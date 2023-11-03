@@ -1,4 +1,4 @@
-import { act,getEthProvider, type Transfer } from '@near-eth/client';
+import { act, getEthProvider, type Transfer } from '@near-eth/client';
 import { bridgedETH, bridgedNEAR, naturalETH, naturalNEAR } from '@near-eth/near-ether';
 import { bridgedNep141, naturalErc20 } from '@near-eth/nep141-erc20';
 

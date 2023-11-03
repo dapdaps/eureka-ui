@@ -7,9 +7,7 @@ import type { NextPageWithLayout } from '@/utils/types';
 
 const ZkevmColumn: NextPageWithLayout = () => {
   const components = useBosComponents();
-  const Container = styled.div`
-    
-  `;
+  const Container = styled.div``;
   return (
     <Container>
       <ComponentWrapperPage

@@ -1,4 +1,4 @@
-import type { Chain,Token as BasicToken } from '@/types';
+import type { Chain, Token as BasicToken } from '@/types';
 
 export type { Chain } from '@/types';
 

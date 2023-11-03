@@ -7,18 +7,11 @@ import type { NextPageWithLayout } from '@/utils/types';
 import { useSearchParams } from 'next/navigation';
 
 const NearColumn: NextPageWithLayout = () => {
+  const search = useSearchParams();
 
+  const initTab = search.get('initTab');
 
-
-  const search = useSearchParams()
-
-
-
-  const initTab = search.get('initTab')
-
-
-
- console.log({initTab})
+  console.log({ initTab });
 
   const components = useBosComponents();
   const Container = styled.div`
@@ -112,12 +105,11 @@ const NearColumn: NextPageWithLayout = () => {
   );
   return (
     <Container>
-
       <ComponentWrapperPage
         src={components.near || ''}
         meta={{ title: 'Connect with the NEAR community.', description: 'Become part of the NEAR community.' }}
         componentProps={{
-          initTab
+          initTab,
         }}
       />
     </Container>

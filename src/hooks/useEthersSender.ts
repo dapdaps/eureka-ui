@@ -1,5 +1,5 @@
 import { ethers } from 'ethers';
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { useEthersProviderContext } from '@/data/web3';
 

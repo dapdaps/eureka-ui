@@ -1,4 +1,4 @@
-import type { Transfer,Transfers } from '@near-eth/client/dist/types';
+import type { Transfer, Transfers } from '@near-eth/client/dist/types';
 
 const onChangeFns: Array<() => unknown> = [];
 

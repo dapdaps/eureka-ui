@@ -116,7 +116,9 @@ const Wrapper = styled.div`
     top: 100%;
     overflow: hidden;
     z-index: 1;
-    transition: width, transform 250ms ease;
+    transition:
+      width,
+      transform 250ms ease;
   }
   .NavigationMenuIndicator[data-state='visible'] {
     animation: fadeIn 200ms ease;
@@ -133,9 +135,14 @@ const Wrapper = styled.div`
     background-color: white;
     border-radius: 6px;
     overflow: hidden;
-    box-shadow: 0px 0px 0px 1px rgba(0, 0, 0, 0.06), 0px 4px 8px rgba(0, 0, 0, 0.06);
+    box-shadow:
+      0px 0px 0px 1px rgba(0, 0, 0, 0.06),
+      0px 4px 8px rgba(0, 0, 0, 0.06);
     height: var(--radix-navigation-menu-viewport-height);
-    transition: width, height, 300ms ease;
+    transition:
+      width,
+      height,
+      300ms ease;
   }
   .NavigationMenuViewport[data-state='open'] {
     animation: scaleIn 200ms ease;

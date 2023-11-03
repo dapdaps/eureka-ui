@@ -1,5 +1,5 @@
 import type { Transfer } from '@near-eth/client';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 export interface TransferList {
   code: number;

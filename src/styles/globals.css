@@ -4,7 +4,8 @@
 
 @font-face {
   font-family: 'Gantari';
-  src: url('/fonts/Mona-Sans.woff2') format('woff2 supports variations'),
+  src:
+    url('/fonts/Mona-Sans.woff2') format('woff2 supports variations'),
     url('/fonts/Mona-Sans.woff2') format('woff2-variations');
   font-weight: 200 900;
   font-stretch: 75% 125%;
@@ -12,7 +13,8 @@
 
 @font-face {
   font-family: 'FK Grotesk';
-  src: url('/fonts/FKGrotesk.woff2') format('woff2 supports variations'),
+  src:
+    url('/fonts/FKGrotesk.woff2') format('woff2 supports variations'),
     url('/fonts/FKGrotesk.woff2') format('woff2-variations');
   font-weight: 200 900;
   font-stretch: 75% 125%;

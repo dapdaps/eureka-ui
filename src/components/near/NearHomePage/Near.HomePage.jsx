@@ -25,8 +25,15 @@ const NearHomePage = () => {
             <StyledIconImage src={nearAsset.img.iconShop} alt={'near'} width={106} height={103} />
           </StyledT1> */}
           <StyledT6>
-            Your Universal Entry  <StyledIconImage src={nearAsset.img.iconNewHome} alt={'near'} width={130} height={136} style={{ margin: "0 -24px 14px 4px" }} />
-            Point Into  <span style={{ color: '#EBF479',marginLeft:'10px' }}>L2s</span>
+            Your Universal Entry{' '}
+            <StyledIconImage
+              src={nearAsset.img.iconNewHome}
+              alt={'near'}
+              width={130}
+              height={136}
+              style={{ margin: '0 -24px 14px 4px' }}
+            />
+            Point Into <span style={{ color: '#EBF479', marginLeft: '10px' }}>L2s</span>
           </StyledT6>
           <StyledT3 style={{ margin: '25px 0 0' }}>
             Join a growing family of <b>12,345</b> community members.

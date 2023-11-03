@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-import type { Chain, SelectClick,Token } from '../types';
+import type { Chain, SelectClick, Token } from '../types';
 import SelectChains from './SelectChains';
 import SelectTokens from './SelectTokens';
 

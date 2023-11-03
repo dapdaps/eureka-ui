@@ -87,9 +87,7 @@ const Tokens = ({ mt }: { mt?: number }) => {
   const tokens = useTokens();
   return (
     <StyledContainer mt={mt}>
-      {tokens?.map((_token, i) => (
-        <Token key={_token.address || 'native'} token={_token} />
-      ))}
+      {tokens?.map((_token, i) => <Token key={_token.address || 'native'} token={_token} />)}
     </StyledContainer>
   );
 };

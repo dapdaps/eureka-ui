@@ -10,7 +10,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prettier:fix": "prettier --write src"
   },
   "dependencies": {
     "@braintree/sanitize-url": "6.0.0",
@@ -69,7 +70,7 @@
     "near-social-vm": "^2.3.1",
     "next": "13.3.4",
     "node-fetch": "^3.3.2",
-    "prettier": "^2.7.1",
+    "prettier": "^3.0.3",
     "react": "18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-typeahead": "^6.1.2",
