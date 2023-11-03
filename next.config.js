@@ -35,6 +35,11 @@ const nextConfig = {
         destination: '/sandbox/:path*',
         permanent: true,
       },
+      {
+        source: '/linea/uniswap',
+        destination: '/linea/uniswap/pools',
+        permanent: true,
+      },
     ];
   },
   rewrites: async () => [

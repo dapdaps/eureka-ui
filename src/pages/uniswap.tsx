@@ -2,10 +2,8 @@ import { useSetChain } from '@web3-onboard/react';
 import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import { useEthersProviderContext } from '@/data/web3';
-import { useBosComponents } from '@/hooks/useBosComponents';
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 
