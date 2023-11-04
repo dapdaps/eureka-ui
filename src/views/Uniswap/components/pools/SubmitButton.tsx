@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<{ disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -11,12 +11,12 @@ const StyledWrapper = styled.div`
   font-size: 18px;
   color: #1b1b1b;
   font-weight: 600;
-  cursor: pointer;
   margin-top: 15px;
+  ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
 `;
 
 const SubmitButton = () => {
-  return <StyledWrapper>Approve USDC</StyledWrapper>;
+  return <StyledWrapper disabled={true}>Approve USDC</StyledWrapper>;
 };
 
 export default memo(SubmitButton);
