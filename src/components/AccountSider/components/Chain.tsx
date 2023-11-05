@@ -22,13 +22,13 @@ const StyledContainer = styled.div<{ mt?: number; showName?: boolean }>`
   padding: 0px 10px 0px 4px;
   margin-top: ${({ mt }) => mt + 'px'};
 `;
-const StyledChain = styled.div`
+const StyledChain = styled.div<{ isMultiChain?: boolean }>`
   display: flex;
   gap: 10px;
   color: #fff;
-  cursor: pointer;
   align-items: center;
   line-height: 38px;
+  ${({ isMultiChain }) => isMultiChain && 'cursor: pointer;'}
 `;
 const ChainLogo = styled.img`
   width: 30px;
@@ -66,9 +66,11 @@ const Chain = ({
   mt,
   showName = true,
   showChains,
+  isMultiChain,
   setShowChains,
 }: {
   mt?: number;
+  isMultiChain: boolean;
   showName?: boolean;
   showChains?: boolean;
   setShowChains?: (show: boolean) => void;
@@ -92,20 +94,23 @@ const Chain = ({
       mt={mt}
       showName={showName}
       onClick={(ev) => {
+        if (!isMultiChain) return;
         ev.stopPropagation();
         showName ? setShowChains?.(!showChains) : setShowList(!showList);
       }}
     >
-      <StyledChain>
+      <StyledChain isMultiChain={isMultiChain}>
         {currentChain && !switching && <ChainLogo src={currentChain.icon} />}
         {switching && <Loading />}
         {showName && (
           <ChainName>{switching ? 'Request' : currentChain ? currentChain.chainName : 'Select Network'}</ChainName>
         )}
       </StyledChain>
-      <ArrowIconWrapper>
-        <ArrowIcon size={12} />
-      </ArrowIconWrapper>
+      {isMultiChain && (
+        <ArrowIconWrapper>
+          <ArrowIcon size={12} />
+        </ArrowIconWrapper>
+      )}
       <ChainList display={showName ? showChains : showList}>
         {Object.values(chains).map((chain) => (
           <ChainItem

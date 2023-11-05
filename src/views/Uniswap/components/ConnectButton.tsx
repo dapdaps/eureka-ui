@@ -1,8 +1,10 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+
 import { useConnectWallet } from '@web3-onboard/react';
 import useChain from '@/hooks/useChain';
 import useAccount from '@/hooks/useAccount';
+import { useLayoutStore } from '@/stores/layout';
 import { ellipsAccount } from '@/utils/account';
 
 const StyledButton = styled.button`
@@ -54,8 +56,15 @@ const Header = () => {
   const { account, chainId } = useAccount();
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const chain = useChain();
+  const setLayoutStore = useLayoutStore((store) => store.set);
   return account && chain ? (
-    <StyledAccountBox>
+    <StyledAccountBox
+      onClick={() => {
+        setLayoutStore({
+          showAccountSider: true,
+        });
+      }}
+    >
       <StyledLogo>
         <StyledChain src={chain?.icon} />
       </StyledLogo>

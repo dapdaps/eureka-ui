@@ -18,16 +18,18 @@ export default function AccountWrapper({
   count,
   setTab,
   showChains,
+  isMultiChain,
   setShowChains,
 }: {
   count: number;
   setTab: (tab: 'bridge' | 'account') => void;
+  isMultiChain: boolean;
   showChains?: boolean;
   setShowChains?: (show: boolean) => void;
 }) {
   return (
     <>
-      <Chain mt={30} showChains={showChains} setShowChains={setShowChains} />
+      <Chain mt={30} showChains={showChains} setShowChains={setShowChains} isMultiChain={isMultiChain} />
       <Amount mt={30} />
       <Actions
         mt={30}

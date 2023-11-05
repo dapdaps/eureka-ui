@@ -43,7 +43,7 @@ const useAuth = () => {
     }
   }, [account]);
 
-  return { login, connect, logout, logging, connecting };
+  return { login, connect, disconnect, wallet, logout, logging, connecting };
 };
 
 export default useAuth;

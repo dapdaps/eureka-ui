@@ -17,5 +17,5 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/((?!uniswap|invite-code|login|_next/static|_next/image|favicon.ico|api|images|fonts).*)'],
+  matcher: ['/((?!uniswap|linea/uniswap|invite-code|login|_next/static|_next/image|favicon.ico|api|images|fonts).*)'],
 };
