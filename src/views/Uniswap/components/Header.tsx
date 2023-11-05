@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 import ConnectButton from './ConnectButton';
 
 const StyledHeader = styled.div`
@@ -28,14 +29,35 @@ const StyledNav = styled.div<{ active?: boolean }>`
   cursor: pointer;
 `;
 
+const NAVS = [
+  {
+    label: 'Swap',
+    path: '/linea/uniswap/swap',
+  },
+  {
+    label: 'Pool',
+    path: '/linea/uniswap/pools',
+  },
+];
+
 const Header = () => {
+  const router = useRouter();
   return (
     <StyledHeader>
       <StyledNavWrapper>
         <StyledLogo src={'/logo44.png'} />
         <StyledNavs>
-          <StyledNav>Swap</StyledNav>
-          <StyledNav>Pool</StyledNav>
+          {NAVS.map((nav) => (
+            <StyledNav
+              key={nav.path}
+              active={router.pathname === nav.path}
+              onClick={() => {
+                router.push(nav.path);
+              }}
+            >
+              {nav.label}
+            </StyledNav>
+          ))}
         </StyledNavs>
       </StyledNavWrapper>
       <ConnectButton />
