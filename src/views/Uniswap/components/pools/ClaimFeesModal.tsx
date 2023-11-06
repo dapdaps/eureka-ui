@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-
+import { balanceFormated } from '@/utils/balance';
 import { CloseIcon } from './Icons';
 import Modal from './ModalBox';
 
@@ -78,7 +78,7 @@ const StyledCollectButton = styled.div<{ disabled?: boolean }>`
   ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
 `;
 const ClaimFeesModal = (props: any) => {
-  const { isOpen, onRequestClose } = props;
+  const { isOpen, detail, onRequestClose } = props;
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
@@ -90,17 +90,17 @@ const ClaimFeesModal = (props: any) => {
           <div className="box">
             <div className="vchb w-full">
               <div className="hvc">
-                <img src="" />
-                <span className="symbol">ETH</span>
+                <img src={detail.token0.icon} />
+                <span className="symbol">{detail.token0.symbol}</span>
               </div>
-              <span className="balance">{'<0'}</span>
+              <span className="balance">{balanceFormated(detail.collectToken0, 4)}</span>
             </div>
             <div className="vchb w-full">
               <div className="hvc">
-                <img src="" />
-                <span className="symbol">USDC</span>
+                <img src={detail.token1.icon} />
+                <span className="symbol">{detail.token1.symbol}</span>
               </div>
-              <span className="balance">{'0.001675'}</span>
+              <span className="balance">{balanceFormated(detail.collectToken1, 4)}</span>
             </div>
           </div>
           <StyledDescription>Collecting fees will withdraw currently available fees for you.</StyledDescription>

@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
+import { StatusColor } from '../../config';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -56,24 +57,48 @@ const StyledLeft = styled.div`
 const StyledRight = styled.div`
   gap: 10px;
 `;
-const PoolPair = () => {
+const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
+  color: ${({ status }) => StatusColor[status]};
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  &::before {
+    content: '';
+    display: inline;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: ${({ status }) => StatusColor[status]};
+  }
+`;
+
+const PoolPair = ({ detail, isReverse }: { detail: any; isReverse: boolean }) => {
+  const router = useRouter();
   return (
     <StyledWrap>
       <StyledLeft className="hvc">
         <div className="hvc icon">
-          <img src="" />
-          <img src="" className="ml-1.5" />
+          <img src={isReverse ? detail.token0.icon : detail.token1.icon} />
+          <img src={isReverse ? detail.token1.icon : detail.token0.icon} className="ml-1.5" />
         </div>
-        <span className="symbol">ETH/USDC</span>
-        <span className="hvc fee">0.05%</span>
-        <div className="hvc">
-          <span className="point"></span>
-          <span className="range">In range</span>
-        </div>
+        <span className="symbol">
+          {isReverse ? detail.token0.symbol : detail.token1.symbol}/
+          {isReverse ? detail.token1.symbol : detail.token0.symbol}
+        </span>
+        <span className="hvc fee">{detail.fee / 10000}%</span>
+        <Status status={detail.status}>
+          {detail.status === 'removed' ? 'Removed' : detail.status === 'in' ? 'In range' : 'Out range'}
+        </Status>
       </StyledLeft>
       <StyledRight className="hvc">
-        <LineButton />
-        <SolidButton />
+        <StyledLineWrap className="hvc" onClick={() => {}}>
+          Increase liquidity
+        </StyledLineWrap>
+        {detail.liquidity.gt(0) && (
+          <StyledSolidWrap className="hvc" onClick={() => {}}>
+            Remove liquidity
+          </StyledSolidWrap>
+        )}
       </StyledRight>
     </StyledWrap>
   );
@@ -89,17 +114,6 @@ const StyledLineWrap = styled.div`
   cursor: pointer;
   color: #5ee0ff;
 `;
-const LineButton = () => {
-  const router = useRouter();
-  function goIncreasePage() {
-    router.push('/linea/uniswap/pools-increase-liquidity');
-  }
-  return (
-    <StyledLineWrap onClick={goIncreasePage} className="hvc">
-      Increase liquidity
-    </StyledLineWrap>
-  );
-};
 
 const StyledSolidWrap = styled.div`
   height: 35px;
@@ -109,14 +123,3 @@ const StyledSolidWrap = styled.div`
   cursor: pointer;
   color: #131313;
 `;
-const SolidButton = () => {
-  const router = useRouter();
-  function goRemovePage() {
-    router.push('/linea/uniswap/pools-remove-liquidity');
-  }
-  return (
-    <StyledSolidWrap onClick={goRemovePage} className="hvc">
-      Remove liquidity
-    </StyledSolidWrap>
-  );
-};

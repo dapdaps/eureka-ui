@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-
+import { StatusColor } from '../../config';
 import { ArrowBothIcon } from './Icons';
+import { tickToPrice } from '../../utils/tickMath';
 
 const StyledWrap = styled.div<{ type?: string }>`
   ${(props) => (props.type == '1' ? 'margin-top: 20px;' : 'border: 1px solid #3d363d;padding: 20px;margin-top: 15px;')}
@@ -68,34 +69,76 @@ const StyledBody = styled.div`
     margin-top: 17px;
   }
 `;
-const PoolPriceRange = ({ type }: { type?: string }) => {
+
+const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
+  color: ${({ status }) => StatusColor[status]};
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  &::before {
+    content: '';
+    display: inline;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: ${({ status }) => StatusColor[status]};
+  }
+`;
+const PoolPriceRange = ({
+  detail,
+  isReverse,
+  onSetReverse,
+}: {
+  detail: any;
+  isReverse: boolean;
+  onSetReverse: () => void;
+}) => {
+  const tickArgs = {
+    decimals0: detail.token0.decimals,
+    decimals1: detail.token1.decimals,
+    isReverse: !isReverse,
+  };
+  const priceRate = `${isReverse ? detail.token0.symbol : detail.token1.symbol} per ${
+    isReverse ? detail.token1.symbol : detail.token0.symbol
+  }`;
   return (
-    <StyledWrap type={type}>
+    <StyledWrap>
       <StyledHead className="vchb">
-        {type == '1' ? (
-          <span>Selected range</span>
-        ) : (
-          <div className="hvc gap-20">
-            <span>Pirce range</span>
-            <div className="hvc">
-              <span className="point"></span>
-              <span className="range">In range</span>
-            </div>
-          </div>
-        )}
+        <div className="hvc gap-20">
+          <span>Pirce range</span>
+          <Status status={detail.status}>
+            {detail.status === 'removed' ? 'Removed' : detail.status === 'in' ? 'In range' : 'Out range'}
+          </Status>
+        </div>
         <div className="switch hvc">
-          <span className="item hvc">USDC</span>
-          <span className="item hvc active">ETH</span>
+          <span className={`item hvc ${!isReverse && 'active'}`} onClick={onSetReverse}>
+            {detail.token1.symbol}
+          </span>
+          <span className={`item hvc ${isReverse && 'active'}`} onClick={onSetReverse}>
+            {detail.token0.symbol}
+          </span>
         </div>
       </StyledHead>
       <StyledBody>
         <div className="vchb minmax">
-          <PriceDetailBox priceType="Min price" price="1811.5246" priceRate="USDC per ETH" />
+          <PriceDetailBox
+            priceType="Min price"
+            price={tickToPrice({ ...tickArgs, tick: detail.tickLow })}
+            priceRate={priceRate}
+          />
           <ArrowBothIcon />
-          <PriceDetailBox priceType="Max price" price="1811.5246" priceRate="USDC per ETH" />
+          <PriceDetailBox
+            priceType="Max price"
+            price={tickToPrice({ ...tickArgs, tick: detail.tickHigh })}
+            priceRate={priceRate}
+          />
         </div>
         <div className="mt-17">
-          <PriceDetailBox priceType="Current price" price="1811.5246" priceRate="USDC per ETH" />
+          <PriceDetailBox
+            priceType="Current price"
+            price={tickToPrice({ ...tickArgs, tick: detail.tick })}
+            priceRate={priceRate}
+          />
         </div>
       </StyledBody>
     </StyledWrap>

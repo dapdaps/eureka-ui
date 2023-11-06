@@ -1,11 +1,10 @@
 import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
-
 import { BackIcon } from './Icons';
 
 const StyledWrap = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 14px;
   cursor: pointer;
@@ -18,11 +17,12 @@ const StyledWrap = styled.div`
 
 const Back = () => {
   const router = useRouter();
-  function goPoolsPage() {
-    router.push('/linea/uniswap/pools');
-  }
   return (
-    <StyledWrap onClick={goPoolsPage}>
+    <StyledWrap
+      onClick={() => {
+        router.back();
+      }}
+    >
       <BackIcon />
       <span className="text">Back to pools</span>
     </StyledWrap>

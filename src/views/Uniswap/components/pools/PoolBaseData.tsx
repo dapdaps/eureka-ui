@@ -1,8 +1,10 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
-
+import { usePriceStore } from '@/stores/price';
+import { balanceFormated } from '@/utils/balance';
+import { getTotalValues } from '../../utils/getValues';
+import NFT from '../Nft';
 import ClaimFeesModal from './ClaimFeesModal';
-import { NFTIcon } from './Icons';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -25,27 +27,23 @@ const StyledWrap = styled.div`
     width: 100%;
   }
 `;
-const PoolBaseData = () => {
+const PoolBaseData = ({ detail, isReverse }: { detail: any; isReverse: boolean }) => {
   return (
     <StyledWrap>
-      <NFT />
-      <LiquidityAndFee />
+      <StyledNFTWrap className="hvc">
+        <NFT image={detail.tokenURI.image} height={537} />
+      </StyledNFTWrap>
+      <StyledLFWrap>
+        <Liquidity detail={detail} isReverse={isReverse} />
+        <UnclaimedFees detail={detail} isReverse={isReverse} />
+      </StyledLFWrap>
     </StyledWrap>
   );
 };
 
 const StyledNFTWrap = styled.div`
-  width: 378px;
-  border: 1px solid #3d363d;
-  border-radius: 24px;
+  flex-shrink: 0;
 `;
-const NFT = () => {
-  return (
-    <StyledNFTWrap className="hvc">
-      <NFTIcon />
-    </StyledNFTWrap>
-  );
-};
 
 const StyledLFWrap = styled.div`
   display: flex;
@@ -54,14 +52,6 @@ const StyledLFWrap = styled.div`
   gap: 14px;
   flex-grow: 1;
 `;
-const LiquidityAndFee = () => {
-  return (
-    <StyledLFWrap>
-      <Liquidity />
-      <UnclaimedFees />
-    </StyledLFWrap>
-  );
-};
 
 const StyledBase = styled.div`
   display: flex;
@@ -105,36 +95,58 @@ const StyledBase = styled.div`
       font-size: 16px;
       font-weight: 500;
       color: #ffffff;
+      display: flex;
+      gap: 6px;
+    }
+    .percent {
+      color: #8e8e8e;
+    }
+    &.reverse {
+      flex-direction: column-reverse;
     }
   }
 `;
 const StyledLiquidity = styled(StyledBase)``;
-const Liquidity = () => {
+const Liquidity = ({ detail, isReverse }: { detail: any; isReverse: boolean }) => {
+  const priceStore = usePriceStore();
+  const { total, percentage0, percentage1 } = getTotalValues({
+    token0: detail.token0,
+    token1: detail.token1,
+    amount0: detail.liquidityToken0,
+    amount1: detail.liquidityToken1,
+    prices: priceStore.price,
+  });
   return (
     <StyledLiquidity>
       <span className="title">Liquidity</span>
-      <span className="value">$-</span>
-      <div className="box">
+      <span className="value">${balanceFormated(total, 4)}</span>
+      <div className={`box ${!isReverse && 'reverse'}`}>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src="" />
-            <span className="symbol">ETH</span>
+            <img src={detail.token0.icon} />
+            <span className="symbol">{detail.token0.symbol}</span>
           </div>
-          <span className="balance">{'<0'}</span>
+          <span className="balance">
+            <span>{balanceFormated(detail.liquidityToken0, 4)}</span>
+            <span className="percent">{percentage0}%</span>
+          </span>
         </div>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src="" />
-            <span className="symbol">USDC</span>
+            <img src={detail.token1.icon} />
+            <span className="symbol">{detail.token1.symbol}</span>
           </div>
-          <span className="balance">{'0.7773'}</span>
+          <span className="balance">
+            <span>{balanceFormated(detail.liquidityToken1, 4)}</span>
+            <span className="percent">{percentage1}%</span>
+          </span>
         </div>
       </div>
     </StyledLiquidity>
   );
 };
 const StyledUnclaimedFees = styled(StyledBase)``;
-const UnclaimedFees = () => {
+const UnclaimedFees = ({ detail, isReverse }: { detail: any; isReverse: boolean }) => {
   const [open, setOpen] = useState(false);
   function closeModal() {
     setOpen(false);
@@ -142,30 +154,40 @@ const UnclaimedFees = () => {
   function openModal() {
     setOpen(true);
   }
+  const priceStore = usePriceStore();
+  const { total } = getTotalValues({
+    token0: detail.token0,
+    token1: detail.token1,
+    amount0: detail.collectToken0,
+    amount1: detail.collectToken1,
+    prices: priceStore.price,
+  });
   return (
     <StyledUnclaimedFees>
       <div className="vchb">
         <span className="title">Unclaimed fees</span>
-        <SolidButton onClick={openModal} />
+        <StyledSolidWrap className="hvc" onClick={openModal}>
+          Collect fees
+        </StyledSolidWrap>
       </div>
-      <span className="value">$-</span>
-      <div className="box">
+      <span className="value">${balanceFormated(total, 4)}</span>
+      <div className={`box ${!isReverse && 'reverse'}`}>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src="" />
-            <span className="symbol">ETH</span>
+            <img src={detail.token0.icon} />
+            <span className="symbol">{detail.token0.symbol}</span>
           </div>
-          <span className="balance">{'<0'}</span>
+          <span className="balance">{balanceFormated(detail.collectToken0, 4)}</span>
         </div>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src="" />
-            <span className="symbol">USDC</span>
+            <img src={detail.token1.icon} />
+            <span className="symbol">{detail.token1.symbol}</span>
           </div>
-          <span className="balance">{'0.001675'}</span>
+          <span className="balance">{balanceFormated(detail.collectToken1, 4)}</span>
         </div>
       </div>
-      <ClaimFeesModal isOpen={open} onRequestClose={closeModal} />
+      <ClaimFeesModal isOpen={open} onRequestClose={closeModal} detail={detail} />
     </StyledUnclaimedFees>
   );
 };
@@ -178,12 +200,5 @@ const StyledSolidWrap = styled.div`
   cursor: pointer;
   color: #131313;
 `;
-const SolidButton = (props: any) => {
-  return (
-    <StyledSolidWrap {...props} className="hvc">
-      Collect fees
-    </StyledSolidWrap>
-  );
-};
 
 export default memo(PoolBaseData);

@@ -33,10 +33,12 @@ const NAVS = [
   {
     label: 'Swap',
     path: '/linea/uniswap/swap',
+    active: ['/linea/uniswap/swap'],
   },
   {
     label: 'Pool',
     path: '/linea/uniswap/pools',
+    active: ['/linea/uniswap/pools', '/linea/uniswap/pools-add-liquidity', '/linea/uniswap/pools-detail-liquidity'],
   },
 ];
 
@@ -50,7 +52,7 @@ const Header = () => {
           {NAVS.map((nav) => (
             <StyledNav
               key={nav.path}
-              active={router.pathname === nav.path}
+              active={nav.active.includes(router.pathname)}
               onClick={() => {
                 router.push(nav.path);
               }}
