@@ -1,8 +1,10 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-import { CloseIcon } from './Icons';
+import HistoryTokens from './HistoryTokens';
+import { CloseIcon, GlassIcon } from './Icons';
 import Modal from './ModalBox';
+import TokenBalanceList from './TokenBalanceList';
 
 const StyledContent = styled.div`
   width: 460px;
@@ -15,6 +17,10 @@ const StyledContent = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+  .hv {
+    display: flex;
+    align-items: center;
   }
   .w-full {
     width: 100%;
@@ -58,24 +64,22 @@ const StyledBody = styled.div`
     }
   }
 `;
-const StyledDescription = styled.div`
-  font-size: 12px;
-  color: #8e8e8e;
-  margin-top: 10px;
-`;
-const StyledCollectButton = styled.div<{ disabled?: boolean }>`
-  margin-top: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 62px;
-  border-radius: 16px;
-  background-color: #62ddff;
-  font-size: 18px;
-  color: #1b1b1b;
-  font-weight: 600;
-  margin-top: 15px;
-  ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
+const StyledSearch = styled.div`
+  margin-top: 18px;
+  height: 44px;
+  border: 1px solid #303030;
+  border-radius: 12px;
+  padding: 0 15px;
+  background-color: #1b1b1b;
+  gap: 8px;
+  input {
+    background: none;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    color: #fff;
+  }
 `;
 const SelectTokenModal = (props: any) => {
   const { isOpen, onRequestClose } = props;
@@ -83,28 +87,16 @@ const SelectTokenModal = (props: any) => {
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
         <StyledHead className="vchb">
-          <span className="title">Claim fees</span>
+          <span className="title">Select a token</span>
           <CloseIcon onClick={onRequestClose} />
         </StyledHead>
         <StyledBody>
-          <div className="box">
-            <div className="vchb w-full">
-              <div className="hvc">
-                <img src="" />
-                <span className="symbol">ETH</span>
-              </div>
-              <span className="balance">{'<0'}</span>
-            </div>
-            <div className="vchb w-full">
-              <div className="hvc">
-                <img src="" />
-                <span className="symbol">USDC</span>
-              </div>
-              <span className="balance">{'0.001675'}</span>
-            </div>
-          </div>
-          <StyledDescription>Collecting fees will withdraw currently available fees for you.</StyledDescription>
-          <StyledCollectButton>Collect</StyledCollectButton>
+          <StyledSearch className="hv">
+            <GlassIcon></GlassIcon>
+            <input type="text" placeholder="Seach name or paste address" />
+          </StyledSearch>
+          <HistoryTokens />
+          <TokenBalanceList />
         </StyledBody>
       </StyledContent>
     </Modal>

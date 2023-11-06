@@ -42,7 +42,7 @@ const CustomModal = ({
           left: '50%',
           right: 'auto',
           bottom: 'auto',
-          transform: 'translate(-50%, -65%)',
+          transform: 'translate(-50%, -50%)',
           outline: 'none',
           border: 'none',
           background: 'transparent',

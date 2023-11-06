@@ -1,5 +1,7 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
+
+import SelectTokenModal from './SelectTokenModal';
 
 const StyledContainer = styled.div`
   flex-grow: 1;
@@ -47,10 +49,17 @@ const StyledContentBox = styled.div`
   }
 `;
 const SelectToken = () => {
+  const [open, setOpen] = useState(true);
+  function openModal() {
+    setOpen(true);
+  }
+  function closeModal() {
+    setOpen(false);
+  }
   return (
     <StyledContainer>
       {/* have no choice */}
-      <StyledEmptyBox>
+      <StyledEmptyBox onClick={openModal}>
         <span>Select a token</span>
         <ArrowDown />
       </StyledEmptyBox>
@@ -62,6 +71,7 @@ const SelectToken = () => {
         </div>
         <ArrowDown />
       </StyledContentBox>
+      <SelectTokenModal isOpen={open} onRequestClose={closeModal} />
     </StyledContainer>
   );
 };
