@@ -135,7 +135,7 @@ const Liquidity = () => {
 };
 const StyledUnclaimedFees = styled(StyledBase)``;
 const UnclaimedFees = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   function closeModal() {
     setOpen(false);
   }
