@@ -1,7 +1,9 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
 
-const StyledWrapper = styled.div<{ disabled: boolean }>`
+import PreviewModal from './PreviewModal';
+
+const StyledWrapper = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -16,7 +18,19 @@ const StyledWrapper = styled.div<{ disabled: boolean }>`
 `;
 
 const IncreaseButton = () => {
-  return <StyledWrapper disabled={true}>Preview</StyledWrapper>;
+  const [open, setOpen] = useState(false);
+  function closeModal() {
+    setOpen(false);
+  }
+  function openModal() {
+    setOpen(true);
+  }
+  return (
+    <>
+      <StyledWrapper onClick={openModal}>Preview</StyledWrapper>
+      <PreviewModal isOpen={open} onRequestClose={closeModal} />
+    </>
+  );
 };
 
 export default memo(IncreaseButton);

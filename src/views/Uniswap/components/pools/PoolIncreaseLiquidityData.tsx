@@ -42,7 +42,7 @@ const StyledWrap = styled.div`
     font-size: 16px;
   }
 `;
-const PoolIncreaseLData = () => {
+const PoolIncreaseLiquidityData = () => {
   return (
     <StyledWrap>
       <div className="vchb">
@@ -63,4 +63,4 @@ const PoolIncreaseLData = () => {
   );
 };
 
-export default memo(PoolIncreaseLData);
+export default memo(PoolIncreaseLiquidityData);

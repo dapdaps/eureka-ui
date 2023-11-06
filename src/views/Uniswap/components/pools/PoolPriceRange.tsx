@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import { ArrowBothIcon } from './Icons';
 
-const StyledWrap = styled.div<{ style?: string }>`
-  ${(props) => (props.style == '1' ? 'margin-top: 20px;' : 'border: 1px solid #3d363d;padding: 20px;margin-top: 15px;')}
+const StyledWrap = styled.div<{ type?: string }>`
+  ${(props) => (props.type == '1' ? 'margin-top: 20px;' : 'border: 1px solid #3d363d;padding: 20px;margin-top: 15px;')}
   border-radius: 24px;
   background-color: #131313;
   .vchb {
@@ -68,11 +68,11 @@ const StyledBody = styled.div`
     margin-top: 17px;
   }
 `;
-const PoolPriceRange = ({ style }: { style?: string }) => {
+const PoolPriceRange = ({ type }: { type?: string }) => {
   return (
-    <StyledWrap style={style}>
+    <StyledWrap type={type}>
       <StyledHead className="vchb">
-        {style == '1' ? (
+        {type == '1' ? (
           <span>Selected range</span>
         ) : (
           <div className="hvc gap-20">

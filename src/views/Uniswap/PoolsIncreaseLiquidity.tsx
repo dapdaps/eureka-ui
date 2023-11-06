@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Head from './components/pools/AddHead';
 import IncreaseButton from './components/pools/IncreaseButton';
-import PoolIncreaseLData from './components/pools/PoolIncreaseLData';
+import PoolIncreaseLiquidityData from './components/pools/PoolIncreaseLiquidityData';
 import PoolIncreaseMore from './components/pools/PoolIncreaseMore';
 import PoolPriceRange from './components/pools/PoolPriceRange';
 import PoolRemovePair from './components/pools/PoolRemovePair';
@@ -23,8 +23,8 @@ const PoolsIncreaseLiquidity = () => {
       <Head showCleanAll={false} />
       <StyledBody>
         <PoolRemovePair />
-        <PoolIncreaseLData />
-        <PoolPriceRange style="1" />
+        <PoolIncreaseLiquidityData />
+        <PoolPriceRange type="1" />
         <PoolIncreaseMore />
         <IncreaseButton />
       </StyledBody>
