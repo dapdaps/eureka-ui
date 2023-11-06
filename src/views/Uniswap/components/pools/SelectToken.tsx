@@ -49,7 +49,7 @@ const StyledContentBox = styled.div`
   }
 `;
 const SelectToken = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   function openModal() {
     setOpen(true);
   }

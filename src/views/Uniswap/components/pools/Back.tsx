@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
 
@@ -16,8 +17,12 @@ const StyledWrap = styled.div`
 `;
 
 const Back = () => {
+  const router = useRouter();
+  function goPoolsPage() {
+    router.push('/linea/uniswap/pools');
+  }
   return (
-    <StyledWrap>
+    <StyledWrap onClick={goPoolsPage}>
       <BackIcon />
       <span className="text">Back to pools</span>
     </StyledWrap>

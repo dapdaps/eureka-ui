@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
 
@@ -89,7 +90,15 @@ const StyledLineWrap = styled.div`
   color: #5ee0ff;
 `;
 const LineButton = () => {
-  return <StyledLineWrap className="hvc">Increase liquidity</StyledLineWrap>;
+  const router = useRouter();
+  function goIncreasePage() {
+    router.push('/linea/uniswap/pools-increase-liquidity');
+  }
+  return (
+    <StyledLineWrap onClick={goIncreasePage} className="hvc">
+      Increase liquidity
+    </StyledLineWrap>
+  );
 };
 
 const StyledSolidWrap = styled.div`
@@ -101,5 +110,13 @@ const StyledSolidWrap = styled.div`
   color: #131313;
 `;
 const SolidButton = () => {
-  return <StyledSolidWrap className="hvc">Remove liquidity</StyledSolidWrap>;
+  const router = useRouter();
+  function goRemovePage() {
+    router.push('/linea/uniswap/pools-remove-liquidity');
+  }
+  return (
+    <StyledSolidWrap onClick={goRemovePage} className="hvc">
+      Remove liquidity
+    </StyledSolidWrap>
+  );
 };

@@ -1,5 +1,7 @@
+import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
+
 import { BackIcon } from './Icons';
 
 const StyledContainer = styled.div`
@@ -37,10 +39,14 @@ const StyledSettings = styled.div`
 `;
 
 const AddLiquidityHeader = ({ showCleanAll = true }: { showCleanAll?: boolean }) => {
+  const router = useRouter();
+  function goBack() {
+    router.back();
+  }
   return (
     <StyledContainer>
       <StyledArrowLeft>
-        <BackIcon />
+        <BackIcon onClick={goBack} />
       </StyledArrowLeft>
       <StyledTitle>Add liquidity</StyledTitle>
       <StyledActions>

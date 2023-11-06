@@ -1,5 +1,7 @@
+import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
+
 import Panel from './components/Panel';
 
 const StyledContainer = styled.div`
@@ -69,7 +71,9 @@ const Record = styled.div`
     color: #8e8e8e;
   }
 `;
-const RecordDetails = styled.div``;
+const RecordDetails = styled.div`
+  cursor: pointer;
+`;
 const RecordPool = styled.div`
   display: flex;
   gap: 6px;
@@ -103,11 +107,18 @@ const Status = styled.div`
 `;
 
 const Pools = () => {
+  const router = useRouter();
+  function goAddLiquidityPage() {
+    router.push('/linea/uniswap/pools-add-liquidity');
+  }
+  function goPoolDetalPage() {
+    router.push('/linea/uniswap/pools-detail-liquidity');
+  }
   return (
     <StyledContainer>
       <StyledHeader>
         <Label>Pools</Label>
-        <PositionButton>+ New position</PositionButton>
+        <PositionButton onClick={goAddLiquidityPage}>+ New position</PositionButton>
       </StyledHeader>
       <StyledPanel>
         <PanelHeader>
@@ -115,7 +126,7 @@ const Pools = () => {
           <CloseBtn>Hide closed positions</CloseBtn>
         </PanelHeader>
         <Record>
-          <RecordDetails>
+          <RecordDetails onClick={goPoolDetalPage}>
             <RecordPool>
               <RecordToken src="https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694" />
               <RecordSecondToken src="https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916" />
