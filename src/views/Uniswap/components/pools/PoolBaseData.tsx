@@ -1,6 +1,7 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
 
+import ClaimFeesModal from './ClaimFeesModal';
 import { NFTIcon } from './Icons';
 
 const StyledWrap = styled.div`
@@ -134,11 +135,18 @@ const Liquidity = () => {
 };
 const StyledUnclaimedFees = styled(StyledBase)``;
 const UnclaimedFees = () => {
+  const [open, setOpen] = useState(true);
+  function closeModal() {
+    setOpen(false);
+  }
+  function openModal() {
+    setOpen(true);
+  }
   return (
     <StyledUnclaimedFees>
       <div className="vchb">
         <span className="title">Unclaimed fees</span>
-        <SolidButton />
+        <SolidButton onClick={openModal} />
       </div>
       <span className="value">$-</span>
       <div className="box">
@@ -157,6 +165,7 @@ const UnclaimedFees = () => {
           <span className="balance">{'0.001675'}</span>
         </div>
       </div>
+      <ClaimFeesModal isOpen={open} onRequestClose={closeModal} />
     </StyledUnclaimedFees>
   );
 };
@@ -169,8 +178,12 @@ const StyledSolidWrap = styled.div`
   cursor: pointer;
   color: #131313;
 `;
-const SolidButton = () => {
-  return <StyledSolidWrap className="hvc">Collect fees</StyledSolidWrap>;
+const SolidButton = (props: any) => {
+  return (
+    <StyledSolidWrap {...props} className="hvc">
+      Collect fees
+    </StyledSolidWrap>
+  );
 };
 
 export default memo(PoolBaseData);
