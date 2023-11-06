@@ -3,12 +3,10 @@ import styled from 'styled-components';
 
 import { ArrowBothIcon } from './Icons';
 
-const StyledWrap = styled.div`
-  border: 1px solid #3d363d;
-  margin-top: 15px;
+const StyledWrap = styled.div<{ style?: string }>`
+  ${(props) => (props.style == '1' ? 'margin-top: 20px;' : 'border: 1px solid #3d363d;padding: 20px;margin-top: 15px;')}
   border-radius: 24px;
   background-color: #131313;
-  padding: 20px;
   .vchb {
     display: flex;
     align-items: center;
@@ -70,17 +68,21 @@ const StyledBody = styled.div`
     margin-top: 17px;
   }
 `;
-const PoolPriceRange = () => {
+const PoolPriceRange = ({ style }: { style?: string }) => {
   return (
-    <StyledWrap>
+    <StyledWrap style={style}>
       <StyledHead className="vchb">
-        <div className="hvc gap-20">
-          <span>Pirce range</span>
-          <div className="hvc">
-            <span className="point"></span>
-            <span className="range">In range</span>
+        {style == '1' ? (
+          <span>Selected range</span>
+        ) : (
+          <div className="hvc gap-20">
+            <span>Pirce range</span>
+            <div className="hvc">
+              <span className="point"></span>
+              <span className="range">In range</span>
+            </div>
           </div>
-        </div>
+        )}
         <div className="switch hvc">
           <span className="item hvc">USDC</span>
           <span className="item hvc active">ETH</span>

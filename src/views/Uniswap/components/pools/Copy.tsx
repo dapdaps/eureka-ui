@@ -1,13 +1,23 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-const StyledHeader = styled.div`
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
+const StyledWrap = styled.div`
+  .vchb {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .hvc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .w-full {
+    width: 100%;
+  }
 `;
 const Header = () => {
-  return <StyledHeader></StyledHeader>;
+  return <StyledWrap></StyledWrap>;
 };
 
 export default memo(Header);

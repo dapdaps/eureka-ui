@@ -36,7 +36,7 @@ const StyledSettings = styled.div`
   cursor: pointer;
 `;
 
-const AddLiquidityHeader = () => {
+const AddLiquidityHeader = ({ showCleanAll = true }: { showCleanAll?: boolean }) => {
   return (
     <StyledContainer>
       <StyledArrowLeft>
@@ -44,7 +44,8 @@ const AddLiquidityHeader = () => {
       </StyledArrowLeft>
       <StyledTitle>Add liquidity</StyledTitle>
       <StyledActions>
-        <StyledClear>Clean all</StyledClear>
+        {showCleanAll ? <StyledClear>Clean all</StyledClear> : null}
+
         <StyledSettings>
           <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
