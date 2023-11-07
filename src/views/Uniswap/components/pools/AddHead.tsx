@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
 
 import { BackIcon } from './Icons';
+import SlippageSetting from './SlippageSetting';
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -39,6 +40,8 @@ const StyledSettings = styled.div`
 `;
 
 const AddLiquidityHeader = ({ showCleanAll = true }: { showCleanAll?: boolean }) => {
+  const [showSettings, setShowSettings] = useState(false);
+  const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const router = useRouter();
   function goBack() {
     router.back();
@@ -49,9 +52,18 @@ const AddLiquidityHeader = ({ showCleanAll = true }: { showCleanAll?: boolean })
         <BackIcon onClick={goBack} />
       </StyledArrowLeft>
       <StyledTitle>Add liquidity</StyledTitle>
-      <StyledActions>
+      <StyledActions
+        onClick={(ev) => {
+          if (!showSettings) {
+            setPosition({
+              x: ev.clientX,
+              y: ev.clientY,
+            });
+          }
+          setShowSettings(!showSettings);
+        }}
+      >
         {showCleanAll ? <StyledClear>Clean all</StyledClear> : null}
-
         <StyledSettings>
           <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -61,6 +73,15 @@ const AddLiquidityHeader = ({ showCleanAll = true }: { showCleanAll?: boolean })
           </svg>
         </StyledSettings>
       </StyledActions>
+      {showSettings && (
+        <SlippageSetting
+          onClose={() => {
+            setShowSettings(false);
+          }}
+          clientX={position?.x}
+          clientY={position?.y}
+        />
+      )}
     </StyledContainer>
   );
 };
