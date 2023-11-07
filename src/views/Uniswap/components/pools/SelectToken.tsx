@@ -2,6 +2,7 @@ import { memo, useState } from 'react';
 import styled from 'styled-components';
 
 import SelectTokenModal from './SelectTokenModal';
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 
 const StyledContainer = styled.div`
   flex-grow: 1;
@@ -48,7 +49,7 @@ const StyledContentBox = styled.div`
     }
   }
 `;
-const SelectToken = () => {
+const SelectToken = ({ onSelectToken, token }: any) => {
   const [open, setOpen] = useState(false);
   function openModal() {
     setOpen(true);
@@ -58,20 +59,28 @@ const SelectToken = () => {
   }
   return (
     <StyledContainer>
-      {/* have no choice */}
-      <StyledEmptyBox onClick={openModal}>
-        <span>Select a token</span>
-        <ArrowDown />
-      </StyledEmptyBox>
-      {/* have choiced */}
-      <StyledContentBox style={{ display: 'none' }}>
-        <div className="tokenInfo">
-          <img src="" />
-          <span className="tokeName">ETH</span>
-        </div>
-        <ArrowDown />
-      </StyledContentBox>
-      <SelectTokenModal isOpen={open} onRequestClose={closeModal} />
+      {token ? (
+        <StyledContentBox onClick={openModal}>
+          <div className="tokenInfo">
+            <img src={token.icon || DEFAULT_TOKEN_ICON} />
+            <span className="tokeName">{token.symbol}</span>
+          </div>
+          <ArrowDown />
+        </StyledContentBox>
+      ) : (
+        <StyledEmptyBox onClick={openModal}>
+          <span>Select a token</span>
+          <ArrowDown />
+        </StyledEmptyBox>
+      )}
+      <SelectTokenModal
+        isOpen={open}
+        onRequestClose={closeModal}
+        onSelectToken={(token: any) => {
+          onSelectToken(token);
+          closeModal();
+        }}
+      />
     </StyledContainer>
   );
 };

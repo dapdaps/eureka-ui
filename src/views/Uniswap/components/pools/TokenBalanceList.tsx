@@ -1,8 +1,14 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import { TickIcon } from './Icons';
+import { utils } from 'ethers';
+import { balanceFormated } from '@/utils/balance';
+import Loading from '@/components/Icons/Loading';
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
+import { copyText } from '@/utils/copy';
+import { TickIcon, CopyIcon } from './Icons';
 import ImportTokenModal from './ImportTokenModal';
+import useImportToken from '../../hooks/useImportToken';
+import useTokensBalance from '../../hooks/useTokensBalance';
 
 const StyledWrap = styled.div`
   margin-top: 24px;
@@ -46,26 +52,51 @@ const StyledList = styled.div`
   height: 380px;
   overflow: auto;
 `;
+const LoadingWrapper = styled.div`
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+`;
+const Empty = styled.div`
+  min-height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 18px;
+  color: #fff;
+`;
 type ITab = 'all' | 'import';
 
-const TokenBalanceList = () => {
-  const balanceList = [
-    { symbol: 'Ether', address: 'ETH', balance: '0.0245' },
-    { symbol: 'Wrapped Ether', address: 'WETH', balance: '0.0245' },
-    { symbol: '1inch', address: '1INCH', balance: '0.0245' },
-    { symbol: 'Aave', address: 'AAVE', balance: '0.0245' },
-    { symbol: 'Arcblock', address: 'WETH', balance: '0.0245' },
-    { symbol: 'Alchemy Pay', address: 'ACH', balance: '0.0245' },
-    { symbol: 'Ambire AdEx', address: 'ADX', balance: '0.0245' },
-    { symbol: 'Wrapped Ether', address: 'WETH', balance: '0.0245' },
-    { symbol: 'Wrapped Ether', address: 'WETH', balance: '0.0245' },
-    { symbol: 'Wrapped Ether', address: 'WETH', balance: '0.0245' },
-  ];
-  const importList = [{ symbol: 'DeFiChain', address: 'DFI' }];
+const TokenBalanceList = (props: any) => {
+  const { loading: balanceLoading, balances } = useTokensBalance(props.tokens, 1);
+  const [tokens, setTokens] = useState<any>([]);
   const [selected, setSelected] = useState<ITab>('all');
+  const { loading, token: importToken, getImportToken } = useImportToken();
   function switchTab(tab: ITab) {
     setSelected(tab);
   }
+  const handleSearch = ({ tab, searchVal }: any) => {
+    const propsTokens = Object.values(props.tokens || {});
+    const _tokens = propsTokens.filter((token: any) => {
+      if (!searchVal) {
+        return tab === 'all' ? true : token.isImport;
+      }
+      return (token.address.toLowerCase() === searchVal?.toLowerCase() ||
+        token.name.toLowerCase().includes(searchVal?.toLowerCase())) &&
+        tab === 'all'
+        ? true
+        : token.isImport;
+    });
+    setTokens(_tokens);
+    if (utils.isAddress(searchVal)) {
+      getImportToken(searchVal);
+    }
+  };
+  useEffect(() => {
+    handleSearch({ tab: selected, searchVal: props.searchVal });
+  }, [props.searchVal, selected]);
+
   return (
     <StyledWrap>
       <StyledHeadTab className="hv">
@@ -87,16 +118,32 @@ const TokenBalanceList = () => {
         </span>
       </StyledHeadTab>
       <StyledList>
-        <div className={selected == 'all' ? '' : 'hidden'}>
-          {balanceList.map(({ symbol, address, balance }) => {
-            return <TokenRow key={address} symbol={symbol} address={address} balance={balance} />;
-          })}
-        </div>
-        <div className={selected == 'all' ? 'hidden' : ''}>
-          {importList.map(({ symbol, address }) => {
-            return <ImportTokenRow key={address} symbol={symbol} address={address} />;
-          })}
-        </div>
+        {loading ? (
+          <LoadingWrapper>
+            <Loading size={30} />
+          </LoadingWrapper>
+        ) : tokens.length ? (
+          <div className={selected == 'all' ? '' : 'hidden'}>
+            {tokens.map((token: any) => {
+              return (
+                <TokenRow
+                  key={token.address}
+                  {...token}
+                  loading={balanceLoading}
+                  balance={balances[token.address]}
+                  isSelected={token.address === props.selectedAddress}
+                  onClick={() => {
+                    props.onSelectToken(token);
+                  }}
+                />
+              );
+            })}
+          </div>
+        ) : importToken ? (
+          <ImportTokenRow token={importToken} onImportTokenCb={props.onImportTokenCb} />
+        ) : (
+          <Empty>No token.</Empty>
+        )}
       </StyledList>
     </StyledWrap>
   );
@@ -121,7 +168,7 @@ const StyledRow = styled.div`
     height: 36px;
     border-radius: 100px;
   }
-  .symbol {
+  .name_wrapper {
     display: flex;
     flex-direction: column;
     .name {
@@ -129,9 +176,12 @@ const StyledRow = styled.div`
       color: #fff;
       font-weight: bold;
     }
-    .address {
+    .symbol {
       font-size: 12px;
       color: #8e8e8e;
+      display: flex;
+      gap: 4px;
+      align-items: center;
     }
   }
   .balance {
@@ -139,19 +189,31 @@ const StyledRow = styled.div`
     color: #fff;
   }
 `;
-const TokenRow = ({ symbol, address, balance }: { symbol: string; address: string; balance: string }) => {
+const TokenRow = ({ symbol, name, address, balance, icon, loading, isSelected, onClick }: any) => {
   return (
-    <StyledRow className="vchb">
+    <StyledRow className="vchb" onClick={onClick}>
       <div className="hvc L">
-        <img src="" />
-        <div className="symbol">
-          <span className="name">{symbol}</span>
-          <span className="address">{address}</span>
+        <img src={icon || DEFAULT_TOKEN_ICON} />
+        <div className="name_wrapper">
+          <div className="name">{name}</div>
+          <div className="symbol">
+            <span>{symbol}</span>
+            {address !== 'native' && (
+              <>
+                <span>{address.slice(0, 9) + '...' + address.slice(-7)}</span>
+                <CopyIcon
+                  onClick={() => {
+                    copyText(address);
+                  }}
+                />
+              </>
+            )}
+          </div>
         </div>
       </div>
       <div className="hvc R">
-        <span className="balance">{balance}</span>
-        <TickIcon className="hidden" />
+        <span className="balance">{loading ? <Loading /> : balanceFormated(balance?.toString(), 4)}</span>
+        <TickIcon className={!isSelected && 'hidden'} />
       </div>
     </StyledRow>
   );
@@ -169,7 +231,9 @@ const StyledImportRow = styled(StyledRow)`
     border-radius: 18px;
   }
 `;
-const ImportTokenRow = ({ symbol, address }: { symbol: string; address: string }) => {
+const ImportTokenRow = ({ token, onImportTokenCb }: any) => {
+  const { symbol, name, icon } = token;
+
   const [open, setOpen] = useState<boolean>(false);
   function openModal() {
     setOpen(true);
@@ -180,16 +244,24 @@ const ImportTokenRow = ({ symbol, address }: { symbol: string; address: string }
   return (
     <StyledImportRow className="vchb">
       <div className="hvc L">
-        <img src="" />
-        <div className="symbol">
-          <span className="name">{symbol}</span>
-          <span className="address">{address}</span>
+        <img src={icon || DEFAULT_TOKEN_ICON} />
+        <div className="name_wrapper">
+          <span className="name">{name}</span>
+          <span className="symbol">{symbol}</span>
         </div>
       </div>
       <div className="importButton hvc" onClick={openModal}>
         Import
       </div>
-      <ImportTokenModal isOpen={open} onRequestClose={closeModal} />
+      <ImportTokenModal
+        isOpen={open}
+        importToken={token}
+        onRequestClose={closeModal}
+        onImportTokenCb={() => {
+          closeModal();
+          onImportTokenCb(token);
+        }}
+      />
     </StyledImportRow>
   );
 };

@@ -1,6 +1,7 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
 
+import useTokens from '../../hooks/useTokens';
 import HistoryTokens from './HistoryTokens';
 import { CloseIcon, GlassIcon } from './Icons';
 import Modal from './ModalBox';
@@ -82,7 +83,11 @@ const StyledSearch = styled.div`
   }
 `;
 const SelectTokenModal = (props: any) => {
-  const { isOpen, onRequestClose } = props;
+  const { isOpen, onRequestClose, onSelectToken } = props;
+  const { tokens, historyTokens } = useTokens();
+  const [showHistory, setShowHistory] = useState(true);
+  const [searchVal, setSearchVal] = useState('');
+
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
@@ -92,11 +97,29 @@ const SelectTokenModal = (props: any) => {
         </StyledHead>
         <StyledBody>
           <StyledSearch className="hv">
-            <GlassIcon></GlassIcon>
-            <input type="text" placeholder="Seach name or paste address" />
+            <GlassIcon />
+            <input
+              value={searchVal}
+              onChange={(ev) => {
+                setSearchVal(ev.target.value);
+              }}
+              type="text"
+              placeholder="Seach name or paste address"
+            />
           </StyledSearch>
-          <HistoryTokens />
-          <TokenBalanceList />
+          {showHistory && <HistoryTokens tokens={Object.values(historyTokens || {})} onSelectToken={onSelectToken} />}
+          <TokenBalanceList
+            tokens={tokens}
+            searchVal={searchVal}
+            onHideHistory={() => {
+              setShowHistory(false);
+            }}
+            onImportTokenCb={(token: any) => {
+              onRequestClose();
+              onSelectToken(token);
+            }}
+            onSelectToken={onSelectToken}
+          />
         </StyledBody>
       </StyledContent>
     </Modal>

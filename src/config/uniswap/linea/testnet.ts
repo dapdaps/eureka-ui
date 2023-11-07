@@ -9,7 +9,6 @@ export default {
       symbol: 'ETH',
       name: 'Ether',
       icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
-      isUp: true,
       isImport: false,
     },
     '0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068': {
@@ -19,7 +18,6 @@ export default {
       symbol: 'USDC',
       name: 'USD Coin',
       icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
-      isUp: true,
       isImport: false,
     },
   },

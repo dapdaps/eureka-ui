@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -8,19 +9,20 @@ const StyledWrap = styled.div`
   gap: 12px 14px;
   margin-top: 16px;
 `;
-const HistoryTokens = () => {
-  const tokenList = [
-    { symbol: 'ETH' },
-    { symbol: 'DAI' },
-    { symbol: 'USDC' },
-    { symbol: 'USDT' },
-    { symbol: 'WBTC' },
-    { symbol: 'WETH' },
-  ];
+const HistoryTokens = ({ tokens, onSelectToken }: any) => {
   return (
     <StyledWrap>
-      {tokenList.map((token) => {
-        return <TokenElement key={token.symbol} symbol={token.symbol} />;
+      {tokens.map((token: any) => {
+        return (
+          <TokenElement
+            key={token.symbol}
+            symbol={token.symbol}
+            icon={token.icon}
+            onClick={() => {
+              onSelectToken(token);
+            }}
+          />
+        );
       })}
     </StyledWrap>
   );
@@ -46,10 +48,10 @@ const StyledTokenWrap = styled.div`
     font-weight: 600;
   }
 `;
-const TokenElement = ({ symbol }: { symbol: string }) => {
+const TokenElement = ({ symbol, icon, onClick }: any) => {
   return (
-    <StyledTokenWrap>
-      <img src="" />
+    <StyledTokenWrap onClick={onClick}>
+      <img src={icon || DEFAULT_TOKEN_ICON} />
       <span className="symbol">{symbol}</span>
     </StyledTokenWrap>
   );

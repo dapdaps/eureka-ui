@@ -5,7 +5,7 @@ import useTokens from './hooks/useTokens';
 
 export default function Swap() {
   const setLayoutStore = useLayoutStore((store) => store.set);
-  const { tokens, importToken } = useTokens();
+  const { tokens, historyTokens, importToken } = useTokens();
   return (
     <>
       <ComponentWrapperPage

@@ -1,8 +1,11 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-
+import { useTokensStore } from '@/stores/tokens';
 import { CopyIcon, LinkIcon, WarningIcon } from './Icons';
 import Modal from './ModalBox';
+import { copyText } from '@/utils/copy';
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
+import config from '@/config/uniswap/linea';
 
 const StyledContent = styled.div`
   width: 390px;
@@ -55,24 +58,32 @@ const StyledCancel = styled.div`
   margin-top: 21px;
 `;
 const ImportTokenModal = (props: any) => {
-  const { isOpen, onRequestClose } = props;
+  const { isOpen, importToken, onRequestClose, onImportTokenCb } = props;
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
         <WarningIcon />
         <StyledTip>This token isn’t frequently swapped. Please do your own research before trading.</StyledTip>
         <StyledToken className="hvc">
-          <img src="" />
+          <img src={importToken.icon || DEFAULT_TOKEN_ICON} />
           <div className="base">
-            <span className="symbol">DFI</span>
+            <span className="symbol">{importToken.symbol}</span>
             <div className="hvc data">
-              <span>Address: 0x8Fc8f82...c8D358A</span>
-              <CopyIcon />
-              <LinkIcon />
+              <span>Address:{importToken.address.slice(0, 9) + '...' + importToken.address.slice(-7)}</span>
+              <CopyIcon
+                onClick={() => {
+                  copyText(importToken.address);
+                }}
+              />
+              <LinkIcon
+                onClick={() => {
+                  window.open(config.explor + '/address/' + importToken.address, '_blank');
+                }}
+              />
             </div>
           </div>
         </StyledToken>
-        <UnderstandButton />
+        <UnderstandButton token={importToken} onImportTokenCb={onImportTokenCb} />
         <StyledCancel onClick={onRequestClose}>Cancel</StyledCancel>
       </StyledContent>
     </Modal>
@@ -90,8 +101,19 @@ const StyledUnderstandButton = styled.div`
   margin-top: 40px;
   border-radius: 18px;
 `;
-const UnderstandButton = () => {
-  return <StyledUnderstandButton className="hvc">I understand</StyledUnderstandButton>;
+const UnderstandButton = ({ token, onImportTokenCb }: any) => {
+  const tokensStore: any = useTokensStore();
+  return (
+    <StyledUnderstandButton
+      className="hvc"
+      onClick={() => {
+        tokensStore.addImportTokens(token);
+        onImportTokenCb();
+      }}
+    >
+      I understand
+    </StyledUnderstandButton>
+  );
 };
 
 export default memo(ImportTokenModal);

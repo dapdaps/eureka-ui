@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
+import useAddLiquidity from './hooks/useAddLiquidity';
+
 import Head from './components/pools/AddHead';
 import Chart from './components/pools/Chart';
 import DepositAmount from './components/pools/DepositAmount';
@@ -14,16 +16,18 @@ const StyledContainer = styled.div`
   border-radius: 24px;
   border: 1px solid #3d363d;
 `;
-const StyledBody = styled.div`
-  padding: 20px;
+const StyledBody = styled.div<{ disabled: boolean }>`
+  padding: 0px 20px 20px;
+  ${({ disabled }) => disabled && 'opacity: 0.5;'}
 `;
 
 const PoolsAddLiquidity = () => {
+  const { token0, token1, detail, onSelectToken, onCleanAll } = useAddLiquidity();
   return (
     <StyledContainer>
       <Head />
-      <StyledBody>
-        <SelectPair />
+      <SelectPair token0={token0} token1={token1} onSelectToken={onSelectToken} />
+      <StyledBody disabled={!detail}>
         <Fee />
         <SetPriceRange />
         <Chart />

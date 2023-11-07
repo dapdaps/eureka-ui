@@ -15,7 +15,7 @@ export default function useDetail(tokenId: string) {
   const positionsStore = usePositionsStore();
   const { provider, account } = useAccount();
 
-  const { getTokens } = useTokens();
+  const { tokens } = useTokens();
 
   const getDetail = async () => {
     if (!tokenId || !account) return;
@@ -35,7 +35,6 @@ export default function useDetail(tokenId: string) {
         getPositionCollect([tokenId, account], provider),
         getTokenURI(tokenId, provider),
       ]);
-      const tokens = getTokens();
       const _token0 = tokens[getTokenAddress(position.token0)];
       const _token1 = tokens[getTokenAddress(position.token1)];
       const [liquidityToken0, liquidityToken1] = getTokenAmounts({
