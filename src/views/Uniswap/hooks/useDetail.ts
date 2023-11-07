@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePositionsStore } from '@/stores/positions';
 import useAccount from '@/hooks/useAccount';
 import useTokens from './useTokens';
@@ -10,6 +10,7 @@ import { getTokenAddress } from '../utils';
 
 export default function useDetail(tokenId: string) {
   const [detail, setDetail] = useState<any>();
+  const [collectData, setCollectData] = useState<any>();
   const [loading, setLoading] = useState<boolean>();
   const positionsStore = usePositionsStore();
   const { provider, account } = useAccount();
@@ -51,8 +52,6 @@ export default function useDetail(tokenId: string) {
         fee: position.fee,
         token0: _token0,
         token1: _token1,
-        collectToken0: collectInfo.amount0 / 10 ** _token0.decimals,
-        collectToken1: collectInfo.amount1 / 10 ** _token1.decimals,
         liquidityToken0,
         liquidityToken1,
         liquidity: position.liquidity,
@@ -60,6 +59,7 @@ export default function useDetail(tokenId: string) {
         tickLow: position.tickLower,
         tickHigh: position.tickUpper,
         tick: pool.tick,
+        tokenId: tokenId,
       };
 
       if (position.liquidity.eq(0)) {
@@ -68,16 +68,28 @@ export default function useDetail(tokenId: string) {
         _detail.status = pool.tick < position.tickLower || pool.tick >= position.tickUpper ? 'out' : 'in';
       }
       setDetail(_detail);
+      setCollectData({
+        collectToken0: collectInfo.amount0 / 10 ** _token0.decimals,
+        collectToken1: collectInfo.amount1 / 10 ** _token1.decimals,
+      });
       setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
     }
   };
+  const getCollectData = useCallback(async () => {
+    if (!tokenId || !account || !provider || !detail) return;
+    const collectInfo = await getPositionCollect([tokenId, account], provider);
+    setCollectData({
+      collectToken0: collectInfo.amount0 / 10 ** detail.token0.decimals,
+      collectToken1: collectInfo.amount1 / 10 ** detail.token1.decimals,
+    });
+  }, [account, tokenId, provider, detail]);
 
   useEffect(() => {
     getDetail();
   }, [provider]);
 
-  return { detail, loading };
+  return { detail, loading, collectData, getCollectData };
 }

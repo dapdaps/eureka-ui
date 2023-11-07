@@ -91,7 +91,12 @@ const PoolPair = ({ detail, isReverse }: { detail: any; isReverse: boolean }) =>
         </Status>
       </StyledLeft>
       <StyledRight className="hvc">
-        <StyledLineWrap className="hvc" onClick={() => {}}>
+        <StyledLineWrap
+          className="hvc"
+          onClick={() => {
+            router.push('/linea/uniswap/pools-add-liquidity');
+          }}
+        >
           Increase liquidity
         </StyledLineWrap>
         {detail.liquidity.gt(0) && (

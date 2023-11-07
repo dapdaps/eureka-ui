@@ -16,7 +16,7 @@ const StyledContainer = styled.div`
 
 const PoolsDetailLiquidity = () => {
   const searchParams = useSearchParams();
-  const { loading, detail } = useDetail(searchParams.get('id') || '');
+  const { loading, detail, collectData, getCollectData } = useDetail(searchParams.get('id') || '');
   const [isReverse, setIsReverse] = useState(true);
 
   return (
@@ -25,7 +25,14 @@ const PoolsDetailLiquidity = () => {
       {!loading && detail ? (
         <>
           <PoolPair detail={detail} isReverse={isReverse} />
-          <PoolBaseData detail={detail} isReverse={isReverse} />
+          <PoolBaseData
+            detail={detail}
+            isReverse={isReverse}
+            collectData={collectData}
+            onSuccess={() => {
+              getCollectData();
+            }}
+          />
           <PoolPriceRange
             detail={detail}
             isReverse={isReverse}

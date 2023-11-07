@@ -8,7 +8,7 @@ import positionAbi from '../abi/positionAbi';
 
 export default function usePositions() {
   const { account, provider } = useAccount();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!!account);
   const [positions, setPositions] = useState([]);
   const positionsStore = usePositionsStore();
   const getPositions = useCallback(async () => {

@@ -1,6 +1,8 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { balanceFormated } from '@/utils/balance';
+import Loading from '@/components/Icons/Loading';
+import useCollect from '../../hooks/useCollect';
 import { CloseIcon } from './Icons';
 import Modal from './ModalBox';
 
@@ -68,6 +70,7 @@ const StyledCollectButton = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   height: 62px;
   border-radius: 16px;
   background-color: #62ddff;
@@ -75,10 +78,17 @@ const StyledCollectButton = styled.div<{ disabled?: boolean }>`
   color: #1b1b1b;
   font-weight: 600;
   margin-top: 15px;
-  ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
+  ${({ disabled }) => (disabled ? 'opacity: 0.6; cursor: not-allowed;' : 'cursor: pointer;')}
 `;
 const ClaimFeesModal = (props: any) => {
-  const { isOpen, detail, onRequestClose } = props;
+  const { isOpen, detail, collectData, onRequestClose, onSuccess } = props;
+  const { collecting, collect } = useCollect(
+    () => {
+      onRequestClose();
+      onSuccess();
+    },
+    () => {},
+  );
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
@@ -93,18 +103,25 @@ const ClaimFeesModal = (props: any) => {
                 <img src={detail.token0.icon} />
                 <span className="symbol">{detail.token0.symbol}</span>
               </div>
-              <span className="balance">{balanceFormated(detail.collectToken0, 4)}</span>
+              <span className="balance">{balanceFormated(collectData.collectToken0, 4)}</span>
             </div>
             <div className="vchb w-full">
               <div className="hvc">
                 <img src={detail.token1.icon} />
                 <span className="symbol">{detail.token1.symbol}</span>
               </div>
-              <span className="balance">{balanceFormated(detail.collectToken1, 4)}</span>
+              <span className="balance">{balanceFormated(collectData.collectToken1, 4)}</span>
             </div>
           </div>
           <StyledDescription>Collecting fees will withdraw currently available fees for you.</StyledDescription>
-          <StyledCollectButton>Collect</StyledCollectButton>
+          <StyledCollectButton
+            disabled={collecting}
+            onClick={() => {
+              collect(detail, collectData);
+            }}
+          >
+            {collecting && <Loading />} Collect
+          </StyledCollectButton>
         </StyledBody>
       </StyledContent>
     </Modal>

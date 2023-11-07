@@ -27,7 +27,17 @@ const StyledWrap = styled.div`
     width: 100%;
   }
 `;
-const PoolBaseData = ({ detail, isReverse }: { detail: any; isReverse: boolean }) => {
+const PoolBaseData = ({
+  detail,
+  isReverse,
+  collectData,
+  onSuccess,
+}: {
+  detail: any;
+  isReverse: boolean;
+  collectData: any;
+  onSuccess: () => void;
+}) => {
   return (
     <StyledWrap>
       <StyledNFTWrap className="hvc">
@@ -35,7 +45,7 @@ const PoolBaseData = ({ detail, isReverse }: { detail: any; isReverse: boolean }
       </StyledNFTWrap>
       <StyledLFWrap>
         <Liquidity detail={detail} isReverse={isReverse} />
-        <UnclaimedFees detail={detail} isReverse={isReverse} />
+        <UnclaimedFees detail={detail} isReverse={isReverse} collectData={collectData} onSuccess={onSuccess} />
       </StyledLFWrap>
     </StyledWrap>
   );
@@ -146,7 +156,17 @@ const Liquidity = ({ detail, isReverse }: { detail: any; isReverse: boolean }) =
   );
 };
 const StyledUnclaimedFees = styled(StyledBase)``;
-const UnclaimedFees = ({ detail, isReverse }: { detail: any; isReverse: boolean }) => {
+const UnclaimedFees = ({
+  detail,
+  isReverse,
+  collectData,
+  onSuccess,
+}: {
+  detail: any;
+  isReverse: boolean;
+  collectData: any;
+  onSuccess: () => void;
+}) => {
   const [open, setOpen] = useState(false);
   function closeModal() {
     setOpen(false);
@@ -158,8 +178,8 @@ const UnclaimedFees = ({ detail, isReverse }: { detail: any; isReverse: boolean 
   const { total } = getTotalValues({
     token0: detail.token0,
     token1: detail.token1,
-    amount0: detail.collectToken0,
-    amount1: detail.collectToken1,
+    amount0: collectData.collectToken0,
+    amount1: collectData.collectToken1,
     prices: priceStore.price,
   });
   return (
@@ -177,17 +197,23 @@ const UnclaimedFees = ({ detail, isReverse }: { detail: any; isReverse: boolean 
             <img src={detail.token0.icon} />
             <span className="symbol">{detail.token0.symbol}</span>
           </div>
-          <span className="balance">{balanceFormated(detail.collectToken0, 4)}</span>
+          <span className="balance">{balanceFormated(collectData.collectToken0, 4)}</span>
         </div>
         <div className="vchb w-full">
           <div className="hvc">
             <img src={detail.token1.icon} />
             <span className="symbol">{detail.token1.symbol}</span>
           </div>
-          <span className="balance">{balanceFormated(detail.collectToken1, 4)}</span>
+          <span className="balance">{balanceFormated(collectData.collectToken1, 4)}</span>
         </div>
       </div>
-      <ClaimFeesModal isOpen={open} onRequestClose={closeModal} detail={detail} />
+      <ClaimFeesModal
+        isOpen={open}
+        onRequestClose={closeModal}
+        detail={detail}
+        collectData={collectData}
+        onSuccess={onSuccess}
+      />
     </StyledUnclaimedFees>
   );
 };
