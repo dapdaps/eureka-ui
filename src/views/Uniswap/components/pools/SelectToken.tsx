@@ -59,7 +59,7 @@ const SelectToken = ({ onSelectToken, token }: any) => {
   }
   return (
     <StyledContainer>
-      {token ? (
+      {!!token ? (
         <StyledContentBox onClick={openModal}>
           <div className="tokenInfo">
             <img src={token.icon || DEFAULT_TOKEN_ICON} />

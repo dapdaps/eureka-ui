@@ -6,16 +6,7 @@ export const useTokensStore = create(
   persist(
     (set, get: any) => ({
       tokens: config.tokens || {},
-      historyTokens: {
-        '0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068': {
-          chainId: 59140,
-          address: '0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068',
-          decimals: 6,
-          symbol: 'USDC',
-          name: 'USD Coin',
-          icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
-        },
-      },
+      historyTokens: {},
       addImportTokens: (token: any) => {
         const _tokens = get().tokens;
         _tokens[token.address] = { ...token, isImport: true };

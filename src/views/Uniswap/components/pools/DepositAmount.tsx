@@ -1,5 +1,12 @@
-import { memo } from 'react';
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
+import { memo, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+import Big from 'big.js';
+import Loading from '@/components/Icons/Loading';
+import { balanceFormated, valueFormated } from '@/utils/balance';
+import { usePriceStore } from '@/stores/price';
+import useTokensBalance from '../../hooks/useTokensBalance';
+import { tickToPrice } from '../../utils/tickMath';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -15,13 +22,68 @@ const StyledContainer = styled.div`
   }
 `;
 
-const DepositAmount = () => {
+const DepositAmount = ({
+  token0,
+  token1,
+  value0,
+  value1,
+  poolTokens,
+  reverse,
+  currentTick,
+  setValue0,
+  setValue1,
+}: any) => {
+  const tokens = useMemo(() => {
+    const _tokens: any = {};
+    if (token0) {
+      _tokens[token0.address] = token0;
+    }
+    if (token1) {
+      _tokens[token1.address] = token1;
+    }
+    return _tokens;
+  }, [token0, token1]);
+
+  const price = useMemo(() => {
+    if (!currentTick || !token0 || !token1) return 0;
+    return tickToPrice({
+      tick: currentTick,
+      decimals0: poolTokens.token0?.decimals,
+      decimals1: poolTokens.token1?.decimals,
+      isReverse: !reverse,
+      isNumber: true,
+    });
+  }, [poolTokens, currentTick, reverse]);
+
+  useEffect(() => {
+    if (value0) setValue1(new Big(value0).mul(price).toFixed(12));
+  }, [reverse]);
+
+  const { balances, loading } = useTokensBalance(tokens, 1);
   return (
     <StyledContainer>
       <span className="title">Deposit amounts</span>
       <div className="I">
-        <InputBox />
-        <InputBox />
+        <InputBox
+          token={token0}
+          value={value0}
+          setValue={(value: string) => {
+            setValue0(value);
+            if (value) setValue1(new Big(value).mul(price).toFixed(12));
+          }}
+          balance={token0 ? balances[token0?.address] : ''}
+          loading={loading}
+        />
+        <InputBox
+          token={token1}
+          value={value1}
+          setValue={(value: string) => {
+            setValue1(value);
+            if (value) setValue0(new Big(1).div(price).mul(value).toFixed(12));
+          }}
+          balance={token1 ? balances[token1?.address] : ''}
+          loading={loading}
+        />
       </div>
     </StyledContainer>
   );
@@ -83,32 +145,40 @@ const StyledBottom = styled.div`
     align-items: center;
     justify-content: center;
     gap: 4px;
+    cursor: pointer;
     .b {
       font-size: 14px;
       color: #8e8e8e;
     }
-    a {
+    .b_v {
       font-size: 14px;
       color: #fff;
       text-decoration: underline;
     }
   }
 `;
-const InputBox = () => {
+const InputBox = ({ token, value, setValue, balance, loading }: any) => {
+  const prices = usePriceStore((store) => store.price);
   return (
     <StyledInputBox>
       <StyledTop>
-        <input type="number" value="0.1" />
+        <input
+          type="number"
+          value={value}
+          onChange={(ev) => {
+            setValue(ev.target.value);
+          }}
+        />
         <div className="token">
-          <img src="" />
-          <span className="symbol">ETH</span>
+          <img src={token?.icon || DEFAULT_TOKEN_ICON} />
+          <span className="symbol">{token?.symbol}</span>
         </div>
       </StyledTop>
       <StyledBottom>
-        <span className="price">$400.714</span>
+        <span className="price">${valueFormated(value, prices[token?.symbol])}</span>
         <div className="balance">
           <span className="b">balance:</span>
-          <a>520.25</a>
+          <span className="b_v">{loading ? <Loading /> : balanceFormated(balance, 4)}</span>
         </div>
       </StyledBottom>
     </StyledInputBox>

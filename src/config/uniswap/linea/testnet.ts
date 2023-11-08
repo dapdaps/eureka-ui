@@ -10,6 +10,7 @@ export default {
       name: 'Ether',
       icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
       isImport: false,
+      isNative: true,
     },
     '0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068': {
       chainId: 59140,

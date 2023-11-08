@@ -1,0 +1,76 @@
+import { useEffect, useState } from 'react';
+import useAccount from '@/hooks/useAccount';
+import { getPoolInfo } from '../utils/getPool';
+import { getTokenAddress } from '../utils';
+
+export default function useTicks({ fee = 3000, token0, token1 }: any) {
+  const { provider } = useAccount();
+  const [loading, setLoading] = useState(false);
+  const [noPair, setNoPair] = useState(false);
+  const [lowerTick, setLowerTick] = useState<number>();
+  const [highTick, setHighTick] = useState<number>();
+  const [currentTick, setCurrentTick] = useState<number>();
+  const [poolTokens, setPoolTokens] = useState<any>();
+  const [reverse, setReverse] = useState(false);
+
+  useEffect(() => {
+    if (!token0 || !token1 || !fee || !provider) return;
+    if (
+      poolTokens &&
+      ((token0.address.toLowerCase() !== getTokenAddress(poolTokens.token0.address, false)?.toLowerCase() &&
+        token1.address.toLowerCase() !== getTokenAddress(poolTokens.token1.address, false)?.toLowerCase()) ||
+        (token0.address.toLowerCase() !== getTokenAddress(poolTokens.token1.address, false)?.toLowerCase() &&
+          token1.address.toLowerCase() !== getTokenAddress(poolTokens.token0.address, false)?.toLowerCase()))
+    ) {
+      return;
+    }
+    const getTicks = async () => {
+      try {
+        setLoading(true);
+        const {
+          currentTick,
+          tickSpacing,
+          token0: _token0,
+          token1: _token1,
+        } = await getPoolInfo({
+          token0: getTokenAddress(token0.address, true),
+          token1: getTokenAddress(token1.address, true),
+          fee,
+          provider,
+        });
+        if (!_token0 && !_token1) {
+          setNoPair(true);
+          setLoading(false);
+          return;
+        }
+        const NearestLowTick = Math.floor(currentTick / tickSpacing) * tickSpacing;
+        const NearestHighTick = Math.floor(currentTick / tickSpacing) * tickSpacing + tickSpacing;
+        setLowerTick(NearestLowTick);
+        setHighTick(NearestHighTick);
+        setCurrentTick(currentTick);
+        setLoading(false);
+        const _reverse = token0.address.toLowerCase() !== getTokenAddress(_token0, false).toLowerCase();
+        setPoolTokens({
+          token0: !_reverse ? token0 : token1,
+          token1: !_reverse ? token1 : token0,
+        });
+        setReverse(_reverse);
+      } catch (err) {
+        setLoading(false);
+      }
+    };
+    getTicks();
+  }, [token0, token1, fee, provider]);
+  return {
+    loading,
+    noPair,
+    lowerTick,
+    highTick,
+    currentTick,
+    poolTokens,
+    reverse,
+    setReverse,
+    setLowerTick,
+    setHighTick,
+  };
+}

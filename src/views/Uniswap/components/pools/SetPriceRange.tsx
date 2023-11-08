@@ -1,5 +1,6 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import styled from 'styled-components';
+import { tickToPrice } from '../../utils/tickMath';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -14,14 +15,101 @@ const StyledContainer = styled.div`
     gap: 16px;
   }
 `;
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 400;
+  color: #fff;
+  align-items: center;
+  padding-bottom: 10px;
+`;
+const HeaderActions = styled.div`
+  display: flex;
+  gap: 5px;
+`;
+const HeaderFullAction = styled.div`
+  height: 30px;
+  line-height: 30px;
+  border: 1px solid #3d363d;
+  border-radius: 8px;
+  width: 70px;
+  text-align: center;
+  font-size: 12px;
+  cursor: pointer;
+`;
+const HeaderTokensAction = styled.div`
+  border: 1px solid #3d363d;
+  border-radius: 8px;
+  padding: 3px;
+  box-sizing: border-box;
+  display: flex;
+`;
+const HeaderTokenAction = styled.div<{ active?: boolean }>`
+  font-size: 12px;
+  line-height: 12px;
+  padding: 6px;
+  border-radius: 6px;
+  color: ${({ active }) => (active ? ' #fff' : '#8E8E8E')};
+  cursor: pointer;
+  height: 24px;
+  box-sizing: border-box;
+  ${({ active }) => active && 'background-color: #262626;'}
+`;
 
-const SetPriceRange = () => {
+const SetPriceRange = ({
+  lowerTick,
+  highTick,
+  setLowerTick,
+  setHighTick,
+  token0,
+  token1,
+  poolTokens,
+  reverse,
+  onExchangeTokens,
+}: any) => {
   return (
     <StyledContainer>
-      <div className="title">Set price range</div>
+      <Header>
+        <div>Set price range</div>
+        <HeaderActions>
+          <HeaderFullAction
+            onClick={() => {
+              setLowerTick(-887272);
+              setHighTick(887272);
+            }}
+          >
+            Full range
+          </HeaderFullAction>
+          <HeaderTokensAction>
+            <HeaderTokenAction onClick={onExchangeTokens} active={!reverse}>
+              {reverse ? token1?.symbol : token0?.symbol}
+            </HeaderTokenAction>
+            <HeaderTokenAction onClick={onExchangeTokens} active={reverse}>
+              {reverse ? token0?.symbol : token1?.symbol}
+            </HeaderTokenAction>
+          </HeaderTokensAction>
+        </HeaderActions>
+      </Header>
       <div className="setArea">
-        <InputPriceBox />
-        <InputPriceBox />
+        <InputPriceBox
+          type="low"
+          tick={lowerTick}
+          setTick={setLowerTick}
+          token0={token0}
+          token1={token1}
+          reverse={reverse}
+          poolTokens={poolTokens}
+        />
+        <InputPriceBox
+          type="up"
+          tick={highTick}
+          setTick={setHighTick}
+          token0={token0}
+          token1={token1}
+          reverse={reverse}
+          poolTokens={poolTokens}
+        />
       </div>
     </StyledContainer>
   );
@@ -43,7 +131,7 @@ const StyledPrice = styled.div`
     font-size: 14px;
     color: #8e8e8e;
   }
-  input[type='number'] {
+  input {
     font-size: 20px;
     color: #fff;
     font-weight: 700;
@@ -78,20 +166,44 @@ const StyledButtonArea = styled.div`
     color: #fff;
   }
 `;
-const InputPriceBox = () => {
+const InputPriceBox = ({ type, tick, setTick, token0, token1, poolTokens, reverse }: any) => {
+  const value = useMemo(() => {
+    if (!tick || !poolTokens) return 0;
+    if (tick === -887272) return '0';
+    if (tick === 887272) return '∞';
+    return tickToPrice({
+      tick,
+      decimals0: poolTokens.token0?.decimals,
+      decimals1: poolTokens.token1?.decimals,
+      isReverse: !reverse,
+      isNumber: true,
+    });
+  }, [tick, poolTokens, reverse]);
   return (
     <StyledInputPriceBox>
       <StyledPrice>
-        <span className="type">Low price</span>
-        <input type="number" value="345" />
-        <span className="txt">USDC per ETH</span>
+        <span className="type">{type === 'low' ? 'Low' : 'High'} price</span>
+        <input value={value} readOnly />
+        <span className="txt">
+          {token1?.symbol} per {token0?.symbol}
+        </span>
       </StyledPrice>
       <StyledButtonArea>
-        <div className="b">
+        <div
+          className="b"
+          onClick={() => {
+            setTick(tick - 1);
+          }}
+        >
           <Add />
         </div>
-        <div className="b">
-          <Sub />{' '}
+        <div
+          className="b"
+          onClick={() => {
+            setTick(tick + 1);
+          }}
+        >
+          <Sub />
         </div>
       </StyledButtonArea>
     </StyledInputPriceBox>
@@ -114,4 +226,4 @@ const Sub = () => {
   );
 };
 
-export default memo(SetPriceRange);
+export default SetPriceRange;

@@ -1,28 +1,43 @@
 import { useState } from 'react';
+import { useAddLiquidityStore } from '@/stores/addLiquidity';
 
 export default function useAddLiquidity() {
-  const [token0, setToken0] = useState<any>();
-  const [token1, setToken1] = useState<any>();
-  const [detail, setDetail] = useState<any>();
+  const liquidityStore: any = useAddLiquidityStore();
 
   const onCleanAll = () => {
-    setDetail(null);
-    setToken0(null);
-    setToken1(null);
+    liquidityStore.setFee(3000);
+    liquidityStore.setToken0(null);
+    liquidityStore.setToken1(null);
   };
   const onSelectToken = (token: any, type: number) => {
     if (type === 0) {
-      setToken0(token);
-      if (token.address === token1?.address) {
-        setToken1(null);
+      liquidityStore.setToken0(token);
+      if (token.address === liquidityStore.getToken1()?.address) {
+        liquidityStore.setToken1(null);
       }
     } else {
-      setToken1(token);
-      if (token.address === token0?.address) {
-        setToken0(null);
+      liquidityStore.setToken1(token);
+      if (token.address === liquidityStore.getToken0()?.address) {
+        liquidityStore.setToken0(null);
       }
     }
   };
+  const onSelectFee = (fee: number) => {
+    liquidityStore.setFee(fee);
+  };
+  const onExchangeTokens = () => {
+    const [_token1, _token0] = [liquidityStore.getToken0(), liquidityStore.getToken1()];
+    liquidityStore.setToken0(_token0);
+    liquidityStore.setToken1(_token1);
+  };
 
-  return { token0, token1, detail, onCleanAll, onSelectToken };
+  return {
+    token0: liquidityStore.getToken0(),
+    token1: liquidityStore.getToken1(),
+    fee: liquidityStore.getFee(),
+    onCleanAll,
+    onSelectToken,
+    onSelectFee,
+    onExchangeTokens,
+  };
 }
