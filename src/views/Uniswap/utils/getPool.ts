@@ -1,6 +1,5 @@
 import { Contract } from 'ethers';
 import config from '@/config/uniswap/linea/index';
-import { utils } from 'ethers';
 import factoryAbi from '../abi/factoryAbi';
 import poolAbi from '../abi/poolAbi';
 import { multicallv3 } from '@/utils/multicall';
@@ -64,5 +63,6 @@ export async function getPoolInfo({
     tickSpacing: tickSpacing[0],
     token0: _token0[0],
     token1: _token1[0],
+    sqrtPriceX96: slot0.sqrtPriceX96.toString(),
   };
 }

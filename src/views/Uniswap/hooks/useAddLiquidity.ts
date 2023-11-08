@@ -5,9 +5,8 @@ import useAccount from '@/hooks/useAccount';
 import config from '@/config/uniswap/linea';
 import { useSettingsStore } from '@/stores/settings';
 import positionAbi from '../abi/positionAbi';
-
 import { getTokenAddress } from '../utils';
-import { parseUnits } from 'ethers/lib/utils';
+import { parseUnits, formatUnits } from 'ethers/lib/utils';
 
 // token0
 // token1 0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068
@@ -38,45 +37,57 @@ export default function useAddLiquidity(onSuccess: () => void, onError: () => vo
         ]),
       );
     }
-    const _amount0 = parseUnits(value0.toFixed(token0.decimals), token0.decimals);
-    const _amount1 = parseUnits(value1.toFixed(token0.decimals), token1.decimals);
+    const _amount0 = new Big(value0 || 0).mul(10 ** token0.decimals).toFixed();
+    const _amount1 = new Big(value1 || 0).mul(10 ** token1.decimals).toFixed();
     const _amount0Min = new Big(_amount0.toString()).mul(1 - slippage).toFixed();
     const _amount1Min = new Big(_amount1.toString()).mul(1 - slippage).toFixed();
     const _deadline = Math.ceil(Date.now() / 1000) + 60;
     if (isMint) {
       calldatas.push(
         Interface.encodeFunctionData('mint', [
-          _token0Address,
-          _token1Address,
-          fee,
-          tickLower,
-          tickUpper,
-          _amount0,
-          _amount1,
-          _amount0Min,
-          _amount1Min,
-          account,
-          _deadline,
+          {
+            token0: _token0Address,
+            token1: _token1Address,
+            fee: fee,
+            tickLower: tickLower,
+            tickUpper: tickUpper,
+            amount0Desired: _amount0,
+            amount1Desired: _amount1,
+            amount0Min: _amount0Min,
+            amount1Min: _amount1Min,
+            recipient: account,
+            deadline: _deadline,
+          },
         ]),
       );
     } else {
+      console.log({
+        tokenId: tokenId,
+        amount0Desired: _amount0,
+        amount1Desired: _amount1,
+        amount0Min: _amount0Min,
+        amount1Min: _amount1Min,
+        deadline: _deadline,
+      });
       calldatas.push(
         Interface.encodeFunctionData('increaseLiquidity', [
-          tokenId,
-          _amount0,
-          _amount1,
-          _amount0Min,
-          _amount1Min,
-          _deadline,
+          {
+            tokenId: tokenId,
+            amount0Desired: _amount0,
+            amount1Desired: _amount1,
+            amount0Min: _amount0Min,
+            amount1Min: _amount1Min,
+            deadline: _deadline,
+          },
         ]),
       );
     }
     let value = '0x';
     if (useNative) {
       const wrappedValue = token0.address === 'native' ? _amount0 : _amount1;
-      if (wrappedValue.gt(0)) {
+      if (new Big(wrappedValue).gt(0)) {
         calldatas.push(Interface.encodeFunctionData('refundETH'));
-        value = wrappedValue.toHexString();
+        value = wrappedValue;
       }
     }
     try {

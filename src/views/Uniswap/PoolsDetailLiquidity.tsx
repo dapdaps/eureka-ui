@@ -24,7 +24,7 @@ const PoolsDetailLiquidity = () => {
       <Back />
       {!loading && detail ? (
         <>
-          <PoolPair detail={detail} isReverse={isReverse} />
+          <PoolPair detail={detail} isReverse={isReverse} tokenId={searchParams.get('id') || ''} />
           <PoolBaseData
             detail={detail}
             isReverse={isReverse}

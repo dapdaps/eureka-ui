@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BigNumber } from 'ethers';
+import Big from 'big.js';
 import CurrencyIcon from '@/components/Logo/CurrencyLogo';
 import Loading from '@/components/Icons/Loading';
 import useToken from '../hooks/useToken';
@@ -51,9 +51,9 @@ const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
 interface PositionListItemProps {
   token0: string;
   token1: string;
-  tokenId: BigNumber;
+  tokenId: string;
   fee: number;
-  liquidity: BigNumber;
+  liquidity: string;
   tickLower: number;
   tickUpper: number;
   onClick: () => void;
@@ -71,10 +71,10 @@ export default function PositionItem({
 }: PositionListItemProps) {
   const token0 = useToken(token0Address);
   const token1 = useToken(token1Address);
-  const { pool, loading } = usePool(token0Address, token1Address, feeAmount);
+  const { pool, loading } = usePool(token0Address, token1Address, feeAmount, tokenId);
   const status = useMemo(() => {
-    if (liquidity.eq(0)) return 'removed';
-    return pool && (pool.tick < tickLower || pool.tick >= tickUpper) ? 'out' : 'in';
+    if (new Big(liquidity || 0).eq(0)) return 'removed';
+    return pool && (pool.currentTick < tickLower || pool.currentTick >= tickUpper) ? 'out' : 'in';
   }, [pool, liquidity, tickLower, tickUpper]);
   const tickArgs = {
     decimals0: token0.decimals,

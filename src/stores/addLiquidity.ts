@@ -15,7 +15,7 @@ export const useAddLiquidityStore = create(
       getToken1: () => get().token1,
     }),
     {
-      name: 'import-tokens',
+      name: 'add-liquidity',
       version: 0.1,
       storage: createJSONStorage(() => sessionStorage),
     },

@@ -1,5 +1,9 @@
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 import { memo } from 'react';
 import styled from 'styled-components';
+import { balanceFormated, valueFormated } from '@/utils/balance';
+import Loading from '@/components/Icons/Loading';
+import { usePriceStore } from '@/stores/price';
 
 const StyledWrap = styled.div`
   margin-top: 30px;
@@ -24,12 +28,46 @@ const StyledHead = styled.div`
 const StyledBody = styled.div`
   margin-top: 16px;
 `;
-const PoolIncreaseMore = () => {
+const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balances, balanceLoading }: any) => {
+  const { tick, tickHigh, tickLow, token0, token1 } = detail;
   return (
     <StyledWrap>
       <StyledHead>Add more liquidity</StyledHead>
       <StyledBody>
-        <InputBox />
+        {tick < tickLow ? (
+          <InputBox
+            token={token0}
+            value={value0}
+            setValue={setValue0}
+            balance={token0 ? balances[token0?.address] : ''}
+            loading={balanceLoading}
+          />
+        ) : tick > tickHigh ? (
+          <InputBox
+            token={token1}
+            value={value1}
+            setValue={setValue1}
+            balance={token1 ? balances[token1?.address] : ''}
+            loading={balanceLoading}
+          />
+        ) : (
+          <>
+            <InputBox
+              token={token0}
+              value={value0}
+              setValue={setValue0}
+              balance={token0 ? balances[token0?.address] : ''}
+              loading={balanceLoading}
+            />
+            <InputBox
+              token={token1}
+              value={value1}
+              setValue={setValue1}
+              balance={token1 ? balances[token1?.address] : ''}
+              loading={balanceLoading}
+            />
+          </>
+        )}
       </StyledBody>
     </StyledWrap>
   );
@@ -41,21 +79,28 @@ const StyledInputBox = styled.div`
   padding: 14px;
   background-color: #1b1b1b;
 `;
-const InputBox = () => {
+const InputBox = ({ token, value, setValue, loading, balance }: any) => {
+  const prices = usePriceStore((store) => store.price);
   return (
     <StyledInputBox>
       <StyledTop>
-        <input type="number" value="0.1" />
+        <input
+          type="number"
+          value={value}
+          onChange={(ev) => {
+            setValue(ev.target.value);
+          }}
+        />
         <div className="token">
-          <img src="" />
-          <span className="symbol">ETH</span>
+          <img src={token.icon || DEFAULT_TOKEN_ICON} />
+          <span className="symbol">{token.symbol}</span>
         </div>
       </StyledTop>
       <StyledBottom>
-        <span className="price">$400.714</span>
+        <span className="price">${valueFormated(value, prices[token?.symbol])}</span>
         <div className="balance">
           <span className="b">balance:</span>
-          <a>520.25</a>
+          <span className="b_v">{loading ? <Loading /> : balanceFormated(balance, 4)}</span>
         </div>
       </StyledBottom>
     </StyledInputBox>
@@ -115,7 +160,7 @@ const StyledBottom = styled.div`
       font-size: 14px;
       color: #8e8e8e;
     }
-    a {
+    .b_v {
       font-size: 14px;
       color: #fff;
       text-decoration: underline;

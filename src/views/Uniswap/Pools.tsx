@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { memo, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import Loading from '@/components/Icons/Loading';
+import Big from 'big.js';
 import Panel from './components/Panel';
 import PositionItem from './components/PositionItem';
 import usePositions from './hooks/usePositions';
@@ -77,7 +78,7 @@ const Pools = () => {
   const { positions, loading } = usePositions();
   const [openPositions, closedPositions] = positions?.reduce(
     (acc: any[], p: any) => {
-      acc[p.liquidity?.isZero() ? 1 : 0].push(p);
+      acc[new Big(p.liquidity || 0).eq(0) ? 1 : 0].push(p);
       return acc;
     },
     [[], []],

@@ -1,14 +1,19 @@
 import { create } from 'zustand';
+import { persist, createJSONStorage } from 'zustand/middleware';
 
-type PositionsState = {
-  positions: { [key: string]: any };
-};
-
-type PositionsStore = PositionsState & {
-  set: (update: PositionsState) => void;
-};
-
-export const usePositionsStore = create<PositionsStore>((set) => ({
-  positions: {},
-  set: (params) => set(() => ({ ...params })),
-}));
+export const usePositionsStore = create(
+  persist(
+    (set, get: any) => ({
+      positions: {},
+      setPositions: (positions: any) => {
+        set({ positions });
+      },
+      getPosition: (id: any) => get().positions[id],
+    }),
+    {
+      name: 'cached_positions',
+      version: 0.1,
+      storage: createJSONStorage(() => sessionStorage),
+    },
+  ),
+);

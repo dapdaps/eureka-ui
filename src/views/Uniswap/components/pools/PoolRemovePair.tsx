@@ -75,16 +75,16 @@ const PoolPair = ({ status, token0, token1, fee }: any) => {
     <StyledWrap>
       <StyledLeft className="hvc">
         <div className="hvc icon">
-          <img src={token0.icon || DEFAULT_TOKEN_ICON} />
-          <img src={token1.icon || DEFAULT_TOKEN_ICON} className="ml-1.5" />
+          <img src={token0?.icon || DEFAULT_TOKEN_ICON} />
+          <img src={token1?.icon || DEFAULT_TOKEN_ICON} className="ml-1.5" />
         </div>
         <span className="symbol">
-          {token0.symbol}/{token1.symbol}
+          {token0?.symbol}/{token1?.symbol}
         </span>
         <span className="hvc fee">{fee / 10000}%</span>
       </StyledLeft>
       <StyledRight className="hvc">
-        <Status status={status} />
+        <Status status={status}>{status === 'in' ? 'In range' : 'Out range'}</Status>
       </StyledRight>
     </StyledWrap>
   );

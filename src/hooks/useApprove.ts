@@ -78,7 +78,7 @@ export default function useApprove({
   };
 
   useEffect(() => {
-    if (token?.isNative || token?.address === 'native') {
+    if (token?.isNative || token?.address === 'native' || !amount) {
       setApproved(true);
       return;
     }

@@ -10,7 +10,7 @@ export default function usePositions() {
   const { account, provider } = useAccount();
   const [loading, setLoading] = useState(!!account);
   const [positions, setPositions] = useState([]);
-  const positionsStore = usePositionsStore();
+  const positionsStore: any = usePositionsStore();
   const getPositions = useCallback(async () => {
     const PositionContract = new Contract(config.contracts.positionAddress, positionAbi, provider);
     try {
@@ -45,13 +45,12 @@ export default function usePositions() {
       });
       const cachedPositions: { [key: string]: any } = {};
       const _positions = results.map((result: any, i: number) => {
-        cachedPositions[tokenIdResults[i].toString()] = result;
-        return {
+        const _position = {
           tokenId: tokenIdResults[i].toString(),
           fee: result.fee,
           feeGrowthInside0LastX128: result.feeGrowthInside0LastX128,
           feeGrowthInside1LastX128: result.feeGrowthInside1LastX128,
-          liquidity: result.liquidity,
+          liquidity: result.liquidity.toString(),
           nonce: result.nonce,
           operator: result.operator,
           tickLower: result.tickLower,
@@ -61,8 +60,10 @@ export default function usePositions() {
           tokensOwed0: result.tokensOwed0,
           tokensOwed1: result.tokensOwed1,
         };
+        cachedPositions[tokenIdResults[i].toString()] = _position;
+        return _position;
       });
-      positionsStore.set({ positions: cachedPositions });
+      positionsStore.setPositions(cachedPositions);
       setPositions(_positions);
       setLoading(false);
     } catch (err) {

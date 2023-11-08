@@ -12,7 +12,7 @@ export default function useDetail(tokenId: string) {
   const [detail, setDetail] = useState<any>();
   const [collectData, setCollectData] = useState<any>();
   const [loading, setLoading] = useState<boolean>();
-  const positionsStore = usePositionsStore();
+  const positionsStore: any = usePositionsStore();
   const { provider, account } = useAccount();
 
   const { tokens } = useTokens();
@@ -21,7 +21,7 @@ export default function useDetail(tokenId: string) {
     if (!tokenId || !account) return;
     setLoading(true);
     try {
-      let position = positionsStore.positions[tokenId];
+      let position = positionsStore.getPosition[tokenId];
       if (!position) {
         position = await getPosition(tokenId, provider);
       }
@@ -39,7 +39,7 @@ export default function useDetail(tokenId: string) {
       const _token1 = tokens[getTokenAddress(position.token1)];
       const [liquidityToken0, liquidityToken1] = getTokenAmounts({
         liquidity: position.liquidity,
-        sqrtPriceX96: position.sqrtPriceX96,
+        sqrtPriceX96: pool.sqrtPriceX96.toString(),
         tickLow: position.tickLower,
         tickHigh: position.tickUpper,
         Decimal0: _token0.decimals,

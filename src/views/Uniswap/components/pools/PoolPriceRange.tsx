@@ -86,30 +86,30 @@ const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
 `;
 const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
   const tickArgs = {
-    decimals0: detail.token0.decimals,
-    decimals1: detail.token1.decimals,
+    decimals0: detail?.token0.decimals,
+    decimals1: detail?.token1.decimals,
     isReverse: !isReverse,
   };
-  const priceRate = `${isReverse ? detail.token0.symbol : detail.token1.symbol} per ${
-    isReverse ? detail.token1.symbol : detail.token0.symbol
+  const priceRate = `${isReverse ? detail?.token0.symbol : detail?.token1.symbol} per ${
+    isReverse ? detail?.token1.symbol : detail?.token0.symbol
   }`;
   return (
     <StyledWrap type={type}>
       <StyledHead className="vchb">
         <div className="hvc gap-20">
           <span>Pirce range</span>
-          {detail.status && (
-            <Status status={detail.status}>
-              {detail.status === 'removed' ? 'Removed' : detail.status === 'in' ? 'In range' : 'Out range'}
+          {detail?.status && (
+            <Status status={detail?.status}>
+              {detail?.status === 'removed' ? 'Removed' : detail?.status === 'in' ? 'In range' : 'Out range'}
             </Status>
           )}
         </div>
         <div className="switch hvc">
           <span className={`item hvc ${!isReverse && 'active'}`} onClick={onSetReverse}>
-            {detail.token1.symbol}
+            {detail?.token1.symbol}
           </span>
           <span className={`item hvc ${isReverse && 'active'}`} onClick={onSetReverse}>
-            {detail.token0.symbol}
+            {detail?.token0.symbol}
           </span>
         </div>
       </StyledHead>
@@ -117,20 +117,20 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
         <div className="vchb minmax">
           <PriceDetailBox
             priceType="Min price"
-            price={tickToPrice({ ...tickArgs, tick: detail.tickLow })}
+            price={tickToPrice({ ...tickArgs, tick: detail?.tickLow })}
             priceRate={priceRate}
           />
           <ArrowBothIcon />
           <PriceDetailBox
             priceType="Max price"
-            price={tickToPrice({ ...tickArgs, tick: detail.tickHigh })}
+            price={tickToPrice({ ...tickArgs, tick: detail?.tickHigh })}
             priceRate={priceRate}
           />
         </div>
         <div className="mt-17">
           <PriceDetailBox
             priceType="Current price"
-            price={tickToPrice({ ...tickArgs, tick: detail.tick })}
+            price={tickToPrice({ ...tickArgs, tick: detail?.tick })}
             priceRate={priceRate}
           />
         </div>

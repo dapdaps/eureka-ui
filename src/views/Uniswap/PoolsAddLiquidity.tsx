@@ -151,9 +151,9 @@ const PoolsAddLiquidity = () => {
         highTick={highTick}
         tick={currentTick}
         fee={fee}
-        isOpen={showPreview}
         noPair={noPair}
         isMint={true}
+        isOpen={showPreview}
         onRequestClose={() => {
           setShowPreview(false);
         }}

@@ -48,15 +48,15 @@ const PoolIncreaseLiquidityData = ({ token0, token1, value0, value1 }: any) => {
     <StyledWrap>
       <div className="vchb">
         <div className="hvc token">
-          <img src={token0.icon || DEFAULT_TOKEN_ICON} />
-          <span>{token0.symbol}</span>
+          <img src={token0?.icon || DEFAULT_TOKEN_ICON} />
+          <span>{token0?.symbol}</span>
         </div>
         <span className="num">{value0}</span>
       </div>
       <div className="vchb">
         <div className="hvc token">
-          <img src={token1.icon || DEFAULT_TOKEN_ICON} />
-          <span>{token1.symbol}</span>
+          <img src={token1?.icon || DEFAULT_TOKEN_ICON} />
+          <span>{token1?.symbol}</span>
         </div>
         <span className="num">{value1}</span>
       </div>
