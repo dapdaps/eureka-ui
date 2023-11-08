@@ -5,7 +5,7 @@ import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
-import useTokensBalance from '../../hooks/useTokensBalance';
+
 import { tickToPrice } from '../../utils/tickMath';
 
 const StyledContainer = styled.div`
@@ -32,18 +32,9 @@ const DepositAmount = ({
   currentTick,
   setValue0,
   setValue1,
+  balances,
+  balanceLoading,
 }: any) => {
-  const tokens = useMemo(() => {
-    const _tokens: any = {};
-    if (token0) {
-      _tokens[token0.address] = token0;
-    }
-    if (token1) {
-      _tokens[token1.address] = token1;
-    }
-    return _tokens;
-  }, [token0, token1]);
-
   const price = useMemo(() => {
     if (!currentTick || !token0 || !token1) return 0;
     return tickToPrice({
@@ -59,7 +50,6 @@ const DepositAmount = ({
     if (value0) setValue1(new Big(value0).mul(price).toFixed(12));
   }, [reverse]);
 
-  const { balances, loading } = useTokensBalance(tokens, 1);
   return (
     <StyledContainer>
       <span className="title">Deposit amounts</span>
@@ -72,7 +62,7 @@ const DepositAmount = ({
             if (value) setValue1(new Big(value).mul(price).toFixed(12));
           }}
           balance={token0 ? balances[token0?.address] : ''}
-          loading={loading}
+          loading={balanceLoading}
         />
         <InputBox
           token={token1}
@@ -82,7 +72,7 @@ const DepositAmount = ({
             if (value) setValue0(new Big(1).div(price).mul(value).toFixed(12));
           }}
           balance={token1 ? balances[token1?.address] : ''}
-          loading={loading}
+          loading={balanceLoading}
         />
       </div>
     </StyledContainer>

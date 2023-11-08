@@ -24,8 +24,8 @@ export default function useApprove({
   const { account, provider } = useAccount();
 
   const checkApproved = async () => {
-    if (!token?.address || !amount || !chain || !spender) return;
-    const provider = new JsonRpcProvider(chain?.rpcUrls[0]);
+    if (!token?.address || !amount || !spender) return;
+    const _provider = chain ? new JsonRpcProvider(chain?.rpcUrls[0]) : provider;
     const TokenContract = new Contract(
       token.address,
       [
@@ -40,16 +40,15 @@ export default function useApprove({
           type: 'function',
         },
       ],
-      provider,
+      _provider,
     );
     const allowanceRes = await TokenContract.allowance(account, spender);
-
     const needApproved = new Big(utils.formatUnits(allowanceRes.toString(), token.decimals)).lt(amount);
     setApproved(!needApproved);
   };
 
   const approve = async () => {
-    if (!token?.address || !amount || !chain || !spender) return;
+    if (!token?.address || !amount || !provider || !spender) return;
     setApproving(true);
     try {
       const signer = provider.getSigner(account);
@@ -79,11 +78,11 @@ export default function useApprove({
   };
 
   useEffect(() => {
-    if (token?.isNative) {
+    if (token?.isNative || token?.address === 'native') {
       setApproved(true);
       return;
     }
-    if (token && amount && chain && spender) checkApproved();
+    if (token && amount && (chain || provider) && spender) checkApproved();
   }, [token, amount, chain, spender]);
 
   return { approved, approve, approving };

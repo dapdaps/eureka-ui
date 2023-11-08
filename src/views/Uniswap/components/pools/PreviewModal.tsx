@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
 
 import { CloseIcon } from './Icons';
@@ -6,6 +6,8 @@ import Modal from './ModalBox';
 import PoolIncreaseLiquidityData from './PoolIncreaseLiquidityData';
 import PoolPriceRange from './PoolPriceRange';
 import PoolRemovePair from './PoolRemovePair';
+import Loading from '@/components/Icons/Loading';
+import useAddLiquidity from '../../hooks/useAddLiquidity';
 
 const StyledContent = styled.div`
   width: 460px;
@@ -65,25 +67,6 @@ const StyledBody = styled.div`
     }
   }
 `;
-const SelectTokenModal = (props: any) => {
-  const { isOpen, onRequestClose } = props;
-  return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
-      <StyledContent>
-        <StyledHead className="vchb">
-          <span className="title">Add liquidity</span>
-          <CloseIcon onClick={onRequestClose} />
-        </StyledHead>
-        <StyledBody>
-          <PoolRemovePair />
-          <PoolIncreaseLiquidityData />
-          <PoolPriceRange type="1" />
-          <AddButton />
-        </StyledBody>
-      </StyledContent>
-    </Modal>
-  );
-};
 
 const StyledAdd = styled.div<{ disabled?: boolean }>`
   display: flex;
@@ -98,8 +81,81 @@ const StyledAdd = styled.div<{ disabled?: boolean }>`
   margin-top: 15px;
   ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
 `;
-const AddButton = () => {
-  return <StyledAdd className="hvc">Add</StyledAdd>;
+
+const SelectTokenModal = (props: any) => {
+  const {
+    isOpen,
+    onRequestClose,
+    token0,
+    token1,
+    value0,
+    value1,
+    lowerTick,
+    highTick,
+    tick,
+    fee,
+    tokenId,
+    noPair,
+    isMint,
+  } = props;
+  const [reverse, setReverse] = useState(false);
+  const { loading, onAdd } = useAddLiquidity(
+    () => {
+      onRequestClose();
+    },
+    () => {},
+  );
+  return (
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+      <StyledContent>
+        <StyledHead className="vchb">
+          <span className="title">Add liquidity</span>
+          <CloseIcon onClick={onRequestClose} />
+        </StyledHead>
+        <StyledBody>
+          <PoolRemovePair
+            status={lowerTick <= tick && tick <= highTick ? 'in' : 'out'}
+            token0={token0}
+            token1={token1}
+            fee={fee}
+          />
+          <PoolIncreaseLiquidityData token0={token0} token1={token1} value0={value0} value1={value1} />
+          <PoolPriceRange
+            type="1"
+            detail={{
+              token0,
+              token1,
+              tickLow: lowerTick,
+              tickHigh: highTick,
+              tick,
+            }}
+            isReverse={reverse}
+            onSetReverse={setReverse}
+          />
+          <StyledAdd
+            className="hvc"
+            onClick={() => {
+              onAdd({
+                token0,
+                token1,
+                value0,
+                value1,
+                fee,
+                tickLower: lowerTick,
+                tickUpper: highTick,
+                noPair,
+                isMint,
+                tokenId,
+              });
+            }}
+            disabled={loading}
+          >
+            {loading && <Loading />} Add
+          </StyledAdd>
+        </StyledBody>
+      </StyledContent>
+    </Modal>
+  );
 };
 
 export default memo(SelectTokenModal);

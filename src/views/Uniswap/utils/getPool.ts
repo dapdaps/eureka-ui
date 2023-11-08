@@ -1,5 +1,6 @@
 import { Contract } from 'ethers';
 import config from '@/config/uniswap/linea/index';
+import { utils } from 'ethers';
 import factoryAbi from '../abi/factoryAbi';
 import poolAbi from '../abi/poolAbi';
 import { multicallv3 } from '@/utils/multicall';

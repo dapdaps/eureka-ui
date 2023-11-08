@@ -1,8 +1,10 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
+import Big from 'big.js';
 
-import useAddLiquidity from './hooks/useAddLiquidity';
+import useAddLiquidityData from './hooks/useAddLiquidityData';
 import useTicks from './hooks/useTickPrices';
+import useTokensBalance from './hooks/useTokensBalance';
 
 import Loading from '@/components/Icons/Loading';
 import Head from './components/pools/AddHead';
@@ -12,6 +14,7 @@ import Fee from './components/pools/Fee';
 import SelectPair from './components/pools/SelectPair';
 import SetPriceRange from './components/pools/SetPriceRange';
 import SubmitButton from './components/pools/SubmitButton';
+import PreviewModal from './components/pools/PreviewModal';
 
 const StyledContainer = styled.div`
   width: 605px;
@@ -30,10 +33,12 @@ const LoadingWrapper = styled.div`
 `;
 
 const PoolsAddLiquidity = () => {
-  const { token0, token1, fee, onSelectToken, onCleanAll, onSelectFee, onExchangeTokens } = useAddLiquidity();
+  const { token0, token1, fee, onSelectToken, onCleanAll, onSelectFee, onExchangeTokens } = useAddLiquidityData();
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
   const [ready, setReady] = useState(false);
+  const [errorTips, setErrorTips] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
   const {
     loading,
     noPair,
@@ -50,9 +55,40 @@ const PoolsAddLiquidity = () => {
     token0,
     token1,
   });
+  const tokens = useMemo(() => {
+    const _tokens: any = {};
+    if (token0) {
+      _tokens[token0.address] = token0;
+    }
+    if (token1) {
+      _tokens[token1.address] = token1;
+    }
+    return _tokens;
+  }, [token0, token1]);
+  const { balances, loading: balanceLoading } = useTokensBalance(tokens, 1);
+
   useEffect(() => {
     setReady(true);
   }, []);
+
+  useEffect(() => {
+    if (new Big(value0 || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
+      return;
+    }
+    if (!token0 || !token1) {
+      setErrorTips('Select a Token');
+      return;
+    }
+    if (
+      !balanceLoading &&
+      (new Big(value0).gt(balances[token0.address] || 0) || new Big(value1).gt(balances[token1.address] || 0))
+    ) {
+      setErrorTips('Insufficient balance');
+      return;
+    }
+    setErrorTips('');
+  }, [value0, value1, balanceLoading, token0, token1]);
   return ready ? (
     <StyledContainer>
       <Head onCleanAll={onCleanAll} />
@@ -92,9 +128,36 @@ const PoolsAddLiquidity = () => {
           setValue0={setValue0}
           setValue1={setValue1}
           poolTokens={poolTokens}
+          balances={balances}
+          balanceLoading={balanceLoading}
         />
-        <SubmitButton />
+        <SubmitButton
+          errorTips={errorTips}
+          token0={token0}
+          value0={value0}
+          token1={token1}
+          value1={value1}
+          onPreview={() => {
+            setShowPreview(true);
+          }}
+        />
       </StyledBody>
+      <PreviewModal
+        token0={poolTokens?.token0}
+        value0={value0}
+        token1={poolTokens?.token1}
+        value1={value1}
+        lowerTick={lowerTick}
+        highTick={highTick}
+        tick={currentTick}
+        fee={fee}
+        isOpen={showPreview}
+        noPair={noPair}
+        isMint={true}
+        onRequestClose={() => {
+          setShowPreview(false);
+        }}
+      />
     </StyledContainer>
   ) : (
     <div />

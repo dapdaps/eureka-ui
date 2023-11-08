@@ -84,15 +84,7 @@ const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
     background-color: ${({ status }) => StatusColor[status]};
   }
 `;
-const PoolPriceRange = ({
-  detail,
-  isReverse,
-  onSetReverse,
-}: {
-  detail: any;
-  isReverse: boolean;
-  onSetReverse: () => void;
-}) => {
+const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
   const tickArgs = {
     decimals0: detail.token0.decimals,
     decimals1: detail.token1.decimals,
@@ -102,13 +94,15 @@ const PoolPriceRange = ({
     isReverse ? detail.token1.symbol : detail.token0.symbol
   }`;
   return (
-    <StyledWrap>
+    <StyledWrap type={type}>
       <StyledHead className="vchb">
         <div className="hvc gap-20">
           <span>Pirce range</span>
-          <Status status={detail.status}>
-            {detail.status === 'removed' ? 'Removed' : detail.status === 'in' ? 'In range' : 'Out range'}
-          </Status>
+          {detail.status && (
+            <Status status={detail.status}>
+              {detail.status === 'removed' ? 'Removed' : detail.status === 'in' ? 'In range' : 'Out range'}
+            </Status>
+          )}
         </div>
         <div className="switch hvc">
           <span className={`item hvc ${!isReverse && 'active'}`} onClick={onSetReverse}>

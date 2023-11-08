@@ -47,7 +47,7 @@ export default function useTokensBalance(tokens: any, updater: number) {
       }
     };
     if (account) getBalances();
-  }, [tokens, account, updater]);
+  }, [tokens, account, provider, updater]);
 
   return { loading, balances };
 }

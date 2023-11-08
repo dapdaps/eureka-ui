@@ -1,3 +1,4 @@
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 import { memo } from 'react';
 import styled from 'styled-components';
 
@@ -42,22 +43,22 @@ const StyledWrap = styled.div`
     font-size: 16px;
   }
 `;
-const PoolIncreaseLiquidityData = () => {
+const PoolIncreaseLiquidityData = ({ token0, token1, value0, value1 }: any) => {
   return (
     <StyledWrap>
       <div className="vchb">
         <div className="hvc token">
-          <img />
-          <span>ETH</span>
+          <img src={token0.icon || DEFAULT_TOKEN_ICON} />
+          <span>{token0.symbol}</span>
         </div>
-        <span className="num">0</span>
+        <span className="num">{value0}</span>
       </div>
       <div className="vchb">
         <div className="hvc token">
-          <img />
-          <span>USDC</span>
+          <img src={token1.icon || DEFAULT_TOKEN_ICON} />
+          <span>{token1.symbol}</span>
         </div>
-        <span className="num">0.7773</span>
+        <span className="num">{value1}</span>
       </div>
     </StyledWrap>
   );
