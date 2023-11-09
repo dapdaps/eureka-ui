@@ -82,13 +82,10 @@ const StyledCollectButton = styled.div<{ disabled?: boolean }>`
 `;
 const ClaimFeesModal = (props: any) => {
   const { isOpen, detail, collectData, onRequestClose, onSuccess } = props;
-  const { collecting, collect } = useCollect(
-    () => {
-      onRequestClose();
-      onSuccess();
-    },
-    () => {},
-  );
+  const { collecting, collect } = useCollect(() => {
+    onRequestClose();
+    onSuccess();
+  });
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>

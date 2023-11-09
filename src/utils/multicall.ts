@@ -1,13 +1,4 @@
-import { Contract, CallOverrides, utils } from 'ethers';
-
-export interface Call {
-  address: string; // Address of the contract
-  name: string; // Function name on the contract (example: balanceOf)
-  params?: any[]; // Function params
-}
-export interface MulticallOptions extends CallOverrides {
-  requireSuccess?: boolean;
-}
+import { Contract, utils } from 'ethers';
 
 export const multicallv3 = async <T = any>({
   abi,
@@ -17,8 +8,8 @@ export const multicallv3 = async <T = any>({
   provider,
 }: {
   abi: any[];
-  calls: Call[];
-  options?: MulticallOptions;
+  calls: any[];
+  options?: any;
   multiAddress: string;
   provider: any;
 }): Promise<T> => {

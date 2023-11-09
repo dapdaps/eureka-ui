@@ -16,7 +16,7 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
     if (!account || !provider) return;
     const Interface = new utils.Interface(positionAbi);
     const calldatas: string[] = [];
-    const _liquidity = new Big(liquidity).mul(percent / 100).toFixed();
+    const _liquidity = new Big(liquidity).mul(percent / 100).toFixed(0);
     const useNative = token0.address === 'native' ? token0 : token1.address === 'native' ? token1 : undefined;
     const _amount0 = new Big(liquidityToken0 || 0)
       .mul(percent / 100)
@@ -29,7 +29,6 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
     const _amount0Min = new Big(_amount0.toString()).mul(1 - slippage).toFixed(0);
     const _amount1Min = new Big(_amount1.toString()).mul(1 - slippage).toFixed(0);
     const _deadline = Math.ceil(Date.now() / 1000) + 60;
-
     calldatas.push(
       Interface.encodeFunctionData('decreaseLiquidity', [
         {
@@ -71,7 +70,7 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
 
     try {
       setLoading(true);
-      let txn: { to: string; data: string } = {
+      const txn: { to: string; data: string } = {
         to: config.contracts.positionAddress,
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
       };

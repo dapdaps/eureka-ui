@@ -23,8 +23,8 @@ function getSnapshot(src: HTMLImageElement, canvas: HTMLCanvasElement) {
 
   if (context) {
     // src may be hidden and not have the target dimensions
-    let width = 311;
-    let height = 537;
+    const width = 311;
+    const height = 537;
 
     // Ensure crispness at high DPIs
     canvas.width = width * devicePixelRatio;

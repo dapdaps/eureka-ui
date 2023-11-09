@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Logo from './Logo';
-import { Token } from '@/types';
+import type { Token } from '@/types';
 
 const StyledTokenLogo = styled(Logo)<{ size: number }>`
   width: ${({ size }) => size}px;

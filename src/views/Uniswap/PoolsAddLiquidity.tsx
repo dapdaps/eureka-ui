@@ -93,7 +93,7 @@ const PoolsAddLiquidity = () => {
     <StyledContainer>
       <Head onCleanAll={onCleanAll} />
       <SelectPair token0={token0} token1={token1} onSelectToken={onSelectToken} />
-      <StyledBody disabled={false}>
+      <StyledBody disabled={!token0 || !token1}>
         <Fee fee={fee} disabled={!token0 || !token1} onSelectFee={onSelectFee} />
         {loading ? (
           <LoadingWrapper>
@@ -143,9 +143,9 @@ const PoolsAddLiquidity = () => {
         />
       </StyledBody>
       <PreviewModal
-        token0={poolTokens?.token0}
+        token0={token0}
         value0={value0}
-        token1={poolTokens?.token1}
+        token1={token1}
         value1={value1}
         lowerTick={lowerTick}
         highTick={highTick}
@@ -154,6 +154,7 @@ const PoolsAddLiquidity = () => {
         noPair={noPair}
         isMint={true}
         isOpen={showPreview}
+        poolTokens={poolTokens}
         onRequestClose={() => {
           setShowPreview(false);
         }}

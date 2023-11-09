@@ -351,7 +351,7 @@ export const DesktopNavigationTop = () => {
         </MenuContainer>
         {account ? (
           <LoginContainer>
-            <Chain showName={false} />
+            <Chain showName={false} isMultiChain={true} />
             <AccountWrapper
               onClick={() => {
                 setLayoutStore({ showAccountSider: true });

@@ -81,14 +81,16 @@ const SetPriceRange = ({
           >
             Full range
           </HeaderFullAction>
-          <HeaderTokensAction>
-            <HeaderTokenAction onClick={onExchangeTokens} active={!reverse}>
-              {reverse ? token1?.symbol : token0?.symbol}
-            </HeaderTokenAction>
-            <HeaderTokenAction onClick={onExchangeTokens} active={reverse}>
-              {reverse ? token0?.symbol : token1?.symbol}
-            </HeaderTokenAction>
-          </HeaderTokensAction>
+          {token1 && token0 && (
+            <HeaderTokensAction>
+              <HeaderTokenAction onClick={onExchangeTokens} active={!reverse}>
+                {reverse ? token1?.symbol : token0?.symbol}
+              </HeaderTokenAction>
+              <HeaderTokenAction onClick={onExchangeTokens} active={reverse}>
+                {reverse ? token0?.symbol : token1?.symbol}
+              </HeaderTokenAction>
+            </HeaderTokensAction>
+          )}
         </HeaderActions>
       </Header>
       <div className="setArea">

@@ -82,7 +82,7 @@ const StyledAdd = styled.div<{ disabled?: boolean }>`
   ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
 `;
 
-const SelectTokenModal = (props: any) => {
+const PreviewModal = (props: any) => {
   const {
     isOpen,
     onRequestClose,
@@ -97,14 +97,12 @@ const SelectTokenModal = (props: any) => {
     tokenId,
     noPair,
     isMint,
+    poolTokens,
   } = props;
   const [reverse, setReverse] = useState(false);
-  const { loading, onAdd } = useAddLiquidity(
-    () => {
-      onRequestClose();
-    },
-    () => {},
-  );
+  const { loading, onAdd } = useAddLiquidity(() => {
+    onRequestClose();
+  });
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
@@ -123,14 +121,16 @@ const SelectTokenModal = (props: any) => {
           <PoolPriceRange
             type="1"
             detail={{
-              token0,
-              token1,
+              token0: poolTokens?.token0,
+              token1: poolTokens?.token1,
               tickLow: lowerTick,
               tickHigh: highTick,
               tick,
             }}
             isReverse={reverse}
-            onSetReverse={setReverse}
+            onSetReverse={() => {
+              setReverse(!reverse);
+            }}
           />
           <StyledAdd
             className="hvc"
@@ -146,6 +146,7 @@ const SelectTokenModal = (props: any) => {
                 noPair,
                 isMint,
                 tokenId,
+                poolTokens,
               });
             }}
             disabled={loading}
@@ -158,4 +159,4 @@ const SelectTokenModal = (props: any) => {
   );
 };
 
-export default memo(SelectTokenModal);
+export default memo(PreviewModal);

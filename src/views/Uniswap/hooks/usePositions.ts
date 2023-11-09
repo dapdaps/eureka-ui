@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { BigNumber, Contract } from 'ethers';
+import { Contract } from 'ethers';
 import useAccount from '@/hooks/useAccount';
 import { multicallv3 } from '@/utils/multicall';
 import config from '@/config/uniswap/linea';
@@ -32,7 +32,7 @@ export default function usePositions() {
         multiAddress: config.contracts.multiAddress,
         provider,
       });
-      const positionRequests = tokenIdResults.map((tokenId: BigNumber) => ({
+      const positionRequests = tokenIdResults.map((tokenId: any) => ({
         address: config.contracts.positionAddress,
         name: 'positions',
         params: [tokenId.toString()],

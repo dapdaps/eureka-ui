@@ -105,7 +105,7 @@ export default function FreeSelect() {
       </FeeSelectBox>
       <FeeStages>
         {FEE_STAGES.map((stage) => (
-          <FeeStage>
+          <FeeStage key={stage.fee}>
             <FeeStageLabel>
               <div>{stage.fee}%</div>
               {/* <Checked>

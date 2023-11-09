@@ -10,8 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "prettier:fix": "prettier --write src"
+    "lint": "next lint"
   },
   "dependencies": {
     "@braintree/sanitize-url": "6.0.0",
@@ -73,7 +72,6 @@
     "near-social-vm": "^2.3.1",
     "next": "13.3.4",
     "node-fetch": "^3.3.2",
-    "prettier": "^3.0.3",
     "react": "18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-typeahead": "^6.1.2",
@@ -95,7 +93,6 @@
     "@types/lodash": "^4.14.194",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
-    "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-simple-import-sort": "^10.0.0"
   }
 }

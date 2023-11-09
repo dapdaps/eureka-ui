@@ -47,6 +47,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const componentSrc = router.query;
 
   const accountInit = useCallback(() => {
+    if (router.pathname.includes('uniswap')) {
+      return;
+    }
     if (account) {
       login();
     } else {

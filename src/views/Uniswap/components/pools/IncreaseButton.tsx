@@ -132,6 +132,10 @@ const IncreaseButton = ({ token0, value0, token1, value1, fee, tickLow, tickHigh
         isOpen={open}
         tokenId={tokenId}
         onRequestClose={closeModal}
+        poolTokens={{
+          token0,
+          token1,
+        }}
       />
     </>
   );

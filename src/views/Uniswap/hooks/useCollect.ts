@@ -5,7 +5,7 @@ import Big from 'big.js';
 import useAccount from '@/hooks/useAccount';
 import positionAbi from '../abi/positionAbi';
 
-export default function useCollect(onSuccess: () => void, onError: () => void) {
+export default function useCollect(onSuccess: () => void, onError?: () => void) {
   const [collecting, setCollecting] = useState<boolean>();
   const { account, provider } = useAccount();
   const collect = useCallback(
@@ -18,8 +18,10 @@ export default function useCollect(onSuccess: () => void, onError: () => void) {
         const args = [
           detail.tokenId,
           account,
-          utils.parseUnits(collectData.collectToken0.toFixed(detail.token0.decimals), detail.token0.decimals),
-          utils.parseUnits(collectData.collectToken1.toFixed(detail.token1.decimals), detail.token1.decimals),
+          // utils.parseUnits(collectData.collectToken0.toFixed(detail.token0.decimals), detail.token0.decimals),
+          // utils.parseUnits(collectData.collectToken1.toFixed(detail.token1.decimals), detail.token1.decimals),
+          '340282366920938463463374607431768211455',
+          '340282366920938463463374607431768211455',
         ];
 
         const estimateGas = await PositionContract.estimateGas.collect(args);
@@ -28,11 +30,11 @@ export default function useCollect(onSuccess: () => void, onError: () => void) {
         if (res.status === 1) {
           onSuccess();
         }
-        onError();
+        onError?.();
         setCollecting(false);
       } catch (err) {
         console.log(err);
-        onError();
+        onError?.();
         setCollecting(false);
       }
     },

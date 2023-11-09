@@ -17,9 +17,9 @@ export async function getPositionCollect(args: string[], provider: any) {
 }
 
 export function getTokenAmounts({ liquidity, sqrtPriceX96, tickLow, tickHigh, currentTick, Decimal0, Decimal1 }: any) {
-  let sqrtRatioA = Math.sqrt(1.0001 ** tickLow);
-  let sqrtRatioB = Math.sqrt(1.0001 ** tickHigh);
-  let sqrtPrice = sqrtPriceX96 / 2 ** 96;
+  const sqrtRatioA = Math.sqrt(1.0001 ** tickLow);
+  const sqrtRatioB = Math.sqrt(1.0001 ** tickHigh);
+  const sqrtPrice = sqrtPriceX96 / 2 ** 96;
   let amount0 = 0;
   let amount1 = 0;
   if (currentTick < tickLow) {
@@ -31,7 +31,7 @@ export function getTokenAmounts({ liquidity, sqrtPriceX96, tickLow, tickHigh, cu
     amount1 = Math.floor(liquidity * (sqrtPrice - sqrtRatioA));
   }
 
-  let amount0Human = (amount0 / 10 ** Decimal0).toFixed(Decimal0);
-  let amount1Human = (amount1 / 10 ** Decimal1).toFixed(Decimal1);
+  const amount0Human = (amount0 / 10 ** Decimal0).toFixed(Decimal0);
+  const amount1Human = (amount1 / 10 ** Decimal1).toFixed(Decimal1);
   return [amount0Human, amount1Human];
 }

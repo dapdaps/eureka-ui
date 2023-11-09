@@ -88,6 +88,7 @@ export default function useDetail(tokenId: string) {
 
   useEffect(() => {
     getDetail();
+    getCollectData();
   }, [provider]);
 
   return { detail, loading, collectData, getCollectData };

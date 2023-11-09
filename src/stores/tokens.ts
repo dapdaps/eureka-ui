@@ -7,16 +7,15 @@ export const useTokensStore = create(
     (set, get: any) => ({
       tokens: config.tokens || {},
       historyTokens: {},
-      addImportTokens: (token: any) => {
+      addImportToken: (token: any) => {
         const _tokens = get().tokens;
         _tokens[token.address] = { ...token, isImport: true };
         set({ tokens: _tokens });
       },
       getTokens: () => get().tokens,
-      addHistoryTokens: (token: any) => {
+      addHistoryToken: (tokens: any) => {
         const _tokens = get().historyTokens;
-        _tokens[token.address] = token;
-        set({ historyTokens: _tokens });
+        set({ historyTokens: { ..._tokens, ...tokens } });
       },
       getHistoryTokens: () => get().historyTokens,
     }),

@@ -107,7 +107,7 @@ const UnderstandButton = ({ token, onImportTokenCb }: any) => {
     <StyledUnderstandButton
       className="hvc"
       onClick={() => {
-        tokensStore.addImportTokens(token);
+        tokensStore.addImportToken(token);
         onImportTokenCb();
       }}
     >

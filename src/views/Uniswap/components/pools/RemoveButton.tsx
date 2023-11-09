@@ -19,8 +19,12 @@ const StyledWrapper = styled.div<{ disabled: boolean }>`
 
 const SubmitButton = ({ token0, token1, liquidityToken0, liquidityToken1, liquidity, percent, tokenId }: any) => {
   const { loading, onRemove } = useRemoveLiquidity(
-    () => {},
-    () => {},
+    () => {
+      console.log('success callback');
+    },
+    () => {
+      console.log('error callback');
+    },
   );
   return (
     <StyledWrapper
