@@ -100,7 +100,12 @@ const PoolPair = ({ detail, isReverse, tokenId }: { detail: any; isReverse: bool
           Increase liquidity
         </StyledLineWrap>
         {detail.liquidity.gt(0) && (
-          <StyledSolidWrap className="hvc" onClick={() => {}}>
+          <StyledSolidWrap
+            className="hvc"
+            onClick={() => {
+              router.push('/linea/uniswap/pools-remove-liquidity?id=' + tokenId);
+            }}
+          >
             Remove liquidity
           </StyledSolidWrap>
         )}

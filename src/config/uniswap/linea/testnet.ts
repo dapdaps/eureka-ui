@@ -1,6 +1,15 @@
 export default {
   chainId: 59140,
   explor: 'https://goerli.lineascan.build',
+  wethToken: {
+    chainId: 59140,
+    address: '0x2C1b868d6596a18e32E61B901E4060C872647b6C',
+    decimals: 18,
+    symbol: 'WETH',
+    name: 'Wrapped Ether',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    isImport: false,
+  },
   tokens: {
     native: {
       chainId: 59140,
@@ -25,7 +34,6 @@ export default {
   contracts: {
     routerAddress: '0x6aa397CAB00a2A40025Dbf839a83f16D5EC7c1eB',
     quoterAddress: '0x2Dd5C9E53d6467E13d77037d4a9E9b84571eAE2e',
-    wethAddress: '0x2C1b868d6596a18e32E61B901E4060C872647b6C',
     positionAddress: '0xBa2e5317CC21CF591d3908F703a855547cDc849f',
     multiAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
     factoryAddress: '0xDB2783e6db8d47F2b1A51ef602608c2854a59dEF',

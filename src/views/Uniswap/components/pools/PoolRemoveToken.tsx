@@ -1,5 +1,7 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
+import { balanceFormated } from '@/utils/balance';
+import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 
 const StyledWrap = styled.div`
   border: 1px solid #303030;
@@ -39,16 +41,24 @@ const StyledCollect = styled.div`
   color: #8e8e8e;
   margin-top: 21px;
 `;
-const PoolRemoveToken = () => {
+const PoolRemoveToken = ({ token0, token1, liquidityToken0, liquidityToken1, collectToken0, collectToken1 }: any) => {
   return (
     <StyledWrap>
       <StyledPool>
-        <RowData name="Pooled ETH:" value="0" />
-        <RowData name="Pooled USDC:" value="0.7773" />
+        <RowData name={`Pooled ${token0?.symbol}:`} value={balanceFormated(liquidityToken0, 4)} icon={token0?.icon} />
+        <RowData name={`Pooled ${token1?.symbol}:`} value={balanceFormated(liquidityToken1, 4)} icon={token1?.icon} />
       </StyledPool>
       <StyledEarnedFees>
-        <RowData name="ETH Fees Earned:" value="0.002462" />
-        <RowData name="USDC Fees Earned:" value="0.00001223" />
+        <RowData
+          name={`${token0?.symbol} Fees Earned:`}
+          value={balanceFormated(collectToken0, 4)}
+          icon={token0?.icon}
+        />
+        <RowData
+          name={`${token1?.symbol} Fees Earned:`}
+          value={balanceFormated(collectToken1, 4)}
+          icon={token1?.icon}
+        />
       </StyledEarnedFees>
     </StyledWrap>
   );
@@ -68,13 +78,13 @@ const StyleRowData = styled.div`
     }
   }
 `;
-const RowData = ({ name, value }: { name: string; value: string }) => {
+const RowData = ({ name, value, icon }: { name: string; value: string; icon: string }) => {
   return (
     <StyleRowData className="vchb">
       <span className="text">{name}</span>
       <div className="hvc value">
         <span>{value}</span>
-        <img src="" />
+        <img src={icon || DEFAULT_TOKEN_ICON} />
       </div>
     </StyleRowData>
   );

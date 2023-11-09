@@ -157,4 +157,25 @@ export default [
     type: 'function',
   },
   { inputs: [], name: 'refundETH', outputs: [], stateMutability: 'payable', type: 'function' },
+  {
+    inputs: [
+      { internalType: 'uint256', name: 'amountMinimum', type: 'uint256' },
+      { internalType: 'address', name: 'recipient', type: 'address' },
+    ],
+    name: 'unwrapWETH9',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'token', type: 'address' },
+      { internalType: 'uint256', name: 'amountMinimum', type: 'uint256' },
+      { internalType: 'address', name: 'recipient', type: 'address' },
+    ],
+    name: 'sweepToken',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function',
+  },
 ];

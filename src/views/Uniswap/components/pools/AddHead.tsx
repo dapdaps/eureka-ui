@@ -44,7 +44,7 @@ const AddLiquidityHeader = ({
   onCleanAll,
 }: {
   showCleanAll?: boolean;
-  onCleanAll: () => void;
+  onCleanAll?: () => void;
 }) => {
   const [showSettings, setShowSettings] = useState(false);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -62,7 +62,7 @@ const AddLiquidityHeader = ({
         {showCleanAll ? (
           <StyledClear
             onClick={() => {
-              onCleanAll();
+              onCleanAll?.();
             }}
           >
             Clean all

@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledWrap = styled.div`
@@ -42,15 +42,11 @@ const StyledSwitchButton = styled.div<{ on: boolean }>`
     background-color: ${(props) => (props.on ? '#62DDFF' : '#4E4E4E')};
   }
 `;
-const PoolRemoveCollect = () => {
-  const [on, setOn] = useState(false);
-  function doSwitch() {
-    setOn(!on);
-  }
+const PoolRemoveCollect = ({ useWeth, setUseWeth }: any) => {
   return (
     <StyledWrap className="vchb">
       <span>Collect as WETH</span>
-      <StyledSwitchButton onClick={doSwitch} on={on}>
+      <StyledSwitchButton onClick={setUseWeth} on={useWeth}>
         <span className="roll"></span>
       </StyledSwitchButton>
     </StyledWrap>

@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledWrap = styled.div`
@@ -70,25 +70,37 @@ const StyledInputRange = styled.div`
     cursor: pointer;
   }
 `;
-const PoolRemoveAmount = () => {
-  const [percent] = useState(['25%', '50%', '75%', 'Max']);
+const PERCENTS = [25, 50, 75, 100];
+const PoolRemoveAmount = ({ percent, setPercent }: any) => {
   return (
     <StyledWrap>
       <span className="title">Amount</span>
       <StyledQuick className="vchb">
-        <span className="v">50%</span>
+        <span className="v">{percent}%</span>
         <div className="hvc gap-8">
-          {percent.map((p) => {
+          {PERCENTS.map((p) => {
             return (
-              <StyledItem className="hvc" key={p}>
-                {p}
+              <StyledItem
+                className="hvc"
+                key={p}
+                onClick={() => {
+                  setPercent(p);
+                }}
+              >
+                {p === 100 ? 'Max' : p + '%'}
               </StyledItem>
             );
           })}
         </div>
       </StyledQuick>
       <StyledInputRange>
-        <input type="range" />
+        <input
+          type="range"
+          value={percent}
+          onChange={(ev) => {
+            setPercent(ev.target.value);
+          }}
+        />
       </StyledInputRange>
     </StyledWrap>
   );

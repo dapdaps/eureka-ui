@@ -38,7 +38,12 @@ const NAVS = [
   {
     label: 'Pool',
     path: '/linea/uniswap/pools',
-    active: ['/linea/uniswap/pools', '/linea/uniswap/pools-add-liquidity', '/linea/uniswap/pools-detail-liquidity'],
+    active: [
+      '/linea/uniswap/pools',
+      '/linea/uniswap/pools-add-liquidity',
+      '/linea/uniswap/pools-detail-liquidity',
+      '/linea/uniswap/pools-remove-liquidity',
+    ],
   },
 ];
 

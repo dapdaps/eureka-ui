@@ -11,15 +11,9 @@ export default function usePool(token0: string, token1: string, fee: number, tok
   useEffect(() => {
     if (!token0 || !token1 || !fee) return;
     const getInfo = async () => {
-      if (tokenId && cachedPoolsStore.getPool(tokenId)) {
-        setPool(cachedPoolsStore.getPool(tokenId));
-        setLoading(false);
-        return;
-      }
       setLoading(true);
       try {
         const poolInfo = await getPoolInfo({ token0, token1, fee, provider });
-
         if (tokenId) {
           cachedPoolsStore.setPool({ ...poolInfo, id: tokenId });
         }

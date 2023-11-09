@@ -6,7 +6,6 @@ import config from '@/config/uniswap/linea';
 import { useSettingsStore } from '@/stores/settings';
 import positionAbi from '../abi/positionAbi';
 import { getTokenAddress } from '../utils';
-import { parseUnits, formatUnits } from 'ethers/lib/utils';
 
 // token0
 // token1 0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068
@@ -61,14 +60,6 @@ export default function useAddLiquidity(onSuccess: () => void, onError: () => vo
         ]),
       );
     } else {
-      console.log({
-        tokenId: tokenId,
-        amount0Desired: _amount0,
-        amount1Desired: _amount1,
-        amount0Min: _amount0Min,
-        amount1Min: _amount1Min,
-        deadline: _deadline,
-      });
       calldatas.push(
         Interface.encodeFunctionData('increaseLiquidity', [
           {
