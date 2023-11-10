@@ -61,16 +61,18 @@ const Modal = ({
   title,
   width = 460,
   content,
+  style = {},
   onClose,
 }: {
   display: boolean;
   title: string | ReactNode;
   width?: number;
   content: ReactNode;
+  style?: any;
   onClose: () => void;
 }) => {
   return (
-    <Dialog className={display ? 'display' : ''}>
+    <Dialog className={display ? 'display' : ''} style={style}>
       <Overlay onClick={onClose}>
         <Main
           width={width}

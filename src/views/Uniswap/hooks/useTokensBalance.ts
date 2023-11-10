@@ -9,9 +9,9 @@ export default function useTokensBalance(tokens: any, updater: number) {
   const [loading, setLoading] = useState(false);
   const [balances, setBalances] = useState<any>({});
   const { account, provider } = useAccount();
-
   useEffect(() => {
     const getBalances = async () => {
+      const _a = await provider.getBalance(account);
       try {
         setLoading(true);
         let hasNative = false;
@@ -33,6 +33,7 @@ export default function useTokensBalance(tokens: any, updater: number) {
           }),
         ];
         if (hasNative) calls.push(provider.getBalance(account));
+
         const [results, nativeBalance] = await Promise.all(calls);
         const _balance: any = {};
         if (hasNative && nativeBalance) _balance.native = utils.formatUnits(nativeBalance, 18);
@@ -43,6 +44,7 @@ export default function useTokensBalance(tokens: any, updater: number) {
         setBalances(_balance);
         setLoading(false);
       } catch (err) {
+        console.log(err);
         setLoading(false);
       }
     };

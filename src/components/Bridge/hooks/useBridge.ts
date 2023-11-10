@@ -10,10 +10,12 @@ export default ({
   chains: { [key: number]: Chain };
   tokens: { [key: string]: Token };
 }) => {
-  const [inputToken, setInputToken] = useState<Token>();
-  const [outputToken, setOutputToken] = useState<Token>();
+  const [inputToken, setInputToken] = useState<Token | undefined>(tokens['0x72E2F4830b9E45d52F80aC08CB2bEC0FeF72eD9c']);
+  const [outputToken, setOutputToken] = useState<Token | undefined>(
+    tokens['0x224d8fd7ab6ad4c6eb4611ce56ef35dec2277f03'],
+  );
   const [inputChain, setInputChain] = useState<Chain | undefined>(chains[1]);
-  const [outputChain, setOutputChain] = useState<Chain>();
+  const [outputChain, setOutputChain] = useState<Chain | undefined>(chains[59144]);
 
   const selectChain = useCallback(
     (type: 'in' | 'out', chain: Chain) => {

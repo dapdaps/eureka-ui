@@ -58,7 +58,7 @@ export default {
     chainName: 'Linea',
     icon: 'https://ipfs.near.social/ipfs/bafkreidase4ydzf6b7cme2tx5r45vt6ua2mzdkoykwcrbydfudb4xvekvy',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-    rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
+    rpcUrls: ['https://rpc.linea.build'],
     blockExplorers: 'https://lineascan.build',
   },
   59140: {

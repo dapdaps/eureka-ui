@@ -62,9 +62,9 @@ const Select = ({ item }: { item?: Item }) => {
           </>
         )}
       </Item>
-      <DownArrow>
+      {/* <DownArrow>
         <ArrowIcon />
-      </DownArrow>
+      </DownArrow> */}
     </Container>
   );
 };

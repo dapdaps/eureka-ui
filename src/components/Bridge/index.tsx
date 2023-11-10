@@ -171,8 +171,8 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
               token={inputToken}
               chain={inputChain}
               onClick={(type: 'chain' | 'token', item?: Token | Chain) => {
-                setClickType('in');
-                handleSelectClick(type, item);
+                // setClickType('in');
+                // handleSelectClick(type, item);
               }}
             />
           </>
@@ -186,8 +186,8 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
               chain={outputChain}
               tokenDisabled
               onClick={(type: 'chain' | 'token', item?: Token | Chain) => {
-                setClickType('out');
-                handleSelectClick(type, item);
+                // setClickType('out');
+                // handleSelectClick(type, item);
               }}
             />
           </>

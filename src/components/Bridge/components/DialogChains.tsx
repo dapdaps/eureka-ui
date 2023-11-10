@@ -49,6 +49,7 @@ const DialogChains = ({
       display={display}
       title="Select Network"
       onClose={onClose}
+      style={{ borderRadius: '32px' }}
       content={
         <Chains>
           {chains.map((chain) => (

@@ -78,6 +78,7 @@ const DialogTokens = ({
       display={display}
       title="Select Token"
       onClose={onClose}
+      style={{ borderRadius: '32px' }}
       content={
         <>
           <InputWarpper>
