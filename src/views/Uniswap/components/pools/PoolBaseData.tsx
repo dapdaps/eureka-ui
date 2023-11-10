@@ -2,6 +2,7 @@ import { memo, useState } from 'react';
 import styled from 'styled-components';
 import { usePriceStore } from '@/stores/price';
 import { balanceFormated } from '@/utils/balance';
+import TokenIcon from '../../TokenIcon';
 import { getTotalValues } from '../../utils/getValues';
 import NFT from '../Nft';
 import ClaimFeesModal from './ClaimFeesModal';
@@ -133,7 +134,7 @@ const Liquidity = ({ detail, isReverse }: { detail: any; isReverse: boolean }) =
       <div className={`box ${!isReverse && 'reverse'}`}>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src={detail.token0.icon} />
+            <TokenIcon token={detail.token0} />
             <span className="symbol">{detail.token0.symbol}</span>
           </div>
           <span className="balance">
@@ -143,7 +144,7 @@ const Liquidity = ({ detail, isReverse }: { detail: any; isReverse: boolean }) =
         </div>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src={detail.token1.icon} />
+            <TokenIcon token={detail.token1} />
             <span className="symbol">{detail.token1.symbol}</span>
           </div>
           <span className="balance">
@@ -194,14 +195,14 @@ const UnclaimedFees = ({
       <div className={`box ${!isReverse && 'reverse'}`}>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src={detail.token0.icon} />
+            <TokenIcon token={detail.token0} />
             <span className="symbol">{detail.token0.symbol}</span>
           </div>
           <span className="balance">{balanceFormated(collectData.collectToken0, 4)}</span>
         </div>
         <div className="vchb w-full">
           <div className="hvc">
-            <img src={detail.token1.icon} />
+            <TokenIcon token={detail.token1} />
             <span className="symbol">{detail.token1.symbol}</span>
           </div>
           <span className="balance">{balanceFormated(collectData.collectToken1, 4)}</span>

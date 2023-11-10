@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import Big from 'big.js';
-import CurrencyIcon from '@/components/Logo/CurrencyLogo';
 import Loading from '@/components/Icons/Loading';
 import useToken from '../hooks/useToken';
 import usePool from '../hooks/usePool';
 import { tickToPrice } from '../utils/tickMath';
 import { useMemo } from 'react';
+import TokenIcon from '../TokenIcon';
 import { StatusColor } from '../config';
 
 const Record = styled.div`
@@ -85,8 +85,8 @@ export default function PositionItem({
     <Record onClick={onClick}>
       <RecordDetails>
         <RecordPool>
-          <CurrencyIcon currency={token0} size={22} />
-          <CurrencyIcon currency={token1} size={22} style={{ marginLeft: '-14px' }} />
+          <TokenIcon token={token0} />
+          <TokenIcon token={token1} style={{ marginLeft: '-14px' }} />
           <span>
             {token0.symbol}/{token1.symbol}
           </span>

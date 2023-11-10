@@ -1,11 +1,10 @@
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 import { memo, useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
-
+import TokenIcon from '../../TokenIcon';
 import { tickToPrice } from '../../utils/tickMath';
 
 const StyledContainer = styled.div`
@@ -160,7 +159,7 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
           }}
         />
         <div className="token">
-          <img src={token?.icon || DEFAULT_TOKEN_ICON} />
+          {token && <TokenIcon token={token} />}
           <span className="symbol">{token?.symbol}</span>
         </div>
       </StyledTop>

@@ -14,6 +14,7 @@ import Fee from './components/pools/Fee';
 import SelectPair from './components/pools/SelectPair';
 import SetPriceRange from './components/pools/SetPriceRange';
 import SubmitButton from './components/pools/SubmitButton';
+import AddLiquidityNoPair from './components/AddLiquidityNoPair';
 import PreviewModal from './components/pools/PreviewModal';
 
 const StyledContainer = styled.div`
@@ -36,6 +37,7 @@ const PoolsAddLiquidity = () => {
   const { token0, token1, fee, onSelectToken, onCleanAll, onSelectFee, onExchangeTokens } = useAddLiquidityData();
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
+  const [price, setPrice] = useState('');
   const [ready, setReady] = useState(false);
   const [errorTips, setErrorTips] = useState('');
   const [showPreview, setShowPreview] = useState(false);
@@ -91,7 +93,13 @@ const PoolsAddLiquidity = () => {
   }, [value0, value1, balanceLoading, token0, token1]);
   return ready ? (
     <StyledContainer>
-      <Head onCleanAll={onCleanAll} />
+      <Head
+        onCleanAll={() => {
+          onCleanAll();
+          setLowerTick(undefined);
+          setHighTick(undefined);
+        }}
+      />
       <SelectPair token0={token0} token1={token1} onSelectToken={onSelectToken} />
       <StyledBody disabled={!token0 || !token1}>
         <Fee fee={fee} disabled={!token0 || !token1} onSelectFee={onSelectFee} />
@@ -118,6 +126,7 @@ const PoolsAddLiquidity = () => {
             <Chart />
           </>
         )}
+        {noPair && <AddLiquidityNoPair token0={token0} token1={token1} price={price} setPrice={setPrice} />}
         <DepositAmount
           token0={token0}
           token1={token1}
@@ -147,6 +156,7 @@ const PoolsAddLiquidity = () => {
         value0={value0}
         token1={token1}
         value1={value1}
+        price={price}
         lowerTick={lowerTick}
         highTick={highTick}
         tick={currentTick}

@@ -4,6 +4,7 @@ import Big from 'big.js';
 import useAccount from '@/hooks/useAccount';
 import config from '@/config/uniswap/linea';
 import { useSettingsStore } from '@/stores/settings';
+import useTokens from './useTokens';
 import positionAbi from '../abi/positionAbi';
 import { getTokenAddress } from '../utils';
 
@@ -11,7 +12,7 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
   const slippage = useSettingsStore((store: any) => store.slippage);
-
+  const { addHistoryToken } = useTokens();
   const onAdd = async ({
     token0,
     token1,
@@ -24,6 +25,7 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     isMint,
     tokenId,
     poolTokens,
+    price,
   }: any) => {
     if (!account || !provider) return;
     const _token0Address = getTokenAddress(token0.address, true);
@@ -37,7 +39,7 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
           _token0Address,
           _token1Address,
           fee,
-          new Big(Math.sqrt(value1 / value0)).mul(2 ** 96).toString(),
+          new Big(Math.sqrt(price)).mul(2 ** 96).toString(),
         ]),
       );
     }
@@ -48,19 +50,6 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     const _deadline = Math.ceil(Date.now() / 1000) + 60;
 
     if (isMint) {
-      console.log({
-        token0: _token0Address,
-        token1: _token1Address,
-        fee: fee,
-        tickLower: tickLower,
-        tickUpper: tickUpper,
-        amount0Desired: _amount0,
-        amount1Desired: _amount1,
-        amount0Min: _amount0Min,
-        amount1Min: _amount1Min,
-        recipient: account,
-        deadline: _deadline,
-      });
       let isReverse = false;
       if (poolTokens && poolTokens.token0 && poolTokens.token1) {
         isReverse = _token0Address === poolTokens.token1.address;
@@ -73,10 +62,10 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
             fee: fee,
             tickLower: tickLower,
             tickUpper: tickUpper,
-            amount0Desired: _amount0,
-            amount1Desired: _amount1,
-            amount0Min: _amount0Min,
-            amount1Min: _amount1Min,
+            amount0Desired: isReverse ? _amount1 : _amount0,
+            amount1Desired: isReverse ? _amount0 : _amount1,
+            amount0Min: 0,
+            amount1Min: 0,
             recipient: account,
             deadline: _deadline,
           },
@@ -111,23 +100,28 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
         value,
       };
+      console.log(txn);
       const signer = provider.getSigner(account);
-      let estimateGas = new Big(200000);
+      let estimateGas = new Big(500000);
       try {
         estimateGas = await signer.estimateGas(txn);
       } catch (err) {
         console.log('err', err);
       }
-      // TODO
-      setLoading(false);
-      return;
+      const gasPrice = await provider.getGasPrice();
       const newTxn = {
         ...txn,
         gasLimit: estimateGas.mul(120).div(100).toString(),
+        gasPrice: gasPrice,
       };
+
       const tx = await signer.sendTransaction(newTxn);
       const res = await tx.wait();
       if (res.status === 1) {
+        addHistoryToken({
+          [token0.address]: token0,
+          [token1.address]: token1,
+        });
         onSuccess();
       } else {
         onError?.();

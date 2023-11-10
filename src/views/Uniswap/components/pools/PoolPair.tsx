@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
+import TokenIcon from '../../TokenIcon';
 import { StatusColor } from '../../config';
 
 const StyledWrap = styled.div`
@@ -78,8 +79,13 @@ const PoolPair = ({ detail, isReverse, tokenId }: { detail: any; isReverse: bool
     <StyledWrap>
       <StyledLeft className="hvc">
         <div className="hvc icon">
-          <img src={isReverse ? detail.token0.icon : detail.token1.icon} />
-          <img src={isReverse ? detail.token1.icon : detail.token0.icon} className="ml-1.5" />
+          <TokenIcon token={isReverse ? detail.token0 : detail.token1} />
+          <TokenIcon
+            token={isReverse ? detail.token1 : detail.token0}
+            style={{
+              marginLeft: '-5px',
+            }}
+          />
         </div>
         <span className="symbol">
           {isReverse ? detail.token0.symbol : detail.token1.symbol}/

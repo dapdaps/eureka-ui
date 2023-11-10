@@ -95,6 +95,7 @@ const PreviewModal = (props: any) => {
     tick,
     fee,
     tokenId,
+    price,
     noPair,
     isMint,
     poolTokens,
@@ -147,6 +148,7 @@ const PreviewModal = (props: any) => {
                 isMint,
                 tokenId,
                 poolTokens,
+                price,
               });
             }}
             disabled={loading}

@@ -1,6 +1,6 @@
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 import { memo } from 'react';
 import styled from 'styled-components';
+import TokenIcon from '../../TokenIcon';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -48,14 +48,14 @@ const PoolIncreaseLiquidityData = ({ token0, token1, value0, value1 }: any) => {
     <StyledWrap>
       <div className="vchb">
         <div className="hvc token">
-          <img src={token0?.icon || DEFAULT_TOKEN_ICON} />
+          {token0 && <TokenIcon token={token0} />}
           <span>{token0?.symbol}</span>
         </div>
         <span className="num">{value0}</span>
       </div>
       <div className="vchb">
         <div className="hvc token">
-          <img src={token1?.icon || DEFAULT_TOKEN_ICON} />
+          {token1 && <TokenIcon token={token1} />}
           <span>{token1?.symbol}</span>
         </div>
         <span className="num">{value1}</span>

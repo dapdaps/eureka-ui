@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { balanceFormated } from '@/utils/balance';
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
+import TokenIcon from '../../TokenIcon';
 
 const StyledWrap = styled.div`
   border: 1px solid #303030;
@@ -45,20 +45,12 @@ const PoolRemoveToken = ({ token0, token1, liquidityToken0, liquidityToken1, col
   return (
     <StyledWrap>
       <StyledPool>
-        <RowData name={`Pooled ${token0?.symbol}:`} value={balanceFormated(liquidityToken0, 4)} icon={token0?.icon} />
-        <RowData name={`Pooled ${token1?.symbol}:`} value={balanceFormated(liquidityToken1, 4)} icon={token1?.icon} />
+        <RowData name={`Pooled ${token0?.symbol}:`} value={balanceFormated(liquidityToken0, 4)} token={token0} />
+        <RowData name={`Pooled ${token1?.symbol}:`} value={balanceFormated(liquidityToken1, 4)} token={token1} />
       </StyledPool>
       <StyledEarnedFees>
-        <RowData
-          name={`${token0?.symbol} Fees Earned:`}
-          value={balanceFormated(collectToken0, 4)}
-          icon={token0?.icon}
-        />
-        <RowData
-          name={`${token1?.symbol} Fees Earned:`}
-          value={balanceFormated(collectToken1, 4)}
-          icon={token1?.icon}
-        />
+        <RowData name={`${token0?.symbol} Fees Earned:`} value={balanceFormated(collectToken0, 4)} token={token0} />
+        <RowData name={`${token1?.symbol} Fees Earned:`} value={balanceFormated(collectToken1, 4)} token={token1} />
       </StyledEarnedFees>
     </StyledWrap>
   );
@@ -78,13 +70,13 @@ const StyleRowData = styled.div`
     }
   }
 `;
-const RowData = ({ name, value, icon }: { name: string; value: string; icon: string }) => {
+const RowData = ({ name, value, token }: { name: string; value: string; token: any }) => {
   return (
     <StyleRowData className="vchb">
       <span className="text">{name}</span>
       <div className="hvc value">
         <span>{value}</span>
-        <img src={icon || DEFAULT_TOKEN_ICON} />
+        <TokenIcon token={token} />
       </div>
     </StyleRowData>
   );

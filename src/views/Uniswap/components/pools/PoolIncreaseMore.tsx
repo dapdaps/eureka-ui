@@ -1,9 +1,9 @@
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 import { memo } from 'react';
 import styled from 'styled-components';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
 import { usePriceStore } from '@/stores/price';
+import TokenIcon from '../../TokenIcon';
 
 const StyledWrap = styled.div`
   margin-top: 30px;
@@ -92,7 +92,7 @@ const InputBox = ({ token, value, setValue, loading, balance }: any) => {
           }}
         />
         <div className="token">
-          <img src={token.icon || DEFAULT_TOKEN_ICON} />
+          {token && <TokenIcon token={token} />}
           <span className="symbol">{token.symbol}</span>
         </div>
       </StyledTop>

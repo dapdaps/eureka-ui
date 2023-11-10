@@ -1,8 +1,7 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
-
 import SelectTokenModal from './SelectTokenModal';
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
+import TokenIcon from '../../TokenIcon';
 
 const StyledContainer = styled.div`
   flex-grow: 1;
@@ -62,7 +61,7 @@ const SelectToken = ({ onSelectToken, token }: any) => {
       {!!token ? (
         <StyledContentBox onClick={openModal}>
           <div className="tokenInfo">
-            <img src={token.icon || DEFAULT_TOKEN_ICON} />
+            <TokenIcon token={token} />
             <span className="tokeName">{token.symbol}</span>
           </div>
           <ArrowDown />

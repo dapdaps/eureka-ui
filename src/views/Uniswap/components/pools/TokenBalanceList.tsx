@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { utils } from 'ethers';
 import { balanceFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
+import TokenIcon from '../../TokenIcon';
 import { copyText } from '@/utils/copy';
 import { TickIcon, CopyIcon } from './Icons';
 import ImportTokenModal from './ImportTokenModal';
@@ -193,7 +193,7 @@ const TokenRow = ({ symbol, name, address, balance, icon, loading, isSelected, o
   return (
     <StyledRow className="vchb" onClick={onClick}>
       <div className="hvc L">
-        <img src={icon || DEFAULT_TOKEN_ICON} />
+        <TokenIcon token={{ symbol, address, icon }} />
         <div className="name_wrapper">
           <div className="name">{name}</div>
           <div className="symbol">
@@ -244,7 +244,7 @@ const ImportTokenRow = ({ token, onImportTokenCb }: any) => {
   return (
     <StyledImportRow className="vchb">
       <div className="hvc L">
-        <img src={icon || DEFAULT_TOKEN_ICON} />
+        <TokenIcon token={token} />
         <div className="name_wrapper">
           <span className="name">{name}</span>
           <span className="symbol">{symbol}</span>

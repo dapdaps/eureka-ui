@@ -16,15 +16,6 @@ export default function useIncreaseDetail(tokenId?: string) {
     const pool = poolsStore.getPool(tokenId) || {};
     const _token0 = tokens[getTokenAddress(pool.token0)];
     const _token1 = tokens[getTokenAddress(pool.token1)];
-    console.log({
-      liquidity: position.liquidity,
-      sqrtPriceX96: pool.sqrtPriceX96,
-      tickLow: position.tickLower,
-      tickHigh: position.tickUpper,
-      Decimal0: _token0.decimals,
-      Decimal1: _token1.decimals,
-      currentTick: pool.currentTick,
-    });
     const [liquidityToken0, liquidityToken1] = getTokenAmounts({
       liquidity: position.liquidity,
       sqrtPriceX96: pool.sqrtPriceX96,

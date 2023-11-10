@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { StatusColor } from '../../config';
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
+import TokenIcon from '../../TokenIcon';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -19,9 +19,6 @@ const StyledLeft = styled.div`
     width: 22px;
     height: 22px;
     border-radius: 100px;
-  }
-  .ml-1.5 {
-    margin-left: -5px;
   }
   .symbol {
     font-size: 20px;
@@ -75,8 +72,8 @@ const PoolPair = ({ status, token0, token1, fee }: any) => {
     <StyledWrap>
       <StyledLeft className="hvc">
         <div className="hvc icon">
-          <img src={token0?.icon || DEFAULT_TOKEN_ICON} />
-          <img src={token1?.icon || DEFAULT_TOKEN_ICON} className="ml-1.5" />
+          <TokenIcon token={token0} />
+          <TokenIcon token={token1} style={{ marginLeft: '-5px' }} />
         </div>
         <span className="symbol">
           {token0?.symbol}/{token1?.symbol}

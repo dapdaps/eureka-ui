@@ -4,8 +4,8 @@ import { useTokensStore } from '@/stores/tokens';
 import { CopyIcon, LinkIcon, WarningIcon } from './Icons';
 import Modal from './ModalBox';
 import { copyText } from '@/utils/copy';
-import { DEFAULT_TOKEN_ICON } from '@/config/uniswap/linea';
 import config from '@/config/uniswap/linea';
+import TokenIcon from '../../TokenIcon';
 
 const StyledContent = styled.div`
   width: 390px;
@@ -65,7 +65,7 @@ const ImportTokenModal = (props: any) => {
         <WarningIcon />
         <StyledTip>This token isn’t frequently swapped. Please do your own research before trading.</StyledTip>
         <StyledToken className="hvc">
-          <img src={importToken.icon || DEFAULT_TOKEN_ICON} />
+          <TokenIcon token={importToken} />
           <div className="base">
             <span className="symbol">{importToken.symbol}</span>
             <div className="hvc data">
