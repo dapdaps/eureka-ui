@@ -11,8 +11,8 @@ import { useBosComponents } from '@/hooks/useBosComponents';
 import { useSignInRedirect } from '@/hooks/useSignInRedirect';
 import { useAuthStore } from '@/stores/auth';
 
-import LogoBlack from '../icons/logo-black.svg';
-import NearLogotype from '../icons/near-logotype.svg';
+import LogoBlack from '@/components/Icons/LogoBlack';
+import NearLogotype from '@/components/Icons/NearLogotype';
 
 type Props = {
   onClickShowMenu: () => void;
@@ -169,7 +169,7 @@ export function TopNavigation(props: Props) {
       )}
 
       <Link href="/" className={classNames(['logo-link', { large: !signedIn }])}>
-        <Image src={signedIn ? LogoBlack : NearLogotype} alt="NEAR logo" />
+        {signedIn ? <LogoBlack /> : <NearLogotype />}
       </Link>
 
       {!signedIn && (

@@ -12,8 +12,8 @@ import { useAuthStore } from '@/stores/auth';
 import { flushEvents } from '@/utils/analytics';
 
 import { UserDropdownMenu } from '../desktop/UserDropdownMenu';
-import NearLogotype from '../icons/near-logotype.svg';
-import SearchIcon from '../icons/search.svg';
+import NearLogotype from '@/components/Icons/NearLogotype';
+import SearchIcon from '@/components/Icons/Search';
 import { NotificationButton } from '../NotificationButton';
 import { AccordionMenu } from './AccordionMenu';
 
@@ -170,9 +170,11 @@ export function MenuLeft(props: Props) {
           className="close-button"
           onClick={props.onCloseMenu}
         />
-
-        <Image className="near-logotype" src={NearLogotype} alt="NEAR logotype" onClick={() => router.push('/')} />
-        <button className="search-btn" style={{ backgroundImage: `url(${SearchIcon.src})` }} onClick={search}>
+        <div className="near-logotype" onClick={() => router.push('/')}>
+          <NearLogotype />
+        </div>
+        <button className="search-btn" onClick={search}>
+          <SearchIcon />
           Search NEAR
         </button>
         <AccordionMenu />

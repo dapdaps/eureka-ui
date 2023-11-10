@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
@@ -11,10 +10,10 @@ import { useAuthStore } from '@/stores/auth';
 import { recordEvent } from '@/utils/analytics';
 import { flushEvents } from '@/utils/analytics';
 
-import LogoBlack from '../icons/logo-black.svg';
-import NearLogotype from '../icons/near-logotype.svg';
-import ReturnIconImage from '../icons/return.svg';
-import SearchIconImage from '../icons/search.svg';
+import LogoBlack from '@/components/Icons/LogoBlack';
+import NearLogotype from '@/components/Icons/NearLogotype';
+import ReturnIconImage from '@/components/Icons/Return';
+import SearchIconImage from '@/components/Icons/Search';
 import { NotificationButton } from '../NotificationButton';
 import { MainNavigationMenu } from './MainNavigationMenu';
 import { TypeAheadDropdown } from './TypeAheadDropdown';
@@ -163,14 +162,7 @@ export const DesktopNavigation = () => {
   return (
     <StyledNavigation className={`${scrolled ? 'border-bottom' : ''}`}>
       <div className="container-xl container-fluid container-wrapper">
-        <Link href="/">
-          <Image
-            priority
-            className={signedIn ? 'logo-only' : ''}
-            src={signedIn ? LogoBlack : NearLogotype}
-            alt="NEAR"
-          />
-        </Link>
+        <Link href="/">{signedIn ? <LogoBlack /> : <NearLogotype />}</Link>
 
         <div className="form-wrapper">
           <form
@@ -182,7 +174,7 @@ export const DesktopNavigation = () => {
           >
             <input
               placeholder="Search"
-              style={{ backgroundImage: `url(${SearchIconImage.src})` }}
+              style={{ backgroundImage: `url(${SearchIconImage})` }}
               onFocus={() => {
                 setSearchIsFocused(true);
                 recordEvent('click-navigation-search');
@@ -201,7 +193,7 @@ export const DesktopNavigation = () => {
             </TypeAheadDropdownContainer>
           )}
 
-          {searchIsFocused && <Image src={ReturnIconImage} alt="Return" />}
+          {searchIsFocused && <ReturnIconImage />}
         </div>
         <MainNavigationMenu />
         <div className="right-side-actions">

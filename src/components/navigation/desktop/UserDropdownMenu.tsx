@@ -18,7 +18,7 @@ const arrowDown = (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <path d="M1 1L5.5 5.09091L10 1" stroke="white" stroke-width="1.63636" stroke-linecap="round" />
+    <path d="M1 1L5.5 5.09091L10 1" stroke="white" strokeWidth="1.63636" strokeLinecap="round" />
   </svg>
 );
 
@@ -109,9 +109,7 @@ const StyledDropdown = styled.div`
     border-radius: 6px;
     margin-top: 11px;
     padding: 5px;
-    box-shadow:
-      0px 10px 38px -10px rgba(22, 23, 24, 0.35),
-      0px 10px 20px -15px rgba(22, 23, 24, 0.2);
+    box-shadow: 0px 10px 38px -10px rgba(22, 23, 24, 0.35), 0px 10px 20px -15px rgba(22, 23, 24, 0.2);
     animation-duration: 600ms;
     animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform, opacity;

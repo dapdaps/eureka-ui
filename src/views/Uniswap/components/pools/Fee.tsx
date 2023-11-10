@@ -152,8 +152,8 @@ const FeeCell = ({
             <path
               d="M6 9.5L9 12.5L14.5 7"
               stroke="#131313"
-              stroke-width="2"
-              stroke-linecap="round"
+              strokeWidth="2"
+              strokeLinecap="round"
               stroke-linejoin="round"
             />
           </svg>
