@@ -5,6 +5,7 @@ const StyledLeftBg = styled.div`
   bottom: -20px;
   left: 0px;
   transform: translateX(-100%);
+  opacity: 0.3;
 `;
 
 export const LeftBg = ({ style }: any) => {
