@@ -1,15 +1,15 @@
 import { useState } from 'react';
 
-import { useVmStore } from '@/stores/vm';
+import useAccount from '@/hooks/useAccount';
 import type { Chain } from '@/types';
 
 export default () => {
   const [switching, setSwitching] = useState(false);
-  const { ethersContext } = useVmStore();
+  const { provider } = useAccount();
   const switchNetwork = async (chain: Chain) => {
     try {
       setSwitching(true);
-      await ethersContext.provider.request({
+      await provider.request({
         method: 'wallet_switchEthereumChain',
         params: [{ chainId: `0x${chain.chainId.toString(16)}` }],
       });
@@ -20,7 +20,7 @@ export default () => {
         return;
       }
       try {
-        await ethersContext.provider.request({
+        await provider.request({
           method: 'wallet_addEthereumChain',
           params: [
             {

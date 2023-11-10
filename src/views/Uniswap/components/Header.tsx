@@ -33,18 +33,18 @@ const StyledNav = styled.div<{ active?: boolean }>`
 const NAVS = [
   {
     label: 'Swap',
-    path: '/linea/uniswap/swap',
-    active: ['/linea/uniswap/swap'],
+    path: '/uniswap/swap',
+    active: ['/uniswap/swap'],
   },
   {
     label: 'Pool',
-    path: '/linea/uniswap/pools',
+    path: '/uniswap/pools',
     active: [
-      '/linea/uniswap/pools',
-      '/linea/uniswap/pools-add-liquidity',
-      '/linea/uniswap/pools-detail-liquidity',
-      '/linea/uniswap/pools-remove-liquidity',
-      '/linea/uniswap/pools-increase-liquidity',
+      '/uniswap/pools',
+      '/uniswap/pools-add-liquidity',
+      '/uniswap/pools-detail-liquidity',
+      '/uniswap/pools-remove-liquidity',
+      '/uniswap/pools-increase-liquidity',
     ],
   },
 ];

@@ -93,7 +93,7 @@ const Pools = () => {
         <Label>Pools</Label>
         <PositionButton
           onClick={() => {
-            router.push('/linea/uniswap/pools-add-liquidity');
+            router.push('/uniswap/pools-add-liquidity');
           }}
         >
           + New position
@@ -120,7 +120,7 @@ const Pools = () => {
               key={position.tokenId}
               {...position}
               onClick={() => {
-                router.push('/linea/uniswap/pools-detail-liquidity?id=' + position.tokenId);
+                router.push('/uniswap/pools-detail-liquidity?id=' + position.tokenId);
               }}
             />
           ))

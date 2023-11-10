@@ -17,7 +17,10 @@ export default function usePositions() {
       setLoading(true);
       const balanceResult = await PositionContract.balanceOf(account);
       const accountBalance = balanceResult.toNumber();
-      if (!accountBalance) return;
+      if (!accountBalance) {
+        setLoading(false);
+        return;
+      }
       const tokenRequests = [];
       for (let i = 0; i < accountBalance; i++) {
         tokenRequests.push({

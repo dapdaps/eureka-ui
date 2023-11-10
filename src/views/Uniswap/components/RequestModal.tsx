@@ -112,7 +112,7 @@ export default function RequestModal({ isOpen, data, onRequestClose }: any) {
           <StyledButton
             onClick={() => {
               onRequestClose();
-              status === 0 && router.push('/linea/uniswap/pools');
+              status === 0 && router.push('/uniswap/pools');
             }}
           >
             Close
