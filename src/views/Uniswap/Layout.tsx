@@ -10,11 +10,15 @@ const StyledContainer = styled.div`
   height: 100vh;
   overflow-y: auto;
   background-color: #131313;
+  background-image: url(/images/uniswap/right_bg.png);
+  background-repeat: no-repeat;
+  background-position: right top;
 `;
 const StyledContent = styled.div`
   padding-top: 20px;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 
 const Uniswap = ({ children }: { children?: ReactNode }) => {
@@ -34,7 +38,7 @@ const Uniswap = ({ children }: { children?: ReactNode }) => {
     >
       <StyledContainer>
         <Header />
-        <StyledContent>{children}</StyledContent>
+        <StyledContent>{children} </StyledContent>
         <AccountSider isMultiChain={false} />
         <RequestModal
           isOpen={isOpen}

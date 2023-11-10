@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import ConnectButton from './ConnectButton';
 
 const StyledHeader = styled.div`
-  padding: 20px;
+  padding: 20px 40px 20px;
   display: flex;
   justify-content: space-between;
 `;

@@ -6,9 +6,11 @@ import Big from 'big.js';
 import Panel from './components/Panel';
 import PositionItem from './components/PositionItem';
 import usePositions from './hooks/usePositions';
+import { LeftBg } from './styles';
 
 const StyledContainer = styled.div`
   width: 854px;
+  position: relative;
 `;
 const StyledHeader = styled.div`
   display: flex;
@@ -63,7 +65,6 @@ const Empty = styled.div`
   justify-content: center;
   gap: 30px;
 `;
-
 const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;
@@ -138,6 +139,7 @@ const Pools = () => {
           </Empty>
         )}
       </StyledPanel>
+      <LeftBg />
     </StyledContainer>
   );
 };

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-
 import useAccount from '@/hooks/useAccount';
 import type { Chain } from '@/types';
 

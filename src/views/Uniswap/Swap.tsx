@@ -1,15 +1,22 @@
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
+import styled from 'styled-components';
 import config from '@/config/uniswap/linea';
 import { useLayoutStore } from '@/stores/layout';
 import { useSettingsStore } from '@/stores/settings';
 import useTokens from './hooks/useTokens';
+import { LeftBg } from './styles';
+
+const StyledContainer = styled.div`
+  width: 462px;
+  position: relative;
+`;
 
 export default function Swap() {
   const setLayoutStore = useLayoutStore((store) => store.set);
   const settingStore: any = useSettingsStore();
   const { tokens, historyTokens, importToken, addHistoryToken } = useTokens();
   return (
-    <>
+    <StyledContainer>
       <ComponentWrapperPage
         componentProps={{
           ...config,
@@ -40,6 +47,7 @@ export default function Swap() {
         }}
         src={'dapdapbos.near/widget/Linea.Uniswap.Swap.Dex'}
       />
-    </>
+      <LeftBg style={{ top: '370px' }} />
+    </StyledContainer>
   );
 }
