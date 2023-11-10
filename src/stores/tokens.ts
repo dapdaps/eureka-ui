@@ -21,7 +21,7 @@ export const useTokensStore = create(
     }),
     {
       name: 'import-tokens',
-      version: 0.1,
+      version: 0.2,
       storage: createJSONStorage(() => localStorage),
     },
   ),
