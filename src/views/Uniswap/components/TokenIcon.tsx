@@ -36,7 +36,7 @@ export default function TokenIcon({ token, size = 22, style }: any) {
         }
       }}
       onError={() => {
-        setSrc(iconsStore.getIcon(token) || (token?.address && getIconByAddress(token.address)) || DEFAULT_TOKEN_ICON);
+        setSrc(DEFAULT_TOKEN_ICON);
       }}
     ></StyledTokenIcon>
   );

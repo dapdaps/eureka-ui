@@ -31,7 +31,7 @@ const PositionButton = styled.button`
   color: #1b1b1b;
 `;
 const StyledPanel = styled(Panel)`
-  height: 300px;
+  min-height: 300px;
   margin-top: 10px;
 `;
 const PanelHeader = styled.div`

@@ -86,7 +86,9 @@ const TokenBalanceList = (props: any) => {
         token.name.toLowerCase().includes(searchVal?.toLowerCase())) &&
         tab === 'all'
         ? true
-        : token.isImport;
+        : tab === 'import'
+        ? token.isImport
+        : false;
     });
     setTokens(_tokens);
     if (utils.isAddress(searchVal)) {

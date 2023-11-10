@@ -43,8 +43,8 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         ]),
       );
     }
-    const _amount0 = new Big(value0 || 0).mul(10 ** token0.decimals).toFixed();
-    const _amount1 = new Big(value1 || 0).mul(10 ** token1.decimals).toFixed();
+    const _amount0 = new Big(value0 || 0).mul(10 ** token0.decimals).toFixed(0);
+    const _amount1 = new Big(value1 || 0).mul(10 ** token1.decimals).toFixed(0);
     const _deadline = Math.ceil(Date.now() / 1000) + 60;
 
     if (isMint) {
