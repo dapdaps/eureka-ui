@@ -37,7 +37,7 @@ const nextConfig = {
       },
       {
         source: '/linea/uniswap',
-        destination: '/linea/uniswap/pools',
+        destination: '/linea/uniswap/swap',
         permanent: true,
       },
     ];
