@@ -5,7 +5,7 @@ import useToken from '../hooks/useToken';
 import usePool from '../hooks/usePool';
 import { tickToPrice } from '../utils/tickMath';
 import { useMemo } from 'react';
-import TokenIcon from '../TokenIcon';
+import TokenIcon from './TokenIcon';
 import { StatusColor } from '../config';
 
 const Record = styled.div`

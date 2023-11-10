@@ -4,7 +4,7 @@ import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 import { tickToPrice } from '../../utils/tickMath';
 
 const StyledContainer = styled.div`
@@ -155,11 +155,11 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
           type="number"
           value={value}
           onChange={(ev) => {
-            setValue(ev.target.value);
+            setValue(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
           }}
         />
         <div className="token">
-          {token && <TokenIcon token={token} />}
+          <TokenIcon token={token} />
           <span className="symbol">{token?.symbol}</span>
         </div>
       </StyledTop>

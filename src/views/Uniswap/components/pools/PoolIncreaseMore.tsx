@@ -1,9 +1,11 @@
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import styled from 'styled-components';
+import Big from 'big.js';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
 import { usePriceStore } from '@/stores/price';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
+import { tickToPrice } from '../../utils/tickMath';
 
 const StyledWrap = styled.div`
   margin-top: 30px;
@@ -28,8 +30,23 @@ const StyledHead = styled.div`
 const StyledBody = styled.div`
   margin-top: 16px;
 `;
-const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balances, balanceLoading }: any) => {
+const InputBoxs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`;
+const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balances, balanceLoading, reverse }: any) => {
   const { tick, tickHigh, tickLow, token0, token1 } = detail;
+  const price = useMemo(() => {
+    if (!tick || !token0 || !token1) return 0;
+    return tickToPrice({
+      tick: detail.tick,
+      decimals0: token0?.decimals,
+      decimals1: token1?.decimals,
+      isReverse: !reverse,
+      isNumber: true,
+    });
+  }, [tick, token0, token1, reverse]);
   return (
     <StyledWrap>
       <StyledHead>Add more liquidity</StyledHead>
@@ -51,22 +68,28 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
             loading={balanceLoading}
           />
         ) : (
-          <>
+          <InputBoxs>
             <InputBox
               token={token0}
               value={value0}
-              setValue={setValue0}
+              setValue={(value: string) => {
+                setValue0(value);
+                if (value) setValue1(new Big(value).mul(price).toFixed(12));
+              }}
               balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}
             />
             <InputBox
               token={token1}
               value={value1}
-              setValue={setValue1}
+              setValue={(value: string) => {
+                setValue1(value);
+                if (value) setValue0(new Big(1).div(price).mul(value).toFixed(12));
+              }}
               balance={token1 ? balances[token1?.address] : ''}
               loading={balanceLoading}
             />
-          </>
+          </InputBoxs>
         )}
       </StyledBody>
     </StyledWrap>
@@ -88,7 +111,7 @@ const InputBox = ({ token, value, setValue, loading, balance }: any) => {
           type="number"
           value={value}
           onChange={(ev) => {
-            setValue(ev.target.value);
+            setValue(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
           }}
         />
         <div className="token">

@@ -2,7 +2,7 @@ import { memo, useState } from 'react';
 import styled from 'styled-components';
 import { usePriceStore } from '@/stores/price';
 import { balanceFormated } from '@/utils/balance';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 import { getTotalValues } from '../../utils/getValues';
 import NFT from '../Nft';
 import ClaimFeesModal from './ClaimFeesModal';

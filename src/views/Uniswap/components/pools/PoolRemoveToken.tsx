@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { balanceFormated } from '@/utils/balance';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 
 const StyledWrap = styled.div`
   border: 1px solid #303030;

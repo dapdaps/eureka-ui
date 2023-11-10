@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { utils } from 'ethers';
 import { balanceFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 import { copyText } from '@/utils/copy';
 import { TickIcon, CopyIcon } from './Icons';
 import ImportTokenModal from './ImportTokenModal';

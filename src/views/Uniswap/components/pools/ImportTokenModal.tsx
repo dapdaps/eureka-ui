@@ -5,7 +5,7 @@ import { CopyIcon, LinkIcon, WarningIcon } from './Icons';
 import Modal from './ModalBox';
 import { copyText } from '@/utils/copy';
 import config from '@/config/uniswap/linea';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 
 const StyledContent = styled.div`
   width: 390px;

@@ -5,12 +5,13 @@ import useAccount from '@/hooks/useAccount';
 import { useSettingsStore } from '@/stores/settings';
 import config from '@/config/uniswap/linea';
 import positionAbi from '../abi/positionAbi';
-import { getTokenAddress } from '../utils';
+import useRequestModal from './useRequestModal';
 
 export default function useRemoveLiquidity(onSuccess: () => void, onError: () => void) {
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
   const slippage = useSettingsStore((store: any) => store.slippage);
+  const { openRequestModal } = useRequestModal();
 
   const onRemove = async ({ token0, token1, liquidityToken0, liquidityToken1, liquidity, percent, tokenId }: any) => {
     if (!account || !provider) return;
@@ -67,6 +68,12 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
         ]),
       );
     }
+    const modalTrade = {
+      token0: token0.symbol,
+      token1: token1.symbol,
+      value0: liquidityToken0,
+      value1: liquidityToken1,
+    };
 
     try {
       setLoading(true);
@@ -75,18 +82,35 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
       };
       const signer = provider.getSigner(account);
+      openRequestModal({
+        status: 1,
+        trade: modalTrade,
+        open: true,
+      });
       const estimate = await signer.estimateGas(txn);
       const newTxn = {
         ...txn,
         gasLimit: estimate.mul(120).div(100),
       };
       const tx = await signer.sendTransaction(newTxn);
+      openRequestModal({
+        status: 2,
+        trade: modalTrade,
+        tx: tx.transactionHash,
+        open: true,
+      });
       const res = await tx.wait();
       if (res.status === 1) {
         onSuccess();
       } else {
         onError();
       }
+      openRequestModal({
+        status: res.status === 1 ? 0 : 3,
+        trade: modalTrade,
+        tx: tx.transactionHash,
+        open: true,
+      });
       setLoading(false);
     } catch (err) {
       setLoading(false);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useIconsStore } from '@/stores/icons';
 
@@ -14,13 +14,17 @@ const getIconByAddress = (address: string) => {
 };
 export default function TokenIcon({ token, size = 22, style }: any) {
   const iconsStore: any = useIconsStore();
-  const [src, setSrc] = useState(
-    token?.icon ||
-      iconsStore?.getIcon(token) ||
-      (token?.address && getIconByAddress(token.address)) ||
-      DEFAULT_TOKEN_ICON ||
-      '',
-  );
+  const getIcon = () => {
+    if (token?.icon) return token.icon;
+    if (iconsStore?.getIcon(token)) return iconsStore.getIcon(token);
+    if (token?.address && getIconByAddress(token.address)) return token?.address && getIconByAddress(token.address);
+    return DEFAULT_TOKEN_ICON;
+  };
+  const [src, setSrc] = useState('');
+  useEffect(() => {
+    const _icon = getIcon();
+    if (_icon !== src) setSrc(_icon);
+  }, [token]);
   return (
     <StyledTokenIcon
       src={src}

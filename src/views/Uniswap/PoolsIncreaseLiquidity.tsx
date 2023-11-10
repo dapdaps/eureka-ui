@@ -87,6 +87,7 @@ const PoolsIncreaseLiquidity = () => {
               setValue0={setValue0}
               value1={value1}
               setValue1={setValue1}
+              reverse={reverse}
               balances={balances}
               balanceLoading={balanceLoading}
             />

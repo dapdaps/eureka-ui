@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import { StatusColor } from '../../config';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -72,8 +72,8 @@ const PoolPair = ({ status, token0, token1, fee }: any) => {
     <StyledWrap>
       <StyledLeft className="hvc">
         <div className="hvc icon">
-          <TokenIcon token={token0} />
-          <TokenIcon token={token1} style={{ marginLeft: '-5px' }} />
+          {token0 && <TokenIcon token={token0} />}
+          {token1 && <TokenIcon token={token1} style={{ marginLeft: '-5px' }} />}
         </div>
         <span className="symbol">
           {token0?.symbol}/{token1?.symbol}

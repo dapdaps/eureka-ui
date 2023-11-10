@@ -9,7 +9,7 @@ const CloseIcon = styled.div`
   }
 `;
 
-export default function Close({ size = 18, onClose }: { size?: number; onClose: () => void }) {
+export default function Close({ size = 18, onClose }: { size?: number; onClose?: () => void }) {
   return (
     <CloseIcon
       style={{ width: size * 1.5, height: size * 1.5 }}

@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
 import SelectTokenModal from './SelectTokenModal';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 
 const StyledContainer = styled.div`
   flex-grow: 1;

@@ -43,6 +43,7 @@ const NAVS = [
       '/linea/uniswap/pools-add-liquidity',
       '/linea/uniswap/pools-detail-liquidity',
       '/linea/uniswap/pools-remove-liquidity',
+      '/linea/uniswap/pools-increase-liquidity',
     ],
   },
 ];

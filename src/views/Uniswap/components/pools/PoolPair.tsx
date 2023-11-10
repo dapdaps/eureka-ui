@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { memo } from 'react';
 import styled from 'styled-components';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 import { StatusColor } from '../../config';
 
 const StyledWrap = styled.div`

@@ -3,16 +3,16 @@ import { utils } from 'ethers';
 import Big from 'big.js';
 import useAccount from '@/hooks/useAccount';
 import config from '@/config/uniswap/linea';
-import { useSettingsStore } from '@/stores/settings';
 import useTokens from './useTokens';
 import positionAbi from '../abi/positionAbi';
 import { getTokenAddress } from '../utils';
+import useRequestModal from './useRequestModal';
 
 export default function useAddLiquidity(onSuccess: () => void, onError?: () => void) {
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
-  const slippage = useSettingsStore((store: any) => store.slippage);
   const { addHistoryToken } = useTokens();
+  const { openRequestModal } = useRequestModal();
   const onAdd = async ({
     token0,
     token1,
@@ -45,8 +45,6 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     }
     const _amount0 = new Big(value0 || 0).mul(10 ** token0.decimals).toFixed();
     const _amount1 = new Big(value1 || 0).mul(10 ** token1.decimals).toFixed();
-    const _amount0Min = new Big(_amount0.toString()).mul(1 - slippage).toFixed();
-    const _amount1Min = new Big(_amount1.toString()).mul(1 - slippage).toFixed();
     const _deadline = Math.ceil(Date.now() / 1000) + 60;
 
     if (isMint) {
@@ -78,8 +76,8 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
             tokenId: tokenId,
             amount0Desired: _amount0,
             amount1Desired: _amount1,
-            amount0Min: _amount0Min,
-            amount1Min: _amount1Min,
+            amount0Min: 0,
+            amount1Min: 0,
             deadline: _deadline,
           },
         ]),
@@ -93,6 +91,12 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         value = wrappedValue;
       }
     }
+    const modalTrade = {
+      token0: token0.symbol,
+      token1: token1.symbol,
+      value0: value0,
+      value1: value1,
+    };
     try {
       setLoading(true);
       const txn: { to: string; data: string; value: string } = {
@@ -100,9 +104,9 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
         value,
       };
-      console.log(txn);
       const signer = provider.getSigner(account);
       let estimateGas = new Big(500000);
+
       try {
         estimateGas = await signer.estimateGas(txn);
       } catch (err) {
@@ -114,8 +118,18 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         gasLimit: estimateGas.mul(120).div(100).toString(),
         gasPrice: gasPrice,
       };
-
+      openRequestModal({
+        status: 1,
+        trade: modalTrade,
+        open: true,
+      });
       const tx = await signer.sendTransaction(newTxn);
+      openRequestModal({
+        status: 2,
+        trade: modalTrade,
+        tx: tx.hash,
+        open: true,
+      });
       const res = await tx.wait();
       if (res.status === 1) {
         addHistoryToken({
@@ -126,11 +140,27 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
       } else {
         onError?.();
       }
+      openRequestModal({
+        status: res.status === 1 ? 0 : 3,
+        trade: modalTrade,
+        tx: tx.hash,
+        open: true,
+      });
       setLoading(false);
-    } catch (err) {
-      console.log(err);
-      setLoading(false);
+    } catch (err: any) {
       onError?.();
+      if (err.code !== 'ACTION_REJECTED') {
+        openRequestModal({
+          status: 3,
+          trade: modalTrade,
+          open: true,
+        });
+      } else {
+        openRequestModal({
+          open: false,
+        });
+      }
+      setLoading(false);
     }
   };
 

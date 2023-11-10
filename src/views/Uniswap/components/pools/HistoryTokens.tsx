@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import TokenIcon from '../../TokenIcon';
+import TokenIcon from '../TokenIcon';
 
 const StyledWrap = styled.div`
   display: flex;

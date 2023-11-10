@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import { multicallv3 } from '@/utils/multicall';
 import erc20Abi from '@/config/abi/erc20';

@@ -8,6 +8,7 @@ import PoolPriceRange from './PoolPriceRange';
 import PoolRemovePair from './PoolRemovePair';
 import Loading from '@/components/Icons/Loading';
 import useAddLiquidity from '../../hooks/useAddLiquidity';
+import useRequestModal from '../../hooks/useRequestModal';
 
 const StyledContent = styled.div`
   width: 460px;
@@ -79,6 +80,7 @@ const StyledAdd = styled.div<{ disabled?: boolean }>`
   color: #1b1b1b;
   font-weight: 600;
   margin-top: 15px;
+  gap: 6px;
   ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
 `;
 
@@ -104,6 +106,7 @@ const PreviewModal = (props: any) => {
   const { loading, onAdd } = useAddLiquidity(() => {
     onRequestClose();
   });
+  const { openRequestModal } = useRequestModal();
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
@@ -136,6 +139,8 @@ const PreviewModal = (props: any) => {
           <StyledAdd
             className="hvc"
             onClick={() => {
+              openRequestModal({ open: true });
+              onRequestClose();
               onAdd({
                 token0,
                 token1,
