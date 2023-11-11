@@ -23,7 +23,6 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
         const {
           currentTick,
           tickSpacing,
-          sqrtPriceX96,
           token0: _token0,
           token1: _token1,
         } = await getPoolInfo({
@@ -43,6 +42,7 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
         setHighTick(NearestHighTick);
         setCurrentTick(currentTick);
         setLoading(false);
+        setNoPair(false);
         const _reverse = token0.address.toLowerCase() !== getTokenAddress(_token0, false).toLowerCase();
         setReverse(_reverse);
       } catch (err) {
