@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import { useTokensStore } from '@/stores/tokens';
+import { useHistoryTokensStore } from '@/stores/historyTokens';
 import { CopyIcon, LinkIcon, WarningIcon } from './Icons';
 import Modal from './ModalBox';
 import { copyText } from '@/utils/copy';
@@ -102,7 +102,7 @@ const StyledUnderstandButton = styled.div`
   border-radius: 18px;
 `;
 const UnderstandButton = ({ token, onImportTokenCb }: any) => {
-  const tokensStore: any = useTokensStore();
+  const tokensStore: any = useHistoryTokensStore();
   return (
     <StyledUnderstandButton
       className="hvc"

@@ -43,7 +43,7 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
       tick: detail.tick,
       decimals0: token0?.decimals,
       decimals1: token1?.decimals,
-      isReverse: !reverse,
+      isReverse: false,
       isNumber: true,
     });
   }, [tick, token0, token1, reverse]);
@@ -51,7 +51,7 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
     <StyledWrap>
       <StyledHead>Add more liquidity</StyledHead>
       <StyledBody>
-        {tick < tickLow ? (
+        {tick <= tickLow ? (
           <InputBox
             token={token0}
             value={value0}
@@ -59,7 +59,7 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
             balance={token0 ? balances[token0?.address] : ''}
             loading={balanceLoading}
           />
-        ) : tick > tickHigh ? (
+        ) : tick >= tickHigh ? (
           <InputBox
             token={token1}
             value={value1}
@@ -74,7 +74,7 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
               value={value0}
               setValue={(value: string) => {
                 setValue0(value);
-                if (value) setValue1(new Big(value).mul(price || 1).toPrecision(3));
+                if (value) setValue1(new Big(value).mul(price || 1).toFixed(12));
               }}
               balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}
@@ -89,7 +89,7 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
                     new Big(1)
                       .div(new Big(price).eq(0) ? 1 : price)
                       .mul(value)
-                      .toPrecision(3),
+                      .toFixed(12),
                   );
               }}
               balance={token1 ? balances[token1?.address] : ''}

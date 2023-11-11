@@ -51,14 +51,14 @@ export default {
       name: 'Dai Stablecoin',
       icon: `https://assets.dapdap.net/images/${'0x4AF15ec2A0BD43Db75dd04E62FAA3B8EF36b00d5'.toLowerCase()}.png`,
     },
-    '0x1f031F8C523b339c7A831355879e3568fa3eB263': {
-      chainId: 59144,
-      address: '0x1f031F8C523b339c7A831355879e3568fa3eB263',
-      name: 'DeversiFi Token',
-      symbol: 'APE',
-      icon: `https://assets.dapdap.net/images/${'0x1f031F8C523b339c7A831355879e3568fa3eB263'.toLowerCase()}.png`,
-      decimals: 18,
-    },
+    // '0x1f031F8C523b339c7A831355879e3568fa3eB263': {
+    //   chainId: 59144,
+    //   address: '0x1f031F8C523b339c7A831355879e3568fa3eB263',
+    //   name: 'DeversiFi Token',
+    //   symbol: 'DVF',
+    //   icon: `https://assets.dapdap.net/images/${'0x1f031F8C523b339c7A831355879e3568fa3eB263'.toLowerCase()}.png`,
+    //   decimals: 18,
+    // },
     '0x0e5F2ee8C29e7eBc14e45dA7FF90566d8c407dB7': {
       chainId: 59144,
       address: '0x0e5F2ee8C29e7eBc14e45dA7FF90566d8c407dB7',

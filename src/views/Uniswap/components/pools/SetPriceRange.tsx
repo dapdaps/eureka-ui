@@ -1,6 +1,8 @@
-import { memo, useMemo } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import useAccount from '@/hooks/useAccount';
 import { tickToPrice } from '../../utils/tickMath';
+import { getTickFromPrice } from '../../utils/getTick';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -75,8 +77,8 @@ const SetPriceRange = ({
         <HeaderActions>
           <HeaderFullAction
             onClick={() => {
-              setLowerTick(-887272);
-              setHighTick(887272);
+              setLowerTick(-887200);
+              setHighTick(887200);
             }}
           >
             Full range
@@ -96,8 +98,8 @@ const SetPriceRange = ({
       <div className="setArea">
         <InputPriceBox
           type="low"
-          tick={lowerTick}
-          setTick={setLowerTick}
+          tick={reverse ? lowerTick : highTick}
+          setTick={reverse ? setLowerTick : setHighTick}
           token0={token0}
           token1={token1}
           reverse={reverse}
@@ -105,8 +107,8 @@ const SetPriceRange = ({
         />
         <InputPriceBox
           type="up"
-          tick={highTick}
-          setTick={setHighTick}
+          tick={reverse ? highTick : lowerTick}
+          setTick={reverse ? setHighTick : setLowerTick}
           token0={token0}
           token1={token1}
           reverse={reverse}
@@ -172,43 +174,82 @@ const StyledButtonArea = styled.div`
     }
   }
 `;
-const InputPriceBox = ({ type, tick, setTick, token0, token1, noPair, reverse }: any) => {
-  const value = useMemo(() => {
-    if (!tick || !token0 || !token1) return 0;
-    if (tick === -887272) return '0';
-    if (tick === 887272) return '∞';
-    if (noPair) return '';
-    return tickToPrice({
+const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse }: any) => {
+  const [price, setPrice] = useState('');
+  const { provider } = useAccount();
+
+  const handlePriceChange = useCallback(async () => {
+    if (price === '') return;
+    let tick = await getTickFromPrice({
+      token0,
+      token1,
+      price: price,
+      provider,
+    });
+    if (tick < -887200) {
+      tick = -887200;
+    }
+    if (tick > 887200) {
+      tick = 887200;
+    }
+    setTick(-2);
+  }, [price]);
+
+  useEffect(() => {
+    if ((!tick && tick !== 0) || !token0 || !token1) {
+      setPrice('');
+      return;
+    }
+    if (tick === -887200) {
+      setPrice('0');
+      return;
+    }
+    if (tick === 887200) {
+      setPrice('∞');
+      return;
+    }
+    const _price = tickToPrice({
       tick,
       decimals0: reverse ? token1.decimals : token0.decimals,
       decimals1: reverse ? token0.decimals : token1.decimals,
       isReverse: reverse,
       isNumber: true,
     });
+    setPrice(_price);
   }, [tick, token0, token1, reverse]);
-  console.log('noPair', noPair);
+
   return (
     <StyledInputPriceBox>
       <StyledPrice>
         <span className="type">{type === 'low' ? 'Low' : 'High'} price</span>
-        <input value={value} readOnly placeholder="0" />
+        <input
+          value={price}
+          placeholder="0"
+          onChange={(ev) => {
+            if (isNaN(Number(ev.target.value))) return;
+            setPrice(ev.target.value);
+          }}
+          onBlur={() => {
+            handlePriceChange();
+          }}
+        />
         <span className="txt">
           {token1?.symbol} per {token0?.symbol}
         </span>
       </StyledPrice>
       <StyledButtonArea>
         <div
-          className={`b ${noPair && 'disabled'}`}
+          className={`b ${(tick === 887200 || !price) && 'disabled'}`}
           onClick={() => {
-            !noPair && setTick(tick - 1);
+            setTick(tick + 1);
           }}
         >
           <Add />
         </div>
         <div
-          className={`b ${noPair && 'disabled'}`}
+          className={`b ${(tick === -887200 || !price) && 'disabled'}`}
           onClick={() => {
-            !noPair && setTick(tick + 1);
+            setTick(tick - 1);
           }}
         >
           <Sub />

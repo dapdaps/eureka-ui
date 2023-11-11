@@ -13,6 +13,7 @@ import { sortTokens } from './utils/sortTokens';
 
 const StyledContainer = styled.div`
   width: 810px;
+  background-color: #131313;
 `;
 
 const PoolsDetailLiquidity = () => {

@@ -16,6 +16,7 @@ const StyledContainer = styled.div`
   width: 605px;
   border-radius: 24px;
   border: 1px solid #3d363d;
+  background-color: #131313;
 `;
 const StyledBody = styled.div`
   padding: 20px;

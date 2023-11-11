@@ -53,11 +53,11 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
     if (useNative) {
       const _nativeAmount = useNative.address === token0.address ? amount0 : amount1;
       calldatas.push(Interface.encodeFunctionData('unwrapWETH9', [_nativeAmount, account]));
-      const otherAmount = useNative.address === token0.address ? amount1 : amount0;
+      // const otherAmount = useNative.address === token0.address ? amount1 : amount0;
       calldatas.push(
         Interface.encodeFunctionData('sweepToken', [
           useNative.address === token0.address ? token1.address : token0.address,
-          otherAmount,
+          '0',
           account,
         ]),
       );
@@ -114,6 +114,7 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
         onError();
       }
     } catch (err: any) {
+      console.log('err', err);
       if (err.code !== 'ACTION_REJECTED') {
         openRequestModal({
           status: 3,

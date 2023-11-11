@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { CloseIcon } from './Icons';
@@ -9,6 +9,8 @@ import PoolRemovePair from './PoolRemovePair';
 import Loading from '@/components/Icons/Loading';
 import useAddLiquidity from '../../hooks/useAddLiquidity';
 import useRequestModal from '../../hooks/useRequestModal';
+
+import { sortTokens } from '../../utils/sortTokens';
 
 const StyledContent = styled.div`
   width: 460px;
@@ -100,12 +102,16 @@ const PreviewModal = (props: any) => {
     price,
     noPair,
     isMint,
-    poolTokens,
   } = props;
   const [reverse, setReverse] = useState(false);
   const { loading, onAdd } = useAddLiquidity(() => {
     onRequestClose();
   });
+  useEffect(() => {
+    if (!token0 || !token1) return;
+    const [_token0, _token1] = sortTokens(token0, token1);
+    setReverse(_token0.address === token1.address);
+  }, [token0, token1]);
   const { openRequestModal } = useRequestModal();
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>

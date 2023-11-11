@@ -3,8 +3,7 @@ import useAccount from '@/hooks/useAccount';
 import Big from 'big.js';
 import { getPoolInfo } from '../utils/getPool';
 import { getTokenAddress } from '../utils';
-import { getTickAtSqrtRatio } from '../utils/getTick';
-import { sortTokens } from '../utils/sortTokens';
+import { getTickFromPrice } from '../utils/getTick';
 
 export default function useTicks({ fee = 3000, token0, token1, price }: any) {
   const { provider } = useAccount();
@@ -53,25 +52,24 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
   }, [token0, token1, fee, provider]);
 
   const getTicksFromPrice = async (price: any) => {
-    const [_token0, _token1] = sortTokens(token0, token1);
-    const isReverse = _token0.address !== token0.address;
-
-    const mathPrice = (isReverse ? price : 1 / price) / 10 ** (_token0.decimals - _token1.decimals);
-    const _sqrtPriceX96 = new Big(mathPrice)
-      .sqrt()
-      .mul(2 ** 96)
-      .toFixed(0);
-    const tick = await getTickAtSqrtRatio(_sqrtPriceX96, provider);
-    const _lowerTick = Math.floor(tick / 60) * 60;
-    const _higherTick = Math.floor(tick / 60) * 60 + 60;
+    const TICK_SPACING: any = {
+      100: 1,
+      500: 10,
+      3000: 60,
+      10000: 200,
+    };
+    const tickSpacing = TICK_SPACING[fee];
+    const tick = await getTickFromPrice({ token0, token1, price, provider });
+    const _lowerTick = Math.floor(tick / tickSpacing) * tickSpacing;
+    const _higherTick = Math.floor(tick / tickSpacing) * tickSpacing + tickSpacing;
     setLowerTick(_lowerTick);
     setCurrentTick(tick);
     setHighTick(_higherTick);
   };
 
   useEffect(() => {
-    if (noPair && price && !new Big(price).eq(0)) getTicksFromPrice(price);
-  }, [price]);
+    if (noPair && price && !new Big(price).eq(0) && token0 && token1) getTicksFromPrice(price);
+  }, [price, token0, token1]);
   return {
     loading,
     noPair,

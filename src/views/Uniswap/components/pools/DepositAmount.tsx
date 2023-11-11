@@ -19,6 +19,14 @@ const StyledContainer = styled.div`
     flex-direction: column;
     gap: 8px;
   }
+  &.disabled {
+    opacity: 0.5;
+  }
+`;
+const InputBoxs = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 const DepositAmount = ({
@@ -28,6 +36,8 @@ const DepositAmount = ({
   value1,
   reverse,
   currentTick,
+  lowerTick,
+  highTick,
   setValue0,
   setValue1,
   balances,
@@ -50,35 +60,71 @@ const DepositAmount = ({
 
   return (
     <StyledContainer>
-      <span className="title">Deposit amounts</span>
-      <div className="I">
-        <InputBox
-          token={token0}
-          value={value0}
-          setValue={(value: string) => {
-            setValue0(value);
-            if (value) setValue1(new Big(value).mul(price).toFixed(12));
-          }}
-          balance={token0 ? balances[token0?.address] : ''}
-          loading={balanceLoading}
-        />
-        <InputBox
-          token={token1}
-          value={value1}
-          setValue={(value: string) => {
-            setValue1(value);
-            if (value)
-              setValue0(
-                new Big(1)
-                  .div(new Big(price).eq(0) ? 1 : price)
-                  .mul(value)
-                  .toFixed(12),
-              );
-          }}
-          balance={token1 ? balances[token1?.address] : ''}
-          loading={balanceLoading}
-        />
-      </div>
+      <span className={`title ${lowerTick >= highTick && 'disabled'}`}>Deposit amounts</span>
+      {lowerTick <= highTick ? (
+        <div className="I">
+          {currentTick <= lowerTick ? (
+            <InputBox
+              token={token0}
+              value={value0}
+              setValue={(value: string) => {
+                setValue0(value);
+                if (value) setValue1(new Big(value).mul(price).toNumber());
+              }}
+              balance={token0 ? balances[token0?.address] : ''}
+              loading={balanceLoading}
+            />
+          ) : currentTick >= highTick ? (
+            <InputBox
+              token={token1}
+              value={value1}
+              setValue={(value: string) => {
+                setValue1(value);
+                if (value)
+                  setValue0(
+                    new Big(1)
+                      .div(new Big(price).eq(0) ? 1 : price)
+                      .mul(value)
+                      .toNumber(),
+                  );
+              }}
+              balance={token1 ? balances[token1?.address] : ''}
+              loading={balanceLoading}
+            />
+          ) : (
+            <InputBoxs>
+              <InputBox
+                token={token0}
+                value={value0}
+                setValue={(value: string) => {
+                  setValue0(value);
+                  if (value) setValue1(new Big(value).mul(price).toNumber());
+                }}
+                balance={token0 ? balances[token0?.address] : ''}
+                loading={balanceLoading}
+              />
+              <InputBox
+                token={token1}
+                value={value1}
+                setValue={(value: string) => {
+                  setValue1(value);
+                  if (value)
+                    setValue0(
+                      new Big(1)
+                        .div(new Big(price).eq(0) ? 1 : price)
+                        .mul(value)
+                        .toNumber(),
+                    );
+                }}
+                balance={token1 ? balances[token1?.address] : ''}
+                loading={balanceLoading}
+              />
+            </InputBoxs>
+          )}
+        </div>
+      ) : (
+        <div />
+      )}
     </StyledContainer>
   );
 };

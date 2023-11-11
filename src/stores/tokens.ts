@@ -5,22 +5,14 @@ import config from '@/config/uniswap/linea';
 export const useTokensStore = create(
   persist(
     (set, get: any) => ({
-      tokens: config.tokens || {},
-      historyTokens: {},
-      addImportToken: (token: any) => {
-        const _tokens = get().tokens;
-        _tokens[token.address] = { ...token, isImport: true };
-        set({ tokens: _tokens });
+      tokens: config.tokens,
+      setTokens: (tokens: any) => {
+        set({ tokens: tokens });
       },
       getTokens: () => get().tokens,
-      addHistoryToken: (tokens: any) => {
-        const _tokens = get().historyTokens;
-        set({ historyTokens: { ..._tokens, ...tokens } });
-      },
-      getHistoryTokens: () => get().historyTokens,
     }),
     {
-      name: 'import-tokens',
+      name: 'config-tokens',
       version: 1,
       storage: createJSONStorage(() => localStorage),
     },

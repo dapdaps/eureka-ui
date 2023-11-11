@@ -22,6 +22,7 @@ const StyledContainer = styled.div`
   width: 605px;
   border-radius: 24px;
   border: 1px solid #3d363d;
+  background-color: #131313;
 `;
 const StyledBody = styled.div<{ disabled: boolean }>`
   padding: 0px 20px 20px;
@@ -72,12 +73,17 @@ const PoolsAddLiquidity = () => {
   }, [token0, token1]);
 
   useEffect(() => {
-    if (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0)) {
-      setErrorTips('Enter an Amount');
-      return;
-    }
     if (!token0 || !token1) {
       setErrorTips('Select a Token');
+      return;
+    }
+    if (lowerTick !== undefined && highTick !== undefined && highTick <= lowerTick) {
+      console.log(lowerTick, highTick, currentTick);
+      setErrorTips('Invalid range selected');
+      return;
+    }
+    if (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
       return;
     }
     if (
@@ -88,7 +94,7 @@ const PoolsAddLiquidity = () => {
       return;
     }
     setErrorTips('');
-  }, [value0, value1, balanceLoading, token0, token1]);
+  }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick]);
   return ready ? (
     <StyledContainer>
       <Head
@@ -143,6 +149,8 @@ const PoolsAddLiquidity = () => {
           value1={value1}
           value0={value0}
           currentTick={currentTick}
+          lowerTick={lowerTick}
+          highTick={highTick}
           reverse={reverse}
           setValue0={setValue0}
           setValue1={setValue1}

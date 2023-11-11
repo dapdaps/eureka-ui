@@ -95,7 +95,7 @@ export default function PositionItem({
         <RecordRange>
           <span className="gray">Min:</span>
           <span>
-            {tickToPrice({ ...tickArgs, tick: tickLower })} {token0.symbol} per {token1.symbol}
+            {tickToPrice({ ...tickArgs, tick: tickLower, isReverse: true })} {token1.symbol} per {token0.symbol}
           </span>
           <svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -105,7 +105,7 @@ export default function PositionItem({
           </svg>
           <span className="gray">Max:</span>
           <span>
-            {tickToPrice({ ...tickArgs, tick: tickUpper })} {token0.symbol} per {token1.symbol}
+            {tickToPrice({ ...tickArgs, tick: tickUpper, isReverse: true })} {token1.symbol} per {token0.symbol}
           </span>
         </RecordRange>
       </RecordDetails>

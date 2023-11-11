@@ -119,13 +119,13 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
         <div className="vchb minmax">
           <PriceDetailBox
             priceType="Min price"
-            price={tickToPrice({ ...tickArgs, tick: detail?.tickLow })}
+            price={tickToPrice({ ...tickArgs, tick: isReverse ? detail?.tickLow : detail?.tickHigh })}
             priceRate={priceRate}
           />
           <ArrowBothIcon />
           <PriceDetailBox
             priceType="Max price"
-            price={tickToPrice({ ...tickArgs, tick: detail?.tickHigh })}
+            price={tickToPrice({ ...tickArgs, tick: isReverse ? detail?.tickHigh : detail?.tickLow })}
             priceRate={priceRate}
           />
         </div>
