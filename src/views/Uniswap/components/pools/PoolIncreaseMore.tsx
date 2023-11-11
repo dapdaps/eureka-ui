@@ -74,7 +74,7 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
               value={value0}
               setValue={(value: string) => {
                 setValue0(value);
-                if (value) setValue1(new Big(value).mul(price).toFixed(12));
+                if (value) setValue1(new Big(value).mul(price || 1).toPrecision(3));
               }}
               balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}
@@ -84,7 +84,13 @@ const PoolIncreaseMore = ({ detail, value0, value1, setValue0, setValue1, balanc
               value={value1}
               setValue={(value: string) => {
                 setValue1(value);
-                if (value) setValue0(new Big(1).div(price).mul(value).toFixed(12));
+                if (value)
+                  setValue0(
+                    new Big(1)
+                      .div(new Big(price).eq(0) ? 1 : price)
+                      .mul(value)
+                      .toPrecision(3),
+                  );
               }}
               balance={token1 ? balances[token1?.address] : ''}
               loading={balanceLoading}
