@@ -23,7 +23,7 @@ export const objectToQueryString = (obj: Record<string, any>): string => {
   }
   return keyValuePairs.join('&');
 };
-const BASE_URL = 'https://test-api.dapdap.net';
+const BASE_URL = 'https://api.dapdap.net';
 
 const getUrl = (url: string) => {
   return url.startsWith('http') ? url : `${BASE_URL}${url}`;
@@ -32,13 +32,13 @@ const getUrl = (url: string) => {
 const AUTH_TOKENS = 'AUTH_TOKENS';
 
 const get = async (url: string, query?: Record<string, any>) => {
-  const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
+  // const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
   const options = {
     method: 'GET',
-    headers: {
-      Authorization: `Bearer ${tokens.access_token || ''}`,
-      'Content-Type': 'application/json',
-    },
+    // headers: {
+    //   Authorization: `Bearer ${tokens.access_token || ''}`,
+    //   'Content-Type': 'application/json',
+    // },
   };
   if (!query) {
     const res = await fetch(getUrl(url), options);
