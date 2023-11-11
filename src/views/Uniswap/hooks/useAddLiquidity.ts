@@ -46,7 +46,6 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         .sqrt()
         .mul(2 ** 96)
         .toFixed(0);
-
       calldatas.push(
         Interface.encodeFunctionData('createAndInitializePoolIfNecessary', [
           _token0Address,
@@ -57,19 +56,6 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
       );
     }
     if (isMint) {
-      console.log({
-        token0: _token0Address,
-        token1: _token1Address,
-        fee: fee,
-        tickLower: tickLower,
-        tickUpper: tickUpper,
-        amount0Desired: _amount0,
-        amount1Desired: _amount1,
-        amount0Min: 0,
-        amount1Min: 0,
-        recipient: account,
-        deadline: _deadline,
-      });
       calldatas.push(
         Interface.encodeFunctionData('mint', [
           {
@@ -123,7 +109,6 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
         value,
       };
-      console.log('data', txn);
       const signer = provider.getSigner(account);
 
       try {

@@ -46,7 +46,6 @@ export default function useDetail(tokenId: string) {
         Decimal1: _token1.decimals,
         currentTick: pool.tick,
       });
-
       const _detail: { [key: string]: any } = {
         fee: position.fee,
         token0: _token0,
@@ -60,7 +59,6 @@ export default function useDetail(tokenId: string) {
         tick: pool.tick,
         tokenId: tokenId,
       };
-
       if (position.liquidity.eq(0)) {
         _detail.status = 'removed';
       } else {

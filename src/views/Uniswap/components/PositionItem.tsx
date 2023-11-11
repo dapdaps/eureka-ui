@@ -77,11 +77,11 @@ export default function PositionItem({
     return pool && (pool.currentTick < tickLower || pool.currentTick >= tickUpper) ? 'out' : 'in';
   }, [pool, liquidity, tickLower, tickUpper]);
   const tickArgs = {
-    decimals0: token0.decimals,
-    decimals1: token1.decimals,
+    decimals0: token0?.decimals,
+    decimals1: token1?.decimals,
     isReverse: false,
   };
-  return (
+  return token0 && token1 ? (
     <Record onClick={onClick}>
       <RecordDetails>
         <RecordPool>
@@ -120,5 +120,7 @@ export default function PositionItem({
         )
       )}
     </Record>
+  ) : (
+    <div />
   );
 }

@@ -43,7 +43,7 @@ const StyledDesc = styled.div`
 export default function AddLiquidityNoPair({ token0, token1, price, setPrice }: any) {
   const [_token0, _token1] = sortTokens(token0, token1);
   const _price = price
-    ? _token0?.address === token1.address
+    ? _token0?.address === token1?.address
       ? new Big(1).div(new Big(price).eq(0) ? 1 : price)
       : new Big(price)
     : '';

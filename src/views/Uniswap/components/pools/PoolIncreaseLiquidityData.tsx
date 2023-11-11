@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import TokenIcon from '../TokenIcon';
+import { balanceFormated } from '@/utils/balance';
 
 const StyledWrap = styled.div`
   display: flex;
@@ -51,14 +52,14 @@ const PoolIncreaseLiquidityData = ({ token0, token1, value0, value1 }: any) => {
           {token0 && <TokenIcon token={token0} />}
           <span>{token0?.symbol}</span>
         </div>
-        <span className="num">{value0}</span>
+        <span className="num">{balanceFormated(value0, 4)}</span>
       </div>
       <div className="vchb">
         <div className="hvc token">
           {token1 && <TokenIcon token={token1} />}
           <span>{token1?.symbol}</span>
         </div>
-        <span className="num">{value1}</span>
+        <span className="num">{balanceFormated(value1, 4)}</span>
       </div>
     </StyledWrap>
   );

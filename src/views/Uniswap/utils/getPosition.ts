@@ -18,8 +18,8 @@ export async function getPositionCollect(args: string[], provider: any) {
 }
 
 export function getTokenAmounts({ liquidity, sqrtPriceX96, tickLow, tickHigh, currentTick, Decimal0, Decimal1 }: any) {
-  const sqrtRatioA = new Big(1.0001).pow(tickLow);
-  const sqrtRatioB = new Big(1.0001).pow(tickHigh);
+  const sqrtRatioA = new Big(1.0001 ** tickLow);
+  const sqrtRatioB = new Big(1.0001 ** tickHigh);
   const sqrtPrice = new Big(sqrtPriceX96 || 1).div(new Big(2).pow(96));
   let amount0 = new Big(0);
   let amount1 = new Big(0);

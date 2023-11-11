@@ -48,11 +48,11 @@ const FEES = {
     selecedNum: '0%',
     key: 100,
   },
-  300: {
+  500: {
     value: '0.05%',
     description: 'Best for stable pairs',
     selecedNum: '67%',
-    key: 300,
+    key: 500,
   },
   3000: {
     value: '0.3%',
@@ -75,8 +75,8 @@ const Fee = ({ fee, disabled, onSelectFee }: any) => {
     <StyledContainer>
       <StyledSelectedFeeArea>
         <p className="pendingTip">
-          <div>{disabled ? 'The % you will earn in fees.' : `${FEES[fee].value} fee tier`}</div>
-          <div className="num">{FEES[fee].selecedNum} select</div>
+          <div>{disabled ? 'The % you will earn in fees.' : `${FEES[fee]?.value} fee tier`}</div>
+          <div className="num">{FEES[fee]?.selecedNum} select</div>
         </p>
         <div
           className="hideOrEditButton"
