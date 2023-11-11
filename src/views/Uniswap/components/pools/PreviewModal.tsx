@@ -125,8 +125,8 @@ const PreviewModal = (props: any) => {
           <PoolPriceRange
             type="1"
             detail={{
-              token0: poolTokens?.token0,
-              token1: poolTokens?.token1,
+              token0: token0,
+              token1: token1,
               tickLow: lowerTick,
               tickHigh: highTick,
               tick,
@@ -152,7 +152,6 @@ const PreviewModal = (props: any) => {
                 noPair,
                 isMint,
                 tokenId,
-                poolTokens,
                 price,
               });
             }}

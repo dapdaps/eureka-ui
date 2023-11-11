@@ -6,6 +6,7 @@ import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
 import TokenIcon from '../TokenIcon';
 import { tickToPrice } from '../../utils/tickMath';
+import { sortTokens } from '../../utils/sortTokens';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -26,7 +27,6 @@ const DepositAmount = ({
   token1,
   value0,
   value1,
-  poolTokens,
   reverse,
   currentTick,
   setValue0,
@@ -35,18 +35,19 @@ const DepositAmount = ({
   balanceLoading,
 }: any) => {
   const price = useMemo(() => {
-    if (!currentTick || !token0 || !token1) return 0;
+    if ((!currentTick && currentTick !== 0) || !token0 || !token1) return 0;
+    const [_token0, _token1] = sortTokens(token0, token1);
     return tickToPrice({
       tick: currentTick,
-      decimals0: poolTokens.token0?.decimals,
-      decimals1: poolTokens.token1?.decimals,
+      decimals0: _token0.decimals,
+      decimals1: _token1.decimals,
       isReverse: !reverse,
       isNumber: true,
     });
-  }, [poolTokens, currentTick, reverse]);
+  }, [token0, token1, currentTick, reverse]);
 
   useEffect(() => {
-    if (value0) setValue1(new Big(value0).mul(price).toFixed(12));
+    if (value0 && price) setValue1(new Big(value0).mul(price).toFixed(12));
   }, [reverse]);
 
   return (
@@ -68,7 +69,13 @@ const DepositAmount = ({
           value={value1}
           setValue={(value: string) => {
             setValue1(value);
-            if (value) setValue0(new Big(1).div(price).mul(value).toFixed(12));
+            if (value)
+              setValue0(
+                new Big(1)
+                  .div(new Big(price).eq(0) ? 1 : price)
+                  .mul(value)
+                  .toFixed(12),
+              );
           }}
           balance={token1 ? balances[token1?.address] : ''}
           loading={balanceLoading}

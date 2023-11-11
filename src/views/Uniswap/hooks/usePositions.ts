@@ -71,6 +71,8 @@ export default function usePositions() {
       setLoading(false);
     } catch (err) {
       console.log('err', err);
+      setPositions([]);
+      positionsStore.setPositions({});
       setLoading(false);
     }
   }, [provider, account]);

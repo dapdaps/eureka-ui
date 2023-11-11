@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
 import { usePriceStore } from '@/stores/price';
-import { balanceFormated } from '@/utils/balance';
+import { balanceFormated, valueFormated } from '@/utils/balance';
 import TokenIcon from '../TokenIcon';
 import { getTotalValues } from '../../utils/getValues';
 import NFT from '../Nft';
@@ -127,10 +127,11 @@ const Liquidity = ({ detail, isReverse }: { detail: any; isReverse: boolean }) =
     amount1: detail.liquidityToken1,
     prices: priceStore.price,
   });
+
   return (
     <StyledLiquidity>
       <span className="title">Liquidity</span>
-      <span className="value">${balanceFormated(total, 4)}</span>
+      <span className="value">${valueFormated(total, '1', 4)}</span>
       <div className={`box ${!isReverse && 'reverse'}`}>
         <div className="vchb w-full">
           <div className="hvc">

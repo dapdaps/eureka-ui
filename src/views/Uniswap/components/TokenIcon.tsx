@@ -23,7 +23,7 @@ export default function TokenIcon({ token, size = 22, style }: any) {
   const [src, setSrc] = useState('');
   useEffect(() => {
     const _icon = getIcon();
-    if (_icon !== src) setSrc(_icon);
+    if (_icon !== src || !src) setSrc(_icon);
   }, [token]);
   return (
     <StyledTokenIcon
@@ -31,7 +31,7 @@ export default function TokenIcon({ token, size = 22, style }: any) {
       size={size}
       style={style}
       onLoad={() => {
-        if (token?.symbol) {
+        if (token?.symbol && src !== DEFAULT_TOKEN_ICON) {
           iconsStore.addIcon({ ...token, icon: src });
         }
       }}

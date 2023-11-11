@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { StatusColor } from '../../config';
 import { ArrowBothIcon } from './Icons';
 import { tickToPrice } from '../../utils/tickMath';
+import { sortTokens } from '../../utils/sortTokens';
 
 const StyledWrap = styled.div<{ type?: string }>`
   ${(props) => (props.type == '1' ? 'margin-top: 20px;' : 'border: 1px solid #3d363d;padding: 20px;margin-top: 15px;')}
@@ -85,10 +86,12 @@ const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
   }
 `;
 const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
+  const [_token0, _token1] = sortTokens(detail?.token0, detail?.token1);
+
   const tickArgs = {
-    decimals0: detail?.token0.decimals,
-    decimals1: detail?.token1.decimals,
-    isReverse: !isReverse,
+    decimals0: _token0?.decimals,
+    decimals1: _token1?.decimals,
+    isReverse: isReverse,
   };
   const priceRate = `${isReverse ? detail?.token0.symbol : detail?.token1.symbol} per ${
     isReverse ? detail?.token1.symbol : detail?.token0.symbol

@@ -38,5 +38,6 @@ export default {
     multiAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
     factoryAddress: '0xDB2783e6db8d47F2b1A51ef602608c2854a59dEF',
     nftAddress: '0xBa2e5317CC21CF591d3908F703a855547cDc849f',
+    tickMathAddress: '0xE2D4e2395f0Eda06964349CC160C17daA8ac868c',
   },
 };

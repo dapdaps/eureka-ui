@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import { tickToPrice } from '../../utils/tickMath';
+import { sortTokens } from '../../utils/sortTokens';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -64,7 +65,6 @@ const SetPriceRange = ({
   setHighTick,
   token0,
   token1,
-  poolTokens,
   reverse,
   onExchangeTokens,
 }: any) => {
@@ -101,7 +101,6 @@ const SetPriceRange = ({
           token0={token0}
           token1={token1}
           reverse={reverse}
-          poolTokens={poolTokens}
         />
         <InputPriceBox
           type="up"
@@ -110,7 +109,6 @@ const SetPriceRange = ({
           token0={token0}
           token1={token1}
           reverse={reverse}
-          poolTokens={poolTokens}
         />
       </div>
     </StyledContainer>
@@ -168,19 +166,20 @@ const StyledButtonArea = styled.div`
     color: #fff;
   }
 `;
-const InputPriceBox = ({ type, tick, setTick, token0, token1, poolTokens, reverse }: any) => {
+const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse }: any) => {
   const value = useMemo(() => {
-    if (!tick || !poolTokens) return 0;
+    if (!tick || !token0 || !token1) return 0;
     if (tick === -887272) return '0';
     if (tick === 887272) return '∞';
+    const [_token0, _token1] = sortTokens(token0, token1);
     return tickToPrice({
       tick,
-      decimals0: poolTokens.token0?.decimals,
-      decimals1: poolTokens.token1?.decimals,
+      decimals0: _token0.decimals,
+      decimals1: _token1.decimals,
       isReverse: !reverse,
       isNumber: true,
     });
-  }, [tick, poolTokens, reverse]);
+  }, [tick, token0, token1, reverse]);
   return (
     <StyledInputPriceBox>
       <StyledPrice>

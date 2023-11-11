@@ -73,7 +73,7 @@ const SubmitButton = ({ token0, value0, token1, value1, errorTips, onPreview }: 
         }}
         disabled={switching}
       >
-        {switching && <Loading />} Switch network
+        {switching && <Loading />} Switch Network
       </StyledWrapper>
     );
   }

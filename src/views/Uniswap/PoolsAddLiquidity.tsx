@@ -41,22 +41,13 @@ const PoolsAddLiquidity = () => {
   const [ready, setReady] = useState(false);
   const [errorTips, setErrorTips] = useState('');
   const [showPreview, setShowPreview] = useState(false);
-  const {
-    loading,
-    noPair,
-    lowerTick,
-    highTick,
-    currentTick,
-    poolTokens,
-    reverse,
-    setReverse,
-    setLowerTick,
-    setHighTick,
-  } = useTicks({
-    fee,
-    token0,
-    token1,
-  });
+  const { loading, noPair, lowerTick, highTick, currentTick, reverse, setReverse, setLowerTick, setHighTick } =
+    useTicks({
+      fee,
+      token0,
+      token1,
+      price,
+    });
   const tokens = useMemo(() => {
     const _tokens: any = {};
     if (token0) {
@@ -84,7 +75,7 @@ const PoolsAddLiquidity = () => {
     }
     if (
       !balanceLoading &&
-      (new Big(value0).gt(balances[token0.address] || 0) || new Big(value1).gt(balances[token1.address] || 0))
+      (new Big(value0 || 0).gt(balances[token0.address] || 0) || new Big(value1 || 0).gt(balances[token1.address] || 0))
     ) {
       setErrorTips('Insufficient balance');
       return;
@@ -117,7 +108,6 @@ const PoolsAddLiquidity = () => {
               token0={token0}
               token1={token1}
               reverse={reverse}
-              poolTokens={poolTokens}
               onExchangeTokens={() => {
                 onExchangeTokens();
                 setReverse(!reverse);
@@ -126,7 +116,18 @@ const PoolsAddLiquidity = () => {
             <Chart />
           </>
         )}
-        {noPair && <AddLiquidityNoPair token0={token0} token1={token1} price={price} setPrice={setPrice} />}
+        {noPair && (
+          <AddLiquidityNoPair
+            token0={token0}
+            token1={token1}
+            price={price}
+            setPrice={(value?: any) => {
+              setPrice(value);
+              setValue0('');
+              setValue1('');
+            }}
+          />
+        )}
         <DepositAmount
           token0={token0}
           token1={token1}
@@ -136,7 +137,6 @@ const PoolsAddLiquidity = () => {
           reverse={reverse}
           setValue0={setValue0}
           setValue1={setValue1}
-          poolTokens={poolTokens}
           balances={balances}
           balanceLoading={balanceLoading}
         />
@@ -164,7 +164,6 @@ const PoolsAddLiquidity = () => {
         noPair={noPair}
         isMint={true}
         isOpen={showPreview}
-        poolTokens={poolTokens}
         onRequestClose={() => {
           setShowPreview(false);
         }}

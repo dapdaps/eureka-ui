@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Spinner from '@/components/Spinner';
 
@@ -9,6 +9,7 @@ import Back from './components/pools/Back';
 import PoolBaseData from './components/pools/PoolBaseData';
 import PoolPair from './components/pools/PoolPair';
 import PoolPriceRange from './components/pools/PoolPriceRange';
+import { sortTokens } from './utils/sortTokens';
 
 const StyledContainer = styled.div`
   width: 810px;
@@ -18,6 +19,12 @@ const PoolsDetailLiquidity = () => {
   const searchParams = useSearchParams();
   const { loading, detail, collectData, getCollectData } = useDetail(searchParams.get('id') || '');
   const [isReverse, setIsReverse] = useState(true);
+
+  useEffect(() => {
+    if (!detail) return;
+    const [_token0, _token1] = sortTokens(detail?.token0, detail?.token1);
+    setIsReverse(_token0.address === detail.token1);
+  }, [detail]);
 
   return (
     <StyledContainer>

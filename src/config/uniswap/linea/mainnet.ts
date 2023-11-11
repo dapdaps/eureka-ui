@@ -24,15 +24,16 @@ export default {
       decimals: 6,
       symbol: 'USDC',
       name: 'USD Coin',
-      icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+      icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
     },
   },
   contracts: {
     routerAddress: '0x3d4e44Eb1374240CE5F1B871ab261CD16335B76a',
     quoterAddress: '0x42bE4D6527829FeFA1493e1fb9F3676d2425C3C1',
     positionAddress: '0x4615C383F85D0a2BbED973d83ccecf5CB7121463',
-    multiAddress: '0x93e253D101519578A8DF0BCe2A43D8292BFb3A1F',
+    multiAddress: '0xcA11bde05977b3631167028862bE2a173976CA11',
     factoryAddress: '0x31FAfd4889FA1269F7a13A66eE0fB458f27D72A9',
     nftAddress: '0x4615C383F85D0a2BbED973d83ccecf5CB7121463',
+    tickMathAddress: '0x485702c21eb1F96998Cae89A5D9cA99cbEebfF7D',
   },
 };

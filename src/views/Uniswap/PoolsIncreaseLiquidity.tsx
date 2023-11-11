@@ -41,7 +41,7 @@ const PoolsIncreaseLiquidity = () => {
   const { balances, loading: balanceLoading } = useTokensBalance(tokens, 1);
 
   useEffect(() => {
-    if (new Big(value0 || 0).eq(0)) {
+    if ((detail?.token0 && new Big(value0 || 0).eq(0)) || (detail?.token1 && new Big(value1 || 0).eq(0))) {
       setErrorTips('Enter an Amount');
       return;
     }

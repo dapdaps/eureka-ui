@@ -6,7 +6,7 @@ import type { Chain, Token } from '@/types';
 
 import useAccount from './useAccount';
 
-const { JsonRpcProvider, Web3Provider } = providers;
+const { JsonRpcProvider } = providers;
 
 export default function useApprove({
   token,

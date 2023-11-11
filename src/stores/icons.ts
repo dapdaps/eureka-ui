@@ -14,7 +14,7 @@ export const useIconsStore = create(
     }),
     {
       name: 'icon-urls',
-      version: 0.1,
+      version: 0.2,
       storage: createJSONStorage(() => localStorage),
     },
   ),

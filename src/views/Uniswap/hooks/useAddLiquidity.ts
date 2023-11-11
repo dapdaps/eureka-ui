@@ -5,8 +5,9 @@ import useAccount from '@/hooks/useAccount';
 import config from '@/config/uniswap/linea';
 import useTokens from './useTokens';
 import positionAbi from '../abi/positionAbi';
-import { getTokenAddress } from '../utils';
 import useRequestModal from './useRequestModal';
+import { sortTokens } from '../utils/sortTokens';
+import { getTokenAddress } from '../utils';
 
 export default function useAddLiquidity(onSuccess: () => void, onError?: () => void) {
   const [loading, setLoading] = useState(false);
@@ -24,44 +25,61 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     noPair,
     isMint,
     tokenId,
-    poolTokens,
     price,
   }: any) => {
     if (!account || !provider) return;
-    const _token0Address = getTokenAddress(token0.address, true);
-    const _token1Address = getTokenAddress(token1.address, true);
-    const useNative = token0.address === 'native' ? token0 : token1.address === 'native' ? token1 : undefined;
+    const [_token0, _token1] = sortTokens(token0, token1);
+    const _token0Address = getTokenAddress(_token0.address, true);
+    const _token1Address = getTokenAddress(_token1.address, true);
+    const useNative = _token0.address === 'native' ? _token0 : _token1.address === 'native' ? _token1 : undefined;
     const Interface = new utils.Interface(positionAbi);
     const calldatas: string[] = [];
+    const isReverse = _token0.address !== token0.address;
+    const _value0 = isReverse ? value1 : value0;
+    const _value1 = isReverse ? value0 : value1;
+    let _amount0 = new Big(_value0 || 0).mul(10 ** _token0.decimals).toFixed(0);
+    let _amount1 = new Big(_value1 || 0).mul(10 ** _token1.decimals).toFixed(0);
+    const _deadline = Math.ceil(Date.now() / 1000) + 60;
     if (noPair) {
+      const mathPrice = (isReverse ? price : 1 / price) / 10 ** (_token0.decimals - _token1.decimals);
+      const _sqrtPriceX96 = new Big(mathPrice)
+        .sqrt()
+        .mul(2 ** 96)
+        .toFixed(0);
+
       calldatas.push(
         Interface.encodeFunctionData('createAndInitializePoolIfNecessary', [
           _token0Address,
           _token1Address,
           fee,
-          new Big(Math.sqrt(price)).mul(2 ** 96).toString(),
+          _sqrtPriceX96,
         ]),
       );
     }
-    const _amount0 = new Big(value0 || 0).mul(10 ** token0.decimals).toFixed(0);
-    const _amount1 = new Big(value1 || 0).mul(10 ** token1.decimals).toFixed(0);
-    const _deadline = Math.ceil(Date.now() / 1000) + 60;
-
     if (isMint) {
-      let isReverse = false;
-      if (poolTokens && poolTokens.token0 && poolTokens.token1) {
-        isReverse = _token0Address === poolTokens.token1.address;
-      }
+      console.log({
+        token0: _token0Address,
+        token1: _token1Address,
+        fee: fee,
+        tickLower: tickLower,
+        tickUpper: tickUpper,
+        amount0Desired: _amount0,
+        amount1Desired: _amount1,
+        amount0Min: 0,
+        amount1Min: 0,
+        recipient: account,
+        deadline: _deadline,
+      });
       calldatas.push(
         Interface.encodeFunctionData('mint', [
           {
-            token0: isReverse ? _token1Address : _token0Address,
-            token1: isReverse ? _token0Address : _token1Address,
+            token0: _token0Address,
+            token1: _token1Address,
             fee: fee,
             tickLower: tickLower,
             tickUpper: tickUpper,
-            amount0Desired: isReverse ? _amount1 : _amount0,
-            amount1Desired: isReverse ? _amount0 : _amount1,
+            amount0Desired: _amount0,
+            amount1Desired: _amount1,
             amount0Min: 0,
             amount1Min: 0,
             recipient: account,
@@ -85,7 +103,7 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     }
     let value = '0';
     if (useNative) {
-      const wrappedValue = token0.address === 'native' ? _amount0 : _amount1;
+      const wrappedValue = _token0.address === 'native' ? _amount0 : _amount1;
       if (new Big(wrappedValue).gt(0)) {
         calldatas.push(Interface.encodeFunctionData('refundETH'));
         value = wrappedValue;
@@ -99,19 +117,23 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     };
     try {
       setLoading(true);
-      const txn: { to: string; data: string; value: string } = {
+      let estimateGas = new Big(1000000);
+      const txn: any = {
         to: config.contracts.positionAddress,
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
         value,
       };
+      console.log('data', txn);
       const signer = provider.getSigner(account);
-      let estimateGas = new Big(500000);
 
       try {
         estimateGas = await signer.estimateGas(txn);
-      } catch (err) {
-        console.log('err', err);
+      } catch (err: any) {
+        if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+          estimateGas = new Big(6000000);
+        }
       }
+
       const gasPrice = await provider.getGasPrice();
       const newTxn = {
         ...txn,
