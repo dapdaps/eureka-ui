@@ -1,7 +1,6 @@
 import { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import { tickToPrice } from '../../utils/tickMath';
-import { sortTokens } from '../../utils/sortTokens';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -66,6 +65,7 @@ const SetPriceRange = ({
   token0,
   token1,
   reverse,
+  noPair,
   onExchangeTokens,
 }: any) => {
   return (
@@ -101,6 +101,7 @@ const SetPriceRange = ({
           token0={token0}
           token1={token1}
           reverse={reverse}
+          noPair={noPair}
         />
         <InputPriceBox
           type="up"
@@ -109,6 +110,7 @@ const SetPriceRange = ({
           token0={token0}
           token1={token1}
           reverse={reverse}
+          noPair={noPair}
         />
       </div>
     </StyledContainer>
@@ -164,44 +166,49 @@ const StyledButtonArea = styled.div`
     background-color: #131313;
     cursor: pointer;
     color: #fff;
+    &.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
   }
 `;
-const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse }: any) => {
+const InputPriceBox = ({ type, tick, setTick, token0, token1, noPair, reverse }: any) => {
   const value = useMemo(() => {
     if (!tick || !token0 || !token1) return 0;
     if (tick === -887272) return '0';
     if (tick === 887272) return '∞';
-    const [_token0, _token1] = sortTokens(token0, token1);
+    if (noPair) return '';
     return tickToPrice({
       tick,
-      decimals0: _token0.decimals,
-      decimals1: _token1.decimals,
-      isReverse: !reverse,
+      decimals0: reverse ? token1.decimals : token0.decimals,
+      decimals1: reverse ? token0.decimals : token1.decimals,
+      isReverse: reverse,
       isNumber: true,
     });
   }, [tick, token0, token1, reverse]);
+  console.log('noPair', noPair);
   return (
     <StyledInputPriceBox>
       <StyledPrice>
         <span className="type">{type === 'low' ? 'Low' : 'High'} price</span>
-        <input value={value} readOnly />
+        <input value={value} readOnly placeholder="0" />
         <span className="txt">
           {token1?.symbol} per {token0?.symbol}
         </span>
       </StyledPrice>
       <StyledButtonArea>
         <div
-          className="b"
+          className={`b ${noPair && 'disabled'}`}
           onClick={() => {
-            setTick(tick - 1);
+            !noPair && setTick(tick - 1);
           }}
         >
           <Add />
         </div>
         <div
-          className="b"
+          className={`b ${noPair && 'disabled'}`}
           onClick={() => {
-            setTick(tick + 1);
+            !noPair && setTick(tick + 1);
           }}
         >
           <Sub />

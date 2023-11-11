@@ -6,7 +6,6 @@ import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
 import TokenIcon from '../TokenIcon';
 import { tickToPrice } from '../../utils/tickMath';
-import { sortTokens } from '../../utils/sortTokens';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -36,12 +35,11 @@ const DepositAmount = ({
 }: any) => {
   const price = useMemo(() => {
     if ((!currentTick && currentTick !== 0) || !token0 || !token1) return 0;
-    const [_token0, _token1] = sortTokens(token0, token1);
     return tickToPrice({
       tick: currentTick,
-      decimals0: _token0.decimals,
-      decimals1: _token1.decimals,
-      isReverse: !reverse,
+      decimals0: reverse ? token1.decimals : token0.decimals,
+      decimals1: reverse ? token0.decimals : token1.decimals,
+      isReverse: reverse,
       isNumber: true,
     });
   }, [token0, token1, currentTick, reverse]);

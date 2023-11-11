@@ -5,6 +5,7 @@ import Big from 'big.js';
 import useAddLiquidityData from './hooks/useAddLiquidityData';
 import useTicks from './hooks/useTickPrices';
 import useTokensBalance from './hooks/useTokensBalance';
+import { sortTokens } from './utils/sortTokens';
 
 import Loading from '@/components/Icons/Loading';
 import Head from './components/pools/AddHead';
@@ -65,7 +66,13 @@ const PoolsAddLiquidity = () => {
   }, []);
 
   useEffect(() => {
-    if (new Big(value0 || 0).eq(0)) {
+    if (!token0 || !token1) return;
+    const [_token0, _token1] = sortTokens(token0, token1);
+    setReverse(_token0.address === token1.address);
+  }, [token0, token1]);
+
+  useEffect(() => {
+    if (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
@@ -108,12 +115,13 @@ const PoolsAddLiquidity = () => {
               token0={token0}
               token1={token1}
               reverse={reverse}
+              noPair={noPair}
               onExchangeTokens={() => {
                 onExchangeTokens();
                 setReverse(!reverse);
               }}
             />
-            <Chart />
+            {!noPair && <Chart />}
           </>
         )}
         {noPair && (
@@ -121,6 +129,7 @@ const PoolsAddLiquidity = () => {
             token0={token0}
             token1={token1}
             price={price}
+            reverse={reverse}
             setPrice={(value?: any) => {
               setPrice(value);
               setValue0('');

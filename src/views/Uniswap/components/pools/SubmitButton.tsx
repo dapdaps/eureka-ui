@@ -110,6 +110,7 @@ const SubmitButton = ({ token0, value0, token1, value1, errorTips, onPreview }: 
 
   return (
     <StyledWrapper
+      disabled={!token0 && !token1}
       onClick={() => {
         onPreview();
       }}

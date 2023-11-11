@@ -72,7 +72,6 @@ const LoadingWrapper = styled.div`
   height: 232px;
   color: #fff;
 `;
-
 const Pools = () => {
   const router = useRouter();
   const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(true);

@@ -18,7 +18,7 @@ const StyledContainer = styled.div`
 const PoolsDetailLiquidity = () => {
   const searchParams = useSearchParams();
   const { loading, detail, collectData, getCollectData } = useDetail(searchParams.get('id') || '');
-  const [isReverse, setIsReverse] = useState(true);
+  const [isReverse, setIsReverse] = useState(false);
 
   useEffect(() => {
     if (!detail) return;
