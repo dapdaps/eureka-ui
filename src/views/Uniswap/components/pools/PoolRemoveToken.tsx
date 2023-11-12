@@ -41,12 +41,28 @@ const StyledCollect = styled.div`
   color: #8e8e8e;
   margin-top: 21px;
 `;
-const PoolRemoveToken = ({ token0, token1, liquidityToken0, liquidityToken1, collectToken0, collectToken1 }: any) => {
+const PoolRemoveToken = ({
+  percent,
+  token0,
+  token1,
+  liquidityToken0,
+  liquidityToken1,
+  collectToken0,
+  collectToken1,
+}: any) => {
   return (
     <StyledWrap>
       <StyledPool>
-        <RowData name={`Pooled ${token0?.symbol}:`} value={balanceFormated(liquidityToken0, 4)} token={token0} />
-        <RowData name={`Pooled ${token1?.symbol}:`} value={balanceFormated(liquidityToken1, 4)} token={token1} />
+        <RowData
+          name={`Pooled ${token0?.symbol}:`}
+          value={balanceFormated(Number(liquidityToken0 || 0) * (percent / 100) + '', 4)}
+          token={token0}
+        />
+        <RowData
+          name={`Pooled ${token1?.symbol}:`}
+          value={balanceFormated(Number(liquidityToken1 || 0) * (percent / 100) + '', 4)}
+          token={token1}
+        />
       </StyledPool>
       <StyledEarnedFees>
         <RowData name={`${token0?.symbol} Fees Earned:`} value={balanceFormated(collectToken0, 4)} token={token0} />

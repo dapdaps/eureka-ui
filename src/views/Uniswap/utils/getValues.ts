@@ -8,7 +8,7 @@ export function getTotalValues({ token0, token1, amount0, amount1, prices }: any
   if (prices[token1.symbol]) {
     value1 = (amount1 || 0) * prices[token1.symbol];
   }
-  const total = value0 + value1 ? value0 + value1 : 1;
+  const total = value0 + value1 ? value0 + value1 : 0;
 
   return {
     total: total.toString(),

@@ -39,6 +39,7 @@ const PoolsAddLiquidity = () => {
             <PoolRemoveToken
               token0={token0}
               token1={token1}
+              percent={percent}
               liquidityToken0={detail?.liquidityToken0}
               liquidityToken1={detail?.liquidityToken1}
               collectToken0={collectData?.collectToken0}
