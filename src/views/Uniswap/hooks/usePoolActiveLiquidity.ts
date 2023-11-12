@@ -8,12 +8,10 @@ import mockData from './mock.json';
 import  { tickToPriceDecimal } from '../utils/chartMath';
 // import { FeeAmount, nearestUsableTick, Pool, TICK_SPACINGS, tickToPrice, priceToClosestTick } from '@uniswap/v3-sdk';
 
-export default function usePoolActiveLiquidity() {
+export default function usePoolActiveLiquidity(reverse:boolean) {
   /**
    * 欠缺的数据 pool 的 liquidity
-   * tickToPriceDecimal 需要验证??????
-   * computeSurroundingTicks 需要验证??????
-   * priceToTick 需要加为了跟其进行交互
+   * computeSurroundingTicks 需要验证
    */
   const addLiquidityStore: any = useAddLiquidityStore();
   const { token0, token1, fee } = addLiquidityStore;
@@ -33,6 +31,7 @@ export default function usePoolActiveLiquidity() {
       tick: currentTick,
       decimals0: token0.decimals,
       decimals1: token1.decimals,
+      isReverse: reverse,
     }).toFixed(PRICE_FIXED_DIGITS),
   }
   if (!+baseData.current) return null;
@@ -50,10 +49,11 @@ export default function usePoolActiveLiquidity() {
       tick: activeTick,
       decimals0: token0.decimals,
       decimals1: token1.decimals,
+      isReverse: reverse,
     }).toFixed(PRICE_FIXED_DIGITS),
   }
-  const subsequentTicks = computeSurroundingTicks(token0, token1, activeTickProcessed, ticks, pivot, true)
-  const previousTicks = computeSurroundingTicks(token0, token1, activeTickProcessed, ticks, pivot, false)
+  const subsequentTicks = computeSurroundingTicks(token0, token1, activeTickProcessed, ticks, pivot, true, reverse)
+  const previousTicks = computeSurroundingTicks(token0, token1, activeTickProcessed, ticks, pivot, false, reverse)
   const ticksProcessed = previousTicks.concat(activeTickProcessed).concat(subsequentTicks)
   const formattedData = formatData(ticksProcessed);
   // const formattedData = mockData.data as any;

@@ -32,15 +32,17 @@ const xAccessor = (d: ChartEntry) => d.price0
 const yAccessor = (d: ChartEntry) => d.activeLiquidity
 
 const SetChartPriceRange = ({
+ reverse,
  lowPrice,
  highPrice,
  setLowPrice,
  setHighPrice,
 }: {
-  lowPrice?:number;
-  highPrice?:number;
-  setLowPrice?:Function;
-  setHighPrice?:Function;
+  reverse:boolean;
+  lowPrice:number;
+  highPrice:number;
+  setLowPrice:Function;
+  setHighPrice:Function;
 }) => {
   const svgWidth = 560;
   const svgPadding = 50; // svg custom
@@ -52,27 +54,29 @@ const SetChartPriceRange = ({
   const percentToBarDistance = 6;
   const [left_coordinate, set_left_coordinate] = useState<any>();
   const [right_coordinate, set_right_coordinate] = useState<any>();
-  const poolChartData = usePoolActiveLiquidity() as any;
+  const poolChartData = usePoolActiveLiquidity(reverse) as any;
   useEffect(() => {
     if (poolChartData?.current) {
       const current_price = poolChartData.current;
       const initMin = current_price * 0.5;
       const initMax = current_price * 2;
-      set_left_coordinate(initMin);
-      set_right_coordinate(initMax);
-      drawInitChart(initMin,  initMax);
+      set_left_coordinate(lowPrice);
+      set_right_coordinate(highPrice);
+      drawInitChart(lowPrice,  highPrice);
     }
   }, [poolChartData?.current]);
   useEffect(() => {
-    if (lowPrice) {
-      set_left_coordinate(lowPrice);
-    }
-    if (highPrice) {
-      set_right_coordinate(highPrice);
-    }
-  }, [lowPrice, highPrice]);
+    debugger;
+    set_left_coordinate(lowPrice);
+  }, [lowPrice])
+  useEffect(() => {
+    debugger;
+    set_right_coordinate(highPrice)
+  }, [highPrice]);
   useEffect(() => {
     if (!poolChartData || left_coordinate == undefined || right_coordinate == undefined) return;
+    drawLeftBar();
+    drawRightBar();
     drawSection();
     setLowPrice && setLowPrice(left_coordinate);
     setHighPrice && setHighPrice(right_coordinate);
@@ -109,9 +113,9 @@ const SetChartPriceRange = ({
     // 创建流动性分布图
     drawLiquidityArea();
     // 创建左拖拽Bar
-    drawLeftBar(initialMin);
+    drawInitLeftBar(initialMin);
     // 创建右拖拽Bar
-    drawRightBar(initialMax);
+    drawInitRightBar(initialMax);
     // 创建当前价格Line
     drawCurrentPriceLine();
   }
@@ -132,33 +136,37 @@ const SetChartPriceRange = ({
     }) as Iterable<[number, number]>);
     d3.select('.liquidity').attr('d', pathData);
   }
-  function drawLeftBar(initialMin?:number) {
+  function drawInitLeftBar(initialMin?:number) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
       if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
-      d3.select('.leftBar').attr('transform', `translate(${e.x}, ${svgHeight - barHeight - axisHeight})`);
-      set_left_coordinate(xScale.invert(e.x));
+      set_left_coordinate(xScale.invert(e.x + 7));
     }) as any;
-    d3.select('.leftBar').attr(
-      'transform',
-      `translate(${xScale(left_coordinate !== undefined ? left_coordinate : initialMin)}, ${svgHeight - barHeight - axisHeight})`,
-    );
-    d3.select('.leftPercent').attr('transform', `translate(-${percentBoxWidth + percentToBarDistance}, 0)`);
+    set_left_coordinate(initialMin);
     d3.select('.leftBar').call(dragEvent);
   }
-  function drawRightBar(initialMax?:number) {
+  function drawInitRightBar(initialMax?:number) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
       if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
-      d3.select('.rightBar').attr('transform', `translate(${e.x}, ${svgHeight - barHeight - axisHeight})`);
-      set_right_coordinate(xScale.invert(e.x));
+      set_right_coordinate(xScale.invert(e.x + 11));
     }) as any;
+    set_right_coordinate(initialMax);
+    d3.select('.rightBar').call(dragEvent);
+  }
+  function drawLeftBar() {
+    d3.select('.leftBar').attr(
+      'transform',
+      `translate(${xScale(+left_coordinate) - 7}, ${svgHeight - barHeight - axisHeight})`,
+    );
+    d3.select('.leftPercent').attr('transform', `translate(-${percentBoxWidth + percentToBarDistance}, 0)`);
+  }
+  function drawRightBar() {
     d3.select('.rightBar').attr(
       'transform',
-      `translate(${xScale(right_coordinate !== undefined ? right_coordinate : initialMax)}, ${svgHeight - barHeight - axisHeight})`,
+      `translate(${xScale(+right_coordinate) - 11}, ${svgHeight - barHeight - axisHeight})`,
     );
     d3.select('.rightPercent').attr('transform', `translate(${barWidth + percentToBarDistance}, 0)`);
-    d3.select('.rightBar').call(dragEvent);
   }
   function drawSection() {
     const x1 = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);

@@ -56,7 +56,8 @@ export function computeSurroundingTicks(
   activeTickProcessed: TickProcessed,
   sortedTickData: Ticks,
   pivot: number,
-  ascending: boolean
+  ascending: boolean,
+  isReverse: boolean,
 ): TickProcessed[] {
   let previousTickProcessed: TickProcessed = {
     ...activeTickProcessed,
@@ -70,7 +71,7 @@ export function computeSurroundingTicks(
       liquidityActive: previousTickProcessed.liquidityActive,
       tick,
       liquidityNet: JSBI.BigInt(sortedTickData[i].liquidityNet),
-      price0: tickToPriceDecimal({tick, decimals0: token0.decimals, decimals1: token1.decimals}).toFixed(PRICE_FIXED_DIGITS)
+      price0: tickToPriceDecimal({tick, decimals0: token0.decimals, decimals1: token1.decimals, isReverse: isReverse }).toFixed(PRICE_FIXED_DIGITS)
     }
 
     // Update the active liquidity.

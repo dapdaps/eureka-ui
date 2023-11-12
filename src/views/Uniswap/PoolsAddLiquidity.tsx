@@ -17,6 +17,7 @@ import SetPriceRange from './components/pools/SetPriceRange';
 import SubmitButton from './components/pools/SubmitButton';
 import AddLiquidityNoPair from './components/AddLiquidityNoPair';
 import PreviewModal from './components/pools/PreviewModal';
+import { tickToPriceDecimal } from './utils/chartMath';
 
 const StyledContainer = styled.div`
   width: 605px;
@@ -43,6 +44,8 @@ const PoolsAddLiquidity = () => {
   const [ready, setReady] = useState(false);
   const [errorTips, setErrorTips] = useState('');
   const [showPreview, setShowPreview] = useState(false);
+  const [lowPrice, setLowPrice] = useState<number>();
+  const [highPrice, setHighPrice] = useState<number>();
   const { loading, noPair, lowerTick, highTick, currentTick, reverse, setReverse, setLowerTick, setHighTick } =
     useTicks({
       fee,
@@ -94,7 +97,23 @@ const PoolsAddLiquidity = () => {
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick]);
-
+  useEffect(() => {
+    if (!token0 || !token1 || lowerTick == undefined || highTick == undefined) return;
+    const low_price = tickToPriceDecimal({
+      tick: lowerTick,
+      decimals0: token0.decimals,
+      decimals1: token1.decimals,
+      isReverse: reverse,
+    })
+    const high_price = tickToPriceDecimal({
+      tick: highTick,
+      decimals0: token0.decimals,
+      decimals1: token1.decimals,
+      isReverse: reverse,
+    })
+    setLowPrice(high_price.toNumber());
+    setHighPrice(low_price.toNumber())
+  }, [lowerTick, highTick, reverse, token0, token1])
   return ready ? (
     <StyledContainer>
       <Head
@@ -131,7 +150,12 @@ const PoolsAddLiquidity = () => {
                 setReverse(!reverse);
               }}
             />
-            {!noPair && <Chart />}
+            {!noPair && lowPrice!== undefined && highPrice !== undefined && <Chart
+             reverse={reverse} 
+             lowPrice={lowPrice}
+             highPrice={highPrice}
+             setLowPrice={setLowPrice}
+             setHighPrice={setHighPrice} />}
           </>
         )}
         {noPair && (
