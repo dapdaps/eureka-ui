@@ -17,3 +17,4 @@ export function nearestUsableTick(tick: number, tickSpacing: number) {
   else if (rounded > 887200) return rounded - tickSpacing;
   else return rounded;
 }
+

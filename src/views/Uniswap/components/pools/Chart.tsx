@@ -6,19 +6,28 @@ import Big from 'big.js';
 
 import usePoolActiveLiquidity from '../../hooks/usePoolActiveLiquidity';
 import { ZOOM_LEVELS, ChartEntry } from '../../utils/chartMath';
+import Loading from '@/components/Icons/Loading';
 
 const StyledContainer = styled.div`
   margin-top: 80px;
-  .empty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    gap: 8px;
-    color: rgba(255, 255, 255, 0.6);
-    height: 120px;
-  }
 `;
+const StyledEmpty = styled.div` 
+  margin-top: 80px;   
+  margin-bottom: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.6);
+  height: 120px;
+`
+const StyledLoadingWrapper = styled.div`
+    color: #fff;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+`
 const xAccessor = (d: ChartEntry) => d.price0
 const yAccessor = (d: ChartEntry) => d.activeLiquidity
 
@@ -41,18 +50,47 @@ const SetChartPriceRange = ({
   const barWidth = 22;
   const percentBoxWidth = 44;
   const percentToBarDistance = 6;
+  const [left_coordinate, set_left_coordinate] = useState<any>();
+  const [right_coordinate, set_right_coordinate] = useState<any>();
+  const poolChartData = usePoolActiveLiquidity() as any;
+  useEffect(() => {
+    if (poolChartData?.current) {
+      const current_price = poolChartData.current;
+      const initMin = current_price * 0.5;
+      const initMax = current_price * 2;
+      set_left_coordinate(initMin);
+      set_right_coordinate(initMax);
+      drawInitChart(initMin,  initMax);
+    }
+  }, [poolChartData?.current]);
+  useEffect(() => {
+    if (lowPrice) {
+      set_left_coordinate(lowPrice);
+    }
+    if (highPrice) {
+      set_right_coordinate(highPrice);
+    }
+  }, [lowPrice, highPrice]);
+  useEffect(() => {
+    if (!poolChartData || left_coordinate == undefined || right_coordinate == undefined) return;
+    drawSection();
+    setLowPrice && setLowPrice(left_coordinate);
+    setHighPrice && setHighPrice(right_coordinate);
+  }, [left_coordinate, right_coordinate, poolChartData?.current]);
 
-  const current_price = 2059.8641; // todo
-  const initMin = current_price * 0.5;
-  const initMax = current_price * 2
-  const [left_coordinate, set_left_coordinate] = useState(initMin); // todo
-  const [right_coordinate, set_right_coordinate] = useState(initMax); // todo
+  if (!poolChartData) return <StyledLoadingWrapper>
+                               <Loading size={30} />
+                            </StyledLoadingWrapper>
+  // if (!poolChartData) return <StyledEmpty>
+  //                             <EmptyIcon />
+  //                             <span>Your position will appear here.</span>
+  //                           </StyledEmpty>;
+
+  const { data: series = [], current: current_price, fee } = poolChartData;
   
-  const series = usePoolActiveLiquidity() as any; // todo
-  
-  const zoomLevels = ZOOM_LEVELS[FeeAmount.MEDIUM] // todo;
-  const axis = [current_price * zoomLevels.initialMin, current_price * zoomLevels.initialMax]; // todo;
-  const liquidityRange = [0, d3.max(series, yAccessor)] as number[]; // todo
+  const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
+  const axis = [current_price * zoomLevels.initialMin, current_price * zoomLevels.initialMax];
+  const liquidityRange = [0, d3.max(series, yAccessor)] as number[];
 
   const xScale = d3
     .scaleLinear()
@@ -65,33 +103,15 @@ const SetChartPriceRange = ({
     .range([barHeight, 0]);
 
 
-  useEffect(() => {
-    drawInitChart();
-  }, []);
-  useEffect(() => {
-    if (lowPrice) {
-      set_left_coordinate(lowPrice);
-    }
-    if (highPrice) {
-      set_right_coordinate(highPrice);
-    }
-  }, [lowPrice, highPrice]);
-  useEffect(() => {
-    drawSection();
-    setLowPrice && setLowPrice(left_coordinate);
-    setHighPrice && setHighPrice(right_coordinate);
-  }, [left_coordinate, right_coordinate]);
-  function drawInitChart() {
+  function drawInitChart(initialMin?:number, initialMax?:number) {
     // 创建横坐标轴
     drawBottomAxis();
     // 创建流动性分布图
     drawLiquidityArea();
     // 创建左拖拽Bar
-    drawLeftBar();
+    drawLeftBar(initialMin);
     // 创建右拖拽Bar
-    drawRightBar();
-    // 创建选中区域
-    drawSection();
+    drawRightBar(initialMax);
     // 创建当前价格Line
     drawCurrentPriceLine();
   }
@@ -112,7 +132,7 @@ const SetChartPriceRange = ({
     }) as Iterable<[number, number]>);
     d3.select('.liquidity').attr('d', pathData);
   }
-  function drawLeftBar() {
+  function drawLeftBar(initialMin?:number) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
       if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
@@ -121,12 +141,12 @@ const SetChartPriceRange = ({
     }) as any;
     d3.select('.leftBar').attr(
       'transform',
-      `translate(${xScale(left_coordinate)}, ${svgHeight - barHeight - axisHeight})`,
+      `translate(${xScale(left_coordinate !== undefined ? left_coordinate : initialMin)}, ${svgHeight - barHeight - axisHeight})`,
     );
     d3.select('.leftPercent').attr('transform', `translate(-${percentBoxWidth + percentToBarDistance}, 0)`);
     d3.select('.leftBar').call(dragEvent);
   }
-  function drawRightBar() {
+  function drawRightBar(initialMax?:number) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
       if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
@@ -135,7 +155,7 @@ const SetChartPriceRange = ({
     }) as any;
     d3.select('.rightBar').attr(
       'transform',
-      `translate(${xScale(right_coordinate)}, ${svgHeight - barHeight - axisHeight})`,
+      `translate(${xScale(right_coordinate !== undefined ? right_coordinate : initialMax)}, ${svgHeight - barHeight - axisHeight})`,
     );
     d3.select('.rightPercent').attr('transform', `translate(${barWidth + percentToBarDistance}, 0)`);
     d3.select('.rightBar').call(dragEvent);
@@ -147,7 +167,6 @@ const SetChartPriceRange = ({
     const rect_x = Number(x1) + barWidth / 2;
     const rect_y = svgHeight - barHeight - axisHeight;
     d3.select('.section').attr('height', '195').attr('width', width).attr('x', rect_x).attr('y', rect_y);
-    
     d3.select('.leftPercent text').text(getPercent(left_coordinate) + '%');
     d3.select('.rightPercent text').text(getPercent(right_coordinate) + '%');
   }
@@ -174,10 +193,6 @@ const SetChartPriceRange = ({
   }
   return (
     <StyledContainer>
-      {/* <div className="empty">
-        <EmptyIcon />
-        <span>Your position will appear here.</span>
-      </div> */}
       <svg width={svgWidth} height={svgHeight}>
         <defs>
           <linearGradient id="paint0_linear_7_2204" x1="0" y1="194" x2="600" y2="194" gradientUnits="userSpaceOnUse">
@@ -232,8 +247,6 @@ const SetChartPriceRange = ({
     </StyledContainer>
   );
 };
-
-export default memo(SetChartPriceRange);
 const EmptyIcon = () => {
   return (
     <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -246,3 +259,4 @@ const EmptyIcon = () => {
     </svg>
   );
 };
+export default memo(SetChartPriceRange);

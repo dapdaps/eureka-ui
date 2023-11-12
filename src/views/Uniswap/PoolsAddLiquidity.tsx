@@ -95,6 +95,7 @@ const PoolsAddLiquidity = () => {
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick]);
+
   return ready ? (
     <StyledContainer>
       <Head

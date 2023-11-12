@@ -64,5 +64,6 @@ export async function getPoolInfo({
     token0: _token0[0],
     token1: _token1[0],
     sqrtPriceX96: slot0.sqrtPriceX96.toString(),
+    poolAddress
   };
 }
