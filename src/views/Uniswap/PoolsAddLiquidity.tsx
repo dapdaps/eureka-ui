@@ -84,32 +84,42 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Invalid range selected');
       return;
     }
+    const _highTick = Number(highTick) < Number(lowerTick) ? lowerTick : highTick;
+    const _lowerTick = Number(highTick) < Number(lowerTick) ? highTick : lowerTick;
 
-    if (currentTick && lowerTick && highTick) {
-      const doubleCheck = currentTick < highTick && currentTick > lowerTick;
-      if (doubleCheck && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
-        setErrorTips('Enter an Amount');
-        return;
-      }
-      if (currentTick > highTick && new Big(value0 || 0).eq(0)) {
-        setErrorTips('Enter an Amount');
-        return;
-      }
-      if (currentTick < highTick && new Big(value1 || 0).eq(0)) {
-        setErrorTips('Enter an Amount');
-        return;
-      }
-    }
-
-    if (
-      !balanceLoading &&
-      (new Big(value0 || 0).gt(balances[token0.address] || 0) || new Big(value1 || 0).gt(balances[token1.address] || 0))
-    ) {
-      setErrorTips('Insufficient balance');
+    const doubleCheck = Number(currentTick) < Number(_highTick) && Number(currentTick) > Number(_lowerTick);
+    if (doubleCheck && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
+      setErrorTips('Enter an Amount');
       return;
     }
+    if (Number(currentTick) >= Number(_highTick) && new Big((reverse ? value1 : value0) || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
+      return;
+    }
+    if (Number(currentTick) <= Number(_lowerTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
+      return;
+    }
+    if (!balanceLoading) {
+      if (
+        doubleCheck &&
+        (new Big(value0 || 0).gt(balances[token0.address] || 0) ||
+          new Big(value1 || 0).gt(balances[token1.address] || 0))
+      ) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
+      if (Number(currentTick) >= Number(highTick) && new Big(value0 || 0).gt(balances[token0.address] || 0)) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
+      if (Number(currentTick) <= Number(highTick) && new Big(value1 || 0).gt(balances[token1.address] || 0)) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
+    }
     setErrorTips('');
-  }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick, currentTick]);
+  }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick, reverse, currentTick]);
 
   useEffect(() => {
     if (!token0 || !token1 || lowerTick == undefined || highTick == undefined) return;

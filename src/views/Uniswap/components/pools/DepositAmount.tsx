@@ -70,7 +70,8 @@ const DepositAmount = ({
   }, [token0, token1, currentTick, lowerTick, highTick, reverse]);
 
   useEffect(() => {
-    if (value0 && price) setValue1(new Big(value0).mul(price).toFixed(12));
+    setValue1('');
+    setValue0('');
   }, [reverse]);
   useEffect(() => {
     if (price && value1) {
