@@ -9,7 +9,7 @@ import { ZOOM_LEVELS, ChartEntry } from '../../utils/chartMath';
 import Loading from '@/components/Icons/Loading';
 
 const StyledContainer = styled.div`
-  margin-top: 80px;
+  margin-top: 40px;
 `;
 const StyledEmpty = styled.div` 
   margin-top: 80px;   
@@ -28,10 +28,25 @@ const StyledLoadingWrapper = styled.div`
     line-height: 200px;
     text-align: center;
 `
+const StyledCurrent = styled.div`
+  display:flex;
+  flex-direction:column;
+  .small{
+    font-size:14px;
+    color:#8E8E8E;
+  }
+  .fold{
+    font-size:20px;
+    font-weight:bold;
+    color:#fff;
+  }
+`
 const xAccessor = (d: ChartEntry) => d.price0
 const yAccessor = (d: ChartEntry) => d.activeLiquidity
 
-const SetChartPriceRange = ({
+const Chart = ({
+ token0,
+ token1,
  reverse,
  lowPrice,
  highPrice,
@@ -43,6 +58,8 @@ const SetChartPriceRange = ({
   highPrice:number;
   setLowPrice:Function;
   setHighPrice:Function;
+  token0:any;
+  token1:any;
 }) => {
   const svgWidth = 560;
   const svgPadding = 50; // svg custom
@@ -57,20 +74,15 @@ const SetChartPriceRange = ({
   const poolChartData = usePoolActiveLiquidity(reverse) as any;
   useEffect(() => {
     if (poolChartData?.current) {
-      const current_price = poolChartData.current;
-      const initMin = current_price * 0.5;
-      const initMax = current_price * 2;
       set_left_coordinate(lowPrice);
       set_right_coordinate(highPrice);
       drawInitChart(lowPrice,  highPrice);
     }
   }, [poolChartData?.current]);
   useEffect(() => {
-    debugger;
     set_left_coordinate(lowPrice);
   }, [lowPrice])
   useEffect(() => {
-    debugger;
     set_right_coordinate(highPrice)
   }, [highPrice]);
   useEffect(() => {
@@ -201,6 +213,11 @@ const SetChartPriceRange = ({
   }
   return (
     <StyledContainer>
+      <StyledCurrent>
+         <span className='small'>Current price</span>
+         <span className='fold'>{poolChartData?.current}</span>
+         <span className='small'>{token1?.symbol} per {token0?.symbol}</span>
+      </StyledCurrent>
       <svg width={svgWidth} height={svgHeight}>
         <defs>
           <linearGradient id="paint0_linear_7_2204" x1="0" y1="194" x2="600" y2="194" gradientUnits="userSpaceOnUse">
@@ -267,4 +284,4 @@ const EmptyIcon = () => {
     </svg>
   );
 };
-export default memo(SetChartPriceRange);
+export default memo(Chart);

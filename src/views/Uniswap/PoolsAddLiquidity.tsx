@@ -151,6 +151,8 @@ const PoolsAddLiquidity = () => {
               }}
             />
             {!noPair && lowPrice!== undefined && highPrice !== undefined && <Chart
+             token0={token0}
+             token1={token1}
              reverse={reverse} 
              lowPrice={lowPrice}
              highPrice={highPrice}

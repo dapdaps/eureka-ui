@@ -49,7 +49,7 @@ export function tickToPriceDecimal({ tick, decimals0, decimals1, isReverse }: an
   }
   return price1;
 }
-export const PRICE_FIXED_DIGITS = 8;
+export const PRICE_FIXED_DIGITS = 6;
 export function computeSurroundingTicks(
   token0: Token,
   token1: Token,
