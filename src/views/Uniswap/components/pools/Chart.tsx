@@ -1,9 +1,14 @@
 import { memo, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import * as d3 from 'd3';
+import { FeeAmount } from '@uniswap/v3-sdk';
+import Big from 'big.js';
+
+import usePoolActiveLiquidity from '../../hooks/usePoolActiveLiquidity';
+import { ZOOM_LEVELS, ChartEntry } from '../../utils/chartMath';
 
 const StyledContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 80px;
   .empty {
     display: flex;
     align-items: center;
@@ -14,27 +19,67 @@ const StyledContainer = styled.div`
     height: 120px;
   }
 `;
-const SetPriceRange = () => {
-  const svgWidth = 560,
-    svgHeight = 300; // custom
+const xAccessor = (d: ChartEntry) => d.price0
+const yAccessor = (d: ChartEntry) => d.activeLiquidity
+
+const SetChartPriceRange = ({
+ lowPrice,
+ highPrice,
+ setLowPrice,
+ setHighPrice,
+}: {
+  lowPrice?:number;
+  highPrice?:number;
+  setLowPrice?:Function;
+  setHighPrice?:Function;
+}) => {
+  const svgWidth = 560;
   const svgPadding = 50; // svg custom
   const axisHeight = 24; // custom
   const barHeight = 195; // custom fixed Bar
+  const svgHeight = barHeight + axisHeight; // custom
   const barWidth = 22;
   const percentBoxWidth = 44;
   const percentToBarDistance = 6;
 
-  const axis = [1800, 1900]; // from interface
-  const liquidityRange = [0, 300]; // from interface
-  const current_price = 1855; // from interface
+  const current_price = 2059.8641; // todo
+  const initMin = current_price * 0.5;
+  const initMax = current_price * 2
+  const [left_coordinate, set_left_coordinate] = useState(initMin); // todo
+  const [right_coordinate, set_right_coordinate] = useState(initMax); // todo
+  
+  const series = usePoolActiveLiquidity() as any; // todo
+  
+  const zoomLevels = ZOOM_LEVELS[FeeAmount.MEDIUM] // todo;
+  const axis = [current_price * zoomLevels.initialMin, current_price * zoomLevels.initialMax]; // todo;
+  const liquidityRange = [0, d3.max(series, yAccessor)] as number[]; // todo
 
-  const [left_coordinate, set_left_coordinate] = useState(1844);
-  const [right_coordinate, set_right_coordinate] = useState(1875);
+  const xScale = d3
+    .scaleLinear()
+    .domain(axis as number[])
+    .range([0, svgWidth - svgPadding * 2]);
+
+  const yScale = d3
+    .scaleLinear()
+    .domain(liquidityRange)
+    .range([barHeight, 0]);
+
+
   useEffect(() => {
     drawInitChart();
   }, []);
   useEffect(() => {
+    if (lowPrice) {
+      set_left_coordinate(lowPrice);
+    }
+    if (highPrice) {
+      set_right_coordinate(highPrice);
+    }
+  }, [lowPrice, highPrice]);
+  useEffect(() => {
     drawSection();
+    setLowPrice && setLowPrice(left_coordinate);
+    setHighPrice && setHighPrice(right_coordinate);
   }, [left_coordinate, right_coordinate]);
   function drawInitChart() {
     // 创建横坐标轴
@@ -50,35 +95,21 @@ const SetPriceRange = () => {
     // 创建当前价格Line
     drawCurrentPriceLine();
   }
-  const scaleAxis = d3
-    .scaleLinear()
-    .domain(axis)
-    .range([0, svgWidth - svgPadding * 2]);
-  const xScale = d3
-    .scaleLinear()
-    .domain(axis)
-    .range([0, svgWidth - svgPadding * 2]);
-  const yScale = d3
-    .scaleLinear()
-    .domain(liquidityRange)
-    .range([svgHeight - axisHeight, 0]);
   function drawBottomAxis() {
-    const axisBottom = d3.axisBottom(scaleAxis).tickSize(0).tickPadding(10) as any;
+    const axisBottom = d3.axisBottom(xScale).tickSize(0).tickPadding(10) as any;
     d3.select('.axis').call(axisBottom).selectAll('text').attr('fill', '#8E8E8E');
     d3.select('.axis').select('.domain').attr('stroke', 'transparent');
   }
   function drawLiquidityArea() {
-    const points = [] as any;
-    const liquidityPoints = [];
-    for (let i = axis[0]; i < axis[1]; i++) {
-      const x = xScale(i);
-      const y_random = Math.round(Math.random() * 200);
-      const y = yScale(y_random);
-      points.push([x, y]);
-      liquidityPoints.push([x, y_random]);
-    }
-    const areaGenerator = d3.area().y0(svgHeight - axisHeight);
-    const pathData = areaGenerator.curve(d3.curveStepAfter)(points);
+    const areaGenerator = d3.area().curve(d3.curveStepAfter).
+    x((d: unknown) => xScale(xAccessor(d as ChartEntry))).
+    y1((d: unknown) => yScale(yAccessor(d as ChartEntry))).
+    y0(yScale(0));
+
+    const pathData = areaGenerator(series.filter((d: ChartEntry) => {
+      const value = xScale(xAccessor(d))
+      return value > 0 && value <= (svgWidth - svgPadding * 2);
+    }) as Iterable<[number, number]>);
     d3.select('.liquidity').attr('d', pathData);
   }
   function drawLeftBar() {
@@ -116,9 +147,25 @@ const SetPriceRange = () => {
     const rect_x = Number(x1) + barWidth / 2;
     const rect_y = svgHeight - barHeight - axisHeight;
     d3.select('.section').attr('height', '195').attr('width', width).attr('x', rect_x).attr('y', rect_y);
+    
+    d3.select('.leftPercent text').text(getPercent(left_coordinate) + '%');
+    d3.select('.rightPercent text').text(getPercent(right_coordinate) + '%');
+  }
+  function getPercent(newPrice:number) {
+    let movePercent;
+    const price = current_price;
+    if (+price > +newPrice) {
+      movePercent = -Big(1)
+        .minus(Big(newPrice).div(price))
+        .mul(100)
+        .toFixed(0, 1);
+    } else {
+      movePercent = Big(newPrice).div(price).minus(1).mul(100).toFixed(0, 1);
+    }
+    return movePercent;
   }
   function drawCurrentPriceLine() {
-    const current_x = scaleAxis(current_price);
+    const current_x = xScale(current_price);
     d3.select('.current')
       .attr('x1', current_x)
       .attr('y1', svgHeight - barHeight - axisHeight)
@@ -186,7 +233,7 @@ const SetPriceRange = () => {
   );
 };
 
-export default memo(SetPriceRange);
+export default memo(SetChartPriceRange);
 const EmptyIcon = () => {
   return (
     <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
