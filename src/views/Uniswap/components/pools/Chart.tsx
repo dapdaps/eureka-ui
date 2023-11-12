@@ -54,8 +54,8 @@ const Chart = ({
  setHighPrice,
 }: {
   reverse:boolean;
-  lowPrice:number;
-  highPrice:number;
+  lowPrice:string;
+  highPrice:string;
   setLowPrice:Function;
   setHighPrice:Function;
   token0:any;
@@ -76,7 +76,7 @@ const Chart = ({
     if (poolChartData?.current) {
       set_left_coordinate(lowPrice);
       set_right_coordinate(highPrice);
-      drawInitChart(lowPrice,  highPrice);
+      drawInitChart(lowPrice, highPrice);
     }
   }, [poolChartData?.current]);
   useEffect(() => {
@@ -118,8 +118,7 @@ const Chart = ({
     .domain(liquidityRange)
     .range([barHeight, 0]);
 
-
-  function drawInitChart(initialMin?:number, initialMax?:number) {
+  function drawInitChart(initialMin?:string, initialMax?:string) {
     // 创建横坐标轴
     drawBottomAxis();
     // 创建流动性分布图
@@ -148,19 +147,21 @@ const Chart = ({
     }) as Iterable<[number, number]>);
     d3.select('.liquidity').attr('d', pathData);
   }
-  function drawInitLeftBar(initialMin?:number) {
+  function drawInitLeftBar(initialMin?:string) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
-      if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
+      // if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
+      if (e.x + barWidth / 2 <= 0) return;
       set_left_coordinate(xScale.invert(e.x + 7));
     }) as any;
     set_left_coordinate(initialMin);
     d3.select('.leftBar').call(dragEvent);
   }
-  function drawInitRightBar(initialMax?:number) {
+  function drawInitRightBar(initialMax?:string) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
-      if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
+      // if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
+      if (e.x >= svgWidth - svgPadding * 2) return;
       set_right_coordinate(xScale.invert(e.x + 11));
     }) as any;
     set_right_coordinate(initialMax);

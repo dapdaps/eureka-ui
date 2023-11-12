@@ -2,31 +2,30 @@ import { FeeAmount, nearestUsableTick, Pool, TICK_SPACINGS } from '@uniswap/v3-s
 import { Token } from '@uniswap/sdk-core'
 import JSBI from 'jsbi';
 import Big from 'big.js';
+import { tickToPrice } from './tickMath';
 
 export const ZOOM_LEVELS: Record<FeeAmount, ZoomLevels> = {
   [FeeAmount.LOWEST]: {
-    initialMin: 0.999,
-    initialMax: 1.001,
+    initialMin: 0.6,
+    initialMax: 1.3,
     min: 0.00001,
     max: 1.5,
   },
   [FeeAmount.LOW]: {
-    initialMin: 0.999,
-    initialMax: 1.001,
+    initialMin: 0.6,
+    initialMax: 1.3,
     min: 0.00001,
     max: 1.5,
   },
   [FeeAmount.MEDIUM]: {
-    // initialMin: 0.5,
-    // initialMax: 2,
     initialMin: 0.00001,
     initialMax: 2.5,
     min: 0.00001,
     max: 20,
   },
   [FeeAmount.HIGH]: {
-    initialMin: 0.5,
-    initialMax: 2,
+    initialMin: 0.6,
+    initialMax: 5,
     min: 0.00001,
     max: 20,
   },
@@ -71,7 +70,13 @@ export function computeSurroundingTicks(
       liquidityActive: previousTickProcessed.liquidityActive,
       tick,
       liquidityNet: JSBI.BigInt(sortedTickData[i].liquidityNet),
-      price0: tickToPriceDecimal({tick, decimals0: token0.decimals, decimals1: token1.decimals, isReverse: isReverse }).toFixed(PRICE_FIXED_DIGITS)
+      price0: tickToPrice({
+        tick, 
+        decimals0: isReverse ? token1.decimals: token0.decimals,
+        decimals1: isReverse ? token0.decimals: token1.decimals,
+        isReverse: !isReverse,
+        isNumber: true
+      })
     }
 
     // Update the active liquidity.

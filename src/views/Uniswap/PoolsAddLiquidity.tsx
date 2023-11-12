@@ -17,7 +17,7 @@ import SetPriceRange from './components/pools/SetPriceRange';
 import SubmitButton from './components/pools/SubmitButton';
 import AddLiquidityNoPair from './components/AddLiquidityNoPair';
 import PreviewModal from './components/pools/PreviewModal';
-import { tickToPriceDecimal } from './utils/chartMath';
+import { tickToPrice } from './utils/tickMath';
 
 const StyledContainer = styled.div`
   width: 605px;
@@ -44,8 +44,8 @@ const PoolsAddLiquidity = () => {
   const [ready, setReady] = useState(false);
   const [errorTips, setErrorTips] = useState('');
   const [showPreview, setShowPreview] = useState(false);
-  const [lowPrice, setLowPrice] = useState<number>();
-  const [highPrice, setHighPrice] = useState<number>();
+  const [lowPrice, setLowPrice] = useState<string>();
+  const [highPrice, setHighPrice] = useState<string>();
   const { loading, noPair, lowerTick, highTick, currentTick, reverse, setReverse, setLowerTick, setHighTick } =
     useTicks({
       fee,
@@ -123,22 +123,24 @@ const PoolsAddLiquidity = () => {
 
   useEffect(() => {
     if (!token0 || !token1 || lowerTick == undefined || highTick == undefined) return;
-    const low_price = tickToPriceDecimal({
-      tick: lowerTick,
-      decimals0: token0.decimals,
-      decimals1: token1.decimals,
-      isReverse: reverse,
-    });
-    const high_price = tickToPriceDecimal({
-      tick: highTick,
-      decimals0: token0.decimals,
-      decimals1: token1.decimals,
-      isReverse: reverse,
-    });
-    setLowPrice(high_price.toNumber());
-    setHighPrice(low_price.toNumber());
+    const low_price = tickToPrice({
+      tick: reverse ? lowerTick: highTick,
+      decimals0: reverse ? token1.decimals : token0.decimals,
+      decimals1: reverse ? token0.decimals : token1.decimals,
+      isReverse: !reverse,
+      isNumber: true,
+    })
+    const high_price = tickToPrice({
+      tick: reverse? highTick: lowerTick,
+      decimals0: reverse ? token1.decimals : token0.decimals,
+      decimals1: reverse ? token0.decimals : token1.decimals,
+      isReverse: !reverse,
+      isNumber: true,
+    })
+    setLowPrice(low_price);
+    setHighPrice(high_price);
   }, [lowerTick, highTick, reverse, token0, token1]);
-
+  
   return ready ? (
     <StyledContainer>
       <Head
@@ -175,17 +177,14 @@ const PoolsAddLiquidity = () => {
                 setReverse(!reverse);
               }}
             />
-            {!noPair && lowPrice !== undefined && highPrice !== undefined && (
-              <Chart
-                token0={token0}
-                token1={token1}
-                reverse={reverse}
-                lowPrice={lowPrice}
-                highPrice={highPrice}
-                setLowPrice={setLowPrice}
-                setHighPrice={setHighPrice}
-              />
-            )}
+            {!noPair && lowPrice!== undefined && highPrice !== undefined && token0 && token1 && <Chart
+             token0={token0}
+             token1={token1}
+             reverse={reverse} 
+             lowPrice={lowPrice}
+             highPrice={highPrice}
+             setLowPrice={setLowPrice}
+             setHighPrice={setHighPrice} />}
           </>
         )}
         {noPair && (
