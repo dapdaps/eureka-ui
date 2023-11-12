@@ -48,4 +48,11 @@ export default [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    inputs: [],
+    name: 'liquidity',
+    outputs: [{ internalType: 'uint128', name: '', type: 'uint128' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ];
