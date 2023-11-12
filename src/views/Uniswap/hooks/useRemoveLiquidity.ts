@@ -51,8 +51,8 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
       ]),
     );
     if (useNative) {
-      const _nativeAmount = useNative.address === token0.address ? amount0 : amount1;
-      calldatas.push(Interface.encodeFunctionData('unwrapWETH9', [_nativeAmount, account]));
+      // const _nativeAmount = useNative.address === token0.address ? amount0 : amount1;
+      calldatas.push(Interface.encodeFunctionData('unwrapWETH9', ['0', account]));
       // const otherAmount = useNative.address === token0.address ? amount1 : amount0;
       calldatas.push(
         Interface.encodeFunctionData('sweepToken', [

@@ -52,24 +52,24 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
   }, [token0, token1, fee, provider]);
 
   const getTicksFromPrice = async (price: any) => {
-    const TICK_SPACING: any = {
-      100: 1,
-      500: 10,
-      3000: 60,
-      10000: 200,
-    };
-    const tickSpacing = TICK_SPACING[fee];
+    // const TICK_SPACING: any = {
+    //   100: 1,
+    //   500: 10,
+    //   3000: 60,
+    //   10000: 200,
+    // };
+    // const tickSpacing = TICK_SPACING[fee];
     const tick = await getTickFromPrice({ token0, token1, price, provider });
-    const _lowerTick = Math.floor(tick / tickSpacing) * tickSpacing;
-    const _higherTick = Math.floor(tick / tickSpacing) * tickSpacing + tickSpacing;
-    setLowerTick(_lowerTick);
+    // const _lowerTick = Math.floor(tick / tickSpacing) * tickSpacing;
+    // const _higherTick = Math.floor(tick / tickSpacing) * tickSpacing + tickSpacing;
+    // setLowerTick(_lowerTick);
     setCurrentTick(tick);
-    setHighTick(_higherTick);
+    // setHighTick(_higherTick);
   };
 
   useEffect(() => {
     if (noPair && price && !new Big(price).eq(0) && token0 && token1) getTicksFromPrice(price);
-  }, [price, token0, token1]);
+  }, [price]);
   return {
     loading,
     noPair,

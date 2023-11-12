@@ -1,6 +1,7 @@
-import { memo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { usePriceStore } from '@/stores/price';
+import Big from 'big.js';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 import TokenIcon from '../TokenIcon';
 import { getTotalValues } from '../../utils/getValues';
@@ -118,15 +119,25 @@ const StyledBase = styled.div`
   }
 `;
 const StyledLiquidity = styled(StyledBase)``;
+
 const Liquidity = ({ detail, isReverse }: { detail: any; isReverse: boolean }) => {
   const priceStore = usePriceStore();
-  const { total, percentage0, percentage1 } = getTotalValues({
+  const { total } = getTotalValues({
     token0: detail.token0,
     token1: detail.token1,
     amount0: detail.liquidityToken0,
     amount1: detail.liquidityToken1,
     prices: priceStore.price,
   });
+
+  const [percentage0, percentage1] = useMemo(() => {
+    const _liquidityToken0 = new Big(detail.liquidityToken0);
+    const _liquidityToken1 = new Big(detail.liquidityToken1);
+    const totalAmount = _liquidityToken0.plus(_liquidityToken1);
+    const _percentage0 = !totalAmount.eq(0) ? _liquidityToken0.div(totalAmount).mul(100).toFixed(2) : 0;
+    const _percentage1 = !totalAmount.eq(0) ? _liquidityToken1.div(totalAmount).mul(100).toFixed(2) : 0;
+    return [_percentage0, _percentage1];
+  }, [detail.liquidityToken0, detail.liquidityToken1]);
 
   return (
     <StyledLiquidity>

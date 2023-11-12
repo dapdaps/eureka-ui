@@ -50,7 +50,7 @@ const AddLiquidityHeader = ({
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const router = useRouter();
   function goBack() {
-    router.push('/uniswap/pools');
+    router.back();
   }
   return (
     <StyledContainer>

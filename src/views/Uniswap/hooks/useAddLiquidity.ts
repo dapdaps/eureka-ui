@@ -41,7 +41,7 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     let _amount1 = new Big(_value1 || 0).mul(10 ** _token1.decimals).toFixed(0);
     const _deadline = Math.ceil(Date.now() / 1000) + 60;
     if (noPair) {
-      const mathPrice = (isReverse ? price : 1 / price) / 10 ** (_token0.decimals - _token1.decimals);
+      const mathPrice = (isReverse ? 1 / price : price) / 10 ** (token0.decimals - token1.decimals);
       const _sqrtPriceX96 = new Big(mathPrice)
         .sqrt()
         .mul(2 ** 96)
@@ -62,8 +62,8 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
             token0: _token0Address,
             token1: _token1Address,
             fee: fee,
-            tickLower: tickLower,
-            tickUpper: tickUpper,
+            tickLower: tickLower > tickUpper ? tickUpper : tickLower,
+            tickUpper: tickLower > tickUpper ? tickLower : tickUpper,
             amount0Desired: _amount0,
             amount1Desired: _amount1,
             amount0Min: 0,
@@ -114,11 +114,11 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
       try {
         estimateGas = await signer.estimateGas(txn);
       } catch (err: any) {
+        console.log('estimateGas err', err);
         if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
-          estimateGas = new Big(6000000);
+          estimateGas = new Big(3000000);
         }
       }
-
       const gasPrice = await provider.getGasPrice();
       const newTxn = {
         ...txn,

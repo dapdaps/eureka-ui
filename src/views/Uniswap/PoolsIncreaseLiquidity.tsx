@@ -6,7 +6,8 @@ import Spinner from '@/components/Spinner';
 import Head from './components/pools/AddHead';
 import IncreaseButton from './components/pools/IncreaseButton';
 import PoolIncreaseLiquidityData from './components/pools/PoolIncreaseLiquidityData';
-import PoolIncreaseMore from './components/pools/PoolIncreaseMore';
+import DepositAmount from './components/pools/DepositAmount';
+import PreviewModal from './components/pools/PreviewModal';
 import PoolPriceRange from './components/pools/PoolPriceRange';
 import PoolRemovePair from './components/pools/PoolRemovePair';
 import useIncreaseDetail from './hooks/useIncreaseDetail';
@@ -28,6 +29,7 @@ const PoolsIncreaseLiquidity = () => {
   const [reverse, setReverse] = useState(false);
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
+  const [showPreview, setShowPreview] = useState(false);
   const [errorTips, setErrorTips] = useState('');
   const tokens = useMemo(() => {
     const _tokens: any = {};
@@ -82,13 +84,18 @@ const PoolsIncreaseLiquidity = () => {
                 setReverse(!reverse);
               }}
             />
-            <PoolIncreaseMore
-              detail={detail}
-              value0={value0}
-              setValue0={setValue0}
+            <DepositAmount
+              token0={detail?.token0}
+              token1={detail?.token1}
               value1={value1}
-              setValue1={setValue1}
+              value0={value0}
+              currentTick={detail?.tick}
+              lowerTick={detail?.tickLow}
+              highTick={detail?.tickHigh}
               reverse={reverse}
+              setValue0={setValue0}
+              setValue1={setValue1}
+              noPair={false}
               balances={balances}
               balanceLoading={balanceLoading}
             />
@@ -103,8 +110,28 @@ const PoolsIncreaseLiquidity = () => {
               tickHigh={detail?.tickHigh}
               tick={detail?.tick}
               tokenId={detail?.tokenId}
+              onPreview={() => {
+                setShowPreview(true);
+              }}
             />
           </StyledBody>
+          <PreviewModal
+            token0={detail?.token0}
+            value0={value0}
+            token1={detail?.token1}
+            value1={value1}
+            lowerTick={detail?.tickLow}
+            highTick={detail?.tickHigh}
+            tick={detail?.tick}
+            fee={detail?.fee}
+            noPair={false}
+            isMint={false}
+            isOpen={showPreview}
+            tokenId={detail?.tokenId}
+            onRequestClose={() => {
+              setShowPreview(false);
+            }}
+          />
         </>
       ) : (
         <Spinner />

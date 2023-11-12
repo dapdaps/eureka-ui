@@ -21,10 +21,7 @@ export default function useDetail(tokenId: string) {
     if (!tokenId || !account) return;
     setLoading(true);
     try {
-      let position = positionsStore.getPosition[tokenId];
-      if (!position) {
-        position = await getPosition(tokenId, provider);
-      }
+      const position = await getPosition(tokenId, provider);
       const [pool, collectInfo, tokenURI] = await Promise.all([
         getPoolSlot({
           token0: position.token0,
@@ -35,16 +32,18 @@ export default function useDetail(tokenId: string) {
         getPositionCollect([tokenId, account], provider),
         getTokenURI(tokenId, provider),
       ]);
+
       const _token0 = tokens[getTokenAddress(position.token0)];
       const _token1 = tokens[getTokenAddress(position.token1)];
-      const [liquidityToken0, liquidityToken1] = getTokenAmounts({
+
+      const [liquidityToken0, liquidityToken1] = await getTokenAmounts({
         liquidity: position.liquidity,
-        sqrtPriceX96: pool.sqrtPriceX96.toString(),
-        tickLow: position.tickLower,
-        tickHigh: position.tickUpper,
-        Decimal0: _token0.decimals,
-        Decimal1: _token1.decimals,
-        currentTick: pool.tick,
+        tickLower: position.tickLower,
+        tickUpper: position.tickUpper,
+        tick: pool.tick,
+        decimal0: _token0.decimals,
+        decimal1: _token1.decimals,
+        provider,
       });
       const _detail: { [key: string]: any } = {
         fee: position.fee,
@@ -64,6 +63,11 @@ export default function useDetail(tokenId: string) {
       } else {
         _detail.status = pool.tick < position.tickLower || pool.tick >= position.tickUpper ? 'out' : 'in';
       }
+      positionsStore.updateSinglePosition({
+        tokenId: tokenId,
+        liquidityToken0,
+        liquidityToken1,
+      });
       setDetail(_detail);
       setCollectData({
         collectToken0: collectInfo.amount0 / 10 ** _token0.decimals,

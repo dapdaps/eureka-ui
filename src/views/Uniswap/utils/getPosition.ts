@@ -2,6 +2,7 @@ import { Contract } from 'ethers';
 import Big from 'big.js';
 import config from '@/config/uniswap/linea/index';
 import positionAbi from '../abi/positionAbi';
+import { getSqrtRatioAtTick } from '../utils/getTick';
 
 export async function getPosition(tokenId: string, provider: any) {
   const PositionContract = new Contract(config.contracts.positionAddress, positionAbi, provider);
@@ -17,21 +18,33 @@ export async function getPositionCollect(args: string[], provider: any) {
   ]);
 }
 
-export function getTokenAmounts({ liquidity, sqrtPriceX96, tickLow, tickHigh, currentTick, Decimal0, Decimal1 }: any) {
-  const sqrtRatioA = new Big(1.0001 ** tickLow);
-  const sqrtRatioB = new Big(1.0001 ** tickHigh);
-  const sqrtPrice = new Big(sqrtPriceX96 || 1).div(new Big(2).pow(96));
-  let amount0 = new Big(0);
-  let amount1 = new Big(0);
-  if (currentTick < tickLow) {
-    amount0 = new Big(liquidity).mul(sqrtRatioB.minus(sqrtRatioA).div(sqrtRatioA.mul(sqrtRatioB)));
-  } else if (currentTick >= tickHigh) {
-    amount1 = new Big(liquidity).mul(sqrtRatioB.minus(sqrtRatioA));
-  } else if (currentTick >= tickLow && currentTick < tickHigh) {
-    amount0 = new Big(liquidity).mul(sqrtRatioB.minus(sqrtPrice).div(sqrtPrice.mul(sqrtRatioB)));
-    amount1 = new Big(liquidity).mul(sqrtPrice.minus(sqrtRatioA));
-  }
-  const amount0Human = amount0.div(10 ** Decimal0).toFixed(Decimal0);
-  const amount1Human = amount1.div(10 ** Decimal1).toFixed(Decimal1);
-  return [amount0Human, amount1Human];
+export async function getTokenAmounts({ liquidity, tickLower, tickUpper, tick, decimal0, decimal1, provider }: any) {
+  const [sqrtRatioLower, sqrtRatioUpper, sqrtRatio] = await Promise.all([
+    getSqrtRatioAtTick(tickLower, provider),
+    getSqrtRatioAtTick(tickUpper, provider),
+    getSqrtRatioAtTick(tick, provider),
+  ]);
+  const _reverse0 = new Big(sqrtRatioUpper).gt(sqrtRatio);
+  const _sqrtRatio0A = _reverse0 ? new Big(sqrtRatio) : new Big(sqrtRatioUpper);
+  const _sqrtRatio0B = _reverse0 ? new Big(sqrtRatioUpper) : new Big(sqrtRatio);
+  const _diff0 = _sqrtRatio0B.minus(_sqrtRatio0A);
+
+  const _reverse1 = new Big(sqrtRatioLower).gt(sqrtRatio);
+  const _sqrtRatio1A = _reverse1 ? new Big(sqrtRatio) : new Big(sqrtRatioLower);
+  const _sqrtRatio1B = _reverse1 ? new Big(sqrtRatioLower) : new Big(sqrtRatio);
+  const _diff1 = _sqrtRatio1B.minus(_sqrtRatio1A);
+
+  const q96 = 2 ** 96;
+  const amount0 = new Big(liquidity)
+    .mul(q96)
+    .mul(_diff0)
+    .div(_sqrtRatio0A)
+    .div(_sqrtRatio0B)
+    .div(10 ** decimal0);
+  const amount1 = new Big(liquidity)
+    .mul(_diff1)
+    .div(q96)
+    .div(10 ** decimal1);
+
+  return [amount0.toFixed(decimal0), amount1.toFixed(decimal1)];
 }

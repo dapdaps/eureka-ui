@@ -16,7 +16,6 @@ export default function useRemoveDetail(tokenId?: string) {
   const [token0, setToken0] = useState<any>();
   const [token1, setToken1] = useState<any>();
   const [collectData, setCollectData] = useState<any>();
-
   const detail = useMemo(() => {
     if (!tokenId) return null;
     const position = positionsStore.getPosition(tokenId) || {};
@@ -24,23 +23,14 @@ export default function useRemoveDetail(tokenId?: string) {
     const _token0 = tokens[getTokenAddress(pool.token0)];
     const _token1 = tokens[getTokenAddress(pool.token1)];
     const useNative = _token0.address === 'native' ? _token0 : _token1.address === 'native' ? _token1 : undefined;
-    const [liquidityToken0, liquidityToken1] = getTokenAmounts({
-      liquidity: position.liquidity,
-      sqrtPriceX96: pool.sqrtPriceX96,
-      tickLow: position.tickLower,
-      tickHigh: position.tickUpper,
-      Decimal0: _token0.decimals,
-      Decimal1: _token1.decimals,
-      currentTick: pool.currentTick,
-    });
     const status = position.tickLower <= pool.currentTick && pool.currentTick <= position.tickUpper ? 'in' : 'out';
     setToken0(_token0);
     setToken1(_token1);
     return {
       token0: cloneDeep(_token0),
       token1: cloneDeep(_token1),
-      liquidityToken0,
-      liquidityToken1,
+      liquidityToken0: position.liquidityToken0,
+      liquidityToken1: position.liquidityToken1,
       tickLow: position.tickLower,
       tickHigh: position.tickUpper,
       status,

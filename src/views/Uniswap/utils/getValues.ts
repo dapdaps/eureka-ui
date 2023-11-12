@@ -9,9 +9,8 @@ export function getTotalValues({ token0, token1, amount0, amount1, prices }: any
     value1 = (amount1 || 0) * prices[token1.symbol];
   }
   const total = value0 + value1 ? value0 + value1 : 1;
+
   return {
-    total: (value0 + value1).toString(),
-    percentage0: ((value0 / total) * 100).toFixed(0),
-    percentage1: ((value1 / total) * 100).toFixed(0),
+    total: total.toString(),
   };
 }

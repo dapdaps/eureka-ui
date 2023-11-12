@@ -68,11 +68,12 @@ export default function useApprove({
         ],
         signer,
       );
-      const tx = await TokenContract.approve(spender, new Big(amount).mul(10 ** token.decimals).toString());
+      const tx = await TokenContract.approve(spender, new Big(amount).mul(10 ** token.decimals).toFixed(0));
       const res = await tx.wait();
       setApproving(false);
       if (res.status === 1) setApproved(true);
     } catch (err) {
+      console.log('err', err);
       setApproving(false);
     }
   };

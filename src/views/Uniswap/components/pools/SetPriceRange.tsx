@@ -67,6 +67,7 @@ const SetPriceRange = ({
   token0,
   token1,
   reverse,
+  fee,
   noPair,
   onExchangeTokens,
 }: any) => {
@@ -104,6 +105,7 @@ const SetPriceRange = ({
           token1={token1}
           reverse={reverse}
           noPair={noPair}
+          fee={fee}
         />
         <InputPriceBox
           type="up"
@@ -113,6 +115,7 @@ const SetPriceRange = ({
           token1={token1}
           reverse={reverse}
           noPair={noPair}
+          fee={fee}
         />
       </div>
     </StyledContainer>
@@ -174,49 +177,74 @@ const StyledButtonArea = styled.div`
     }
   }
 `;
-const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse }: any) => {
+const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, fee }: any) => {
   const [price, setPrice] = useState('');
   const { provider } = useAccount();
 
+  const setPriceFromTick = useCallback(
+    (_tick: any) => {
+      if ((!_tick && _tick !== 0) || !token0 || !token1) {
+        setPrice('');
+        return;
+      }
+      if (_tick === -887200) {
+        setPrice('0');
+        return;
+      }
+      if (_tick === 887200) {
+        setPrice('∞');
+        return;
+      }
+      const _price = tickToPrice({
+        tick: _tick,
+        decimals0: reverse ? token1.decimals : token0.decimals,
+        decimals1: reverse ? token0.decimals : token1.decimals,
+        isReverse: !reverse,
+        isNumber: true,
+      });
+      setPrice(_price);
+    },
+    [token0, token1, reverse],
+  );
+
   const handlePriceChange = useCallback(async () => {
     if (price === '') return;
-    let tick = await getTickFromPrice({
+    let _tick = await getTickFromPrice({
       token0,
       token1,
       price: price,
       provider,
     });
-    if (tick < -887200) {
-      tick = -887200;
+    if (_tick < -887200) {
+      _tick = -887200;
     }
-    if (tick > 887200) {
-      tick = 887200;
+    if (_tick > 887200) {
+      _tick = 887200;
     }
-    setTick(tick);
+
+    const TICK_SPACING: any = {
+      100: 1,
+      500: 10,
+      3000: 60,
+      10000: 200,
+    };
+    const tickSpacing = TICK_SPACING[fee];
+    const _useableTick =
+      type === 'up'
+        ? Math.floor(_tick / tickSpacing) * tickSpacing
+        : Math.floor(_tick / tickSpacing) * tickSpacing + tickSpacing;
+
+    setTick(_useableTick);
+    setPriceFromTick(_useableTick);
   }, [price]);
 
   useEffect(() => {
-    if ((!tick && tick !== 0) || !token0 || !token1) {
-      setPrice('');
-      return;
-    }
-    if (tick === -887200) {
-      setPrice('0');
-      return;
-    }
-    if (tick === 887200) {
-      setPrice('∞');
-      return;
-    }
-    const _price = tickToPrice({
-      tick,
-      decimals0: reverse ? token1.decimals : token0.decimals,
-      decimals1: reverse ? token0.decimals : token1.decimals,
-      isReverse: reverse,
-      isNumber: true,
-    });
-    setPrice(_price);
+    !noPair && setPriceFromTick(tick);
   }, [tick, token0, token1, reverse]);
+
+  useEffect(() => {
+    if (tick === undefined) setPrice('');
+  }, [tick]);
 
   return (
     <StyledInputPriceBox>

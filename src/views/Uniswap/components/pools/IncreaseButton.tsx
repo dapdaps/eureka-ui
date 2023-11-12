@@ -7,7 +7,6 @@ import { useConnectWallet } from '@web3-onboard/react';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
-import PreviewModal from './PreviewModal';
 
 const StyledWrapper = styled.div<{ disabled?: boolean }>`
   display: flex;
@@ -28,8 +27,7 @@ const StyledBox = styled.div`
   gap: 20px;
 `;
 
-const IncreaseButton = ({ token0, value0, token1, value1, fee, tickLow, tickHigh, tick, errorTips, tokenId }: any) => {
-  const [open, setOpen] = useState(false);
+const IncreaseButton = ({ token0, value0, token1, value1, onPreview, errorTips }: any) => {
   const { account, chainId } = useAccount();
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const { switching, switchNetwork } = useSwitchChain();
@@ -109,34 +107,9 @@ const IncreaseButton = ({ token0, value0, token1, value1, fee, tickLow, tickHigh
     );
   }
 
-  function closeModal() {
-    setOpen(false);
-  }
-  function openModal() {
-    setOpen(true);
-  }
   return (
     <>
-      <StyledWrapper onClick={openModal}>Preview</StyledWrapper>
-      <PreviewModal
-        token0={token0}
-        value0={value0}
-        token1={token1}
-        value1={value1}
-        lowerTick={tickLow}
-        highTick={tickHigh}
-        tick={tick}
-        fee={fee}
-        noPair={false}
-        isMint={false}
-        isOpen={open}
-        tokenId={tokenId}
-        onRequestClose={closeModal}
-        poolTokens={{
-          token0,
-          token1,
-        }}
-      />
+      <StyledWrapper onClick={onPreview}>Preview</StyledWrapper>
     </>
   );
 };

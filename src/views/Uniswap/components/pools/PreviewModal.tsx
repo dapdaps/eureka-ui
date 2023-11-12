@@ -112,7 +112,10 @@ const PreviewModal = (props: any) => {
     const [_token0, _token1] = sortTokens(token0, token1);
     setReverse(_token0.address === token1.address);
   }, [token0, token1]);
+
   const { openRequestModal } = useRequestModal();
+  const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
+  const _highTick = lowerTick > highTick ? lowerTick : highTick;
   return (
     <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
       <StyledContent>
@@ -122,7 +125,7 @@ const PreviewModal = (props: any) => {
         </StyledHead>
         <StyledBody>
           <PoolRemovePair
-            status={lowerTick <= tick && tick <= highTick ? 'in' : 'out'}
+            status={_lowerTick <= tick && tick <= _highTick ? 'in' : 'out'}
             token0={token0}
             token1={token1}
             fee={fee}
@@ -133,8 +136,8 @@ const PreviewModal = (props: any) => {
             detail={{
               token0: token0,
               token1: token1,
-              tickLow: lowerTick,
-              tickHigh: highTick,
+              tickLow: _lowerTick,
+              tickHigh: _highTick,
               tick,
             }}
             isReverse={reverse}

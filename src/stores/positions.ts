@@ -8,6 +8,12 @@ export const usePositionsStore = create(
       setPositions: (positions: any) => {
         set({ positions });
       },
+      updateSinglePosition: (params: any) => {
+        const _positions = get().positions;
+        const _position = get().positions[params.tokenId];
+        _positions[params.tokenId] = { ..._position, ...params };
+        set({ positions: _positions });
+      },
       getPosition: (id: any) => get().positions[id],
     }),
     {

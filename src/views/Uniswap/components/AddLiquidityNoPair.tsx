@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Big from 'big.js';
 
 const StyledTips = styled.div`
   border-radius: 16px;
@@ -49,6 +48,7 @@ export default function AddLiquidityNoPair({ token0, token1, price, setPrice }: 
       </StyledTips>
       <StyledInput
         type="number"
+        value={price}
         onChange={(ev) => {
           setPrice(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
         }}

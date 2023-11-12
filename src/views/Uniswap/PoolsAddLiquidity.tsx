@@ -77,12 +77,11 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Select a Token');
       return;
     }
-    if (lowerTick !== undefined && highTick !== undefined && highTick <= lowerTick) {
-      console.log(lowerTick, highTick, currentTick);
+    if (lowerTick !== undefined && highTick !== undefined && lowerTick <= highTick) {
       setErrorTips('Invalid range selected');
       return;
     }
-    if (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0)) {
+    if (new Big(value0 || 0).eq(0) && new Big(value1 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
@@ -103,6 +102,9 @@ const PoolsAddLiquidity = () => {
           onCleanAll();
           setLowerTick(undefined);
           setHighTick(undefined);
+          setValue0('');
+          setValue1('');
+          setPrice('');
         }}
       />
       <SelectPair token0={token0} token1={token1} onSelectToken={onSelectToken} />
@@ -123,6 +125,7 @@ const PoolsAddLiquidity = () => {
               token1={token1}
               reverse={reverse}
               noPair={noPair}
+              fee={fee}
               onExchangeTokens={() => {
                 onExchangeTokens();
                 setReverse(!reverse);
@@ -155,6 +158,7 @@ const PoolsAddLiquidity = () => {
           reverse={reverse}
           setValue0={setValue0}
           setValue1={setValue1}
+          noPair={noPair}
           balances={balances}
           balanceLoading={balanceLoading}
         />

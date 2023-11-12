@@ -12,14 +12,14 @@ export async function getTickAtSqrtRatio(sqrtPriceX96: string, provider: any) {
 
 export async function getSqrtRatioAtTick(tick: string, provider: any) {
   const TickMathContract = new Contract(config.contracts.tickMathAddress, tickMathAbi, provider);
-  const result = await TickMathContract.getSqrtRatioAtTick(tick);
+  const result = await TickMathContract.callStatic.getSqrtRatioAtTick(tick);
   return result.toString();
 }
 
 export async function getTickFromPrice({ token0, token1, price, provider }: any) {
   const [_token0, _token1] = sortTokens(token0, token1);
   const isReverse = _token0.address !== token0.address;
-  const mathPrice = (isReverse ? price : 1 / price) / 10 ** (_token0.decimals - _token1.decimals);
+  const mathPrice = (isReverse ? 1 / price : price) / 10 ** (token0.decimals - token1.decimals);
   const _sqrtPriceX96 = new Big(mathPrice)
     .sqrt()
     .mul(2 ** 96)
