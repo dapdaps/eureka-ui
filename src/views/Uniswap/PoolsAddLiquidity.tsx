@@ -84,10 +84,23 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Invalid range selected');
       return;
     }
-    if (new Big(value0 || 0).eq(0) && new Big(value1 || 0).eq(0)) {
-      setErrorTips('Enter an Amount');
-      return;
+
+    if (currentTick && lowerTick && highTick) {
+      const doubleCheck = currentTick < highTick && currentTick > lowerTick;
+      if (doubleCheck && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
+        setErrorTips('Enter an Amount');
+        return;
+      }
+      if (currentTick > highTick && new Big(value0 || 0).eq(0)) {
+        setErrorTips('Enter an Amount');
+        return;
+      }
+      if (currentTick < highTick && new Big(value1 || 0).eq(0)) {
+        setErrorTips('Enter an Amount');
+        return;
+      }
     }
+
     if (
       !balanceLoading &&
       (new Big(value0 || 0).gt(balances[token0.address] || 0) || new Big(value1 || 0).gt(balances[token1.address] || 0))
@@ -96,7 +109,8 @@ const PoolsAddLiquidity = () => {
       return;
     }
     setErrorTips('');
-  }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick]);
+  }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick, currentTick]);
+
   useEffect(() => {
     if (!token0 || !token1 || lowerTick == undefined || highTick == undefined) return;
     const low_price = tickToPriceDecimal({
@@ -104,16 +118,17 @@ const PoolsAddLiquidity = () => {
       decimals0: token0.decimals,
       decimals1: token1.decimals,
       isReverse: reverse,
-    })
+    });
     const high_price = tickToPriceDecimal({
       tick: highTick,
       decimals0: token0.decimals,
       decimals1: token1.decimals,
       isReverse: reverse,
-    })
+    });
     setLowPrice(high_price.toNumber());
-    setHighPrice(low_price.toNumber())
-  }, [lowerTick, highTick, reverse, token0, token1])
+    setHighPrice(low_price.toNumber());
+  }, [lowerTick, highTick, reverse, token0, token1]);
+
   return ready ? (
     <StyledContainer>
       <Head
@@ -150,14 +165,17 @@ const PoolsAddLiquidity = () => {
                 setReverse(!reverse);
               }}
             />
-            {!noPair && lowPrice!== undefined && highPrice !== undefined && <Chart
-             token0={token0}
-             token1={token1}
-             reverse={reverse} 
-             lowPrice={lowPrice}
-             highPrice={highPrice}
-             setLowPrice={setLowPrice}
-             setHighPrice={setHighPrice} />}
+            {!noPair && lowPrice !== undefined && highPrice !== undefined && (
+              <Chart
+                token0={token0}
+                token1={token1}
+                reverse={reverse}
+                lowPrice={lowPrice}
+                highPrice={highPrice}
+                setLowPrice={setLowPrice}
+                setHighPrice={setHighPrice}
+              />
+            )}
           </>
         )}
         {noPair && (

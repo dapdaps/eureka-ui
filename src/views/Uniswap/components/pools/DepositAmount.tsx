@@ -45,6 +45,8 @@ const DepositAmount = ({
   balances,
   balanceLoading,
 }: any) => {
+  const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
+  const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
   const price = useMemo(() => {
     if (
       (!currentTick && currentTick !== 0) ||
@@ -54,15 +56,16 @@ const DepositAmount = ({
       (!highTick && highTick !== 0)
     )
       return 0;
-    const _price = getToken0Amounts({
+    let _price = getToken0Amounts({
       token1Amount: 1000000,
       currentTick,
-      tickLow: reverse ? lowerTick : highTick,
-      tickHigh: reverse ? highTick : lowerTick,
+      tickLow: _lowerTick,
+      tickHigh: _tickHigh,
       decimals0: reverse ? token1.decimals : token0.decimals,
       decimals1: reverse ? token0.decimals : token1.decimals,
       reverse: reverse,
     });
+    _price = new Big(_price || 0).gt(0) ? _price : 1;
     return 1 / (_price / 10 ** (reverse ? token0.decimals : token1.decimals));
   }, [token0, token1, currentTick, lowerTick, highTick, reverse]);
 
@@ -79,12 +82,11 @@ const DepositAmount = ({
       );
     }
   }, [price]);
-
   return (
     <StyledContainer>
       <span className={`title ${lowerTick >= highTick && 'disabled'}`}>Deposit amounts</span>
       <div className="I">
-        {noPair || (currentTick < highTick && currentTick > lowerTick) ? (
+        {noPair || (currentTick < _tickHigh && currentTick > _lowerTick) ? (
           <InputBoxs>
             <InputBox
               token={token0}
@@ -107,7 +109,29 @@ const DepositAmount = ({
               loading={balanceLoading}
             />
           </InputBoxs>
-        ) : lowerTick <= highTick ? (
+        ) : currentTick >= _tickHigh ? (
+          !reverse ? (
+            <InputBox
+              token={token0}
+              value={value0}
+              setValue={(value: string) => {
+                setValue0(value);
+              }}
+              balance={token0 ? balances[token0?.address] : ''}
+              loading={balanceLoading}
+            />
+          ) : (
+            <InputBox
+              token={token1}
+              value={value1}
+              setValue={(value: string) => {
+                setValue1(value);
+              }}
+              balance={token1 ? balances[token1?.address] : ''}
+              loading={balanceLoading}
+            />
+          )
+        ) : !reverse ? (
           <InputBox
             token={token0}
             value={value0}
