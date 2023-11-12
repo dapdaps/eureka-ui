@@ -86,11 +86,10 @@ const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
 `;
 const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
   const [_token0 = {}, _token1 = {}] = [detail?.token0, detail?.token1];
-
   const tickArgs = {
-    decimals0: isReverse ? _token1.decimals : _token0.decimals,
-    decimals1: isReverse ? _token0.decimals : _token1.decimals,
-    isReverse: isReverse,
+    decimals0: _token0.decimals,
+    decimals1: _token1.decimals,
+    isReverse: !isReverse,
   };
   const priceRate = `${isReverse ? detail?.token0.symbol : detail?.token1.symbol} per ${
     isReverse ? detail?.token1.symbol : detail?.token0.symbol
@@ -119,13 +118,19 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
         <div className="vchb minmax">
           <PriceDetailBox
             priceType="Min price"
-            price={tickToPrice({ ...tickArgs, tick: isReverse ? detail?.tickLow : detail?.tickHigh })}
+            price={tickToPrice({
+              ...tickArgs,
+              tick: !isReverse ? detail?.tickLow : detail?.tickHigh,
+            })}
             priceRate={priceRate}
           />
           <ArrowBothIcon />
           <PriceDetailBox
             priceType="Max price"
-            price={tickToPrice({ ...tickArgs, tick: isReverse ? detail?.tickHigh : detail?.tickLow })}
+            price={tickToPrice({
+              ...tickArgs,
+              tick: !isReverse ? detail?.tickHigh : detail?.tickLow,
+            })}
             priceRate={priceRate}
           />
         </div>

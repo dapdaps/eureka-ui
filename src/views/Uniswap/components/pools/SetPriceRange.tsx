@@ -192,7 +192,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse }: any) =>
     if (tick > 887200) {
       tick = 887200;
     }
-    setTick(-2);
+    setTick(tick);
   }, [price]);
 
   useEffect(() => {
