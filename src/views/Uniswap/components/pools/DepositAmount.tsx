@@ -47,10 +47,11 @@ const DepositAmount = ({
 }: any) => {
   const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
   const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
-  const _decimals0 = reverse ? token1.decimals : token0.decimals;
-  const _decimals1 = reverse ? token0.decimals : token1.decimals;
+
   const price = useMemo(() => {
     if ((!currentPrice && !currentTick) || !lowerTick || !highTick) return 0;
+    const _decimals0 = reverse ? token1?.decimals : token0?.decimals;
+    const _decimals1 = reverse ? token0?.decimals : token1?.decimals;
     const lowPrice =
       _lowerTick === -887200
         ? 0
