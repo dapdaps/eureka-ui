@@ -57,7 +57,7 @@ const DepositAmount = ({
     )
       return 0;
     let _price = getToken0Amounts({
-      token1Amount: 1000000,
+      token1Amount: 10 ** (reverse ? token0.decimals : token1.decimals),
       currentTick,
       tickLow: _lowerTick,
       tickHigh: _tickHigh,
@@ -66,7 +66,7 @@ const DepositAmount = ({
       reverse: reverse,
     });
     _price = new Big(_price || 0).gt(0) ? _price : 1;
-    return 1 / (_price / 10 ** (reverse ? token0.decimals : token1.decimals));
+    return 1 / _price / 10 ** (reverse ? token0.decimals : token1.decimals);
   }, [token0, token1, currentTick, lowerTick, highTick, reverse]);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ const DepositAmount = ({
               value={value0}
               setValue={(value: string) => {
                 setValue0(value);
-                if (value) setValue1(new Big(value).mul(price).toNumber());
+                if (value) setValue1(new Big(value).mul(price).toFixed(token0.decimals));
               }}
               balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}
@@ -100,7 +100,8 @@ const DepositAmount = ({
               value={value1}
               setValue={(value: string) => {
                 setValue1(value);
-                if (value) setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toNumber());
+                if (value)
+                  setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
               }}
               balance={token1 ? balances[token1?.address] : ''}
               loading={balanceLoading}

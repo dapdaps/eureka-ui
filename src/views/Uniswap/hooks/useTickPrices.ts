@@ -53,7 +53,7 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
     getTicks();
   }, [token0, token1, fee, provider]);
 
-  const getTicksFromPrice = async (price: any) => {
+  const setCurrentTickFromPrice = async (price: any) => {
     // const TICK_SPACING: any = {
     //   100: 1,
     //   500: 10,
@@ -68,10 +68,6 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
     setCurrentTick(tick);
     // setHighTick(_higherTick);
   };
-
-  useEffect(() => {
-    if (noPair && price && !new Big(price).eq(0) && token0 && token1) getTicksFromPrice(price);
-  }, [price]);
   return {
     loading,
     noPair,
@@ -82,5 +78,6 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
     setReverse,
     setLowerTick,
     setHighTick,
+    setCurrentTickFromPrice,
   };
 }

@@ -46,13 +46,23 @@ const PoolsAddLiquidity = () => {
   const [ready, setReady] = useState(false);
   const [errorTips, setErrorTips] = useState('');
   const [showPreview, setShowPreview] = useState(false);
-  const { loading, noPair, lowerTick, highTick, currentTick, reverse, setReverse, setLowerTick, setHighTick } =
-    useTicks({
-      fee,
-      token0,
-      token1,
-      price,
-    });
+  const {
+    loading,
+    noPair,
+    lowerTick,
+    highTick,
+    currentTick,
+    reverse,
+    setReverse,
+    setLowerTick,
+    setHighTick,
+    setCurrentTickFromPrice,
+  } = useTicks({
+    fee,
+    token0,
+    token1,
+    price,
+  });
   const tokens = useMemo(() => {
     const _tokens: any = {};
     if (token0) {
@@ -209,6 +219,7 @@ const PoolsAddLiquidity = () => {
               setValue0('');
               setValue1('');
             }}
+            setCurrentTickFromPrice={setCurrentTickFromPrice}
           />
         )}
         <DepositAmount

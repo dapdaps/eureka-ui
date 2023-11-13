@@ -38,7 +38,7 @@ const StyledDesc = styled.div`
   margin-top: 10px;
 `;
 
-export default function AddLiquidityNoPair({ token0, token1, price, setPrice }: any) {
+export default function AddLiquidityNoPair({ token0, token1, price, setPrice, setCurrentTickFromPrice }: any) {
   return (
     <>
       <StyledTips>
@@ -51,6 +51,9 @@ export default function AddLiquidityNoPair({ token0, token1, price, setPrice }: 
         value={price}
         onChange={(ev) => {
           setPrice(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
+        }}
+        onBlur={(ev) => {
+          setCurrentTickFromPrice(price);
         }}
       />
       <StyledDesc>
