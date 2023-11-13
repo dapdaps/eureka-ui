@@ -1,7 +1,7 @@
 import Big from 'big.js';
 
 export function tickToPrice({ tick, decimals0, decimals1, isReverse, isNumber }: any) {
-  const price0 = new Big(1.0001 ** tick).div(10 ** (decimals1 - decimals0) || 1);
+  const price0 = decimals1 === decimals0 ? new Big(1) : new Big(1.0001 ** tick).div(10 ** (decimals1 - decimals0));
   const price1 = new Big(1).div(price0.eq(0) ? 1 : price0);
   if (isReverse) {
     if (price0.lt(0.001) && !isNumber) return '<0.001';
