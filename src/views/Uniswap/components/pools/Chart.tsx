@@ -187,7 +187,11 @@ const Chart = ({
     const width = Number(x2) - Number(x1);
     const rect_x = Number(x1) + barWidth / 2;
     const rect_y = svgHeight - barHeight - axisHeight;
-    d3.select('.section').attr('height', '195').attr('width', width).attr('x', rect_x).attr('y', rect_y);
+    if (width >= 0) {
+      d3.select('.section').attr('opacity', 1).attr('height', '195').attr('width', width).attr('x', rect_x).attr('y', rect_y);
+    } else {
+      d3.select('.section').attr('height', '195').attr('opacity', 0);
+    }
     d3.select('.leftPercent text').text(getPercent(left_coordinate) + '%');
     d3.select('.rightPercent text').text(getPercent(right_coordinate) + '%');
   }
