@@ -33,6 +33,7 @@ const StyledLoadingWrapper = styled.div`
 const StyledCurrent = styled.div`
   display: flex;
   flex-direction: column;
+  margin-bottom:10px;
   .small {
     font-size: 14px;
     color: #8e8e8e;
@@ -252,12 +253,12 @@ const Chart = ({
     if (width >= 0) {
       d3.select('.section')
         .attr('opacity', 1)
-        .attr('height', '195')
+        .attr('height', barHeight)
         .attr('width', width)
         .attr('x', rect_x)
         .attr('y', rect_y);
     } else {
-      d3.select('.section').attr('height', '195').attr('opacity', 0);
+      d3.select('.section').attr('height', barHeight).attr('opacity', 0);
     }
     d3.select('.leftPercent text').text(getPercent(left) + '%');
     d3.select('.rightPercent text').text(getPercent(right) + '%');
