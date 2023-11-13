@@ -11,7 +11,6 @@ import  { tickToPrice } from '../utils/tickMath';
 
 export default function usePoolActiveLiquidity(reverse:boolean) {
   /**
-   * 欠缺的数据 pool 的 liquidity
    * computeSurroundingTicks 需要验证
    */
   const addLiquidityStore: any = useAddLiquidityStore();
@@ -44,7 +43,7 @@ export default function usePoolActiveLiquidity(reverse:boolean) {
 
   // process ticks 
   const activeTickProcessed: TickProcessed = {
-    liquidityActive: JSBI.BigInt(liquidity ?? 0),
+    liquidityActive: liquidity ?? 0,
     tick: activeTick,
     liquidityNet: Number(ticks[pivot].tick) === activeTick ? JSBI.BigInt(ticks[pivot].liquidityNet) : JSBI.BigInt(0),
     price0: tickToPrice({
