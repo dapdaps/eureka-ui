@@ -1,8 +1,10 @@
-import { memo, useState, useEffect } from 'react';
+import { memo, useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
 import * as d3 from 'd3';
 import { FeeAmount } from '@uniswap/v3-sdk';
 import Big from 'big.js';
+import debounce from 'lodash/debounce';
+import { tickToPrice } from '../../utils/tickMath';
 
 import usePoolActiveLiquidity from '../../hooks/usePoolActiveLiquidity';
 import { ZOOM_LEVELS, ChartEntry } from '../../utils/chartMath';
@@ -11,8 +13,8 @@ import Loading from '@/components/Icons/Loading';
 const StyledContainer = styled.div`
   margin-top: 40px;
 `;
-const StyledEmpty = styled.div` 
-  margin-top: 80px;   
+const StyledEmpty = styled.div`
+  margin-top: 80px;
   margin-bottom: 50px;
   display: flex;
   align-items: center;
@@ -21,45 +23,43 @@ const StyledEmpty = styled.div`
   gap: 8px;
   color: rgba(255, 255, 255, 0.6);
   height: 120px;
-`
+`;
 const StyledLoadingWrapper = styled.div`
-    color: #fff;
-    height: 200px;
-    line-height: 200px;
-    text-align: center;
-`
+  color: #fff;
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+`;
 const StyledCurrent = styled.div`
-  display:flex;
-  flex-direction:column;
-  .small{
-    font-size:14px;
-    color:#8E8E8E;
+  display: flex;
+  flex-direction: column;
+  .small {
+    font-size: 14px;
+    color: #8e8e8e;
   }
-  .fold{
-    font-size:20px;
-    font-weight:bold;
-    color:#fff;
+  .fold {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
   }
-`
-const xAccessor = (d: ChartEntry) => d.price0
-const yAccessor = (d: ChartEntry) => d.activeLiquidity
+`;
+const xAccessor = (d: ChartEntry) => d.price0;
+const yAccessor = (d: ChartEntry) => d.activeLiquidity;
 
 const Chart = ({
- token0,
- token1,
- reverse,
- lowPrice,
- highPrice,
- setLowPrice,
- setHighPrice,
+  token0,
+  token1,
+  reverse,
+  lowerTick,
+  highTick,
+  onPriceChange,
 }: {
-  reverse:boolean;
-  lowPrice:string;
-  highPrice:string;
-  setLowPrice:Function;
-  setHighPrice:Function;
-  token0:any;
-  token1:any;
+  reverse: boolean;
+  lowerTick: number;
+  highTick: number;
+  token0: any;
+  token1: any;
+  onPriceChange: Function;
 }) => {
   const svgWidth = 560;
   const svgPadding = 50; // svg custom
@@ -74,36 +74,92 @@ const Chart = ({
   const poolChartData = usePoolActiveLiquidity(reverse) as any;
   useEffect(() => {
     if (poolChartData?.current) {
+      const lowPrice = tickToPrice({
+        tick: reverse ? highTick : lowerTick,
+        decimals0: reverse ? token1.decimals : token0.decimals,
+        decimals1: reverse ? token0.decimals : token1.decimals,
+        isReverse: !reverse,
+        isNumber: true,
+      });
+      const highPrice = tickToPrice({
+        tick: reverse ? lowerTick : highTick,
+        decimals0: reverse ? token1.decimals : token0.decimals,
+        decimals1: reverse ? token0.decimals : token1.decimals,
+        isReverse: !reverse,
+        isNumber: true,
+      });
       set_left_coordinate(lowPrice);
       set_right_coordinate(highPrice);
       drawInitChart(lowPrice, highPrice);
     }
   }, [poolChartData?.current]);
   useEffect(() => {
-    set_left_coordinate(lowPrice);
-  }, [lowPrice])
+    const price = tickToPrice({
+      tick: reverse ? lowerTick : highTick,
+      decimals0: reverse ? token1.decimals : token0.decimals,
+      decimals1: reverse ? token0.decimals : token1.decimals,
+      isReverse: !reverse,
+      isNumber: true,
+    });
+    if (reverse) {
+      set_right_coordinate(price);
+      onRenderChart({ right: price });
+    } else {
+      set_left_coordinate(price);
+      onRenderChart({ left: price });
+    }
+  }, [lowerTick, reverse]);
   useEffect(() => {
-    set_right_coordinate(highPrice)
-  }, [highPrice]);
-  useEffect(() => {
-    if (!poolChartData || left_coordinate == undefined || right_coordinate == undefined) return;
-    drawLeftBar();
-    drawRightBar();
-    drawSection();
-    setLowPrice && setLowPrice(left_coordinate);
-    setHighPrice && setHighPrice(right_coordinate);
-  }, [left_coordinate, right_coordinate, poolChartData?.current]);
+    const price = tickToPrice({
+      tick: reverse ? highTick : lowerTick,
+      decimals0: reverse ? token1.decimals : token0.decimals,
+      decimals1: reverse ? token0.decimals : token1.decimals,
+      isReverse: !reverse,
+      isNumber: true,
+    });
+    if (reverse) {
+      set_left_coordinate(price);
+      onRenderChart({ left: price });
+    } else {
+      set_right_coordinate(price);
+      onRenderChart({ right: price });
+    }
+  }, [highTick, reverse]);
 
-  if (!poolChartData) return <StyledLoadingWrapper>
-                               <Loading size={30} />
-                            </StyledLoadingWrapper>
+  const onRenderChart = ({ left, right }: any) => {
+    if (!poolChartData) return;
+    const _left = left || left_coordinate;
+    const _right = right || right_coordinate;
+    if (left !== undefined) drawLeftBar(_left);
+    if (right !== undefined) drawRightBar(_right);
+    drawSection({ left: _left, right: _right });
+  };
+
+  const onUpdateTick = useCallback((coordinate: any, type: any) => {
+    onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'low' : 'up') : reverse ? 'up' : 'low' });
+  }, []);
+
+  const _debounceUpdateTick = debounce(onUpdateTick, 500);
+
+  const handleCoordinateChange = ({ coordinate, type }: any) => {
+    const params = type === 'left' ? { left: coordinate } : { right: coordinate };
+    onRenderChart(params);
+    if (coordinate && type) _debounceUpdateTick(coordinate, type);
+  };
+
+  if (!poolChartData)
+    return (
+      <StyledLoadingWrapper>
+        <Loading size={30} />
+      </StyledLoadingWrapper>
+    );
   // if (!poolChartData) return <StyledEmpty>
   //                             <EmptyIcon />
   //                             <span>Your position will appear here.</span>
   //                           </StyledEmpty>;
 
   const { data: series = [], current: current_price, fee } = poolChartData;
-  
+
   const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
   const axis = [current_price * zoomLevels.initialMin, current_price * zoomLevels.initialMax];
   const liquidityRange = [0, d3.max(series, yAccessor)] as number[];
@@ -113,12 +169,9 @@ const Chart = ({
     .domain(axis as number[])
     .range([0, svgWidth - svgPadding * 2]);
 
-  const yScale = d3
-    .scaleLinear()
-    .domain(liquidityRange)
-    .range([barHeight, 0]);
+  const yScale = d3.scaleLinear().domain(liquidityRange).range([barHeight, 0]);
 
-  function drawInitChart(initialMin?:string, initialMax?:string) {
+  function drawInitChart(initialMin?: string, initialMax?: string) {
     // 创建横坐标轴
     drawBottomAxis();
     // 创建流动性分布图
@@ -136,73 +189,84 @@ const Chart = ({
     d3.select('.axis').select('.domain').attr('stroke', 'transparent');
   }
   function drawLiquidityArea() {
-    const areaGenerator = d3.area().curve(d3.curveStepAfter).
-    x((d: unknown) => xScale(xAccessor(d as ChartEntry))).
-    y1((d: unknown) => yScale(yAccessor(d as ChartEntry))).
-    y0(yScale(0));
+    const areaGenerator = d3
+      .area()
+      .curve(d3.curveStepAfter)
+      .x((d: unknown) => xScale(xAccessor(d as ChartEntry)))
+      .y1((d: unknown) => yScale(yAccessor(d as ChartEntry)))
+      .y0(yScale(0));
 
-    const pathData = areaGenerator(series.filter((d: ChartEntry) => {
-      const value = xScale(xAccessor(d))
-      return value > 0 && value <= (svgWidth - svgPadding * 2);
-    }) as Iterable<[number, number]>);
+    const pathData = areaGenerator(
+      series.filter((d: ChartEntry) => {
+        const value = xScale(xAccessor(d));
+        return value > 0 && value <= svgWidth - svgPadding * 2;
+      }) as Iterable<[number, number]>,
+    );
     d3.select('.liquidity').attr('d', pathData);
   }
-  function drawInitLeftBar(initialMin?:string) {
+  function drawInitLeftBar(initialMin?: string) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
       // if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
       if (e.x + barWidth / 2 <= 0) return;
       set_left_coordinate(xScale.invert(e.x + 7));
+      handleCoordinateChange({ coordinate: xScale.invert(e.x + 7), type: 'left' });
     }) as any;
     set_left_coordinate(initialMin);
+    handleCoordinateChange({ coordinate: initialMin, type: 'left' });
     d3.select('.leftBar').call(dragEvent);
   }
-  function drawInitRightBar(initialMax?:string) {
+  function drawInitRightBar(initialMax?: string) {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
       // if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
       if (e.x >= svgWidth - svgPadding * 2) return;
       set_right_coordinate(xScale.invert(e.x + 11));
+      handleCoordinateChange({ coordinate: xScale.invert(e.x + 11), type: 'right' });
     }) as any;
     set_right_coordinate(initialMax);
+    handleCoordinateChange({ coordinate: initialMax, type: 'right' });
     d3.select('.rightBar').call(dragEvent);
   }
-  function drawLeftBar() {
+  function drawLeftBar(coordinate: any) {
     d3.select('.leftBar').attr(
       'transform',
-      `translate(${xScale(+left_coordinate) - 7}, ${svgHeight - barHeight - axisHeight})`,
+      `translate(${xScale(+coordinate) - 7}, ${svgHeight - barHeight - axisHeight})`,
     );
     d3.select('.leftPercent').attr('transform', `translate(-${percentBoxWidth + percentToBarDistance}, 0)`);
   }
-  function drawRightBar() {
+  function drawRightBar(coordinate: any) {
     d3.select('.rightBar').attr(
       'transform',
-      `translate(${xScale(+right_coordinate) - 11}, ${svgHeight - barHeight - axisHeight})`,
+      `translate(${xScale(+coordinate) - 11}, ${svgHeight - barHeight - axisHeight})`,
     );
     d3.select('.rightPercent').attr('transform', `translate(${barWidth + percentToBarDistance}, 0)`);
   }
-  function drawSection() {
+  function drawSection({ left, right }: any) {
+    if (!d3.select('.leftBar').attr('transform') || !d3.select('.rightBar').attr('transform')) return;
     const x1 = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
     const x2 = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
     const width = Number(x2) - Number(x1);
     const rect_x = Number(x1) + barWidth / 2;
     const rect_y = svgHeight - barHeight - axisHeight;
     if (width >= 0) {
-      d3.select('.section').attr('opacity', 1).attr('height', '195').attr('width', width).attr('x', rect_x).attr('y', rect_y);
+      d3.select('.section')
+        .attr('opacity', 1)
+        .attr('height', '195')
+        .attr('width', width)
+        .attr('x', rect_x)
+        .attr('y', rect_y);
     } else {
       d3.select('.section').attr('height', '195').attr('opacity', 0);
     }
-    d3.select('.leftPercent text').text(getPercent(left_coordinate) + '%');
-    d3.select('.rightPercent text').text(getPercent(right_coordinate) + '%');
+    d3.select('.leftPercent text').text(getPercent(left) + '%');
+    d3.select('.rightPercent text').text(getPercent(right) + '%');
   }
-  function getPercent(newPrice:number) {
+  function getPercent(newPrice: number) {
     let movePercent;
     const price = current_price;
     if (+price > +newPrice) {
-      movePercent = -Big(1)
-        .minus(Big(newPrice).div(price))
-        .mul(100)
-        .toFixed(0, 1);
+      movePercent = -Big(1).minus(Big(newPrice).div(price)).mul(100).toFixed(0, 1);
     } else {
       movePercent = Big(newPrice).div(price).minus(1).mul(100).toFixed(0, 1);
     }
@@ -219,9 +283,11 @@ const Chart = ({
   return (
     <StyledContainer>
       <StyledCurrent>
-         <span className='small'>Current price</span>
-         <span className='fold'>{poolChartData?.current}</span>
-         <span className='small'>{token1?.symbol} per {token0?.symbol}</span>
+        <span className="small">Current price</span>
+        <span className="fold">{poolChartData?.current}</span>
+        <span className="small">
+          {token1?.symbol} per {token0?.symbol}
+        </span>
       </StyledCurrent>
       <svg width={svgWidth} height={svgHeight}>
         <defs>

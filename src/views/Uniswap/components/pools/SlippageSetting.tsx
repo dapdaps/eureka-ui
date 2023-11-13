@@ -115,7 +115,7 @@ export default function SlippageSetting(props?: any) {
               placeholder="0.5"
               value={settingStore.getSlippage()}
               onChange={(ev) => {
-                settingStore.setSlippage(Number(ev.target.value || 0.5));
+                settingStore.setSlippage(ev.target.value);
                 setType(Number(ev.target.value) !== 0.5 ? 'Custom' : 'Auto');
               }}
               type="number"

@@ -10,7 +10,7 @@ import useRequestModal from './useRequestModal';
 export default function useRemoveLiquidity(onSuccess: () => void, onError: () => void) {
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
-  const slippage = useSettingsStore((store: any) => store.slippage);
+  const slippage = useSettingsStore((store: any) => store.slippage) || 0.5;
   const { openRequestModal } = useRequestModal();
 
   const onRemove = async ({ token0, token1, liquidityToken0, liquidityToken1, liquidity, percent, tokenId }: any) => {

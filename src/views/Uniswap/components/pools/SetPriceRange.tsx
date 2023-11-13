@@ -99,8 +99,8 @@ const SetPriceRange = ({
       <div className="setArea">
         <InputPriceBox
           type="low"
-          tick={reverse ? lowerTick : highTick}
-          setTick={reverse ? setLowerTick : setHighTick}
+          tick={reverse ? highTick : lowerTick}
+          setTick={reverse ? setHighTick : setLowerTick}
           token0={token0}
           token1={token1}
           reverse={reverse}
@@ -109,8 +109,8 @@ const SetPriceRange = ({
         />
         <InputPriceBox
           type="up"
-          tick={reverse ? highTick : lowerTick}
-          setTick={reverse ? setHighTick : setLowerTick}
+          tick={reverse ? lowerTick : highTick}
+          setTick={reverse ? setLowerTick : setHighTick}
           token0={token0}
           token1={token1}
           reverse={reverse}
@@ -180,7 +180,6 @@ const StyledButtonArea = styled.div`
 const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, fee }: any) => {
   const [price, setPrice] = useState('');
   const { provider } = useAccount();
-
   const setPriceFromTick = useCallback(
     (_tick: any) => {
       if ((!_tick && _tick !== 0) || !token0 || !token1) {
@@ -202,6 +201,7 @@ const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, f
         isReverse: !reverse,
         isNumber: true,
       });
+
       setPrice(_price);
     },
     [token0, token1, reverse],
@@ -213,29 +213,12 @@ const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, f
       token0,
       token1,
       price: price,
+      fee,
+      type,
       provider,
     });
-    if (_tick < -887200) {
-      _tick = -887200;
-    }
-    if (_tick > 887200) {
-      _tick = 887200;
-    }
-
-    const TICK_SPACING: any = {
-      100: 1,
-      500: 10,
-      3000: 60,
-      10000: 200,
-    };
-    const tickSpacing = TICK_SPACING[fee];
-    const _useableTick =
-      type === 'up'
-        ? Math.floor(_tick / tickSpacing) * tickSpacing
-        : Math.floor(_tick / tickSpacing) * tickSpacing + tickSpacing;
-
-    setTick(_useableTick);
-    setPriceFromTick(_useableTick);
+    setTick(_tick);
+    setPriceFromTick(_tick);
   }, [price]);
 
   useEffect(() => {
