@@ -33,7 +33,7 @@ const StyledLoadingWrapper = styled.div`
 const StyledCurrent = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom:10px;
+  margin-bottom: 10px;
   .small {
     font-size: 14px;
     color: #8e8e8e;
@@ -96,7 +96,7 @@ const Chart = ({
   }, [poolChartData?.current]);
   useEffect(() => {
     const price = tickToPrice({
-      tick: reverse ? lowerTick : highTick,
+      tick: reverse ? highTick : lowerTick,
       decimals0: reverse ? token1.decimals : token0.decimals,
       decimals1: reverse ? token0.decimals : token1.decimals,
       isReverse: !reverse,
@@ -112,7 +112,7 @@ const Chart = ({
   }, [lowerTick, reverse]);
   useEffect(() => {
     const price = tickToPrice({
-      tick: reverse ? highTick : lowerTick,
+      tick: reverse ? lowerTick : highTick,
       decimals0: reverse ? token1.decimals : token0.decimals,
       decimals1: reverse ? token0.decimals : token1.decimals,
       isReverse: !reverse,
@@ -137,7 +137,7 @@ const Chart = ({
   };
 
   const onUpdateTick = useCallback((coordinate: any, type: any) => {
-    onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'low' : 'up') : reverse ? 'up' : 'low' });
+    onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'up' : 'low') : reverse ? 'low' : 'up' });
   }, []);
 
   const _debounceUpdateTick = debounce(onUpdateTick, 500);
