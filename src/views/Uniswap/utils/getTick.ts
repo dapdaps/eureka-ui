@@ -22,7 +22,7 @@ export async function getTickFromPrice({ token0, token1, price, fee, type, provi
   const mathPrice =
     _token0.decimals === _token1.decimals
       ? 1
-      : (isReverse ? 1 / price : price) / (10 ** _token0.decimals - _token1.decimals);
+      : (isReverse ? 1 / price : price) / 10 ** (_token0.decimals - _token1.decimals);
   const _sqrtPriceX96 = new Big(mathPrice)
     .sqrt()
     .mul(2 ** 96)
