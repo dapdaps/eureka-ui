@@ -81,6 +81,7 @@ export default function PositionItem({
     decimals1: token1?.decimals,
     isReverse: false,
   };
+  const isFullRange = tickLower === -887200 && tickUpper === 887200;
   return token0 && token1 ? (
     <Record onClick={onClick}>
       <RecordDetails>
@@ -95,7 +96,8 @@ export default function PositionItem({
         <RecordRange>
           <span className="gray">Min:</span>
           <span>
-            {tickToPrice({ ...tickArgs, tick: tickLower, isReverse: true })} {token1.symbol} per {token0.symbol}
+            {isFullRange ? 0 : tickToPrice({ ...tickArgs, tick: tickLower, isReverse: true })} {token1.symbol} per{' '}
+            {token0.symbol}
           </span>
           <svg width="18" height="8" viewBox="0 0 18 8" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -105,7 +107,8 @@ export default function PositionItem({
           </svg>
           <span className="gray">Max:</span>
           <span>
-            {tickToPrice({ ...tickArgs, tick: tickUpper, isReverse: true })} {token1.symbol} per {token0.symbol}
+            {isFullRange ? '∞' : tickToPrice({ ...tickArgs, tick: tickUpper, isReverse: true })} {token1.symbol} per{' '}
+            {token0.symbol}
           </span>
         </RecordRange>
       </RecordDetails>
