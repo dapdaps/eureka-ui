@@ -62,12 +62,11 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
     chains,
     tokens,
   });
-  const { balance, loading } = useTokenBalance({ currency: inputToken, updater });
+  const { balance, loading } = useTokenBalance({ currency: inputToken, updater: 0 });
   const { balance: nativeTokenBalance } = useTokenBalance({
-    isNative: true,
     isPure: true,
-    currency: { chainId: inputChain?.chainId || 1, symbol: '', icon: '', decimals: 18 },
-    updater,
+    currency: { chainId: inputChain?.chainId || 1, symbol: '', icon: '', decimals: 18, isNative: true },
+    updater: 0,
   });
   const { checked, setChecked, destination, setDestination } = useDestination();
   const { getBestRoute, gasCost, trade, checking, swap, swaping } = useBestRoute();
