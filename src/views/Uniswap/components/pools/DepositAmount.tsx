@@ -4,9 +4,8 @@ import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
-import { getToken0Amounts } from '../../utils/tickMath';
 import TokenIcon from '../TokenIcon';
-import { tickToPrice } from '../../utils/tickMath';
+import { tickToPrice, getPriceFromTicks } from '../../utils/tickMath';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -36,8 +35,9 @@ const DepositAmount = ({
   value0,
   value1,
   reverse,
-  currentTick,
+  currentPrice,
   lowerTick,
+  currentTick,
   highTick,
   setValue0,
   setValue1,
@@ -47,27 +47,52 @@ const DepositAmount = ({
 }: any) => {
   const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
   const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
+  const _decimals0 = reverse ? token1.decimals : token0.decimals;
+  const _decimals1 = reverse ? token0.decimals : token1.decimals;
   const price = useMemo(() => {
-    if (
-      (!currentTick && currentTick !== 0) ||
-      !token0 ||
-      !token1 ||
-      (!lowerTick && lowerTick !== 0) ||
-      (!highTick && highTick !== 0)
-    )
-      return 0;
-    let _price = getToken0Amounts({
-      token1Amount: 10 ** (reverse ? token0.decimals : token1.decimals),
-      currentTick,
-      tickLow: _lowerTick,
-      tickHigh: _tickHigh,
-      decimals0: reverse ? token1.decimals : token0.decimals,
-      decimals1: reverse ? token0.decimals : token1.decimals,
-      reverse: reverse,
+    if ((!currentPrice && !currentTick) || !lowerTick || !highTick) return 0;
+    const lowPrice =
+      _lowerTick === -887200
+        ? 0
+        : tickToPrice({
+            tick: _lowerTick,
+            decimals0: _decimals0,
+            decimals1: _decimals1,
+            isReverse: !reverse,
+            isNumber: true,
+          });
+    const highPrice =
+      _tickHigh === 887200
+        ? 2 ** 96
+        : tickToPrice({
+            tick: _tickHigh,
+            decimals0: _decimals0,
+            decimals1: _decimals1,
+            isReverse: !reverse,
+            isNumber: true,
+          });
+    let _currentPrice = currentPrice;
+    if (!_currentPrice) {
+      _currentPrice = tickToPrice({
+        tick: currentTick,
+        decimals0: _decimals0,
+        decimals1: _decimals1,
+        isReverse: !reverse,
+        isNumber: true,
+      });
+    }
+    const _priceAmount = new Big(_currentPrice).mul(10 ** token1.decimals).toFixed(0);
+    const _amount0 = reverse ? _priceAmount : 10 ** token0.decimals;
+    const _amount1 = reverse ? 10 ** token0.decimals : _priceAmount;
+    let _price = getPriceFromTicks({
+      amount0: _amount0,
+      amount1: _amount1,
+      currentPrice: _currentPrice,
+      lowPrice: lowPrice,
+      highPrice: highPrice,
     });
-    _price = new Big(_price || 0).gt(0) ? _price : 1;
-    return 1 / _price / 10 ** (reverse ? token0.decimals : token1.decimals);
-  }, [token0, token1, currentTick, lowerTick, highTick, reverse]);
+    return _price;
+  }, [token0, token1, currentPrice, currentTick, lowerTick, highTick, reverse]);
 
   useEffect(() => {
     setValue1('');
@@ -231,11 +256,12 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
         <input
           type="number"
           value={value}
+          style={{ flexGrow: 1 }}
           onChange={(ev) => {
             setValue(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
           }}
         />
-        <div className="token">
+        <div className="token" style={{ flexShrink: 0 }}>
           <TokenIcon token={token} />
           <span className="symbol">{token?.symbol}</span>
         </div>

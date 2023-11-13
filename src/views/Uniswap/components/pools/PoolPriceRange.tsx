@@ -94,6 +94,9 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
   const priceRate = `${isReverse ? detail?.token0.symbol : detail?.token1.symbol} per ${
     isReverse ? detail?.token1.symbol : detail?.token0.symbol
   }`;
+  const _tickLow = !isReverse ? detail?.tickLow : detail?.tickHigh;
+  const _tickHigh = !isReverse ? detail?.tickHigh : detail?.tickLow;
+  const isFullRange = detail?.tickLow === -887200 && detail?.tickHigh === 887200;
   return (
     <StyledWrap type={type}>
       <StyledHead className="vchb">
@@ -118,19 +121,27 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
         <div className="vchb minmax">
           <PriceDetailBox
             priceType="Min price"
-            price={tickToPrice({
-              ...tickArgs,
-              tick: !isReverse ? detail?.tickLow : detail?.tickHigh,
-            })}
+            price={
+              isFullRange
+                ? '0'
+                : tickToPrice({
+                    ...tickArgs,
+                    tick: _tickLow,
+                  })
+            }
             priceRate={priceRate}
           />
           <ArrowBothIcon />
           <PriceDetailBox
             priceType="Max price"
-            price={tickToPrice({
-              ...tickArgs,
-              tick: !isReverse ? detail?.tickHigh : detail?.tickLow,
-            })}
+            price={
+              isFullRange
+                ? '∞'
+                : tickToPrice({
+                    ...tickArgs,
+                    tick: _tickHigh,
+                  })
+            }
             priceRate={priceRate}
           />
         </div>

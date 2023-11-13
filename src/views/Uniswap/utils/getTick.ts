@@ -19,10 +19,7 @@ export async function getSqrtRatioAtTick(tick: string, provider: any) {
 export async function getTickFromPrice({ token0, token1, price, fee, type, provider }: any) {
   const [_token0, _token1] = sortTokens(token0, token1);
   const isReverse = _token0.address !== token0.address;
-  const mathPrice =
-    _token0.decimals === _token1.decimals
-      ? 1
-      : (isReverse ? 1 / price : price) / 10 ** (_token0.decimals - _token1.decimals);
+  const mathPrice = (isReverse ? 1 / price : price) / 10 ** (_token0.decimals - _token1.decimals);
   const _sqrtPriceX96 = new Big(mathPrice)
     .sqrt()
     .mul(2 ** 96)
@@ -45,5 +42,6 @@ export async function getTickFromPrice({ token0, token1, price, fee, type, provi
     type === 'up'
       ? Math.floor(_tick / tickSpacing) * tickSpacing
       : Math.floor(_tick / tickSpacing) * tickSpacing + tickSpacing;
+
   return _useableTick;
 }

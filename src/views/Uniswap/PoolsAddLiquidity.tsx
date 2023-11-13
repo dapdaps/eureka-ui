@@ -130,7 +130,7 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (Number(currentTick) >= Number(_highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
+    if (Number(currentTick) > Number(_highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
@@ -159,7 +159,6 @@ const PoolsAddLiquidity = () => {
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick, reverse, currentTick]);
-
   return ready ? (
     <StyledContainer>
       <Head
@@ -233,6 +232,7 @@ const PoolsAddLiquidity = () => {
           reverse={reverse}
           setValue0={setValue0}
           setValue1={setValue1}
+          currentPrice={price}
           noPair={noPair}
           balances={balances}
           balanceLoading={balanceLoading}

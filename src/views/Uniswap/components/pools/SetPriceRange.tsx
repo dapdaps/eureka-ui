@@ -177,7 +177,7 @@ const StyledButtonArea = styled.div`
     }
   }
 `;
-const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, fee }: any) => {
+const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: any) => {
   const [price, setPrice] = useState('');
   const { provider } = useAccount();
   const setPriceFromTick = useCallback(
@@ -187,13 +187,14 @@ const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, f
         return;
       }
       if (_tick === -887200) {
-        setPrice('0');
+        setPrice(reverse ? '∞' : '0');
         return;
       }
       if (_tick === 887200) {
-        setPrice('∞');
+        setPrice(reverse ? '0' : '∞');
         return;
       }
+
       const _price = tickToPrice({
         tick: _tick,
         decimals0: reverse ? token1.decimals : token0.decimals,
@@ -201,7 +202,6 @@ const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, f
         isReverse: !reverse,
         isNumber: true,
       });
-
       setPrice(_price);
     },
     [token0, token1, reverse],
@@ -222,7 +222,7 @@ const InputPriceBox = ({ type, tick, setTick, noPair, token0, token1, reverse, f
   }, [price]);
 
   useEffect(() => {
-    !noPair && setPriceFromTick(tick);
+    setPriceFromTick(tick);
   }, [tick, token0, token1, reverse]);
 
   useEffect(() => {
