@@ -75,12 +75,8 @@ const DepositAmount = ({
   }, [reverse]);
   useEffect(() => {
     if (price && value1) {
-      setValue0(
-        new Big(1)
-          .div(new Big(price).eq(0) ? 1 : price)
-          .mul(value1)
-          .toNumber(),
-      );
+      const _value1 = new Big(1).div(new Big(price).eq(0) ? 1 : price).mul(value1);
+      setValue0(_value1.gt(0) ? _value1.toNumber() : '');
     }
   }, [price]);
   return (
