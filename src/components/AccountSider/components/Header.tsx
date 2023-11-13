@@ -12,19 +12,11 @@ const StyledHeader = styled.div`
   justify-content: space-between;
 `;
 
-const Header = ({
-  showCodes,
-  isMultiChain,
-  setShowCodes,
-}: {
-  showCodes: boolean;
-  isMultiChain: boolean;
-  setShowCodes: (show: boolean) => void;
-}) => {
+const Header = () => {
   return (
     <StyledHeader>
       <AccountItem />
-      <SubtractItem showCodes={showCodes} isMultiChain={isMultiChain} setShowCodes={setShowCodes} />
+      <SubtractItem />
     </StyledHeader>
   );
 };

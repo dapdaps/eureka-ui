@@ -45,7 +45,7 @@ const CloseIcon = styled.div`
   cursor: pointer;
 `;
 
-const AccountSider = ({ isMultiChain = true }: { isMultiChain?: boolean }) => {
+const AccountSider = () => {
   const layoutStore = useLayoutStore();
   const defaultTab = layoutStore.defaultTab;
   const [tab, setTab] = useState<'bridge' | 'account'>('account');
@@ -72,16 +72,8 @@ const AccountSider = ({ isMultiChain = true }: { isMultiChain?: boolean }) => {
   return (
     <StyledPanel display={layoutStore.showAccountSider}>
       <Content>
-        <Header showCodes={showCodes} setShowCodes={setShowCodes} isMultiChain={isMultiChain} />
-        {tab === 'account' && (
-          <AccountWrapper
-            count={count}
-            setTab={setTab}
-            showChains={showChains}
-            setShowChains={setShowChains}
-            isMultiChain={isMultiChain}
-          />
-        )}
+        <Header />
+        {tab === 'account' && <AccountWrapper count={count} setTab={setTab} />}
         {tab === 'bridge' && (
           <BridgeWrapper
             onBack={() => {

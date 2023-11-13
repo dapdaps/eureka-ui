@@ -54,7 +54,7 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
   const [selectableChains, setSelectableChains] = useState<Chain[]>([]);
   const [errorTips, setErrorTips] = useState<string>('');
   const [clickType, setClickType] = useState<'in' | 'out'>();
-  const [updater, setUpdater] = useState<number>(0);
+  const [, setUpdater] = useState<number>(0);
   const [amount, setAmount] = useState<string>();
   const { account, chainId } = useAccount();
   const { tokens, chains } = useTokensAndChains();
@@ -77,33 +77,6 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
         return a.chainId === inputChain?.chainId ? -1 : 1;
       });
   }, [inputChain]);
-
-  const handleSelectClick = useCallback(
-    (type: 'chain' | 'token', item?: Token | Chain) => {
-      type === 'token' ? setShowTokenDialog(true) : setShowChainDialog(true);
-      if (type === 'chain') {
-        if ((clickType === 'in' && inputToken) || (clickType === 'out' && outputToken)) {
-          const _token = clickType === 'in' ? inputToken : outputToken;
-          const _selectableChains: Chain[] = [];
-          Object.values(tokens).forEach((token) => {
-            if (token.poolId === _token?.poolId) {
-              _selectableChains.push(chains[token.chainId]);
-            }
-          });
-          setSelectableChains(_selectableChains);
-        } else {
-          setSelectableChains(Object.values(chains));
-        }
-      }
-      if (!item) return;
-      if (item as Token) {
-        setSelectedTokenAddress((item as Token).address || '');
-      } else {
-        setSelectedChainId(item.chainId);
-      }
-    },
-    [inputChain, outputChain, clickType, inputToken, outputToken],
-  );
 
   const handleBestRoute = useCallback(() => {
     if (!inputChain || !outputChain || !outputToken || inputChain.chainId === outputChain.chainId) return;
@@ -166,29 +139,14 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
         <>
           <>
             <Label>From</Label>
-            <Select
-              token={inputToken}
-              chain={inputChain}
-              onClick={(type: 'chain' | 'token', item?: Token | Chain) => {
-                // setClickType('in');
-                // handleSelectClick(type, item);
-              }}
-            />
+            <Select token={inputToken} chain={inputChain} />
           </>
           <StyledExchangeIcon onClick={onExchange}>
             <ExchangeIcon />
           </StyledExchangeIcon>
           <>
             <Label>To</Label>
-            <Select
-              token={outputToken}
-              chain={outputChain}
-              tokenDisabled
-              onClick={(type: 'chain' | 'token', item?: Token | Chain) => {
-                // setClickType('out');
-                // handleSelectClick(type, item);
-              }}
-            />
+            <Select token={outputToken} chain={outputChain} tokenDisabled />
           </>
           <Input
             balance={balance}

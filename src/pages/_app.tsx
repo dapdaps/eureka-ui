@@ -63,7 +63,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           key="canonical"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <title>DapDap</title>
+        <title>Uniswap</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo.png" />
       </Head>

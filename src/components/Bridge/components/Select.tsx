@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-import type { Chain, SelectClick, Token } from '../types';
+import type { Chain, Token } from '../types';
 import SelectChains from './SelectChains';
 import SelectTokens from './SelectTokens';
 
@@ -23,18 +23,16 @@ const Select = ({
   chain,
   tokenDisabled,
   chainDisabled,
-  onClick,
 }: {
   token?: Token;
   chain?: Chain;
   tokenDisabled?: boolean;
   chainDisabled?: boolean;
-  onClick: SelectClick;
 }) => {
   return (
     <Container>
-      <SelectTokens token={token} disabled={tokenDisabled} onClick={onClick} />
-      <SelectChains chain={chain} disabled={chainDisabled} onClick={onClick} />
+      <SelectTokens token={token} disabled={tokenDisabled} />
+      <SelectChains chain={chain} disabled={chainDisabled} />
     </Container>
   );
 };

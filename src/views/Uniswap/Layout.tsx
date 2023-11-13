@@ -39,7 +39,7 @@ const Uniswap = ({ children }: { children?: ReactNode }) => {
       <StyledContainer>
         <Header />
         <StyledContent>{children} </StyledContent>
-        <AccountSider isMultiChain={false} />
+        <AccountSider />
         <RequestModal
           isOpen={isOpen}
           onRequestClose={() => {

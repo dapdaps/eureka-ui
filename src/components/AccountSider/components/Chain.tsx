@@ -1,7 +1,5 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
-
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
@@ -22,13 +20,12 @@ const StyledContainer = styled.div<{ mt?: number; showName?: boolean }>`
   padding: 0px 10px 0px 4px;
   margin-top: ${({ mt }) => mt + 'px'};
 `;
-const StyledChain = styled.div<{ isMultiChain?: boolean }>`
+const StyledChain = styled.div`
   display: flex;
   gap: 10px;
   color: #fff;
   align-items: center;
   line-height: 38px;
-  ${({ isMultiChain }) => isMultiChain && 'cursor: pointer;'}
 `;
 const ChainLogo = styled.img`
   width: 30px;
@@ -38,9 +35,6 @@ const ChainLogo = styled.img`
 const ChainName = styled.div`
   font-size: 16px;
   font-weight: 400;
-`;
-const ArrowIconWrapper = styled.div`
-  color: #979abe;
 `;
 const ChainList = styled.div<{ display?: boolean }>`
   width: 204px;
@@ -66,11 +60,9 @@ const Chain = ({
   mt,
   showName = true,
   showChains,
-  isMultiChain,
   setShowChains,
 }: {
   mt?: number;
-  isMultiChain: boolean;
   showName?: boolean;
   showChains?: boolean;
   setShowChains?: (show: boolean) => void;
@@ -90,27 +82,14 @@ const Chain = ({
   }, []);
 
   return (
-    <StyledContainer
-      mt={mt}
-      showName={showName}
-      onClick={(ev) => {
-        if (!isMultiChain) return;
-        ev.stopPropagation();
-        showName ? setShowChains?.(!showChains) : setShowList(!showList);
-      }}
-    >
-      <StyledChain isMultiChain={isMultiChain}>
+    <StyledContainer mt={mt} showName={showName}>
+      <StyledChain>
         {currentChain && !switching && <ChainLogo src={currentChain.icon} />}
         {switching && <Loading />}
         {showName && (
           <ChainName>{switching ? 'Request' : currentChain ? currentChain.chainName : 'Select Network'}</ChainName>
         )}
       </StyledChain>
-      {isMultiChain && (
-        <ArrowIconWrapper>
-          <ArrowIcon size={12} />
-        </ArrowIconWrapper>
-      )}
       <ChainList display={showName ? showChains : showList}>
         {Object.values(chains).map((chain) => (
           <ChainItem

@@ -22,14 +22,9 @@ const Container = styled.div`
   }
 `;
 
-const SelectChains = ({ chain, disabled, onClick }: { chain?: Chain; disabled?: boolean; onClick: SelectClick }) => {
+const SelectChains = ({ chain, disabled }: { chain?: Chain; disabled?: boolean }) => {
   return (
-    <Container
-      className={disabled ? 'disabled' : ''}
-      onClick={() => {
-        !disabled && onClick('chain', chain);
-      }}
-    >
+    <Container className={disabled ? 'disabled' : ''}>
       <SelectLabel label="Network" />
       <SelectItem item={chain ? { icon: chain.icon, symbol: chain.chainName } : undefined} />
     </Container>

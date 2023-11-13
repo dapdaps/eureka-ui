@@ -23,14 +23,9 @@ const Container = styled.div`
   }
 `;
 
-const SelectTokens = ({ token, disabled, onClick }: { token?: Token; disabled?: boolean; onClick: SelectClick }) => {
+const SelectTokens = ({ token, disabled }: { token?: Token; disabled?: boolean }) => {
   return (
-    <Container
-      className={disabled ? 'disabled' : ''}
-      onClick={() => {
-        !disabled && onClick('token', token);
-      }}
-    >
+    <Container className={disabled ? 'disabled' : ''}>
       <SelectLabel label="Token" />
       <SelectItem item={token} />
     </Container>

@@ -29,16 +29,9 @@ const getUrl = (url: string) => {
   return url.startsWith('http') ? url : `${BASE_URL}${url}`;
 };
 
-const AUTH_TOKENS = 'AUTH_TOKENS';
-
 const get = async (url: string, query?: Record<string, any>) => {
-  // const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
   const options = {
     method: 'GET',
-    // headers: {
-    //   Authorization: `Bearer ${tokens.access_token || ''}`,
-    //   'Content-Type': 'application/json',
-    // },
   };
   if (!query) {
     const res = await fetch(getUrl(url), options);
@@ -52,17 +45,4 @@ const get = async (url: string, query?: Record<string, any>) => {
   return res.json() as any;
 };
 
-const post = async (url: string, data: object) => {
-  const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
-  const res = await fetch(getUrl(url), {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${tokens.access_token || ''}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-  return (await res.json()) as any;
-};
-
-export { get, post, AUTH_TOKENS };
+export { get };

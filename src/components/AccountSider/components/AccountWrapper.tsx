@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import TransactionTips from '@/components/Bridge/components/TransactionTips';
 import Actions from './Actions';
@@ -18,18 +17,16 @@ export default function AccountWrapper({
   count,
   setTab,
   showChains,
-  isMultiChain,
   setShowChains,
 }: {
   count: number;
   setTab: (tab: 'bridge' | 'account') => void;
-  isMultiChain: boolean;
   showChains?: boolean;
   setShowChains?: (show: boolean) => void;
 }) {
   return (
     <>
-      <Chain mt={30} showChains={showChains} setShowChains={setShowChains} isMultiChain={isMultiChain} />
+      <Chain mt={30} showChains={showChains} setShowChains={setShowChains} />
       <Amount mt={30} />
       <Actions
         mt={30}
