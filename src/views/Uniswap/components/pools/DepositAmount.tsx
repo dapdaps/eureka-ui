@@ -241,7 +241,14 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
       </StyledTop>
       <StyledBottom>
         <span className="price">${valueFormated(value, prices[token?.symbol])}</span>
-        <div className="balance">
+        <div
+          className="balance"
+          onClick={() => {
+            if (balance && !isNaN(Number(balance))) {
+              setValue(balance);
+            }
+          }}
+        >
           <span className="b">balance:</span>
           <span className="b_v">{loading ? <Loading /> : balanceFormated(balance, 4)}</span>
         </div>

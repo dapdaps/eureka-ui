@@ -19,6 +19,15 @@ export default {
     tickMathAddress: '0x485702c21eb1F96998Cae89A5D9cA99cbEebfF7D',
   },
   tokens: {
+    native: {
+      chainId: 59144,
+      name: 'ETH',
+      symbol: 'ETH',
+      icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+      decimals: 18,
+      isNative: true,
+      address: 'native',
+    },
     '0xA219439258ca9da29E9Cc4cE5596924745e12B93': {
       chainId: 59144,
       address: '0xA219439258ca9da29E9Cc4cE5596924745e12B93',
