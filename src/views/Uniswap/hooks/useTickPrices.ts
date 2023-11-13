@@ -61,7 +61,7 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
     //   10000: 200,
     // };
     // const tickSpacing = TICK_SPACING[fee];
-    const tick = await getTickFromPrice({ token0, token1, price, provider });
+    const tick = await getTickFromPrice({ token0, token1, price, provider, fee });
     // const _lowerTick = Math.floor(tick / tickSpacing) * tickSpacing;
     // const _higherTick = Math.floor(tick / tickSpacing) * tickSpacing + tickSpacing;
     // setLowerTick(_lowerTick);
