@@ -6,6 +6,7 @@ import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
 import TokenIcon from '../TokenIcon';
 import { tickToPrice, getPriceFromTicks } from '../../utils/tickMath';
+import { sortTokens } from '../../utils/sortTokens';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -50,8 +51,9 @@ const DepositAmount = ({
 
   const price = useMemo(() => {
     if ((!currentPrice && !currentTick) || !lowerTick || !highTick) return 0;
-    const _decimals0 = reverse ? token1?.decimals : token0?.decimals;
-    const _decimals1 = reverse ? token0?.decimals : token1?.decimals;
+    const [_token0, _token1] = sortTokens(token0, token1);
+    const _decimals0 = _token0?.decimals;
+    const _decimals1 = _token1?.decimals;
     const lowPrice =
       _lowerTick === -887272
         ? 0
@@ -59,7 +61,7 @@ const DepositAmount = ({
             tick: _lowerTick,
             decimals0: _decimals0,
             decimals1: _decimals1,
-            isReverse: !reverse,
+            isReverse: true,
             isNumber: true,
           });
     const highPrice =
@@ -69,7 +71,7 @@ const DepositAmount = ({
             tick: _tickHigh,
             decimals0: _decimals0,
             decimals1: _decimals1,
-            isReverse: !reverse,
+            isReverse: true,
             isNumber: true,
           });
     let _currentPrice = currentPrice;
@@ -78,13 +80,13 @@ const DepositAmount = ({
         tick: currentTick,
         decimals0: _decimals0,
         decimals1: _decimals1,
-        isReverse: !reverse,
+        isReverse: true,
         isNumber: true,
       });
     }
-    const _priceAmount = new Big(_currentPrice).mul(10 ** token1.decimals).toFixed(0);
-    const _amount0 = reverse ? _priceAmount : 10 ** token0.decimals;
-    const _amount1 = reverse ? 10 ** token0.decimals : _priceAmount;
+    const _priceAmount = new Big(_currentPrice).mul(10 ** _token1.decimals).toFixed(0);
+    const _amount0 = 10 ** _token0.decimals;
+    const _amount1 = _priceAmount;
     let _price = getPriceFromTicks({
       amount0: _amount0,
       amount1: _amount1,
@@ -116,7 +118,7 @@ const DepositAmount = ({
               value={value0}
               setValue={(value: string) => {
                 setValue0(value);
-                if (value) setValue1(new Big(value).mul(price).toFixed(token0.decimals));
+                if (value) setValue1(new Big(value).mul(price || 1).toFixed(token0.decimals));
               }}
               balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}

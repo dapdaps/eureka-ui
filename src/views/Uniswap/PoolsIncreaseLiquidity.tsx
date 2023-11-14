@@ -44,21 +44,56 @@ const PoolsIncreaseLiquidity = () => {
   const { balances, loading: balanceLoading } = useTokensBalance(tokens, 1);
 
   useEffect(() => {
-    if ((detail?.token0 && new Big(value0 || 0).eq(0)) || (detail?.token1 && new Big(value1 || 0).eq(0))) {
+    if (!detail) return;
+    const _highTick = Number(detail.tickHigh) < Number(detail.tickLow) ? detail.tickLow : detail.tickHigh;
+    const _lowerTick = Number(detail.tickHigh) < Number(detail.tickLow) ? detail.tickHigh : detail.tickLow;
+    const currentTick = detail.tick;
+    const doubleCheck = Number(currentTick) < Number(_highTick) && Number(currentTick) > Number(_lowerTick);
+
+    const isFullRange = _lowerTick === -887272 && _highTick === 887272;
+
+    if (doubleCheck && !isFullRange && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!detail?.token0 || !detail?.token1) {
-      setErrorTips('Select a Token');
+    if (isFullRange && new Big(value0 || 0).eq(0) && new Big(value1 || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
       return;
     }
-    if (
-      !balanceLoading &&
-      (new Big(value0 || 0).gt(balances[detail?.token0.address] || 0) ||
-        new Big(value1 || 0).gt(balances[detail?.token1.address] || 0))
-    ) {
-      setErrorTips('Insufficient balance');
+    if (!isFullRange && Number(currentTick) > Number(_highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
       return;
+    }
+    if (!isFullRange && Number(currentTick) < Number(_lowerTick) && new Big((reverse ? value1 : value0) || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
+      return;
+    }
+
+    if (!balanceLoading) {
+      if (
+        doubleCheck &&
+        (new Big(value0 || 0).gt(balances[detail.token0.address] || 0) ||
+          new Big(value1 || 0).gt(balances[detail.token1.address] || 0))
+      ) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
+      if (
+        isFullRange &&
+        new Big(value0 || 0).gt(balances[detail.token0.address] || 0) &&
+        new Big(value1 || 0).gt(balances[detail.token1.address] || 0)
+      ) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
+      if (Number(currentTick) >= Number(_highTick) && new Big(value0 || 0).gt(balances[detail.token0.address] || 0)) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
+      if (Number(currentTick) < Number(_lowerTick) && new Big(value1 || 0).gt(balances[detail.token1.address] || 0)) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, detail]);
