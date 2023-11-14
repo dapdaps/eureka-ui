@@ -81,7 +81,7 @@ export default function RequestModal({ isOpen, data, onRequestClose }: any) {
   const router = useRouter();
   const { status = 1, trade, tx } = data;
   return (
-    <ModalBox isOpen={isOpen} onRequestClose={onRequestClose}>
+    <ModalBox isOpen={isOpen} onRequestClose={onRequestClose} shouldCloseOnOverlayClick={false}>
       <StyledContent>
         {status === 0 && (
           <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">

@@ -11,16 +11,19 @@ const StyledContainer = styled.div`
 const CustomModal = ({
   isOpen,
   onRequestClose,
+  shouldCloseOnOverlayClick = true,
   children,
 }: {
   isOpen: boolean;
   onRequestClose: any;
+  shouldCloseOnOverlayClick?: boolean;
   children: React.ReactNode;
 }) => {
   return (
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
+      shouldCloseOnOverlayClick={shouldCloseOnOverlayClick}
       style={{
         overlay: {
           position: 'fixed',
