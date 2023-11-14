@@ -5,9 +5,11 @@ import tickMathAbi from '../abi/tickMathAbi';
 import { sortTokens } from './sortTokens';
 
 export async function getTickAtSqrtRatio(sqrtPriceX96: string, provider: any) {
-  const TickMathContract = new Contract(config.contracts.tickMathAddress, tickMathAbi, provider);
-  const result = await TickMathContract.callStatic.getTickAtSqrtRatio(sqrtPriceX96);
-  return result;
+  try {
+    const TickMathContract = new Contract(config.contracts.tickMathAddress, tickMathAbi, provider);
+    const result = await TickMathContract.callStatic.getTickAtSqrtRatio(sqrtPriceX96);
+    return result;
+  } catch (err) {}
 }
 
 export async function getSqrtRatioAtTick(tick: string, provider: any) {
@@ -25,6 +27,7 @@ export async function getTickFromPrice({ token0, token1, price, fee, type, provi
     .mul(2 ** 96)
     .toFixed(0);
   let _tick = await getTickAtSqrtRatio(_sqrtPriceX96, provider);
+  if (_tick === 0) return 0;
   if (_tick < -887272) {
     _tick = -887272;
   }

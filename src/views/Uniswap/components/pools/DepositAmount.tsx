@@ -50,7 +50,7 @@ const DepositAmount = ({
   const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
 
   const price = useMemo(() => {
-    if ((!currentPrice && !currentTick) || !lowerTick || !highTick) return 0;
+    if ((!currentPrice && !currentTick) || (!lowerTick && lowerTick !== 0) || (!highTick && highTick !== 0)) return 0;
     const [_token0, _token1] = sortTokens(token0, token1);
     const _decimals0 = _token0?.decimals;
     const _decimals1 = _token1?.decimals;
@@ -108,35 +108,35 @@ const DepositAmount = ({
     }
   }, [price]);
   return (
-    <StyledContainer>
-      <span className={`title ${lowerTick >= highTick && 'disabled'}`}>Deposit amounts</span>
-      <div className="I">
-        {noPair || (currentTick < _tickHigh && currentTick > _lowerTick) ? (
-          <InputBoxs>
-            <InputBox
-              token={token0}
-              value={value0}
-              setValue={(value: string) => {
-                setValue0(value);
-                if (value) setValue1(new Big(value).mul(price || 1).toFixed(token0.decimals));
-              }}
-              balance={token0 ? balances[token0?.address] : ''}
-              loading={balanceLoading}
-            />
-            <InputBox
-              token={token1}
-              value={value1}
-              setValue={(value: string) => {
-                setValue1(value);
-                if (value)
-                  setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
-              }}
-              balance={token1 ? balances[token1?.address] : ''}
-              loading={balanceLoading}
-            />
-          </InputBoxs>
-        ) : currentTick >= _tickHigh ? (
-          !reverse ? (
+    <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
+      <span className={`title`}>Deposit amounts</span>
+      {lowerTick < highTick ? (
+        <div className="I">
+          {currentTick < highTick && currentTick > lowerTick ? (
+            <InputBoxs>
+              <InputBox
+                token={token0}
+                value={value0}
+                setValue={(value: string) => {
+                  setValue0(value);
+                  if (value) setValue1(new Big(value).mul(price || 1).toFixed(token0.decimals));
+                }}
+                balance={token0 ? balances[token0?.address] : ''}
+                loading={balanceLoading}
+              />
+              <InputBox
+                token={token1}
+                value={value1}
+                setValue={(value: string) => {
+                  setValue1(value);
+                  if (value)
+                    setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
+                }}
+                balance={token1 ? balances[token1?.address] : ''}
+                loading={balanceLoading}
+              />
+            </InputBoxs>
+          ) : currentTick >= highTick ? (
             <InputBox
               token={token0}
               value={value0}
@@ -148,37 +148,19 @@ const DepositAmount = ({
             />
           ) : (
             <InputBox
-              token={token1}
-              value={value1}
+              token={token0}
+              value={value0}
               setValue={(value: string) => {
-                setValue1(value);
+                setValue0(value);
               }}
-              balance={token1 ? balances[token1?.address] : ''}
+              balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}
             />
-          )
-        ) : !reverse ? (
-          <InputBox
-            token={token0}
-            value={value0}
-            setValue={(value: string) => {
-              setValue0(value);
-            }}
-            balance={token0 ? balances[token0?.address] : ''}
-            loading={balanceLoading}
-          />
-        ) : (
-          <InputBox
-            token={token1}
-            value={value1}
-            setValue={(value: string) => {
-              setValue1(value);
-            }}
-            balance={token1 ? balances[token1?.address] : ''}
-            loading={balanceLoading}
-          />
-        )}
-      </div>
+          )}
+        </div>
+      ) : (
+        <div />
+      )}
     </StyledContainer>
   );
 };
