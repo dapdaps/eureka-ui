@@ -126,15 +126,21 @@ const PoolsAddLiquidity = () => {
       return;
     }
     const doubleCheck = Number(currentTick) < Number(_highTick) && Number(currentTick) > Number(_lowerTick);
-    if (doubleCheck && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
+
+    const isFullRange = _lowerTick === -887200 && _highTick === 887200;
+    if (doubleCheck && !isFullRange && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (Number(currentTick) > Number(_highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
+    if (isFullRange && new Big(value0 || 0).eq(0) && new Big(value1 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (Number(currentTick) <= Number(_lowerTick) && new Big((reverse ? value1 : value0) || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) > Number(_highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
+      setErrorTips('Enter an Amount');
+      return;
+    }
+    if (!isFullRange && Number(currentTick) < Number(_lowerTick) && new Big((reverse ? value1 : value0) || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
@@ -148,11 +154,19 @@ const PoolsAddLiquidity = () => {
         setErrorTips('Insufficient balance');
         return;
       }
+      if (
+        isFullRange &&
+        new Big(value0 || 0).gt(balances[token0.address] || 0) &&
+        new Big(value1 || 0).gt(balances[token1.address] || 0)
+      ) {
+        setErrorTips('Insufficient balance');
+        return;
+      }
       if (Number(currentTick) >= Number(_highTick) && new Big(value0 || 0).gt(balances[token0.address] || 0)) {
         setErrorTips('Insufficient balance');
         return;
       }
-      if (Number(currentTick) <= Number(_lowerTick) && new Big(value1 || 0).gt(balances[token1.address] || 0)) {
+      if (Number(currentTick) < Number(_lowerTick) && new Big(value1 || 0).gt(balances[token1.address] || 0)) {
         setErrorTips('Insufficient balance');
         return;
       }

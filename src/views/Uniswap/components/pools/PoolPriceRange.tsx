@@ -92,9 +92,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
     decimals1: _token1.decimals,
     isReverse: !isReverse,
   };
-  const priceRate = `${isReverse ? detail?.token0.symbol : detail?.token1.symbol} per ${
-    isReverse ? detail?.token1.symbol : detail?.token0.symbol
-  }`;
+  const priceRate = `${isReverse ? _token0.symbol : _token1.symbol} per ${isReverse ? _token1.symbol : _token0.symbol}`;
   const _tickLow = !isReverse ? detail?.tickLow : detail?.tickHigh;
   const _tickHigh = !isReverse ? detail?.tickHigh : detail?.tickLow;
   const isFullRange = detail?.tickLow === -887200 && detail?.tickHigh === 887200;
