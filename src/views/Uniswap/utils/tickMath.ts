@@ -1,6 +1,7 @@
 import Big from 'big.js';
 
 export function tickToPrice({ tick, decimals0, decimals1, isReverse, isNumber }: any) {
+  if (!tick || !decimals0 || !decimals1) return 0;
   const price0 = new Big(1.0001 ** tick).div(10 ** (decimals1 - decimals0));
   const price1 = new Big(1).div(price0.eq(0) ? 1 : price0);
   if (isReverse) {
