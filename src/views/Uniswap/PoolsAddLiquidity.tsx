@@ -127,7 +127,7 @@ const PoolsAddLiquidity = () => {
     }
     const doubleCheck = Number(currentTick) < Number(_highTick) && Number(currentTick) > Number(_lowerTick);
 
-    const isFullRange = _lowerTick === -887200 && _highTick === 887200;
+    const isFullRange = _lowerTick === -887272 && _highTick === 887272;
     if (doubleCheck && !isFullRange && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
       setErrorTips('Enter an Amount');
       return;

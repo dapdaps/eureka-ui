@@ -78,8 +78,8 @@ const SetPriceRange = ({
         <HeaderActions>
           <HeaderFullAction
             onClick={() => {
-              setLowerTick(-887200);
-              setHighTick(887200);
+              setLowerTick(-887272);
+              setHighTick(887272);
             }}
           >
             Full range
@@ -186,11 +186,11 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
         setPrice('');
         return;
       }
-      if (_tick === -887200) {
+      if (_tick === -887272) {
         setPrice(reverse ? '∞' : '0');
         return;
       }
-      if (_tick === 887200) {
+      if (_tick === 887272) {
         setPrice(reverse ? '0' : '∞');
         return;
       }
@@ -250,7 +250,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
       </StyledPrice>
       <StyledButtonArea>
         <div
-          className={`b ${(tick === 887200 || !price) && 'disabled'}`}
+          className={`b ${(tick === 887272 || !price) && 'disabled'}`}
           onClick={() => {
             setTick(tick + 1);
           }}
@@ -258,7 +258,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
           <Add />
         </div>
         <div
-          className={`b ${(tick === -887200 || !price) && 'disabled'}`}
+          className={`b ${(tick === -887272 || !price) && 'disabled'}`}
           onClick={() => {
             setTick(tick - 1);
           }}

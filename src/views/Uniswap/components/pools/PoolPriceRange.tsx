@@ -95,7 +95,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
   const priceRate = `${isReverse ? _token0.symbol : _token1.symbol} per ${isReverse ? _token1.symbol : _token0.symbol}`;
   const _tickLow = !isReverse ? detail?.tickLow : detail?.tickHigh;
   const _tickHigh = !isReverse ? detail?.tickHigh : detail?.tickLow;
-  const isFullRange = detail?.tickLow === -887200 && detail?.tickHigh === 887200;
+  const isFullRange = detail?.tickLow === -887272 && detail?.tickHigh === 887272;
 
   return (
     <StyledWrap type={type}>

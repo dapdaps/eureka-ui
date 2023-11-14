@@ -81,7 +81,7 @@ export default function PositionItem({
     decimals1: token1?.decimals,
     isReverse: false,
   };
-  const isFullRange = tickLower === -887200 && tickUpper === 887200;
+  const isFullRange = tickLower === -887272 && tickUpper === 887272;
   return token0 && token1 ? (
     <Record onClick={onClick}>
       <RecordDetails>

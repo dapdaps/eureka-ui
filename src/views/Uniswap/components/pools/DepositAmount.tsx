@@ -53,7 +53,7 @@ const DepositAmount = ({
     const _decimals0 = reverse ? token1?.decimals : token0?.decimals;
     const _decimals1 = reverse ? token0?.decimals : token1?.decimals;
     const lowPrice =
-      _lowerTick === -887200
+      _lowerTick === -887272
         ? 0
         : tickToPrice({
             tick: _lowerTick,
@@ -63,7 +63,7 @@ const DepositAmount = ({
             isNumber: true,
           });
     const highPrice =
-      _tickHigh === 887200
+      _tickHigh === 887272
         ? 2 ** 96
         : tickToPrice({
             tick: _tickHigh,

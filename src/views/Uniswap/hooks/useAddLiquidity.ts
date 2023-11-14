@@ -9,6 +9,13 @@ import useRequestModal from './useRequestModal';
 import { sortTokens } from '../utils/sortTokens';
 import { getTokenAddress } from '../utils';
 
+const TICK_SPACING: any = {
+  100: 1,
+  500: 10,
+  3000: 60,
+  10000: 200,
+};
+
 export default function useAddLiquidity(onSuccess: () => void, onError?: () => void) {
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
@@ -56,14 +63,25 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
       );
     }
     if (isMint) {
+      let _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
+      let _tickUpper = tickLower > tickUpper ? tickLower : tickUpper;
+      const tickSpacing = TICK_SPACING[fee];
+      _tickLower = Math.round(_tickLower / tickSpacing) * tickSpacing;
+      _tickUpper = Math.round(_tickUpper / tickSpacing) * tickSpacing;
+      if (_tickLower < -887272) {
+        _tickLower = _tickLower + tickSpacing;
+      }
+      if (_tickUpper > 887272) {
+        _tickUpper = _tickUpper - tickSpacing;
+      }
       calldatas.push(
         Interface.encodeFunctionData('mint', [
           {
             token0: _token0Address,
             token1: _token1Address,
             fee: fee,
-            tickLower: tickLower > tickUpper ? tickUpper : tickLower,
-            tickUpper: tickLower > tickUpper ? tickLower : tickUpper,
+            tickLower: _tickLower,
+            tickUpper: _tickUpper,
             amount0Desired: _amount0,
             amount1Desired: _amount1,
             amount0Min: 0,

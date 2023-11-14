@@ -25,11 +25,11 @@ export async function getTickFromPrice({ token0, token1, price, fee, type, provi
     .mul(2 ** 96)
     .toFixed(0);
   let _tick = await getTickAtSqrtRatio(_sqrtPriceX96, provider);
-  if (_tick < -887200) {
-    _tick = -887200;
+  if (_tick < -887272) {
+    _tick = -887272;
   }
-  if (_tick > 887200) {
-    _tick = 887200;
+  if (_tick > 887272) {
+    _tick = 887272;
   }
   const TICK_SPACING: any = {
     100: 1,

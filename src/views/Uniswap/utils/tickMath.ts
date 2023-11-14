@@ -13,8 +13,8 @@ export function tickToPrice({ tick, decimals0, decimals1, isReverse, isNumber }:
 
 export function nearestUsableTick(tick: number, tickSpacing: number) {
   const rounded = Math.round(tick / tickSpacing) * tickSpacing;
-  if (rounded < -887200) return rounded + tickSpacing;
-  else if (rounded > 887200) return rounded - tickSpacing;
+  if (rounded < -887272) return rounded + tickSpacing;
+  else if (rounded > 887272) return rounded - tickSpacing;
   else return rounded;
 }
 
