@@ -1,5 +1,5 @@
 import { FeeAmount, nearestUsableTick, Pool, TICK_SPACINGS } from '@uniswap/v3-sdk';
-import { Token } from '@uniswap/sdk-core'
+import { Token } from '@uniswap/sdk-core';
 import JSBI from 'jsbi';
 import Big from 'big.js';
 import { tickToPrice } from './tickMath';
@@ -29,16 +29,18 @@ export const ZOOM_LEVELS: Record<FeeAmount, ZoomLevels> = {
     min: 0.00001,
     max: 20,
   },
-}
+};
 
 export interface ZoomLevels {
-  initialMin: number
-  initialMax: number
-  min: number
-  max: number
+  initialMin: number;
+  initialMax: number;
+  min: number;
+  max: number;
 }
 export const getActiveTick = (tickCurrent: number | undefined, feeAmount: FeeAmount | undefined) =>
-  tickCurrent!== undefined && feeAmount ? Math.floor(tickCurrent / TICK_SPACINGS[feeAmount]) * TICK_SPACINGS[feeAmount] : undefined
+  tickCurrent !== undefined && feeAmount
+    ? Math.floor(tickCurrent / TICK_SPACINGS[feeAmount]) * TICK_SPACINGS[feeAmount]
+    : undefined;
 
 export function tickToPriceDecimal({ tick, decimals0, decimals1, isReverse }: any) {
   const price0 = new Big(1.0001 ** tick).div(10 ** (decimals1 - decimals0));
@@ -60,24 +62,24 @@ export function computeSurroundingTicks(
 ): TickProcessed[] {
   let previousTickProcessed: TickProcessed = {
     ...activeTickProcessed,
-  }
+  };
   // Iterate outwards (either up or down depending on direction) from the active tick,
   // building active liquidity for every tick.
-  let processedTicks: TickProcessed[] = []
+  let processedTicks: TickProcessed[] = [];
   for (let i = pivot + (ascending ? 1 : -1); ascending ? i < sortedTickData.length : i >= 0; ascending ? i++ : i--) {
-    const tick = Number(sortedTickData[i].tick)
+    const tick = Number(sortedTickData[i].tick);
     const currentTickProcessed: TickProcessed = {
       liquidityActive: previousTickProcessed.liquidityActive,
       tick,
       liquidityNet: JSBI.BigInt(sortedTickData[i].liquidityNet),
       price0: tickToPrice({
-        tick, 
-        decimals0: isReverse ? token1.decimals: token0.decimals,
-        decimals1: isReverse ? token0.decimals: token1.decimals,
+        tick,
+        decimals0: isReverse ? token1.decimals : token0.decimals,
+        decimals1: isReverse ? token0.decimals : token1.decimals,
         isReverse: !isReverse,
-        isNumber: true
-      })
-    }
+        isNumber: true,
+      }),
+    };
 
     // Update the active liquidity.
     // If we are iterating ascending and we found an initialized tick we immediately apply
@@ -86,35 +88,35 @@ export function computeSurroundingTicks(
     if (ascending) {
       currentTickProcessed.liquidityActive = JSBI.add(
         previousTickProcessed.liquidityActive,
-        JSBI.BigInt(sortedTickData[i].liquidityNet)
-      )
+        JSBI.BigInt(sortedTickData[i].liquidityNet),
+      );
     } else if (!ascending && JSBI.notEqual(previousTickProcessed.liquidityNet, JSBI.BigInt(0))) {
       // We are iterating descending, so look at the previous tick and apply any net liquidity.
       currentTickProcessed.liquidityActive = JSBI.subtract(
         previousTickProcessed.liquidityActive,
-        previousTickProcessed.liquidityNet
-      )
+        previousTickProcessed.liquidityNet,
+      );
     }
 
-    processedTicks.push(currentTickProcessed)
-    previousTickProcessed = currentTickProcessed
+    processedTicks.push(currentTickProcessed);
+    previousTickProcessed = currentTickProcessed;
   }
 
   if (!ascending) {
-    processedTicks = processedTicks.reverse()
+    processedTicks = processedTicks.reverse();
   }
 
-  return processedTicks
+  return processedTicks;
 }
 
 export interface TickProcessed {
-  tick: number
-  liquidityActive: JSBI
-  liquidityNet: JSBI
-  price0: string
+  tick: any;
+  liquidityActive: JSBI;
+  liquidityNet: JSBI;
+  price0: any;
 }
 export interface ChartEntry {
-  activeLiquidity: number
-  price0: number
+  activeLiquidity: number;
+  price0: number;
 }
-export type Ticks = Array<{ __typename?: 'Tick', liquidityNet: any, price0: any, price1: any, tick: any }>;
+export type Ticks = Array<{ __typename?: 'Tick'; liquidityNet: any; price0: any; price1: any; tick: any }>;

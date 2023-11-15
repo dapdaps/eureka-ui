@@ -172,7 +172,7 @@ const Chart = ({
 
   const yScale = d3.scaleLinear().domain(liquidityRange).range([barHeight, 0]);
 
-  function drawInitChart(initialMin?: string, initialMax?: string) {
+  function drawInitChart(initialMin?: any, initialMax?: any) {
     // 创建横坐标轴
     drawBottomAxis();
     // 创建流动性分布图

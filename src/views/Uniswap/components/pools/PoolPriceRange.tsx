@@ -177,7 +177,7 @@ const StyledPriceDetailBox = styled.div`
     margin: 6px 0 2px 0;
   }
 `;
-const PriceDetailBox = ({ priceType, price, priceRate }: { priceType: string; price: string; priceRate: string }) => {
+const PriceDetailBox = ({ priceType, price, priceRate }: { priceType: string; price: any; priceRate: string }) => {
   return (
     <StyledPriceDetailBox>
       <span className="text">{priceType}</span>

@@ -178,7 +178,7 @@ const StyledButtonArea = styled.div`
   }
 `;
 const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: any) => {
-  const [price, setPrice] = useState('');
+  const [price, setPrice] = useState<any>('');
   const { provider } = useAccount();
   const setPriceFromTick = useCallback(
     (_tick: any) => {
