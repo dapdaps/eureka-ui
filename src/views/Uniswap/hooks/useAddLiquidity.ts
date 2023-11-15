@@ -8,13 +8,7 @@ import positionAbi from '../abi/positionAbi';
 import useRequestModal from './useRequestModal';
 import { sortTokens } from '../utils/sortTokens';
 import { getTokenAddress } from '../utils';
-
-const TICK_SPACING: any = {
-  100: 1,
-  500: 10,
-  3000: 60,
-  10000: 200,
-};
+import { nearestUsableTick } from '../utils/tickMath';
 
 export default function useAddLiquidity(onSuccess: () => void, onError?: () => void) {
   const [loading, setLoading] = useState(false);
@@ -65,15 +59,8 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     if (isMint) {
       let _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
       let _tickUpper = tickLower > tickUpper ? tickLower : tickUpper;
-      const tickSpacing = TICK_SPACING[fee];
-      _tickLower = Math.round(_tickLower / tickSpacing) * tickSpacing;
-      _tickUpper = Math.round(_tickUpper / tickSpacing) * tickSpacing;
-      if (_tickLower < -887272) {
-        _tickLower = _tickLower + tickSpacing;
-      }
-      if (_tickUpper > 887272) {
-        _tickUpper = _tickUpper - tickSpacing;
-      }
+      _tickLower = nearestUsableTick(_tickLower, fee);
+      _tickUpper = nearestUsableTick(_tickUpper, fee);
       calldatas.push(
         Interface.encodeFunctionData('mint', [
           {

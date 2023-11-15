@@ -61,7 +61,7 @@ const DepositAmount = ({
             tick: _lowerTick,
             decimals0: _decimals0,
             decimals1: _decimals1,
-            isReverse: true,
+            isReverse: !reverse,
             isNumber: true,
           });
     const highPrice =
@@ -71,7 +71,7 @@ const DepositAmount = ({
             tick: _tickHigh,
             decimals0: _decimals0,
             decimals1: _decimals1,
-            isReverse: true,
+            isReverse: !reverse,
             isNumber: true,
           });
     let _currentPrice = currentPrice;
@@ -80,7 +80,7 @@ const DepositAmount = ({
         tick: currentTick,
         decimals0: _decimals0,
         decimals1: _decimals1,
-        isReverse: true,
+        isReverse: !reverse,
         isNumber: true,
       });
     }
@@ -91,8 +91,8 @@ const DepositAmount = ({
       amount0: _amount0,
       amount1: _amount1,
       currentPrice: _currentPrice,
-      lowPrice: lowPrice,
-      highPrice: highPrice,
+      lowPrice: lowPrice > highPrice ? highPrice : lowPrice,
+      highPrice: highPrice < lowPrice ? lowPrice : highPrice,
     });
     return _price;
   }, [token0, token1, currentPrice, currentTick, lowerTick, highTick, reverse]);

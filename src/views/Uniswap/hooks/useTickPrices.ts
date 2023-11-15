@@ -5,7 +5,7 @@ import { getPoolInfo } from '../utils/getPool';
 import { getTokenAddress } from '../utils';
 import { getTickFromPrice } from '../utils/getTick';
 
-export default function useTicks({ fee = 3000, token0, token1, price }: any) {
+export default function useTicks({ fee = 3000, token0, token1 }: any) {
   const { provider } = useAccount();
   const [loading, setLoading] = useState(false);
   const [noPair, setNoPair] = useState(false);
@@ -53,7 +53,7 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
     getTicks();
   }, [token0, token1, fee, provider]);
 
-  const setCurrentTickFromPrice = async (price: any) => {
+  const setCurrentTickFromPrice = async (price: any, _token0?: any, _token1?: any) => {
     // const TICK_SPACING: any = {
     //   100: 1,
     //   500: 10,
@@ -61,13 +61,15 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
     //   10000: 200,
     // };
     // const tickSpacing = TICK_SPACING[fee];
-    const tick = await getTickFromPrice({ token0, token1, price, provider, fee });
+
+    const tick = await getTickFromPrice({ token0: _token0 || token0, token1: _token1 || token1, price, provider, fee });
     // const _lowerTick = Math.floor(tick / tickSpacing) * tickSpacing;
     // const _higherTick = Math.floor(tick / tickSpacing) * tickSpacing + tickSpacing;
     // setLowerTick(_lowerTick);
     setCurrentTick(tick);
     // setHighTick(_higherTick);
   };
+
   return {
     loading,
     noPair,

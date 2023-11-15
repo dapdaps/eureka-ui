@@ -207,6 +207,7 @@ const PoolsAddLiquidity = () => {
               onExchangeTokens={() => {
                 onExchangeTokens();
                 setReverse(!reverse);
+                setCurrentTickFromPrice(price, token1, token0);
               }}
             />
             {!noPair && lowerTick !== undefined && highTick !== undefined && token0 && token1 && (

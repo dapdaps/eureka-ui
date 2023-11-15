@@ -1,7 +1,14 @@
 import Big from 'big.js';
 
+const TICK_SPACING: any = {
+  100: 1,
+  500: 10,
+  3000: 60,
+  10000: 200,
+};
+
 export function tickToPrice({ tick, decimals0, decimals1, isReverse, isNumber }: any) {
-  if (!tick || !decimals0 || !decimals1) return 0;
+  if (!tick || !decimals0 || !decimals1) return 1;
   const price0 = new Big(1.0001 ** tick).div(10 ** (decimals1 - decimals0));
   const price1 = new Big(1).div(price0.eq(0) ? 1 : price0);
   if (isReverse) {
@@ -12,7 +19,8 @@ export function tickToPrice({ tick, decimals0, decimals1, isReverse, isNumber }:
   return !isNumber ? price1.toFixed(3) : price1.toFixed(decimals1);
 }
 
-export function nearestUsableTick(tick: number, tickSpacing: number) {
+export function nearestUsableTick(tick: number, fee: number) {
+  const tickSpacing = TICK_SPACING[fee];
   const rounded = Math.round(tick / tickSpacing) * tickSpacing;
   if (rounded < -887272) return rounded + tickSpacing;
   else if (rounded > 887272) return rounded - tickSpacing;
@@ -27,6 +35,7 @@ export function getPriceFromTicks({ amount0, amount1, currentPrice, lowPrice, hi
   const sqrtp_low = price_to_sqrtp(lowPrice).toFixed(0);
   const sqrtp_cur = price_to_sqrtp(currentPrice).toFixed(0);
   const sqrtp_upp = price_to_sqrtp(highPrice).toFixed(0);
+
   function sort(pa: any, pb: any) {
     let _pa = new Big(pa);
     let _pb = new Big(pb);
