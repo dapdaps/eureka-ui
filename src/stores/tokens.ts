@@ -13,7 +13,7 @@ export const useTokensStore = create(
     }),
     {
       name: 'config-tokens',
-      version: 1.2,
+      version: 1.3,
       storage: createJSONStorage(() => localStorage),
     },
   ),

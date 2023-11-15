@@ -107,7 +107,6 @@ const DepositAmount = ({
       setValue0(_value1.gt(0) ? _value1.toNumber() : '');
     }
   }, [price]);
-  console.log(lowerTick, currentTick, highTick);
   return (
     <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
       <span className={`title`}>Deposit amounts</span>

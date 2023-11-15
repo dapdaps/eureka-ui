@@ -122,7 +122,7 @@ export default {
       name: 'Wrapped BTC',
       symbol: 'WBTC',
       icon: `https://assets.dapdap.net/images/${'0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4'.toLowerCase()}.png`,
-      decimals: 18,
+      decimals: 8,
     },
     '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f': {
       chainId: 59144,
