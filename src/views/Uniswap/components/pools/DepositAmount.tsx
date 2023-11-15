@@ -107,6 +107,7 @@ const DepositAmount = ({
       setValue0(_value1.gt(0) ? _value1.toNumber() : '');
     }
   }, [price]);
+  console.log(lowerTick, currentTick, highTick);
   return (
     <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
       <span className={`title`}>Deposit amounts</span>
@@ -138,6 +139,16 @@ const DepositAmount = ({
             </InputBoxs>
           ) : currentTick > highTick ? (
             <InputBox
+              token={token0}
+              value={value0}
+              setValue={(value: string) => {
+                setValue0(value);
+              }}
+              balance={token0 ? balances[token0?.address] : ''}
+              loading={balanceLoading}
+            />
+          ) : (
+            <InputBox
               token={token1}
               value={value1}
               setValue={(value: string) => {
@@ -146,16 +157,6 @@ const DepositAmount = ({
                   setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
               }}
               balance={token1 ? balances[token1?.address] : ''}
-              loading={balanceLoading}
-            />
-          ) : (
-            <InputBox
-              token={token0}
-              value={value0}
-              setValue={(value: string) => {
-                setValue0(value);
-              }}
-              balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}
             />
           )}
