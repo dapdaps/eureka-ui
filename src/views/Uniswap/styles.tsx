@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const StyledLeftBg = styled.div`
   position: absolute;
-  bottom: -20px;
+  bottom: 0px;
   left: 0px;
   transform: translateX(-100%);
   opacity: 0.3;

@@ -53,6 +53,7 @@ const PoolsAddLiquidity = () => {
     highTick,
     currentTick,
     reverse,
+    setNoPair,
     setReverse,
     setLowerTick,
     setHighTick,
@@ -181,6 +182,7 @@ const PoolsAddLiquidity = () => {
           setValue0('');
           setValue1('');
           setPrice('');
+          setNoPair(false);
         }}
       />
       <SelectPair token0={token0} token1={token1} onSelectToken={onSelectToken} />

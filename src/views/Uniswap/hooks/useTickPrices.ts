@@ -75,6 +75,7 @@ export default function useTicks({ fee = 3000, token0, token1, price }: any) {
     highTick,
     currentTick,
     reverse,
+    setNoPair,
     setReverse,
     setLowerTick,
     setHighTick,

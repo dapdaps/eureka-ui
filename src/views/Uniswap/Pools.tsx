@@ -11,6 +11,7 @@ import { LeftBg } from './styles';
 const StyledContainer = styled.div`
   width: 854px;
   position: relative;
+  height: calc(100vh - 96px);
 `;
 const StyledHeader = styled.div`
   display: flex;
@@ -21,6 +22,11 @@ const Label = styled.div`
   font-size: 26px;
   font-weight: 700;
   color: #fff;
+`;
+const Positions = styled.div`
+  max-height: calc(100vh - 232px);
+  overflow-y: auto;
+  padding-bottom: 10px;
 `;
 const PositionButton = styled.button`
   width: 120px;
@@ -99,7 +105,7 @@ const Pools = () => {
           + New position
         </PositionButton>
       </StyledHeader>
-      <StyledPanel>
+      <StyledPanel style={{ maxHeight: 'calc(100% - 69px)', marginBottom: '20px', overflow: 'hidden' }}>
         <PanelHeader>
           <Title>Your positions ({userSelectedPositionSet.length})</Title>
           <CloseBtn
@@ -115,15 +121,17 @@ const Pools = () => {
             <Loading size={30} />
           </LoadingWrapper>
         ) : userSelectedPositionSet.length > 0 ? (
-          userSelectedPositionSet.map((position) => (
-            <PositionItem
-              key={position.tokenId}
-              {...position}
-              onClick={() => {
-                router.push('/uniswap/pools-detail-liquidity?id=' + position.tokenId);
-              }}
-            />
-          ))
+          <Positions>
+            {userSelectedPositionSet.map((position) => (
+              <PositionItem
+                key={position.tokenId}
+                {...position}
+                onClick={() => {
+                  router.push('/uniswap/pools-detail-liquidity?id=' + position.tokenId);
+                }}
+              />
+            ))}
+          </Positions>
         ) : (
           <Empty>
             <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
