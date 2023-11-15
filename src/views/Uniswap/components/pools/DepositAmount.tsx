@@ -50,7 +50,14 @@ const DepositAmount = ({
   const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
 
   const price = useMemo(() => {
-    if ((!currentPrice && !currentTick) || (!lowerTick && lowerTick !== 0) || (!highTick && highTick !== 0)) return 0;
+    if (
+      (!currentPrice && !currentTick) ||
+      (!lowerTick && lowerTick !== 0) ||
+      (!highTick && highTick !== 0) ||
+      !token0 ||
+      !token1
+    )
+      return 0;
     const [_token0, _token1] = sortTokens(token0, token1);
     const _decimals0 = _token0?.decimals;
     const _decimals1 = _token1?.decimals;
