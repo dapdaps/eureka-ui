@@ -21,7 +21,7 @@ const StyledValue = styled.div`
 
 const Amount = ({ mt }: { mt?: number }) => {
   const currentChain = useChain();
-  const { balance } = useTokenBalance({ isNative: true });
+  const { balance } = useTokenBalance({ currency: { isNative: true } });
   const price = usePriceStore((store) => store.price);
   return (
     <StyledWrapper mt={mt}>

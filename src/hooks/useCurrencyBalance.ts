@@ -9,10 +9,9 @@ import useAccount from './useAccount';
 export default function useTokenBalance({
   currency,
   updater,
-  isNative,
   isPure,
 }: {
-  currency?: Token;
+  currency?: any;
   updater?: number;
   isNative?: boolean;
   isPure?: boolean;
@@ -72,7 +71,7 @@ export default function useTokenBalance({
         setLoading(false);
       }
     };
-    if (!!(currency?.address || currency?.isNative || isNative) && account && !loading)
+    if (!!(currency?.address || currency?.isNative) && account && !loading)
       currency?.isNative ? getNativeBalance() : getBalance();
   }, [currency, account, updater, chainId]);
   return { balance, loading };
