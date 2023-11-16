@@ -41,10 +41,7 @@ export default function useAllV3Ticks(poolAddress:string) {
         skip: 0
       }
     }) as any;
-    const ticks = result?.ticks.filter((t:any) => {
-       return t.liquidityNet >= 0;
-    })
-    setTicks(ticks || [])
+    setTicks(result?.ticks || [])
     setLoading(false);
   }
   return {

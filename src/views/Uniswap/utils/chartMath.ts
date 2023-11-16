@@ -85,18 +85,22 @@ export function computeSurroundingTicks(
     // If we are iterating ascending and we found an initialized tick we immediately apply
     // it to the current processed tick we are building.
     // If we are iterating descending, we don't want to apply the net liquidity until the following tick.
-    if (ascending) {
-      currentTickProcessed.liquidityActive = JSBI.add(
-        previousTickProcessed.liquidityActive,
-        JSBI.BigInt(sortedTickData[i].liquidityNet),
-      );
-    } else if (!ascending && JSBI.notEqual(previousTickProcessed.liquidityNet, JSBI.BigInt(0))) {
-      // We are iterating descending, so look at the previous tick and apply any net liquidity.
-      currentTickProcessed.liquidityActive = JSBI.subtract(
-        previousTickProcessed.liquidityActive,
-        previousTickProcessed.liquidityNet,
-      );
+    try {
+      if (ascending) {
+        currentTickProcessed.liquidityActive = JSBI.add(
+          previousTickProcessed.liquidityActive,
+          JSBI.BigInt(sortedTickData[i].liquidityNet),
+        );
+      } else if (!ascending && JSBI.notEqual(previousTickProcessed.liquidityNet, JSBI.BigInt(0))) {
+        // We are iterating descending, so look at the previous tick and apply any net liquidity.
+        currentTickProcessed.liquidityActive = JSBI.subtract(
+          previousTickProcessed.liquidityActive,
+          previousTickProcessed.liquidityNet,
+        );
+      }
+    } catch (error) {
     }
+    
 
     processedTicks.push(currentTickProcessed);
     previousTickProcessed = currentTickProcessed;
