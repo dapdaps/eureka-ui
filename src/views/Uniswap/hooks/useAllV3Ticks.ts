@@ -37,11 +37,14 @@ export default function useAllV3Ticks(poolAddress:string) {
       url,
       document,
       variables: {
-        poolAddress,
+        poolAddress: poolAddress.toLocaleLowerCase(),
         skip: 0
       }
     }) as any;
-    setTicks(result?.ticks || [])
+    const ticks = result?.ticks.filter((t:any) => {
+       return t.liquidityNet >= 0;
+    })
+    setTicks(ticks || [])
     setLoading(false);
   }
   return {
