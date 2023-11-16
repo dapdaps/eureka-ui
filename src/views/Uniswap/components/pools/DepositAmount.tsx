@@ -98,8 +98,8 @@ const DepositAmount = ({
       amount0: _amount0,
       amount1: _amount1,
       currentPrice: _currentPrice,
-      lowPrice: lowPrice > highPrice ? highPrice : lowPrice,
-      highPrice: highPrice < lowPrice ? lowPrice : highPrice,
+      lowPrice: new Big(lowPrice).gt(highPrice) ? highPrice : lowPrice,
+      highPrice: new Big(lowPrice).gt(highPrice) ? lowPrice : highPrice,
     });
     return _price;
   }, [token0, token1, currentPrice, currentTick, lowerTick, highTick, reverse]);
