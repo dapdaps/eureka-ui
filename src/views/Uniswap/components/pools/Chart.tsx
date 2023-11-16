@@ -102,13 +102,8 @@ const Chart = ({
       isReverse: !reverse,
       isNumber: true,
     });
-    if (reverse) {
-      set_right_coordinate(price);
-      onRenderChart({ right: price });
-    } else {
-      set_left_coordinate(price);
-      onRenderChart({ left: price });
-    }
+    set_left_coordinate(price);
+    onRenderChart({ left: price });
   }, [lowerTick, reverse]);
   useEffect(() => {
     const price = tickToPrice({
@@ -118,13 +113,8 @@ const Chart = ({
       isReverse: !reverse,
       isNumber: true,
     });
-    if (reverse) {
-      set_left_coordinate(price);
-      onRenderChart({ left: price });
-    } else {
-      set_right_coordinate(price);
-      onRenderChart({ right: price });
-    }
+    set_right_coordinate(price);
+    onRenderChart({ right: price });
   }, [highTick, reverse]);
 
   const onRenderChart = ({ left, right }: any) => {

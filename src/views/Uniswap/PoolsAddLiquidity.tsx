@@ -87,7 +87,7 @@ const PoolsAddLiquidity = () => {
           type,
           provider,
         });
-        reverse ? setHighTick(_tick) : setLowerTick(_tick);
+        setLowerTick(_tick);
       }
       if (type === 'up') {
         const _tick = await getTickFromPrice({
@@ -98,7 +98,7 @@ const PoolsAddLiquidity = () => {
           type,
           provider,
         });
-        reverse ? setLowerTick(_tick) : setHighTick(_tick);
+        setHighTick(_tick);
       }
     },
     [fee, provider, token0, token1, reverse],
@@ -127,7 +127,8 @@ const PoolsAddLiquidity = () => {
     const doubleCheck = Number(currentTick) < Number(lowerTick) && Number(currentTick) > Number(highTick);
 
     const isFullRange = lowerTick === -887272 && highTick === 887272;
-    if (doubleCheck && !isFullRange && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
+
+    if ((doubleCheck && !isFullRange && new Big(value0 || 0).eq(0)) || new Big(value1 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
