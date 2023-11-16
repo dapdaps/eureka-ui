@@ -188,7 +188,7 @@ const PoolsAddLiquidity = () => {
       />
       <SelectPair token0={token0} token1={token1} onSelectToken={onSelectToken} />
       <StyledBody disabled={!token0 || !token1}>
-        <Fee fee={fee} disabled={!token0 || !token1} onSelectFee={onSelectFee} />
+        <Fee fee={fee} disabled={!token0 || !token1} token0={token0} token1={token1} onSelectFee={onSelectFee} />
         {loading ? (
           <LoadingWrapper>
             <Loading size={30} />

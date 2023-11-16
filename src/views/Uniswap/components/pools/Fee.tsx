@@ -1,5 +1,6 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
+import useFeeFrequency from '../../hooks/useFeeFrequency';
 
 const StyledContainer = styled.div`
   margin-top: 12px;
@@ -45,38 +46,35 @@ const FEES = {
   100: {
     value: '0.01%',
     description: 'Best for very stable pairs',
-    selecedNum: '0%',
     key: 100,
   },
   500: {
     value: '0.05%',
     description: 'Best for stable pairs',
-    selecedNum: '67%',
     key: 500,
   },
   3000: {
     value: '0.3%',
     description: 'Best for most pairs',
-    selecedNum: '31%',
     key: 3000,
   },
   10000: {
     value: '1%',
-    description: 'Best for most pairs',
-    selecedNum: '1%',
+    description: 'Best for exotic pairs',
     key: 10000,
   },
 } as { [key: number]: any };
 
-const Fee = ({ fee, disabled, onSelectFee }: any) => {
+const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
   const feeList = Object.values(FEES);
   const [showList, setShowList] = useState(false);
+  const frequency = useFeeFrequency({ token0, token1 });
   return (
     <StyledContainer>
       <StyledSelectedFeeArea>
         <p className="pendingTip">
           <div>{disabled ? 'The % you will earn in fees.' : `${FEES[fee]?.value} fee tier`}</div>
-          <div className="num">{FEES[fee]?.selecedNum} select</div>
+          <div className="num">{frequency[fee]}% select</div>
         </p>
         <div
           className="hideOrEditButton"
@@ -89,14 +87,14 @@ const Fee = ({ fee, disabled, onSelectFee }: any) => {
       </StyledSelectedFeeArea>
       {showList && (
         <StyledFeeSelectList>
-          {feeList.map(({ value, key, description, selecedNum }) => {
+          {feeList.map(({ value, key, description }) => {
             return (
               <FeeCell
                 key={value}
                 isSelected={key === fee}
                 value={value}
                 description={description}
-                selecedNum={selecedNum}
+                selecedNum={frequency[fee]}
                 onClick={() => {
                   onSelectFee(key);
                 }}
@@ -160,7 +158,7 @@ const FeeCell = ({
         )}
       </span>
       <p className="description">{description}</p>
-      <div className="num">{selecedNum} select</div>
+      <div className="num">{selecedNum}% select</div>
     </StyledCell>
   );
 };
