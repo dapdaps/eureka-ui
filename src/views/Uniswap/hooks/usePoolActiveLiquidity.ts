@@ -7,6 +7,7 @@ import { TickProcessed, ChartEntry, getActiveTick, PRICE_FIXED_DIGITS, computeSu
 import mockData from './mock.json';
 import  { tickToPriceDecimal } from '../utils/chartMath';
 import  { tickToPrice } from '../utils/tickMath';
+import  { getTokenAddress } from '../utils';
 // import { FeeAmount, nearestUsableTick, Pool, TICK_SPACINGS, tickToPrice, priceToClosestTick } from '@uniswap/v3-sdk';
 
 export default function usePoolActiveLiquidity(reverse:boolean) {
@@ -16,7 +17,7 @@ export default function usePoolActiveLiquidity(reverse:boolean) {
   const addLiquidityStore: any = useAddLiquidityStore();
   const { token0, token1, fee } = addLiquidityStore;
   // get pool
-  const { pool } = usePool(token0?.address, token1?.address, fee) as any;
+  const { pool } = usePool(getTokenAddress(token0?.address, true), getTokenAddress(token1?.address, true), fee) as any;
   const { poolAddress, currentTick, liquidity } = pool || {};
   
   // get all v3 ticks
