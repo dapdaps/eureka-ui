@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { useIconsStore } from '@/stores/icons';
 
 const StyledTokenIcon = styled.img<{ size: number }>`
   border-radius: 50%;
@@ -12,31 +11,31 @@ const DEFAULT_TOKEN_ICON = 'https://ipfs.near.social/ipfs/bafkreigrjhg7cu6bceirv
 const getIconByAddress = (address: string) => {
   return `https://assets.dapdap.net/images/${address.toLowerCase()}.png`;
 };
-export default function TokenIcon({ token, size = 22, style }: any) {
-  const iconsStore: any = useIconsStore();
-  const getIcon = () => {
-    if (token?.icon) return token.icon;
-    if (iconsStore?.getIcon(token)) return iconsStore.getIcon(token);
-    if (token?.address && getIconByAddress(token.address)) return token?.address && getIconByAddress(token.address);
+const getIcon = (token: any) => {
+  if (token?.icon) return token.icon;
+  if (token?.address && getIconByAddress(token.address)) return token?.address && getIconByAddress(token.address);
+  return DEFAULT_TOKEN_ICON;
+};
+const matchIcon = (token: any) => {
+  const _icon = getIcon(token);
+  const deadlinks: any = sessionStorage.getItem('deadlinks') || {};
+  if (deadlinks[_icon]) {
     return DEFAULT_TOKEN_ICON;
-  };
-  const [src, setSrc] = useState('');
-  useEffect(() => {
-    const _icon = getIcon();
-    if (_icon !== src || !src) setSrc(_icon);
-  }, [token]);
+  }
+  return _icon;
+};
+
+export default function TokenIcon({ token, size = 22, style }: any) {
+  const [src, setSrc] = useState(matchIcon(token));
   return (
     <StyledTokenIcon
       src={src}
       size={size}
       style={style}
-      onLoad={() => {
-        if (token?.symbol && src !== DEFAULT_TOKEN_ICON) {
-          iconsStore.addIcon({ ...token, icon: src });
-        }
-      }}
       onError={() => {
         setSrc(DEFAULT_TOKEN_ICON);
+        const deadlinks: any = sessionStorage.getItem('deadlinks') || {};
+        if (token?.symbol) deadlinks[src] = true;
       }}
     ></StyledTokenIcon>
   );

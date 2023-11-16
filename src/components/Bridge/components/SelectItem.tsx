@@ -46,7 +46,7 @@ interface Item {
   symbol: string;
 }
 
-const Select = ({ item }: { item?: Item }) => {
+const Select = ({ item, type }: { item?: Item; type: 'chain' | 'token' }) => {
   return (
     <Container>
       <Item>

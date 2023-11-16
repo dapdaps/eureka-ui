@@ -220,7 +220,7 @@ export default function useStargate() {
       ? [
           _outputChain.dstId,
           account,
-          account,
+          destination || account,
           _amount.toString(),
           new Big(_amount.toString()).mul(0.995).toString(),
           { value: new Big((fee || '0')?.toString()).add(_amount.toString()).toString() },

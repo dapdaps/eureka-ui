@@ -33,7 +33,7 @@ export default {
       address: '0xA219439258ca9da29E9Cc4cE5596924745e12B93',
       name: 'USDT',
       symbol: 'USDT',
-      icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+      icon: `https://assets.dapdap.net/images/${'0xA219439258ca9da29E9Cc4cE5596924745e12B93'.toLowerCase()}.png`,
       decimals: 6,
     },
     '0x176211869cA2b568f2A7D4EE941E073a821EE1ff': {
@@ -42,7 +42,7 @@ export default {
       decimals: 6,
       symbol: 'USDC',
       name: 'USD Coin',
-      icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+      icon: `https://assets.dapdap.net/images/${'0x176211869cA2b568f2A7D4EE941E073a821EE1ff'.toLowerCase()}.png`,
     },
     '0x6bAA318CF7C51C76e17ae1EbE9Bbff96AE017aCB': {
       chainId: 59144,

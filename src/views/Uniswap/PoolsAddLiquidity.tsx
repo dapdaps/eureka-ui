@@ -125,11 +125,11 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Invalid range selected');
       return;
     }
-    const doubleCheck = Number(currentTick) < Number(lowerTick) && Number(currentTick) > Number(highTick);
+    const doubleCheck = Number(currentTick) < Number(highTick) && Number(currentTick) > Number(lowerTick);
 
     const isFullRange = lowerTick === -887272 && highTick === 887272;
 
-    if ((doubleCheck && !isFullRange && new Big(value0 || 0).eq(0)) || new Big(value1 || 0).eq(0)) {
+    if (doubleCheck && !isFullRange && (new Big(value0 || 0).eq(0) || new Big(value1 || 0).eq(0))) {
       setErrorTips('Enter an Amount');
       return;
     }
@@ -137,11 +137,11 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) > Number(highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) > Number(highTick) && new Big(value0 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) < Number(lowerTick) && new Big((reverse ? value1 : value0) || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) < Number(lowerTick) && new Big(value1 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }

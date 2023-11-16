@@ -27,7 +27,7 @@ const SelectTokens = ({ token, disabled }: { token?: Token; disabled?: boolean }
   return (
     <Container className={disabled ? 'disabled' : ''}>
       <SelectLabel label="Token" />
-      <SelectItem item={token} />
+      <SelectItem type="chain" item={token} />
     </Container>
   );
 };

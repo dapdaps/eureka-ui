@@ -26,7 +26,7 @@ const SelectChains = ({ chain, disabled }: { chain?: Chain; disabled?: boolean }
   return (
     <Container className={disabled ? 'disabled' : ''}>
       <SelectLabel label="Network" />
-      <SelectItem item={chain ? { icon: chain.icon, symbol: chain.chainName } : undefined} />
+      <SelectItem type="chain" item={chain ? { icon: chain.icon, symbol: chain.chainName } : undefined} />
     </Container>
   );
 };

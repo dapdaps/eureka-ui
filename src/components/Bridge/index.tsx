@@ -86,7 +86,7 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
   const debouncedBestRoute = debounce(handleBestRoute, 500);
 
   useEffect(() => {
-    if (!amount || new Big(amount).eq(0)) {
+    if (!amount || new Big(amount || 0).eq(0)) {
       setErrorTips('Enter An Amount');
       return;
     }
