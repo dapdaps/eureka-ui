@@ -13,7 +13,7 @@ export default function useFeeFrequency({ token0, token1 }: any) {
       const _token0Address = getTokenAddress(_token0.address, true);
       const _token1Address = getTokenAddress(_token1.address, true);
       const result = await get(
-        `https://test-api.dapdap.net/api/uniswap/mint?token0=${_token0Address.toLowerCase()}&token1=${_token1Address.toLowerCase()}`,
+        `https://api.dapdap.net/api/uniswap/mint?token0=${_token0Address.toLowerCase()}&token1=${_token1Address.toLowerCase()}`,
       );
       setFrequency(result?.data || {});
     } catch (err) {}
