@@ -36,7 +36,7 @@ export default function usePoolActiveLiquidity(reverse:boolean) {
       isNumber: true,
     })
   }
-  if (!+baseData.current) return null;
+  if (!+baseData.current) return {};
 
   // get pivot
   const pivot = ticks.findIndex(({ tick } : any ) => tick > activeTick) - 1;

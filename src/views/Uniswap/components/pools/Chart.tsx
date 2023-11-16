@@ -118,7 +118,7 @@ const Chart = ({
   }, [highTick, reverse]);
 
   const onRenderChart = ({ left, right }: any) => {
-    if (!poolChartData) return;
+    if (!poolChartData?.current) return;
     const _left = left || left_coordinate;
     const _right = right || right_coordinate;
     if (left !== undefined) drawLeftBar(_left);
@@ -144,10 +144,10 @@ const Chart = ({
         <Loading size={30} />
       </StyledLoadingWrapper>
     );
-  // if (!poolChartData) return <StyledEmpty>
-  //                             <EmptyIcon />
-  //                             <span>Your position will appear here.</span>
-  //                           </StyledEmpty>;
+  if (!poolChartData.current) return <StyledEmpty>
+                              <EmptyIcon />
+                              <span>Your position will appear here.</span>
+                            </StyledEmpty>;
 
   const { data: series = [], current: current_price, fee } = poolChartData;
 
