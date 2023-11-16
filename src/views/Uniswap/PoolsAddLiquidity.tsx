@@ -18,6 +18,7 @@ import SetPriceRange from './components/pools/SetPriceRange';
 import SubmitButton from './components/pools/SubmitButton';
 import AddLiquidityNoPair from './components/AddLiquidityNoPair';
 import PreviewModal from './components/pools/PreviewModal';
+import InvalidRangeTips from './components/InvalidRangeTips';
 import { getTickFromPrice } from './utils/getTick';
 
 const StyledContainer = styled.div`
@@ -223,6 +224,7 @@ const PoolsAddLiquidity = () => {
             )}
           </>
         )}
+        {errorTips === 'Invalid range selected' && <InvalidRangeTips />}
         {noPair && (
           <AddLiquidityNoPair
             token0={token0}
