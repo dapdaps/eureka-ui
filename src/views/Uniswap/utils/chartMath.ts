@@ -67,25 +67,25 @@ export function computeSurroundingTicks(
   // building active liquidity for every tick.
   let processedTicks: TickProcessed[] = [];
   for (let i = pivot + (ascending ? 1 : -1); ascending ? i < sortedTickData.length : i >= 0; ascending ? i++ : i--) {
-    const tick = Number(sortedTickData[i].tick);
-    const currentTickProcessed: TickProcessed = {
-      liquidityActive: previousTickProcessed.liquidityActive,
-      tick,
-      liquidityNet: JSBI.BigInt(sortedTickData[i].liquidityNet),
-      price0: tickToPrice({
-        tick,
-        decimals0: isReverse ? token1.decimals : token0.decimals,
-        decimals1: isReverse ? token0.decimals : token1.decimals,
-        isReverse: !isReverse,
-        isNumber: true,
-      }),
-    };
-
-    // Update the active liquidity.
-    // If we are iterating ascending and we found an initialized tick we immediately apply
-    // it to the current processed tick we are building.
-    // If we are iterating descending, we don't want to apply the net liquidity until the following tick.
     try {
+      const tick = Number(sortedTickData[i].tick);
+      const currentTickProcessed: TickProcessed = {
+        liquidityActive: previousTickProcessed.liquidityActive,
+        tick,
+        liquidityNet: JSBI.BigInt(sortedTickData[i].liquidityNet),
+        price0: tickToPrice({
+          tick,
+          decimals0: isReverse ? token1.decimals : token0.decimals,
+          decimals1: isReverse ? token0.decimals : token1.decimals,
+          isReverse: !isReverse,
+          isNumber: true,
+        }),
+      };
+
+      // Update the active liquidity.
+      // If we are iterating ascending and we found an initialized tick we immediately apply
+      // it to the current processed tick we are building.
+      // If we are iterating descending, we don't want to apply the net liquidity until the following tick.
       if (ascending) {
         currentTickProcessed.liquidityActive = JSBI.add(
           previousTickProcessed.liquidityActive,
@@ -98,12 +98,12 @@ export function computeSurroundingTicks(
           previousTickProcessed.liquidityNet,
         );
       }
+      
+
+      processedTicks.push(currentTickProcessed);
+      previousTickProcessed = currentTickProcessed;
     } catch (error) {
     }
-    
-
-    processedTicks.push(currentTickProcessed);
-    previousTickProcessed = currentTickProcessed;
   }
 
   if (!ascending) {
