@@ -208,7 +208,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
   );
 
   const handlePriceChange = useCallback(async () => {
-    if (price === '') return;
+    if (price === '' || !provider) return;
     let _tick = await getTickFromPrice({
       token0,
       token1,
@@ -219,7 +219,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
     });
     setTick(_tick);
     setPriceFromTick(_tick);
-  }, [price]);
+  }, [price, token0, token1, fee, type, provider]);
 
   useEffect(() => {
     setPriceFromTick(tick);
