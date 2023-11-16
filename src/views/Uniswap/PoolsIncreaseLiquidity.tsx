@@ -25,13 +25,14 @@ const StyledBody = styled.div`
 
 const PoolsIncreaseLiquidity = () => {
   const searchParams = useSearchParams();
-  const detail = useIncreaseDetail(searchParams.get('id') || '');
+  const { detail, loading } = useIncreaseDetail(searchParams.get('id') || '');
   const [reverse, setReverse] = useState(false);
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
   const [showPreview, setShowPreview] = useState(false);
   const [errorTips, setErrorTips] = useState('');
   const tokens = useMemo(() => {
+    if (!detail) return {};
     const _tokens: any = {};
     if (detail?.token0) {
       _tokens[detail.token0.address] = detail.token0;
@@ -97,10 +98,9 @@ const PoolsIncreaseLiquidity = () => {
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, detail]);
-
   return (
     <StyledContainer>
-      {detail ? (
+      {!loading && detail ? (
         <>
           <Head showCleanAll={false} />
           <StyledBody>

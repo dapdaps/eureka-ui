@@ -26,11 +26,10 @@ const PoolsAddLiquidity = () => {
   const searchParams = useSearchParams();
   const [percent, setPercent] = useState(0);
   const [useWeth, setUseWeth] = useState(false);
-  const { token0, token1, detail, collectData, changeToWeth } = useRemoveDetail(searchParams.get('id') || '');
-
+  const { token0, token1, detail, loading, collectData, changeToWeth } = useRemoveDetail(searchParams.get('id') || '');
   return (
     <StyledContainer>
-      {detail ? (
+      {!loading && detail ? (
         <>
           <Head showCleanAll={false} />
           <StyledBody>

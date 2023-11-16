@@ -3,14 +3,12 @@ import { Contract } from 'ethers';
 import useAccount from '@/hooks/useAccount';
 import { multicallv3 } from '@/utils/multicall';
 import config from '@/config/uniswap/linea';
-import { usePositionsStore } from '@/stores/positions';
 import positionAbi from '../abi/positionAbi';
 
 export default function usePositions() {
   const { account, provider } = useAccount();
   const [loading, setLoading] = useState(!!account);
   const [positions, setPositions] = useState([]);
-  const positionsStore: any = usePositionsStore();
   const getPositions = useCallback(async () => {
     const PositionContract = new Contract(config.contracts.positionAddress, positionAbi, provider);
     try {
@@ -66,13 +64,11 @@ export default function usePositions() {
         cachedPositions[tokenIdResults[i].toString()] = _position;
         return _position;
       });
-      positionsStore.setPositions(cachedPositions);
       setPositions(_positions);
       setLoading(false);
     } catch (err) {
       console.log('err', err);
       setPositions([]);
-      positionsStore.setPositions({});
       setLoading(false);
     }
   }, [provider, account]);

@@ -224,7 +224,9 @@ const PoolsAddLiquidity = () => {
             )}
           </>
         )}
-        {errorTips === 'Invalid range selected' && <InvalidRangeTips />}
+        {errorTips === 'Invalid range selected' && lowerTick !== undefined && highTick !== undefined && (
+          <InvalidRangeTips />
+        )}
         {noPair && (
           <AddLiquidityNoPair
             token0={token0}

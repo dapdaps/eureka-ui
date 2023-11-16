@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { usePositionsStore } from '@/stores/positions';
 import useAccount from '@/hooks/useAccount';
 import useTokens from './useTokens';
 
@@ -12,7 +11,6 @@ export default function useDetail(tokenId: string) {
   const [detail, setDetail] = useState<any>();
   const [collectData, setCollectData] = useState<any>();
   const [loading, setLoading] = useState<boolean>();
-  const positionsStore: any = usePositionsStore();
   const { provider, account } = useAccount();
 
   const { tokens } = useTokens();
@@ -63,11 +61,6 @@ export default function useDetail(tokenId: string) {
       } else {
         _detail.status = pool.tick < position.tickLower || pool.tick >= position.tickUpper ? 'out' : 'in';
       }
-      positionsStore.updateSinglePosition({
-        tokenId: tokenId,
-        liquidityToken0,
-        liquidityToken1,
-      });
       setDetail(_detail);
       setCollectData({
         collectToken0: collectInfo.amount0 / 10 ** _token0.decimals,

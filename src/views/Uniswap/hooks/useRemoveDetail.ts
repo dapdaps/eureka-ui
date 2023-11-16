@@ -1,56 +1,74 @@
-import { useMemo, useState, useCallback, useEffect } from 'react';
-import { usePositionsStore } from '@/stores/positions';
-import { useCachedPoolsStore } from '@/stores/pools';
+import { useState, useCallback, useEffect } from 'react';
 import useTokens from './useTokens';
 import useAccount from '@/hooks/useAccount';
 import config from '@/config/uniswap/linea';
-import { cloneDeep } from 'lodash';
+import { getPosition, getPositionCollect, getTokenAmounts } from '../utils/getPosition';
 import { getTokenAddress } from '../utils';
-import { getPositionCollect, getTokenAmounts } from '../utils/getPosition';
+import { getPoolInfo } from '../utils/getPool';
 
 export default function useRemoveDetail(tokenId?: string) {
   const { provider, account } = useAccount();
-  const positionsStore: any = usePositionsStore();
-  const poolsStore: any = useCachedPoolsStore();
   const { tokens } = useTokens();
   const [token0, setToken0] = useState<any>();
   const [token1, setToken1] = useState<any>();
   const [collectData, setCollectData] = useState<any>();
-  const detail = useMemo(() => {
-    if (!tokenId) return null;
-    const position = positionsStore.getPosition(tokenId) || {};
-    const pool = poolsStore.getPool(tokenId) || {};
-    const _token0 = tokens[getTokenAddress(pool.token0)];
-    const _token1 = tokens[getTokenAddress(pool.token1)];
-    const useNative = _token0.address === 'native' ? _token0 : _token1.address === 'native' ? _token1 : undefined;
-    const status = position.tickLower <= pool.currentTick && pool.currentTick <= position.tickUpper ? 'in' : 'out';
-    setToken0(_token0);
-    setToken1(_token1);
-    return {
-      token0: cloneDeep(_token0),
-      token1: cloneDeep(_token1),
-      liquidityToken0: position.liquidityToken0,
-      liquidityToken1: position.liquidityToken1,
-      tickLow: position.tickLower,
-      tickHigh: position.tickUpper,
-      status,
-      tick: pool.currentTick,
-      fee: position.fee,
-      tokenId: tokenId,
-      liquidity: position.liquidity,
-      useNative,
-    };
-  }, [tokenId]);
-  const getCollectData = useCallback(async () => {
+  const [detail, setDetail] = useState<any>();
+  const [loading, setLoading] = useState(false);
+
+  const getRemoveDetail = useCallback(async () => {
+    if (!tokenId || !provider) return;
     try {
-      if (!tokenId || !account || !provider || !token0 || !token1) return;
-      const collectInfo = await getPositionCollect([tokenId, account], provider);
-      setCollectData({
-        collectToken0: collectInfo.amount0 / 10 ** token0.decimals,
-        collectToken1: collectInfo.amount1 / 10 ** token1.decimals,
+      const position = await getPosition(tokenId, provider);
+      const poolInfo = await getPoolInfo({
+        token0: position.token0,
+        token1: position.token1,
+        fee: position.fee,
+        provider,
       });
-    } catch (err) {}
-  }, [account, tokenId, provider, token0, token1]);
+      const _token0 = tokens[getTokenAddress(position.token0)];
+      const _token1 = tokens[getTokenAddress(position.token1)];
+      const [liquidityToken0, liquidityToken1] = await getTokenAmounts({
+        liquidity: position.liquidity,
+        tickLower: position.tickLower,
+        tickUpper: position.tickUpper,
+        tick: poolInfo.currentTick,
+        decimal0: _token0.decimals,
+        decimal1: _token1.decimals,
+        provider,
+      });
+      const status =
+        position.tickLower <= poolInfo.currentTick && poolInfo.currentTick <= position.tickUpper ? 'in' : 'out';
+      const useNative = _token0.address === 'native' ? _token0 : _token1.address === 'native' ? _token1 : undefined;
+      setDetail({
+        token0: _token0,
+        token1: _token1,
+        liquidityToken0,
+        liquidityToken1,
+        tickLow: position.tickLower,
+        tickHigh: position.tickUpper,
+        status,
+        tick: poolInfo.currentTick,
+        fee: position.fee,
+        tokenId: tokenId,
+        liquidity: position.liquidity,
+        useNative,
+      });
+      setLoading(false);
+      setToken0(_token0);
+      setToken1(_token1);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
+  }, [tokenId, provider]);
+  const getCollectInfo = useCallback(async () => {
+    if (!tokenId || !account || !token0 || !token1 || !provider) return;
+    const collectInfo = await getPositionCollect([tokenId, account], provider);
+    setCollectData({
+      collectToken0: collectInfo.amount0 / 10 ** token0.decimals,
+      collectToken1: collectInfo.amount1 / 10 ** token1.decimals,
+    });
+  }, [tokenId, account, token0, token1, provider]);
 
   const changeToWeth = useCallback(
     (flag: boolean) => {
@@ -64,8 +82,14 @@ export default function useRemoveDetail(tokenId?: string) {
     },
     [token0, token1, detail],
   );
+
   useEffect(() => {
-    getCollectData();
-  }, [account, tokenId, provider, detail]);
-  return { token0, token1, detail, collectData, changeToWeth };
+    getRemoveDetail();
+  }, [tokenId, provider]);
+
+  useEffect(() => {
+    getCollectInfo();
+  }, [tokenId, account, token0, token1, provider]);
+
+  return { token0, token1, detail, loading, collectData, changeToWeth };
 }
