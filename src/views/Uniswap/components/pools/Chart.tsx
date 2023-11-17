@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useCallback } from 'react';
+import { memo, useState, useEffect, useCallback, useMemo } from 'react';
 import styled from 'styled-components';
 import * as d3 from 'd3';
 import { FeeAmount } from '@uniswap/v3-sdk';
@@ -70,107 +70,77 @@ const Chart = ({
   const barWidth = 22;
   const percentBoxWidth = 44;
   const percentToBarDistance = 6;
-  const [left_coordinate, set_left_coordinate] = useState<any>();
-  const [right_coordinate, set_right_coordinate] = useState<any>();
   const poolChartData = usePoolActiveLiquidity(reverse) as any;
-  useEffect(() => {
-    if (poolChartData?.current) {
-      const lowPrice = tickToPrice({
-        tick: reverse ? highTick : lowerTick,
-        decimals0: reverse ? token1.decimals : token0.decimals,
-        decimals1: reverse ? token0.decimals : token1.decimals,
-        isReverse: !reverse,
-        isNumber: true,
-      });
-      const highPrice = tickToPrice({
-        tick: reverse ? lowerTick : highTick,
-        decimals0: reverse ? token1.decimals : token0.decimals,
-        decimals1: reverse ? token0.decimals : token1.decimals,
-        isReverse: !reverse,
-        isNumber: true,
-      });
-      set_left_coordinate(lowPrice);
-      set_right_coordinate(highPrice);
-      drawInitChart(lowPrice, highPrice);
+  const { current, fee, data } = poolChartData || {};
+  const [chart_done, set_chart_done] = useState<boolean>(false);
+  const xScale:any = useMemo(() => {
+    if (current) {
+      const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
+      const axis = [current * zoomLevels.initialMin, current * zoomLevels.initialMax];
+      const xScale = d3
+      .scaleLinear()
+      .domain(axis as number[])
+      .range([0, svgWidth - svgPadding * 2]);
+      return xScale;
     }
-  }, [poolChartData?.current]);
+  }, [current, fee])
+  const yScale:any = useMemo(() => {
+    const series = data || []
+    const liquidityRange = [0, d3.max(series, yAccessor)] as number[];
+    const yScale = d3.scaleLinear().domain(liquidityRange).range([barHeight, 0]);
+    return yScale;
+  }, [data])
   useEffect(() => {
-    const price = tickToPrice({
+    set_chart_done(false);
+    if (current && xScale && yScale) {
+      drawInitChart();
+      set_chart_done(true);
+    }
+  }, [current, token0?.address, token1?.address, xScale, yScale]);
+  useEffect(() => {
+    if (!chart_done) return;
+    const left = tickToPrice({
       tick: reverse ? highTick : lowerTick,
       decimals0: reverse ? token1.decimals : token0.decimals,
       decimals1: reverse ? token0.decimals : token1.decimals,
       isReverse: !reverse,
       isNumber: true,
     });
-    set_left_coordinate(price);
-    onRenderChart({ left: price });
-  }, [lowerTick, highTick, reverse]);
-  useEffect(() => {
-    const price = tickToPrice({
+    const right = tickToPrice({
       tick: reverse ? lowerTick : highTick,
       decimals0: reverse ? token1.decimals : token0.decimals,
       decimals1: reverse ? token0.decimals : token1.decimals,
       isReverse: !reverse,
       isNumber: true,
     });
-    set_right_coordinate(price);
-    onRenderChart({ right: price });
-  }, [highTick, lowerTick, reverse]);
+    onRenderChart({ left, right });
+  }, [lowerTick, highTick, reverse, chart_done]);
+
+  const _debounceUpdateTick = useCallback(debounce((coordinate: any, type: any) => {
+    onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'up' : 'low') : reverse ? 'low' : 'up' });
+  }, 500), [])
 
   const onRenderChart = ({ left, right }: any) => {
     if (!poolChartData?.current) return;
-    const _left = left || left_coordinate;
-    const _right = right || right_coordinate;
-    if (left !== undefined) drawLeftBar(_left);
-    if (right !== undefined) drawRightBar(_right);
-    drawSection({ left: _left, right: _right });
+    if (left !== undefined) drawLeftBar(left);
+    if (right !== undefined) drawRightBar(right);
+    drawSection();
   };
-
-  const onUpdateTick = useCallback((coordinate: any, type: any) => {
-    onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'up' : 'low') : reverse ? 'low' : 'up' });
-  }, []);
-
-  const _debounceUpdateTick = debounce(onUpdateTick, 500);
 
   const handleCoordinateChange = ({ coordinate, type }: any) => {
     const params = type === 'left' ? { left: coordinate } : { right: coordinate };
     onRenderChart(params);
     if (coordinate && type) _debounceUpdateTick(coordinate, type);
   };
-
-  if (!poolChartData)
-    return (
-      <StyledLoadingWrapper>
-        <Loading size={30} />
-      </StyledLoadingWrapper>
-    );
-  if (!poolChartData.current) return <StyledEmpty>
-                              <EmptyIcon />
-                              <span>Your position will appear here.</span>
-                            </StyledEmpty>;
-
-  const { data: series = [], current: current_price, fee } = poolChartData;
-
-  const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
-  const axis = [current_price * zoomLevels.initialMin, current_price * zoomLevels.initialMax];
-  const liquidityRange = [0, d3.max(series, yAccessor)] as number[];
-
-  const xScale = d3
-    .scaleLinear()
-    .domain(axis as number[])
-    .range([0, svgWidth - svgPadding * 2]);
-
-  const yScale = d3.scaleLinear().domain(liquidityRange).range([barHeight, 0]);
-
-  function drawInitChart(initialMin?: any, initialMax?: any) {
+  function drawInitChart() {
     // 创建横坐标轴
     drawBottomAxis();
     // 创建流动性分布图
     drawLiquidityArea();
-    // 创建左拖拽Bar
-    drawInitLeftBar(initialMin);
-    // 创建右拖拽Bar
-    drawInitRightBar(initialMax);
+    // 左拖拽Bar Bind Event
+    drawInitLeftBar();
+    // 右拖拽Bar Bind Event
+    drawInitRightBar();
     // 创建当前价格Line
     drawCurrentPriceLine();
   }
@@ -186,7 +156,7 @@ const Chart = ({
       .x((d: unknown) => xScale(xAccessor(d as ChartEntry)))
       .y1((d: unknown) => yScale(yAccessor(d as ChartEntry)))
       .y0(yScale(0));
-
+    const series = poolChartData?.data || []
     const pathData = areaGenerator(
       series.filter((d: ChartEntry) => {
         const value = xScale(xAccessor(d));
@@ -195,16 +165,13 @@ const Chart = ({
     );
     d3.select('.liquidity').attr('d', pathData);
   }
-  function drawInitLeftBar(initialMin?: string) {
+  function drawInitLeftBar() {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
       // if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
       if (e.x + barWidth / 2 <= 0) return;
-      set_left_coordinate(xScale.invert(e.x + 7));
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 7), type: 'left' });
     }) as any;
-    set_left_coordinate(initialMin);
-    handleCoordinateChange({ coordinate: initialMin, type: 'left' });
     d3.select('.leftBar').call(dragEvent);
   }
   function drawInitRightBar(initialMax?: string) {
@@ -212,11 +179,8 @@ const Chart = ({
       const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
       // if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
       if (e.x >= svgWidth - svgPadding * 2) return;
-      set_right_coordinate(xScale.invert(e.x + 11));
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 11), type: 'right' });
     }) as any;
-    set_right_coordinate(initialMax);
-    handleCoordinateChange({ coordinate: initialMax, type: 'right' });
     d3.select('.rightBar').call(dragEvent);
   }
   function drawLeftBar(coordinate: any) {
@@ -233,7 +197,7 @@ const Chart = ({
     );
     d3.select('.rightPercent').attr('transform', `translate(${barWidth + percentToBarDistance}, 0)`);
   }
-  function drawSection({ left, right }: any) {
+  function drawSection() {
     if (!d3.select('.leftBar').attr('transform') || !d3.select('.rightBar').attr('transform')) return;
     const x1 = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
     const x2 = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
@@ -250,12 +214,12 @@ const Chart = ({
     } else {
       d3.select('.section').attr('height', barHeight).attr('opacity', 0);
     }
-    d3.select('.leftPercent text').text(getPercent(left) + '%');
-    d3.select('.rightPercent text').text(getPercent(right) + '%');
+    d3.select('.leftPercent text').text(getPercent(xScale.invert(+x1 + 7)) + '%');
+    d3.select('.rightPercent text').text(getPercent(xScale.invert(+x2 + 11)) + '%');
   }
   function getPercent(newPrice: number) {
     let movePercent;
-    const price = current_price;
+    const price = current;
     if (+price > +newPrice) {
       movePercent = -Big(1).minus(Big(newPrice).div(price)).mul(100).toFixed(0, 1);
     } else {
@@ -264,13 +228,23 @@ const Chart = ({
     return movePercent;
   }
   function drawCurrentPriceLine() {
-    const current_x = xScale(current_price);
+    const current_x = xScale(current);
     d3.select('.current')
       .attr('x1', current_x)
       .attr('y1', svgHeight - barHeight - axisHeight)
       .attr('x2', current_x)
       .attr('y2', svgHeight - axisHeight);
   }
+  if (!poolChartData)
+    return (
+      <StyledLoadingWrapper>
+        <Loading size={30} />
+      </StyledLoadingWrapper>
+    );
+  if (!current) return <StyledEmpty>
+                              <EmptyIcon />
+                              <span>Your position will appear here.</span>
+                            </StyledEmpty>;
   return (
     <StyledContainer>
       <StyledCurrent>
