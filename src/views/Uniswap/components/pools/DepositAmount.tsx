@@ -42,7 +42,6 @@ const DepositAmount = ({
   highTick,
   setValue0,
   setValue1,
-  noPair,
   balances,
   balanceLoading,
 }: any) => {

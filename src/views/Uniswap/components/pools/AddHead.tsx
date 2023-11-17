@@ -42,8 +42,10 @@ const StyledSettings = styled.div`
 const AddLiquidityHeader = ({
   showCleanAll = true,
   onCleanAll,
+  isRemove,
 }: {
   showCleanAll?: boolean;
+  isRemove?: boolean;
   onCleanAll?: () => void;
 }) => {
   const [showSettings, setShowSettings] = useState(false);
@@ -57,7 +59,7 @@ const AddLiquidityHeader = ({
       <StyledArrowLeft>
         <BackIcon onClick={goBack} />
       </StyledArrowLeft>
-      <StyledTitle>Add liquidity</StyledTitle>
+      <StyledTitle>{isRemove ? 'Remove liquidity' : 'Add liquidity'}</StyledTitle>
       <StyledActions>
         {showCleanAll ? (
           <StyledClear

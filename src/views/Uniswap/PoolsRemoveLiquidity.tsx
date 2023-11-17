@@ -31,7 +31,7 @@ const PoolsAddLiquidity = () => {
     <StyledContainer>
       {!loading && detail ? (
         <>
-          <Head showCleanAll={false} />
+          <Head showCleanAll={false} isRemove={true} />
           <StyledBody>
             <PoolRemovePair token0={token0} token1={token1} fee={detail?.fee} status={detail?.status} />
             <PoolRemoveAmount percent={percent} setPercent={setPercent} />

@@ -61,7 +61,7 @@ const SelectToken = ({ onSelectToken, token }: any) => {
       {!!token ? (
         <StyledContentBox onClick={openModal}>
           <div className="tokenInfo">
-            <TokenIcon token={token} />
+            <TokenIcon token={token} key={token.address} />
             <span className="tokeName">{token.symbol}</span>
           </div>
           <ArrowDown />

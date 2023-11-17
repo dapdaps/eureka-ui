@@ -37,7 +37,7 @@ const NAVS = [
     active: ['/uniswap/swap'],
   },
   {
-    label: 'Pool',
+    label: 'Pools',
     path: '/uniswap/pools',
     active: [
       '/uniswap/pools',

@@ -92,7 +92,7 @@ export default function SlippageSetting(props?: any) {
       <StyledContainer
         style={{
           left: props.clientX - 260 + 'px',
-          top: props.clientY + 20 + 'px',
+          top: props.clientY - 60 + 'px',
         }}
       >
         <Label>Slippage Setting</Label>
