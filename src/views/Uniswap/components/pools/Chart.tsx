@@ -104,7 +104,7 @@ const Chart = ({
     });
     set_left_coordinate(price);
     onRenderChart({ left: price });
-  }, [lowerTick, reverse]);
+  }, [lowerTick, highTick, reverse]);
   useEffect(() => {
     const price = tickToPrice({
       tick: reverse ? lowerTick : highTick,
@@ -115,7 +115,7 @@ const Chart = ({
     });
     set_right_coordinate(price);
     onRenderChart({ right: price });
-  }, [highTick, reverse]);
+  }, [highTick, lowerTick, reverse]);
 
   const onRenderChart = ({ left, right }: any) => {
     if (!poolChartData?.current) return;
