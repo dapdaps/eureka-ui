@@ -2,7 +2,7 @@ import { memo } from 'react';
 import styled from 'styled-components';
 import { useHistoryTokensStore } from '@/stores/historyTokens';
 import { CopyIcon, LinkIcon, WarningIcon } from './Icons';
-import Modal from './ModalBox';
+import Modal from '@/components/ModalBox';
 import { copyText } from '@/utils/copy';
 import config from '@/config/uniswap/linea';
 import TokenIcon from '../TokenIcon';

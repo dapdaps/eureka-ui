@@ -94,7 +94,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
                 isSelected={key === fee}
                 value={value}
                 description={description}
-                selecedNum={frequency[fee]}
+                selecedNum={frequency[key]}
                 onClick={() => {
                   onSelectFee(key);
                 }}

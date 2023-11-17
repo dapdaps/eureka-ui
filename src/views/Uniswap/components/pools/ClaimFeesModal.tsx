@@ -2,9 +2,9 @@ import { memo } from 'react';
 import styled from 'styled-components';
 import { balanceFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
+import Modal from '@/components/ModalBox';
 import useCollect from '../../hooks/useCollect';
 import { CloseIcon } from './Icons';
-import Modal from './ModalBox';
 
 const StyledContent = styled.div`
   width: 460px;

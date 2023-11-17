@@ -30,6 +30,15 @@ export default {
       icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
       isImport: false,
     },
+    '0xA3Ca67B7230bC057ce6f13B497de177C30D8631b': {
+      chainId: 59140,
+      address: '0xA3Ca67B7230bC057ce6f13B497de177C30D8631b',
+      decimals: 8,
+      symbol: 'WBTC',
+      name: 'WBTC Test',
+      icon: '',
+      isImport: false,
+    },
   },
   contracts: {
     routerAddress: '0x6aa397CAB00a2A40025Dbf839a83f16D5EC7c1eB',

@@ -120,7 +120,6 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Select a Token');
       return;
     }
-
     if (lowerTick === undefined || highTick === undefined || Number(lowerTick) >= Number(highTick)) {
       setErrorTips('Invalid range selected');
       return;
@@ -137,11 +136,11 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) > Number(highTick) && new Big(value0 || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) >= Number(highTick) && new Big(value0 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) < Number(lowerTick) && new Big(value1 || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) <= Number(lowerTick) && new Big(value1 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }

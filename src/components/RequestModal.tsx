@@ -2,9 +2,8 @@ import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/Icons/Loading';
 import CloseIcon from '@/components/Icons/Close';
-import ModalBox from './pools/ModalBox';
+import ModalBox from './ModalBox';
 import config from '@/config/uniswap/linea';
-import { balanceFormated } from '@/utils/balance';
 
 const StyledContent = styled.div`
   width: 462px;
@@ -79,7 +78,7 @@ const StyledTradeText = styled.div`
 // status 0 for success 1 for confirm 2 for submit 3 for error
 export default function RequestModal({ isOpen, data, onRequestClose }: any) {
   const router = useRouter();
-  const { status = 1, trade, tx } = data;
+  const { status, text, tx, from } = data;
   return (
     <ModalBox isOpen={isOpen} onRequestClose={onRequestClose} shouldCloseOnOverlayClick={false}>
       <StyledContent>
@@ -103,28 +102,26 @@ export default function RequestModal({ isOpen, data, onRequestClose }: any) {
           </ErrorIcon>
         )}
         <StyledText>
-          {status === 0 && 'Transaction successed'}
+          {status === 0 && 'Transaction submitted'}
           {status === 1 && 'Waiting for confirmation'}
-          {status === 2 && 'Waiting for submitting'}
-          {status === 3 && 'Transaction errored'}
+          {status === 2 && 'Transaction errored'}
         </StyledText>
-        {(status === 0 || status === 3) && (
+        {(status === 0 || status === 2) && (
           <StyledButton
             onClick={() => {
               onRequestClose();
-              status === 0 && router.push('/uniswap/pools');
+              status === 0 && from === 'pool' && router.push('/uniswap/pools');
             }}
           >
             Close
           </StyledButton>
         )}
-        {(status === 1 || status === 2) && trade && (
-          <StyledTradeText>
-            Supplying {balanceFormated(trade.value0, 4)} {trade.token0} and {balanceFormated(trade.value1, 4)}{' '}
-            {trade.token1}
-          </StyledTradeText>
+        {status === 1 && text && <StyledTradeText>{text}</StyledTradeText>}
+        {status !== 1 && !!tx && (
+          <StyledLink href={config.explor + '/tx/' + tx} target="_blank">
+            View on Linea scan
+          </StyledLink>
         )}
-        {status !== 1 && !!tx && <StyledLink href={config.explor + '/tx/' + tx}>View on Linea scan</StyledLink>}
         {status === 1 && <StyledDesc>Confirm this transaction in your wallet</StyledDesc>}
       </StyledContent>
     </ModalBox>

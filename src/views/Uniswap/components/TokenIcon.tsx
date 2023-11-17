@@ -18,7 +18,7 @@ const getIcon = (token: any) => {
 };
 const matchIcon = (token: any) => {
   const _icon = getIcon(token);
-  const deadlinks: any = sessionStorage.getItem('deadlinks') || {};
+  const deadlinks: any = sessionStorage?.getItem('deadlinks') || {};
   if (deadlinks[_icon]) {
     return DEFAULT_TOKEN_ICON;
   }

@@ -15,7 +15,6 @@ const StyledContainer = styled.div<{ mt?: number }>`
   margin-top: ${({ mt }) => mt + 'px'};
   padding-left: var(--padding-x);
   padding-right: var(--padding-x);
-  padding-top: 10px;
   max-height: calc(100vh - 400px);
   overflow-y: auto;
 `;
@@ -87,7 +86,9 @@ const Tokens = ({ mt }: { mt?: number }) => {
   const tokens = useTokens();
   return (
     <StyledContainer mt={mt}>
-      {tokens?.map((_token, i) => <Token key={_token.address || 'native'} token={_token} />)}
+      {tokens?.map((_token, i) => (
+        <Token key={_token.address || 'native'} token={_token} />
+      ))}
     </StyledContainer>
   );
 };

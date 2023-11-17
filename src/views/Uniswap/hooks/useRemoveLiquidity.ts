@@ -5,13 +5,19 @@ import useAccount from '@/hooks/useAccount';
 import { useSettingsStore } from '@/stores/settings';
 import config from '@/config/uniswap/linea';
 import positionAbi from '../abi/positionAbi';
-import useRequestModal from './useRequestModal';
+import useRequestModal from '../../../hooks/useRequestModal';
+import { balanceFormated } from '@/utils/balance';
+import useToast from '@/hooks/useToast';
+import { useTransactionsStore } from '@/stores/transactions';
 
 export default function useRemoveLiquidity(onSuccess: () => void, onError: () => void) {
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
   const slippage = useSettingsStore((store: any) => store.slippage) || 0.5;
   const { openRequestModal } = useRequestModal();
+
+  const toast = useToast();
+  const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
 
   const onRemove = async ({ token0, token1, liquidityToken0, liquidityToken1, liquidity, percent, tokenId }: any) => {
     if (!account || !provider) return;
@@ -62,25 +68,22 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
         ]),
       );
     }
-    const modalTrade = {
-      token0: token0.symbol,
-      token1: token1.symbol,
-      value0: liquidityToken0,
-      value1: liquidityToken1,
-    };
-
+    const tradeText = `Removed liquidity ${balanceFormated(liquidityToken0, 4)} ${token0.symbol} and ${balanceFormated(
+      liquidityToken1,
+      4,
+    )} ${token1.symbol}`;
     try {
       setLoading(true);
+      openRequestModal({
+        status: 1,
+        text: tradeText,
+        open: true,
+      });
       const txn: any = {
         to: config.contracts.positionAddress,
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),
       };
       const signer = provider.getSigner(account);
-      openRequestModal({
-        status: 1,
-        trade: modalTrade,
-        open: true,
-      });
       let estimateGas = new Big(1000000);
       try {
         estimateGas = await signer.estimateGas(txn);
@@ -95,35 +98,53 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
       };
       const tx = await signer.sendTransaction(newTxn);
       openRequestModal({
-        status: 2,
-        trade: modalTrade,
+        text: tradeText,
+        status: 0,
         tx: tx.hash,
         open: true,
-      });
-      const res = await tx.wait();
-      openRequestModal({
-        status: res.status === 1 ? 0 : 3,
-        trade: modalTrade,
-        tx: tx.hash,
-        open: true,
+        from: 'pool',
       });
       setLoading(false);
+      const res = await tx.wait();
       if (res.status === 1) {
         onSuccess();
+        toast.success({
+          title: 'Transaction Successful!',
+          text: tradeText,
+        });
       } else {
         onError();
+        toast.fail({
+          title: 'Transaction Failed!',
+          text: tradeText,
+        });
       }
+      addTransaction({
+        icons: [token0.icon, token1.icon],
+        failed: res.status !== 1,
+        tx: tx.hash,
+        handler: 'Removed Liquidity',
+        desc: `${balanceFormated(liquidityToken0, 4)} ${token0.symbol} and ${balanceFormated(liquidityToken1, 4)} ${
+          token1.symbol
+        }`,
+        time: Date.now(),
+      });
     } catch (err: any) {
       console.log('err', err);
       if (err.code !== 'ACTION_REJECTED') {
         openRequestModal({
           status: 3,
-          trade: modalTrade,
+          text: tradeText,
           open: true,
         });
       } else {
         openRequestModal({
           open: false,
+        });
+        toast.fail({
+          title: 'Transaction Failed',
+          text: `User rejected the request. Details: 
+          MetaMask Tx Signature: User denied transaction signature. `,
         });
       }
       setLoading(false);

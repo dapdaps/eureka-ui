@@ -4,6 +4,9 @@ import config from '@/config/uniswap/linea';
 import { useLayoutStore } from '@/stores/layout';
 import { useSettingsStore } from '@/stores/settings';
 import useTokens from './hooks/useTokens';
+import useToast from '@/hooks/useToast';
+import { useTransactionsStore } from '@/stores/transactions';
+import useRequestModal from '@/hooks/useRequestModal';
 import { LeftBg } from './styles';
 
 const StyledContainer = styled.div`
@@ -15,6 +18,10 @@ export default function Swap() {
   const setLayoutStore = useLayoutStore((store) => store.set);
   const settingStore: any = useSettingsStore();
   const { tokens, historyTokens, importToken, addHistoryToken } = useTokens();
+  const { openRequestModal } = useRequestModal();
+  const toast = useToast();
+  const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
+
   return (
     <StyledContainer>
       <ComponentWrapperPage
@@ -44,6 +51,9 @@ export default function Swap() {
           onSetSlippage: (slippage: number) => {
             settingStore.setSlippage(slippage);
           },
+          openRequestModal,
+          toast,
+          addTransaction,
         }}
         src={'dapdapbos.near/widget/Linea.Uniswap.Swap.Dex'}
       />

@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import useTokens from '../../hooks/useTokens';
 import HistoryTokens from './HistoryTokens';
 import { CloseIcon, GlassIcon } from './Icons';
-import Modal from './ModalBox';
+import Modal from '@/components/ModalBox';
 import TokenBalanceList from './TokenBalanceList';
 
 const StyledContent = styled.div`

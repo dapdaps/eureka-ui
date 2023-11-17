@@ -5,16 +5,23 @@ import useAccount from '@/hooks/useAccount';
 import config from '@/config/uniswap/linea';
 import useTokens from './useTokens';
 import positionAbi from '../abi/positionAbi';
-import useRequestModal from './useRequestModal';
+import useRequestModal from '../../../hooks/useRequestModal';
 import { sortTokens } from '../utils/sortTokens';
 import { getTokenAddress } from '../utils';
 import { nearestUsableTick } from '../utils/tickMath';
+import { balanceFormated } from '@/utils/balance';
+
+import useToast from '@/hooks/useToast';
+import { useTransactionsStore } from '@/stores/transactions';
 
 export default function useAddLiquidity(onSuccess: () => void, onError?: () => void) {
   const [loading, setLoading] = useState(false);
   const { account, provider } = useAccount();
   const { addHistoryToken } = useTokens();
   const { openRequestModal } = useRequestModal();
+  const toast = useToast();
+  const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
+
   const onAdd = async ({
     token0,
     token1,
@@ -42,8 +49,8 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     let _amount1 = new Big(_value1 || 1).mul(10 ** _token1.decimals).toFixed(0);
     const _deadline = Math.ceil(Date.now() / 1000) + 60;
     if (noPair) {
-      const mathPrice = (isReverse ? price : 1 / price) / 10 ** (_token0.decimals - _token1.decimals);
-      const _sqrtPriceX96 = new Big(mathPrice)
+      const _price = new Big(price).div(10 ** (_token0.decimals - _token1.decimals));
+      const _sqrtPriceX96 = new Big(_price.toFixed())
         .sqrt()
         .mul(2 ** 96)
         .toFixed(0);
@@ -100,14 +107,16 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         value = wrappedValue;
       }
     }
-    const modalTrade = {
-      token0: token0.symbol,
-      token1: token1.symbol,
-      value0: value0,
-      value1: value1,
-    };
+    const tradeText = `Supplying ${balanceFormated(value0, 4)} ${token0.symbol} and ${balanceFormated(value1, 4)} ${
+      token1.symbol
+    }`;
     try {
       setLoading(true);
+      openRequestModal({
+        status: 1,
+        text: tradeText,
+        open: true,
+      });
       let estimateGas = new Big(1000000);
       const txn: any = {
         to: config.contracts.positionAddress,
@@ -125,24 +134,22 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
         }
       }
       console.log('estimateGas', estimateGas.toString());
+
       const gasPrice = await provider.getGasPrice();
       const newTxn = {
         ...txn,
         gasLimit: estimateGas.mul(120).div(100).toString(),
         gasPrice: gasPrice,
       };
-      openRequestModal({
-        status: 1,
-        trade: modalTrade,
-        open: true,
-      });
       const tx = await signer.sendTransaction(newTxn);
       openRequestModal({
-        status: 2,
-        trade: modalTrade,
+        text: tradeText,
+        status: 0,
         tx: tx.hash,
         open: true,
+        from: 'pool',
       });
+      setLoading(false);
       const res = await tx.wait();
       if (res.status === 1) {
         addHistoryToken({
@@ -150,27 +157,43 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
           [token1.address]: token1,
         });
         onSuccess();
+        toast.success({
+          title: 'Transaction Successful!',
+          text: tradeText,
+        });
       } else {
         onError?.();
+        toast.fail({
+          title: 'Transaction Failed!',
+          text: tradeText,
+        });
       }
-      openRequestModal({
-        status: res.status === 1 ? 0 : 3,
-        trade: modalTrade,
+      addTransaction({
+        icons: [token0.icon, token1.icon],
+        failed: res.status !== 1,
         tx: tx.hash,
-        open: true,
+        handler: isMint ? 'New Position' : 'Added Liquidity',
+        desc: `${balanceFormated(value0, 4)} ${token0.symbol} and ${balanceFormated(value1, 4)} ${token1.symbol}`,
+        time: Date.now(),
       });
-      setLoading(false);
     } catch (err: any) {
       onError?.();
       if (err.code !== 'ACTION_REJECTED') {
         openRequestModal({
-          status: 3,
-          trade: modalTrade,
+          data: {
+            text: tradeText,
+            status: 3,
+          },
           open: true,
         });
       } else {
         openRequestModal({
           open: false,
+        });
+        toast.fail({
+          title: 'Transaction Failed',
+          text: `User rejected the request. Details: 
+          MetaMask Tx Signature: User denied transaction signature. `,
         });
       }
       setLoading(false);

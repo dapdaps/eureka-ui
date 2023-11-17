@@ -2,13 +2,12 @@ import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { CloseIcon } from './Icons';
-import Modal from './ModalBox';
+import Modal from '@/components/ModalBox';
 import PoolIncreaseLiquidityData from './PoolIncreaseLiquidityData';
 import PoolPriceRange from './PoolPriceRange';
 import PoolRemovePair from './PoolRemovePair';
 import Loading from '@/components/Icons/Loading';
 import useAddLiquidity from '../../hooks/useAddLiquidity';
-import useRequestModal from '../../hooks/useRequestModal';
 
 import { sortTokens } from '../../utils/sortTokens';
 
@@ -113,7 +112,6 @@ const PreviewModal = (props: any) => {
     setReverse(_token0.address === token1.address);
   }, [token0, token1]);
 
-  const { openRequestModal } = useRequestModal();
   const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
   const _highTick = lowerTick > highTick ? lowerTick : highTick;
   return (
@@ -148,7 +146,6 @@ const PreviewModal = (props: any) => {
           <StyledAdd
             className="hvc"
             onClick={() => {
-              openRequestModal({ open: true });
               onRequestClose();
               onAdd({
                 token0,
