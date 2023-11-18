@@ -6,30 +6,30 @@ import { tickToPrice } from './tickMath';
 
 export const ZOOM_LEVELS: Record<FeeAmount, ZoomLevels> = {
   [FeeAmount.LOWEST]: {
-    initialMin: 0.6,
-    initialMax: 1.3,
+    initialMin: 0.999,
+    initialMax: 1.001,
     min: 0.00001,
     max: 1.5,
   },
   [FeeAmount.LOW]: {
-    initialMin: 0.6,
-    initialMax: 1.3,
+    initialMin: 0.999,
+    initialMax: 1.001,
     min: 0.00001,
     max: 1.5,
   },
   [FeeAmount.MEDIUM]: {
-    initialMin: 0.00001,
-    initialMax: 2.5,
+    initialMin: 0.5,
+    initialMax: 2,
     min: 0.00001,
     max: 20,
   },
   [FeeAmount.HIGH]: {
-    initialMin: 0.6,
-    initialMax: 5,
+    initialMin: 0.5,
+    initialMax: 2,
     min: 0.00001,
     max: 20,
   },
-};
+}
 
 export interface ZoomLevels {
   initialMin: number;

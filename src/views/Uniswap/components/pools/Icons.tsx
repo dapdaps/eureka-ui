@@ -98,3 +98,22 @@ export const LinkIcon = (props: any) => {
     </svg>
   );
 };
+
+export const ZoomAddIcon = (props: any) => {
+  return <svg {...props} width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="15.5" cy="15.5" r="15" fill="#131313" stroke="#3D363D"/>
+  <circle cx="14.5" cy="14.5" r="6.7" stroke="#8E8E8E" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M12 15H18" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+  <path d="M15 12L15 17.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="21.0976" y1="18.7256" x2="24.7256" y2="20.9024" stroke="#8E8E8E" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+}
+
+export const ZoomSubIcon = (props: any) => {
+  return <svg {...props} width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="15.5" cy="15.5" r="15" fill="#131313" stroke="#3D363D"/>
+  <path d="M11 15H16" stroke="white" stroke-width="1.6" stroke-linecap="round"/>
+  <circle cx="13.5" cy="14.5" r="6.7" stroke="#8E8E8E" stroke-width="1.6" stroke-linecap="round"/>
+  <line x1="20.0976" y1="18.7256" x2="23.7256" y2="20.9024" stroke="#8E8E8E" stroke-width="1.6" stroke-linecap="round"/>
+  </svg>
+}
