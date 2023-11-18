@@ -208,7 +208,7 @@ const Chart = ({
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
       // if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
-      if (e.x + barWidth / 2 <= 0) return;
+      if (e.x + barWidth / 2 <= 0 || xScale.invert(e.x + 7) < 0) return;
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 7), type: 'left' });
     }) as any;
     d3.select('.leftBar').call(dragEvent);
@@ -217,7 +217,7 @@ const Chart = ({
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
       // if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
-      if (e.x >= svgWidth - svgPadding * 2) return;
+      if (e.x >= svgWidth - svgPadding * 2 || xScale.invert(e.x + 11) < 0) return;
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 11), type: 'right' });
     }) as any;
     d3.select('.rightBar').call(dragEvent);
