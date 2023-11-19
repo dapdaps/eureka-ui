@@ -73,13 +73,7 @@ export function computeSurroundingTicks(
         liquidityActive: previousTickProcessed.liquidityActive,
         tick,
         liquidityNet: JSBI.BigInt(sortedTickData[i].liquidityNet),
-        price0: tickToPrice({
-          tick,
-          decimals0: isReverse ? token1.decimals : token0.decimals,
-          decimals1: isReverse ? token0.decimals : token1.decimals,
-          isReverse: !isReverse,
-          isNumber: true,
-        }),
+        price0: Big(isReverse ? sortedTickData[i].price1 :  sortedTickData[i].price0).toFixed(8),
       };
 
       // Update the active liquidity.

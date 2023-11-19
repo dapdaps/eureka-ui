@@ -11,9 +11,6 @@ import  { getTokenAddress } from '../utils';
 // import { FeeAmount, nearestUsableTick, Pool, TICK_SPACINGS, tickToPrice, priceToClosestTick } from '@uniswap/v3-sdk';
 
 export default function usePoolActiveLiquidity(reverse:boolean) {
-  /**
-   * computeSurroundingTicks 需要验证
-   */
   const addLiquidityStore: any = useAddLiquidityStore();
   const { token0, token1, fee } = addLiquidityStore;
   // get pool
@@ -44,7 +41,7 @@ export default function usePoolActiveLiquidity(reverse:boolean) {
 
   // process ticks 
   const activeTickProcessed: TickProcessed = {
-    liquidityActive: liquidity ?? 0,
+    liquidityActive: JSBI.BigInt(liquidity) ?? 0,
     tick: activeTick,
     liquidityNet: Number(ticks[pivot].tick) === activeTick ? JSBI.BigInt(ticks[pivot].liquidityNet) : JSBI.BigInt(0),
     price0: tickToPrice({
@@ -59,7 +56,6 @@ export default function usePoolActiveLiquidity(reverse:boolean) {
   const previousTicks = computeSurroundingTicks(token0, token1, activeTickProcessed, ticks, pivot, false, reverse)
   const ticksProcessed = previousTicks.concat(activeTickProcessed).concat(subsequentTicks)
   const formattedData = formatData(ticksProcessed);
-  // const formattedData = mockData.data as any;
   return { data:formattedData, ...baseData };
 }
 function formatData(data: TickProcessed[]) {
