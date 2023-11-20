@@ -211,6 +211,7 @@ const PoolsAddLiquidity = () => {
                 setCurrentTickFromPrice(price, token1, token0);
               }}
             />
+            {(lowerTick === currentTick || highTick === currentTick) && <InvalidRangeTips />}
             {!noPair && lowerTick !== undefined && highTick !== undefined && token0 && token1 && (
               <Chart
                 token0={token0}
@@ -222,9 +223,6 @@ const PoolsAddLiquidity = () => {
               />
             )}
           </>
-        )}
-        {errorTips === 'Invalid range selected' && lowerTick !== undefined && highTick !== undefined && (
-          <InvalidRangeTips />
         )}
         {noPair && (
           <AddLiquidityNoPair

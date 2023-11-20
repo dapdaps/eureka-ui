@@ -7,8 +7,6 @@ import Header from './components/Header';
 import RequestModal from '@/components/RequestModal';
 import PoolContext from '../../contexts/requestModalContext';
 
-import useToast from '@/hooks/useToast';
-
 import 'react-toastify/dist/ReactToastify.css';
 
 const StyledContainer = styled.div`
