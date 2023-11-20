@@ -13,6 +13,10 @@ const StyledContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  @media (max-width: 768px) {
+    width: 271px;
+    height: 291px;
+  }
 `;
 const StyledText = styled.div`
   color: #fff;
@@ -20,6 +24,9 @@ const StyledText = styled.div`
   font-size: 20px;
   font-weight: 500;
   margin-top: 44px;
+  @media (max-width: 768px) {
+    font-size: 18px;
+  }
 `;
 const StyledButton = styled.button`
   width: 414px;
@@ -33,6 +40,11 @@ const StyledButton = styled.button`
   border: none;
   cursor: pointer;
   margin-top: 26px;
+
+  @media (max-width: 768px) {
+    width: 241px;
+    height: 50px;
+  }
 `;
 const StyledLink = styled.a`
   color: #5ee0ff;
@@ -73,6 +85,9 @@ const StyledTradeText = styled.div`
   font-weight: 500;
   line-height: normal;
   margin-top: 40px;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 
 // status 0 for success 1 for confirm 2 for submit 3 for error

@@ -26,6 +26,11 @@ const StyledContainer = styled.div`
   border-radius: 24px;
   border: 1px solid #3d363d;
   background-color: #131313;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    border: none;
+  }
 `;
 const StyledBody = styled.div<{ disabled: boolean }>`
   padding: 0px 20px 20px;
@@ -173,6 +178,7 @@ const PoolsAddLiquidity = () => {
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick, reverse, currentTick]);
+
   return ready ? (
     <StyledContainer>
       <Head
@@ -211,7 +217,7 @@ const PoolsAddLiquidity = () => {
                 setCurrentTickFromPrice(price, token1, token0);
               }}
             />
-            {(lowerTick === currentTick || highTick === currentTick) && <InvalidRangeTips />}
+            {(lowerTick === currentTick || highTick === currentTick) && token0 && token1 && <InvalidRangeTips />}
             {!noPair && lowerTick !== undefined && highTick !== undefined && token0 && token1 && (
               <Chart
                 token0={token0}

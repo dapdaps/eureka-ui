@@ -10,8 +10,10 @@ import useRequestModal from '@/hooks/useRequestModal';
 import { LeftBg } from './styles';
 
 const StyledContainer = styled.div`
-  width: 462px;
   position: relative;
+  @media (max-width: 768px) {
+    padding-top: 20px;
+  }
 `;
 
 export default function Swap() {

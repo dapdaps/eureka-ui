@@ -21,6 +21,20 @@ const Account = styled.div`
   font-weight: 700;
   color: #fff;
 `;
+const StyledCopyButton = styled.div`
+  @media (max-width: 768px) {
+    border-radius: 10px;
+    border: 1px solid #343838;
+    background: #242424;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-right: 10px;
+  }
+`;
 
 const AccountItem = ({ showCopy = true, logoSize = 38 }: { showCopy?: boolean; logoSize?: number }) => {
   const { account } = useAccount();
@@ -29,14 +43,16 @@ const AccountItem = ({ showCopy = true, logoSize = 38 }: { showCopy?: boolean; l
       <Logo size={logoSize} />
       <Account>{ellipsAccount(account)}</Account>
       {account && showCopy && (
-        <CopyButton
-          size={16}
-          text={account}
-          tooltipMessage="Copied"
-          tooltipTop={-31}
-          tooltipRight={-12}
-          tooltipFontSize={12}
-        />
+        <StyledCopyButton>
+          <CopyButton
+            size={16}
+            text={account}
+            tooltipMessage="Copied"
+            tooltipTop={-31}
+            tooltipRight={-12}
+            tooltipFontSize={12}
+          />
+        </StyledCopyButton>
       )}
     </StyledItem>
   );

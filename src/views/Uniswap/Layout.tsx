@@ -16,18 +16,29 @@ const StyledContainer = styled.div`
   background-image: url(/images/uniswap/right_bg.png);
   background-repeat: no-repeat;
   background-position: right top;
+  @media (max-width: 768px) {
+    background-position: left 20px;
+    background-image: url(/images/uniswap/right_m_bg.png);
+  }
 `;
 const StyledContent = styled.div`
   padding-top: 20px;
   display: flex;
   justify-content: center;
   position: relative;
+  @media (max-width: 768px) {
+    padding-top: 0px;
+  }
 `;
 
 const Uniswap = ({ children }: { children?: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [requestData, setRequestData] = useState<any>({});
+  const [ready, setReady] = useState(false);
 
+  useEffect(() => {
+    setReady(true);
+  }, []);
   return (
     <PoolContext.Provider
       value={{
@@ -53,16 +64,18 @@ const Uniswap = ({ children }: { children?: ReactNode }) => {
           data={requestData}
         />
       </StyledContainer>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={true}
-        theme="dark"
-        newestOnTop
-        rtl={false}
-        pauseOnFocusLoss
-        closeButton={false}
-      />
+      {ready && (
+        <ToastContainer
+          position={window.innerWidth > 768 ? 'top-right' : 'bottom-right'}
+          autoClose={5000}
+          hideProgressBar={true}
+          theme="dark"
+          newestOnTop
+          rtl={false}
+          pauseOnFocusLoss
+          closeButton={false}
+        />
+      )}
     </PoolContext.Provider>
   );
 };

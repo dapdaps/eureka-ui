@@ -7,6 +7,9 @@ const StyledHeader = styled.div`
   padding: 20px 40px 20px;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    padding: 18px 16px;
+  }
 `;
 const StyledNavWrapper = styled.div`
   display: flex;
@@ -28,6 +31,9 @@ const StyledNav = styled.div<{ active?: boolean }>`
   font-weight: 500;
   color: ${({ active }) => (active ? '#fff' : '#8E8E8E')};
   cursor: pointer;
+  @media (max-width: 768px) {
+    padding: 0px 16px;
+  }
 `;
 
 const NAVS = [

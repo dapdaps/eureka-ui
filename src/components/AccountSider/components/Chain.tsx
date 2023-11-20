@@ -19,6 +19,11 @@ const StyledContainer = styled.div<{ mt?: number; showName?: boolean }>`
   box-sizing: border-box;
   padding: 0px 10px 0px 4px;
   margin-top: ${({ mt }) => mt + 'px'};
+  @media (max-width: 768px) {
+    border: none;
+    background-color: transparent;
+    justify-content: center;
+  }
 `;
 const StyledChain = styled.div`
   display: flex;
@@ -26,6 +31,8 @@ const StyledChain = styled.div`
   color: #fff;
   align-items: center;
   line-height: 38px;
+  @media (max-width: 768px) {
+  }
 `;
 const ChainLogo = styled.img`
   width: 30px;
@@ -35,6 +42,9 @@ const ChainLogo = styled.img`
 const ChainName = styled.div`
   font-size: 16px;
   font-weight: 400;
+  @media (max-width: 768px) {
+    font-weight: 700;
+  }
 `;
 const ChainList = styled.div<{ display?: boolean }>`
   width: 204px;

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import styled from 'styled-components';
 
@@ -7,6 +7,13 @@ const StyledContainer = styled.div`
   border: 1px solid #3d363d;
   border-radius: 24px;
   background-color: #131313;
+  @media (max-width: 768px) {
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 24px 24px 0px;
+    border-radius: 24px 24px 0px 0px;
+    background-color: #2b2b2b;
+  }
 `;
 const CustomModal = ({
   isOpen,
@@ -19,6 +26,10 @@ const CustomModal = ({
   shouldCloseOnOverlayClick?: boolean;
   children: React.ReactNode;
 }) => {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    setReady(true);
+  }, []);
   return (
     <Modal
       isOpen={isOpen}
@@ -36,21 +47,35 @@ const CustomModal = ({
           outline: 'none',
           overflow: 'auto',
         },
-        content: {
-          position: 'absolute',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          top: '50%',
-          left: '50%',
-          right: 'auto',
-          bottom: 'auto',
-          transform: 'translate(-50%, -50%)',
-          outline: 'none',
-          border: 'none',
-          background: 'transparent',
-          padding: '0px',
-        },
+        content: ready
+          ? window.innerWidth > 768
+            ? {
+                position: 'absolute',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                top: '50%',
+                left: '50%',
+                right: 'auto',
+                bottom: 'auto',
+                transform: 'translate(-50%, -50%)',
+                outline: 'none',
+                border: 'none',
+                background: 'transparent',
+                padding: '0px',
+              }
+            : {
+                position: 'absolute',
+                top: 'auto',
+                bottom: '0px',
+                left: '0px',
+                right: '0px',
+                padding: '0px',
+                outline: 'none',
+                border: 'none',
+                background: 'transparent',
+              }
+          : {},
       }}
     >
       <StyledContainer>{children}</StyledContainer>

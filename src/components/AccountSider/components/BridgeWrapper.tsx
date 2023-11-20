@@ -4,7 +4,6 @@ import Bridge from '@/components/Bridge';
 import BridgeHistory from '@/components/Bridge/History';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import TransactionTips from '@/components/Bridge/components/TransactionTips';
-import Split from './Split';
 
 const StyledBridgeWrapper = styled.div`
   color: #fff;
@@ -15,6 +14,11 @@ const Header = styled.div`
   margin-top: 20px;
   padding-left: var(--padding-x);
   padding-right: var(--padding-x);
+  border-top: 1px solid #343838;
+  @media (max-width: 768px) {
+    margin-top: 0px;
+    border-top: none;
+  }
 `;
 const StyledArrowIcon = styled.div`
   cursor: pointer;
@@ -38,6 +42,10 @@ const Box = styled.div`
   padding-left: var(--padding-x);
   padding-right: var(--padding-x);
   margin-top: 20px;
+  @media (max-width: 768px) {
+    overflow-y: auto;
+    height: calc(80vh - 60px);
+  }
 `;
 const RefreshText = styled.div`
   font-size: 14px;
@@ -80,7 +88,6 @@ const BridgeWrapper = ({
   const [showHistory, setShowHistory] = useState(false);
   return (
     <StyledBridgeWrapper>
-      <Split mt={20} />
       <Header>
         <StyledArrowIcon
           onClick={() => {

@@ -26,6 +26,9 @@ const Container = styled.div`
   gap: 10px;
   background-color: transparent;
   color: red;
+  @media (max-width: 768px) {
+    padding-bottom: 20px;
+  }
 `;
 const Empty = styled.div`
   font-size: 16px;

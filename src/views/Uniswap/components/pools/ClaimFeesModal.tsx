@@ -21,6 +21,9 @@ const StyledContent = styled.div`
   .w-full {
     width: 100%;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const StyledHead = styled.div`
   .title {
@@ -79,6 +82,11 @@ const StyledCollectButton = styled.div<{ disabled?: boolean }>`
   font-weight: 600;
   margin-top: 15px;
   ${({ disabled }) => (disabled ? 'opacity: 0.6; cursor: not-allowed;' : 'cursor: pointer;')}
+
+  @media (max-width: 768px) {
+    height: 50px;
+    margin-bottom: 20px;
+  }
 `;
 const ClaimFeesModal = (props: any) => {
   const { isOpen, detail, collectData, onRequestClose, onSuccess } = props;

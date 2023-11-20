@@ -30,6 +30,9 @@ const StyledContent = styled.div`
   .w-full {
     width: 100%;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const StyledHead = styled.div`
   .title {
@@ -39,6 +42,11 @@ const StyledHead = styled.div`
   }
   svg {
     cursor: pointer;
+  }
+  @media (max-width: 768px) {
+    .title {
+      font-size: 16px;
+    }
   }
 `;
 const StyledBody = styled.div`
@@ -83,6 +91,10 @@ const StyledAdd = styled.div<{ disabled?: boolean }>`
   margin-top: 15px;
   gap: 6px;
   ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
+  @media (max-width: 768px) {
+    height: 50px;
+    margin-bottom: 20px;
+  }
 `;
 
 const PreviewModal = (props: any) => {

@@ -17,6 +17,9 @@ const StyledContainer = styled.div<{ mt?: number }>`
   padding-right: var(--padding-x);
   max-height: calc(100vh - 400px);
   overflow-y: auto;
+  @media (max-width: 768px) {
+    max-height: calc(100vh - 440px);
+  }
 `;
 const TokenWrapper = styled.div`
   display: flex;

@@ -55,6 +55,9 @@ const PoolBaseData = ({
 
 const StyledNFTWrap = styled.div`
   flex-shrink: 0;
+  @media (max-width: 768px) {
+    display: none !important;
+  }
 `;
 
 const StyledLFWrap = styled.div`

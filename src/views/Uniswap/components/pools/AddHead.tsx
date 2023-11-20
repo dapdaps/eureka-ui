@@ -22,6 +22,10 @@ const StyledTitle = styled.div`
   font-size: 18px;
   font-weight: 500;
   color: #fff;
+  @media (max-width: 768px) {
+    font-size: 16px;
+    margin-left: -36%;
+  }
 `;
 const StyledActions = styled.div`
   display: flex;

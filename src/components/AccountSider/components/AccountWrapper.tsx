@@ -31,7 +31,7 @@ export default function AccountWrapper({
   return (
     <>
       <Chain mt={30} showChains={showChains} setShowChains={setShowChains} />
-      <Amount mt={30} />
+      <Amount mt={20} />
       <Actions
         mt={30}
         onClick={(type) => {

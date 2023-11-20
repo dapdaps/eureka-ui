@@ -17,6 +17,10 @@ const StyledContent = styled.div`
     align-items: center;
     justify-content: center;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+    padding-bottom: 20px;
+  }
 `;
 const StyledTip = styled.div`
   font-size: 14px;

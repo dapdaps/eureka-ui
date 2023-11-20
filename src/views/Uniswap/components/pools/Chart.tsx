@@ -45,15 +45,15 @@ const StyledCurrent = styled.div`
   }
 `;
 const StyledButton = styled.div`
-  display:flex;
-  align-items:center;
-  justify-content:flex-end;
-  gap:12px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
   transform: translate(0, -30px);
-  svg{
-    cursor:pointer;
+  svg {
+    cursor: pointer;
   }
-`
+`;
 const xAccessor = (d: ChartEntry) => d.price0;
 const yAccessor = (d: ChartEntry) => d.activeLiquidity;
 
@@ -72,7 +72,7 @@ const Chart = ({
   token1: any;
   onPriceChange: Function;
 }) => {
-  const svgWidth = 560;
+  const svgWidth = window.innerWidth > 768 ? 560 : window.innerWidth - 40;
   const svgPadding = 50; // svg custom
   const axisHeight = 24; // custom
   const barHeight = 195; // custom fixed Bar
@@ -84,54 +84,56 @@ const Chart = ({
   const { current, fee, data } = poolChartData || {};
   const [chart_done, set_chart_done] = useState<boolean>(false);
   const [zoom, setZoom] = useState<d3.ZoomTransform | null>(null);
-  const zoomBehavior:any = useMemo(() => {
+  const zoomBehavior: any = useMemo(() => {
     if (fee) {
       const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
-      const zoomBehavior = d3.zoom().
-      scaleExtent([zoomLevels.min, zoomLevels.max]).extent([
-        [0, 0],
-        [svgWidth, svgHeight],
-      ]).
-      on('zoom', ( { transform } ) => {
-        setZoom(transform)
-      })
+      const zoomBehavior = d3
+        .zoom()
+        .scaleExtent([zoomLevels.min, zoomLevels.max])
+        .extent([
+          [0, 0],
+          [svgWidth, svgHeight],
+        ])
+        .on('zoom', ({ transform }) => {
+          setZoom(transform);
+        });
       return zoomBehavior;
     }
-  }, [fee])
+  }, [fee]);
   const xScale: any = useMemo(() => {
     if (current && fee) {
       const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
       const axis = [current * zoomLevels.initialMin, current * zoomLevels.initialMax];
       const xScale = d3
-      .scaleLinear()
-      .domain(axis as number[])
-      .range([0, svgWidth - svgPadding * 2]);
+        .scaleLinear()
+        .domain(axis as number[])
+        .range([0, svgWidth - svgPadding * 2]);
       return xScale;
     }
-  }, [current, fee])
+  }, [current, fee]);
   const xScaleZoom: any = useMemo(() => {
     if (current && fee) {
       const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
       const axis = [current * zoomLevels.initialMin, current * zoomLevels.initialMax];
       const xScale = d3
-      .scaleLinear()
-      .domain(axis as number[])
-      .range([0, svgWidth - svgPadding * 2]);
+        .scaleLinear()
+        .domain(axis as number[])
+        .range([0, svgWidth - svgPadding * 2]);
       return xScale;
     }
-  }, [current, fee])
-  const yScale:any = useMemo(() => {
-    const series = data || []
+  }, [current, fee]);
+  const yScale: any = useMemo(() => {
+    const series = data || [];
     const liquidityRange = [0, d3.max(series, yAccessor)] as number[];
     const yScale = d3.scaleLinear().domain(liquidityRange).range([barHeight, 0]);
     return yScale;
-  }, [data])
+  }, [data]);
   useEffect(() => {
     if (zoom && xScaleZoom) {
-      const newXScale =  zoom.rescaleX(xScaleZoom);
+      const newXScale = zoom.rescaleX(xScaleZoom);
       xScale.domain(newXScale.domain());
     }
-  }, [zoom, xScaleZoom])
+  }, [zoom, xScaleZoom]);
   useEffect(() => {
     set_chart_done(false);
     if (current && xScale && yScale) {
@@ -157,9 +159,12 @@ const Chart = ({
     });
     onRenderChart({ left, right });
   }, [lowerTick, highTick, reverse, chart_done, zoom]);
-  const _debounceUpdateTick = useCallback(debounce((coordinate: any, type: any) => {
-    onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'up' : 'low') : reverse ? 'low' : 'up' });
-  }, 500), [])
+  const _debounceUpdateTick = useCallback(
+    debounce((coordinate: any, type: any) => {
+      onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'up' : 'low') : reverse ? 'low' : 'up' });
+    }, 500),
+    [],
+  );
   const onRenderChart = ({ left, right }: any) => {
     if (!poolChartData?.current) return;
     if (left !== undefined) drawLeftBar(left);
@@ -195,7 +200,7 @@ const Chart = ({
       .x((d: unknown) => xScale(xAccessor(d as ChartEntry)))
       .y1((d: unknown) => yScale(yAccessor(d as ChartEntry)))
       .y0(yScale(0));
-    const series = poolChartData?.data || []
+    const series = poolChartData?.data || [];
     const pathData = areaGenerator(
       series.filter((d: ChartEntry) => {
         const value = xScale(xAccessor(d));
@@ -286,10 +291,13 @@ const Chart = ({
         <Loading size={30} />
       </StyledLoadingWrapper>
     );
-  if (!current) return <StyledEmpty>
-                              <EmptyIcon />
-                              <span>Your position will appear here.</span>
-                       </StyledEmpty>;
+  if (!current)
+    return (
+      <StyledEmpty>
+        <EmptyIcon />
+        <span>Your position will appear here.</span>
+      </StyledEmpty>
+    );
   return (
     <StyledContainer>
       <StyledCurrent>
@@ -310,7 +318,7 @@ const Chart = ({
             <stop offset="1" stopColor="#3E5BF2" stop-opacity="0.1" />
           </linearGradient>
         </defs>
-        <g className='zoomRef' width={svgWidth} height={svgHeight}></g>
+        <g className="zoomRef" width={svgWidth} height={svgHeight}></g>
         <g className="container" transform={`translate(${svgPadding}, 0)`}>
           {/* 横坐标轴 */}
           <g className="axis" transform={`translate(0, ${svgHeight - axisHeight})`}></g>

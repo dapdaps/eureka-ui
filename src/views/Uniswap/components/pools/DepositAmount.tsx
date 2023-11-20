@@ -158,8 +158,6 @@ const DepositAmount = ({
               value={value1}
               setValue={(value: string) => {
                 setValue1(value);
-                if (value)
-                  setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
               }}
               balance={token1 ? balances[token1?.address] : ''}
               loading={balanceLoading}
@@ -190,6 +188,7 @@ const StyledTop = styled.div`
     background: none;
     border: none;
     outline: none;
+    width: calc(100% - 100px);
   }
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {

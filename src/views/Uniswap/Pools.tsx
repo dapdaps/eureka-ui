@@ -12,6 +12,11 @@ const StyledContainer = styled.div`
   width: 854px;
   position: relative;
   height: calc(100vh - 96px);
+
+  @media (max-width: 768px) {
+    width: calc(100vw - 16px);
+    margin-left: 8px;
+  }
 `;
 const StyledHeader = styled.div`
   display: flex;
@@ -48,17 +53,26 @@ const PanelHeader = styled.div`
   justify-content: space-between;
   border-bottom: 1px solid #3d363d;
   align-items: center;
+  @media (max-width: 768px) {
+    padding: 18px 15px 15px;
+  }
 `;
 const Title = styled.div`
   font-size: 18px;
   font-weight: 500;
   color: #fff;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 `;
 const CloseBtn = styled.div`
   font-size: 14px;
   font-weight: 400;
   color: #ff75bf;
   cursor: pointer;
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
 `;
 const Empty = styled.div`
   height: 200px;

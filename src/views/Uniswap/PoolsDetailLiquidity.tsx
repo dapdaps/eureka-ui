@@ -14,6 +14,10 @@ import { sortTokens } from './utils/sortTokens';
 const StyledContainer = styled.div`
   width: 810px;
   background-color: #131313;
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 16px;
+  }
 `;
 
 const PoolsDetailLiquidity = () => {
@@ -26,7 +30,6 @@ const PoolsDetailLiquidity = () => {
     const [_token0, _token1] = sortTokens(detail?.token0, detail?.token1);
     setIsReverse(_token0.address === detail.token1);
   }, [detail]);
-
   return (
     <StyledContainer>
       <Back />

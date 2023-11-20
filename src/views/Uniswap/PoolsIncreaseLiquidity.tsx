@@ -18,6 +18,10 @@ const StyledContainer = styled.div`
   border-radius: 24px;
   border: 1px solid #3d363d;
   background-color: #131313;
+  @media (max-width: 768px) {
+    width: 100%;
+    border: none;
+  }
 `;
 const StyledBody = styled.div`
   padding: 20px;

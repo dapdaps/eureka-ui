@@ -46,11 +46,18 @@ const StyledHeadTab = styled.div`
   .active {
     color: #fff;
   }
+  @media (max-width: 768px) {
+    border-bottom: 1px solid #343838;
+  }
 `;
 const StyledList = styled.div`
   margin: 0 -24px;
   height: 380px;
   overflow: auto;
+
+  @media (max-width: 768px) {
+    height: calc(80vh - 290px);
+  }
 `;
 const LoadingWrapper = styled.div`
   height: 100px;

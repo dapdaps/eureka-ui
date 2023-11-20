@@ -11,6 +11,13 @@ const StyledContainer = styled.div`
     color: #fff;
     font-size: 12px;
     display: inline-block;
+    white-space: nowrap;
+  }
+  @media (max-width: 768px) {
+    .num {
+      padding: 4px 5px;
+      margin-top: 10px;
+    }
   }
 `;
 const StyledSelectedFeeArea = styled.div`
@@ -38,7 +45,7 @@ const StyledSelectedFeeArea = styled.div`
 const StyledFeeSelectList = styled.div`
   display: flex;
   algin-items: center;
-  gap: 8px;
+  gap: 4px;
   margin-top: 12px;
 `;
 
@@ -113,7 +120,8 @@ const StyledCell = styled.div<{ isSelected: boolean }>`
   padding: 8px 6px;
   border-radius: 12px;
   cursor: pointer;
-  flex-grow: 1;
+  width: 25%;
+  box-sizing: border-box;
 
   .value {
     font-size: 14px;
@@ -125,6 +133,9 @@ const StyledCell = styled.div<{ isSelected: boolean }>`
     font-size: 12px;
     color: #8e8e8e;
     margin: 0;
+  }
+  @media (max-width: 768px) {
+    padding: 8px 4px;
   }
 `;
 const FeeCell = ({

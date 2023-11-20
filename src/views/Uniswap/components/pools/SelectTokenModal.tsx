@@ -26,6 +26,9 @@ const StyledContent = styled.div`
   .w-full {
     width: 100%;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const StyledHead = styled.div`
   .title {

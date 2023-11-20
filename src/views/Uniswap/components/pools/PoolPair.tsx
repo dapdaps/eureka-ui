@@ -14,6 +14,11 @@ const StyledWrap = styled.div`
     align-items: center;
     justify-content: center;
   }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
 `;
 const StyledLeft = styled.div`
   img {
@@ -57,6 +62,9 @@ const StyledLeft = styled.div`
 `;
 const StyledRight = styled.div`
   gap: 10px;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
   color: ${({ status }) => StatusColor[status]};
@@ -129,6 +137,10 @@ const StyledLineWrap = styled.div`
   padding: 0 12px;
   cursor: pointer;
   color: #5ee0ff;
+  @media (max-width: 768px) {
+    width: 50%;
+    height: 42px;
+  }
 `;
 
 const StyledSolidWrap = styled.div`
@@ -138,4 +150,8 @@ const StyledSolidWrap = styled.div`
   padding: 0 12px;
   cursor: pointer;
   color: #131313;
+  @media (max-width: 768px) {
+    width: 50%;
+    height: 42px;
+  }
 `;

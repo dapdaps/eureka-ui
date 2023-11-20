@@ -10,6 +10,9 @@ const StyledToast = styled.div`
   display: flex;
   gap: 10px;
   width: 288px;
+  @media (max-width: 768px) {
+    width: calc(100vw - 32px);
+  }
 `;
 const StyledContent = styled.div`
   display: flex;

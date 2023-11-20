@@ -22,6 +22,10 @@ const StyledWrap = styled.div<{ type?: string }>`
   .w-full {
     width: 100%;
   }
+  @media (max-width: 768px) {
+    width: 100%;
+    background-color: transparent;
+  }
 `;
 const StyledHead = styled.div`
   font-size: 16px;

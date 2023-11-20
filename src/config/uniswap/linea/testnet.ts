@@ -39,6 +39,15 @@ export default {
       icon: '',
       isImport: false,
     },
+    '0x921f671A00d88bF4A9816Fe49e7725219a41CE9b': {
+      chainId: 59140,
+      address: '0x921f671A00d88bF4A9816Fe49e7725219a41CE9b',
+      decimals: 6,
+      symbol: 'KIKI',
+      name: 'KIKI Test',
+      icon: '',
+      isImport: false,
+    },
   },
   contracts: {
     routerAddress: '0x6aa397CAB00a2A40025Dbf839a83f16D5EC7c1eB',

@@ -47,6 +47,9 @@ const StyledItem = styled.div`
   &.active {
     border: 1px solid #62ddff;
   }
+  @media (max-width: 768px) {
+    width: 48px;
+  }
 `;
 const StyledInputRange = styled.div`
   margin-top: 24px;
