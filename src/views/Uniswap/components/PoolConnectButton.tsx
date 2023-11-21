@@ -21,6 +21,10 @@ const StyledButton = styled.button`
   gap: 6px;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    width: 80%;
+  }
 `;
 
 export default function PoolConnectButton() {
