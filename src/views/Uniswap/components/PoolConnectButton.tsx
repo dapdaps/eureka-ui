@@ -51,5 +51,5 @@ export default function PoolConnectButton() {
       </StyledButton>
     );
   }
-  return '';
+  return <div />;
 }
