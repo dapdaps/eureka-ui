@@ -180,10 +180,7 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
       onError?.();
       if (err.code !== 'ACTION_REJECTED') {
         openRequestModal({
-          data: {
-            text: tradeText,
-            status: 3,
-          },
+          status: 3,
           open: true,
         });
       } else {

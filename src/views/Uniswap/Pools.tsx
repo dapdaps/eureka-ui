@@ -7,7 +7,11 @@ import Panel from './components/Panel';
 import PositionItem from './components/PositionItem';
 import { LeftBg } from './styles';
 import PoolConnectButton from './components/PoolConnectButton';
+
 import usePositions from './hooks/usePositions';
+import useAccount from '@/hooks/useAccount';
+
+import config from '@/config/uniswap/linea';
 
 const StyledContainer = styled.div`
   width: 854px;
@@ -121,6 +125,7 @@ const PowerBy = styled.div`
 `;
 const Pools = () => {
   const router = useRouter();
+  const { chainId } = useAccount();
   const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(false);
   const { positions, loading } = usePositions();
   const [openPositions, closedPositions] = positions?.reduce(
@@ -185,7 +190,11 @@ const Pools = () => {
                 stroke-linejoin="round"
               />
             </svg>
-            <span>Your active V3 liquidity positions will appear here.</span>
+            <span>
+              {chainId === config.chainId || !chainId
+                ? 'Your active V3 liquidity positions will appear here.'
+                : 'Your connected network is unsupported.'}
+            </span>
             <PoolConnectButton />
           </Empty>
         )}

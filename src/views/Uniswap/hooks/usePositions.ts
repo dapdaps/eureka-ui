@@ -73,6 +73,7 @@ export default function usePositions() {
     }
   }, [provider, account]);
   useEffect(() => {
+    if (!account) setPositions([]);
     if (provider && account) getPositions();
   }, [provider, account]);
   return { loading, positions };
