@@ -51,8 +51,8 @@ const PoolsIncreaseLiquidity = () => {
 
   useEffect(() => {
     if (!detail) return;
-    const _highTick = Number(detail.tickHigh) < Number(detail.tickLow) ? detail.tickLow : detail.tickHigh;
-    const _lowerTick = Number(detail.tickHigh) < Number(detail.tickLow) ? detail.tickHigh : detail.tickLow;
+    const _highTick = detail.tickHigh;
+    const _lowerTick = detail.tickLow;
     const currentTick = detail.tick;
     const doubleCheck = Number(currentTick) < Number(_highTick) && Number(currentTick) > Number(_lowerTick);
 
@@ -66,11 +66,11 @@ const PoolsIncreaseLiquidity = () => {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) > Number(_highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) >= Number(_highTick) && new Big(value0 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) < Number(_lowerTick) && new Big((reverse ? value1 : value0) || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) <= Number(_lowerTick) && new Big(value1 || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
