@@ -14,7 +14,7 @@ const StyledContent = styled.div`
   justify-content: center;
   align-items: center;
   @media (max-width: 768px) {
-    width: 271px;
+    width: 100%;
     height: 291px;
   }
 `;
@@ -119,9 +119,9 @@ export default function RequestModal({ isOpen, data, onRequestClose }: any) {
         <StyledText>
           {status === 0 && 'Transaction submitted'}
           {status === 1 && 'Waiting for confirmation'}
-          {status === 2 && 'Transaction errored'}
+          {status === 3 && 'Transaction errored'}
         </StyledText>
-        {(status === 0 || status === 2) && (
+        {(status === 0 || status === 3) && (
           <StyledButton
             onClick={() => {
               onRequestClose();
@@ -131,7 +131,7 @@ export default function RequestModal({ isOpen, data, onRequestClose }: any) {
             Close
           </StyledButton>
         )}
-        {status === 1 && text && <StyledTradeText>{text}</StyledTradeText>}
+        {(status === 1 || status === 2) && text && <StyledTradeText>{text}</StyledTradeText>}
         {status !== 1 && !!tx && (
           <StyledLink href={config.explor + '/tx/' + tx} target="_blank">
             View on Linea scan
