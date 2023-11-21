@@ -143,20 +143,27 @@ const Chart = ({
   }, [current, token0?.address, token1?.address, xScale?.domain(), yScale]);
   useEffect(() => {
     if (!chart_done) return;
-    const left = tickToPrice({
-      tick: reverse ? highTick : lowerTick,
-      decimals0: reverse ? token1.decimals : token0.decimals,
-      decimals1: reverse ? token0.decimals : token1.decimals,
-      isReverse: !reverse,
-      isNumber: true,
-    });
-    const right = tickToPrice({
-      tick: reverse ? lowerTick : highTick,
-      decimals0: reverse ? token1.decimals : token0.decimals,
-      decimals1: reverse ? token0.decimals : token1.decimals,
-      isReverse: !reverse,
-      isNumber: true,
-    });
+    let left, right;
+    
+    if (lowerTick == -887272 && highTick == 887272) {
+      left =  0;
+      right = 999999999;
+    } else {
+      left = tickToPrice({
+        tick: reverse ? highTick : lowerTick,
+        decimals0: reverse ? token1.decimals : token0.decimals,
+        decimals1: reverse ? token0.decimals : token1.decimals,
+        isReverse: !reverse,
+        isNumber: true,
+      });
+      right = tickToPrice({
+        tick: reverse ? lowerTick : highTick,
+        decimals0: reverse ? token1.decimals : token0.decimals,
+        decimals1: reverse ? token0.decimals : token1.decimals,
+        isReverse: !reverse,
+        isNumber: true,
+      });
+    }
     onRenderChart({ left, right });
   }, [lowerTick, highTick, reverse, chart_done, zoom]);
   const _debounceUpdateTick = useCallback(
