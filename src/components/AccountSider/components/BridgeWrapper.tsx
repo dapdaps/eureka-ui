@@ -42,9 +42,13 @@ const Box = styled.div`
   padding-left: var(--padding-x);
   padding-right: var(--padding-x);
   margin-top: 20px;
+  padding-top: 20px;
+  height: calc(100vh - 180px);
+  overflow-y: auto;
   @media (max-width: 768px) {
     overflow-y: auto;
     height: calc(80vh - 60px);
+    padding-top: 0px;
   }
 `;
 const RefreshText = styled.div`

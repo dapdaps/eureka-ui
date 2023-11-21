@@ -132,7 +132,6 @@ const Liquidity = ({ detail, isReverse }: { detail: any; isReverse: boolean }) =
     amount1: detail.liquidityToken1,
     prices: priceStore.price,
   });
-
   const [percentage0, percentage1] = useMemo(() => {
     const _liquidityToken0 = new Big(detail.liquidityToken0);
     const _liquidityToken1 = new Big(detail.liquidityToken1);
@@ -202,9 +201,11 @@ const UnclaimedFees = ({
     <StyledUnclaimedFees>
       <div className="vchb">
         <span className="title">Unclaimed fees</span>
-        <StyledSolidWrap className="hvc" onClick={openModal}>
-          Collect fees
-        </StyledSolidWrap>
+        {detail?.liquidity.gt(0) && (
+          <StyledSolidWrap className="hvc" onClick={openModal}>
+            Collect fees
+          </StyledSolidWrap>
+        )}
       </div>
       <span className="value">${balanceFormated(total, 4)}</span>
       <div className={`box ${!isReverse && 'reverse'}`}>

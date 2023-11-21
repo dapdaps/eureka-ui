@@ -10,12 +10,11 @@ export default function useIncreaseDetail(tokenId?: string) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(false);
   const { provider } = useAccount();
-
   const getIncreaseDetail = useCallback(async () => {
     if (!tokenId || !provider) return;
     try {
+      setLoading(true);
       const position = await getPosition(tokenId, provider);
-
       const poolInfo = await getPoolInfo({
         token0: position.token0,
         token1: position.token1,
@@ -49,13 +48,14 @@ export default function useIncreaseDetail(tokenId?: string) {
       });
       setLoading(false);
     } catch (err) {
+      console.log(53);
       setLoading(false);
     }
   }, [tokenId, provider]);
 
   useEffect(() => {
-    getIncreaseDetail();
-  }, [tokenId]);
+    if (tokenId && provider) getIncreaseDetail();
+  }, [tokenId, provider]);
 
   return {
     detail,

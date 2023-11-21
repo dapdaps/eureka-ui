@@ -4,7 +4,7 @@ export default function useAddLiquidity() {
   const liquidityStore: any = useAddLiquidityStore();
 
   const onCleanAll = () => {
-    liquidityStore.setFee(3000);
+    liquidityStore.setFee();
     liquidityStore.setToken0(null);
     liquidityStore.setToken1(null);
   };

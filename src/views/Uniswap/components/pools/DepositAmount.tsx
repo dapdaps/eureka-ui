@@ -116,6 +116,12 @@ const DepositAmount = ({
   return (
     <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
       <span className={`title`}>Deposit amounts</span>
+      {(!token0 || !token1) && (
+        <InputBoxs>
+          <InputBox token={token0} balance={token0 ? balances[token0?.address] : ''} />
+          <InputBox token={token1} balance={token0 ? balances[token1?.address] : ''} />
+        </InputBoxs>
+      )}
       {lowerTick < highTick ? (
         <div className="I">
           {currentTick < highTick && currentTick > lowerTick ? (
@@ -240,6 +246,17 @@ const StyledBottom = styled.div`
     }
   }
 `;
+const NoToken = styled.button`
+  border-radius: 16px;
+  background: #5ee0ff;
+  width: 128px;
+  height: 36px;
+  color: #131313;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  border: none;
+`;
 const InputBox = ({ token, value, setValue, balance, loading }: any) => {
   const prices = usePriceStore((store) => store.price);
   return (
@@ -249,29 +266,35 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
           type="number"
           value={value}
           style={{ flexGrow: 1 }}
+          disabled={!token}
           onChange={(ev) => {
             setValue(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
           }}
         />
-        <div className="token" style={{ flexShrink: 0 }}>
-          <TokenIcon token={token} />
-          <span className="symbol">{token?.symbol}</span>
-        </div>
+        {token && (
+          <div className="token" style={{ flexShrink: 0 }}>
+            <TokenIcon token={token} />
+            <span className="symbol">{token?.symbol}</span>
+          </div>
+        )}
+        {!token && <NoToken disabled>Select token</NoToken>}
       </StyledTop>
-      <StyledBottom>
-        <span className="price">${valueFormated(value, prices[token?.symbol])}</span>
-        <div
-          className="balance"
-          onClick={() => {
-            if (balance && !isNaN(Number(balance))) {
-              setValue(balance);
-            }
-          }}
-        >
-          <span className="b">balance:</span>
-          <span className="b_v">{loading ? <Loading /> : balanceFormated(balance, 4)}</span>
-        </div>
-      </StyledBottom>
+      {token && (
+        <StyledBottom>
+          <span className="price">${valueFormated(value, prices[token?.symbol])}</span>
+          <div
+            className="balance"
+            onClick={() => {
+              if (balance && !isNaN(Number(balance))) {
+                setValue(balance);
+              }
+            }}
+          >
+            <span className="b">balance:</span>
+            <span className="b_v">{loading ? <Loading /> : balanceFormated(balance, 4)}</span>
+          </div>
+        </StyledBottom>
+      )}
     </StyledInputBox>
   );
 };

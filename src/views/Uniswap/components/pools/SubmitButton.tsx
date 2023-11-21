@@ -52,6 +52,10 @@ const SubmitButton = ({ token0, value0, token1, value1, errorTips, onPreview }: 
     spender: config.contracts.positionAddress,
   });
 
+  if (!token0 && !token1) {
+    return <StyledWrapper disabled>Invalid pair</StyledWrapper>;
+  }
+
   if (!account) {
     return (
       <StyledWrapper

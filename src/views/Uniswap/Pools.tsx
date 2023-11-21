@@ -5,8 +5,9 @@ import Loading from '@/components/Icons/Loading';
 import Big from 'big.js';
 import Panel from './components/Panel';
 import PositionItem from './components/PositionItem';
-import usePositions from './hooks/usePositions';
 import { LeftBg } from './styles';
+import PoolConnectButton from './components/PoolConnectButton';
+import usePositions from './hooks/usePositions';
 
 const StyledContainer = styled.div`
   width: 854px;
@@ -34,7 +35,7 @@ const Positions = styled.div`
   padding-bottom: 10px;
 `;
 const PositionButton = styled.button`
-  width: 120px;
+  width: 130px;
   height: 35px;
   border-radius: 12px;
   border: none;
@@ -92,9 +93,35 @@ const LoadingWrapper = styled.div`
   height: 232px;
   color: #fff;
 `;
+const PowerBy = styled.div`
+  width: 100%;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 22px;
+  letter-spacing: 0em;
+  text-align: center;
+  padding-top: 10px;
+  color: #8e8e8e;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .view-code {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+  }
+  .view-code-icon {
+    width: 15px;
+    height: 15px;
+  }
+  .view-code-text {
+    text-decoration: underline;
+  }
+`;
 const Pools = () => {
   const router = useRouter();
-  const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(true);
+  const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(false);
   const { positions, loading } = usePositions();
   const [openPositions, closedPositions] = positions?.reduce(
     (acc: any[], p: any) => {
@@ -119,7 +146,7 @@ const Pools = () => {
           + New position
         </PositionButton>
       </StyledHeader>
-      <StyledPanel style={{ maxHeight: 'calc(100% - 69px)', marginBottom: '20px', overflow: 'hidden' }}>
+      <StyledPanel style={{ maxHeight: 'calc(100% - 82px)', overflow: 'hidden' }}>
         <PanelHeader>
           <Title>Your positions ({userSelectedPositionSet.length})</Title>
           {!!userSelectedPositionSet.length && (
@@ -128,7 +155,7 @@ const Pools = () => {
                 setUserHideClosedPositions(!userHideClosedPositions);
               }}
             >
-              {userHideClosedPositions ? 'Hide' : 'Show'} closed positions
+              {!userHideClosedPositions ? 'Hide' : 'Show'} closed positions
             </CloseBtn>
           )}
         </PanelHeader>
@@ -159,9 +186,37 @@ const Pools = () => {
               />
             </svg>
             <span>Your active V3 liquidity positions will appear here.</span>
+            <PoolConnectButton />
           </Empty>
         )}
       </StyledPanel>
+      <PowerBy>
+        <div
+          className="view-code"
+          onClick={() => {
+            window.open(
+              'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Linea.Uniswap.Swap.Dex&tab=source',
+              '_blank',
+            );
+          }}
+        >
+          <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_2_166)">
+              <path
+                d="M5.33524 7.50357C5.33522 7.66313 5.39812 7.81627 5.51028 7.92977C5.62244 8.04326 5.77482 8.10797 5.93438 8.10984H9.27247C9.43232 8.10984 9.58562 8.04634 9.69865 7.93331C9.81168 7.82028 9.87518 7.66698 9.87518 7.50713C9.87518 7.34728 9.81168 7.19398 9.69865 7.08095C9.58562 6.96792 9.43232 6.90442 9.27247 6.90442H5.93438C5.77605 6.90627 5.62473 6.96999 5.51277 7.08195C5.40081 7.19392 5.33709 7.34524 5.33524 7.50357ZM2.33951 7.93866C2.39518 7.99451 2.46132 8.03883 2.53415 8.06907C2.60697 8.09931 2.68505 8.11488 2.76391 8.11488C2.84276 8.11488 2.92084 8.09931 2.99367 8.06907C3.0665 8.03883 3.13264 7.99451 3.1883 7.93866L5.53495 5.58488C5.59081 5.52922 5.63512 5.46307 5.66536 5.39025C5.6956 5.31742 5.71117 5.23934 5.71117 5.16048C5.71117 5.08163 5.6956 5.00355 5.66536 4.93072C5.63512 4.85789 5.59081 4.79175 5.53495 4.73609L3.1883 2.35378C3.13257 2.29758 3.06631 2.25291 2.99332 2.22231C2.92032 2.19172 2.84201 2.1758 2.76286 2.17547C2.68372 2.17514 2.60528 2.1904 2.53203 2.22038C2.45878 2.25036 2.39215 2.29448 2.33595 2.35021C2.27975 2.40595 2.23508 2.4722 2.20448 2.5452C2.17389 2.6182 2.15797 2.6965 2.15764 2.77565C2.15697 2.9355 2.21983 3.08907 2.33238 3.20257L4.2796 5.14979L2.33238 7.08274C2.27545 7.13852 2.23021 7.20511 2.19934 7.27859C2.16846 7.35208 2.15255 7.43099 2.15255 7.5107C2.15255 7.59041 2.16846 7.66932 2.19934 7.7428C2.23021 7.81629 2.27545 7.88287 2.33238 7.93866H2.33951ZM13.7946 13.7946H1.20542V1.20542H13.7946V13.7946ZM13.7946 0H1.20542C0.885723 0 0.57912 0.126999 0.35306 0.35306C0.126999 0.57912 0 0.885723 0 1.20542L0 13.7946C0.00560989 14.1106 0.135082 14.4117 0.360537 14.6331C0.585992 14.8546 0.889396 14.9787 1.20542 14.9786H13.7946C14.1069 14.9731 14.4049 14.8466 14.6257 14.6257C14.8466 14.4049 14.9731 14.1069 14.9786 13.7946V1.20542C14.9787 0.889396 14.8546 0.585992 14.6331 0.360537C14.4117 0.135082 14.1106 0.00560989 13.7946 0Z"
+                fill="#8E8E8E"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_2_166">
+                <rect width="15" height="15" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+          <div className="view-code-text">View Code</div>
+        </div>
+        <div>Powered by DapDap & BOS</div>
+      </PowerBy>
       <LeftBg />
     </StyledContainer>
   );

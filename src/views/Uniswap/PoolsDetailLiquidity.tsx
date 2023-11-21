@@ -14,6 +14,7 @@ import { sortTokens } from './utils/sortTokens';
 const StyledContainer = styled.div`
   width: 810px;
   background-color: #131313;
+  margin-bottom: 20px;
   @media (max-width: 768px) {
     width: 100%;
     padding: 16px;

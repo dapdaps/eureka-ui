@@ -116,6 +116,7 @@ export default function SlippageSetting(props?: any) {
                 className={_type === type ? 'active' : ''}
                 onClick={() => {
                   setType(_type);
+                  settingStore.setSlippage(_type === 'Auto' ? '' : '0.5');
                 }}
               >
                 {_type}

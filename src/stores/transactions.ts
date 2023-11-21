@@ -19,7 +19,10 @@ export const useTransactionsStore = create(
         _transactions.push(transaction);
         set({ _icons: _transactions });
       },
-      getTransactions: () => get().transactions,
+      getTransactions: () => {
+        const _transactions = get().transactions || [];
+        return _transactions.sort((a: Transaction, b: Transaction) => b.time - a.time);
+      },
     }),
     {
       name: 'transactions',

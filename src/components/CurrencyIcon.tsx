@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { DEFAULT_TOKEN_ICON } from '@/views/Uniswap/components/TokenIcon';
 
 const CurrencyIconWrapper = styled.div<{ mr: number }>`
   position: relative;
@@ -19,12 +20,6 @@ const ChainIcon = styled.img<{ size: number }>`
   padding: 3px;
   background-color: #1f2121;
 `;
-const Empty = styled.div<{ size: number }>`
-  width: ${({ size }) => size}px;
-  height: ${({ size }) => size}px;
-  border-radius: 50%;
-  background-color: #979abe;
-`;
 
 export default function CurrencyIcon({
   token,
@@ -41,9 +36,8 @@ export default function CurrencyIcon({
 }) {
   return (
     <CurrencyIconWrapper mr={mr} className={className}>
-      {token && <StyledCurrencyIcon size={size} src={token} />}
+      <StyledCurrencyIcon size={size} src={token || DEFAULT_TOKEN_ICON} />
       {chain && <ChainIcon size={size * 0.6} src={chain} />}
-      {!token && <Empty size={size} />}
     </CurrencyIconWrapper>
   );
 }

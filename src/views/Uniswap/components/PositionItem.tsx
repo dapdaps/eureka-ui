@@ -18,6 +18,9 @@ const Record = styled.div`
   .gray {
     color: #8e8e8e;
   }
+  &:hover {
+    background: rgba(255, 255, 255, 0.05);
+  }
   @media (max-width: 768px) {
     .gray {
       display: none;

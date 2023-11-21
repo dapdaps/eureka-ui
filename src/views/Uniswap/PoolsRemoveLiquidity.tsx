@@ -25,7 +25,7 @@ const StyledBody = styled.div`
   padding: 20px;
 `;
 
-const PoolsAddLiquidity = () => {
+const PoolsRemoveLiquidity = () => {
   const searchParams = useSearchParams();
   const [percent, setPercent] = useState(0);
   const [useWeth, setUseWeth] = useState(false);
@@ -74,4 +74,4 @@ const PoolsAddLiquidity = () => {
   );
 };
 
-export default memo(PoolsAddLiquidity);
+export default memo(PoolsRemoveLiquidity);

@@ -80,13 +80,14 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
     <StyledContainer>
       <StyledSelectedFeeArea>
         <p className="pendingTip">
-          <div>{disabled ? 'The % you will earn in fees.' : `${FEES[fee]?.value} fee tier`}</div>
-          <div className="num">{frequency[fee]}% select</div>
+          <div>{disabled || !fee ? 'The % you will earn in fees.' : `${FEES[fee]?.value} fee tier`}</div>
+          {fee && <div className="num">{frequency[fee]}% select</div>}
         </p>
         <div
           className="hideOrEditButton"
+          style={{ cursor: token0 && token1 ? 'pointer' : 'not-allowed' }}
           onClick={() => {
-            setShowList(!showList);
+            if (token0 && token1) setShowList(!showList);
           }}
         >
           {showList ? 'Hide' : 'Edit'}
@@ -94,7 +95,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
       </StyledSelectedFeeArea>
       {showList && (
         <StyledFeeSelectList>
-          {feeList.map(({ value, key, description }) => {
+          {feeList.map(({ value, key, description }, i) => {
             return (
               <FeeCell
                 key={value}
@@ -105,6 +106,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
                 onClick={() => {
                   onSelectFee(key);
                 }}
+                i={i}
               />
             );
           })}
@@ -115,7 +117,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
 };
 export default memo(Fee);
 
-const StyledCell = styled.div<{ isSelected: boolean }>`
+const StyledCell = styled.div<{ isSelected: boolean; i: number }>`
   border: ${({ isSelected }) => (isSelected ? '2px solid #5EE0FF' : '1px solid #3d363d')};
   padding: 8px 6px;
   border-radius: 12px;
@@ -133,9 +135,16 @@ const StyledCell = styled.div<{ isSelected: boolean }>`
     font-size: 12px;
     color: #8e8e8e;
     margin: 0;
+    ${({ i }) => i === 0 && 'letter-spacing: -0.3px;'}
+    white-space: nowrap;
   }
+
   @media (max-width: 768px) {
     padding: 8px 4px;
+    .description {
+      white-space: wrap;
+      letter-spacing: 0px;
+    }
   }
 `;
 const FeeCell = ({
@@ -143,16 +152,18 @@ const FeeCell = ({
   value,
   description,
   selecedNum,
+  i,
   onClick,
 }: {
   isSelected: boolean;
   value: string;
   description: string;
   selecedNum: string;
+  i: number;
   onClick: () => void;
 }) => {
   return (
-    <StyledCell isSelected={isSelected} onClick={onClick}>
+    <StyledCell isSelected={isSelected} onClick={onClick} i={i}>
       <span className="value">
         <span>{value}</span>
         {isSelected && (

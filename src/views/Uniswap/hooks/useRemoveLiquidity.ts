@@ -134,7 +134,6 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
       if (err.code !== 'ACTION_REJECTED') {
         openRequestModal({
           status: 3,
-          text: tradeText,
           open: true,
         });
       } else {

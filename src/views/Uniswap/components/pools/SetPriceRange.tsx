@@ -76,14 +76,16 @@ const SetPriceRange = ({
       <Header>
         <div>Set price range</div>
         <HeaderActions>
-          <HeaderFullAction
-            onClick={() => {
-              setLowerTick(-887272);
-              setHighTick(887272);
-            }}
-          >
-            Full range
-          </HeaderFullAction>
+          {token1 && token0 && (
+            <HeaderFullAction
+              onClick={() => {
+                setLowerTick(-887272);
+                setHighTick(887272);
+              }}
+            >
+              Full range
+            </HeaderFullAction>
+          )}
           {token1 && token0 && (
             <HeaderTokensAction>
               <HeaderTokenAction onClick={onExchangeTokens} active={!reverse}>
