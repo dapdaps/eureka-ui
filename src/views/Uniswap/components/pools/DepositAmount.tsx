@@ -47,7 +47,6 @@ const DepositAmount = ({
 }: any) => {
   const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
   const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
-
   const price = useMemo(() => {
     if (
       (!currentPrice && !currentTick) ||
@@ -119,7 +118,7 @@ const DepositAmount = ({
       {(!token0 || !token1) && (
         <InputBoxs>
           <InputBox token={token0} balance={token0 ? balances[token0?.address] : ''} />
-          <InputBox token={token1} balance={token0 ? balances[token1?.address] : ''} />
+          <InputBox token={token1} balance={token1 ? balances[token1?.address] : ''} />
         </InputBoxs>
       )}
       {lowerTick < highTick ? (
@@ -249,7 +248,7 @@ const StyledBottom = styled.div`
 const NoToken = styled.button`
   border-radius: 16px;
   background: #5ee0ff;
-  width: 128px;
+  width: 138px;
   height: 36px;
   color: #131313;
   font-size: 16px;

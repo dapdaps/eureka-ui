@@ -32,6 +32,14 @@ const StyledSelectedFeeArea = styled.div`
     font-size: 12px;
     color: #8e8e8e;
     margin: 0;
+    @media (max-width: 768px) {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      .num {
+        margin-top: 0px !important;
+      }
+    }
   }
   .hideOrEditButton {
     border-radius: 6px;
@@ -84,7 +92,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
       <StyledSelectedFeeArea>
         <p className="pendingTip">
           <div>{disabled || !fee ? 'The % you will earn in fees.' : `${FEES[fee]?.value} fee tier`}</div>
-          {fee && <div className="num">{frequency[fee]}% select</div>}
+          {token0 && token1 && <div className="num">{frequency[fee]}% select</div>}
         </p>
         <div
           className="hideOrEditButton"

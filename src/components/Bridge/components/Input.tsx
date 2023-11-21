@@ -50,6 +50,8 @@ const MaxButton = styled.button`
   border-radius: 6px;
   font-size: 12px;
   font-weight: 400;
+  text-align: center;
+  padding: 0px;
   color: #979abe;
   background-color: rgba(151, 154, 190, 0.3);
 `;

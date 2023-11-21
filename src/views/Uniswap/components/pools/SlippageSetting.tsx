@@ -92,8 +92,8 @@ const Input = styled.input`
 const TYPES = ['Auto', 'Custom'];
 
 export default function SlippageSetting(props?: any) {
-  const [type, setType] = useState('Auto');
   const settingStore: any = useSettingsStore();
+  const [type, setType] = useState(settingStore.getSlippage() ? 'Custom' : 'Auto');
   return (
     <>
       <Layer
