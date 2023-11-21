@@ -24,9 +24,10 @@ export async function getTokenAmounts({ liquidity, tickLower, tickUpper, tick, d
     getSqrtRatioAtTick(tickUpper, provider),
     getSqrtRatioAtTick(tick, provider),
   ]);
-  const _reverse0 = new Big(sqrtRatioUpper).gt(sqrtRatio);
-  const _sqrtRatio0A = _reverse0 ? new Big(sqrtRatio) : new Big(sqrtRatioUpper);
-  const _sqrtRatio0B = _reverse0 ? new Big(sqrtRatioUpper) : new Big(sqrtRatio);
+  const _current0 = tick < tickLower ? new Big(sqrtRatioLower) : new Big(sqrtRatio);
+  const _reverse0 = new Big(sqrtRatioUpper).gt(_current0);
+  const _sqrtRatio0A = _reverse0 ? new Big(_current0) : new Big(sqrtRatioUpper);
+  const _sqrtRatio0B = _reverse0 ? new Big(sqrtRatioUpper) : new Big(_current0);
   const _diff0 = _sqrtRatio0B.minus(_sqrtRatio0A);
 
   const _reverse1 = new Big(sqrtRatioLower).gt(sqrtRatio);
@@ -41,10 +42,14 @@ export async function getTokenAmounts({ liquidity, tickLower, tickUpper, tick, d
     .div(_sqrtRatio0A)
     .div(_sqrtRatio0B)
     .div(10 ** decimal0);
-  const amount1 = new Big(liquidity)
-    .mul(_diff1)
-    .div(q96)
-    .div(10 ** decimal1);
+
+  const amount1 =
+    tick < tickLower
+      ? new Big(0)
+      : new Big(liquidity)
+          .mul(_diff1)
+          .div(q96)
+          .div(10 ** decimal1);
 
   return [amount0.toFixed(decimal0), amount1.toFixed(decimal1)];
 }

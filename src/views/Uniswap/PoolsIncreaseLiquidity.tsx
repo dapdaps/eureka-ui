@@ -92,11 +92,11 @@ const PoolsIncreaseLiquidity = () => {
         setErrorTips('Insufficient balance');
         return;
       }
-      if (Number(currentTick) >= Number(_highTick) && new Big(value0 || 0).gt(balances[detail.token0.address] || 0)) {
+      if (Number(currentTick) >= Number(_highTick) && new Big(value1 || 0).gt(balances[detail.token0.address] || 0)) {
         setErrorTips('Insufficient balance');
         return;
       }
-      if (Number(currentTick) < Number(_lowerTick) && new Big(value1 || 0).gt(balances[detail.token1.address] || 0)) {
+      if (Number(currentTick) < Number(_lowerTick) && new Big(value0 || 0).gt(balances[detail.token1.address] || 0)) {
         setErrorTips('Insufficient balance');
         return;
       }

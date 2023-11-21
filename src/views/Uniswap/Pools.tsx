@@ -109,6 +109,7 @@ const PowerBy = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-bottom: 10px;
   .view-code {
     display: flex;
     align-items: center;
@@ -151,7 +152,7 @@ const Pools = () => {
           + New position
         </PositionButton>
       </StyledHeader>
-      <StyledPanel style={{ maxHeight: 'calc(100% - 82px)', overflow: 'hidden' }}>
+      <StyledPanel style={{ maxHeight: 'calc(100% - 92px)', overflow: 'hidden' }}>
         <PanelHeader>
           <Title>Your positions ({userSelectedPositionSet.length})</Title>
           {!!userSelectedPositionSet.length && (

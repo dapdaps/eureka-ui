@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useFeeFrequency from '../../hooks/useFeeFrequency';
 
@@ -76,6 +76,9 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
   const feeList = Object.values(FEES);
   const [showList, setShowList] = useState(false);
   const frequency = useFeeFrequency({ token0, token1 });
+  useEffect(() => {
+    if (!fee) setShowList(true);
+  }, []);
   return (
     <StyledContainer>
       <StyledSelectedFeeArea>

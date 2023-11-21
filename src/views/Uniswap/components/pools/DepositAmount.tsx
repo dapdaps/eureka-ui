@@ -150,22 +150,22 @@ const DepositAmount = ({
             </InputBoxs>
           ) : currentTick > highTick ? (
             <InputBox
-              token={token0}
-              value={value0}
-              setValue={(value: string) => {
-                setValue0(value);
-              }}
-              balance={token0 ? balances[token0?.address] : ''}
-              loading={balanceLoading}
-            />
-          ) : (
-            <InputBox
               token={token1}
               value={value1}
               setValue={(value: string) => {
                 setValue1(value);
               }}
               balance={token1 ? balances[token1?.address] : ''}
+              loading={balanceLoading}
+            />
+          ) : (
+            <InputBox
+              token={token0}
+              value={value0}
+              setValue={(value: string) => {
+                setValue0(value);
+              }}
+              balance={token0 ? balances[token0?.address] : ''}
               loading={balanceLoading}
             />
           )}
