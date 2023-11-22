@@ -143,7 +143,6 @@ const Container = styled.div`
 const LogoContainer = styled.div`
   width: auto;
   align-items: center;
-  padding-bottom: 20px;
 `;
 
 const MenuContainer = styled.div`
@@ -214,7 +213,7 @@ const MenuContainer = styled.div`
   }
 `;
 
-const logoUrl = 'https://ipfs.near.social/ipfs/bafkreifzlmyfwus3t24c5xwz5hg5j4p7tk2pa4lisq4qkxuyky5huxkz6e';
+const logoUrl = 'https://assets.dapdap.net/images/4cb6580ca519dd6e658da1f478773f55.png';
 
 const lockUrl = 'https://ipfs.near.social/ipfs/bafkreihwfdlygayrdbdjzofkt7js7dhaopyvys7pyglb7zdqvsao7ynt2u';
 const extendPaths = {
@@ -301,7 +300,7 @@ export const DesktopNavigationTop = () => {
     <Container className={showBorder ? 'show-border' : ''}>
       <div className="container-nav">
         <LogoContainer>
-          <img src={logoUrl} alt="" />
+          <img src={logoUrl} alt="" style={{ width: '180px' }} />
         </LogoContainer>
         <MenuContainer>
           {menuData.map((item, index) => {

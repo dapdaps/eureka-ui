@@ -15,7 +15,7 @@ export default function LoginView() {
           <img src={bluebg} alt="" />
         </div>
         <div className="content">
-          <img src={'/images/eureka-logo.svg'} />
+          <img src={'https://assets.dapdap.net/images/4cb6580ca519dd6e658da1f478773f55.png'} />
           <div className="title">
             <p>
               Your Universal Entry Point Into <span>L2s</span>{' '}
