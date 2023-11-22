@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { Contract } from 'ethers';
 import useAccount from '@/hooks/useAccount';
 import { multicallv3 } from '@/utils/multicall';
@@ -9,6 +9,7 @@ export default function usePositions() {
   const { account, provider } = useAccount();
   const [loading, setLoading] = useState(!!account);
   const [positions, setPositions] = useState([]);
+  const timer = useRef<any>();
   const getPositions = useCallback(async () => {
     const PositionContract = new Contract(config.contracts.positionAddress, positionAbi, provider);
     try {
@@ -73,8 +74,11 @@ export default function usePositions() {
     }
   }, [provider, account]);
   useEffect(() => {
-    if (!account) setPositions([]);
-    if (provider && account) getPositions();
+    clearTimeout(timer.current);
+    timer.current = setTimeout(() => {
+      if (!account) setPositions([]);
+      if (provider && account) getPositions();
+    }, 300);
   }, [provider, account]);
   return { loading, positions };
 }
