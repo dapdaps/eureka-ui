@@ -4,7 +4,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 export const useSettingsStore = create(
   persist(
     (set, get: any) => ({
-      slippage: 0.5,
+      slippage: 0,
       setSlippage: (slippage: number) => set({ slippage: slippage }),
       getSlippage: () => get().slippage,
     }),

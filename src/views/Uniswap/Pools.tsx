@@ -20,7 +20,6 @@ const StyledContainer = styled.div`
 
   @media (max-width: 768px) {
     width: calc(100vw - 16px);
-    margin-left: 8px;
   }
 `;
 const StyledHeader = styled.div`
