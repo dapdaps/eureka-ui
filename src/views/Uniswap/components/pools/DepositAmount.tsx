@@ -113,6 +113,16 @@ const DepositAmount = ({
     setValue1('');
     setValue0('');
   }, [reverse]);
+
+  useEffect(() => {
+    if (!isMint) return;
+    if (currentTick < highTick && currentTick > lowerTick) return;
+    if (currentTick > highTick) {
+      reverse ? setValue1('') : setValue0('');
+    } else {
+      reverse ? setValue0('') : setValue1('');
+    }
+  }, [lowerTick, highTick, currentTick]);
   if (isMint) {
     return (
       <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
