@@ -142,11 +142,11 @@ const PoolsAddLiquidity = () => {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) >= Number(highTick) && new Big(value1 || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) > Number(highTick) && new Big((reverse ? value0 : value1) || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
-    if (!isFullRange && Number(currentTick) <= Number(lowerTick) && new Big(value0 || 0).eq(0)) {
+    if (!isFullRange && Number(currentTick) <= Number(highTick) && new Big((reverse ? value1 : value0) || 0).eq(0)) {
       setErrorTips('Enter an Amount');
       return;
     }
@@ -168,11 +168,21 @@ const PoolsAddLiquidity = () => {
         setErrorTips('Insufficient balance');
         return;
       }
-      if (Number(currentTick) >= Number(highTick) && new Big(value0 || 0).gt(balances[token0.address] || 0)) {
+      if (
+        Number(currentTick) > Number(highTick) &&
+        (reverse
+          ? new Big(value0 || 0).gt(balances[token0.address] || 0)
+          : new Big(value1 || 0).gt(balances[token1.address] || 0))
+      ) {
         setErrorTips('Insufficient balance');
         return;
       }
-      if (Number(currentTick) < Number(lowerTick) && new Big(value1 || 0).gt(balances[token1.address] || 0)) {
+      if (
+        Number(currentTick) <= Number(lowerTick) &&
+        (reverse
+          ? new Big(value1 || 0).gt(balances[token1.address] || 0)
+          : new Big(value0 || 0).gt(balances[token0.address] || 0))
+      ) {
         setErrorTips('Insufficient balance');
         return;
       }
@@ -260,6 +270,7 @@ const PoolsAddLiquidity = () => {
           noPair={noPair}
           balances={balances}
           balanceLoading={balanceLoading}
+          isMint={true}
         />
         <SubmitButton
           errorTips={errorTips}

@@ -44,6 +44,7 @@ const DepositAmount = ({
   setValue1,
   balances,
   balanceLoading,
+  isMint,
 }: any) => {
   const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
   const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
@@ -112,15 +113,97 @@ const DepositAmount = ({
     setValue1('');
     setValue0('');
   }, [reverse]);
+  if (isMint) {
+    return (
+      <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
+        <span className={`title`}>Deposit amounts</span>
+        {(!token0 || !token1) && (
+          <InputBoxs>
+            <InputBox token={token0} balance={token0 ? balances[token0?.address] : ''} />
+            <InputBox token={token1} balance={token1 ? balances[token1?.address] : ''} />
+          </InputBoxs>
+        )}
+        {lowerTick < highTick ? (
+          <div className="I">
+            {currentTick < highTick && currentTick > lowerTick ? (
+              <InputBoxs>
+                <InputBox
+                  token={token0}
+                  value={value0}
+                  setValue={(value: string) => {
+                    setValue0(value);
+                    if (value) setValue1(new Big(value).mul(price || 1).toFixed(token0.decimals));
+                  }}
+                  balance={token0 ? balances[token0?.address] : ''}
+                  loading={balanceLoading}
+                />
+                <InputBox
+                  token={token1}
+                  value={value1}
+                  setValue={(value: string) => {
+                    setValue1(value);
+                    if (value)
+                      setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
+                  }}
+                  balance={token1 ? balances[token1?.address] : ''}
+                  loading={balanceLoading}
+                />
+              </InputBoxs>
+            ) : currentTick > highTick ? (
+              reverse ? (
+                <InputBox
+                  token={token0}
+                  value={value0}
+                  setValue={(value: string) => {
+                    setValue0(value);
+                  }}
+                  balance={token0 ? balances[token0?.address] : ''}
+                  loading={balanceLoading}
+                />
+              ) : (
+                <InputBox
+                  token={token1}
+                  value={value1}
+                  setValue={(value: string) => {
+                    setValue1(value);
+                  }}
+                  key={token1?.address}
+                  balance={token1 ? balances[token1?.address] : ''}
+                  loading={balanceLoading}
+                />
+              )
+            ) : reverse ? (
+              <InputBox
+                token={token1}
+                value={value1}
+                setValue={(value: string) => {
+                  setValue1(value);
+                }}
+                key={token1?.address}
+                balance={token1 ? balances[token1?.address] : ''}
+                loading={balanceLoading}
+              />
+            ) : (
+              <InputBox
+                token={token0}
+                value={value0}
+                setValue={(value: string) => {
+                  setValue0(value);
+                }}
+                balance={token0 ? balances[token0?.address] : ''}
+                loading={balanceLoading}
+              />
+            )}
+          </div>
+        ) : (
+          <div />
+        )}
+      </StyledContainer>
+    );
+  }
   return (
     <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
       <span className={`title`}>Deposit amounts</span>
-      {(!token0 || !token1) && (
-        <InputBoxs>
-          <InputBox token={token0} balance={token0 ? balances[token0?.address] : ''} />
-          <InputBox token={token1} balance={token1 ? balances[token1?.address] : ''} />
-        </InputBoxs>
-      )}
       {lowerTick < highTick ? (
         <div className="I">
           {currentTick < highTick && currentTick > lowerTick ? (
@@ -148,29 +231,6 @@ const DepositAmount = ({
               />
             </InputBoxs>
           ) : currentTick > highTick ? (
-            reverse ? (
-              <InputBox
-                token={token0}
-                value={value0}
-                setValue={(value: string) => {
-                  setValue0(value);
-                }}
-                balance={token0 ? balances[token0?.address] : ''}
-                loading={balanceLoading}
-              />
-            ) : (
-              <InputBox
-                token={token1}
-                value={value1}
-                setValue={(value: string) => {
-                  setValue1(value);
-                }}
-                key={token1?.address}
-                balance={token1 ? balances[token1?.address] : ''}
-                loading={balanceLoading}
-              />
-            )
-          ) : reverse ? (
             <InputBox
               token={token1}
               value={value1}
