@@ -57,6 +57,7 @@ const AddLiquidityHeader = ({
   const router = useRouter();
   function goBack() {
     router.back();
+    onCleanAll?.();
   }
   return (
     <StyledContainer>
