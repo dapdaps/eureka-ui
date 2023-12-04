@@ -68,10 +68,9 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
         ]),
       );
     }
-    const tradeText = `Removed liquidity ${balanceFormated(liquidityToken0, 4)} ${token0.symbol} and ${balanceFormated(
-      liquidityToken1,
-      4,
-    )} ${token1.symbol}`;
+    const tradeText = `Removed liquidity ${balanceFormated(`${Number(liquidityToken0) * (percent / 100)}`, 4)} ${
+      token0.symbol
+    } and ${balanceFormated(`${Number(liquidityToken1) * (percent / 100)}`, 4)} ${token1.symbol}`;
     try {
       setLoading(true);
       openRequestModal({
