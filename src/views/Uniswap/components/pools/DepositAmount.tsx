@@ -366,7 +366,7 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
         />
         {token && (
           <div className="token" style={{ flexShrink: 0 }}>
-            <TokenIcon token={token} />
+            <TokenIcon token={token} key={token.icon}/>
             <span className="symbol">{token?.symbol}</span>
           </div>
         )}
