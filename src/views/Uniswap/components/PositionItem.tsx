@@ -98,10 +98,10 @@ export default function PositionItem({
     <Record onClick={onClick}>
       <RecordDetails>
         <RecordPool>
-          <TokenIcon token={token0} />
-          <TokenIcon token={token1} style={{ marginLeft: '-14px' }} />
+          <TokenIcon token={token1} />
+          <TokenIcon token={token0} style={{ marginLeft: '-14px' }} />
           <span>
-            {token0.symbol}/{token1.symbol}
+            {token1.symbol}/{token0.symbol}
           </span>
           <span className="gray">{feeAmount / 10000}%</span>
         </RecordPool>
