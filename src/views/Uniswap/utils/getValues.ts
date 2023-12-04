@@ -12,5 +12,7 @@ export function getTotalValues({ token0, token1, amount0, amount1, prices }: any
 
   return {
     total: total.toString(),
+    value0,
+    value1,
   };
 }
