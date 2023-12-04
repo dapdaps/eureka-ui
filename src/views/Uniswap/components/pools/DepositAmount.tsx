@@ -105,8 +105,8 @@ const DepositAmount = ({
 
   useEffect(() => {
     if (price && value1 && currentTick < highTick && currentTick > lowerTick) {
-      const _value1 = new Big(1).div(new Big(price).eq(0) ? 1 : price).mul(value1);
-      setValue0(_value1.gt(0) ? _value1.toNumber() : '');
+      const _value1 = new Big(1).div(new Big(price === Infinity ? 0 : price).eq(0) ? 1 : price).mul(value1);
+      setValue0(_value1.gt(0) ? _value1.toFixed(6) : '');
     }
   }, [price]);
   useEffect(() => {
@@ -366,7 +366,7 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
         />
         {token && (
           <div className="token" style={{ flexShrink: 0 }}>
-            <TokenIcon token={token} key={token.icon}/>
+            <TokenIcon token={token} key={token.icon} />
             <span className="symbol">{token?.symbol}</span>
           </div>
         )}
