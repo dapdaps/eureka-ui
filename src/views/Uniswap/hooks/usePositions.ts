@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState, useRef } from 'react';
 import { Contract } from 'ethers';
 import useAccount from '@/hooks/useAccount';
 import { multicallv3 } from '@/utils/multicall';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import positionAbi from '../abi/positionAbi';
 
 export default function usePositions() {

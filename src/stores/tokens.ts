@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 export const useTokensStore = create((set, get: any) => ({
   tokens: config.tokens,

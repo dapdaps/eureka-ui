@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { utils } from 'ethers';
 import Big from 'big.js';
 import useAccount from '@/hooks/useAccount';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import useTokens from './useTokens';
 import positionAbi from '../abi/positionAbi';
 import useRequestModal from '../../../hooks/useRequestModal';

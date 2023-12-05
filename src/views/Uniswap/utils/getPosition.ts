@@ -1,6 +1,6 @@
 import { Contract } from 'ethers';
 import Big from 'big.js';
-import config from '@/config/uniswap/linea/index';
+import config from '@/config/uniswap/index';
 import positionAbi from '../abi/positionAbi';
 import { getSqrtRatioAtTick } from '../utils/getTick';
 

@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 import CurrencyIcon from '@/components/CurrencyIcon';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 import useChain from '@/hooks/useChain';
 import { useTransactionsStore } from '@/stores/transactions';

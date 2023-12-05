@@ -1,4 +1,4 @@
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 export function getTokenAddress(address: string, reverse?: boolean) {
   if (address === config.wethToken.address && !reverse) return 'native';

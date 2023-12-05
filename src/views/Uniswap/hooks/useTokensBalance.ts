@@ -3,7 +3,7 @@ import useAccount from '@/hooks/useAccount';
 import { utils } from 'ethers';
 import { multicallv3 } from '@/utils/multicall';
 import erc20Abi from '@/config/abi/erc20';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 export default function useTokensBalance(tokens: any, updater: number) {
   const [loading, setLoading] = useState(false);

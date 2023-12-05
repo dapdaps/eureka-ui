@@ -1,5 +1,5 @@
 import { Contract } from 'ethers';
-import config from '@/config/uniswap/linea/index';
+import config from '@/config/uniswap/index';
 import nftAbi from '../abi/nftAbi';
 
 const STARTS_WITH = 'data:application/json;base64,';

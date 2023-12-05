@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import Loading from '@/components/Icons/Loading';
 import CloseIcon from '@/components/Icons/Close';
 import ModalBox from './ModalBox';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 const StyledContent = styled.div`
   width: 462px;

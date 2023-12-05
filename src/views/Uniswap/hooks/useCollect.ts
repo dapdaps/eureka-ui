@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Contract, utils } from 'ethers';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import Big from 'big.js';
 import useAccount from '@/hooks/useAccount';
 import positionAbi from '../abi/positionAbi';

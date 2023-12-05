@@ -3,7 +3,7 @@ import { utils } from 'ethers';
 import Big from 'big.js';
 import useAccount from '@/hooks/useAccount';
 import { useSettingsStore } from '@/stores/settings';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import positionAbi from '../abi/positionAbi';
 import useRequestModal from '../../../hooks/useRequestModal';
 import { balanceFormated } from '@/utils/balance';

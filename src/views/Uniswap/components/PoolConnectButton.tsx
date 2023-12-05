@@ -5,7 +5,7 @@ import { useConnectWallet } from '@web3-onboard/react';
 import useSwitchChain from '@/hooks/useSwitchChain';
 
 import chains from '@/config/chains';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 const StyledButton = styled.button`
   border-radius: 16px;

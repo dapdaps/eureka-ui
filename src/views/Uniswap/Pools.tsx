@@ -11,7 +11,7 @@ import PoolConnectButton from './components/PoolConnectButton';
 import usePositions from './hooks/usePositions';
 import useAccount from '@/hooks/useAccount';
 
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 const StyledContainer = styled.div`
   width: 854px;

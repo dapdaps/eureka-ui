@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import useTokens from './useTokens';
 import useAccount from '@/hooks/useAccount';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import { getPosition, getPositionCollect, getTokenAmounts } from '../utils/getPosition';
 import { getTokenAddress } from '../utils';
 import { getPoolInfo } from '../utils/getPool';

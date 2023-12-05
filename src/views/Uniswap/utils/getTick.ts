@@ -1,5 +1,5 @@
 import { Contract } from 'ethers';
-import config from '@/config/uniswap/linea/index';
+import config from '@/config/uniswap/index';
 import Big from 'big.js';
 import tickMathAbi from '../abi/tickMathAbi';
 import { sortTokens } from './sortTokens';

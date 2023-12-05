@@ -2,7 +2,7 @@ import { useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import { multicallv3 } from '@/utils/multicall';
 import erc20Abi from '@/config/abi/erc20';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 
 export default function useImportToken() {
   const [token, setToken] = useState<any>();

@@ -1,6 +1,6 @@
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import styled from 'styled-components';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import { useLayoutStore } from '@/stores/layout';
 import { useSettingsStore } from '@/stores/settings';
 import useTokens from './hooks/useTokens';

@@ -1,7 +1,7 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
 import useAccount from '@/hooks/useAccount';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import useApprove from '@/hooks/useApprove';
 import { useConnectWallet } from '@web3-onboard/react';
 import useSwitchChain from '@/hooks/useSwitchChain';

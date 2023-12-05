@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import config from '@/config/uniswap/linea';
+import config from '@/config/uniswap';
 import useAccount from '@/hooks/useAccount';
 
 export default function useNetwork() {
