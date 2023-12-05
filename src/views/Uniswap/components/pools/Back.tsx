@@ -20,7 +20,7 @@ const Back = () => {
   return (
     <StyledWrap
       onClick={() => {
-        router.back();
+        router.push('/uniswap/pools');
       }}
     >
       <BackIcon />

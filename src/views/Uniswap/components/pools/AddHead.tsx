@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { BackIcon } from './Icons';
 import SlippageSetting from './SlippageSetting';
+import { useSearchParams } from 'next/navigation';
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -47,16 +48,24 @@ const AddLiquidityHeader = ({
   showCleanAll = true,
   onCleanAll,
   isRemove,
+  isIncrease,
 }: {
   showCleanAll?: boolean;
   isRemove?: boolean;
+  isIncrease?: boolean;
   onCleanAll?: () => void;
 }) => {
   const [showSettings, setShowSettings] = useState(false);
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const router = useRouter();
+  const searchParams = useSearchParams();
   function goBack() {
-    router.back();
+    if (isIncrease || isRemove) {
+      const id = searchParams.get('id');
+      router.push(id ? `/uniswap/pools-detail-liquidity?id=${id}` : '/uniswap/pools');
+    } else {
+      router.push('/uniswap/pools');
+    }
     onCleanAll?.();
   }
   return (

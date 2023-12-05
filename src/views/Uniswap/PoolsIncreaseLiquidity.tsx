@@ -107,7 +107,7 @@ const PoolsIncreaseLiquidity = () => {
     <StyledContainer>
       {!loading && detail ? (
         <>
-          <Head showCleanAll={false} />
+          <Head showCleanAll={false} isIncrease />
           <StyledBody>
             <PoolRemovePair token0={detail.token0} token1={detail.token1} fee={detail.fee} status={detail.status} />
             <PoolIncreaseLiquidityData

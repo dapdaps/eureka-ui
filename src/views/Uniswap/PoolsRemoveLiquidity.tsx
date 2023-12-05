@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useState } from 'react';
 import styled from 'styled-components';
 import { useSearchParams } from 'next/navigation';
 import Spinner from '@/components/Spinner';
