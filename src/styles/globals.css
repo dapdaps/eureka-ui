@@ -4,8 +4,7 @@
 
 @font-face {
   font-family: 'Gantari';
-  src:
-    url('/fonts/Mona-Sans.woff2') format('woff2 supports variations'),
+  src: url('/fonts/Mona-Sans.woff2') format('woff2 supports variations'),
     url('/fonts/Mona-Sans.woff2') format('woff2-variations');
   font-weight: 200 900;
   font-stretch: 75% 125%;
@@ -13,8 +12,7 @@
 
 @font-face {
   font-family: 'FK Grotesk';
-  src:
-    url('/fonts/FKGrotesk.woff2') format('woff2 supports variations'),
+  src: url('/fonts/FKGrotesk.woff2') format('woff2 supports variations'),
     url('/fonts/FKGrotesk.woff2') format('woff2-variations');
   font-weight: 200 900;
   font-stretch: 75% 125%;
@@ -161,22 +159,22 @@ a:hover {
   right: 10px;
 }
 
-div::-webkit-scrollbar{
-  width:6px;
-  height:6px;
+div::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
   /**/
 }
-div::-webkit-scrollbar-track{
+div::-webkit-scrollbar-track {
   background: transparent;
-  border-radius:6px;
+  border-radius: 6px;
 }
-div::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,0.1);
-  border-radius:6px;
+div::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 6px;
   cursor: pointer;
 }
-div::-webkit-scrollbar-thumb:hover{
-  background:rgba(255,255,255,0.3);
+div::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
 }
 
 @media (max-width: 650px) {

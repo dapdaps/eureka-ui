@@ -7,7 +7,7 @@ const StyledWrap = styled.div`
   justify-content: space-between;
   margin-top: 21px;
   font-size: 16px;
-  color: #8e8e8e;
+  color: #101010;
   margin-top: 21px;
   .vchb {
     display: flex;
@@ -28,9 +28,9 @@ const StyledSwitchButton = styled.div<{ on: boolean }>`
   align-items: center;
   width: 66px;
   height: 36px;
-  border: 1px solid ${(props) => (props.on ? '#62DDFF' : '#303030')};
+  border: 1px solid ${(props) => (props.on ? '#EBC28E' : '#A49B9A')};
   padding: 4px;
-  background-color: #1b1b1b;
+  background-color: ${(props) => (props.on ? '#EBC28E' : 'rgba(16, 16, 16, 0.1)')};
   border-radius: 200px;
   cursor: pointer;
   justify-content: ${(props) => (props.on ? 'flex-end' : 'flex-start')};
@@ -39,7 +39,7 @@ const StyledSwitchButton = styled.div<{ on: boolean }>`
     width: 26px;
     height: 26px;
     border-radius: 100px;
-    background-color: ${(props) => (props.on ? '#62DDFF' : '#4E4E4E')};
+    background-color: ${(props) => (props.on ? '#fff' : '#A49B9A')};
   }
 `;
 const PoolRemoveCollect = ({ useWeth, setUseWeth }: any) => {

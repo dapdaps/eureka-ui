@@ -37,7 +37,7 @@ const StyledContent = styled.div`
 const StyledHead = styled.div`
   .title {
     font-size: 20px;
-    color: #ffffff;
+    color: #101010;
     font-weight: 700;
   }
   svg {
@@ -68,7 +68,7 @@ const StyledBody = styled.div`
     .symbol {
       font-size: 16px;
       font-weight: 500;
-      color: #ffffff;
+      color: #101010;
     }
     .balance {
       font-size: 16px;
@@ -84,9 +84,9 @@ const StyledAdd = styled.div<{ disabled?: boolean }>`
   justify-content: center;
   height: 62px;
   border-radius: 16px;
-  background-color: #62ddff;
+  background-color: #101010;
   font-size: 18px;
-  color: #1b1b1b;
+  color: #ffffff;
   font-weight: 600;
   margin-top: 15px;
   gap: 6px;
@@ -140,9 +140,8 @@ const PreviewModal = (props: any) => {
             token1={token1}
             fee={fee}
           />
-          <PoolIncreaseLiquidityData token0={token0} token1={token1} value0={value0} value1={value1} />
+          <PoolIncreaseLiquidityData token0={token0} token1={token1} value0={value0} value1={value1} type="1" />
           <PoolPriceRange
-            type="1"
             detail={{
               token0: token0,
               token1: token1,
@@ -154,6 +153,7 @@ const PreviewModal = (props: any) => {
             onSetReverse={() => {
               setReverse(!reverse);
             }}
+            type="1"
           />
           <StyledAdd
             className="hvc"

@@ -6,7 +6,7 @@ import config from '@/config/uniswap';
 import positionAbi from '../abi/positionAbi';
 
 export default function usePositions() {
-  const { account, provider } = useAccount();
+  const { account, chainId, provider } = useAccount();
   const [loading, setLoading] = useState(!!account);
   const [positions, setPositions] = useState([]);
   const timer = useRef<any>();
@@ -77,7 +77,7 @@ export default function usePositions() {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (!account) setPositions([]);
-      if (provider && account) getPositions();
+      if (provider && account && chainId === config.chainId) getPositions();
     }, 300);
   }, [provider, account]);
   return { loading, positions };

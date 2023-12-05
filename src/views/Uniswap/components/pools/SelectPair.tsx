@@ -10,7 +10,7 @@ const StyledSelectPair = styled.div`
 `;
 const StyledTitle = styled.div`
   font-size: 16px;
-  color: #fff;
+  color: #101010;
   margin-bottom: 16px;
   @media (max-width: 768px) {
     font-size: 14px;

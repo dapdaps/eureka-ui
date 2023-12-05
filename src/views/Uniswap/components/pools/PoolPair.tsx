@@ -31,7 +31,7 @@ const StyledLeft = styled.div`
   }
   .symbol {
     font-size: 20px;
-    color: #ffffff;
+    color: #101010;
     font-weight: bold;
     margin: 0 8px;
   }
@@ -41,9 +41,9 @@ const StyledLeft = styled.div`
     justify-content: center;
     border-radius: 6px;
     height: 24px;
-    background-color: #262626;
+    background-color: #ffe6c7;
     font-size: 14px;
-    color: #8e8e8e;
+    color: #101010;
     padding: 0 5px;
     margin-right: 7px;
   }
@@ -131,12 +131,12 @@ export default memo(PoolPair);
 
 const StyledLineWrap = styled.div`
   height: 35px;
-  border: 1px solid #5ee0ff;
-  background-color: #131313;
-  border-radius: 12px;
+  border: 1px solid #000;
+  background-color: #fff0dd;
+  border-radius: 6px;
   padding: 0 12px;
   cursor: pointer;
-  color: #5ee0ff;
+  color: #101010;
   @media (max-width: 768px) {
     width: 50%;
     height: 42px;
@@ -145,11 +145,11 @@ const StyledLineWrap = styled.div`
 
 const StyledSolidWrap = styled.div`
   height: 35px;
-  background-color: #5ee0ff;
-  border-radius: 12px;
+  background-color: #101010;
+  border-radius: 6px;
   padding: 0 12px;
   cursor: pointer;
-  color: #131313;
+  color: #ffffff;
   @media (max-width: 768px) {
     width: 50%;
     height: 42px;

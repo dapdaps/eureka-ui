@@ -31,11 +31,11 @@ const StyledTokenWrap = styled.div`
   display: flex;
   align-items: center;
   height: 36px;
-  border: 1px solid #303030;
-  background-color: #1b1b1b;
+  border: 1px solid #a49b9a;
   padding: 7px 20px 7px 7px;
+  background: #eee;
   gap: 8px;
-  border-radius: 18px;
+  border-radius: 6px;
   cursor: pointer;
   img {
     width: 22px;
@@ -44,7 +44,7 @@ const StyledTokenWrap = styled.div`
   }
   .symbol {
     font-size: 16px;
-    color: #fff;
+    color: #101010;
     font-weight: 600;
   }
   @media (max-width: 768px) {

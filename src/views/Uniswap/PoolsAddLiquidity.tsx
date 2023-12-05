@@ -23,9 +23,8 @@ import { getTickFromPrice } from './utils/getTick';
 
 const StyledContainer = styled.div`
   width: 605px;
-  border-radius: 24px;
-  border: 1px solid #3d363d;
-  background-color: #131313;
+  border-radius: 16px;
+  background-color: #ffe6c7;
   margin-bottom: 20px;
 
   @media (max-width: 768px) {
@@ -38,7 +37,7 @@ const StyledBody = styled.div<{ disabled: boolean }>`
   ${({ disabled }) => disabled && 'opacity: 0.5;'}
 `;
 const LoadingWrapper = styled.div`
-  color: #fff;
+  color: #101010;
   height: 300px;
   line-height: 300px;
   text-align: center;
@@ -189,7 +188,6 @@ const PoolsAddLiquidity = () => {
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, token0, token1, lowerTick, highTick, reverse, currentTick]);
-
   return ready ? (
     <StyledContainer>
       <Head
@@ -228,7 +226,11 @@ const PoolsAddLiquidity = () => {
                 setCurrentTickFromPrice(price, token1, token0);
               }}
             />
-            {(lowerTick === currentTick || highTick === currentTick) && token0 && token1 && <InvalidRangeTips />}
+            {(lowerTick === currentTick || highTick === currentTick) &&
+              lowerTick !== undefined &&
+              currentTick !== undefined &&
+              token0 &&
+              token1 && <InvalidRangeTips />}
             {!noPair && lowerTick !== undefined && highTick !== undefined && token0 && token1 && (
               <Chart
                 token0={token0}

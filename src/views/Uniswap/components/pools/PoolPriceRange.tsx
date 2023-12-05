@@ -5,10 +5,10 @@ import { ArrowBothIcon } from './Icons';
 import { tickToPrice } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/sortTokens';
 
-const StyledWrap = styled.div<{ type?: string }>`
-  ${(props) => (props.type == '1' ? 'margin-top: 20px;' : 'border: 1px solid #3d363d;padding: 20px;margin-top: 15px;')}
-  border-radius: 24px;
-  background-color: #131313;
+const StyledWrap = styled.div<{ type?: string; $isDetail?: boolean }>`
+  ${(props) =>
+    props.type == '1' ? 'margin-top: 20px;' : 'margin-top: 15px;background-color: #FFE6C7;border-radius: 24px;'}
+  ${(props) => props.$isDetail && 'padding: 20px;'}
   .vchb {
     display: flex;
     align-items: center;
@@ -30,7 +30,7 @@ const StyledWrap = styled.div<{ type?: string }>`
 const StyledHead = styled.div`
   font-size: 16px;
   font-weight: 500;
-  color: #ffffff;
+  color: #101010;
   .gap-20 {
     gap: 20px;
   }
@@ -47,21 +47,20 @@ const StyledHead = styled.div`
     font-weight: bold;
   }
   .switch {
-    border: 1px solid #3d363d;
     border-radius: 8px;
-    background-color: #131313;
+    background-color: #101010;
     padding: 2px 4px;
     .item {
       font-size: 12px;
-      color: #8e8e8e;
+      color: #ffffff;
       cursor: pointer;
-      height: 24px;
+      height: 26px;
       padding: 0 8px;
     }
     .item.active {
       border-radius: 6px;
-      background-color: #262626;
-      color: #fff;
+      background-color: #fff0dd;
+      color: #101010;
     }
   }
 `;
@@ -89,7 +88,7 @@ const Status = styled.div<{ status: 'in' | 'out' | 'removed' }>`
     background-color: ${({ status }) => StatusColor[status]};
   }
 `;
-const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
+const PoolPriceRange = ({ detail, isReverse, onSetReverse, type, isDetail }: any) => {
   const [_token0 = {}, _token1 = {}] = sortTokens(detail?.token0, detail?.token1);
   const tickArgs = {
     decimals0: _token0.decimals,
@@ -102,7 +101,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
   const isFullRange = detail?.tickLow === -887272 && detail?.tickHigh === 887272;
 
   return (
-    <StyledWrap type={type}>
+    <StyledWrap type={type} $isDetail={isDetail}>
       <StyledHead className="vchb">
         <div className="hvc gap-20">
           <span>Pirce range</span>
@@ -134,6 +133,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
                   })
             }
             priceRate={priceRate}
+            type={type}
           />
           <ArrowBothIcon />
           <PriceDetailBox
@@ -147,6 +147,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
                   })
             }
             priceRate={priceRate}
+            type={type}
           />
         </div>
         <div className="mt-17">
@@ -154,6 +155,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
             priceType="Current price"
             price={tickToPrice({ ...tickArgs, tick: detail?.tick })}
             priceRate={priceRate}
+            type={type}
           />
         </div>
       </StyledBody>
@@ -161,32 +163,46 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type }: any) => {
   );
 };
 
-const StyledPriceDetailBox = styled.div`
+const StyledPriceDetailBox = styled.div<{ $type?: string }>`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: #1b1b1b;
+  background-color: ${({ $type }) => ($type !== '1' ? '#fff0dd' : '#FFE6C7')};
   border-radius: 16px;
   height: 118px;
   flex-grow: 1;
   .text {
     font-size: 14px;
-    color: #8e8e8e;
+    color: #101010;
   }
   .value {
     font-size: 20px;
-    color: #ffffff;
+    color: #101010;
     font-weight: bold;
     margin: 6px 0 2px 0;
   }
+  .desc {
+    font-size: 14px;
+    color: #a49b9a;
+  }
 `;
-const PriceDetailBox = ({ priceType, price, priceRate }: { priceType: string; price: any; priceRate: string }) => {
+const PriceDetailBox = ({
+  priceType,
+  price,
+  type,
+  priceRate,
+}: {
+  priceType: string;
+  price: any;
+  priceRate: string;
+  type?: string;
+}) => {
   return (
-    <StyledPriceDetailBox>
+    <StyledPriceDetailBox $type={type}>
       <span className="text">{priceType}</span>
       <span className="value">{price}</span>
-      <span className="text">{priceRate}</span>
+      <span className="desc">{priceRate}</span>
     </StyledPriceDetailBox>
   );
 };

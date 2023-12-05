@@ -12,6 +12,7 @@ const StyledContainer = styled.div`
     font-size: 12px;
     display: inline-block;
     white-space: nowrap;
+    margin-top: 6px;
   }
   @media (max-width: 768px) {
     .num {
@@ -24,7 +25,7 @@ const StyledSelectedFeeArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #3d363d;
+  background-color: #fff0dd;
   padding: 12px;
   border-radius: 12px;
   min-height: 50px;
@@ -46,7 +47,7 @@ const StyledSelectedFeeArea = styled.div`
     background-color: #262626;
     padding: 2px 6px;
     cursor: pointer;
-    color: rgba(255, 255, 255, 0.6);
+    color: #ffffff;
     font-size: 14px;
   }
 `;
@@ -129,7 +130,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
 export default memo(Fee);
 
 const StyledCell = styled.div<{ isSelected: boolean; i: number }>`
-  border: ${({ isSelected }) => (isSelected ? '2px solid #5EE0FF' : '1px solid #3d363d')};
+  background-color: #fff0dd;
   padding: 8px 6px;
   border-radius: 12px;
   cursor: pointer;
@@ -138,7 +139,7 @@ const StyledCell = styled.div<{ isSelected: boolean; i: number }>`
 
   .value {
     font-size: 14px;
-    color: #8e8e8e;
+    color: #101010;
     display: flex;
     justify-content: space-between;
   }

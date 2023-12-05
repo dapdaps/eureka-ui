@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 const StyledTips = styled.div`
   border-radius: 16px;
-  background: rgba(255, 117, 191, 0.1);
+  background: rgba(255, 104, 75, 0.2);
   padding: 15px;
-  color: #ff75bf;
+  color: #ff684b;
   font-size: 16px;
   font-weight: 400;
   line-height: normal;
@@ -12,15 +12,16 @@ const StyledTips = styled.div`
 `;
 const StyledInput = styled.input`
   border-radius: 16px;
-  border: 1px solid #303030;
-  background: #1b1b1b;
-  padding: 8px 15px 11px;
-  color: #fff;
+  background: #fff0dd;
+  border: none;
+  padding: 9px 15px 10px;
+  color: #101010;
   font-size: 20px;
   font-weight: 700;
   line-height: normal;
   margin-top: 20px;
   width: 100%;
+
   outline: none;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
@@ -31,7 +32,7 @@ const StyledInput = styled.input`
 const StyledDesc = styled.div`
   display: flex;
   justify-content: space-between;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(16, 16, 16, 0.6);
   font-size: 16px;
   font-weight: 400;
   line-height: normal;

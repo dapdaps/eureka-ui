@@ -6,13 +6,13 @@ const StyledContainer = styled.div`
   padding: 24px;
   border: 1px solid #3d363d;
   border-radius: 24px;
-  background-color: #131313;
+  background-color: #ffffff;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
   @media (max-width: 768px) {
     width: 100vw;
     box-sizing: border-box;
     padding: 24px 24px 0px;
     border-radius: 24px 24px 0px 0px;
-    background-color: #2b2b2b;
   }
 `;
 const CustomModal = ({

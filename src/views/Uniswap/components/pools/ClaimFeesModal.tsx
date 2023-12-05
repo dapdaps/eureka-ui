@@ -28,7 +28,7 @@ const StyledContent = styled.div`
 const StyledHead = styled.div`
   .title {
     font-size: 20px;
-    color: #ffffff;
+    color: #101010;
     font-weight: 700;
   }
   svg {
@@ -42,7 +42,7 @@ const StyledBody = styled.div`
     flex-direction: column;
     align-items: center;
     border-radius: 16px;
-    background-color: #1b1b1b;
+    background-color: #ffe6c7;
     padding: 18px;
     gap: 20px;
     img {
@@ -54,18 +54,18 @@ const StyledBody = styled.div`
     .symbol {
       font-size: 16px;
       font-weight: 500;
-      color: #ffffff;
+      color: #101010;
     }
     .balance {
       font-size: 16px;
       font-weight: 500;
-      color: #ffffff;
+      color: #101010;
     }
   }
 `;
 const StyledDescription = styled.div`
   font-size: 12px;
-  color: #8e8e8e;
+  color: #101010;
   margin-top: 10px;
 `;
 const StyledCollectButton = styled.div<{ disabled?: boolean }>`
@@ -76,9 +76,9 @@ const StyledCollectButton = styled.div<{ disabled?: boolean }>`
   gap: 6px;
   height: 62px;
   border-radius: 16px;
-  background-color: #62ddff;
+  background-color: #101010;
   font-size: 18px;
-  color: #1b1b1b;
+  color: #ffffff;
   font-weight: 600;
   margin-top: 15px;
   ${({ disabled }) => (disabled ? 'opacity: 0.6; cursor: not-allowed;' : 'cursor: pointer;')}

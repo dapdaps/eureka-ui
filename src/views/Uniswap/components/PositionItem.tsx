@@ -11,7 +11,7 @@ import { StatusColor } from '../config';
 const Record = styled.div`
   font-size: 14px;
   font-weight: 500;
-  color: #fff;
+  color: #101010;
   text-align: left;
   padding: 20px;
   cursor: pointer;
@@ -19,7 +19,7 @@ const Record = styled.div`
     color: #8e8e8e;
   }
   &:hover {
-    background: rgba(255, 255, 255, 0.05);
+    background: #fff0dd;
   }
   @media (max-width: 768px) {
     .gray {

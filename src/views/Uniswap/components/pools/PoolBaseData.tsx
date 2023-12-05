@@ -71,20 +71,19 @@ const StyledLFWrap = styled.div`
 const StyledBase = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #3d363d;
   border-radius: 24px;
   padding: 20px;
-  background-color: #131313;
+  background-color: #ffe6c7;
   width: 100%;
   gap: 16px;
   .title {
     font-size: 16px;
-    color: #ffffff;
+    color: #101010;
     font-weight: bold;
   }
   .value {
     font-size: 36px;
-    color: #ffffff;
+    color: #101010;
     font-weight: bold;
   }
   .box {
@@ -92,7 +91,7 @@ const StyledBase = styled.div`
     flex-direction: column;
     align-items: center;
     border-radius: 16px;
-    background-color: #1b1b1b;
+    background-color: #fff0dd;
     padding: 18px;
     gap: 20px;
     img {
@@ -104,17 +103,17 @@ const StyledBase = styled.div`
     .symbol {
       font-size: 16px;
       font-weight: 500;
-      color: #ffffff;
+      color: #101010;
     }
     .balance {
       font-size: 16px;
       font-weight: 500;
-      color: #ffffff;
+      color: #101010;
       display: flex;
       gap: 6px;
     }
     .percent {
-      color: #8e8e8e;
+      color: #a49b9a;
     }
     &.reverse {
       flex-direction: column-reverse;
@@ -240,11 +239,11 @@ const UnclaimedFees = ({
 
 const StyledSolidWrap = styled.div`
   height: 35px;
-  background-color: #5ee0ff;
-  border-radius: 12px;
+  background-color: #101010;
+  border-radius: 6px;
   padding: 0 12px;
   cursor: pointer;
-  color: #131313;
+  color: #ffffff;
 `;
 
 export default memo(PoolBaseData);

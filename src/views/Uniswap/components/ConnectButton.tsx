@@ -11,17 +11,16 @@ const StyledButton = styled.button`
   width: 93px;
   height: 36px;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: #ff684b;
   border: none;
   font-size: 16px;
   font-weight: 500;
-  color: #1b1b1b;
+  color: #fff;
 `;
 const StyledAccountBox = styled.div`
   width: 158px;
   height: 36px;
   border-radius: 12px;
-  background-color: #2d3247;
   display: flex;
   align-items: center;
   padding: 0px 5px;
@@ -49,7 +48,7 @@ const StyledChain = styled.img`
 const StyledAccount = styled.div`
   font-size: 16px;
   font-weight: 700;
-  color: #fff;
+  color: #101010;
 `;
 
 const Header = () => {

@@ -4,9 +4,8 @@ import { balanceFormated } from '@/utils/balance';
 import TokenIcon from '../TokenIcon';
 
 const StyledWrap = styled.div`
-  border: 1px solid #303030;
-  background-color: #1b1b1b;
-  border-radius: 16px;
+  border-radius: 12px;
+  border: 1px solid #c7bfb6;
   padding: 16px;
   margin-top: 14px;
   .vchb {
@@ -30,17 +29,13 @@ const StyledBaseUI = styled.div`
   gap: 22px;
 `;
 const StyledPool = styled(StyledBaseUI)`
-  border-bottom: 1px solid #303030;
+  border-bottom: 1px solid #c7bfb6;
   margin: 0 -16px 0 -16px;
 `;
 const StyledEarnedFees = styled(StyledBaseUI)`
   margin: 0 -16px 0 -16px;
 `;
-const StyledCollect = styled.div`
-  font-size: 16px;
-  color: #8e8e8e;
-  margin-top: 21px;
-`;
+
 const PoolRemoveToken = ({
   percent,
   token0,
@@ -74,8 +69,8 @@ const PoolRemoveToken = ({
 
 const StyleRowData = styled.div`
     font-size:16px;
-    color:#fff;
-    font-weight:bold;
+    color:#101010;
+    font-weight:500;
     .value{
       gap:10px;
       img{

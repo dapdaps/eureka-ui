@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import TokenIcon from '../TokenIcon';
 import { balanceFormated } from '@/utils/balance';
 
-const StyledWrap = styled.div`
+const StyledWrap = styled.div<{ $type?: string }>`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  border: 1px solid #303030;
   border-radius: 16px;
   padding: 16px;
-  background-color: #1b1b1b;
   margin-top: 16px;
+  background-color: ${({ $type }) => ($type !== '1' ? '#fff0dd' : '#FFE6C7')};
   .vchb {
     display: flex;
     align-items: center;
@@ -34,19 +33,19 @@ const StyledWrap = styled.div`
     }
     span {
       font-weight: bold;
-      color: #fff;
+      color: #101010;
       font-size: 16px;
     }
   }
   .num {
     font-weight: bold;
-    color: #fff;
+    color: #101010;
     font-size: 16px;
   }
 `;
-const PoolIncreaseLiquidityData = ({ token0, token1, value0, value1 }: any) => {
+const PoolIncreaseLiquidityData = ({ token0, token1, value0, value1, type }: any) => {
   return (
-    <StyledWrap>
+    <StyledWrap $type={type}>
       <div className="vchb">
         <div className="hvc token">
           {token0 && <TokenIcon token={token0} />}

@@ -2,14 +2,13 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledWrap = styled.div`
-  border: 1px solid #303030;
-  background-color: #1b1b1b;
+  background-color: #fff0dd;
   border-radius: 16px;
   padding: 16px;
   margin-top: 14px;
   .title {
     font-size: 16px;
-    color: #8e8e8e;
+    color: #101010;
   }
   .vchb {
     display: flex;
@@ -29,7 +28,7 @@ const StyledQuick = styled.div`
   margin-top: 14px;
   .v {
     font-size: 36px;
-    color: #ffffff;
+    color: #101010;
     font-weight: bold;
   }
   .gap-8 {
@@ -40,12 +39,12 @@ const StyledItem = styled.div`
   width: 82px;
   height: 32px;
   border-radius: 6px;
-  background-color: rgba(98, 221, 255, 0.1);
+  background-color: rgba(16, 16, 16, 0.1);
   font-size: 14px;
-  color: #62ddff;
+  color: #101010;
   cursor: pointer;
   &.active {
-    border: 1px solid #62ddff;
+    border: 1px solid #000000;
   }
   @media (max-width: 768px) {
     width: 48px;
@@ -58,7 +57,7 @@ const StyledInputRange = styled.div`
     width: 100%;
     appearance: none;
     -webkit-appearance: none;
-    background: #62ddff;
+    background: #a49b9a;
     height: 2px;
     border-radius: 5px;
     margin: 0 auto;
@@ -66,7 +65,7 @@ const StyledInputRange = styled.div`
   }
   input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background-color: #62ddff;
+    background-color: #101010;
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -84,7 +83,7 @@ const PoolRemoveAmount = ({ percent, setPercent }: any) => {
           {PERCENTS.map((p) => {
             return (
               <StyledItem
-                className="hvc"
+                className={`hvc ${p === percent && 'active'}`}
                 key={p}
                 onClick={() => {
                   setPercent(p);

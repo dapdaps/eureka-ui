@@ -14,8 +14,7 @@ import useRemoveDetail from './hooks/useRemoveDetail';
 const StyledContainer = styled.div`
   width: 605px;
   border-radius: 24px;
-  border: 1px solid #3d363d;
-  background-color: #131313;
+  background-color: #ffe6c7;
   @media (max-width: 768px) {
     width: 100%;
     border: none;
@@ -30,47 +29,45 @@ const PoolsRemoveLiquidity = () => {
   const [percent, setPercent] = useState(0);
   const [useWeth, setUseWeth] = useState(false);
   const { token0, token1, detail, loading, collectData, changeToWeth } = useRemoveDetail(searchParams.get('id') || '');
-  return (
+  return !loading && detail ? (
     <StyledContainer>
-      {!loading && detail ? (
-        <>
-          <Head showCleanAll={false} isRemove={true} />
-          <StyledBody>
-            <PoolRemovePair token0={token0} token1={token1} fee={detail?.fee} status={detail?.status} />
-            <PoolRemoveAmount percent={percent} setPercent={setPercent} />
-            <PoolRemoveToken
-              token0={token0}
-              token1={token1}
-              percent={percent}
-              liquidityToken0={detail?.liquidityToken0}
-              liquidityToken1={detail?.liquidityToken1}
-              collectToken0={collectData?.collectToken0}
-              collectToken1={collectData?.collectToken1}
+      <>
+        <Head showCleanAll={false} isRemove={true} />
+        <StyledBody>
+          <PoolRemovePair token0={token0} token1={token1} fee={detail?.fee} status={detail?.status} />
+          <PoolRemoveAmount percent={percent} setPercent={setPercent} />
+          <PoolRemoveToken
+            token0={token0}
+            token1={token1}
+            percent={percent}
+            liquidityToken0={detail?.liquidityToken0}
+            liquidityToken1={detail?.liquidityToken1}
+            collectToken0={collectData?.collectToken0}
+            collectToken1={collectData?.collectToken1}
+          />
+          {detail?.useNative && (
+            <PoolRemoveCollect
+              useWeth={useWeth}
+              setUseWeth={() => {
+                changeToWeth(!useWeth);
+                setUseWeth(!useWeth);
+              }}
             />
-            {detail?.useNative && (
-              <PoolRemoveCollect
-                useWeth={useWeth}
-                setUseWeth={() => {
-                  changeToWeth(!useWeth);
-                  setUseWeth(!useWeth);
-                }}
-              />
-            )}
-            <RemoveButton
-              token0={token0}
-              token1={token1}
-              liquidityToken0={detail?.liquidityToken0}
-              liquidityToken1={detail?.liquidityToken1}
-              liquidity={detail?.liquidity}
-              percent={percent}
-              tokenId={detail?.tokenId}
-            />
-          </StyledBody>
-        </>
-      ) : (
-        <Spinner />
-      )}
+          )}
+          <RemoveButton
+            token0={token0}
+            token1={token1}
+            liquidityToken0={detail?.liquidityToken0}
+            liquidityToken1={detail?.liquidityToken1}
+            liquidity={detail?.liquidity}
+            percent={percent}
+            tokenId={detail?.tokenId}
+          />
+        </StyledBody>
+      </>
     </StyledContainer>
+  ) : (
+    <Spinner />
   );
 };
 

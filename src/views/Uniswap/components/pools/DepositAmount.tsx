@@ -12,7 +12,7 @@ const StyledContainer = styled.div`
   margin-top: 20px;
   .title {
     font-size: 16px;
-    color: #fff;
+    color: #101010;
   }
   .I {
     margin-top: 15px;
@@ -28,6 +28,7 @@ const InputBoxs = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 10px;
 `;
 
 const DepositAmount = ({
@@ -214,9 +215,9 @@ const DepositAmount = ({
   }
   return (
     <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
-      <span className={`title`}>Deposit amounts</span>
+      <span className={`title`}>Add more liquidity</span>
       {lowerTick < highTick ? (
-        <div className="I">
+        <div className="I" style={{ marginTop: 0 }}>
           {currentTick < highTick && currentTick > lowerTick ? (
             <InputBoxs>
               <InputBox
@@ -272,10 +273,9 @@ const DepositAmount = ({
 };
 
 const StyledInputBox = styled.div`
-  border: 1px solid #303030;
   border-radius: 16px;
   padding: 14px;
-  background-color: #1b1b1b;
+  background-color: #fff0dd;
 `;
 const StyledTop = styled.div`
   display: flex;
@@ -283,7 +283,7 @@ const StyledTop = styled.div`
   justify-content: space-between;
   input[type='number'] {
     font-size: 20px;
-    color: #fff;
+    color: #101010;
     font-weight: 700;
     background: none;
     border: none;
@@ -296,11 +296,11 @@ const StyledTop = styled.div`
     margin: 0;
   }
   .token {
-    background-color: #131313;
-    border: 1px solid #242424;
+    background-color: #fff;
+    border: 1px solid #000;
     padding: 6px;
     padding-right: 12px;
-    border-radius: 18px;
+    border-radius: 8px;
     img {
       width: 22px;
       height: 22px;
@@ -309,7 +309,7 @@ const StyledTop = styled.div`
     }
     .symbol {
       font-size: 16px;
-      color: #fff;
+      color: #101010;
       font-weight: 600;
     }
   }
@@ -335,17 +335,17 @@ const StyledBottom = styled.div`
     }
     .b_v {
       font-size: 14px;
-      color: #fff;
+      color: #131313;
       text-decoration: underline;
     }
   }
 `;
 const NoToken = styled.button`
   border-radius: 16px;
-  background: #5ee0ff;
+  background: #101010;
   width: 138px;
   height: 36px;
-  color: #131313;
+  color: #ffffff;
   font-size: 16px;
   font-weight: 600;
   line-height: normal;

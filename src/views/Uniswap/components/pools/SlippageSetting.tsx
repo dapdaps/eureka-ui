@@ -13,9 +13,9 @@ const Layer = styled.div`
 const StyledContainer = styled.div`
   width: 280px;
   height: 129px;
-  border: 1px solid #3d363d;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
   border-radius: 12px;
-  background-color: #131313;
+  background-color: #ffffff;
   padding: 20px;
   position: absolute;
   z-index: 20;
@@ -26,7 +26,7 @@ const StyledContainer = styled.div`
 const Label = styled.div`
   font-size: 16px;
   font-weight: 700;
-  color: #fff;
+  color: #101010;
 `;
 const Inputs = styled.div`
   display: flex;
@@ -34,14 +34,14 @@ const Inputs = styled.div`
   margin-top: 10px;
 `;
 const SlippageActions = styled.div`
-  border: 1px solid #3d363d;
+  background-color: #ffe6c7;
   border-radius: 12px;
   padding: 3px;
   box-sizing: border-box;
   display: flex;
   font-size: 16px;
   font-weight: 500;
-  color: #fff;
+  align-items: center;
   @media (max-width: 768px) {
     background-color: #1b1b1b;
   }
@@ -49,13 +49,12 @@ const SlippageActions = styled.div`
 const SlippageAction = styled.div`
   padding: 6px;
   border-radius: 10px;
-  color: #fff;
+  color: #101010;
   cursor: pointer;
   height: 36px;
   box-sizing: border-box;
   &.active {
-    color: #8e8e8e;
-    background-color: #262626;
+    background-color: #ffffff;
   }
   @media (max-width: 768px) {
     &.active {
@@ -68,9 +67,9 @@ const InputWrapper = styled.div`
   width: 103px;
   height: 45px;
   border-radius: 12px;
-  border: 1px solid #3d363d;
-  background-color: #131313;
-  color: #fff;
+  border: 1px solid #473935;
+  background-color: #fff;
+  color: #101010;
   display: flex;
   gap: 5px;
   align-items: center;

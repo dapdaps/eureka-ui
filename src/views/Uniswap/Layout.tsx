@@ -12,13 +12,11 @@ import 'react-toastify/dist/ReactToastify.css';
 const StyledContainer = styled.div`
   height: 100vh;
   overflow-y: auto;
-  background-color: #131313;
-  background-image: url(/images/uniswap/right_bg.png);
+  background-color: #fff8f3;
   background-repeat: no-repeat;
   background-position: right top;
   @media (max-width: 768px) {
     background-position: left 20px;
-    background-image: url(/images/uniswap/right_m_bg.png);
   }
 `;
 const StyledContent = styled.div`
@@ -67,9 +65,9 @@ const Uniswap = ({ children }: { children?: ReactNode }) => {
       {ready && (
         <ToastContainer
           position={window.innerWidth > 768 ? 'top-right' : 'bottom-right'}
-          autoClose={5000}
+          autoClose={500000}
           hideProgressBar={true}
-          theme="dark"
+          toastStyle={{ backgroundColor: 'transparent', boxShadow: 'none' }}
           newestOnTop
           rtl={false}
           pauseOnFocusLoss

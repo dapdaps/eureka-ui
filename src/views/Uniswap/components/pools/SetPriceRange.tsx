@@ -9,7 +9,7 @@ const StyledContainer = styled.div`
   margin-top: 20px;
   .title {
     font-size: 16px;
-    color: rgba(255, 255, 255, 1);
+    color: #101010;
     margin-bottom: 16px;
   }
   .setArea {
@@ -23,7 +23,7 @@ const Header = styled.div`
   justify-content: space-between;
   font-size: 16px;
   font-weight: 400;
-  color: #fff;
+  color: #101010;
   align-items: center;
   padding-bottom: 10px;
 `;
@@ -34,15 +34,16 @@ const HeaderActions = styled.div`
 const HeaderFullAction = styled.div`
   height: 30px;
   line-height: 30px;
-  border: 1px solid #3d363d;
+  background-color: #101010;
   border-radius: 8px;
   width: 70px;
   text-align: center;
   font-size: 12px;
   cursor: pointer;
+  color: #ffffff;
 `;
 const HeaderTokensAction = styled.div`
-  border: 1px solid #3d363d;
+  background-color: #101010;
   border-radius: 8px;
   padding: 3px;
   box-sizing: border-box;
@@ -53,11 +54,11 @@ const HeaderTokenAction = styled.div<{ active?: boolean }>`
   line-height: 12px;
   padding: 6px;
   border-radius: 6px;
-  color: ${({ active }) => (active ? ' #fff' : '#8E8E8E')};
+  color: ${({ active }) => (active ? ' #101010' : '#fff')};
   cursor: pointer;
   height: 24px;
   box-sizing: border-box;
-  ${({ active }) => active && 'background-color: #262626;'}
+  ${({ active }) => active && 'background-color: #FFF0DD;'}
 `;
 
 const SetPriceRange = ({
@@ -130,21 +131,20 @@ const StyledInputPriceBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #303030;
   border-radius: 16px;
   padding: 12px 18px;
-  background-color: #1b1b1b;
+  background-color: #fff0dd;
 `;
 const StyledPrice = styled.div`
   display: flex;
   flex-direction: column;
   .type {
     font-size: 14px;
-    color: #8e8e8e;
+    color: rgba(16, 16, 16, 0.6);
   }
   input {
     font-size: 20px;
-    color: #fff;
+    color: #101010;
     font-weight: 700;
     background: none;
     border: none;
@@ -157,7 +157,7 @@ const StyledPrice = styled.div`
   }
   .txt {
     font-size: 14px;
-    color: #8e8e8e;
+    color: #a49b9a;
   }
 `;
 const StyledButtonArea = styled.div`
@@ -170,7 +170,6 @@ const StyledButtonArea = styled.div`
     justify-content: center;
     width: 30px;
     height: 30px;
-    border: 1px solid #3d363d;
     border-radius: 8px;
     background-color: #131313;
     cursor: pointer;

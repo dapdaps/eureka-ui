@@ -9,7 +9,6 @@ import { useTransactionsStore } from '@/stores/transactions';
 import useRequestModal from '@/hooks/useRequestModal';
 import useAccount from '@/hooks/useAccount';
 import { useDebounce } from 'usehooks-ts';
-import { LeftBg } from './styles';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -27,7 +26,6 @@ export default function Swap() {
   const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
   const { account } = useAccount();
   const debounceAccount = useDebounce(account, 1000);
-
   return (
     <StyledContainer>
       <ComponentWrapperPage
@@ -38,10 +36,7 @@ export default function Swap() {
           slippage: settingStore.getSlippage(),
           account: debounceAccount,
           onOpenBridge: () => {
-            setLayoutStore({
-              showAccountSider: true,
-              defaultTab: 'bridge',
-            });
+            window.open('https://scroll.io/bridge', '_blank');
           },
           onOpenCode: () => {
             window.open(
@@ -62,9 +57,8 @@ export default function Swap() {
           toast,
           addTransaction,
         }}
-        src={'dapdapbos.near/widget/Linea.Uniswap.Swap.Dex'}
+        src="dapdapbos.near/widget/Scroll.Uniswap.Swap.Dex"
       />
-      <LeftBg style={{ top: '370px' }} />
     </StyledContainer>
   );
 }

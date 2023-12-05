@@ -12,10 +12,10 @@ const StyledEmptyBox = styled.div`
   justify-content: space-between;
   height: 45px;
   border-radius: 16px;
-  background-color: #5ee0ff;
+  background-color: #101010;
   padding: 5px 14px;
   font-size: 16px;
-  color: #1b1b1b;
+  color: #ffffff;
   font-weight: 600;
   cursor: pointer;
 `;
@@ -26,12 +26,12 @@ const StyledContentBox = styled.div`
   justify-content: space-between;
   height: 45px;
   border-radius: 16px;
-  border: 1px solid #3d363d;
+  border: 1px solid #000000;
   padding: 5px 14px;
   font-size: 16px;
-  color: #fff;
   font-weight: 600;
   cursor: pointer;
+  background-color: #fff;
   .tokenInfo {
     display: flex;
     align-items: center;
@@ -43,7 +43,7 @@ const StyledContentBox = styled.div`
     }
     .tokeName {
       font-size: 20px;
-      color: #fff;
+      color: #101010;
       font-weight: bold;
     }
   }

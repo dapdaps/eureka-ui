@@ -9,10 +9,8 @@ import config from '@/config/uniswap';
 
 const StyledButton = styled.button`
   border-radius: 16px;
-  background: #62ddff;
   width: 446px;
   height: 62px;
-  color: #1b1b1b;
   font-size: 18px;
   font-weight: 600;
   line-height: normal;
@@ -21,7 +19,7 @@ const StyledButton = styled.button`
   gap: 6px;
   justify-content: center;
   align-items: center;
-
+  margin-top: 39px;
   @media (max-width: 768px) {
     width: 80%;
   }
@@ -37,6 +35,10 @@ export default function PoolConnectButton() {
         onClick={() => {
           connect();
         }}
+        style={{
+          backgroundColor: '#FF684B',
+          color: '#fff',
+        }}
       >
         {connecting && <Loading />}
         Connect wallet
@@ -49,9 +51,13 @@ export default function PoolConnectButton() {
         onClick={() => {
           switchNetwork(chains[config.chainId]);
         }}
+        style={{
+          backgroundColor: '#101010',
+          color: '#fff',
+        }}
       >
         {switching && <Loading />}
-        Switch Linea Chain
+        Switch Scroll Chain
       </StyledButton>
     );
   }

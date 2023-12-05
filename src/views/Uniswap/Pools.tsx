@@ -5,7 +5,6 @@ import Loading from '@/components/Icons/Loading';
 import Big from 'big.js';
 import Panel from './components/Panel';
 import PositionItem from './components/PositionItem';
-import { LeftBg } from './styles';
 import PoolConnectButton from './components/PoolConnectButton';
 
 import usePositions from './hooks/usePositions';
@@ -30,7 +29,7 @@ const StyledHeader = styled.div`
 const Label = styled.div`
   font-size: 26px;
   font-weight: 700;
-  color: #fff;
+  color: #101010;
 `;
 const Positions = styled.div`
   max-height: calc(100vh - 232px);
@@ -42,20 +41,20 @@ const PositionButton = styled.button`
   height: 35px;
   border-radius: 12px;
   border: none;
-  background-color: #5ee0ff;
+  background-color: #101010;
   font-size: 14px;
   font-weight: 600;
-  color: #1b1b1b;
+  color: #ffffff;
 `;
 const StyledPanel = styled(Panel)`
-  min-height: 300px;
+  min-height: 380px;
   margin-top: 10px;
 `;
 const PanelHeader = styled.div`
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #3d363d;
+  border-bottom: 1px solid rgba(199, 191, 182, 0.5);
   align-items: center;
   @media (max-width: 768px) {
     padding: 18px 15px 15px;
@@ -64,7 +63,7 @@ const PanelHeader = styled.div`
 const Title = styled.div`
   font-size: 18px;
   font-weight: 500;
-  color: #fff;
+  color: #101010;
   @media (max-width: 768px) {
     font-size: 16px;
   }
@@ -72,29 +71,32 @@ const Title = styled.div`
 const CloseBtn = styled.div`
   font-size: 14px;
   font-weight: 400;
-  color: #ff75bf;
+  color: #ff684b;
   cursor: pointer;
   @media (max-width: 768px) {
     font-size: 12px;
   }
 `;
 const Empty = styled.div`
-  height: 200px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   font-size: 14px;
   font-weight: 400;
-  color: #fff;
+  color: #101010;
   align-items: center;
   justify-content: center;
-  gap: 30px;
+  padding-top: 85px;
+  .desc {
+    margin-top: 23px;
+  }
 `;
 const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   height: 232px;
-  color: #fff;
+  color: #101010;
 `;
 const PowerBy = styled.div`
   width: 100%;
@@ -125,7 +127,7 @@ const PowerBy = styled.div`
 `;
 const Pools = () => {
   const router = useRouter();
-  const { chainId } = useAccount();
+  const { chainId, account } = useAccount();
   const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(false);
   const { positions, loading } = usePositions();
   const [openPositions, closedPositions] = positions?.reduce(
@@ -152,18 +154,20 @@ const Pools = () => {
         </PositionButton>
       </StyledHeader>
       <StyledPanel style={{ maxHeight: 'calc(100% - 92px)', overflow: 'hidden' }}>
-        <PanelHeader>
-          <Title>Your positions ({userSelectedPositionSet.length})</Title>
-          {positions.length > 0 && (
-            <CloseBtn
-              onClick={() => {
-                setUserHideClosedPositions(!userHideClosedPositions);
-              }}
-            >
-              {!userHideClosedPositions ? 'Hide' : 'Show'} closed positions
-            </CloseBtn>
-          )}
-        </PanelHeader>
+        {chainId === config.chainId && account && (
+          <PanelHeader>
+            <Title>Your positions ({userSelectedPositionSet.length})</Title>
+            {positions.length > 0 && (
+              <CloseBtn
+                onClick={() => {
+                  setUserHideClosedPositions(!userHideClosedPositions);
+                }}
+              >
+                {!userHideClosedPositions ? 'Hide' : 'Show'} closed positions
+              </CloseBtn>
+            )}
+          </PanelHeader>
+        )}
         {loading ? (
           <LoadingWrapper>
             <Loading size={30} />
@@ -182,19 +186,32 @@ const Pools = () => {
           </Positions>
         ) : (
           <Empty>
-            <svg width="42" height="34" viewBox="0 0 42 34" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M1 17L8.08994 3.65422C8.95763 2.02092 10.656 1 12.5055 1H29.4945C31.344 1 33.0424 2.02093 33.9101 3.65422L41 17M1 17V29C1 31.2091 2.79086 33 5 33H37C39.2091 33 41 31.2091 41 29V17M1 17H13L17 23H25L28.5 17H41"
-                stroke="white"
-                strokeWidth="2"
-                stroke-linejoin="round"
-              />
-            </svg>
-            <span>
+            {(!account || !positions.length) && chainId === config.chainId && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="42" height="34" viewBox="0 0 42 34" fill="none">
+                <path
+                  d="M1 17L8.08994 3.65422C8.95763 2.02092 10.656 1 12.5055 1H29.4945C31.344 1 33.0424 2.02093 33.9101 3.65422L41 17M1 17V29C1 31.2091 2.79086 33 5 33H37C39.2091 33 41 31.2091 41 29V17M1 17H13L17 23H25L28.5 17H41"
+                  stroke="#101010"
+                  stroke-width="2"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            )}
+            {chainId !== config.chainId && account && (
+              <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                <path
+                  d="M19.6038 7.5C21.5283 4.16667 26.3396 4.16667 28.2641 7.5L39.9988 27.8252C41.9233 31.1586 39.5177 35.3252 35.6687 35.3252H12.1992C8.35017 35.3252 5.94454 31.1586 7.86904 27.8252L19.6038 7.5Z"
+                  stroke="#101010"
+                  stroke-width="2"
+                />
+                <rect x="22.1224" y="14.4924" width="3.6231" height="10.8693" rx="1.81155" fill="#101010" />
+                <rect x="22.1224" y="27.1731" width="3.6231" height="3.6231" rx="1.81155" fill="#101010" />
+              </svg>
+            )}
+            <div className="desc">
               {chainId === config.chainId || !chainId
                 ? 'Your active V3 liquidity positions will appear here.'
                 : 'Your connected network is unsupported.'}
-            </span>
+            </div>
             <PoolConnectButton />
           </Empty>
         )}
@@ -226,7 +243,6 @@ const Pools = () => {
         </div>
         <div>Powered by DapDap & BOS</div>
       </PowerBy>
-      <LeftBg />
     </StyledContainer>
   );
 };

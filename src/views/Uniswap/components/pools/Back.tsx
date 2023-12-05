@@ -10,8 +10,8 @@ const StyledWrap = styled.div`
   cursor: pointer;
   .text {
     font-size: 16px;
-    color: #8e8e8e;
-    font-weight: bold;
+    color: #101010;
+    font-weight: 400;
   }
 `;
 

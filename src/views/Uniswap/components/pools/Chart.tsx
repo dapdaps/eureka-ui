@@ -36,12 +36,12 @@ const StyledCurrent = styled.div`
   flex-direction: column;
   .small {
     font-size: 14px;
-    color: #8e8e8e;
+    color: #101010;
   }
   .fold {
     font-size: 20px;
     font-weight: bold;
-    color: #fff;
+    color: #101010;
   }
 `;
 const StyledButton = styled.div`
@@ -144,9 +144,9 @@ const Chart = ({
   useEffect(() => {
     if (!chart_done) return;
     let left, right;
-    
+
     if (lowerTick == -887272 && highTick == 887272) {
-      left =  0;
+      left = 0;
       right = 999999999;
     } else {
       left = tickToPrice({
@@ -339,14 +339,14 @@ const Chart = ({
           <g className="leftBar" style={{ cursor: 'ew-resize' }}>
             <svg width="22" height="195" viewBox="0 0 22 195" fill="none" xmlns="http://www.w3.org/2000/svg">
               <rect width="22" height="195" fill="transparent" />
-              <rect x="7" width="4" height="195" fill="#D9D9D9" />
-              <path d="M0 4C0 1.79086 1.79086 0 4 0H11V20H4C1.79086 20 0 18.2091 0 16V4Z" fill="#D9D9D9" />
+              <rect x="7" width="4" height="195" fill="#101010" />
+              <path d="M0 4C0 1.79086 1.79086 0 4 0H11V20H4C1.79086 20 0 18.2091 0 16V4Z" fill="#101010" />
               <line x1="4.5" y1="5" x2="4.5" y2="14" stroke="white" />
               <line x1="7.5" y1="5" x2="7.5" y2="14" stroke="white" />
             </svg>
 
             <g className="leftPercent">
-              <rect width="44" height="24" rx="6" fill="#262626"></rect>
+              <rect width="44" height="24" rx="6" fill="rgba(19, 19, 19, 0.50)"></rect>
               <text fontSize="12" x="22" y="12" fill="white" textAnchor="middle" dominantBaseline="middle">
                 -0.1%
               </text>
@@ -362,7 +362,7 @@ const Chart = ({
               <line x1="18.5" y1="5" x2="18.5" y2="14" stroke="white" />
             </svg>
             <g className="rightPercent">
-              <rect width="44" height="24" rx="6" fill="#262626"></rect>
+              <rect width="44" height="24" rx="6" fill="rgba(19, 19, 19, 0.50)"></rect>
               <text fontSize="12" x="22" y="12" fill="white" textAnchor="middle" dominantBaseline="middle">
                 0.1%
               </text>

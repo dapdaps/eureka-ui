@@ -12,6 +12,7 @@ const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-top: 10px;
   .hvc {
     display: flex;
     align-items: center;
@@ -24,9 +25,10 @@ const StyledContent = styled.div`
 `;
 const StyledTip = styled.div`
   font-size: 14px;
-  color: #fff;
+  color: #101010;
   margin-top: 20px;
   text-align: center;
+  font-weight: 500;
 `;
 const StyledToken = styled.div`
   gap: 8px;
@@ -43,7 +45,7 @@ const StyledToken = styled.div`
   }
   .symbol {
     font-size: 16px;
-    color: #fff;
+    color: #101010;
     font-weight: bold;
   }
   .data {
@@ -98,12 +100,12 @@ const StyledUnderstandButton = styled.div`
   width: 200px;
   height: 36px;
   cursor: pointer;
-  background-color: #5ee0ff;
+  background-color: #101010;
   font-size: 16px;
-  color: #131313;
+  color: #ffffff;
   font-weight: 600;
   margin-top: 40px;
-  border-radius: 18px;
+  border-radius: 6px;
 `;
 const UnderstandButton = ({ token, onImportTokenCb }: any) => {
   const tokensStore: any = useHistoryTokensStore();

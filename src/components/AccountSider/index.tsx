@@ -52,9 +52,15 @@ const Bg = styled.div`
 const CloseIcon = styled.div`
   position: absolute;
   padding: 5px;
-  left: -27px;
-  top: 16px;
+  left: -40px;
+  top: 20px;
   cursor: pointer;
+  border-radius: 23px 0px 0px 23px;
+  background: rgba(55, 58, 83, 0.5);
+  width: 40px;
+  height: 32px;
+  padding-left: 15px;
+  padding-top: 3px;
   @media (max-width: 768px) {
     display: none;
   }
@@ -113,9 +119,14 @@ const AccountSider = () => {
               });
             }}
           >
-            <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1 12L6 6.5L1 1" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
-              <path d="M9 12L14 6.5L9 1" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none">
+              <path d="M1 9.46176L4.84626 5.23087L1 0.999986" stroke="white" stroke-width="2" stroke-linecap="round" />
+              <path
+                d="M7.15356 9.46176L10.9998 5.23087L7.15356 0.999986"
+                stroke="white"
+                stroke-width="2"
+                stroke-linecap="round"
+              />
             </svg>
           </CloseIcon>
         )}

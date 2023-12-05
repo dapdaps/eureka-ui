@@ -33,7 +33,7 @@ const StyledContent = styled.div`
 const StyledHead = styled.div`
   .title {
     font-size: 20px;
-    color: #ffffff;
+    color: #101010;
     font-weight: 700;
   }
   svg {
@@ -71,10 +71,9 @@ const StyledBody = styled.div`
 const StyledSearch = styled.div`
   margin-top: 18px;
   height: 44px;
-  border: 1px solid #303030;
+  border: 1px solid #101010;
   border-radius: 12px;
   padding: 0 15px;
-  background-color: #1b1b1b;
   gap: 8px;
   input {
     background: none;
@@ -82,7 +81,7 @@ const StyledSearch = styled.div`
     outline: none;
     width: 100%;
     font-size: 14px;
-    color: #fff;
+    color: #101010;
   }
 `;
 const SelectTokenModal = (props: any) => {

@@ -35,16 +35,16 @@ const StyledWrap = styled.div`
 `;
 const StyledHeadTab = styled.div`
   padding: 12px 24px;
-  border-bottom: 1px solid #242424;
+  border-bottom: 1px solid #e7e7e7;
   margin: 0 -24px;
   gap: 44px;
   .tabItem {
     font-size: 14px;
-    color: #8e8e8e;
+    color: #a49b9a;
     cursor: pointer;
   }
   .active {
-    color: #fff;
+    color: #101010;
   }
   @media (max-width: 768px) {
     border-bottom: 1px solid #343838;
@@ -64,14 +64,14 @@ const LoadingWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: #fff;
+  color: #101010;
 `;
 const Empty = styled.div`
   min-height: 100px;
   line-height: 100px;
   text-align: center;
   font-size: 18px;
-  color: #fff;
+  color: #101010;
 `;
 type ITab = 'all' | 'import';
 
@@ -163,7 +163,7 @@ const StyledRow = styled.div`
   padding: 0 24px;
   cursor: pointer;
   &:hover {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: #eeeeee;
   }
   .L {
     gap: 12px;
@@ -182,7 +182,7 @@ const StyledRow = styled.div`
     flex-direction: column;
     .name {
       font-size: 16px;
-      color: #fff;
+      color: #101010;
       font-weight: bold;
     }
     .symbol {
@@ -195,7 +195,7 @@ const StyledRow = styled.div`
   }
   .balance {
     font-size: 14px;
-    color: #fff;
+    color: #8e8e8e;
   }
 `;
 const TokenRow = ({ symbol, name, address, balance, icon, loading, isSelected, onClick }: any) => {
@@ -234,10 +234,10 @@ const StyledImportRow = styled(StyledRow)`
     cursor: pointer;
     padding: 0 24px;
     font-size: 16px;
-    color: #131313;
+    color: #ffffff;
     font-weight: 600;
-    background-color: #5ee0ff;
-    border-radius: 18px;
+    background-color: #101010;
+    border-radius: 6px;
   }
 `;
 const ImportTokenRow = ({ token, onImportTokenCb }: any) => {

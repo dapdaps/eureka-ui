@@ -22,7 +22,7 @@ const StyledLeft = styled.div`
   }
   .symbol {
     font-size: 20px;
-    color: #ffffff;
+    color: #101010;
     font-weight: bold;
     margin: 0 8px;
   }
@@ -32,9 +32,9 @@ const StyledLeft = styled.div`
     justify-content: center;
     border-radius: 6px;
     height: 24px;
-    background-color: #262626;
+    background-color: rgba(38, 38, 38, 0.2);
     font-size: 14px;
-    color: #8e8e8e;
+    color: #101010;
     padding: 0 5px;
     margin-right: 7px;
   }
