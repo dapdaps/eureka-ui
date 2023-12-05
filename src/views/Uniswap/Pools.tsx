@@ -154,15 +154,13 @@ const Pools = () => {
       <StyledPanel style={{ maxHeight: 'calc(100% - 92px)', overflow: 'hidden' }}>
         <PanelHeader>
           <Title>Your positions ({userSelectedPositionSet.length})</Title>
-          {!!userSelectedPositionSet.length && (
-            <CloseBtn
-              onClick={() => {
-                setUserHideClosedPositions(!userHideClosedPositions);
-              }}
-            >
-              {!userHideClosedPositions ? 'Hide' : 'Show'} closed positions
-            </CloseBtn>
-          )}
+          <CloseBtn
+            onClick={() => {
+              setUserHideClosedPositions(!userHideClosedPositions);
+            }}
+          >
+            {!userHideClosedPositions ? 'Hide' : 'Show'} closed positions
+          </CloseBtn>
         </PanelHeader>
         {loading ? (
           <LoadingWrapper>
