@@ -7,6 +7,8 @@ import useTokens from './hooks/useTokens';
 import useToast from '@/hooks/useToast';
 import { useTransactionsStore } from '@/stores/transactions';
 import useRequestModal from '@/hooks/useRequestModal';
+import useAccount from '@/hooks/useAccount';
+import { useDebounce } from 'usehooks-ts';
 import { LeftBg } from './styles';
 
 const StyledContainer = styled.div`
@@ -23,6 +25,8 @@ export default function Swap() {
   const { openRequestModal } = useRequestModal();
   const toast = useToast();
   const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
+  const { account } = useAccount();
+  const debounceAccount = useDebounce(account, 1000);
 
   return (
     <StyledContainer>
@@ -32,6 +36,7 @@ export default function Swap() {
           tokens,
           historyTokens,
           slippage: settingStore.getSlippage(),
+          account: debounceAccount,
           onOpenBridge: () => {
             setLayoutStore({
               showAccountSider: true,
