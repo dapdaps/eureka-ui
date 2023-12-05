@@ -35,12 +35,10 @@ export default function useTicks({ fee = 3000, token0, token1 }: any) {
           setLoading(false);
           return;
         }
-        if (currentTick !== 0) {
-          const NearestLowTick = Math.floor(currentTick / tickSpacing) * tickSpacing;
-          const NearestHighTick = Math.floor(currentTick / tickSpacing) * tickSpacing + tickSpacing;
-          setLowerTick(NearestLowTick);
-          setHighTick(NearestHighTick);
-        }
+        const NearestLowTick = Math.floor(currentTick / tickSpacing) * tickSpacing;
+        const NearestHighTick = Math.floor(currentTick / tickSpacing) * tickSpacing + tickSpacing;
+        setLowerTick(NearestLowTick);
+        setHighTick(NearestHighTick);
         setCurrentTick(currentTick);
         setLoading(false);
         setNoPair(false);
