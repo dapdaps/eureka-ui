@@ -32,6 +32,7 @@ const StyledTokenWrap = styled.div`
   align-items: center;
   height: 36px;
   border: 1px solid #303030;
+  background-color: #1b1b1b;
   padding: 7px 20px 7px 7px;
   gap: 8px;
   border-radius: 18px;

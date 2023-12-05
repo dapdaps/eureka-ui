@@ -6,7 +6,7 @@ import Loading from '@/components/Icons/Loading';
 import useChain from '@/hooks/useChain';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { usePriceStore } from '@/stores/price';
-import { Token } from '@/types';
+import { Token as IToken } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 
 import useTokens from '../hooks/useTokens';
@@ -54,11 +54,20 @@ const Balance = styled.div`
   text-align: right;
   color: #fff;
 `;
+const LoadingWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+  color: #fff;
+`;
+interface TokenWithBalance extends IToken {
+  balance: string;
+}
 
-const Token = ({ token }: { token: Token }) => {
+const Token = ({ token }: { token: TokenWithBalance }) => {
   const chain = useChain(token.chainId);
   const price = usePriceStore((store) => store.price);
-  const { balance, loading } = useTokenBalance({ currency: token });
   return (
     <TokenWrapper>
       <StyledToken>
@@ -72,26 +81,24 @@ const Token = ({ token }: { token: Token }) => {
         </div>
       </StyledToken>
       <Balance>
-        {loading ? (
-          <Loading />
-        ) : (
-          <>
-            <Symbol>{balanceFormated(balance)}</Symbol>
-            <Price>${valueFormated(balance, price[token.symbol])}</Price>
-          </>
-        )}
+        <Symbol>{balanceFormated(token.balance)}</Symbol>
+        <Price>${valueFormated(token.balance, price[token.symbol])}</Price>
       </Balance>
     </TokenWrapper>
   );
 };
 
 const Tokens = ({ mt }: { mt?: number }) => {
-  const tokens = useTokens();
+  const { tokens, loading } = useTokens();
   return (
     <StyledContainer mt={mt}>
-      {tokens?.map((_token, i) => (
-        <Token key={_token.address || 'native'} token={_token} />
-      ))}
+      {loading ? (
+        <LoadingWrapper>
+          <Loading size={30} />
+        </LoadingWrapper>
+      ) : (
+        tokens?.map((_token, i) => <Token key={_token.address || 'native'} token={_token} />)
+      )}
     </StyledContainer>
   );
 };

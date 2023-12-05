@@ -194,11 +194,17 @@ const UnclaimedFees = ({
     amount1: collectData.collectToken1,
     prices: priceStore.price,
   });
+
+  const claimable = useMemo(
+    () => new Big(collectData.collectToken0 || 0).gt(0) || new Big(collectData.collectToken1 || 0).gt(0),
+    [collectData.collectToken0, collectData.collectToken1],
+  );
+
   return (
     <StyledUnclaimedFees>
       <div className="vchb">
         <span className="title">Unclaimed fees</span>
-        {detail?.liquidity.gt(0) && (
+        {claimable && (
           <StyledSolidWrap className="hvc" onClick={openModal}>
             Collect fees
           </StyledSolidWrap>

@@ -11,7 +11,6 @@ export default function useTokensBalance(tokens: any, updater: number) {
   const { account, provider } = useAccount();
   useEffect(() => {
     const getBalances = async () => {
-      const _a = await provider.getBalance(account);
       try {
         setLoading(true);
         let hasNative = false;
@@ -32,6 +31,7 @@ export default function useTokensBalance(tokens: any, updater: number) {
             provider,
           }),
         ];
+
         if (hasNative) calls.push(provider.getBalance(account));
 
         const [results, nativeBalance] = await Promise.all(calls);

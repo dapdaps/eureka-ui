@@ -361,6 +361,7 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
           value={value}
           style={{ flexGrow: 1 }}
           disabled={!token}
+          placeholder="0"
           onChange={(ev) => {
             setValue(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
           }}

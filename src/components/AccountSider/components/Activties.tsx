@@ -74,6 +74,11 @@ const StyledTime = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
+const Empty = styled.div`
+  text-align: center;
+  padding-top: 60px;
+  color: #fff;
+`;
 
 const Activty = ({ icons, failed, tx, handler, desc, time }: any) => {
   const chain = useChain(config.chainId);
@@ -122,6 +127,7 @@ const Activties = ({ mt }: { mt?: number }) => {
       {transactions.map((transaction: any) => (
         <Activty key={transaction.tx} {...transaction} />
       ))}
+      {transactions.length === 0 && <Empty>No activties</Empty>}
     </StyledContainer>
   );
 };

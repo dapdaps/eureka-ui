@@ -86,7 +86,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
   const frequency = useFeeFrequency({ token0, token1 });
   useEffect(() => {
     if (!fee) setShowList(true);
-  }, []);
+  }, [fee]);
   return (
     <StyledContainer>
       <StyledSelectedFeeArea>

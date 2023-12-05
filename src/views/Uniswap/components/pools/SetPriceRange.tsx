@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import useAccount from '@/hooks/useAccount';
 import { tickToPrice } from '../../utils/tickMath';
 import { getTickFromPrice } from '../../utils/getTick';
+import { sortTokens } from '../../utils/sortTokens';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -71,6 +72,7 @@ const SetPriceRange = ({
   noPair,
   onExchangeTokens,
 }: any) => {
+  const [_token0, _token1] = sortTokens(token0, token1);
   return (
     <StyledContainer>
       <Header>
@@ -89,10 +91,10 @@ const SetPriceRange = ({
           {token1 && token0 && (
             <HeaderTokensAction>
               <HeaderTokenAction onClick={onExchangeTokens} active={!reverse}>
-                {reverse ? token1?.symbol : token0?.symbol}
+                {_token1?.symbol}
               </HeaderTokenAction>
               <HeaderTokenAction onClick={onExchangeTokens} active={reverse}>
-                {reverse ? token0?.symbol : token1?.symbol}
+                {_token0?.symbol}
               </HeaderTokenAction>
             </HeaderTokensAction>
           )}
@@ -254,7 +256,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
         <div
           className={`b ${(tick === 887272 || !price) && 'disabled'}`}
           onClick={() => {
-            setTick(tick + 1);
+            reverse ? setTick(tick - 1) : setTick(tick + 1);
           }}
         >
           <Add />
@@ -262,7 +264,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
         <div
           className={`b ${(tick === -887272 || !price) && 'disabled'}`}
           onClick={() => {
-            setTick(tick - 1);
+            !reverse ? setTick(tick - 1) : setTick(tick + 1);
           }}
         >
           <Sub />

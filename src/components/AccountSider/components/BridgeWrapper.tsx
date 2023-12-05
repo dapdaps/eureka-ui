@@ -14,7 +14,6 @@ const Header = styled.div`
   margin-top: 20px;
   padding-left: var(--padding-x);
   padding-right: var(--padding-x);
-  border-top: 1px solid #343838;
   @media (max-width: 768px) {
     margin-top: 0px;
     border-top: none;
@@ -103,14 +102,6 @@ const BridgeWrapper = ({
         <Title>Bridge</Title>
         {!showHistory ? (
           <Icons>
-            <Icon>
-              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 4.2666H17" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                <path d="M1 13.8667H17" stroke="white" strokeWidth="2" strokeLinecap="round" />
-                <circle cx="11" cy="4" r="3" fill="#141414" stroke="white" strokeWidth="2" />
-                <circle cx="7" cy="14" r="3" fill="#141414" stroke="white" strokeWidth="2" />
-              </svg>
-            </Icon>
             <TimeIcon
               onClick={() => {
                 setShowHistory(true);

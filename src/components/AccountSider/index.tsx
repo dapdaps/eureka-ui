@@ -59,15 +59,6 @@ const CloseIcon = styled.div`
     display: none;
   }
 `;
-const Layer = styled.div`
-  position: fixed;
-  right: 0px;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  z-index: 48;
-  background: rgba(0, 0, 0, 0.6);
-`;
 
 const AccountSider = () => {
   const layoutStore = useLayoutStore();
@@ -129,7 +120,6 @@ const AccountSider = () => {
           </CloseIcon>
         )}
       </StyledPanel>
-      {layoutStore.showAccountSider && <Layer />}
     </>
   );
 };
