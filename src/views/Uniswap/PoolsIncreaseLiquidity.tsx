@@ -103,81 +103,79 @@ const PoolsIncreaseLiquidity = () => {
     }
     setErrorTips('');
   }, [value0, value1, balanceLoading, detail]);
-  return (
+  return !loading && detail ? (
     <StyledContainer>
-      {!loading && detail ? (
-        <>
-          <Head showCleanAll={false} isIncrease />
-          <StyledBody>
-            <PoolRemovePair token0={detail.token0} token1={detail.token1} fee={detail.fee} status={detail.status} />
-            <PoolIncreaseLiquidityData
-              token0={detail.token0}
-              token1={detail.token1}
-              value0={detail.liquidityToken0}
-              value1={detail.liquidityToken1}
-            />
-            <PoolPriceRange
-              type="1"
-              detail={detail}
-              isReverse={reverse}
-              onSetReverse={() => {
-                setReverse(!reverse);
-              }}
-            />
-            <DepositAmount
-              token0={detail?.token0}
-              token1={detail?.token1}
-              value1={value1}
-              value0={value0}
-              currentTick={detail?.tick}
-              lowerTick={detail?.tickLow}
-              highTick={detail?.tickHigh}
-              reverse={reverse}
-              setValue0={setValue0}
-              setValue1={setValue1}
-              noPair={false}
-              balances={balances}
-              balanceLoading={balanceLoading}
-              isMint={false}
-            />
-            <IncreaseButton
-              errorTips={errorTips}
-              token0={detail?.token0}
-              value0={value0}
-              token1={detail?.token1}
-              value1={value1}
-              fee={detail?.fee}
-              tickLow={detail?.tickLow}
-              tickHigh={detail?.tickHigh}
-              tick={detail?.tick}
-              tokenId={detail?.tokenId}
-              onPreview={() => {
-                setShowPreview(true);
-              }}
-            />
-          </StyledBody>
-          <PreviewModal
+      <>
+        <Head showCleanAll={false} isIncrease />
+        <StyledBody>
+          <PoolRemovePair token0={detail.token0} token1={detail.token1} fee={detail.fee} status={detail.status} />
+          <PoolIncreaseLiquidityData
+            token0={detail.token0}
+            token1={detail.token1}
+            value0={detail.liquidityToken0}
+            value1={detail.liquidityToken1}
+          />
+          <PoolPriceRange
+            type="1"
+            detail={detail}
+            isReverse={reverse}
+            onSetReverse={() => {
+              setReverse(!reverse);
+            }}
+          />
+          <DepositAmount
+            token0={detail?.token0}
+            token1={detail?.token1}
+            value1={value1}
+            value0={value0}
+            currentTick={detail?.tick}
+            lowerTick={detail?.tickLow}
+            highTick={detail?.tickHigh}
+            reverse={reverse}
+            setValue0={setValue0}
+            setValue1={setValue1}
+            noPair={false}
+            balances={balances}
+            balanceLoading={balanceLoading}
+            isMint={false}
+          />
+          <IncreaseButton
+            errorTips={errorTips}
             token0={detail?.token0}
             value0={value0}
             token1={detail?.token1}
             value1={value1}
-            lowerTick={detail?.tickLow}
-            highTick={detail?.tickHigh}
-            tick={detail?.tick}
             fee={detail?.fee}
-            noPair={false}
-            isMint={false}
-            isOpen={showPreview}
+            tickLow={detail?.tickLow}
+            tickHigh={detail?.tickHigh}
+            tick={detail?.tick}
             tokenId={detail?.tokenId}
-            onRequestClose={() => {
-              setShowPreview(false);
+            onPreview={() => {
+              setShowPreview(true);
             }}
           />
-        </>
-      ) : (
-        <Spinner />
-      )}
+        </StyledBody>
+        <PreviewModal
+          token0={detail?.token0}
+          value0={value0}
+          token1={detail?.token1}
+          value1={value1}
+          lowerTick={detail?.tickLow}
+          highTick={detail?.tickHigh}
+          tick={detail?.tick}
+          fee={detail?.fee}
+          noPair={false}
+          isMint={false}
+          isOpen={showPreview}
+          tokenId={detail?.tokenId}
+          onRequestClose={() => {
+            setShowPreview(false);
+          }}
+        />
+      </>
     </StyledContainer>
+  ) : (
+    <Spinner />
   );
 };
 
