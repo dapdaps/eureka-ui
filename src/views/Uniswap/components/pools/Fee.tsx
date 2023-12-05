@@ -118,6 +118,7 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
                   onSelectFee(key);
                 }}
                 i={i}
+                showPercent={token0 && token1}
               />
             );
           })}
@@ -164,12 +165,14 @@ const FeeCell = ({
   description,
   selecedNum,
   i,
+  showPercent,
   onClick,
 }: {
   isSelected: boolean;
   value: string;
   description: string;
   selecedNum: string;
+  showPercent?: boolean;
   i: number;
   onClick: () => void;
 }) => {
@@ -191,7 +194,7 @@ const FeeCell = ({
         )}
       </span>
       <p className="description">{description}</p>
-      <div className="num">{selecedNum}% select</div>
+      {showPercent && <div className="num">{selecedNum}% select</div>}
     </StyledCell>
   );
 };
