@@ -142,7 +142,8 @@ const DepositAmount = ({
                   value={value0}
                   setValue={(value: string) => {
                     setValue0(value);
-                    if (value) setValue1(new Big(value).mul(price || 1).toFixed(token0.decimals));
+                    if (value)
+                      setValue1(new Big(value).mul(price === Infinity ? 1 : price || 1).toFixed(token0.decimals));
                   }}
                   balance={token0 ? balances[token0?.address] : ''}
                   loading={balanceLoading}
