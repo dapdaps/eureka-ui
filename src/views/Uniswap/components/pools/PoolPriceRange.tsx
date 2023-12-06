@@ -113,10 +113,10 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type, isDetail }: any
         </div>
         <div className="switch hvc">
           <span className={`item hvc ${!isReverse && 'active'}`} onClick={onSetReverse}>
-            {detail?.token1.symbol}
+            {_token1.symbol}
           </span>
           <span className={`item hvc ${isReverse && 'active'}`} onClick={onSetReverse}>
-            {detail?.token0.symbol}
+            {_token0.symbol}
           </span>
         </div>
       </StyledHead>
