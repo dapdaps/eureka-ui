@@ -68,7 +68,7 @@ const DepositAmount = ({
             tick: _lowerTick,
             decimals0: _decimals0,
             decimals1: _decimals1,
-            isReverse: !reverse,
+            isReverse: isMint ? !reverse : true,
             isNumber: true,
           });
     const highPrice =
@@ -78,7 +78,7 @@ const DepositAmount = ({
             tick: _tickHigh,
             decimals0: _decimals0,
             decimals1: _decimals1,
-            isReverse: !reverse,
+            isReverse: isMint ? !reverse : true,
             isNumber: true,
           });
     let _currentPrice = currentPrice;
@@ -87,7 +87,7 @@ const DepositAmount = ({
         tick: currentTick,
         decimals0: _decimals0,
         decimals1: _decimals1,
-        isReverse: !reverse,
+        isReverse: isMint ? !reverse : true,
         isNumber: true,
       });
     }
@@ -143,8 +143,11 @@ const DepositAmount = ({
                   value={value0}
                   setValue={(value: string) => {
                     setValue0(value);
-                    if (value)
+                    if (value) {
                       setValue1(new Big(value).mul(price === Infinity ? 0 : price || 1).toFixed(token0.decimals));
+                    } else {
+                      setValue1('');
+                    }
                   }}
                   balance={token0 ? balances[token0?.address] : ''}
                   loading={balanceLoading}
@@ -154,8 +157,11 @@ const DepositAmount = ({
                   value={value1}
                   setValue={(value: string) => {
                     setValue1(value);
-                    if (value)
+                    if (value) {
                       setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
+                    } else {
+                      setValue0('');
+                    }
                   }}
                   balance={token1 ? balances[token1?.address] : ''}
                   loading={balanceLoading}
@@ -225,7 +231,11 @@ const DepositAmount = ({
                 value={value0}
                 setValue={(value: string) => {
                   setValue0(value);
-                  if (value) setValue1(new Big(value).mul(price || 1).toFixed(token0.decimals));
+                  if (value) {
+                    setValue1(new Big(value).mul(price || 1).toFixed(token0.decimals));
+                  } else {
+                    setValue1('');
+                  }
                 }}
                 balance={token0 ? balances[token0?.address] : ''}
                 loading={balanceLoading}
@@ -235,8 +245,11 @@ const DepositAmount = ({
                 value={value1}
                 setValue={(value: string) => {
                   setValue1(value);
-                  if (value)
+                  if (value) {
                     setValue0(new Big(price).eq(0) ? 0 : new Big(1).div(price).mul(value).toFixed(token1.decimals));
+                  } else {
+                    setValue0('');
+                  }
                 }}
                 balance={token1 ? balances[token1?.address] : ''}
                 loading={balanceLoading}
