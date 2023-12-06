@@ -211,7 +211,8 @@ const Chart = ({
     const pathData = areaGenerator(
       series.filter((d: ChartEntry) => {
         const value = xScale(xAccessor(d));
-        return value > 0 && value <= svgWidth - svgPadding * 2;
+        return value;
+        // return value > 0 && value <= svgWidth - svgPadding * 2;
       }) as Iterable<[number, number]>,
     );
     d3.select('.liquidity').attr('d', pathData);
@@ -220,7 +221,7 @@ const Chart = ({
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
       // if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
-      if (e.x + barWidth / 2 <= 0 || xScale.invert(e.x + 7) < 0) return;
+      if (e.x - barWidth / 2 <= 0 || e.x >= svgWidth - svgPadding * 2 || xScale.invert(e.x + 7) < 0) return;
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 7), type: 'left' });
     }) as any;
     d3.select('.leftBar').call(dragEvent);
@@ -229,7 +230,7 @@ const Chart = ({
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
       // if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
-      if (e.x >= svgWidth - svgPadding * 2 || xScale.invert(e.x + 11) < 0) return;
+      if (e.x >= svgWidth - svgPadding * 2 || e.x - barWidth / 2 <= 0 || xScale.invert(e.x + 11) < 0) return;
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 11), type: 'right' });
     }) as any;
     d3.select('.rightBar').call(dragEvent);
@@ -242,11 +243,17 @@ const Chart = ({
     d3.select('.leftPercent').attr('transform', `translate(-${percentBoxWidth + percentToBarDistance}, 0)`);
   }
   function drawRightBar(coordinate: any) {
+    const barTranslateDistance = xScale(+coordinate) - 11;
     d3.select('.rightBar').attr(
       'transform',
-      `translate(${xScale(+coordinate) - 11}, ${svgHeight - barHeight - axisHeight})`,
+      `translate(${barTranslateDistance}, ${svgHeight - barHeight - axisHeight})`,
     );
-    d3.select('.rightPercent').attr('transform', `translate(${barWidth + percentToBarDistance}, 0)`);
+    if (svgWidth - barTranslateDistance < 130) {
+      d3.select('.rightPercent').attr('transform', `translate(${-40}, 0)`);
+    } else {
+      d3.select('.rightPercent').attr('transform', `translate(${barWidth + percentToBarDistance}, 0)`);
+    }
+    
   }
   function drawSection() {
     if (!d3.select('.leftBar').attr('transform') || !d3.select('.rightBar').attr('transform')) return;
