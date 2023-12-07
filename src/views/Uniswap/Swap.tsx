@@ -1,7 +1,6 @@
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import styled from 'styled-components';
 import config from '@/config/uniswap';
-import { useLayoutStore } from '@/stores/layout';
 import { useSettingsStore } from '@/stores/settings';
 import useTokens from './hooks/useTokens';
 import useToast from '@/hooks/useToast';
@@ -18,9 +17,8 @@ const StyledContainer = styled.div`
 `;
 
 export default function Swap() {
-  const setLayoutStore = useLayoutStore((store) => store.set);
   const settingStore: any = useSettingsStore();
-  const { tokens, historyTokens, importToken, addHistoryToken } = useTokens();
+  const { tokens, stableTokens, importToken } = useTokens();
   const { openRequestModal } = useRequestModal();
   const toast = useToast();
   const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
@@ -32,7 +30,7 @@ export default function Swap() {
         componentProps={{
           ...config,
           tokens,
-          historyTokens,
+          stableTokens,
           slippage: settingStore.getSlippage(),
           account: debounceAccount,
           onOpenBridge: () => {
@@ -46,9 +44,6 @@ export default function Swap() {
           },
           onImportToken: (token: any) => {
             importToken(token);
-          },
-          onAddHistoryToken: (tokens: any) => {
-            addHistoryToken(tokens);
           },
           onSetSlippage: (slippage: number) => {
             settingStore.setSlippage(slippage);

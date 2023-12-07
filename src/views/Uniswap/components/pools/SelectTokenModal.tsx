@@ -86,7 +86,7 @@ const StyledSearch = styled.div`
 `;
 const SelectTokenModal = (props: any) => {
   const { isOpen, onRequestClose, onSelectToken } = props;
-  const { tokens, historyTokens } = useTokens();
+  const { tokens, stableTokens } = useTokens();
   const [showHistory, setShowHistory] = useState(true);
   const [searchVal, setSearchVal] = useState('');
 
@@ -109,7 +109,7 @@ const SelectTokenModal = (props: any) => {
               placeholder="Seach name or paste address"
             />
           </StyledSearch>
-          {showHistory && <HistoryTokens tokens={Object.values(historyTokens || {})} onSelectToken={onSelectToken} />}
+          {showHistory && <HistoryTokens tokens={stableTokens || []} onSelectToken={onSelectToken} />}
           <TokenBalanceList
             tokens={tokens}
             searchVal={searchVal}
