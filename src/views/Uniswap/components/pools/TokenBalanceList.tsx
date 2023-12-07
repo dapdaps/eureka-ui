@@ -51,7 +51,7 @@ const StyledHeadTab = styled.div`
 `;
 const StyledList = styled.div`
   margin: 0 -24px;
-  height: calc(90vh - 182px);
+  height: calc(80vh - 282px);
   overflow-y: auto;
 `;
 const LoadingWrapper = styled.div`
