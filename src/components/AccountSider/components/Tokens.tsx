@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import CurrencyIcon from '@/components/CurrencyIcon';
 import Loading from '@/components/Icons/Loading';
 import useChain from '@/hooks/useChain';
-import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { usePriceStore } from '@/stores/price';
 import { Token as IToken } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';

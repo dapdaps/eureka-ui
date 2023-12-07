@@ -122,7 +122,7 @@ export default {
   534352: {
     chainId: 534352,
     chainName: 'Scroll',
-    icon: '/images/chains/scroll.png',
+    icon: '/images/chains/scroll.svg',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://rpc.scroll.io'],
     blockExplorers: 'https://scrollscan.com/',

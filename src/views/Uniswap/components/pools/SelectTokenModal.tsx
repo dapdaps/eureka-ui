@@ -91,7 +91,7 @@ const SelectTokenModal = (props: any) => {
   const [searchVal, setSearchVal] = useState('');
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+    <Modal isOpen={isOpen} onRequestClose={onRequestClose} height="90vh">
       <StyledContent>
         <StyledHead className="vchb">
           <span className="title">Select a token</span>

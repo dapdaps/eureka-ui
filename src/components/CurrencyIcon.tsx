@@ -18,7 +18,6 @@ const ChainIcon = styled.img<{ size: number }>`
   right: -${({ size }) => size / 3}px;
   bottom: -3px;
   padding: 3px;
-  background-color: #1f2121;
 `;
 
 export default function CurrencyIcon({

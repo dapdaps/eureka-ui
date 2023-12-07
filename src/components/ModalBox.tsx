@@ -5,9 +5,10 @@ import styled from 'styled-components';
 const StyledContainer = styled.div`
   padding: 24px;
   border: 1px solid #3d363d;
-  border-radius: 24px;
+  border-radius: 12px;
   background-color: #ffffff;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+  box-sizing: border-box;
   @media (max-width: 768px) {
     width: 100vw;
     box-sizing: border-box;
@@ -20,11 +21,13 @@ const CustomModal = ({
   onRequestClose,
   shouldCloseOnOverlayClick = true,
   children,
+  height,
 }: {
   isOpen: boolean;
   onRequestClose: any;
   shouldCloseOnOverlayClick?: boolean;
   children: React.ReactNode;
+  height?: string;
 }) => {
   const [ready, setReady] = useState(false);
   useEffect(() => {
@@ -78,7 +81,7 @@ const CustomModal = ({
           : {},
       }}
     >
-      <StyledContainer>{children}</StyledContainer>
+      <StyledContainer style={{ height: height || 'auto' }}>{children}</StyledContainer>
     </Modal>
   );
 };

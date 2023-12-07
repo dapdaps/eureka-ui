@@ -11,7 +11,6 @@ import useImportToken from '../../hooks/useImportToken';
 import useTokensBalance from '../../hooks/useTokensBalance';
 
 const StyledWrap = styled.div`
-  margin-top: 24px;
   .vchb {
     display: flex;
     align-items: center;
@@ -52,12 +51,8 @@ const StyledHeadTab = styled.div`
 `;
 const StyledList = styled.div`
   margin: 0 -24px;
-  height: 380px;
-  overflow: auto;
-
-  @media (max-width: 768px) {
-    height: calc(80vh - 290px);
-  }
+  height: calc(90vh - 182px);
+  overflow-y: auto;
 `;
 const LoadingWrapper = styled.div`
   height: 100px;

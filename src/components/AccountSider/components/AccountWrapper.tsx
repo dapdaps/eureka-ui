@@ -18,7 +18,6 @@ const TipsWrapper = styled.div`
 
 export default function AccountWrapper({
   count,
-  setTab,
   showChains,
   setShowChains,
 }: {
@@ -35,7 +34,7 @@ export default function AccountWrapper({
       <Actions
         mt={30}
         onClick={(type) => {
-          type === 'bridge' && setTab('bridge');
+          type === 'bridge' && window.open('https://scroll.io/bridge', '_blank');
         }}
       />
       <TipsWrapper>

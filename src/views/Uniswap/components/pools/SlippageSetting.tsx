@@ -19,9 +19,6 @@ const StyledContainer = styled.div`
   padding: 20px;
   position: absolute;
   z-index: 20;
-  @media (max-width: 768px) {
-    background: #2b2b2b;
-  }
 `;
 const Label = styled.div`
   font-size: 16px;
@@ -42,9 +39,6 @@ const SlippageActions = styled.div`
   font-size: 16px;
   font-weight: 500;
   align-items: center;
-  @media (max-width: 768px) {
-    background-color: #1b1b1b;
-  }
 `;
 const SlippageAction = styled.div`
   padding: 6px;
@@ -55,12 +49,6 @@ const SlippageAction = styled.div`
   box-sizing: border-box;
   &.active {
     background-color: #ffffff;
-  }
-  @media (max-width: 768px) {
-    &.active {
-      color: #fff;
-      background: #3f3f3f;
-    }
   }
 `;
 const InputWrapper = styled.div`
