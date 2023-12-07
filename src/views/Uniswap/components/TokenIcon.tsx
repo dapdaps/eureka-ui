@@ -7,8 +7,7 @@ const StyledTokenIcon = styled.img<{ size: number }>`
   height: ${({ size }) => size + 'px'};
 `;
 
-export const DEFAULT_TOKEN_ICON =
-  'https://ipfs.near.social/ipfs/bafkreigrjhg7cu6bceirvh3vuujt7pg7l5um3jeuemhd2ac3mmh3qjjwme';
+export const DEFAULT_TOKEN_ICON = '/defalut_token.png';
 const getIconByAddress = (address: string) => {
   return `https://assets.dapdap.net/images/${address.toLowerCase()}.png`;
 };
