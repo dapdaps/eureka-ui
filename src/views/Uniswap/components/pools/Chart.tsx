@@ -84,6 +84,8 @@ const Chart = ({
   const { current, fee, data } = poolChartData || {};
   const [chart_done, set_chart_done] = useState<boolean>(false);
   const [zoom, setZoom] = useState<d3.ZoomTransform | null>(null);
+  const [leftGotoZero, setLeftGotoZero] = useState<boolean>(false)
+  const [rightGotoZero, setRightGotoZero] = useState<boolean>(false)
   const zoomBehavior: any = useMemo(() => {
     if (fee) {
       const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
@@ -220,7 +222,11 @@ const Chart = ({
   function drawInitLeftBar() {
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
-      // if (e.x >= bar_right_x || e.x + barWidth / 2 <= 0) return;
+      if (xScale.invert(e.x + 7) < 0) {
+        setLeftGotoZero(true)
+      } else {
+        setLeftGotoZero(false);
+      }
       if (e.x - barWidth / 2 <= 0 || e.x >= svgWidth - svgPadding * 2 || xScale.invert(e.x + 7) < 0) return;
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 7), type: 'left' });
     }) as any;
@@ -228,8 +234,11 @@ const Chart = ({
   }
   function drawInitRightBar() {
     const dragEvent = d3.drag().on('drag', (e) => {
-      const bar_left_x = d3.select('.leftBar').attr('transform').split(',')[0].slice(10);
-      // if (e.x <= bar_left_x || e.x >= svgWidth - svgPadding * 2) return;
+      if (xScale.invert(e.x + 11) < 0) {
+        setRightGotoZero(true)
+      } else {
+        setRightGotoZero(false);
+      }
       if (e.x >= svgWidth - svgPadding * 2 || e.x - barWidth / 2 <= 0 || xScale.invert(e.x + 11) < 0) return;
       handleCoordinateChange({ coordinate: xScale.invert(e.x + 11), type: 'right' });
     }) as any;
@@ -272,8 +281,8 @@ const Chart = ({
     } else {
       d3.select('.section').attr('height', barHeight).attr('opacity', 0);
     }
-    d3.select('.leftPercent text').text(getPercent(xScale.invert(+x1 + 7)) + '%');
-    d3.select('.rightPercent text').text(getPercent(xScale.invert(+x2 + 11)) + '%');
+    d3.select('.leftPercent text').text( (leftGotoZero ? -100 : getPercent(xScale.invert(+x1 + 7))) + '%');
+    d3.select('.rightPercent text').text( (rightGotoZero? -100 : getPercent(xScale.invert(+x2 + 11))) + '%');
   }
   function getPercent(newPrice: number) {
     let movePercent;
