@@ -11,7 +11,7 @@ export default function useTokens() {
 
   return {
     tokens: { ...tokenStore.tokens, ...historyTokensStore.importTokens },
-    historyTokens: historyTokensStore.historyTokens,
+    stableTokens: tokenStore.stableTokens,
     importToken,
     addHistoryToken: historyTokensStore.addHistoryToken,
   };
