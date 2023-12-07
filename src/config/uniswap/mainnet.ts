@@ -42,7 +42,7 @@ export default {
       decimals: 18,
       symbol: 'BAL',
       name: 'Balancer',
-      icon: `https://assets.dapdap.net/images/${'0x6a28e90582c583fcd3347931c544819C31e9D0e0'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0x6a28e90582c583fcd3347931c544819C31e9D0e0'.toLowerCase()}.svg`,
     },
     '0xB755039eDc7910C1F1BD985D48322E55A31AC0bF': {
       chainId: 534352,
