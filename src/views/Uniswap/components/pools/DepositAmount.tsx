@@ -308,6 +308,7 @@ const StyledTop = styled.div`
     border: none;
     outline: none;
     width: calc(100% - 100px);
+    padding-left: 0px;
   }
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {

@@ -25,6 +25,9 @@ const StyledContainer = styled.div`
 `;
 const StyledBody = styled.div`
   padding: 20px;
+  @media (max-width: 768px) {
+    padding-top: 0px;
+  }
 `;
 
 const PoolsIncreaseLiquidity = () => {

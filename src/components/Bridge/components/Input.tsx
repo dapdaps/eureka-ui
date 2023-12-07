@@ -31,7 +31,6 @@ const InputWrapper = styled.div`
   border-radius: 12px;
   border: 1px solid #373a53;
   display: flex;
-  padding: 10px;
   box-sizing: border-box;
 `;
 const StyledInput = styled.input`
@@ -42,6 +41,7 @@ const StyledInput = styled.input`
   color: #fff;
   background-color: transparent;
   flex-grow: 1;
+  padding-left: 10px;
 `;
 const MaxButton = styled.button`
   width: 36px;
@@ -54,6 +54,8 @@ const MaxButton = styled.button`
   padding: 0px;
   color: #979abe;
   background-color: rgba(151, 154, 190, 0.3);
+  margin-top: 10px;
+  margin-right: 10px;
 `;
 
 const Input = ({

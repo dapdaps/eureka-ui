@@ -28,6 +28,10 @@ const StyledAccountBox = styled.div`
   box-sizing: border-box;
   gap: 10px;
   cursor: pointer;
+  @media (max-width: 768px) {
+    background-color: transparent;
+    width: 36px;
+  }
 `;
 const StyledLogo = styled.div`
   width: 28px;
@@ -55,6 +59,9 @@ const StyledAccount = styled.div`
   font-size: 16px;
   font-weight: 700;
   color: #101010;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Header = () => {

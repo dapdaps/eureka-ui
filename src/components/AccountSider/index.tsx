@@ -14,8 +14,7 @@ const StyledContainer = styled.div<{ display: boolean }>`
   top: 20px;
   z-index: 50;
   transition: 0.5s;
-  transform: translate(${({ display }) => (display ? 0 : 500)}px);
-
+  transform: translate(${({ display }) => (display ? 0 : 900)}px);
   @media (max-width: 768px) {
     width: 100vw;
     right: 0px;

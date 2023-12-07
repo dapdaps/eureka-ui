@@ -30,6 +30,10 @@ const StyledQuick = styled.div`
     font-size: 36px;
     color: #101010;
     font-weight: bold;
+
+    @media (max-width: 720px) {
+      font-size: 30px;
+    }
   }
   .gap-8 {
     gap: 8px;
