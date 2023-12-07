@@ -139,6 +139,7 @@ const Pools = () => {
     () => [...openPositions, ...(userHideClosedPositions ? [] : closedPositions)],
     [closedPositions, openPositions, userHideClosedPositions],
   );
+  console.log('positions', positions);
   return (
     <StyledContainer>
       <StyledHeader>

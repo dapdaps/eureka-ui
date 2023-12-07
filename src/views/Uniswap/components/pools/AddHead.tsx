@@ -15,6 +15,9 @@ const StyledContainer = styled.div`
   padding: 0px 20px;
   box-sizing: border-box;
   border-bottom: 1px solid #3d363d;
+  @media (max-width: 768px) {
+    border-bottom: none;
+  }
 `;
 const StyledArrowLeft = styled.div`
   cursor: pointer;

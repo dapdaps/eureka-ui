@@ -13,6 +13,10 @@ const StyledWrap = styled.div`
     align-items: center;
     justify-content: center;
   }
+
+  @media (max-width: 768px) {
+    margin-top: 0px;
+  }
 `;
 const StyledLeft = styled.div`
   img {
