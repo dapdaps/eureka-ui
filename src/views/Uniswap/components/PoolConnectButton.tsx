@@ -51,7 +51,7 @@ export default function PoolConnectButton() {
         }}
       >
         {switching && <Loading />}
-        Switch Linea Chain
+        Switch to the Linea Chain
       </StyledButton>
     );
   }
