@@ -22,7 +22,7 @@ const StyledEmpty = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 8px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(16,16,16, 0.6);
   height: 120px;
 `;
 const StyledLoadingWrapper = styled.div`
