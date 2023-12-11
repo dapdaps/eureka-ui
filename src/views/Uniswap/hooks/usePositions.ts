@@ -77,7 +77,11 @@ export default function usePositions() {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
       if (!account) setPositions([]);
-      if (provider && account && chainId === config.chainId) getPositions();
+      if (provider && account && chainId === config.chainId) {
+        getPositions()
+      }else{
+        setLoading(false)
+      };
     }, 300);
   }, [provider, account]);
   return { loading, positions };
