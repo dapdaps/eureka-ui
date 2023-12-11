@@ -31,7 +31,7 @@ const StyledSelectedFeeArea = styled.div`
   min-height: 50px;
   .pendingTip {
     font-size: 12px;
-    color: #8e8e8e;
+    color: #101010;
     margin: 0;
     @media (max-width: 768px) {
       display: flex;
