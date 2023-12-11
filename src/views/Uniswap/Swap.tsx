@@ -38,7 +38,7 @@ export default function Swap() {
           },
           onOpenCode: () => {
             window.open(
-              'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Linea.Uniswap.Swap.Dex&tab=source',
+              'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Scroll.Uniswap.Swap.Dex&tab=source',
               '_blank',
             );
           },
