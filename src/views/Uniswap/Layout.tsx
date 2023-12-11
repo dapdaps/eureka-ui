@@ -65,7 +65,7 @@ const Uniswap = ({ children }: { children?: ReactNode }) => {
       {ready && (
         <ToastContainer
           position={window.innerWidth > 768 ? 'top-right' : 'bottom-right'}
-          autoClose={500000}
+          autoClose={5000}
           hideProgressBar={true}
           toastStyle={{ backgroundColor: 'transparent', boxShadow: 'none' }}
           newestOnTop
