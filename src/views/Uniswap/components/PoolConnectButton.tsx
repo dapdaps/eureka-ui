@@ -57,7 +57,7 @@ export default function PoolConnectButton() {
         }}
       >
         {switching && <Loading />}
-        Switch Scroll Chain
+        Switch to the Scroll network
       </StyledButton>
     );
   }
