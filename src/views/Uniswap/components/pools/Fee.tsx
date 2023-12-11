@@ -182,13 +182,13 @@ const FeeCell = ({
       <span className="value">
         <span>{value}</span>
         {isSelected && (
-          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="10" fill="#5EE0FF" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <circle cx="10" cy="10" r="10" fill="#101010" />
             <path
               d="M6 9.5L9 12.5L14.5 7"
-              stroke="#131313"
-              strokeWidth="2"
-              strokeLinecap="round"
+              stroke="#FFE6C7"
+              stroke-width="2"
+              stroke-linecap="round"
               stroke-linejoin="round"
             />
           </svg>
