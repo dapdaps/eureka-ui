@@ -49,12 +49,12 @@ const StyledHead = styled.div`
   .switch {
     border-radius: 8px;
     background-color: #101010;
-    padding: 2px 4px;
+    padding: 3px 4px;
     .item {
       font-size: 12px;
       color: #ffffff;
       cursor: pointer;
-      height: 26px;
+      height: 24px;
       padding: 0 8px;
     }
     .item.active {
@@ -104,7 +104,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type, isDetail }: any
     <StyledWrap type={type} $isDetail={isDetail}>
       <StyledHead className="vchb">
         <div className="hvc gap-20">
-          <span>Pirce range</span>
+          <span>{type === "1" ?"Selected range" : "Pirce range"}</span>
           {detail?.status && (
             <Status status={detail?.status}>
               {detail?.status === 'removed' ? 'Removed' : detail?.status === 'in' ? 'In range' : 'Out range'}
