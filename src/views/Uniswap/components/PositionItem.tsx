@@ -7,6 +7,7 @@ import { tickToPrice } from '../utils/tickMath';
 import { useMemo } from 'react';
 import TokenIcon from './TokenIcon';
 import { StatusColor } from '../config';
+import { nearestUsableTick } from '../utils/tickMath';
 
 const Record = styled.div`
   font-size: 14px;
@@ -95,7 +96,14 @@ export default function PositionItem({
     decimals1: token1?.decimals,
     isReverse: false,
   };
-  const isFullRange = tickLower === -887272 && tickUpper === 887272;
+  const isFullRange = useMemo(() => {
+    if (tickLower === -887272 && tickUpper === 887272) return true;
+    if (tickLower === nearestUsableTick(-887272, feeAmount) && tickUpper === nearestUsableTick(887272, feeAmount)) {
+      return true;
+    }
+    return false;
+  }, [tickLower, tickUpper, feeAmount]);
+
   return token0 && token1 ? (
     <Record onClick={onClick}>
       <RecordDetails>

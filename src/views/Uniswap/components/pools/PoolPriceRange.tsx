@@ -1,9 +1,10 @@
-import { memo } from 'react';
+import { memo,useMemo } from 'react';
 import styled from 'styled-components';
 import { StatusColor } from '../../config';
 import { ArrowBothIcon } from './Icons';
 import { tickToPrice } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/sortTokens';
+import { nearestUsableTick } from '../../utils/tickMath';
 
 const StyledWrap = styled.div<{ type?: string; $isDetail?: boolean }>`
   ${(props) =>
@@ -98,7 +99,14 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type, isDetail }: any
   const priceRate = `${isReverse ? _token0.symbol : _token1.symbol} per ${isReverse ? _token1.symbol : _token0.symbol}`;
   const _tickLow = !isReverse ? detail?.tickLow : detail?.tickHigh;
   const _tickHigh = !isReverse ? detail?.tickHigh : detail?.tickLow;
-  const isFullRange = detail?.tickLow === -887272 && detail?.tickHigh === 887272;
+  console.log(detail)
+  const isFullRange = useMemo(() => {
+    if (detail?.tickLow === -887272 && detail?.tickHigh === 887272) return true;
+    if (detail?.tickLow === nearestUsableTick(-887272, detail.fee) && detail?.tickHigh === nearestUsableTick(887272, detail.fee)) {
+      return true;
+    }
+    return false;
+  }, [detail]);
 
   return (
     <StyledWrap type={type} $isDetail={isDetail}>
