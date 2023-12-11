@@ -171,7 +171,7 @@ const StyledButtonArea = styled.div`
     width: 30px;
     height: 30px;
     border-radius: 8px;
-    background-color: #131313;
+    background-color: rgba(19, 19, 19, 0.50);
     cursor: pointer;
     color: #fff;
     &.disabled {
