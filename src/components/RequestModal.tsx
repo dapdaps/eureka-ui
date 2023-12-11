@@ -68,13 +68,13 @@ const LoadingWrapper = styled.div`
   color: #101010;
 `;
 const ErrorIcon = styled.div`
-  color: #5ee0ff;
+  color: #101010;
   pointer-events: none;
   margin-bottom: -40px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 4px solid #5ee0ff;
+  border: 4px solid #101010;
   margin-bottom: 2px;
 `;
 const StyledTradeText = styled.div`
