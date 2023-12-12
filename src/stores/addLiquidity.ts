@@ -6,7 +6,7 @@ export const useAddLiquidityStore = create(
     (set, get: any) => ({
       token0: null,
       token1: null,
-      fee: 3000,
+      fee: null,
       setFee: (fee: number) => set({ fee }),
       getFee: () => get().fee,
       setToken0: (token0: any) => set({ token0 }),
