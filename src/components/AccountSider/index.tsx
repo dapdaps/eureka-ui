@@ -6,21 +6,27 @@ import BridgeWrapper from './components/BridgeWrapper';
 import Header from './components/Header';
 import AccountWrapper from './components/AccountWrapper';
 
-const StyledPanel = styled.div<{ display: boolean }>`
+const StyledContainer = styled.div`
   width: 352px;
   height: calc(100vh - 40px);
+  position: fixed;
+  right: 20px;
+  top: 20px;
+  z-index: 50;
+`;
+
+const StyledPanel = styled.div<{ display: boolean }>`
   border-radius: 32px;
+  height: 100%;
   border: 1px solid #343838;
   box-sizing: border-box;
   padding: 20px 0px;
   background-color: #141414;
   --padding-x: 20px;
-  position: fixed;
-  right: 20px;
-  top: 20px;
-  z-index: 50;
   transition: 0.5s;
   transform: translate(${({ display }) => (display ? 0 : 400)}px);
+  position: relative;
+  z-index: 52;
   @media (max-width: 768px) {
     width: 100vw;
     right: 0px;
@@ -65,10 +71,11 @@ const CloseIcon = styled.div`
   cursor: pointer;
   border-radius: 23px 0px 0px 23px;
   background: rgba(55, 58, 83, 0.5);
-  width: 40px;
+  width: 50px;
   height: 32px;
   padding-left: 15px;
   padding-top: 3px;
+  z-index: 51;
   @media (max-width: 768px) {
     display: none;
   }
@@ -99,7 +106,7 @@ const AccountSider = () => {
   }, [showCodes]);
 
   return (
-    <>
+    <StyledContainer>
       <StyledPanel display={layoutStore.showAccountSider}>
         <Content>
           <Header tab={tab} />
@@ -119,27 +126,27 @@ const AccountSider = () => {
           )}
         </Content>
         <Bg />
-        {layoutStore.showAccountSider && (
-          <CloseIcon
-            onClick={() => {
-              layoutStore.set({
-                showAccountSider: false,
-              });
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none">
-              <path d="M1 9.46176L4.84626 5.23087L1 0.999986" stroke="white" stroke-width="2" stroke-linecap="round" />
-              <path
-                d="M7.15356 9.46176L10.9998 5.23087L7.15356 0.999986"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </svg>
-          </CloseIcon>
-        )}
       </StyledPanel>
-    </>
+      {layoutStore.showAccountSider && (
+        <CloseIcon
+          onClick={() => {
+            layoutStore.set({
+              showAccountSider: false,
+            });
+          }}
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="13" height="11" viewBox="0 0 13 11" fill="none">
+            <path d="M1 9.46176L4.84626 5.23087L1 0.999986" stroke="white" stroke-width="2" stroke-linecap="round" />
+            <path
+              d="M7.15356 9.46176L10.9998 5.23087L7.15356 0.999986"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+          </svg>
+        </CloseIcon>
+      )}
+    </StyledContainer>
   );
 };
 
