@@ -5,13 +5,14 @@ import { init, useConnectWallet } from '@web3-onboard/react';
 import walletConnectModule from '@web3-onboard/walletconnect';
 import { useEffect, useState } from 'react';
 import { singletonHook } from 'react-singleton-hook';
+import config from '@/config/uniswap'
 
 const web3onboardKey = 'web3-onboard:connectedWallets';
 
 const wcV2InitOptions: any = {
   version: 2,
-  projectId: '72b7b3359ab477e339a070f615806aa6',
-  requiredChains: [59144],
+  projectId: 'f64d7370325897df18aa72484e3b23ac',
+  requiredChains: [config.chainId],
 };
 
 const walletConnect = walletConnectModule(wcV2InitOptions);
