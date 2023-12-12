@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import useAccount from '@/hooks/useAccount';
+import { omit } from 'lodash';
 import type { Chain } from '@/types';
 
 export default () => {
@@ -18,9 +19,10 @@ export default () => {
       try {
         await provider.send('wallet_addEthereumChain', [
           {
-            ...chain,
+            ...omit(chain,"blockExplorers","icon"),
             blockExplorerUrls: [chain.blockExplorers],
             chainId: `0x${chain.chainId.toString(16)}`,
+            iconUrls: [chain.icon]
           },
         ]);
         setSwitching(false);
