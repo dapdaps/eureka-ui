@@ -18,7 +18,7 @@ const StyledWrapper = styled.div<{ disabled?: boolean }>`
   font-size: 18px;
   color: #1b1b1b;
   font-weight: 600;
-  margin-top: 15px;
+  margin: 0px 24px 25px 26px;
   ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
   flex-grow: 1;
 `;

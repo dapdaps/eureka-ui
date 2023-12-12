@@ -34,7 +34,7 @@ const StyledContainer = styled.div`
   }
 `;
 const StyledBody = styled.div<{ disabled: boolean }>`
-  padding: 0px 20px 20px;
+  padding: 0px 20px 15px;
   ${({ disabled }) => disabled && 'opacity: 0.5;'}
 `;
 const LoadingWrapper = styled.div`
@@ -272,17 +272,17 @@ const PoolsAddLiquidity = () => {
           balanceLoading={balanceLoading}
           isMint={true}
         />
-        <SubmitButton
-          errorTips={errorTips}
-          token0={token0}
-          value0={value0}
-          token1={token1}
-          value1={value1}
-          onPreview={() => {
-            setShowPreview(true);
-          }}
-        />
       </StyledBody>
+      <SubmitButton
+        errorTips={errorTips}
+        token0={token0}
+        value0={value0}
+        token1={token1}
+        value1={value1}
+        onPreview={() => {
+          setShowPreview(true);
+        }}
+      />
       <PreviewModal
         token0={token0}
         value0={value0}
