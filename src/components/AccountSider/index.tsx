@@ -30,6 +30,14 @@ const StyledPanel = styled.div<{ display: boolean }>`
     background: #2b2b2b;
     padding: 20px 0px 0px;
   }
+  div::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  div::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
 `;
 const Content = styled.div`
   position: relative;
