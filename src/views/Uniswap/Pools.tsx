@@ -24,7 +24,7 @@ const StyledContainer = styled.div`
 const StyledHeader = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0px 10px;
+  padding-left: 10px;
 `;
 const Label = styled.div`
   font-size: 26px;
