@@ -190,17 +190,22 @@ const StyledRow = styled.div`
   }
   .balance {
     font-size: 14px;
-    color: #8e8e8e;
+    color: #101010;
+  }
+  .active {
+    opacity: 0.5;
   }
 `;
 const TokenRow = ({ symbol, name, address, balance, icon, loading, isSelected, onClick }: any) => {
   return (
     <StyledRow className="vchb" onClick={onClick}>
       <div className="hvc L">
-        <TokenIcon token={{ symbol, address, icon }} />
+        <div className={isSelected && 'active'}>
+          <TokenIcon token={{ symbol, address, icon }} />
+        </div>
         <div className="name_wrapper">
           <div className="name">{name}</div>
-          <div className="symbol">
+          <div className={isSelected ? 'active symbol' : 'symbol'}>
             <span>{symbol}</span>
             {address !== 'native' && (
               <>
@@ -216,8 +221,10 @@ const TokenRow = ({ symbol, name, address, balance, icon, loading, isSelected, o
         </div>
       </div>
       <div className="hvc R">
-        <span className="balance">{loading ? <Loading /> : balanceFormated(balance?.toString(), 4)}</span>
-        <TickIcon className={!isSelected && 'hidden'} />
+        <span className={isSelected ? 'active balance' : 'balance'}>
+          {loading ? <Loading /> : balanceFormated(balance?.toString(), 4)}
+        </span>
+        {isSelected ? <TickIcon /> : <div style={{ width: '16px' }} />}
       </div>
     </StyledRow>
   );

@@ -79,6 +79,7 @@ const SelectToken = ({ onSelectToken, token }: any) => {
           onSelectToken(token);
           closeModal();
         }}
+        selectedAddress={token?.address}
       />
     </StyledContainer>
   );

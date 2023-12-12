@@ -47,8 +47,8 @@ export const GlassIcon = () => {
 
 export const TickIcon = (props: any) => {
   return (
-    <svg {...props} width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path opacity="0.5" d="M1 5L6 10L15 1" stroke="#55EEEE" strokeWidth="2" strokeLinecap="round" />
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" fill="none">
+      <path d="M1 5L6 10L15 1" stroke="#131313" stroke-width="2" stroke-linecap="round" />
     </svg>
   );
 };

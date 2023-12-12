@@ -113,6 +113,7 @@ const SelectTokenModal = (props: any) => {
           <TokenBalanceList
             tokens={tokens}
             searchVal={searchVal}
+            selectedAddress={props.selectedAddress}
             onHideHistory={() => {
               setShowHistory(false);
             }}
