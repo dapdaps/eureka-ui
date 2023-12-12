@@ -70,6 +70,7 @@ const Input = styled.input`
   outline: none;
   width: 68px;
   color: #fff;
+  text-align: center;
   &::-webkit-outer-spin-button,
   &::-webkit-inner-spin-button {
     -webkit-appearance: none;
@@ -120,7 +121,7 @@ export default function SlippageSetting(props?: any) {
               }}
               type="number"
             />
-            <div>%</div>
+            <div style={{ fontWeight: 500 }}>%</div>
           </InputWrapper>
         </Inputs>
       </StyledContainer>

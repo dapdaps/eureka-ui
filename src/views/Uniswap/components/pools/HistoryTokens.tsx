@@ -47,9 +47,6 @@ const StyledTokenWrap = styled.div`
     color: #101010;
     font-weight: 600;
   }
-  @media (max-width: 768px) {
-    background: #1b1b1b;
-  }
 `;
 const TokenElement = ({ token, onClick }: any) => {
   return (

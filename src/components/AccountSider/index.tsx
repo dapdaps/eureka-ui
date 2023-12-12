@@ -6,16 +6,18 @@ import BridgeWrapper from './components/BridgeWrapper';
 import Header from './components/Header';
 import AccountWrapper from './components/AccountWrapper';
 
-const StyledContainer = styled.div`
+const StyledContainer = styled.div<{ display: boolean }>`
   width: 352px;
   height: calc(100vh - 40px);
   position: fixed;
   right: 20px;
   top: 20px;
   z-index: 50;
+  transition: 0.5s;
+  transform: translate(${({ display }) => (display ? 0 : 400)}px);
 `;
 
-const StyledPanel = styled.div<{ display: boolean }>`
+const StyledPanel = styled.div`
   border-radius: 32px;
   height: 100%;
   border: 1px solid #343838;
@@ -23,8 +25,7 @@ const StyledPanel = styled.div<{ display: boolean }>`
   padding: 20px 0px;
   background-color: #141414;
   --padding-x: 20px;
-  transition: 0.5s;
-  transform: translate(${({ display }) => (display ? 0 : 400)}px);
+
   position: relative;
   z-index: 52;
   @media (max-width: 768px) {
@@ -106,8 +107,8 @@ const AccountSider = () => {
   }, [showCodes]);
 
   return (
-    <StyledContainer>
-      <StyledPanel display={layoutStore.showAccountSider}>
+    <StyledContainer display={layoutStore.showAccountSider}>
+      <StyledPanel>
         <Content>
           <Header tab={tab} />
           {tab === 'account' && <AccountWrapper count={count} setTab={setTab} />}
