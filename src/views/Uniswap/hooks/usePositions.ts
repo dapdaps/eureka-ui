@@ -76,13 +76,13 @@ export default function usePositions() {
   useEffect(() => {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      if (!account) setPositions([]);
+      if (!account || chainId !== config.chainId) setPositions([]);
       if (provider && account && chainId === config.chainId) {
-        getPositions()
-      }else{
-        setLoading(false)
-      };
+        getPositions();
+      } else {
+        setLoading(false);
+      }
     }, 300);
-  }, [provider, account]);
+  }, [provider, account, chainId]);
   return { loading, positions };
 }
