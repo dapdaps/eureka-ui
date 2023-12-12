@@ -26,7 +26,7 @@ const StyledEmpty = styled.div`
   height: 120px;
 `;
 const StyledLoadingWrapper = styled.div`
-  color: #fff;
+  color: rgba(16,16,16, 1);
   height: 200px;
   line-height: 200px;
   text-align: center;
