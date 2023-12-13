@@ -22,11 +22,11 @@ const StyledEmpty = styled.div`
   justify-content: center;
   flex-direction: column;
   gap: 8px;
-  color: rgba(16,16,16, 0.6);
+  color: rgba(16, 16, 16, 0.6);
   height: 120px;
 `;
 const StyledLoadingWrapper = styled.div`
-  color: rgba(16,16,16, 1);
+  color: rgba(16, 16, 16, 1);
   height: 200px;
   line-height: 200px;
   text-align: center;
@@ -84,8 +84,8 @@ const Chart = ({
   const { current, fee, data } = poolChartData || {};
   const [chart_done, set_chart_done] = useState<boolean>(false);
   const [zoom, setZoom] = useState<d3.ZoomTransform | null>(null);
-  const [leftGotoZero, setLeftGotoZero] = useState<boolean>(false)
-  const [rightGotoZero, setRightGotoZero] = useState<boolean>(false)
+  const [leftGotoZero, setLeftGotoZero] = useState<boolean>(false);
+  const [rightGotoZero, setRightGotoZero] = useState<boolean>(false);
   const zoomBehavior: any = useMemo(() => {
     if (fee) {
       const zoomLevels = ZOOM_LEVELS[fee as FeeAmount];
@@ -223,7 +223,7 @@ const Chart = ({
     const dragEvent = d3.drag().on('drag', (e) => {
       const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
       if (xScale.invert(e.x + 7) < 0) {
-        setLeftGotoZero(true)
+        setLeftGotoZero(true);
       } else {
         setLeftGotoZero(false);
       }
@@ -235,7 +235,7 @@ const Chart = ({
   function drawInitRightBar() {
     const dragEvent = d3.drag().on('drag', (e) => {
       if (xScale.invert(e.x + 11) < 0) {
-        setRightGotoZero(true)
+        setRightGotoZero(true);
       } else {
         setRightGotoZero(false);
       }
@@ -262,7 +262,6 @@ const Chart = ({
     } else {
       d3.select('.rightPercent').attr('transform', `translate(${barWidth + percentToBarDistance}, 0)`);
     }
-    
   }
   function drawSection() {
     if (!d3.select('.leftBar').attr('transform') || !d3.select('.rightBar').attr('transform')) return;
@@ -281,8 +280,8 @@ const Chart = ({
     } else {
       d3.select('.section').attr('height', barHeight).attr('opacity', 0);
     }
-    d3.select('.leftPercent text').text( (leftGotoZero ? -100 : getPercent(xScale.invert(+x1 + 7))) + '%');
-    d3.select('.rightPercent text').text( (rightGotoZero? -100 : getPercent(xScale.invert(+x2 + 11))) + '%');
+    d3.select('.leftPercent text').text((leftGotoZero ? -100 : getPercent(xScale.invert(+x1 + 7))) + '%');
+    d3.select('.rightPercent text').text((rightGotoZero ? -100 : getPercent(xScale.invert(+x2 + 11))) + '%');
   }
   function getPercent(newPrice: number) {
     let movePercent;
@@ -346,7 +345,7 @@ const Chart = ({
           {/* 横坐标轴 */}
           <g className="axis" transform={`translate(0, ${svgHeight - axisHeight})`}></g>
           {/* 流动性分布图 */}
-          <path className="liquidity" fill="rgba(98, 221, 255, 0.5)"></path>
+          <path className="liquidity" fill="rgba(235, 194, 142, 0.5)"></path>
           {/* 创建两根Bar之间的区域 */}
           <rect className="section" fill="url(#paint0_linear_7_2204)"></rect>
           {/* 当前价格 */}
