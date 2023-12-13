@@ -125,15 +125,21 @@ const DepositAmount = ({
     }
   }, [lowerTick, highTick, currentTick]);
   if (isMint) {
+    if (!token0 || !token1)
+      return (
+        <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
+          <span className={`title`}>Deposit amounts</span>
+          {(!token0 || !token1) && (
+            <InputBoxs>
+              <InputBox token={token0} balance={token0 ? balances[token0?.address] : ''} />
+              <InputBox token={token1} balance={token1 ? balances[token1?.address] : ''} />
+            </InputBoxs>
+          )}
+        </StyledContainer>
+      );
     return (
       <StyledContainer className={`${lowerTick >= highTick && 'disabled'}`}>
         <span className={`title`}>Deposit amounts</span>
-        {(!token0 || !token1) && (
-          <InputBoxs>
-            <InputBox token={token0} balance={token0 ? balances[token0?.address] : ''} />
-            <InputBox token={token1} balance={token1 ? balances[token1?.address] : ''} />
-          </InputBoxs>
-        )}
         {lowerTick < highTick ? (
           <div className="I">
             {currentTick < highTick && currentTick > lowerTick ? (
