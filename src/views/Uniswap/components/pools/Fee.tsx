@@ -144,20 +144,22 @@ const StyledCell = styled.div<{ isSelected: boolean; i: number }>`
     display: flex;
     justify-content: space-between;
   }
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100% - 22px);
+  }
   .description {
     font-size: 12px;
     color: #8e8e8e;
+    line-height: normal;
     margin: 0;
     ${({ i }) => i === 0 && 'letter-spacing: -0.3px;'}
-    white-space: nowrap;
   }
 
   @media (max-width: 768px) {
     padding: 8px 4px;
-    .description {
-      white-space: wrap;
-      letter-spacing: 0px;
-    }
   }
 `;
 const FeeCell = ({
@@ -194,8 +196,15 @@ const FeeCell = ({
           </svg>
         )}
       </span>
-      <p className="description">{description}</p>
-      {showPercent && <div className="num">{selecedNum}% select</div>}
+      <div className="content">
+        <p className="description">{description}</p>
+        {showPercent && (
+          <div>
+            {' '}
+            <div className="num">{selecedNum}% select</div>
+          </div>
+        )}
+      </div>
     </StyledCell>
   );
 };
