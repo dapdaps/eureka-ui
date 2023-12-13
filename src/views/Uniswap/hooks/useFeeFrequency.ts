@@ -26,9 +26,7 @@ export default function useFeeFrequency({ token0, token1 }: any) {
           max = [Number(key), Number(value)];
         }
       });
-      if (!liquidityStore.getFee()) {
-        liquidityStore.setFee(max[0]);
-      }
+      liquidityStore.setFee(max[0]);
     } catch (err) {}
   }, [token0, token1]);
 
