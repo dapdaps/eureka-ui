@@ -228,7 +228,12 @@ const PoolsAddLiquidity = () => {
                 setCurrentTickFromPrice(price, token1, token0);
               }}
             />
-            {(lowerTick === currentTick || highTick === currentTick) && token0 && token1 && <InvalidRangeTips />}
+            {lowerTick !== undefined &&
+              currentTick !== undefined &&
+              highTick !== undefined &&
+              (lowerTick > currentTick || highTick < currentTick) &&
+              token0 &&
+              token1 && <InvalidRangeTips />}
             {!noPair && lowerTick !== undefined && highTick !== undefined && token0 && token1 && (
               <Chart
                 token0={token0}
