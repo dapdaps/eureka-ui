@@ -5,6 +5,7 @@ import { FeeAmount } from '@uniswap/v3-sdk';
 import Big from 'big.js';
 import debounce from 'lodash/debounce';
 import { tickToPrice } from '../../utils/tickMath';
+import { nearestUsableTick } from '../../utils/tickMath';
 
 import usePoolActiveLiquidity from '../../hooks/usePoolActiveLiquidity';
 import { ZOOM_LEVELS, ChartEntry } from '../../utils/chartMath';
@@ -143,21 +144,30 @@ const Chart = ({
       set_chart_done(true);
     }
   }, [current, token0?.address, token1?.address, xScale?.domain(), yScale]);
+  const isFullRange = useMemo(() => {
+    if (lowerTick === -887272 && highTick === 887272) return true;
+    if (lowerTick === nearestUsableTick(-887272, fee) && highTick === nearestUsableTick(887272, fee)) {
+      return true;
+    }
+    return false;
+  }, [lowerTick, highTick, fee]);
   useEffect(() => {
     if (!chart_done) return;
     let left, right;
-
-    if (lowerTick == -887272 && highTick == 887272) {
+    if (isFullRange) {
       left = 0;
       right = 999999999;
     } else {
-      left = tickToPrice({
-        tick: reverse ? highTick : lowerTick,
-        decimals0: reverse ? token1.decimals : token0.decimals,
-        decimals1: reverse ? token0.decimals : token1.decimals,
-        isReverse: !reverse,
-        isNumber: true,
-      });
+      const _lowerTick = reverse ? highTick : lowerTick;
+      left = _lowerTick
+        ? tickToPrice({
+            tick: reverse ? highTick : lowerTick,
+            decimals0: reverse ? token1.decimals : token0.decimals,
+            decimals1: reverse ? token0.decimals : token1.decimals,
+            isReverse: !reverse,
+            isNumber: true,
+          })
+        : 0;
       right = tickToPrice({
         tick: reverse ? lowerTick : highTick,
         decimals0: reverse ? token1.decimals : token0.decimals,
@@ -167,7 +177,7 @@ const Chart = ({
       });
     }
     onRenderChart({ left, right });
-  }, [lowerTick, highTick, reverse, chart_done, zoom]);
+  }, [lowerTick, highTick, reverse, chart_done, zoom, isFullRange]);
   const _debounceUpdateTick = useCallback(
     debounce((coordinate: any, type: any) => {
       onPriceChange({ price: coordinate, type: type === 'left' ? (reverse ? 'up' : 'low') : reverse ? 'low' : 'up' });
@@ -183,7 +193,7 @@ const Chart = ({
   const handleCoordinateChange = ({ coordinate, type }: any) => {
     const params = type === 'left' ? { left: coordinate } : { right: coordinate };
     onRenderChart(params);
-    if (coordinate && type) _debounceUpdateTick(coordinate, type);
+    if ((coordinate || coordinate === 0) && type) _debounceUpdateTick(coordinate, type);
   };
   function drawInitChart() {
     // 创建横坐标轴
@@ -221,14 +231,13 @@ const Chart = ({
   }
   function drawInitLeftBar() {
     const dragEvent = d3.drag().on('drag', (e) => {
-      const bar_right_x = d3.select('.rightBar').attr('transform').split(',')[0].slice(10);
-      if (xScale.invert(e.x + 7) < 0) {
-        setLeftGotoZero(true);
-      } else {
-        setLeftGotoZero(false);
-      }
-      if (e.x - barWidth / 2 <= 0 || e.x >= svgWidth - svgPadding * 2 || xScale.invert(e.x + 7) < 0) return;
-      handleCoordinateChange({ coordinate: xScale.invert(e.x + 7), type: 'left' });
+      const isZero = xScale.invert(e.x + 7) <= 0;
+      // if (e.x - barWidth / 2 <= 0 || e.x >= svgWidth - svgPadding * 2 || xScale.invert(e.x + 7) < 0) {
+      //   setLeftGotoZero(isZero);
+      //   return;
+      // }
+      setLeftGotoZero(isZero);
+      handleCoordinateChange({ coordinate: !isZero ? xScale.invert(e.x + 7) : 0, type: 'left' });
     }) as any;
     d3.select('.leftBar').call(dragEvent);
   }

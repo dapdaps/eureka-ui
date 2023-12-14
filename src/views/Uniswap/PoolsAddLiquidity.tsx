@@ -226,9 +226,10 @@ const PoolsAddLiquidity = () => {
                 setCurrentTickFromPrice(price, token1, token0);
               }}
             />
-            {(lowerTick === currentTick || highTick === currentTick) &&
-              lowerTick !== undefined &&
+            {lowerTick !== undefined &&
               currentTick !== undefined &&
+              highTick !== undefined &&
+              (lowerTick > currentTick || highTick < currentTick) &&
               token0 &&
               token1 && <InvalidRangeTips />}
             {!noPair && lowerTick !== undefined && highTick !== undefined && token0 && token1 && (
@@ -276,15 +277,15 @@ const PoolsAddLiquidity = () => {
         />
       </StyledBody>
       <SubmitButton
-          errorTips={errorTips}
-          token0={token0}
-          value0={value0}
-          token1={token1}
-          value1={value1}
-          onPreview={() => {
-            setShowPreview(true);
-          }}
-        />
+        errorTips={errorTips}
+        token0={token0}
+        value0={value0}
+        token1={token1}
+        value1={value1}
+        onPreview={() => {
+          setShowPreview(true);
+        }}
+      />
       <PreviewModal
         token0={token0}
         value0={value0}

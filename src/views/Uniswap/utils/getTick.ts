@@ -24,11 +24,22 @@ export async function getTickFromPrice({ token0, token1, price, fee, provider }:
   const [_token0, _token1] = sortTokens(token0, token1);
   const isReverse = _token0.address !== token0.address;
   const mathPrice = (isReverse ? 1 / price : price) / 10 ** (_token0.decimals - _token1.decimals);
-  const _sqrtPriceX96 = new Big(mathPrice)
-    .sqrt()
-    .mul(2 ** 96)
-    .toFixed(0);
-  let _tick = await getTickAtSqrtRatio(_sqrtPriceX96, provider);
-  const _useableTick = nearestUsableTick(_tick, fee);
+  let _tick = 0;
+  if (mathPrice === 0) {
+    _tick = -887272;
+  } else if (mathPrice === Infinity) {
+    _tick = 887272;
+  } else {
+    const _sqrtPriceX96 =
+      mathPrice !== Infinity
+        ? new Big(mathPrice)
+            .sqrt()
+            .mul(2 ** 96)
+            .toFixed(0)
+        : '1461501637330902918203684832716283019655932542975';
+
+    _tick = await getTickAtSqrtRatio(_sqrtPriceX96, provider);
+  }
+  const _useableTick = nearestUsableTick(_tick || 887272, fee);
   return _useableTick;
 }
