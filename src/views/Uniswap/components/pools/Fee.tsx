@@ -116,9 +116,10 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
                 description={description}
                 selecedNum={frequency[key]}
                 onClick={() => {
-                  onSelectFee(key);
+                  if (token0 && token1) onSelectFee(key);
                 }}
                 i={i}
+                disabled={!token0 || !token1}
                 showPercent={token0 && token1}
               />
             );
@@ -169,6 +170,7 @@ const FeeCell = ({
   selecedNum,
   i,
   showPercent,
+  disabled,
   onClick,
 }: {
   isSelected: boolean;
@@ -176,11 +178,17 @@ const FeeCell = ({
   description: string;
   selecedNum: string;
   showPercent?: boolean;
+  disabled: boolean;
   i: number;
   onClick: () => void;
 }) => {
   return (
-    <StyledCell isSelected={isSelected} onClick={onClick} i={i}>
+    <StyledCell
+      isSelected={isSelected}
+      onClick={onClick}
+      i={i}
+      style={{ cursor: !disabled ? 'pointer' : 'not-allowed' }}
+    >
       <span className="value">
         <span>{value}</span>
         {isSelected && (
