@@ -7,6 +7,7 @@ import { usePriceStore } from '@/stores/price';
 import TokenIcon from '../TokenIcon';
 import { tickToPrice, getPriceFromTicks } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/sortTokens';
+import { nearestUsableTick } from '../../utils/tickMath';
 
 const StyledContainer = styled.div`
   margin-top: 20px;
@@ -45,6 +46,7 @@ const DepositAmount = ({
   balances,
   balanceLoading,
   isMint,
+  fee,
 }: any) => {
   const _lowerTick = lowerTick > highTick ? highTick : lowerTick;
   const _tickHigh = lowerTick > highTick ? lowerTick : highTick;
@@ -61,7 +63,7 @@ const DepositAmount = ({
     const _decimals0 = _token0?.decimals;
     const _decimals1 = _token1?.decimals;
     const lowPrice =
-      _lowerTick === -887272
+      _lowerTick === -887272 || _lowerTick === nearestUsableTick(-887272, fee)
         ? 0
         : tickToPrice({
             tick: _lowerTick,
@@ -70,8 +72,9 @@ const DepositAmount = ({
             isReverse: isMint ? !reverse : true,
             isNumber: true,
           });
+
     const highPrice =
-      _tickHigh === 887272
+      _tickHigh === 887272 || _tickHigh === nearestUsableTick(887272, fee)
         ? 2 ** 96
         : tickToPrice({
             tick: _tickHigh,
@@ -90,6 +93,7 @@ const DepositAmount = ({
         isNumber: true,
       });
     }
+
     const _priceAmount = new Big(_currentPrice).mul(10 ** _token1.decimals).toFixed(0);
     const _amount0 = 10 ** _token0.decimals;
     const _amount1 = _priceAmount;
@@ -101,7 +105,7 @@ const DepositAmount = ({
       highPrice: new Big(lowPrice).gt(highPrice) ? lowPrice : highPrice,
     });
     return _price;
-  }, [token0, token1, currentPrice, currentTick, lowerTick, highTick, reverse]);
+  }, [token0, token1, currentPrice, currentTick, lowerTick, highTick, reverse, fee]);
 
   useEffect(() => {
     if (price && value1 && currentTick < highTick && currentTick > lowerTick) {

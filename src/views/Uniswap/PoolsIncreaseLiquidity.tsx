@@ -141,6 +141,7 @@ const PoolsIncreaseLiquidity = () => {
             balances={balances}
             balanceLoading={balanceLoading}
             isMint={false}
+            fee={detail?.fee}
           />
           <IncreaseButton
             errorTips={errorTips}
