@@ -274,6 +274,7 @@ const PoolsAddLiquidity = () => {
           balances={balances}
           balanceLoading={balanceLoading}
           isMint={true}
+          fee={fee}
         />
       </StyledBody>
       <SubmitButton
