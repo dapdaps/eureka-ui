@@ -14,7 +14,16 @@ const StyledContainer = styled.div<{ display: boolean }>`
   top: 20px;
   z-index: 50;
   transition: 0.5s;
-  transform: translate(${({ display }) => (display ? 0 : 400)}px);
+  transform: translate(${({ display }) => (display ? 0 : 500)}px);
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    right: 0px;
+    border-radius: 32px 32px 0px 0px;
+    top: 20vh;
+    height: 80vh;
+    padding: 20px 0px 0px;
+  }
 `;
 
 const StyledPanel = styled.div`
@@ -28,15 +37,11 @@ const StyledPanel = styled.div`
 
   position: relative;
   z-index: 52;
+
   @media (max-width: 768px) {
-    width: 100vw;
-    right: 0px;
-    border-radius: 32px 32px 0px 0px;
-    top: 20vh;
-    height: 80vh;
     background: #2b2b2b;
-    padding: 20px 0px 0px;
   }
+
   div::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.3);
     border-radius: 6px;
