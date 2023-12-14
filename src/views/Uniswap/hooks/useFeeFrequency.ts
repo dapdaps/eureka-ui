@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { get } from '@/utils/http';
 import { sortTokens } from '../utils/sortTokens';
 import { getTokenAddress } from '../utils';
@@ -9,14 +9,20 @@ export default function useFeeFrequency({ token0, token1 }: any) {
   const [frequency, setFrequency] = useState<any>({});
   const liquidityStore: any = useAddLiquidityStore();
 
+  const [token0Address, token1Address] = useMemo(() => {
+    if (!token0 || !token1) return ['', ''];
+    const [_token0, _token1] = sortTokens(token0, token1);
+    const _token0Address = getTokenAddress(_token0.address, true);
+    const _token1Address = getTokenAddress(_token1.address, true);
+    return [_token0Address, _token1Address];
+  }, [token0, token1]);
+
   const getFeeFrequency = useCallback(async () => {
-    if (!token0 || !token1) return;
+    if (!token0Address || !token1Address) return;
+    console.log(22);
     try {
-      const [_token0, _token1] = sortTokens(token0, token1);
-      const _token0Address = getTokenAddress(_token0.address, true);
-      const _token1Address = getTokenAddress(_token1.address, true);
       const result = await get(
-        `https://api.dapdap.net/api/uniswap/mint?token0=${_token0Address.toLowerCase()}&token1=${_token1Address.toLowerCase()}`,
+        `https://api.dapdap.net/api/uniswap/mint?token0=${token0Address.toLowerCase()}&token1=${token1Address.toLowerCase()}`,
       );
       setFrequency(result?.data || {});
 
@@ -30,11 +36,11 @@ export default function useFeeFrequency({ token0, token1 }: any) {
         liquidityStore.setFee(max[0]);
       }
     } catch (err) {}
-  }, [token0, token1]);
+  }, [token0Address, token1Address]);
 
   useEffect(() => {
     getFeeFrequency();
-  }, [token0, token1]);
+  }, [token0Address, token1Address]);
 
   return frequency;
 }
