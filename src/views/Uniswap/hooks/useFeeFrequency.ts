@@ -19,7 +19,6 @@ export default function useFeeFrequency({ token0, token1 }: any) {
 
   const getFeeFrequency = useCallback(async () => {
     if (!token0Address || !token1Address) return;
-    console.log(22);
     try {
       const result = await get(
         `https://api.dapdap.net/api/uniswap/mint?token0=${token0Address.toLowerCase()}&token1=${token1Address.toLowerCase()}`,
