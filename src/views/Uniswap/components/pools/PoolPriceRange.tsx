@@ -1,4 +1,4 @@
-import { memo,useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import { StatusColor } from '../../config';
 import { ArrowBothIcon } from './Icons';
@@ -102,17 +102,26 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type, isDetail }: any
 
   const isFullRange = useMemo(() => {
     if (detail?.tickLow === -887272 && detail?.tickHigh === 887272) return true;
-    if (detail?.tickLow === nearestUsableTick(-887272, detail.fee) && detail?.tickHigh === nearestUsableTick(887272, detail.fee)) {
+    if (
+      detail?.tickLow === nearestUsableTick(-887272, detail.fee) &&
+      detail?.tickHigh === nearestUsableTick(887272, detail.fee)
+    ) {
       return true;
     }
     return false;
   }, [detail]);
+  const currentPrice = useMemo(() => {
+    if (detail?.tick === -887272 || detail?.tick === nearestUsableTick(-887272, detail.fee))
+      return isReverse ? '∞' : '0';
+    if (detail?.tick === 887272 || detail?.tick === nearestUsableTick(887272, detail.fee)) return isReverse ? '0' : '∞';
+    return tickToPrice({ ...tickArgs, tick: detail?.tick });
+  }, [detail, isReverse]);
 
   return (
     <StyledWrap type={type} $isDetail={isDetail}>
       <StyledHead className="vchb">
         <div className="hvc gap-20">
-          <span>{type === "1" ?"Selected range" : "Pirce range"}</span>
+          <span>{type === '1' ? 'Selected range' : 'Pirce range'}</span>
           {detail?.status && (
             <Status status={detail?.status}>
               {detail?.status === 'removed' ? 'Removed' : detail?.status === 'in' ? 'In range' : 'Out range'}
@@ -159,12 +168,7 @@ const PoolPriceRange = ({ detail, isReverse, onSetReverse, type, isDetail }: any
           />
         </div>
         <div className="mt-17">
-          <PriceDetailBox
-            priceType="Current price"
-            price={tickToPrice({ ...tickArgs, tick: detail?.tick })}
-            priceRate={priceRate}
-            type={type}
-          />
+          <PriceDetailBox priceType="Current price" price={currentPrice} priceRate={priceRate} type={type} />
         </div>
       </StyledBody>
     </StyledWrap>

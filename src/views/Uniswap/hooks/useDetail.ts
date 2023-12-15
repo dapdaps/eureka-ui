@@ -30,7 +30,7 @@ export default function useDetail(tokenId: string) {
         getPositionCollect([tokenId, account], provider),
         getTokenURI(tokenId, provider),
       ]);
-
+      console.log('pool', pool);
       const _token0 = tokens[getTokenAddress(position.token0)];
       const _token1 = tokens[getTokenAddress(position.token1)];
 
