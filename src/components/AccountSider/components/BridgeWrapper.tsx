@@ -42,10 +42,8 @@ const Box = styled.div`
   padding-right: var(--padding-x);
   margin-top: 20px;
   padding-top: 20px;
-  height: calc(100vh - 180px);
   overflow: auto;
   @media (max-width: 768px) {
-    height: calc(80vh - 60px);
     padding-top: 0px;
   }
 `;
@@ -136,7 +134,13 @@ const BridgeWrapper = ({
           <TransactionTips count={count} />
         </TipsWrapper>
       )}
-      <Box>{showHistory ? <BridgeHistory txs={txs} loading={txLoading} /> : <Bridge onSuccess={refreshTxs} />}</Box>
+      <Box
+        style={{
+          height: window.innerWidth < 768 ? window.innerHeight * 0.8 - 60 : window.innerHeight - 180,
+        }}
+      >
+        {showHistory ? <BridgeHistory txs={txs} loading={txLoading} /> : <Bridge onSuccess={refreshTxs} />}
+      </Box>
     </StyledBridgeWrapper>
   );
 };

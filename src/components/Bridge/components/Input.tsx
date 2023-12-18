@@ -41,8 +41,7 @@ const StyledInput = styled.input`
   color: #fff;
   background-color: transparent;
   flex-grow: 1;
-  padding: 10px;
-  line-height: normal;
+  padding-left: 10px;
   height: 43px;
 `;
 const MaxButton = styled.button`

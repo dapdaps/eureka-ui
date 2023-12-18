@@ -63,9 +63,10 @@ const CloseIcon = styled.div`
 const AccountSider = () => {
   const layoutStore = useLayoutStore();
   const defaultTab = layoutStore.defaultTab;
-  const [tab, setTab] = useState<'bridge' | 'account'>('account');
+  const [tab, setTab] = useState<'bridge' | 'account'>('bridge');
   const [showChains, setShowChains] = useState(false);
   const [showCodes, setShowCodes] = useState(false);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (layoutStore.showAccountSider && defaultTab === 'bridge') {
@@ -84,9 +85,19 @@ const AccountSider = () => {
     if (showCodes) setShowChains(false);
   }, [showCodes]);
 
-  return (
+  useEffect(() => {
+    setReady(true);
+  }, []);
+
+  return ready ? (
     <>
-      <StyledPanel display={layoutStore.showAccountSider}>
+      <StyledPanel
+        display={layoutStore.showAccountSider}
+        style={{
+          top: window.innerWidth < 768 ? window.innerHeight * 0.2 + 'px' : '20px',
+          height: window.innerWidth < 768 ? window.innerHeight * 0.8 + 'px' : window.innerHeight - 40 + 'px',
+        }}
+      >
         <Content>
           <Header tab={tab} />
           {tab === 'account' && <AccountWrapper count={count} setTab={setTab} />}
@@ -121,6 +132,8 @@ const AccountSider = () => {
         )}
       </StyledPanel>
     </>
+  ) : (
+    <div />
   );
 };
 
