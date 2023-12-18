@@ -17,11 +17,10 @@ const Label = styled.div`
 `;
 const InputWrapper = styled.div`
   width: 100%;
-  height: 45px;
   border-radius: 12px;
   border: 1px solid #373a53;
   display: flex;
-  padding: 10px;
+
   box-sizing: border-box;
   margin-top: 6px;
 `;
@@ -33,6 +32,8 @@ const Input = styled.input`
   color: #fff;
   background-color: transparent;
   flex-grow: 1;
+  padding-left: 10px;
+  height: 43px;
 `;
 
 const Destination = ({
