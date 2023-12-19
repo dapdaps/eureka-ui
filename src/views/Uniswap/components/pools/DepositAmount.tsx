@@ -389,6 +389,7 @@ const InputBox = ({ token, value, setValue, balance, loading }: any) => {
           onChange={(ev) => {
             setValue(ev.target.value ? (Number(ev.target.value) < 0 ? '' : ev.target.value) : '');
           }}
+          onWheel={(e) => (e.target as HTMLInputElement).blur()}
         />
         {token && (
           <div className="token" style={{ flexShrink: 0 }}>

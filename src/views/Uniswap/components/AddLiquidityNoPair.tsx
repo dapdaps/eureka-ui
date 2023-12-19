@@ -55,6 +55,7 @@ export default function AddLiquidityNoPair({ token0, token1, price, setPrice, se
         onBlur={(ev) => {
           setCurrentTickFromPrice(price);
         }}
+        onWheel={(e) => (e.target as HTMLInputElement).blur()}
       />
       <StyledDesc>
         <span>Starting {token0?.symbol} Price:</span>
