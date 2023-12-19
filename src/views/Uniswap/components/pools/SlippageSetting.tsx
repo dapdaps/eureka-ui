@@ -120,6 +120,7 @@ export default function SlippageSetting(props?: any) {
                 setType(Number(ev.target.value) !== 0.5 ? 'Custom' : 'Auto');
               }}
               type="number"
+              onWheel={(e) => (e.target as HTMLInputElement).blur()}
             />
             <div style={{ fontWeight: 500 }}>%</div>
           </InputWrapper>
