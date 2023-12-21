@@ -10,6 +10,7 @@ import useRequestModal from '@/hooks/useRequestModal';
 import useAccount from '@/hooks/useAccount';
 import { useDebounce } from 'usehooks-ts';
 import { LeftBg } from './styles';
+import { useSetChain } from '@web3-onboard/react';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -27,7 +28,7 @@ export default function Swap() {
   const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
   const { account } = useAccount();
   const debounceAccount = useDebounce(account, 1000);
-
+  const [{ settingChain }, setChain] = useSetChain();
   return (
     <StyledContainer>
       <ComponentWrapperPage
@@ -55,6 +56,8 @@ export default function Swap() {
           onSetSlippage: (slippage: number) => {
             settingStore.setSlippage(slippage);
           },
+          onSwitchChain: setChain,
+          switchingChain: settingChain,
           openRequestModal,
           toast,
           addTransaction,
