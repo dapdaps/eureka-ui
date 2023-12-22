@@ -139,7 +139,7 @@ export const componentsByNetworkId: Record<NetworkId, NetworkComponents | undefi
       learningLinks: 'near/widget/NearOrg.LearningLinks',
       usePage: 'near/widget/NearOrg.UsePage',
     },
-    notificationButton: 'near/widget/NotificationButton',
+    notificationButton: 'ref-admin.near/widget/NotificationButton',
     notificationsPage: 'near/widget/NotificationsPage',
     peoplePage: 'near/widget/PeoplePage',
     profileImage: 'mob.near/widget/ProfileImage',
