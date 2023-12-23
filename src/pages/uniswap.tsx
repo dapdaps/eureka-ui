@@ -65,6 +65,7 @@ const TopContent = styled.div`
         border-radius: 12px;
         padding: 12px;
         width: 249px;
+        z-index: 10;
         .select-popups-item {
           width: 100%;
           display: flex;
