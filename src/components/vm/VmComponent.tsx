@@ -1,6 +1,5 @@
 import { useBosLoaderStore } from '@/stores/bos-loader';
 import { useVmStore } from '@/stores/vm';
-
 import { Spinner } from '../lib/Spinner';
 
 type Props = {
@@ -22,7 +21,16 @@ export function VmComponent(props: Props) {
         config={{
           redirectMap: redirectMapStore.redirectMap,
         }}
-        {...props}
+        src={props.src}
+        props={{
+          toast: {
+            fail: () => {},
+            success: () => {},
+            loading: () => {},
+            dismiss: () => {},
+          },
+          ...props.props,
+        }}
       />
     </EthersProvider>
   );
