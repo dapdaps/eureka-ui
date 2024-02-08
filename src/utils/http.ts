@@ -23,7 +23,7 @@ export const objectToQueryString = (obj: Record<string, any>): string => {
   }
   return keyValuePairs.join('&');
 };
-const BASE_URL = 'https://api.dapdap.net';
+const BASE_URL = 'https://api.dapdap.tech';
 
 const getUrl = (url: string) => {
   return url.startsWith('http') ? url : `${BASE_URL}${url}`;
