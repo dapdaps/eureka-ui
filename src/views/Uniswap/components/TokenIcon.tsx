@@ -9,7 +9,7 @@ const StyledTokenIcon = styled.img<{ size: number }>`
 
 export const DEFAULT_TOKEN_ICON = '/defalut_token.png';
 const getIconByAddress = (address: string) => {
-  return `https://assets.dapdap.tech/images/${address.toLowerCase()}.png`;
+  return `https://assets.dapdap.net/images/${address.toLowerCase()}.png`;
 };
 const getIcon = (token: any) => {
   if (token?.icon) return token.icon;

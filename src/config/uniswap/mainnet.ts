@@ -33,7 +33,7 @@ export default {
       address: '0x79379C0E09a41d7978f883a56246290eE9a8c4d3',
       symbol: 'AAVE',
       name: 'Aave Token',
-      icon: `https://assets.dapdap.tech/images/${'0x79379C0E09a41d7978f883a56246290eE9a8c4d3'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0x79379C0E09a41d7978f883a56246290eE9a8c4d3'.toLowerCase()}.png`,
       decimals: 18,
     },
     '0x6a28e90582c583fcd3347931c544819C31e9D0e0': {
@@ -42,14 +42,14 @@ export default {
       decimals: 18,
       symbol: 'BAL',
       name: 'Balancer',
-      icon: `https://assets.dapdap.tech/images/${'0x6a28e90582c583fcd3347931c544819C31e9D0e0'.toLowerCase()}.svg`,
+      icon: `https://assets.dapdap.net/images/${'0x6a28e90582c583fcd3347931c544819C31e9D0e0'.toLowerCase()}.svg`,
     },
     '0xB755039eDc7910C1F1BD985D48322E55A31AC0bF': {
       chainId: 534352,
       address: '0xB755039eDc7910C1F1BD985D48322E55A31AC0bF',
       name: 'Curve DAO Token',
       symbol: 'CRV',
-      icon: `https://assets.dapdap.tech/images/${'0xB755039eDc7910C1F1BD985D48322E55A31AC0bF'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0xB755039eDc7910C1F1BD985D48322E55A31AC0bF'.toLowerCase()}.png`,
       decimals: 18,
     },
     '0xcA77eB3fEFe3725Dc33bccB54eDEFc3D9f764f97': {
@@ -58,7 +58,7 @@ export default {
       decimals: 18,
       symbol: 'DAI',
       name: 'Dai Stablecoin',
-      icon: `https://assets.dapdap.tech/images/${'0xcA77eB3fEFe3725Dc33bccB54eDEFc3D9f764f97'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0xcA77eB3fEFe3725Dc33bccB54eDEFc3D9f764f97'.toLowerCase()}.png`,
     },
     '0x608ef9A3BffE206B86c3108218003b3cfBf99c84': {
       chainId: 534352,
@@ -66,7 +66,7 @@ export default {
       decimals: 18,
       symbol: 'KNC',
       name: 'Kyber Network Crystal v2',
-      icon: `https://assets.dapdap.tech/images/${'0x608ef9A3BffE206B86c3108218003b3cfBf99c84'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0x608ef9A3BffE206B86c3108218003b3cfBf99c84'.toLowerCase()}.png`,
     },
     '0xeDEAbc3A1e7D21fE835FFA6f83a710c70BB1a051': {
       chainId: 534352,
@@ -74,14 +74,14 @@ export default {
       decimals: 18,
       symbol: 'LUSD',
       name: 'LUSD Stablecoin',
-      icon: `https://assets.dapdap.tech/images/${'0xeDEAbc3A1e7D21fE835FFA6f83a710c70BB1a051'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0xeDEAbc3A1e7D21fE835FFA6f83a710c70BB1a051'.toLowerCase()}.png`,
     },
     '0x53878B874283351D26d206FA512aEcE1Bef6C0dD': {
       chainId: 534352,
       address: '0x53878B874283351D26d206FA512aEcE1Bef6C0dD',
       name: 'Rocket Pool ETH',
       symbol: 'rETH',
-      icon: `https://assets.dapdap.tech/images/${'0x53878B874283351D26d206FA512aEcE1Bef6C0dD'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0x53878B874283351D26d206FA512aEcE1Bef6C0dD'.toLowerCase()}.png`,
       decimals: 18,
     },
     '0x434cdA25E8a2CA5D9c1C449a8Cb6bCbF719233E8': {
@@ -90,7 +90,7 @@ export default {
       decimals: 18,
       symbol: 'UNI',
       name: 'Uniswap',
-      icon: `https://assets.dapdap.tech/images/${'0x434cdA25E8a2CA5D9c1C449a8Cb6bCbF719233E8'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0x434cdA25E8a2CA5D9c1C449a8Cb6bCbF719233E8'.toLowerCase()}.png`,
     },
     '0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4': {
       chainId: 534352,
@@ -98,14 +98,14 @@ export default {
       decimals: 6,
       symbol: 'USDC',
       name: 'USD Coin',
-      icon: `https://assets.dapdap.tech/images/${'0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4'.toLowerCase()}.png`,
     },
     '0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df': {
       chainId: 534352,
       address: '0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df',
       name: 'Tether USD',
       symbol: 'USDT',
-      icon: `https://assets.dapdap.tech/images/${'0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df'.toLowerCase()}.png`,
       decimals: 6,
     },
     '0x3C1BCa5a656e69edCD0D4E36BEbb3FcDAcA60Cf1': {
@@ -113,7 +113,7 @@ export default {
       address: '0x3C1BCa5a656e69edCD0D4E36BEbb3FcDAcA60Cf1',
       name: 'Wrapped BTC',
       symbol: 'WBTC',
-      icon: `https://assets.dapdap.tech/images/${'0x3C1BCa5a656e69edCD0D4E36BEbb3FcDAcA60Cf1'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0x3C1BCa5a656e69edCD0D4E36BEbb3FcDAcA60Cf1'.toLowerCase()}.png`,
       decimals: 8,
     },
     '0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32': {
@@ -122,7 +122,7 @@ export default {
       decimals: 18,
       symbol: 'wstETH',
       name: 'Wrapped liquid staked Ether 2.0',
-      icon: `https://assets.dapdap.tech/images/${'0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32'.toLowerCase()}.png`,
+      icon: `https://assets.dapdap.net/images/${'0xf610A9dfB7C89644979b4A0f27063E9e7d7Cda32'.toLowerCase()}.png`,
     },
     '0x5300000000000000000000000000000000000004': {
       chainId: 534352,
