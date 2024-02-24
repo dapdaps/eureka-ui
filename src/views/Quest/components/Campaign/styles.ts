@@ -1,13 +1,9 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-import {
-  StyledTitle
-} from '../../styles'
+import { StyledTitle } from '../../styles';
 export { StyledCoin } from '../../styles';
-export {
-  StyledTitle
-}
+export { StyledTitle };
 
 export const LoadingWrapper = styled.div`
   display: flex;
@@ -17,7 +13,7 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const StyledCampaignContainer = styled.div`
-  background: radial-gradient(100% 100% at 0% 0%, #AE92FF 0%, #6D2DF3 100%);
+  background: radial-gradient(100% 100% at 0% 0%, #ae92ff 0%, #6d2df3 100%);
   /* height: 254px; */
 `;
 
@@ -30,8 +26,7 @@ export const StyledCampaign = styled.div`
   --onboarding-color: #787dff;
   --social-color: #aad6ff;
   --engage-color: #f4ca79;
-`
-
+`;
 
 export const StyledBox = styled.div`
   display: flex;
@@ -46,7 +41,7 @@ export const StyledHeader = styled.div`
   justify-content: space-between;
 `;
 
-export const StyledHeartBox = styled(motion.div) <{ $active?: boolean }>`
+export const StyledHeartBox = styled(motion.div)<{ $active?: boolean }>`
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(0, 0, 0, 0.3);
@@ -74,8 +69,7 @@ export const StyledDesc = styled.div`
 export const StyledTags = styled.div`
   margin-top: 18px;
 `;
-export const StyledWrapper = styled.div`
-`
+export const StyledWrapper = styled.div``;
 
 export const StyledTag = styled.div`
   border-radius: 16px;
@@ -119,8 +113,13 @@ export const StyledTimerBox = styled.div`
   gap: 20px;
 `;
 
-
 export const StyledCampaignsContainer = styled.div`
+  &.DapDapsBlastEcosystemIntegrationSurvey {
+    ${StyledCampaignContainer} {
+      background: url('/images/quest/survey_bg.png') center no-repeat;
+      background-size: cover;
+    }
+  }
 
   &.DapDapXLi {
     ${StyledCampaignContainer} {
@@ -158,6 +157,4 @@ export const StyledCampaignsContainer = styled.div`
       color: #000;
     }
   }
-  
-  
 `;

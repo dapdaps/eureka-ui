@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { memo, useEffect } from 'react';
 
 import Loading from '@/components/Icons/Loading';
@@ -11,22 +12,29 @@ import {
   JoinedAccountsBox,
   LoadingWrapper,
   StyledBox,
+  StyledCampaign,
   StyledCampaignContainer,
   StyledCampaignsContainer,
-  StyledCampaign,
-  StyledWrapper,
   StyledCoin,
   StyledDesc,
   StyledHeader,
   StyledHeartBox,
   StyledTag,
   StyledTags,
-  StyledTitle,
   StyledTimerBox,
+  StyledTitle,
+  StyledWrapper,
 } from './styles';
-import { useRouter } from 'next/router';
 
-const Campaign = ({ campaign, categories, campaignsContainerClassName }: { campaign: any; categories: any, campaignsContainerClassName: any }) => {
+const Campaign = ({
+  campaign,
+  categories,
+  campaignsContainerClassName,
+}: {
+  campaign: any;
+  categories: any;
+  campaignsContainerClassName: any;
+}) => {
   const { like, handleLike } = useLike(campaign.id, 'quest_campaign');
   return (
     <StyledCampaignContainer>
@@ -40,9 +48,15 @@ const Campaign = ({ campaign, categories, campaignsContainerClassName }: { campa
             <StyledTimerBox>
               {campaign.start_time > Date.now() && <div>Upcoming</div>}
               {campaign.start_time > Date.now() ? (
-                <Timer color={['DapDapXLi', 'DapDapTwitterSpace'].includes(campaignsContainerClassName) ? 'black' : 'white'} endTime={Number(campaign.start_time)} />
+                <Timer
+                  color={['DapDapXLi', 'DapDapTwitterSpace'].includes(campaignsContainerClassName) ? 'black' : 'white'}
+                  endTime={Number(campaign.start_time)}
+                />
               ) : (
-                <Timer color={['DapDapXLi', 'DapDapTwitterSpace'].includes(campaignsContainerClassName) ? 'black' : 'white'} endTime={Number(campaign.end_time)} />
+                <Timer
+                  color={['DapDapXLi', 'DapDapTwitterSpace'].includes(campaignsContainerClassName) ? 'black' : 'white'}
+                  endTime={Number(campaign.end_time)}
+                />
               )}
             </StyledTimerBox>
             {/* <StyledHeartBox
@@ -85,7 +99,10 @@ const Campaign = ({ campaign, categories, campaignsContainerClassName }: { campa
                 {campaign.quests.total_category
                   .sort((a: any, b: any) => a.quest_category_id - b.quest_category_id)
                   .map(({ total, quest_category_id }: { total: number; quest_category_id: number }) => (
-                    <span style={{ color: `var(--${categories[quest_category_id]?.name}-color` }} key={quest_category_id}>
+                    <span
+                      style={{ color: `var(--${categories[quest_category_id]?.name}-color` }}
+                      key={quest_category_id}
+                    >
                       {total} #{categories[quest_category_id]?.name}
                     </span>
                   ))}
@@ -102,13 +119,14 @@ const Campaign = ({ campaign, categories, campaignsContainerClassName }: { campa
 };
 
 const Campaigns = ({ onLoad, loading, campaigns, categoryLoading, categories }: any) => {
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     if (!loading && campaigns.length) {
       onLoad(campaigns[0].id);
     }
   }, [loading, campaigns]);
-  const campaignsContainerClassName = typeof router.query.campaignName === 'string' ? router.query.campaignName.replace(/\s/g, '').split('.')[0] : ''
+  const campaignsContainerClassName =
+    typeof router.query.campaignName === 'string' ? router.query.campaignName.replace(/\s|\'/g, '').split('.')[0] : '';
   return (
     <StyledCampaignsContainer className={campaignsContainerClassName}>
       {loading || categoryLoading ? (
@@ -116,7 +134,14 @@ const Campaigns = ({ onLoad, loading, campaigns, categoryLoading, categories }: 
           <Loading size={30} />
         </LoadingWrapper>
       ) : (
-        campaigns.map((campaign: any) => <Campaign campaignsContainerClassName={campaignsContainerClassName} key={campaign.id} campaign={campaign} categories={categories} />)
+        campaigns.map((campaign: any) => (
+          <Campaign
+            campaignsContainerClassName={campaignsContainerClassName}
+            key={campaign.id}
+            campaign={campaign}
+            categories={categories}
+          />
+        ))
       )}
     </StyledCampaignsContainer>
   );
