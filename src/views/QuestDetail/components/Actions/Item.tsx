@@ -1,15 +1,18 @@
 import { AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
 import { memo, useCallback, useEffect, useState } from 'react';
+
 import { overlay } from '@/components/animation';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useLayoutStore } from '@/stores/layout';
-import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useReport from '@/views/Landing/hooks/useReport';
-import useActionCheck from '../../hooks/useActionCheck';
+import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
+
 import { formatDescription } from '../../helper';
+import useActionCheck from '../../hooks/useActionCheck';
 import PasswordAction from './PasswordAction';
 import {
+  RefreshTips,
   StyledDapp,
   StyledDappIcon,
   StyledDapps,
@@ -22,8 +25,8 @@ import {
   StyledItemRight,
   StyledItemTop,
   StyledMore,
-  RefreshTips,
 } from './styles';
+import SurveyAction from './survey-action';
 
 const ActionItem = ({
   action,
@@ -139,6 +142,65 @@ const ActionItem = ({
     setActionCompleted(completed);
   }, [completed]);
 
+  const renderExpand = () => {
+    switch (action.category) {
+      case 'password':
+        return (
+          <PasswordAction
+            id={action.id}
+            onSuccess={() => {
+              setOpen(false);
+              setActionCompleted(true);
+              onSuccess();
+            }}
+          />
+        );
+      case 'questionnaire':
+        return (
+          <SurveyAction
+            status={action.status}
+            id={action.id}
+            onSuccess={() => {
+              setOpen(false);
+              setActionCompleted(true);
+              onSuccess();
+            }}
+          />
+        );
+      default:
+        return (
+          <>
+            <StyledDapps>
+              {action.operators
+                ?.filter((item: any, i: number) => i < 10)
+                .map((dapp: any) => (
+                  <StyledDapp
+                    key={dapp.dapp_id}
+                    whileHover={{ opacity: 0.8 }}
+                    whileTap={{ opacity: 0.6 }}
+                    onClick={() => {
+                      handleDappRedirect(dapp);
+                    }}
+                  >
+                    <StyledDappIcon src={dapp.dapp_logo} />
+                    <span>{dapp.dapp_name}</span>
+                  </StyledDapp>
+                ))}
+            </StyledDapps>
+            {action.operators?.length > 10 && (
+              <StyledMore
+                onClick={() => {
+                  router.push('/alldapps');
+                }}
+              >
+                View all Dapps
+              </StyledMore>
+            )}
+          </>
+        );
+    }
+  };
+
   return (
     <StyledItemContainer>
       <StyledItemTop
@@ -183,7 +245,9 @@ const ActionItem = ({
           <span>{action.name}</span>
         </StyledItemLeft>
         <StyledItemRight>
-          {action.description || action.category === 'password' ? (
+          {action.description ||
+          action.category === 'password' ||
+          (action.category === 'questionnaire' && action.status !== 'completed') ? (
             <StyledIconBox
               className={open ? 'open' : ''}
               onClick={(ev) => {
@@ -265,46 +329,8 @@ const ActionItem = ({
           >
             <StyledExpand>
               <StyledDesc dangerouslySetInnerHTML={{ __html: formatDescription(action.description) }} />
-              {action.category === 'password' ? (
-                <PasswordAction
-                  id={action.id}
-                  onSuccess={() => {
-                    setOpen(false);
-                    setActionCompleted(true);
-                    onSuccess();
-                  }}
-                />
-              ) : (
-                <>
-                  {' '}
-                  <StyledDapps>
-                    {action.operators
-                      ?.filter((item: any, i: number) => i < 10)
-                      .map((dapp: any) => (
-                        <StyledDapp
-                          key={dapp.dapp_id}
-                          whileHover={{ opacity: 0.8 }}
-                          whileTap={{ opacity: 0.6 }}
-                          onClick={() => {
-                            handleDappRedirect(dapp);
-                          }}
-                        >
-                          <StyledDappIcon src={dapp.dapp_logo} />
-                          <span>{dapp.dapp_name}</span>
-                        </StyledDapp>
-                      ))}
-                  </StyledDapps>
-                  {action.operators?.length > 10 && (
-                    <StyledMore
-                      onClick={() => {
-                        router.push('/alldapps');
-                      }}
-                    >
-                      View all Dapps
-                    </StyledMore>
-                  )}
-                </>
-              )}
+
+              {renderExpand()}
 
               {/* {(action.operators?.length === 0 || !action.operators) && (
                 <StyledExpandButtonBox>
