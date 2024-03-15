@@ -16,11 +16,10 @@ const wcV2InitOptions: any = {
   projectId: '72b7b3359ab477e339a070f615806aa6',
   requiredChains: Object.keys(chains).map((chain) => Number(chain)),
 };
-
 const walletConnect = walletConnectModule(wcV2InitOptions);
 const injected = injectedModule({
   // display specific unavailable wallets
-  displayUnavailable: [ProviderLabel.MetaMask],
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.OKXWallet],
 });
 const bitgetWallet = bitgetWalletModule();
 
