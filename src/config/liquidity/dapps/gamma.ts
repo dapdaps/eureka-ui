@@ -23,7 +23,9 @@ const basic = {
     ERN: 'https://app.gamma.xyz/_next/static/media/icon.5571c161.svg',
     WMNT: 'https://app.gamma.xyz/_next/static/media/icon.d80ccc43.svg',
     LYNX: 'https://app.gamma.xyz/_next/static/media/icon.4098f714.svg',
-    ankrBNB: 'https://app.gamma.xyz/_next/static/media/icon.e48c2ef6.svg'
+    ankrBNB: 'https://app.gamma.xyz/_next/static/media/icon.e48c2ef6.svg',
+    WMATIC: 'https://app.gamma.xyz/_next/static/media/icon.fe758f26.svg',
+    stMATIC: 'https://app.gamma.xyz/_next/static/media/icon.11f91d3b.svg'
   },
 };
 const networks = {
