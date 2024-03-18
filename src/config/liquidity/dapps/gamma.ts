@@ -64,10 +64,10 @@ const networks = {
     LAST_SNAP_SHOT_DATA_URL: 'https://wire2.gamma.xyz/database/thena/bsc/hypervisors/lastSnapshot',
     ammName: 'Thena',
     ammImage: 'https://app.gamma.xyz/_next/static/media/icon.d0ece9b9.svg',
-    defaultPair: 'N ETH-WBNB-0',
+    defaultPair: 'N WETH-WBNB-0',
     pairs: [
       {
-        id: 'N ETH-WBNB-0',
+        id: 'N WETH-WBNB-0',
         strategy: 'Dynamic',
         strategy2: 'Narrow',
         token0: 'WETH',
@@ -121,11 +121,11 @@ const networks = {
       WETH: '0x2170ed0880ac9a755fd29b2688956bd959f933f8',
       WBNB: '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c',
       BTCB: '0x7130d2a12b9bcbfae4f2634d864a1ee1ce3ead9c',
-      USDT: '0x55d398326f99059ff775485246999027b3197955',
-      USDC: '0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d',
+      ankrBNB: '0x52f24a5e03aee338da5fd9df68d2b6fae1178827',
       BNBx: '0x1bdd3cf7f79cfb8edbb955f20ad99211551ba275',
-
-      'N ETH-WBNB-0': '0x10bf6e7b28b1cffb1c047d7f815953931e5ee947',
+      USDT: '0x55d398326f99059ff775485246999027b3197955',
+      
+      'N WETH-WBNB-0': '0x10bf6e7b28b1cffb1c047d7f815953931e5ee947',
       'N BTCB-WBNB-0': '0xd3c480ec7a47596ff8d63396227d1f7dc728a7f0',
       'P ankrBNB-WBNB-0': '0x754fd74e22255780a58f125300008781d8318e3a',
       'P BNBx-WBNB-0': '0x2ecbd508c00bbc8aa0cdc9100bf3956fcabe7677',
