@@ -125,4 +125,13 @@ export const manta: { [key: string]: Token } = {
     name: 'LineaBank Token',
     icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce',
   },
+
+  manta: {
+    chainId: CHAIN_ID,
+    address: '0x95CeF13441Be50d20cA4558CC0a27B601aC544E5',
+    decimals: 18,
+    symbol: 'MANTA',
+    name: 'Manta',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiblmivom5d5yrxtvtwf4aztyjzjxophzflqrppntwb3c7qc7sspgu',
+  },
 };

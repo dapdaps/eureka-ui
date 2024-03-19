@@ -185,4 +185,13 @@ export const zkSync: { [key: string]: Token } = {
     icon: 'https://ipfs.near.social/ipfs/bafkreihvtu2nfnzgzc6jbcdvd22fmtufkxoawttgbt3nmagc5rcvfjjcki',
     priceKey: 'velocore',
   },
+
+  dai: {
+    chainId: CHAIN_ID,
+    address: '0x4b9eb6c0b6ea15176bbf62841c6b2a8a398cb656',
+    decimals: 18,
+    symbol: 'DAI',
+    name: 'Dai Stablecoin',
+    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+  },
 };
