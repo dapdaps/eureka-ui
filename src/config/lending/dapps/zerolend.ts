@@ -8,6 +8,7 @@ const WMATIC_TOKEN = { name: 'Wrapped Matic', symbol: 'WMATIC', decimals: 18 };
 const ownerId = 'bluebiu.near';
 const nodeUrl = 'https://rpc.mainnet.near.org';
 const ipfsPrefix = 'https://ipfs.near.social/ipfs';
+const showHealthFactor = true;
 const CONTRACT_ABI = {
   wrappedTokenGatewayV3ABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WrappedTokenGatewayV3ABI.json',
@@ -17,7 +18,7 @@ const CONTRACT_ABI = {
   walletBalanceProviderABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
 };
-
+const baseConfig = { ownerId, nodeUrl, ipfsPrefix, showHealthFactor };
 const basic = {
   name: 'zerolend',
   // icon: '/images/apps/granary.png',
@@ -41,9 +42,7 @@ const networks = {
     //   // },
     // },
     config: {
-      ownerId,
-      nodeUrl,
-      ipfsPrefix,
+      ...baseConfig,
       chainName: 'zkSync Mainnet',
       nativeCurrency: zkSync['eth'],
       nativeWrapCurrency: zkSync['weth'],
@@ -61,6 +60,7 @@ const networks = {
         availableLiquidityUSD: '',
         borrowingEnabled: true,
         decimals: 18,
+        icon: zkSync['eth'].icon,
         id: '1',
         isIsolated: false,
         name: 'Ethereum',
@@ -79,9 +79,10 @@ const networks = {
         name: zkSync['weth'].name,
         symbol: zkSync['weth'].symbol,
         decimals: zkSync['weth'].decimals,
+        icon: zkSync['weth'].icon,
         supplyAPY: '',
         usageAsCollateralEnabled: true,
-        borrowingEnabled: true,
+        borrowingEnabled: false,
         aTokenAddress: '0x9002ecb8a06060e3b56669c6B8F18E1c3b119914',
         variableDebtTokenAddress: '0x56f58d9BE10929CdA709c4134eF7343D73B080Cf',
         isIsolated: false,
@@ -97,6 +98,7 @@ const networks = {
         name: zkSync['usdc'].name,
         symbol: zkSync['usdc'].symbol,
         decimals: zkSync['usdc'].decimals,
+        icon: zkSync['usdc'].icon,
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
@@ -116,6 +118,7 @@ const networks = {
         name: zkSync['usdt'].name,
         symbol: zkSync['usdt'].symbol,
         decimals: zkSync['usdt'].decimals,
+        icon: zkSync['usdt'].icon,
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
@@ -134,6 +137,7 @@ const networks = {
         name: zkSync['dai'].name,
         symbol: zkSync['dai'].symbol,
         decimals: zkSync['dai'].decimals,
+        icon: zkSync['dai'].icon,
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
@@ -152,6 +156,7 @@ const networks = {
         decimals: zkSync['lusd'].decimals,
         symbol: zkSync['lusd'].symbol,
         name: zkSync['lusd'].name,
+        icon: zkSync['lusd'].icon,
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
@@ -170,9 +175,7 @@ const networks = {
   //manta
   169: {
     config: {
-      ownerId,
-      nodeUrl,
-      ipfsPrefix,
+      ...baseConfig,
       chainName: 'Manta Pacific Mainnet',
       nativeCurrency: manta['eth'],
       nativeWrapCurrency: manta['weth'],

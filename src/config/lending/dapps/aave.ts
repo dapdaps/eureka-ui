@@ -16,7 +16,7 @@ const CONTRACT_ABI = {
   walletBalanceProviderABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
 };
-
+const baseConfig = { ownerId, nodeUrl, ipfsPrefix };
 const basic = {
   name: 'AAVE V3',
   // icon: '/images/apps/granary.png',
@@ -29,9 +29,7 @@ const networks = {
   // scroll
   534352: {
     config: {
-      ownerId,
-      nodeUrl,
-      ipfsPrefix,
+      ...baseConfig,
       chainName: 'Scroll',
       nativeCurrency: scroll['eth'],
       nativeWrapCurrency: scroll['weth'],
