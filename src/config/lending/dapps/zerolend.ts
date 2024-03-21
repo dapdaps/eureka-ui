@@ -8,7 +8,7 @@ const WMATIC_TOKEN = { name: 'Wrapped Matic', symbol: 'WMATIC', decimals: 18 };
 const ownerId = 'bluebiu.near';
 const nodeUrl = 'https://rpc.mainnet.near.org';
 const ipfsPrefix = 'https://ipfs.near.social/ipfs';
-const showHealthFactor = true;
+
 const CONTRACT_ABI = {
   wrappedTokenGatewayV3ABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WrappedTokenGatewayV3ABI.json',
@@ -18,7 +18,8 @@ const CONTRACT_ABI = {
   walletBalanceProviderABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
 };
-const baseConfig = { ownerId, nodeUrl, ipfsPrefix, showHealthFactor };
+const heroData = ['Net Worth', 'Net APY', 'Health Factor', 'Available rewards'];
+const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'zerolend',
   // icon: '/images/apps/granary.png',
@@ -69,6 +70,7 @@ const networks = {
         symbol: 'ETH',
         underlyingAsset: '0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91',
         usageAsCollateralEnabled: true,
+        stableDebtTokenAddress: '0x9c9158BFF47342A20b7D2Ac09F89e96F3A209b9B',
         variableBorrowAPY: '',
         variableDebtTokenAddress: '0x56f58d9BE10929CdA709c4134eF7343D73B080Cf',
         LTV: 0.8,
@@ -84,6 +86,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: false,
         aTokenAddress: '0x9002ecb8a06060e3b56669c6B8F18E1c3b119914',
+        stableDebtTokenAddress: '0x9c9158BFF47342A20b7D2Ac09F89e96F3A209b9B',
         variableDebtTokenAddress: '0x56f58d9BE10929CdA709c4134eF7343D73B080Cf',
         isIsolated: false,
         availableLiquidity: 0,
@@ -103,6 +106,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0x016341e6Da8da66b33Fd32189328c102f32Da7CC',
+        stableDebtTokenAddress: '0x5faC4FD2e4bCE392d34600d94Aa1114274e54Dff',
         variableDebtTokenAddress: '0xE60E1953aF56Db378184997cab20731d17c65004',
         isIsolated: false,
         availableLiquidity: 0,
@@ -123,6 +127,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0x9ca4806fa54984Bf5dA4E280b7AA8bB821D21505',
+        stableDebtTokenAddress: '0x6F977fD05962d67Eb7B16b15684fbEa0462F442d',
         variableDebtTokenAddress: '0xa333c6FF89525939271E796FbDe2a2D9A970F831',
         isIsolated: false,
         availableLiquidity: 0,
@@ -142,6 +147,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0x15b362768465F966F1E5983b7AE87f4C5Bf75C55',
+        stableDebtTokenAddress: '0xb6ABb4183B98A2a85E1d8e9aC93542446461E2d7',
         variableDebtTokenAddress: '0x0325F21eB0A16802E2bACD931964434929985548',
         isIsolated: false,
         availableLiquidity: 0,
@@ -161,6 +167,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0xd97Ac0ce99329EE19b97d03E099eB42D7Aa19ddB',
+        stableDebtTokenAddress: '0x029214A5cd528433b8A4EccD7eF798210dB3518C',
         variableDebtTokenAddress: '0x41c618CCE58Fb27cAF4EEb1dd25de1d03A0DAAc6',
         isIsolated: false,
         availableLiquidity: 0,
@@ -198,6 +205,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: false,
         aTokenAddress: '0x0ab214F127998a36Ce7aB0087a9B0D20adc2d5AD',
+        stableDebtTokenAddress: '0xffa256ad2487c4d989c3dfa6a6e9c13fe33beba4',
         variableDebtTokenAddress: '0xb5EEf4Df2e48Fb41E6eaE6778c14787bAAa181F1',
         isIsolated: false,
         availableLiquidity: 0,
@@ -217,6 +225,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: false,
         aTokenAddress: '0x0ab214F127998a36Ce7aB0087a9B0D20adc2d5AD',
+        stableDebtTokenAddress: '0xffa256ad2487c4d989c3dfa6a6e9c13fe33beba4',
         variableDebtTokenAddress: '0xb5EEf4Df2e48Fb41E6eaE6778c14787bAAa181F1',
         isIsolated: false,
         availableLiquidity: 0,
@@ -236,6 +245,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0xbdad407f77f44f7da6684b416b1951eca461fb07',
+        stableDebtTokenAddress: '0xba832bc55af97867170271f3afeab5eba1405ebc',
         variableDebtTokenAddress: '0x5F62aEa5549CdF5dc309255946D69E516a9C2042',
         isIsolated: false,
         availableLiquidity: 0,
@@ -255,6 +265,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0x0ab214F127998a36Ce7aB0087a9B0D20adc2d5AD',
+        stableDebtTokenAddress: '0x28d7246cd9da102c75faa7d4cf1c5399b323f084',
         variableDebtTokenAddress: '0xb5EEf4Df2e48Fb41E6eaE6778c14787bAAa181F1',
         isIsolated: false,
         availableLiquidity: 0,
@@ -274,6 +285,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0xB4FFEf15daf4C02787bC5332580b838cE39805f5',
+        stableDebtTokenAddress: '0x27c7733d7a0f142720af777e70ebc33ca485d014',
         variableDebtTokenAddress: '0xCb2dA0F5aEce616e2Cbf29576CFc795fb15c6133',
         isIsolated: false,
         availableLiquidity: 0,
@@ -293,6 +305,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0x95cef13441be50d20ca4558cc0a27b601ac544e5',
+        stableDebtTokenAddress: '0x7101ff22ea63464cc106e0a3274ef4a2d28cd292',
         variableDebtTokenAddress: '0x061ca6fDF24D586EE9a4e4B4A1D61f9090aB48e9',
         isIsolated: false,
         availableLiquidity: 0,
@@ -312,6 +325,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0xec901da9c68e90798bbbb74c11406a32a70652c3',
+        stableDebtTokenAddress: '0x7675abdc6139dbf46d3bb5a3dcf79e6cad936765',
         variableDebtTokenAddress: '0x3Da71Ad7E055ee9716bBA4DaC53E37cDDF60D509',
         isIsolated: false,
         availableLiquidity: 0,
@@ -331,6 +345,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0x759cb97fbc452BAFD49992BA88d3C5dA4Dd9B0e7',
+        stableDebtTokenAddress: '0xb8e26f3c4afb4f56f430a390dc3f3b12f8a50b26',
         variableDebtTokenAddress: '0xc1d9ca73f57930D4303D380C5DC668C40B38598B',
         isIsolated: false,
         availableLiquidity: 0,
@@ -350,6 +365,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0x508C39Cd02736535d5cB85f3925218E5e0e8F07A',
+        stableDebtTokenAddress: '0x60c28a4cb4e78e9fee49bcaae3f4dbcde77f412f',
         variableDebtTokenAddress: '0x476F206511a18C9956fc79726108a03E647A1817',
         isIsolated: false,
         availableLiquidity: 0,
@@ -369,6 +385,7 @@ const networks = {
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
         aTokenAddress: '0xE7e54ca3D6F8a5561f8cee361260E537BDc5bE48',
+        stableDebtTokenAddress: '0x7c2e57764ec33292fe098636aaa5d0357d814d16',
         variableDebtTokenAddress: '0xe6B9b00d42fA5831ccE4E44D9d6D8C51ba17cd1E',
         isIsolated: false,
         availableLiquidity: 0,

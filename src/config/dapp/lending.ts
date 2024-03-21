@@ -598,6 +598,30 @@ const ROUTE_CONFIG = {
       '--claim-color': '#EAEBEF',
     },
   },
+  'seamless-protocol': {
+    type: 'lending',
+    theme: {
+      '--button-color': '#3AB1FF',
+      '--button-disabled-color': 'rgba(234, 235, 239, .5)',
+      '--switch-color': '#3AB1FF',
+      '--button-text-color': 'black',
+      '--supply-color': '#3AB1FF',
+      '--yours-table-title': 'black',
+      '--borrow-color': '#77047B',
+      '--withdraw-bg-color': '#3AB1FF',
+      '--withdraw-border-color': '#3AB1FF',
+      '--withdraw-bg-hover-color': '#3AB1FF',
+      '--repay-bg-color': '#77047B',
+      '--repay-border-color': '#77047B',
+      '--repay-bg-hover-color': '#77047B',
+      '--claim-bg-hover-color': '#292E40',
+      '--claim-bg-color': '#292E40',
+      '--claim-border-color': '#292E40',
+      '--withdraw-color': '#3AB1FF',
+      '--replay-color': '#77047B',
+      '--claim-color': '#292E40',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
