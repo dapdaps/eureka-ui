@@ -169,7 +169,7 @@ const SwapPanel = ({ chainId, onLoad, defaultDapp, defaultAmount }: any) => {
             wethAddress: weth[chainId],
             prices,
             ...currentDapp,
-            slippage: '0.05',
+            slippage: 0.005,
             onLoad: (data: any) => {
               console.log('amountOutFn', data);
               setTrade(data);
