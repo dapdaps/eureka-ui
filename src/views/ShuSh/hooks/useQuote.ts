@@ -3,7 +3,7 @@ import useToast from '@/hooks/useToast';
 
 let timer: ReturnType<typeof setTimeout> | null = null;
 
-export default function useQuote(cb: Function) {
+export default function useQuote(cb: any) {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
@@ -19,7 +19,7 @@ export default function useQuote(cb: Function) {
         if (result.status === 'success') {
           cb({ ...result.data, direction });
           if (timer) clearTimeout(timer);
-          setTimeout(
+          timer = setTimeout(
             () => {
               queryQuote({ from, to, amount, direction, anonymous });
             },

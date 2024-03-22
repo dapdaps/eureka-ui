@@ -20,7 +20,7 @@ export default function useChechStatus(auto: boolean) {
           shushOrdersStore.addOrder({ ...result.data, semi: shushOrdersStore.semis[result.data.houdiniId] });
           if (auto) {
             if (timer) clearTimeout(timer);
-            setTimeout(
+            timer = setTimeout(
               () => {
                 queryStatus(id);
               },

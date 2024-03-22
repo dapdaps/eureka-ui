@@ -29,7 +29,7 @@ const QA = () => {
               <div className="title3">Step 2 - Send Your Funds to Start</div>
               <ul>
                 <li>
-                  Receiving Wallet Address : Input the address of the receiving wallet, ensuring it's on the same
+                  Receiving Wallet Address : Input the address of the receiving wallet, ensuring it&apos;s on the same
                   blockchain as the receiving currency.
                 </li>
                 <li>Initiate Order: Send the specified crypto amount to the Shush Finance address provided.</li>
@@ -40,7 +40,7 @@ const QA = () => {
                   Transaction Processing: Takes 20-40 minutes on average for Private Transactions and 3 minutes for
                   Semi-Private.
                 </li>
-                <li>Track Progress: Follow your transaction's progress once your transaction initiates.</li>
+                <li>Track Progress: Follow your transaction&apos;s progress once your transaction initiates.</li>
                 <li>
                   Contact Support: Reach out to our Support Team for assistance by clicking the link below. Order ID:
                   Please provide your Order ID to help us quickly address your issue.
@@ -98,8 +98,8 @@ const QA = () => {
               </div>
               <div className="title3">Sender Anonymity</div>
               <div>
-                The sender's originating wallet address remains hidden and untraceable by the recipient or any external
-                parties.
+                The sender&apos;s originating wallet address remains hidden and untraceable by the recipient or any
+                external parties.
               </div>
               <div className="title3">Recipient Privacy</div>
               <div>The recipient receives funds without the sender’s wallet address being traceable on-chain.</div>
@@ -131,7 +131,7 @@ const QA = () => {
                 moderately private alternative for crypto transfers, particularly useful in scenarios like cross-chain
                 swaps.
               </div>
-              <div className="mt-10">Here's a concise overview:</div>
+              <div className="mt-10">Here&apos;s a concise overview:</div>
               <div className="title3">Intermediate Privacy</div>
               <ul>
                 <li>
@@ -175,9 +175,9 @@ const QA = () => {
           content={
             <>
               <div>
-                A 'Completed' order status without fund receipt is usually due to network-related delays. Checking the
-                transaction history through a blockchain scanner can clarify the situation. If the issue persists, our
-                Support Team is ready to help resolve it promptly. Here’s how to proceed:
+                A &apos;Completed&apos; order status without fund receipt is usually due to network-related delays.
+                Checking the transaction history through a blockchain scanner can clarify the situation. If the issue
+                persists, our Support Team is ready to help resolve it promptly. Here’s how to proceed:
               </div>
               <div className="title3">Check for Pending Transaction</div>
               <ul>
@@ -187,7 +187,7 @@ const QA = () => {
                 </li>
                 <li>
                   Use Blockchain Scanners: To verify, use a blockchain scanner like Etherscan or BSCScan. Search your
-                  receiving wallet address history and check for any transactions marked as 'pending'.
+                  receiving wallet address history and check for any transactions marked as &apos;pending&apos;.
                 </li>
                 <li>
                   Pending Transaction Indication: If there’s a pending deposit transaction, it’s likely a temporary
@@ -210,9 +210,9 @@ const QA = () => {
           content={
             <>
               <div>
-                Sending the wrong currency doesn't mean your funds are lost. We can arrange for the return of your funds
-                but please note that resolving such matters can potentially take up to 24 hours. Be assured, we are
-                committed to ensuring the safety of your funds and resolving the issue promptly.
+                Sending the wrong currency doesn&apos;t mean your funds are lost. We can arrange for the return of your
+                funds but please note that resolving such matters can potentially take up to 24 hours. Be assured, we
+                are committed to ensuring the safety of your funds and resolving the issue promptly.
               </div>
             </>
           }
@@ -223,8 +223,9 @@ const QA = () => {
           content={
             <>
               <div>
-                If your transaction status shows 'Order Expired,' rest assured that your funds are secure. We're
-                committed to resolving any issues promptly and ensuring the security of your transactions at all times.
+                If your transaction status shows &apos;Order Expired,&apos; rest assured that your funds are secure.
+                We&apos;re committed to resolving any issues promptly and ensuring the security of your transactions at
+                all times.
               </div>
             </>
           }
@@ -236,10 +237,10 @@ const QA = () => {
             <>
               <div>
                 Variable rates offer flexibility and are more cost-effective but come with rate uncertainty, while fixed
-                rates provide stability at a slightly higher cost. The choice depends on your transaction's
+                rates provide stability at a slightly higher cost. The choice depends on your transaction&apos;s
                 requirements.
               </div>
-              <div className="mt-10">Here's a concise overview:</div>
+              <div className="mt-10">Here&apos;s a concise overview:</div>
               <div className="title3">Variable Rates</div>
               <ul>
                 <li>
