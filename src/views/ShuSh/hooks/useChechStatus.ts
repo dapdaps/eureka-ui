@@ -16,7 +16,8 @@ export default function useChechStatus(auto: boolean) {
         const response = await fetch(`/shush/api/status?id=${id}`);
         const result = await response.json();
         if (result.status === 'success') {
-          setStatusResult(result.data || {});
+          const _data = result.data || {};
+          setStatusResult({ ..._data, semi: shushOrdersStore.semis[result.data.houdiniId] });
           shushOrdersStore.addOrder({ ...result.data, semi: shushOrdersStore.semis[result.data.houdiniId] });
           if (auto) {
             if (timer) clearTimeout(timer);
