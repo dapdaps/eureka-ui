@@ -27,7 +27,7 @@ export const getTimePeriods = (seconds: number) => {
     delta -= timeLeft.minutes * MINUTE_IN_SECONDS;
   }
 
-  timeLeft.seconds = delta;
+  timeLeft.seconds = Math.ceil(delta);
 
   return timeLeft;
 };

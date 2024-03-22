@@ -31,7 +31,8 @@ const Container = styled.div`
   top: 0;
   width: 100%;
   z-index: 50;
-  background: #16181d;
+  background: rgba(22, 24, 29, 0.9);
+  backdrop-filter: blur(5px);
   border-bottom: 1px solid #21232a;
 
   .container-nav {
