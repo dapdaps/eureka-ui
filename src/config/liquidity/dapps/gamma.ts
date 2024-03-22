@@ -26,7 +26,8 @@ const basic = {
     LYNX: 'https://app.gamma.xyz/_next/static/media/icon.4098f714.svg',
     ankrBNB: 'https://app.gamma.xyz/_next/static/media/icon.e48c2ef6.svg',
     WMATIC: 'https://app.gamma.xyz/_next/static/media/icon.fe758f26.svg',
-    stMATIC: 'https://app.gamma.xyz/_next/static/media/icon.11f91d3b.svg'
+    stMATIC: 'https://app.gamma.xyz/_next/static/media/icon.11f91d3b.svg',
+    MINU: 'https://app.gamma.xyz/_next/static/media/icon.89124599.svg'
   },
 };
 const networks = {
