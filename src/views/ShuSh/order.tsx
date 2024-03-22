@@ -14,7 +14,7 @@ const ShuShOrderView = ({ id }: any) => {
   useEffect(() => {
     if (id) queryStatus(id);
   }, [id]);
-  return loading || tokensLoading ? (
+  return (loading || tokensLoading) && !statusResult ? (
     <Spinner />
   ) : statusResult ? (
     <Common anonymous={statusResult.semi}>

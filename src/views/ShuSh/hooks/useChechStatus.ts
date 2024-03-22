@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useShushOrdersStore } from '@/stores/shush';
 
 let timer: ReturnType<typeof setTimeout> | null = null;
@@ -17,8 +17,12 @@ export default function useChechStatus(auto: boolean) {
         const result = await response.json();
         if (result.status === 'success') {
           const _data = result.data || {};
-          setStatusResult({ ..._data, semi: shushOrdersStore.semis[result.data.houdiniId] });
-          shushOrdersStore.addOrder({ ...result.data, semi: shushOrdersStore.semis[result.data.houdiniId] });
+          const record = { ..._data, semi: shushOrdersStore.semis[result.data.houdiniId] };
+          setStatusResult(record);
+          if (!shushOrdersStore.orders[record.houdiniId]) {
+            shushOrdersStore.addOrder(record);
+          }
+          shushOrdersStore.addStatus(record.houdiniId, record.status);
           if (auto) {
             if (timer) clearTimeout(timer);
             timer = setTimeout(
@@ -36,6 +40,10 @@ export default function useChechStatus(auto: boolean) {
     },
     [loading],
   );
+
+  useEffect(() => {
+    if (timer) clearTimeout(timer);
+  }, []);
 
   return { loading, statusResult, queryStatus };
 }

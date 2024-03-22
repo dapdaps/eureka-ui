@@ -14,8 +14,12 @@ import {
   StyledEmpty,
 } from './styles';
 
+let statusTimer: ReturnType<typeof setTimeout> | null = null;
+let refreshTimer: ReturnType<typeof setTimeout> | null = null;
+
 const PreviousOrders = ({ tokens }: any) => {
   const [searchId, setSearchId] = useState('');
+  const [filteredOrders, setFilteredOrders] = useState<any>([]);
   const shushOrdersStore: any = useShushOrdersStore();
   const { queryStatus } = useChechStatus(false);
 
@@ -31,26 +35,42 @@ const PreviousOrders = ({ tokens }: any) => {
       semis: _semis,
     });
 
-    setTimeout(
+    setFilteredOrders(_orders);
+
+    if (refreshTimer) clearTimeout(refreshTimer);
+
+    refreshTimer = setTimeout(() => {
+      refreshOrders();
+    }, 10 * 1000);
+  };
+
+  const filterOrders = useMemo(() => {
+    if (!searchId) return filteredOrders;
+    return filteredOrders.filter((order: any) => order.houdiniId.includes(searchId));
+  }, [filteredOrders, searchId]);
+
+  useEffect(() => {
+    refreshOrders();
+
+    return () => {
+      if (refreshTimer) clearTimeout(refreshTimer);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (statusTimer) clearTimeout(statusTimer);
+    statusTimer = setTimeout(
       () => {
-        refreshOrders();
-        _orders.forEach((order: any) => {
+        filteredOrders.forEach((order: any) => {
           queryStatus(order.houdiniId);
         });
       },
       1 * 60 * 1000,
     );
-  };
-
-  const filterOrders = useMemo(() => {
-    if (!searchId) return Object.values(shushOrdersStore.orders);
-    return Object.values(shushOrdersStore.orders).filter((order: any) => order.houdiniId.includes(searchId));
-  }, [shushOrdersStore.orders, searchId]);
-
-  useEffect(() => {
-    refreshOrders();
-  }, []);
-
+    return () => {
+      if (statusTimer) clearTimeout(statusTimer);
+    };
+  }, [filteredOrders.length]);
   return (
     <StyledContainer>
       <StyledHeader>
@@ -89,10 +109,11 @@ const PreviousOrders = ({ tokens }: any) => {
         {filterOrders.length ? (
           filterOrders.map((order: any) => (
             <OrderPanel
-              key={order.id}
+              key={order.houdiniId}
               order={order}
               tokens={tokens}
               defaultExpand={false}
+              status={shushOrdersStore.status[order.houdiniId]}
               onSuccess={() => {
                 queryStatus(order.houdiniId);
               }}

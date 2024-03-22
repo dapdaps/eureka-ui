@@ -61,7 +61,7 @@ export default function ShuShView() {
 
   useEffect(() => {
     if (quoteAmount && Number(quoteAmount) && direction) quote();
-  }, [quoteAmount, direction, from, to]);
+  }, [quoteAmount, direction, from, to, anonymous]);
 
   return loading ? (
     <Spinner />

@@ -34,7 +34,7 @@ const SearchInput = ({ value, onChange }: any) => {
   return (
     <StyledContainer>
       <svg xmlns="http://www.w3.org/2000/svg" width="21" height="15" viewBox="0 0 21 15" fill="none">
-        <circle cx="7.01829" cy="7.01829" r="6.01829" stroke="#3D4159" stroke-width="2" />
+        <circle cx="7.01829" cy="7.01829" r="6.01829" stroke="#3D4159" strokeWidth="2" />
         <rect
           x="14.9141"
           y="9.64941"

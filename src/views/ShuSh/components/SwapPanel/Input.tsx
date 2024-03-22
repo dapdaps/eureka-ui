@@ -87,6 +87,7 @@ const StyledBalance = styled.span`
 const Input = ({ amount, token, prices, onAmountChange, onSelectToken }: any) => {
   const value = useMemo(() => {
     if (!amount) return '-';
+    if (!prices) return '-';
     const price = prices[token.symbol];
     if (!price) return '-';
     return formateValueWithThousandSeparator(new Big(amount).mul(price).toString(), 2);
@@ -108,7 +109,7 @@ const Input = ({ amount, token, prices, onAmountChange, onSelectToken }: any) =>
         <StyledTokenSelector onClick={onSelectToken}>
           <StyledTokenIcon src={token.icon || '/images/tokens/default_icon.png'} />
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
-            <path d="M1 1L6 5L11 1" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+            <path d="M1 1L6 5L11 1" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
           </svg>
         </StyledTokenSelector>
       </StyledInputBox>

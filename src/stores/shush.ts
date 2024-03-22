@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
+import { cloneDeep } from 'lodash';
 
 export const useShushTokensStore = create(
   persist(
@@ -21,18 +22,26 @@ export const useShushOrdersStore = create(
     (set, get: any) => ({
       orders: {},
       semis: {},
+      status: {},
+      addStatus: (houdiniId: string, status: number) => {
+        const _status = get().status;
+        _status[houdiniId] = status;
+        set({
+          orders: cloneDeep(_status),
+        });
+      },
       addOrder: (order: any) => {
         const _orders = get().orders;
         _orders[order.houdiniId] = order;
         set({
-          orders: _orders,
+          orders: cloneDeep(_orders),
         });
       },
       setSemi: (id: string, semi: boolean) => {
         const _semis = get().semis;
         _semis[id] = semi;
         set({
-          semis: _semis,
+          semis: cloneDeep(_semis),
         });
       },
       set: (params: any) => set(() => ({ ...params })),

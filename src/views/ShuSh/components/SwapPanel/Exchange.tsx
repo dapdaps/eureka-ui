@@ -32,8 +32,8 @@ const Exchange = ({ onClick }: any) => {
         <path
           d="M1 6.50008L11.5 6.50008M11.5 6.50008L6 12M11.5 6.50008L6 1"
           stroke="#FCC42C"
-          stroke-width="2"
-          stroke-linecap="round"
+          strokeWidth="2"
+          strokeLinecap="round"
         />
       </svg>
     </StyledContainer>

@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import Big from 'big.js';
 import { format } from 'date-fns';
+import { useShushOrdersStore } from '@/stores/shush';
 import { AnimatePresence } from 'framer-motion';
 import CopyButton from '@/components/CopyButton';
 import { ellipsAccount } from '@/utils/account';
@@ -21,15 +22,15 @@ import {
   StyledMainItem,
 } from './styles';
 
-const OrderPanel = ({ order, tokens, defaultExpand, onSuccess }: any) => {
+const OrderPanel = ({ order, tokens, defaultExpand, status, onSuccess }: any) => {
   const [expand, setExpand] = useState(defaultExpand);
   const inToken = tokens[order.inSymbol] || {};
   const outToken = tokens[order.outSymbol] || {};
   const [expired, setExpired] = useState(false);
 
   useEffect(() => {
-    setExpired(order.status === 5);
-  }, [order]);
+    setExpired(status === 5);
+  }, [status]);
   return (
     <StyledContainer>
       <StyledTop
