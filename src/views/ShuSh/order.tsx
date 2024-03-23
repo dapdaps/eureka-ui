@@ -17,7 +17,7 @@ const ShuShOrderView = ({ id }: any) => {
   return (loading || tokensLoading) && !statusResult ? (
     <Spinner />
   ) : (
-    <Common anonymous={statusResult?.semi}>
+    <Common anonymous={statusResult?.semi === undefined ? statusResult?.anonymous : statusResult.semi}>
       <StyledBack
         onClick={() => {
           router.back();
