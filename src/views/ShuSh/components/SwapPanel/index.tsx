@@ -51,7 +51,7 @@ const SwapPanel = ({
             handleAmountChange('from', val);
           }}
           onSelectToken={() => {
-            handleTokenSelect(from);
+            handleTokenSelect('from');
           }}
         />
         <Exchange onClick={handleExchange} />
@@ -63,7 +63,7 @@ const SwapPanel = ({
             handleAmountChange('to', val);
           }}
           onSelectToken={() => {
-            handleTokenSelect(to);
+            handleTokenSelect('to');
           }}
         />
       </StyledInputsWrapper>

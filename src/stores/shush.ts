@@ -11,7 +11,7 @@ export const useShushTokensStore = create(
     }),
     {
       name: '_shushi_tokens',
-      version: 0.1,
+      version: 0.2,
       storage: createJSONStorage(() => sessionStorage),
     },
   ),
@@ -21,34 +21,19 @@ export const useShushOrdersStore = create(
   persist(
     (set, get: any) => ({
       orders: {},
-      semis: {},
-      status: {},
-      addStatus: (houdiniId: string, status: number) => {
-        const _status = get().status;
-        _status[houdiniId] = status;
-        set({
-          orders: cloneDeep(_status),
-        });
-      },
       addOrder: (order: any) => {
         const _orders = get().orders;
-        _orders[order.houdiniId] = order;
+        _orders[order.id] = order;
         set({
           orders: cloneDeep(_orders),
         });
       },
-      setSemi: (id: string, semi: boolean) => {
-        const _semis = get().semis;
-        _semis[id] = semi;
-        set({
-          semis: cloneDeep(_semis),
-        });
-      },
+      getOrder: (id: string) => get().orders[id],
       set: (params: any) => set(() => ({ ...params })),
     }),
     {
-      name: '_shushi_orders',
-      version: 0.1,
+      name: '_shush_orders',
+      version: 0.2,
       storage: createJSONStorage(() => localStorage),
     },
   ),

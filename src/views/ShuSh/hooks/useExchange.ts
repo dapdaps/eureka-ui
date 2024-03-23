@@ -1,11 +1,13 @@
 import { useCallback, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useShushOrdersStore } from '@/stores/shush';
+import useToast from '@/hooks/useToast';
 
 export default function useExchange() {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const setSemi = useShushOrdersStore((store: any) => store.setSemi);
+  const addOrder = useShushOrdersStore((store: any) => store.addOrder);
+  const toast = useToast();
 
   const queryTrade = useCallback(
     async ({ from, to, amount, anonymous, addressTo, direction }: any) => {
@@ -20,13 +22,15 @@ export default function useExchange() {
           body: `amount=${amount}&from=${from}&to=${to}&anonymous=${anonymous}&fixed=${true}&direction=${direction}&addressTo=${addressTo}&receiverTag=${''}`,
         });
         const result = await response.json();
-        if (result.data.id) {
+        if (result.status === 'success') {
           router.push(`/shush?id=${result.data.id}`);
-          setSemi(result.data.id, anonymous);
+          addOrder({ id: result.data.id, semi: anonymous });
+        } else {
+          toast.fail({ title: result.message });
         }
 
         setLoading(false);
-      } catch (err) {
+      } catch (err: any) {
         setLoading(false);
       }
     },

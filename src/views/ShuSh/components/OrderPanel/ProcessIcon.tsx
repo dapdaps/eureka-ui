@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-const StyledContainer = styled.div<{ $active: boolean }>`
+const StyledContainer = styled.div<{ $active: boolean; $loading: boolean }>`
   width: 36px;
   height: 36px;
-  border: 1px solid ${({ $active }) => ($active ? 'transparent' : '#979ABE')};
+  border: 1px solid ${({ $loading, $active }) => ($loading || $active ? 'transparent' : '#979ABE')};
   border-radius: 50%;
-  color: ${({ $active }) => ($active ? '#fff' : '#979ABE')};
+  color: ${({ $loading, $active }) => ($loading ? '#fff' : $active ? '#000' : '#979ABE')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -15,7 +15,8 @@ const StyledContainer = styled.div<{ $active: boolean }>`
 `;
 
 const StyledBg = styled.div<{ $active: boolean; $loading: boolean }>`
-  background-color: ${({ $active }) => ($active ? 'rgba(151, 154, 190, 0.2)' : 'transparent')};
+  background-color: ${({ $active, $loading }) =>
+    $loading ? 'rgba(151, 154, 190, 0.2)' : $active ? '#FCC42C' : 'transparent'};
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -57,7 +58,7 @@ const StyledLabel = styled.div<{ $active: boolean }>`
 
 const ProcessIcon = ({ active, loading, icon, label }: any) => {
   return (
-    <StyledContainer $active={active}>
+    <StyledContainer $active={active} $loading={loading}>
       <StyledBg $active={active} $loading={loading}>
         {loading && (
           <StyledLoading>

@@ -11,10 +11,11 @@ import useNetworksAndTokens from './hooks/useNetworksAndTokens';
 import useExchange from './hooks/useExchange';
 import { useDebounceFn } from 'ahooks';
 
+let openType: 'from' | 'to' = 'from';
+
 export default function ShuShView() {
   const [anonymous, setAnonymous] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [openTokenId, setOpenTokenId] = useState('');
   const { loading, networks, tokens } = useNetworksAndTokens();
   const {
     from,
@@ -82,12 +83,14 @@ export default function ShuShView() {
           isAddressCorrect={isAddressCorrect}
           setAnonymous={setAnonymous}
           handleAddressChange={handleAddressChange}
-          handleTokenSelect={(tokenId: string) => {
-            setOpenTokenId(tokenId);
+          handleTokenSelect={(type: 'from' | 'to') => {
+            openType = type;
             setShowModal(true);
           }}
           handleAmountChange={handleAmountChange}
-          handleRefresh={quote}
+          handleRefresh={() => {
+            if (quoteAmount && Number(quoteAmount) && direction) quote();
+          }}
           handleSwap={handleSwap}
           handleExchange={handleTokenExchange}
         />
@@ -96,12 +99,12 @@ export default function ShuShView() {
           display={showModal}
           networks={networks}
           tokens={tokens}
-          tokenId={openTokenId}
+          tokenId={openType === 'from' ? from : to}
           onClose={() => {
             setShowModal(false);
           }}
           onSelectToken={(token: any) => {
-            handleTokenChange(openTokenId === from ? 'from' : 'to', token.id);
+            handleTokenChange(openType, token.id);
             setShowModal(false);
           }}
         />

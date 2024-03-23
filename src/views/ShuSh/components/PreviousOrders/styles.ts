@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+export { LoadingWrapper } from '@/views/QuestProfile/styles';
 
 export const StyledContainer = styled.div``;
 

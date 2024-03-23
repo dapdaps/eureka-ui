@@ -1,7 +1,8 @@
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo } from 'react';
+import { useRouter } from 'next/router';
+import Loading from '@/components/Icons/Loading';
 import OrderPanel from '../OrderPanel';
-import useChechStatus from '../../hooks/useChechStatus';
-import { useShushOrdersStore } from '@/stores/shush';
+import usePreviousOrders from '../../hooks/usePreviousOrders';
 import {
   StyledContainer,
   StyledHeader,
@@ -12,65 +13,13 @@ import {
   StyledInput,
   StyledList,
   StyledEmpty,
+  LoadingWrapper,
 } from './styles';
 
-let statusTimer: ReturnType<typeof setTimeout> | null = null;
-let refreshTimer: ReturnType<typeof setTimeout> | null = null;
-
 const PreviousOrders = ({ tokens }: any) => {
-  const [searchId, setSearchId] = useState('');
-  const [filteredOrders, setFilteredOrders] = useState<any>([]);
-  const shushOrdersStore: any = useShushOrdersStore();
-  const { queryStatus } = useChechStatus(false);
+  const { loading, orders, fetchOrders } = usePreviousOrders();
+  const router = useRouter();
 
-  const refreshOrders = () => {
-    const _semis = shushOrdersStore.semis;
-    const _orders = Object.values(shushOrdersStore.orders).filter((order: any) => {
-      const isNotExpired = Date.now() - new Date(order.created).getTime() < 60 * 60 * 1000;
-      if (!isNotExpired) delete _semis[order.houdiniId];
-      return isNotExpired;
-    });
-    shushOrdersStore.set({
-      orders: _orders.reduce((acc: any, order: any) => ({ ...acc, [order.houdiniId]: order }), {}),
-      semis: _semis,
-    });
-
-    setFilteredOrders(_orders);
-
-    if (refreshTimer) clearTimeout(refreshTimer);
-
-    refreshTimer = setTimeout(() => {
-      refreshOrders();
-    }, 10 * 1000);
-  };
-
-  const filterOrders = useMemo(() => {
-    if (!searchId) return filteredOrders;
-    return filteredOrders.filter((order: any) => order.houdiniId.includes(searchId));
-  }, [filteredOrders, searchId]);
-
-  useEffect(() => {
-    refreshOrders();
-
-    return () => {
-      if (refreshTimer) clearTimeout(refreshTimer);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (statusTimer) clearTimeout(statusTimer);
-    statusTimer = setTimeout(
-      () => {
-        filteredOrders.forEach((order: any) => {
-          queryStatus(order.houdiniId);
-        });
-      },
-      1 * 60 * 1000,
-    );
-    return () => {
-      if (statusTimer) clearTimeout(statusTimer);
-    };
-  }, [filteredOrders.length]);
   return (
     <StyledContainer>
       <StyledHeader>
@@ -91,9 +40,10 @@ const PreviousOrders = ({ tokens }: any) => {
           <StyledInputWrapper>
             <StyledInput
               placeholder="Search by Shush ID"
-              value={searchId}
-              onChange={(ev) => {
-                setSearchId(ev.target.value);
+              onKeyDown={(ev: any) => {
+                if (ev.keyCode === 13 && ev.target.value) {
+                  router.push(`/shush?id=${ev.target.value}`);
+                }
               }}
             />
           </StyledInputWrapper>
@@ -106,16 +56,19 @@ const PreviousOrders = ({ tokens }: any) => {
         </StyledInputBox>
       </StyledHeader>
       <StyledList>
-        {filterOrders.length ? (
-          filterOrders.map((order: any) => (
+        {loading && orders.length === 0 ? (
+          <LoadingWrapper>
+            <Loading size={26} />
+          </LoadingWrapper>
+        ) : orders.length ? (
+          orders.map((order: any) => (
             <OrderPanel
-              key={order.houdiniId}
+              key={order.houdiniId + order.status}
               order={order}
               tokens={tokens}
               defaultExpand={false}
-              status={shushOrdersStore.status[order.houdiniId]}
               onSuccess={() => {
-                queryStatus(order.houdiniId);
+                fetchOrders();
               }}
             />
           ))

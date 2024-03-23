@@ -5,6 +5,8 @@ export const StyledContainer = styled.div`
   border-radius: 16px;
   border: 1px solid #373a53;
   background-color: #1d1f29;
+  position: relative;
+  z-index: 10;
 
   .color {
     color: #fcc42c;
@@ -42,13 +44,13 @@ export const StyledTokenIcon = styled.img`
   height: 22px;
 `;
 
-export const StyledExpand = styled.div<{ $expand: boolean }>`
+export const StyledExpand = styled.div<{ $expand: boolean; $done: boolean }>`
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  border: 1px solid #979abe;
-  background-color: ${({ $expand }) => ($expand ? '#979abe' : 'transparent')};
-  color: ${({ $expand }) => ($expand ? '#fff' : '#979ABE')};
+  border: 1px solid ${({ $done }) => ($done ? 'transparent' : '#979abe')};
+  background-color: ${({ $expand, $done }) => ($done ? '#FCC42C' : $expand ? '#979abe' : 'transparent')};
+  color: ${({ $expand, $done }) => ($done ? '#000' : $expand ? '#fff' : '#979ABE')};
   display: flex;
   align-items: center;
   justify-content: center;

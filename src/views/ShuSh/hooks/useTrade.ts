@@ -30,9 +30,8 @@ export default function useTokens({ tokens }: any) {
     const params = new URLSearchParams(searchParams);
     if (params.has(type)) {
       params.delete(type);
-    } else {
-      params.set(type, id);
     }
+    params.set(type, id);
     router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
   };
 

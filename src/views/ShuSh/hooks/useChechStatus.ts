@@ -6,7 +6,7 @@ let timer: ReturnType<typeof setTimeout> | null = null;
 export default function useChechStatus(auto: boolean) {
   const [statusResult, setStatusResult] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
-  const shushOrdersStore: any = useShushOrdersStore();
+  const getOrder = useShushOrdersStore((store: any) => store.getOrder);
 
   const queryStatus = useCallback(
     async (id: string) => {
@@ -15,14 +15,11 @@ export default function useChechStatus(auto: boolean) {
         setLoading(true);
         const response = await fetch(`/shush/api/status?id=${id}`);
         const result = await response.json();
+        setLoading(false);
         if (result.status === 'success') {
           const _data = result.data || {};
-          const record = { ..._data, semi: shushOrdersStore.semis[result.data.houdiniId] };
+          const record = { ..._data, semi: getOrder(result.data.houdiniId)?.semi };
           setStatusResult(record);
-          if (!shushOrdersStore.orders[record.houdiniId]) {
-            shushOrdersStore.addOrder(record);
-          }
-          shushOrdersStore.addStatus(record.houdiniId, record.status);
           if (auto) {
             if (timer) clearTimeout(timer);
             timer = setTimeout(
@@ -32,8 +29,8 @@ export default function useChechStatus(auto: boolean) {
               1 * 60 * 1000,
             );
           }
+          return record;
         }
-        setLoading(false);
       } catch (err) {
         setLoading(false);
       }

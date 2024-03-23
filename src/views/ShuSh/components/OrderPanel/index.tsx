@@ -1,7 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import Big from 'big.js';
 import { format } from 'date-fns';
-import { useShushOrdersStore } from '@/stores/shush';
 import { AnimatePresence } from 'framer-motion';
 import CopyButton from '@/components/CopyButton';
 import { ellipsAccount } from '@/utils/account';
@@ -22,15 +21,15 @@ import {
   StyledMainItem,
 } from './styles';
 
-const OrderPanel = ({ order, tokens, defaultExpand, status, onSuccess }: any) => {
+const OrderPanel = ({ order, tokens, defaultExpand, onSuccess }: any) => {
   const [expand, setExpand] = useState(defaultExpand);
   const inToken = tokens[order.inSymbol] || {};
   const outToken = tokens[order.outSymbol] || {};
   const [expired, setExpired] = useState(false);
 
   useEffect(() => {
-    setExpired(status === 5);
-  }, [status]);
+    setExpired(order.status === 5);
+  }, [order]);
   return (
     <StyledContainer>
       <StyledTop
@@ -57,15 +56,26 @@ const OrderPanel = ({ order, tokens, defaultExpand, status, onSuccess }: any) =>
           </div>
         </StyledTopLeft>
         {!expired && (
-          <StyledExpand $expand={expand}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="9" height="2" viewBox="0 0 9 2" fill="none">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M2 1C2 1.55228 1.55228 2 1 2C0.447715 2 0 1.55228 0 1C0 0.447715 0.447715 0 1 0C1.55228 0 2 0.447715 2 1ZM5.33333 1C5.33333 1.55228 4.88562 2 4.33333 2C3.78105 2 3.33333 1.55228 3.33333 1C3.33333 0.447715 3.78105 0 4.33333 0C4.88562 0 5.33333 0.447715 5.33333 1ZM7.66667 2C8.21895 2 8.66667 1.55228 8.66667 1C8.66667 0.447715 8.21895 0 7.66667 0C7.11438 0 6.66667 0.447715 6.66667 1C6.66667 1.55228 7.11438 2 7.66667 2Z"
-                fill="currentColor"
-              />
-            </svg>
+          <StyledExpand $expand={expand} $done={order.status === 4}>
+            {order.status === 4 ? (
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="9.75" viewBox="0 0 16 13" fill="none">
+                <path
+                  d="M1.52002 6.27996L5.84002 10.6L14.48 1.95996"
+                  stroke="#000"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                />
+              </svg>
+            ) : (
+              <svg xmlns="http://www.w3.org/2000/svg" width="9" height="2" viewBox="0 0 9 2" fill="none">
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M2 1C2 1.55228 1.55228 2 1 2C0.447715 2 0 1.55228 0 1C0 0.447715 0.447715 0 1 0C1.55228 0 2 0.447715 2 1ZM5.33333 1C5.33333 1.55228 4.88562 2 4.33333 2C3.78105 2 3.33333 1.55228 3.33333 1C3.33333 0.447715 3.78105 0 4.33333 0C4.88562 0 5.33333 0.447715 5.33333 1ZM7.66667 2C8.21895 2 8.66667 1.55228 8.66667 1C8.66667 0.447715 8.21895 0 7.66667 0C7.11438 0 6.66667 0.447715 6.66667 1C6.66667 1.55228 7.11438 2 7.66667 2Z"
+                  fill="currentColor"
+                />
+              </svg>
+            )}
           </StyledExpand>
         )}
         {expired && (
@@ -119,15 +129,35 @@ const OrderPanel = ({ order, tokens, defaultExpand, status, onSuccess }: any) =>
                         <div>Creation time: </div>
                         <div className="white">{format(new Date(order.created), 'dd/MM/yyyy HH:mm')}</div>
                       </StyledItem>
-                      <StyledItem className="mt">
-                        <div>Send you funds within </div>
-                        <Timer
-                          endTime={new Date(order.expires).getTime()}
-                          onEnd={() => {
-                            setExpired(true);
-                          }}
-                        />
-                      </StyledItem>
+                      {order.status === 0 ? (
+                        <StyledItem className="mt">
+                          <div>Send your funds within </div>
+                          <Timer
+                            endTime={new Date(order.expires).getTime()}
+                            onEnd={() => {
+                              setExpired(true);
+                            }}
+                          />
+                        </StyledItem>
+                      ) : (
+                        <StyledItem className="mt">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="12"
+                            height="9.75"
+                            viewBox="0 0 16 13"
+                            fill="none"
+                          >
+                            <path
+                              d="M1.52002 6.27996L5.84002 10.6L14.48 1.95996"
+                              stroke="#FCC42C"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                          <div className="color">Funds Received</div>
+                        </StyledItem>
+                      )}
                     </StyledMainItem>
                     <StyledMainItem>
                       <StyledItem>
@@ -149,7 +179,7 @@ const OrderPanel = ({ order, tokens, defaultExpand, status, onSuccess }: any) =>
                           buttonColor="rgba(255,255,255,0.6)"
                         />
                       </StyledItem>
-                      <OpenInWallet order={order} tokens={tokens} onSuccess={onSuccess} />
+                      {order.status === 0 && <OpenInWallet order={order} tokens={tokens} onSuccess={onSuccess} />}
                     </StyledMainItem>
                     <StyledMainItem>
                       <div>Est. swap time</div>

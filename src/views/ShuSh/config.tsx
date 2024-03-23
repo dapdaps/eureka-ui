@@ -44,7 +44,7 @@ export const STEPS = [
     label: 'Done',
     icon: (
       <svg width="16" height="13" viewBox="0 0 16 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1.52 6.28L5.84 10.6L14.48 1.96" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
+        <path d="M1.52 6.28L5.84 10.6L14.48 1.96" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
       </svg>
     ),
   },

@@ -16,8 +16,8 @@ const ShuShOrderView = ({ id }: any) => {
   }, [id]);
   return (loading || tokensLoading) && !statusResult ? (
     <Spinner />
-  ) : statusResult ? (
-    <Common anonymous={statusResult.semi}>
+  ) : (
+    <Common anonymous={statusResult?.semi}>
       <StyledBack
         onClick={() => {
           router.back();
@@ -28,17 +28,17 @@ const ShuShOrderView = ({ id }: any) => {
         </svg>
         <span>Back</span>
       </StyledBack>
-      <OrderPanel
-        order={statusResult}
-        tokens={tokens}
-        defaultExpand={true}
-        onSuccess={() => {
-          queryStatus(id);
-        }}
-      />
+      {statusResult && (
+        <OrderPanel
+          order={statusResult}
+          tokens={tokens}
+          defaultExpand={true}
+          onSuccess={() => {
+            queryStatus(id);
+          }}
+        />
+      )}
     </Common>
-  ) : (
-    <div />
   );
 };
 
