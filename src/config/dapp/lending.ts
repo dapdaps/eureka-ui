@@ -572,6 +572,7 @@ const ROUTE_CONFIG = {
       '--withdraw-color': '#EAEBEF',
       '--replay-color': '#EAEBEF',
       '--claim-color': '#EAEBEF',
+      '--button-disabled-color': 'rgba(234, 235, 239, .5)',
     },
   },
   aave: {
