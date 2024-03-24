@@ -17,7 +17,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'WETH',
     decimals: 18,
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq',
   },
   usdc: {
     address: '0xb73603C5d87fA094B7314C74ACE2e64D165016fb',
@@ -25,7 +25,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'USDC',
     decimals: 6,
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
   },
   usdt: {
     address: '0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f',
@@ -51,7 +51,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'DAI',
     decimals: 18,
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene',
   },
   matic: {
     chainId: CHAIN_ID,
