@@ -18,14 +18,22 @@ const CONTRACT_ABI = {
   walletBalanceProviderABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
 };
-const heroData = ['Net Worth', 'Net APY', 'Health Factor', 'Available rewards'];
+const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'zerolend',
   // icon: '/images/apps/granary.png',
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
+  handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
+};
+const rewardToken = {
+  address: '',
+  // decimals: 18,
+  symbol: 'earlyZERO',
+  name: 'earlyZERO',
+  icon: '',
 };
 
 const networks = {
@@ -83,7 +91,7 @@ const networks = {
         icon: zkSync['weth'].icon,
         supplyAPY: '',
         usageAsCollateralEnabled: true,
-        borrowingEnabled: false,
+        borrowingEnabled: true,
         aTokenAddress: '0x9002ecb8a06060e3b56669c6B8F18E1c3b119914',
         stableDebtTokenAddress: '0x9c9158BFF47342A20b7D2Ac09F89e96F3A209b9B',
         variableDebtTokenAddress: '0x56f58d9BE10929CdA709c4134eF7343D73B080Cf',
@@ -172,6 +180,7 @@ const networks = {
       },
     ],
     CONTRACT_ABI,
+    rewardToken,
   },
   //manta
   169: {
@@ -380,6 +389,7 @@ const networks = {
       },
     ],
     CONTRACT_ABI,
+    rewardToken,
   },
 };
 
