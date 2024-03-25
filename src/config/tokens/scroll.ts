@@ -10,7 +10,8 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'ETH',
     decimals: 18,
     name: 'Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
+    // icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -26,7 +27,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq',
   },
   usdc: {
     chainId: CHAIN_ID,
@@ -34,7 +35,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
   },
   lusd: {
     chainId: CHAIN_ID,
