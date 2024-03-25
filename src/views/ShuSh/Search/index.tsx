@@ -108,7 +108,7 @@ const ShuShSearchView = () => {
           }}
         />
       ) : (
-        <StyledEmpty>No results.</StyledEmpty>
+        statusResult === null && <StyledEmpty>No results.</StyledEmpty>
       )}
     </Common>
   );
