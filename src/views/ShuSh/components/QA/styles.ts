@@ -57,11 +57,12 @@ export const StyledIconBox = styled.div`
   cursor: pointer;
   transition: 0.5s;
   position: relative;
+  transform: rotate(-90deg);
   &:hover {
     opacity: 0.8;
   }
   &.open {
-    transform: rotate(-90deg);
+    transform: rotate(0deg);
   }
   svg {
     vertical-align: inherit;
