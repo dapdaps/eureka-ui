@@ -35,13 +35,17 @@ export default {
       ...baseSwapBasic,
       ...baseSwapNetworks[CHAIN_ID],
     },
+    Balancer: {
+      ...balancerBasic,
+      ...balancerNetworks[CHAIN_ID],
+    },
     SwapBased: {
       ...swapBasedBasic,
       ...swapBasedNetworks[CHAIN_ID],
     },
-    Balancer: {
-      ...balancerBasic,
-      ...balancerNetworks[CHAIN_ID],
+    'Velocimeter V2': {
+      ...velocimeterV2Basic,
+      ...velocimeterV2Networks[CHAIN_ID],
     },
     RocketSwap: {
       ...rocketSwapBasic,
@@ -51,9 +55,9 @@ export default {
       ...synthSwapBasic,
       ...synthSwapNetworks[CHAIN_ID],
     },
-    'Velocimeter V2': {
-      ...velocimeterV2Basic,
-      ...velocimeterV2Networks[CHAIN_ID],
+    Sobal: {
+      ...sobalBasic,
+      ...sobalNetworks[CHAIN_ID],
     },
     SharkSwap: {
       ...sharkBasic,
@@ -62,10 +66,6 @@ export default {
     HorizonDEX: {
       ...horizonDexBasic,
       ...horizonDexNetworks[CHAIN_ID],
-    },
-    Sobal: {
-      ...sobalBasic,
-      ...sobalNetworks[CHAIN_ID],
     },
   },
 };

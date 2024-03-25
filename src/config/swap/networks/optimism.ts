@@ -21,13 +21,13 @@ export default {
       ...velodromeBasic,
       ...velodromeNetworks[CHAIN_ID],
     },
-    'Velodrome V1': {
-      ...velodromeV1Basic,
-      ...velodromeV1Networks[CHAIN_ID],
-    },
     'Beethoven X': {
       ...beethovenBasic,
       ...beethovenNetworks[CHAIN_ID],
+    },
+    'Velodrome V1': {
+      ...velodromeV1Basic,
+      ...velodromeV1Networks[CHAIN_ID],
     },
     SushiSwap: {
       ...sushiBasic,

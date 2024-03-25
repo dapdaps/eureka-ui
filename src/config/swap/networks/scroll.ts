@@ -43,10 +43,6 @@ export default {
       ...dodoBasic,
       ...dodoNetworks[CHAIN_ID],
     },
-    'XY Finance': {
-      ...xyBasic,
-      ...xyNetworks[CHAIN_ID],
-    },
     SushiSwap: {
       ...sushiBasic,
       ...sushiNetworks[CHAIN_ID],
@@ -62,6 +58,10 @@ export default {
     'Metavault V3': {
       ...metavaultV3Basic,
       ...metavaultV3Networks[CHAIN_ID],
+    },
+    'XY Finance': {
+      ...xyBasic,
+      ...xyNetworks[CHAIN_ID],
     },
   },
 };

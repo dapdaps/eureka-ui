@@ -26,10 +26,6 @@ export default {
       ...honeySwapBasic,
       ...honeySwapNetworks[CHAIN_ID],
     },
-    SushiSwap: {
-      ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
-    },
     Swapr: {
       ...swaprBasic,
       ...swaprNetworks[CHAIN_ID],
@@ -41,6 +37,10 @@ export default {
     Symmetric: {
       ...symmetricBasic,
       ...symmetricNetworks[CHAIN_ID],
+    },
+    SushiSwap: {
+      ...sushiBasic,
+      ...sushiNetworks[CHAIN_ID],
     },
   },
 };

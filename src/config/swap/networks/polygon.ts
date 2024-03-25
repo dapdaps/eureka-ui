@@ -22,10 +22,6 @@ export default {
       ...quickSwapBasic,
       ...quickSwapNetworks[CHAIN_ID],
     },
-    SushiSwap: {
-      ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
-    },
     Retro: {
       ...retroBasic,
       ...retroNetworks[CHAIN_ID],
@@ -33,6 +29,10 @@ export default {
     Apeswap: {
       ...apeBasic,
       ...apeNetworks[CHAIN_ID],
+    },
+    SushiSwap: {
+      ...sushiBasic,
+      ...sushiNetworks[CHAIN_ID],
     },
     PearlFi: {
       ...pearlFiBasic,

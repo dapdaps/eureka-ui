@@ -19,16 +19,16 @@ export default {
     noAccountTips: 'Linea Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Linea Chain.',
   },
-  defalutDex: 'Lynex',
+  defalutDex: 'SyncSwap',
   dexs: {
-    Lynex: {
-      ...lynexBasic,
-      ...lynexNetworks[CHAIN_ID],
-    },
     SyncSwap: {
       ...SyncSwapBasic,
       ...SyncSwapNetworks[CHAIN_ID],
       oneExecutionDisabled: true,
+    },
+    Lynex: {
+      ...lynexBasic,
+      ...lynexNetworks[CHAIN_ID],
     },
     iZiSwap: {
       ...IziSwapBasic,
