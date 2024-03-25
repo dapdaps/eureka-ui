@@ -16,7 +16,7 @@ const CONTRACT_ABI = {
   walletBalanceProviderABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
 };
-const heroData = ['Net Worth', 'Net APY'];
+const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'AAVE V3',
