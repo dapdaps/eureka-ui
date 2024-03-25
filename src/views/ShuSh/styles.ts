@@ -73,7 +73,7 @@ export const StyledBg2 = styled(StyledBg)`
 `;
 
 export const StyledBack = styled.div`
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 8px;
   color: #979abe;
@@ -82,7 +82,7 @@ export const StyledBack = styled.div`
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
-  padding: 28px 16px 12px;
+  padding: 28px 16px 12px 0px;
 
   &:hover {
     opacity: 0.9;

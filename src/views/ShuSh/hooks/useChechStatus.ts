@@ -13,6 +13,7 @@ export default function useChechStatus(auto: boolean) {
       if (loading) return;
       try {
         setLoading(true);
+        setStatusResult(undefined);
         const response = await fetch(`/shush/api/status?id=${id}`);
         const result = await response.json();
         setLoading(false);

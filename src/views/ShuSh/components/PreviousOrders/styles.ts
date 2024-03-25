@@ -29,49 +29,26 @@ export const StyledSubtitle = styled.div`
   gap: 2px;
 `;
 
-export const StyledInputBox = styled.div`
-  width: 182px;
-  height: 43px;
-  border-radius: 12px;
-  border: 1px solid #373a53;
-  padding: 12px;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-`;
-
-export const StyledInputWrapper = styled.div`
-  flex-grow: 1;
-`;
-
-export const StyledInput = styled.input`
-  color: #fff;
-  font-size: 14px;
-  font-weight: 400;
-  line-height: normal;
-  width: 100%;
-
-  &::placeholder {
-    color: #979abe;
-    opacity: 0.5;
-  }
-`;
-
-export const StyledSearchIcon = styled.div`
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:active {
-    opacity: 0.6;
-  }
-`;
-
 export const StyledList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
+`;
+
+export const StyledSearchBtn = styled.button`
+  width: 120px;
+  height: 43px;
+  border-radius: 12px;
+  background: #2e3142;
+  color: #979abe;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: normal;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 0.8;
+  }
 `;

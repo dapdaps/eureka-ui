@@ -12,7 +12,7 @@ import {
   StyledBg2,
 } from './styles';
 
-const Common = ({ anonymous, children }: any) => {
+const Common = ({ anonymous, from, children }: any) => {
   return (
     <StyledContainer>
       <StyledGirl src="/images/shush/private-bg.png" $show={anonymous} style={{ top: '-52px' }} />
@@ -26,7 +26,7 @@ const Common = ({ anonymous, children }: any) => {
       <StyledContent>
         <StyledMain>
           <StyledBg1 />
-          <StyledBg2 />
+          {from !== 'search' && <StyledBg2 />}
           <StyledTitle>MOVE YOUR TOKENS IN SILENCE</StyledTitle>
           <StyledSubtitle>Compliant Private Muti-chain Liquidity Aggregator</StyledSubtitle>
           {children}

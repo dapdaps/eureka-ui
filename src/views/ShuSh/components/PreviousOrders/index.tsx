@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
 import OrderPanel from '../OrderPanel';
@@ -8,17 +8,13 @@ import {
   StyledHeader,
   StyledTitle,
   StyledSubtitle,
-  StyledInputBox,
-  StyledInputWrapper,
-  StyledInput,
   StyledList,
   StyledEmpty,
   LoadingWrapper,
-  StyledSearchIcon,
+  StyledSearchBtn,
 } from './styles';
 
 const PreviousOrders = ({ tokens }: any) => {
-  const [searchVal, setSearchVal] = useState('');
   const { loading, orders, fetchOrders } = usePreviousOrders();
   const router = useRouter();
 
@@ -38,34 +34,13 @@ const PreviousOrders = ({ tokens }: any) => {
             <span>1 hour after creation</span>
           </StyledSubtitle>
         </div>
-        <StyledInputBox>
-          <StyledInputWrapper>
-            <StyledInput
-              placeholder="Search by Shush ID"
-              value={searchVal}
-              onChange={(ev) => {
-                setSearchVal(ev.target.value);
-              }}
-              onKeyDown={(ev: any) => {
-                if (ev.keyCode === 13 && ev.target.value) {
-                  router.push(`/shush?id=${ev.target.value}`);
-                }
-              }}
-            />
-          </StyledInputWrapper>
-          <StyledSearchIcon
-            onClick={() => {
-              if (searchVal) router.push(`/shush?id=${searchVal}`);
-            }}
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <path
-                d="M15.8348 14.2405L12.7247 11.1304C13.5586 9.97572 14.0497 8.55716 14.0497 7.02497C14.0497 3.14502 10.9048 0 7.02487 0C3.14497 0 0 3.14502 0 7.02314C0 10.9031 3.14497 14.0481 7.02487 14.0481C8.55704 14.0481 9.97557 13.5569 11.1302 12.723L14.2422 15.8351C14.4621 16.055 14.8195 16.055 15.0394 15.8351L15.8367 15.0378C16.0548 14.8179 16.0548 14.4605 15.8348 14.2405ZM2.00684 7.02314C2.00684 4.252 4.25378 2.00504 7.02487 2.00504C9.79597 2.00504 12.0429 4.252 12.0429 7.02314C12.0429 9.79427 9.79597 12.0412 7.02487 12.0412C4.25378 12.0412 2.00684 9.79611 2.00684 7.02314Z"
-                fill="#979ABE"
-              />
-            </svg>
-          </StyledSearchIcon>
-        </StyledInputBox>
+        <StyledSearchBtn
+          onClick={() => {
+            router.push('/shush/search');
+          }}
+        >
+          Search Order
+        </StyledSearchBtn>
       </StyledHeader>
       <StyledList>
         {loading && orders.length === 0 ? (
