@@ -32,7 +32,7 @@ export const StyledQuestion = styled.div`
   position: relative;
 
   & .hints {
-    opacity: 0;
+    display: none;
   }
 
   &:hover {
@@ -40,7 +40,7 @@ export const StyledQuestion = styled.div`
   }
 
   &:hover .hints {
-    opacity: 1;
+    display: block;
   }
 `;
 
