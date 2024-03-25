@@ -21,6 +21,10 @@ export default {
       ...biSwapBasic,
       ...biSwapNetworks[CHAIN_ID],
     },
+    'THENA V1': {
+      ...thenaV1Basic,
+      ...thenaV1Networks[CHAIN_ID],
+    },
     Apeswap: {
       ...apeSwapBasic,
       ...apeSwapNetworks[CHAIN_ID],
@@ -28,10 +32,6 @@ export default {
     Orion: {
       ...orionBasic,
       ...orionNetworks[CHAIN_ID],
-    },
-    'THENA V1': {
-      ...thenaV1Basic,
-      ...thenaV1Networks[CHAIN_ID],
     },
     'Trader Joe': {
       ...joeTraderBasic,

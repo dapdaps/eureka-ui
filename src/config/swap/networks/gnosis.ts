@@ -16,8 +16,12 @@ export default {
     noAccountTips: 'Gnosis Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Gnosis Chain.',
   },
-  defalutDex: 'Honeyswap',
+  defalutDex: 'Balancer',
   dexs: {
+    Balancer: {
+      ...balancerBasic,
+      ...balancerNetworks[CHAIN_ID],
+    },
     Honeyswap: {
       ...honeySwapBasic,
       ...honeySwapNetworks[CHAIN_ID],
@@ -37,10 +41,6 @@ export default {
     Symmetric: {
       ...symmetricBasic,
       ...symmetricNetworks[CHAIN_ID],
-    },
-    Balancer: {
-      ...balancerBasic,
-      ...balancerNetworks[CHAIN_ID],
     },
   },
 };

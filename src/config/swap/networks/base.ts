@@ -21,51 +21,51 @@ export default {
     noAccountTips: 'Base Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Base Chain.',
   },
-  defalutDex: 'BaseSwap',
+  defalutDex: 'Aerodrome',
   dexs: {
-    BaseSwap: {
-      ...baseSwapBasic,
-      ...baseSwapNetworks[CHAIN_ID],
-    },
-    RocketSwap: {
-      ...rocketSwapBasic,
-      ...rocketSwapNetworks[CHAIN_ID],
-    },
-    SwapBased: {
-      ...swapBasedBasic,
-      ...swapBasedNetworks[CHAIN_ID],
-    },
-    Synthswap: {
-      ...synthSwapBasic,
-      ...synthSwapNetworks[CHAIN_ID],
-    },
-    HorizonDEX: {
-      ...horizonDexBasic,
-      ...horizonDexNetworks[CHAIN_ID],
-    },
-    SharkSwap: {
-      ...sharkBasic,
-      ...sharkNetworks[CHAIN_ID],
-    },
     Aerodrome: {
       ...aerodromeBasic,
       ...aerodromeNetworks[CHAIN_ID],
-    },
-    Sobal: {
-      ...sobalBasic,
-      ...sobalNetworks[CHAIN_ID],
-    },
-    'Velocimeter V2': {
-      ...velocimeterV2Basic,
-      ...velocimeterV2Networks[CHAIN_ID],
     },
     SushiSwap: {
       ...sushiBasic,
       ...sushiNetworks[CHAIN_ID],
     },
+    BaseSwap: {
+      ...baseSwapBasic,
+      ...baseSwapNetworks[CHAIN_ID],
+    },
+    SwapBased: {
+      ...swapBasedBasic,
+      ...swapBasedNetworks[CHAIN_ID],
+    },
     Balancer: {
       ...balancerBasic,
       ...balancerNetworks[CHAIN_ID],
+    },
+    RocketSwap: {
+      ...rocketSwapBasic,
+      ...rocketSwapNetworks[CHAIN_ID],
+    },
+    Synthswap: {
+      ...synthSwapBasic,
+      ...synthSwapNetworks[CHAIN_ID],
+    },
+    'Velocimeter V2': {
+      ...velocimeterV2Basic,
+      ...velocimeterV2Networks[CHAIN_ID],
+    },
+    SharkSwap: {
+      ...sharkBasic,
+      ...sharkNetworks[CHAIN_ID],
+    },
+    HorizonDEX: {
+      ...horizonDexBasic,
+      ...horizonDexNetworks[CHAIN_ID],
+    },
+    Sobal: {
+      ...sobalBasic,
+      ...sobalNetworks[CHAIN_ID],
     },
   },
 };

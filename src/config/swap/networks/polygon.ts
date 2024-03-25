@@ -16,8 +16,16 @@ export default {
     noAccountTips: 'Polygon Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Polygon Chain.',
   },
-  defalutDex: 'Retro',
+  defalutDex: 'QuickSwap',
   dexs: {
+    QuickSwap: {
+      ...quickSwapBasic,
+      ...quickSwapNetworks[CHAIN_ID],
+    },
+    SushiSwap: {
+      ...sushiBasic,
+      ...sushiNetworks[CHAIN_ID],
+    },
     Retro: {
       ...retroBasic,
       ...retroNetworks[CHAIN_ID],
@@ -26,21 +34,13 @@ export default {
       ...apeBasic,
       ...apeNetworks[CHAIN_ID],
     },
-    Honeyswap: {
-      ...honeyBasic,
-      ...honeyNetworks[CHAIN_ID],
-    },
-    QuickSwap: {
-      ...quickSwapBasic,
-      ...quickSwapNetworks[CHAIN_ID],
-    },
     PearlFi: {
       ...pearlFiBasic,
       ...pearlFiNetworks[CHAIN_ID],
     },
-    SushiSwap: {
-      ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
+    Honeyswap: {
+      ...honeyBasic,
+      ...honeyNetworks[CHAIN_ID],
     },
   },
 };
