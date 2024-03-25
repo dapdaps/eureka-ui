@@ -31,7 +31,7 @@ const Common = ({ anonymous, from, children }: any) => {
           <StyledSubtitle>Compliant Private Muti-chain Liquidity Aggregator</StyledSubtitle>
           {children}
         </StyledMain>
-        <QA />
+        {from === 'index' && <QA />}
       </StyledContent>
     </StyledContainer>
   );

@@ -68,7 +68,7 @@ export default function ShuShView() {
     <Spinner />
   ) : (
     <>
-      <Common anonymous={anonymous}>
+      <Common anonymous={anonymous} from="index">
         <SwapPanel
           from={from}
           to={to}
