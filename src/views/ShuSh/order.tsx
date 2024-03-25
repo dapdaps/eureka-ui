@@ -5,7 +5,7 @@ import Common from './common';
 import OrderPanel from './components/OrderPanel';
 import useChechStatus from './hooks/useChechStatus';
 import useNetworksAndTokens from './hooks/useNetworksAndTokens';
-import { StyledBack } from './styles';
+import { StyledBack, StyledEmpty } from './styles';
 
 const ShuShOrderView = ({ id }: any) => {
   const { loading, statusResult, queryStatus } = useChechStatus(true);
@@ -28,7 +28,7 @@ const ShuShOrderView = ({ id }: any) => {
         </svg>
         <span>Back</span>
       </StyledBack>
-      {statusResult && (
+      {statusResult ? (
         <OrderPanel
           order={statusResult}
           tokens={tokens}
@@ -37,6 +37,8 @@ const ShuShOrderView = ({ id }: any) => {
             queryStatus(id);
           }}
         />
+      ) : (
+        <StyledEmpty>No results.</StyledEmpty>
       )}
     </Common>
   );

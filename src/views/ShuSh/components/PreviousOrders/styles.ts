@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 export { LoadingWrapper } from '@/views/QuestProfile/styles';
+export { StyledEmpty } from '../../styles';
 
 export const StyledContainer = styled.div``;
 
@@ -73,14 +74,4 @@ export const StyledList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 12px;
-`;
-
-export const StyledEmpty = styled.div`
-  color: #979abe;
-  text-align: center;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  padding-top: 40px;
-  opacity: 0.5;
 `;
