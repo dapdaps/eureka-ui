@@ -18,13 +18,13 @@ const QA = () => {
               </div>
               <div className="title3">Step 1 - Get Your Order Quote</div>
               <ul>
-                <li>Select Crypto Pair: **Pick the two tokens you want to Swap, Send, or Bridge from and to.</li>
+                <li>Select Crypto Pair: Pick the two tokens you want to Swap, Send, or Bridge from and to.</li>
                 <li>
-                  Enter Amount: **Specify the crypto amount to transfer. Choose Fixed for a specific amount to be
-                  received or Variable for best market-dependent rates.
+                  Enter Amount: Specify the crypto amount to transfer. Choose Fixed for a specific amount to be received
+                  or Variable for best market-dependent rates.
                 </li>
-                <li>Price Optimized: **Shush Finance automatically finds the lowest rates.</li>
-                <li>No Wallet Connect: **For enhanced security, you are not required to connect your wallet.</li>
+                <li>Price Optimized: Shush Finance automatically finds the lowest rates.</li>
+                <li>No Wallet Connect: For enhanced security, you are not required to connect your wallet.</li>
               </ul>
               <div className="title3">Step 2 - Send Your Funds to Start</div>
               <ul>

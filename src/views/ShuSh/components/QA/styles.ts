@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  width: 1244px;
+  width: 792px;
   margin: 100px auto 0px;
 `;
 

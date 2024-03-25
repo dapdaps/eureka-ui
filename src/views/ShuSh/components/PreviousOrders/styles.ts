@@ -57,6 +57,18 @@ export const StyledInput = styled.input`
   }
 `;
 
+export const StyledSearchIcon = styled.div`
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:active {
+    opacity: 0.6;
+  }
+`;
+
 export const StyledList = styled.div`
   display: flex;
   flex-direction: column;
