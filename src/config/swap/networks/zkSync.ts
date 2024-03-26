@@ -16,31 +16,31 @@ export default {
     noAccountTips: 'zkSync Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to zkSync Chain.',
   },
-  defalutDex: 'SpaceFi',
+  defalutDex: 'SyncSwap',
   dexs: {
-    SpaceFi: {
-      ...spaceFiBasic,
-      ...spaceFiNetworks[CHAIN_ID],
-    },
-    'Velocore V2': {
-      ...velocoreV2Basic,
-      ...velocoreV2Networks[CHAIN_ID],
-    },
-    veSync: {
-      ...veSyncBasic,
-      ...veSyncNetworks[CHAIN_ID],
-    },
     SyncSwap: {
       ...syncSwapBasic,
       ...syncSwapNetworks[CHAIN_ID],
+    },
+    Mute: {
+      ...muteBasic,
+      ...muteNetworks[CHAIN_ID],
     },
     'zkSwap Finance': {
       ...zkSwapBasic,
       ...zkSwapNetworks[CHAIN_ID],
     },
-    Mute: {
-      ...muteBasic,
-      ...muteNetworks[CHAIN_ID],
+    'Velocore V2': {
+      ...velocoreV2Basic,
+      ...velocoreV2Networks[CHAIN_ID],
+    },
+    SpaceFi: {
+      ...spaceFiBasic,
+      ...spaceFiNetworks[CHAIN_ID],
+    },
+    veSync: {
+      ...veSyncBasic,
+      ...veSyncNetworks[CHAIN_ID],
     },
   },
 };

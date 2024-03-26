@@ -21,20 +21,8 @@ export default {
     noAccountTips: 'Scroll Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Scroll Chain.',
   },
-  defalutDex: 'Metavault V3',
+  defalutDex: 'Ambient',
   dexs: {
-    'Metavault V3': {
-      ...metavaultV3Basic,
-      ...metavaultV3Networks[CHAIN_ID],
-    },
-    Skydrome: {
-      ...skydromeBasic,
-      ...skydromeNetworks[CHAIN_ID],
-    },
-    SpaceFi: {
-      ...spaceFiBasic,
-      ...spaceFiNetworks[CHAIN_ID],
-    },
     Ambient: {
       ...ambientBasic,
       ...ambientNetworks[CHAIN_ID],
@@ -43,13 +31,13 @@ export default {
       ...SyncSwapBasic,
       ...SyncSwapNetworks[CHAIN_ID],
     },
-    Zebra: {
-      ...zebraBasic,
-      ...zebraNetworks[CHAIN_ID],
-    },
     iZiSwap: {
       ...IziSwapBasic,
       ...IziSwapNetworks[CHAIN_ID],
+    },
+    Zebra: {
+      ...zebraBasic,
+      ...zebraNetworks[CHAIN_ID],
     },
     DODO: {
       ...dodoBasic,
@@ -58,6 +46,18 @@ export default {
     SushiSwap: {
       ...sushiBasic,
       ...sushiNetworks[CHAIN_ID],
+    },
+    SpaceFi: {
+      ...spaceFiBasic,
+      ...spaceFiNetworks[CHAIN_ID],
+    },
+    Skydrome: {
+      ...skydromeBasic,
+      ...skydromeNetworks[CHAIN_ID],
+    },
+    'Metavault V3': {
+      ...metavaultV3Basic,
+      ...metavaultV3Networks[CHAIN_ID],
     },
     'XY Finance': {
       ...xyBasic,

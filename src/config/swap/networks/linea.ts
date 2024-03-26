@@ -19,40 +19,40 @@ export default {
     noAccountTips: 'Linea Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Linea Chain.',
   },
-  defalutDex: 'HorizonDEX',
+  defalutDex: 'SyncSwap',
   dexs: {
-    HorizonDEX: {
-      ...HorizonDEXBasic,
-      ...HorizonDEXNetworks[CHAIN_ID],
-    },
-    iZiSwap: {
-      ...IziSwapBasic,
-      ...IziSwapNetworks[CHAIN_ID],
-    },
     SyncSwap: {
       ...SyncSwapBasic,
       ...SyncSwapNetworks[CHAIN_ID],
       oneExecutionDisabled: true,
     },
-    'Velocore V2': {
-      ...VelocoreV2Basic,
-      ...VelocoreV2Networks[CHAIN_ID],
+    Lynex: {
+      ...lynexBasic,
+      ...lynexNetworks[CHAIN_ID],
     },
-    'Metavault V3': {
-      ...metavaultV3Basic,
-      ...metavaultV3Networks[CHAIN_ID],
-    },
-    'Pancake Swap': {
-      ...pancakeSwapBasic,
-      ...pancakeSwapNetworks[CHAIN_ID],
+    iZiSwap: {
+      ...IziSwapBasic,
+      ...IziSwapNetworks[CHAIN_ID],
     },
     Xfai: {
       ...xfaiBasic,
       ...xfaiNetworks[CHAIN_ID],
     },
-    Lynex: {
-      ...lynexBasic,
-      ...lynexNetworks[CHAIN_ID],
+    'Pancake Swap': {
+      ...pancakeSwapBasic,
+      ...pancakeSwapNetworks[CHAIN_ID],
+    },
+    'Metavault V3': {
+      ...metavaultV3Basic,
+      ...metavaultV3Networks[CHAIN_ID],
+    },
+    'Velocore V2': {
+      ...VelocoreV2Basic,
+      ...VelocoreV2Networks[CHAIN_ID],
+    },
+    HorizonDEX: {
+      ...HorizonDEXBasic,
+      ...HorizonDEXNetworks[CHAIN_ID],
     },
     SushiSwap: {
       ...sushiBasic,
