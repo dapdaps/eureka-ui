@@ -1,13 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useDebounceFn } from 'ahooks';
 import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { deleteRequest, get } from '@/utils/http';
 
 const useMyActions = (chainId: number, pageSize: number) => {
   const [list, setList] = useState<any>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState(false);
   const { account } = useAccount();
   const [page, setPage] = useState(1);
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const queryList = useCallback(
     async (_page?: number) => {
@@ -39,9 +42,24 @@ const useMyActions = (chainId: number, pageSize: number) => {
     }
   }, []);
 
+  const { run } = useDebounceFn(
+    () => {
+      if (!chainId) return;
+      if (!account) {
+        setList([]);
+        setLoading(false);
+      } else {
+        check(() => {
+          queryList(1);
+        });
+      }
+    },
+    { wait: list ? 600 : 3000 },
+  );
+
   useEffect(() => {
-    if (chainId) queryList(1);
-  }, [chainId]);
+    run();
+  }, [chainId, account]);
 
   return { loading, list, deleting, handleDelete };
 };
