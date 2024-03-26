@@ -555,7 +555,7 @@ const ROUTE_CONFIG = {
     type: 'lending',
     theme: {
       '--button-color': '#EAEBEF',
-      '--switch-color': '#EAEBEF',
+      '--switch-color': 'rgba(234, 235, 239, .5)',
       '--button-text-color': 'black',
       '--supply-color': '#EAEBEF',
       '--yours-table-title': 'black',
@@ -580,7 +580,7 @@ const ROUTE_CONFIG = {
     theme: {
       '--button-color': '#EAEBEF',
       '--button-disabled-color': 'rgba(234, 235, 239, .5)',
-      '--switch-color': '#EAEBEF',
+      '--switch-color': 'rgba(234, 235, 239, .5)',
       '--button-text-color': 'black',
       '--supply-color': '#EAEBEF',
       '--yours-table-title': 'black',
