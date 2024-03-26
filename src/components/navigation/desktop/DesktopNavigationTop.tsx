@@ -23,7 +23,7 @@ const AccountWrapper = styled.div<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ $expand: boolean }>`
   position: relative;
   color: #979abe;
   padding: 20px 36px;
@@ -31,8 +31,8 @@ const Container = styled.div`
   top: 0;
   width: 100%;
   z-index: 50;
-  background: rgba(22, 24, 29, 0.9);
-  backdrop-filter: blur(5px);
+  background: ${({ $expand }) => ($expand ? 'rgba(22, 24, 29, 1)' : 'rgba(22, 24, 29, 0.9)')};
+  backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
   border-bottom: 1px solid #21232a;
 
   .container-nav {
@@ -160,7 +160,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   const isFromActivity = router.pathname.match(activityReg);
 
   return (
-    <Container>
+    <Container $expand={showMenuContent}>
       <div className="container-nav">
         {isFromActivity ? (
           <LogoContainer onClick={goHomeWithFresh}>
