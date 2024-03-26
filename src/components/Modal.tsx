@@ -64,16 +64,18 @@ const StyledCloseIcon = styled.div`
 
 const Modal = ({
   display,
-  title,
+  title = '',
   width = 460,
   content,
-  onClose,
+  showHeader = true,
+  onClose = () => {},
 }: {
   display: boolean;
-  title: string | ReactNode;
+  title?: string | ReactNode;
   width?: number;
+  showHeader?: boolean;
   content: ReactNode;
-  onClose: () => void;
+  onClose?: () => void;
 }) => {
   return (
     <AnimatePresence mode="wait">
@@ -87,12 +89,14 @@ const Modal = ({
                 ev.stopPropagation();
               }}
             >
-              <Header>
-                <Title>{title}</Title>
-                <StyledCloseIcon>
-                  <CloseIcon onClose={onClose} />
-                </StyledCloseIcon>
-              </Header>
+              {showHeader && (
+                <Header>
+                  <Title>{title}</Title>
+                  <StyledCloseIcon>
+                    <CloseIcon onClose={onClose} />
+                  </StyledCloseIcon>
+                </Header>
+              )}
               <Content>{content}</Content>
             </Main>
           </Overlay>

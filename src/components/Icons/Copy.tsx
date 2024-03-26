@@ -6,6 +6,9 @@ const CopyIcon = styled.div`
   :hover {
     opacity: 0.8;
   }
+  &:active {
+    opacity: 0.7;
+  }
 `;
 
 export default function Copy({ size = 16, onCopy }: { size?: number; onCopy: () => void }) {
