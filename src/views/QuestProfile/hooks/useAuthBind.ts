@@ -68,7 +68,6 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
   );
 
   useEffect(() => {
-    console.log(70, code);
     if (!account || !code) return;
     check(() => {
       const type = sessionStorage.getItem('_auth_type');

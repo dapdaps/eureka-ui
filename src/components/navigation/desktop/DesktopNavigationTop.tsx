@@ -31,7 +31,7 @@ const Container = styled.div<{ $expand: boolean }>`
   top: 0;
   width: 100%;
   z-index: 50;
-  background: ${({ $expand }) => ($expand ? 'rgba(22, 24, 29, 1)' : 'rgba(22, 24, 29, 0.9)')};
+  background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(38, 40, 54, 0.9)')};
   backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
   border-bottom: 1px solid #21232a;
 
