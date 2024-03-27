@@ -23,6 +23,7 @@ const Game = ({ detail, onRefreshDetail }: any) => {
             reward={detail?.rules?.[item]}
             remain={detail?.total_spins ? detail.total_spins - 15 * item : 0}
             sliceOrders={slices[item]}
+            key={item}
           />
         ))}
       </StyledCards>
