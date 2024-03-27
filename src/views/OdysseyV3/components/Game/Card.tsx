@@ -116,7 +116,7 @@ const Card = ({ completed, index, reward, remain, sliceOrders }: any) => {
           ))}
         </StyledEmptyCard>
       </StyledCard>
-      {completed && <StyledAnimation />}
+      {completed === 0 && <StyledAnimation />}
     </StyledContainer>
   );
 };

@@ -9,19 +9,25 @@ const Game = ({ detail, onRefreshDetail }: any) => {
   const [step, setStep] = useState(0);
   const slices = useOdysseyV3Store((store: any) => store.slices);
   useEffect(() => {
-    if (detail?.synthesizedIndex) {
-      setStep(detail.synthesizedIndex);
-    }
-  }, [detail]);
+    setStep(detail?.synthesizedIndex || 0);
+  }, [detail?.synthesizedIndex]);
   return (
     <StyledContainer>
       <StyledCards>
         {[0, 1, 2, 3].map((item) => (
           <Card
-            completed={step > item ? 0 : Math.floor(detail.total_spins / 15) > item ? 1 : 2}
+            completed={!detail?.total_spins ? 2 : step > item ? 0 : Math.floor(detail?.total_spins / 15) > item ? 1 : 2}
             index={item}
             reward={detail?.rules?.[item]}
-            remain={step > item ? 0 : Math.floor(detail.total_spins / 15) > item ? 15 : detail.total_spins % 15}
+            remain={
+              !detail?.total_spins
+                ? 0
+                : step > item
+                  ? 0
+                  : Math.floor(detail?.total_spins / 15) > item
+                    ? 15
+                    : detail.total_spins - item * 15
+            }
             sliceOrders={slices[item]}
             key={item}
           />

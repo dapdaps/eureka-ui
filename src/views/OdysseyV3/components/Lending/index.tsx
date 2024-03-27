@@ -7,10 +7,7 @@ import { StyledContainer, StyledContent } from './styles';
 export default function Lending({ list, onRefreshDetail }: any) {
   return (
     <StyledContainer>
-      <Title
-        title="Lending"
-        subtitle="Dive into lending on Scroll and make waves & Become a liquidity provider in Scroll and make a splash!"
-      />
+      <Title title="Lending" subtitle="Dive into lending on Scroll and make a splash!" />
       <StyledContent>
         {list?.length ? (
           list.map((item: any) => <DappCard key={item.id} {...item} onRefreshDetail={onRefreshDetail} />)

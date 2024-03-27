@@ -42,6 +42,7 @@ const ExporeItem = ({
 
     if (!source) return;
     if (source === '/network/scroll') handleReport(id);
+    if (source === '/all-in-one/scroll') handleReport(id);
     window.open(source, '_blank');
   };
 
