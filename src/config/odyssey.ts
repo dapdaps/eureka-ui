@@ -11,6 +11,12 @@ export default {
     chainsHeight: '56px',
     showPrizeLabel: false,
   },
+  3: {
+    path: '/odyssey/home?id=3',
+    chainsImg: '/images/odyssey/v3/chains.png',
+    chainsHeight: '56px',
+    showPrizeLabel: false,
+  },
 } as {
   [key: string]: {
     path: string;
