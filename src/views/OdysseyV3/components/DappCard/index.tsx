@@ -72,7 +72,7 @@ export default function DappCard({
   }, [total_spins, spins]);
 
   return (
-    <Card onClick={onItemClick} disabled={times === 0 ? false : execution > times}>
+    <Card onClick={onItemClick} disabled={times === 0 ? false : execution >= times}>
       <StyledTop>
         <StyledDappWrapper>
           <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
@@ -84,7 +84,7 @@ export default function DappCard({
         <ArrowIcon style={{ marginTop: '6px' }} />
       </StyledTop>
       <StyledFooter>
-        <Fragments amount={spins * execution} disabled={execution === times} />
+        <Fragments amount={spins} disabled={execution === times} />
         <StyledFooterActions>
           <RefreshButton
             onClick={(ev: any) => {

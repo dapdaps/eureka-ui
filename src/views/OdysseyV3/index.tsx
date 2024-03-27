@@ -20,7 +20,7 @@ export default function OdysseyV2() {
     onSuccess: () => {
       queryUserInfo();
     },
-    redirect_uri: `${window.location.origin}${window.location.pathname}?id=2`,
+    redirect_uri: `${window.location.origin}${window.location.pathname}?id=3`,
   });
   return (
     <StyledContainer>

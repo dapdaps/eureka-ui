@@ -12,7 +12,7 @@ export const StyledContent = styled.div`
   gap: 16px;
 `;
 
-export const StyledItem = styled.div`
+export const StyledItem = styled.div<{ $disabled: boolean }>`
   height: 70px;
   border-radius: 12px;
   border: 1px solid #373a53;
@@ -22,7 +22,7 @@ export const StyledItem = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: pointer;
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
 `;
 
 export const StyledItemTitle = styled.div`

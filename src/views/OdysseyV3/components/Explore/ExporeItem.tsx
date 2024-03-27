@@ -28,7 +28,7 @@ const ExporeItem = ({
   const { handleReport } = useReport();
 
   const onItemClick = () => {
-    if (category === 'password') return;
+    if (finished) return;
 
     if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
@@ -51,7 +51,7 @@ const ExporeItem = ({
   }, [total_spins, times, spins]);
 
   return (
-    <StyledItem onClick={onItemClick}>
+    <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished}>
       <StyledItemLeft>
         <Fragments amount={spins} disabled={finished} />
         <StyledItemTitle>{name}</StyledItemTitle>

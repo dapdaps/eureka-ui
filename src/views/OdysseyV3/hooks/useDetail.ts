@@ -18,14 +18,15 @@ export default function useDetail() {
         const _rules = JSON.parse(result.data.rule);
         let i = 0;
         _rules.forEach((rule: number) => {
-          if (result.data.user?.total_reward - rule <= 0) return;
-          i++;
+          if (result.data.user?.total_reward - rule > 0) {
+            i++;
+          }
         });
         setDetail({
           rules: _rules,
-          available_rewards: result.data.user?.unclaimed_reward,
-          total_reward: result.data.user?.total_reward,
-          total_spins: result.data.user?.total_spins,
+          available_rewards: result.data.user?.unclaimed_reward || 0,
+          total_reward: result.data.user?.total_reward || 0,
+          total_spins: result.data.user?.total_spins || 0,
           synthesizedIndex: i,
         });
       } else {

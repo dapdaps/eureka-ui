@@ -89,6 +89,7 @@ const StyledAnimation = styled.div`
 `;
 
 const Card = ({ completed, index, reward, remain, sliceOrders }: any) => {
+  console.log('remain', remain);
   const [hideEmptyCard, setHideEmptyCard] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 

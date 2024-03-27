@@ -104,7 +104,7 @@ const Total = ({ spins, rewards, synthesizedIndex, onSuccess, onSynthesisSuccess
           </StyledAmount>
           <StyledUnits>PTS</StyledUnits>
         </StyledRewards>
-        <StyledButton disabled={loading} onClick={onClaim}>
+        <StyledButton disabled={loading || Number(rewards) === 0} onClick={onClaim}>
           {loading ? <Loading size={20} /> : 'Claim'}
         </StyledButton>
       </StyledItem>
