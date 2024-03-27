@@ -1,6 +1,6 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-
+import useAccount from '@/hooks/useAccount';
 import { QUEST_PATH } from '@/config/quest';
 import useToast from '@/hooks/useToast';
 import useAuthCheck from '@/hooks/useAuthCheck';
@@ -25,6 +25,7 @@ type AuthType = 'telegram' | 'twitter' | 'discord';
 
 export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: VoidFunction; redirect_uri: string }) {
   const [loading, setLoading] = useState(false);
+  const { account } = useAccount();
   const [type, setType] = useState<AuthType>();
   const toast = useToast();
   const searchParams = useSearchParams();
@@ -67,13 +68,15 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
   );
 
   useEffect(() => {
+    console.log(70, code);
+    if (!account || !code) return;
     check(() => {
       const type = sessionStorage.getItem('_auth_type');
       if (!code || !type) return;
       handleBind(type as AuthType);
       sessionStorage.removeItem('_auth_type');
     });
-  }, [code]);
+  }, [code, account]);
 
   return { loading, type, handleBind };
 }
