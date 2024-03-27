@@ -18,10 +18,10 @@ const Game = ({ detail, onRefreshDetail }: any) => {
       <StyledCards>
         {[0, 1, 2, 3].map((item) => (
           <Card
-            completed={step > item}
+            completed={step > item ? 0 : Math.floor(detail.total_spins / 15) > item ? 1 : 2}
             index={item}
             reward={detail?.rules?.[item]}
-            remain={detail?.total_spins ? detail.total_spins - 15 * item : 0}
+            remain={step > item ? 0 : Math.floor(detail.total_spins / 15) > item ? 15 : detail.total_spins % 15}
             sliceOrders={slices[item]}
             key={item}
           />

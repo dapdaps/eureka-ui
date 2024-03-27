@@ -95,7 +95,7 @@ const Card = ({ completed, index, reward, remain, sliceOrders }: any) => {
   useEffect(() => {
     if (timerRef.current) clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
-      setHideEmptyCard(completed);
+      setHideEmptyCard(completed === 0);
     }, 500);
   }, [completed]);
 
@@ -109,7 +109,7 @@ const Card = ({ completed, index, reward, remain, sliceOrders }: any) => {
           {Slices.map((slice, i) => (
             <slice.component
               key={i}
-              isFill={remain >= 15 ? true : sliceOrders[i] >= remain}
+              isFill={remain >= 15 ? false : sliceOrders[i] >= remain}
               svgProps={slice.svgProps}
               path={slice.path}
             />
