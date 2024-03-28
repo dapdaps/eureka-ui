@@ -69,10 +69,10 @@ const MyRadioGroup: FC<IProps> = ({ order, outerSize = 25, innerSize = 11, optio
     <RadioGroupRoot value={value} onValueChange={onValueChange}>
       {options.map((item, index) => (
         <Flex key={index}>
-          <RadioGroupItem value={item.value as string} id={`r${index}`}>
+          <RadioGroupItem value={item.value as string} id={`r${order}${index}`}>
             <RadioGroupIndicator />
           </RadioGroupItem>
-          <Label htmlFor={`r${index}`}>{item.label}</Label>
+          <Label htmlFor={`r${order}${index}`}>{item.label}</Label>
         </Flex>
       ))}
     </RadioGroupRoot>

@@ -176,10 +176,7 @@ const SurveyAction = ({ onSuccess, id, status, data }: any) => {
           </Section>
         );
       })}
-      <Intro>
-        We appreciate you taking the time to share your feedback and playing a crucial role in shaping the future of
-        DapDap 🤜🤛
-      </Intro>
+
       {status !== 'completed' ? (
         <Foot>
           {isDisabled ? (

@@ -99,7 +99,8 @@ export default function ShuShView({ questId }: any) {
           handleExchange={handleTokenExchange}
         />
         <PreviousOrders tokens={tokens} />
-        <Quests questList={questList} loading={questingLoading} />
+        {questId || questId === '0' ? <Quests questList={questList} loading={questingLoading} /> : null}
+
         <SelectTokens
           display={showModal}
           networks={networks}
