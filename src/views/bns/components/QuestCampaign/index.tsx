@@ -1,13 +1,13 @@
+import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
-
-import QuestItem from '@/views/Quest/components/QuestItem';
-import { formatPeriodDate } from '@/views/Quest/helpers';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import useQuestList from '../../hooks/useQuestList';
-import Timer from '../Timer';
 
 import Loading from '@/components/Icons/Loading';
-import { useRouter } from 'next/router';
+import QuestItem from '@/views/Quest/components/QuestItem';
+import { formatPeriodDate } from '@/views/Quest/helpers';
+
+import useQuestList from '../../hooks/useQuestList';
+import Timer from '../Timer';
 import {
   StyledButton,
   StyledCampaipnContainer,

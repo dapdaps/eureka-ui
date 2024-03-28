@@ -12,6 +12,7 @@ import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import { formatDescription } from '../../helper';
 import useActionCheck from '../../hooks/useActionCheck';
 import PasswordAction from './PasswordAction';
+import QaAction from './qa-action';
 import {
   RefreshTips,
   StyledDapp,
@@ -138,7 +139,7 @@ const ActionItem = ({
   const onItemClick = () => {
     check(() => {
       if (!isLive || action.source === 'bitget_wallet') return;
-      if (action.category === 'password') {
+      if (action.category === 'password' || action.category === 'question_answer') {
         setOpen(!open);
         return;
       }
@@ -160,6 +161,66 @@ const ActionItem = ({
     setActionCompleted(completed);
   }, [completed]);
 
+  const renderExpand = () => {
+    switch (action.category) {
+      case 'password':
+        return (
+          <PasswordAction
+            id={action.id}
+            onSuccess={() => {
+              setOpen(false);
+              setActionCompleted(true);
+              onSuccess();
+            }}
+          />
+        );
+      case 'question_answer':
+        return (
+          <QaAction
+            data={action.extra_data}
+            status={action.status}
+            id={action.id}
+            onSuccess={() => {
+              setOpen(false);
+              setActionCompleted(true);
+              onSuccess();
+            }}
+          />
+        );
+
+      default:
+        return (
+          <>
+            <StyledDapps>
+              {action.operators
+                ?.filter((item: any, i: number) => i < 10)
+                .map((dapp: any) => (
+                  <StyledDapp
+                    key={dapp.dapp_id}
+                    whileHover={{ opacity: 0.8 }}
+                    whileTap={{ opacity: 0.6 }}
+                    onClick={() => {
+                      handleDappRedirect(dapp);
+                    }}
+                  >
+                    <StyledDappIcon src={dapp.dapp_logo} />
+                    <span>{dapp.dapp_name}</span>
+                  </StyledDapp>
+                ))}
+            </StyledDapps>
+            {action.operators?.length > 10 && (
+              <StyledMore
+                onClick={() => {
+                  router.push('/alldapps');
+                }}
+              >
+                View all dApps
+              </StyledMore>
+            )}
+          </>
+        );
+    }
+  };
   return (
     <StyledItemContainer>
       <StyledItemTop
@@ -273,46 +334,7 @@ const ActionItem = ({
           >
             <StyledExpand>
               <StyledDesc dangerouslySetInnerHTML={{ __html: formatDescription(action.description) }} />
-              {action.category === 'password' ? (
-                <PasswordAction
-                  id={action.id}
-                  onSuccess={() => {
-                    setOpen(false);
-                    setActionCompleted(true);
-                    onSuccess();
-                  }}
-                />
-              ) : (
-                <>
-                  {' '}
-                  <StyledDapps>
-                    {action.operators
-                      ?.filter((item: any, i: number) => i < 10)
-                      .map((dapp: any) => (
-                        <StyledDapp
-                          key={dapp.dapp_id}
-                          whileHover={{ opacity: 0.8 }}
-                          whileTap={{ opacity: 0.6 }}
-                          onClick={() => {
-                            handleDappRedirect(dapp);
-                          }}
-                        >
-                          <StyledDappIcon src={dapp.dapp_logo} />
-                          <span>{dapp.dapp_name}</span>
-                        </StyledDapp>
-                      ))}
-                  </StyledDapps>
-                  {action.operators?.length > 10 && (
-                    <StyledMore
-                      onClick={() => {
-                        router.push('/alldapps');
-                      }}
-                    >
-                      View all dApps
-                    </StyledMore>
-                  )}
-                </>
-              )}
+              {renderExpand()}
 
               {/* {(action.operators?.length === 0 || !action.operators) && (
                 <StyledExpandButtonBox>
