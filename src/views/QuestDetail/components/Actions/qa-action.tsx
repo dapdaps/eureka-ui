@@ -113,7 +113,7 @@ const SurveyAction = ({ onSuccess, id, status, data }: any) => {
     // console.log('handle: ', qIndex, aIndex, checked, text);
     const _temp = [...surveys];
     if (_temp[qIndex].type === 'radio') {
-      const _options = _temp[qIndex].options.map((item) => ({
+      const _options = _temp[qIndex].options.map((item: any) => ({
         ...item,
         checked: false,
       }));
