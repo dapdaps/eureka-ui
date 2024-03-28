@@ -2,7 +2,6 @@ import { memo, useRef } from 'react';
 
 import QuestItem from '@/views/Quest/components/QuestItem';
 import { formatPeriodDate } from '@/views/Quest/helpers';
-import useLike from '@/views/Quest/hooks/useLike';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useQuestList from '../../hooks/useQuestList';
 import Timer from '../Timer';
@@ -32,12 +31,12 @@ import {
 
 const iconLeft = (
   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
-    <path d="M9 1L2 8L9 15" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+    <path d="M9 1L2 8L9 15" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 const iconRight = (
   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
-    <path d="M1 1L8 8L1 15" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+    <path d="M1 1L8 8L1 15" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 const iconExploreRight = (
@@ -50,7 +49,6 @@ const iconExploreRight = (
 );
 const Campaign = ({ campaign, categories, bp }: { campaign: any; categories: any; bp?: string }) => {
   const router = useRouter();
-  const { like, handleLike } = useLike(campaign.id, 'quest_campaign');
   const handleClickExplore = function (event: any) {
     event.stopPropagation();
     router.push('/quest/leaderboard/' + campaign.name.replace(/\s/g, ''));

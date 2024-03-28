@@ -24,10 +24,6 @@ export default {
       ...camelotBasic,
       ...camelotNetworks[CHAIN_ID],
     },
-    Apeswap: {
-      ...apeBasic,
-      ...apeNetworks[CHAIN_ID],
-    },
     Spartadex: {
       ...spartaBasic,
       ...spartaNetworks[CHAIN_ID],
@@ -35,10 +31,6 @@ export default {
     'Ramses V2': {
       ...ramsesV2Basic,
       ...ramsesV2Networks[CHAIN_ID],
-    },
-    'Chronos V1': {
-      ...chronosV1Basic,
-      ...chronosV1Networks[CHAIN_ID],
     },
     'Ramses V1': {
       ...ramsesV1Basic,
@@ -48,9 +40,17 @@ export default {
       ...sushiBasic,
       ...sushiNetworks[CHAIN_ID],
     },
+    'Chronos V1': {
+      ...chronosV1Basic,
+      ...chronosV1Networks[CHAIN_ID],
+    },
     SolidLizard: {
       ...solidLizardBasic,
       ...solidLizardNetworks[CHAIN_ID],
+    },
+    Apeswap: {
+      ...apeBasic,
+      ...apeNetworks[CHAIN_ID],
     },
   },
 };

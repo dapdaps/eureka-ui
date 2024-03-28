@@ -6,7 +6,9 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { checkAddressIsInvited, getAccessToken, getBnsUserName, insertedAccessKey } from '@/apis';
 import { QUEST_PATH } from '@/config/quest';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useCopy from '@/hooks/useCopy';
+import useUserInfo from '@/hooks/useUserInfo';
 import { ellipsAccount } from '@/utils/account';
 import { goHomeWithFresh } from '@/utils/activity-utils';
 import { AUTH_TOKENS, get, getWithoutActive, post } from '@/utils/http';
@@ -14,7 +16,6 @@ import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 import { ModalPC, Tabs } from './components';
-import useUserInfo from './hooks/useUserInfo';
 import * as Styles from './invite-pc-styles';
 interface IProps {
   // inviteCode?: string;
@@ -35,7 +36,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
   const { copy } = useCopy();
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const router = useRouter();
-
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const [address, setAddress] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
   const [modalType, setModalType] = useState<'success' | 'fail'>('success');
@@ -54,7 +55,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
   const [fresh, setFresh] = useState(0);
   const [updater, setUpdater] = useState(0);
   const [id, setId] = useState<string>();
-  const { loading: userLoading, info: userInfo = {} } = useUserInfo({ id, updater });
+  const { userInfo, queryUserInfo } = useUserInfo();
 
   const [claimLoading, setClaimLoading] = useState(false);
 
@@ -77,13 +78,13 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
     onSuccess: () => {
       // onSuccess(1);
       setUpdater(Date.now());
+      queryUserInfo();
     },
     redirect_uri: redirectUri,
   });
   const logout = () => {
     window.localStorage.setItem(AUTH_TOKENS, '{}');
     insertedAccessKey('');
-    deleteCookie('LOGIN_ACCOUNT');
     deleteCookie('AUTHED_ACCOUNT');
     deleteCookie('BNS_NAME');
   };
@@ -154,7 +155,6 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
 
   async function fetchAccessToken() {
     await getAccessToken(address);
-    setCookie('LOGIN_ACCOUNT', address);
     setCookie('AUTHED_ACCOUNT', address);
     checkAccount();
   }
@@ -289,8 +289,10 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
 
   useEffect(() => {
     if (isBlur) return;
-    fetchTotalRewards();
-    getInviteList();
+    check(() => {
+      fetchTotalRewards();
+      getInviteList();
+    });
   }, [updater, isBlur]);
 
   const renderButton = () => {
@@ -332,7 +334,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
 
   const openSource = (action: any) => {
     if (isBlur) return;
-    if (action.category === 'twitter_follow' && userInfo.twitter?.is_bind) {
+    if (action.category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + action.id, '1');
     }
     if (action.category.startsWith('twitter') && !userInfo.twitter?.is_bind) {
@@ -365,7 +367,15 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
 
     window.open(action.source, '_blank', 'width=850,height=550');
   };
-
+  const handleClickFresh = async (index: number, id: number) => {
+    setSpin2((prev) => {
+      const temp = [...prev];
+      temp[index] = !temp[index];
+      return temp;
+    });
+    await checkQuest(id);
+    handleFresh();
+  };
   const prefix = location.origin;
 
   return (
@@ -433,14 +443,14 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
                         src="/images/marketing/fresh.svg"
                         onClick={async (e) => {
                           if (isBlur) return;
-                          setSpin2((prev) => {
-                            const temp = [...prev];
-                            temp[index] = !temp[index];
-                            return temp;
-                          });
-                          await checkQuest(item.id);
-                          handleFresh();
                           e.stopPropagation();
+
+                          if (item.category.startsWith('twitter')) {
+                            const clicked = sessionStorage.getItem('_clicked_twitter_' + item.id);
+                            clicked && handleClickFresh(index, item.id);
+                          } else {
+                            handleClickFresh(index, item.id);
+                          }
                         }}
                       />
                     )}
@@ -454,7 +464,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
               ))
             : null}
         </Styles.CardBox>
-        <Styles.Title>Invite</Styles.Title>
+        {/* <Styles.Title>Invite</Styles.Title>
         <Styles.InviteBox className={userStatus === 'new' ? '' : 'blur'}>
           <Styles.InviteHead>
             <div>
@@ -477,7 +487,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
                 ))
               : null}
           </Styles.InviteBody>
-        </Styles.InviteBox>
+        </Styles.InviteBox> */}
       </Styles.Box>
 
       <Styles.Foot>

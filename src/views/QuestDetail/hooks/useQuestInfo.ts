@@ -1,18 +1,20 @@
 import { useCallback, useEffect, useState } from 'react';
-
+import useAccount from '@/hooks/useAccount';
 import { QUEST_PATH } from '@/config/quest';
 import { get } from '@/utils/http';
+import { useDebounceFn } from 'ahooks';
+import useAuthCheck from '@/hooks/useAuthCheck';
 
 export default function useQuestInfo(id?: string, source?: string) {
   const [info, setInfo] = useState<any>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { account } = useAccount();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const queryQuestInfo = useCallback(async () => {
-    if (loading) return;
-    setLoading(true);
     try {
+      setLoading(true);
       const params = id ? `id=${id}` : `source=${source}`;
-
       const result = await get(`${QUEST_PATH}/api/quest?${params}`);
       const data = result.data || [];
       setInfo(data);
@@ -22,9 +24,21 @@ export default function useQuestInfo(id?: string, source?: string) {
     }
   }, [id, source, loading]);
 
+  const { run } = useDebounceFn(
+    () => {
+      if (!id && !source) return;
+      if (!account) {
+        queryQuestInfo();
+      } else {
+        check(queryQuestInfo);
+      }
+    },
+    { wait: info ? 800 : 3000 },
+  );
+
   useEffect(() => {
-    if (id || source) queryQuestInfo();
-  }, [id, source]);
+    run();
+  }, [account, id, source]);
 
   return { loading, info };
 }

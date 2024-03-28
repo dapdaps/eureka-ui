@@ -9,6 +9,10 @@ export default {
   rpcUrls: ['https://mainnet.era.zksync.io'],
   defaultTab: 'Swap',
   menuConfig: {
+    Bridge: {
+      tab: 'Bridge',
+      path: 'bluebiu.near/widget/zkSync.Bridge.Index',
+    },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/zkSync.Swap.Dex',

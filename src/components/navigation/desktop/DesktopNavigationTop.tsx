@@ -6,10 +6,12 @@ import AccountItem from '@/components/AccountSider/components/AccountItem';
 import Chain from '@/components/AccountSider/components/Chain';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
+import ConnectWallet from '@/components/ConnectWallet';
 import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
+import { useRouter } from 'next/router';
 
 const LoginContainer = styled.div`
   width: auto;
@@ -21,7 +23,7 @@ const AccountWrapper = styled.div<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ $expand: boolean }>`
   position: relative;
   color: #979abe;
   padding: 20px 36px;
@@ -29,7 +31,8 @@ const Container = styled.div`
   top: 0;
   width: 100%;
   z-index: 50;
-  background: #16181d;
+  background: ${({ $expand }) => ($expand ? 'rgba(22, 24, 29, 1)' : 'rgba(22, 24, 29, 0.9)')};
+  backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
   border-bottom: 1px solid #21232a;
 
   .container-nav {
@@ -145,7 +148,8 @@ const ExpandIcon = 'https://assets.dapdap.net/images/bafkreiam7p4ewrfedupruquxts
 
 const CloseIcon = 'https://assets.dapdap.net/images/bafkreier3j4otvsg2hp6bwgqsenjkecslv4vsn6mdjhyskdgfn5uqilkyu.svg';
 
-export const DesktopNavigationTop = () => {
+export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolean }) => {
+  const router = useRouter();
   const setLayoutStore = useLayoutStore((store) => store.set);
   const { account } = useAccount();
 
@@ -153,10 +157,10 @@ export const DesktopNavigationTop = () => {
 
   const [showMenuContent, setShowMenuContent] = useState(false);
 
-  const isFromActivity = location.pathname.match(activityReg);
+  const isFromActivity = router.pathname.match(activityReg);
 
   return (
-    <Container>
+    <Container $expand={showMenuContent}>
       <div className="container-nav">
         {isFromActivity ? (
           <LogoContainer onClick={goHomeWithFresh}>
@@ -190,7 +194,7 @@ export const DesktopNavigationTop = () => {
                 fill="none"
                 className="search-icon"
               >
-                <circle cx="7.01829" cy="7.01829" r="6.01829" stroke="#EBF479" stroke-width="2" />
+                <circle cx="7.01829" cy="7.01829" r="6.01829" stroke="#EBF479" strokeWidth="2" />
                 <rect
                   x="14.9138"
                   y="9.64978"
@@ -228,7 +232,10 @@ export const DesktopNavigationTop = () => {
             />
           </Search>
         </MenuContainer>
-        {account ? (
+        {/* Page don't need account section */}
+        {isHideAccount ? (
+          <div />
+        ) : account ? (
           <LoginContainer>
             <Chain showName={false} bp="3001-003" />
             <AccountWrapper
@@ -240,7 +247,7 @@ export const DesktopNavigationTop = () => {
             </AccountWrapper>
           </LoginContainer>
         ) : (
-          <div />
+          <ConnectWallet />
         )}
       </div>
 

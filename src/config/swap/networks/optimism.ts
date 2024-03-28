@@ -15,8 +15,16 @@ export default {
     noAccountTips: 'Optimism Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Optimism Chain.',
   },
-  defalutDex: 'Velodrome V1',
+  defalutDex: 'Velodrome V2',
   dexs: {
+    'Velodrome V2': {
+      ...velodromeBasic,
+      ...velodromeNetworks[CHAIN_ID],
+    },
+    'Beethoven X': {
+      ...beethovenBasic,
+      ...beethovenNetworks[CHAIN_ID],
+    },
     'Velodrome V1': {
       ...velodromeV1Basic,
       ...velodromeV1Networks[CHAIN_ID],
@@ -25,17 +33,9 @@ export default {
       ...sushiBasic,
       ...sushiNetworks[CHAIN_ID],
     },
-    'Beethoven X': {
-      ...beethovenBasic,
-      ...beethovenNetworks[CHAIN_ID],
-    },
     'Frax Swap': {
       ...fraxBasic,
       ...fraxNetworks[CHAIN_ID],
-    },
-    'Velodrome V2': {
-      ...velodromeBasic,
-      ...velodromeNetworks[CHAIN_ID],
     },
   },
 };

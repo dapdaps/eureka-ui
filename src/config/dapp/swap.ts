@@ -415,4 +415,25 @@ export default {
       '--button-text-color': '#000',
     },
   },
+  lynex: {
+    type: 'swap',
+    theme: {
+      '--button-color': '#E2944A',
+      '--button-text-color': '#fff',
+    },
+  },
+  mute: {
+    type: 'swap',
+    theme: {
+      '--button-color': '#47a1ff',
+      '--button-text-color': '#fff',
+    },
+  },
+  'xy-finance': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#277eec',
+      '--button-text-color': '#fff',
+    },
+  },
 };

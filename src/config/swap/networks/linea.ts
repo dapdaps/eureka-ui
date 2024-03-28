@@ -5,6 +5,8 @@ import { basic as VelocoreV2Basic, networks as VelocoreV2Networks } from '../dap
 import { basic as metavaultV3Basic, networks as metavaultV3Networks } from '../dapps/metavault-v3';
 import { basic as pancakeSwapBasic, networks as pancakeSwapNetworks } from '../dapps/pancake-swap';
 import { basic as xfaiBasic, networks as xfaiNetworks } from '../dapps/xfai';
+import { basic as lynexBasic, networks as lynexNetworks } from '../dapps/lynex';
+import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import chains from '../../chains';
 
 const CHAIN_ID = 59144;
@@ -17,36 +19,44 @@ export default {
     noAccountTips: 'Linea Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Linea Chain.',
   },
-  defalutDex: 'HorizonDEX',
+  defalutDex: 'SyncSwap',
   dexs: {
-    HorizonDEX: {
-      ...HorizonDEXBasic,
-      ...HorizonDEXNetworks[CHAIN_ID],
-    },
-    iZiSwap: {
-      ...IziSwapBasic,
-      ...IziSwapNetworks[CHAIN_ID],
-    },
     SyncSwap: {
       ...SyncSwapBasic,
       ...SyncSwapNetworks[CHAIN_ID],
       oneExecutionDisabled: true,
     },
-    'Velocore V2': {
-      ...VelocoreV2Basic,
-      ...VelocoreV2Networks[CHAIN_ID],
+    Lynex: {
+      ...lynexBasic,
+      ...lynexNetworks[CHAIN_ID],
     },
-    'Metavault V3': {
-      ...metavaultV3Basic,
-      ...metavaultV3Networks[CHAIN_ID],
+    iZiSwap: {
+      ...IziSwapBasic,
+      ...IziSwapNetworks[CHAIN_ID],
+    },
+    Xfai: {
+      ...xfaiBasic,
+      ...xfaiNetworks[CHAIN_ID],
     },
     'Pancake Swap': {
       ...pancakeSwapBasic,
       ...pancakeSwapNetworks[CHAIN_ID],
     },
-    Xfai: {
-      ...xfaiBasic,
-      ...xfaiNetworks[CHAIN_ID],
+    'Metavault V3': {
+      ...metavaultV3Basic,
+      ...metavaultV3Networks[CHAIN_ID],
+    },
+    'Velocore V2': {
+      ...VelocoreV2Basic,
+      ...VelocoreV2Networks[CHAIN_ID],
+    },
+    HorizonDEX: {
+      ...HorizonDEXBasic,
+      ...HorizonDEXNetworks[CHAIN_ID],
+    },
+    SushiSwap: {
+      ...sushiBasic,
+      ...sushiNetworks[CHAIN_ID],
     },
   },
 };

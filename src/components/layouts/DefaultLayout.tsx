@@ -2,19 +2,18 @@ import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
+import { useDebounceFn } from 'ahooks';
+import useAccount from '@/hooks/useAccount';
 import AccountSider from '../AccountSider';
 import Footer from '../Footer';
-import { DesktopNavigationLeft } from '../navigation/desktop/DesktopNavigationLeft';
 import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
-import { LoginBox } from '../navigation/desktop/LoginBox';
 
 interface Props {
   children: ReactNode;
 }
 
 const Layout = styled.div`
-  background: #16181d;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -30,10 +29,27 @@ const Layout = styled.div`
 
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();
-
   const pathName = router.pathname;
+  const { account } = useAccount();
+  const { getInitialDataWithAuth } = useInititalDataWithAuth();
+
+  const { run: updateAccount } = useDebounceFn(
+    () => {
+      getInitialDataWithAuth(account);
+    },
+    { wait: 500 },
+  );
+
+  useEffect(() => {
+    updateAccount();
+  }, [account]);
+
   return (
-    <Layout>
+    <Layout
+      style={{
+        background: router.pathname === '/odyssey/[version]' ? '#000' : '#16181d',
+      }}
+    >
       {pathName !== '/uniswap' && <DesktopNavigationTop />}
 
       <div className="content">

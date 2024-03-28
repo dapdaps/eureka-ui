@@ -51,26 +51,26 @@ const iconCircle = (
       opacity="0.5"
       d="M8 15C11.866 15 15 11.866 15 8C15 4.13401 11.866 1 8 1C4.13401 1 1 4.13401 1 8"
       stroke="white"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     />
   </svg>
 );
 const RegisterDialog = ({ priceLabel, onClose, discount, setShowSwitchNetworkDialog, currentChain, setChain }: any) => {
   const toast = useToast();
   const router = useRouter();
-  const priceStore = usePriceStore()
+  const priceStore = usePriceStore();
   const { account } = useAccount();
   const contract = useBnsContract();
   const { handleReport } = useReport();
-  const price = priceStore.price
+  const price = priceStore.price;
 
   const [registerStatus, setRegisterStatus] = useState<RegisterStatusType>(0);
   const [year, setYear] = useState(1);
   const totalPrice = useMemo(() => year * priceLabel.price, [priceLabel.price, year]);
-  const discountPrice = useMemo(() => 0.4 * year * priceLabel.price, [priceLabel.price, year]);
-  const realPrice = useMemo(() => totalPrice - (discount ? discountPrice : 0), [totalPrice, discount, discountPrice])
+  const discountPrice = useMemo(() => 0.6 * year * priceLabel.price, [priceLabel.price, year]);
+  const realPrice = useMemo(() => totalPrice - (discount ? discountPrice : 0), [totalPrice, discount, discountPrice]);
 
   const handlePlus = function () {
     setYear((prev) => (prev += 1));
@@ -89,7 +89,7 @@ const RegisterDialog = ({ priceLabel, onClose, discount, setShowSwitchNetworkDia
       label: priceLabel.label,
       years: year,
       isPrimaryName: false,
-      promoCode: '25DISCOUNT',
+      promoCode: discount ? 'dapdap60' : '',
     });
     const signedRegisterRequest = response.signedRegisterRequest;
     const iface = new ethers.utils.Interface([
@@ -142,6 +142,13 @@ const RegisterDialog = ({ priceLabel, onClose, discount, setShowSwitchNetworkDia
     const avatar = `files.basename.app/avatars/${hashedName}.svg`;
     const encodedDataAvatar = iface.encodeFunctionData('setText', [hashedName, 'avatar', avatar]);
     const callData = [encodedDataAddress, encodedDataAvatar];
+
+    console.log(
+      '===signedRegisterRequest',
+      JSON.stringify(signedRegisterRequest),
+      '=====callData',
+      JSON.stringify(callData),
+    );
     try {
       setRegisterStatus(1);
       await contract.write({
@@ -156,7 +163,7 @@ const RegisterDialog = ({ priceLabel, onClose, discount, setShowSwitchNetworkDia
         ],
       });
       setRegisterStatus(2);
-      handleReport('quest/leaderboard/DapDapXBNS?click_yourname')
+      handleReport('quest/leaderboard/DapDapXBNS?click_yourname');
     } catch (error: any) {
       setRegisterStatus(0);
       error.reason &&
@@ -259,10 +266,7 @@ const RegisterDialog = ({ priceLabel, onClose, discount, setShowSwitchNetworkDia
                     ${balanceFormated(realPrice, 2)}
                   </StyledText>
                   <StyledText $color="#979ABE" $size="14px" $line="120%">
-                    (~{Big(realPrice)
-                      .div(price['ETH'])
-                      .toFixed(4)
-                    } ETH)
+                    (~{Big(realPrice).div(price['ETH']).toFixed(4)} ETH)
                   </StyledText>
                 </StyledFlex>
               </StyledFlex>

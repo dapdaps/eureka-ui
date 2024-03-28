@@ -7,6 +7,8 @@ import { basic as SyncSwapBasic, networks as SyncSwapNetworks } from '../dapps/s
 import { basic as zebraBasic, networks as zebraNetworks } from '../dapps/zebra';
 import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
 import { basic as dodoBasic, networks as dodoNetworks } from '../dapps/dodo';
+import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
 
 const CHAIN_ID = 534352;
 
@@ -19,20 +21,8 @@ export default {
     noAccountTips: 'Scroll Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Scroll Chain.',
   },
-  defalutDex: 'DODO',
+  defalutDex: 'Ambient',
   dexs: {
-    'Metavault V3': {
-      ...metavaultV3Basic,
-      ...metavaultV3Networks[CHAIN_ID],
-    },
-    Skydrome: {
-      ...skydromeBasic,
-      ...skydromeNetworks[CHAIN_ID],
-    },
-    SpaceFi: {
-      ...spaceFiBasic,
-      ...spaceFiNetworks[CHAIN_ID],
-    },
     Ambient: {
       ...ambientBasic,
       ...ambientNetworks[CHAIN_ID],
@@ -41,17 +31,37 @@ export default {
       ...SyncSwapBasic,
       ...SyncSwapNetworks[CHAIN_ID],
     },
-    Zebra: {
-      ...zebraBasic,
-      ...zebraNetworks[CHAIN_ID],
-    },
     iZiSwap: {
       ...IziSwapBasic,
       ...IziSwapNetworks[CHAIN_ID],
     },
+    Zebra: {
+      ...zebraBasic,
+      ...zebraNetworks[CHAIN_ID],
+    },
     DODO: {
       ...dodoBasic,
       ...dodoNetworks[CHAIN_ID],
+    },
+    SushiSwap: {
+      ...sushiBasic,
+      ...sushiNetworks[CHAIN_ID],
+    },
+    SpaceFi: {
+      ...spaceFiBasic,
+      ...spaceFiNetworks[CHAIN_ID],
+    },
+    Skydrome: {
+      ...skydromeBasic,
+      ...skydromeNetworks[CHAIN_ID],
+    },
+    'Metavault V3': {
+      ...metavaultV3Basic,
+      ...metavaultV3Networks[CHAIN_ID],
+    },
+    'XY Finance': {
+      ...xyBasic,
+      ...xyNetworks[CHAIN_ID],
     },
   },
 };

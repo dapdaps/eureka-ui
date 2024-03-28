@@ -2,16 +2,17 @@ import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { colors } from '@/config/chains';
-import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
+import { useUserStore } from '@/stores/user';
 import InviteFirendsModal from '@/views/QuestProfile/components/InviteFirendsModal';
-import useInviteList from '@/views/QuestProfile/hooks/useInviteList';
+import useInviteList from '@/hooks/useInviteList';
 
 import useTxs from '../Bridge/hooks/useTxs';
 import AccountWrapper from './components/AccountWrapper';
 import BridgeWrapper from './components/BridgeWrapper';
 import Footer from './components/Footer';
 import Header from './components/Header';
+import InviteLink from './components/InviteLink';
 
 const StyledContainer = styled.div<{ display: number }>`
   width: 352px;
@@ -92,12 +93,13 @@ const CloseIcon = styled.div`
 `;
 const AccountSider = () => {
   const layoutStore = useLayoutStore();
+  const userInfo = useUserStore((store: any) => store.user);
   const defaultTab = layoutStore.defaultTab;
   const [tab, setTab] = useState<'bridge' | 'account'>('account');
   const [showChains, setShowChains] = useState(false);
   const [showCodes, setShowCodes] = useState(false);
-  const { chainId } = useAccount();
-  const { list, totalRewards, reward } = useInviteList();
+  const [showInviteLink, setShowInviteLink] = useState(false);
+  const { inviteInfo, queryInviteList } = useInviteList();
 
   useEffect(() => {
     if (layoutStore.showAccountSider && defaultTab === 'bridge') {
@@ -116,6 +118,10 @@ const AccountSider = () => {
     if (showCodes) setShowChains(false);
   }, [showCodes]);
 
+  useEffect(() => {
+    if (showInviteLink && userInfo.address) queryInviteList();
+  }, [showInviteLink, userInfo]);
+
   return (
     <>
       <StyledLayer
@@ -129,7 +135,8 @@ const AccountSider = () => {
       <StyledContainer display={layoutStore.showAccountSider ? 1 : 0}>
         <StyledPanel>
           <Content>
-            <Header showCodes={showCodes} setShowCodes={setShowCodes} />
+            <Header showInviteLink={showInviteLink} setShowInviteLink={setShowInviteLink} />
+            {showInviteLink && <InviteLink showCodes={showCodes} setShowCodes={setShowCodes} />}
             <Footer />
             <Main>
               {tab === 'account' && (
@@ -169,9 +176,9 @@ const AccountSider = () => {
       </StyledContainer>
       <InviteFirendsModal
         open={showCodes}
-        list={list}
-        totalRewards={totalRewards}
-        reward={reward}
+        list={inviteInfo?.data || []}
+        totalRewards={inviteInfo?.reward}
+        reward={inviteInfo?.invite_reward}
         onClose={() => {
           setShowCodes(false);
         }}

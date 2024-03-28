@@ -13,15 +13,15 @@ export default {
     noAccountTips: 'Mantle Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Mantle Chain.',
   },
-  defalutDex: 'Maia V3',
+  defalutDex: 'Netswap',
   dexs: {
-    'Maia V3': {
-      ...maiaBasic,
-      ...maiaNetworks[CHAIN_ID],
-    },
     Netswap: {
       ...netSwap3Basic,
       ...netSwapNetworks[CHAIN_ID],
+    },
+    'Maia V3': {
+      ...maiaBasic,
+      ...maiaNetworks[CHAIN_ID],
     },
     Hummus: {
       ...hummusBasic,

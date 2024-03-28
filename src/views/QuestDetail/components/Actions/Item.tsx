@@ -3,6 +3,7 @@ import { useRouter } from 'next/navigation';
 import { memo, useCallback, useEffect, useState } from 'react';
 
 import { overlay } from '@/components/animation';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useLayoutStore } from '@/stores/layout';
 import useReport from '@/views/Landing/hooks/useReport';
@@ -47,6 +48,7 @@ const ActionItem = ({
   bp?: string;
   onSuccess: (type?: number) => void;
 }) => {
+  const { check } = useAuthCheck({ isNeedAk: true });
   const [open, setOpen] = useState(false);
   const [actionCompleted, setActionCompleted] = useState(completed);
   const router = useRouter();
@@ -97,7 +99,7 @@ const ActionItem = ({
       return;
     }
 
-    if (action.category === 'twitter_follow' && userInfo.twitter?.is_bind) {
+    if (action.category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + action.id, '1');
     }
     if (action.category.startsWith('twitter') && !userInfo.twitter?.is_bind) {
@@ -133,6 +135,23 @@ const ActionItem = ({
     if (!action.source) return;
     router.push('/' + action.source);
   }, [router, config, action, userInfo]);
+
+  const onItemClick = () => {
+    check(() => {
+      if (!isLive || action.source === 'bitget_wallet') return;
+      if (action.category === 'password') {
+        setOpen(!open);
+        return;
+      }
+      if (action.operators?.length === 0 || !action.operators) {
+        handleClick();
+        return;
+      }
+      if (action.operators?.length) {
+        handleDappRedirect(action.operators[0]);
+      }
+    });
+  };
 
   const handleDappRedirect = useCallback((dapp: any) => {
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest' });
@@ -205,20 +224,7 @@ const ActionItem = ({
     <StyledItemContainer>
       <StyledItemTop
         initial={false}
-        onClick={() => {
-          if (!isLive || action.source === 'bitget_wallet') return;
-          if (action.category === 'password') {
-            setOpen(!open);
-            return;
-          }
-          if (action.operators?.length === 0 || !action.operators) {
-            handleClick();
-            return;
-          }
-          if (action.operators?.length) {
-            handleDappRedirect(action.operators[0]);
-          }
-        }}
+        onClick={onItemClick}
         style={{
           cursor: !binding && isLive ? 'pointer' : 'not-allowed',
         }}
@@ -277,7 +283,7 @@ const ActionItem = ({
               onClick={(ev) => {
                 ev.stopPropagation();
                 if (checking) return;
-                if (action.category === 'twitter_follow') {
+                if (action.category.startsWith('twitter')) {
                   const clicked = sessionStorage.getItem('_clicked_twitter_' + action.id);
                   clicked && handleRefresh(action.id);
                 } else {

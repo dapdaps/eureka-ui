@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-const api_url = process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : 'https://api.dapdap.net'
+const api_url = process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : 'https://api.dapdap.net';
 
 const nextConfig = {
   compiler: { styledComponents: true },
@@ -69,6 +69,10 @@ const nextConfig = {
       source: '/wepiggy/polygon/:path*',
       destination: 'https://gateway.polygon.bs.fortop.site/:path*',
     },
+    {
+      source: '/shush/:path*',
+      destination: 'https://www.shush.fi/:path*',
+    },
   ],
   images: {
     remotePatterns: [
@@ -80,7 +84,19 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'www.basename.app',
+        hostname: 'basename.app',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 's3.amazonaws.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'pbs.twimg.com',
         port: '',
         pathname: '/**',
       },

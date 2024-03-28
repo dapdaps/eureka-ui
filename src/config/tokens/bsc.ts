@@ -321,4 +321,20 @@ export const bsc: { [key: string]: Token } = {
     name: 'StaFi rATOM',
     icon: 'https://ipfs.near.social/ipfs/bafkreidu5prvhasx4yno6y5oapwqatvrf4cb3pm4vl2uvg5qmxemkoc6ou',
   },
+  xvs: {
+    chainId: CHAIN_ID,
+    address: '0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63',
+    decimals: 18,
+    symbol: 'XVS',
+    name: 'Venus',
+    icon: '/images/tokens/xvs.svg',
+  },
+  valas: {
+    chainId: CHAIN_ID,
+    address: '0xB1EbdD56729940089Ecc3aD0BBEEB12b6842ea6F',
+    decimals: 18,
+    symbol: 'VALAS',
+    name: 'Valas Finance Protocol Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihlb7bnkmkjil6syoiznhslzyvt5xpyn3ih54ywwvlvvxti7ywbiu',
+  },
 };

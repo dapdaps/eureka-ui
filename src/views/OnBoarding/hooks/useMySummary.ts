@@ -1,11 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
+import { useDebounceFn } from 'ahooks';
 import { get } from '@/utils/http';
 import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 
 const useSummary = (chainId: number) => {
   const [info, setInfo] = useState<any>();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { account } = useAccount();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const queryInfo = useCallback(
     async (_page?: number) => {
@@ -21,9 +24,22 @@ const useSummary = (chainId: number) => {
     [chainId, account],
   );
 
+  const { run } = useDebounceFn(
+    () => {
+      if (!chainId) return;
+      if (!account) {
+        setInfo(null);
+        setLoading(false);
+      } else {
+        check(queryInfo);
+      }
+    },
+    { wait: info ? 600 : 3000 },
+  );
+
   useEffect(() => {
-    if (chainId) queryInfo();
-  }, [chainId]);
+    run();
+  }, [chainId, account]);
 
   return { loading, info };
 };
