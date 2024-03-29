@@ -1,4 +1,5 @@
 import { scroll } from '@/config/tokens/scroll';
+import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'XY Finance',
@@ -20,6 +21,13 @@ const networks = {
       scroll['wsteth'],
       scroll['usdt'],
     ],
+  },
+  59144: {
+    defaultCurrencies: {
+      input: linea['eth'],
+      output: linea['usdc'],
+    },
+    tokens: [linea['usdc'], linea['eth'], linea['weth'], linea['wbtc'], linea['usdt'], linea['dai'], linea['wsteth']],
   },
 };
 
