@@ -7,8 +7,8 @@ import ShuShOrderView from '@/views/ShuSh/order';
 
 const ShuShPage: NextPageWithLayout = () => {
   const router = useRouter();
-  const { questId, id } = router.query;
-  return id ? <ShuShOrderView id={id} questId={questId} /> : <ShuShView questId={questId} />;
+  const { id } = router.query;
+  return id ? <ShuShOrderView id={id} /> : <ShuShView />;
 };
 
 ShuShPage.getLayout = useDefaultLayout;

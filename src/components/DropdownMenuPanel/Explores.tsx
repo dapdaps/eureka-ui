@@ -144,7 +144,6 @@ const Explores = ({ setShow }: any) => {
           if (item.category === 'Shush') {
             router.push({
               pathname: '/shush',
-              query: { questId: item.id },
             });
             return;
           }
