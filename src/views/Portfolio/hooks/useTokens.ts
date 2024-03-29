@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
-import { AccessKey } from '../config';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import { useDebounceFn } from 'ahooks';
+import { get } from '@/utils/http';
 import Big from 'big.js';
 
 export default function useTokens() {
@@ -9,18 +11,13 @@ export default function useTokens() {
   const [networks, setNetworks] = useState<any>();
   const [totalBalance, setTotalBalance] = useState<any>();
   const { account } = useAccount();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const fetchTokens = useCallback(async () => {
     try {
       setLoading(true);
       setTokens([]);
-      const response = await fetch(`https://api.db3.app/api/balance/list?address=${account}`, {
-        method: 'GET',
-        headers: {
-          AccessKey,
-        },
-      });
-      const result = await response.json();
+      const result = await get(`/db3`, { url: 'api/balance/list', params: JSON.stringify({ address: account }) });
       const _networks: any = {};
       let _totalBalance = new Big(0);
       result?.data?.list.forEach((record: any) => {
@@ -51,15 +48,22 @@ export default function useTokens() {
     }
   }, [account]);
 
+  const { run } = useDebounceFn(
+    () => {
+      if (!account) {
+        setNetworks([]);
+        setLoading(false);
+        setTotalBalance(undefined);
+        setTokens([]);
+      } else {
+        check(fetchTokens);
+      }
+    },
+    { wait: tokens ? 600 : 3000 },
+  );
+
   useEffect(() => {
-    if (account) {
-      fetchTokens();
-    } else {
-      setNetworks([]);
-      setLoading(false);
-      setTotalBalance(undefined);
-      setTokens([]);
-    }
+    run();
   }, [account]);
 
   return { loading, tokens, networks, totalBalance };

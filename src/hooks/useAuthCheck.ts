@@ -1,12 +1,12 @@
 import * as http from '@/utils/http';
 import useConnectWallet from './useConnectWallet';
 import useAccount from './useAccount';
-
-let timer: ReturnType<typeof setTimeout> | null = null;
+import { useRef } from 'react';
 
 export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean; isQuiet?: boolean }) {
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const check = async (cb?: any, quiet?: boolean) => {
     if (!account) {
       if (quiet !== undefined ? quiet : isQuiet) return;
@@ -25,8 +25,8 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
         cb?.();
         return;
       }
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
+      if (timer.current) clearTimeout(timer.current);
+      timer.current = setTimeout(() => {
         checkAk();
       }, 500);
     };

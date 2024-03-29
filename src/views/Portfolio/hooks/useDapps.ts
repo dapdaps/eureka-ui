@@ -1,24 +1,21 @@
 import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import { AccessKey } from '../config';
+import { get } from '@/utils/http';
 
 export default function useDapps() {
   const [loading, setLoading] = useState(false);
   const [dapps, setDapps] = useState<any>();
   const { account } = useAccount();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const fetchDapps = useCallback(async () => {
     try {
       setLoading(true);
       setDapps([]);
-      const response = await fetch(`https://api.db3.app/api/balance/dapp/list?address=${account}`, {
-        method: 'GET',
-        headers: {
-          AccessKey,
-        },
-      });
-      const result = await response.json();
+      const result = await get(`/db3`, { url: 'api/balance/dapp/list', params: JSON.stringify({ address: account }) });
       const _dapps: any = {};
       result?.data?.list.forEach((record: any) => {
         if (_dapps[record.id]) {
@@ -49,13 +46,20 @@ export default function useDapps() {
     }
   }, [account]);
 
+  const { run } = useDebounceFn(
+    () => {
+      if (!account) {
+        setLoading(false);
+        setDapps([]);
+      } else {
+        check(fetchDapps);
+      }
+    },
+    { wait: dapps ? 600 : 3000 },
+  );
+
   useEffect(() => {
-    if (account) {
-      fetchDapps();
-    } else {
-      setLoading(false);
-      setDapps([]);
-    }
+    run();
   }, [account]);
 
   return { loading, dapps };

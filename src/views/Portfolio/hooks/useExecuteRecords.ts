@@ -1,31 +1,36 @@
 import { useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import { useDebounceFn } from 'ahooks';
+import { get } from '@/utils/http';
 import { upperFirst } from 'lodash';
 import { formatQuest, formatGas } from '../helpers';
-import { AccessKey } from '../config';
 
 export default function useExecuteRecords({ currentPage }: any) {
   const { account } = useAccount();
   const [hasMore, setHasMore] = useState(false);
-  const [records, setRecords] = useState<any>([]);
+  const [records, setRecords] = useState<any>();
   const [loading, setLoading] = useState(true);
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const fetchRecordList = async () => {
     try {
       setLoading(true);
       setRecords([]);
-      const response = await fetch(
-        `https://api.db3.app/api/transaction/list?address=${account}&limit=${20}&start_time=${
-          currentPage === 1 ? '' : records.slice(-1).tx_time
-        }`,
-        {
-          method: 'GET',
-          headers: {
-            AccessKey,
-          },
-        },
-      );
-      const result = await response.json();
+      console.log(records.slice(-1), {
+        currentPage,
+        address: account,
+        limit: 20,
+        start_time: currentPage === 1 ? '' : records.slice(-1)[0].tx_time,
+      });
+      const result = await get(`/db3`, {
+        url: 'api/transaction/list',
+        params: JSON.stringify({
+          address: account,
+          limit: 20,
+          start_time: currentPage === 1 ? '' : records.slice(-1)[0].tx_time,
+        }),
+      });
       setRecords(
         result.data.list.map((record: any) => {
           return {
@@ -50,15 +55,25 @@ export default function useExecuteRecords({ currentPage }: any) {
       setRecords([]);
     }
   };
+  const { run } = useDebounceFn(
+    () => {
+      if (!account) {
+        setLoading(false);
+        setHasMore(false);
+        setRecords([]);
+      } else {
+        check(fetchRecordList);
+      }
+    },
+    { wait: records ? 600 : 3000 },
+  );
   useEffect(() => {
-    if (account) {
-      fetchRecordList();
-    } else {
-      setLoading(false);
-      setHasMore(false);
-      setRecords([]);
-    }
-  }, [account, currentPage]);
+    run();
+  }, [account]);
+
+  useEffect(() => {
+    if (account) fetchRecordList();
+  }, [currentPage]);
 
   return { hasMore, records, loading };
 }
