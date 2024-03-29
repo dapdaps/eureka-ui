@@ -100,21 +100,23 @@ const Search = styled.div`
   }
   .switch-icon-img {
     position: absolute;
-    left: 20px;
-    top: 16px;
+    left: 14px;
+    top: 14px;
     margin-left: 0;
     cursor: pointer;
-  }
-  .switch-icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-  }
-  .switch-icon-img {
     transition: 0.3s;
     opacity: 0;
   }
+  .switch-icon {
+    position: absolute;
+    right: -40px;
+    top: 6px;
+    cursor: pointer;
+    padding: 20px;
+    width: 12px;
+    height: 12px;
+  }
+
   .switch-icon-img.show {
     opacity: 1;
   }
@@ -225,11 +227,6 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
               <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
             </div>
-            <DropdownSearchResultPanel
-              searchText={searchContent}
-              setSearchContent={setSearchContent}
-              show={searchContent}
-            />
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}
@@ -250,8 +247,8 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
           <ConnectWallet />
         )}
       </div>
-
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
+      <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
     </Container>
   );
 };
