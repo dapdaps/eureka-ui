@@ -31,7 +31,9 @@ export default function useDapps() {
           record.assets.map((asset: any) => {
             asset.map((item: any) => {
               _totalBalance =
-                item.type.toLowerCase() === 'borrow' ? _totalBalance.minus(item.usd) : _totalBalance.add(item.usd);
+                item.type.toLowerCase() === 'borrow'
+                  ? _totalBalance.minus(item.usd || 0)
+                  : _totalBalance.add(item.usd || 0);
             });
           });
           record.usd = _totalBalance;

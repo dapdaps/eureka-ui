@@ -17,12 +17,6 @@ export default function useExecuteRecords({ currentPage }: any) {
     try {
       setLoading(true);
       setRecords([]);
-      console.log(records.slice(-1), {
-        currentPage,
-        address: account,
-        limit: 20,
-        start_time: currentPage === 1 ? '' : records.slice(-1)[0].tx_time,
-      });
       const result = await get(`/db3`, {
         url: 'api/transaction/list',
         params: JSON.stringify({

@@ -22,17 +22,17 @@ export default function useTokens() {
       let _totalBalance = new Big(0);
       result?.data?.list.forEach((record: any) => {
         if (_networks[record.chain_id]) {
-          _networks[record.chain_id].usd += Number(record.usd);
+          _networks[record.chain_id].usd += Number(record.usd || 0);
         } else {
           _networks[record.chain_id] = {
             id: record.chain_id,
-            usd: Number(record.usd),
+            usd: Number(record.usd || 0),
           };
         }
-        _totalBalance = _totalBalance.add(record.usd);
+        _totalBalance = _totalBalance.add(record.usd || 0);
       });
       const _tokens = result?.data?.list.map((record: any) => {
-        const percent = new Big(record.usd).div(_totalBalance).mul(100).toFixed(2);
+        const percent = _totalBalance.eq(0) ? '0' : new Big(record.usd || 0).div(_totalBalance).mul(100).toFixed(2);
         return { ...record, percent };
       });
       setLoading(false);

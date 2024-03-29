@@ -46,10 +46,10 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
         const _key = protocol.type === 'Liquidity' ? i : item.type;
         if (_protocols[_key]) {
           _protocols[_key].list.push(item);
-          _totalBalances[_key] = _totalBalances[_key].add(item.usd);
+          _totalBalances[_key] = _totalBalances[_key].add(item.usd || 0);
         } else {
           _protocols[_key] = { list: [item], type: item.type, key: _key };
-          _totalBalances[_key] = new Big(item.usd);
+          _totalBalances[_key] = new Big(item.usd || 0);
         }
       });
     });

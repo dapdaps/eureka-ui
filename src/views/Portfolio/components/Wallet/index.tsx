@@ -38,7 +38,7 @@ const Wallet = ({ tokens, totalBalance, filterFunc, loading }: any) => {
     tokens.forEach((token: any) => {
       if (_list[token.symbol]) {
         _list[token.symbol].chain_ids.push(token.chain_id);
-        _list[token.symbol].usd = new Big(_list[token.symbol].usd).plus(token.usd).toString();
+        _list[token.symbol].usd = new Big(_list[token.symbol].usd || 0).plus(token.usd || 0).toString();
       } else {
         _list[token.symbol] = { ...token, chain_ids: [token.chain_id] };
       }
