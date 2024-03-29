@@ -16,6 +16,7 @@ function addThousandSeparator(numberString: string) {
 }
 
 const formateValue = (value: string | number, precision: number) => {
+  if (!value) return '-';
   if (Big(value).eq(0)) return '0';
 
   if (Big(value).lt(Big(10).pow(-precision))) {
@@ -26,6 +27,7 @@ const formateValue = (value: string | number, precision: number) => {
 };
 
 const formateValueWithThousandSeparator = (value: string | number, precision: number) => {
+  if (!value) return '-';
   if (Big(value).eq(0)) return '0';
 
   if (Big(value).lt(Big(10).pow(-precision))) {
@@ -40,6 +42,7 @@ const formateValueWithThousandSeparatorAndFont = (
   precision: number,
   isSimple?: boolean,
 ): any => {
+  if (!value) return '-';
   if (Big(value).eq(0))
     return isSimple
       ? '0'
@@ -68,6 +71,12 @@ const formateValueWithThousandSeparatorAndFont = (
 
 function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}
 
-export { formateAddress, formateValue, formateValueWithThousandSeparator, formateValueWithThousandSeparatorAndFont, getRandomInt };
+export {
+  formateAddress,
+  formateValue,
+  formateValueWithThousandSeparator,
+  formateValueWithThousandSeparatorAndFont,
+  getRandomInt,
+};
