@@ -100,21 +100,23 @@ const Search = styled.div`
   }
   .switch-icon-img {
     position: absolute;
-    left: 20px;
-    top: 16px;
+    left: 4px;
+    top: 4px;
     margin-left: 0;
     cursor: pointer;
-  }
-  .switch-icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-  }
-  .switch-icon-img {
     transition: 0.3s;
     opacity: 0;
   }
+  .switch-icon {
+    position: absolute;
+    right: -30px;
+    top: 16px;
+    cursor: pointer;
+    padding: 10px;
+    width: 12px;
+    height: 12px;
+  }
+
   .switch-icon-img.show {
     opacity: 1;
   }
