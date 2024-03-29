@@ -394,12 +394,7 @@ const ExecuteRecords = ({ hasMore, records, loading, currentPage, setCurrentPage
                       <td>{record.quest}</td>
                       <td>{record.action}</td>
                       <td>
-                        <img
-                          width="16"
-                          height="16"
-                          src={getDappLogo(record.dapp_name)}
-                          style={{ marginRight: '6px' }}
-                        />
+                        <img width="16" height="16" src={getDappLogo(record.name)} style={{ marginRight: '6px' }} />
                         {record.dapp_name}
                       </td>
                       <td>{record.gas}</td>
