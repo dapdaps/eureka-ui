@@ -2,6 +2,7 @@ import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
 
 import Spinner from '@/components/Spinner';
+import useCampaignList from '@/views/Quest/hooks/useCampaignList';
 
 import useQuestList from '../bns/hooks/useQuestList';
 import Common from './common';
@@ -16,11 +17,14 @@ import useQuote from './hooks/useQuote';
 import useTrade from './hooks/useTrade';
 
 let openType: 'from' | 'to' = 'from';
-export default function ShuShView({ questId }: any) {
+export default function ShuShView() {
   const [anonymous, setAnonymous] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const { loading: campaignLoading, campaigns } = useCampaignList();
   const { loading, networks, tokens } = useNetworksAndTokens();
+  const [questId, setQuestId] = useState('');
   const { loading: questingLoading, questList } = useQuestList(questId);
+
   const {
     from,
     to,
@@ -68,6 +72,14 @@ export default function ShuShView({ questId }: any) {
     if (quoteAmount && Number(quoteAmount) && direction) quote();
   }, [quoteAmount, direction, from, to, anonymous]);
 
+  useEffect(() => {
+    if (!Array.isArray(campaigns) || campaigns.length < 1) return;
+
+    const _questId = campaigns.find((item: any) => item.category === 'Shush')?.id;
+
+    setQuestId(_questId);
+  }, [campaigns]);
+
   return loading ? (
     <Spinner />
   ) : (
@@ -99,7 +111,8 @@ export default function ShuShView({ questId }: any) {
           handleExchange={handleTokenExchange}
         />
         <PreviousOrders tokens={tokens} />
-        {questId || questId === '0' ? <Quests questList={questList} loading={questingLoading} /> : null}
+
+        <Quests questList={questList} loading={questingLoading} />
 
         <SelectTokens
           display={showModal}
