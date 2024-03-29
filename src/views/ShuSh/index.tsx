@@ -1,22 +1,26 @@
+import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
-import SwapPanel from './components/SwapPanel';
-import PreviousOrders from './components/PreviousOrders';
-import SelectTokens from './components/SelectTokens';
+
 import Spinner from '@/components/Spinner';
+
+import useQuestList from '../bns/hooks/useQuestList';
 import Common from './common';
-import useTrade from './hooks/useTrade';
+import PreviousOrders from './components/PreviousOrders';
+import Quests from './components/Quests';
+import SelectTokens from './components/SelectTokens';
+import SwapPanel from './components/SwapPanel';
+import useExchange from './hooks/useExchange';
+import useNetworksAndTokens from './hooks/useNetworksAndTokens';
 import usePrices from './hooks/usePrices';
 import useQuote from './hooks/useQuote';
-import useNetworksAndTokens from './hooks/useNetworksAndTokens';
-import useExchange from './hooks/useExchange';
-import { useDebounceFn } from 'ahooks';
+import useTrade from './hooks/useTrade';
 
 let openType: 'from' | 'to' = 'from';
-
-export default function ShuShView() {
+export default function ShuShView({ questId }: any) {
   const [anonymous, setAnonymous] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const { loading, networks, tokens } = useNetworksAndTokens();
+  const { loading: questingLoading, questList } = useQuestList(questId);
   const {
     from,
     to,
@@ -95,6 +99,8 @@ export default function ShuShView() {
           handleExchange={handleTokenExchange}
         />
         <PreviousOrders tokens={tokens} />
+        {questId || questId === '0' ? <Quests questList={questList} loading={questingLoading} /> : null}
+
         <SelectTokens
           display={showModal}
           networks={networks}

@@ -1,21 +1,22 @@
+import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Loading from '@/components/Icons/Loading';
 import QuestItem from '@/views/Quest/components/QuestItem';
-import { useRouter } from 'next/router';
-import { Swiper, SwiperSlide } from 'swiper/react';
+
 import useQuestList from '../../hooks/useQuestList';
 import {
   StyledButton,
   StyledCampaign,
   StyledContainer,
+  StyledExplore,
   StyledFlex,
   StyledHeader,
   StyledLoadingWrapper,
   StyledSvg,
   StyledText,
   StyledWrapper,
-  StyledExplore,
 } from './styles';
 const iconRight = (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12">
@@ -47,6 +48,8 @@ const Campaign = function ({ campaign, bp }: any) {
   const handleClickCampaign = function (event: any) {
     if (campaign.category === 'bns') {
       router.push('/quest/leaderboard/DapDapXBNS');
+    } else if (campaign.category === 'Shush') {
+      router.push({ pathname: '/shush', query: { questId: campaign.id } });
     } else {
       router.push('/quest/leaderboard/' + campaign.name.replace(/\s/g, ''));
     }
