@@ -1,10 +1,7 @@
 import styled from 'styled-components';
-import type {
-  FlexProps,
-  FontProps
-} from './types';
+import type { FlexProps, FontProps } from './types';
 
-export const StyledContainer = styled.div``
+export const StyledContainer = styled.div``;
 
 export const StyledFont = styled.div<FontProps>`
   color: ${(props) => props.color || '#000'};
@@ -26,4 +23,10 @@ export const StyledSvg = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
+export const StyledLoadingWrapper = styled.div<{ $h: string }>`
+  height: ${({ $h }) => $h};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

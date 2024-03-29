@@ -255,3 +255,21 @@ svg {
   stroke: rgba(217, 217, 217, 0.1);
   fill: rgba(217, 217, 217, 0.1);
 }
+
+.underline {
+  text-decoration-line: underline;
+}
+
+.link {
+  text-decoration-line: underline;
+  cursor: pointer;
+  color: inherit;
+}
+
+.link:hover {
+  opacity: 0.9;
+}
+
+.link:active {
+  opacity: 0.8;
+}

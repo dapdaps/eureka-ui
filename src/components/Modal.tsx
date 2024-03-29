@@ -34,7 +34,6 @@ const Main = styled(motion.div)<{ $width: number }>`
   border-radius: 20px;
   border: 1px solid #373a53;
   background: #262836;
-  overflow: hidden;
   @media (max-width: 900px) {
     width: 100%;
     border-radius: 16px 16px 0px 0px;
@@ -64,16 +63,18 @@ const StyledCloseIcon = styled.div`
 
 const Modal = ({
   display,
-  title,
+  title = '',
   width = 460,
   content,
-  onClose,
+  showHeader = true,
+  onClose = () => {},
 }: {
   display: boolean;
-  title: string | ReactNode;
+  title?: string | ReactNode;
   width?: number;
+  showHeader?: boolean;
   content: ReactNode;
-  onClose: () => void;
+  onClose?: () => void;
 }) => {
   return (
     <AnimatePresence mode="wait">
@@ -87,12 +88,14 @@ const Modal = ({
                 ev.stopPropagation();
               }}
             >
-              <Header>
-                <Title>{title}</Title>
-                <StyledCloseIcon>
-                  <CloseIcon onClose={onClose} />
-                </StyledCloseIcon>
-              </Header>
+              {showHeader && (
+                <Header>
+                  <Title>{title}</Title>
+                  <StyledCloseIcon>
+                    <CloseIcon onClose={onClose} />
+                  </StyledCloseIcon>
+                </Header>
+              )}
               <Content>{content}</Content>
             </Main>
           </Overlay>

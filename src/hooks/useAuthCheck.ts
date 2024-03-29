@@ -2,6 +2,8 @@ import * as http from '@/utils/http';
 import useConnectWallet from './useConnectWallet';
 import useAccount from './useAccount';
 
+let timer: ReturnType<typeof setTimeout> | null = null;
+
 export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean; isQuiet?: boolean }) {
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
@@ -23,12 +25,11 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
         cb?.();
         return;
       }
-
-      setTimeout(() => {
+      if (timer) clearTimeout(timer);
+      timer = setTimeout(() => {
         checkAk();
       }, 500);
     };
-
     checkAk();
   };
 

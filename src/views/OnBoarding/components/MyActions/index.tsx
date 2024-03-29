@@ -1,4 +1,6 @@
 import { memo } from 'react';
+import Loading from '@/components/Icons/Loading';
+import { StyledLoadingWrapper } from '@/styled/styles';
 import useMyActions from '../../hooks/useMyActions';
 import Total from './Total';
 import Empty from './Empty';
@@ -10,8 +12,15 @@ const MyActions = ({ chain, openModal }: any) => {
   return (
     <StyledContainer>
       <Total chainId={chain.chainId} />
-      {list?.length && <Table {...{ loading, list, deleting, handleDelete, openModal }} />}
-      {list?.length === 0 && !loading && <Empty />}
+      {loading ? (
+        <StyledLoadingWrapper $h="200px">
+          <Loading size={32} />
+        </StyledLoadingWrapper>
+      ) : !list || list?.length === 0 ? (
+        <Empty />
+      ) : (
+        <Table {...{ loading, list, deleting, handleDelete, openModal }} />
+      )}
     </StyledContainer>
   );
 };

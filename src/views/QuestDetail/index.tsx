@@ -1,16 +1,18 @@
-import { useSearchParams } from 'next/navigation';
-import { memo, useEffect, useState, useMemo } from 'react';
 import { useConnectWallet } from '@web3-onboard/react';
+import { useSearchParams } from 'next/navigation';
+import { memo, useEffect, useMemo, useState } from 'react';
+
 import Breadcrumb from '@/components/Breadcrumb';
 import Spinner from '@/components/Spinner';
 import useUserInfo from '@/hooks/useUserInfo';
 import useUserReward from '@/hooks/useUserReward';
-import useCategoryList from '@/views/Quest/hooks/useCategoryList';
 import useReport from '@/views/Landing/hooks/useReport';
-import ClaimedSuccessModal from './components/ClaimedSuccessModal';
+import useCategoryList from '@/views/Quest/hooks/useCategoryList';
+
 import Yours from '../Quest/components/Yours';
 import useCampaignList from '../Quest/hooks/useCampaignList';
 import Actions from './components/Actions';
+import ClaimedSuccessModal from './components/ClaimedSuccessModal';
 import Details from './components/Details';
 import Recommends from './components/Recommends';
 import useQuestInfo from './hooks/useQuestInfo';
@@ -40,11 +42,19 @@ const QuestDetailView = () => {
       const campaign = campaigns.find((campaign) => campaign.id === quest.quest_campaign_id);
       const array = [];
       array[0] = { name: 'Quests Campaign', path: '/quest/leaderboard' };
+
       if (campaign) {
-        array[1] = {
-          name: campaign.name,
-          path: '/quest/leaderboard/' + campaign.name.replace(/\s/g, ''),
-        };
+        if (campaign.category === 'Shush') {
+          array[1] = {
+            name: campaign.name,
+            path: `/shush?questId=${campaign.id}`,
+          };
+        } else {
+          array[1] = {
+            name: campaign.name,
+            path: '/quest/leaderboard/' + campaign.name.replace(/\s/g, ''),
+          };
+        }
         array[2] = { name: 'Detail', path: '/quest/detail' };
       } else {
         array[1] = { name: 'Detail', path: '' };

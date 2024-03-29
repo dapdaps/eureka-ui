@@ -1,21 +1,21 @@
-import { memo, useState, useEffect, useMemo } from 'react';
-import { useRouter } from 'next/router';
 import Link from 'next/link';
-import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
-import { useChainsStore } from '@/stores/chains';
-import { IdToPath } from '@/config/all-in-one/chains';
+import { useRouter } from 'next/router';
+import { memo, useEffect, useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-import { get } from '@/utils/http';
+import { IdToPath } from '@/config/all-in-one/chains';
 import { QUEST_PATH } from '@/config/quest';
+import { useChainsStore } from '@/stores/chains';
+import { get } from '@/utils/http';
+import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
 import {
-  StyledExplores,
   StyledExplore,
-  StyledExploreTitle,
   StyledExploreDesc,
-  StyledExploreItems,
   StyledExploreItem,
+  StyledExploreItems,
+  StyledExplores,
+  StyledExploreTitle,
 } from './styles';
 
 const Explore = ({ title, desc, items, link, loading, onLinkClick, onItemClick }: any) => {
@@ -140,6 +140,14 @@ const Explores = ({ setShow }: any) => {
         loading={questLoading}
         onItemClick={(item: any) => {
           setShow(false);
+          // console.log(item);
+          if (item.category === 'Shush') {
+            router.push({
+              pathname: '/shush',
+              query: { questId: item.id },
+            });
+            return;
+          }
           if (item) {
             router.push(`/quest/leaderboard/${item.name.replaceAll(' ', '')}`);
           } else {
