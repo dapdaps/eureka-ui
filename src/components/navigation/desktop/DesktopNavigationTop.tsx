@@ -100,8 +100,8 @@ const Search = styled.div`
   }
   .switch-icon-img {
     position: absolute;
-    left: 4px;
-    top: 4px;
+    left: 14px;
+    top: 14px;
     margin-left: 0;
     cursor: pointer;
     transition: 0.3s;
@@ -109,10 +109,10 @@ const Search = styled.div`
   }
   .switch-icon {
     position: absolute;
-    right: -30px;
-    top: 16px;
+    right: -40px;
+    top: 6px;
     cursor: pointer;
-    padding: 10px;
+    padding: 20px;
     width: 12px;
     height: 12px;
   }
