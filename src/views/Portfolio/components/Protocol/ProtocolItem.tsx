@@ -147,7 +147,7 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
             {protocol.type !== 'Liquidity' &&
               Object.values(protocols).map((value: any) => {
                 if (checkHideValue(totalBalances[value.type])) return <div />;
-                console.log(value);
+
                 return (
                   <ProtocolTableGenerator
                     key={value.type}
@@ -156,7 +156,7 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
                     showTitle={false}
                     columns={Columns}
                     rows={[
-                      <ProtocolTableRow>
+                      <ProtocolTableRow key={1}>
                         <td>
                           <Position lists={value.list} type={name} />
                         </td>

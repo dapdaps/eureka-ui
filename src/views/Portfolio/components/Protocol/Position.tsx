@@ -34,7 +34,7 @@ const Position = ({ lists, name }: any) => {
       </StyledIcons>
       <StyleSymbol>
         {lists.map((item: any, i: number) => (
-          <span>
+          <span key={item.symbol}>
             {i > 0 && '+'} {item.symbol}
           </span>
         ))}
