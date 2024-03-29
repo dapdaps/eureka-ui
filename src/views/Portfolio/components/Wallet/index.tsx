@@ -15,7 +15,7 @@ import NetworkWithName from './NetworkWithName';
 import Percent from './Percent';
 import Type from './Type';
 import Switcher from '@/components/Switcher';
-import { DefaultIcon } from '../../config';
+import { getTokenLogo } from '../../helpers';
 import { HoldingTitle, ProtocolSelectBox, HoldingTableWrapper, HoldingTable, SortArrowDownWrapper } from './styles';
 
 export const sortArrowDown = (
@@ -194,7 +194,7 @@ const Wallet = ({ tokens, totalBalance, filterFunc, loading }: any) => {
                     <tr key={token.address + token.chain_id}>
                       <td>
                         <div className="frcs token-info">
-                          <img src={token.logo_url || DefaultIcon} className="token-icon" />
+                          <img src={getTokenLogo(token.symbol)} className="token-icon" />
 
                           <div>
                             <div className="token-symbol">{token.symbol}</div>

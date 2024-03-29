@@ -8,6 +8,7 @@ import {
 import chains from '@/config/chains';
 import ProtocolTableGenerator from './ProtocolTableGenerator';
 import Position from './Position';
+import { getChainLogo, getDappLogo } from '../../helpers';
 import { ProtocolCard, ProtocolArrowWrapper, ProtocolTableRow } from './styles';
 import Big from 'big.js';
 
@@ -66,8 +67,8 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
       <motion.header className="protocol-title" initial={false}>
         <div className="title-filed">
           <div className="icon-filed">
-            <img className="protocol-icon" src={protocol.logo || ''} />
-            <img className="chain-icon " src={chain.icon} />
+            <img className="protocol-icon" src={getDappLogo(protocol.name)} />
+            <img className="chain-icon " src={getChainLogo(chain.chainName)} />
           </div>
 
           <div>

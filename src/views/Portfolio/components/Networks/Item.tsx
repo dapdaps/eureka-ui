@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import chains from '@/config/chains';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+import { getChainLogo } from '../../helpers';
 import { NetWorkTab } from './styles';
 import Big from 'big.js';
 
@@ -22,7 +23,7 @@ const Item = ({ chainId, usd, totalBalance, network, setNetwork }: any) => {
       className="frcs-gm"
     >
       {chain?.icon ? (
-        <img className="network-icon-chain" src={chain.icon} />
+        <img className="network-icon-chain" src={getChainLogo(chain.chainName)} />
       ) : (
         <div className="default-icon network-icon" />
       )}

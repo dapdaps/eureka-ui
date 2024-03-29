@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+import { getTokenLogo } from '../../helpers';
 import { DefaultIcon } from '../../config';
 
 const StyledContainer = styled.div`
@@ -29,7 +30,7 @@ const Position = ({ lists, name }: any) => {
     <StyledContainer>
       <StyledIcons>
         {lists.map((item: any, i: number) => (
-          <StyledIcon key={item.logo} src={item.logo || DefaultIcon} style={{ marginLeft: i > 0 ? '-4px' : 0 }} />
+          <StyledIcon key={item.logo} src={getTokenLogo(item.symbol)} style={{ marginLeft: i > 0 ? '-4px' : 0 }} />
         ))}
       </StyledIcons>
       <StyleSymbol>

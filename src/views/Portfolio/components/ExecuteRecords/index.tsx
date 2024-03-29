@@ -1,10 +1,10 @@
 import { styled } from 'styled-components';
 import { container } from '@/components/animation';
 import { AnimatePresence, motion } from 'framer-motion';
-
 import { StyledLoadingWrapper } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
+import { getDappLogo } from '../../helpers';
 import { StyledTx } from './styles';
 
 const Container = styled(motion.div)`
@@ -326,8 +326,8 @@ const right_icon = (
 );
 
 const ExecuteRecords = ({ hasMore, records, loading, currentPage, setCurrentPage }: any) => {
-  function getTime(timeStr: string) {
-    const date = new Date(timeStr);
+  function getTime(timeStr: number) {
+    const date = new Date(timeStr * 1000);
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -394,7 +394,12 @@ const ExecuteRecords = ({ hasMore, records, loading, currentPage, setCurrentPage
                       <td>{record.quest}</td>
                       <td>{record.action}</td>
                       <td>
-                        <img width="16" height="16" src={record.dapp_logo} style={{ marginRight: '6px' }} />
+                        <img
+                          width="16"
+                          height="16"
+                          src={getDappLogo(record.dapp_name)}
+                          style={{ marginRight: '6px' }}
+                        />
                         {record.dapp_name}
                       </td>
                       <td>{record.gas}</td>

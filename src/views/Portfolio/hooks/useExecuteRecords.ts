@@ -33,7 +33,7 @@ export default function useExecuteRecords({ currentPage }: any) {
             action: upperFirst(record.type),
             gas: formatGas(record),
             dapp_logo: record.dapp.logo,
-            dapp_name: record.dapp.name,
+            dapp_name: record.dapp.show_name,
             tx_time: record.tx_time,
             tx_hash: record.tx_hash,
             chain_id: record.chain_id,

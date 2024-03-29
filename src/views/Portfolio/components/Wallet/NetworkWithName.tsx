@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react';
 import chains from '@/config/chains';
 import styled from 'styled-components';
+import { getChainLogo } from '../../helpers';
 
 const StyledNetworkWithName = styled.div`
   display: flex;
@@ -25,7 +26,7 @@ const NetworkWithName = ({ chainId }: any) => {
   }, [chainId]);
   return chain ? (
     <StyledNetworkWithName>
-      <StyledLogo src={chain.icon} />
+      <StyledLogo src={getChainLogo(chain.chainName)} />
       <StyledName>{chain.chainName}</StyledName>
     </StyledNetworkWithName>
   ) : null;
