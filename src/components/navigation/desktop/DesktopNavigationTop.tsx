@@ -227,11 +227,6 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
               <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
             </div>
-            <DropdownSearchResultPanel
-              searchText={searchContent}
-              setSearchContent={setSearchContent}
-              show={searchContent}
-            />
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}
@@ -252,8 +247,8 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
           <ConnectWallet />
         )}
       </div>
-
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
+      <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
     </Container>
   );
 };

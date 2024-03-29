@@ -9,17 +9,18 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const StyledSearchResults = styled.div`
-  width: 100%;
+  width: 528px;
   position: absolute;
-  top: 55px;
+  top: 70px;
+  left: calc(50% - 264px);
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   background-color: rgb(48, 49, 66);
   color: rgba(151, 154, 190, 1);
-
   border-radius: 12px;
   max-height: 600px;
   overflow: auto;
   height: 0;
+  z-index: 120;
 
   &.show {
     border: 1px solid rgba(55, 58, 83, 1);
