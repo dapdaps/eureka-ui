@@ -5,7 +5,7 @@ import {
   formateValueWithThousandSeparator,
   formateValueWithThousandSeparatorAndFont,
 } from '@/utils/formate';
-import { useChainsStore } from '@/stores/chains';
+import chains from '@/config/chains';
 import ProtocolTableGenerator from './ProtocolTableGenerator';
 import Position from './Position';
 import { ProtocolCard, ProtocolArrowWrapper, ProtocolTableRow } from './styles';
@@ -30,9 +30,9 @@ export const ProtocolArrowDown = (
 
 const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
   const [thisCardExpand, setThisCardExpand] = useState<boolean>(false);
-  const chains = useChainsStore((store: any) => store.chains);
+
   const chain = useMemo(() => {
-    return chains.find((chain: any) => chain.chain_id === protocol.chain_id);
+    return chains[protocol.chain_id];
   }, [protocol.chain_id]);
   useEffect(() => {
     setThisCardExpand(isExpand);
@@ -67,12 +67,12 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
         <div className="title-filed">
           <div className="icon-filed">
             <img className="protocol-icon" src={protocol.logo || ''} />
-            <img className="chain-icon " src={chain.logo} />
+            <img className="chain-icon " src={chain.icon} />
           </div>
 
           <div>
             <div className="protocol-name">{protocol.show_name}</div>
-            <div className="chain-name">{chain.name}</div>
+            <div className="chain-name">{chain.chainName}</div>
           </div>
         </div>
 

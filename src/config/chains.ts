@@ -144,6 +144,14 @@ const chainCofig = {
     rpcUrls: ['https://rpc.scroll.io'],
     blockExplorers: 'https://scrollscan.com/',
   },
+  81457: {
+    chainId: 81457,
+    chainName: 'Blast',
+    icon: '/images/chains/blast.png',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://rpc.blast.io'],
+    blockExplorers: 'https://blastscan.io/',
+  },
 } as { [key: number]: Chain };
 
 export default chainCofig;

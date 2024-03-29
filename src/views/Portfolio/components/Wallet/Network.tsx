@@ -1,5 +1,5 @@
 import { memo, useMemo } from 'react';
-import { useChainsStore } from '@/stores/chains';
+import chains from '@/config/chains';
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
@@ -14,11 +14,10 @@ const StyledChainLogo = styled.img`
 `;
 
 const ChainLogo = ({ chainId }: any) => {
-  const chains = useChainsStore((store: any) => store.chains);
   const chain = useMemo(() => {
-    return chains.find((chain: any) => chain.chain_id === chainId);
+    return chains[chainId];
   }, [chainId]);
-  return chain ? <StyledChainLogo src={chain.logo} /> : null;
+  return chain ? <StyledChainLogo src={chain.icon} /> : null;
 };
 
 const Network = ({ chainIds }: any) => {

@@ -16,8 +16,6 @@ export const NoAssetWrapper = styled.div`
   justify-content: center;
 
   border: 1px solid #373a53;
-
-  position: absolute;
   flex-direction: column;
 
   background: #181a27;

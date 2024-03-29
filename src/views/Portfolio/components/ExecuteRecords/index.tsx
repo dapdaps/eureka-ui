@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import { styled } from 'styled-components';
 import { container } from '@/components/animation';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { StyledLoadingWrapper } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
-import { useChainsStore } from '@/stores/chains';
+import chains from '@/config/chains';
 import { StyledTx } from './styles';
 
 const Container = styled(motion.div)`
@@ -327,8 +326,6 @@ const right_icon = (
 );
 
 const ExecuteRecords = ({ hasMore, records, loading, currentPage, setCurrentPage }: any) => {
-  const chains = useChainsStore((store: any) => store.chains);
-
   function getTime(timeStr: string) {
     const date = new Date(timeStr);
     const year = date.getFullYear();
@@ -361,14 +358,14 @@ const ExecuteRecords = ({ hasMore, records, loading, currentPage, setCurrentPage
 
   const formatTx = (tx: string, chain_id: number) => {
     if (!tx) return '-';
-    const currentChain = chains.find((chain: any) => chain.chain_id === chain_id);
+    const currentChain = chains[chain_id];
     return (
       <a
         style={{
           color: '#91A2AE',
           textDecoration: 'underline',
         }}
-        href={`${currentChain.block_explorer}tx/${tx}`}
+        href={`${currentChain.blockExplorers}tx/${tx}`}
         target="_blank"
       >
         Tx

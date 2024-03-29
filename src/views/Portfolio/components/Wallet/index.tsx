@@ -129,102 +129,105 @@ const Wallet = ({ tokens, totalBalance, filterFunc, loading }: any) => {
             </div>
           </div>
         </HoldingTitle>
-        <HoldingTableWrapper>
-          <HoldingTable>
-            <thead>
-              <tr>
-                <th style={{ width: type === 'Default' ? '25%' : '20%' }}>Token</th>
-                <th style={{ width: type === 'Default' ? '25%' : '15%' }}>
-                  <div
-                    className="frcs-gm"
-                    onClick={() => {
-                      setSortBy('price');
-                    }}
-                  >
-                    <span>Price</span>{' '}
-                    <SortArrowDownWrapper active={sortBy === 'price'}> {sortArrowDown} </SortArrowDownWrapper>{' '}
-                  </div>{' '}
-                </th>
-                {type === 'Summary' && <th style={{ width: '20%' }}>Network</th>}
-                <th style={{ width: type === 'Default' ? '25%' : '15%' }}>
-                  <div
-                    className="frcs-gm"
-                    onClick={() => {
-                      setSortBy('amount');
-                    }}
-                  >
-                    <span>{type === 'Default' ? 'Amount' : 'Total Amount'}</span>
-                    <SortArrowDownWrapper active={sortBy === 'amount'}> {sortArrowDown} </SortArrowDownWrapper>{' '}
-                  </div>{' '}
-                </th>
 
-                <th style={{ width: type === 'Default' ? '25%' : '15%' }}>
-                  <div
-                    className="frcs-gm"
-                    onClick={() => {
-                      setSortBy('usd');
-                    }}
-                  >
-                    <span>USD value</span>{' '}
-                    <SortArrowDownWrapper active={sortBy === 'usd'}> {sortArrowDown} </SortArrowDownWrapper>{' '}
-                  </div>{' '}
-                </th>
-                {type === 'Summary' && (
-                  <th style={{ width: '15%' }}>
+        {!!displayedList.length && (
+          <HoldingTableWrapper>
+            <HoldingTable>
+              <thead>
+                <tr>
+                  <th style={{ width: type === 'Default' ? '25%' : '20%' }}>Token</th>
+                  <th style={{ width: type === 'Default' ? '25%' : '15%' }}>
                     <div
                       className="frcs-gm"
                       onClick={() => {
-                        setSortBy('percent');
+                        setSortBy('price');
                       }}
                     >
-                      <span>Percent</span>
-                      <SortArrowDownWrapper active={sortBy === 'percent'}>{sortArrowDown}</SortArrowDownWrapper>{' '}
+                      <span>Price</span>{' '}
+                      <SortArrowDownWrapper active={sortBy === 'price'}> {sortArrowDown} </SortArrowDownWrapper>{' '}
                     </div>{' '}
                   </th>
-                )}
-              </tr>
-            </thead>
+                  {type === 'Summary' && <th style={{ width: '20%' }}>Network</th>}
+                  <th style={{ width: type === 'Default' ? '25%' : '15%' }}>
+                    <div
+                      className="frcs-gm"
+                      onClick={() => {
+                        setSortBy('amount');
+                      }}
+                    >
+                      <span>{type === 'Default' ? 'Amount' : 'Total Amount'}</span>
+                      <SortArrowDownWrapper active={sortBy === 'amount'}> {sortArrowDown} </SortArrowDownWrapper>{' '}
+                    </div>{' '}
+                  </th>
 
-            <tbody>
-              {displayedList.map((token: any, i: number) => {
-                if (isHide && token.usd < 0.1) return <></>;
-                return (
-                  <tr key={token.address + token.chain_id}>
-                    <td>
-                      <div className="frcs token-info">
-                        <img src={token.logo_url || DefaultIcon} className="token-icon" />
+                  <th style={{ width: type === 'Default' ? '25%' : '15%' }}>
+                    <div
+                      className="frcs-gm"
+                      onClick={() => {
+                        setSortBy('usd');
+                      }}
+                    >
+                      <span>USD value</span>{' '}
+                      <SortArrowDownWrapper active={sortBy === 'usd'}> {sortArrowDown} </SortArrowDownWrapper>{' '}
+                    </div>{' '}
+                  </th>
+                  {type === 'Summary' && (
+                    <th style={{ width: '15%' }}>
+                      <div
+                        className="frcs-gm"
+                        onClick={() => {
+                          setSortBy('percent');
+                        }}
+                      >
+                        <span>Percent</span>
+                        <SortArrowDownWrapper active={sortBy === 'percent'}>{sortArrowDown}</SortArrowDownWrapper>{' '}
+                      </div>{' '}
+                    </th>
+                  )}
+                </tr>
+              </thead>
 
-                        <div>
-                          <div className="token-symbol">{token.symbol}</div>
-                          {type === 'Default' && <NetworkWithName chainId={token.chain_id} />}
+              <tbody>
+                {displayedList.map((token: any, i: number) => {
+                  if (isHide && token.usd < 0.1) return <></>;
+                  return (
+                    <tr key={token.address + token.chain_id}>
+                      <td>
+                        <div className="frcs token-info">
+                          <img src={token.logo_url || DefaultIcon} className="token-icon" />
+
+                          <div>
+                            <div className="token-symbol">{token.symbol}</div>
+                            {type === 'Default' && <NetworkWithName chainId={token.chain_id} />}
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td>{formateValue(token.price, 2)}</td>
-                    {type === 'Summary' && (
-                      <td>
-                        <Network chainIds={token.chain_ids} />
                       </td>
-                    )}
-                    <td>{formateValue(token.amount, 4)}</td>
-                    <td>${formateValueWithThousandSeparator(token.usd, 4)}</td>
-                    {type === 'Summary' && (
-                      <td>
-                        <Percent percent={token.percent} />
-                      </td>
-                    )}
-                  </tr>
-                );
-              })}
-            </tbody>
-          </HoldingTable>
-          {loading && (
-            <StyledLoadingWrapper $h="100px">
-              <Loading size={22} />
-            </StyledLoadingWrapper>
-          )}
-          {!loading && !displayedList.length && <NoDataLayout />}
-        </HoldingTableWrapper>
+                      <td>{formateValue(token.price, 2)}</td>
+                      {type === 'Summary' && (
+                        <td>
+                          <Network chainIds={token.chain_ids} />
+                        </td>
+                      )}
+                      <td>{formateValue(token.amount, 4)}</td>
+                      <td>${formateValueWithThousandSeparator(token.usd, 4)}</td>
+                      {type === 'Summary' && (
+                        <td>
+                          <Percent percent={token.percent} />
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </HoldingTable>
+          </HoldingTableWrapper>
+        )}
+        {loading && (
+          <StyledLoadingWrapper $h="100px">
+            <Loading size={22} />
+          </StyledLoadingWrapper>
+        )}
+        {!loading && !displayedList.length && <NoDataLayout />}
       </motion.div>
     </AnimatePresence>
   );

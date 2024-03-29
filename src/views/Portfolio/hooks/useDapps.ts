@@ -52,6 +52,9 @@ export default function useDapps() {
   useEffect(() => {
     if (account) {
       fetchDapps();
+    } else {
+      setLoading(false);
+      setDapps([]);
     }
   }, [account]);
 

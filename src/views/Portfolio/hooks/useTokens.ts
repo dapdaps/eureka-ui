@@ -55,7 +55,10 @@ export default function useTokens() {
     if (account) {
       fetchTokens();
     } else {
+      setNetworks([]);
       setLoading(false);
+      setTotalBalance(undefined);
+      setTokens([]);
     }
   }, [account]);
 

@@ -53,6 +53,10 @@ export default function useExecuteRecords({ currentPage }: any) {
   useEffect(() => {
     if (account) {
       fetchRecordList();
+    } else {
+      setLoading(false);
+      setHasMore(false);
+      setRecords([]);
     }
   }, [account, currentPage]);
 
