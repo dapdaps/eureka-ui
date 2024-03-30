@@ -49,7 +49,9 @@ const Campaign = function ({ campaign, bp }: any) {
     if (campaign.category === 'bns') {
       router.push('/quest/leaderboard/DapDapXBNS');
     } else if (campaign.category === 'Shush') {
-      router.push({ pathname: '/shush', query: { questId: campaign.id } });
+      router.push({
+        pathname: '/shush',
+      });
     } else {
       router.push('/quest/leaderboard/' + campaign.name.replace(/\s/g, ''));
     }
