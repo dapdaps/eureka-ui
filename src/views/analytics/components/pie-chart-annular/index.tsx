@@ -74,7 +74,7 @@ const App: FC<IProps> = ({ data }) => {
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} stroke={null} />
         ))}
       </Pie>
-      <Tooltip
+      {/* <Tooltip
         // trigger="click"
         wrapperStyle={{
           // width: 120,
@@ -92,7 +92,7 @@ const App: FC<IProps> = ({ data }) => {
         itemStyle={{
           color: 'white',
         }}
-      />
+      /> */}
     </PieChart>
   );
 };
