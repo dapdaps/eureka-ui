@@ -47,7 +47,7 @@ const QuestDetailView = () => {
         if (campaign.category === 'Shush') {
           array[1] = {
             name: campaign.name,
-            path: `/shush?questId=${campaign.id}`,
+            path: `/shush`,
           };
         } else {
           array[1] = {
