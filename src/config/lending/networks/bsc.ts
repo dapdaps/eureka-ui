@@ -8,7 +8,7 @@ import filda from '../dapps/filda';
 import liqee from '../dapps/liqee';
 
 const CHAIN_ID = 56;
-const CHAIN_NAME = 'BSC';
+const CHAIN_NAME = 'BNB';
 
 export default {
   chainId: CHAIN_ID,
@@ -16,8 +16,8 @@ export default {
   multicallAddress: multicall[CHAIN_ID],
   wethAddress: weth[CHAIN_ID],
   connectProps: {
-    noAccountTips: 'BSC Lending Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to BSC Chain.',
+    noAccountTips: 'BNB Lending Collection',
+    wrongNetworkTips: 'To proceed, kindly switch to BNB Chain.',
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },

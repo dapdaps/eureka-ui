@@ -64,9 +64,9 @@ const chainCofig = {
   },
   56: {
     chainId: 56,
-    chainName: 'BSC',
+    chainName: 'BNB',
     icon: 'https://assets.dapdap.net/images/bafkreibtexscwwgqupgb7anrseqdpogvt4cckyv4kavr7o3jgtcqzjkx5m.svg',
-    nativeCurrency: { name: 'BSC', symbol: 'BSC', decimals: 18 },
+    nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
     rpcUrls: ['https://binance.llamarpc.com'],
     blockExplorers: 'https://bscscan.com',
   },
