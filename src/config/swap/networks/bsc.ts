@@ -8,7 +8,7 @@ const CHAIN_ID = 56;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'BNB Chain',
+  chainName: 'BNB',
   displayChainName: 'BNB Chain',
   wethAddress: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
   connectProps: {
