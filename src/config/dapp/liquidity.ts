@@ -16,7 +16,7 @@ const ROUTE_CONFIG = {
   'rangeprotocol': {
     type: 'liquidity',
     theme: {
-      '--button-color': '#AA4FEB',
+      '--button-color': '#7637A4',
       '--button-text-color': '#FFFFFF',
     },
   },
@@ -26,7 +26,21 @@ const ROUTE_CONFIG = {
       '--button-color': '#AA4FEB',
       '--button-text-color': '#FFFFFF',
     },
-  }
+  },
+  'arrakis': {
+    type: 'liquidity',
+    theme: {
+      '--button-color': '#FFA760',
+      '--button-text-color': '#FFFFFF',
+    },
+  },
+  'steer': {
+    type: 'liquidity',
+    theme: {
+      '--button-color': '#6d28d9',
+      '--button-text-color': '#FFFFFF',
+    },
+  },
   // 'arrakis-finance': {
   //   type: 'liquidity',
   //   theme: {

@@ -2,7 +2,7 @@
 const basic = {
   name: 'SteakHut',
   icon: '/images/apps/steakhut.png',
-  logo: '',
+  logo: 'https://ipfs.near.social/ipfs/bafkreihfhllr2cu5t4huao5jejfjuqzjnxjxifaisl5p2lsks6bdpbxkqm',
   amountOutFn: 'bluebiu.near/widget/Liquidity.STEAKHUT',
   ICON_VAULT_MAP: {
     CAI: 'https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x48f88A3fE843ccb0b5003e70B4192c1d7448bEf0/logo.png',
