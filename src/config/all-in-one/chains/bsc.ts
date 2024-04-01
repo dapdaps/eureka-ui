@@ -1,5 +1,5 @@
 export default {
-  title: 'BNB',
+  title: 'BNB Chain',
   path: 'bnb',
   icon: 'https://assets.dapdap.net/images/bafkreiczurnr4ai5epzfovu4btugbrfsoc57d42wnz22kdjmogz3ewfgcm.svg',
   bgColor: '#FFBF19',

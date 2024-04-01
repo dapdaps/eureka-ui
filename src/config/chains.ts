@@ -64,7 +64,7 @@ const chainCofig = {
   },
   56: {
     chainId: 56,
-    chainName: 'BNB',
+    chainName: 'BNB Chain',
     icon: 'https://assets.dapdap.net/images/bafkreibtexscwwgqupgb7anrseqdpogvt4cckyv4kavr7o3jgtcqzjkx5m.svg',
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
     rpcUrls: ['https://binance.llamarpc.com'],

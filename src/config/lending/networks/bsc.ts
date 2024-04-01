@@ -16,7 +16,7 @@ export default {
   multicallAddress: multicall[CHAIN_ID],
   wethAddress: weth[CHAIN_ID],
   connectProps: {
-    noAccountTips: 'BNB Lending Collection',
+    noAccountTips: 'BNB Chain Lending Collection',
     wrongNetworkTips: 'To proceed, kindly switch to BNB Chain.',
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,

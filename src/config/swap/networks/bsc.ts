@@ -8,11 +8,11 @@ const CHAIN_ID = 56;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'BNB',
-  displayChainName: 'BNB',
+  chainName: 'BNB Chain',
+  displayChainName: 'BNB Chain',
   wethAddress: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
   connectProps: {
-    noAccountTips: 'BNB Dex Collection',
+    noAccountTips: 'BNB Chain Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to BNB Chain.',
   },
   defalutDex: 'Biswap',
