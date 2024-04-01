@@ -31,7 +31,7 @@ const StyledUserContainer = styled.div`
   gap: 8px;
 `
 const StyledUser = styled.div`
-  width: 169px;
+  min-width: 169px;
   height: 60px;
   padding: 12px 20px 9px 14px;
   border-radius: 72px;
@@ -200,7 +200,7 @@ const LoginView = () => {
             </StyledUserContainer>
           )
         }
-        <StyledInvitedAward>💡 Sign up through his/her invite link and you and inviter will earn 100 PTS each.</StyledInvitedAward>
+        <StyledInvitedAward>💡 Sign up through this invite link, you and the inviter will earn 100 PTS for each.</StyledInvitedAward>
         <StyledLoginConnectWalletButton
           onClick={() => {
             connect();
