@@ -1,6 +1,6 @@
 import manta from './chains/manta';
 import optimism from './chains/optimism';
-import bsc from './chains/bsc';
+import bnb from './chains/bsc';
 import gnosis from './chains/gnosis';
 import polygon from './chains/polygon';
 import zksync from './chains/zksync';
@@ -28,7 +28,7 @@ const popupsData: {
   };
 } = {
   optimism,
-  bsc,
+  bnb,
   gnosis,
   polygon,
   zksync,
@@ -45,7 +45,7 @@ const popupsData: {
 
 export const PathToId: { [key: string]: number } = {
   optimism: 13,
-  bsc: 12,
+  bnb: 12,
   gnosis: 11,
   polygon: 10,
   zksync: 9,
@@ -62,7 +62,7 @@ export const PathToId: { [key: string]: number } = {
 
 export const IdToPath: { [key: string]: string } = {
   13: 'optimism',
-  12: 'bsc',
+  12: 'bnb',
   11: 'gnosis',
   10: 'polygon',
   9: 'zksync',
