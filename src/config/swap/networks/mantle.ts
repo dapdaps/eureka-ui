@@ -23,6 +23,10 @@ export default {
       ...agniBasic,
       ...agniNetworks[CHAIN_ID],
     },
+    'Merchant Moe': {
+      ...merchantMoeBasic,
+      ...merchantMoeNetworks[CHAIN_ID],
+    },
     'FusionX V3': {
       ...fusionV3Basic,
       ...fusionV3Networks[CHAIN_ID],
@@ -31,14 +35,6 @@ export default {
       ...iziSwapBasic,
       ...iziSwapNetworks[CHAIN_ID],
     },
-    'Ammos Finance': {
-      ...ammosBasic,
-      ...ammosNetworks[CHAIN_ID],
-    },
-    'Merchant Moe': {
-      ...merchantMoeBasic,
-      ...merchantMoeNetworks[CHAIN_ID],
-    },
     'Cleopatra Exchange': {
       ...cleopatraBasic,
       ...cleopatraNetworks[CHAIN_ID],
@@ -46,6 +42,10 @@ export default {
     'Velocimeter V2': {
       ...velocimeterV2Basic,
       ...velocimeterV2Networks[CHAIN_ID],
+    },
+    'Ammos Finance': {
+      ...ammosBasic,
+      ...ammosNetworks[CHAIN_ID],
     },
   },
 };

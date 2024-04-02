@@ -1,21 +1,22 @@
+import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Loading from '@/components/Icons/Loading';
 import QuestItem from '@/views/Quest/components/QuestItem';
-import { useRouter } from 'next/router';
-import { Swiper, SwiperSlide } from 'swiper/react';
+
 import useQuestList from '../../hooks/useQuestList';
 import {
   StyledButton,
   StyledCampaign,
   StyledContainer,
+  StyledExplore,
   StyledFlex,
   StyledHeader,
   StyledLoadingWrapper,
   StyledSvg,
   StyledText,
   StyledWrapper,
-  StyledExplore,
 } from './styles';
 const iconRight = (
   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12">
@@ -24,12 +25,12 @@ const iconRight = (
 );
 const iconSwiperLeft = (
   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
-    <path d="M9 1L2 8L9 15" stroke="#979ABE" strokeWidth="2" stroke-linecap="round" />
+    <path d="M9 1L2 8L9 15" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 const iconSwiperRight = (
   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="16" viewBox="0 0 10 16" fill="none">
-    <path d="M1 1L8 8L1 15" stroke="#979ABE" strokeWidth="2" stroke-linecap="round" />
+    <path d="M1 1L8 8L1 15" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 const Campaign = function ({ campaign, bp }: any) {
@@ -47,6 +48,10 @@ const Campaign = function ({ campaign, bp }: any) {
   const handleClickCampaign = function (event: any) {
     if (campaign.category === 'bns') {
       router.push('/quest/leaderboard/DapDapXBNS');
+    } else if (campaign.category === 'Shush') {
+      router.push({
+        pathname: '/shush',
+      });
     } else {
       router.push('/quest/leaderboard/' + campaign.name.replace(/\s/g, ''));
     }

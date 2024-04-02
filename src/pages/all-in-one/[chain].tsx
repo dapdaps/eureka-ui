@@ -7,11 +7,13 @@ import swapConfig from '@/config/swap/networks';
 import lendingConfig from '@/config/lending/networks';
 import useReport from '@/views/Landing/hooks/useReport';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useAccount from '@/hooks/useAccount';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import popupsData from '@/config/all-in-one/chains';
 import useAddAction from '@/hooks/useAddAction';
 import { useDefaultLayout } from '@/hooks/useLayout';
 import { usePriceStore } from '@/stores/price';
+import { useDebounceFn } from 'ahooks';
 import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
 import type { NextPageWithLayout } from '@/utils/types';
@@ -187,13 +189,13 @@ const BreadCrumbs = styled.div`
   }
 `;
 
-let timer: any = null;
 const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
   const chain = router.query.chain as string;
-  const currentChain = popupsData[chain] || popupsData['arbitrum'];
+  const [currentChain, setCurrentChain] = useState<any>();
   const [isSelectItemClicked, setIsSelectItemClicked] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
+  const { account, chainId } = useAccount();
   const [{ settingChain }, setChain] = useSetChain();
   const { handleReport } = useReport();
   const prices = usePriceStore((store) => store.price);
@@ -203,6 +205,23 @@ const AllInOne: NextPageWithLayout = () => {
   const { addAction } = useAddAction('all-in-one');
   const popupRef = useRef<HTMLDivElement | null>(null);
   const { check } = useAuthCheck({ isNeedAk: false });
+
+  const { run } = useDebounceFn(
+    () => {
+      const _currentChain = popupsData[chain] || popupsData['arbitrum'];
+      setCurrentChain(_currentChain);
+      setShowComponent(true);
+      const cachedTab = cachedTabsStore.chains[_currentChain.chainId];
+      if (sourceTab) {
+        setTab(sourceTab);
+      } else if (cachedTab) {
+        setTab(cachedTab);
+      } else {
+        setTab(_currentChain.defaultTab);
+      }
+    },
+    { wait: 500 },
+  );
 
   const handleSelectItemClick = () => {
     setIsSelectItemClicked(!isSelectItemClicked);
@@ -219,20 +238,8 @@ const AllInOne: NextPageWithLayout = () => {
     });
   };
 
-  const tabConfig = useMemo(() => {
-    if (!currentChain || !tab) return {};
-    if (tab === 'Swap') return swapConfig[currentChain?.chainId] || {};
-    if (tab === 'Lending') return lendingConfig[currentChain?.chainId] || {};
-    return {};
-  }, [currentChain, tab]);
-
   useEffect(() => {
-    if (chain && popupsData[chain]) {
-      clearTimeout(timer);
-      timer = setTimeout(() => {
-        setShowComponent(true);
-      }, 500);
-    }
+    run();
   }, [chain]);
 
   useEffect(() => {
@@ -241,24 +248,21 @@ const AllInOne: NextPageWithLayout = () => {
         setIsSelectItemClicked(false);
       }
     };
-
     document.addEventListener('mousedown', handleClickOutside);
     handleReport('all-in-one');
-
-    const cachedTab = cachedTabsStore.chains[currentChain.chainId];
-    if (sourceTab) {
-      setTab(sourceTab);
-    } else if (cachedTab) {
-      setTab(cachedTab);
-    } else {
-      setTab(currentChain.defaultTab);
-    }
-
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
-  return (
+
+  const tabConfig = useMemo(() => {
+    if (!currentChain || !tab) return {};
+    if (tab === 'Swap') return swapConfig[currentChain?.chainId] || {};
+    if (tab === 'Lending') return lendingConfig[currentChain?.chainId] || {};
+    return {};
+  }, [currentChain, tab]);
+
+  return currentChain ? (
     <Container key={chain}>
       <BreadCrumbs>
         <Link href="/">Home</Link>
@@ -330,10 +334,12 @@ const AllInOne: NextPageWithLayout = () => {
                   addAction,
                   multicall,
                   chainId: currentChain.chainId,
+                  currentChainId: chainId,
                   menuConfig: currentChain.menuConfig,
                   ...tabConfig,
                   prices,
                   tab,
+                  account,
                   onReset: () => {},
                   onChangeTab: (tab: string) => {
                     cachedTabsStore.setCachedTab(tab, currentChain.chainId);
@@ -346,6 +352,8 @@ const AllInOne: NextPageWithLayout = () => {
         )}
       </>
     </Container>
+  ) : (
+    <div />
   );
 };
 

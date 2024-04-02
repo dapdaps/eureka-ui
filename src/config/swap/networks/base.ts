@@ -7,6 +7,8 @@ import { basic as sharkBasic, networks as sharkNetworks } from '../dapps/shark-s
 import { basic as aerodromeBasic, networks as aerodromeNetworks } from '../dapps/aerodrome';
 import { basic as sobalBasic, networks as sobalNetworks } from '../dapps/sobal';
 import { basic as velocimeterV2Basic, networks as velocimeterV2Networks } from '../dapps/velocimeter-v2';
+import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
 
 const CHAIN_ID = 8453;
 
@@ -19,43 +21,51 @@ export default {
     noAccountTips: 'Base Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Base Chain.',
   },
-  defalutDex: 'BaseSwap',
+  defalutDex: 'Aerodrome',
   dexs: {
+    Aerodrome: {
+      ...aerodromeBasic,
+      ...aerodromeNetworks[CHAIN_ID],
+    },
+    SushiSwap: {
+      ...sushiBasic,
+      ...sushiNetworks[CHAIN_ID],
+    },
     BaseSwap: {
       ...baseSwapBasic,
       ...baseSwapNetworks[CHAIN_ID],
     },
-    RocketSwap: {
-      ...rocketSwapBasic,
-      ...rocketSwapNetworks[CHAIN_ID],
+    Balancer: {
+      ...balancerBasic,
+      ...balancerNetworks[CHAIN_ID],
     },
     SwapBased: {
       ...swapBasedBasic,
       ...swapBasedNetworks[CHAIN_ID],
     },
+    'Velocimeter V2': {
+      ...velocimeterV2Basic,
+      ...velocimeterV2Networks[CHAIN_ID],
+    },
+    RocketSwap: {
+      ...rocketSwapBasic,
+      ...rocketSwapNetworks[CHAIN_ID],
+    },
     Synthswap: {
       ...synthSwapBasic,
       ...synthSwapNetworks[CHAIN_ID],
-    },
-    HorizonDEX: {
-      ...horizonDexBasic,
-      ...horizonDexNetworks[CHAIN_ID],
-    },
-    SharkSwap: {
-      ...sharkBasic,
-      ...sharkNetworks[CHAIN_ID],
-    },
-    Aerodrome: {
-      ...aerodromeBasic,
-      ...aerodromeNetworks[CHAIN_ID],
     },
     Sobal: {
       ...sobalBasic,
       ...sobalNetworks[CHAIN_ID],
     },
-    'Velocimeter V2': {
-      ...velocimeterV2Basic,
-      ...velocimeterV2Networks[CHAIN_ID],
+    SharkSwap: {
+      ...sharkBasic,
+      ...sharkNetworks[CHAIN_ID],
+    },
+    HorizonDEX: {
+      ...horizonDexBasic,
+      ...horizonDexNetworks[CHAIN_ID],
     },
   },
 };

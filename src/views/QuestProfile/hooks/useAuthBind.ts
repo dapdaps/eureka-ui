@@ -3,7 +3,8 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { QUEST_PATH } from '@/config/quest';
 import useToast from '@/hooks/useToast';
-import { get, post } from '@/utils/http';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import { post } from '@/utils/http';
 
 const MAPS = {
   twitter: {
@@ -27,6 +28,7 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
   const [type, setType] = useState<AuthType>();
   const toast = useToast();
   const searchParams = useSearchParams();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const code = searchParams.get('code');
   const handleBind = useCallback(
     async (type: AuthType, data?: any) => {
@@ -65,10 +67,12 @@ export default function useAuthBind({ onSuccess, redirect_uri }: { onSuccess: Vo
   );
 
   useEffect(() => {
-    const type = sessionStorage.getItem('_auth_type');
-    if (!code || !type) return;
-    handleBind(type as AuthType);
-    sessionStorage.removeItem('_auth_type');
+    check(() => {
+      const type = sessionStorage.getItem('_auth_type');
+      if (!code || !type) return;
+      handleBind(type as AuthType);
+      sessionStorage.removeItem('_auth_type');
+    });
   }, [code]);
 
   return { loading, type, handleBind };

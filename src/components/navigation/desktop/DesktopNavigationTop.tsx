@@ -23,7 +23,7 @@ const AccountWrapper = styled.div<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
-const Container = styled.div`
+const Container = styled.div<{ $expand: boolean }>`
   position: relative;
   color: #979abe;
   padding: 20px 36px;
@@ -31,7 +31,8 @@ const Container = styled.div`
   top: 0;
   width: 100%;
   z-index: 50;
-  background: #16181d;
+  background: ${({ $expand }) => ($expand ? 'rgba(22, 24, 29, 1)' : 'rgba(22, 24, 29, 0.9)')};
+  backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
   border-bottom: 1px solid #21232a;
 
   .container-nav {
@@ -99,21 +100,23 @@ const Search = styled.div`
   }
   .switch-icon-img {
     position: absolute;
-    left: 20px;
-    top: 16px;
+    left: 14px;
+    top: 14px;
     margin-left: 0;
     cursor: pointer;
-  }
-  .switch-icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-  }
-  .switch-icon-img {
     transition: 0.3s;
     opacity: 0;
   }
+  .switch-icon {
+    position: absolute;
+    right: -40px;
+    top: 6px;
+    cursor: pointer;
+    padding: 20px;
+    width: 12px;
+    height: 12px;
+  }
+
   .switch-icon-img.show {
     opacity: 1;
   }
@@ -159,7 +162,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   const isFromActivity = router.pathname.match(activityReg);
 
   return (
-    <Container>
+    <Container $expand={showMenuContent}>
       <div className="container-nav">
         {isFromActivity ? (
           <LogoContainer onClick={goHomeWithFresh}>
@@ -224,11 +227,6 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
               <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
             </div>
-            <DropdownSearchResultPanel
-              searchText={searchContent}
-              setSearchContent={setSearchContent}
-              show={searchContent}
-            />
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}
@@ -249,8 +247,8 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
           <ConnectWallet />
         )}
       </div>
-
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
+      <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
     </Container>
   );
 };

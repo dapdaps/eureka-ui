@@ -3,10 +3,8 @@ import DapXBNS from '@/assets/images/DapXBNS.svg';
 import desktop from '@/assets/images/desktop.png';
 import discountMark from '@/assets/images/discount_mark.svg';
 import iconAchieved from '@/assets/images/icon_achieved.svg';
-import AccountSider from '@/components/AccountSider';
 import Breadcrumb from '@/components/Breadcrumb';
 import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
-import { DesktopNavigationTop } from '@/components/navigation/desktop/DesktopNavigationTop';
 import useAccount from '@/hooks/useAccount';
 import * as http from '@/utils/http';
 import QuestItem from '@/views/Quest/components/QuestItem';
@@ -34,8 +32,7 @@ import {
   StyledWrapper,
 } from './styles';
 import type { QueryNameStatusType } from './types';
-
-import useUserInfo from '@/hooks/useUserInfo';
+import { useRewardStore } from '@/stores/reward';
 import useReport from '@/views/Landing/hooks/useReport';
 import namehash from '@ensdomains/eth-ens-namehash';
 import NetworkDialog from './components/NetworkDialog';
@@ -51,7 +48,7 @@ const CampaignView = () => {
   const { chains } = useTokensAndChains();
   const { account } = useAccount();
   const [value, setValue] = useState('');
-  const { info: userInfo = {} } = useUserInfo({ updater: 1 });
+  const rewardInfo = useRewardStore((store: any) => store.reward);
   const { check } = useAuthCheck({ isNeedAk: true });
 
   const [queryNameStatus, setQueryNameStatus] = useState<QueryNameStatusType>(0);
@@ -180,8 +177,7 @@ const CampaignView = () => {
 
   return (
     <StyledWrapper style={{ paddingBottom: 120 }}>
-      <Yours info={userInfo} />
-      <DesktopNavigationTop />
+      <Yours info={rewardInfo} />
       <StyledContainer style={{ paddingTop: 30, paddingBottom: 19 }}>
         <Breadcrumb
           navs={[
@@ -280,7 +276,6 @@ const CampaignView = () => {
         />
       )}
       {showSwitchNetworkDialog && <SwitchNetwork chainId={8453} onClose={() => setShowSwitchNetworkDialog(false)} />}
-      <AccountSider />
     </StyledWrapper>
   );
 };

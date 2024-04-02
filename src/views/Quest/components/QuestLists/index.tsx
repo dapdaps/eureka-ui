@@ -1,7 +1,5 @@
-import { memo } from 'react';
-
+import { memo, useMemo } from 'react';
 import Loading from '@/components/Icons/Loading';
-
 import ProcessBar from '../ProcessBar';
 import QuestItem from '../QuestItem';
 import {
@@ -15,7 +13,20 @@ import {
   StyledTitle,
 } from './styles';
 
-const QuestLists = ({ achieved, loading, quests }: any) => {
+const QuestLists = ({ loading, quests }: any) => {
+  const achieved = useMemo(() => {
+    if (!quests || !quests.length) return 0;
+    let completed = 0;
+    let total = 0;
+    quests.forEach((slip: any) => {
+      total++;
+      if (slip.action_completed >= slip.total_action) {
+        completed++;
+      }
+    });
+    if (total === 0) return 0;
+    return Math.ceil((completed / total) * 100);
+  }, [quests]);
   return (
     <StyledContainer>
       <StyledHeader>
@@ -34,19 +45,10 @@ const QuestLists = ({ achieved, loading, quests }: any) => {
         </LoadingWrapper>
       ) : (
         <StyledListBox>
-          {Object.keys(quests)
+          {quests
             .sort((a: any, b: any) => a - b)
-            .map((key) => {
-              const _quests = quests[key] as any[];
-              return _quests?.length ? (
-                <>
-                  {_quests.map((item) => (
-                    <QuestItem quest={item} key={item.id + Math.random()} />
-                  ))}
-                </>
-              ) : (
-                <div key={Date.now()} />
-              );
+            .map((item: any) => {
+              return item ? <QuestItem quest={item} key={item.id + Math.random()} /> : <div key={Date.now()} />;
             })}
         </StyledListBox>
       )}

@@ -422,4 +422,18 @@ export default {
       '--button-text-color': '#fff',
     },
   },
+  mute: {
+    type: 'swap',
+    theme: {
+      '--button-color': '#47a1ff',
+      '--button-text-color': '#fff',
+    },
+  },
+  'xy-finance': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#277eec',
+      '--button-text-color': '#fff',
+    },
+  },
 };

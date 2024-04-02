@@ -17,15 +17,15 @@ import { useState } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { ToastContainer } from 'react-toastify';
 import useAccount from '@/hooks/useAccount';
+import { useDebounceFn } from 'ahooks';
 import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
 import useClickTracking from '@/hooks/useClickTracking';
 import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
-import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import useTokenPrice from '@/hooks/useTokenPrice';
-import { useDebounceFn } from 'ahooks';
 import { useAuthStore } from '@/stores/auth';
 import type { NextPageWithLayout } from '@/utils/types';
 import { styleZendesk } from '@/utils/zendesk';
+import { report } from '@/utils/burying-point';
 
 const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
   ssr: false,
@@ -39,30 +39,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useBosLoaderInitializer();
   useClickTracking();
   const { getInitialDataWithoutAuth } = useInitialDataWithoutAuth();
-  const { getInitialDataWithAuth } = useInititalDataWithAuth();
-
+  const { account } = useAccount();
   const [ready, setReady] = useState(false);
-  const [updater, setUpdater] = useState<number>(1);
+
   const { initializePrice } = useTokenPrice();
   const getLayout = Component.getLayout ?? ((page) => page);
   const router = useRouter();
   const authStore = useAuthStore();
-  const { account } = useAccount();
-  const componentSrc = router.query;
 
-  const { run: updateAccount } = useDebounceFn(
-    () => {
-      setUpdater(Date.now());
-      getInitialDataWithAuth(account);
-    },
-    { wait: 500 },
-  );
-  
-  useEffect(() => {
-    if (!["/referral/[inviteCode]"].includes(router.pathname)) {
-      updateAccount();
-    }
-  }, [account]);
+  const componentSrc = router.query;
 
   useEffect(() => {
     // Displays the Zendesk widget only if user is signed in and on the home page
@@ -74,6 +59,17 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     localStorage.setItem('accountId', authStore.accountId);
     window.zE('webWidget', 'show');
   }, [authStore.accountId, authStore.signedIn, componentSrc]);
+
+  const { run: updateAccount } = useDebounceFn(
+    () => {
+      if (account) report({ code: '2001-001', address: account });
+    },
+    { wait: 500 },
+  );
+
+  useEffect(() => {
+    updateAccount();
+  }, [account]);
 
   useEffect(() => {
     initializePrice();
@@ -161,7 +157,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       {ready && (
         <>
           <SkeletonTheme baseColor="#353649" highlightColor="#444">
-            {getLayout(<Component {...pageProps} key={updater} />)}
+            {getLayout(<Component {...pageProps} />)}
           </SkeletonTheme>
           <ToastContainer
             position={window.innerWidth > 768 ? 'top-right' : 'bottom-right'}

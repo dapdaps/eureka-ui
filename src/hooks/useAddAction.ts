@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { useChainsStore } from '@/stores/chains';
 import { useUUIdStore } from '@/stores/uuid';
 import { post } from '@/utils/http';
+import { getSignature } from '@/utils/signature';
 
 import useAccount from './useAccount';
 
@@ -89,7 +90,7 @@ export default function useAddAction(source: string) {
       if (data.type === 'Liquidity') {
         params = {
           action_title: `${data.action} ${data.token0}-${data.token1} on ${data.template}`,
-          action_type: data.action,
+          action_type: data.type,
           action_tokens: JSON.stringify([data.token0, data.token1]),
           action_amount: data.amount,
           account_id: account,
@@ -103,8 +104,31 @@ export default function useAddAction(source: string) {
           extra_data: data.extra_data,
         };
       }
-      console.info('addAction params: ', params);
+      if (data.type === 'Staking') {
+        params = {
+          action_title: `${data.action} ${data.token.symbol} on ${data.template}`,
+          action_type: 'Staking',
+          action_tokens: JSON.stringify([`${data.token.symbol}`]),
+          action_amount: data.amount,
+          account_id: account,
+          account_info: uuid,
+          template: data.template,
+          action_switch: data.add ? 1 : 0,
+          action_status: data.status === 1 ? 'Success' : 'Failed',
+          tx_id: data.transactionHash,
+          action_network_id: currentChain.name,
+          chain_id: chainId,
+        };
+      }
+
+      params.ss = getSignature(
+        `template=${data.template}&action_type=${data.type}&tx_hash=${
+          data.transactionHash
+        }&chain_id=${chainId}&time=${Math.ceil(Date.now() / 1000)}`,
+      );
       params.source = source;
+      console.log('useAddAction params:', params);
+
       post('/api/action/add', params);
     },
     [chainId, account],
