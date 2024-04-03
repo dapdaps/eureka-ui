@@ -7,6 +7,7 @@ import Chain from '@/components/AccountSider/components/Chain';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
 import ConnectWallet from '@/components/ConnectWallet';
+import OdysseyIcon from './OdysseyIcon';
 import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
@@ -57,7 +58,7 @@ const MenuContainer = styled.div`
   width: 40%;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 44%;
   transform: translate(-50%, -50%);
   z-index: 30;
   flex: 1;
@@ -227,6 +228,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
               <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
             </div>
+            <OdysseyIcon />
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}
