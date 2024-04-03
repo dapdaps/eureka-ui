@@ -21,6 +21,7 @@ const networks = {
   // metis
   1088: {
     ALL_DATA_URL: "https://subgraph.satsuma-prod.com/769a117cc018/steer/steer-protocol-metis/api",
+    FEE_APR_URL: "/pool/fee-apr",
     ammName: "Hercules",
     ammImage: "https://app.steer.finance/_next/image?url=%2Ficons%2Fhercules.png&w=256&q=75",
     pairs: [{
@@ -87,6 +88,7 @@ const networks = {
   169: {
     ALL_DATA_URL: "https://subgraph.steer.finance/manta/subgraphs/name/steerprotocol/steer-manta",
     STAKING_POOLS_URL: "https://9i52h964s3.execute-api.us-east-1.amazonaws.com/dev/staking-pools",
+    FEE_APR_URL: "/pool/fee-apr",
     ammName: "QuickSwap",
     ammImage: "https://app.gamma.xyz/_next/static/media/icon.ea1fec4d.svg",
     pairs: [{

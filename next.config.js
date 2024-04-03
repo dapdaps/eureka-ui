@@ -73,6 +73,10 @@ const nextConfig = {
       source: '/shush/:path*',
       destination: 'https://www.shush.fi/:path*',
     },
+    {
+      source: '/pool/fee-apr',
+      destination: 'https://ro81h8hq6b.execute-api.us-east-1.amazonaws.com/pool/fee-apr',
+    },
   ],
   images: {
     remotePatterns: [

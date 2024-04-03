@@ -6,7 +6,6 @@ const basic = {
   amountOutFn: 'bluebiu.near/widget/Liquidity.STEERPROTOCOL',
   ICON_VAULT_MAP: {
     USDT: 'https://app.rangeprotocol.com/images/coins/56/0x55d398326f99059fF775485246999027B3197955.png',
-    USDC: 'https://app.rangeprotocol.com/images/coins/56/0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d.png',
     CAKE: 'https://app.rangeprotocol.com/images/coins/56/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82.png',
     WBNB: 'https://app.rangeprotocol.com/images/coins/56/0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c.png',
     ZETA: 'https://app.rangeprotocol.com/images/coins/56/0x0000028a2eB8346cd5c0267856aB7594B7a55308.png',
