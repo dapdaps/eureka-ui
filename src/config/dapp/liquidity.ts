@@ -31,7 +31,7 @@ const ROUTE_CONFIG = {
     type: 'liquidity',
     theme: {
       '--button-color': '#FFA760',
-      '--button-text-color': '#FFFFFF',
+      '--button-text-color': '#000000',
     },
   },
   'steer': {
