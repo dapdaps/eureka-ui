@@ -8,7 +8,7 @@ const QA = () => {
       <StyledTitle>Q&A</StyledTitle>
       <StyledList>
         <Item
-          title="How it works?"
+          title="How does it work?"
           icon="/images/shush/qa-1.svg"
           content={
             <>

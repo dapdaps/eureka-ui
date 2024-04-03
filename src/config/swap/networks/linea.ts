@@ -7,6 +7,7 @@ import { basic as pancakeSwapBasic, networks as pancakeSwapNetworks } from '../d
 import { basic as xfaiBasic, networks as xfaiNetworks } from '../dapps/xfai';
 import { basic as lynexBasic, networks as lynexNetworks } from '../dapps/lynex';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
 import chains from '../../chains';
 
 const CHAIN_ID = 59144;
@@ -49,6 +50,10 @@ export default {
     'Velocore V2': {
       ...VelocoreV2Basic,
       ...VelocoreV2Networks[CHAIN_ID],
+    },
+    'XY Finance': {
+      ...xyBasic,
+      ...xyNetworks[CHAIN_ID],
     },
     HorizonDEX: {
       ...HorizonDEXBasic,
