@@ -12,6 +12,7 @@ import arbitrum from './chains/arbitrum';
 import avalanche from './chains/avalanche';
 import linea from './chains/linea';
 import scroll from './chains/scroll';
+import blast from './chains/blast';
 
 const popupsData: {
   [key: string]: {
@@ -41,6 +42,7 @@ const popupsData: {
   linea,
   manta,
   scroll,
+  blast,
 };
 
 export const PathToId: { [key: string]: number } = {
@@ -58,6 +60,7 @@ export const PathToId: { [key: string]: number } = {
   linea: 4,
   manta: 15,
   scroll: 17,
+  blast: 18,
 };
 
 export const IdToPath: { [key: string]: string } = {
@@ -75,6 +78,7 @@ export const IdToPath: { [key: string]: string } = {
   4: 'linea',
   15: 'manta',
   17: 'scroll',
+  18: 'blast',
 };
 
 export default popupsData;
