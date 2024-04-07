@@ -436,4 +436,18 @@ export default {
       '--button-text-color': '#fff',
     },
   },
+  'thruster-finance': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(170deg, #ff6d63, #ff6157)',
+      '--button-text-color': '#fff',
+    },
+  },
+  mimswap: {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(90deg, #2d4a96 0%, #745cd2 100%)',
+      '--button-text-color': '#fff',
+    },
+  },
 };
