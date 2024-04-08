@@ -97,7 +97,7 @@ export const manta: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'TIA',
     symbol: 'TIA',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiavk5cl3r5qvb5ulfuux4trhupqd6rb53ht5bcbsiht5fj5tz7cay',
+    icon: 'https://ipfs.near.social/ipfs/bafkreid5wh7aykqa2obc6c4ix36ty3y47w4m3bhl5p5druouckoxavylby',
     decimals: 18,
     address: '0x6fae4d9935e2fcb11fc79a64e917fb2bf14dafaa',
   },
