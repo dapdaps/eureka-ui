@@ -1,9 +1,7 @@
 
 const basic = {
   name: 'Rangeprotocol',
-  icon: '/images/apps/gamma.png',
-  logo: 'https://ipfs.near.social/ipfs/bafkreibgmu62fb5o3n3s54srlzyf7ppn2c42racp5q3gnukcjgkfwkzuse',
-  amountOutFn: 'bluebiu.near/widget/Liquidity.STEERPROTOCOL',
+  amountOutFn: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
   ICON_VAULT_MAP: {
     USDT: 'https://app.rangeprotocol.com/images/coins/56/0x55d398326f99059fF775485246999027B3197955.png',
     CAKE: 'https://app.rangeprotocol.com/images/coins/56/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82.png',

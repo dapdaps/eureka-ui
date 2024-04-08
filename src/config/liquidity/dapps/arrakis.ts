@@ -1,8 +1,7 @@
 
 const basic = {
   name: 'arrakis-finance',
-  logo: 'https://ipfs.near.social/ipfs/bafkreibgmu62fb5o3n3s54srlzyf7ppn2c42racp5q3gnukcjgkfwkzuse',
-  amountOutFn: 'bluebiu.near/widget/Liquidity.ARRAKISFINANCE',
+  amountOutFn: 'bluebiu.near/widget/Liquidity.ARRAKIS',
   ICON_VAULT_MAP: {
     'THALES': 'https://assets.dex.guru/icons/0x217d47011b23bb961eb6d93ca9945b7501a5bb11-optimism.png',
     'WETH': 'https://assets.dex.guru/icons/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2-eth.png',

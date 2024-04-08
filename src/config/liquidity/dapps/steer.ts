@@ -1,8 +1,7 @@
 
 const basic = {
-  name: "arrakis-finance",
-  logo: "https://ipfs.near.social/ipfs/bafkreibgmu62fb5o3n3s54srlzyf7ppn2c42racp5q3gnukcjgkfwkzuse",
-  amountOutFn: "bluebiu.near/widget/Liquidity.ARRAKISFINANCE",
+  name: "steer",
+  amountOutFn: "bluebiu.near/widget/Liquidity.STEER",
   ICON_VAULT_MAP: {
     "WETH": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fraw.githubusercontent.com%2Ftrustwallet%2Fassets%2Fmaster%2Fblockchains%2Fethereum%2Fassets%2F0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2%2Flogo.png&w=128&q=100",
     "STONE": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fstorage.googleapis.com%2Fks-setting-1d682dca%2Fdee351e5-ff61-4a8f-994d-82f3078119661696785945490.png&w=128&q=100",
@@ -14,7 +13,7 @@ const basic = {
     "m.USDT": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_48%2Fd_unknown.png%2Ftokens%2F1088%2F0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC.jpg&w=128&q=100",
     "m.USDC": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fraw.githubusercontent.com%2FMaiaDAO%2Ftoken-list%2Fmain%2F0xEA32A96608495e54156Ae48931A7c20f0dcc1a21.png&w=128&q=100",
     "WMETIS": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_48%2Fd_unknown.png%2Ftokens%2F1088%2F0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481.jpg&w=128&q=100",
-    "artMETIS": "/images/unknow.png"
+    "artMETIS": "https://token-list.hercules.exchange/assets/artMETIS.svg"
   }
 };
 const networks = {

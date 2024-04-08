@@ -76,6 +76,7 @@ const networks = {
         "decimals0": 18,
         "decimals1": 18,
         "poolAddress": "0x1123e75b71019962cd4d21b0f3018a6412edb63c",
+        "gaugeV2Address": "0xD777E84b0D29128351A35045D7AE728780dEf54D"
       },
       {
         id: 'N BTCB-WBNB-0',
@@ -86,6 +87,7 @@ const networks = {
         "decimals0": 18,
         "decimals1": 18,
         "poolAddress": "0x6b67112aa7b45e8cdc0a93b8d66a6a36e68ae8e5",
+        "gaugeV2Address": "0x65E40E779560199F5e68126Bc95bdc03083e5AA4"
       },
       {
         id: 'P ankrBNB-WBNB-0',
@@ -96,6 +98,7 @@ const networks = {
         "decimals0": 18,
         "decimals1": 18,
         "poolAddress": "0x2f6c6e00e517944ee5efe310cd0b98a3fc61cb98",
+        "gaugeV2Address": "0x8782fA8e2C973f7Cc19ce28DDf549fD9114F69dA"
       },
       {
         id: 'P BNBx-WBNB-0',
@@ -106,6 +109,7 @@ const networks = {
         "decimals0": 18,
         "decimals1": 18,
         "poolAddress": "0xf2a4e4261fcdfbb891bcf703640fbe713c6cd0fe",
+        "gaugeV2Address": "0xf50Af14BC4953Dcf9d27EbCA8BB3625855F5B42d"
       },
       {
         id: 'N USDT-WBNB-0',
@@ -116,6 +120,7 @@ const networks = {
         "decimals0": 18,
         "decimals1": 18,
         "poolAddress": "0xd405b976ac01023c9064024880999fc450a8668b",
+        "gaugeV2Address": "0xf50Af14BC4953Dcf9d27EbCA8BB3625855F5B42d"
       },
     ],
     addresses: {
