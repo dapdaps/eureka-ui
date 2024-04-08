@@ -4,7 +4,7 @@ export default {
   icon: '/images/chains/scroll.svg',
   bgIcon: '/images/chains/scroll_white.svg',
   bgColor: '#fff',
-  selectBgColor: '#35bde3',
+  selectBgColor: '#EBC28E',
   chainId: 534352,
   rpcUrls: ['https://rpc.scroll.io'],
   defaultTab: 'Swap',
