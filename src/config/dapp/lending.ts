@@ -555,7 +555,7 @@ const ROUTE_CONFIG = {
     type: 'lending',
     theme: {
       '--button-color': '#EAEBEF',
-      '--switch-color': 'rgba(234, 235, 239, .5)',
+      '--switch-color': '#45499F',
       '--button-text-color': 'black',
       '--supply-color': '#EAEBEF',
       '--yours-table-title': 'black',
