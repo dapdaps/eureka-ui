@@ -1,3 +1,4 @@
+import { linea } from '@/config/tokens/linea';
 import { manta } from '@/config/tokens/manta';
 import { zkSync } from '@/config/tokens/zkSync';
 
@@ -37,6 +38,7 @@ const rewardToken = {
 };
 
 const networks = {
+  // zksync
   324: {
     // wethGateway: '0x4d8d90FAF90405b9743Ce600E98A2Aa8CdF579a0',
     // StabilityPool: '0xDAce04E411D9916169c0401033a7f76994eF5A0f',
@@ -61,6 +63,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0x767b4A087c11d7581Ac95eaFfc1FeBFA26bad3d2',
       balanceProviderAddress: '0xdeEa10da04D867e3303AB6E50FA26C2d8a5e9f70',
       incentivesProxy: '0x54AB34aB3C723bD2674c7082aA6fFcdfd3A5BEdc', //CLAIM
+      rewardAddress: '0x9793eac2fECef55248efA039BEC78e82aC01CB2f',
     },
     rawMarkets: [
       {
@@ -195,6 +198,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0xE05361EA51E20118072aec0fB0FD178e8b09D69e',
       balanceProviderAddress: '0xCbDc0aeD7CDf2472784068abEf23a902CafABb98',
       incentivesProxy: '0x28F6899fF643261Ca9766ddc251b359A2d00b945', //CLAIM
+      rewardAddress: '0x642CE49f36f74FCC430ff79A76EB984737A7672d',
     },
     rawMarkets: [
       {
@@ -381,6 +385,104 @@ const networks = {
         aTokenAddress: '0xE7e54ca3D6F8a5561f8cee361260E537BDc5bE48',
         stableDebtTokenAddress: '0x7c2e57764ec33292fe098636aaa5d0357d814d16',
         variableDebtTokenAddress: '0xe6B9b00d42fA5831ccE4E44D9d6D8C51ba17cd1E',
+        isIsolated: false,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+      },
+    ],
+    CONTRACT_ABI,
+    rewardToken,
+  },
+  //linea
+  59144: {
+    config: {
+      ...baseConfig,
+      chainName: 'Linea',
+      nativeCurrency: linea['eth'],
+      nativeWrapCurrency: linea['weth'],
+      rpcUrl: 'https://linea.blockpi.network/v1/rpc/public',
+      aavePoolV3Address: '0x2f9bB73a8e98793e26Cb2F6C4ad037BDf1C6B269',
+      PoolDataProvider: '0x67f93d36792c49a4493652B91ad4bD59f428AD15',
+      wrappedTokenGatewayV3Address: '0x5d50bE703836C330Fc2d147a631CDd7bb8D7171c',
+      balanceProviderAddress: '0xE05361EA51E20118072aec0fB0FD178e8b09D69e',
+      incentivesProxy: '0x28F6899fF643261Ca9766ddc251b359A2d00b945', //CLAIM
+      rewardAddress: '0x40A59A3F3b16d9e74C811d24D8b7969664cFe180',
+    },
+    rawMarkets: [
+      {
+        id: '1',
+        underlyingAsset: linea['weth'].address,
+        icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
+        decimals: 18,
+        name: 'Ethereum',
+        symbol: 'ETH',
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: false,
+        aTokenAddress: '0x0ab214F127998a36Ce7aB0087a9B0D20adc2d5AD',
+        stableDebtTokenAddress: '0xffa256ad2487c4d989c3dfa6a6e9c13fe33beba4',
+        variableDebtTokenAddress: '0xb5EEf4Df2e48Fb41E6eaE6778c14787bAAa181F1',
+        isIsolated: false,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+      },
+      {
+        id: '2',
+        underlyingAsset: linea['weth'].address,
+        icon: linea['weth'].icon,
+        decimals: linea['weth'].decimals,
+        symbol: linea['weth'].symbol,
+        name: linea['weth'].name,
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: false,
+        aTokenAddress: '0x0ab214F127998a36Ce7aB0087a9B0D20adc2d5AD',
+        stableDebtTokenAddress: '0xffa256ad2487c4d989c3dfa6a6e9c13fe33beba4',
+        variableDebtTokenAddress: '0xb5EEf4Df2e48Fb41E6eaE6778c14787bAAa181F1',
+        isIsolated: false,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+      },
+
+      {
+        id: '3',
+        underlyingAsset: linea['usdc'].address,
+        icon: linea['usdc'].icon,
+        decimals: linea['usdc'].decimals,
+        symbol: linea['usdc'].symbol,
+        name: linea['usdc'].name,
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: true,
+        aTokenAddress: '0xB4FFEf15daf4C02787bC5332580b838cE39805f5',
+        stableDebtTokenAddress: '0x27c7733d7a0f142720af777e70ebc33ca485d014',
+        variableDebtTokenAddress: '0xCb2dA0F5aEce616e2Cbf29576CFc795fb15c6133',
+        isIsolated: false,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+      },
+
+      {
+        id: '4',
+        underlyingAsset: linea['usdt'].address,
+        icon: 'https://ipfs.near.social/ipfs/bafkreiees4c52xtve6vtnwctudcv5yugs2tdmvyfywr4ltig4baloxzw2e',
+        decimals: linea['usdt'].decimals,
+        symbol: linea['usdt'].symbol,
+        name: linea['usdt'].name,
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: true,
+        aTokenAddress: '0x759cb97fbc452BAFD49992BA88d3C5dA4Dd9B0e7',
+        stableDebtTokenAddress: '0xb8e26f3c4afb4f56f430a390dc3f3b12f8a50b26',
+        variableDebtTokenAddress: '0xc1d9ca73f57930D4303D380C5DC668C40B38598B',
         isIsolated: false,
         availableLiquidity: 0,
         availableLiquidityUSD: '',
