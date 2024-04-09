@@ -155,4 +155,20 @@ export const linea: { [key: string]: Token } = {
     name: 'XFIT',
     icon: '/images/tokens/xfit.webp',
   },
+  mai: {
+    chainId: CHAIN_ID,
+    address: '0xf3b001d64c656e30a62fbaaca003b1336b4ce12a',
+    decimals: 18,
+    symbol: 'MAI',
+    name: 'Mai Stablecoin ',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidburs6q3dzqnpvodhxl4a7o47sgsjoh2toryltts6zeaxh22h7hm',
+  },
+  grai: {
+    chainId: CHAIN_ID,
+    address: '0x894134a25a5faC1c2C26F1d8fBf05111a3CB9487',
+    decimals: 18,
+    symbol: 'GRAI',
+    name: 'Gravita Debt Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreic62f4fvqgjso3trvpbyveldzk5ejt5ggb43jy56l2m5rjm7fzdtu',
+  },
 };
