@@ -124,4 +124,12 @@ export const scroll: { [key: string]: Token } = {
     name: 'DODO bird',
     icon: '/images/tokens/dodo.webp',
   },
+  pxeth: {
+    chainId: CHAIN_ID,
+    address: '0x9E0d7D79735e1c63333128149c7b616a0dC0bBDb',
+    decimals: 18,
+    symbol: 'pxETH',
+    name: 'Pirex Ether OFT',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiepil46e3xesbiq623ucwrwg3b4wxmynfejaks5osx2rhpyfv5gai',
+  },
 };
