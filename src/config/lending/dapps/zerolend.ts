@@ -22,7 +22,7 @@ const CONTRACT_ABI = {
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
-  name: 'zerolend',
+  name: 'ZeroLend',
   // icon: '/images/apps/granary.png',
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
