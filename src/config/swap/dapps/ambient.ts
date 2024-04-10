@@ -13,7 +13,7 @@ const networks = {
       input: scroll['eth'],
       output: scroll['usdc'],
     },
-    tokens: [scroll['usdt'], scroll['eth'], scroll['usdc'], scroll['wbtc']],
+    tokens: [scroll['pxeth'], scroll['usdt'], scroll['eth'], scroll['usdc'], scroll['wbtc']],
   },
 };
 
