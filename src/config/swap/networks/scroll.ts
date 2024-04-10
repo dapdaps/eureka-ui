@@ -9,6 +9,7 @@ import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi
 import { basic as dodoBasic, networks as dodoNetworks } from '../dapps/dodo';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
+import { basic as univ3Basic, networks as univ3Networks } from '../dapps/uniswapv3';
 
 const CHAIN_ID = 534352;
 
@@ -26,6 +27,10 @@ export default {
     Ambient: {
       ...ambientBasic,
       ...ambientNetworks[CHAIN_ID],
+    },
+    'Uniswap V3': {
+      ...univ3Basic,
+      ...univ3Networks[CHAIN_ID],
     },
     SyncSwap: {
       ...SyncSwapBasic,
