@@ -21,6 +21,7 @@ import {
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
   Stargate: 'https://s3.amazonaws.com/dapdap.prod/images/stargate.png',
+  Orbiter: '/images/apps/orbiter.png',
 };
 
 export default function DappCard({
@@ -60,7 +61,7 @@ export default function DappCard({
       });
       return;
     }
-    if (category_name === 'Bridge' && name === 'Stargate') {
+    if (category_name === 'Bridge') {
       setCachedTab(category_name, 534352);
     }
     if (!source) return;

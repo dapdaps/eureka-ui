@@ -92,7 +92,7 @@ const Total = ({ spins, rewards, synthesizedIndex, onSuccess, onSynthesisSuccess
           {spins === undefined ? <Skeleton width="60px" height="26px" borderRadius="6px" /> : spins}
         </StyledAmount>
         <StyledButton disabled={spins - synthesizedIndex * 15 < 15 || synthesizing} onClick={onSynthesis}>
-          {synthesizing ? <Loading size={20} /> : `Synthesis Scroll ${STEPS[synthesizedIndex]}`}
+          {synthesizing ? <Loading size={20} /> : `Synthesis Scroll ${STEPS[synthesizedIndex] || 'I'}`}
         </StyledButton>
       </StyledItem>
       <StyledItem>
