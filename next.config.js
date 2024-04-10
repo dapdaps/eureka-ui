@@ -103,6 +103,9 @@ const nextConfig = {
     ],
   },
   transpilePackages: ['ahooks'],
+  experimental: {
+    esmExternals: 'loose',
+  },
 };
 
 module.exports = nextConfig;
