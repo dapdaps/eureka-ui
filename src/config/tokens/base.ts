@@ -35,6 +35,14 @@ export const base: { [key: string]: Token } = {
     name: 'Wrapped Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
   },
+  wsteth: {
+    chainId: CHAIN_ID,
+    address: '0xc1cba3fcea344f92d9239c08c0568f6f2f0ee452',
+    decimals: 18,
+    symbol: 'wstETH',
+    name: 'Wrapped liquid staked Ether 2.0',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra',
+  },
   axlusdc: {
     chainId: CHAIN_ID,
     address: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
