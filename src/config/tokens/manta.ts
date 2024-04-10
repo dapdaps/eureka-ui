@@ -17,7 +17,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'WETH',
     decimals: 18,
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq',
   },
   usdc: {
     address: '0xb73603C5d87fA094B7314C74ACE2e64D165016fb',
@@ -25,7 +25,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'USDC',
     decimals: 6,
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
   },
   usdt: {
     address: '0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f',
@@ -51,7 +51,7 @@ export const manta: { [key: string]: Token } = {
     symbol: 'DAI',
     decimals: 18,
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene',
   },
   matic: {
     chainId: CHAIN_ID,
@@ -97,7 +97,7 @@ export const manta: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'TIA',
     symbol: 'TIA',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiavk5cl3r5qvb5ulfuux4trhupqd6rb53ht5bcbsiht5fj5tz7cay',
+    icon: 'https://ipfs.near.social/ipfs/bafkreid5wh7aykqa2obc6c4ix36ty3y47w4m3bhl5p5druouckoxavylby',
     decimals: 18,
     address: '0x6fae4d9935e2fcb11fc79a64e917fb2bf14dafaa',
   },
@@ -124,5 +124,14 @@ export const manta: { [key: string]: Token } = {
     symbol: 'LAB',
     name: 'LineaBank Token',
     icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce',
+  },
+
+  manta: {
+    chainId: CHAIN_ID,
+    address: '0x95CeF13441Be50d20cA4558CC0a27B601aC544E5',
+    decimals: 18,
+    symbol: 'MANTA',
+    name: 'Manta',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiblmivom5d5yrxtvtwf4aztyjzjxophzflqrppntwb3c7qc7sspgu',
   },
 };
