@@ -61,7 +61,7 @@ export default function DappCard({
       return;
     }
     if (category_name === 'Bridge' && name === 'Stargate') {
-      setCachedTab(category_name, 59144);
+      setCachedTab(category_name, 534352);
     }
     if (!source) return;
     window.open(source, '_blank');
