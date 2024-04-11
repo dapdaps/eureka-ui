@@ -623,6 +623,9 @@ const ROUTE_CONFIG = {
       '--claim-color': '#292E40',
     },
   },
+  compoundv3: {
+    type: 'lending',
+  },
 };
 
 export default ROUTE_CONFIG;
