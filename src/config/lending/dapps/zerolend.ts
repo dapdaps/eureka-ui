@@ -23,9 +23,7 @@ const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'ZeroLend',
-  // icon: '/images/apps/granary.png',
   data: 'bluebiu.near/widget/AAVE.Data.Zerolend',
-  // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
 };

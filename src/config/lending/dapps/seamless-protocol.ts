@@ -19,9 +19,8 @@ const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'Seamless Protocol',
-  // icon: '/images/apps/granary.png',
-  // data: 'bluebiu.near/widget/Lending.Data.Liquity',
-  // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
+  data: 'bluebiu.near/widget/AAVE.Data.Seamless',
+  handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
 };
 const rewardToken = [

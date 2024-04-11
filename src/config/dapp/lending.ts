@@ -603,7 +603,7 @@ const ROUTE_CONFIG = {
     type: 'lending',
     theme: {
       '--button-color': '#3AB1FF',
-      '--button-disabled-color': 'rgba(234, 235, 239, .7)',
+      '--button-disabled-color': 'rgba(58,177,255, .5)',
       '--switch-color': '#45499F',
       '--button-text-color': 'black',
       '--supply-color': '#3AB1FF',
