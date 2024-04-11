@@ -25,12 +25,15 @@ const basic = {
 };
 const rewardToken = [
   {
-    address: '',
+    address: '0x5607718c64334eb5174cb2226af891a6ed82c7c6',
     // decimals: 18,
-    symbol: '',
-    name: '',
-    icon: '',
+    symbol: 'OG Points',
+    name: 'OG Points',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiez74jwccvehead67kbbi2r5b5tibtk23vuo3aamuhyllfvujczhu',
   },
+  base['seam'],
+  base['esseam'],
+  base['usdc'],
 ];
 
 const networks = {
@@ -166,7 +169,7 @@ const networks = {
       },
     ],
     CONTRACT_ABI,
-    // rewardToken,
+    rewardToken,
   },
 };
 
