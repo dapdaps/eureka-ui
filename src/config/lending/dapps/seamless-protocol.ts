@@ -70,7 +70,7 @@ const networks = {
         variableBorrowAPY: '',
         aTokenAddress: '0x48bf8fCd44e2977c8a9A744658431A8e6C0d866c',
         variableDebtTokenAddress: '0x4cebC6688faa595537444068996ad9A207A19f13',
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '2',
@@ -89,7 +89,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '3',
@@ -108,7 +108,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '4',
@@ -127,7 +127,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '5',
@@ -146,7 +146,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '6',
@@ -165,7 +165,8 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+
+        supportBorrow: true,
       },
     ],
     CONTRACT_ABI,
