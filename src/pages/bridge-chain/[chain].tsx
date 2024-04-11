@@ -146,13 +146,14 @@ const Container = styled.div`
     z-index: 1;
     width: 100%;
     position: relative;
+    padding-top: 150px;
     /* position: absolute; */
   }
   .select-bg-icon {
     z-index: 0;
     position: absolute;
     top: 60px;
-    left: 50%;
+    left: 45%;
     .select-bg-content {
       width: 560px;
       height: 80px;
@@ -210,15 +211,6 @@ const AllInOne: NextPageWithLayout = () => {
     () => {
       const _currentChain = popupsData[chain] || popupsData['arbitrum'];
       setCurrentChain(_currentChain);
-      setShowComponent(true);
-      const cachedTab = cachedTabsStore.chains[_currentChain.chainId];
-      if (sourceTab) {
-        setTab(sourceTab);
-      } else if (cachedTab) {
-        setTab(cachedTab);
-      } else {
-        setTab(_currentChain.defaultTab);
-      }
     },
     { wait: 500 },
   );
@@ -243,7 +235,7 @@ const AllInOne: NextPageWithLayout = () => {
         </div>
         <div className="content-page">
           <ComponentWrapperPage
-            src="bluebiu.near/widget/All-in-one"
+            src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
             componentProps={{
               addAction,
               multicall,
