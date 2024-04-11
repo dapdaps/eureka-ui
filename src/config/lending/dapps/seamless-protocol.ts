@@ -23,6 +23,18 @@ const basic = {
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'aave-v3',
 };
+const rewardToken = [
+  {
+    address: '0x5607718c64334eb5174cb2226af891a6ed82c7c6',
+    // decimals: 18,
+    symbol: 'OG Points',
+    name: 'OG Points',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiez74jwccvehead67kbbi2r5b5tibtk23vuo3aamuhyllfvujczhu',
+  },
+  base['seam'],
+  base['esseam'],
+  base['usdc'],
+];
 
 const networks = {
   // base
@@ -38,6 +50,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0xaeeB3898edE6a6e86864688383E211132BAa1Af3',
       balanceProviderAddress: '0xDb0f02421f830398d7b59dae8d385e2Cd5ed5CF7',
       incentivesProxy: '0x91Ac2FfF8CBeF5859eAA6DdA661feBd533cD3780', //CLAIM
+      rewardAddress: '0x998e44232BEF4F8B033e5A5175BDC97F2B10d5e5',
     },
     rawMarkets: [
       {
@@ -57,7 +70,7 @@ const networks = {
         variableBorrowAPY: '',
         aTokenAddress: '0x48bf8fCd44e2977c8a9A744658431A8e6C0d866c',
         variableDebtTokenAddress: '0x4cebC6688faa595537444068996ad9A207A19f13',
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '2',
@@ -76,7 +89,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '3',
@@ -95,7 +108,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '4',
@@ -114,7 +127,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '5',
@@ -133,7 +146,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+        supportBorrow: true,
       },
       {
         id: '6',
@@ -152,10 +165,12 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0.8,
+
+        supportBorrow: true,
       },
     ],
     CONTRACT_ABI,
+    rewardToken,
   },
 };
 

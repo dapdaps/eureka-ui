@@ -45,7 +45,7 @@ const renderActiveShape = (props: any) => {
 const App: FC<IProps> = ({ data }) => {
   // const totalArray = data.map((item: any) => item?.total);
   // const maxIndex = data.findIndex((item: any) => item.total === Math.max(...totalArray));
-  console.log('annular-data:', data);
+  console.log('test annular-data:', data);
 
   const [activeIndex, setActiveIndex] = useState(-1);
   const onPieEnter = useCallback(

@@ -60,6 +60,7 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
+        supportBorrow: true,
       },
       {
         id: '2',
@@ -79,6 +80,7 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
+        supportBorrow: false,
       },
       {
         id: '3',
@@ -98,6 +100,7 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
+        supportBorrow: true,
       },
       {
         id: '4',
@@ -117,6 +120,7 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
+        supportBorrow: true,
       },
     ],
     CONTRACT_ABI,

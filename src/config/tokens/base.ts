@@ -139,4 +139,20 @@ export const base: { [key: string]: Token } = {
     name: 'BMX',
     icon: 'https://ipfs.near.social/ipfs/bafkreiacekb2ntq2vrwgluxzxnsmqdx3ppjoou7fooyelgwhdc5pkr76gy',
   },
+  seam: {
+    chainId: CHAIN_ID,
+    address: '0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85',
+    decimals: 18,
+    symbol: 'SEAM',
+    name: 'Seamless',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigipeyo37ay3rik7bohviyrdoqzdffqrz75uocl6ripeveq5zji3u',
+  },
+  esseam: {
+    chainId: CHAIN_ID,
+    address: '0x998e44232bef4f8b033e5a5175bdc97f2b10d5e5',
+    decimals: 18,
+    symbol: 'esSEAM',
+    name: 'Escrow SEAM',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigipeyo37ay3rik7bohviyrdoqzdffqrz75uocl6ripeveq5zji3u',
+  },
 };

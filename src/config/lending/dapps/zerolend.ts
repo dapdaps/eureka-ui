@@ -24,18 +24,22 @@ const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'ZeroLend',
   // icon: '/images/apps/granary.png',
-  // data: 'bluebiu.near/widget/Lending.Data.Liquity',
+  data: 'bluebiu.near/widget/AAVE.Data.Zerolend',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
 };
-const rewardToken = {
-  address: '',
-  // decimals: 18,
-  symbol: 'earlyZERO',
-  name: 'earlyZERO',
-  icon: '',
-};
+
+const rewardToken = [
+  {
+    address: '',
+    // decimals: 18,
+    symbol: 'earlyZERO',
+    name: 'earlyZERO',
+    icon: '',
+    unclaimed: '',
+  },
+];
 
 const networks = {
   // zksync
@@ -84,6 +88,7 @@ const networks = {
         stableDebtTokenAddress: '0x9c9158BFF47342A20b7D2Ac09F89e96F3A209b9B',
         variableBorrowAPY: '',
         variableDebtTokenAddress: '0x56f58d9BE10929CdA709c4134eF7343D73B080Cf',
+        supportBorrow: true,
       },
       {
         id: '2',
@@ -103,6 +108,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '3',
@@ -122,6 +128,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
 
       {
@@ -142,6 +149,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '5',
@@ -161,6 +169,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '6',
@@ -180,6 +189,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
     ],
     CONTRACT_ABI,
@@ -219,6 +229,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '2',
@@ -238,6 +249,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '3',
@@ -257,6 +269,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '4',
@@ -276,6 +289,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '5',
@@ -295,6 +309,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '6',
@@ -314,6 +329,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '7',
@@ -333,6 +349,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '8',
@@ -352,6 +369,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '9',
@@ -371,6 +389,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '9',
@@ -390,6 +409,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
     ],
     CONTRACT_ABI,
@@ -429,6 +449,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '2',
@@ -448,6 +469,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: false,
       },
 
       {
@@ -468,6 +490,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
 
       {
@@ -488,6 +511,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: true,
       },
       {
         id: '5',
@@ -507,6 +531,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: false,
       },
       {
         id: '5',
@@ -526,6 +551,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
+        supportBorrow: false,
       },
     ],
     CONTRACT_ABI,
