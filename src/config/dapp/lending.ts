@@ -625,6 +625,10 @@ const ROUTE_CONFIG = {
   },
   compoundv3: {
     type: 'lending',
+    theme: {
+      '--button-color': '#00ad79',
+      '--button-text-color': '#fff',
+    },
   },
 };
 

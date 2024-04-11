@@ -73,9 +73,9 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Lending') {
         params = {
-          action_title: `${data.action} ${data.token.symbol} on ${data.template}`,
+          action_title: data.action_title || `${data.action} ${data.token.symbol} on ${data.template}`,
           action_type: 'Lending',
-          action_tokens: JSON.stringify([`${data.token.symbol}`]),
+          action_tokens: data.action_tokens || JSON.stringify([`${data.token.symbol}`]),
           action_amount: data.amount,
           account_id: account,
           account_info: uuid,
