@@ -24,18 +24,21 @@ const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'ZeroLend',
   // icon: '/images/apps/granary.png',
-  // data: 'bluebiu.near/widget/Lending.Data.Liquity',
+  data: 'bluebiu.near/widget/AAVE.Data.Zerolend',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
 };
-const rewardToken = {
-  address: '',
-  // decimals: 18,
-  symbol: 'earlyZERO',
-  name: 'earlyZERO',
-  icon: '',
-};
+const rewardToken = [
+  {
+    address: '',
+    // decimals: 18,
+    symbol: 'earlyZERO',
+    name: 'earlyZERO',
+    icon: '',
+    unclaimed: '',
+  },
+];
 
 const networks = {
   // zksync

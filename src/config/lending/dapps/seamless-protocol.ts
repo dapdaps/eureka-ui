@@ -23,6 +23,15 @@ const basic = {
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'aave-v3',
 };
+const rewardToken = [
+  {
+    address: '',
+    // decimals: 18,
+    symbol: '',
+    name: '',
+    icon: '',
+  },
+];
 
 const networks = {
   // base
@@ -38,6 +47,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0xaeeB3898edE6a6e86864688383E211132BAa1Af3',
       balanceProviderAddress: '0xDb0f02421f830398d7b59dae8d385e2Cd5ed5CF7',
       incentivesProxy: '0x91Ac2FfF8CBeF5859eAA6DdA661feBd533cD3780', //CLAIM
+      rewardAddress: '0x998e44232BEF4F8B033e5A5175BDC97F2B10d5e5',
     },
     rawMarkets: [
       {
@@ -156,6 +166,7 @@ const networks = {
       },
     ],
     CONTRACT_ABI,
+    // rewardToken,
   },
 };
 
