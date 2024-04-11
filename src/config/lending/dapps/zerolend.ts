@@ -29,6 +29,7 @@ const basic = {
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
 };
+
 const rewardToken = [
   {
     address: '',
