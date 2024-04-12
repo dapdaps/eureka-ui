@@ -106,7 +106,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: false,
       },
       {
         id: '3',
