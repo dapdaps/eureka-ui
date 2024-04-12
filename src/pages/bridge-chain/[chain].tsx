@@ -194,10 +194,10 @@ const BreadCrumbs = styled.div`
 
 function toChecksumAddress (address: string): string {
   address = address.toLowerCase().replace('0x', '')
-  var hash = createKeccakHash('keccak256').update(address).digest('hex')
-  var ret = '0x'
+  const hash = createKeccakHash('keccak256').update(address).digest('hex')
+  let ret = '0x'
 
-  for (var i = 0; i < address.length; i++) {
+  for (let i = 0; i < address.length; i++) {
     if (parseInt(hash[i], 16) >= 8) {
       ret += address[i].toUpperCase()
     } else {
