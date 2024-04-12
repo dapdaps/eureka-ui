@@ -30,7 +30,7 @@ export function formatTitle(record: any) {
         const lendingActions = parsedExtraData?.lending_actions;
         if (lendingActions.length) {
           return lendingActions.map((action: any, i: number) => (
-            <div>
+            <div key={i}>
               {action.type} <span style={{ color: '#979abe' }}>{action.amount}</span> {action.tokenSymbol}
             </div>
           ));
