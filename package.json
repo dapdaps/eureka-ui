@@ -79,6 +79,7 @@
     "firebase": "^10.6.0",
     "framer-motion": "^10.16.5",
     "iframe-resizer-react": "^1.1.0",
+    "keccak": "^3.0.4",
     "lite-merkle-patricia-tree": "^1.0.1",
     "local-storage": "^2.0.0",
     "lodash": "^4.17.21",

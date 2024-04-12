@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import createKeccakHash from 'keccak'
 import swapConfig from '@/config/swap/networks';
 import lendingConfig from '@/config/lending/networks';
 import useReport from '@/views/Landing/hooks/useReport';
@@ -16,6 +17,7 @@ import { usePriceStore } from '@/stores/price';
 import { useDebounceFn } from 'ahooks';
 import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
+import { ethers } from 'ethers'
 import type { NextPageWithLayout } from '@/utils/types';
 
 const arrow = (
@@ -190,6 +192,22 @@ const BreadCrumbs = styled.div`
   }
 `;
 
+function toChecksumAddress (address: string): string {
+  address = address.toLowerCase().replace('0x', '')
+  var hash = createKeccakHash('keccak256').update(address).digest('hex')
+  var ret = '0x'
+
+  for (var i = 0; i < address.length; i++) {
+    if (parseInt(hash[i], 16) >= 8) {
+      ret += address[i].toUpperCase()
+    } else {
+      ret += address[i]
+    }
+  }
+
+  return ret
+}
+
 const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
   const chain = router.query.chain as string;
@@ -197,6 +215,7 @@ const AllInOne: NextPageWithLayout = () => {
   const [isSelectItemClicked, setIsSelectItemClicked] = useState(false);
   const [showComponent, setShowComponent] = useState(false);
   const { account, chainId } = useAccount();
+  const [ checkSumAccount, setCheckSumAccount ] = useState<string>()
   const [{ settingChain }, setChain] = useSetChain();
   const { handleReport } = useReport();
   const prices = usePriceStore((store) => store.price);
@@ -215,12 +234,17 @@ const AllInOne: NextPageWithLayout = () => {
     { wait: 500 },
   );
 
-
-
   useEffect(() => {
     run();
   }, [chain]);
 
+  useEffect(() => {
+    if (account) {
+      const checkSumAccount = toChecksumAddress(account as string)
+      setCheckSumAccount(checkSumAccount)
+    }
+  }, [account])
+  
 
   return currentChain ? (
     <Container key={chain}>
@@ -244,7 +268,7 @@ const AllInOne: NextPageWithLayout = () => {
               menuConfig: currentChain.menuConfig,
               prices,
               tab,
-              account,
+              account: checkSumAccount,
               onReset: () => { },
               onChangeTab: (tab: string) => {
                 cachedTabsStore.setCachedTab(tab, currentChain.chainId);
