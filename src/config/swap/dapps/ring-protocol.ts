@@ -3,7 +3,7 @@ import multicall from '@/config/contract/multicall';
 
 const basic = {
   name: 'Ring Protocol',
-  logo: '/images/apps/1.png',
+  logo: '/images/apps/ring-protocol.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.RingProtocol',
 };
 const networks = {

@@ -16,7 +16,7 @@ export default {
     noAccountTips: 'Blast Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Blast Chain.',
   },
-  defalutDex: 'Ring Protocol',
+  defalutDex: 'Thruster Finance',
   dexs: {
     'Thruster Finance': {
       ...thrusterBasic,
