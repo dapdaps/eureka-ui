@@ -115,6 +115,7 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     name: 'OLE token powering both DistrictOne and OpenLeverage',
     icon: 'https://ipfs.near.social/ipfs/bafkreibv5fgl5qxu6iv2crptnl3ohlmsh44c2fy5fjh7o7yzjebfzrpecy',
+    priceKey: 'openleverage',
   },
   andy: {
     address: '0xd43d8adac6a4c7d9aeece7c3151fca8f23752cf8',
@@ -187,5 +188,6 @@ export const blast: { [key: string]: Token } = {
     decimals: 18,
     name: 'OmniCat',
     icon: 'https://ipfs.near.social/ipfs/bafkreigzusaroe6xtxrlags6ke7jy576mxxfgphab4mhmigm6hfu5fbjiy',
+    priceKey: 'omnicat',
   },
 };

@@ -1,7 +1,7 @@
 import { blast } from '@/config/tokens/blast';
 const basic = {
   name: 'MimSwap',
-  logo: '/images/apps/1.png',
+  logo: '/images/apps/mimswap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.Mimswap',
 };
 const networks = {
