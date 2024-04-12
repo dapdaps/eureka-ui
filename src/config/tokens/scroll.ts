@@ -133,4 +133,12 @@ export const scroll: { [key: string]: Token } = {
     name: 'Pirex Ether OFT',
     icon: 'https://ipfs.near.social/ipfs/bafkreiepil46e3xesbiq623ucwrwg3b4wxmynfejaks5osx2rhpyfv5gai',
   },
+  wrseth: {
+    chainId: CHAIN_ID,
+    address: '0xa25b25548b4c98b0c7d3d27dca5d5ca743d68b7f',
+    decimals: 18,
+    symbol: 'wrsETH',
+    name: 'rsETHWrapper',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifcfbemweplxi43rajsimrzzfgovmh6bg7zkg5nkivyxob6gfu7ki',
+  },
 };
