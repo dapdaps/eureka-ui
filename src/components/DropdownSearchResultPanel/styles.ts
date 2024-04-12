@@ -12,7 +12,7 @@ export const StyledSearchResults = styled.div`
   width: 38%;
   position: absolute;
   top: 70px;
-  left: 31%;
+  left: 25.5%;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   background-color: rgb(48, 49, 66);
   color: rgba(151, 154, 190, 1);
