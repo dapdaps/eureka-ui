@@ -17,6 +17,7 @@ import useLike from '@/views/Quest/hooks/useLike';
 import { StyledHeartBox } from '@/views/QuestDetail/components/Details/styles';
 import { useChainsStore } from '@/stores/chains';
 import Empty from '@/components/Empty';
+import { formatTitle } from '@/views/OnBoarding/helpers';
 
 const arrow = (
   <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -622,7 +623,7 @@ const DappsDetailsColumn: NextPageWithLayout = () => {
                           <div className="td-avatar"></div>
                           {formatId(item.account_id)}
                         </td>
-                        <td>{item.action_title}</td>
+                        <td>{formatTitle(item)}</td>
                         <td style={{ color: ' #979ABE' }}>{formatDate(item.timestamp)}</td>
                       </tr>
                     );

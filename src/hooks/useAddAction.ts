@@ -73,10 +73,7 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Lending') {
         params = {
-          action_title: data.action_title || `${data.action} ${data.token.symbol} on ${data.template}`,
           action_type: 'Lending',
-          action_tokens: data.action_tokens || JSON.stringify([`${data.token.symbol}`]),
-          action_amount: data.amount,
           account_id: account,
           account_info: uuid,
           template: data.template,
@@ -86,6 +83,14 @@ export default function useAddAction(source: string) {
           action_network_id: currentChain.name,
           chain_id: chainId,
         };
+
+        if (data.extra_data?.lending_actions) {
+          params.extra_data = JSON.stringify(data.extra_data);
+        } else {
+          params.action_title = `${data.action} ${data.token.symbol} on ${data.template}`;
+          params.action_tokens = JSON.stringify([`${data.token.symbol}`]);
+          params.action_amount = data.amount;
+        }
       }
       if (data.type === 'Liquidity') {
         params = {

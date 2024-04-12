@@ -7,7 +7,6 @@ export function formatTitle(record: any) {
   } catch (e) {
     tokens = eval(record.action_tokens);
   }
-  console.log('====tokens', tokens)
 
   if (record.action_type === 'Swap') {
     return (
@@ -25,6 +24,19 @@ export function formatTitle(record: any) {
     );
   }
   if (record.action_type === 'Lending') {
+    if (record.extra_data) {
+      try {
+        const parsedExtraData = JSON.parse(record.extra_data);
+        const lendingActions = parsedExtraData?.lending_actions;
+        if (lendingActions.length) {
+          return lendingActions.map((action: any, i: number) => (
+            <div>
+              {action.type} <span style={{ color: '#979abe' }}>{action.amount}</span> {action.tokenSymbol}
+            </div>
+          ));
+        }
+      } catch (err) {}
+    }
     return (
       <>
         Supply <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]} on {record.template}
