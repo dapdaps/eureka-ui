@@ -223,7 +223,7 @@ const AllInOne: NextPageWithLayout = () => {
   const [tab, setTab] = useState('');
   const sourceTab = useAllInOneTabStore((store: any) => store.tab);
   const cachedTabsStore: any = useAllInOneTabCachedStore();
-  const { addAction } = useAddAction('all-in-one');
+  const { addAction } = useAddAction('dapp');
   const popupRef = useRef<HTMLDivElement | null>(null);
   const { check } = useAuthCheck({ isNeedAk: false });
 
