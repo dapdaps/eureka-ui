@@ -31,7 +31,7 @@ export default function useRemoveLiquidity(onSuccess: () => void, onError: () =>
     const amount1 = _amount1.lt(0) ? '0' : _amount1.toFixed(0);
     const _amount0Min = new Big(_amount0.toString()).mul(1 - slippage);
     const _amount1Min = new Big(_amount1.toString()).mul(1 - slippage);
-    const _deadline = Math.ceil(Date.now() / 1000) + 60;
+    const _deadline = Math.ceil(Date.now() / 1000) + 600;
     const amount0Min = _amount0Min.lt(0) ? '0' : _amount0Min.toFixed(0);
     const amount1Min = _amount1Min.lt(0) ? '0' : _amount1Min.toFixed(0);
     calldatas.push(

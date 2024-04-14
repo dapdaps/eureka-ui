@@ -47,7 +47,7 @@ export default function useAddLiquidity(onSuccess: () => void, onError?: () => v
     const _value1 = isReverse ? value0 : value1;
     let _amount0 = new Big(_value0 || 1).mul(10 ** _token0.decimals).toFixed(0);
     let _amount1 = new Big(_value1 || 1).mul(10 ** _token1.decimals).toFixed(0);
-    const _deadline = Math.ceil(Date.now() / 1000) + 60;
+    const _deadline = Math.ceil(Date.now() / 1000) + 600;
     if (noPair) {
       const _price = new Big(isReverse ? 1 / price : price).div(10 ** (_token0.decimals - _token1.decimals));
       const _sqrtPriceX96 = new Big(_price.toFixed())
