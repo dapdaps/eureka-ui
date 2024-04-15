@@ -646,6 +646,13 @@ const ROUTE_CONFIG = {
       '--claim-color': '#292E40',
     },
   },
+  compoundv3: {
+    type: 'lending',
+    theme: {
+      '--button-color': '#00ad79',
+      '--button-text-color': '#fff',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;

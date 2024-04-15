@@ -48,6 +48,7 @@ const StyledBar = styled.div`
   position: absolute;
   background: #e8ceab;
   transition: 0.3s;
+  max-width: 100%;
 `;
 
 const StyledPoints = styled(StyledItems)`

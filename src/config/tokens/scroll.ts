@@ -1,6 +1,6 @@
 import type { Token } from '@/types';
 
-const CHAIN_ID = 534352;
+export const CHAIN_ID = 534352;
 
 export const scroll: { [key: string]: Token } = {
   eth: {

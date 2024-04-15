@@ -41,7 +41,7 @@ const networks = {
   },
   169: {
     unitrollerAddress: '0xB7A23Fc0b066051dE58B922dC1a08f33DF748bbf',
-    oracleAddress: '0x38f4384B457F81A4895c93a7503c255eFd0746d2',
+    oracleAddress: '0x6e3661519025D6cBcAFD3013D5BDB7aB71741B99',
     rateModelSlopeAddress: '0x27F85bD47740139a56e34124B33481ea6e1e660D',
     distributionAddress: '0x67c10B7b8eEFe92EB4DfdEeedd94263632E483b0',
     markets: {
