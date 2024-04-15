@@ -393,7 +393,7 @@ const Dashboard: FC<IProps> = ({}) => {
         <Styles.DappsWrap>
           <Styles.DappsLeft>
             <Styles.DappTitle>
-              <Styles.Title>Transaction of popular Dapps</Styles.Title>
+              <Styles.Title>Top dApps Trading Volume</Styles.Title>
               <SimpleSelect
                 data={chainsList}
                 onChange={(chainId) => {
