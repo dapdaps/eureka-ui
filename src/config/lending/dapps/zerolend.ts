@@ -23,9 +23,7 @@ const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'ZeroLend',
-  // icon: '/images/apps/granary.png',
   data: 'bluebiu.near/widget/AAVE.Data.Zerolend',
-  // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
 };
@@ -108,7 +106,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: false,
       },
       {
         id: '3',
@@ -221,7 +219,7 @@ const networks = {
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: false,
-        aTokenAddress: '0x0ab214F127998a36Ce7aB0087a9B0D20adc2d5AD',
+        aTokenAddress: '0x0684FC172a0B8e6A65cF4684eDb2082272fe9050',
         stableDebtTokenAddress: '0xffa256ad2487c4d989c3dfa6a6e9c13fe33beba4',
         variableDebtTokenAddress: '0xb5EEf4Df2e48Fb41E6eaE6778c14787bAAa181F1',
         isIsolated: false,
@@ -241,7 +239,7 @@ const networks = {
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: false,
-        aTokenAddress: '0x0ab214F127998a36Ce7aB0087a9B0D20adc2d5AD',
+        aTokenAddress: '0x0684FC172a0B8e6A65cF4684eDb2082272fe9050',
         stableDebtTokenAddress: '0xffa256ad2487c4d989c3dfa6a6e9c13fe33beba4',
         variableDebtTokenAddress: '0xb5EEf4Df2e48Fb41E6eaE6778c14787bAAa181F1',
         isIsolated: false,
@@ -392,7 +390,7 @@ const networks = {
         supportBorrow: true,
       },
       {
-        id: '9',
+        id: '10',
         underlyingAsset: manta['wbtc'].address,
         icon: manta['wbtc'].icon,
         decimals: manta['wbtc'].decimals,

@@ -551,6 +551,29 @@ const ROUTE_CONFIG = {
       '--claim-color': '#773AD1',
     },
   },
+  'cog-finance': {
+    type: 'lending',
+    theme: {
+      '--button-color': '#7955F8',
+      '--switch-color': '#7955F8',
+      '--button-text-color': 'white',
+      '--supply-color': '#7955F8',
+      '--yours-table-title': 'white',
+      '--borrow-color': '#7955F8',
+      '--withdraw-bg-color': '#7955F8',
+      '--withdraw-border-color': '#7955F8',
+      '--withdraw-bg-hover-color': '#7955F8',
+      '--repay-bg-color': '#7955F8',
+      '--repay-border-color': '#7955F8',
+      '--repay-bg-hover-color': '#7955F8',
+      '--claim-bg-hover-color': '#7955F8',
+      '--claim-bg-color': '#7955F8',
+      '--claim-border-color': '#7955F8',
+      '--withdraw-color': '#7955F8',
+      '--replay-color': '#7955F8',
+      '--claim-color': '#7955F8',
+    },
+  },
   zerolend: {
     type: 'lending',
     theme: {
@@ -603,7 +626,7 @@ const ROUTE_CONFIG = {
     type: 'lending',
     theme: {
       '--button-color': '#3AB1FF',
-      '--button-disabled-color': 'rgba(234, 235, 239, .7)',
+      '--button-disabled-color': 'rgba(58,177,255, .5)',
       '--switch-color': '#45499F',
       '--button-text-color': 'black',
       '--supply-color': '#3AB1FF',

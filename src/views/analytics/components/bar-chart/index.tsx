@@ -39,8 +39,8 @@ const App: FC<IProps> = ({ data }) => {
               <Styles.Icon color={item.color}></Styles.Icon>
               {map[item.name]}
             </Styles.Key>
-            {payload.name === 'total_trading_value' ? (
-              <Styles.Value>{formatThousandsSeparator(item.value)}</Styles.Value>
+            {item.name === 'total_trading_value' ? (
+              <Styles.Value>${formatThousandsSeparator(item.value)}</Styles.Value>
             ) : (
               <Styles.Value>{item.value}</Styles.Value>
             )}
