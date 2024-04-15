@@ -12,11 +12,10 @@ import chains from '@/config/chains';
 const web3onboardKey = 'web3-onboard:connectedWallets';
 
 const wcV2InitOptions: any = {
-  version: 2,
   projectId: '72b7b3359ab477e339a070f615806aa6',
-  requiredChains: Object.keys(chains).map((chain) => Number(chain)),
+  optionalChains: Object.keys(chains).map((chain) => Number(chain)),
+  dappUrl: 'https://www.dapdap.net/',
 };
-
 const walletConnect = walletConnectModule(wcV2InitOptions);
 const injected = injectedModule({
   // display specific unavailable wallets

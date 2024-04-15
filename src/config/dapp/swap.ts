@@ -436,4 +436,11 @@ export default {
       '--button-text-color': '#fff',
     },
   },
+  uniswapv3: {
+    type: 'swap',
+    theme: {
+      '--button-color': '#277eec',
+      '--button-text-color': '#fff',
+    },
+  },
 };

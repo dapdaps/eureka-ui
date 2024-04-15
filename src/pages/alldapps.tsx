@@ -823,7 +823,7 @@ const AllDappsColumn: NextPageWithLayout = () => {
             <div className="page-function-list">
               {categoryArray?.map((item: any, index: number) => {
                 // REF-5789 隐藏Bridge
-                if (item.name === 'Bridge') return null;
+                // if (item.name === 'Bridge') return null;
                 return (
                   <div
                     key={index}

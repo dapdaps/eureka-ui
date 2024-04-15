@@ -35,6 +35,14 @@ export const base: { [key: string]: Token } = {
     name: 'Wrapped Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
   },
+  wsteth: {
+    chainId: CHAIN_ID,
+    address: '0xc1cba3fcea344f92d9239c08c0568f6f2f0ee452',
+    decimals: 18,
+    symbol: 'wstETH',
+    name: 'Wrapped liquid staked Ether 2.0',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra',
+  },
   axlusdc: {
     chainId: CHAIN_ID,
     address: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
@@ -130,5 +138,21 @@ export const base: { [key: string]: Token } = {
     symbol: 'BMX',
     name: 'BMX',
     icon: 'https://ipfs.near.social/ipfs/bafkreiacekb2ntq2vrwgluxzxnsmqdx3ppjoou7fooyelgwhdc5pkr76gy',
+  },
+  seam: {
+    chainId: CHAIN_ID,
+    address: '0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85',
+    decimals: 18,
+    symbol: 'SEAM',
+    name: 'Seamless',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigipeyo37ay3rik7bohviyrdoqzdffqrz75uocl6ripeveq5zji3u',
+  },
+  esseam: {
+    chainId: CHAIN_ID,
+    address: '0x998e44232bef4f8b033e5a5175bdc97f2b10d5e5',
+    decimals: 18,
+    symbol: 'esSEAM',
+    name: 'Escrow SEAM',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigipeyo37ay3rik7bohviyrdoqzdffqrz75uocl6ripeveq5zji3u',
   },
 };
