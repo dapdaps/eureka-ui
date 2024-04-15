@@ -390,7 +390,7 @@ const networks = {
         supportBorrow: true,
       },
       {
-        id: '9',
+        id: '10',
         underlyingAsset: manta['wbtc'].address,
         icon: manta['wbtc'].icon,
         decimals: manta['wbtc'].decimals,
