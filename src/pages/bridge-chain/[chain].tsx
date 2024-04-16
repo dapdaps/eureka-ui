@@ -243,7 +243,7 @@ const AllInOne: NextPageWithLayout = () => {
         <div className="select-bg-icon">
           <div className="select-bg-content">
             <img src={chainConfig?.logo} alt="" />
-            <span>Scroll</span>
+            <span>{ chainConfig?.name }</span>
           </div>
         </div>
         <div className="content-page">
