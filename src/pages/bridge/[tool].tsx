@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { init, getQuote, excute, getIcon, getAllToken } from 'bridge-sdk';
+import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'bridge-sdk';
 
 import chainCofig from '@/config/chains'
 import useAccount from '@/hooks/useAccount';
@@ -59,7 +59,7 @@ const Bridge: NextPageWithLayout = () => {
 
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
 
-    const icon = getIcon(tool)
+    const { icon, name, color } = getBridgeMsg(tool)
 
     const handleDocClick = useCallback((e: any) => {
         handlerList.current.forEach((handler: any) => {
@@ -84,8 +84,6 @@ const Bridge: NextPageWithLayout = () => {
         }
     }, [])
 
-    console.log('chainId: ', chainId)
-
     return (
         <Container>
             <BreadCrumbs>
@@ -95,17 +93,22 @@ const Bridge: NextPageWithLayout = () => {
             </BreadCrumbs>
             <ComponentWrapperPage
                 src="dapdapbos.near/widget/Bridge.Index"
+                // src="dapdapbos.near/widget/Test"
                 componentProps={{
                     addAction,
                     prices,
                     account,
                     icon,
+                    name,
+                    color,
                     tool,
                     chainList,
                     toggleDocClickHandler: toggleDocClickHandler,
                     getQuote,
                     getAllToken,
-                    excute,
+                    getChainScan,
+                    getStatus,
+                    execute,
                     currentChainId: connectedChain?.id ? parseInt(connectedChain.id, 16) : 1,
                     toChainId,
                     setToChain,
