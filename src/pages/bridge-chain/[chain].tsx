@@ -17,6 +17,7 @@ import { usePriceStore } from '@/stores/price';
 import { useDebounceFn } from 'ahooks';
 import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
+import { get } from '@/utils/http'
 import { ethers } from 'ethers'
 import type { NextPageWithLayout } from '@/utils/types';
 
@@ -182,6 +183,7 @@ const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
   const chain = router.query.chain as string;
   const [currentChain, setCurrentChain] = useState<any>();
+  const [chainConfig, setChainConfig] = useState<any>(null)
   const { account, chainId } = useAccount();
   const [ checkSumAccount, setCheckSumAccount ] = useState<string>()
   const [{ settingChain }, setChain] = useSetChain();
@@ -198,13 +200,27 @@ const AllInOne: NextPageWithLayout = () => {
     () => {
       const _currentChain = popupsData[chain] || popupsData['arbitrum'];
       setCurrentChain(_currentChain);
+      if (chain) {
+      }
     },
     { wait: 500 },
   );
 
   useEffect(() => {
+    if (currentChain && !chainConfig) {
+      get(`https://api.dapdap.net/api/dapp?route=bridge-chain/${currentChain.path}`)
+      .then(res => {
+        if (res.code === 0) {
+          setChainConfig(res.data)
+        }
+      })
+    }
+  }, [currentChain, chainConfig])
+
+  useEffect(() => {
     run();
   }, [chain]);
+
 
   useEffect(() => {
     if (account) {
@@ -219,14 +235,14 @@ const AllInOne: NextPageWithLayout = () => {
       <BreadCrumbs>
         <Link href="/">Home</Link>
         {arrow}
-        <Link href="/alldapps">Dapps</Link>
+        <Link href="/alldapps">dApps</Link>
         {arrow}
         <span>{currentChain.title} Bridge</span>
       </BreadCrumbs>
       <>
         <div className="select-bg-icon">
           <div className="select-bg-content">
-            <img src={currentChain.bgIcon || currentChain.icon} alt="" />
+            <img src={chainConfig?.logo} alt="" />
             <span>Scroll</span>
           </div>
         </div>
