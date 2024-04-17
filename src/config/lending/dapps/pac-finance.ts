@@ -13,29 +13,17 @@ const CONTRACT_ABI = {
   walletBalanceProviderABI:
     'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
 };
-const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
+const heroData = ['Blast Points', 'Blast Gold', 'Net Worth', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'Pac Finance',
-  // data: 'bluebiu.near/widget/AAVE.Data.Zerolend',
-  // handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
+  data: 'bluebiu.near/widget/Lending.Data.Pac',
   type: 'aave-v3',
 };
 
-// const rewardToken = [
-//   {
-//     address: '',
-//     // decimals: 18,
-//     symbol: 'earlyZERO',
-//     name: 'earlyZERO',
-//     icon: '',
-//     unclaimed: '',
-//   },
-// ];
-
 const networks = {
   // blast
-  238: {
+  81457: {
     config: {
       ...baseConfig,
       chainName: 'Blast',
@@ -69,6 +57,9 @@ const networks = {
         underlyingAsset: '0x4300000000000000000000000000000000000004',
         stableDebtTokenAddress: '0xDc1C1257637d5e9dE85F66d14030809A4dB16456',
         variableDebtTokenAddress: '0x7cB8a894b163848bccee03fD71b098693eE7a77D',
+        LEVERAGE: 3,
+        LTV: 0.7,
+        EXTRA_RADIO: 0.3,
       },
       {
         id: '2',
@@ -89,30 +80,35 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         supportBorrow: false,
+        LEVERAGE: 3,
+        LTV: 0.7,
+        EXTRA_RADIO: 0.3,
       },
-      // {
-      //   id: '3',
-      //   underlyingAsset: blast['usdc'].address,
-      //   name: blast['usdc'].name,
-      //   symbol: blast['usdc'].symbol,
-      //   decimals: blast['usdc'].decimals,
-      //   icon: blast['usdc'].icon,
-      //   supplyAPY: '',
-      //   usageAsCollateralEnabled: true,
-      //   borrowingEnabled: true,
-      //   aTokenAddress: '0x016341e6Da8da66b33Fd32189328c102f32Da7CC',
-      //   stableDebtTokenAddress: '0x5faC4FD2e4bCE392d34600d94Aa1114274e54Dff',
-      //   variableDebtTokenAddress: '0xE60E1953aF56Db378184997cab20731d17c65004',
-      //   isIsolated: false,
-      //   availableLiquidity: 0,
-      //   availableLiquidityUSD: '',
-      //   variableBorrowAPY: '',
-      //   supportPermit: false,
-      //   supportBorrow: true,
-      // },
+      {
+        id: '3',
+        underlyingAsset: blast['usdb'].address,
+        name: blast['usdb'].name,
+        symbol: blast['usdb'].symbol,
+        decimals: blast['usdb'].decimals,
+        icon: blast['usdb'].icon,
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: true,
+        aTokenAddress: '0xc7206216F28C23B2Da6537d296e789CFB81b31Ef',
+        stableDebtTokenAddress: '0x3FDda42F3be9b827ECd17786b4bDcb4466F7F15F',
+        variableDebtTokenAddress: '0x325261d7bD4BDa7bAF38d08217793e94B19C8fC7',
+        isIsolated: false,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+        supportBorrow: true,
+        LEVERAGE: 5,
+        LTV: 0.8,
+        EXTRA_RADIO: 0.3,
+      },
     ],
     CONTRACT_ABI,
-    // rewardToken,
   },
 };
 

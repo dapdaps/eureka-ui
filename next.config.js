@@ -73,6 +73,10 @@ const nextConfig = {
       source: '/shush/:path*',
       destination: 'https://www.shush.fi/:path*',
     },
+    {
+      source: '/pac/:path*',
+      destination: api_url + '/pac/:path*',
+    },
   ],
   images: {
     remotePatterns: [
