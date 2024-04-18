@@ -7,7 +7,7 @@ export const base: { [key: string]: Token } = {
     address: 'native',
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
     decimals: 18,
     isNative: true,
   },
@@ -16,7 +16,7 @@ export const base: { [key: string]: Token } = {
     address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     name: 'USDC',
     symbol: 'USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
     decimals: 6,
   },
   cbeth: {
@@ -25,7 +25,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'cbETH',
     name: 'Coinbase Wrapped Staked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif6fax6u2xtetbjv5c27ubxedwqjzrqsreytqbppflryagvm5ix7u',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicnk5s6pfutfj33lcmntimk47sxg2zfxennkmlafrk455zpncbd34',
   },
   weth: {
     chainId: CHAIN_ID,
@@ -41,7 +41,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'Wrapped liquid staked Ether 2.0',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibukwahpp2ei74ax5acm6p7uwcnbsfvdzkizsdzqu26yfbxndpvra',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie5mwrdg7fgm3hhkx5kj5esozzklvaofwjkx6uf3rii54c3j5jrci',
   },
   axlusdc: {
     chainId: CHAIN_ID,
@@ -65,7 +65,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene',
   },
   usdbc: {
     chainId: CHAIN_ID,
@@ -73,7 +73,7 @@ export const base: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDbC',
     name: 'USD Base Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidvlzvrojji7ezvfrcxnjkmdfhxnau6qp7wngfctmxcvurqpeddb4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreia54g5rmlff6cs2rbwj3lqeiprrnszbc2u2gcszdbpubhq7hxekam',
   },
   rckt: {
     chainId: CHAIN_ID,
