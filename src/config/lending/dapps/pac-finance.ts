@@ -46,6 +46,7 @@ const networks = {
         icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
         id: '1',
         isIsolated: false,
+        supportLoop: true,
         name: 'Ethereum',
         supplyAPY: '',
         supportPermit: true,
@@ -60,6 +61,7 @@ const networks = {
         LEVERAGE: 3,
         LTV: 0.7,
         EXTRA_RADIO: 0.3,
+        NATIVE_YIELD: 0.04,
       },
       {
         id: '2',
@@ -75,6 +77,7 @@ const networks = {
         stableDebtTokenAddress: '0xDc1C1257637d5e9dE85F66d14030809A4dB16456',
         variableDebtTokenAddress: '0x7cB8a894b163848bccee03fD71b098693eE7a77D',
         isIsolated: false,
+        supportLoop: true,
         availableLiquidity: 0,
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
@@ -83,6 +86,7 @@ const networks = {
         LEVERAGE: 3,
         LTV: 0.7,
         EXTRA_RADIO: 0.3,
+        NATIVE_YIELD: 0.04,
       },
       {
         id: '3',
@@ -98,6 +102,7 @@ const networks = {
         stableDebtTokenAddress: '0x3FDda42F3be9b827ECd17786b4bDcb4466F7F15F',
         variableDebtTokenAddress: '0x325261d7bD4BDa7bAF38d08217793e94B19C8fC7',
         isIsolated: false,
+        supportLoop: true,
         availableLiquidity: 0,
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
@@ -106,6 +111,7 @@ const networks = {
         LEVERAGE: 5,
         LTV: 0.8,
         EXTRA_RADIO: 0.3,
+        NATIVE_YIELD: 0.15,
       },
       {
         id: '4',
