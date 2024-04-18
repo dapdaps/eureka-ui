@@ -23,8 +23,8 @@ export default function useDapps() {
         // .filter((record: any) => record.name === 'juice')
         .map((record: any) => {
           let _totalBalance = new Big(0);
-          let items: any = {};
-          let _typeBalance: any = {};
+          const items: any = {};
+          const _typeBalance: any = {};
           record.assets.forEach((item: any) => {
             let _typeTotalBalance = new Big(0);
             const _type = item.type || record.type;
