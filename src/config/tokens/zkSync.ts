@@ -4,7 +4,7 @@ const CHAIN_ID = 324;
 export const zkSync: { [key: string]: Token } = {
   eth: {
     chainId: CHAIN_ID,
-    address: 'native',
+    address: '',
     isNative: true,
     decimals: 18,
     symbol: 'ETH',

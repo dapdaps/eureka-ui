@@ -9,7 +9,7 @@ export const optimism: { [key: string]: Token } = {
     icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
     decimals: 18,
     isNative: true,
-    address: 'native',
+    address: '',
   },
   dai: {
     chainId: CHAIN_ID,
@@ -37,7 +37,7 @@ export const optimism: { [key: string]: Token } = {
   },
   native: {
     chainId: CHAIN_ID,
-    address: 'native',
+    address: '',
     decimals: 18,
     symbol: 'ETH',
     name: 'Ether',

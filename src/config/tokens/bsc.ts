@@ -33,7 +33,7 @@ export const bsc: { [key: string]: Token } = {
     name: 'BNB',
     icon: 'https://assets.dapdap.net/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg',
     isNative: true,
-    address: 'native',
+    address: '',
   },
   eth: {
     chainId: CHAIN_ID,

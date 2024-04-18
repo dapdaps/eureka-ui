@@ -4,12 +4,10 @@ import { scroll } from '@/config/tokens/scroll';
 const basic = {
   name: 'SpaceFi',
   logo: '/images/apps/space-fi.png',
-  amountOutFn: 'bluebiu.near/widget/Arbitrum.Swap.ApeAmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   324: {
-    factoryAddress: '0x0700Fb51560CfC8F896B2c812499D17c5B0bF6A7',
-    routerAddress: '0xbE7D1FD1f6748bbDefC4fbaCafBb11C6Fc506d1d',
     defaultCurrencies: {
       input: zkSync['eth'],
       output: zkSync['usdc'],

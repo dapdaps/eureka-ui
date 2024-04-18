@@ -8,7 +8,7 @@ export const polygon: { [key: string]: Token } = {
     symbol: 'MATIC',
     icon: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912',
     decimals: 18,
-    address: 'native',
+    address: '',
     isNative: true,
   },
   eth: {
