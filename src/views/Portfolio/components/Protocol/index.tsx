@@ -96,8 +96,10 @@ const Protocol = ({ dapps, filterFunc, loading }: any) => {
             )}
           </div>
         </YourAssetsTitle>
-        {filteredList.map((protocol: any) => {
-          return <ProtocolItem isHide={isHide} isExpand={isExpand} protocol={protocol} key={protocol.id} />;
+        {filteredList.map((protocol: any, i: number) => {
+          return (
+            <ProtocolItem isHide={isHide} isExpand={isExpand} protocol={protocol} key={protocol.id + Math.random()} />
+          );
         })}
         {loading && (
           <StyledLoadingWrapper $h="100px">

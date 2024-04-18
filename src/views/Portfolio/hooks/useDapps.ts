@@ -15,31 +15,51 @@ export default function useDapps() {
     try {
       setLoading(true);
       setDapps([]);
-      const result = await get(`/db3`, { url: 'api/balance/dapp/list', params: JSON.stringify({ address: account }) });
-      const _dapps: any = {};
-      result?.data?.list.forEach((record: any) => {
-        if (_dapps[record.id]) {
-          _dapps[record.id].assets.push(record.assets);
-        } else {
-          _dapps[record.id] = { ...record, assets: [record.assets] };
-        }
+      const result = await get(`/db3`, {
+        url: 'api/balance/dapp/list',
+        params: JSON.stringify({ address: '0xC25d79fc4970479B88068Ce8891eD9bE5799210D' }),
       });
-
-      setDapps(
-        Object.values(_dapps).map((record: any) => {
+      const _dapps: any = result?.data?.list
+        // .filter((record: any) => record.name === 'juice')
+        .map((record: any) => {
           let _totalBalance = new Big(0);
-          record.assets.map((asset: any) => {
-            asset.map((item: any) => {
+          let items: any = {};
+          let _typeBalance: any = {};
+          record.assets.forEach((item: any) => {
+            let _typeTotalBalance = new Big(0);
+            const _type = item.type || record.type;
+            item.assets.forEach((asset: any) => {
               _totalBalance =
-                item.type.toLowerCase() === 'borrow'
-                  ? _totalBalance.minus(item.usd || 0)
-                  : _totalBalance.add(item.usd || 0);
+                _type.toLowerCase() === 'borrow'
+                  ? _totalBalance.minus(asset.usd || 0)
+                  : _totalBalance.add(asset.usd || 0);
+
+              _typeTotalBalance =
+                _type.toLowerCase() === 'borrow'
+                  ? _typeTotalBalance.minus(asset.usd || 0)
+                  : _typeTotalBalance.add(asset.usd || 0);
             });
+            if (items[_type]) {
+              items[_type].push(item);
+              _typeBalance[_type] = _typeBalance[_type].add(_typeTotalBalance);
+            } else {
+              items[_type] = [item];
+              _typeBalance[_type] = _typeTotalBalance;
+            }
+            item.usd = _typeTotalBalance;
           });
-          record.usd = _totalBalance;
-          return { ...record, usd: _totalBalance };
-        }),
-      );
+
+          return {
+            ...record,
+            assets: Object.keys(items).map((item: any) => ({
+              type: item,
+              assets: items[item],
+              usd: _typeBalance[item],
+            })),
+            usd: _totalBalance,
+          };
+        });
+      setDapps(_dapps);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching resultNetwork data:', error);

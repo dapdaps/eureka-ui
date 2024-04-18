@@ -39,25 +39,6 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
     setThisCardExpand(isExpand);
   }, [isExpand]);
 
-  const [protocols, totalBalances] = useMemo(() => {
-    const _protocols: any = {};
-    const _totalBalances: any = {};
-    protocol.assets.forEach((asset: any, i: number) => {
-      asset.forEach((item: any) => {
-        const _key = protocol.type === 'Liquidity' ? i : item.type;
-        if (_protocols[_key]) {
-          _protocols[_key].list.push(item);
-          _totalBalances[_key] = _totalBalances[_key].add(item.usd || 0);
-        } else {
-          _protocols[_key] = { list: [item], type: item.type, key: _key };
-          _totalBalances[_key] = new Big(item.usd || 0);
-        }
-      });
-    });
-
-    return [_protocols, _totalBalances];
-  }, [protocol.assets]);
-
   const checkHideValue = (value: number) => {
     return isHide && value < 0.01;
   };
@@ -120,60 +101,35 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
             }}
             transition={{ duration: 0.3, ease: [0.04, 0.62, 0.23, 0.98] }}
           >
-            {protocol.type === 'Liquidity' && (
-              <ProtocolTableGenerator
-                type={protocol.type}
-                name={protocol.type}
-                showTitle={false}
-                columns={Columns}
-                rows={Object.values(protocols).map((record: any, i: number) => {
-                  return (
-                    <ProtocolTableRow key={i}>
-                      <td>
-                        <Position lists={record.list} type={i} />
-                      </td>
-                      <td>
-                        {record.list.map((item: any) => (
-                          <div key={item.symbol}>
-                            {formateValue(item.amount, 4)} {item.symbol}
-                          </div>
-                        ))}
-                      </td>
-                      <td>${formateValueWithThousandSeparator(totalBalances[i], 4)}</td>
-                    </ProtocolTableRow>
-                  );
-                })}
-              />
-            )}
-            {protocol.type !== 'Liquidity' &&
-              Object.values(protocols).map((value: any) => {
-                if (checkHideValue(totalBalances[value.type])) return <div />;
-
-                return (
-                  <ProtocolTableGenerator
-                    key={value.type}
-                    type={protocol.type}
-                    name={value.type}
-                    showTitle={false}
-                    columns={Columns}
-                    rows={[
-                      <ProtocolTableRow key={1}>
+            {protocol.assets.map((item: any, i: number) => {
+              if (checkHideValue(item.usd)) return <div key={Math.random()} />;
+              return (
+                <ProtocolTableGenerator
+                  key={item.type + Math.random()}
+                  type={item.type}
+                  name={item.type}
+                  showTitle={false}
+                  columns={Columns}
+                  rows={item.assets.map((record: any, i: number) => {
+                    return (
+                      <ProtocolTableRow key={i}>
                         <td>
-                          <Position lists={value.list} type={name} />
+                          <Position lists={record.assets} type={i} />
                         </td>
                         <td>
-                          {value.list.map((item: any) => (
-                            <div key={item.symbol}>
-                              {formateValue(item.amount, 4)} {item.symbol}
+                          {record.assets.map((slip: any) => (
+                            <div key={slip.symbol}>
+                              {formateValue(slip.amount, 4)} {slip.symbol}
                             </div>
                           ))}
                         </td>
-                        <td>${formateValueWithThousandSeparator(totalBalances[value.type], 4)}</td>
-                      </ProtocolTableRow>,
-                    ]}
-                  />
-                );
-              })}
+                        <td>{formateValueWithThousandSeparator(record.usd, 4)}</td>
+                      </ProtocolTableRow>
+                    );
+                  })}
+                />
+              );
+            })}
           </motion.section>
         )}
       </AnimatePresence>
