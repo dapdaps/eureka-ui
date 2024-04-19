@@ -3,7 +3,7 @@ import type { Token } from '@/types';
 const CHAIN_ID = 169;
 export const manta: { [key: string]: Token } = {
   eth: {
-    address: '',
+    address: 'native',
     isNative: true,
     chainId: CHAIN_ID,
     symbol: 'ETH',

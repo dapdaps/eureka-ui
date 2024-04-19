@@ -9,7 +9,7 @@ export const mantle: { [key: string]: Token } = {
     icon: 'https://ipfs.near.social/ipfs/bafkreibmrdi5ww5rk657jqglnaek5nptc6ze3kljferdsdewcirx4jijhe',
     decimals: 18,
     isNative: true,
-    address: '',
+    address: 'native',
   },
   weth: {
     address: '0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111',

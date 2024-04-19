@@ -4,7 +4,7 @@ export const CHAIN_ID = 534352;
 
 export const scroll: { [key: string]: Token } = {
   eth: {
-    address: '',
+    address: 'native',
     isNative: true,
     chainId: CHAIN_ID,
     symbol: 'ETH',

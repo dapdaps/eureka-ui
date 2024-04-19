@@ -4,7 +4,7 @@ const CHAIN_ID = 8453;
 export const base: { [key: string]: Token } = {
   eth: {
     chainId: CHAIN_ID,
-    address: '',
+    address: 'native',
     name: 'ETH',
     symbol: 'ETH',
     icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',

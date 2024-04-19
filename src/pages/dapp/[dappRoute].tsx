@@ -31,12 +31,6 @@ export const DappPage: NextPageWithLayout = () => {
     return dapp.dapp_network?.map((network: any) => chains.find((_chain: any) => _chain.id === network.network_id));
   }, [chains, dapp]);
 
-  const default_chain_id = useMemo(() => {
-    if (dapp.default_chain_id) return dapp.default_chain_id;
-    const default_chain = chains.find((_chain: any) => _chain.id === dapp.default_network_id);
-    return default_chain?.chain_id;
-  }, [chains, dapp]);
-
   const getLocalConfig = useCallback(async () => {
     if (!dappPathname) {
       setLocalConfig(null);
@@ -65,13 +59,12 @@ export const DappPage: NextPageWithLayout = () => {
   }, [dappPathname]);
 
   const { run } = useDebounceFn(
-    (chain_id) => {
-      if (!chains?.length) return;
-      const isSupported = !!dapp.dapp_network?.find((_chain: any) => _chain.chain_id === chain_id);
-      setIsChainSupported(isSupported && chain_id === chainId);
-
+    () => {
+      const _chainId = chainId || dapp.default_chain_id;
+      const isSupported = !!dapp.dapp_network?.find((_chain: any) => _chain.chain_id === _chainId);
+      setIsChainSupported(isSupported && _chainId === chainId);
       setCurrentChain(
-        chains.find((_chain: any) => _chain.chain_id === (isSupported ? chain_id : dapp.default_chain_id)),
+        chains.find((_chain: any) => _chain.chain_id === (isSupported ? _chainId : dapp.default_chain_id)),
       );
     },
     {
@@ -88,13 +81,7 @@ export const DappPage: NextPageWithLayout = () => {
   }, [dappPathname]);
 
   useEffect(() => {
-    if (!chains?.length) return;
-    run(default_chain_id);
-  }, [chains, default_chain_id]);
-
-  useEffect(() => {
-    if (!currentChain || !chainId || !chains?.length) return;
-    run(chainId);
+    run();
   }, [chainId]);
   const network = useMemo(() => {
     if (!dapp.dapp_network) return null;
@@ -102,8 +89,7 @@ export const DappPage: NextPageWithLayout = () => {
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp]);
 
-  if (!dapp || !default_chain_id || !currentChain || (!dapp.default_chain_id && !dapp.default_network_id))
-    return <div />;
+  if (!dapp || !currentChain || (!dapp.default_chain_id && !dapp.default_network_id)) return <div />;
 
   if (!network?.dapp_src || !localConfig) return <div />;
 

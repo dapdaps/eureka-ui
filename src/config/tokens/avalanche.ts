@@ -64,7 +64,7 @@ export const avalanche: { [key: string]: Token } = {
     symbol: 'AVAX',
     icon: 'https://assets.dapdap.net/images/bafkreiaxodsgromeeaihu44fazsxdopkrqvinqzhyfxvx5mrbcmduqdfpq.svg',
     decimals: 18,
-    address: '',
+    address: 'native',
     isNative: true,
   },
   eth: {
