@@ -598,6 +598,29 @@ const ROUTE_CONFIG = {
       '--claim-color': '#BAEA29',
     },
   },
+  'orbit-protocol': {
+    type: 'lending',
+    theme: {
+      '--button-color': '#69E2DB',
+      '--switch-color': '#69E2DB',
+      '--button-text-color': '#000000',
+      '--supply-color': '#69E2DB',
+      '--yours-table-title': '#fff',
+      '--borrow-color': '#FFB8D2',
+      '--withdraw-bg-color': '#69E2DB',
+      '--withdraw-border-color': '#69E2DB',
+      '--withdraw-bg-hover-color': '#69E2DB',
+      '--repay-bg-color': '#FFB8D2',
+      '--repay-border-color': '#FFB8D2',
+      '--repay-bg-hover-color': '#FFB8D2',
+      '--claim-bg-hover-color': '#69E2DB',
+      '--claim-bg-color': '#69E2DB',
+      '--claim-border-color': '#69E2DB',
+      '--withdraw-color': '#000000',
+      '--replay-color': '#000000',
+      '--claim-color': '#000000',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
