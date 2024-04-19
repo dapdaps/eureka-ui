@@ -36,6 +36,7 @@ const networks = {
       balanceProviderAddress: '0xce3c0026d3c7aa5ec2e8488efb95688b9543fe4e',
       incentivesProxy: '0x13c836bd2dec4ae49e7f865baafe02b402013795', //CLAIM
       // rewardAddress: '',
+      LoopDelegateeAddress: '0xfDe98aB7a6602ad55462297D952CE25b58743140',
     },
     rawMarkets: [
       {
