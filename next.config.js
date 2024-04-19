@@ -106,6 +106,27 @@ const nextConfig = {
   experimental: {
     esmExternals: 'loose',
   },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    console.log(config.resolve)
+    config.resolve.alias['stream'] = 'stream-browserify'
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      path: false,
+      url: false,
+      "fs": false,
+      "constants": false,
+      "querystring": false,
+      "os": false,
+      "http": require.resolve("http-browserify"),
+      "https": require.resolve("https-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      // "stream": false,
+      "crypto": require.resolve("crypto-browserify"),
+      // "zlib": require.resolve('browserify-zlib'),
+      // "vm": require.resolve("vm-browserify"),
+    }
+    return config
+  },
 };
 
 module.exports = nextConfig;

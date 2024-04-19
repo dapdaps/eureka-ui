@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
 
-
 import chainCofig from '@/config/chains'
 import useAccount from '@/hooks/useAccount';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
