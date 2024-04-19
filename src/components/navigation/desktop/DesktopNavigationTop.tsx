@@ -7,6 +7,7 @@ import Chain from '@/components/AccountSider/components/Chain';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
 import ConnectWallet from '@/components/ConnectWallet';
+import OdysseyIcon from './OdysseyIcon';
 import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
@@ -31,7 +32,7 @@ const Container = styled.div<{ $expand: boolean }>`
   top: 0;
   width: 100%;
   z-index: 50;
-  background: ${({ $expand }) => ($expand ? 'rgba(22, 24, 29, 1)' : 'rgba(22, 24, 29, 0.9)')};
+  background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(22, 24, 29, 0.9)')};
   backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
   border-bottom: 1px solid #21232a;
 
@@ -57,7 +58,7 @@ const MenuContainer = styled.div`
   width: 40%;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 44%;
   transform: translate(-50%, -50%);
   z-index: 30;
   flex: 1;
@@ -227,6 +228,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
               <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
             </div>
+            <OdysseyIcon />
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}

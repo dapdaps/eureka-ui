@@ -3,9 +3,11 @@ import { get } from '@/utils/http';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { useRouter } from 'next/router';
-import { memo } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import odyssey from '@/config/odyssey';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { LeftButton, RightButton } from './ArrowBtn';
 
 interface FlexProps {
   flexDirection?: 'row' | 'column';
@@ -63,11 +65,31 @@ const StyledFlex = styled.div<FlexProps>`
   justify-content: ${(props) => props.justifyContent || 'flex-start'};
   gap: ${(props) => props.gap || '0px'};
 `;
+const StyledOdysseyWrapper = styled.div`
+  width: calc(100% - 388px);
+  position: relative;
+`;
+const StyledOdysseyContainer = styled.div`
+  overflow: hidden;
+`;
+
+const StyledMask = styled.div`
+  width: 129px;
+  height: 227px;
+  background: linear-gradient(270deg, #262836 0%, rgba(38, 40, 54, 0) 100%);
+  position: absolute;
+  top: 0px;
+  z-index: 4;
+`;
+
 const Odyssey = function ({ setShow }: any) {
   const toast = useToast();
   const { loading, compassList } = useCompassList();
+  const [showBeginMask, setShowBeginMask] = useState(false);
+  const [showEndMask, setShowEndMask] = useState(true);
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true });
+  const swiperRef = useRef<any>();
 
   const handleClick = async function (compass: any) {
     let status = compass.status;
@@ -87,8 +109,13 @@ const Odyssey = function ({ setShow }: any) {
   };
   return (
     <StyledOdyssey>
-      <StyledFlex alignItems="flex-start" gap="86px" style={{ width: '100%' }}>
-        <StyledFlex flexDirection="column" alignItems="flex-start" gap="15px" style={{ width: '30%', marginTop: 17 }}>
+      <StyledFlex alignItems="flex-start" gap="70px" style={{ width: '100%' }}>
+        <StyledFlex
+          flexDirection="column"
+          alignItems="flex-start"
+          gap="15px"
+          style={{ width: '316px', marginTop: 17, flexShrink: '0' }}
+        >
           <StyledFont color="#FFF" fontSize="20px" fontWeight="700">
             Odyssey
           </StyledFont>
@@ -96,33 +123,65 @@ const Odyssey = function ({ setShow }: any) {
             Obtain spins through on-chain interactive quests as you explore the untapped potential of Ethereum L2s.
           </StyledFont>
         </StyledFlex>
-        {compassList.map((compass: any) => (
-          <StyledFlex flexDirection="column" gap="14px" style={{ width: '30%' }} key={compass.id}>
-            <StyledContainer
-              style={{
-                cursor: compass.status === 'un_start' ? 'not-allowed' : 'pointer',
-                position: 'relative',
-              }}
-              onClick={() => {
-                check(() => {
-                  handleClick(compass);
-                });
+        <StyledOdysseyWrapper>
+          <StyledOdysseyContainer>
+            <Swiper
+              width={860}
+              slidesPerView={2.4}
+              speed={500}
+              spaceBetween={28}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
               }}
             >
-              <StyledImage style={{ backgroundImage: `url(${compass.banner})` }} />
-              {compass.status === 'un_start' && (
-                <StyledMakser>
-                  <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
-                    Coming soon...
-                  </StyledFont>
-                </StyledMakser>
-              )}
-            </StyledContainer>
-            <StyledFont color="#FFF" fontSize="16px" fontWeight="700">
-              {compass.name}
-            </StyledFont>
-          </StyledFlex>
-        ))}
+              {compassList.map((compass: any, index: number) => (
+                <SwiperSlide key={index}>
+                  <StyledFlex flexDirection="column" gap="14px" style={{ width: '330px' }} key={compass.id}>
+                    <StyledContainer
+                      style={{
+                        cursor: compass.status === 'un_start' ? 'not-allowed' : 'pointer',
+                        position: 'relative',
+                      }}
+                      onClick={() => {
+                        check(() => {
+                          handleClick(compass);
+                        });
+                      }}
+                    >
+                      <StyledImage style={{ backgroundImage: `url(${compass.banner})` }} />
+                      {compass.status === 'un_start' && (
+                        <StyledMakser>
+                          <StyledFont color="#FFF" fontSize="16px" fontWeight="500">
+                            Coming soon...
+                          </StyledFont>
+                        </StyledMakser>
+                      )}
+                    </StyledContainer>
+                    <StyledFont color="#FFF" fontSize="16px" fontWeight="700">
+                      {compass.name}
+                    </StyledFont>
+                  </StyledFlex>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </StyledOdysseyContainer>
+          {showBeginMask && <StyledMask style={{ left: '0px', transform: 'rotate(-180deg)' }} />}
+          {showEndMask && compassList?.length > 2 && <StyledMask style={{ right: '0px' }} />}
+          <LeftButton
+            onClick={() => {
+              swiperRef.current && swiperRef.current.slidePrev();
+              setShowEndMask(!swiperRef.current?.isEnd);
+              setShowBeginMask(!swiperRef.current?.isBeginning);
+            }}
+          />
+          <RightButton
+            onClick={() => {
+              swiperRef.current && swiperRef.current.slideNext();
+              setShowEndMask(!swiperRef.current?.isEnd);
+              setShowBeginMask(!swiperRef.current?.isBeginning);
+            }}
+          />
+        </StyledOdysseyWrapper>
       </StyledFlex>
     </StyledOdyssey>
   );

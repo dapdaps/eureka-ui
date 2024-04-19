@@ -6,7 +6,7 @@ export const MenuContainer = styled(motion.div)`
   position: absolute;
   left: 0;
   top: 78px;
-  background: #16181d;
+  background: #262836;
   width: 100%;
   padding: 40px 0px;
   color: #ffffff;
@@ -117,7 +117,7 @@ export const StyledMenuTitle = styled.div`
 
 export const StyledMenuLock = styled.div`
   border-radius: 10px;
-  border: 1px solid #16181d;
+  border: 1px solid #262836;
   background: #373a53;
   width: 51px;
   height: 20px;

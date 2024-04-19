@@ -25,6 +25,7 @@ export const StyledSvg = styled.div`
   justify-content: center;
 `;
 export const StyledLoadingWrapper = styled.div<{ $h: string }>`
+  width: 100%;
   height: ${({ $h }) => $h};
   display: flex;
   align-items: center;

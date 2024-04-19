@@ -119,9 +119,9 @@ const Compass = () => {
                   <StyledCompassIcon>
                     <CompassIcon />
                   </StyledCompassIcon>
-                  {odyssey[compass.id]?.showPrizeLabel && (
+                  {odyssey[compass.id]?.reward && (
                     <StyledWinPtsIcon>
-                      <WinPtsIcon num="10,000" />
+                      <WinPtsIcon num={odyssey[compass.id].reward} />
                     </StyledWinPtsIcon>
                   )}
                 </SwiperSlide>
