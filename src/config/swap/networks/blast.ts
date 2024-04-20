@@ -4,6 +4,7 @@ import { basic as mimswapBasic, networks as mimswapNetworks } from '../dapps/mim
 import { basic as momoswapV3Basic, networks as momoswapV3Networks } from '../dapps/momoswap-v3';
 import { basic as momoswapV2Basic, networks as momoswapV2Networks } from '../dapps/momoswap-v2';
 import { basic as ringBasic, networks as ringNetworks } from '../dapps/ring-protocol';
+import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
 
 const CHAIN_ID = 81457;
 
@@ -26,6 +27,10 @@ export default {
       ...ringBasic,
       ...ringNetworks[CHAIN_ID],
     },
+    Ambient: {
+      ...ambientBasic,
+      ...ambientNetworks[CHAIN_ID],
+    },
     'MonoSwap V3': {
       ...momoswapV3Basic,
       ...momoswapV3Networks[CHAIN_ID],
@@ -34,7 +39,6 @@ export default {
       ...momoswapV2Basic,
       ...momoswapV2Networks[CHAIN_ID],
     },
-
     MimSwap: {
       ...mimswapBasic,
       ...mimswapNetworks[CHAIN_ID],
