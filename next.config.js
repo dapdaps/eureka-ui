@@ -107,7 +107,7 @@ const nextConfig = {
     esmExternals: 'loose',
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    console.log(config.resolve)
+    // console.log(config.resolve)
     config.resolve.alias['stream'] = 'stream-browserify'
     config.resolve.fallback = {
       ...config.resolve.fallback,
