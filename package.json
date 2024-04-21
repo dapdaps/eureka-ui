@@ -10,8 +10,7 @@
     "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "yarn add @0xsquid/squid-types --ignore-engines"
+    "lint": "next lint"
   },
   "dependencies": {
     "@braintree/sanitize-url": "6.0.4",
@@ -111,7 +110,6 @@
   },
   "devDependencies": {
     "ts-loader": "^9.5.1",
-    "@0xsquid/squid-types": "^0.1.59",
     "@types/analytics-node": "^3.1.14",
     "@types/big.js": "^6.2.2",
     "@types/keccak": "^3.0.4",
