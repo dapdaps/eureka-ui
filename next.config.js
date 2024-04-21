@@ -109,6 +109,21 @@ const nextConfig = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     // console.log(config.resolve)
     config.resolve.alias['stream'] = 'stream-browserify'
+    config.resolve.alias['stream'] = 'stream-browserify'
+    config.module.rules.push({
+          test: /super-bridge-sdk/,
+          use: [
+                {
+                    loader: 'ts-loader',
+                    options: {
+                      compilerOptions: {noEmit: false},
+                      onlyCompileBundledFiles: true,
+                      allowTsInNodeModules: true
+                    }
+                }
+            ]
+         
+    })
     config.resolve.fallback = {
       ...config.resolve.fallback,
       path: false,
