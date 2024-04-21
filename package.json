@@ -109,6 +109,7 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@0xsquid/squid-types": "^0.1.59",
     "@types/analytics-node": "^3.1.14",
     "@types/big.js": "^6.2.2",
     "@types/keccak": "^3.0.4",
