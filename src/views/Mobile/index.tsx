@@ -30,6 +30,7 @@ const StyledIntroduction = styled.div`
   border: 1px solid #4B4A4A;
   background: rgba(33, 35, 42, 0.90);
   backdrop-filter: blur(5px);
+  z-index: 999;
 `
 const StyledFooterLogo = styled.img`
   width: 91px;
@@ -54,6 +55,7 @@ const StyledCover = styled.div`
   top: 0;
   right: 0;
   bottom: 0;
+  z-index: 99;
 `
 const StyledChainListContainer = styled.div`
   
@@ -105,8 +107,8 @@ const Index = function () {
       <StyledCover>
         <StyledChainListContainer className="down">
           {
-            new Array(2).fill("").map(key => (
-              <StyledChainList key={key}>
+            new Array(2).fill("").map((key, parentIndex) => (
+              <StyledChainList key={parentIndex}>
                 {
                   chains.map((chain, index) => {
                     return (
@@ -120,8 +122,8 @@ const Index = function () {
         </StyledChainListContainer>
         <StyledChainListContainer className="up">
           {
-            new Array(2).fill("").map(key => (
-              <StyledChainList key={key}>
+            new Array(2).fill("").map((key, parentIndex) => (
+              <StyledChainList key={parentIndex}>
                 {
                   chains.map((chain, index) => {
                     return (
@@ -135,7 +137,10 @@ const Index = function () {
         </StyledChainListContainer>
       </StyledCover>
 
-      <StyledContainer>
+      <StyledContainer style={{
+        position: "relative",
+        zIndex: 999
+      }}>
         <StyledSvg style={{
           margin: "125px auto 23px",
         }}>
@@ -198,7 +203,7 @@ const Index = function () {
             marginBottom: 24
           }}
         >
-          <StyledSquareButton onTouchEnd={() => {
+          <StyledSquareButton onClick={() => {
             window.open("https://twitter.com/DapDapMeUp", '_self');
           }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -221,7 +226,7 @@ const Index = function () {
               </defs>
             </svg>
           </StyledSquareButton>
-          <StyledSquareButton onTouchEnd={() => {
+          <StyledSquareButton onClick={() => {
             window.open("https://discord.gg/x5USArxKVH", '_self');
           }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="10" viewBox="0 0 16 10" fill="none">
@@ -244,7 +249,7 @@ const Index = function () {
               </defs>
             </svg>
           </StyledSquareButton>
-          <StyledSquareButton onTouchEnd={() => {
+          <StyledSquareButton onClick={() => {
             window.open("https://t.me/DapDapDiscussion", '_self');
           }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12" fill="none">
@@ -268,7 +273,8 @@ const Index = function () {
             </svg>
           </StyledSquareButton>
         </StyledFlex>
-        <StyledIntroduction onTouchEnd={() => {
+        <StyledIntroduction onClick={() => {
+          console.log('====1111===')
           window.open("https://docs.dapdap.net", '_self');
         }}>
           <StyledFooterLogo src="/images/mobile/footer_logo.png" alt="footer_logo" />
