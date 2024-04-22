@@ -13,6 +13,7 @@ import { EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useClaim from './hooks/useClaim';
 import useDetail from './hooks/useDetail';
+import useAuthCheck from '@/hooks/useAuthCheck';
 const StyledLogo = styled.img`
   width: 340px;
 `
@@ -155,11 +156,13 @@ const StyledSwiperButton = styled.div`
 `
 const Index = function () {
   const router = useRouter()
+  const { check } = useAuthCheck({ isNeedAk: true });
   const { loading, compassList } = useCompassList();
   const { detail, queryDetail } = useDetail()
   const { loading: claimLoading, onClaim } = useClaim()
   const [activeIndex, setActiveIndex] = useState(0)
   const [sortCompassList, setSortCompassList] = useState([])
+
 
   const swiperRef = useRef<any>(null);
 
@@ -169,8 +172,11 @@ const Index = function () {
 
 
   const handleClickClaim = function () {
+    if (claimLoading) return
     if (detail.unclaimed_reward > 0) {
-      onClaim(currentCompass?.id)
+      onClaim(currentCompass?.id, () => {
+        queryDetail(currentCompass?.id)
+      })
     }
   }
   const handleJump = function () {
@@ -391,8 +397,14 @@ const Index = function () {
           <StyledFlex flexDirection='column' gap='30px'>
             <StyledFont color='#FFF' fontSize='20px' lineHeight='150%'>{odyssey[currentCompass.id].tips}</StyledFont>
             <StyledFlex gap='18px'>
-              <StyledJoinButton onClick={handleJump}>Join Odyssey Vol.{currentCompass.id}</StyledJoinButton>
-              <StyledClaimButton onClick={handleClickClaim}>Claim {detail.unclaimed_reward} PTS</StyledClaimButton>
+              <StyledJoinButton onClick={() => {
+                check(handleJump)
+              }}>Join Odyssey Vol.{currentCompass.id}</StyledJoinButton>
+              <StyledClaimButton
+                onClick={() => {
+                  check(handleClickClaim)
+                }}
+              >Claim {detail?.unclaimed_reward ?? 0} PTS</StyledClaimButton>
             </StyledFlex>
           </StyledFlex>
         )

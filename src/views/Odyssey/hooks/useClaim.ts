@@ -6,7 +6,7 @@ export default function useClaim() {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
-  const onClaim = async (id: number) => {
+  const onClaim = async (id: number, onSuccess: VoidFunction) => {
     setLoading(true);
     try {
       const result = await post('/api/compass/claim', {
@@ -16,6 +16,7 @@ export default function useClaim() {
         toast.success({
           title: 'Claim successfully',
         });
+        onSuccess && onSuccess()
       } else {
         toast.fail({
           title: result.msg || 'Claim failed',

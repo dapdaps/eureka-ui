@@ -198,7 +198,7 @@ const Index = function () {
             marginBottom: 24
           }}
         >
-          <StyledSquareButton onClick={() => {
+          <StyledSquareButton onTouchEnd={() => {
             window.open("https://twitter.com/DapDapMeUp", '_blank');
           }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
@@ -221,7 +221,7 @@ const Index = function () {
               </defs>
             </svg>
           </StyledSquareButton>
-          <StyledSquareButton onClick={() => {
+          <StyledSquareButton onTouchEnd={() => {
             window.open("https://discord.gg/x5USArxKVH", '_blank');
           }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="10" viewBox="0 0 16 10" fill="none">
@@ -244,7 +244,7 @@ const Index = function () {
               </defs>
             </svg>
           </StyledSquareButton>
-          <StyledSquareButton onClick={() => {
+          <StyledSquareButton onTouchEnd={() => {
             window.open("https://t.me/DapDapDiscussion", '_blank');
           }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12" fill="none">
@@ -268,7 +268,7 @@ const Index = function () {
             </svg>
           </StyledSquareButton>
         </StyledFlex>
-        <StyledIntroduction onClick={() => {
+        <StyledIntroduction onTouchEnd={() => {
           window.open("https://docs.dapdap.net", '_blank');
         }}>
           <StyledFooterLogo src="/images/mobile/footer_logo.png" alt="footer_logo" />
