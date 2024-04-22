@@ -1,17 +1,19 @@
 import { memo, useCallback } from 'react';
 import styled from 'styled-components';
+
 import Breadcrumb from '@/components/Breadcrumb';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
-import { bridge as dappBridgeTheme } from '@/config/theme/dapp';
 import chainsConfig from '@/config/chains';
 import GAS_LIMIT_RECOMMENDATIONS from '@/config/contract/gas-limit';
 import multicallConfig from '@/config/contract/multicall';
 import wethConfig from '@/config/contract/weth';
-import { multicall } from '@/utils/multicall';
-import { usePriceStore } from '@/stores/price';
+import { bridge as dappBridgeTheme } from '@/config/theme/dapp';
 import useAddAction from '@/hooks/useAddAction';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useLayoutStore } from '@/stores/layout';
+import { usePriceStore } from '@/stores/price';
+import { multicall } from '@/utils/multicall';
+import refresh from '@/utils/refresh';
 
 const StyledPage = styled.div`
   padding: 50px 80px 0px;
@@ -100,6 +102,7 @@ const Dapp = ({
             multicall,
             isChainSupported,
             GAS_LIMIT_RECOMMENDATIONS,
+            refresh,
           }}
           src={network.dapp_src}
         />
