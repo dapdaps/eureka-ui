@@ -64,7 +64,7 @@ const networks = {
         token1: 'WBNB',
         "decimals0": 18,
         "decimals1": 18,
-        "poolAddress": "0x479e1B71A702a595e19b6d5932CD5c863ab57ee0",
+        "poolAddress": "0x36696169C63e42cd08ce11f5deeBbCeBae652050",
       },
       {
         id: 'P USDV-USDT',
@@ -140,7 +140,7 @@ const networks = {
         token1: 'USDC',
         "decimals0": 18,
         "decimals1": 18,
-        "poolAddress": "0xdd0d223384bB2FA880f6566baCDa599439457aa6",
+        "poolAddress": "0x92930F343c8Fb1da3656D4908d2F59b543A54056",
       },
       {
         id: 'A WETH-WEBMI',
@@ -159,7 +159,7 @@ const networks = {
       STONE: '0xEc901DA9c68E90798BbBb74c11406A32A70652C3',
       wUSDM: '0xbdAd407F77f44F7Da6684B416b1951ECa461FB07',
       MANTA: '0x95CeF13441Be50d20cA4558CC0a27B601aC544E5',
-      USDC: '0x5F0b1a82749cb4E2278EC87F8BF6B618dC71a8bf',
+      USDC: '0xb73603C5d87fA094B7314C74ACE2e64D165016fb',
       WEBMI: '0x19585009Ce333efCC4a383c28B27A0Eb2e8497Ea',
 
       'P WETH-STONE': '0xC69Aa5d11B9B3B8Af0699603F4B8779a1eF200a3',
