@@ -222,7 +222,6 @@ const Index = function () {
           }}
           loop={true}
           modules={[EffectCoverflow]}
-          initialSlide={activeIndex}
           onActiveIndexChange={(event) => {
             setActiveIndex(event.realIndex)
           }}
