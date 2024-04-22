@@ -1,11 +1,12 @@
 import odyssey from '@/config/odyssey';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import {
   StyledContainer,
   StyledFlex,
-  StyledFont,
-  StyledSvg
+  StyledFont
 } from "@/styled/styles";
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import { useConnectWallet } from '@web3-onboard/react';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
@@ -13,7 +14,6 @@ import { EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useClaim from './hooks/useClaim';
 import useDetail from './hooks/useDetail';
-import useAuthCheck from '@/hooks/useAuthCheck';
 const StyledLogo = styled.img`
   width: 340px;
 `
@@ -156,6 +156,7 @@ const StyledSwiperButton = styled.div`
 `
 const Index = function () {
   const router = useRouter()
+  const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const { check } = useAuthCheck({ isNeedAk: true });
   const { loading, compassList } = useCompassList();
   const { detail, queryDetail } = useDetail()
@@ -179,8 +180,8 @@ const Index = function () {
       })
     }
   }
-  const handleJump = function () {
-    router.push(odyssey[currentCompass.id].path);
+  const handleJump = function (compass: any) {
+    router.push(odyssey[compass.id].path);
   }
   const handleClickSlideButton = function (event: any, type: string) {
     event.stopPropagation();
@@ -201,11 +202,14 @@ const Index = function () {
       sortList[middleIndex] = sortList[0]
       sortList[0] = temp
       setSortCompassList(sortList)
-      console.log("=middleIndex", middleIndex, "=swiperRef.current", swiperRef.current)
       setActiveIndex(middleIndex)
       swiperRef.current && swiperRef.current.slideTo(middleIndex, 0)
     }
   }, [compassList])
+
+  useEffect(() => {
+    queryDetail(currentCompass?.id)
+  }, [wallet]);
   return (
     <StyledContainer style={{
       paddingTop: 56
@@ -241,7 +245,11 @@ const Index = function () {
             sortCompassList.map((compass: any, index: number) => {
               return (
                 <SwiperSlide key={index} className='swiper-no-swiping'>
-                  <StyledCard onClick={handleJump}>
+                  <StyledCard
+                    onClick={() => {
+                      handleJump(compass)
+                    }}
+                  >
                     <StyledContainer style={{
                       padding: "16px 20px 0 24px"
                     }}>
@@ -334,7 +342,7 @@ const Index = function () {
                         }}>
                           {
                             odyssey[compass.id].video ? (
-                              <StyledCompassVideo autoPlay loop src={odyssey[compass.id].video} />
+                              <StyledCompassVideo autoPlay loop muted={false} playsInline src={odyssey[compass.id].video} />
                             ) : (
                               <StyledCompassImage src={compass.banner} style={{ filter: compass.status === "ended" ? "grayscale(1)" : "grayscale(0)" }} />
                             )
@@ -398,7 +406,9 @@ const Index = function () {
             <StyledFont color='#FFF' fontSize='20px' lineHeight='150%'>{odyssey[currentCompass.id].tips}</StyledFont>
             <StyledFlex gap='18px'>
               <StyledJoinButton onClick={() => {
-                check(handleJump)
+                check(() => {
+                  handleJump(currentCompass)
+                })
               }}>Join Odyssey Vol.{currentCompass.id}</StyledJoinButton>
               <StyledClaimButton
                 onClick={() => {
