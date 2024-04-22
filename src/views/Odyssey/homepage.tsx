@@ -195,6 +195,7 @@ const Index = function () {
       sortList[middleIndex] = sortList[0]
       sortList[0] = temp
       setSortCompassList(sortList)
+      console.log("=middleIndex", middleIndex, "=swiperRef.current", swiperRef.current)
       setActiveIndex(middleIndex)
       swiperRef.current && swiperRef.current.slideTo(middleIndex, 0)
     }
@@ -220,8 +221,9 @@ const Index = function () {
             modifier: 1,
             slideShadows: true,
           }}
-          loop={true}
+          // loop={true}
           modules={[EffectCoverflow]}
+          initialSlide={activeIndex}
           onActiveIndexChange={(event) => {
             setActiveIndex(event.realIndex)
           }}
