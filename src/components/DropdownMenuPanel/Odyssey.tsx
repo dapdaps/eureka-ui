@@ -8,6 +8,7 @@ import styled from 'styled-components';
 import odyssey from '@/config/odyssey';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { LeftButton, RightButton } from './ArrowBtn';
+import { StyledSvg } from '@/styled/styles';
 
 interface FlexProps {
   flexDirection?: 'row' | 'column';

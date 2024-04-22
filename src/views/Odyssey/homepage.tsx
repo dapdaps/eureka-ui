@@ -220,7 +220,7 @@ const Index = function () {
             modifier: 1,
             slideShadows: true,
           }}
-          // loop={true}
+          loop={true}
           modules={[EffectCoverflow]}
           initialSlide={activeIndex}
           onActiveIndexChange={(event) => {
