@@ -101,7 +101,7 @@
     "recharts": "^2.10.1",
     "rudder-sdk-js": "^2.45.0",
     "styled-components": "^6.1.1",
-    "super-bridge-sdk": "0.0.9-6",
+    "super-bridge-sdk": "link:/Users/ranzhang/Documents/code/wb/bridge-sdk",
     "swiper": "^11.0.5",
     "typescript": "5.3.2",
     "uuid": "^9.0.1",
