@@ -41,13 +41,13 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#FFFFFF',
     },
   },
-  // 'arrakis-finance': {
-  //   type: 'liquidity',
-  //   theme: {
-  //     '--button-color': '#FFA760',
-  //     '--button-text-color': '#000000',
-  //   },
-  // },
+  'blastoff': {
+    type: 'liquidity',
+    theme: {
+      '--button-color': '#F49102',
+      '--button-text-color': '#000',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
