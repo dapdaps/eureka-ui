@@ -23,8 +23,6 @@ const networks = {
     ],
   },
   534352: {
-    factoryAddress: '0x6cC370Ed99f1C11e7AC439F845d0BA6aed55cf50',
-    routerAddress: '0x18b71386418A9FCa5Ae7165E31c385a5130011b6',
     defaultCurrencies: {
       input: scroll['weth'],
       output: scroll['usdc'],

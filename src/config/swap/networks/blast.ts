@@ -1,8 +1,8 @@
 import weths from '../../contract/weth';
 import { basic as thrusterBasic, networks as thrusterNetworks } from '../dapps/thruster-finance';
 import { basic as mimswapBasic, networks as mimswapNetworks } from '../dapps/mimswap';
-import { basic as momoswapV3Basic, networks as momoswapV3Networks } from '../dapps/momoswap-v3';
-import { basic as momoswapV2Basic, networks as momoswapV2Networks } from '../dapps/momoswap-v2';
+import { basic as monoswapV3Basic, networks as monoswapV3Networks } from '../dapps/monoswap-v3';
+import { basic as monoswapV2Basic, networks as monoswapV2Networks } from '../dapps/monoswap-v2';
 import { basic as ringBasic, networks as ringNetworks } from '../dapps/ring-protocol';
 import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
 
@@ -32,12 +32,12 @@ export default {
       ...ambientNetworks[CHAIN_ID],
     },
     'MonoSwap V3': {
-      ...momoswapV3Basic,
-      ...momoswapV3Networks[CHAIN_ID],
+      ...monoswapV3Basic,
+      ...monoswapV3Networks[CHAIN_ID],
     },
     'MonoSwap V2': {
-      ...momoswapV2Basic,
-      ...momoswapV2Networks[CHAIN_ID],
+      ...monoswapV2Basic,
+      ...monoswapV2Networks[CHAIN_ID],
     },
     MimSwap: {
       ...mimswapBasic,

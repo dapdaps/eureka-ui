@@ -1,12 +1,11 @@
 import { blast } from '@/config/tokens/blast';
 const basic = {
   name: 'MonoSwap V2',
-  logo: '/images/apps/momoswap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.MomoswapV2',
+  logo: '/images/apps/monoswap.png',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   81457: {
-    routerAddress: '0x859374eA6dF8289d883fEd4E688a83381276521d',
     defaultCurrencies: {
       input: blast['eth'],
       output: blast['usdb'],
