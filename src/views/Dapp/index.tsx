@@ -104,7 +104,7 @@ const Dapp = ({
             GAS_LIMIT_RECOMMENDATIONS,
             refresh,
           }}
-          src={network.dapp_src}
+          src={"bluebiu.near/widget/Liquidity.BLASTOFF"}
         />
       </div>
     </StyledPage>

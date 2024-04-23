@@ -20,6 +20,39 @@ export const DappPage: NextPageWithLayout = () => {
 
   const { chainId, account } = useAccount();
   const { dapp, loading } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
+  // const loading = false
+  // const dapp = {
+  //   "id": 95,
+  //   "created_at": "2024-01-30T03:22:22.323000+00:00",
+  //   "updated_at": "2024-02-17T10:21:59+00:00",
+  //   "name": "Xfai",
+  //   "description": "Xfai is a decentralized exchange (DEX), that is based on a system of of on-chain constant function market maker (CFMM) smart contracts.",
+  //   "route": "dapp/xfai",
+  //   "logo": "https://s3.amazonaws.com/dapdap.prod/images/xfai.png",
+  //   "favorite": 0,
+  //   "default_chain_id": 81457,
+  //   "priority": 1,
+  //   "tbd_token": "N",
+  //   "recommend": true,
+  //   "recommend_icon": "https://s3.amazonaws.com/dapdap.prod/images/dapps1.jpg",
+  //   "tag": "xfai,linea,swap,dex,dapdap",
+  //   "native_currency": "{\"name\":\"\",\"symbol\":\"\",\"decimals\":1,\"logo\":\"\"}",
+  //   "theme": "{\"swap_color\":\"\"}",
+  //   "dapp_category": [
+  //     {
+  //       "dapp_id": 95,
+  //       "category_id": 2
+  //     }
+  //   ],
+  //   "dapp_network": [
+  //     {
+  //       "dapp_id": 95,
+  //       "network_id": 4,
+  //       "chain_id": 81457,
+  //       "dapp_src": "bluebiu.near/widget/Liquidity.BLASTOFF"
+  //     }
+  //   ]
+  // }
 
   const [currentChain, setCurrentChain] = useState<any>();
   const [ready, setReady] = useState(false);
