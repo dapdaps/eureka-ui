@@ -44,7 +44,7 @@ const App: FC<IProps> = ({ data }) => {
   const CustomTooltip = (props: any) => {
     const { payload } = props;
 
-    const map: any = { total_trading_value: 'Transactions' };
+    const map: any = { total_trading_value: 'Trading Volume' };
 
     return (
       <Styles.CustomTooltip>
