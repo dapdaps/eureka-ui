@@ -187,7 +187,7 @@ const AllInOne: NextPageWithLayout = () => {
   const prices = usePriceStore((store) => store.price);
   const [tab, setTab] = useState('');
   const cachedTabsStore: any = useAllInOneTabCachedStore();
-  const { addAction } = useAddAction('XYFinance');
+  const { addAction } = useAddAction('dapp');
 
 
   useEffect(() => {
