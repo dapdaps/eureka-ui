@@ -7,6 +7,8 @@ const basic = {
   handler: 'bluebiu.near/widget/Lending.Handler.Orbit',
 };
 
+// reward 0x42e12d42b3d6c4a74a88a61063856756ea2db357
+
 const networks = {
   // blast
   81457: {
@@ -21,6 +23,7 @@ const networks = {
         icon: blast['eth'].icon,
         address: '0x0872b71efc37cb8dde22b2118de3d800427fdba0',
         underlyingToken: blast['eth'],
+        loanToValue: 0.75,
       },
       '0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87': {
         underlyingAsset: blast['usdb'].address,
@@ -30,6 +33,7 @@ const networks = {
         icon: blast['usdb'].icon,
         address: '0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87',
         underlyingToken: blast['usdb'],
+        loanToValue: 0.75,
       },
       '0x8c415331761063e5d6b1c8e700f996b13603fc2e': {
         underlyingAsset: blast['wbtc'].address,
@@ -39,6 +43,7 @@ const networks = {
         icon: blast['wbtc'].icon,
         address: '0x8c415331761063e5d6b1c8e700f996b13603fc2e',
         underlyingToken: blast['wbtc'],
+        loanToValue: 0.75,
       },
     },
   },
