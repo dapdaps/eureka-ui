@@ -451,6 +451,9 @@ const Index = function () {
                         handleJump(currentCompass)
                       })
                     }}
+                    style={{
+                      width: currentCompass.status === "ended" ? 216 : 380
+                    }}
                   >{currentCompass.status === "ended" ? `Join Odyssey Vol.${currentCompass?.id}` : `Odyssey Vol.${currentCompass?.id} is coming soon!`}</StyledComingSoonButton>
                 ) : (
                   <StyledJoinButton
