@@ -21,9 +21,9 @@ const StyledSwiperContainer = styled.div`
   position: relative;
   margin: 69px 0 29px;
   .swiper-slide {
-    background-position: center;
-    background-size: cover;
     width: 500px;
+    border-radius: 16px;
+    overflow: hidden;
     /* height: 454px; */
   }
 `
@@ -166,6 +166,7 @@ const Index = function () {
 
 
   const swiperRef = useRef<any>(null);
+  const videoListRef = useRef<any>([])
 
   const currentCompass = useMemo(() => {
     return compassList[activeIndex]
@@ -238,7 +239,17 @@ const Index = function () {
           modules={[EffectCoverflow]}
           initialSlide={activeIndex}
           onActiveIndexChange={(event) => {
-            setActiveIndex(event.realIndex)
+            const index = event.realIndex
+            setActiveIndex(index)
+            // stop video
+            videoListRef.current.forEach((video: any) => {
+              if (!video.paused) {
+                video.pause()
+              }
+            })
+            if (videoListRef.current[index]) {
+              videoListRef.current[index].play()
+            }
           }}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
@@ -345,7 +356,7 @@ const Index = function () {
                         }}>
                           {
                             odyssey[compass.id]?.video ? (
-                              <StyledCompassVideo autoPlay loop muted={false} playsInline src={odyssey[compass.id]?.video} />
+                              <StyledCompassVideo ref={(ref) => videoListRef.current[index] = ref} loop muted={false} controls playsInline src={odyssey[compass.id]?.video} />
                             ) : (
                               <StyledCompassImage src={compass.banner} style={{ filter: ["ended", "un_start"].includes(compass.status) ? "grayscale(1)" : "grayscale(0)" }} />
                             )
@@ -413,11 +424,15 @@ const Index = function () {
                   handleJump(currentCompass)
                 })
               }}>Join Odyssey Vol.{currentCompass?.id}</StyledJoinButton>
-              <StyledClaimButton
-                onClick={() => {
-                  check(handleClickClaim)
-                }}
-              >Claim {detail?.unclaimed_reward ?? 0} PTS</StyledClaimButton>
+              {
+                (detail?.unclaimed_reward ?? 0) > 0 && (
+                  <StyledClaimButton
+                    onClick={() => {
+                      check(handleClickClaim)
+                    }}
+                  >Claim {detail?.unclaimed_reward} PTS</StyledClaimButton>
+                )
+              }
             </StyledFlex>
           </StyledFlex>
         )
