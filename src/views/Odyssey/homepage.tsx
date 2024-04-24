@@ -5,7 +5,7 @@ import {
   StyledFlex,
   StyledFont
 } from "@/styled/styles";
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import useCompassList from './hooks/useCompassList';
 import { useConnectWallet } from '@web3-onboard/react';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -181,7 +181,10 @@ const Index = function () {
     }
   }
   const handleJump = function (compass: any) {
-    router.push(odyssey[compass.id].path);
+    if (["ended", "un_start"].includes(compass.status)) {
+      return
+    }
+    router.push(odyssey[compass.id]?.path);
   }
   const handleClickSlideButton = function (event: any, type: string) {
     event.stopPropagation();
@@ -258,18 +261,18 @@ const Index = function () {
                         style={{ marginBottom: 20 }}
                       >
                         <StyledFlex gap='13px'>
-                          <StyledVol style={{ backgroundImage: "url(" + (compass.status === "ended" ? "/images/odyssey/welcome/ended_vol_bg.png" : "/images/odyssey/welcome/vol_bg.png") + ")" }}>Vol. {compass.id}</StyledVol>
+                          <StyledVol style={{ backgroundImage: "url(" + (["ended", "un_start"].includes(compass.status) ? "/images/odyssey/welcome/ended_vol_bg.png" : "/images/odyssey/welcome/vol_bg.png") + ")" }}>Vol. {compass.id}</StyledVol>
                           {odyssey[compass.id]?.chainsImg && (
                             <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: 33 }} />
                           )}
                         </StyledFlex>
                         {
-                          compass.status === "ended" ? (
+                          ["ended", "un_start"].includes(compass.status) ? (
                             <StyledExpired>
                               <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
                                 <ellipse cx="3.99988" cy="4" rx="4" ry="4" fill="#979ABE" />
                               </svg>
-                              <StyledFont color='#FFF' fontSize='12px' fontWeight='500' fontFamily='Gantari'>Expired</StyledFont>
+                              <StyledFont color='#FFF' fontSize='12px' fontWeight='500' fontFamily='Gantari'>{compass.status === "ended" ? "Expired" : "Upcoming"}</StyledFont>
                             </StyledExpired>
                           ) : (
                             <StyledLiveContainer>
@@ -284,7 +287,7 @@ const Index = function () {
                         }
                       </StyledFlex>
                       <StyledFont
-                        color={compass.status === "ended" ? '#979ABE' : '#FFF'}
+                        color={["ended", "un_start"].includes(compass.status) ? '#979ABE' : '#FFF'}
                         fontSize='26px'
                         fontWeight='700'
                         style={{
@@ -301,7 +304,7 @@ const Index = function () {
                         position: "relative"
                       }}>
                         {
-                          odyssey[compass.id].reward && (
+                          odyssey[compass.id]?.reward && (
                             <StyledContainer style={{
                               position: "absolute",
                               right: -13,
@@ -309,7 +312,7 @@ const Index = function () {
                               zIndex: 10
                             }}>
                               {
-                                compass.status === "ended" ? (
+                                ["ended", "un_start"].includes(compass.status) ? (
                                   <svg width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M43.5454 1.67862C44.6696 0.713137 46.3304 0.713135 47.4546 1.67862L53.6054 6.96105C54.3286 7.58216 55.304 7.82257 56.233 7.6087L64.1341 5.78976C65.5782 5.45731 67.0488 6.22909 67.5955 7.60643L70.5869 15.1422C70.9386 16.0283 71.6906 16.6944 72.6126 16.9368L80.454 18.998C81.8872 19.3748 82.8306 20.7415 82.6746 22.2152L81.8213 30.278C81.721 31.226 82.0772 32.1653 82.781 32.8084L88.7663 38.2776C89.8602 39.2772 90.0604 40.9258 89.2375 42.1582L84.735 48.9009C84.2056 49.6937 84.0845 50.691 84.4088 51.5874L87.1668 59.2117C87.6709 60.6052 87.082 62.158 85.7806 62.8668L78.6603 66.7448C77.8231 67.2007 77.2525 68.0275 77.123 68.972L76.022 77.0046C75.8207 78.4728 74.5776 79.5741 73.0959 79.5969L64.9891 79.7217C64.0359 79.7364 63.1464 80.2032 62.5928 80.9793L57.8849 87.5802C57.0244 88.7867 55.412 89.1842 54.0894 88.5158L46.8531 84.8588C46.0023 84.4288 44.9977 84.4288 44.1469 84.8588L36.9106 88.5158C35.588 89.1842 33.9756 88.7867 33.1151 87.5803L28.4072 80.9793C27.8536 80.2032 26.9641 79.7364 26.0109 79.7217L17.9041 79.5969C16.4224 79.5741 15.1793 78.4728 14.978 77.0046L13.877 68.972C13.7475 68.0275 13.1769 67.2007 12.3397 66.7448L5.2194 62.8668C3.91801 62.158 3.3291 60.6052 3.8332 59.2117L6.59125 51.5874C6.91554 50.691 6.79446 49.6937 6.26505 48.9009L1.76253 42.1582C0.939592 40.9259 1.13977 39.2772 2.23373 38.2776L8.21904 32.8084C8.92279 32.1653 9.27902 31.226 9.17869 30.278L8.32539 22.2152C8.16943 20.7415 9.11283 19.3748 10.546 18.998L18.3874 16.9368C19.3094 16.6944 20.0614 16.0283 20.4131 15.1422L23.4045 7.60643C23.9513 6.22909 25.4218 5.45731 26.8659 5.78976L34.767 7.6087C35.696 7.82257 36.6714 7.58216 37.3946 6.96105L43.5454 1.67862Z" fill="#979ABE" />
                                     <path d="M44.197 8.17602C44.9465 7.53236 46.0536 7.53236 46.8031 8.17602L51.7865 12.4559C52.7508 13.284 54.0513 13.6046 55.29 13.3194L61.6916 11.8457C62.6543 11.6241 63.6347 12.1386 63.9992 13.0568L66.4228 19.1624C66.8918 20.3438 67.8944 21.232 69.1237 21.5551L75.4769 23.2252C76.4323 23.4763 77.0613 24.3875 76.9573 25.37L76.266 31.9025C76.1322 33.1665 76.6071 34.4189 77.5455 35.2763L82.3948 39.7076C83.1241 40.374 83.2576 41.4731 82.709 42.2947L79.061 47.7577C78.3551 48.8147 78.1937 50.1444 78.6261 51.3397L80.8607 57.5169C81.1967 58.4459 80.8041 59.4812 79.9365 59.9537L74.1676 63.0956C73.0513 63.7036 72.2905 64.8059 72.1179 66.0652L71.2258 72.5734C71.0916 73.5522 70.2629 74.2863 69.2751 74.3015L62.7068 74.4026C61.4359 74.4222 60.2499 75.0447 59.5118 76.0795L55.6974 81.4276C55.1238 82.2319 54.0488 82.4969 53.1671 82.0513L47.3042 79.0884C46.1697 78.5151 44.8303 78.5151 43.6959 79.0884L37.833 82.0513C36.9513 82.4969 35.8763 82.2319 35.3026 81.4276L31.4882 76.0795C30.7502 75.0447 29.5642 74.4222 28.2932 74.4026L21.725 74.3015C20.7372 74.2863 19.9085 73.5521 19.7743 72.5734L18.8822 66.0652C18.7096 64.8059 17.9487 63.7036 16.8324 63.0956L16.3542 63.9738L16.8324 63.0956L11.0635 59.9537C10.1959 59.4812 9.80334 58.4459 10.1394 57.5169L12.374 51.3397C12.8064 50.1444 12.6449 48.8147 11.9391 47.7577L8.29109 42.2947C7.74246 41.4731 7.87592 40.374 8.60522 39.7076L13.4546 35.2763C14.3929 34.4189 14.8679 33.1665 14.7341 31.9025L14.0428 25.37C13.9388 24.3875 14.5677 23.4763 15.5232 23.2252L21.8764 21.5551C23.1057 21.232 24.1083 20.3438 24.5772 19.1624L27.0009 13.0568C27.3654 12.1386 28.3457 11.6241 29.3085 11.8457L35.7101 13.3194C36.9488 13.6046 38.2492 13.284 39.2135 12.4559L44.197 8.17602Z" stroke="black" stroke-width="2" />
@@ -332,7 +335,7 @@ const Index = function () {
                                 top: 36,
                                 textAlign: "center",
                                 transform: "rotate(-15deg)"
-                              }}>{odyssey[compass.id].reward}</StyledFont>
+                              }}>{odyssey[compass.id]?.reward}</StyledFont>
                             </StyledContainer>
                           )
                         }
@@ -341,10 +344,10 @@ const Index = function () {
                           overflow: "hidden"
                         }}>
                           {
-                            odyssey[compass.id].video ? (
-                              <StyledCompassVideo autoPlay loop muted={false} playsInline src={odyssey[compass.id].video} />
+                            odyssey[compass.id]?.video ? (
+                              <StyledCompassVideo autoPlay loop muted={false} playsInline src={odyssey[compass.id]?.video} />
                             ) : (
-                              <StyledCompassImage src={compass.banner} style={{ filter: compass.status === "ended" ? "grayscale(1)" : "grayscale(0)" }} />
+                              <StyledCompassImage src={compass.banner} style={{ filter: ["ended", "un_start"].includes(compass.status) ? "grayscale(1)" : "grayscale(0)" }} />
                             )
                           }
                         </StyledContainer>
@@ -403,13 +406,13 @@ const Index = function () {
       {
         currentCompass && (
           <StyledFlex flexDirection='column' gap='30px'>
-            <StyledFont color='#FFF' fontSize='20px' lineHeight='150%'>{odyssey[currentCompass.id].tips}</StyledFont>
+            <StyledFont color='#FFF' fontSize='20px' lineHeight='150%'>{odyssey[currentCompass.id]?.tips}</StyledFont>
             <StyledFlex gap='18px'>
               <StyledJoinButton onClick={() => {
                 check(() => {
                   handleJump(currentCompass)
                 })
-              }}>Join Odyssey Vol.{currentCompass.id}</StyledJoinButton>
+              }}>Join Odyssey Vol.{currentCompass?.id}</StyledJoinButton>
               <StyledClaimButton
                 onClick={() => {
                   check(handleClickClaim)
