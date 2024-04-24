@@ -23,7 +23,7 @@ import {
   StyledOperationButton,
   StyledSwitchButton
 } from "./styles";
-const WasabiView = function () {
+const SynFuturesView = function () {
   const { chainId } = useAccount();
   const price = usePriceStore((store) => store.price);
   const {
@@ -110,6 +110,7 @@ const WasabiView = function () {
   };
   const renderPrice = (market: any) => {
     if (market?.token1 === "USDB") {
+      console.log('=price', price)
       return (
         <StyledGantariFont
           color={market?.data?.tokenStats?.oneDayChange > 0 ? "#81ED70" : "#FF547D"}
@@ -496,4 +497,4 @@ const WasabiView = function () {
     </StyledContainer>
   )
 }
-export default WasabiView
+export default SynFuturesView
