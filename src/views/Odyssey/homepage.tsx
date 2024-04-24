@@ -47,6 +47,7 @@ const StyledComingSoonButton = styled(StyledButton)`
   width: 380px;
   background: #5E617E;
   color: #FFF;
+  cursor: not-allowed;
 `
 const StyledJoinButton = styled(StyledButton)`
   background-color: #EBF479;
@@ -271,7 +272,7 @@ const Index = function () {
                   <StyledCard>
                     <StyledContainer
                       style={{
-                        padding: "16px 20px 33px 24px",
+                        padding: "16px 20px 0 24px",
                         cursor: "pointer"
                       }}
                       onClick={() => {
@@ -318,7 +319,7 @@ const Index = function () {
                       >{compass.name}</StyledFont>
                     </StyledContainer>
                     <StyledContainer style={{
-                      padding: "0 16px 16px",
+                      padding: "33px 16px 16px",
                       borderRadius: 16,
                       overflow: "hidden"
                     }}>
@@ -450,7 +451,7 @@ const Index = function () {
                         handleJump(currentCompass)
                       })
                     }}
-                  >Odyssey Vol.{currentCompass?.id} is coming soon!</StyledComingSoonButton>
+                  >{currentCompass.status === "ended" ? `Join Odyssey Vol.${currentCompass?.id}` : `Odyssey Vol.${currentCompass?.id} is coming soon!`}</StyledComingSoonButton>
                 ) : (
                   <StyledJoinButton
                     onClick={() => {
