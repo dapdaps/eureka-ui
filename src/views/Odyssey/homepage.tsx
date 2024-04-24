@@ -5,7 +5,6 @@ import {
   StyledFlex,
   StyledFont
 } from "@/styled/styles";
-import useCompassList from './hooks/useCompassList';
 import { useConnectWallet } from '@web3-onboard/react';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -13,6 +12,7 @@ import styled from "styled-components";
 import { EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useClaim from './hooks/useClaim';
+import useCompassList from './hooks/useCompassList';
 import useDetail from './hooks/useDetail';
 const StyledLogo = styled.img`
   width: 340px;
@@ -43,8 +43,16 @@ const StyledButton = styled.div`
   font-weight: 700;
   line-height: normal;
 `
+const StyledComingSoonButton = styled(StyledButton)`
+  width: 380px;
+  background: #5E617E;
+  color: #FFF;
+`
 const StyledJoinButton = styled(StyledButton)`
   background-color: #EBF479;
+  &:hover {
+    opacity: 0.8;
+  }
 `
 const StyledClaimButton = styled(StyledButton)`
   color: #EBF479;
@@ -229,10 +237,11 @@ const Index = function () {
           centeredSlides={true}
           slidesPerView={"auto"}
           coverflowEffect={{
-            rotate: 50,
+            rotate: 30,
             stretch: 0,
-            depth: 0,
+            depth: 100,
             modifier: 1,
+            scale: 0.9,
             slideShadows: true,
           }}
           // loop={true}
@@ -259,14 +268,16 @@ const Index = function () {
             sortCompassList.map((compass: any, index: number) => {
               return (
                 <SwiperSlide key={index} className='swiper-no-swiping'>
-                  <StyledCard
-                    onClick={() => {
-                      handleJump(compass)
-                    }}
-                  >
-                    <StyledContainer style={{
-                      padding: "16px 20px 0 24px"
-                    }}>
+                  <StyledCard>
+                    <StyledContainer
+                      style={{
+                        padding: "16px 20px 33px 24px",
+                        cursor: "pointer"
+                      }}
+                      onClick={() => {
+                        handleJump(compass)
+                      }}
+                    >
                       <StyledFlex
                         justifyContent="space-between"
                         style={{ marginBottom: 20 }}
@@ -307,7 +318,7 @@ const Index = function () {
                       >{compass.name}</StyledFont>
                     </StyledContainer>
                     <StyledContainer style={{
-                      padding: "33px 16px 16px",
+                      padding: "0 16px 16px",
                       borderRadius: 16,
                       overflow: "hidden"
                     }}>
@@ -321,7 +332,8 @@ const Index = function () {
                               right: -13,
                               top: -11,
                               zIndex: 10
-                            }}>
+                            }}
+                            >
                               {
                                 ["ended", "un_start"].includes(compass.status) ? (
                                   <svg width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -417,13 +429,39 @@ const Index = function () {
       {
         currentCompass && (
           <StyledFlex flexDirection='column' gap='30px'>
-            <StyledFont color='#FFF' fontSize='20px' lineHeight='150%'>{odyssey[currentCompass.id]?.tips}</StyledFont>
+            <StyledFont
+              color='#FFF'
+              fontSize='20px'
+              lineHeight='150%'
+              lineClamp="2"
+              className='ellipsis'
+              style={{
+                width: 898,
+                textAlign: 'center',
+              }}
+
+            >{currentCompass?.description ?? ''}</StyledFont>
             <StyledFlex gap='18px'>
-              <StyledJoinButton onClick={() => {
-                check(() => {
-                  handleJump(currentCompass)
-                })
-              }}>Join Odyssey Vol.{currentCompass?.id}</StyledJoinButton>
+              {
+                ["ended", "un_start"].includes(currentCompass.status) ? (
+                  <StyledComingSoonButton
+                    onClick={() => {
+                      check(() => {
+                        handleJump(currentCompass)
+                      })
+                    }}
+                  >Odyssey Vol.{currentCompass?.id} is coming soon!</StyledComingSoonButton>
+                ) : (
+                  <StyledJoinButton
+                    onClick={() => {
+                      check(() => {
+                        handleJump(currentCompass)
+                      })
+                    }}
+                  >Join Odyssey Vol.{currentCompass?.id}</StyledJoinButton>
+                )
+              }
+
               {
                 (detail?.unclaimed_reward ?? 0) > 0 && (
                   <StyledClaimButton
