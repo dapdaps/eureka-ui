@@ -28,6 +28,10 @@ export default function Treasure() {
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
   const [showModal5, setShowModal5] = useState(false);
+  const TrapLayout = {
+    borderColor: '#FFDD4D',
+    corner: 34,
+  };
   return (
     <StyledContainer>
       {showModal1 ? (
@@ -41,7 +45,7 @@ export default function Treasure() {
           </ModalDesc>
           <ModalBody>
             <div className="modal-body-1">
-              <Trapeziform className="modal-sec-1">
+              <Trapeziform {...TrapLayout} className="modal-sec-1">
                 <div className="coin-group">
                   <Image src="/images/odyssey/v4/coin-btc.svg" alt="" width={46} height={46} />
                   <Image
@@ -61,7 +65,7 @@ export default function Treasure() {
                   Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                 </TrapeziformBtn>
               </Trapeziform>
-              <Trapeziform className="modal-sec-1">
+              <Trapeziform {...TrapLayout} className="modal-sec-1">
                 <div className="coin-group">
                   <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={46} height={46} />
                   <Image
@@ -97,7 +101,7 @@ export default function Treasure() {
           </ModalDesc>
           <ModalBody>
             <div className="modal-body">
-              <Trapeziform className="modal-list">
+              <Trapeziform {...TrapLayout} className="modal-list">
                 <div className="modal-list-head">
                   <div className="head-left">
                     <div className="head-title">Step 1. Get ezETH from </div>
@@ -130,7 +134,7 @@ export default function Treasure() {
                   </div>
                 </div>
               </Trapeziform>
-              <Trapeziform className="modal-list">
+              <Trapeziform {...TrapLayout} className="modal-list">
                 <div className="modal-list-head">
                   <div className="head-left">
                     <div className="head-title">Step 2. Add ezETH/WETH Liquidity on</div>
@@ -165,7 +169,7 @@ export default function Treasure() {
                 </div>
               </Trapeziform>
               <div className="modal-body-2">
-                <Trapeziform className="modal-sec-2">
+                <Trapeziform {...TrapLayout} className="modal-sec-2">
                   <div className="step">Step 3-A.</div>
                   <div className="desc">
                     Provide LP on
@@ -198,7 +202,7 @@ export default function Treasure() {
                     <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </Trapeziform>
-                <Trapeziform className="modal-sec-2">
+                <Trapeziform {...TrapLayout} className="modal-sec-2">
                   <div className="step">Step 3-B.</div>
                   <div className="desc">
                     Provide LP on
@@ -244,7 +248,7 @@ export default function Treasure() {
             rewards will have three times the effect on assets.
           </ModalDesc>
           <ModalBody>
-            <Trapeziform className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list">
               <div className="modal-list-head">
                 <div className="head-left">
                   <div className="head-title">Step 1. Swap fwWETH on</div>
@@ -273,7 +277,7 @@ export default function Treasure() {
                 </div>
               </div>
             </Trapeziform>
-            <Trapeziform className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list">
               <div className="modal-list-head">
                 <div className="head-left">
                   <div className="head-title">Step 2. Loop fwWETH on</div>
@@ -341,7 +345,7 @@ export default function Treasure() {
           </ModalDesc>
           <ModalBody>
             <div className="modal-body">
-              <Trapeziform className="modal-list">
+              <Trapeziform {...TrapLayout} className="modal-list">
                 <div className="modal-list-head">
                   <div className="head-left">
                     <div className="head-title">Step 1. Swap mwstETH-WPUNKS on</div>
@@ -366,7 +370,7 @@ export default function Treasure() {
                   </div>
                 </div>
               </Trapeziform>
-              <Trapeziform className="modal-list">
+              <Trapeziform {...TrapLayout} className="modal-list">
                 <div className="modal-list-head">
                   <div className="head-left">
                     <div className="head-title">Step 2. Add LP mwstETH-WPUNKS / WETH on</div>
@@ -392,7 +396,7 @@ export default function Treasure() {
                 </div>
               </Trapeziform>
               <div className="modal-body-2">
-                <Trapeziform className="modal-sec-2">
+                <Trapeziform {...TrapLayout} className="modal-sec-2">
                   <div className="step">Step 2-A.</div>
                   <div className="desc">
                     Provide LP on{' '}
@@ -426,7 +430,7 @@ export default function Treasure() {
                     Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </Trapeziform>
-                <Trapeziform className="modal-sec-2">
+                <Trapeziform {...TrapLayout} className="modal-sec-2">
                   <div className="step">Step 2-B.</div>
                   <div className="desc">
                     Provide LP on
@@ -474,7 +478,7 @@ export default function Treasure() {
             Juice Points/ Blast Gold + Blast points.
           </ModalDesc>
           <ModalBody>
-            <Trapeziform className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list">
               <div className="modal-list-head">
                 <div className="head-left">
                   <div className="head-title">Step 1. Create sub account and borrow WETH </div>
@@ -497,7 +501,7 @@ export default function Treasure() {
               </div>
             </Trapeziform>
 
-            <Trapeziform className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list">
               <div className="modal-list-head">
                 <div className="head-left">
                   <div className="head-title">Step 2. Add LP WETH/weETH on</div>
@@ -521,7 +525,7 @@ export default function Treasure() {
                 </div>
               </div>
             </Trapeziform>
-            <Trapeziform className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list">
               <div className="modal-list-head">
                 <div className="head-left">
                   <div className="head-title">Step 3. Stake LP on</div>
@@ -545,7 +549,7 @@ export default function Treasure() {
                 </div>
               </div>
             </Trapeziform>
-            <Trapeziform className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list">
               <div className="modal-list-head">
                 <div className="head-left">
                   <div className="head-title">Step 4. Deposit position on</div>

@@ -14,6 +14,7 @@ export const StyledContainer = styled.div`
 export const StyledContent = styled.div`
   margin: 140px auto 0;
   width: 834px;
+  border: 1px solid #3c3d00;
   background-color: white;
   position: relative;
   background-color: #191b1f;

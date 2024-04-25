@@ -14,11 +14,10 @@ export const StyledContainer = styled.div`
 export const StyledContent = styled.div`
   margin: 140px auto 0;
   width: 834px;
-  background-color: white;
   position: relative;
   background-color: #191b1f;
   padding: 35px 55px;
-  /* background-color: #191b1f; */
+  border: 1px solid #3c3d00;
   .shape {
     position: absolute;
     left: -60px;

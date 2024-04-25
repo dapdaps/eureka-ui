@@ -108,7 +108,7 @@ export default function Banner() {
       ) : null}
       <BgHead />
       <StyledContent>
-        <Trapeziform borderColor="#3C3D00" borderWidth="30px">
+        <Trapeziform borderColor="#3C3D00" corner={34}>
           <Head>
             <HeadLeft>
               <Image src="/images/odyssey/v4/logo-particle.svg" alt="" width={85} height={85} />

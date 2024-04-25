@@ -14,7 +14,7 @@ const Bg = styled.div`
 `;
 export const BgHead = styled(Bg)`
   background-image: url('/images/odyssey/v4/ellipse-head.png');
-  margin-top: -341px;
+  margin-top: -372px;
 `;
 export const BgFoot = styled(Bg)`
   margin-top: -230px;
@@ -27,6 +27,9 @@ export const Head = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background-image: url('/images/odyssey/v4/bg-particle.png');
+  background-repeat: no-repeat;
+  background-size: contain;
 `;
 export const HeadLeft = styled.div`
   display: flex;
