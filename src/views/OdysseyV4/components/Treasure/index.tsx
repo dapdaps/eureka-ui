@@ -44,7 +44,13 @@ export default function Treasure() {
               <Trapeziform className="modal-sec-1">
                 <div className="coin-group">
                   <Image src="/images/odyssey/v4/coin-btc.svg" alt="" width={46} height={46} />
-                  <Image src="/images/odyssey/v4/coin-usdb.svg" alt="" width={26} height={26} />
+                  <Image
+                    src="/images/odyssey/v4/coin-usdb.svg"
+                    alt=""
+                    width={26}
+                    height={26}
+                    style={{ marginLeft: -10 }}
+                  />
                 </div>
                 <div className="coin-title">BTC/USDB</div>
                 <div className="tags">
@@ -58,7 +64,13 @@ export default function Treasure() {
               <Trapeziform className="modal-sec-1">
                 <div className="coin-group">
                   <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={46} height={46} />
-                  <Image src="/images/odyssey/v4/coin-usdb.svg" alt="" width={26} height={26} />
+                  <Image
+                    src="/images/odyssey/v4/coin-usdb.svg"
+                    alt=""
+                    width={26}
+                    height={26}
+                    style={{ marginLeft: -10 }}
+                  />
                 </div>
                 <div className="coin-title">WETH/USDB</div>
                 <div className="tags">
@@ -83,6 +95,145 @@ export default function Treasure() {
             This strategy enables users to earn Renzo points & Eigenlayer Point & Blast points & Blast gold & Thruster
             points & Hyperlock points/Particle points + some APR
           </ModalDesc>
+          <ModalBody>
+            <div className="modal-body">
+              <Trapeziform className="modal-list">
+                <div className="modal-list-head">
+                  <div className="head-left">
+                    <div className="head-title">Step 1. Get ezETH from </div>
+                    <div className="tag-thr">
+                      <Image src="/images/odyssey/v4/tag-renzo.svg" alt="" width={93} height={24} />
+                    </div>
+                  </div>
+                  <div className="tag-points">
+                    <Image
+                      src="/images/odyssey/v4/icon-renzo.svg"
+                      alt=""
+                      width={16}
+                      height={16}
+                      style={{ marginRight: 5 }}
+                    />
+                    ezPoints
+                  </div>
+                </div>
+                <div className="modal-list-body">
+                  <div className="body-left">
+                    <Image src="/images/odyssey/v4/coin-eth.svg" alt="" width={26} height={26} />
+                    <Image src="/images/odyssey/v4/arrow-white.svg" alt="" width={19} height={16} />
+                    <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
+                  </div>
+                  <div className="body-right">
+                    <TrapeziformBtn width="286px" height="42px">
+                      Restake
+                      <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                    </TrapeziformBtn>
+                  </div>
+                </div>
+              </Trapeziform>
+              <Trapeziform className="modal-list">
+                <div className="modal-list-head">
+                  <div className="head-left">
+                    <div className="head-title">Step 2. Add ezETH/WETH Liquidity on</div>
+                    <div className="tag-thr">
+                      <Image src="/images/odyssey/v4/tag-thr.svg" alt="" width={139} height={24} />
+                    </div>
+                  </div>
+                  <div className="tag-points">
+                    <Image
+                      src="/images/odyssey/v4/icon-thruster.svg"
+                      alt=""
+                      width={16}
+                      height={16}
+                      style={{ marginRight: 5 }}
+                    />
+                    Thruster points
+                  </div>
+                </div>
+                <div className="modal-list-body">
+                  <div className="body-left">
+                    <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
+                    <Image src="/images/odyssey/v4/coin-weth2.svg" alt="" width={26} height={26} className="lp-img" />
+                    <div className="body-left-content">
+                      <div className="body-left-content-title">mwstETH-WPUNKS / WETH</div>
+                    </div>
+                  </div>
+                  <div className="body-right">
+                    <TrapeziformBtn width="286px" height="42px">
+                      Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                    </TrapeziformBtn>
+                  </div>
+                </div>
+              </Trapeziform>
+              <div className="modal-body-2">
+                <Trapeziform className="modal-sec-2">
+                  <div className="step">Step 3-A.</div>
+                  <div className="desc">
+                    Provide LP on
+                    <div className="tag-thr">
+                      <Image src="/images/odyssey/v4/tag-hyp.svg" alt="" width={107} height={22} />
+                    </div>
+                  </div>
+
+                  {/* <div className="tag-coins"> */}
+                  <Image src="/images/odyssey/v4/hpgroups.svg" alt="" width={68} height={26} className="" />
+                  {/* </div> */}
+                  <div className="coin-pairs">
+                    <div className="pairs">
+                      <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
+                      <Image
+                        src="/images/odyssey/v4/coin-weth1.svg"
+                        alt=""
+                        width={26}
+                        height={26}
+                        style={{ marginLeft: -10 }}
+                      />
+                    </div>
+
+                    <div className="txt">
+                      mwstETH-WPUNKS <br />/ WETH
+                    </div>
+                  </div>
+                  <TrapeziformBtn width="236px" height="42px">
+                    Stake LP
+                    <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  </TrapeziformBtn>
+                </Trapeziform>
+                <Trapeziform className="modal-sec-2">
+                  <div className="step">Step 3-B.</div>
+                  <div className="desc">
+                    Provide LP on
+                    <div className="tag-thr">
+                      <Image src="/images/odyssey/v4/tag-par.svg" alt="" width={107} height={22} />
+                    </div>
+                  </div>
+
+                  <div className="tag-coins">
+                    <Image src="/images/odyssey/v4/icon-particle.svg" alt="" width={22} height={22} className="" />
+                    Particle Points
+                  </div>
+                  <div className="coin-pairs">
+                    <div className="pairs">
+                      <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
+                      <Image
+                        src="/images/odyssey/v4/coin-weth.svg"
+                        alt=""
+                        width={26}
+                        height={26}
+                        style={{ marginLeft: -10 }}
+                      />
+                    </div>
+
+                    <div className="txt">
+                      mwstETH-WPUNKS <br />/ WETH
+                    </div>
+                  </div>
+                  <TrapeziformBtn width="236px" height="42px">
+                    Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  </TrapeziformBtn>
+                </Trapeziform>
+              </div>
+            </div>
+          </ModalBody>
         </Modal>
       ) : null}
       {showModal3 ? (
@@ -228,6 +379,7 @@ export default function Treasure() {
                 <div className="modal-list-body">
                   <div className="body-left">
                     <Image src="/images/odyssey/v4/coin-mwesteth.svg" alt="" width={26} height={26} />
+                    <Image src="/images/odyssey/v4/coin-weth2.svg" alt="" width={26} height={26} className="lp-img" />
                     <div className="body-left-content">
                       <div className="body-left-content-title">mwstETH-WPUNKS / WETH</div>
                     </div>
@@ -239,6 +391,75 @@ export default function Treasure() {
                   </div>
                 </div>
               </Trapeziform>
+              <div className="modal-body-2">
+                <Trapeziform className="modal-sec-2">
+                  <div className="step">Step 2-A.</div>
+                  <div className="desc">
+                    Provide LP on{' '}
+                    <div className="tag-thr">
+                      <Image src="/images/odyssey/v4/tag-hyp.svg" alt="" width={107} height={22} />
+                    </div>
+                  </div>
+
+                  <div className="tag-coins">
+                    <Image src="/images/odyssey/v4/icon-thruster.svg" alt="" width={20} height={20} className="" />
+                    {/* <Image src="/images/odyssey/v4/icon-particle.svg" alt="" width={22} height={22} className="" /> */}
+                    <Image src="/images/odyssey/v4/icon-hyperlock.svg" alt="" width={20} height={20} className="" />
+                  </div>
+                  <div className="coin-pairs">
+                    <div className="pairs">
+                      <Image src="/images/odyssey/v4/coin-mwesteth.svg" alt="" width={26} height={26} />
+                      <Image
+                        src="/images/odyssey/v4/coin-weth1.svg"
+                        alt=""
+                        width={26}
+                        height={26}
+                        style={{ marginLeft: -10 }}
+                      />
+                    </div>
+
+                    <div className="txt">
+                      mwstETH-WPUNKS <br />/ WETH
+                    </div>
+                  </div>
+                  <TrapeziformBtn width="236px" height="42px">
+                    Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  </TrapeziformBtn>
+                </Trapeziform>
+                <Trapeziform className="modal-sec-2">
+                  <div className="step">Step 2-B.</div>
+                  <div className="desc">
+                    Provide LP on
+                    <div className="tag-thr">
+                      <Image src="/images/odyssey/v4/tag-par.svg" alt="" width={107} height={22} />
+                    </div>
+                  </div>
+
+                  <div className="tag-coins">
+                    <Image src="/images/odyssey/v4/icon-particle.svg" alt="" width={22} height={22} className="" />
+                    Particle Points
+                  </div>
+                  <div className="coin-pairs">
+                    <div className="pairs">
+                      <Image src="/images/odyssey/v4/coin-mwesteth.svg" alt="" width={26} height={26} />
+                      <Image
+                        src="/images/odyssey/v4/coin-weth.svg"
+                        alt=""
+                        width={26}
+                        height={26}
+                        style={{ marginLeft: -10 }}
+                      />
+                    </div>
+
+                    <div className="txt">
+                      mwstETH-WPUNKS <br />/ WETH
+                    </div>
+                  </div>
+                  <TrapeziformBtn width="236px" height="42px">
+                    Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  </TrapeziformBtn>
+                </Trapeziform>
+              </div>
             </div>
           </ModalBody>
         </Modal>

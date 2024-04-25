@@ -179,6 +179,30 @@ export const ModalBody = styled.div`
     display: flex;
     gap: 60px;
   }
+  .modal-body-2 {
+    display: flex;
+    gap: 26px;
+    .step {
+      color: #ebf479;
+      text-align: center;
+      font-family: Montserrat;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+    }
+    .desc {
+      color: #ebf479;
+      text-align: center;
+      font-family: Montserrat;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 700;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
   .modal-sec-1 {
     flex-grow: 1;
     display: flex;
@@ -188,6 +212,14 @@ export const ModalBody = styled.div`
     background-color: #000000;
     padding: 54px 0 37px;
   }
+  .modal-sec-2 {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #000000;
+    padding: 14px 0 50px;
+  }
   .coin-title {
     margin-top: 13px;
     color: #fff;
@@ -196,6 +228,10 @@ export const ModalBody = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 100%; /* 20px */
+  }
+  .coin-group {
+    display: flex;
+    align-items: baseline;
   }
   .tags {
     display: flex;
@@ -225,8 +261,6 @@ export const ModalBody = styled.div`
     line-height: 100%; /* 12px */
   }
 
-  .modal-body-4 {
-  }
   .modal-list {
     padding: 19px 25px;
     background-color: #000;
@@ -271,21 +305,52 @@ export const ModalBody = styled.div`
       background: #252525;
       margin-left: 7px;
     }
-    .tag-points {
-      width: 72px;
-      height: 26px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 4px;
-      border: 1px solid #3d405a;
-      color: #979abe;
-      text-align: center;
-      font-family: Montserrat;
-      font-size: 12px;
-      font-style: normal;
-      font-weight: 500;
+  }
+  .tag-points {
+    padding: 0 5px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid #3d405a;
+    color: #979abe;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .coin-pairs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 14px 0;
+    .pairs {
     }
+    .txt {
+      color: #fff;
+      font-family: Montserrat;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 120%; /* 19.2px */
+    }
+  }
+  .tag-coins {
+    padding: 0 7px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    border: 1px solid #3d405a;
+    color: #979abe;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
   }
   .modal-list-body {
     margin-top: 15px;
