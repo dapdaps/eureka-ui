@@ -5,9 +5,11 @@ import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 import Banner from './components/Banner';
+import FootClaim from './components/FootClaim';
 import Golds from './components/Golds';
 import Lending from './components/Lending';
 import Modal from './components/Modal';
+import Noti from './components/Noti';
 import Pilcrow from './components/Pilcrow';
 import Summary from './components/Summary';
 import Trade from './components/Trade';
@@ -21,6 +23,8 @@ export default function OdysseyV2() {
   const { detail, loading, queryDetail } = useDetail();
   const { loading: questingLoading, quests } = useQuests();
   const { userInfo, queryUserInfo } = useUserInfo();
+
+  const [showNoti, setShowNoti] = useState(true);
   useAuthBind({
     onSuccess: () => {
       queryUserInfo();
@@ -31,6 +35,8 @@ export default function OdysseyV2() {
   return (
     <StyledContainer>
       <StyledContent>
+        {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null}
+
         <Banner />
         <Summary />
         <Pilcrow
@@ -50,6 +56,7 @@ export default function OdysseyV2() {
         />
         <Trade list={quests.bridge} onRefreshDetail={queryDetail} />
         <Lending list={quests.lending} onRefreshDetail={queryDetail} />
+        <FootClaim />
       </StyledContent>
     </StyledContainer>
   );
