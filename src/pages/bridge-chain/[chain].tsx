@@ -208,7 +208,8 @@ const AllInOne: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (currentChain && !chainConfig) {
-      get(`https://api.dapdap.net/api/dapp?route=bridge-chain/${currentChain.path}`)
+      // get(`https://api.dapdap.net/api/dapp?route=bridge-chain/${currentChain.path}`)
+      get(`/api/dapp?route=bridge-chain/${currentChain.path}`)
       .then(res => {
         if (res.code === 0) {
           setChainConfig(res.data)
@@ -248,7 +249,8 @@ const AllInOne: NextPageWithLayout = () => {
         </div>
         <div className="content-page">
           <ComponentWrapperPage
-            src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
+            // src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
+            src={chainConfig?.dapp_network[0].dapp_src}
             componentProps={{
               addAction,
               multicall,

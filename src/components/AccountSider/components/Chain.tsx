@@ -128,6 +128,8 @@ const Chain = ({
     };
   }, []);
 
+  console.log('currentChain: ', currentChain, connectedChain)
+
   return (
     <StyledContainer
       $mt={mt}
