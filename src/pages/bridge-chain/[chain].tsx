@@ -133,6 +133,8 @@ const Container = styled.div`
     top: 60px;
     left: 50%;
     transform: translate(-50%);
+    font-size: 20px;
+    font-weight: 700;
     .select-bg-content {
       padding-top: 40px;
       display: flex;
