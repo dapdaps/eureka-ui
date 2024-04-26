@@ -7,8 +7,8 @@ const basic = {
   name: 'BlastOff',
 };
 const networks = {
-  // base
-  8453: {
+  // blast
+  81457: {
   },
 };
 
