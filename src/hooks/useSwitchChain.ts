@@ -2,6 +2,7 @@ import { useSetChain } from '@web3-onboard/react';
 import { useState } from 'react';
 import useAccount from './useAccount';
 import useConnectWallet from './useConnectWallet';
+import { omit } from 'lodash';
 
 export default function useSwitchChain() {
   const [{ settingChain }, setChain] = useSetChain();
@@ -18,7 +19,11 @@ export default function useSwitchChain() {
         return;
       }
     }
-    await setChain(params);
+    await setChain({
+      ...omit(params, ['chainName', 'icon', 'nativeCurrency', 'rpcUrls', 'blockExplorers']),
+      chainNamespace: 'evm',
+      rpcUrl: params.rpcUrls[0],
+    } as any);
     setSwitching(false);
     cb?.();
   };
