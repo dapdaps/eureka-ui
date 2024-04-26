@@ -6762,7 +6762,7 @@
                 "address": "0x608ef9a3bffe206b86c3108218003b3cfbf99c84",
                 "chain": "scroll",
                 "decimals": 18,
-                "logoURI": "https://raw.githubusercontent.com/polkaswitch/assets/master/blockchains/scroll/assets/0x608ef9A3BffE206B86c3108218003b3cfBf99c84/logo.png"
+                "logoURI": "https://scroll-tech.github.io/token-list/data/KNC/logo.svg"
             },
             {
                 "symbol": "SIS",

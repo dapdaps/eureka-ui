@@ -1,5 +1,6 @@
 import { useSetChain } from '@web3-onboard/react';
 import Link from 'next/link';
+import useConnectWallet from '@/hooks/useConnectWallet';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
@@ -50,10 +51,12 @@ const chainList = Object.values(chainCofig)
 
 const Bridge: NextPageWithLayout = () => {
     const handlerList = useRef<any[]>([])
-    const [toChainId, setToChain] = useState<number>(chainList[1].chainId)
+    const { onConnect } = useConnectWallet()
+    // const [toChainId, setToChain] = useState<number>(chainList[1].chainId)
     const router = useRouter();
     const tool = router.query.tool as string;
     const { account, chainId } = useAccount();
+
     const prices = usePriceStore((store) => store.price);
     const { addAction } = useAddAction('all-in-one');
 
@@ -89,11 +92,11 @@ const Bridge: NextPageWithLayout = () => {
             <BreadCrumbs>
                 <Link href="/">Home</Link>
                 {arrow}
-                <span>{ tool }</span>
+                <span>{tool}</span>
             </BreadCrumbs>
+
             <ComponentWrapperPage
                 src="dapdapbos.near/widget/Bridge.Index"
-                // src="dapdapbos.near/widget/Test"
                 componentProps={{
                     addAction,
                     prices,
@@ -110,11 +113,14 @@ const Bridge: NextPageWithLayout = () => {
                     getStatus,
                     execute,
                     currentChainId: connectedChain?.id ? parseInt(connectedChain.id, 16) : 1,
-                    toChainId,
-                    setToChain,
+                    toChainId: router.query.toChainId as string,
+                    fromChainId: router.query.fromChainId as string,
+                    // setToChain,
                     setChain,
                 }}
             />
+
+
         </Container>
     )
 };
