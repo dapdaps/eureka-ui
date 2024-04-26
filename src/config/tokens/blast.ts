@@ -199,7 +199,7 @@ export const blast: { [key: string]: Token } = {
     icon: 'https://ipfs.near.social/ipfs/bafkreig3gppjmgeyecm5v5qs57ekewun6mjimgbtcwjelcnit7pr7nwoxe',
   },
   fwusdb: {
-    address: '0x66714DB8F3397c767d0A602458B5b4E3C0FE7dd1',
+    address: '0x866f2C06B83Df2ed7Ca9C2D044940E7CD55a06d6',
     chainId: CHAIN_ID,
     symbol: 'fwUSDB',
     decimals: 18,

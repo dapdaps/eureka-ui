@@ -37,7 +37,7 @@ const networks = {
       incentivesProxy: '0x13c836bd2dec4ae49e7f865baafe02b402013795', //CLAIM
       // rewardAddress: '',
       LoopDelegateeAddress: '0xfDe98aB7a6602ad55462297D952CE25b58743140',
-      AaveOracle: '0xAf77325317F109ee21459AFeEDE51b16C231e6b1',
+      AaveOracle: '0xAf77325317F109ee21459AFeEDE51b16C231e6b1', // token price
     },
     rawMarkets: [
       {
