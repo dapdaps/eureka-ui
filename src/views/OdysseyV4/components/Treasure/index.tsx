@@ -704,8 +704,6 @@ export default function Treasure() {
           <Title className="title title2">& 3x Assets</Title>
         </Treasure5>
       </StyledContent>
-      {/* 
-        <Image src="/images/odyssey/v4/gold-rush.svg" alt="" width={1151} height={451} /> */}
     </StyledContainer>
   );
 }
