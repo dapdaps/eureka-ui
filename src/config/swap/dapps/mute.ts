@@ -11,15 +11,7 @@ const networks = {
       input: zkSync['eth'],
       output: zkSync['usdc'],
     },
-    tokens: [
-      zkSync['eth'],
-      zkSync['usdc'],
-      zkSync['wbtc'],
-      zkSync['space'],
-      zkSync['cebnb'],
-      zkSync['usdt'],
-      zkSync['cebusd'],
-    ],
+    tokens: [zkSync['eth'], zkSync['usdc'], zkSync['wbtc'], zkSync['space'], zkSync['usdt'], zkSync['cebusd']],
   },
 };
 
