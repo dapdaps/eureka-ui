@@ -73,6 +73,10 @@ const nextConfig = {
       source: '/shush/:path*',
       destination: 'https://www.shush.fi/:path*',
     },
+    {
+      source: '/blast/bridge/:path*',
+      destination: 'https://waitlist-api.prod.blast.io/:path*',
+    },
   ],
   images: {
     remotePatterns: [

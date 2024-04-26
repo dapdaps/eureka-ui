@@ -384,7 +384,7 @@ const Dashboard: FC<IProps> = ({}) => {
         <Styles.SubTitle>Chains & dApps Data</Styles.SubTitle>
         <Styles.ChainsWrap>
           <Styles.UsersTotalTitle>
-            <Styles.Title>Transaction & Tading Volume</Styles.Title>
+            <Styles.Title>Users & Trading Volume</Styles.Title>
             <Styles.Intro>{format(new Date(), 'yyyy/MM/dd')}</Styles.Intro>
           </Styles.UsersTotalTitle>
           <BarChart data={chainsData} />

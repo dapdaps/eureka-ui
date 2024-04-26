@@ -12,6 +12,7 @@ import arbitrum from './chains/arbitrum';
 import avalanche from './chains/avalanche';
 import linea from './chains/linea';
 import scroll from './chains/scroll';
+import blast from './chains/blast';
 
 const popupsData: {
   [key: string]: {
@@ -41,6 +42,7 @@ const popupsData: {
   linea,
   manta,
   scroll,
+  blast,
 };
 
 export const PathToId: { [key: string]: number } = {

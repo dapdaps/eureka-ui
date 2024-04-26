@@ -4,6 +4,7 @@ const exclude_chains: { [key: number]: boolean } = {
     5000: true,
     534352: true,
     169: true,
+    81457: true,
 }
 
 export const excludeChain = function(chainId: number): boolean | undefined {

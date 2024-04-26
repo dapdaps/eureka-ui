@@ -15,6 +15,7 @@ import { polygonZkevmTokens } from './polygonZkevm';
 import { zkSyncTokens } from './zkSync';
 import { scrollTokens } from './scroll';
 import { mantaTokens } from './manta';
+import { blastTokens } from './blast';
 
 export default {
   42161: arbitrumTokens,
@@ -32,4 +33,5 @@ export default {
   5000: mantleTokens,
   534352: scrollTokens,
   169: mantaTokens,
+  81457: blastTokens,
 } as { [key: number]: { [key: string]: Token } };
