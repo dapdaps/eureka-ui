@@ -69,8 +69,8 @@ export default function useIncrease({
         const tickLower = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
         const tickUpper = priceToUsableTick({ price: upperPrice, token0, token1, fee });
 
-        let _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
-        let _tickUpper = tickLower > tickUpper ? tickLower : tickUpper;
+        const _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
+        const _tickUpper = tickLower > tickUpper ? tickLower : tickUpper;
 
         calldatas.push(
           Interface.encodeFunctionData('mint', [

@@ -12,6 +12,6 @@ const StyledContainer = styled.div`
   line-height: normal;
 `;
 
-export default ({ fee }: any) => {
+export default function Fee({ fee }: any) {
   return <StyledContainer>{fee / 10000}%</StyledContainer>;
-};
+}

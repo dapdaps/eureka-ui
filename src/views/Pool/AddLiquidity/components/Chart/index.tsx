@@ -27,7 +27,7 @@ function Chart({
   fee: number;
   lowerPrice: number;
   highPrice: number;
-  onPriceChange: Function;
+  onPriceChange: any;
   token0: any;
   token1: any;
 }) {
