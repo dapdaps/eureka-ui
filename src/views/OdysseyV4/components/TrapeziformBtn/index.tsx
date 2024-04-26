@@ -5,7 +5,7 @@ import { StyledContainer } from './styles';
 export default function TrapeziformBtn({ children, width, height, handleClick, loading }: any) {
   const onClick = () => {
     if (loading) return false;
-    handleClick();
+    handleClick && handleClick();
   };
 
   return (

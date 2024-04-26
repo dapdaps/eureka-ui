@@ -1,6 +1,9 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 
+import Loading from '@/components/Icons/Loading';
+
+import { ParticleLink } from '../../const';
 import RankModal from '../RankModal';
 import RefreshButton from '../RefreshButton';
 import StatusTag from '../StatusTag';
@@ -17,12 +20,13 @@ import {
   Head,
   HeadLeft,
   HeadRight,
+  LoadingWrap,
   StyledContainer,
   StyledContent,
   StyledTimerBox,
 } from './styles';
 
-export default function Golds({ list, data }: any) {
+export default function Golds({ loading, list, data, onRefreshDetail }: any) {
   const [id, setId] = useState('');
 
   const [showRankModal, setShowRankModal] = useState(false);
@@ -45,7 +49,7 @@ export default function Golds({ list, data }: any) {
       'Particle',
       {
         logo: '/images/odyssey/v4/logo-particle.svg',
-        link: '',
+        link: ParticleLink,
         rank1: 1000,
         rank2: 500,
         rank3: 500,
@@ -69,7 +73,7 @@ export default function Golds({ list, data }: any) {
       'PAC Finance',
       {
         logo: '/images/odyssey/v4/logo-pac.svg',
-        link: '',
+        link: `${location.origin}/dapp/pac-finance`,
         rank1: 1000,
         rank2: 500,
         rank3: 500,
@@ -84,13 +88,20 @@ export default function Golds({ list, data }: any) {
       {showRankModal ? <RankModal name={curDapp} id={id} onClose={hideRank} /> : null}
       <BgHead />
       <StyledContent>
-        {list.map((item: any) => (
-          <Quest
-            key={item.name}
-            showRank={showRank}
-            data={{ ...GoldsMap.get(item.name), ...item, start_time: data.start_time, end_time: data.end_time }}
-          />
-        ))}
+        {loading ? (
+          <LoadingWrap>
+            <Loading size={30} />
+          </LoadingWrap>
+        ) : (
+          list.map((item: any) => (
+            <Quest
+              key={item.name}
+              showRank={showRank}
+              data={{ ...GoldsMap.get(item.name), ...item, start_time: data.start_time, end_time: data.end_time }}
+              onRefreshDetail={onRefreshDetail}
+            />
+          ))
+        )}
       </StyledContent>
       <BgFoot />
     </StyledContainer>

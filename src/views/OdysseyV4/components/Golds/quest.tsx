@@ -1,6 +1,7 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
+import useCheck from '../../hooks/useCheck';
 import useParticleReport from '../../hooks/useParticleReport';
 import RefreshButton from '../RefreshButton';
 import StatusTag from '../StatusTag';
@@ -22,14 +23,21 @@ import {
   StyledTimerBox,
 } from './styles';
 
-export default function Quest({ data, showRank }: any) {
-  const { id, name, logo, link, rank1, rank2, rank3, reward, desc, start_time, end_time } = data;
+export default function Quest({ data, showRank, onRefreshDetail }: any) {
+  const { id, name, logo, link, rank1, rank2, rank3, reward, desc, start_time, end_time, total_spins, spins } = data;
 
+  const [execution, setExecution] = useState(0);
+  const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
+    onRefreshDetail();
+    setExecution(_times);
+  });
   const openLink = () => {
     window.open(link, '_blank');
   };
   const { loading: reportLoading, onStartReport } = useParticleReport(openLink);
-
+  useEffect(() => {
+    setExecution(total_spins / spins);
+  }, [total_spins, spins]);
   const handleTrade = () => {
     if (name === 'Particle') {
       onStartReport();
@@ -38,6 +46,7 @@ export default function Quest({ data, showRank }: any) {
     }
   };
 
+  // disabled={times === 0 ? false : execution >= times}
   return (
     <Trapeziform borderColor="#3C3D00" corner={34} className="quest-item">
       <Head>
@@ -90,10 +99,9 @@ export default function Quest({ data, showRank }: any) {
               <RefreshButton
                 onClick={(ev: any) => {
                   ev.stopPropagation();
-                  //TODO
-                  // if (!checking) handleRefresh();
+                  if (!checking) handleRefresh();
                 }}
-                // loading={checking}
+                loading={checking}
               />
             </div>
           </div>

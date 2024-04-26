@@ -56,7 +56,7 @@ export default function OdysseyV4() {
           desc="Interact with popular dApps in Blast on DapDap, win extra Gold"
         />
 
-        <Golds list={quests.golds} data={detail} />
+        <Golds list={quests.golds} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
         <Pilcrow
           title="explore more dApps on Blast"
           desc="Interact with popular dApps in Blast on DapDap, win 100 DapDap PTS for each."
@@ -65,7 +65,11 @@ export default function OdysseyV4() {
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />
         <Lending list={[...quests.lending, ...quests.liquidity]} onRefreshDetail={queryDetail} />
 
-        <FootClaim unclaimed={detail?.user?.unclaimed_reward} unlocked={quests.unlockedAmount} />
+        <FootClaim
+          unclaimed={detail?.user?.unclaimed_reward}
+          unlocked={quests.unlockedAmount}
+          onRefreshDetail={queryDetail}
+        />
       </StyledContent>
     </StyledContainer>
   );

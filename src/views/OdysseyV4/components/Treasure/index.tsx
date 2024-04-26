@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import { ParticleLink } from '../../const';
+import useParticleReport from '../../hooks/useParticleReport';
 import Line from '../Line';
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
@@ -32,6 +34,19 @@ export default function Treasure() {
     borderColor: '#FFDD4D',
     corner: 34,
   };
+
+  const openLink = (link: string) => {
+    window.open(link, '_blank');
+  };
+  const { loading: reportLoading, onStartReport } = useParticleReport(() => openLink(ParticleLink));
+  const handleJump = (link: string, isReport?: boolean) => {
+    if (isReport) {
+      onStartReport();
+    } else {
+      openLink(link);
+    }
+  };
+
   return (
     <StyledContainer>
       {showModal1 ? (
@@ -231,7 +246,12 @@ export default function Treasure() {
                       mwstETH-WPUNKS <br />/ WETH
                     </div>
                   </div>
-                  <TrapeziformBtn width="236px" height="42px">
+                  <TrapeziformBtn
+                    width="236px"
+                    height="42px"
+                    loading={reportLoading}
+                    handleClick={(e: any) => handleJump('', true)}
+                  >
                     Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </Trapeziform>
@@ -271,7 +291,11 @@ export default function Treasure() {
                   </div>
                 </div>
                 <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
+                  <TrapeziformBtn
+                    width="286px"
+                    height="42px"
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/ring-protocol`)}
+                  >
                     Loop fwWETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </div>
@@ -318,7 +342,11 @@ export default function Treasure() {
                   </div>
                 </div>
                 <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
+                  <TrapeziformBtn
+                    width="286px"
+                    height="42px"
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/pac-finance`)}
+                  >
                     Loop fwWETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </div>
@@ -364,7 +392,11 @@ export default function Treasure() {
                     </div>
                   </div>
                   <div className="body-right">
-                    <TrapeziformBtn width="286px" height="42px">
+                    <TrapeziformBtn
+                      width="286px"
+                      height="42px"
+                      handleClick={(e: any) => handleJump(`${location.origin}/dapp/thruster-finance`)}
+                    >
                       Swap mwstETH-WPUNKS <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                     </TrapeziformBtn>
                   </div>
@@ -389,7 +421,11 @@ export default function Treasure() {
                     </div>
                   </div>
                   <div className="body-right">
-                    <TrapeziformBtn width="286px" height="42px">
+                    <TrapeziformBtn
+                      width="286px"
+                      height="42px"
+                      handleClick={(e: any) => handleJump(`${location.origin}/dapp/thruster-finance`)}
+                    >
                       Swap mwstETH-WPUNKS <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                     </TrapeziformBtn>
                   </div>
@@ -399,7 +435,7 @@ export default function Treasure() {
                 <Trapeziform {...TrapLayout} className="modal-sec-2">
                   <div className="step">Step 2-A.</div>
                   <div className="desc">
-                    Provide LP on{' '}
+                    Provide LP on
                     <div className="tag-thr">
                       <Image src="/images/odyssey/v4/tag-hyp.svg" alt="" width={107} height={22} />
                     </div>
@@ -407,7 +443,6 @@ export default function Treasure() {
 
                   <div className="tag-coins">
                     <Image src="/images/odyssey/v4/icon-thruster.svg" alt="" width={20} height={20} className="" />
-                    {/* <Image src="/images/odyssey/v4/icon-particle.svg" alt="" width={22} height={22} className="" /> */}
                     <Image src="/images/odyssey/v4/icon-hyperlock.svg" alt="" width={20} height={20} className="" />
                   </div>
                   <div className="coin-pairs">
@@ -427,7 +462,7 @@ export default function Treasure() {
                     </div>
                   </div>
                   <TrapeziformBtn width="236px" height="42px">
-                    Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                    Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </Trapeziform>
                 <Trapeziform {...TrapLayout} className="modal-sec-2">
@@ -459,8 +494,13 @@ export default function Treasure() {
                       mwstETH-WPUNKS <br />/ WETH
                     </div>
                   </div>
-                  <TrapeziformBtn width="236px" height="42px">
-                    Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  <TrapeziformBtn
+                    width="236px"
+                    height="42px"
+                    loading={reportLoading}
+                    handleClick={(e: any) => handleJump(ParticleLink, true)}
+                  >
+                    Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </Trapeziform>
               </div>
