@@ -116,7 +116,14 @@ const Bridge: NextPageWithLayout = () => {
                     toChainId: router.query.toChainId as string,
                     fromChainId: router.query.fromChainId as string,
                     // setToChain,
-                    setChain,
+                    setChain: async (param: any, fromChainId: string, toChainId: string, needSwitchChain: boolean = true) => {
+                        if (needSwitchChain) {
+                            await setChain(param)
+                        }
+                        setTimeout(() => {
+                            router.push(`/bridge-x/${router.query.tool}?fromChainId=${fromChainId}&toChainId=${toChainId}`)
+                        }, 0);
+                    },
                 }}
             />
 
