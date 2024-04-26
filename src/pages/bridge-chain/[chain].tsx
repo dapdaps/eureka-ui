@@ -124,7 +124,7 @@ const Container = styled.div`
     z-index: 1;
     width: 100%;
     position: relative;
-    padding-top: 150px;
+    padding-top: 50px;
     /* position: absolute; */
   }
   .select-bg-icon {
@@ -134,7 +134,7 @@ const Container = styled.div`
     left: 50%;
     transform: translate(-50%);
     .select-bg-content {
-      padding-top: 150px;
+      padding-top: 40px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
