@@ -1,4 +1,5 @@
 export function formatThousandsSeparator(n: number): string {
+  if (isNaN(Number(n))) return '';
   const strSplit = n.toString().split('.');
   const integer = strSplit[0].split('');
   integer.reverse();

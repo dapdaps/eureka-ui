@@ -6,7 +6,7 @@ export const StyledContainer = styled.div<{
   $corner: string;
 }>`
   position: relative;
-  background-color: ${({ $bgColor }) => ` ${$bgColor}` || 'transparent'};
+  /* background-color: ${({ $bgColor }) => ` ${$bgColor}` || 'transparent'}; */
   border: ${({ $borderColor }) => `1px solid  ${$borderColor}` || 'none'};
   clip-path: ${({ $corner }) =>
     `polygon(${$corner}px 0%, 100% 0%, 100% calc(100% - ${$corner}px), calc(100% - ${$corner}px) 100%, 0% 100%, 0% ${$corner}px)`};

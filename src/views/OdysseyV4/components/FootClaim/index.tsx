@@ -1,18 +1,24 @@
 import Image from 'next/image';
 
+import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
 import { StyledContainer, StyledContent } from './styles';
 
-export default function FootClaim({}: any) {
-  return (
+export default function FootClaim({ unclaimed, unlocked }: any) {
+  const TrapLayout = {
+    borderColor: '#FFDD4D',
+    corner: 34,
+  };
+  //TODO CLAIM
+  return unlocked > 0 ? (
     <StyledContainer>
-      <StyledContent>
-        <div className="txt">You have unlocked 1 dApps on Blast by DapDap</div>
+      <Trapeziform {...TrapLayout} className="content">
+        <div className="txt">You have unlocked {unlocked} dApps on Blast by DapDap</div>
         <TrapeziformBtn width="202px" height="61px">
-          Claim 200
+          Claim {unclaimed}
           <Image src="/images/odyssey/v4/coin.svg" alt="" width={21} height={21} />
         </TrapeziformBtn>
-      </StyledContent>
+      </Trapeziform>
     </StyledContainer>
-  );
+  ) : null;
 }

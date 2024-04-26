@@ -8,6 +8,7 @@ const StyledContainer = styled.div`
   position: absolute;
   right: -190px;
   top: -14px;
+  z-index: -1;
   /* width: 96.5px;
   height: 31.209px;
   background-image: url(/images/odyssey/v3/nav-bg.png);

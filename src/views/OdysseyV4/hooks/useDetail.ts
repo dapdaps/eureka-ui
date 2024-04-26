@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
-import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
+import { useCallback, useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import { get } from '@/utils/http';
 
-export default function useDetail() {
+export default function useDetail(id: any) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(true);
   const { account } = useAccount();
@@ -13,22 +14,27 @@ export default function useDetail() {
   const queryDetail = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get('/api/compass/v3/detail', { id: 3 });
+      const result = await get('/api/compass/v4/detail', { id });
+
       if (result.code === 0 && result.data) {
-        const _rules = JSON.parse(result.data.rule);
-        let i = 0;
-        _rules.forEach((rule: number) => {
-          if (result.data.user?.total_reward - rule > 0) {
-            i++;
-          }
-        });
-        setDetail({
-          rules: _rules,
-          available_rewards: result.data.user?.unclaimed_reward || 0,
-          total_reward: result.data.user?.total_reward || 0,
-          total_spins: result.data.user?.total_spins || 0,
-          synthesizedIndex: i,
-        });
+        // const _rules = JSON.parse(result.data.rule);
+        // let i = 0;
+        // _rules.forEach((rule: number) => {
+        //   if (result.data.user?.total_reward - rule > 0) {
+        //     i++;
+        //   }
+        // });
+        setDetail({ ...result.data });
+        // setDetail({
+        //   rules: _rules,
+        //   total_transactions,
+        //   total_users,
+        //   trading_volume,
+        //   // available_rewards: result.data.user?.unclaimed_reward || 0,
+        //   // total_reward: result.data.user?.total_reward || 0,
+        //   // total_spins: result.data.user?.total_spins || 0,
+        //   synthesizedIndex: i,
+        // });
       } else {
         setDetail({});
       }

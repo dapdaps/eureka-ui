@@ -1,6 +1,24 @@
 import styled from 'styled-components';
 
-export const StyledContainer = styled.div``;
+export const StyledContainer = styled.div`
+  .view-rank {
+    height: 62px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    color: #fff;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .quest-item {
+    margin-bottom: 30px;
+  }
+`;
 
 export const StyledContent = styled.div`
   max-width: 1400px;
@@ -48,25 +66,6 @@ export const HeadLeft = styled.div`
 export const HeadRight = styled.div`
   display: flex;
   flex-direction: column;
-  .numbers {
-    color: #fff;
-    font-family: Gantari;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
-  .strings {
-    color: #fff;
-    text-align: center;
-    font-family: Gantari;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-  .str {
-  }
 `;
 export const Body = styled.div`
   padding: 32px;
@@ -74,7 +73,10 @@ export const Body = styled.div`
   justify-content: space-between;
   gap: 32px;
 `;
-export const BodyLeft = styled.div``;
+export const BodyLeft = styled.div`
+  width: 414px;
+  flex-shrink: 0;
+`;
 export const BodyRight = styled.div`
   flex-grow: 1;
   display: flex;
@@ -116,123 +118,84 @@ export const BodyRight = styled.div`
   }
 `;
 
-export const ModalHead = styled.div`
-  color: #fff;
-  text-align: center;
-  font-family: Gantari;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  height: 87px;
+export const StyledTimerBox = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 44px;
+  color: #fff;
+  font-size: 36px;
+  font-weight: 700;
+  gap: 20px;
+`;
+
+export const Rank = styled.div`
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   position: relative;
-  overflow: hidden;
-  .smoke {
-    position: absolute;
-    height: 100px;
-    width: 837px;
-    left: 0;
-    bottom: -55px;
-    border-radius: 1100px;
-    opacity: 0.3;
-    background: radial-gradient(50% 50% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+  display: flex;
+  padding-top: 54px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  color: #ebf479;
+  font-family: Montserrat;
+  font-size: 26px;
+  font-weight: 700;
+
+  &.rank1 {
+    height: 108px;
+    background-image: url('/images/odyssey/v4/bg-rank1.svg');
+    margin-bottom: 16px;
   }
-  .left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
+  &.rank2 {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 700;
+
+    width: 202px;
+    height: 100px;
+    background-image: url('/images/odyssey/v4/bg-rank2.svg');
+  }
+  &.rank3 {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 700;
+
+    width: 202px;
+    height: 100px;
+    background-image: url('/images/odyssey/v4/bg-rank3.svg');
   }
 `;
-export const ModalBody = styled.div`
-  color: #fff;
-  text-align: center;
-  font-family: Gantari;
-  font-size: 32px;
-  font-style: normal;
+
+export const RankGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const Bdage = styled.div`
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  color: #000;
+  font-family: Montserrat;
+  font-size: 26px;
   font-weight: 700;
-  line-height: normal;
-  padding: 25px 30px 38px;
-  .desc {
-    text-align: left;
-    color: #979abe;
-    font-family: Gantari;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    margin-bottom: 25px;
+  position: absolute;
+  left: 50%;
+  top: -20px;
+  margin-left: -30px;
+  &.bd1 {
+    background-image: url('/images/odyssey/v4/bdage1.svg');
   }
-  .text-left {
-    text-align: left;
+  &.bd2 {
+    background-image: url('/images/odyssey/v4/bdage2.svg');
   }
-  .text-right {
-    text-align: right;
-  }
-  .rank-table {
-    width: 100%;
-    flex-shrink: 0;
-    border: 1px solid #373a53;
-    border-radius: 4px;
-    background: rgba(55, 58, 83, 0.2);
-  }
-  .rank-head {
-    width: 100%;
-    display: table;
-    color: #979abe;
-    font-family: Gantari;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    padding: 15px 20px 5px;
-  }
-  .rank-th {
-    float: left;
-    width: 33.33333%;
-  }
-  .rank-row {
-    width: 100%;
-    display: table;
-    color: #fff;
-    padding: 15px 20px;
-    font-family: Gantari;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-  .rank-col {
-    float: left;
-    width: 33.33333%;
-  }
-  .you {
-    height: 48px;
-    display: flex;
-    align-items: center;
-    color: #979abe;
-    font-family: Gantari;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-  }
-  .your-rank {
-    padding: 0 20px;
-    height: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 4px;
-    border: 1px solid #373a53;
-    background: rgba(55, 58, 83, 0.2);
-    color: #fff;
-    font-family: Gantari;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+  &.bd3 {
+    background-image: url('/images/odyssey/v4/bdage3.svg');
   }
 `;

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import useUserInfo from '@/hooks/useUserInfo';
@@ -5,6 +6,7 @@ import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 import Banner from './components/Banner';
+import Bridge from './components/Bridge';
 import FootClaim from './components/FootClaim';
 import Golds from './components/Golds';
 import Lending from './components/Lending';
@@ -18,10 +20,13 @@ import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import { StyledContainer, StyledContent } from './styles';
 
-export default function OdysseyV2() {
+export default function OdysseyV4() {
+  const router = useRouter();
+  const { id } = router.query;
+
   const authConfig = useAuthConfig();
-  const { detail, loading, queryDetail } = useDetail();
-  const { loading: questingLoading, quests } = useQuests();
+  const { detail, loading, queryDetail } = useDetail(id);
+  const { loading: questingLoading, quests } = useQuests(id);
   const { userInfo, queryUserInfo } = useUserInfo();
 
   const [showNoti, setShowNoti] = useState(true);
@@ -32,13 +37,15 @@ export default function OdysseyV2() {
     redirect_uri: `${window.location.origin}${window.location.pathname}?id=4`,
   });
 
+  console.log('quests--', quests);
+
   return (
     <StyledContainer>
       <StyledContent>
         {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null}
 
         <Banner />
-        <Summary />
+        <Summary data={detail} />
         <Pilcrow
           title="Blast Treasure Strategy"
           desc="Explore Blast treasure strategy, maximize your Blast Gold earnings!"
@@ -49,14 +56,16 @@ export default function OdysseyV2() {
           desc="Interact with popular dApps in Blast on DapDap, win extra Gold"
         />
 
-        <Golds />
+        <Golds list={quests.golds} data={detail} />
         <Pilcrow
           title="explore more dApps on Blast"
           desc="Interact with popular dApps in Blast on DapDap, win 100 DapDap PTS for each."
         />
-        <Trade list={quests.bridge} onRefreshDetail={queryDetail} />
-        <Lending list={quests.lending} onRefreshDetail={queryDetail} />
-        <FootClaim />
+        <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
+        <Trade list={quests.swap} onRefreshDetail={queryDetail} />
+        <Lending list={[...quests.lending, ...quests.liquidity]} onRefreshDetail={queryDetail} />
+
+        <FootClaim unclaimed={detail?.user?.unclaimed_reward} unlocked={quests.unlockedAmount} />
       </StyledContent>
     </StyledContainer>
   );

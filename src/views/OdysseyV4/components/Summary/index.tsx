@@ -2,7 +2,9 @@ import { formatThousandsSeparator } from '@/utils/format-number';
 
 import { Item, StyledContainer, Title, Value } from './styles';
 
-export default function Summary() {
+export default function Summary({ data }: any) {
+  const { total_transactions, total_users, trading_volume } = data;
+
   return (
     <StyledContainer>
       <span className="left yLine"></span>
@@ -11,15 +13,15 @@ export default function Summary() {
       <span className="bottom xLine"></span>
       <Item>
         <Title>Trading Volume</Title>
-        <Value>${formatThousandsSeparator(10000)}</Value>
+        <Value>${formatThousandsSeparator(Number(Number(trading_volume).toFixed(2)))}</Value>
       </Item>
       <Item>
         <Title>Total Transactions</Title>
-        <Value>${formatThousandsSeparator(10000)}</Value>
+        <Value>${formatThousandsSeparator(total_transactions)}</Value>
       </Item>
       <Item>
         <Title>Total Users</Title>
-        <Value>{formatThousandsSeparator(10000)}</Value>
+        <Value>{formatThousandsSeparator(total_users)}</Value>
       </Item>
       <Item>
         <Title>accumulated Gold</Title>

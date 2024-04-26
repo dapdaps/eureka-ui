@@ -87,7 +87,7 @@ export default function DappCard({
         <ArrowIcon style={{ marginTop: '6px' }} />
       </StyledTop>
       <StyledFooter>
-        <LockStatus status="unlocked" />
+        <LockStatus status={total_spins > 0 ? 'unlocked' : 'locked'} />
         <StyledFooterActions>
           <RefreshButton
             onClick={(ev: any) => {
