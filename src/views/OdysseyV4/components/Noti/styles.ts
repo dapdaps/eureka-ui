@@ -2,10 +2,10 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   background: #ebf479;
-  /* position: fixed;
+  position: fixed;
   left: 0;
   right: 0;
-  z-index: 7; */
+  z-index: 7;
   .close {
     position: absolute;
     top: 25px;
