@@ -9,10 +9,10 @@ export default {
   rpcUrls: ['https://rpc.blast.io'],
   defaultTab: 'Swap',
   menuConfig: {
-    // Bridge: {
-    //   tab: 'Bridge',
-    //   path: 'bluebiu.near/widget/Arbitrum.Bridge',
-    // },
+    Bridge: {
+      tab: 'Bridge',
+      path: 'bluebiu.near/widget/Blast.BridgeAuthority.Index',
+    },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Blast.Swap',

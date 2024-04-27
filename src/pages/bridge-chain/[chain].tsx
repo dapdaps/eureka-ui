@@ -124,7 +124,7 @@ const Container = styled.div`
     z-index: 1;
     width: 100%;
     position: relative;
-    padding-top: 150px;
+    padding-top: 50px;
     /* position: absolute; */
   }
   .select-bg-icon {
@@ -133,8 +133,10 @@ const Container = styled.div`
     top: 60px;
     left: 50%;
     transform: translate(-50%);
+    font-size: 20px;
+    font-weight: 700;
     .select-bg-content {
-      padding-top: 150px;
+      padding-top: 40px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
@@ -208,7 +210,8 @@ const AllInOne: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (currentChain && !chainConfig) {
-      get(`https://api.dapdap.net/api/dapp?route=bridge-chain/${currentChain.path}`)
+      // get(`https://api.dapdap.net/api/dapp?route=bridge-chain/${currentChain.path}`)
+      get(`/api/dapp?route=bridge-chain/${currentChain.path}`)
       .then(res => {
         if (res.code === 0) {
           setChainConfig(res.data)
@@ -248,7 +251,8 @@ const AllInOne: NextPageWithLayout = () => {
         </div>
         <div className="content-page">
           <ComponentWrapperPage
-            src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
+            // src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
+            src={chainConfig?.dapp_network[0].dapp_src}
             componentProps={{
               addAction,
               multicall,
