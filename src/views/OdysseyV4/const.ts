@@ -27,16 +27,16 @@ export const GoldsMap = new Map([
       desc: 'When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
     },
   ],
-  [
-    'Ambient',
-    {
-      logo: '/images/odyssey/v4/logo-pac.svg',
-      link: `${location.origin}/dapp/pac-finance`,
-      rank1: 1000,
-      rank2: 500,
-      rank3: 500,
-      reward: '1%',
-      desc: 'When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
-    },
-  ],
+  // [
+  //   'Ambient',
+  //   {
+  //     logo: '/images/odyssey/v4/logo-pac.svg',
+  //     link: `${location.origin}/dapp/pac-finance`,
+  //     rank1: 1000,
+  //     rank2: 500,
+  //     rank3: 500,
+  //     reward: '1%',
+  //     desc: 'When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
+  //   },
+  // ],
 ]);
