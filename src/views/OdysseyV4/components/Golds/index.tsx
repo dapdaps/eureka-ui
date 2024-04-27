@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 
-import { ParticleLink } from '../../const';
+import { GoldsMap } from '../../const';
 import RankModal from '../RankModal';
 import RefreshButton from '../RefreshButton';
 import StatusTag from '../StatusTag';
@@ -43,45 +43,6 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
     setCurDapp('');
     setId('');
   };
-
-  const GoldsMap = new Map([
-    [
-      'Particle',
-      {
-        logo: '/images/odyssey/v4/logo-particle.svg',
-        link: ParticleLink,
-        rank1: 1000,
-        rank2: 500,
-        rank3: 500,
-        reward: '1%',
-        desc: 'When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
-      },
-    ],
-    [
-      'Thruster',
-      {
-        logo: '/images/odyssey/v4/logo-thruster.svg',
-        link: '',
-        rank1: 1000,
-        rank2: 500,
-        rank3: 500,
-        reward: '1%',
-        desc: 'When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
-      },
-    ],
-    [
-      'PAC Finance',
-      {
-        logo: '/images/odyssey/v4/logo-pac.svg',
-        link: `${location.origin}/dapp/pac-finance`,
-        rank1: 1000,
-        rank2: 500,
-        rank3: 500,
-        reward: '1%',
-        desc: 'When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
-      },
-    ],
-  ]);
 
   return (
     <StyledContainer>
