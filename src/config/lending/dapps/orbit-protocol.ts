@@ -17,13 +17,13 @@ const networks = {
 
     ORBIT_MARKETS: {
       '0x0872b71efc37cb8dde22b2118de3d800427fdba0': {
-        underlyingAsset: blast['eth'].address,
-        name: blast['eth'].name,
-        symbol: blast['eth'].symbol,
-        decimals: blast['eth'].decimals,
-        icon: blast['eth'].icon,
+        underlyingAsset: blast['oeth'].address,
+        name: blast['oeth'].name,
+        symbol: blast['oeth'].symbol,
+        decimals: blast['oeth'].decimals,
+        icon: blast['oeth'].icon,
         address: '0x0872b71efc37cb8dde22b2118de3d800427fdba0',
-        underlyingToken: blast['eth'],
+        underlyingToken: blast['oeth'],
         loanToValue: 0.75,
         isCollateral: false,
       },
