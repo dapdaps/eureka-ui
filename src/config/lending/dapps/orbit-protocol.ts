@@ -14,7 +14,8 @@ const networks = {
   81457: {
     unitrollerAddress: '0x1E18C3cb491D908241D0db14b081B51be7B6e652',
     oracleAddress: '0x5f3f2f65c78ea522767ae965a1c48cbc852820ce',
-    markets: {
+
+    ORBIT_MARKETS: {
       '0x0872b71efc37cb8dde22b2118de3d800427fdba0': {
         underlyingAsset: blast['eth'].address,
         name: blast['eth'].name,
@@ -48,6 +49,8 @@ const networks = {
         loanToValue: 0.75,
         isCollateral: false,
       },
+    },
+    RENZO_MARKETS: {
       '0x795dCD51EaC6eb3123b7a4a1f906992EAA54Cb0e': {
         underlyingAsset: blast['eth'].address,
         name: blast['eth'].name,
@@ -82,6 +85,8 @@ const networks = {
         loanToValue: 0.75,
         isCollateral: false,
       },
+    },
+    KELP_MARKETS: {
       '0xAFAbd582E82042f4A8574f75c36409abEa916Ac5': {
         underlyingAsset: blast['eth'].address,
         name: blast['eth'].name,
@@ -116,9 +121,6 @@ const networks = {
         isCollateral: false,
       },
     },
-    ORBIT_MARKETS: {},
-    RENZO_MARKETS: {},
-    KELP_MARKETS: {},
   },
 };
 

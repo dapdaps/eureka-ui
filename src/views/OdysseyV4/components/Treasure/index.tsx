@@ -426,7 +426,8 @@ export default function Treasure() {
                       height="42px"
                       handleClick={(e: any) => handleJump(`${location.origin}/dapp/thruster-finance`)}
                     >
-                      Swap mwstETH-WPUNKS <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                      Add Liquidity
+                      <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                     </TrapeziformBtn>
                   </div>
                 </div>
