@@ -77,6 +77,10 @@ const nextConfig = {
       source: '/blast/bridge/:path*',
       destination: 'https://waitlist-api.prod.blast.io/:path*',
     },
+    {
+      source: '/renzo/:path*',
+      destination: 'https://app.renzoprotocol.com/:path*',
+    },
   ],
   images: {
     remotePatterns: [

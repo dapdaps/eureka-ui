@@ -43,6 +43,7 @@ export default function useTokenBalance(address: string | 'native', decimals: nu
       } else {
         const TokenContract = new Contract(address, TOKEN_ABI, provider.getSigner());
         const rawBalance = await TokenContract.balanceOf(account);
+        console.log('rawBalance: ', rawBalance)
         setTokenBalance(utils.formatUnits(rawBalance, decimals));
       }
     } catch (error) {
