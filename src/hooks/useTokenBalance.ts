@@ -26,7 +26,7 @@ const TOKEN_ABI = [
 
 export default function useTokenBalance(address: string | 'native', decimals: number) {
   // console.info('use-token-bal:', address, decimals);
-  const { account, provider } = useAccount();
+  const { account, provider, chainId } = useAccount();
   const [tokenBalance, setTokenBalance] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -57,7 +57,7 @@ export default function useTokenBalance(address: string | 'native', decimals: nu
   };
   useEffect(() => {
     getBalance();
-  }, [account, address, decimals, fresh]);
+  }, [account, address, decimals, fresh, chainId]);
 
   return { tokenBalance, isError, isLoading, update };
 }
