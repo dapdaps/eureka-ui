@@ -1,13 +1,14 @@
 import { memo } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { StyledContainer } from './styles';
 
 const Header = () => {
   const router = useRouter();
+
   return (
     <StyledContainer
       onClick={() => {
-        router.back();
+        router.push(`/dapp/${router.query.dappRoute}`);
       }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="9" height="13" viewBox="0 0 9 13" fill="none">

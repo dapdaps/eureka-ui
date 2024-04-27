@@ -20,9 +20,7 @@ export default function useSwitchChain() {
       }
     }
     await setChain({
-      ...omit(params, ['chainName', 'icon', 'nativeCurrency', 'rpcUrls', 'blockExplorers']),
-      chainNamespace: 'evm',
-      rpcUrl: params.rpcUrls[0],
+      chainId: params.chainId,
     } as any);
     setSwitching(false);
     cb?.();

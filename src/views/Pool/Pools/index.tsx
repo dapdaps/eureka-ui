@@ -23,8 +23,6 @@ const Pools = () => {
 
   const router = useRouter();
 
-  console.log(router);
-
   const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(false);
 
   const [openPositions, closedPositions] = pools?.reduce(

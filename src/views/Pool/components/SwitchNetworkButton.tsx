@@ -13,7 +13,7 @@ export default function SwitchNetworkButton({ style, chain }: any) {
         });
       }}
     >
-      {switching ? 'Switch Network...' : `Switch Network to ${chain.chainName}`}
+      {switching ? 'Switch Network...' : `Switch Network to ${chain.name}`}
     </Button>
   );
 }

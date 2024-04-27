@@ -6,7 +6,6 @@ import AddLiquidity from '@/views/Pool/AddLiquidity';
 
 export default function PoolDapp({ dapp, chainId, dappChains, currentChain, localConfig, network, chains }: any) {
   const router = useRouter();
-  console.log(router);
   return (
     <LiquidityContext.Provider
       value={{

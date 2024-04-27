@@ -2,19 +2,18 @@ import { memo, useMemo, useState } from 'react';
 import Modal from '@/components/Modal';
 import TokenRow from './TokenRow';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import useAccount from '@/hooks/useAccount';
 import useTokensBalance from '@/hooks/useTokensBalance';
 import { StyledContent, StyledSearch, StyledTokens } from './styles';
 
 const SelectTokens = ({ open, selectedToken, onClose, onSelectToken }: any) => {
   const [searchVal, setSearchVal] = useState('');
-  const { chainId } = useAccount();
-  const { tokens, defaultChain } = useDappConfig();
+
+  const { tokens, currentChain } = useDappConfig();
 
   const chainTokens = useMemo(() => {
-    const _chainId = chainId || defaultChain.chainId;
+    const _chainId = currentChain.chain_id;
     return Object.values(tokens[_chainId]);
-  }, [chainId, tokens]);
+  }, [tokens]);
 
   const filterTokens = useMemo(() => {
     return chainTokens.filter((token: any) => {

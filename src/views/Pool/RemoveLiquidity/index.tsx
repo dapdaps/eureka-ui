@@ -17,7 +17,7 @@ const Remove = ({ amount0, amount1, feeAmount0, feeAmount1, open, onClose, onSuc
   const [percent, setPercent] = useState(0);
   const { loading, onRemove } = useRemove({ detail, percent, onSuccess });
   const { account, chainId } = useAccount();
-  const { contracts, defaultChain } = useDappConfig();
+  const { currentChain } = useDappConfig();
 
   return (
     <Modal
@@ -40,8 +40,8 @@ const Remove = ({ amount0, amount1, feeAmount0, feeAmount1, open, onClose, onSuc
           />
           {!account ? (
             <ConnectWalletButton style={{ width: '100%', height: 62, marginTop: 20 }} />
-          ) : chainId && !contracts[chainId] ? (
-            <SwitchNetworkButton style={{ width: '100%', height: 62, marginTop: 20 }} chain={defaultChain} />
+          ) : chainId !== currentChain.chain_id ? (
+            <SwitchNetworkButton style={{ width: '100%', height: 62, marginTop: 20 }} chain={currentChain} />
           ) : (
             <Button
               style={{ width: '100%', height: 62, marginTop: 20 }}

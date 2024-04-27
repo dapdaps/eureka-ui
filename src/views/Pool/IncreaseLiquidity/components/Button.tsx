@@ -67,13 +67,13 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
 
 const AddButton = ({ errorTips, loading, ...rest }: any) => {
   const { account, chainId } = useAccount();
-  const { contracts, defaultChain } = useDappConfig();
+  const { contracts, currentChain } = useDappConfig();
   if (!account || !chainId) {
     return <ConnectWalletButton style={style} />;
   }
 
-  if (!contracts[chainId]) {
-    return <SwitchNetworkButton style={style} chain={defaultChain} />;
+  if (chainId !== currentChain.chain_id) {
+    return <SwitchNetworkButton style={style} chain={currentChain} />;
   }
 
   if (!rest.token0 || !rest.token1) {
