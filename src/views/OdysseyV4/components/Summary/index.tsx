@@ -1,11 +1,16 @@
+import Loading from '@/components/Icons/Loading';
 import { formatThousandsSeparator } from '@/utils/format-number';
 
-import { Item, StyledContainer, Title, Value } from './styles';
+import { Item, LoadingWrap, StyledContainer, Title, Value } from './styles';
 
-export default function Summary({ data }: any) {
+export default function Summary({ data, loading }: any) {
   const { total_transactions, total_users, trading_volume } = data;
 
-  return (
+  return loading ? (
+    <LoadingWrap>
+      <Loading size={30} />
+    </LoadingWrap>
+  ) : (
     <StyledContainer>
       <span className="left yLine"></span>
       <span className="right yLine"></span>

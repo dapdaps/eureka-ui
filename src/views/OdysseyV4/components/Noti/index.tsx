@@ -1,12 +1,13 @@
 import Image from 'next/image';
 
+import LottieEyes from '../LottieEyes';
 import { StyledContainer, StyledContent } from './styles';
 
 export default function Noti({ onClose }: any) {
   return (
     <StyledContainer>
       <StyledContent>
-        <Image src="/images/odyssey/v4/eyes.svg" alt="" width={38} height={38} />
+        <LottieEyes />
         When completing a transaction, please stay on the component page briefly to prevent any failure in reporting
         information.
       </StyledContent>
