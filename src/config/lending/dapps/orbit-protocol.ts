@@ -5,6 +5,7 @@ const basic = {
   //   icon: '/images/apps/cream.png',
   data: 'bluebiu.near/widget/Lending.Data.Orbit',
   handler: 'bluebiu.near/widget/Lending.Handler.Orbit',
+  handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Orbit',
 };
 
 // reward 0x42e12d42b3d6c4a74a88a61063856756ea2db357
@@ -14,7 +15,8 @@ const networks = {
   81457: {
     unitrollerAddress: '0x1E18C3cb491D908241D0db14b081B51be7B6e652',
     oracleAddress: '0x5f3f2f65c78ea522767ae965a1c48cbc852820ce',
-
+    renzoAddress: '0x273683ca19d9cf827628ee216e4a9604efb077a3',
+    kelpAddress: '0xe9266ae95bb637a7ad598cb0390d44262130f433',
     ORBIT_MARKETS: {
       '0x0872b71efc37cb8dde22b2118de3d800427fdba0': {
         underlyingAsset: blast['oeth'].address,
