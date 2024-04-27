@@ -1,17 +1,39 @@
-import styled from 'styled-components';
-import useAuthCheck from '@/hooks/useAuthCheck';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
+import useAuthCheck from '@/hooks/useAuthCheck';
 
 const StyledContainer = styled.div`
   position: absolute;
-  right: -180px;
-  top: 8px;
-  width: 96.5px;
+  right: -190px;
+  top: -14px;
+  z-index: -1;
+  /* width: 96.5px;
   height: 31.209px;
   background-image: url(/images/odyssey/v3/nav-bg.png);
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
   background-size: 100%;
   cursor: pointer;
+  .light {
+    position: absolute;
+    left: 86px;
+    top: -2px;
+    animation: scale 1.8s infinite ease-in-out;
+    @keyframes scale {
+      0% {
+        transform: scale(0.6) rotate(0deg);
+      }
+
+      50% {
+        transform: scale(1.1) rotate(50deg);
+      }
+
+      100% {
+        transform: scale(0.6);
+      }
+    }
+  }
 `;
 
 const StyledIcon = styled.div`
@@ -47,11 +69,13 @@ export default function OdysseyIcon() {
     <StyledContainer
       onClick={() => {
         check(() => {
-          router.push('/odyssey/home?id=3');
+          router.push('/odyssey/home?id=4');
         });
       }}
     >
-      <StyledIcon />
+      <Image src="/images/odyssey/v4/ody-logo.svg" alt="" width={236} height={146} />
+      <Image src="/images/odyssey/v4/ody-light.svg" alt="" width={51} height={51} className="light" />
+      {/* <StyledIcon /> */}
     </StyledContainer>
   );
 }

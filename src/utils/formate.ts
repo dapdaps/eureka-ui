@@ -11,12 +11,12 @@ const formateAddress = (address: string) => {
 function addThousandSeparator(numberString: string) {
   const parts = numberString.split('.');
   const integerPart = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-  const decimalPart = parts[1] ? `.${parts[1]}` : ''; // 添加小数部分，如果存在
+  const decimalPart = parts[1] ? `.${parts[1]}` : '';
   return integerPart + decimalPart;
 }
 
 const formateValue = (value: string | number, precision: number) => {
-  if (Big(value).eq(0)) return '0';
+  if (Big(value || 0).eq(0)) return '0';
 
   if (Big(value).lt(Big(10).pow(-precision))) {
     return `< ${Big(10).pow(-precision).toFixed(precision)}`;
@@ -68,6 +68,12 @@ const formateValueWithThousandSeparatorAndFont = (
 
 function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
+}
 
-export { formateAddress, formateValue, formateValueWithThousandSeparator, formateValueWithThousandSeparatorAndFont, getRandomInt };
+export {
+  formateAddress,
+  formateValue,
+  formateValueWithThousandSeparator,
+  formateValueWithThousandSeparatorAndFont,
+  getRandomInt,
+};
