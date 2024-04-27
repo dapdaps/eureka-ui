@@ -1,31 +1,18 @@
 import Big from 'big.js';
-import { Contract, providers, utils } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 
-import type { Chain, Token } from '@/types';
+import type { Token } from '@/types';
 
 import useAccount from './useAccount';
 
-const { JsonRpcProvider, Web3Provider } = providers;
-
-export default function useApprove({
-  token,
-  amount,
-  chain,
-  spender,
-}: {
-  token?: Token;
-  amount?: string;
-  chain?: Chain;
-  spender?: string;
-}) {
+export default function useApprove({ token, amount, spender }: { token?: Token; amount?: string; spender?: string }) {
   const [approved, setApproved] = useState(false);
   const [approving, setApproving] = useState(false);
   const { account, provider } = useAccount();
 
   const checkApproved = async () => {
-    if (!token?.address || !amount || !chain || !spender) return;
-    const provider = new JsonRpcProvider(chain?.rpcUrls[0]);
+    if (!token?.address || !amount || !spender) return;
     const TokenContract = new Contract(
       token.address,
       [
@@ -49,7 +36,7 @@ export default function useApprove({
   };
 
   const approve = async () => {
-    if (!token?.address || !amount || !chain || !spender) return;
+    if (!token?.address || !amount || !spender) return;
     setApproving(true);
     try {
       const signer = provider.getSigner(account);
@@ -69,11 +56,12 @@ export default function useApprove({
         ],
         signer,
       );
-      const tx = await TokenContract.approve(spender, new Big(amount).mul(10 ** token.decimals).toString());
+      const tx = await TokenContract.approve(spender, new Big(amount).mul(10 ** token.decimals).toFixed(0));
       const res = await tx.wait();
       setApproving(false);
       if (res.status === 1) setApproved(true);
     } catch (err) {
+      console.log(err);
       setApproving(false);
     }
   };
@@ -83,8 +71,8 @@ export default function useApprove({
       setApproved(true);
       return;
     }
-    if (token && amount && chain && spender) checkApproved();
-  }, [token, amount, chain, spender]);
+    if (token && amount && spender) checkApproved();
+  }, [token, amount, spender]);
 
   return { approved, approve, approving };
 }

@@ -3,12 +3,10 @@ import { avalanche } from '@/config/tokens/avalanche';
 const basic = {
   name: 'Pangolin',
   logo: '/images/apps/pangolin.png',
-  amountOutFn: 'bluebiu.near/widget/Avalanche.Swap.PangolinAmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   43114: {
-    factoryAddress: '0xefa94DE7a4656D787667C749f7E1223D71E9FD88',
-    routerAddress: '0xE54Ca86531e17Ef3616d22Ca28b0D458b6C89106',
     defaultCurrencies: {
       input: avalanche['eth'],
       output: avalanche['usdc.e'],
