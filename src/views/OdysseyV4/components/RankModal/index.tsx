@@ -40,7 +40,7 @@ export default function RankModal({ name, id, onClose }: any) {
         <ModalHead>
           <span className="left">
             {renderLogo()}
-            {name} Top 50 Rank
+            {name} Top Rank
             <div className="smoke"></div>
           </span>
           <Image
