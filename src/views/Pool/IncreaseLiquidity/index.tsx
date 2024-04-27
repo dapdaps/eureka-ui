@@ -6,7 +6,7 @@ import Range from '../Detail/components/Range';
 import DepositAmounts from '../components/DepositAmounts';
 import IncreaseButton from './components/Button';
 import { StyledContent } from './styles';
-import { tickToPrice } from '../utils/tickMath';
+import { tickToPrice, checkIsFullRange } from '../utils/tickMath';
 import useIncrease from './hooks/useIncrease';
 
 const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) => {
@@ -24,6 +24,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) =
   });
 
   const rangeType = useMemo(() => {
+    if (checkIsFullRange({ tickLower, tickUpper })) return 3;
     if (currentTick < tickUpper && currentTick > tickLower) return 0;
     if (currentTick < tickLower) return 1;
     if (currentTick > tickUpper) return 2;

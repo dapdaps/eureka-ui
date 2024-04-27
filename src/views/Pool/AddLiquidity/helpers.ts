@@ -1,6 +1,10 @@
 import Big from 'big.js';
 
-export function getAnotherAmountOut({ currentPrice, lowerPrice, upperPrice, amount, isToken0 }: any) {
+export function getAnotherAmountOut({ currentPrice, lowerPrice, upperPrice, amount, isToken0, isFullRange }: any) {
+  if (isFullRange) {
+    return isToken0 ? amount * currentPrice : amount * (1 / currentPrice);
+  }
+
   const q96 = 2 ** 96;
 
   const sqrtpLower = Math.sqrt(lowerPrice) * q96;

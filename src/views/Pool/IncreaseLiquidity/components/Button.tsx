@@ -14,6 +14,7 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
     approve: handleToken0Approve,
     approved: value0Approved,
     approving: value0Approving,
+    checking: value0Checking,
   } = useApprove({
     amount: value0,
     token: token0,
@@ -24,11 +25,20 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
     approve: handleToken1Approve,
     approved: value1Approved,
     approving: value1Approving,
+    checking: value1Checking,
   } = useApprove({
     amount: value1,
     token: token1,
     spender,
   });
+  if (value0Checking || value1Checking) {
+    return (
+      <Button style={style} disabled>
+        <Loading size={20} />
+      </Button>
+    );
+  }
+
   if (!value0Approved && !value1Approved) {
     return (
       <StyledButtons>

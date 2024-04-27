@@ -1,9 +1,15 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import usePoolInfo from './usePoolInfo';
 import useDappConfig from '../../hooks/useDappConfig';
-import { tickToPrice, priceToTick, priceToUsablePrice } from '../../utils/tickMath';
-import { priceToUsableTick } from '../../utils/tickMath';
+import {
+  tickToPrice,
+  priceToUsablePrice,
+  priceToUsableTick,
+  priceToTick,
+  nearestUsableTick,
+} from '../../utils/tickMath';
 import { sortTokens } from '../../utils/token';
+import { FEES, MIN_TICK, MAX_TICK } from '@/config/pool/index';
 
 export default function useData() {
   const { defaultFee } = useDappConfig();
@@ -64,14 +70,16 @@ export default function useData() {
 
   const rangeType = useMemo(() => {
     if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice) return 0;
+    if (lowerPrice === '0' || upperPrice === '∞') return 3;
     const lowerTick = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
     const upperTick = priceToUsableTick({ price: upperPrice, token0, token1, fee });
     const currentTick = info.currentTick || priceToUsableTick({ price: currentPrice, token0, token1, fee });
     const [_lowerTick, _upperTick] = lowerTick > upperTick ? [upperTick, lowerTick] : [lowerTick, upperTick];
 
-    if (currentTick < _upperTick && currentTick > _lowerTick) return 0;
+    // if (currentTick < _upperTick && currentTick > _lowerTick) return 0;
     if (currentTick < _lowerTick) return 1;
     if (currentTick > _upperTick) return 2;
+    return 0;
   }, [lowerPrice, upperPrice, currentPrice, info]);
 
   const onPriceChange = useCallback(
@@ -93,17 +101,25 @@ export default function useData() {
 
   const onPointChange = useCallback(
     (stepType: 'add' | 'minus', type: 'upper' | 'lower') => {
-      let tick = type === 'lower' ? priceToTick(lowerPrice) : priceToTick(upperPrice);
+      const tickLower = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
+
+      const tickUpper = upperPrice === priceToUsableTick({ price: upperPrice, token0, token1, fee });
+
+      let tick = type === 'lower' ? tickLower : tickUpper;
+
+      const space = FEES[fee].space;
+
       if (reverse) {
-        stepType === 'add' ? tick-- : tick++;
+        stepType === 'add' ? (tick -= space) : (tick += space);
       } else {
-        stepType === 'add' ? tick++ : tick--;
+        stepType === 'add' ? (tick += space) : (tick -= space);
       }
-      const price = tickToPrice(tick);
+
+      const price = tickToPrice({ tick, token0, token1 });
 
       type === 'upper' ? setUpperPrice(price) : setLowerPrice(price);
     },
-    [token0, token1, fee, reverse],
+    [token0, token1, fee, reverse, lowerPrice, upperPrice],
   );
 
   useEffect(() => {

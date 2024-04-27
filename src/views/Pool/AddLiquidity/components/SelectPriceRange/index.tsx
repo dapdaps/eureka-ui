@@ -9,6 +9,7 @@ const SelectPriceRange = ({
   token0,
   token1,
   reverse,
+  rangeType,
   onExchangeTokens,
   onPointChange,
   onPriceChange,
@@ -43,6 +44,7 @@ const SelectPriceRange = ({
           onPointChange(type, 'lower', lowerPrice);
         }}
         disabled={!token0 || !token1}
+        rangeType={rangeType}
       />
       <Input
         label="High price"
@@ -55,6 +57,7 @@ const SelectPriceRange = ({
           onPointChange(type, 'upper', upperPrice);
         }}
         disabled={!token0 || !token1}
+        rangeType={rangeType}
       />
     </StyledContainer>
   );

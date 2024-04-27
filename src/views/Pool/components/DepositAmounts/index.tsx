@@ -26,10 +26,12 @@ const DepositAmounts = ({
   const handleValue = (value: any, type: 0 | 1) => {
     if (type === 0) {
       setValue0(value);
+      setValue1('');
     } else {
+      setValue0('');
       setValue1(value);
     }
-    if (rangeType || !Number(value)) return;
+    if ([1, 2].includes(rangeType) || !Number(value)) return;
 
     const isReversed = token0.address.toLowerCase() > token1.address.toLowerCase();
 
@@ -42,6 +44,7 @@ const DepositAmounts = ({
           upperPrice: isReversed ? 1 / lowerPrice : upperPrice,
           amount: value,
           isToken0,
+          isFullRange: rangeType === 3,
         })
       : '';
 
@@ -75,14 +78,18 @@ const DepositAmounts = ({
   }, [rangeType]);
 
   useEffect(() => {
-    if ((rangeType === 1 && !value0) || (rangeType === 2 && !value1) || (rangeType === 0 && (!value0 || !value1))) {
+    if (
+      (rangeType === 1 && !value0) ||
+      (rangeType === 2 && !value1) ||
+      ([0, 3].includes(rangeType) && (!value0 || !value1))
+    ) {
       onError('Enter Amount');
       return;
     }
     if (
       (rangeType === 1 && new Big(balance0 || 0).lt(value0 || 0)) ||
       (rangeType === 2 && new Big(balance1 || 0).lt(value1 || 0)) ||
-      (rangeType === 0 && (new Big(balance0 || 0).lt(value0 || 0) || new Big(balance1 || 0).lt(value1 || 0)))
+      ([0, 3].includes(rangeType) && (new Big(balance0 || 0).lt(value0 || 0) || new Big(balance1 || 0).lt(value1 || 0)))
     ) {
       onError('Insufficient Balance');
       return;
@@ -93,7 +100,7 @@ const DepositAmounts = ({
   return (
     <StyledContainer>
       <StyledSubtitle>{label}</StyledSubtitle>
-      {[0, 1].includes(rangeType) && (
+      {[0, 1, 3].includes(rangeType) && (
         <Input
           token={token0}
           value={value0}
@@ -108,7 +115,7 @@ const DepositAmounts = ({
         />
       )}
 
-      {[0, 2].includes(rangeType) && (
+      {[0, 2, 3].includes(rangeType) && (
         <Input
           token={token1}
           value={value1}

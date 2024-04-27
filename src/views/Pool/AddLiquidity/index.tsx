@@ -79,13 +79,14 @@ const Add = () => {
               token1={token1}
               reverse={reverse}
               noPair={noPair}
+              rangeType={rangeType}
               onExchangeTokens={() => {
                 onExchangeTokens();
               }}
               onPointChange={onPointChange}
               onPriceChange={onPriceChange}
             />
-            {!!rangeType && !noPair && <OutRangeHints type={rangeType} />}
+            {[1, 2].includes(rangeType) && !noPair && <OutRangeHints type={rangeType} />}
             {noPair && token0 && token1 && <PoolHints />}
             {noPair && (
               <StartingPrice
@@ -104,7 +105,7 @@ const Add = () => {
                 currentPrice={currentPrice}
                 fee={fee}
                 lowerPrice={lowerPrice}
-                highPrice={upperPrice}
+                highPrice={upperPrice === '∞' ? 2 ** 96 : upperPrice}
                 token0={token0}
                 token1={token1}
                 onPriceChange={onPriceChange}

@@ -9,7 +9,7 @@ import {
   StyledInputDesc,
 } from './styles';
 
-const Input = ({ label, value, setValue, onButtonClick, desc, disabled }: any) => {
+const Input = ({ label, value, setValue, onButtonClick, desc, disabled, rangeType }: any) => {
   const [price, setPrice] = useState('');
   useEffect(() => {
     setPrice(value);
@@ -34,7 +34,7 @@ const Input = ({ label, value, setValue, onButtonClick, desc, disabled }: any) =
       </StyledInputLeft>
       <StyledInputRight>
         <StyledInputButton
-          disabled={value === '∞'}
+          disabled={value === '∞' || rangeType === 3}
           onClick={() => {
             onButtonClick('add');
           }}
@@ -45,7 +45,7 @@ const Input = ({ label, value, setValue, onButtonClick, desc, disabled }: any) =
           </svg>
         </StyledInputButton>
         <StyledInputButton
-          disabled={Number(value) === 0}
+          disabled={Number(value) === 0 || rangeType === 3}
           onClick={() => {
             onButtonClick('minus');
           }}
