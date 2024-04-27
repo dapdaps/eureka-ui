@@ -16,12 +16,12 @@ import usePoolDetail from './hooks/usePoolDetail';
 import useCollectInfo from './hooks/useCollectInfo';
 import { StyledContainer, StyledLoadingWrapper, StyledPanels } from './styles';
 
-const Detail = ({ dapp, tokenId }: any) => {
+const Detail = () => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showIncreaseModal, setShowIncreaseModal] = useState(false);
+  const { theme = {}, tokenId } = useDappConfig();
   const { detail = {}, loading, queryDetail } = usePoolDetail(tokenId);
   const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId);
-  const { theme = {} } = useDappConfig();
   const _token0 = useToken(detail?.token0, detail?.chainId);
   const _token1 = useToken(detail?.token1, detail?.chainId);
 
@@ -51,7 +51,7 @@ const Detail = ({ dapp, tokenId }: any) => {
 
   return (
     <StyledContainer style={{ ...theme }}>
-      <Header dapp={dapp} />
+      <Header />
       {loading || !_token0 || !_token1 ? (
         <StyledLoadingWrapper>
           <Loading size={36} />
@@ -63,7 +63,6 @@ const Detail = ({ dapp, tokenId }: any) => {
             <Actions
               id={tokenId}
               liquidity={detail.liquidity}
-              dapp={dapp}
               onRemove={() => {
                 setShowRemoveModal(true);
               }}

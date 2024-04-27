@@ -17,10 +17,13 @@ import {
   StyledTogglePositions,
 } from './styles';
 
-const Pools = ({ dapp }: any) => {
+const Pools = () => {
   const { pools, loading } = usePools();
   const { theme = {} } = useDappConfig();
+
   const router = useRouter();
+
+  console.log(router);
 
   const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(false);
 
@@ -44,7 +47,7 @@ const Pools = ({ dapp }: any) => {
         <Button
           style={{ width: '149px', height: '35px' }}
           onClick={() => {
-            router.push(`/pool/${dapp}/add`);
+            router.push(`/dapp/${router.query.dappRoute}/add`);
           }}
         >
           + Create Position
@@ -72,7 +75,7 @@ const Pools = ({ dapp }: any) => {
                 key={position.tokenId}
                 {...position}
                 onClick={() => {
-                  router.push(`/pool/${dapp}/position?id=${position.tokenId}`);
+                  router.push(`/dapp/${router.query.dappRoute}/position?id=${position.tokenId}`);
                 }}
               />
             ))}

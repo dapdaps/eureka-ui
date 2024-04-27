@@ -1,5 +1,3 @@
-import ThrusterFinance from './thruster-finance';
-
 export const MAX_TICK = 887272;
 export const MIN_TICK = -887272;
 
@@ -20,7 +18,3 @@ export const FEES: { [key: number]: any } = {
     desc: 'Best for exotic pairs',
   },
 };
-
-export default {
-  'thruster-finance': ThrusterFinance,
-} as { [key: string]: any };

@@ -2,7 +2,7 @@ import { memo, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 import FeeNoExsitHints from '../FeeNoExsitHints';
-import { FEES } from '@/views/Pool/config';
+import { FEES } from '@/config/pool';
 import {
   StyledContainer,
   StyledHeader,

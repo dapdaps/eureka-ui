@@ -8,7 +8,9 @@ export default function SwitchNetworkButton({ style, chain }: any) {
     <Button
       style={style}
       onClick={() => {
-        switchChain(chain);
+        switchChain({
+          chainId: chain.chain_id,
+        });
       }}
     >
       {switching ? 'Switch Network...' : `Switch Network to ${chain.chainName}`}

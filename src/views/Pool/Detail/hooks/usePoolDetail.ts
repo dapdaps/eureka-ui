@@ -53,6 +53,7 @@ export default function usePoolDetail(tokenId: string) {
   }, [tokenId, chainId]);
 
   useEffect(() => {
+    console.log(tokenId, chainId);
     queryDetail();
   }, [tokenId, chainId]);
 

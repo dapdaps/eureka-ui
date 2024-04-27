@@ -38,6 +38,7 @@ export const DappPage: NextPageWithLayout = () => {
     }
 
     const config = dappConfig[dappPathname];
+
     if (!config) {
       setLocalConfig(null);
       return;
@@ -55,6 +56,10 @@ export const DappPage: NextPageWithLayout = () => {
     if (config.type === 'liquidity') {
       result = (await import(`@/config/liquidity/dapps/${dappPathname}`))?.default;
     }
+    if (config.type === 'pool') {
+      result = (await import(`@/config/pool/dapps/${dappPathname}`))?.default;
+    }
+
     setLocalConfig({ ...result, theme: config.theme });
   }, [dappPathname]);
 
@@ -91,7 +96,7 @@ export const DappPage: NextPageWithLayout = () => {
 
   if (!dapp || !currentChain || (!dapp.default_chain_id && !dapp.default_network_id)) return <div />;
 
-  if (!network?.dapp_src || !localConfig) return <div />;
+  if (!localConfig) return <div />;
 
   return ready && !loading ? (
     <DappView

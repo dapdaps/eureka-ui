@@ -6,16 +6,16 @@ import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
 import { StyledContainer, StyledText } from './style';
 
 export default function Empty() {
-  const { account, chainId } = useAccount();
-  const { contracts, defaultChain } = useDappConfig();
+  const { account, chainId: walletChainId } = useAccount();
+  const { chainId, currentChain } = useDappConfig();
   return (
     <StyledContainer>
       <EmptyIcon />
       <StyledText>Your active V3 liquidity positions will appear here.</StyledText>
 
       {!account && <ConnectWalletButton style={{ width: 446, height: 62, fontSize: 18 }} />}
-      {chainId && !contracts[chainId] && (
-        <SwitchNetworkButton style={{ width: 446, height: 62, fontSize: 18 }} chain={defaultChain} />
+      {chainId !== walletChainId && (
+        <SwitchNetworkButton style={{ width: 446, height: 62, fontSize: 18 }} chain={currentChain} />
       )}
     </StyledContainer>
   );

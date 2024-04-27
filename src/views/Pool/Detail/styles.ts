@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   width: 810px;
-  margin: 50px auto 0px;
+  margin: 10px auto 0px;
 `;
 
 export const StyledTop = styled.div`

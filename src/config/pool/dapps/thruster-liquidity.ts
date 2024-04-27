@@ -1,6 +1,5 @@
 import { blast } from '@/config/tokens/blast';
-import chains from '@/config/chains';
-import { formatTokenKey, formatToken } from './helpers';
+import { formatTokenKey, formatToken } from '../helpers';
 
 const contracts: { [key: number]: any } = {
   81457: {
@@ -35,9 +34,4 @@ export default {
   fees: [500, 3000, 10000],
   defaultFee: 3000,
   tokens,
-  defaultChain: chains[81457],
-  theme: {
-    '--button-color': 'linear-gradient(180deg, #FF8581 0%, #FE2B29 100%)',
-    '--border-color': '#FE6360',
-  },
 };

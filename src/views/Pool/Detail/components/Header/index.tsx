@@ -2,12 +2,12 @@ import { memo } from 'react';
 import { useRouter } from 'next/navigation';
 import { StyledContainer } from './styles';
 
-const Header = ({ dapp }: any) => {
+const Header = () => {
   const router = useRouter();
   return (
     <StyledContainer
       onClick={() => {
-        router.push(`/pool/${dapp}`);
+        router.back();
       }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="9" height="13" viewBox="0 0 9 13" fill="none">
