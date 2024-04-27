@@ -29,6 +29,11 @@ const Treasure = styled.div`
   .star {
     position: absolute;
   }
+  .star4 {
+    position: absolute;
+    top: 21px;
+    left: 57px;
+  }
   .scale {
     transition: transform 0.3s;
     &:hover {

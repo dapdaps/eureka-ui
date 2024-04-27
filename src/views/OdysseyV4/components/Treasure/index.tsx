@@ -635,7 +635,7 @@ export default function Treasure() {
         </Treasure1>
         <Treasure2 onClick={() => setShowModal4(true)}>
           <Line />
-          <Image src="/images/odyssey/v4/thruster.svg" alt="" width={208} height={208} className="scale" />
+          {/* <Image src="/images/odyssey/v4/thruster.svg" alt="" width={208} height={208} className="scale" />
           <Image
             src="/images/odyssey/v4/thruster-track.svg"
             style={{ marginTop: -160 }}
@@ -650,7 +650,8 @@ export default function Treasure() {
             width={60}
             height={60}
             className="scale star hyperlock"
-          />
+          /> */}
+          <Image src="/images/odyssey/v4/star3.svg" alt="" width={362} height={208} className="scale star3" />
           <Title className="title">Extra Points</Title>
           <IconGroup className="td2">
             <Image src="/images/odyssey/v4/icon-thruster.svg" alt="" width={22} height={22} className="" />
@@ -672,7 +673,7 @@ export default function Treasure() {
       >
         <Treasure4 onClick={() => setShowModal2(true)}>
           <Line />
-          <Image src="/images/odyssey/v4/track1.svg" alt="" width={478} height={164} className="track1" />
+          {/* <Image src="/images/odyssey/v4/track1.svg" alt="" width={478} height={164} className="track1" />
 
           <Image src="/images/odyssey/v4/particle.svg" alt="" width={74} height={74} className="scale star particle" />
           <Image
@@ -689,7 +690,8 @@ export default function Treasure() {
             height={76}
             className="scale star hyperlock"
           />
-          <Image src="/images/odyssey/v4/renzo.svg" alt="" width={118} height={118} className="scale star renzo" />
+          <Image src="/images/odyssey/v4/renzo.svg" alt="" width={118} height={118} className="scale star renzo" /> */}
+          <Image src="/images/odyssey/v4/star4.svg" alt="" width={504} height={249} className="scale star4" />
           <Title className="title">Extra Points</Title>
           <Image src="/images/odyssey/v4/td4.svg" alt="" width={79} height={22} className="td4" />
         </Treasure4>

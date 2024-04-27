@@ -19,18 +19,21 @@ const StyledContainer = styled.div`
     position: absolute;
     left: 0;
     top: -2px;
-    animation: scale 2s infinite ease-in-out;
-    @keyframes scale {
+    animation: topLight 3s infinite ease-in-out;
+    @keyframes topLight {
       0% {
-        transform: scale(0.6) rotate(0deg);
+        transform: scale(0.8) rotate(0deg);
+        opacity: 0;
       }
 
       50% {
         transform: scale(1.1) rotate(50deg);
+        opacity: 1;
       }
 
       100% {
-        transform: scale(0.6);
+        transform: scale(0.8);
+        opacity: 0;
       }
     }
   }
