@@ -5,10 +5,11 @@ import Big from 'big.js';
 import useToast from '@/hooks/useToast';
 import useDappConfig from '../../hooks/useDappConfig';
 import { sortTokens } from '../../utils/token';
-import { priceToUsableTick } from '../../utils/tickMath';
+import { priceToUsableTick, nearestUsableTick } from '../../utils/tickMath';
 import positionAbi from '../../abi/position';
 import { wrapNativeToken } from '@/views/Pool/utils/token';
 import { useSettingsStore } from '@/stores/settings';
+import { MAX_TICK, MIN_TICK } from '@/config/pool/index';
 
 export default function useIncrease({
   token0,
@@ -66,8 +67,14 @@ export default function useIncrease({
       }
 
       if (!tokenId) {
-        const tickLower = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
-        const tickUpper = priceToUsableTick({ price: upperPrice, token0, token1, fee });
+        const tickLower =
+          lowerPrice === '0'
+            ? nearestUsableTick(MIN_TICK, fee)
+            : priceToUsableTick({ price: lowerPrice, token0, token1, fee });
+        const tickUpper =
+          upperPrice === '∞'
+            ? nearestUsableTick(MAX_TICK, fee)
+            : priceToUsableTick({ price: upperPrice, token0, token1, fee });
 
         const _tickLower = tickLower > tickUpper ? tickUpper : tickLower;
         const _tickUpper = tickLower > tickUpper ? tickLower : tickUpper;

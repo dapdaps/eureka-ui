@@ -6,7 +6,7 @@ import { StyledStatus } from './styles';
 const Status = ({ from, rangeType, tickLower, tickUpper, liquidity, currentTick, loading }: any) => {
   const status = useMemo(() => {
     if (from === 'add') {
-      return rangeType ? 'out' : 'in';
+      return [1, 2].includes(rangeType) ? 'out' : 'in';
     }
     if (new Big(liquidity || 0).eq(0)) return 'removed';
     return currentTick < tickLower || currentTick >= tickUpper ? 'out' : 'in';

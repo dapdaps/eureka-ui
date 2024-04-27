@@ -9,30 +9,37 @@ import useAccount from './useAccount';
 export default function useApprove({ token, amount, spender }: { token?: Token; amount?: string; spender?: string }) {
   const [approved, setApproved] = useState(false);
   const [approving, setApproving] = useState(false);
+  const [checking, setChecking] = useState(false);
   const { account, provider } = useAccount();
 
   const checkApproved = async () => {
     if (!token?.address || !amount || !spender) return;
-    const TokenContract = new Contract(
-      token.address,
-      [
-        {
-          inputs: [
-            { internalType: 'address', name: '', type: 'address' },
-            { internalType: 'address', name: '', type: 'address' },
-          ],
-          name: 'allowance',
-          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      provider,
-    );
-    const allowanceRes = await TokenContract.allowance(account, spender);
+    setChecking(true);
+    try {
+      const TokenContract = new Contract(
+        token.address,
+        [
+          {
+            inputs: [
+              { internalType: 'address', name: '', type: 'address' },
+              { internalType: 'address', name: '', type: 'address' },
+            ],
+            name: 'allowance',
+            outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function',
+          },
+        ],
+        provider,
+      );
+      const allowanceRes = await TokenContract.allowance(account, spender);
 
-    const needApproved = new Big(utils.formatUnits(allowanceRes.toString(), token.decimals)).lt(amount);
-    setApproved(!needApproved);
+      const needApproved = new Big(utils.formatUnits(allowanceRes.toString(), token.decimals)).lt(amount);
+      setApproved(!needApproved);
+      setChecking(false);
+    } catch (err) {
+      setChecking(false);
+    }
   };
 
   const approve = async () => {
@@ -74,5 +81,5 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
     if (token && amount && spender) checkApproved();
   }, [token, amount, spender]);
 
-  return { approved, approve, approving };
+  return { approved, approve, approving, checking };
 }
