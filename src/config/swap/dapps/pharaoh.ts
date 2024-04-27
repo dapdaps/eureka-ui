@@ -3,14 +3,10 @@ import { avalanche } from '@/config/tokens/avalanche';
 const basic = {
   name: 'Pharaoh',
   logo: '/images/apps/pharaoh.png',
-  amountOutFn: 'bluebiu.near/widget/Mantle.Swap.AgniFinanceAmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   43114: {
-    factoryAddress: '0xAAA32926fcE6bE95ea2c51cB4Fcb60836D320C42',
-    routerAddress: '0xAAAE99091Fbb28D400029052821653C1C752483B',
-    quoterAddress: '0xAAAbFD1E45Cc93d16c2751645e50F2594bE12680',
-    fees: [50, 100, 250, 500, 3000, 10000],
     defaultCurrencies: {
       input: avalanche['eth'],
       output: avalanche['usdc'],

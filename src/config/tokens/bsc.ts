@@ -191,7 +191,7 @@ export const bsc: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'ORN',
     name: 'Orion Protocol',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibx6e6tsab3xxd6s7alev2tgvbjs4welhfndrrunsedvgopv2hmj4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreif5d2cyavxamgmr6yhpl3de4wl3wxtakva52sbsl2fsondyqbdusm',
   },
   inj: {
     chainId: CHAIN_ID,

@@ -81,6 +81,10 @@ const nextConfig = {
       source: '/renzo/:path*',
       destination: 'https://app.renzoprotocol.com/:path*',
     },
+    {
+      source: '/pac/:path*',
+      destination: api_url + '/pac/:path*',
+    },
   ],
   images: {
     remotePatterns: [

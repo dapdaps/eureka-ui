@@ -13,14 +13,14 @@ const Dialog = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 9000;
+  z-index: 900;
 `;
 const Overlay = styled(motion.div)`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   position: absolute;
-  z-index: 9999;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
