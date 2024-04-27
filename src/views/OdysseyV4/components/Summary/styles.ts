@@ -1,5 +1,12 @@
 import styled from 'styled-components';
 
+export const LoadingWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 145px;
+`;
+
 export const StyledContainer = styled.div`
   position: relative;
   width: 1342px;

@@ -45,7 +45,8 @@ export default function OdysseyV4() {
         {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null}
 
         <Banner />
-        <Summary data={detail} />
+        <Summary data={detail} loading={loading} />
+
         <Pilcrow
           title="Blast Treasure Strategy"
           desc="Explore Blast treasure strategy, maximize your Blast Gold earnings!"
