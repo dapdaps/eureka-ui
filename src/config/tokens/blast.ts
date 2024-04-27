@@ -246,4 +246,12 @@ export const blast: { [key: string]: Token } = {
     name: 'oEther V2',
     icon: 'https://ipfs.near.social/ipfs/bafkreid2nz4ivnj4sucoedgze3f23l3pjjwjn5mokvm6y4schduc4xnacq',
   },
+  rseth: {
+    address: '0x4186bfc76e2e237523cbc30fd220fe055156b41f',
+    chainId: CHAIN_ID,
+    symbol: 'rsETH',
+    decimals: 18,
+    name: 'KelpDao Restaked ETH',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
+  },
 };
