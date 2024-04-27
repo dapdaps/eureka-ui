@@ -4,14 +4,19 @@ import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import Big from 'big.js';
 
-export default function useWrapAndUnwrap(tab: string, amount: string, onSuccess: VoidFunction) {
+export default function useWrapAndUnwrap(
+  tab: string,
+  amount: string,
+  onSuccess: VoidFunction,
+  onError: (text: string) => void,
+) {
   const [loading, setLoading] = useState(false);
   const { provider, account, chainId } = useAccount();
   const toast = useToast();
 
   const onWrapOrUnwrap = useCallback(async () => {
     setLoading(true);
-    let toastId = toast.loading({ title: 'Confirming...' });
+    let toastId: any = null;
     try {
       const signer = provider.getSigner(account);
       const WethContract = new Contract(
@@ -40,7 +45,7 @@ export default function useWrapAndUnwrap(tab: string, amount: string, onSuccess:
       );
       const _amount = Big(amount).mul(1e18).toFixed(0);
       const method = tab === 'Wrap' ? 'deposit' : 'withdraw';
-      const value = tab === 'Wrap' ? _amount : '';
+      const value = tab === 'Wrap' ? _amount : '0';
       const params = tab === 'Wrap' ? [] : [_amount];
 
       let estimateGas: any = 300000;
@@ -48,6 +53,15 @@ export default function useWrapAndUnwrap(tab: string, amount: string, onSuccess:
       try {
         estimateGas = await WethContract.estimateGas[method](...params, { value });
       } catch (err) {}
+
+      const gasPrice = await provider.getGasPrice();
+      const rawBalance = await provider.getBalance(account);
+      if (Big(gasPrice).mul(estimateGas).add(value).gt(Big(rawBalance))) {
+        onError('Gas not enough');
+        setLoading(false);
+        return;
+      }
+      toastId = toast.loading({ title: 'Confirming...' });
 
       const tx = await WethContract[method](...params, { value });
 
@@ -65,7 +79,7 @@ export default function useWrapAndUnwrap(tab: string, amount: string, onSuccess:
         toast.fail({ title: `${tab} faily!` });
       }
     } catch (err: any) {
-      toast.dismiss(toastId);
+      toastId && toast.dismiss(toastId);
       setLoading(false);
       toast.fail({
         title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `${tab} faily!`,

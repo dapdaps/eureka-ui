@@ -93,6 +93,7 @@ const StyledBalance = styled.span`
   font-weight: 400;
   line-height: normal;
   text-decoration-line: underline;
+  cursor: pointer;
 `;
 
 const Input = ({ value, tab, balance, loading, setValue }: any) => {

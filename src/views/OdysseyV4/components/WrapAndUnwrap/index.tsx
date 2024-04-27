@@ -18,9 +18,16 @@ const WrapAndUnwrap = ({ open, onClose }: any) => {
     tab === 'Wrap' ? 'native' : '0x4300000000000000000000000000000000000004',
     18,
   );
-  const { loading, onWrapOrUnwrap } = useWrapAndUnwrap(tab, value, () => {
-    update();
-  });
+  const { loading, onWrapOrUnwrap } = useWrapAndUnwrap(
+    tab,
+    value,
+    () => {
+      update();
+    },
+    (tips: string) => {
+      setErrorTips(tips);
+    },
+  );
 
   useEffect(() => {
     if (Big(value || 0).eq(0)) {
