@@ -6,9 +6,10 @@ export const StyledContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 50;
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
 `;
 
 export const StyledContent = styled.div`

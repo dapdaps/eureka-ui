@@ -15,7 +15,9 @@ export default function FootClaim({ unclaimed, unlocked, onRefreshDetail, id }: 
   return unlocked > 0 ? (
     <StyledContainer>
       <Trapeziform {...TrapLayout} className="content">
-        <div className="txt">You have unlocked {unlocked} dApps on Blast by DapDap</div>
+        <div className="txt">
+          You have unlocked <span className="count">{unlocked}</span> dApps on Blast by DapDap
+        </div>
         <TrapeziformBtn width="202px" height="61px" handleClick={onClaim} loading={loading}>
           Claim {unclaimed}
           <Image src="/images/odyssey/v4/coin.svg" alt="" width={21} height={21} />

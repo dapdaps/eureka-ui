@@ -170,7 +170,7 @@ export const ModalDesc = styled.div`
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 20px;
   .bold {
     color: #ebf479;

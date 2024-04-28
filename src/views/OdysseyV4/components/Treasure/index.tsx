@@ -520,95 +520,66 @@ export default function Treasure() {
             <Trapeziform {...TrapLayout} className="modal-list">
               <div className="modal-list-head">
                 <div className="head-left">
-                  <div className="head-title">Step 1. Create sub account and borrow WETH </div>
+                  <div className="head-title">Step 1. Create sub account and Deposit WETH on</div>
+                </div>
+              </div>
+              <div className="modal-list-body">
+                <div className="body-left" style={{ gap: 5 }}>
+                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
+
+                  <div className="body-left-content">
+                    <div className="body-left-content-title">WETH</div>
+                  </div>
+                </div>
+                <div className="body-right">
+                  <TrapeziformBtn width="286px" height="42px">
+                    Deposit WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  </TrapeziformBtn>
+                </div>
+              </div>
+            </Trapeziform>
+            <Trapeziform {...TrapLayout} className="modal-list">
+              <div className="modal-list-head">
+                <div className="head-left">
+                  <div className="head-title">Step 2.Borrow 3x WETH</div>
+                </div>
+              </div>
+              <div className="modal-list-body">
+                <div className="body-left" style={{ gap: 5 }}>
+                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
+
+                  <div className="body-left-content">
+                    <div className="body-left-content-title">WETH</div>
+                  </div>
+                </div>
+                <div className="body-right">
+                  <TrapeziformBtn width="286px" height="42px">
+                    Borrow WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  </TrapeziformBtn>
+                </div>
+              </div>
+            </Trapeziform>
+            <Trapeziform {...TrapLayout} className="modal-list">
+              <div className="modal-list-head">
+                <div className="head-left">
+                  <div className="head-title">Step 3.Deposit borrowed WETH in EtherFi V3 LP Vault</div>
                 </div>
               </div>
               <div className="modal-list-body">
                 <div className="body-left" style={{ gap: 5 }}>
                   <Image src="/images/odyssey/v4/coin-eth.svg" alt="" width={26} height={26} />
-                  <Image src="/images/odyssey/v4/arrow-white.svg" alt="" width={19} height={16} />
-                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
-                  <div className="body-left-content">
-                    <div className="body-left-content-title">Wrap ETH</div>
-                  </div>
-                </div>
-                <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
-                    Get weETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                  </TrapeziformBtn>
-                </div>
-              </div>
-            </Trapeziform>
 
-            <Trapeziform {...TrapLayout} className="modal-list">
-              <div className="modal-list-head">
-                <div className="head-left">
-                  <div className="head-title">Step 2. Add LP WETH/weETH on</div>
-                  <div className="tag-thr">
-                    <Image src="/images/odyssey/v4/tag-thr.svg" alt="" width={139} height={24} />
-                  </div>
-                </div>
-              </div>
-              <div className="modal-list-body">
-                <div className="body-left">
-                  <Image src="/images/odyssey/v4/coin-weeth.svg" alt="" width={26} height={26} />
-                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} className="lp-img" />
-                  <div className="body-left-content">
-                    <div className="body-left-content-title">weETH / WETH</div>
-                  </div>
+                  <div className="body-left-content-title">WETH</div>
+
+                  <Image src="/images/odyssey/v4/dash-arrow.svg" alt="" width={33} height={16} />
+                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
+
+                  <div className="body-left-content-title">HYPLP</div>
                 </div>
                 <div className="body-right">
                   <TrapeziformBtn width="286px" height="42px">
-                    Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                  </TrapeziformBtn>
-                </div>
-              </div>
-            </Trapeziform>
-            <Trapeziform {...TrapLayout} className="modal-list">
-              <div className="modal-list-head">
-                <div className="head-left">
-                  <div className="head-title">Step 3. Stake LP on</div>
-                  <div className="tag-thr">
-                    <Image src="/images/odyssey/v4/tag-hyp.svg" alt="" width={139} height={24} />
-                  </div>
-                </div>
-              </div>
-              <div className="modal-list-body">
-                <div className="body-left ">
-                  <Image src="/images/odyssey/v4/coin-weeth.svg" alt="" width={26} height={26} />
-                  <Image src="/images/odyssey/v4/coin-weth1.svg" alt="" width={26} height={26} className="lp-img" />
-                  <div className="body-left-content">
-                    <div className="body-left-content-title">weETH / WETH</div>
-                  </div>
-                </div>
-                <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
-                    Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                  </TrapeziformBtn>
-                </div>
-              </div>
-            </Trapeziform>
-            <Trapeziform {...TrapLayout} className="modal-list">
-              <div className="modal-list-head">
-                <div className="head-left">
-                  <div className="head-title">Step 4. Deposit position on</div>
-                  <div className="tag-juice">
-                    <Image src="/images/odyssey/v4/icon-juice.svg" alt="" width={23} height={23} />
-                    <Image src="/images/odyssey/v4/tag-juice.svg" alt="" width={50} height={24} />
-                  </div>
-                </div>
-              </div>
-              <div className="modal-list-body">
-                <div className="body-left ">
-                  <Image src="/images/odyssey/v4/coin-weeth.svg" alt="" width={26} height={26} />
-                  <Image src="/images/odyssey/v4/coin-weth1.svg" alt="" width={26} height={26} className="lp-img" />
-                  <div className="body-left-content">
-                    <div className="body-left-content-title">weETH / WETH</div>
-                  </div>
-                </div>
-                <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
-                    Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                    Stake LP
+                    <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </div>
               </div>
