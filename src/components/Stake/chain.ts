@@ -30,7 +30,23 @@ export const chains = [
         nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
         rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
         blockExplorers: 'https://lineascan.build',
-    }
+    },
+    {
+        chainId: 8453,
+        chainName: 'Base',
+        icon: 'https://assets.dapdap.net/images/bafkreif24bmxzparik2t2nkog6km5diuwcysvxdv2j5ygzkzwm3pxs573a.svg',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: ['https://developer-access-mainnet.base.org'],
+        blockExplorers: 'https://basescan.org',
+    },
+    {
+        chainId: 81457,
+        chainName: 'Blast',
+        icon: 'https://s3.amazonaws.com/dapdap.prod/images/blast.png',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: ['https://rpc.blast.io'],
+        blockExplorers: 'https://blastscan.io',
+    },
 ]
 
 export const tokens: any =  {
@@ -77,5 +93,27 @@ export const tokens: any =  {
             isNative: true,
             address: 'native',
         },
-    ]
+    ],
+    8453: [
+        {
+            chainId: 8453,
+            name: 'ETH',
+            symbol: 'ETH',
+            icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+            decimals: 18,
+            isNative: true,
+            address: 'native',
+        },
+    ],
+    81457: [
+        {
+            chainId: 81457,
+            name: 'ETH',
+            symbol: 'ETH',
+            icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+            decimals: 18,
+            isNative: true,
+            address: 'native',
+        },
+    ],
 }

@@ -5,14 +5,17 @@ interface Result {
 }
 
 async function getApr(chainId: string) {
-    const res = await fetch(`/renzo/api/stats?chainId=${chainId}`, {
+    const res = await fetch(`https://api.allorigins.win/get?url=https://stake.lido.fi/api/sma-steth-apr`, {
     }).then(res => res.json())
-    if (res?.status) {
-        return res.data.apr.data
+
+    if (res?.contents) {
+        return Number(res.contents.replaceAll('"', ''))
     }
+
+    return 0
 }
 
-export default function useLidoDetail(chain: any): Result{
+export default function useRenzoDetail(chain: any): Result{
     const [apr, setApr] = useState(0)
 
     useEffect(() => {
