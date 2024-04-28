@@ -11,8 +11,9 @@ export default function FootClaim({ unclaimed, unlocked, onRefreshDetail, id }: 
     borderColor: '#FFDD4D',
     corner: 34,
   };
+  console.log('FootClaim--', unclaimed, unlocked);
 
-  return unlocked > 0 ? (
+  return unclaimed > 0 ? (
     <StyledContainer>
       <Trapeziform {...TrapLayout} className="content">
         <div className="txt">
