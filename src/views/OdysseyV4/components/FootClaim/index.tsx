@@ -5,8 +5,8 @@ import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
 import { StyledContainer, StyledContent } from './styles';
 
-export default function FootClaim({ unclaimed, unlocked, onRefreshDetail }: any) {
-  const { loading, onClaim } = useClaim(onRefreshDetail);
+export default function FootClaim({ unclaimed, unlocked, onRefreshDetail, id }: any) {
+  const { loading, onClaim } = useClaim(id, onRefreshDetail);
   const TrapLayout = {
     borderColor: '#FFDD4D',
     corner: 34,

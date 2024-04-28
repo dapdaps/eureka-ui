@@ -71,6 +71,7 @@ export default function OdysseyV4() {
           unclaimed={detail?.user?.unclaimed_reward}
           unlocked={quests.unlockedAmount}
           onRefreshDetail={queryDetail}
+          id={id}
         />
       </StyledContent>
     </StyledContainer>
