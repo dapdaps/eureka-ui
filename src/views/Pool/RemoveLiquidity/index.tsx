@@ -15,7 +15,7 @@ import { StyledContent } from './styles';
 const Remove = ({ amount0, amount1, feeAmount0, feeAmount1, open, onClose, onSuccess, detail }: any) => {
   const { token0, token1 } = detail;
   const [percent, setPercent] = useState(0);
-  const { loading, onRemove } = useRemove({ detail, percent, onSuccess });
+  const { loading, onRemove } = useRemove({ detail, percent, amount0, amount1, onSuccess });
   const { account, chainId } = useAccount();
   const { currentChain } = useDappConfig();
 

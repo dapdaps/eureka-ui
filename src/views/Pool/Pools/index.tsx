@@ -56,7 +56,7 @@ const Pools = () => {
           <LoadingWrapper>
             <Loading size={30} />
           </LoadingWrapper>
-        ) : userSelectedPositionSet.length > 0 ? (
+        ) : (
           <>
             <StyledContentTop>
               <div>Your positions ({userSelectedPositionSet.length})</div>
@@ -77,9 +77,8 @@ const Pools = () => {
                 }}
               />
             ))}
+            {userSelectedPositionSet.length === 0 && <Empty />}
           </>
-        ) : (
-          <Empty />
         )}
       </StyledContent>
     </StyledContainer>

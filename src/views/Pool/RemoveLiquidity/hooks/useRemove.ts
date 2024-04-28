@@ -5,12 +5,14 @@ import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useDappConfig from '../../hooks/useDappConfig';
 import positionAbi from '../../abi/position';
+import useAddAction from '@/hooks/useAddAction';
 
-export default function useRemove({ detail, percent, onSuccess }: any) {
+export default function useRemove({ detail, percent, amount0, amount1, onSuccess }: any) {
   const [loading, setLoading] = useState(false);
-  const { contracts } = useDappConfig();
+  const { contracts, dapp } = useDappConfig();
   const { account, chainId, provider } = useAccount();
   const toast = useToast();
+  const { addAction } = useAddAction('dapp');
 
   const onRemove = useCallback(async () => {
     if (!chainId) return;
@@ -86,6 +88,15 @@ export default function useRemove({ detail, percent, onSuccess }: any) {
 
       const { status, transactionHash } = await tx.wait();
       setLoading(false);
+      addAction({
+        type: 'Liquidity',
+        action: 'Remove Liquidity',
+        tokens: [detail.token0.symbol, detail.token1.symbol],
+        template: dapp.name,
+        status,
+        transactionHash,
+        extra_data: { amount0, amount1, action: 'Remove Liquidity', type: 'univ3' },
+      });
       toast.dismiss(toastId);
       if (status === 1) {
         toast.success({ title: 'Remove successfully!', tx: transactionHash, chainId });

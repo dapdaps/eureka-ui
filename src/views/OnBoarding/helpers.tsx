@@ -45,6 +45,17 @@ export function formatTitle(record: any) {
   }
 
   if (['Liquidity', 'Deposit'].includes(record.action_type)) {
+    try {
+      const parsedExtraData = JSON.parse(record.extra_data || {});
+      if (parsedExtraData.type === 'univ3') {
+        return (
+          <>
+            {parsedExtraData.action} {parsedExtraData.amount0} {tokens[0]} and {parsedExtraData.amount1} {tokens[1]} on{' '}
+            {record.template}
+          </>
+        );
+      }
+    } catch (err) {}
     return (
       <>
         Deposit <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}-{tokens[1]}
