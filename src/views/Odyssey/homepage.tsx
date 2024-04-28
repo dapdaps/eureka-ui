@@ -154,6 +154,14 @@ const StyledSwiperButton = styled.div`
   position: absolute;
   left: 50px;
   top: 217px;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(151, 154, 190, 0.30);
+  background: rgba(33, 35, 42, 0.90);
+  backdrop-filter: blur(10px);
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -161,6 +169,7 @@ const StyledSwiperButton = styled.div`
   &.right {
     left: unset;
     right: 50px;
+    transform: rotate(180deg);
   }
 `
 const Index = function () {
@@ -386,45 +395,13 @@ const Index = function () {
 
         </Swiper>
         <StyledSwiperButton onClick={() => handleClickSlideButton(event, 'prev')}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
-            <g filter="url(#filter0_b_9312_3673)">
-              <rect width="60" height="60" rx="16" transform="matrix(-1 0 0 1 61 1)" fill="url(#paint0_linear_9312_3673)" fill-opacity="0.9" />
-              <rect width="60" height="60" rx="16" transform="matrix(-1 0 0 1 61 1)" stroke="#979ABE" stroke-opacity="0.3" />
-            </g>
-            <path d="M44 29.5C44.8284 29.5 45.5 30.1716 45.5 31C45.5 31.8284 44.8284 32.5 44 32.5V29.5ZM17.9393 32.0607C17.3536 31.4749 17.3536 30.5251 17.9393 29.9393L27.4853 20.3934C28.0711 19.8076 29.0208 19.8076 29.6066 20.3934C30.1924 20.9792 30.1924 21.9289 29.6066 22.5147L21.1213 31L29.6066 39.4853C30.1924 40.0711 30.1924 41.0208 29.6066 41.6066C29.0208 42.1924 28.0711 42.1924 27.4853 41.6066L17.9393 32.0607ZM44 32.5H19V29.5H44V32.5Z" fill="#979ABE" />
-            <defs>
-              <filter id="filter0_b_9312_3673" x="-19.5" y="-19.5" width="101" height="101" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feGaussianBlur in="BackgroundImageFix" stdDeviation="10" />
-                <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_9312_3673" />
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_9312_3673" result="shape" />
-              </filter>
-              <linearGradient id="paint0_linear_9312_3673" x1="30" y1="0" x2="30" y2="60" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#21232A" />
-                <stop offset="1" stop-color="#21232A" stop-opacity="0.51" />
-              </linearGradient>
-            </defs>
+          <svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24" fill="none">
+            <path d="M27 10.5C27.8284 10.5 28.5 11.1716 28.5 12C28.5 12.8284 27.8284 13.5 27 13.5V10.5ZM0.939341 13.0607C0.353554 12.4749 0.353554 11.5251 0.939341 10.9393L10.4853 1.3934C11.0711 0.807611 12.0208 0.807611 12.6066 1.3934C13.1924 1.97919 13.1924 2.92893 12.6066 3.51472L4.12132 12L12.6066 20.4853C13.1924 21.0711 13.1924 22.0208 12.6066 22.6066C12.0208 23.1924 11.0711 23.1924 10.4853 22.6066L0.939341 13.0607ZM27 13.5H2V10.5H27V13.5Z" fill="#979ABE" />
           </svg>
         </StyledSwiperButton>
         <StyledSwiperButton className='right' onClick={(event) => handleClickSlideButton(event, 'next')}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
-            <g filter="url(#filter0_b_9312_3670)">
-              <rect x="1" y="1" width="60" height="60" rx="16" fill="url(#paint0_linear_9312_3670)" fill-opacity="0.9" />
-              <rect x="1" y="1" width="60" height="60" rx="16" stroke="#979ABE" stroke-opacity="0.3" />
-            </g>
-            <path d="M19 29.5C18.1716 29.5 17.5 30.1716 17.5 31C17.5 31.8284 18.1716 32.5 19 32.5V29.5ZM45.0607 32.0607C45.6464 31.4749 45.6464 30.5251 45.0607 29.9393L35.5147 20.3934C34.9289 19.8076 33.9792 19.8076 33.3934 20.3934C32.8076 20.9792 32.8076 21.9289 33.3934 22.5147L41.8787 31L33.3934 39.4853C32.8076 40.0711 32.8076 41.0208 33.3934 41.6066C33.9792 42.1924 34.9289 42.1924 35.5147 41.6066L45.0607 32.0607ZM19 32.5H44V29.5H19V32.5Z" fill="#979ABE" />
-            <defs>
-              <filter id="filter0_b_9312_3670" x="-19.5" y="-19.5" width="101" height="101" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feGaussianBlur in="BackgroundImageFix" stdDeviation="10" />
-                <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_9312_3670" />
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_9312_3670" result="shape" />
-              </filter>
-              <linearGradient id="paint0_linear_9312_3670" x1="31" y1="1" x2="31" y2="61" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#21232A" />
-                <stop offset="1" stop-color="#21232A" stop-opacity="0.51" />
-              </linearGradient>
-            </defs>
+          <svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24" fill="none">
+            <path d="M27 10.5C27.8284 10.5 28.5 11.1716 28.5 12C28.5 12.8284 27.8284 13.5 27 13.5V10.5ZM0.939341 13.0607C0.353554 12.4749 0.353554 11.5251 0.939341 10.9393L10.4853 1.3934C11.0711 0.807611 12.0208 0.807611 12.6066 1.3934C13.1924 1.97919 13.1924 2.92893 12.6066 3.51472L4.12132 12L12.6066 20.4853C13.1924 21.0711 13.1924 22.0208 12.6066 22.6066C12.0208 23.1924 11.0711 23.1924 10.4853 22.6066L0.939341 13.0607ZM27 13.5H2V10.5H27V13.5Z" fill="#979ABE" />
           </svg>
         </StyledSwiperButton>
       </StyledSwiperContainer>
