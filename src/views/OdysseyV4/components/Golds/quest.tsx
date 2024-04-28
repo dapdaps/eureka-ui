@@ -23,7 +23,7 @@ import {
   StyledTimerBox,
 } from './styles';
 
-export default function Quest({ data, showRank, onRefreshDetail }: any) {
+export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any) {
   const { id, name, logo, link, rank1, rank2, rank3, reward, desc, start_time, end_time, total_spins, spins } = data;
 
   const [execution, setExecution] = useState(0);
@@ -46,27 +46,10 @@ export default function Quest({ data, showRank, onRefreshDetail }: any) {
     }
   };
 
-  const makeHeadClass = () => {
-    let _headClass;
-    switch (name) {
-      case 'Particle':
-        _headClass = 'bg-particle';
-        break;
-      case 'Ring Protocol':
-        _headClass = 'bg-ring';
-        break;
-      case 'Ambient':
-        _headClass = 'bg-ambient';
-        break;
-    }
-    return _headClass;
-  };
-  const headClass = makeHeadClass();
-
   // disabled={times === 0 ? false : execution >= times}
   return (
     <Trapeziform borderColor="#3C3D00" corner={34} className="quest-item">
-      <Head className={headClass}>
+      <Head className={bgClass}>
         <HeadLeft>
           <Image src={logo} alt="" width={85} height={85} />
           <span className="name">{name}</span>
@@ -101,7 +84,12 @@ export default function Quest({ data, showRank, onRefreshDetail }: any) {
               {rank3} Gold
             </Rank>
           </RankGroup>
-          <Trapeziform borderColor="#363940" corner={20} className="view-rank" onClick={(e: any) => showRank(name, id)}>
+          <Trapeziform
+            borderColor="#363940"
+            corner={20}
+            className="view-rank"
+            onClick={(e: any) => showRank(name, id, bgClass, logo)}
+          >
             View Rank <Image src="/images/odyssey/v4/extend.svg" alt="" width={15} height={15} />
           </Trapeziform>
         </BodyLeft>

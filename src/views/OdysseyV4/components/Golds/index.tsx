@@ -31,11 +31,15 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
 
   const [showRankModal, setShowRankModal] = useState(false);
   const [curDapp, setCurDapp] = useState('');
+  const [curBgClass, setCurBgClass] = useState('');
+  const [curLogo, setCurLogo] = useState('');
 
-  const showRank = (dapp: string, id: string) => {
+  const showRank = (dapp: string, id: string, curClass: string, logo: string) => {
     setShowRankModal(true);
     setCurDapp(dapp);
     setId(id);
+    setCurBgClass(curClass);
+    setCurLogo(logo);
   };
 
   const hideRank = () => {
@@ -49,6 +53,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
       {
         logo: '/images/odyssey/v4/logo-particle.svg',
         link: ParticleLink,
+        bgClass: 'bg-particle',
         rank1: 100,
         rank2: 60,
         rank3: 40,
@@ -61,6 +66,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
       {
         logo: '/images/odyssey/v4/logo-ring.png',
         link: `${location.origin}/dapp/ring-protocol`,
+        bgClass: 'bg-ring',
         rank1: 100,
         rank2: 60,
         rank3: 40,
@@ -73,6 +79,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
       {
         logo: '/images/odyssey/v4/logo-ambient.png',
         link: `${location.origin}/dapp/ambient`,
+        bgClass: 'bg-ambient',
         rank1: 100,
         rank2: 60,
         rank3: 40,
@@ -84,7 +91,9 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
 
   return (
     <StyledContainer>
-      {showRankModal ? <RankModal name={curDapp} id={id} onClose={hideRank} /> : null}
+      {showRankModal ? (
+        <RankModal name={curDapp} id={id} logo={curLogo} bgClass={curBgClass} onClose={hideRank} />
+      ) : null}
       <BgHead />
       <StyledContent>
         {loading ? (
@@ -96,6 +105,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
             <Quest
               key={item.name}
               showRank={showRank}
+              bgClass={GoldsMap.get(item.name)?.bgClass}
               data={{ ...GoldsMap.get(item.name), ...item, start_time: data.start_time, end_time: data.end_time }}
               onRefreshDetail={onRefreshDetail}
             />

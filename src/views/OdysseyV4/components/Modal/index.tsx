@@ -29,7 +29,7 @@ export default function Modal({ type, children, onClose }: any) {
   };
   return (
     <StyledContainer>
-      <StyledContent>
+      <StyledContent className="animate__bounceIn">
         {renderShape()}
         <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={12} height={12} />
         <Image className="corner-left" src="/images/odyssey/v4/modal-corner-left.svg" alt="" width={37} height={37} />
