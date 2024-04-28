@@ -48,9 +48,7 @@ const ezToken = {
     address: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
 }
 
-export const Stake = ({
-}: {
-    }) => {
+export const Stake = () => {
     const { chainId, account, provider } = useAccount();
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')

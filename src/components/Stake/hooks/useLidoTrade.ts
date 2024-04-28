@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { Contract, Signer, providers, utils } from 'ethers';
+import { Contract } from 'ethers';
 import Big from 'big.js'
 
+import type { Signer }  from 'ethers';
 import useToast from '@/hooks/useToast';
 
 interface Request {
@@ -81,15 +82,13 @@ async function getEstimateGas(value: string, signer: any) {
 }
 
 async function getTransactionData(value: string, signer: Signer) {
-    let transactionData, DepositContract
-
-    DepositContract = new Contract(
+    const DepositContract = new Contract(
         '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
         ethereumAbi,
         signer,
     );
 
-    transactionData = await DepositContract.populateTransaction.submit(
+    const transactionData = await DepositContract.populateTransaction.submit(
         '0x0000000000000000000000000000000000000000', {
         value
     })

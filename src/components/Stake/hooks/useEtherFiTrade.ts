@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Contract, Signer, providers, utils } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import Big from 'big.js'
+
+import type { Signer }  from 'ethers';
 
 import useToast from '@/hooks/useToast';
 
@@ -140,16 +142,14 @@ async function getEstimateGas(value: string, signer: any) {
 }
 
 async function getTransactionData(value: string, signer: Signer) {
-    let transactionData, DepositContract
-
-    DepositContract = new Contract(
+    const DepositContract = new Contract(
         '0x52c4221cb805479954cde5accff8c4dcaf96623b',
         EtherfiL2ModeSyncPoolETHAbi,
         signer,
     );
 
 
-    transactionData = await DepositContract.populateTransaction.deposit(
+    const transactionData = await DepositContract.populateTransaction.deposit(
         '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
         value,
         new Big(value).mul(new Big(0.9)).toString(),
