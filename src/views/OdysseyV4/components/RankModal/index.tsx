@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import Loading from '@/components/Icons/Loading';
+import { useUserStore } from '@/stores/user';
 import { ellipsAccount } from '@/utils/account';
 import { simplifyNum } from '@/utils/format-number';
 
@@ -8,8 +9,11 @@ import useLeaderBoard from '../../hooks/useLeaderBoard';
 import Trapeziform from '../Trapeziform';
 import { Avatar, ModalBody, ModalHead, StyledContainer, StyledContent } from './styles';
 
-export default function RankModal({ name, id, onClose }: any) {
+export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
   const { ranks, loading: rankLoading, fetchData } = useLeaderBoard(id);
+  const userInfo = useUserStore((store: any) => store.user);
+
+  console.log('userInfo--', userInfo);
 
   const TrapLayout = {
     borderColor: '#FFDD4D',
@@ -22,24 +26,14 @@ export default function RankModal({ name, id, onClose }: any) {
     [3, '/images/odyssey/v4/rank3.svg'],
   ]);
 
-  const renderLogo = () => {
-    switch (name) {
-      case 'Particle':
-        return <Image src="/images/odyssey/v4/logo-particle.svg" alt="" width={43} height={43} />;
-      case 'Thruster':
-        return <Image src="/images/odyssey/v4/logo-thruster.svg" alt="" width={43} height={43} />;
-      case 'PAC Finance':
-        return <Image src="/images/odyssey/v4/logo-pac.svg" alt="" width={43} height={43} />;
-    }
-  };
   return (
     <StyledContainer>
-      <StyledContent>
+      <StyledContent className="animate__bounceIn">
         {/* <Trapeziform {...TrapLayout}>
           </Trapeziform> */}
-        <ModalHead>
+        <ModalHead className={bgClass}>
           <span className="left">
-            {renderLogo()}
+            <Image src={logo} alt="" width={43} height={43} />
             {name} Top Rank
             <div className="smoke"></div>
           </span>
@@ -94,8 +88,8 @@ export default function RankModal({ name, id, onClose }: any) {
                   <div className="your-rank rank-row">
                     <div className="rank-col text-left"># {ranks?.user?.rank}</div>
                     <div className="rank-col text-left">
-                      <Avatar src={ranks?.user?.account?.avatar} />
-                      {ellipsAccount(ranks?.user?.account.address)}
+                      <Avatar src={userInfo?.avatar} />
+                      {ellipsAccount(userInfo?.address)}
                     </div>
                     <div className="rank-col text-right">${simplifyNum(ranks?.user?.trading_volume)}</div>
                   </div>

@@ -6,13 +6,17 @@ export const StyledContainer = styled.div`
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 10;
+  z-index: 50;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
 `;
 
 export const StyledContent = styled.div`
-  margin: 140px auto 0;
   width: 834px;
   position: relative;
   background-color: #191b1f;

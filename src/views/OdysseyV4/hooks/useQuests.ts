@@ -42,7 +42,9 @@ export default function useQuests(id: any) {
           _result.bridge.push(item);
         }
         if (item.category_id === 2) {
-          _result.swap.push(item);
+          if (item.name !== 'Ring Protocol' && item.name !== 'Ambient') {
+            _result.swap.push(item);
+          }
         }
         if (item.category_id === 3) {
           _result.lending.push(item);

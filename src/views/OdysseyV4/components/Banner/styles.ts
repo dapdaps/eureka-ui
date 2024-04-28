@@ -6,11 +6,15 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  padding-top: 96px;
-  gap: 20px;
+  padding-top: 90px;
+  gap: 99px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  .dapdapx {
+    position: absolute;
+    top: 193px;
+  }
 `;
 
 export const Rush = styled.div`

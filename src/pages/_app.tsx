@@ -6,7 +6,9 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'animate.css';
 
+import { useDebounceFn } from 'ahooks';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import Head from 'next/head';
@@ -16,16 +18,16 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';
 import { ToastContainer } from 'react-toastify';
+
 import useAccount from '@/hooks/useAccount';
-import { useDebounceFn } from 'ahooks';
 import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
 import useClickTracking from '@/hooks/useClickTracking';
 import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
 import useTokenPrice from '@/hooks/useTokenPrice';
 import { useAuthStore } from '@/stores/auth';
+import { report } from '@/utils/burying-point';
 import type { NextPageWithLayout } from '@/utils/types';
 import { styleZendesk } from '@/utils/zendesk';
-import { report } from '@/utils/burying-point';
 
 const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
   ssr: false,

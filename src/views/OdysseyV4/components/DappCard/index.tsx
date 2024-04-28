@@ -39,6 +39,7 @@ export default function DappCard({
   onRefreshDetail,
 }: any) {
   const [execution, setExecution] = useState(0);
+  console.log('DAPDAPCARD--', source, name, spins, total_spins, execution);
   const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
     onRefreshDetail();
     setExecution(_times);
@@ -52,6 +53,8 @@ export default function DappCard({
   };
 
   const onItemClick = () => {
+    console.log('onItemClick--', source, operators);
+
     if (operators?.length) {
       handleDappRedirect(operators[0]);
       return;
@@ -67,7 +70,7 @@ export default function DappCard({
       setCachedTab(category_name, 534352);
     }
     if (!source) return;
-    window.open(source, '_blank');
+    // window.open(source, '_blank');
   };
 
   useEffect(() => {
@@ -75,7 +78,10 @@ export default function DappCard({
   }, [total_spins, spins]);
 
   return (
-    <Card onClick={onItemClick} disabled={times === 0 ? false : execution >= times}>
+    <Card
+      onClick={onItemClick}
+      // disabled={times === 0 ? false : execution >= times}
+    >
       <StyledTop>
         <StyledDappWrapper>
           <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
@@ -87,7 +93,7 @@ export default function DappCard({
         <ArrowIcon style={{ marginTop: '6px' }} />
       </StyledTop>
       <StyledFooter>
-        <LockStatus status={total_spins > 0 ? 'unlocked' : 'locked'} />
+        <LockStatus status={total_spins > 0 || execution > 0} />
         <StyledFooterActions>
           <RefreshButton
             onClick={(ev: any) => {

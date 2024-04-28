@@ -8,13 +8,13 @@ export default function StatusTag({ status }: any) {
       <Image src="/images/odyssey/v4/done.svg" alt="" width={21} height={21} />
       <b className="value">200</b>
       <Image src="/images/odyssey/v4/coin.svg" alt="" width={21} height={21} />
-      Unlocked
+      Explored
     </StyledUnlocked>
   ) : (
     <StyledLocked>
       <b className="value">200</b>
       <Image src="/images/odyssey/v4/coin.svg" alt="" width={21} height={21} />
-      Locked
+      Unexplored
     </StyledLocked>
   );
 }

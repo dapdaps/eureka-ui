@@ -21,12 +21,12 @@ const Icon = styled.img`
 `;
 
 export default function LockStatus({ status }: any) {
-  return status === 'locked' ? (
-    <StyledContainer $status={status}>Locked</StyledContainer>
+  return !status ? (
+    <StyledContainer $status={status}>Unexplored</StyledContainer>
   ) : (
     <StyledContainer $status={status}>
       <Icon src="/images/odyssey/v4/done.svg" />
-      Unlocked
+      Explored
     </StyledContainer>
   );
 }
