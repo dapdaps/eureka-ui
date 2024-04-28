@@ -7,7 +7,8 @@ export const StyledContainer = styled.div`
   left: 0;
   right: 0;
   z-index: 50;
-  /* overflow-y: auto; */
+  overflow-y: auto;
+  overscroll-behavior: contain;
   display: flex;
   align-items: center;
   justify-content: center;

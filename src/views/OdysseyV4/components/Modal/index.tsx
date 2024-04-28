@@ -7,7 +7,7 @@ export default function Modal({ type, children, onClose }: any) {
     switch (type) {
       case 'type1':
         return (
-          <Image src="/images/odyssey/v4/modal-shape-1.svg" alt="" width={161} height={161} className="shape shape1" />
+          <Image src="/images/odyssey/v4/star-particle.svg" alt="" width={179} height={121} className="shape shape1" />
         );
       case 'type2':
         return (

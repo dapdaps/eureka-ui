@@ -27,7 +27,7 @@ export default function Quest({ data, showRank, onRefreshDetail }: any) {
   const { id, name, logo, link, rank1, rank2, rank3, reward, desc, start_time, end_time, total_spins, spins } = data;
 
   const [execution, setExecution] = useState(0);
-  const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
+  const { checking, handleRefresh } = useCheck({ id }, (_times: number) => {
     onRefreshDetail();
     setExecution(_times);
   });
@@ -46,10 +46,27 @@ export default function Quest({ data, showRank, onRefreshDetail }: any) {
     }
   };
 
+  const makeHeadClass = () => {
+    let _headClass;
+    switch (name) {
+      case 'Particle':
+        _headClass = 'bg-particle';
+        break;
+      case 'Ring Protocol':
+        _headClass = 'bg-ring';
+        break;
+      case 'Ambient':
+        _headClass = 'bg-ambient';
+        break;
+    }
+    return _headClass;
+  };
+  const headClass = makeHeadClass();
+
   // disabled={times === 0 ? false : execution >= times}
   return (
     <Trapeziform borderColor="#3C3D00" corner={34} className="quest-item">
-      <Head>
+      <Head className={headClass}>
         <HeadLeft>
           <Image src={logo} alt="" width={85} height={85} />
           <span className="name">{name}</span>
@@ -91,11 +108,14 @@ export default function Quest({ data, showRank, onRefreshDetail }: any) {
         <BodyRight>
           <div className="head">
             <div className="rewards">
-              <Image src="/images/odyssey/v4/brick.svg" alt="" width={89} height={89} />
-              <span className="title">+{reward} Gold</span>
+              <Image src="/images/odyssey/v4/brick.svg" alt="" width={67} height={67} />
+              <div className="rewards-right">
+                <div className="intro">To divide up extra 1% Gold</div>
+                <div className="title">+{reward} Gold</div>
+              </div>
             </div>
             <div className="status">
-              <StatusTag status={false} />
+              <StatusTag status={total_spins > 0 || execution > 0} />
               <RefreshButton
                 onClick={(ev: any) => {
                   ev.stopPropagation();

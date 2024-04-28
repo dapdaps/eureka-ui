@@ -49,14 +49,12 @@ export default function Treasure() {
 
   return (
     <StyledContainer>
-      {showModal1 ? (
+      {/* {showModal1 ? (
         <Modal type="type1" onClose={() => setShowModal1(false)}>
-          <ModalTitle>
-            How to earn 200x <Image src="/images/odyssey/v4/td1.svg" alt="" width={36} height={21} /> Synfutures Points?
-          </ModalTitle>
-          <ModalDesc style={{ fontSize: 18 }}>
-            <span className="bold">BTC/USDB and WETH/USDB can earn 200x Synfutures points.</span>A higher boost means
-            that an equivalent effective liquidity will yield greater points rewards compared to others.
+          <ModalTitle>How to earn extra 1% Blast Gold by Particle?</ModalTitle>
+          <ModalDesc>
+            This strategy benefits users with an additional Gold bonus reward. Trade on Particle with perps, you will
+            get 1% extra Blast Gold.
           </ModalDesc>
           <ModalBody>
             <div className="modal-body-1">
@@ -101,6 +99,27 @@ export default function Treasure() {
                 </TrapeziformBtn>
               </Trapeziform>
             </div>
+          </ModalBody>
+        </Modal>
+      ) : null} */}
+      {showModal1 ? (
+        <Modal type="type1" onClose={() => setShowModal1(false)}>
+          <ModalTitle>How to earn extra 1% Blast Gold by Particle?</ModalTitle>
+          <ModalDesc>
+            This strategy benefits users with an additional Gold bonus reward. Trade on Particle with perps, you will
+            get 1% extra Blast Gold.
+          </ModalDesc>
+          <ModalBody>
+            <TrapeziformBtn
+              width="236px"
+              height="42px"
+              handleClick={(e: any) => openLink('https://app.particle.trade/')}
+              style={{
+                margin: '73px auto 0',
+              }}
+            >
+              Trade on Particle <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+            </TrapeziformBtn>
           </ModalBody>
         </Modal>
       ) : null}
@@ -592,15 +611,15 @@ export default function Treasure() {
         <Treasure1 onClick={() => setShowModal1(true)}>
           <Line />
           <Image
-            src="/images/odyssey/v4/synfutures.svg"
+            src="/images/odyssey/v4/star-particle.svg"
             alt=""
-            width={246}
-            height={246}
+            width={302}
+            height={206}
             className="scale"
             style={{ marginTop: -23 }}
           />
-          <Title className="title">200x O_O Points</Title>
-          <Image src="/images/odyssey/v4/td1.svg" alt="" width={28} height={16} className="td1" />
+          <Title className="title">1% Extra Gold</Title>
+          <Image src="/images/odyssey/v4/icon-gold.svg" alt="" width={42} height={42} className="td1" />
         </Treasure1>
         <Treasure2 onClick={() => setShowModal4(true)}>
           <Line />
