@@ -136,10 +136,12 @@ export default function Treasure() {
                   </div>
                 </div>
                 <div className="modal-list-body">
-                  <div className="body-left">
+                  <div className="body-left" style={{ color: 'white' }}>
                     <Image src="/images/odyssey/v4/coin-eth.svg" alt="" width={26} height={26} />
+                    ETH
                     <Image src="/images/odyssey/v4/arrow-white.svg" alt="" width={19} height={16} />
                     <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
+                    ezETH
                   </div>
                   <div className="body-right">
                     <TrapeziformBtn width="286px" height="42px">
@@ -173,7 +175,7 @@ export default function Treasure() {
                     <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
                     <Image src="/images/odyssey/v4/coin-weth2.svg" alt="" width={26} height={26} className="lp-img" />
                     <div className="body-left-content">
-                      <div className="body-left-content-title">mwstETH-WPUNKS / WETH</div>
+                      <div className="body-left-content-title">ezETH / WETH</div>
                     </div>
                   </div>
                   <div className="body-right">
@@ -208,9 +210,7 @@ export default function Treasure() {
                       />
                     </div>
 
-                    <div className="txt">
-                      mwstETH-WPUNKS <br />/ WETH
-                    </div>
+                    <div className="txt">ezETH / WETH</div>
                   </div>
                   <TrapeziformBtn width="236px" height="42px">
                     Stake LP
@@ -242,9 +242,7 @@ export default function Treasure() {
                       />
                     </div>
 
-                    <div className="txt">
-                      mwstETH-WPUNKS <br />/ WETH
-                    </div>
+                    <div className="txt">ezETH / WETH</div>
                   </div>
                   <TrapeziformBtn
                     width="236px"

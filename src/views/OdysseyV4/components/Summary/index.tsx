@@ -12,17 +12,17 @@ export default function Summary({ data, loading }: any) {
     </LoadingWrap>
   ) : (
     <StyledContainer>
-      <span className="left yLine"></span>
-      <span className="right yLine"></span>
-      <span className="top xLine"></span>
-      <span className="bottom xLine"></span>
+      <span className="leftTop corner"></span>
+      <span className="rightTop corner"></span>
+      <span className="leftBottom corner"></span>
+      <span className="rightBottom corner"></span>
       <Item>
         <Title>Trading Volume</Title>
         <Value>${formatThousandsSeparator(Number(Number(trading_volume).toFixed(2)))}</Value>
       </Item>
       <Item>
         <Title>Total Transactions</Title>
-        <Value>${formatThousandsSeparator(total_transactions)}</Value>
+        <Value>{formatThousandsSeparator(total_transactions)}</Value>
       </Item>
       <Item>
         <Title>Total Users</Title>

@@ -38,6 +38,7 @@ export default function OdysseyV4() {
   });
 
   console.log('quests--', quests);
+  console.log('detail--', detail);
 
   return (
     <StyledContainer>

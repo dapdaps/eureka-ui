@@ -17,32 +17,35 @@ export const StyledContainer = styled.div`
   align-items: center;
   background: rgba(22, 24, 29, 0.8);
   backdrop-filter: blur(5px);
-  border: 1px solid #fff;
-  .xLine {
+  /* border: 1px solid #fff; */
+  .corner {
     position: absolute;
-    width: 1270px;
-    height: 1px;
-    border-top: 1px solid #000;
-    left: 36px;
-    &.top {
-      top: -1px;
-    }
-    &.bottom {
-      bottom: -1px;
-    }
+    width: 34px;
+    height: 34px;
   }
-  .yLine {
-    position: absolute;
-    width: 1px;
-    height: 73px;
-    border-left: 1px solid #000;
-    &.left {
-      left: -1px;
-    }
-
-    &.right {
-      right: -1px;
-    }
+  .leftTop {
+    top: 0;
+    left: 0;
+    border-left: 1px solid #fff;
+    border-top: 1px solid #fff;
+  }
+  .rightTop {
+    top: 0;
+    right: 0;
+    border-right: 1px solid #fff;
+    border-top: 1px solid #fff;
+  }
+  .leftBottom {
+    bottom: 0;
+    left: 0;
+    border-left: 1px solid #fff;
+    border-bottom: 1px solid #fff;
+  }
+  .rightBottom {
+    bottom: 0;
+    right: 0;
+    border-right: 1px solid #fff;
+    border-bottom: 1px solid #fff;
   }
 `;
 export const Item = styled.div`
