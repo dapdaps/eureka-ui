@@ -28,6 +28,7 @@ const networks = {
         underlyingToken: blast['oeth'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: true,
       },
       '0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87': {
         underlyingAsset: blast['usdb'].address,
@@ -39,6 +40,7 @@ const networks = {
         underlyingToken: blast['usdb'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: true,
       },
       '0x8c415331761063e5d6b1c8e700f996b13603fc2e': {
         underlyingAsset: blast['wbtc'].address,
@@ -50,6 +52,7 @@ const networks = {
         underlyingToken: blast['wbtc'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: true,
       },
     },
     RENZO_MARKETS: {
@@ -63,6 +66,7 @@ const networks = {
         underlyingToken: blast['eth'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: true,
       },
       '0x4991b902F397dC16b0BBd21b0057a20b4B357AE2': {
         underlyingAsset: blast['ezeth'].address,
@@ -74,6 +78,7 @@ const networks = {
         underlyingToken: blast['ezeth'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: false,
       },
 
       '0xb51b76c73fb24f472e0dd63bb8195bd2170bc65d': {
@@ -86,6 +91,7 @@ const networks = {
         underlyingToken: blast['fwweth'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: true,
       },
     },
     KELP_MARKETS: {
@@ -99,6 +105,7 @@ const networks = {
         underlyingToken: blast['eth'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: true,
       },
       '0x9bbba6322fe5f3968c1f27c8b860727d683194c8': {
         underlyingAsset: blast['wrseth'].address,
@@ -110,6 +117,7 @@ const networks = {
         underlyingToken: blast['wrseth'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: false,
       },
       '0xd55634a79e571dc4c7cdd2f2c0a5857bf7a8a782': {
         underlyingAsset: blast['fwweth'].address,
@@ -121,6 +129,7 @@ const networks = {
         underlyingToken: blast['fwweth'],
         loanToValue: 0.75,
         isCollateral: false,
+        canBorrow: true,
       },
     },
   },
