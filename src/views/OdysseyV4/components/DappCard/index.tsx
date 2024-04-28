@@ -39,7 +39,7 @@ export default function DappCard({
   onRefreshDetail,
 }: any) {
   const [execution, setExecution] = useState(0);
-  console.log('DAPDAPCARD--', source, name, spins, total_spins, execution);
+
   const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
     onRefreshDetail();
     setExecution(_times);

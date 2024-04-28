@@ -24,6 +24,7 @@ export const StyledContainer = styled.div`
     }
     .count {
       color: #ebf479;
+      font-weight: 700;
     }
   }
 `;
