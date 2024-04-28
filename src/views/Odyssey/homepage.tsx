@@ -225,7 +225,8 @@ const Index = function () {
   }, [wallet]);
   return (
     <StyledContainer style={{
-      paddingTop: 56
+      paddingTop: 56,
+      backgroundColor: "#0D0F12"
     }}>
       <StyledFlex flexDirection='column' gap='20px'>
         <StyledLogo src="/images/odyssey/welcome/logo.png" />
