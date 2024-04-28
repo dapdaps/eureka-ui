@@ -7,6 +7,7 @@ import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 import Banner from './components/Banner';
 import Bridge from './components/Bridge';
+import Explores from './components/Explores';
 import FootClaim from './components/FootClaim';
 import Golds from './components/Golds';
 import Lending from './components/Lending';
@@ -59,10 +60,7 @@ export default function OdysseyV4() {
         />
 
         <Golds list={quests.golds} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
-        <Pilcrow
-          title="explore more dApps on Blast"
-          desc="Interact with popular dApps in Blast on DapDap, win 200 DapDap PTS for each."
-        />
+        <Explores />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />
         <Lending list={[...quests.lending, ...quests.liquidity]} onRefreshDetail={queryDetail} />
