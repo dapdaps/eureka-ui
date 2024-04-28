@@ -1,6 +1,7 @@
 import Image from 'next/image';
 
 import Loading from '@/components/Icons/Loading';
+import { useUserStore } from '@/stores/user';
 import { ellipsAccount } from '@/utils/account';
 import { simplifyNum } from '@/utils/format-number';
 
@@ -10,6 +11,9 @@ import { Avatar, ModalBody, ModalHead, StyledContainer, StyledContent } from './
 
 export default function RankModal({ name, id, onClose }: any) {
   const { ranks, loading: rankLoading, fetchData } = useLeaderBoard(id);
+  const userInfo = useUserStore((store: any) => store.user);
+
+  console.log('userInfo--', userInfo);
 
   const TrapLayout = {
     borderColor: '#FFDD4D',
@@ -94,8 +98,8 @@ export default function RankModal({ name, id, onClose }: any) {
                   <div className="your-rank rank-row">
                     <div className="rank-col text-left"># {ranks?.user?.rank}</div>
                     <div className="rank-col text-left">
-                      <Avatar src={ranks?.user?.account?.avatar} />
-                      {ellipsAccount(ranks?.user?.account.address)}
+                      <Avatar src={userInfo?.avatar} />
+                      {ellipsAccount(userInfo?.address)}
                     </div>
                     <div className="rank-col text-right">${simplifyNum(ranks?.user?.trading_volume)}</div>
                   </div>
