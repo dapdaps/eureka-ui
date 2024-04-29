@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useSetChain } from '@web3-onboard/react';
+import useConnectWallet from '@/hooks/useConnectWallet';
 
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
@@ -74,6 +75,7 @@ export const Stake = () => {
     const { chainId, account, provider } = useAccount();
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')
+    const { onConnect } = useConnectWallet();
 
     const { addAction } = useAddAction('dapp');
     const [currentChain, setCurrentChain] = useState<any>(chains[5]);
@@ -129,6 +131,12 @@ export const Stake = () => {
     })
 
     useEffect(() => {
+        if (!chainId) {
+            setIsError(false)
+            setBtnMsg(`Connect Wallet`)
+            return
+        }
+
         if (currentChain?.chainId !== chainId) {
             setNeedChainSwitch(true)
             setIsError(false)
@@ -197,6 +205,11 @@ export const Stake = () => {
         </InputActionWapper>
 
         <SubmitBtn style={{ opacity: isError ? 0.2 : 1 }} onClick={async () => {
+            if (!account) {
+                onConnect()
+                return
+            }
+
             if (needChainSwitch) {
                 setChain({ chainId: `0x${currentChain.chainId.toString(16)}` });
                 return

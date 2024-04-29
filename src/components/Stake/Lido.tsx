@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useSetChain } from '@web3-onboard/react';
+import useConnectWallet from '@/hooks/useConnectWallet';
 
 import useAddAction from '@/hooks/useAddAction';
 import useAccount from '@/hooks/useAccount';
@@ -51,6 +52,7 @@ const ezToken = {
 
 export const Stake = () => {
     const { chainId, account, provider } = useAccount();
+    const { onConnect } = useConnectWallet();
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')
     const { addAction } = useAddAction('dapp');
@@ -107,6 +109,12 @@ export const Stake = () => {
     })
 
     useEffect(() => {
+        if (!chainId) {
+            setIsError(false)
+            setBtnMsg(`Connect Wallet`)
+            return
+        }
+
         if (currentChain?.chainId !== chainId) {
             setNeedChainSwitch(true)
             setIsError(false)
@@ -168,6 +176,11 @@ export const Stake = () => {
         </InputActionWapper>
 
         <SubmitBtn style={{ opacity: isError ? 0.2 : 1 }} onClick={async () => {
+            if (!account) {
+                onConnect()
+                return
+            }
+
             if (needChainSwitch) {
                 setChain({ chainId: `0x${currentChain.chainId.toString(16)}` });
                 return
