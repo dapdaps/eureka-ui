@@ -34,7 +34,7 @@ export default function Pilcrow({}: any) {
         </Trapeziform>
         <Trapeziform {...TrapLayout} className="poly-btn large renzo" handleClick={() => {
           setStakeShow(true)
-          setStakeType('ranzo')
+          setStakeType('renzo')
         }}>
           <Image src="/images/odyssey/v4/btn-mask.png" alt="" width={268} height={62} className="poly-mask" />
           <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
