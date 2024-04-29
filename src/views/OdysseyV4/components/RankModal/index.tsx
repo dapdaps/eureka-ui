@@ -26,9 +26,15 @@ export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
     [3, '/images/odyssey/v4/rank3.svg'],
   ]);
 
+  const formatRank = (myRank: any) => {
+    if (isNaN(Number(myRank))) return '-';
+    if (Number(myRank) === 0) return '-';
+    return myRank;
+  };
+
   return (
     <StyledContainer>
-      <StyledContent className="animate__bounceIn">
+      <StyledContent>
         {/* <Trapeziform {...TrapLayout}>
           </Trapeziform> */}
         <ModalHead className={bgClass}>
@@ -86,7 +92,7 @@ export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
                 <>
                   <div className="you">You</div>
                   <div className="your-rank rank-row">
-                    <div className="rank-col text-left"># {ranks?.user?.rank}</div>
+                    <div className="rank-col text-left"># {formatRank(ranks?.user?.rank)}</div>
                     <div className="rank-col text-left">
                       <Avatar src={userInfo?.avatar} />
                       {ellipsAccount(userInfo?.address)}

@@ -22,8 +22,8 @@ export const Rush = styled.div`
   .gold {
     position: absolute;
     left: 50%;
-    margin-left: -163px;
-    margin-top: -63px;
+    margin-left: -65px;
+    margin-top: 47px;
     z-index: 2;
   }
   .light {

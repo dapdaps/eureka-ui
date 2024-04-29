@@ -271,6 +271,12 @@ export const ModalBody = styled.div`
     background-color: #000;
     margin-bottom: 20px;
   }
+  .modal-desc {
+    color: #979abe;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 400;
+  }
   .modal-list-head {
     display: flex;
     align-items: center;

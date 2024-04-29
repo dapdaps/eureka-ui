@@ -1,8 +1,10 @@
 import Image from 'next/image';
+import type { MouseEvent } from 'react';
+import { useRef } from 'react';
 
 import { StyledContainer, StyledContent } from './styles';
 
-export default function Modal({ type, children, onClose }: any) {
+export default function Modal({ type, children, onClose, bgColor }: any) {
   const renderShape = () => {
     switch (type) {
       case 'type1':
@@ -27,12 +29,23 @@ export default function Modal({ type, children, onClose }: any) {
         );
     }
   };
+
+  const bodyRef = useRef();
+  const clickMask = (e: MouseEvent) => {
+    if ((bodyRef?.current as any).contains(e.target)) {
+      return;
+    } else {
+      onClose();
+    }
+  };
   return (
-    <StyledContainer>
-      <StyledContent className="animate__bounceIn">
+    <StyledContainer onClick={clickMask}>
+      <StyledContent $bgColor={bgColor} ref={bodyRef}>
         {renderShape()}
         <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={12} height={12} />
-        <Image className="corner-left" src="/images/odyssey/v4/modal-corner-left.svg" alt="" width={37} height={37} />
+        <div className="corner-left"></div>
+        <div className="corner-right"></div>
+        {/* <Image className="corner-left" src="/images/odyssey/v4/modal-corner-left.svg" alt="" width={37} height={37} />
         <Image
           className="corner-right"
           onClick={onClose}
@@ -40,7 +53,7 @@ export default function Modal({ type, children, onClose }: any) {
           alt=""
           width={37}
           height={37}
-        />
+        /> */}
         {children}
       </StyledContent>
     </StyledContainer>

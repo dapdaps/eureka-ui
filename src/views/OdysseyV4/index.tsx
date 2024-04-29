@@ -63,10 +63,14 @@ export default function OdysseyV4() {
         <Explores />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />
-        <Lending list={[...quests.lending, ...quests.liquidity, ...quests.staking]} onRefreshDetail={queryDetail} />
+        <Lending
+          list={[...quests.lending, ...quests.liquidity, ...quests.staking, ...quests.yield]}
+          onRefreshDetail={queryDetail}
+        />
 
         <FootClaim
           unclaimed={detail?.user?.unclaimed_reward}
+          totalReward={detail?.user?.total_reward}
           unlocked={quests.unlockedAmount}
           onRefreshDetail={queryDetail}
           id={id}

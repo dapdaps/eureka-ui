@@ -8,7 +8,16 @@ import { get } from '@/utils/http';
 
 import { GOLD_QUESTS } from '../const';
 
-const defaultQuests: any = { social: [], bridge: [], swap: [], lending: [], liquidity: [], golds: [], staking: [] };
+const defaultQuests: any = {
+  social: [],
+  bridge: [],
+  swap: [],
+  lending: [],
+  liquidity: [],
+  golds: [],
+  staking: [],
+  yield: [],
+};
 
 export default function useQuests(id: any) {
   const [quests, setQuests] = useState(null);
@@ -42,9 +51,7 @@ export default function useQuests(id: any) {
           _result.bridge.push(item);
         }
         if (item.category_id === 2) {
-          if (item.name !== 'Ring Protocol' && item.name !== 'Ambient') {
-            _result.swap.push(item);
-          }
+          _result.swap.push(item);
         }
         if (item.category_id === 3) {
           _result.lending.push(item);
@@ -54,6 +61,11 @@ export default function useQuests(id: any) {
         }
         if (item.category_id === 5) {
           _result.staking.push(item);
+        }
+        if (item.category_id === 6) {
+          if (item.name !== 'Particle') {
+            _result.yield.push(item);
+          }
         }
       });
       setQuests(_result);

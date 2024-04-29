@@ -1,9 +1,15 @@
+import { useState } from 'react'
+
 import Image from 'next/image';
 
 import Trapeziform from '../Trapeziform';
+import SkakeModel from '@/views/StakeModal/index'
 import { Btns, Desc, StyledContainer, Title } from './styles';
 
 export default function Pilcrow({}: any) {
+  const [stakeShow, setStakeShow] = useState<boolean>(false)
+  const [stakeType, setStakeType] = useState<string>('renzo')
+
   const TrapLayout = {
     borderColor: '#1C1E2D',
     corner: 10,
@@ -11,6 +17,7 @@ export default function Pilcrow({}: any) {
   const click = () => {
     console.log('click');
   };
+
   return (
     <StyledContainer>
       <Title>Explore more dApps on Blast</Title>
@@ -25,13 +32,19 @@ export default function Pilcrow({}: any) {
           Wrap ETH to WETH
           <Image src="/images/odyssey/v4/white-arrow.svg" alt="" width={28} height={16} />
         </Trapeziform>
-        <Trapeziform {...TrapLayout} className="poly-btn large renzo" handleClick={click}>
+        <Trapeziform {...TrapLayout} className="poly-btn large renzo" handleClick={() => {
+          setStakeShow(true)
+          setStakeType('ranzo')
+        }}>
           <Image src="/images/odyssey/v4/btn-mask.png" alt="" width={268} height={62} className="poly-mask" />
           <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
           Get ezETH by RENZO
           <Image src="/images/odyssey/v4/white-arrow.svg" alt="" width={28} height={16} />
         </Trapeziform>
-        <Trapeziform {...TrapLayout} className="poly-btn lido" handleClick={click}>
+        <Trapeziform {...TrapLayout} className="poly-btn lido" handleClick={() => {
+          setStakeShow(true)
+          setStakeType('lido')
+        }}>
           <Image src="/images/odyssey/v4/btn-mask.png" alt="" width={268} height={62} className="poly-mask" />
           <Image src="/images/odyssey/v4/coin-eth.svg" alt="" width={26} height={26} />
           Get stETH by LIDO
@@ -44,6 +57,12 @@ export default function Pilcrow({}: any) {
           fill="#EBF479"
         />
       </svg>
+      {
+        stakeShow && <SkakeModel stakeType={stakeType} onClose={() => {
+          setStakeShow(false)
+        }}/>
+      }
+      
     </StyledContainer>
   );
 }
