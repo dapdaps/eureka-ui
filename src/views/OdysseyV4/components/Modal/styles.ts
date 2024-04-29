@@ -16,7 +16,7 @@ export const StyledContainer = styled.div`
   backdrop-filter: blur(5px);
 `;
 
-export const StyledContent = styled.div<{ $bgColor: string }>`
+export const StyledContent = styled.div<{ $bgColor: string; ref: any }>`
   width: 834px;
   position: relative;
   /* background-color: #191b1f; */
