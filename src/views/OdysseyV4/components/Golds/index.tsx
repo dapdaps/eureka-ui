@@ -58,7 +58,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         rank2: 60,
         rank3: 40,
         reward: '2700',
-        desc: 'Get ready to boost your rewards with Particle! Particle is a powerful dapp in the Blast ecosystem,When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
+        desc: 'Get ready to boost your rewards with Particle! Particle is a powerful dapp in the Blast ecosystem. When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
       },
     ],
     [
@@ -71,7 +71,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         rank2: 60,
         rank3: 40,
         reward: '1300',
-        desc: 'Participate in our Odyssey4 and earn additional Gold rewards,Traders with the highest volume will be rewarded with special Gold bonuses.Ring Protocol offers seamless asset trading and lending services within the Blast ecosystem,Explore the possibilities with Ring Protocol on DapDap!',
+        desc: 'Ring Protocol offers seamless asset trading and lending services within the Blast ecosystem. Explore DeFi with Ring Protocol on DapDap today! <br />Participate in our latest Odyssey campaign and earn additional Gold rewards. The top traders with the highest volume will be rewarded with special Gold bonuses.',
       },
     ],
     [
@@ -84,7 +84,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         rank2: 60,
         rank3: 40,
         reward: '800',
-        desc: 'Ambient is a Zero-to-One Decentralized Trading Protocol on Blast, offering cutting-edge trading solutions.Join our Odyssey4 and complete trade on Ambient to earn extra Gold rewards. Trade actively to climb the leaderboard and stand a chance to win one of the top three prizes.',
+        desc: 'Ambient is a Zero-to-One Decentralised Trading Protocol on Blast, offering cutting-edge trading solutions.<br />Complete trades on Ambient to earn extra Gold rewards. Trade actively and climb the leaderboard to stand a chance to win one of the top three prizes!',
       },
     ],
   ]);

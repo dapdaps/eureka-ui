@@ -8,7 +8,11 @@ import { StyledContainer, StyledContent } from './styles';
 export default function Bridge({ list, onRefreshDetail }: any) {
   return (
     <StyledContainer>
-      <Title title="Bridge" subtitle="Construct a bridge in Blast to new opportunities" />
+      <Title
+        title="Bridge"
+        subtitle="Cross a bridge to Blast and discover new opportunities
+"
+      />
       <StyledContent>
         {list?.length ? (
           list.map((item: any) => <DappCard key={item.id} {...item} onRefreshDetail={onRefreshDetail} />)

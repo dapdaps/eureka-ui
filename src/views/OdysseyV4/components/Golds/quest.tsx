@@ -113,7 +113,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any)
               />
             </div>
           </div>
-          <div className="body">{desc}</div>
+          <div className="body" dangerouslySetInnerHTML={{ __html: desc }}></div>
           <div className="foot">
             <TrapeziformBtn width="202px" height="62px" handleClick={handleTrade} loading={reportLoading}>
               Trade <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />

@@ -1,7 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import SkakeModel from '@/views/StakeModal/index'
+import SkakeModel from '@/views/StakeModal/index';
+
 import { ParticleLink } from '../../const';
 import useParticleReport from '../../hooks/useParticleReport';
 import Line from '../Line';
@@ -166,9 +167,13 @@ export default function Treasure() {
                     ezETH
                   </div>
                   <div className="body-right">
-                    <TrapeziformBtn onClick={() => {
-                      setShowRenzo(true)
-                    }} width="286px" height="42px">
+                    <TrapeziformBtn
+                      onClick={() => {
+                        setShowRenzo(true);
+                      }}
+                      width="286px"
+                      height="42px"
+                    >
                       Restake
                       <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                     </TrapeziformBtn>
@@ -682,7 +687,7 @@ export default function Treasure() {
         <Treasure3 onClick={() => setShowModal5(true)}>
           <Line />
           <Image src="/images/odyssey/v4/juice.svg" alt="" width={208} height={208} className="scale" />
-          <Title className="title">Mutiple Points</Title>
+          <Title className="title">Multiple Points</Title>
           <Image src="/images/odyssey/v4/td3.svg" alt="" width={79} height={22} className="td3" />
         </Treasure3>
       </StyledContent>
@@ -727,11 +732,14 @@ export default function Treasure() {
           <Title className="title title2">& 3x Assets</Title>
         </Treasure5>
       </StyledContent>
-      {
-        showRenzo && <SkakeModel stakeType='renzo' onClose={() => {
-          setShowRenzo(false)
-        }}/>
-      }
+      {showRenzo && (
+        <SkakeModel
+          stakeType="renzo"
+          onClose={() => {
+            setShowRenzo(false);
+          }}
+        />
+      )}
     </StyledContainer>
   );
 }
