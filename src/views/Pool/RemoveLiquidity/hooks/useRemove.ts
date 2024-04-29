@@ -91,11 +91,12 @@ export default function useRemove({ detail, percent, amount0, amount1, onSuccess
       addAction({
         type: 'Liquidity',
         action: 'Remove Liquidity',
-        tokens: [detail.token0.symbol, detail.token1.symbol],
+        token0: detail.token0.symbol,
+        token1: detail.token1.symbol,
         template: dapp.name,
         status,
         transactionHash,
-        extra_data: { amount0, amount1, action: 'Remove Liquidity', type: 'univ3' },
+        extra_data: JSON.stringify({ amount0, amount1, action: 'Remove Liquidity', type: 'univ3' }),
       });
       toast.dismiss(toastId);
       if (status === 1) {

@@ -14,7 +14,7 @@ export default function Empty() {
       <StyledText>Your active V3 liquidity positions will appear here.</StyledText>
 
       {!account && <ConnectWalletButton style={{ width: 446, height: 62, fontSize: 18 }} />}
-      {currentChain.chain_id !== chainId && (
+      {account && currentChain.chain_id !== chainId && (
         <SwitchNetworkButton style={{ width: 446, height: 62, fontSize: 18 }} chain={currentChain} />
       )}
     </StyledContainer>
