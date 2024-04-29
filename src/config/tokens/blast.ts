@@ -44,6 +44,14 @@ export const blast: { [key: string]: Token } = {
     name: 'Renzo Restaked ETH',
     icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii',
   },
+  oezeth: {
+    address: '0x4991b902f397dc16b0bbd21b0057a20b4b357ae2',
+    chainId: CHAIN_ID,
+    symbol: 'oezETH',
+    decimals: 18,
+    name: 'Orbit ezETH ',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii',
+  },
   'mwstETH-WPUNKS:20': {
     address: '0x9a50953716bA58e3d6719Ea5c437452ac578705F',
     chainId: CHAIN_ID,
