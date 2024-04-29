@@ -34,7 +34,7 @@ export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
 
   return (
     <StyledContainer>
-      <StyledContent className="animate__bounceIn">
+      <StyledContent>
         {/* <Trapeziform {...TrapLayout}>
           </Trapeziform> */}
         <ModalHead className={bgClass}>

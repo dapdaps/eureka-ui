@@ -29,7 +29,7 @@ export default function Modal({ type, children, onClose, bgColor }: any) {
   };
   return (
     <StyledContainer>
-      <StyledContent $bgColor={bgColor} className="animate__bounceIn">
+      <StyledContent $bgColor={bgColor}>
         {renderShape()}
         <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={12} height={12} />
         <div className="corner-left"></div>
