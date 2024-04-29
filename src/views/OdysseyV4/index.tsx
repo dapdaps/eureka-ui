@@ -70,6 +70,7 @@ export default function OdysseyV4() {
 
         <FootClaim
           unclaimed={detail?.user?.unclaimed_reward}
+          totalReward={detail?.user?.total_reward}
           unlocked={quests.unlockedAmount}
           onRefreshDetail={queryDetail}
           id={id}

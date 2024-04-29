@@ -11,7 +11,7 @@ export default function Banner() {
         <Image src="/images/odyssey/v4/DapDapXBlast.svg" alt="" width={1145} height={88} className="dapdapx" />
         <Rush>
           <Image src="/images/odyssey/v4/banner-txt.svg" alt="" width={919} height={183} />
-          <Image src="/images/odyssey/v4/banner-gold.svg" alt="" width={327} height={327} className="gold" />
+          <Image src="/images/odyssey/v4/banner-gold.svg" alt="" width={127} height={127} className="gold" />
           <Image src="/images/odyssey/v4/banner-light.svg" alt="" width={380} height={380} className="light" />
         </Rush>
       </StyledContent>

@@ -113,7 +113,8 @@ export default function Treasure() {
             <TrapeziformBtn
               width="236px"
               height="42px"
-              handleClick={(e: any) => openLink('https://app.particle.trade/')}
+              loading={reportLoading}
+              handleClick={(e: any) => handleJump('https://app.particle.trade/', true)}
               style={{
                 margin: '73px auto 0',
               }}
@@ -198,7 +199,11 @@ export default function Treasure() {
                     </div>
                   </div>
                   <div className="body-right">
-                    <TrapeziformBtn width="286px" height="42px">
+                    <TrapeziformBtn
+                      width="286px"
+                      height="42px"
+                      handleClick={(e: any) => handleJump(`${location.origin}/dapp/thruster-liquidity`)}
+                    >
                       Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                     </TrapeziformBtn>
                   </div>
@@ -231,7 +236,11 @@ export default function Treasure() {
 
                     <div className="txt">ezETH / WETH</div>
                   </div>
-                  <TrapeziformBtn width="236px" height="42px">
+                  <TrapeziformBtn
+                    width="236px"
+                    height="42px"
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/hyperlock`)}
+                  >
                     Stake LP
                     <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
@@ -443,7 +452,7 @@ export default function Treasure() {
                     <TrapeziformBtn
                       width="286px"
                       height="42px"
-                      handleClick={(e: any) => handleJump(`${location.origin}/dapp/thruster-finance`)}
+                      handleClick={(e: any) => handleJump(`${location.origin}/dapp/thruster-liquidity`)}
                     >
                       Add Liquidity
                       <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
@@ -481,7 +490,11 @@ export default function Treasure() {
                       mwstETH-WPUNKS <br />/ WETH
                     </div>
                   </div>
-                  <TrapeziformBtn width="236px" height="42px">
+                  <TrapeziformBtn
+                    width="236px"
+                    height="42px"
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/hyperlock`)}
+                  >
                     Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </Trapeziform>
@@ -554,7 +567,11 @@ export default function Treasure() {
                   </div>
                 </div>
                 <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
+                  <TrapeziformBtn
+                    width="286px"
+                    height="42px"
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/juice`)}
+                  >
                     Deposit WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </div>
@@ -575,7 +592,11 @@ export default function Treasure() {
                   </div>
                 </div>
                 <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
+                  <TrapeziformBtn
+                    width="286px"
+                    height="42px"
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/juice`)}
+                  >
                     Borrow WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </div>
@@ -599,7 +620,11 @@ export default function Treasure() {
                   <div className="body-left-content-title">HYPLP</div>
                 </div>
                 <div className="body-right">
-                  <TrapeziformBtn width="286px" height="42px">
+                  <TrapeziformBtn
+                    width="286px"
+                    height="42px"
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/hyperlock`)}
+                  >
                     Stake LP
                     <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
