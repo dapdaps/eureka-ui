@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { StyledContainer, StyledContent } from './styles';
 
-export default function Modal({ type, children, onClose }: any) {
+export default function Modal({ type, children, onClose, bgColor }: any) {
   const renderShape = () => {
     switch (type) {
       case 'type1':
@@ -29,10 +29,12 @@ export default function Modal({ type, children, onClose }: any) {
   };
   return (
     <StyledContainer>
-      <StyledContent className="animate__bounceIn">
+      <StyledContent $bgColor={bgColor} className="animate__bounceIn">
         {renderShape()}
         <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={12} height={12} />
-        <Image className="corner-left" src="/images/odyssey/v4/modal-corner-left.svg" alt="" width={37} height={37} />
+        <div className="corner-left"></div>
+        <div className="corner-right"></div>
+        {/* <Image className="corner-left" src="/images/odyssey/v4/modal-corner-left.svg" alt="" width={37} height={37} />
         <Image
           className="corner-right"
           onClick={onClose}
@@ -40,7 +42,7 @@ export default function Modal({ type, children, onClose }: any) {
           alt=""
           width={37}
           height={37}
-        />
+        /> */}
         {children}
       </StyledContent>
     </StyledContainer>

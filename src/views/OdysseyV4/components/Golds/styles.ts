@@ -21,7 +21,8 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  max-width: 1400px;
+  /* max-width: 1400px; */
+  width: 1188px;
   margin: -160px auto 0;
 `;
 const Bg = styled.div`

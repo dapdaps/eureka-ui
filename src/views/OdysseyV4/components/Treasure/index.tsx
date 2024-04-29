@@ -103,11 +103,11 @@ export default function Treasure() {
         </Modal>
       ) : null} */}
       {showModal1 ? (
-        <Modal type="type1" onClose={() => setShowModal1(false)}>
+        <Modal type="type1" onClose={() => setShowModal1(false)} bgColor="#000">
           <ModalTitle>How to earn extra 1% Blast Gold by Particle?</ModalTitle>
           <ModalDesc>
-            This strategy benefits users with an additional Gold bonus reward. Trade on Particle with perps, you will
-            get 1% extra Blast Gold.
+            This strategy benefits users with an additional Gold bonus reward. <br />
+            Trade on Particle with perps, you will get 1% extra Blast Gold.
           </ModalDesc>
           <ModalBody>
             <TrapeziformBtn
@@ -267,7 +267,9 @@ export default function Treasure() {
                     width="236px"
                     height="42px"
                     loading={reportLoading}
-                    handleClick={(e: any) => handleJump('', true)}
+                    handleClick={(e: any) =>
+                      handleJump('https://app.particle.trade/0x7BE481D464CAD7ad99500CE8A637599eB8d0FCDB', true)
+                    }
                   >
                     Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
@@ -290,7 +292,7 @@ export default function Treasure() {
                 <div className="head-left">
                   <div className="head-title">Step 1. Swap fwWETH on</div>
                   <div className="tag-thr">
-                    <Image src="/images/odyssey/v4/tag-ring.svg" alt="" width={139} height={24} />
+                    <Image src="/images/odyssey/v4/tag-ring.svg" alt="" width={72} height={27} />
                   </div>
                 </div>
                 <div className="tag-points">
@@ -313,7 +315,7 @@ export default function Treasure() {
                     height="42px"
                     handleClick={(e: any) => handleJump(`${location.origin}/dapp/ring-protocol`)}
                   >
-                    Loop fwWETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                    Swap fwWETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                   </TrapeziformBtn>
                 </div>
               </div>
@@ -542,6 +544,7 @@ export default function Treasure() {
                   <div className="head-title">Step 1. Create sub account and Deposit WETH on</div>
                 </div>
               </div>
+              <div className="modal-desc">* If you don’t have WETH, you can wrap ETH to WETH on this page</div>
               <div className="modal-list-body">
                 <div className="body-left" style={{ gap: 5 }}>
                   <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
@@ -586,12 +589,12 @@ export default function Treasure() {
               </div>
               <div className="modal-list-body">
                 <div className="body-left" style={{ gap: 5 }}>
-                  <Image src="/images/odyssey/v4/coin-eth.svg" alt="" width={26} height={26} />
+                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
 
                   <div className="body-left-content-title">WETH</div>
 
                   <Image src="/images/odyssey/v4/dash-arrow.svg" alt="" width={33} height={16} />
-                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
+                  <Image src="/images/odyssey/v4/icon-hyperlock.svg" alt="" width={26} height={26} />
 
                   <div className="body-left-content-title">HYPLP</div>
                 </div>
