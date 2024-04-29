@@ -87,7 +87,7 @@ export const DappPage: NextPageWithLayout = () => {
 
   useEffect(() => {
     run();
-  }, [chainId]);
+  }, [chainId, dapp]);
   const network = useMemo(() => {
     if (!dapp.dapp_network) return null;
     const _network = dapp.dapp_network?.find((_network: any) => _network.network_id === currentChain?.id);

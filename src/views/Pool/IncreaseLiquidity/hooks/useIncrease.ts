@@ -10,6 +10,7 @@ import positionAbi from '../../abi/position';
 import { wrapNativeToken } from '@/views/Pool/utils/token';
 import { useSettingsStore } from '@/stores/settings';
 import { MAX_TICK, MIN_TICK } from '@/config/pool/index';
+import useAddAction from '@/hooks/useAddAction';
 
 export default function useIncrease({
   token0,
@@ -26,10 +27,10 @@ export default function useIncrease({
 }: any) {
   const [loading, setLoading] = useState(false);
   const { account, provider, chainId } = useAccount();
-  const { contracts } = useDappConfig();
+  const { contracts, dapp } = useDappConfig();
   const toast = useToast();
   const slippage = useSettingsStore((store: any) => store.slippage);
-
+  const { addAction } = useAddAction('dapp');
   const onIncrease = async () => {
     setLoading(true);
     const { PositionManager } = contracts[token0.chainId];
@@ -158,7 +159,15 @@ export default function useIncrease({
       } else {
         toast.fail({ title: 'Add faily!' });
       }
-
+      addAction({
+        type: 'Liquidity',
+        action: 'Add Liquidity',
+        tokens: [token0.symbol, token1.symbol],
+        template: dapp.name,
+        status,
+        transactionHash,
+        extra_data: { amount0: value0, amount1: value1, action: 'Remove Liquidity', type: 'univ3' },
+      });
       setLoading(false);
     } catch (err: any) {
       console.log(err);

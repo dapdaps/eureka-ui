@@ -11,7 +11,14 @@ export default function Noti({ onClose }: any) {
         When completing a transaction, please stay on the component page briefly to prevent any failure in reporting
         information.
       </StyledContent>
-      <Image className="close" src="/images/odyssey/v4/close.svg" alt="" width={12} height={12} onClick={onClose} />
+      <Image
+        className="close"
+        src="/images/odyssey/v4/noti-close.svg"
+        alt=""
+        width={12}
+        height={12}
+        onClick={onClose}
+      />
     </StyledContainer>
   );
 }

@@ -8,7 +8,16 @@ import { get } from '@/utils/http';
 
 import { GOLD_QUESTS } from '../const';
 
-const defaultQuests: any = { social: [], bridge: [], swap: [], lending: [], liquidity: [], golds: [] };
+const defaultQuests: any = {
+  social: [],
+  bridge: [],
+  swap: [],
+  lending: [],
+  liquidity: [],
+  golds: [],
+  staking: [],
+  yield: [],
+};
 
 export default function useQuests(id: any) {
   const [quests, setQuests] = useState(null);
@@ -49,6 +58,14 @@ export default function useQuests(id: any) {
         }
         if (item.category_id === 4) {
           _result.liquidity.push(item);
+        }
+        if (item.category_id === 5) {
+          _result.staking.push(item);
+        }
+        if (item.category_id === 6) {
+          if (item.name !== 'Particle') {
+            _result.yield.push(item);
+          }
         }
       });
       setQuests(_result);

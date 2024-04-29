@@ -73,6 +73,17 @@ export const ModalHead = styled.div`
   padding: 0 44px;
   position: relative;
   overflow: hidden;
+  background-repeat: no-repeat;
+  background-size: contain;
+  &.bg-particle {
+    background-image: url('/images/odyssey/v4/bg-particle.png');
+  }
+  &.bg-ring {
+    background-image: url('/images/odyssey/v4/bg-ring.png');
+  }
+  &.bg-ambient {
+    background-image: url('/images/odyssey/v4/bg-ambient.png');
+  }
   .smoke {
     position: absolute;
     height: 100px;

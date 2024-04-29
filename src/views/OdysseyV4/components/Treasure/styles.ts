@@ -29,6 +29,11 @@ const Treasure = styled.div`
   .star {
     position: absolute;
   }
+  .star4 {
+    position: absolute;
+    top: 21px;
+    left: 57px;
+  }
   .scale {
     transition: transform 0.3s;
     &:hover {
@@ -39,13 +44,13 @@ const Treasure = styled.div`
 
 export const Treasure1 = styled(Treasure)`
   .title {
-    left: 133px;
+    left: 162px;
     width: 230px;
   }
   .td1 {
     position: absolute;
-    left: 133px;
-    top: 33px;
+    left: 152px;
+    top: 23px;
   }
 `;
 export const Treasure2 = styled(Treasure)`
@@ -165,7 +170,7 @@ export const ModalDesc = styled.div`
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 500;
   margin-bottom: 20px;
   .bold {
     color: #ebf479;
@@ -265,6 +270,12 @@ export const ModalBody = styled.div`
     padding: 19px 25px;
     background-color: #000;
     margin-bottom: 20px;
+  }
+  .modal-desc {
+    color: #979abe;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-weight: 400;
   }
   .modal-list-head {
     display: flex;

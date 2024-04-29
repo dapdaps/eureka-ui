@@ -21,7 +21,8 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  max-width: 1400px;
+  /* max-width: 1400px; */
+  width: 1188px;
   margin: -160px auto 0;
 `;
 const Bg = styled.div`
@@ -45,9 +46,18 @@ export const Head = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-image: url('/images/odyssey/v4/bg-particle.png');
+
   background-repeat: no-repeat;
   background-size: contain;
+  &.bg-particle {
+    background-image: url('/images/odyssey/v4/bg-particle.png');
+  }
+  &.bg-ring {
+    background-image: url('/images/odyssey/v4/bg-ring.png');
+  }
+  &.bg-ambient {
+    background-image: url('/images/odyssey/v4/bg-ambient.png');
+  }
 `;
 export const HeadLeft = styled.div`
   display: flex;
@@ -97,7 +107,16 @@ export const BodyRight = styled.div`
   .rewards {
     display: flex;
     align-items: center;
-    gap: 25px;
+    gap: 18px;
+  }
+  .rewards-right {
+    flex-grow: 1;
+  }
+  .intro {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 400;
   }
   .title {
     color: #ebf479;
@@ -105,6 +124,7 @@ export const BodyRight = styled.div`
     font-size: 36px;
     font-weight: 700;
     text-transform: uppercase;
+    margin-top: -8px;
   }
   .status {
     display: flex;

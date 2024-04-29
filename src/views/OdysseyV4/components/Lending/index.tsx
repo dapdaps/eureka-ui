@@ -9,8 +9,8 @@ export default function Lending({ list, onRefreshDetail }: any) {
   return (
     <StyledContainer>
       <Title
-        title="Lending & Liquidity"
-        subtitle="Dive into lending on Blastl and make waves & Become a liquidity provider in Scroll and make a splash!"
+        title="Lending & Liquidity & Staking"
+        subtitle="Dive into lending and liquidity on Blast, Stake your assets to earn rewards!"
       />
       <StyledContent>
         {list?.length ? (
