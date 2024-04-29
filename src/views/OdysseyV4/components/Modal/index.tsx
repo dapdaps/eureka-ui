@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import type { MouseEvent } from 'react';
+import { useRef } from 'react';
 
 import { StyledContainer, StyledContent } from './styles';
 
@@ -27,9 +29,18 @@ export default function Modal({ type, children, onClose, bgColor }: any) {
         );
     }
   };
+
+  const bodyRef = useRef();
+  const clickMask = (e: MouseEvent) => {
+    if ((bodyRef?.current as any).contains(e.target)) {
+      return;
+    } else {
+      onClose();
+    }
+  };
   return (
-    <StyledContainer>
-      <StyledContent $bgColor={bgColor}>
+    <StyledContainer onClick={clickMask}>
+      <StyledContent $bgColor={bgColor} ref={bodyRef}>
         {renderShape()}
         <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={12} height={12} />
         <div className="corner-left"></div>
