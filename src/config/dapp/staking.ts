@@ -45,6 +45,13 @@ const ROUTE_CONFIG = {
       '--claim-color': '#1aca8a',
     },
   },
+  'penpad': {
+    type: 'staking',
+    theme: {
+      '--button-color': '#29C8A5',
+      '--button-text-color': '#000',
+    }
+  }
 };
 
 export default ROUTE_CONFIG;

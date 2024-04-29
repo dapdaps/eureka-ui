@@ -12,6 +12,13 @@ const ROUTE_CONFIG = {
       '--button-color': '#F49102',
       '--button-text-color': '#000',
     }
+  },
+  'juice': {
+    type: 'liquidity',
+    theme: {
+      '--button-color': 'linear-gradient(270deg,#CE86FE 0%,#8321D9 100%)',
+      '--button-text-color': '#FFF',
+    }
   }
 };
 
