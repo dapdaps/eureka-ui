@@ -9,10 +9,12 @@ export const StyledContainer = styled.div`
   z-index: 10;
   overflow-y: auto;
   background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const StyledContent = styled.div`
-  margin: 140px auto 0;
+export const StyledContent = styled.div<{ ref: any }>`
   width: 834px;
   border: 1px solid #3c3d00;
   background-color: white;

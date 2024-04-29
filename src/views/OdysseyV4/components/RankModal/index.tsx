@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import type { MouseEvent } from 'react';
+import { useRef } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import { useUserStore } from '@/stores/user';
@@ -31,12 +33,18 @@ export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
     if (Number(myRank) === 0) return '-';
     return myRank;
   };
+  const bodyRef = useRef();
+  const clickMask = (e: MouseEvent) => {
+    if ((bodyRef?.current as any).contains(e.target)) {
+      return;
+    } else {
+      onClose();
+    }
+  };
 
   return (
-    <StyledContainer>
-      <StyledContent>
-        {/* <Trapeziform {...TrapLayout}>
-          </Trapeziform> */}
+    <StyledContainer onClick={clickMask}>
+      <StyledContent ref={bodyRef}>
         <ModalHead className={bgClass}>
           <span className="left">
             <Image src={logo} alt="" width={43} height={43} />

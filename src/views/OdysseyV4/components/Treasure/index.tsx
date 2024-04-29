@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import SkakeModel from '@/views/StakeModal/index'
 import { ParticleLink } from '../../const';
 import useParticleReport from '../../hooks/useParticleReport';
 import Line from '../Line';
@@ -30,6 +31,7 @@ export default function Treasure() {
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
   const [showModal5, setShowModal5] = useState(false);
+  const [showRenzo, setShowRenzo] = useState(false);
   const TrapLayout = {
     borderColor: '#FFDD4D',
     corner: 34,
@@ -164,7 +166,9 @@ export default function Treasure() {
                     ezETH
                   </div>
                   <div className="body-right">
-                    <TrapeziformBtn width="286px" height="42px">
+                    <TrapeziformBtn onClick={() => {
+                      setShowRenzo(true)
+                    }} width="286px" height="42px">
                       Restake
                       <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                     </TrapeziformBtn>
@@ -723,6 +727,11 @@ export default function Treasure() {
           <Title className="title title2">& 3x Assets</Title>
         </Treasure5>
       </StyledContent>
+      {
+        showRenzo && <SkakeModel stakeType='renzo' onClose={() => {
+          setShowRenzo(false)
+        }}/>
+      }
     </StyledContainer>
   );
 }
