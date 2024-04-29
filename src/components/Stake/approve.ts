@@ -1,5 +1,6 @@
-import { ethers, Contract, Signer } from 'ethers'
-import Big from 'big.js'
+import { Contract } from 'ethers'
+import type { Signer } from 'ethers'
+import type Big from 'big.js'
 
 import { ERC20ABI } from './ERC20'
 
