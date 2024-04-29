@@ -32,6 +32,7 @@ export default function useTokenBalance({
       return;
     }
     const rpcUrl = _chainId ? chains[_chainId].rpcUrls[0] : '';
+
     const getBalance = async () => {
       if (!currency || !rpcUrl || !account || !currency.address) return;
       setLoading(true);

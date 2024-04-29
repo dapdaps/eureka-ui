@@ -78,8 +78,8 @@ export const Stake = () => {
     const { onConnect } = useConnectWallet();
 
     const { addAction } = useAddAction('dapp');
-    const [currentChain, setCurrentChain] = useState<any>(chains[5]);
-    const [currentToken, setCurrentToken] = useState<any>(tokens[chains[5].chainId][0]);
+    const [currentChain, setCurrentChain] = useState<any>(chains[4]);
+    const [currentToken, setCurrentToken] = useState<any>(tokens[chains[4].chainId][0]);
     const [needChainSwitch, setNeedChainSwitch] = useState(false)
     const [isError, setIsError] = useState(false)
     const [btnMsg, setBtnMsg] = useState('Confirm')
