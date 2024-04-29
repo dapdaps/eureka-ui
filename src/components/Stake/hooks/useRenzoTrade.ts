@@ -5,6 +5,7 @@ import Big from 'big.js'
 import type { Signer }  from 'ethers';
 
 import useToast from '@/hooks/useToast';
+import approve from "../approve";
 
 interface Request {
     amount: string | number;
@@ -213,7 +214,6 @@ async function getTransactionData(value: string, chainId: number, minOut: string
                 getTimeAfter(20),
                 {
                     value,
-                    gasLimit: 19200
                 },
             )
             break; 
@@ -221,6 +221,7 @@ async function getTransactionData(value: string, chainId: number, minOut: string
 
     return transactionData
 }
+
 
 
 export default function useTrade({
@@ -236,18 +237,19 @@ export default function useTrade({
     const [exchangeRate, setExchangeRate] = useState('')
     const [transactionCost, setTransactionCost] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [gasEstimate, setGasEstimate] = useState(19200)
+    const [gasEstimate, setGasEstimate] = useState(192000)
 
     async function deposit(value: string, signer: Signer) {
         try {
             const _value = new Big(value).mul(10 ** 18).toString()
             setIsLoading(true)
-            await ethereumDeposit(_value, signer)
+            const tx = await ethereumDeposit(_value, signer)
             success({
                 title: 'Transaction successed',
             })
 
             setIsLoading(false)
+            return tx.transactionHash
         } catch (err: any) {
             console.log(err)
             fail({
@@ -256,17 +258,24 @@ export default function useTrade({
             })
             setIsLoading(false)
         }
+
+        return null
     }
 
     async function ethereumDeposit(value: string, signer: Signer) {
         const _minOut = new Big(recived).mul(10 ** 18).toString().split('.')[0]
         const transactionData = await getTransactionData(value, chainId, _minOut, signer)
         console.log('transactionData:', transactionData)
+
+        if (chainId === 56) {
+            await approve('0x2170Ed0880ac9A755fd29B2688956BD959F933F8', new Big(value), '0xf25484650484DE3d554fB0b7125e7696efA4ab99', signer)
+        }
+
         const tx = await signer.sendTransaction({
             ...transactionData,
-            gasLimit: gasEstimate || 19200,
+            gasLimit: chainId === 1 ? gasEstimate : 1920000,
         })
-        await tx.wait()
+        return tx.wait()
     }
 
     useEffect(() => {
@@ -281,7 +290,7 @@ export default function useTrade({
 
     useEffect(() => {
         if (amount && !isNaN(Number(amount)) && rate) {
-            const recived = new Big(amount).div(new Big(rate)).toString()
+            const recived = new Big(amount).div(new Big(rate)).mul(new Big(0.9)).toString()
             setRecived(recived)
         } else {
             setRecived('')
@@ -299,6 +308,7 @@ export default function useTrade({
                     )
                 } else {
                     setTransactionCost('')
+                    setGasEstimate(192000)
                 }
             })
         } else {

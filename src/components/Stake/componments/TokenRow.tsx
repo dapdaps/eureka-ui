@@ -73,10 +73,12 @@ export const ChainTokens = ({
     tokenItem,
     token,
     chain,
+    onClick,
 }: {
-    tokenItem: any,
-    token: any,
-    chain: any,
+    tokenItem: any;
+    token: any;
+    chain: any;
+    onClick: () => void;
 }) => {
     const { balance, loading } = useTokenBalance({
         currency: token, 
@@ -85,7 +87,7 @@ export const ChainTokens = ({
         isPure: false,
     })
 
-    return <Container>
+    return <Container onClick={onClick}>
         <div className={"token-row" + (tokenItem.symbol === token.symbol ? ' active' : '')}>
             <div className="token-desc">
                 <div className="token-imgs">

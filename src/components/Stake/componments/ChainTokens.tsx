@@ -130,7 +130,9 @@ export const ChainTokens = ({
         <TokenList>
             {
                 tokenList?.map((tokenItem: any) => {
-                    return <TokenRow key={tokenItem.symbol} chain={chain} token={token} tokenItem={tokenItem}></TokenRow>
+                    return <TokenRow onClick={() => {
+                        onClose && onClose()
+                    }} key={tokenItem.symbol} chain={chain} token={token} tokenItem={tokenItem}></TokenRow>
                 })
             }
         </TokenList>

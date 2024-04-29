@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useSetChain } from '@web3-onboard/react';
 
+import useAddAction from '@/hooks/useAddAction';
 import useAccount from '@/hooks/useAccount';
 import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
@@ -52,7 +53,7 @@ export const Stake = () => {
     const { chainId, account, provider } = useAccount();
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')
-
+    const { addAction } = useAddAction('dapp');
     const [currentChain, setCurrentChain] = useState<any>(chains[0]);
     const [currentToken, setCurrentToken] = useState<any>(tokens[chains[0].chainId][0]);
     const [needChainSwitch, setNeedChainSwitch] = useState(false)
@@ -173,7 +174,20 @@ export const Stake = () => {
             }
 
             if (!isError && !isLoading) {
-                await deposit(inputValue, provider.getSigner())
+                const transactionHash = await deposit(inputValue, provider.getSigner())
+                addAction({
+                    type: "Staking",
+                    fromChainId: currentChain.chainId,
+                    toChainId: currentChain.chainId,
+                    token: currentToken,
+                    amount: amount,
+                    template: "Lido Stake",
+                    add: false,
+                    status: 1,
+                    action: 'Staking',
+                    transactionHash,
+                    action_network_id: currentChain.chainName,
+                });
                 setUpdater(updater + 1)
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>

@@ -132,7 +132,6 @@ export default function TokenAction({
                 
             }} />
             <div className={"token" + (tokenChange ? ' t-border' : '')} onClick={() => {
-                console.log(1111)
                 tokenChange && tokenChange()
             }}>
                 <div className="chian-token">
@@ -147,7 +146,9 @@ export default function TokenAction({
         </TokenActionWapper>
         <BalanceWapper>
             <div className="price-value">{outputMoney}</div>
-            <div className="balance-value">Balance:<span className={tokenAmountChange && "balance-text"}>
+            <div className="balance-value">Balance:<span onClick={() => {
+                (tokenAmountChange && !balanceLoading) && tokenAmountChange(balance)
+            }} className={tokenAmountChange && "balance-text"}>
                 {balanceLoading ? <Loading size={14} /> : balanceFormated(balance)} {symbol}
             </span></div>
         </BalanceWapper>

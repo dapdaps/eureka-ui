@@ -79,8 +79,8 @@ export const tokens: any =  {
             symbol: 'ETH',
             icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
             decimals: 18,
-            isNative: true,
-            address: 'native',
+            isNative: false,
+            address: '0x2170Ed0880ac9A755fd29B2688956BD959F933F8',
         },
     ],
     59144: [

@@ -5,14 +5,15 @@ interface Result {
 }
 
 async function getApr(chainId: string) {
-    const res = await fetch(`/renzo/api/stats?chainId=${chainId}`, {
-    }).then(res => res.json())
-    if (res?.status) {
+    const res = await fetch(`/renzo/api/stats?chainId=${chainId}`).then(res => res.json())
+    if (res?.success) {
         return res.data.apr.data
     }
+
+    return 0
 }
 
-export default function useLidoDetail(chain: any): Result{
+export default function useRenzoDetail(chain: any): Result{
     const [apr, setApr] = useState(0)
 
     useEffect(() => {

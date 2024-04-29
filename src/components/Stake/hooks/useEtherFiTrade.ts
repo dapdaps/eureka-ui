@@ -181,12 +181,13 @@ export default function useTrade({
         try {
             const _value = new Big(value).mul(10 ** 18).toString()
             setIsLoading(true)
-            await ethereumDeposit(_value, signer)
+            const tx = await ethereumDeposit(_value, signer)
             success({
                 title: 'Transaction successed',
             })
 
             setIsLoading(false)
+            return tx.transactionHash
         } catch (err: any) {
             console.log(err)
             fail({
@@ -205,7 +206,7 @@ export default function useTrade({
             ...transactionData,
             // gasLimit: 19200,
         })
-        await tx.wait()
+        return tx.wait()
     }
 
     useEffect(() => {

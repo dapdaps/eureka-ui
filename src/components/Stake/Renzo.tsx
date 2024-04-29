@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom'
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { useSetChain } from '@web3-onboard/react';
+import useAddAction from '@/hooks/useAddAction';
 
 import useAccount from '@/hooks/useAccount';
 import Loading from '@/components/Icons/Loading';
@@ -13,6 +14,7 @@ import useTrade from './hooks/useRenzoTrade'
 import useValue from './hooks/useValue';
 import { usePriceStore } from '@/stores/price';
 import { useChainsStore } from '@/stores/chains';
+
 
 import ChainTokens from './componments/ChainTokens';
 import Header from './componments/Header';
@@ -55,10 +57,12 @@ const ezToken = {
 export const Stake = () => {
     const { chainId, account, provider } = useAccount();
     const [{ settingChain }, setChain] = useSetChain();
-    const [amount, setAmount] = useState<string>('')
+    const { addAction } = useAddAction('dapp');
 
+    const [amount, setAmount] = useState<string>('')
     const [currentChain, setCurrentChain] = useState<any>(chains[0]);
     const [currentToken, setCurrentToken] = useState<any>(tokens[chains[0].chainId][0]);
+    const [_ezToken, setEzToken] = useState<any>(ezToken);
     const [chainTokenShow, setChainTokenShow] = useState<boolean>(false);
     const [needChainSwitch, setNeedChainSwitch] = useState(false)
     const [isError, setIsError] = useState(false)
@@ -77,7 +81,7 @@ export const Stake = () => {
     })
 
     const { balance: ezETHbalance, loading: ezETHLoading } = useTokenBalance({
-        currency: ezToken,
+        currency: _ezToken,
         updater,
         isNative: false,
         isPure: false,
@@ -178,7 +182,20 @@ export const Stake = () => {
             }
 
             if (!isError && !isLoading) {
-                await deposit(inputValue, provider.getSigner())
+                const transactionHash = await deposit(inputValue, provider.getSigner())
+                addAction({
+                    type: "Staking",
+                    fromChainId: currentChain.chainId,
+                    toChainId: currentChain.chainId,
+                    token: currentToken,
+                    amount: amount,
+                    template: "Renzo Stake",
+                    add: false,
+                    status: 1,
+                    action: 'Staking',
+                    transactionHash,
+                    action_network_id: currentChain.chainName,
+                });
                 setUpdater(updater + 1)
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>
@@ -198,6 +215,13 @@ export const Stake = () => {
                 onChainTokenChange={(chain, token) => {
                     setCurrentChain(chain)
                     setCurrentToken(token)
+                    const newEzToken = {
+                        ..._ezToken,
+                        chainId: chain.chainId,
+                        address: chain.chainId === 1 ? '0xbf5495Efe5DB9ce00f80364C8B423567e58d2110' : '0x2416092f143378750bb29b79eD961ab195CcEea5'
+                    }
+
+                    setEzToken(newEzToken)
                 }} /> : null
         }
 

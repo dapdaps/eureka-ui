@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useSetChain } from '@web3-onboard/react';
 
 import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
 import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { balanceFormated, percentFormated } from '@/utils/balance';
@@ -29,7 +30,7 @@ const InputActionWapper = styled.div`
     padding: 10px 20px 20px;
 `
 const InputActionTitle = styled.div`
-    font-size: 18px;
+    
     font-weight: 400;
     line-height: 16.8px;
     margin-top: 20px;
@@ -38,9 +39,12 @@ const InputActionTitle = styled.div`
     align-items: center;
     .title {
         color: #fff;
+        font-weight: 700;
+        font-size: 18px;
     }
     .desc {
         color: rgba(151, 154, 190, 1);
+        font-size: 14px;
     }
 `
 
@@ -54,15 +58,13 @@ const SubmitBtn = styled.button`
     border-radius: 8px;
     color: #fff;
     background: linear-gradient(90deg, #3E9BF1 0%, #9C5DF3 100%);
-    
-;
 `
 
 const ezToken = {
     chainId: 81457,
     name: 'weETH',
     symbol: 'weETH',
-    icon: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAA6xJREFUeF7t3bFtHUcUheFlAQTcgDLmCpm7AueEGyCgagQ4VWA4c+BEDShTDwIcOHXGAmQ4c/z+BxwM/DG/O/POPfuf2eXO7sP7T5+/Xwf//fH4Mp39T2+/Tcevgz8wQJOQAZp+uRoBmoQI0PS7ECAKWMsRoCmIAE0/BIj65XIEaBIiQNMPAaJ+uRwBmoQI0PRDgKhfLkeAJiECNP0QIOqXyxGgSYgATT8EiPrlcgRoEiJA0+98Avz5+w/peYC/fvmWJPzw89dU//HX51Rfi9fzf/f6lH7CAwMk/S4GQIDkoEowBBAByYAiIMl3iQCLwO0iVgSIgMQwEZDkEwGXCBAB6RxaX0enyV8IgADjO5kWgRaBCWIWgUk+ESACRID/BhaI+F/A+Awqzfu3dn0VkxeB6+3h9QyoDVzXVwPV+c+fCGKAdiOJAaoC43oEGF/Hj/uf1xB1/iKgKhjrEQABooVaOQI0/XI1AiBANlE5AAIU9e5QiwAIcAcb3X4IBLhdu7tUIgAC3MVItx4EAW5V7k51CIAAd7LSbYdBgNt0u1sVAiDA3cx0y4HmBKhv+Kj7Em4R7b819YGM9cumGSA6gAGigAiw/eIIAkQDI0AUEAEQIFnIIjDJd4mApt8lAqKAIkAEJAuJgCSfCGjyXSKgCigCREDykAhI8omAJp8IqPpdIkAEJBOJgCSfCGjyiYBrvb17/UTN6b8/3wo+XYBKgNN/PwNEBzDA+Jk+EdDeMIIACPA5fTTqdATG/h+/CEaA6IDTTwAGYAARUDyAAK4Cin9ybb0KEgGxBQiAANFCrRwB4summ/yXy8DTEcgAn1wFFBOcfgJYBJbuXyIgZ+DpO2vWj7QdvwhkgO0nd+YRwAAMkFJ4/YoVERBvBCEAAiBAUMAi8G27sUIEiIBw/l7zL6+6Ckjtu+Zb20SACEgWRoAkHwK4Ffz4kixUN7eKABGQDCgCknwiQASIgOd0DrkVPL4V/OXHv9PWsNR9xXMFHhhg3oPpBBhgKv9+cAbY92A6AwaYyr8fnAH2PZjOgAGm8u8HZ4B9D6YzYICp/PvBGWDfg+kMGGAq/35wBtj3YDoDBpjKvx+cAfY9mM6AAaby7wdngH0PpjOYG6A+EFIfqqzqnz5/BogOYID/uYAMwABJgXWEiYDUvv7RKAZ4fUotWAsoAlL7zj+DGIABkgJrglkDpPadTzAGYIDtzqDTM/T0+SMAAiBA8QACFPWu8xdRDMAASQGXge4EJgPV4n8AyiPwzlyf1WoAAAAASUVORK5CYII=',
+    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
     decimals: 18,
     isNative: false,
     address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
@@ -73,6 +75,7 @@ export const Stake = () => {
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')
 
+    const { addAction } = useAddAction('dapp');
     const [currentChain, setCurrentChain] = useState<any>(chains[5]);
     const [currentToken, setCurrentToken] = useState<any>(tokens[chains[5].chainId][0]);
     const [needChainSwitch, setNeedChainSwitch] = useState(false)
@@ -116,7 +119,7 @@ export const Stake = () => {
     const { value: outputMoney } = useValue({
         prices,
         amount: recived,
-        symbol: 'stETH'
+        symbol: 'weETH'
     })
 
     const { value: transactionCostMoney } = useValue({
@@ -200,7 +203,20 @@ export const Stake = () => {
             }
 
             if (!isError && !isLoading) {
-                await deposit(inputValue, provider.getSigner())
+                const transactionHash = await deposit(inputValue, provider.getSigner())
+                addAction({
+                    type: "Staking",
+                    fromChainId: currentChain.chainId,
+                    toChainId: currentChain.chainId,
+                    token: currentToken,
+                    amount: amount,
+                    template: "Lido Stake",
+                    add: false,
+                    status: 1,
+                    action: 'Staking',
+                    transactionHash,
+                    action_network_id: currentChain.chainName,
+                });
                 setUpdater(updater + 1)
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>
