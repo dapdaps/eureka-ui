@@ -1,14 +1,16 @@
-import { useState } from 'react'
+import { useState } from 'react';
 
 import Image from 'next/image';
 
 import Trapeziform from '../Trapeziform';
-import SkakeModel from '@/views/StakeModal/index'
+import SkakeModel from '@/views/StakeModal/index';
+import WrapAndUnwrap from '../WrapAndUnwrap';
 import { Btns, Desc, StyledContainer, Title } from './styles';
 
 export default function Pilcrow({}: any) {
-  const [stakeShow, setStakeShow] = useState<boolean>(false)
-  const [stakeType, setStakeType] = useState<string>('renzo')
+  const [stakeShow, setStakeShow] = useState<boolean>(false);
+  const [showWrapAndUnwrap, setShowWrapAndUnwrap] = useState(false);
+  const [stakeType, setStakeType] = useState<string>('renzo');
 
   const TrapLayout = {
     borderColor: '#1C1E2D',
@@ -23,7 +25,13 @@ export default function Pilcrow({}: any) {
       <Title>Explore more dApps on Blast</Title>
       <Desc>Interact with popular dApps in Blast on DapDap, win 200 DapDap PTS for each.</Desc>
       <Btns>
-        <Trapeziform {...TrapLayout} className="poly-btn" handleClick={click}>
+        <Trapeziform
+          {...TrapLayout}
+          className="poly-btn"
+          handleClick={() => {
+            setShowWrapAndUnwrap(true);
+          }}
+        >
           <Image src="/images/odyssey/v4/btn-mask.png" alt="" width={268} height={62} className="poly-mask" />
           <span className="poly-lp">
             <Image src="/images/odyssey/v4/coin-eth.svg" alt="" width={26} height={26} />
@@ -32,19 +40,27 @@ export default function Pilcrow({}: any) {
           Wrap ETH to WETH
           <Image src="/images/odyssey/v4/white-arrow.svg" alt="" width={28} height={16} />
         </Trapeziform>
-        <Trapeziform {...TrapLayout} className="poly-btn large renzo" handleClick={() => {
-          setStakeShow(true)
-          setStakeType('renzo')
-        }}>
+        <Trapeziform
+          {...TrapLayout}
+          className="poly-btn large renzo"
+          handleClick={() => {
+            setStakeShow(true);
+            setStakeType('renzo');
+          }}
+        >
           <Image src="/images/odyssey/v4/btn-mask.png" alt="" width={268} height={62} className="poly-mask" />
           <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
           Get ezETH by RENZO
           <Image src="/images/odyssey/v4/white-arrow.svg" alt="" width={28} height={16} />
         </Trapeziform>
-        <Trapeziform {...TrapLayout} className="poly-btn lido" handleClick={() => {
-          setStakeShow(true)
-          setStakeType('lido')
-        }}>
+        <Trapeziform
+          {...TrapLayout}
+          className="poly-btn lido"
+          handleClick={() => {
+            setStakeShow(true);
+            setStakeType('lido');
+          }}
+        >
           <Image src="/images/odyssey/v4/btn-mask.png" alt="" width={268} height={62} className="poly-mask" />
           <Image src="/images/odyssey/v4/coin-eth.svg" alt="" width={26} height={26} />
           Get stETH by LIDO
@@ -57,12 +73,20 @@ export default function Pilcrow({}: any) {
           fill="#EBF479"
         />
       </svg>
-      {
-        stakeShow && <SkakeModel stakeType={stakeType} onClose={() => {
-          setStakeShow(false)
-        }}/>
-      }
-      
+      {stakeShow && (
+        <SkakeModel
+          stakeType={stakeType}
+          onClose={() => {
+            setStakeShow(false);
+          }}
+        />
+      )}
+      <WrapAndUnwrap
+        open={showWrapAndUnwrap}
+        onClose={() => {
+          setShowWrapAndUnwrap(false);
+        }}
+      />
     </StyledContainer>
   );
 }

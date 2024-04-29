@@ -5,11 +5,9 @@ import { StyledLoadingWrapper } from '@/styled/styles';
 
 import DappCard from '../DappCard';
 import Title from '../Title';
-import WrapAndUnwrap from '../WrapAndUnwrap';
-import { StyledContainer, StyledContent, StyledWrapButton } from './styles';
+import { StyledContainer, StyledContent } from './styles';
 
 export default function Trade({ list, onRefreshDetail }: any) {
-  const [showWrapModal, setShowWrapModal] = useState(false);
   return (
     <StyledContainer>
       <Title title="Trade" subtitle="Execute a flawless trade in Blast" />
@@ -22,12 +20,6 @@ export default function Trade({ list, onRefreshDetail }: any) {
           </StyledLoadingWrapper>
         )}
       </StyledContent>
-      <WrapAndUnwrap
-        open={showWrapModal}
-        onClose={() => {
-          setShowWrapModal(false);
-        }}
-      />
     </StyledContainer>
   );
 }
