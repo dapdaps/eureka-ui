@@ -74,6 +74,9 @@ export default function BosDapp({
         isChainSupported,
         GAS_LIMIT_RECOMMENDATIONS,
         refresh,
+        windowOpen: (url: any, target: any) => {
+          window.open(url, target)
+        }
       }}
       src={network.dapp_src}
     />
