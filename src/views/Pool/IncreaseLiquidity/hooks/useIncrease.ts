@@ -31,6 +31,7 @@ export default function useIncrease({
   const toast = useToast();
   const slippage = useSettingsStore((store: any) => store.slippage);
   const { addAction } = useAddAction('dapp');
+
   const onIncrease = async () => {
     setLoading(true);
     const { PositionManager } = contracts[token0.chainId];
@@ -137,7 +138,7 @@ export default function useIncrease({
           estimateGas = new Big(3000000);
         }
       }
-      console.log(estimateGas.toString());
+
       const gasPrice = await provider.getGasPrice();
       const newTxn = {
         ...txn,
@@ -162,11 +163,12 @@ export default function useIncrease({
       addAction({
         type: 'Liquidity',
         action: 'Add Liquidity',
-        tokens: [token0.symbol, token1.symbol],
+        token0: token0.symbol,
+        token1: token1.symbol,
         template: dapp.name,
         status,
         transactionHash,
-        extra_data: { amount0: value0, amount1: value1, action: 'Remove Liquidity', type: 'univ3' },
+        extra_data: JSON.stringify({ amount0: value0, amount1: value1, action: 'Add Liquidity', type: 'univ3' }),
       });
       setLoading(false);
     } catch (err: any) {

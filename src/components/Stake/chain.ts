@@ -23,14 +23,14 @@ export const chains = [
         rpcUrls: ['https://binance.llamarpc.com'],
         blockExplorers: 'https://bscscan.com',
     },
-    {
-        chainId: 59144,
-        chainName: 'Linea',
-        icon: 'https://assets.dapdap.net/images/bafkreib5v3jonanuknj5db5ysuhb6ubowv2pqnopyg3yraknfr3jn7el4u.svg',
-        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-        rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
-        blockExplorers: 'https://lineascan.build',
-    },
+    // {
+    //     chainId: 59144,
+    //     chainName: 'Linea',
+    //     icon: 'https://assets.dapdap.net/images/bafkreib5v3jonanuknj5db5ysuhb6ubowv2pqnopyg3yraknfr3jn7el4u.svg',
+    //     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    //     rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
+    //     blockExplorers: 'https://lineascan.build',
+    // },
     {
         chainId: 8453,
         chainName: 'Base',
