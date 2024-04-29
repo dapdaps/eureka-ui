@@ -121,7 +121,7 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
-          action_network_id: currentChain.name,
+          action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
         };
       }

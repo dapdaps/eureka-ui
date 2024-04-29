@@ -77,6 +77,18 @@ const nextConfig = {
       source: '/blast/bridge/:path*',
       destination: 'https://waitlist-api.prod.blast.io/:path*',
     },
+    {
+      source: '/renzo/:path*',
+      destination: 'https://app.renzoprotocol.com/:path*',
+    },
+    {
+      source: '/lido/:path*',
+      destination: 'https://stake.lido.fi/:path*',
+    },
+    {
+      source: '/pac/:path*',
+      destination: api_url + '/pac/:path*',
+    },
   ],
   images: {
     remotePatterns: [
