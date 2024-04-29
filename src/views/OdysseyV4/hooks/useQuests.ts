@@ -63,7 +63,9 @@ export default function useQuests(id: any) {
           _result.staking.push(item);
         }
         if (item.category_id === 6) {
-          _result.yield.push(item);
+          if (item.name !== 'Particle') {
+            _result.yield.push(item);
+          }
         }
       });
       setQuests(_result);
