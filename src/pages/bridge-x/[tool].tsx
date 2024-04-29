@@ -88,7 +88,6 @@ const Bridge: NextPageWithLayout = () => {
             document.removeEventListener('click', handleDocClick)
         }
     }, [])
-
     return (
         <Container>
             <BreadCrumbs>
