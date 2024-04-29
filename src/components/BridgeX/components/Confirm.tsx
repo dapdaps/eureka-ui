@@ -100,7 +100,7 @@ const SubmitBtn = styled.button`
     line-height: 48px;
     text-align: center;
     border-radius: 8px;
-    color: #000;
+    color: #fff;
     background: linear-gradient(180deg, #EEF3BF 0%, #E9F456 100%);
 `
 
@@ -184,7 +184,7 @@ export default function Comfirm({
                 }}
             /> */}
 
-                <SubmitBtn onClick={async () => {
+                <SubmitBtn style={{ background: color }} onClick={async () => {
                     !disabled && onSend()
                 }}>{loading ? <Loading size={18} /> : null} Confirm and Send</SubmitBtn>
             </ButtonWapper>

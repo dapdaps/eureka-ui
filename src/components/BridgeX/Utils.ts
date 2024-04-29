@@ -63,30 +63,26 @@ export function addressFormated(address: string) {
 }
 
 export function saveTransaction(transaction_key: any, config: any) {
-    // const transactionObj = getTransaction(transaction_key)
-    // transactionObj.transactionList.push(config)
-    // Storage.privateSet(transaction_key, transactionObj)
+    const transactionObj = getTransaction(transaction_key)
+    transactionObj[config.hash] = config
+    saveAllTransaction(transaction_key, transactionObj)
 }
 
-export function saveAllTransaction(transaction_key: any, transactionList: any) {
-    // Storage.privateSet(transaction_key, {
-    //     transactionList
-    // })
+export function saveAllTransaction(transaction_key: any, transactionObj: any) {
+    localStorage.setItem(transaction_key, JSON.stringify(transactionObj))
 }
 
 export function getTransaction(transaction_key: any): any {
-    // let transactionObj = Storage.privateGet(transaction_key)
+    console.log('transaction_key: ', transaction_key)
+    let transactionObj: any = localStorage.getItem(transaction_key)
 
-    // if (!transactionObj) {
-    //     transactionObj = {}
-    // }
+    if (!transactionObj) {
+        transactionObj = {}
+    } else {
+        transactionObj = JSON.parse(transactionObj)
+    }
 
-    // if (!transactionObj.transactionList) {
-    //     transactionObj.transactionList = []
-    // }
-
-
-    // return transactionObj
+    return transactionObj
 }
 
 export default {

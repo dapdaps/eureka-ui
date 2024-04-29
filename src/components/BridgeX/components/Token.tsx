@@ -151,6 +151,7 @@ const CurrencySymbol = styled.div`
 
 
 export default function Token({
+    currentChain,
     title,
     tokens,
     selectToken,
@@ -198,9 +199,9 @@ export default function Token({
                         setTokensDisplay(true)
                     }}>
                         <CurrencyWrapper>
-                            {selectToken.logoURI && <CurrencyIcon src={selectToken.logoURI} />}
+                            {selectToken?.logoURI && <CurrencyIcon src={selectToken.logoURI} />}
                             <CurrencySymbol>
-                                {selectToken.symbol || (
+                                {selectToken?.symbol || (
                                     <span className="fz-14">Select a token</span>
                                 )}
                             </CurrencySymbol>
@@ -212,8 +213,9 @@ export default function Token({
                 {
                     tokensDisplay && <CurrencySelectCom
                         display={tokensDisplay}
-                        selectedTokenAddress={selectToken.address}
+                        selectedTokenAddress={selectToken?.address}
                         tokens={tokens}
+                        currentChain={currentChain}
                         onClose={() => {
                             setTokensDisplay(false)
                         }}
@@ -229,8 +231,8 @@ export default function Token({
 
         <BalanceWapper>
             <BalanceText>${
-                selectToken && prices[selectToken.symbol] && amount
-                    ? balanceFormated(new Big(amount).times(prices[selectToken.symbol]).toString())
+                selectToken && prices[selectToken?.symbol] && amount
+                    ? balanceFormated(new Big(amount).times(prices[selectToken?.symbol]).toString())
                     : 0}</BalanceText>
             <BalanceText
                 onClick={() => {

@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Big from 'big.js'
+import { useDebounce } from 'ahooks';
 
+import useToast from '@/hooks/useToast';
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
+import { useSetChain } from '@web3-onboard/react';
+import useConnectWallet from '@/hooks/useConnectWallet';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import ChainSelector from './components/ChainSelector'
 import FeeMsg from './components/FeeMsg';
@@ -13,9 +19,7 @@ import Confirm from './components/Confirm'
 import Token from './components/Token'
 
 import {
-    getBalance,
     addressFormated,
-    balanceFormated,
     getTransaction,
     saveTransaction,
 } from './Utils'
@@ -71,7 +75,6 @@ const ChainPairs = styled.div`
     gap: 10px;
 `
 
-
 const ChainArrow = styled.div`
     cursor: pointer;
 `
@@ -102,11 +105,11 @@ const SubmitBtn = styled.button`
     margin: 0 auto;
     display: block;
     height: 48px;
-    width: calc(100% - 40px);
+    width: 100%;
     line-height: 48px;
     text-align: center;
     border-radius: 8px;
-    color: #000;
+    color: #fff;
     background: linear-gradient(180deg, #EEF3BF 0%, #E9F456 100%);
 `
 
@@ -122,17 +125,18 @@ export default function BridgeX({
     toggleDocClickHandler,
     getQuote,
     getAllToken,
-    getChainScan,
     getStatus,
     prices,
     currentChainId,
     setChain,
-    setToChain,
     fromChainId,
     toChainId,
     execute,
-    toast,
+    getChainScan,
+    addAction
 }: any) {
+    const { fail, success } = useToast()
+    const [updater, setUpdate] = useState(1)
     const [chainFrom, setChainFrom] = useState<any>(null)
     const [chainTo, setChainTo] = useState<any>(null)
     const [allTokens, setAllTokens] = useState<any>({})
@@ -144,10 +148,6 @@ export default function BridgeX({
     const [selectOutputToken, setSelectOutputToken] = useState<any>(null)
     const [sendAmount, setSendAmount] = useState('')
     const [receiveAmount, setReceiveAmount] = useState('')
-    const [inputBalance, setInputBalance] = useState('')
-    const [inputBalanceLoading, setInputBalanceLoading] = useState(false)
-    const [outputBalance, setOutputBalance] = useState('')
-    const [outputBalanceLoading, setOutputBalanceLoading] = useState(false)
     const [duration, setDuration] = useState('')
     const [gasCostUSD, setGasCostUSD] = useState('')
     const [fromUSD, setFromUSD] = useState('')
@@ -169,15 +169,38 @@ export default function BridgeX({
 
     const { chainId, provider } = useAccount();
 
+    const { balance: inputBalance, loading: inputBalanceLoading } = useTokenBalance({
+        currency: selectInputToken,
+        updater,
+        isNative: chainFrom?.nativeCurrency.symbol === selectInputToken?.symbol,
+        isPure: false,
+    })
+
+    const { balance: outputBalance, loading: outputBalanceLoading } = useTokenBalance({
+        currency: selectOutputToken,
+        updater,
+        isNative: chainTo?.nativeCurrency.symbol === selectOutputToken?.symbol,
+        isPure: false,
+    })
+
+    const inputValue = useDebounce(sendAmount, { wait: 500 });
+
+
     useEffect(() => {
-        console.log('fromChainId:', fromChainId, toChainId)
-        if (fromChainId && toChainId) {
-            const _chainFrom = chainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0]
-            const _chainTo = chainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0]
-            setChainFrom(_chainFrom)
-            setChainTo(_chainTo)
+        let _chainFrom, _chainTo
+        if (fromChainId) {
+            _chainFrom = chainList.filter((chain: any) => chain.chainId === parseInt(fromChainId))[0]
+        } else {
+            _chainFrom = chainList[0]
         }
 
+        if (toChainId) {
+            _chainTo = chainList.filter((chain: any) => chain.chainId === parseInt(toChainId))[0]
+        } else {
+            _chainTo = chainList[1]
+        }
+        setChainFrom(_chainFrom)
+        setChainTo(_chainTo)
     }, [])
 
     useEffect(() => {
@@ -188,69 +211,47 @@ export default function BridgeX({
     }, [])
 
     useEffect(() => {
-        if (loadedAllTokens && account) {
-            setInputTokens(allTokens[chainFrom.chainId])
+        if (loadedAllTokens && chainFrom) {
+            setInputTokens(allTokens[chainFrom?.chainId])
             setSelectInputToken(null)
-            setInputBalance('0.0')
         }
     }, [chainFrom, loadedAllTokens, allTokens])
 
-
-
     useEffect(() => {
-        if (loadedAllTokens && account) {
+        if (loadedAllTokens && chainTo) {
             setOutputTokens(allTokens[chainTo.chainId])
             setSelectOutputToken(null)
-            setOutputBalance('0.0')
         }
     }, [chainTo, loadedAllTokens, allTokens])
 
 
+    // useEffect(() => {
+    //     const inter = setInterval(() => {
+    //         if (!account) {
+    //             return
+    //         }
+    //         setTransitionUpdate(Date.now())
+    //     }, 10000)
+
+    //     return () => {
+    //         clearInterval(inter)
+    //     }
+    // }, [])
+
+
     useEffect(() => {
-        const inter = setInterval(() => {
-            if (!account) {
-                return
-            }
-            setTransitionUpdate(Date.now())
-        }, 10000)
-
-        return () => {
-            clearInterval(inter)
-        }
-    }, [])
-
-
-    useEffect(() => {
-        // if (state.timeOut) {
-        //     clearTimeout(state.timeOut)
-        // }
-        // const timeOut = setTimeout(() => {
-        //     if (!account) {
-        //         return 
-        //     }
-        //     getTrade(sendAmount, selectInputToken, selectOutputToken, toAddress, otherAddressChecked)
-        // }, 500)
-
         getTrade()
-
-
-        // State.update({
-        //     timeOut
-        // })
-        // return () => {
-        //     clearTimeout(timeOut)
-        // }
-    }, [sendAmount, selectInputToken, selectOutputToken, toAddress])
+    }, [inputValue, selectInputToken, selectOutputToken, toAddress])
 
     useEffect(() => {
-        if (sendAmount && inputBalance) {
+        if (inputValue && inputBalance) {
             const canRoute = validateInput()
             if (!canRoute) {
                 setBtnText('Send')
                 return
             }
 
-            if (Number(sendAmount) > Number(inputBalance)) {
+            if (Number(inputValue) > Number(inputBalance)) {
                 setBtnText('Insufficient balance')
                 setCanRoute(false)
                 return
@@ -271,9 +272,9 @@ export default function BridgeX({
             setBtnText('Send')
             setCanRoute(true)
         }
-    }, [sendAmount, inputBalance, route, loading, chainFrom])
+    }, [inputValue, inputBalance, route, loading, chainFrom])
 
-    const signer = provider.getSigner()
+    
 
     function refreshTransactionList() {
         const transactionObj = getTransaction(`bridge-${account}-${tool}`)
@@ -282,23 +283,15 @@ export default function BridgeX({
     }
 
     function validateInput() {
-        // const { sendAmount, selectInputToken, selectOutputToken, toAddress, otherAddressChecked, isValidAddress } = state
-        const canRoute = sendAmount && Number(sendAmount) > 0 && selectInputToken && selectOutputToken
+        const canRoute = inputValue && Number(inputValue) > 0 && selectInputToken && selectOutputToken
             && ((otherAddressChecked && toAddress && isValidAddress) || !otherAddressChecked)
 
         return canRoute
     }
 
-    function getTokenBalance(chain: any, token: any) {
-        const address = chain.nativeCurrency.symbol === token.symbol ? 'native' : token.address
-        return getBalance(address, account, chain.rpcUrls[0], token.decimals)
-    }
-
-
     function getTrade() {
-        // const { sendAmount, selectInputToken, selectOutputToken, toAddress, otherAddressChecked, isValidAddress } = state
-
         const canRoute = validateInput()
+        setRoute(null)
 
         if (canRoute) {
             setLoading(true)
@@ -323,9 +316,9 @@ export default function BridgeX({
                 },
                 fromAddress: account,
                 destAddress: otherAddressChecked ? toAddress : account,
-                amount: new Big(sendAmount).times(Math.pow(10, selectInputToken.decimals)),
+                amount: new Big(inputValue).times(Math.pow(10, selectInputToken.decimals)),
                 engine: [tool]
-            }, signer).then((res: any) => {
+            }, provider.getSigner()).then((res: any) => {
                 console.log('route: ', res)
                 if (res && res.length) {
                     let maxReceiveAmount = 0
@@ -354,18 +347,6 @@ export default function BridgeX({
         }
     }
 
-
-    // if (!account) {
-    //     return (
-    //         // <Widget
-    //         //     src="dapdapbos.near/widget/Bridge.ConnectButton"
-    //         //     props={{
-    //         //     }}
-    //         // />
-    //     );
-    // }
-
-
     return <BridgePanel>
         <Header>
             <BridgeIcon>
@@ -382,18 +363,14 @@ export default function BridgeX({
                     toggleDocClickHandler={toggleDocClickHandler}
                     onChainChange={(chain: any) => {
                         setChainFrom(chain)
-                        setChain({ chainId: `0x${chain.chainId?.toString(16)}` }, chain.chainId, chainTo.chainId, true)
-
                     }}
                 />
 
                 <ChainArrow onClick={() => {
-                    const _chainTo = chainFrom
-                    const _chainFrom = chainTo
+                    const [_chainFrom, _chainTo] = [chainTo, chainFrom]
 
-                    setChainFrom(_chainTo)
-                    setChainTo(_chainFrom)
-                    setChain({ chainId: `0x${chainFrom.chainId?.toString(16)}` }, chainFrom.chainId, chainTo.chainId, true)
+                    setChainFrom(_chainFrom)
+                    setChainTo(_chainTo)
 
                 }}>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -408,7 +385,6 @@ export default function BridgeX({
                     toggleDocClickHandler={toggleDocClickHandler}
                     onChainChange={(chain: any) => {
                         setChainTo(chain)
-                        // setChain({ chainId: `0x${chain.chainId?.toString(16)}` }, chain.chainId, chainTo.chainId, true)
 
                     }}
                 />
@@ -418,6 +394,7 @@ export default function BridgeX({
             <Token
                 title="Send"
                 selectToken={selectInputToken}
+                currentChain={chainFrom}
                 tokens={inputTokens}
                 amount={sendAmount}
                 balance={inputBalance}
@@ -429,9 +406,6 @@ export default function BridgeX({
                     setSelectInputToken(token)
                     setSendAmount('')
                     setReceiveAmount('')
-                    setInputBalance('0')
-                    setOutputBalance('0')
-                    setInputBalanceLoading(false)
                 }}
                 onInputChange={(val: any) => {
                     setSendAmount(val)
@@ -446,10 +420,9 @@ export default function BridgeX({
                 </TransformArrow>
             </TokenSpace>
 
-
-
             <Token
                 title="Receive"
+                currentChain={chainTo}
                 selectToken={selectOutputToken}
                 tokens={outputTokens}
                 amount={receiveAmount}
@@ -459,13 +432,10 @@ export default function BridgeX({
                 prices={prices}
                 amountUSD={toUSD}
                 onTokenChange={(token: any) => {
+                    setSelectOutputToken(token)
                     setReceiveAmount('')
-                    setOutputBalance('0')
-                    setOutputBalanceLoading(false)
                 }}
-
             />
-
 
             {/* <Widget
                 src="dapdapbos.near/widget/Bridge.AddressInput"
@@ -493,22 +463,15 @@ export default function BridgeX({
                 }}
             /> */}
 
-
             <FeeMsg
                 duration={duration}
                 gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : ''}
             />
-
             {
                 showWarning ? <Alert /> : null
             }
-
             <TokenSpace height={'12px'} />
-
-
-
-
-            <SubmitBtn style={{ opacity: canRoute ? 0.2 : 1 }} onClick={async () => {
+            <SubmitBtn style={{ opacity: !route ? 0.2 : 1, background: color }} onClick={async () => {
                 if (btnText === 'Switch Chain') {
                     setChain({ chainId: `0x${chainFrom.chainId?.toString(16)}` })
                     return
@@ -519,8 +482,6 @@ export default function BridgeX({
         </Content>
 
         <TokenSpace height={'16px'} />
-
-
 
         {
             showConfirm && <Confirm
@@ -539,74 +500,68 @@ export default function BridgeX({
                         setShowConfirm(false)
                     }
                 }}
-                onSend={() => {
-
+                onSend={async () => {
                     setIsSending(true)
                     setIsSendingDisabled(true)
 
-
-                    execute(route, signer).then((txHash: any) => {
+                    try {
+                        const txHash: any = await execute(route, provider.getSigner())
                         console.log('txHash: ', txHash)
                         if (!txHash) {
                             return
                         }
 
-                        // getTokenBalance(chainFrom, selectInputToken)
-                        //     .then(balance => {
-                        //         State.update({
-                        //             inputBalance: balance,
-                        //         })
-
-                        //     })
-
-                        // getTokenBalance(state.chainTo, state.selectOutputToken)
-                        //     .then(balance => {
-                        //         State.update({
-                        //             outputBalance: balance,
-                        //         })
-                        //     })
-
                         setShowConfirm(false)
                         setIsSending(false)
                         setIsSendingDisabled(false)
 
+                        saveTransaction(`bridge-${account}-${tool}`, {
+                            hash: txHash,
+                            link: getChainScan(chainFrom.chainId),
+                            duration: duration,
+                            fromChainId: chainFrom.chainId,
+                            fromChainLogo: chainFrom.icon,
+                            fromTokenLogo: selectInputToken.logoURI,
+                            fromAmount: sendAmount,
+                            fromTokenSymbol: selectInputToken.symbol,
+                            toChainId: chainTo.chainId,
+                            toChainLogo: chainTo.icon,
+                            toTokenLogo: selectOutputToken.logoURI,
+                            toAmout: receiveAmount,
+                            toToenSymbol: selectOutputToken.symbol,
+                            time: Date.now(),
+                        })
 
-                        // saveTransaction(`bridge-${account}-${tool}`, {
-                        //     hash: txHash,
-                        //     link: getChainScan(state.chainFrom.chainId),
-                        //     duration: route.duration,
-                        //     fromChainId: state.chainFrom.chainId,
-                        //     fromChainLogo: state.chainFrom.icon,
-                        //     fromTokenLogo: state.selectInputToken.logoURI,
-                        //     fromAmount: state.sendAmount,
-                        //     fromTokenSymbol: state.selectInputToken.symbol,
-                        //     toChainId: state.chainTo.chainId,
-                        //     toChainLogo: state.chainTo.icon,
-                        //     toTokenLogo: state.selectOutputToken.logoURI,
-                        //     toAmout: state.receiveAmount,
-                        //     toToenSymbol: state.selectOutputToken.symbol,
-                        //     time: Date.now(),
-                        // })
+                        addAction({
+                            type: "Bridge",
+                            fromChainId: chainFrom.chainId,
+                            toChainId: chainTo.chainId,
+                            token: selectInputToken,
+                            amount: inputValue,
+                            template: `${tool} Bridge`,
+                            add: false,
+                            status: 1,
+                            transactionHash: txHash,
+                        })
 
-                        toast.success({
+                        success({
                             title: 'Transaction success',
                             text: '',
                         })
 
                         refreshTransactionList()
 
-                    }).catch((err: any) => {
+                    } catch(err: any) {
 
-                        toast.fail({
+                        fail({
                             title: 'Transaction failed',
                             text: err.toString(),
                         })
 
                         setIsSending(false)
                         setIsSendingDisabled(false)
-                    })
+                    }
                 }}
-
             />
         }
 

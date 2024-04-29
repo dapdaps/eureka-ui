@@ -112,13 +112,12 @@ const Empty = styled.div`
 `;
 
 
-export default function CurrencySelect({ title, tokens, display, chainIdNotSupport, onClose, selectedTokenAddress, onSelect }: any) {
+export default function CurrencySelect({ title, currentChain, tokens, display, onClose, selectedTokenAddress, onSelect }: any) {
   const [_tokens, setTokens] = useState(tokens)
 
   const handleSearch = (e: any) => {
     setTokens(e.target.value
       ? tokens.filter((token: any) => {
-        console.log(token);
         return (
           token.address === e.target.value ||
           token.name.toLowerCase().includes(e.target.value?.toLowerCase())
@@ -142,11 +141,12 @@ export default function CurrencySelect({ title, tokens, display, chainIdNotSuppo
             />
           </InputWarpper>
           <CurrencyList>
-            {tokens.map((currency: any) => (
+            {_tokens.map((currency: any) => (
               <CurrencyRow
                 selectedTokenAddress={selectedTokenAddress}
                 currency={currency}
                 display={display}
+                currentChain={currentChain}
                 onClick={() => {
                   onSelect?.(currency)
                   onClose()

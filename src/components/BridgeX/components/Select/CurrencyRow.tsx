@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Big from 'big.js'
 
+import useTokenBalance from '@/hooks/useCurrencyBalance';
 import Loading from '@/components/Icons/Loading';
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
 
 const CurrencyRowWapper = styled.div`
@@ -67,35 +69,22 @@ const CurrencyAmount = styled.div`
 `;
 
 
-
-
-export default function CurrencyRow({currency, selectedTokenAddress, display, onClick, chainIdNotSuppor}: any) {
-  const [balanceLoaded, setBalanceLoaded] = useState(false)
-  const [balance, setBalance] = useState('0')
-
+export default function CurrencyRow({ currency, selectedTokenAddress, onClick, currentChain }: any) {
   const isActive = currency.address === selectedTokenAddress;
 
-
+  // const { balance, loading } = useTokenBalance({
+  //   currency,
+  //   updater: 1,
+  //   isNative: currentChain?.nativeCurrency.symbol === currency?.symbol,
+  //   isPure: false,
+  // })
+  
   return (
     <CurrencyRowWapper
       className={currency.address === selectedTokenAddress ? "active" : ""}
       onClick={onClick}
     >
-      {/* {display && !state.balanceLoaded && (
-        <Widget
-          src="dapdapbos.near/widget/Bridge.Select.CurrencyBalance"
-          props={{
-            address: currency.address,
-            chainIdNotSupport,
-            onLoad: (balance) => {
-              State.update({
-                balance: ethers.utils.formatUnits(balance, currency.decimals),
-                balanceLoaded: true,
-              });
-            },
-          }}
-        />
-      )} */}
+    
       <CurrencyLabel>
         <CurrencyIcon src={currency.logoURI} />
         <div>
@@ -103,13 +92,11 @@ export default function CurrencyRow({currency, selectedTokenAddress, display, on
           <CurrencyName>{currency.name}</CurrencyName>
         </div>
       </CurrencyLabel>
-      {/* <CurrencyAmount>
-        {!chainIdNotSupport ? utils.balanceFormated() : "-"}
-  
-        {isActive ? checkIcon : ""}
-      </CurrencyAmount> */}
+      <CurrencyAmount>
+        {/* {loading ? <Loading size={16}/> : balanceFormated(balance) } */}
+      </CurrencyAmount>
     </CurrencyRowWapper>
   );
-  
+
 }
 

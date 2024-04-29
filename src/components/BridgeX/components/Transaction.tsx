@@ -3,15 +3,13 @@ import styled from 'styled-components';
 import Big from 'big.js'
 
 import Loading from '@/components/Icons/Loading';
+import { balanceFormated, percentFormated } from '@/utils/balance';
+import { formateTxDate } from '@/utils/date';
 
 import { ArrowDown, ArrowUp } from './Arrows'
 
 import { 
-    getBalance,
-    addressFormated,
-    balanceFormated,
     getTransaction,
-    saveTransaction,
     saveAllTransaction
  } from '../Utils'
 
@@ -117,13 +115,11 @@ const ArrowIcon = styled.div`
   cursor: pointer;
 `;
 
-
-// const {
-//     getTransaction,
-//     saveTransaction,
-//     saveAllTransaction,
-//     balanceFormated,
-// } = VM.require('dapdapbos.near/widget/Bridge.Utils');
+const Arrow = () => <div>
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 6L13.7273 6M13.7273 6L8.87869 11.0002M13.7273 6L8.87869 1" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+    </svg>
+</div>
 
 export default function Transaction(
     { updater, storageKey, getStatus, tool, account }: any
@@ -136,18 +132,17 @@ export default function Transaction(
 
 
     function refreshTransactionList() {
-        
         setIsLoading(true)
-
         const transactionObj = getTransaction(storageKey)
+
+        console.log('transactionObj: ', transactionObj)
 
         const transactionList: any = []
         let proccessSum = 0
 
-        // console.log('transactionObj: ', transactionObj)
-
-        const pList = transactionObj.transactionList.map((item: any) => {
+        const pList = Object.values(transactionObj).map((item: any) => {
             if (item.status === 2) {
+                
                 transactionList.push(item)
                 return
             }
@@ -165,6 +160,7 @@ export default function Transaction(
                     item.status = 3
                 }
 
+                transactionObj[item.hash] = item
                 transactionList.push(item)
             }).catch((err: any) => {
                 transactionList.push(item)
@@ -172,22 +168,20 @@ export default function Transaction(
         })
 
         Promise.all(pList).then(() => {
-            // console.log('transactionObj.transactionList: ', transactionList.length, transactionList)
             if (transactionList.length > 0) {
-                saveAllTransaction(storageKey, transactionList)
+                saveAllTransaction(storageKey, transactionObj)
             }
-            // saveAllTransaction(storageKey, transactionList)
+
             const isFold = proccessSum > 0
             setTransactionList(transactionList)
             setIsLoading(false)
             setProccessSum(proccessSum)
             setIsFold(isFold)
-
             
         }).catch(err => {
-            if (transactionList.length > 0) {
-                saveAllTransaction(storageKey, transactionList)
-            }
+            // if (transactionList.length > 0) {
+            //     saveAllTransaction(storageKey, transactionList)
+            // }
             // saveAllTransaction(storageKey, transactionList)
             const isFold = proccessSum > 0
 
@@ -232,29 +226,15 @@ export default function Transaction(
                             <div className="chain-token-status">
                                 <div className="chain-token">
                                     <img src={tx.fromChainLogo} />
-                                    {/* <Widget src="bluebiu.near/widget/Base.Bridge.SwapRightIcon" /> */}
+                                    <Arrow />
                                     <img src={tx.toChainLogo} />
                                     <img src={tx.fromTokenLogo} />
                                     <div>{balanceFormated(tx.fromAmount)} {tx.fromTokenSymbol}</div>
-                                    {/* <Widget src="bluebiu.near/widget/Base.Bridge.SwapRightIcon" /> */}
+                                    <Arrow />                                    
                                     <img src={tx.toTokenLogo} />
                                     <div>{balanceFormated(tx.toAmout)} {tx.toToenSymbol}</div>
                                 </div>
                                 <div>
-                                    {
-                                        tx.status === 1 && <div className="btn" onClick={() => {
-                                            if (isLoadingTx[tx.hash]) {
-                                                return
-                                            }
-                                            // handleClaim(tx.claim_info, tx.hash)
-
-                                        }}>
-                                            {isLoadingTx[tx.hash] && (
-                                                <Loading size={16}/>
-                                            )}
-                                            Claim
-                                        </div>
-                                    }
                                     {
                                         tx.status === 2 && <div className="complete">Complete</div>
                                     }
@@ -266,7 +246,7 @@ export default function Transaction(
                             <div className="time">
                                 <div className="format-time-link">
                                     <div className="format-time">
-                                        { tx.time }
+                                        { formateTxDate(tx.time) }
                                     </div>
                                     <a target="_blank" className="tx-link" href={`${tx.link}/tx/${tx.hash}`}>Tx</a>
                                 </div>

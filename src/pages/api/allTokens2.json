@@ -9,7 +9,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3568.7"
+                "priceUSD": "3568.7",
+                "isNative": true
             },
             {
                 "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
@@ -1141,7 +1142,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3568.7"
+                "priceUSD": "3568.7",
+                "isNative": true
             },
             {
                 "address": "0x4200000000000000000000000000000000000006",
@@ -1693,7 +1695,8 @@
                 "name": "BNB",
                 "coinKey": "BNB",
                 "logoURI": "https://assets.coingecko.com/coins/images/825/small/binance-coin-logo.png?1547034615",
-                "priceUSD": "592.8"
+                "priceUSD": "592.8",
+                "isNative": true
             },
             {
                 "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
@@ -2534,7 +2537,8 @@
                 "name": "WXDAI",
                 "coinKey": "WXDAI",
                 "logoURI": "https://static.debank.com/image/xdai_token/logo_url/0xe91d153e0b41518a2ce8dd3d7944fa863463a97d/3fedab836c5425fc3fc2eb542c34c81a.png",
-                "priceUSD": "0.99985"
+                "priceUSD": "0.99985",
+                "isNative": true
             },
             {
                 "address": "0x9C58BAcC331c9aa871AFD802DB6379a98e80CEdb",
@@ -2886,7 +2890,8 @@
                 "name": "MATIC",
                 "coinKey": "MATIC",
                 "logoURI": "https://static.debank.com/image/matic_token/logo_url/matic/6f5a6b6f0732a7a235131bd7804d357c.png",
-                "priceUSD": "0.923678"
+                "priceUSD": "0.923678",
+                "isNative": true
             },
             {
                 "address": "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
@@ -3766,7 +3771,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3566.15"
+                "priceUSD": "3566.15",
+                "isNative": true
             },
             {
                 "address": "0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000",
@@ -3868,7 +3874,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3566.15"
+                "priceUSD": "3566.15",
+                "isNative": true
             },
             {
                 "address": "0x5AEa5775959fBC2557Cc8789bC1bf90A239D9a91",
@@ -4272,7 +4279,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3566.15"
+                "priceUSD": "3566.15",
+                "isNative": true
             },
             {
                 "address": "0x4F9A0e7FD2Bf6067db6994CF12E4495Df938E6e9",
@@ -4827,7 +4835,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3566.15"
+                "priceUSD": "3566.15",
+                "isNative": true
             },
             {
                 "address": "0x4200000000000000000000000000000000000006",
@@ -5261,7 +5270,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3566.15"
+                "priceUSD": "3566.15",
+                "isNative": true
             },
             {
                 "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
@@ -6043,7 +6053,8 @@
                 "name": "AVAX",
                 "coinKey": "AVAX",
                 "logoURI": "https://static.debank.com/image/avax_token/logo_url/avax/0b9c84359c84d6bdd5bfda9c2d4c4a82.png",
-                "priceUSD": "49.79"
+                "priceUSD": "49.79",
+                "isNative": true
             },
             {
                 "address": "0xB97EF9Ef8734C71904D8002F8b6Bc66Dd9c48a6E",
@@ -6405,7 +6416,8 @@
                 "name": "ETH",
                 "coinKey": "ETH",
                 "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png",
-                "priceUSD": "3566.15"
+                "priceUSD": "3566.15",
+                "isNative": true
             },
             {
                 "address": "0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f",
@@ -6754,7 +6766,8 @@
                 "address": "0x0000000000000000000000000000000000000000",
                 "chain": "scroll",
                 "decimals": 18,
-                "logoURI": "https://s3.openocean.finance/token_logos/logos/1690850882500_3869056607396706.png"
+                "logoURI": "https://s3.openocean.finance/token_logos/logos/1690850882500_3869056607396706.png",
+                "isNative": true
             },
             {
                 "symbol": "KNC",
@@ -6817,10 +6830,24 @@
             {
                 "symbol": "ETH",
                 "name": "ETH",
+                "chainId": 169,
                 "address": "0x0000000000000000000000000000000000000000",
                 "chain": "manta",
                 "decimals": 18,
-                "logoURI": "https://s3.openocean.finance/token_logos/logos/1690850882500_3869056607396706.png"
+                "logoURI": "https://s3.openocean.finance/token_logos/logos/1690850882500_3869056607396706.png",
+                "isNative": true
+            }
+        ],
+        "81457": [
+            {
+                "symbol": "ETH",
+                "name": "ETH",
+                "chainId": 81457,
+                "address": "0x0000000000000000000000000000000000000000",
+                "chain": "blast",
+                "decimals": 18,
+                "logoURI": "https://s3.openocean.finance/token_logos/logos/1690850882500_3869056607396706.png",
+                "isNative": true
             }
         ],
         "5000": [

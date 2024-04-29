@@ -5,7 +5,7 @@ const CloseIconWapper = styled.div`
   transition: 0.5s;
   :hover {
     opacity: 0.8;
-    transform: scale(1.3);
+    /* transform: scale(1.3); */
   }
 `;
 
