@@ -14,6 +14,8 @@ import { useDefaultLayout } from '@/hooks/useLayout';
 import { usePriceStore } from '@/stores/price';
 import { useDebounceFn } from 'ahooks';
 
+import BridgeX from '@/components/BridgeX/Index';
+
 import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
 
@@ -95,39 +97,26 @@ const Bridge: NextPageWithLayout = () => {
                 <span>{tool}</span>
             </BreadCrumbs>
 
-            <ComponentWrapperPage
-                src="dapdapbos.near/widget/Bridge.Index"
-                componentProps={{
-                    addAction,
-                    prices,
-                    account,
-                    icon,
-                    name,
-                    color,
-                    tool,
-                    chainList,
-                    toggleDocClickHandler: toggleDocClickHandler,
-                    getQuote,
-                    getAllToken,
-                    getChainScan,
-                    getStatus,
-                    execute,
-                    currentChainId: connectedChain?.id ? parseInt(connectedChain.id, 16) : 1,
-                    toChainId: router.query.toChainId as string,
-                    fromChainId: router.query.fromChainId as string,
-                    // setToChain,
-                    setChain: async (param: any, fromChainId: string, toChainId: string, needSwitchChain: boolean = true) => {
-                        if (needSwitchChain) {
-                            await setChain(param)
-                        }
-                        setTimeout(() => {
-                            router.push(`/bridge-x/${router.query.tool}?fromChainId=${fromChainId}&toChainId=${toChainId}`)
-                        }, 0);
-                    },
-                }}
+            <BridgeX
+                addAction={addAction}
+                prices={prices}
+                account={account}
+                icon={icon}
+                name={name}
+                color={color}
+                tool={tool}
+                chainList={chainList}
+                toggleDocClickHandler={toggleDocClickHandler}
+                getQuote={getQuote}
+                getAllToken={getAllToken}
+                getChainScan={getChainScan}
+                getStatus={getStatus}
+                execute={execute}
+                currentChainId={connectedChain?.id ? parseInt(connectedChain.id, 16) : 1}
+                toChainId={router.query.toChainId as string}
+                fromChainId={router.query.fromChainId as string}
+                setChain={setChain}
             />
-
-
         </Container>
     )
 };
