@@ -60,7 +60,10 @@ export default function OdysseyV4() {
         <Banner />
         <Summary data={detail} loading={loading} />
 
-        <Pilcrow title="Blast Treasure Strategies" desc="Explore Blast treasure strategies" />
+        <Pilcrow
+          title="Blast Treasure Strategies"
+          desc="Explore Blast treasure strategies, maximize your Blast Gold earnings!"
+        />
         <Treasure />
         <Pilcrow
           title="Win Extra Gold With Partner DApps"
