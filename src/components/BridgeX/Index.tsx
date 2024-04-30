@@ -117,7 +117,6 @@ const SubmitBtn = styled.button`
 
 
 export default function BridgeX({
-    bridge,
     icon,
     name,
     color,
@@ -170,6 +169,7 @@ export default function BridgeX({
     const [isSendingDisabled, setIsSendingDisabled] = useState(false)
 
     const { chainId, provider } = useAccount();
+    const { onConnect } = useConnectWallet();
 
     const { balance: inputBalance, loading: inputBalanceLoading } = useTokenBalance({
         currency: selectInputToken,
@@ -250,6 +250,12 @@ export default function BridgeX({
     }, [inputValue, selectInputToken, selectOutputToken, toAddress])
 
     useEffect(() => {
+        if (!account) {
+            setBtnText('Connect Wallet')
+            setCanRoute(true)
+            return
+        } 
+
         if (inputValue && inputBalance) {
             const canRoute = validateInput()
             if (!canRoute) {
@@ -275,12 +281,13 @@ export default function BridgeX({
                 return
             }
 
-            setBtnText('Send')
             setCanRoute(true)
         }
-    }, [inputValue, inputBalance, route, loading, chainFrom])
 
-    
+        setBtnText('Send')
+        
+    }, [account, inputValue, inputBalance, route, loading, chainFrom])
+
 
     function refreshTransactionList() {
         const transactionObj = getTransaction(`bridge-${account}-${tool}`)
@@ -296,8 +303,6 @@ export default function BridgeX({
         if (chainFrom?.chainId === chainTo?.chainId) {
             return false
         }
-
-        console.log(Number(inputValue) > Number(inputBalance))
 
         const canRoute = inputValue && Number(inputValue) < Number(inputBalance)
             && ((otherAddressChecked && toAddress && isValidAddress) || !otherAddressChecked)
@@ -376,7 +381,6 @@ export default function BridgeX({
                 <ChainSelector
                     chain={chainFrom}
                     chainList={chainList}
-                    toggleDocClickHandler={toggleDocClickHandler}
                     onChainChange={(chain: any) => {
                         setChainFrom(chain)
                     }}
@@ -394,11 +398,9 @@ export default function BridgeX({
                     </svg>
                 </ChainArrow>
 
-
                 <ChainSelector
                     chain={chainTo}
                     chainList={chainList}
-                    toggleDocClickHandler={toggleDocClickHandler}
                     onChainChange={(chain: any) => {
                         setChainTo(chain)
 
@@ -420,7 +422,7 @@ export default function BridgeX({
                 amountUSD={fromUSD}
                 onTokenChange={(token: any) => {
                     setSelectInputToken(token)
-                    setSendAmount('')
+                    // setSendAmount('')
                     setReceiveAmount('')
                 }}
                 onInputChange={(val: any) => {
@@ -487,7 +489,13 @@ export default function BridgeX({
                 showWarning ? <Alert /> : null
             }
             <TokenSpace height={'12px'} />
-            <SubmitBtn style={{ opacity: !route ? 0.2 : 1, background: color }} onClick={async () => {
+            <SubmitBtn style={{ opacity: (!route && account) ? 0.2 : 1, background: color }} onClick={async () => {
+                if (!account) {
+                    onConnect()
+                    return
+                }
+    
+                
                 if (!route) {
                     return
                 }
