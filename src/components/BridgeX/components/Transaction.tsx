@@ -200,7 +200,7 @@ export default function Transaction(
         <div className="header">
             <div className="title">
                 <span>Transaction History</span>
-                <span>{proccessSum} Processing</span>
+                <span> {proccessSum} Processing</span>
             </div>
             <div className="fresh">
                 <RefreshText onClick={() => {

@@ -4137,7 +4137,8 @@
                 "name": "METIS",
                 "coinKey": "METIS",
                 "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/9640.png",
-                "priceUSD": "92.265000000000000000"
+                "priceUSD": "92.265000000000000000",
+                "isNative": true
             },
             {
                 "address": "0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481",
@@ -6945,7 +6946,8 @@
                 "address": "0x0000000000000000000000000000000000000000",
                 "chain": "mantle",
                 "decimals": 18,
-                "logoURI": "https://raw.githubusercontent.com/polkaswitch/assets/master/blockchains/mantle/assets/0x0000000000000000000000000000000000000000/logo.png"
+                "logoURI": "https://raw.githubusercontent.com/polkaswitch/assets/master/blockchains/mantle/assets/0x0000000000000000000000000000000000000000/logo.png",
+                "isNative": true
             },
             {
                 "symbol": "MOE",
