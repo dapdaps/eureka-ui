@@ -138,7 +138,7 @@ export default function BridgeX({
     addAction
 }: any) {
     const { fail, success } = useToast()
-    const [updater, setUpdate] = useState(1)
+    const [updater, setUpdater] = useState(1)
     const [chainFrom, setChainFrom] = useState<any>(null)
     const [chainTo, setChainTo] = useState<any>(null)
     const [allTokens, setAllTokens] = useState<any>({})
@@ -186,12 +186,7 @@ export default function BridgeX({
         isPure: false,
     })
 
-    
-
     const inputValue = useDebounce(sendAmount, { wait: 500 });
-
-   
-
 
     useEffect(() => {
         let _chainFrom, _chainTo
@@ -374,6 +369,9 @@ export default function BridgeX({
                 } else {
                     setLoading(false)
                 }
+            }).catch((e: any) => {
+                setLoading(false)
+                setBtnText('Send')
             })
         }
     }
@@ -401,6 +399,7 @@ export default function BridgeX({
 
                     setChainFrom(_chainFrom)
                     setChainTo(_chainTo)
+                    setUpdater(updater + 1)
 
                 }}>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -506,7 +505,6 @@ export default function BridgeX({
                     return
                 }
     
-                
                 if (!route || !canRoute) {
                     return
                 }
@@ -588,6 +586,7 @@ export default function BridgeX({
                             text: '',
                         })
 
+                        setUpdater(updater + 1)
                         refreshTransactionList()
 
                     } catch(err: any) {

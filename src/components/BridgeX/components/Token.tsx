@@ -248,7 +248,7 @@ export default function Token({
                 }}
                 className={disabled ? '' : 'balance-in'}>balance: {loadingBalance ? <LoadingWrapper>
                     <Loading size={12} />
-                </LoadingWrapper> : balanceFormated(balance)}</BalanceText>
+                </LoadingWrapper> : balanceFormated(selectToken ? balance : '0.0')}</BalanceText>
         </BalanceWapper>
     </Wrapper>
 }
