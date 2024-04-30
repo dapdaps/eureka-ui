@@ -12,4 +12,5 @@ export interface FontProps {
   fontWeight?: string;
   lineHeight?: string;
   whiteSpace?: string;
+  lineClamp?: string;
 }

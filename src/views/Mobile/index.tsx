@@ -101,7 +101,8 @@ const Index = function () {
     <StyledContainer
       style={{
         position: "relative",
-        overflow: "hidden"
+        overflow: "hidden",
+        height: "100dvh"
       }}
     >
       <StyledCover>
@@ -142,7 +143,7 @@ const Index = function () {
         zIndex: 999
       }}>
         <StyledSvg style={{
-          margin: "125px auto 23px",
+          margin: "40px auto 20px",
         }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="233" height="62" viewBox="0 0 233 62" fill="none">
             <path d="M3.69881 30.1711C2.68298 25.7375 7.47144 14.365 7.47144 14.365L33.1206 12.6604C38.0813 11.3311 43.1804 14.2751 44.5097 19.2359L55.3559 37.1101C53.6123 45.828 52.1675 50.7706 47.2067 52.0998L21.2095 59.5928C16.2488 60.9221 11.1497 57.9781 9.82044 53.0173L3.69881 30.1711Z" fill="#EBF479" />
@@ -175,19 +176,28 @@ const Index = function () {
         </StyledContainer>
         <StyledFlex
           justifyContent="center"
+          flexDirection='column'
           style={{
-            marginTop: 68,
-            marginBottom: 15
+            marginTop: 30,
+            marginBottom: 20
           }}
         >
           <StyledFont
             color="#FFF"
-            fontSize="18px"
+            fontSize="20px"
             style={{
               width: 353,
               textAlign: "center"
             }}
-          >Mobile is under construction, coming soon! Explore DapDap via desktop for the full experience.</StyledFont>
+          >Mobile is under construction, coming soon! </StyledFont>
+          <StyledFont
+            color="#FFF"
+            fontSize="20px"
+            style={{
+              width: 353,
+              textAlign: "center"
+            }}
+          >Explore DapDap via desktop for the full experience.</StyledFont>
         </StyledFlex>
 
         <StyledFlex
@@ -195,96 +205,102 @@ const Index = function () {
         >
           <StyledFont fontSize="60px" lineHeight="60px">{characters[characterIndex]}</StyledFont>
         </StyledFlex>
-        <StyledFlex
-          justifyContent="center"
-          gap="35px"
-          style={{
-            marginTop: 77,
-            marginBottom: 24
-          }}
-        >
-          <StyledSquareButton onClick={() => {
-            window.open("https://twitter.com/DapDapMeUp", '_self');
-          }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
-              <path
-                d="M7.1428 5.08177L11.6108 0H10.5524L6.6712 4.41152L3.5736 0H0L4.6852 6.67164L0 12H1.0584L5.1544 7.34028L8.4264 12H12M1.4404 0.780949H3.0664L10.5516 11.2574H8.9252"
-                fill="url(#paint0_linear_4989_162)"
-              />
-              <defs>
-                <linearGradient
-                  id="paint0_linear_4989_162"
-                  x1="6"
-                  y1="0"
-                  x2="6"
-                  y2="13.2381"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#979ABE" />
-                  <stop offset="1" stopColor="#979ABE" stopOpacity="0.5" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </StyledSquareButton>
-          <StyledSquareButton onClick={() => {
-            window.open("https://discord.gg/x5USArxKVH", '_self');
-          }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="10" viewBox="0 0 16 10" fill="none">
-              <path
-                d="M8 0.491013C4.81493 0.491013 2.58063 1.69243 2.58063 1.69243C3.80475 0.731297 5.94397 0.177601 5.94397 0.177601L5.74193 0C3.73344 0.0313412 1.9151 1.25365 1.9151 1.25365C-0.129049 5.00415 0.00168121 8.24275 0.00168121 8.24275C1.66552 10.1337 4.13751 9.99786 4.13751 9.99786L4.98132 9.05762C3.49575 8.77555 2.55686 7.61592 2.55686 7.61592C2.55686 7.61592 4.79116 8.95315 8 8.95315C11.2088 8.95315 13.4431 7.61592 13.4431 7.61592C13.4431 7.61592 12.5043 8.77555 11.0187 9.05762L11.8625 9.99786C11.8625 9.99786 14.3345 10.1337 15.9983 8.24275C15.9983 8.24275 16.129 5.00415 14.0849 1.25365C14.0849 1.25365 12.2666 0.0313412 10.2581 0L10.056 0.177601C10.056 0.177601 12.1953 0.731297 13.4194 1.69243C13.4194 1.69243 11.1851 0.491013 8 0.491013ZM5.53989 4.45046C6.31239 4.45046 6.94227 5.04594 6.93039 5.77724C6.93039 6.49809 6.31239 7.10402 5.53989 7.10402C4.77928 7.10402 4.16128 6.49809 4.16128 5.77724C4.16128 5.04594 4.76739 4.45046 5.53989 4.45046ZM10.4958 4.45046C11.2683 4.45046 11.8863 5.04594 11.8863 5.77724C11.8863 6.49809 11.2683 7.10402 10.4958 7.10402C9.73515 7.10402 9.11715 6.49809 9.11715 5.77724C9.11715 5.04594 9.72326 4.45046 10.4958 4.45046Z"
-                fill="url(#paint0_linear_4989_163)"
-              />
-              <defs>
-                <linearGradient
-                  id="paint0_linear_4989_163"
-                  x1="8"
-                  y1="0"
-                  x2="8"
-                  y2="11.0317"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#979ABE" />
-                  <stop offset="1" stopColor="#979ABE" stopOpacity="0.5" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </StyledSquareButton>
-          <StyledSquareButton onClick={() => {
-            window.open("https://t.me/DapDapDiscussion", '_self');
-          }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12" fill="none">
-              <path
-                d="M5.643 11.274L5.87603 7.91777L12.2677 2.42717C12.5506 2.1812 12.2094 2.06219 11.8349 2.27642L3.94523 7.02912L0.533028 5.99764C-0.199346 5.79929 -0.207669 5.31529 0.699476 4.96617L13.9904 0.0785899C14.5979 -0.183245 15.1805 0.221409 14.9475 1.11006L12.6838 11.274C12.5257 11.996 12.0679 12.1706 11.4354 11.8374L7.98993 9.40943L6.33376 10.9408C6.14235 11.1233 5.98422 11.274 5.643 11.274Z"
-                fill="url(#paint0_linear_4989_164)"
-              />
-              <defs>
-                <linearGradient
-                  id="paint0_linear_4989_164"
-                  x1="7.5"
-                  y1="0"
-                  x2="7.5"
-                  y2="13.2381"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#979ABE" />
-                  <stop offset="1" stopColor="#979ABE" stopOpacity="0.5" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </StyledSquareButton>
-        </StyledFlex>
-        <StyledIntroduction onClick={() => {
-          console.log('====1111===')
-          window.open("https://docs.dapdap.net", '_self');
+        <StyledContainer style={{
+          position: "fixed",
+          bottom: 0,
+          left: 0,
+          right: 0
         }}>
-          <StyledFooterLogo src="/images/mobile/footer_logo.png" alt="footer_logo" />
-          <StyledFlex flexDirection="column" alignItems="flex-start" gap="7px">
-            <StyledFont color="#FFF" fontSize="20px" fontWeight="700">👊Introduction</StyledFont>
-            <StyledFont color="#D2D2D2" style={{
-              width: 250
-            }}>DapDap introduces itself as a universal gateway designed to streamline Web3 navigation...</StyledFont>
+
+          <StyledFlex
+            justifyContent="center"
+            gap="35px"
+            style={{
+              marginBottom: 24
+            }}
+          >
+            <StyledSquareButton onClick={() => {
+              window.open("https://twitter.com/DapDapMeUp", '_self');
+            }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+                <path
+                  d="M7.1428 5.08177L11.6108 0H10.5524L6.6712 4.41152L3.5736 0H0L4.6852 6.67164L0 12H1.0584L5.1544 7.34028L8.4264 12H12M1.4404 0.780949H3.0664L10.5516 11.2574H8.9252"
+                  fill="url(#paint0_linear_4989_162)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_4989_162"
+                    x1="6"
+                    y1="0"
+                    x2="6"
+                    y2="13.2381"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#979ABE" />
+                    <stop offset="1" stopColor="#979ABE" stopOpacity="0.5" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </StyledSquareButton>
+            <StyledSquareButton onClick={() => {
+              window.open("https://discord.gg/x5USArxKVH", '_self');
+            }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="10" viewBox="0 0 16 10" fill="none">
+                <path
+                  d="M8 0.491013C4.81493 0.491013 2.58063 1.69243 2.58063 1.69243C3.80475 0.731297 5.94397 0.177601 5.94397 0.177601L5.74193 0C3.73344 0.0313412 1.9151 1.25365 1.9151 1.25365C-0.129049 5.00415 0.00168121 8.24275 0.00168121 8.24275C1.66552 10.1337 4.13751 9.99786 4.13751 9.99786L4.98132 9.05762C3.49575 8.77555 2.55686 7.61592 2.55686 7.61592C2.55686 7.61592 4.79116 8.95315 8 8.95315C11.2088 8.95315 13.4431 7.61592 13.4431 7.61592C13.4431 7.61592 12.5043 8.77555 11.0187 9.05762L11.8625 9.99786C11.8625 9.99786 14.3345 10.1337 15.9983 8.24275C15.9983 8.24275 16.129 5.00415 14.0849 1.25365C14.0849 1.25365 12.2666 0.0313412 10.2581 0L10.056 0.177601C10.056 0.177601 12.1953 0.731297 13.4194 1.69243C13.4194 1.69243 11.1851 0.491013 8 0.491013ZM5.53989 4.45046C6.31239 4.45046 6.94227 5.04594 6.93039 5.77724C6.93039 6.49809 6.31239 7.10402 5.53989 7.10402C4.77928 7.10402 4.16128 6.49809 4.16128 5.77724C4.16128 5.04594 4.76739 4.45046 5.53989 4.45046ZM10.4958 4.45046C11.2683 4.45046 11.8863 5.04594 11.8863 5.77724C11.8863 6.49809 11.2683 7.10402 10.4958 7.10402C9.73515 7.10402 9.11715 6.49809 9.11715 5.77724C9.11715 5.04594 9.72326 4.45046 10.4958 4.45046Z"
+                  fill="url(#paint0_linear_4989_163)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_4989_163"
+                    x1="8"
+                    y1="0"
+                    x2="8"
+                    y2="11.0317"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#979ABE" />
+                    <stop offset="1" stopColor="#979ABE" stopOpacity="0.5" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </StyledSquareButton>
+            <StyledSquareButton onClick={() => {
+              window.open("https://t.me/DapDapDiscussion", '_self');
+            }}>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="12" viewBox="0 0 15 12" fill="none">
+                <path
+                  d="M5.643 11.274L5.87603 7.91777L12.2677 2.42717C12.5506 2.1812 12.2094 2.06219 11.8349 2.27642L3.94523 7.02912L0.533028 5.99764C-0.199346 5.79929 -0.207669 5.31529 0.699476 4.96617L13.9904 0.0785899C14.5979 -0.183245 15.1805 0.221409 14.9475 1.11006L12.6838 11.274C12.5257 11.996 12.0679 12.1706 11.4354 11.8374L7.98993 9.40943L6.33376 10.9408C6.14235 11.1233 5.98422 11.274 5.643 11.274Z"
+                  fill="url(#paint0_linear_4989_164)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_4989_164"
+                    x1="7.5"
+                    y1="0"
+                    x2="7.5"
+                    y2="13.2381"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#979ABE" />
+                    <stop offset="1" stopColor="#979ABE" stopOpacity="0.5" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </StyledSquareButton>
           </StyledFlex>
-        </StyledIntroduction>
+          <StyledIntroduction onClick={() => {
+            window.open("https://docs.dapdap.net", '_self');
+          }}>
+            <StyledFooterLogo src="/images/mobile/footer_logo.png" alt="footer_logo" />
+            <StyledFlex flexDirection="column" alignItems="flex-start" gap="7px">
+              <StyledFont color="#FFF" fontSize="20px" fontWeight="700">👊Introduction</StyledFont>
+              <StyledFont color="#D2D2D2" style={{
+                width: 250
+              }}>DapDap introduces itself as a universal gateway designed to streamline Web3 navigation...</StyledFont>
+            </StyledFlex>
+          </StyledIntroduction>
+        </StyledContainer>
       </StyledContainer>
     </StyledContainer >
   )

@@ -51,6 +51,16 @@ export default function useQuests(id: any) {
           _result.bridge.push(item);
         }
         if (item.category_id === 2) {
+          if (item.name === 'Thruster Finance') {
+            item.order = 1;
+          } else if (item.name === 'Ring Protocol') {
+            item.order = 2;
+          } else if (item.name === 'Ambient') {
+            item.order = 3;
+          } else {
+            item.order = 6;
+          }
+
           _result.swap.push(item);
         }
         if (item.category_id === 3) {

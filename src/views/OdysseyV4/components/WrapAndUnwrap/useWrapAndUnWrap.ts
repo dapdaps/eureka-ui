@@ -2,6 +2,7 @@ import { useCallback, useState } from 'react';
 import { Contract } from 'ethers';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
+import useAddAction from '@/hooks/useAddAction';
 import Big from 'big.js';
 
 export default function useWrapAndUnwrap(
@@ -13,6 +14,7 @@ export default function useWrapAndUnwrap(
   const [loading, setLoading] = useState(false);
   const { provider, account, chainId } = useAccount();
   const toast = useToast();
+  const { addAction } = useAddAction('dapp');
 
   const onWrapOrUnwrap = useCallback(async () => {
     setLoading(true);
@@ -78,6 +80,27 @@ export default function useWrapAndUnwrap(
       } else {
         toast.fail({ title: `${tab} faily!` });
       }
+      addAction({
+        type: 'Swap',
+        inputCurrencyAmount: amount,
+        inputCurrency: tab === 'Wrap' ? { symbol: 'ETH' } : { symbol: 'WETH' },
+        outputCurrencyAmount: amount,
+        outputCurrency: tab !== 'Wrap' ? { symbol: 'ETH' } : { symbol: 'WETH' },
+        template: 'Wrap and Unwrap',
+        status,
+        transactionHash,
+        add: 0,
+        token_in_currency: {
+          address: tab === 'Wrap' ? 'native' : '0x4300000000000000000000000000000000000004',
+          symbol: tab === 'Wrap' ? 'ETH' : 'WETH',
+          decimals: 18,
+        },
+        token_out_currency: {
+          address: tab === 'Wrap' ? '0x4300000000000000000000000000000000000004' : 'native',
+          symbol: tab === 'Wrap' ? 'WETH' : 'ETH',
+          decimals: 18,
+        },
+      });
     } catch (err: any) {
       toastId && toast.dismiss(toastId);
       setLoading(false);
