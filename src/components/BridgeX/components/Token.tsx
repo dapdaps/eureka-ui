@@ -40,7 +40,7 @@ const Input = styled.input`
     line-height: 31px;
     width: 200px;
     background-color: inherit;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 1);
     &:focus {
         outline: none;
         border: none;
@@ -248,7 +248,7 @@ export default function Token({
                 }}
                 className={disabled ? '' : 'balance-in'}>balance: {loadingBalance ? <LoadingWrapper>
                     <Loading size={12} />
-                </LoadingWrapper> : balanceFormated(balance)}</BalanceText>
+                </LoadingWrapper> : balanceFormated(selectToken ? balance : '0.0')}</BalanceText>
         </BalanceWapper>
     </Wrapper>
 }

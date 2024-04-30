@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import SkakeModel from '@/views/StakeModal/index';
 
 import { ParticleLink } from '../../const';
@@ -37,14 +39,19 @@ export default function Treasure() {
     borderColor: '#FFDD4D',
     corner: 34,
   };
-
+  const { check } = useAuthCheck({ isNeedAk: true });
+  const { account } = useAccount();
   const openLink = (link: string) => {
     window.open(link, '_blank');
   };
   const { loading: reportLoading, onStartReport } = useParticleReport(() => openLink(ParticleLink));
   const handleJump = (link: string, isReport?: boolean) => {
     if (isReport) {
-      onStartReport();
+      if (!account) {
+        check();
+      } else {
+        onStartReport();
+      }
     } else {
       openLink(link);
     }
@@ -632,7 +639,7 @@ export default function Treasure() {
                   <TrapeziformBtn
                     width="286px"
                     height="42px"
-                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/hyperlock`)}
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/juice`)}
                   >
                     Stake LP
                     <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />

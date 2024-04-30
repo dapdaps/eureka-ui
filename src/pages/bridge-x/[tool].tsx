@@ -60,41 +60,20 @@ const Bridge: NextPageWithLayout = () => {
     const { account, chainId } = useAccount();
 
     const prices = usePriceStore((store) => store.price);
-    const { addAction } = useAddAction('all-in-one');
+    const { addAction } = useAddAction('dapp');
 
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
 
     const { icon, name, color } = getBridgeMsg(tool)
 
-    const handleDocClick = useCallback((e: any) => {
-        handlerList.current.forEach((handler: any) => {
-            handler(e)
-        })
-    }, [])
-
-    const toggleDocClickHandler = useCallback((handler: any) => {
-        const indexOf = handlerList.current?.indexOf(handler)
-        if (indexOf > -1) {
-            handlerList.current.splice(indexOf, 1)
-        } else {
-            handlerList.current.push(handler)
-        }
-    }, [])
-
-    useEffect(() => {
-        document.addEventListener('click', handleDocClick, false)
-
-        return () => {
-            document.removeEventListener('click', handleDocClick)
-        }
-    }, [])
-    
     return (
         <Container>
             <BreadCrumbs>
                 <Link href="/">Home</Link>
                 {arrow}
-                <span>{tool}</span>
+                <Link href="/alldapps">dApp</Link>
+                {arrow}
+                <span>{name}</span>
             </BreadCrumbs>
 
             <BridgeX
@@ -106,7 +85,6 @@ const Bridge: NextPageWithLayout = () => {
                 color={color}
                 tool={tool}
                 chainList={chainList}
-                toggleDocClickHandler={toggleDocClickHandler}
                 getQuote={getQuote}
                 getAllToken={getAllToken}
                 getChainScan={getChainScan}
