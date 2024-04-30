@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import useUserInfo from '@/hooks/useUserInfo';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
@@ -40,6 +40,18 @@ export default function OdysseyV4() {
 
   console.log('quests--', quests);
   console.log('detail--', detail);
+  quests.swap.sort((a: any, b: any) => {
+    return a.order - b.order;
+  });
+  const [lendingList, setLendingList] = useState<any>();
+  useEffect(() => {
+    if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
+    const orbit = quests.lending.find((item: any) => item.name === 'Orbit');
+    const pac = quests.lending.find((item: any) => item.name === 'Pac Finance');
+    const _list = [...quests.yield, orbit, ...quests.liquidity, pac, ...quests.staking];
+    setLendingList(_list);
+  }, [quests]);
+  console.log(22222, lendingList);
 
   return (
     <StyledContainer>
@@ -63,10 +75,7 @@ export default function OdysseyV4() {
         <Explores />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />
-        <Lending
-          list={[...quests.lending, ...quests.liquidity, ...quests.staking, ...quests.yield]}
-          onRefreshDetail={queryDetail}
-        />
+        <Lending list={lendingList} onRefreshDetail={queryDetail} />
 
         <FootClaim
           unclaimed={detail?.user?.unclaimed_reward}

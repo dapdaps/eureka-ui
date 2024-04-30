@@ -10,7 +10,7 @@ export default function Summary({ data, loading }: any) {
 
   let golds = 0;
   if (!loading) {
-    golds = 30000;
+    golds = 5400;
   }
   // const golds = 30000;
   const duration = 2;
