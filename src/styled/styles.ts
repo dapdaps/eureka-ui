@@ -11,6 +11,13 @@ export const StyledFont = styled.div<FontProps>`
   font-weight: ${(props) => props.fontWeight || '400'};
   line-height: ${(props) => props.lineHeight || 'normal'};
   white-space: ${(props) => props.whiteSpace || 'normal'};
+  &.ellipsis {
+    display: -webkit-box;
+    -webkit-line-clamp: ${(props) => props.lineClamp || 1};
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
 export const StyledFlex = styled.div<FlexProps>`
   display: flex;
