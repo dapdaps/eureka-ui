@@ -632,7 +632,7 @@ export default function Treasure() {
                   <TrapeziformBtn
                     width="286px"
                     height="42px"
-                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/hyperlock`)}
+                    handleClick={(e: any) => handleJump(`${location.origin}/dapp/juice`)}
                   >
                     Stake LP
                     <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />

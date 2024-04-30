@@ -51,7 +51,6 @@ export default function OdysseyV4() {
     const _list = [...quests.yield, orbit, ...quests.liquidity, pac, ...quests.staking];
     setLendingList(_list);
   }, [quests]);
-  console.log(22222, lendingList);
 
   return (
     <StyledContainer>
