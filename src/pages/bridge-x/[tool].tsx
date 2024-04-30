@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
 
+import { get } from '@/utils/http'
 import chainCofig from '@/config/chains'
 import useAccount from '@/hooks/useAccount';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
@@ -63,8 +64,29 @@ const Bridge: NextPageWithLayout = () => {
     const { addAction } = useAddAction('dapp');
 
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
+    const [icon, setIcon] = useState('')
+    const [name, setName] = useState('')
+    const [color, setColor] = useState('')
+    const [template, setTemplate] = useState('')
 
-    const { icon, name, color } = getBridgeMsg(tool)
+    // const { icon, name, color } = getBridgeMsg(tool)
+
+    useEffect(() => {
+        if (tool) {
+            const { icon, name, color } = getBridgeMsg(tool)
+            setIcon(icon)
+            setName(name)
+            setColor(color)
+            get(`/api/dapp?route=bridge-x/${tool}`)
+                .then(res => {
+                    if (res.code === 0) {
+                        console.log(res)
+                        setTemplate(res.data.name)
+                        // setChainConfig(res.data)
+                    }
+                })
+        }
+    }, [tool])
 
     return (
         <Container>
@@ -84,6 +106,7 @@ const Bridge: NextPageWithLayout = () => {
                 name={name}
                 color={color}
                 tool={tool}
+                template={template}
                 chainList={chainList}
                 getQuote={getQuote}
                 getAllToken={getAllToken}
