@@ -115,6 +115,7 @@ const SubmitBtn = styled.button`
     background: linear-gradient(180deg, #EEF3BF 0%, #E9F456 100%);
 `
 
+let quoteParam = null
 
 export default function BridgeX({
     icon,
@@ -322,25 +323,30 @@ export default function BridgeX({
             setToUSD('')
             setRoute(null)
 
-            getQuote({
+            quoteParam = {
                 fromChainId: chainFrom.chainId,
                 toChainId: chainTo.chainId,
                 fromToken: {
-                    address: selectInputToken.address,
-                    symbol: selectInputToken.symbol,
-                    decimals: selectInputToken.decimals,
+                    address: selectInputToken?.address,
+                    symbol: selectInputToken?.symbol,
+                    decimals: selectInputToken?.decimals,
                 },
                 toToken: {
-                    address: selectOutputToken.address,
-                    symbol: selectOutputToken.symbol,
-                    decimals: selectOutputToken.decimals,
+                    address: selectOutputToken?.address,
+                    symbol: selectOutputToken?.symbol,
+                    decimals: selectOutputToken?.decimals,
                 },
                 fromAddress: account,
                 destAddress: otherAddressChecked ? toAddress : account,
-                amount: new Big(inputValue).times(Math.pow(10, selectInputToken.decimals)),
+                amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
                 engine: [tool]
-            }, provider.getSigner()).then((res: any) => {
+            }
+
+            getQuote(quoteParam, provider.getSigner()).then((res: any) => {
                 console.log('route: ', res)
+                if (res) {
+
+                }
                 if (res && res.length) {
                     let maxReceiveAmount = 0
                     let maxRoute: any
