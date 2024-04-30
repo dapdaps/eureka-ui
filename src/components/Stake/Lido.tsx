@@ -99,7 +99,7 @@ export const Stake = () => {
     const { value: outputMoney } = useValue({
         prices,
         amount: recived,
-        symbol: 'stETH'
+        symbol: 'wstETH'
     })
 
     const { value: transactionCostMoney } = useValue({
