@@ -13,7 +13,7 @@ export default {
     chainsImg: '/images/odyssey/v2/chains.png',
     chainsHeight: '56px',
     reward: '',
-    tips: 'Venture into Linea\'s Expansive DeFi Ecosystem'
+    tips: "Venture into Linea's Expansive DeFi Ecosystem",
   },
   3: {
     path: '/odyssey/home?id=3',
@@ -21,7 +21,24 @@ export default {
     chainsImg: '/images/odyssey/v3/chains.png',
     chainsHeight: '56px',
     reward: '8,500',
-    tips: 'Venture into Scroll\'s Expansive DeFi Ecosystem.'
+    tips: "Venture into Scroll's Expansive DeFi Ecosystem.",
+  },
+  4: {
+    path: '/odyssey/home?id=4',
+    video: '/videos/odyssey3.mp4',
+    chainsImg: '/images/odyssey/v4/chains.png',
+    chainsHeight: '56px',
+    reward: '5,400',
+    tips: 'Explore, Trade, Earn - Go for Gold!',
+  },
+  7: {
+    // fot v4 test
+    path: '/odyssey/home?id=7',
+    video: '/videos/odyssey3.mp4',
+    chainsImg: '/images/odyssey/v4/chains.png',
+    chainsHeight: '56px',
+    reward: '5,400',
+    tips: 'Explore, Trade, Earn - Go for Gold!',
   },
 } as {
   [key: string]: {

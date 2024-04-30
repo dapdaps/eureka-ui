@@ -5,7 +5,6 @@ import {
   StyledFlex,
   StyledFont
 } from "@/styled/styles";
-import useCompassList from './hooks/useCompassList';
 import { useConnectWallet } from '@web3-onboard/react';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -13,6 +12,7 @@ import styled from "styled-components";
 import { EffectCoverflow } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import useClaim from './hooks/useClaim';
+import useCompassList from './hooks/useCompassList';
 import useDetail from './hooks/useDetail';
 const StyledLogo = styled.img`
   width: 340px;
@@ -21,9 +21,9 @@ const StyledSwiperContainer = styled.div`
   position: relative;
   margin: 69px 0 29px;
   .swiper-slide {
-    background-position: center;
-    background-size: cover;
     width: 500px;
+    border-radius: 16px;
+    overflow: hidden;
     /* height: 454px; */
   }
 `
@@ -43,8 +43,17 @@ const StyledButton = styled.div`
   font-weight: 700;
   line-height: normal;
 `
+const StyledComingSoonButton = styled(StyledButton)`
+  width: 380px;
+  background: #5E617E;
+  color: #FFF;
+  cursor: not-allowed;
+`
 const StyledJoinButton = styled(StyledButton)`
   background-color: #EBF479;
+  &:hover {
+    opacity: 0.8;
+  }
 `
 const StyledClaimButton = styled(StyledButton)`
   color: #EBF479;
@@ -145,6 +154,14 @@ const StyledSwiperButton = styled.div`
   position: absolute;
   left: 50px;
   top: 217px;
+  width: 60px;
+  height: 60px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  border: 1px solid rgba(151, 154, 190, 0.30);
+  background: rgba(33, 35, 42, 0.90);
+  backdrop-filter: blur(10px);
+
   display: flex;
   align-items: center;
   justify-content: center;
@@ -152,6 +169,7 @@ const StyledSwiperButton = styled.div`
   &.right {
     left: unset;
     right: 50px;
+    transform: rotate(180deg);
   }
 `
 const Index = function () {
@@ -166,6 +184,7 @@ const Index = function () {
 
 
   const swiperRef = useRef<any>(null);
+  const videoListRef = useRef<any>([])
 
   const currentCompass = useMemo(() => {
     return compassList[activeIndex]
@@ -215,7 +234,8 @@ const Index = function () {
   }, [wallet]);
   return (
     <StyledContainer style={{
-      paddingTop: 56
+      paddingTop: 56,
+      backgroundColor: "#0D0F12"
     }}>
       <StyledFlex flexDirection='column' gap='20px'>
         <StyledLogo src="/images/odyssey/welcome/logo.png" />
@@ -228,17 +248,28 @@ const Index = function () {
           centeredSlides={true}
           slidesPerView={"auto"}
           coverflowEffect={{
-            rotate: 50,
+            rotate: 30,
             stretch: 0,
-            depth: 0,
+            depth: 100,
             modifier: 1,
+            scale: 0.9,
             slideShadows: true,
           }}
           // loop={true}
           modules={[EffectCoverflow]}
           initialSlide={activeIndex}
           onActiveIndexChange={(event) => {
-            setActiveIndex(event.realIndex)
+            const index = event.realIndex
+            setActiveIndex(index)
+            // stop video
+            videoListRef.current.forEach((video: any) => {
+              if (!video.paused) {
+                video.pause()
+              }
+            })
+            if (videoListRef.current[index]) {
+              videoListRef.current[index].play()
+            }
           }}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
@@ -248,14 +279,16 @@ const Index = function () {
             sortCompassList.map((compass: any, index: number) => {
               return (
                 <SwiperSlide key={index} className='swiper-no-swiping'>
-                  <StyledCard
-                    onClick={() => {
-                      handleJump(compass)
-                    }}
-                  >
-                    <StyledContainer style={{
-                      padding: "16px 20px 0 24px"
-                    }}>
+                  <StyledCard>
+                    <StyledContainer
+                      style={{
+                        padding: "16px 20px 0 24px",
+                        cursor: "pointer"
+                      }}
+                      onClick={() => {
+                        handleJump(compass)
+                      }}
+                    >
                       <StyledFlex
                         justifyContent="space-between"
                         style={{ marginBottom: 20 }}
@@ -310,7 +343,8 @@ const Index = function () {
                               right: -13,
                               top: -11,
                               zIndex: 10
-                            }}>
+                            }}
+                            >
                               {
                                 ["ended", "un_start"].includes(compass.status) ? (
                                   <svg width="91" height="91" viewBox="0 0 91 91" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -345,7 +379,7 @@ const Index = function () {
                         }}>
                           {
                             odyssey[compass.id]?.video ? (
-                              <StyledCompassVideo autoPlay loop muted={false} playsInline src={odyssey[compass.id]?.video} />
+                              <StyledCompassVideo ref={(ref) => videoListRef.current[index] = ref} loop muted={false} controls playsInline src={odyssey[compass.id]?.video} />
                             ) : (
                               <StyledCompassImage src={compass.banner} style={{ filter: ["ended", "un_start"].includes(compass.status) ? "grayscale(1)" : "grayscale(0)" }} />
                             )
@@ -361,63 +395,64 @@ const Index = function () {
 
         </Swiper>
         <StyledSwiperButton onClick={() => handleClickSlideButton(event, 'prev')}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
-            <g filter="url(#filter0_b_9312_3673)">
-              <rect width="60" height="60" rx="16" transform="matrix(-1 0 0 1 61 1)" fill="url(#paint0_linear_9312_3673)" fill-opacity="0.9" />
-              <rect width="60" height="60" rx="16" transform="matrix(-1 0 0 1 61 1)" stroke="#979ABE" stroke-opacity="0.3" />
-            </g>
-            <path d="M44 29.5C44.8284 29.5 45.5 30.1716 45.5 31C45.5 31.8284 44.8284 32.5 44 32.5V29.5ZM17.9393 32.0607C17.3536 31.4749 17.3536 30.5251 17.9393 29.9393L27.4853 20.3934C28.0711 19.8076 29.0208 19.8076 29.6066 20.3934C30.1924 20.9792 30.1924 21.9289 29.6066 22.5147L21.1213 31L29.6066 39.4853C30.1924 40.0711 30.1924 41.0208 29.6066 41.6066C29.0208 42.1924 28.0711 42.1924 27.4853 41.6066L17.9393 32.0607ZM44 32.5H19V29.5H44V32.5Z" fill="#979ABE" />
-            <defs>
-              <filter id="filter0_b_9312_3673" x="-19.5" y="-19.5" width="101" height="101" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feGaussianBlur in="BackgroundImageFix" stdDeviation="10" />
-                <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_9312_3673" />
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_9312_3673" result="shape" />
-              </filter>
-              <linearGradient id="paint0_linear_9312_3673" x1="30" y1="0" x2="30" y2="60" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#21232A" />
-                <stop offset="1" stop-color="#21232A" stop-opacity="0.51" />
-              </linearGradient>
-            </defs>
+          <svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24" fill="none">
+            <path d="M27 10.5C27.8284 10.5 28.5 11.1716 28.5 12C28.5 12.8284 27.8284 13.5 27 13.5V10.5ZM0.939341 13.0607C0.353554 12.4749 0.353554 11.5251 0.939341 10.9393L10.4853 1.3934C11.0711 0.807611 12.0208 0.807611 12.6066 1.3934C13.1924 1.97919 13.1924 2.92893 12.6066 3.51472L4.12132 12L12.6066 20.4853C13.1924 21.0711 13.1924 22.0208 12.6066 22.6066C12.0208 23.1924 11.0711 23.1924 10.4853 22.6066L0.939341 13.0607ZM27 13.5H2V10.5H27V13.5Z" fill="#979ABE" />
           </svg>
         </StyledSwiperButton>
         <StyledSwiperButton className='right' onClick={(event) => handleClickSlideButton(event, 'next')}>
-          <svg xmlns="http://www.w3.org/2000/svg" width="62" height="62" viewBox="0 0 62 62" fill="none">
-            <g filter="url(#filter0_b_9312_3670)">
-              <rect x="1" y="1" width="60" height="60" rx="16" fill="url(#paint0_linear_9312_3670)" fill-opacity="0.9" />
-              <rect x="1" y="1" width="60" height="60" rx="16" stroke="#979ABE" stroke-opacity="0.3" />
-            </g>
-            <path d="M19 29.5C18.1716 29.5 17.5 30.1716 17.5 31C17.5 31.8284 18.1716 32.5 19 32.5V29.5ZM45.0607 32.0607C45.6464 31.4749 45.6464 30.5251 45.0607 29.9393L35.5147 20.3934C34.9289 19.8076 33.9792 19.8076 33.3934 20.3934C32.8076 20.9792 32.8076 21.9289 33.3934 22.5147L41.8787 31L33.3934 39.4853C32.8076 40.0711 32.8076 41.0208 33.3934 41.6066C33.9792 42.1924 34.9289 42.1924 35.5147 41.6066L45.0607 32.0607ZM19 32.5H44V29.5H19V32.5Z" fill="#979ABE" />
-            <defs>
-              <filter id="filter0_b_9312_3670" x="-19.5" y="-19.5" width="101" height="101" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                <feGaussianBlur in="BackgroundImageFix" stdDeviation="10" />
-                <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_9312_3670" />
-                <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_9312_3670" result="shape" />
-              </filter>
-              <linearGradient id="paint0_linear_9312_3670" x1="31" y1="1" x2="31" y2="61" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#21232A" />
-                <stop offset="1" stop-color="#21232A" stop-opacity="0.51" />
-              </linearGradient>
-            </defs>
+          <svg xmlns="http://www.w3.org/2000/svg" width="29" height="24" viewBox="0 0 29 24" fill="none">
+            <path d="M27 10.5C27.8284 10.5 28.5 11.1716 28.5 12C28.5 12.8284 27.8284 13.5 27 13.5V10.5ZM0.939341 13.0607C0.353554 12.4749 0.353554 11.5251 0.939341 10.9393L10.4853 1.3934C11.0711 0.807611 12.0208 0.807611 12.6066 1.3934C13.1924 1.97919 13.1924 2.92893 12.6066 3.51472L4.12132 12L12.6066 20.4853C13.1924 21.0711 13.1924 22.0208 12.6066 22.6066C12.0208 23.1924 11.0711 23.1924 10.4853 22.6066L0.939341 13.0607ZM27 13.5H2V10.5H27V13.5Z" fill="#979ABE" />
           </svg>
         </StyledSwiperButton>
       </StyledSwiperContainer>
       {
         currentCompass && (
           <StyledFlex flexDirection='column' gap='30px'>
-            <StyledFont color='#FFF' fontSize='20px' lineHeight='150%'>{odyssey[currentCompass.id]?.tips}</StyledFont>
+            <StyledFont
+              color='#FFF'
+              fontSize='20px'
+              lineHeight='150%'
+              lineClamp="2"
+              className='ellipsis'
+              style={{
+                width: 898,
+                textAlign: 'center',
+              }}
+
+            >{currentCompass?.description ?? ''}</StyledFont>
             <StyledFlex gap='18px'>
-              <StyledJoinButton onClick={() => {
-                check(() => {
-                  handleJump(currentCompass)
-                })
-              }}>Join Odyssey Vol.{currentCompass?.id}</StyledJoinButton>
-              <StyledClaimButton
-                onClick={() => {
-                  check(handleClickClaim)
-                }}
-              >Claim {detail?.unclaimed_reward ?? 0} PTS</StyledClaimButton>
+              {
+                ["ended", "un_start"].includes(currentCompass.status) ? (
+                  <StyledComingSoonButton
+                    onClick={() => {
+                      check(() => {
+                        handleJump(currentCompass)
+                      })
+                    }}
+                    style={{
+                      width: currentCompass.status === "ended" ? 216 : 380
+                    }}
+                  >{currentCompass.status === "ended" ? `Join Odyssey Vol.${currentCompass?.id}` : `Odyssey Vol.${currentCompass?.id} is coming soon!`}</StyledComingSoonButton>
+                ) : (
+                  <StyledJoinButton
+                    onClick={() => {
+                      check(() => {
+                        handleJump(currentCompass)
+                      })
+                    }}
+                  >Join Odyssey Vol.{currentCompass?.id}</StyledJoinButton>
+                )
+              }
+
+              {
+                (detail?.unclaimed_reward ?? 0) > 0 && (
+                  <StyledClaimButton
+                    onClick={() => {
+                      check(handleClickClaim)
+                    }}
+                  >Claim {detail?.unclaimed_reward} PTS</StyledClaimButton>
+                )
+              }
             </StyledFlex>
           </StyledFlex>
         )
