@@ -7,7 +7,7 @@ interface Request{
     symbol: string;
 }
 
-export default function useValue({
+export default function usePriceValue({
     prices,
     amount,
     symbol

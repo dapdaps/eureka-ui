@@ -18,6 +18,8 @@ import Transaction from './components/Transaction';
 import Confirm from './components/Confirm'
 import Token from './components/Token'
 
+import usePriceValue from './hooks/usePriceValue';
+
 import {
     addressFormated,
     getTransaction,
@@ -183,7 +185,11 @@ export default function BridgeX({
         isPure: false,
     })
 
+    
+
     const inputValue = useDebounce(sendAmount, { wait: 500 });
+
+   
 
 
     useEffect(() => {
@@ -283,7 +289,17 @@ export default function BridgeX({
     }
 
     function validateInput() {
-        const canRoute = inputValue && Number(inputValue) > 0 && selectInputToken && selectOutputToken
+        if (!chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
+            return false
+        }
+
+        if (chainFrom?.chainId === chainTo?.chainId) {
+            return false
+        }
+
+        console.log(Number(inputValue) > Number(inputBalance))
+
+        const canRoute = inputValue && Number(inputValue) < Number(inputBalance)
             && ((otherAddressChecked && toAddress && isValidAddress) || !otherAddressChecked)
 
         return canRoute
@@ -472,6 +488,10 @@ export default function BridgeX({
             }
             <TokenSpace height={'12px'} />
             <SubmitBtn style={{ opacity: !route ? 0.2 : 1, background: color }} onClick={async () => {
+                if (!route) {
+                    return
+                }
+                
                 if (btnText === 'Switch Chain') {
                     setChain({ chainId: `0x${chainFrom.chainId?.toString(16)}` })
                     return

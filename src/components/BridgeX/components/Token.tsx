@@ -7,6 +7,8 @@ import Loading from '@/components/Icons/Loading';
 import { ArrowDown, ArrowUp } from './Arrows'
 import CurrencySelectCom from './Select/CurrencySelect'
 
+import usePriceValue from '../hooks/usePriceValue';
+
 const Wrapper = styled.div`
     background: #2E3142;
     border: 1px solid #373A53;
@@ -164,10 +166,17 @@ export default function Token({
     amountUSD,
     loadingBalance,
 }: any) {
+
+
     const [isFocus, setIsFocus] = useState(false)
     const [options, setOptions] = useState([])
     const [tokensDisplay, setTokensDisplay] = useState(false)
 
+    const { value: inputUSD } = usePriceValue({
+        prices,
+        amount: amount,
+        symbol: selectToken?.symbol
+    })
 
     function handleInputFocus() {
         setIsFocus(true)
@@ -230,10 +239,9 @@ export default function Token({
         </InputWapper>
 
         <BalanceWapper>
-            <BalanceText>${
-                selectToken && prices[selectToken?.symbol] && amount
-                    ? balanceFormated(new Big(amount).times(prices[selectToken?.symbol]).toString())
-                    : 0}</BalanceText>
+            <BalanceText>
+                {inputUSD}
+            </BalanceText>
             <BalanceText
                 onClick={() => {
                     onInputChange && onInputChange(balance)
