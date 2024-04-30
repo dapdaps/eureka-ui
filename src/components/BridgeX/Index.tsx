@@ -115,6 +115,7 @@ const SubmitBtn = styled.button`
     background: linear-gradient(180deg, #EEF3BF 0%, #E9F456 100%);
 `
 
+let quoteParam = null
 
 export default function BridgeX({
     icon,
@@ -231,18 +232,18 @@ export default function BridgeX({
     }, [chainTo, loadedAllTokens, allTokens])
 
 
-    // useEffect(() => {
-    //     const inter = setInterval(() => {
-    //         if (!account) {
-    //             return
-    //         }
-    //         setTransitionUpdate(Date.now())
-    //     }, 10000)
+    useEffect(() => {
+        const inter = setInterval(() => {
+            if (!account) {
+                return
+            }
+            setTransitionUpdate(Date.now())
+        }, 30000)
 
-    //     return () => {
-    //         clearInterval(inter)
-    //     }
-    // }, [])
+        return () => {
+            clearInterval(inter)
+        }
+    }, [])
 
 
     useEffect(() => {
@@ -255,6 +256,12 @@ export default function BridgeX({
             setCanRoute(true)
             return
         } 
+
+        if (loading) {
+            setBtnText('Loading')
+            setCanRoute(false)
+            return
+        }
 
         if (inputValue && inputBalance) {
             const canRoute = validateInput()
@@ -304,7 +311,7 @@ export default function BridgeX({
             return false
         }
 
-        const canRoute = inputValue && Number(inputValue) < Number(inputBalance)
+        const canRoute = inputValue
             && ((otherAddressChecked && toAddress && isValidAddress) || !otherAddressChecked)
 
         return canRoute
@@ -322,25 +329,28 @@ export default function BridgeX({
             setToUSD('')
             setRoute(null)
 
-            getQuote({
+            quoteParam = {
                 fromChainId: chainFrom.chainId,
                 toChainId: chainTo.chainId,
                 fromToken: {
-                    address: selectInputToken.address,
-                    symbol: selectInputToken.symbol,
-                    decimals: selectInputToken.decimals,
+                    address: selectInputToken?.address,
+                    symbol: selectInputToken?.symbol,
+                    decimals: selectInputToken?.decimals,
                 },
                 toToken: {
-                    address: selectOutputToken.address,
-                    symbol: selectOutputToken.symbol,
-                    decimals: selectOutputToken.decimals,
+                    address: selectOutputToken?.address,
+                    symbol: selectOutputToken?.symbol,
+                    decimals: selectOutputToken?.decimals,
                 },
                 fromAddress: account,
                 destAddress: otherAddressChecked ? toAddress : account,
-                amount: new Big(inputValue).times(Math.pow(10, selectInputToken.decimals)),
+                amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
                 engine: [tool]
-            }, provider.getSigner()).then((res: any) => {
+            }
+
+            getQuote(quoteParam, provider.getSigner()).then((res: any) => {
                 console.log('route: ', res)
+                
                 if (res && res.length) {
                     let maxReceiveAmount = 0
                     let maxRoute: any
@@ -489,14 +499,15 @@ export default function BridgeX({
                 showWarning ? <Alert /> : null
             }
             <TokenSpace height={'12px'} />
-            <SubmitBtn style={{ opacity: (!route && account) ? 0.2 : 1, background: color }} onClick={async () => {
+            
+            <SubmitBtn style={{ opacity: ((!route || !canRoute) && account ) ? 0.2 : 1, background: color }} onClick={async () => {
                 if (!account) {
                     onConnect()
                     return
                 }
     
                 
-                if (!route) {
+                if (!route || !canRoute) {
                     return
                 }
                 
@@ -566,7 +577,7 @@ export default function BridgeX({
                             toChainId: chainTo.chainId,
                             token: selectInputToken,
                             amount: inputValue,
-                            template: `${tool} Bridge`,
+                            template: `${tool}`,
                             add: false,
                             status: 1,
                             transactionHash: txHash,

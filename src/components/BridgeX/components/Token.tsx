@@ -40,7 +40,7 @@ const Input = styled.input`
     line-height: 31px;
     width: 200px;
     background-color: inherit;
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 1);
     &:focus {
         outline: none;
         border: none;

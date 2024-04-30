@@ -223,7 +223,7 @@ export const Stake = () => {
                     toChainId: currentChain.chainId,
                     token: currentToken,
                     amount: amount,
-                    template: "ether.fi Stake",
+                    template: "ether.fi",
                     add: false,
                     status: 1,
                     action: 'Staking',
