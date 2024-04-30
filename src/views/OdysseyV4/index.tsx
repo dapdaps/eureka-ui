@@ -60,14 +60,11 @@ export default function OdysseyV4() {
         <Banner />
         <Summary data={detail} loading={loading} />
 
-        <Pilcrow
-          title="Blast Treasure Strategy"
-          desc="Explore Blast treasure strategy, maximize your Blast Gold earnings!"
-        />
+        <Pilcrow title="Blast Treasure Strategies" desc="Explore Blast treasure strategies" />
         <Treasure />
         <Pilcrow
-          title="Mine Extra Gold by Hot Dapps"
-          desc="Interact with popular dApps in Blast on DapDap, win extra Gold"
+          title="Win Extra Gold With Partner DApps"
+          desc="Interact with popular Blast dApps via DapDap, secure extra Gold"
         />
 
         <Golds list={quests.golds} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
