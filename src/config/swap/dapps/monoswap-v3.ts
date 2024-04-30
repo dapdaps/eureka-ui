@@ -1,7 +1,7 @@
 import { blast } from '@/config/tokens/blast';
 const basic = {
   name: 'MonoSwap V3',
-  logo: '/images/apps/monoswap-v3.png',
+  logo: '/images/apps/monoswap.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.MomoswapV3',
 };
 const networks = {
