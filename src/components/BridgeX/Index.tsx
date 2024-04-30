@@ -232,18 +232,18 @@ export default function BridgeX({
     }, [chainTo, loadedAllTokens, allTokens])
 
 
-    // useEffect(() => {
-    //     const inter = setInterval(() => {
-    //         if (!account) {
-    //             return
-    //         }
-    //         setTransitionUpdate(Date.now())
-    //     }, 10000)
+    useEffect(() => {
+        const inter = setInterval(() => {
+            if (!account) {
+                return
+            }
+            setTransitionUpdate(Date.now())
+        }, 30000)
 
-    //     return () => {
-    //         clearInterval(inter)
-    //     }
-    // }, [])
+        return () => {
+            clearInterval(inter)
+        }
+    }, [])
 
 
     useEffect(() => {
@@ -256,6 +256,12 @@ export default function BridgeX({
             setCanRoute(true)
             return
         } 
+
+        if (loading) {
+            setBtnText('Loading')
+            setCanRoute(false)
+            return
+        }
 
         if (inputValue && inputBalance) {
             const canRoute = validateInput()
@@ -305,7 +311,7 @@ export default function BridgeX({
             return false
         }
 
-        const canRoute = inputValue && Number(inputValue) < Number(inputBalance)
+        const canRoute = inputValue
             && ((otherAddressChecked && toAddress && isValidAddress) || !otherAddressChecked)
 
         return canRoute
@@ -344,9 +350,7 @@ export default function BridgeX({
 
             getQuote(quoteParam, provider.getSigner()).then((res: any) => {
                 console.log('route: ', res)
-                if (res) {
-
-                }
+                
                 if (res && res.length) {
                     let maxReceiveAmount = 0
                     let maxRoute: any
@@ -495,14 +499,15 @@ export default function BridgeX({
                 showWarning ? <Alert /> : null
             }
             <TokenSpace height={'12px'} />
-            <SubmitBtn style={{ opacity: (!route && account) ? 0.2 : 1, background: color }} onClick={async () => {
+            
+            <SubmitBtn style={{ opacity: ((!route || !canRoute) && account ) ? 0.2 : 1, background: color }} onClick={async () => {
                 if (!account) {
                     onConnect()
                     return
                 }
     
                 
-                if (!route) {
+                if (!route || !canRoute) {
                     return
                 }
                 
@@ -572,7 +577,7 @@ export default function BridgeX({
                             toChainId: chainTo.chainId,
                             token: selectInputToken,
                             amount: inputValue,
-                            template: `${tool} Bridge`,
+                            template: `${tool}`,
                             add: false,
                             status: 1,
                             transactionHash: txHash,
