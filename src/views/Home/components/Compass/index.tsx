@@ -160,9 +160,9 @@ const Compass = () => {
                       }}
                     >
                       {['ended', 'un_start'].includes(compass.status) ? (
-                        <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={91} height={91} />
+                        <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
                       ) : (
-                        <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={91} height={91} />
+                        <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={111} height={111} />
                       )}
                       <StyledFont
                         fontSize="18px"
