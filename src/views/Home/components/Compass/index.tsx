@@ -1,4 +1,5 @@
 import { useDebounceFn } from 'ahooks';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useMemo, useRef, useState } from 'react';
 import { Autoplay } from 'swiper/modules';
@@ -144,10 +145,41 @@ const Compass = () => {
                   <StyledCompassIcon>
                     <CompassIcon />
                   </StyledCompassIcon>
-                  {odyssey[compass.id]?.reward && (
+                  {/* {odyssey[compass.id]?.reward && (
                     <StyledWinPtsIcon>
                       <WinPtsIcon num={odyssey[compass.id].reward} />
                     </StyledWinPtsIcon>
+                  )} */}
+                  {odyssey[compass.id]?.reward && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        right: -34,
+                        top: 0,
+                        zIndex: 20,
+                      }}
+                    >
+                      {['ended', 'un_start'].includes(compass.status) ? (
+                        <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
+                      ) : (
+                        <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={111} height={111} />
+                      )}
+                      <StyledFont
+                        fontSize="18px"
+                        fontWeight="700"
+                        lineHeight="150%"
+                        style={{
+                          position: 'absolute',
+                          left: 0,
+                          right: 0,
+                          top: 36,
+                          textAlign: 'center',
+                          transform: 'rotate(-15deg)',
+                        }}
+                      >
+                        {odyssey[compass.id]?.reward}
+                      </StyledFont>
+                    </div>
                   )}
                 </SwiperSlide>
               ))}
