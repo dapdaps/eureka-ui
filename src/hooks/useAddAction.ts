@@ -121,14 +121,30 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
-          action_network_id: currentChain.name,
+          action_network_id: currentChain?.name || data.action_network_id,
+          chain_id: chainId,
+        };
+      }
+
+      if (data.type === 'Yield') {
+        params = {
+          action_title: `${data.action} ${data?.token0 + (data?.token1 ? ('-' + data.token1) : '')} on ${data.template}`,
+          action_type: data.type,
+          action_tokens: JSON.stringify([data?.token0 ?? '', data?.token1 ?? '']),
+          action_amount: data.amount,
+          account_id: account,
+          account_info: uuid,
+          template: data.template,
+          action_switch: data.add ? 1 : 0,
+          action_status: data.status === 1 ? 'Success' : 'Failed',
+          tx_id: data.transactionHash,
+          action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
         };
       }
 
       params.ss = getSignature(
-        `template=${data.template}&action_type=${data.type}&tx_hash=${
-          data.transactionHash
+        `template=${data.template}&action_type=${data.type}&tx_hash=${data.transactionHash
         }&chain_id=${chainId}&time=${Math.ceil(Date.now() / 1000)}`,
       );
       params.source = source;

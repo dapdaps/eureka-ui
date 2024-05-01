@@ -27,3 +27,7 @@ export function balanceShortFormated(balance?: string | number, digits = 1) {
   if (_balance.lt(1e6)) return _balance.div(1e3).toFixed(digits) + 'K';
   return _balance.div(1e6).toFixed(digits) + 'M';
 }
+
+export function percentFormated(value: string | number, needMul = false): string {
+  return (Number(value) * (needMul ? 100 : 1)).toFixed(2) + "%"
+}
