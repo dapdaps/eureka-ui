@@ -289,7 +289,7 @@ export default function BridgeX({
 
         setBtnText('Send')
         
-    }, [account, inputValue, inputBalance, route, loading, chainFrom])
+    }, [account, currentChainId, inputValue, inputBalance, route, loading, chainFrom])
 
 
     function refreshTransactionList() {
@@ -417,7 +417,6 @@ export default function BridgeX({
                     }}
                 />
             </ChainPairs>
-
 
             <Token
                 title="Send"
@@ -591,10 +590,10 @@ export default function BridgeX({
                         refreshTransactionList()
 
                     } catch(err: any) {
-
+                        console.log(err)
                         fail({
                             title: 'Transaction failed',
-                            text: err.toString(),
+                            text: err.message || err.toString(),
                         })
 
                         setIsSending(false)

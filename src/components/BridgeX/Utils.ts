@@ -57,6 +57,9 @@ export function balanceFormated(balance: any, digits?: any) {
 const addressReg = /(\w{6})(.*)(\w{4})/
 
 export function addressFormated(address: string) {
+    if (!address) {
+        return ''
+    }
     return address.replace(addressReg, (_1: string, _2: string, _3: string, _4: string) => {
         return `${_2}...${_4}`
     })
