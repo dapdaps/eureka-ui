@@ -74,7 +74,7 @@ const StyledQuestion = styled.div`
   padding: 20px;
 `;
 const StyledCard = styled.div`
-  padding:;
+  padding: 0;
   width: 500px;
   min-height: 454px;
 
