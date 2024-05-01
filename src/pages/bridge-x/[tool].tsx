@@ -6,6 +6,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
 
+import { get } from '@/utils/http'
 import chainCofig from '@/config/chains'
 import useAccount from '@/hooks/useAccount';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
@@ -60,41 +61,42 @@ const Bridge: NextPageWithLayout = () => {
     const { account, chainId } = useAccount();
 
     const prices = usePriceStore((store) => store.price);
-    const { addAction } = useAddAction('all-in-one');
+    const { addAction } = useAddAction('dapp');
 
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
+    const [icon, setIcon] = useState('')
+    const [name, setName] = useState('')
+    const [color, setColor] = useState('')
+    const [template, setTemplate] = useState('')
 
-    const { icon, name, color } = getBridgeMsg(tool)
-
-    const handleDocClick = useCallback((e: any) => {
-        handlerList.current.forEach((handler: any) => {
-            handler(e)
-        })
-    }, [])
-
-    const toggleDocClickHandler = useCallback((handler: any) => {
-        const indexOf = handlerList.current?.indexOf(handler)
-        if (indexOf > -1) {
-            handlerList.current.splice(indexOf, 1)
-        } else {
-            handlerList.current.push(handler)
-        }
-    }, [])
+    // const { icon, name, color } = getBridgeMsg(tool)
 
     useEffect(() => {
-        document.addEventListener('click', handleDocClick, false)
-
-        return () => {
-            document.removeEventListener('click', handleDocClick)
+        if (tool) {
+            const { icon, name, color } = getBridgeMsg(tool)
+            setIcon(icon)
+            setName(name)
+            setColor(color)
+            get(`/api/dapp?route=bridge-x/${tool}`)
+                .then(res => {
+                    if (res.code === 0) {
+                        console.log(res)
+                        setTemplate(res.data.name)
+                        setName(res.data.name)
+                        // setChainConfig(res.data)
+                    }
+                })
         }
-    }, [])
-    
+    }, [tool])
+
     return (
         <Container>
             <BreadCrumbs>
                 <Link href="/">Home</Link>
                 {arrow}
-                <span>{tool}</span>
+                <Link href="/alldapps">dApp</Link>
+                {arrow}
+                <span>{name}</span>
             </BreadCrumbs>
 
             <BridgeX
@@ -105,8 +107,8 @@ const Bridge: NextPageWithLayout = () => {
                 name={name}
                 color={color}
                 tool={tool}
+                template={template}
                 chainList={chainList}
-                toggleDocClickHandler={toggleDocClickHandler}
                 getQuote={getQuote}
                 getAllToken={getAllToken}
                 getChainScan={getChainScan}

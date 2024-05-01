@@ -128,12 +128,12 @@ const Compass = () => {
           <StyledSwiperWrapper>
             <Swiper
               width={1244}
-              // modules={[Autoplay]}
+              modules={[Autoplay]}
               slidesPerView={1}
-              // autoplay={{ delay: 3000 }}
-              // speed={1000}
+              autoplay={{ delay: 3000 }}
+              speed={1000}
               spaceBetween={(window.innerWidth - 1244) / 2 + 100}
-              // loop
+              loop
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}

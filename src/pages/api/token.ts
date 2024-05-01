@@ -5,9 +5,9 @@ import path from 'path'
 
 const tokens = fs.readFileSync(path.resolve(process.cwd(), './src/pages/api/allTokens2.json'), 'utf8')
 const tokenObj = JSON.parse(tokens)
-Object.values(tokenObj.tokens).forEach((value: any) => {
-  value.splice(30)
-})
+// Object.values(tokenObj.tokens).forEach((value: any) => {
+//   value.splice(30)
+// })
 
 
 const handler: NextApiHandler = (req, res) => {

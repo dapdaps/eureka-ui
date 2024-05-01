@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from  'react'
+import { useCallback, useEffect, useState, useRef } from  'react'
 import styled from 'styled-components';
 import Big from 'big.js'
 
@@ -59,9 +59,13 @@ const ChainName = styled.div`
 
 export default function ChainSelector({ chain, chainList, toggleDocClickHandler, onChainChange }: any) {
     const [modalShow, setModalShow] = useState(false)
+    const domRef = useRef<any>(null)
     
-    const docClick = useCallback(() => {
-        setModalShow(false)
+    const docClick = useCallback((e: any) => {
+        const isChild = domRef.current?.contains(e.target)
+        if (!isChild) {
+            setModalShow(false)
+        }
     }, [])
 
     useEffect(() => {
@@ -71,9 +75,9 @@ export default function ChainSelector({ chain, chainList, toggleDocClickHandler,
             document.removeEventListener('click', docClick)
         }
     }, [])
+
     
-    return <ChainItem onClick={(e) => {
-        e.stopPropagation()
+    return <ChainItem ref={domRef} onClick={(e) => {
         setModalShow(!modalShow)
     }}>
         <ItemGroup>

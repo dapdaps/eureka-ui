@@ -122,6 +122,7 @@ export default function BridgeX({
     name,
     color,
     tool,
+    template,
     account,
     chainList,
     toggleDocClickHandler,
@@ -138,7 +139,7 @@ export default function BridgeX({
     addAction
 }: any) {
     const { fail, success } = useToast()
-    const [updater, setUpdate] = useState(1)
+    const [updater, setUpdater] = useState(1)
     const [chainFrom, setChainFrom] = useState<any>(null)
     const [chainTo, setChainTo] = useState<any>(null)
     const [allTokens, setAllTokens] = useState<any>({})
@@ -186,12 +187,7 @@ export default function BridgeX({
         isPure: false,
     })
 
-    
-
     const inputValue = useDebounce(sendAmount, { wait: 500 });
-
-   
-
 
     useEffect(() => {
         let _chainFrom, _chainTo
@@ -232,18 +228,18 @@ export default function BridgeX({
     }, [chainTo, loadedAllTokens, allTokens])
 
 
-    // useEffect(() => {
-    //     const inter = setInterval(() => {
-    //         if (!account) {
-    //             return
-    //         }
-    //         setTransitionUpdate(Date.now())
-    //     }, 10000)
+    useEffect(() => {
+        const inter = setInterval(() => {
+            if (!account) {
+                return
+            }
+            setTransitionUpdate(Date.now())
+        }, 30000)
 
-    //     return () => {
-    //         clearInterval(inter)
-    //     }
-    // }, [])
+        return () => {
+            clearInterval(inter)
+        }
+    }, [])
 
 
     useEffect(() => {
@@ -256,6 +252,12 @@ export default function BridgeX({
             setCanRoute(true)
             return
         } 
+
+        if (loading) {
+            setBtnText('Loading')
+            setCanRoute(false)
+            return
+        }
 
         if (inputValue && inputBalance) {
             const canRoute = validateInput()
@@ -287,7 +289,7 @@ export default function BridgeX({
 
         setBtnText('Send')
         
-    }, [account, inputValue, inputBalance, route, loading, chainFrom])
+    }, [account, currentChainId, inputValue, inputBalance, route, loading, chainFrom])
 
 
     function refreshTransactionList() {
@@ -305,7 +307,7 @@ export default function BridgeX({
             return false
         }
 
-        const canRoute = inputValue && Number(inputValue) < Number(inputBalance)
+        const canRoute = inputValue
             && ((otherAddressChecked && toAddress && isValidAddress) || !otherAddressChecked)
 
         return canRoute
@@ -344,9 +346,7 @@ export default function BridgeX({
 
             getQuote(quoteParam, provider.getSigner()).then((res: any) => {
                 console.log('route: ', res)
-                if (res) {
-
-                }
+                
                 if (res && res.length) {
                     let maxReceiveAmount = 0
                     let maxRoute: any
@@ -370,6 +370,9 @@ export default function BridgeX({
                 } else {
                     setLoading(false)
                 }
+            }).catch((e: any) => {
+                setLoading(false)
+                setBtnText('Send')
             })
         }
     }
@@ -397,6 +400,7 @@ export default function BridgeX({
 
                     setChainFrom(_chainFrom)
                     setChainTo(_chainTo)
+                    setUpdater(updater + 1)
 
                 }}>
                     <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -413,7 +417,6 @@ export default function BridgeX({
                     }}
                 />
             </ChainPairs>
-
 
             <Token
                 title="Send"
@@ -495,14 +498,14 @@ export default function BridgeX({
                 showWarning ? <Alert /> : null
             }
             <TokenSpace height={'12px'} />
-            <SubmitBtn style={{ opacity: (!route && account) ? 0.2 : 1, background: color }} onClick={async () => {
+            
+            <SubmitBtn style={{ opacity: ((!route || !canRoute) && account ) ? 0.2 : 1, background: color }} onClick={async () => {
                 if (!account) {
                     onConnect()
                     return
                 }
     
-                
-                if (!route) {
+                if (!route || !canRoute) {
                     return
                 }
                 
@@ -572,7 +575,7 @@ export default function BridgeX({
                             toChainId: chainTo.chainId,
                             token: selectInputToken,
                             amount: inputValue,
-                            template: `${tool} Bridge`,
+                            template,
                             add: false,
                             status: 1,
                             transactionHash: txHash,
@@ -583,13 +586,14 @@ export default function BridgeX({
                             text: '',
                         })
 
+                        setUpdater(updater + 1)
                         refreshTransactionList()
 
                     } catch(err: any) {
-
+                        console.log(err)
                         fail({
                             title: 'Transaction failed',
-                            text: err.toString(),
+                            text: err.message || err.toString(),
                         })
 
                         setIsSending(false)
