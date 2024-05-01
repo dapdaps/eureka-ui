@@ -450,14 +450,14 @@ export default {
       '--button-text-color': '#fff',
     },
   },
-  'momoswap-v3': {
+  'monoswap-v3': {
     type: 'swap',
     theme: {
       '--button-color': 'linear-gradient(90deg, rgb(104, 255, 255) 0%, rgb(104, 255, 155) 100%)',
       '--button-text-color': '#000',
     },
   },
-  'momoswap-v2': {
+  'monoswap-v2': {
     type: 'swap',
     theme: {
       '--button-color': 'linear-gradient(90deg, rgb(104, 255, 255) 0%, rgb(104, 255, 155) 100%)',
