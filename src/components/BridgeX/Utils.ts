@@ -88,6 +88,10 @@ export function getTransaction(transaction_key: any): any {
     return transactionObj
 }
 
+export function isNumeric(value: any): boolean {
+    return /^[0-9]+(\.)?([0-9]+)?$/.test(value);
+}
+
 export default {
     getBalance,
     balanceFormated,

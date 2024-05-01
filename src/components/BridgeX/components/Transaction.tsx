@@ -5,6 +5,7 @@ import Big from 'big.js'
 import Loading from '@/components/Icons/Loading';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
+import useAccount from '@/hooks/useAccount';
 
 import { ArrowDown, ArrowUp } from './Arrows'
 
@@ -130,6 +131,7 @@ export default function Transaction(
     const [transactionList, setTransactionList] = useState([])
     const [isLoading, setIsLoading] = useState(false)
 
+    const { chainId, provider } = useAccount();
 
     function refreshTransactionList() {
         setIsLoading(true)
@@ -141,18 +143,20 @@ export default function Transaction(
         let proccessSum = 0
 
         const pList = Object.values(transactionObj).map((item: any) => {
+            console.log(1111)
             if (item.status === 2) {
-                
                 transactionList.push(item)
                 return
             }
+
             return getStatus({
                 hash: item.hash,
                 chainId: item.fromChainId,
                 address: account,
                 fromChainId: item.fromChainId,
                 toChainId: item.toChainId,
-            }, tool).then((isComplate: boolean) => {
+            }, tool, provider.getSigner()).then((isComplate: boolean) => {
+                console.log('isComplate:', isComplate)
                 if (isComplate) {
                     item.status = 2
                 } else {
@@ -163,20 +167,26 @@ export default function Transaction(
                 transactionObj[item.hash] = item
                 transactionList.push(item)
             }).catch((err: any) => {
+                item.status = 3
                 transactionList.push(item)
             })
         })
+
+        
 
         Promise.all(pList).then(() => {
             if (transactionList.length > 0) {
                 saveAllTransaction(storageKey, transactionObj)
             }
 
+            console.log('proccessSum:', proccessSum)
             const isFold = proccessSum > 0
+
+            transactionList.sort((a: any, b: any) => b.time - a.time)
             setTransactionList(transactionList)
             setIsLoading(false)
             setProccessSum(proccessSum)
-            setIsFold(isFold)
+            // setIsFold(isFold)
             
         }).catch(err => {
             // if (transactionList.length > 0) {
@@ -184,15 +194,16 @@ export default function Transaction(
             // }
             // saveAllTransaction(storageKey, transactionList)
             const isFold = proccessSum > 0
-
+            transactionList.sort((a: any, b: any) => b.time - a.time)
             setTransactionList(transactionList)
             setIsLoading(false)
             setProccessSum(proccessSum)
-            setIsFold(isFold)
+            // setIsFold(isFold)
         })
     }
 
     useEffect(() => {
+        console.log(111)
         refreshTransactionList()
     }, [updater])
 
@@ -214,7 +225,7 @@ export default function Transaction(
                 <ArrowIcon onClick={() => {
                     setIsFold(!isFold)
                 }}>
-                    <ArrowDown />
+                    { isFold ? <ArrowDown /> : <ArrowUp />}
                 </ArrowIcon>
             </div>
         </div>

@@ -24,6 +24,7 @@ import {
     addressFormated,
     getTransaction,
     saveTransaction,
+    isNumeric,
 } from './Utils'
 
 const BridgePanel = styled.div`
@@ -229,6 +230,9 @@ export default function BridgeX({
 
 
     useEffect(() => {
+        if (account) {
+            setTransitionUpdate(Date.now())
+        }
         const inter = setInterval(() => {
             if (!account) {
                 return
@@ -239,7 +243,7 @@ export default function BridgeX({
         return () => {
             clearInterval(inter)
         }
-    }, [])
+    }, [account])
 
 
     useEffect(() => {
@@ -307,7 +311,7 @@ export default function BridgeX({
             return false
         }
 
-        const canRoute = inputValue
+        const canRoute = inputValue && isNumeric(inputValue) && Number(inputValue) > 0
             && ((otherAddressChecked && toAddress && isValidAddress) || !otherAddressChecked)
 
         return canRoute
@@ -598,6 +602,7 @@ export default function BridgeX({
 
                         setIsSending(false)
                         setIsSendingDisabled(false)
+                        setUpdater(updater + 1)
                     }
                 }}
             />
