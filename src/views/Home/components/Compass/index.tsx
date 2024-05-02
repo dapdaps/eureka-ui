@@ -171,8 +171,8 @@ const Compass = () => {
                         style={{
                           position: 'absolute',
                           left: 0,
-                          right: 0,
-                          top: 36,
+                          right: -8,
+                          top: 45,
                           textAlign: 'center',
                           transform: 'rotate(-15deg)',
                         }}
