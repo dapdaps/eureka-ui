@@ -1,4 +1,5 @@
 import { memo, useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
 import Header from './components/Header';
 import SelectPair from './components/SelectPair';
@@ -26,6 +27,7 @@ const Add = () => {
   const [selectedToken, setSelectedToken] = useState<any>({});
   const [errorTips, setErrorTips] = useState('');
   const { theme = {} } = useDappConfig();
+  const router = useRouter();
   const inputType = useRef<0 | 1>(0);
 
   const {
@@ -171,7 +173,10 @@ const Add = () => {
           onClose={() => {
             setShowPreviewModal(false);
           }}
-          onSuccess={() => {}}
+          onSuccess={() => {
+            setShowPreviewModal(false);
+            router.push(`/dapp/${router.query.dappRoute}`);
+          }}
         />
       </StyledContent>
     </StyledContainer>
