@@ -143,7 +143,6 @@ export default function Transaction(
         let proccessSum = 0
 
         const pList = Object.values(transactionObj).map((item: any) => {
-            console.log(1111)
             if (item.status === 2) {
                 transactionList.push(item)
                 return
@@ -156,7 +155,6 @@ export default function Transaction(
                 fromChainId: item.fromChainId,
                 toChainId: item.toChainId,
             }, tool, provider.getSigner()).then((isComplate: boolean) => {
-                console.log('isComplate:', isComplate)
                 if (isComplate) {
                     item.status = 2
                 } else {
@@ -172,14 +170,11 @@ export default function Transaction(
             })
         })
 
-        
-
         Promise.all(pList).then(() => {
             if (transactionList.length > 0) {
                 saveAllTransaction(storageKey, transactionObj)
             }
 
-            console.log('proccessSum:', proccessSum)
             const isFold = proccessSum > 0
 
             transactionList.sort((a: any, b: any) => b.time - a.time)
@@ -203,7 +198,6 @@ export default function Transaction(
     }
 
     useEffect(() => {
-        console.log(111)
         refreshTransactionList()
     }, [updater])
 

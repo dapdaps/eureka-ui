@@ -1,49 +1,5 @@
 import Big from 'big.js'
 
-export function getBalance(address: any, account: any, rpcUrl: any, decimals: any) {
-//     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-
-//     if (address === "native") {
-//         return provider.getBalance(account).then((rawBalance) => {
-//             return ethers.utils.formatUnits(rawBalance._hex, decimals).toString()
-//         });
-//     }
-
-//     const TokenContract = new ethers.Contract(
-//         address,
-//         [
-//             {
-//                 constant: true,
-//                 inputs: [
-//                     {
-//                         name: "_owner",
-//                         type: "address",
-//                     },
-//                 ],
-//                 name: "balanceOf",
-//                 outputs: [
-//                     {
-//                         name: "balance",
-//                         type: "uint256",
-//                     },
-//                 ],
-//                 payable: false,
-//                 stateMutability: "view",
-//                 type: "function",
-//             },
-//         ],
-//         provider
-//     );
-
-//     return TokenContract.balanceOf(account)
-//         .then((rawBalance: any) => {
-//             return ethers.utils.formatUnits(rawBalance._hex, decimals).toString()
-//         })
-//         .catch((err) => {
-//             console.log(err)
-//             return '0.0'
-//         });
-}
 
 export function balanceFormated(balance: any, digits?: any) {
     digits = digits || 4
@@ -76,7 +32,6 @@ export function saveAllTransaction(transaction_key: any, transactionObj: any) {
 }
 
 export function getTransaction(transaction_key: any): any {
-    console.log('transaction_key: ', transaction_key)
     let transactionObj: any = localStorage.getItem(transaction_key)
 
     if (!transactionObj) {
@@ -93,7 +48,6 @@ export function isNumeric(value: any): boolean {
 }
 
 export default {
-    getBalance,
     balanceFormated,
     addressFormated,
     saveTransaction,

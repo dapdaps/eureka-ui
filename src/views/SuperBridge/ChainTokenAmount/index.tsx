@@ -1,11 +1,22 @@
 import styled from 'styled-components';
+import { useState, useRef, useCallback, useEffect } from "react";
 
-import Arrow from '../Arrow'
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import usePriceValue from '../hooks/usePriceValue';
+import { usePriceStore } from '@/stores/price';
+
+import { ArrowDown } from '../Arrow'
+import TokenSelectModal from './TokenSelectModal';
+import { balanceFormated, percentFormated } from '@/utils/balance';
+import Loading from '@/components/Icons/Loading';
+
+import type { Chain, Token } from '@/types';
 
 const Wapper = styled.div`
     min-height: 145px;
     border-radius: 12px;
     border: 1px solid rgba(55, 58, 83, 1);
+    background-color: rgba(46, 49, 66, 1);
 `
 const Header = styled.div`
     display: flex;
@@ -23,6 +34,7 @@ const ChainName = styled.div`
     font-size: 16px;
     font-weight: 700;
     color: #fff;
+    width: 30px;
 `
 const ChainTrigger = styled.div`
     height: 36px;
@@ -36,6 +48,10 @@ const ChainTrigger = styled.div`
     gap: 10px;
     padding: 0 5px;
     cursor: pointer;
+    transition: all .3s;
+    &:hover {
+        border: 1px solid rgba(235, 244, 121, .3);
+    }
 `
 const ChainGroupImg = styled.img`
     width: 22px;
@@ -77,6 +93,10 @@ const AmountInput = styled.input`
     &::placeholder {
         color: rgba(151, 154, 190, 1);
     }
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
 `
 
 const PriceWapper = styled.div`
@@ -103,6 +123,10 @@ const TokenTrigger = styled.div`
     border: 1px solid rgba(55, 58, 83, 1);
     background-color: rgba(46, 49, 66, 1);
     cursor: pointer;
+    transition: all .3s;
+    &:hover {
+        border: 1px solid rgba(235, 244, 121, .3);
+    }
 `
 
 const TokenGroupImg = styled.div`
@@ -113,6 +137,7 @@ const TokenGroupImg = styled.div`
        display: block;
        width: 100%;
        height: 100%;
+       border-radius: 100%;
     }
     .chain {
         position: absolute;
@@ -140,38 +165,99 @@ const BalanceWapper = styled.div`
     }
 `
 
-export default function ChainTokenAmount() {
+interface Props {
+    title: string;
+    address: string;
+    chainList: Chain[];
+    chainToken: any;
+    currentChain: Chain | undefined;
+    currentToken: Token | undefined;
+    inputDisabled?: boolean;
+    amount: string;
+    onChainChange: (chain: Chain) => void;
+    onTokenChange: (token: Token) => void;
+    onAmountChange?: (value: string) => void;
+}
+
+export default function ChainTokenAmount({
+      title, address, chainList, chainToken, currentChain, currentToken, amount, inputDisabled = false, onChainChange, onTokenChange, onAmountChange,
+}: Props) {
+    const prices = usePriceStore((store) => store.price);
+    const [tokenModalShow, setTokenModalShow] = useState<boolean>(false)
+
+    const { balance, loading } = useTokenBalance({
+        currency: currentToken,
+        updater: 1,
+        isNative: currentChain?.nativeCurrency.symbol === currentToken?.symbol,
+        isPure: false,
+    })
+
+    const { value : usdVal } = usePriceValue({
+        prices,
+        amount,
+        symbol: currentToken?.symbol
+    })
+
     return <Wapper>
         <Header>
             <ChainWapper>
-                <ChainName>From</ChainName>
-                <ChainTrigger>
-                    <ChainGroupImg src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a"/>
-                    <ChainGroupName>Ethereum</ChainGroupName>
-                    <Arrow />
+                <ChainName>{title}</ChainName>
+                <ChainTrigger onClick={() => {
+                    setTokenModalShow(true)
+                }}>
+                    <ChainGroupImg src={currentChain?.icon} />
+                    <ChainGroupName>{currentChain?.chainName}</ChainGroupName>
+                    <ArrowDown />
                 </ChainTrigger>
             </ChainWapper>
-            <AddressWapper>0xc25...9210d</AddressWapper>
+            <AddressWapper>{address}</AddressWapper>
         </Header>
         <Content>
             <AmountWapper>
-                <AmountInput placeholder='0' />
-                <PriceWapper>$-</PriceWapper>
+                <AmountInput value={amount} onChange={e => {
+                    onAmountChange && !inputDisabled && onAmountChange(e.target.value)
+                }} type="number" disabled={inputDisabled} placeholder='0' />
+                <PriceWapper>{usdVal}</PriceWapper>
             </AmountWapper>
             <TokenWapper>
-                <TokenTrigger>
-                    <TokenGroupImg>
-                        <img className='token' src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a"/>
-                        <img className='chain' src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a"/>
-                    </TokenGroupImg>
-                    <TokenGroupName>ETH</TokenGroupName>
-                    <Arrow />
+                <TokenTrigger onClick={() => {
+                    setTokenModalShow(true)
+                }}>
+                    {
+                        currentToken ? <>
+                            <TokenGroupImg>
+                                <img className='token' src={currentToken?.logoURI} />
+                                <img className='chain' src={currentChain?.icon} />
+                            </TokenGroupImg>
+                            <TokenGroupName>ETH</TokenGroupName>
+                        </> : <>Select a Token</>
+                    }
+                    <ArrowDown />
                 </TokenTrigger>
                 <BalanceWapper>
                     <span>balance: </span>
-                    <span className='num'>123.23</span>
+                    {
+                        loading 
+                        ? <Loading size={12} /> 
+                        : <span className='num' 
+                        onClick={() => {
+                            onAmountChange && !inputDisabled && balance && onAmountChange(balance)
+                        }}>{ balanceFormated(balance) }</span>
+                    }
                 </BalanceWapper>
             </TokenWapper>
         </Content>
+
+        {
+            tokenModalShow && <TokenSelectModal
+                currentChain={currentChain}
+                currentToken={currentToken}
+                chainToken={chainToken}
+                chainList={chainList}
+                onClose={() => { setTokenModalShow(false) }}
+                onChainChange={onChainChange}
+                onTokenChange={onTokenChange}
+            />
+        }
     </Wapper>
 }

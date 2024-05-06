@@ -31,3 +31,13 @@ export function balanceShortFormated(balance?: string | number, digits = 1) {
 export function percentFormated(value: string | number, needMul = false): string {
   return (Number(value) * (needMul ? 100 : 1)).toFixed(2) + "%"
 }
+
+const addressReg = /(\w{6})(.*)(\w{4})/
+export function addressFormated(address: string) {
+  if (!address) {
+      return ''
+  }
+  return address.replace(addressReg, (_1: string, _2: string, _3: string, _4: string) => {
+      return `${_2}...${_4}`
+  })
+}

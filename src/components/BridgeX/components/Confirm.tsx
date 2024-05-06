@@ -168,21 +168,6 @@ export default function Comfirm({
             </List>
 
             <ButtonWapper>
-                {/* <Widget
-                src="dapdapbos.near/widget/UI.Button"
-                props={{
-                    text: 'Confirm and Send',
-                    type: 'primary',
-                    block: true,
-                    className: 'pink',
-                    loading,
-                    style: { backgroundColor: color },
-                    disabled,
-                    onClick: () => {
-                        !disabled && props.onSend()
-                    }
-                }}
-            /> */}
 
                 <SubmitBtn style={{ background: color }} onClick={async () => {
                     !disabled && onSend()
