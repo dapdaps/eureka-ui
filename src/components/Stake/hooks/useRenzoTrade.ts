@@ -237,7 +237,7 @@ export default function useTrade({
     const [exchangeRate, setExchangeRate] = useState('')
     const [transactionCost, setTransactionCost] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [gasEstimate, setGasEstimate] = useState(192000)
+    const [gasEstimate, setGasEstimate] = useState(1920000)
 
     async function deposit(value: string, signer: Signer) {
         try {
@@ -273,7 +273,7 @@ export default function useTrade({
 
         const tx = await signer.sendTransaction({
             ...transactionData,
-            gasLimit: chainId === 1 ? gasEstimate : 1920000,
+            gasLimit: (chainId === 1 && gasEstimate) ? gasEstimate : 1920000,
         })
         return tx.wait()
     }
@@ -308,7 +308,7 @@ export default function useTrade({
                     )
                 } else {
                     setTransactionCost('')
-                    setGasEstimate(192000)
+                    setGasEstimate(1920000)
                 }
             })
         } else {
