@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import styled from 'styled-components';
+import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
 
 import { ArrowRight } from '../Arrow'
 import Route from '../Route'
@@ -39,6 +40,7 @@ const Sep = styled.div`
 `
 
 interface Props {
+    routes: QuoteResponse[] | null
 }
 
 export default function RouteSelected(

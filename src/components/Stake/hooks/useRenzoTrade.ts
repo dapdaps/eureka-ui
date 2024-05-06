@@ -273,7 +273,7 @@ export default function useTrade({
 
         const tx = await signer.sendTransaction({
             ...transactionData,
-            gasLimit: chainId === 1 ? gasEstimate : 1920000,
+            gasLimit: chainId === 1 ? (gasEstimate || 1920000) : 1920000,
         })
         return tx.wait()
     }

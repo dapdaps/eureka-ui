@@ -5,17 +5,25 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 
 import useAccount from '@/hooks/useAccount';
 
-export default function useQuote(quoteRequest: QuoteRequest) {
-    const [routes, setRoutes] = useState(null)
+export default function useQuote(quoteRequest: QuoteRequest | null) {
+    const [routes, setRoutes] = useState<QuoteResponse[] | null>(null)
     const [loading, setLoading] = useState(false)
-    const { chainId, provider } = useAccount();
+    const { chainId, provider } = useAccount()
 
     async function getRoutes() {
+        if (!quoteRequest) {
+            setRoutes(null)
+            return 
+        }
+        setLoading(true)
         const routes = await getQuote(quoteRequest, provider.getSigner())
+        console.log('routes:', routes)
+        setRoutes(routes)
+        setLoading(false)
     } 
 
     useEffect(() => {
-        
+        getRoutes()
     }, [quoteRequest])
 
     return {

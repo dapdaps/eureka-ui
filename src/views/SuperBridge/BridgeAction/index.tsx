@@ -2,6 +2,8 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import styled from 'styled-components';
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
 import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
+import { useDebounce } from 'ahooks';
+import Big from 'big.js'
 
 import useAccount from '@/hooks/useAccount';
 import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
@@ -12,6 +14,7 @@ import RouteSelected from '../RouteSelected';
 import SubmitBtn from '../SubmitBtn'
 import SettingModal from './SettingModal';
 
+import useQuote from "../hooks/useQuote";
 
 import type { Chain, Token } from '@/types';
 
@@ -82,7 +85,7 @@ export default function BirdgeAction(
     // getChainScan,
   }: Props) {
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false)
-  const {account, chainId} = useAccount();
+  const { account, chainId } = useAccount();
   const [chainToken, setChainToken] = useState<any>({})
   const [fromChain, setFromChain] = useState<Chain>(chainList[0])
   const [toChain, setToChain] = useState<Chain>(chainList[1])
@@ -90,14 +93,45 @@ export default function BirdgeAction(
   const [toToken, setToToken] = useState<Token>()
   const [sendAmount, setSendAmount] = useState('')
   const [reciveAmount, setReciveAmount] = useState('')
+  const inputValue = useDebounce(sendAmount, { wait: 500 });
+  const [quoteReques, setQuoteRequest] = useState<QuoteRequest | null>(null)
+
+  const { routes, loading } = useQuote(quoteReques)
+
+  useEffect(() => {
+    if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
+      return
+    }
+
+    if (Number(inputValue) <= 0) {
+      return
+    }
+
+    setQuoteRequest({
+      fromChainId: fromChain?.chainId.toString(),
+      toChainId: toChain?.chainId.toString(),
+      fromToken: {
+        address: fromToken?.address as string,
+        symbol: fromToken?.symbol as string,
+        decimals: fromToken?.decimals as number,
+      },
+      toToken: {
+        address: toToken?.address as string,
+        symbol: toToken?.symbol as string,
+        decimals: toToken?.decimals as number,
+      },
+      fromAddress: account as string,
+      destAddress: account as string,
+      amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
+    })
+
+  }, [fromChain, toChain, fromToken, toToken, account, inputValue])
 
   useEffect(() => {
     getAllToken().then((res: any) => {
       setChainToken(res)
     })
   }, [])
-
-
 
   return <Container>
     <PublicTitle
@@ -152,7 +186,9 @@ export default function BirdgeAction(
       address={addressFormated(account as string)}
       chainList={chainList}
     />
-    <RouteSelected />
+    {
+      routes?.length && <RouteSelected routes={routes}/>
+    }
     <Sep height={20} />
     <SubmitBtn />
 

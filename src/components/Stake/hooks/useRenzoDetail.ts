@@ -7,7 +7,7 @@ interface Result {
 async function getApr(chainId: string) {
     const res = await fetch(`/renzo/api/stats?chainId=${chainId}`).then(res => res.json())
     if (res?.success) {
-        return res.data.apr.data
+        return res.data.apr.data.rate
     }
 
     return 0
