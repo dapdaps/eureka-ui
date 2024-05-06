@@ -1,18 +1,16 @@
-import { useDebounceFn } from 'ahooks';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { memo, useMemo, useRef, useState } from 'react';
+import { memo, useRef } from 'react';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
-import WinPtsIcon from '@/components/Icons/WinPts';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import { get } from '@/utils/http';
+import { useSize } from "ahooks";
 
 import useCompassList from './hooks/useCompassList';
 import {
@@ -33,9 +31,7 @@ import {
   StyledRadialBg2,
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
-  StyledSwiperWrapper,
-  StyledTitle,
-  StyledWinPtsIcon,
+  StyledSwiperWrapper
 } from './styles';
 
 const iconRight = (
@@ -57,6 +53,7 @@ const Card = function ({ compass }: any) {
     if (!odyssey[compass.id]) return;
     router.push(odyssey[compass.id].path);
   };
+
   return (
     <StyledCard>
       <StyledCardBackgroundImage width={646} height={323} src={compass.banner} alt={compass.name} />
@@ -90,6 +87,7 @@ const Card = function ({ compass }: any) {
 };
 const Compass = () => {
   const router = useRouter();
+  const size: any = useSize(window.document.getElementsByTagName("body")[0]);
   const { loading, compassList } = useCompassList();
   const swiperRef = useRef<any>();
 
@@ -133,8 +131,8 @@ const Compass = () => {
               slidesPerView={1}
               autoplay={{ delay: 3000 }}
               speed={1000}
-              spaceBetween={(window.innerWidth - 1244) / 2 + 100}
-              loop
+              spaceBetween={(size?.width - 1244) / 2 + 100}
+              updateOnWindowResize={true}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
