@@ -203,7 +203,7 @@ export default function Treasure() {
                       height={16}
                       style={{ marginRight: 5 }}
                     />
-                    Thruster points
+                    Thruster Credits
                   </div>
                 </div>
                 <div className="modal-list-body">
@@ -412,7 +412,7 @@ export default function Treasure() {
             by Thruster / Hyperlock / Particle?
           </ModalTitle>
           <ModalDesc>
-            This strategy enables users to earn XP points & Blast points & Blast gold & Thruster points & Hyperlock
+            This strategy enables users to earn XP points & Blast points & Blast gold & Thruster Credits & Hyperlock
             points/Particle points + some APR.
           </ModalDesc>
           <ModalBody>
@@ -563,7 +563,7 @@ export default function Treasure() {
             How to earn <Image src="/images/odyssey/v4/td3.svg" alt="" width={79} height={22} /> on Juice?
           </ModalTitle>
           <ModalDesc>
-            This strategy enables users to earn Etherfi points/ Eigen Layer points/ Hyperlock Points/ Thruster Points/
+            This strategy enables users to earn Etherfi points/ Eigen Layer points/ Hyperlock Points/ Thruster Credits/
             Juice Points/ Blast Gold + Blast points.
           </ModalDesc>
           <ModalBody>
