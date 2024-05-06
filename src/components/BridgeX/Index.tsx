@@ -303,7 +303,7 @@ export default function BridgeX({
     }
 
     function validateInput() {
-        if (!chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
+        if (!account || !chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
             return false
         }
 
