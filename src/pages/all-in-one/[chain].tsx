@@ -17,6 +17,7 @@ import { useDebounceFn } from 'ahooks';
 import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
 import type { NextPageWithLayout } from '@/utils/types';
+import AllInOneView from '@/views/AllInOne';
 
 const arrow = (
   <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -268,6 +269,8 @@ const AllInOne: NextPageWithLayout = () => {
 
   return currentChain ? (
     <Container key={chain}>
+      <AllInOneView currentChain={currentChain} />
+      {/*#region following is the old page */}
       <BreadCrumbs>
         <Link href="/">Home</Link>
         {arrow}
@@ -355,6 +358,7 @@ const AllInOne: NextPageWithLayout = () => {
           </>
         )}
       </>
+      {/*#endregion */}
     </Container>
   ) : (
     <div />
