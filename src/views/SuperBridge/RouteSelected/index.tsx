@@ -43,27 +43,44 @@ const Sep = styled.div`
 interface Props {
     routes: QuoteResponse[] | null;
     toToken: Token;
+    routeSortType: number;
     onRouteSelected: (route: QuoteResponse | null) => void;
 }
 
 export default function RouteSelected(
-    { routes, toToken, onRouteSelected }: Props
+    { routes, toToken, routeSortType, onRouteSelected }: Props
 ) {
     const [routeModalShow, setRouteModalShow] = useState<boolean>(false)
     const [routeSelected, setRouteSelected] = useState<QuoteResponse | null>(null)
+    const [best, setBest] = useState<QuoteResponse | null>(null)
+    const [fast, setFast] = useState<QuoteResponse | null>(null)
 
     useEffect(() => {
-        let maxRoute: QuoteResponse | null = null
+        let bestRoute: QuoteResponse | null = null
+        let fastRoute: QuoteResponse | null = null
         if (routes && routes.length) {
-            maxRoute = routes[0]
+            bestRoute = routes[0]
+            fastRoute = routes[0]
             routes.forEach(route => {
-                if (Number(route.receiveAmount) > Number(maxRoute?.receiveAmount)) {
-                    maxRoute = route
+                if (Number(route.receiveAmount) > Number(bestRoute?.receiveAmount)) {
+                    bestRoute = route
+                }
+
+                if (Number(route.duration) < Number(fastRoute?.duration)) {
+                    fastRoute = route
                 }
             })
         }
-        setRouteSelected(maxRoute)
-        onRouteSelected(maxRoute)
+        setBest(bestRoute)
+        setFast(fastRoute)
+        if (routeSortType === 1) {
+            setRouteSelected(bestRoute)
+            onRouteSelected(bestRoute)
+        } else if (routeSortType === 2) {
+            setRouteSelected(fastRoute)
+            onRouteSelected(fastRoute)
+        }
+        
     }, [routes])
 
     return <Container>
@@ -76,10 +93,10 @@ export default function RouteSelected(
         </TitleWapper>
         <Sep />
         {
-            routeSelected && <Route toToken={toToken} route={routeSelected} active/>
+            routeSelected && <Route best={best} fast={fast} toToken={toToken} route={routeSelected} active/>
         }
         {
-            routeModalShow && <RouteModal toToken={toToken} routeSelected={routeSelected} routes={routes} onClose={() => { setRouteModalShow(false) }} />
+            routeModalShow && <RouteModal best={best} fast={fast} toToken={toToken} routeSelected={routeSelected} routes={routes} onClose={() => { setRouteModalShow(false) }} />
         }
     </Container>
 }

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Container = styled.div<{ size?: number | string }>`
     position: absolute;
     left: 50%;
-    top: 50%;
+    top: 30%;
     z-index: 11;
     transform: translate(-50%, -50%);
     min-width: 468px;

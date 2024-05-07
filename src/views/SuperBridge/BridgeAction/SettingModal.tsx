@@ -30,6 +30,8 @@ const ItemWapper = styled.div`
             height: 36px;
             padding: 0 10px;
             gap: 10px;
+            white-space: nowrap;
+            width: 140px;
         }
         .layer {
             position: absolute;
@@ -39,6 +41,7 @@ const ItemWapper = styled.div`
             padding: 5px 0;
             border-radius: 8px;
             background-color: rgba(46, 49, 66, 1);
+            white-space: nowrap;
             .layer-item {
                 height: 36px;
                 display: flex;
@@ -54,14 +57,26 @@ const ItemWapper = styled.div`
     }
 `
 
+const sorts = [{
+    key: 1,
+    name: 'Best Return',
+}, {
+    key: 2,
+    name: 'Fastest',
+}]
+
 interface Props {
-    onClose?: () => void; 
+    onClose?: () => void;
+    routeSortType: number;
+    onSortTypeChange: (val: number) => void;
 }
 
-export default function SettingModal({ onClose }: Props) {
+export default function SettingModal({ onClose, routeSortType, onSortTypeChange }: Props) {
     const [layerShow, setLayerShow] = useState(false)
+    const [sortList, setSortList] = useState(sorts)
+    const [selectSort, setSelectSort] = useState(sorts[0])
     const domRef = useRef<any>(null)
-    
+
     const docClick = useCallback((e: any) => {
         const isChild = domRef.current?.contains(e.target)
         if (!isChild) {
@@ -77,6 +92,11 @@ export default function SettingModal({ onClose }: Props) {
         }
     }, [])
 
+    useEffect(() => {
+        const selectSort = sortList.find(item => item.key === routeSortType)
+        setSelectSort(selectSort!)
+    }, [routeSortType, sortList])
+
     return <Modal title="Setting" onClose={onClose}>
         <ItemWapper>
             <div className="title">Preference for Route</div>
@@ -84,25 +104,31 @@ export default function SettingModal({ onClose }: Props) {
                 <div className="trigger" onClick={() => {
                     setLayerShow(true)
                 }}>
-                    <div>Best Return</div>
+                    <div>{ selectSort.name }</div>
                     <div>
                         <ArrowDown />
                     </div>
                 </div>
                 {
                     layerShow && <div className="layer">
-                        <div className="layer-item">
-                            <div>Best Return</div>
-                            <div>
-                                <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M1 4L5 8L12 1" stroke="#EBF479" stroke-width="2" stroke-linecap="round" />
-                                </svg>
+                        {
+                            sortList.map(item => {
+                                return <div key={item.key} onClick={() => {
+                                    onSortTypeChange(item.key)
+                                    setLayerShow(false)
+                                }} className="layer-item">
+                                    <div>{item.name}</div>
+                                    {
+                                        routeSortType === item.key && <div>
+                                            <svg width="13" height="10" viewBox="0 0 13 10" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M1 4L5 8L12 1" stroke="#EBF479" stroke-width="2" stroke-linecap="round" />
+                                            </svg>
 
-                            </div>
-                        </div>
-                        <div className="layer-item">
-                            <div>Fast</div>
-                        </div>
+                                        </div>
+                                    }
+                                </div>
+                            })
+                        }
                     </div>
                 }
             </div>

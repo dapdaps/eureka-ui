@@ -96,11 +96,13 @@ interface Props {
     active?: boolean;
     route: QuoteResponse;
     toToken: Token;
+    best: QuoteResponse | null;
+    fast: QuoteResponse | null;
     onClick?: () => void;
 }
 
 export default function Route(
-    { showOutputTitle = true, active = false, onClick, route, toToken } : Props
+    { showOutputTitle = true, active = false, onClick, route, best, fast, toToken } : Props
     ) {
     const prices = usePriceStore((store) => store.price);
         
@@ -114,8 +116,12 @@ export default function Route(
                 <div className="name">{route.bridgeName}</div>
             </div>
             <div className="tags">
-                <div className="tag fastest">Fastest</div>
-                <div className="tag best-return">Best Return</div>
+                {
+                    best === route && <div className="tag best-return">Best Return</div>
+                }
+                {
+                    fast === route && <div className="tag fastest">Fastest</div>
+                }
             </div>
         </BridgeSummary>
         <BridgeAmount>
@@ -123,14 +129,14 @@ export default function Route(
                 {
                     showOutputTitle && <div className="title">Est. output</div>
                 }
-                <img className="token-icon" src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a" />
+                <img className="token-icon" src={toToken.logoURI} />
                 <div className="token-amount">~{ balanceFormated(route.receiveAmount ? new Big(route.receiveAmount).div(10 ** toToken.decimals).toString() : '') }</div>
                 {/* <div> + </div>
                 <img className="token-icon" src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a" />
                 <div className="token-amount">~3380.49</div> */}
             </div>
             <div className="cost-wapper">
-                <div>~{route.duration} min｜Gas ${ balanceFormated(route.feeType === 1 ? (prices as any)['ETH'] * Number(route.gas) : route.gas) }</div>
+                <div>~{route.duration} min｜Fee ${ balanceFormated(route.feeType === 1 ? (prices as any)['ETH'] * Number(route.gas) : route.gas) }</div>
             </div>
         </BridgeAmount>
     </Contanier>

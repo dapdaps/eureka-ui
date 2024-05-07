@@ -93,6 +93,7 @@ export default function BirdgeAction(
   const [reciveAmount, setReciveAmount] = useState('')
   const [selectedRoute, setSelectedRoute] = useState<QuoteResponse | null>(null)
   const [identification, setIdentification] = useState(Date.now())
+  const [routeSortType, setRouteSortType] = useState(1)
   const inputValue = useDebounce(sendAmount, { wait: 500 });
 
   const [quoteReques, setQuoteRequest] = useState<QuoteRequest | null>(null)
@@ -138,6 +139,15 @@ export default function BirdgeAction(
       setChainToken(res)
     })
   }, [])
+
+  useEffect(() => {
+    if (selectedRoute && toToken) {
+      const reciveAmount = new Big(selectedRoute.receiveAmount).div(10 ** toToken.decimals).toString()
+      setReciveAmount(reciveAmount)
+    } else {
+      setReciveAmount('')
+    }
+  }, [selectedRoute, toToken])
 
   return <Container>
     <PublicTitle
@@ -187,13 +197,15 @@ export default function BirdgeAction(
       currentChain={toChain}
       currentToken={toToken}
       chainToken={chainToken}
-      amount={selectedRoute?.receiveAmount || ''}
+      amount={reciveAmount}
       title="To"
       address={addressFormated(account as string)}
       chainList={chainList}
     />
     {
-      toToken && routes?.length && <RouteSelected onRouteSelected={(route: QuoteResponse | null) => {
+      toToken && routes?.length && <RouteSelected 
+      routeSortType={routeSortType} 
+      onRouteSelected={(route: QuoteResponse | null) => {
         setSelectedRoute(route)
       }} toToken={toToken} routes={routes}/>
     }
@@ -201,7 +213,9 @@ export default function BirdgeAction(
     <SubmitBtn />
 
     {
-      settingModalShow && <SettingModal onClose={() => { setSettingModalShow(false) }} />
+      settingModalShow && <SettingModal onSortTypeChange={(val) => {
+        setRouteSortType(val)
+      }} routeSortType={routeSortType} onClose={() => { setSettingModalShow(false) }} />
     }
 
   </Container>
