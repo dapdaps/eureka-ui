@@ -1,4 +1,5 @@
 import chains from '@/config/chains';
+import { formateValue } from '@/utils/formate';
 
 export function formatTitle(record: any) {
   let tokens = [];
@@ -50,8 +51,8 @@ export function formatTitle(record: any) {
       if (parsedExtraData.type === 'univ3') {
         return (
           <>
-            {parsedExtraData.action} {parsedExtraData.amount0} {tokens[0]} and {parsedExtraData.amount1} {tokens[1]} on{' '}
-            {record.template}
+            {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {tokens[0]} and{' '}
+            {formateValue(parsedExtraData.amount1, 3)} {tokens[1]} on {record.template}
           </>
         );
       }
@@ -61,5 +62,20 @@ export function formatTitle(record: any) {
         Deposit <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}-{tokens[1]}
       </>
     );
+  }
+
+  if (record.action_type === 'Staking') {
+    try {
+      const parsedExtraData = JSON.parse(record.extra_data || {});
+      if (parsedExtraData) {
+        return (
+          <>
+            {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {parsedExtraData.token0Symbol} and{' '}
+            {formateValue(parsedExtraData.amount1, 3)} {parsedExtraData.token1Symbol} on {record.template}
+          </>
+        );
+      }
+    } catch (err) {}
+    return <>{record.action_title}</>;
   }
 }
