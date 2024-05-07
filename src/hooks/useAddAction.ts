@@ -111,7 +111,7 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Staking') {
         params = {
-          action_title: `${data.action} ${data.token.symbol} on ${data.template}`,
+          action_title: `${data.action} ${data.amount} ${data.token.symbol} on ${data.template}`,
           action_type: 'Staking',
           action_tokens: JSON.stringify([`${data.token.symbol}`]),
           action_amount: data.amount,
