@@ -125,7 +125,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any)
                 <div className="title">+{reward} Gold</div>
               </div>
             </div>
-            <div className="status">
+            {/* <div className="status">
               <RefreshButton
                 onClick={(ev: any) => {
                   ev.stopPropagation();
@@ -133,7 +133,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any)
                 }}
                 loading={checking}
               />
-            </div>
+            </div> */}
           </div>
           <div className="body">
             Swap ETH to yield-bearing Liquid Credit Tokens and LP on partner DEXs. <br />

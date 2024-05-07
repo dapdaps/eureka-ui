@@ -95,7 +95,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
       {
         logo: '/images/odyssey/v4/logo-metastreet.svg',
         hyperlockLink: `${location.origin}/dapp/hyperlock`,
-        thrusterLink: `${location.origin}/dapp/thruster-liquidity`,
+        thrusterLink: `${location.origin}/dapp/thruster-finance`,
         particleLink: 'https://app.particle.trade/0xe557Fa3DA7c728E9c7e7E76555773BAF00205654',
         bgClass: 'bg-metastreet',
         rank1: 100,
