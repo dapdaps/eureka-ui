@@ -35,11 +35,41 @@ export function formatTitle(record: any) {
             </div>
           ));
         }
-      } catch (err) {}
+      } catch (err) { }
     }
     return (
       <>
         Supply <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]} on {record.template}
+      </>
+    );
+  }
+  if (record.action_type === 'Staking') {
+    return (
+      <>
+        {record.action_title.split(" ").map((txt, index) => {
+          return index === 1 ? (
+            <span key={index}>
+              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
+              {" " + txt + " "}
+            </span>
+          ) : txt + " "
+        })}
+      </>
+    );
+  }
+
+  if (record.action_type === 'Yield') {
+    return (
+      <>
+        {record.action_title.split(" ").map((txt, index) => {
+          return index === 1 ? (
+            <span key={index}>
+              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
+              {" " + txt + " "}
+            </span>
+          ) : txt + " "
+        })}
+        {/* Yield <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}{tokens[1] ? ' to' + tokens[1] : ''} on {record.template} */}
       </>
     );
   }
@@ -55,7 +85,7 @@ export function formatTitle(record: any) {
           </>
         );
       }
-    } catch (err) {}
+    } catch (err) { }
     return (
       <>
         Deposit <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}-{tokens[1]}
