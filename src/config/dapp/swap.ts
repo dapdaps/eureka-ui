@@ -478,4 +478,11 @@ export default {
       '--button-text-color': '#fff',
     },
   },
+  'swap-mode': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(rgb(223, 254, 0) 50%, rgb(96, 254, 0))',
+      '--button-text-color': '#000',
+    },
+  },
 };

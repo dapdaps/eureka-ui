@@ -123,4 +123,20 @@ export const mode: { [key: string]: Token } = {
     name: 'StakeStone Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreih3upiejskutko5ochkysbzuihf4t7ngopshrdefi3zjknmnmou6i',
   },
+  kim: {
+    chainId: CHAIN_ID,
+    address: '0x6863fb62Ed27A9DdF458105B507C15b5d741d62e',
+    decimals: 18,
+    symbol: 'KIM',
+    name: 'KIM',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidiekbdac2oxzv3wue537e22wi7hvb62wqwp3tkmy3oquolbsedf4',
+  },
+  wrseth: {
+    address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
+    chainId: CHAIN_ID,
+    symbol: 'wrsETH',
+    decimals: 18,
+    name: 'rsETHWrapper',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty',
+  },
 };
