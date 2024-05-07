@@ -46,7 +46,7 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Staking') {
     return (
       <>
-        {record.action_title.split(" ").map((txt, index) => {
+        {record.action_title.split(" ").map((txt: any, index: number) => {
           return index === 1 ? (
             <span key={index}>
               <span style={{ color: '#979abe' }}>{record.action_amount}</span>
@@ -61,7 +61,7 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Yield') {
     return (
       <>
-        {record.action_title.split(" ").map((txt, index) => {
+        {record.action_title.split(" ").map((txt: any, index: number) => {
           return index === 1 ? (
             <span key={index}>
               <span style={{ color: '#979abe' }}>{record.action_amount}</span>
