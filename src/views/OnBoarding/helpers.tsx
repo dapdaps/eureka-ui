@@ -51,8 +51,8 @@ export function formatTitle(record: any) {
       if (parsedExtraData.type === 'univ3') {
         return (
           <>
-            {parsedExtraData.action} {parsedExtraData.amount0} {tokens[0]} and {parsedExtraData.amount1} {tokens[1]} on{' '}
-            {record.template}
+            {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {tokens[0]} and{' '}
+            {formateValue(parsedExtraData.amount1, 3)} {tokens[1]} on {record.template}
           </>
         );
       }
