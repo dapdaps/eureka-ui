@@ -12,14 +12,15 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Swap') {
     return (
       <>
-        Swap <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]} to {tokens[1]}
+        Swap <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} to{' '}
+        {tokens[1]}
       </>
     );
   }
   if (record.action_type === 'Bridge') {
     return (
       <>
-        Bridge <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}{' '}
+        Bridge <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}{' '}
         {chains[record.chain_id]?.chainName} to {chains[record.to_chain_id]?.chainName}
       </>
     );
@@ -32,29 +33,17 @@ export function formatTitle(record: any) {
         if (lendingActions.length) {
           return lendingActions.map((action: any, i: number) => (
             <div key={i}>
-              {action.type} <span style={{ color: '#979abe' }}>{action.amount}</span> {action.tokenSymbol}
+              {action.type} <span style={{ color: '#979abe' }}>{formateValue(action.amount, 3)}</span>{' '}
+              {action.tokenSymbol}
             </div>
           ));
         }
-      } catch (err) { }
+      } catch (err) {}
     }
     return (
       <>
-        Supply <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]} on {record.template}
-      </>
-    );
-  }
-  if (record.action_type === 'Staking') {
-    return (
-      <>
-        {record.action_title.split(" ").map((txt: any, index: number) => {
-          return index === 1 ? (
-            <span key={index}>
-              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
-              {" " + txt + " "}
-            </span>
-          ) : txt + " "
-        })}
+        Supply <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {record.template}
       </>
     );
   }
@@ -62,13 +51,15 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Yield') {
     return (
       <>
-        {record.action_title.split(" ").map((txt: any, index: number) => {
+        {record.action_title.split(' ').map((txt: any, index: number) => {
           return index === 1 ? (
             <span key={index}>
-              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
-              {" " + txt + " "}
+              <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span>
+              {' ' + txt + ' '}
             </span>
-          ) : txt + " "
+          ) : (
+            txt + ' '
+          );
         })}
         {/* Yield <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}{tokens[1] ? ' to' + tokens[1] : ''} on {record.template} */}
       </>
@@ -81,15 +72,18 @@ export function formatTitle(record: any) {
       if (parsedExtraData.type === 'univ3') {
         return (
           <>
-            {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {tokens[0]} and{' '}
-            {formateValue(parsedExtraData.amount1, 3)} {tokens[1]} on {record.template}
+            {parsedExtraData.action}{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span> {tokens[0]} and{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span> {tokens[1]} on{' '}
+            {record.template}
           </>
         );
       }
-    } catch (err) { }
+    } catch (err) {}
     return (
       <>
-        Deposit <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}-{tokens[1]}
+        Deposit <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
+        {tokens[1]}
       </>
     );
   }
@@ -97,15 +91,25 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Staking') {
     try {
       const parsedExtraData = JSON.parse(record.extra_data || {});
-      if (parsedExtraData) {
+      if (parsedExtraData && !record.action_title) {
         return (
           <>
-            {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {parsedExtraData.token0Symbol} and{' '}
-            {formateValue(parsedExtraData.amount1, 3)} {parsedExtraData.token1Symbol} on {record.template}
+            {parsedExtraData.action}{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span>{' '}
+            {parsedExtraData.token0Symbol} and{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span>{' '}
+            {parsedExtraData.token1Symbol} on {record.template}
           </>
         );
       }
     } catch (err) {}
-    return <>{record.action_title}</>;
+    const action = record.action_title.split(' ')[0];
+    return (
+      <>
+        {action} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {record.template}
+      </>
+    );
   }
+  return <>{record.action_title}</>;
 }
