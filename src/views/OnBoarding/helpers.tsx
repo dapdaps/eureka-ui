@@ -69,8 +69,10 @@ export function formatTitle(record: any) {
       if (parsedExtraData.type === 'univ3') {
         return (
           <>
-            {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {tokens[0]} and{' '}
-            {formateValue(parsedExtraData.amount1, 3)} {tokens[1]} on {record.template}
+            {parsedExtraData.action}{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span> {tokens[0]} and{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span> {tokens[1]} on{' '}
+            {record.template}
           </>
         );
       }
@@ -88,8 +90,11 @@ export function formatTitle(record: any) {
       if (parsedExtraData?.amount0) {
         return (
           <>
-            {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {parsedExtraData.token0Symbol} and{' '}
-            {formateValue(parsedExtraData.amount1, 3)} {parsedExtraData.token1Symbol} on {record.template}
+            {parsedExtraData.action}{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span>{' '}
+            {parsedExtraData.token0Symbol} and{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span>{' '}
+            {parsedExtraData.token1Symbol} on {record.template}
           </>
         );
       }
