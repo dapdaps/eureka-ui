@@ -12,14 +12,15 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Swap') {
     return (
       <>
-        Swap <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]} to {tokens[1]}
+        Swap <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} to{' '}
+        {tokens[1]}
       </>
     );
   }
   if (record.action_type === 'Bridge') {
     return (
       <>
-        Bridge <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}{' '}
+        Bridge <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}{' '}
         {chains[record.chain_id]?.chainName} to {chains[record.to_chain_id]?.chainName}
       </>
     );
@@ -32,7 +33,8 @@ export function formatTitle(record: any) {
         if (lendingActions.length) {
           return lendingActions.map((action: any, i: number) => (
             <div key={i}>
-              {action.type} <span style={{ color: '#979abe' }}>{action.amount}</span> {action.tokenSymbol}
+              {action.type} <span style={{ color: '#979abe' }}>{formateValue(action.amount, 3)}</span>{' '}
+              {action.tokenSymbol}
             </div>
           ));
         }
@@ -40,7 +42,8 @@ export function formatTitle(record: any) {
     }
     return (
       <>
-        Supply <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]} on {record.template}
+        Supply <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {record.template}
       </>
     );
   }
@@ -51,7 +54,7 @@ export function formatTitle(record: any) {
         {record.action_title.split(' ').map((txt: any, index: number) => {
           return index === 1 ? (
             <span key={index}>
-              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
+              <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span>
               {' ' + txt + ' '}
             </span>
           ) : (
@@ -79,7 +82,8 @@ export function formatTitle(record: any) {
     } catch (err) {}
     return (
       <>
-        Deposit <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}-{tokens[1]}
+        Deposit <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
+        {tokens[1]}
       </>
     );
   }
@@ -87,7 +91,7 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Staking') {
     try {
       const parsedExtraData = JSON.parse(record.extra_data || {});
-      if (parsedExtraData?.amount0) {
+      if (parsedExtraData && !record.action_title) {
         return (
           <>
             {parsedExtraData.action}{' '}
@@ -99,18 +103,11 @@ export function formatTitle(record: any) {
         );
       }
     } catch (err) {}
+    const action = record.action_title.split(' ')[0];
     return (
       <>
-        {record.action_title.split(' ').map((txt: any, index: number) => {
-          return index === 1 ? (
-            <span key={index}>
-              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
-              {' ' + txt + ' '}
-            </span>
-          ) : (
-            txt + ' '
-          );
-        })}
+        {action} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {record.template}
       </>
     );
   }
