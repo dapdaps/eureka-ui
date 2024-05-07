@@ -81,8 +81,6 @@ interface Props {
 export default function BirdgeAction(
   {
     chainList,
-    // getAllTokens,
-    // getChainScan,
   }: Props) {
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false)
   const { account, chainId } = useAccount();
@@ -93,10 +91,13 @@ export default function BirdgeAction(
   const [toToken, setToToken] = useState<Token>()
   const [sendAmount, setSendAmount] = useState('')
   const [reciveAmount, setReciveAmount] = useState('')
+  const [selectedRoute, setSelectedRoute] = useState<QuoteResponse | null>(null)
+  const [identification, setIdentification] = useState(Date.now())
   const inputValue = useDebounce(sendAmount, { wait: 500 });
+
   const [quoteReques, setQuoteRequest] = useState<QuoteRequest | null>(null)
 
-  const { routes, loading } = useQuote(quoteReques)
+  const { routes, loading } = useQuote(quoteReques, identification)
 
   useEffect(() => {
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
@@ -106,6 +107,10 @@ export default function BirdgeAction(
     if (Number(inputValue) <= 0) {
       return
     }
+
+    const identification = Date.now()
+
+    setIdentification(identification)
 
     setQuoteRequest({
       fromChainId: fromChain?.chainId.toString(),
@@ -123,6 +128,7 @@ export default function BirdgeAction(
       fromAddress: account as string,
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
+      identification,
     })
 
   }, [fromChain, toChain, fromToken, toToken, account, inputValue])
@@ -181,13 +187,15 @@ export default function BirdgeAction(
       currentChain={toChain}
       currentToken={toToken}
       chainToken={chainToken}
-      amount={reciveAmount}
+      amount={selectedRoute?.receiveAmount || ''}
       title="To"
       address={addressFormated(account as string)}
       chainList={chainList}
     />
     {
-      routes?.length && <RouteSelected routes={routes}/>
+      toToken && routes?.length && <RouteSelected onRouteSelected={(route: QuoteResponse | null) => {
+        setSelectedRoute(route)
+      }} toToken={toToken} routes={routes}/>
     }
     <Sep height={20} />
     <SubmitBtn />

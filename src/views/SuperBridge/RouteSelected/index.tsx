@@ -5,6 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { ArrowRight } from '../Arrow'
 import Route from '../Route'
 import RouteModal from './RouteModal';
+import { Token } from "@/types";
 
 const Container = styled.div`
     margin-top: 20px;
@@ -40,26 +41,45 @@ const Sep = styled.div`
 `
 
 interface Props {
-    routes: QuoteResponse[] | null
+    routes: QuoteResponse[] | null;
+    toToken: Token;
+    onRouteSelected: (route: QuoteResponse | null) => void;
 }
 
 export default function RouteSelected(
-    {  }: Props
+    { routes, toToken, onRouteSelected }: Props
 ) {
     const [routeModalShow, setRouteModalShow] = useState<boolean>(false)
+    const [routeSelected, setRouteSelected] = useState<QuoteResponse | null>(null)
+
+    useEffect(() => {
+        let maxRoute: QuoteResponse | null = null
+        if (routes && routes.length) {
+            maxRoute = routes[0]
+            routes.forEach(route => {
+                if (Number(route.receiveAmount) > Number(maxRoute?.receiveAmount)) {
+                    maxRoute = route
+                }
+            })
+        }
+        setRouteSelected(maxRoute)
+        onRouteSelected(maxRoute)
+    }, [routes])
 
     return <Container>
         <TitleWapper>
             <div className="title">Select Bridge Route</div>
             <div className="arrow" onClick={() => { setRouteModalShow(true) }}>
-                <span className="route-num">2 Routes</span>
+                <span className="route-num">{routes?.length} Routes</span>
                 <ArrowRight />
             </div>
         </TitleWapper>
         <Sep />
-        <Route active/>
         {
-            routeModalShow && <RouteModal onClose={() => { setRouteModalShow(false) }} />
+            routeSelected && <Route toToken={toToken} route={routeSelected} active/>
+        }
+        {
+            routeModalShow && <RouteModal toToken={toToken} routeSelected={routeSelected} routes={routes} onClose={() => { setRouteModalShow(false) }} />
         }
     </Container>
 }

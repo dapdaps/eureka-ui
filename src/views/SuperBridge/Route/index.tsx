@@ -1,4 +1,11 @@
 import styled from 'styled-components';
+import Big from 'big.js';
+
+import { usePriceStore } from '@/stores/price';
+import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
+
+import type { Token } from '@/types';
+import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
 
 const Contanier = styled.div<{active: boolean, canClick: any}>`
     /* background-color: rgba(55, 58, 83, 1); */
@@ -20,6 +27,7 @@ const BridgeSummary = styled.div`
         .img {
             width: 30px;
             height: 30px;
+            border-radius: 100%;
         }
         .name {
             font-size: 16px;
@@ -86,19 +94,24 @@ const BridgeAmount = styled.div`
 interface Props {
     showOutputTitle?: boolean;
     active?: boolean;
+    route: QuoteResponse;
+    toToken: Token;
     onClick?: () => void;
 }
 
 export default function Route(
-    { showOutputTitle = true, active = false, onClick } : Props
+    { showOutputTitle = true, active = false, onClick, route, toToken } : Props
     ) {
+    const prices = usePriceStore((store) => store.price);
+        
+
     return <Contanier active={active} canClick={onClick} onClick={() => {
         onClick && onClick()
     }}>
         <BridgeSummary>
             <div className="bridge-names">
-                <img className="img" src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a" />
-                <div className="name">HoneySwap</div>
+                <img className="img" src={route.icon} />
+                <div className="name">{route.bridgeName}</div>
             </div>
             <div className="tags">
                 <div className="tag fastest">Fastest</div>
@@ -111,12 +124,13 @@ export default function Route(
                     showOutputTitle && <div className="title">Est. output</div>
                 }
                 <img className="token-icon" src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a" />
-                <div className="token-amount">~3380.49 + </div>
+                <div className="token-amount">~{ balanceFormated(route.receiveAmount ? new Big(route.receiveAmount).div(10 ** toToken.decimals).toString() : '') }</div>
+                {/* <div> + </div>
                 <img className="token-icon" src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a" />
-                <div className="token-amount">~3380.49 + </div>
+                <div className="token-amount">~3380.49</div> */}
             </div>
             <div className="cost-wapper">
-                <div>~3 min｜Gas $3.025</div>
+                <div>~{route.duration} min｜Gas ${ balanceFormated(route.feeType === 1 ? (prices as any)['ETH'] * Number(route.gas) : route.gas) }</div>
             </div>
         </BridgeAmount>
     </Contanier>
