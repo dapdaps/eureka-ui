@@ -87,6 +87,21 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         desc: 'Ambient is a Zero-to-One Decentralised Trading Protocol on Blast, offering cutting-edge trading solutions.<br />Complete trades on Ambient to earn extra Gold rewards. Trade actively and climb the leaderboard to stand a chance to win one of the top three prizes!',
       },
     ],
+    [
+      'MetaStreet',
+      {
+        logo: '/images/odyssey/v4/logo-metastreet.svg',
+        hyperlockLink: `${location.origin}/dapp/hyperlock`,
+        thrusterLink: `${location.origin}/dapp/thruster-liquidity`,
+        particleLink: 'https://app.particle.trade/0xe557Fa3DA7c728E9c7e7E76555773BAF00205654',
+        bgClass: 'bg-metastreet',
+        rank1: 100,
+        rank2: 60,
+        rank3: 40,
+        reward: '1500',
+        desc: '',
+      },
+    ],
   ]);
 
   return (
@@ -107,6 +122,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
               showRank={showRank}
               bgClass={GoldsMap.get(item.name)?.bgClass}
               data={{ ...GoldsMap.get(item.name), ...item, start_time: data.start_time, end_time: data.end_time }}
+              type="metastreet"
               onRefreshDetail={onRefreshDetail}
             />
           ))

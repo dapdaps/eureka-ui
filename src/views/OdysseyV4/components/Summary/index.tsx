@@ -10,11 +10,11 @@ export default function Summary({ data, loading }: any) {
 
   let golds = 0;
   if (!loading) {
-    golds = 5400;
+    golds = 6900;
   }
-  // const golds = 30000;
+
   const duration = 2;
-  // const delay = 2;
+
   return (
     <StyledContainer>
       <span className="leftTop corner"></span>
@@ -23,14 +23,13 @@ export default function Summary({ data, loading }: any) {
       <span className="rightBottom corner"></span>
       <Item>
         <Title>Trading Volume</Title>
-        {/* <Value>${formatThousandsSeparator(Number(Number(trading_volume).toFixed(2)))}</Value> */}
+
         <Value>
           <CountUp start={0} end={trading_volume} duration={duration} decimals={2} decimal="." prefix="$" suffix="" />
         </Value>
       </Item>
       <Item>
         <Title>Total Transactions</Title>
-        {/* <Value>{formatThousandsSeparator(total_transactions)}</Value> */}
         <Value>
           <CountUp start={0} end={total_transactions} duration={duration} />
         </Value>
@@ -44,7 +43,6 @@ export default function Summary({ data, loading }: any) {
       </Item>
       <Item>
         <Title>accumulated Gold</Title>
-        {/* <Value>{formatThousandsSeparator(30000)}</Value> */}
         <Value>
           <CountUp start={0} end={golds} duration={duration} />
         </Value>
