@@ -271,93 +271,93 @@ const AllInOne: NextPageWithLayout = () => {
     <Container key={chain}>
       <AllInOneView currentChain={currentChain} />
       {/*#region following is the old page */}
-      <BreadCrumbs>
-        <Link href="/">Home</Link>
-        {arrow}
-        <span>{currentChain.title} Navigation</span>
-      </BreadCrumbs>
-      <>
-        {' '}
-        <div className="top-login-select">
-          <div className="select-item-wrapper" onClick={handleSelectItemClick} data-bp="10014-002">
-            <div
-              className="selsect-item-img"
-              style={{
-                backgroundColor: currentChain.bgColor,
-              }}
-            >
-              <img className="select-chain-img" src={currentChain.icon} alt="" />
-            </div>
-            <div className="selsect-item-text">
-              <p> {currentChain.title}</p>
-            </div>
-            <div className="selsect-item-icon">
-              <img
-                style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                src={narrowUrl}
-                alt=""
-              />
-            </div>
-          </div>
-
-          {isSelectItemClicked && (
-            <div className="login-select-popup" ref={popupRef}>
-              {Object.values(popupsData).map((item) => (
-                <div
-                  className={`select-popups-item ${chain === item.path ? 'selected' : ''}`}
-                  key={item.path}
-                  onClick={() => handleItemClick(item.path)}
-                  data-bp="10014-003"
-                >
-                  <div className="popup-item-img" style={{ backgroundColor: item.bgColor }}>
-                    <img src={item.icon} alt="" />
-                  </div>
-                  <div className="popups-item-text">{item.title}</div>
-                  <div className="flex-grow"></div>
-                  {chain === item.path && (
-                    <div className="check-mark">
-                      <img src={checkMark} alt="check-mark" />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-        {showComponent && (
-          <>
-            <div className="select-bg-icon">
-              <div className="select-bg-content">
-                <img src={currentChain.bgIcon || currentChain.icon} alt="" />
-                <div className="select-bg">
-                  <SelectBg bgColor={currentChain.selectBgColor} />
-                </div>
-              </div>
-            </div>
-            <div className="content-page">
-              <ComponentWrapperPage
-                src="bluebiu.near/widget/All-in-one"
-                componentProps={{
-                  addAction,
-                  multicall,
-                  chainId: currentChain.chainId,
-                  currentChainId: chainId,
-                  menuConfig: currentChain.menuConfig,
-                  ...tabConfig,
-                  prices,
-                  tab,
-                  account,
-                  onReset: () => {},
-                  onChangeTab: (tab: string) => {
-                    cachedTabsStore.setCachedTab(tab, currentChain.chainId);
-                    setTab(tab);
-                  },
-                }}
-              />
-            </div>
-          </>
-        )}
-      </>
+      {/*<BreadCrumbs>*/}
+      {/*  <Link href="/">Home</Link>*/}
+      {/*  {arrow}*/}
+      {/*  <span>{currentChain.title} Navigation</span>*/}
+      {/*</BreadCrumbs>*/}
+      {/*<>*/}
+      {/*  {' '}*/}
+      {/*  <div className="top-login-select">*/}
+      {/*    <div className="select-item-wrapper" onClick={handleSelectItemClick} data-bp="10014-002">*/}
+      {/*      <div*/}
+      {/*        className="selsect-item-img"*/}
+      {/*        style={{*/}
+      {/*          backgroundColor: currentChain.bgColor,*/}
+      {/*        }}*/}
+      {/*      >*/}
+      {/*        <img className="select-chain-img" src={currentChain.icon} alt="" />*/}
+      {/*      </div>*/}
+      {/*      <div className="selsect-item-text">*/}
+      {/*        <p> {currentChain.title}</p>*/}
+      {/*      </div>*/}
+      {/*      <div className="selsect-item-icon">*/}
+      {/*        <img*/}
+      {/*          style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}*/}
+      {/*          src={narrowUrl}*/}
+      {/*          alt=""*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*    </div>*/}
+      
+      {/*    {isSelectItemClicked && (*/}
+      {/*      <div className="login-select-popup" ref={popupRef}>*/}
+      {/*        {Object.values(popupsData).map((item) => (*/}
+      {/*          <div*/}
+      {/*            className={`select-popups-item ${chain === item.path ? 'selected' : ''}`}*/}
+      {/*            key={item.path}*/}
+      {/*            onClick={() => handleItemClick(item.path)}*/}
+      {/*            data-bp="10014-003"*/}
+      {/*          >*/}
+      {/*            <div className="popup-item-img" style={{ backgroundColor: item.bgColor }}>*/}
+      {/*              <img src={item.icon} alt="" />*/}
+      {/*            </div>*/}
+      {/*            <div className="popups-item-text">{item.title}</div>*/}
+      {/*            <div className="flex-grow"></div>*/}
+      {/*            {chain === item.path && (*/}
+      {/*              <div className="check-mark">*/}
+      {/*                <img src={checkMark} alt="check-mark" />*/}
+      {/*              </div>*/}
+      {/*            )}*/}
+      {/*          </div>*/}
+      {/*        ))}*/}
+      {/*      </div>*/}
+      {/*    )}*/}
+      {/*  </div>*/}
+      {/*  {showComponent && (*/}
+      {/*    <>*/}
+      {/*      <div className="select-bg-icon">*/}
+      {/*        <div className="select-bg-content">*/}
+      {/*          <img src={currentChain.bgIcon || currentChain.icon} alt="" />*/}
+      {/*          <div className="select-bg">*/}
+      {/*            <SelectBg bgColor={currentChain.selectBgColor} />*/}
+      {/*          </div>*/}
+      {/*        </div>*/}
+      {/*      </div>*/}
+      {/*      <div className="content-page">*/}
+      {/*        <ComponentWrapperPage*/}
+      {/*          src="bluebiu.near/widget/All-in-one"*/}
+      {/*          componentProps={{*/}
+      {/*            addAction,*/}
+      {/*            multicall,*/}
+      {/*            chainId: currentChain.chainId,*/}
+      {/*            currentChainId: chainId,*/}
+      {/*            menuConfig: currentChain.menuConfig,*/}
+      {/*            ...tabConfig,*/}
+      {/*            prices,*/}
+      {/*            tab,*/}
+      {/*            account,*/}
+      {/*            onReset: () => {},*/}
+      {/*            onChangeTab: (tab: string) => {*/}
+      {/*              cachedTabsStore.setCachedTab(tab, currentChain.chainId);*/}
+      {/*              setTab(tab);*/}
+      {/*            },*/}
+      {/*          }}*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*    </>*/}
+      {/*  )}*/}
+      {/*</>*/}
       {/*#endregion */}
     </Container>
   ) : (
