@@ -36,7 +36,7 @@ export function formatTitle(record: any) {
             </div>
           ));
         }
-      } catch (err) { }
+      } catch (err) {}
     }
     return (
       <>
@@ -44,31 +44,19 @@ export function formatTitle(record: any) {
       </>
     );
   }
-  if (record.action_type === 'Staking') {
-    return (
-      <>
-        {record.action_title.split(" ").map((txt: any, index: number) => {
-          return index === 1 ? (
-            <span key={index}>
-              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
-              {" " + txt + " "}
-            </span>
-          ) : txt + " "
-        })}
-      </>
-    );
-  }
 
   if (record.action_type === 'Yield') {
     return (
       <>
-        {record.action_title.split(" ").map((txt: any, index: number) => {
+        {record.action_title.split(' ').map((txt: any, index: number) => {
           return index === 1 ? (
             <span key={index}>
               <span style={{ color: '#979abe' }}>{record.action_amount}</span>
-              {" " + txt + " "}
+              {' ' + txt + ' '}
             </span>
-          ) : txt + " "
+          ) : (
+            txt + ' '
+          );
         })}
         {/* Yield <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}{tokens[1] ? ' to' + tokens[1] : ''} on {record.template} */}
       </>
@@ -86,7 +74,7 @@ export function formatTitle(record: any) {
           </>
         );
       }
-    } catch (err) { }
+    } catch (err) {}
     return (
       <>
         Deposit <span style={{ color: '#979abe' }}>{record.action_amount}</span> {tokens[0]}-{tokens[1]}
@@ -97,7 +85,7 @@ export function formatTitle(record: any) {
   if (record.action_type === 'Staking') {
     try {
       const parsedExtraData = JSON.parse(record.extra_data || {});
-      if (parsedExtraData) {
+      if (parsedExtraData?.amount0) {
         return (
           <>
             {parsedExtraData.action} {formateValue(parsedExtraData.amount0, 3)} {parsedExtraData.token0Symbol} and{' '}
@@ -106,6 +94,20 @@ export function formatTitle(record: any) {
         );
       }
     } catch (err) {}
-    return <>{record.action_title}</>;
+    return (
+      <>
+        {record.action_title.split(' ').map((txt: any, index: number) => {
+          return index === 1 ? (
+            <span key={index}>
+              <span style={{ color: '#979abe' }}>{record.action_amount}</span>
+              {' ' + txt + ' '}
+            </span>
+          ) : (
+            txt + ' '
+          );
+        })}
+      </>
+    );
   }
+  return <>{record.action_title}</>;
 }
