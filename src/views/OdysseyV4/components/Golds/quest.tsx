@@ -23,7 +23,7 @@ import {
   StyledTimerBox,
 } from './styles';
 
-export default function Quest({ data, showRank, bgClass, onRefreshDetail, type }: any) {
+export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any) {
   const {
     id,
     name,
@@ -41,6 +41,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail, type }
     hyperlockLink,
     thrusterLink,
     particleLink,
+    type,
   } = data;
 
   const [execution, setExecution] = useState(0);
