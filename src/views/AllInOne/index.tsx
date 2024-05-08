@@ -26,6 +26,7 @@ import { useSetChain } from '@web3-onboard/react';
 import useReport from '@/views/Landing/hooks/useReport';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
+import Trade from './components/Trade';
 
 const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
 
@@ -185,7 +186,7 @@ const AllInOneView = (props: Props) => {
                     bgColor={currentChain.selectBgColor}
                     style={getCardWidth()}
                   >
-                    Form
+                    <Trade chain={currentChain}/>
                   </AllInOneCardView>
                 );
               })}
