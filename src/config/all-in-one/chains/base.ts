@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Base.Bridge',
+      description: 'Trade by best price on Base',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Base.BaseDex',
+      description: 'Trade by best price on Base',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Base.Lending',
+      description: 'Trade by best price on Base',
     },
   },
 };

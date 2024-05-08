@@ -13,18 +13,22 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Linea.Bridge',
+      description: 'Bridge assets from other chains to Linea',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Linea.Swap.Dex',
+      description: 'Trade by best price on Linea',
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Linea.Liquidity.GAMMA',
+      description: 'Trade by best price on Linea',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Linea.Lending',
+      description: 'Trade by best price on Linea',
     },
   },
 };

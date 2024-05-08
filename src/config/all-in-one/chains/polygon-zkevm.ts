@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'guessme.near/widget/ZKEVMSwap.zkevm-bridge',
+      description: 'Trade by best price on Polygon zkEVM',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/PolygonZkevm.Swap.Dex',
+      description: 'Trade by best price on Polygon zkEVM',
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/ZKEVM.GAMMA',
+      description: 'Trade by best price on Polygon zkEVM',
     },
   },
 };

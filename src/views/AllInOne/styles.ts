@@ -20,12 +20,13 @@ export const StyledLogo = styled.div`
   width: 40px;
   height: 40px;
   overflow: hidden;
+
   .chain-logo {
     width: 100%;
     height: 100%;
   }
 `;
-export const StyledImage = styled.img<{iconColor: string}>`
+export const StyledImage = styled.img<{ iconColor: string }>`
   transform: translateX(40px);
   -webkit-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
   -moz-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
@@ -44,7 +45,7 @@ export const StyledTitle = styled.div`
 `;
 export const StyledArrowIconWrap = styled.div`
   cursor: pointer;
-    transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
 `;
 export const StyledHeader = styled.div`
   position: relative;
@@ -62,17 +63,15 @@ export const StyledMainHeader = styled.div`
   width: 200px;
   height: 200px;
   margin: 0 auto;
-  z-index: 2;
+  z-index: 1;
 `;
 
 export const StyledContent = styled.div`
   width: 100%;
   position: relative;
   display: flex;
-  flex-wrap: wrap;
   gap: 12px;
-  justify-content: center;
-  align-items: center;
+  flex-wrap: wrap;
 `;
 
 export const StyledMainLogo = styled.div`
@@ -91,7 +90,7 @@ export const StyledShadow = styled.div`
   top: 35%;
   left: 50%;
   transform: translate(-50%, 0);
-  z-index: 1;
+  z-index: 0;
 `;
 
 export const StyledPopup = styled.div`
@@ -113,9 +112,11 @@ export const StyledPopupItem = styled.div`
   align-items: center;
   padding: 8px;
   border-radius: 8px;
+
   .flex-grow {
     flex-grow: 1;
   }
+
   &:hover,
   &.selected {
     background: #2a2a3a;

@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/zkSync.Bridge.Index',
+      description: 'Trade by best price on zkSync',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/zkSync.Swap.Dex',
+      description: 'Trade by best price on zkSync',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/zkSync.Lending',
+      description: 'Trade by best price on zkSync',
     },
   },
 };

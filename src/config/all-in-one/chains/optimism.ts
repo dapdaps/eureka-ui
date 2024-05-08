@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Optimism.Bridge',
+      description: 'Trade by best price on Optimism',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Optimism.Dex',
+      description: 'Trade by best price on Optimism',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Optimism.Lending',
+      description: 'Trade by best price on Optimism',
     },
   },
 };

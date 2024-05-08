@@ -12,10 +12,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Blast.BridgeAuthority.Index',
+      description: 'Trade by best price on Blast',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Blast.Swap',
+      description: 'Trade by best price on Blast',
     },
     // Lending: {
     //   tab: 'Lending',

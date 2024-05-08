@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Polygon.Bridge',
+      description: 'Trade by best price on Polygon',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Polygon.Swap.Dex',
+      description: 'Trade by best price on Polygon',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Polygon.Lending',
+      description: 'Trade by best price on Polygon',
     },
   },
 };

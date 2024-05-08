@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Arbitrum.Bridge',
+      description: 'Trade by best price on Arbitrum',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Arbitrum.Swap.Dex',
+      description: 'Trade by best price on Arbitrum',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Arbitrum.Lending',
+      description: 'Trade by best price on Arbitrum',
     },
   },
 };

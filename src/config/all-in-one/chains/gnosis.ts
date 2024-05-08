@@ -12,10 +12,12 @@ export default {
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Gnosis.Swap.Dex',
+      description: 'Trade by best price on Gnosis',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Gnosis.Lending',
+      description: 'Trade by best price on Gnosis',
     },
   },
 };

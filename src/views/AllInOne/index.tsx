@@ -25,6 +25,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { useSetChain } from '@web3-onboard/react';
 import useReport from '@/views/Landing/hooks/useReport';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
+import { Gradient } from '@/views/AllInOne/components/Gradient';
 
 const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
 
@@ -50,38 +51,6 @@ const AllInOneView = (props: Props) => {
       return menuItem;
     });
   }, [currentChain]);
-
-  const SelectBg: React.FC<{
-    bgColor: string;
-  }> = ({ bgColor }) => (
-    <svg width="720" height="241" viewBox="0 0 720 241" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g opacity="0.5" filter="url(#filter0_f_510_1870)">
-        <ellipse cx="360" cy="120.5" rx="280" ry="40.5" fill={bgColor} />
-      </g>
-      <defs>
-        <filter
-          id="filter0_f_510_1870"
-          x="0"
-          y="0"
-          width="720"
-          height="241"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-          <feGaussianBlur stdDeviation="40" result="effect1_foregroundBlur_510_1870" />
-        </filter>
-      </defs>
-    </svg>
-  );
-
-  const ArrowTopRight = ({ size = 14, color = '#979ABE', classname }: { size?: number, color?: string, classname: string}) => {
-    return <svg className={classname} width={size} height={size} viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M1 15L15 1M15 1H1M15 1V15" stroke={color} stroke-width="1.5" />
-    </svg>;
-
-  }
 
   const handleSelectItemClick = () => {
     setIsSelectItemClicked(!isSelectItemClicked);
@@ -125,7 +94,7 @@ const AllInOneView = (props: Props) => {
     };
   }, []);
 
-  console.log(currentChainMenuList);
+  console.log(currentChain);
 
   return (
     <StyledContainer>
@@ -181,18 +150,45 @@ const AllInOneView = (props: Props) => {
             </StyledMainLogo>
           </StyledMainHeader>
           <StyledShadow>
-            <SelectBg bgColor={currentChain.selectBgColor} />
+            <Gradient
+              bgColor={currentChain.selectBgColor}
+              width={720}
+              height={241}
+              rx={280}
+              ry={40.5}
+            />
           </StyledShadow>
         </StyledHeader>
 
         {
           showComponent && (
             <StyledContent>
-              {currentChainMenuList.map((item: any) => (
-                <AllInOneCardView key={item.tab} title={item.tab}>
-                  Form
-                </AllInOneCardView>
-              ))}
+              {currentChainMenuList.map((item: any, idx: number) => {
+                const len = currentChainMenuList.length;
+                const getCardWidth = () => {
+                  const index = idx + 1;
+                  if (len >= 4) {
+                    if ([1, 0].includes(index % 4)) {
+                      return { width: `calc(40% - 6px)`, flexShrink: 0, flexGrow: 0 };
+                    }
+                    if ([2, 3].includes(index % 4)) {
+                      return { width: `calc(60% - 6px)`, flexShrink: 0, flexGrow: 0 };
+                    }
+                  }
+                  return { flex: 1 };
+                };
+                return (
+                  <AllInOneCardView
+                    key={item.tab}
+                    title={item.tab}
+                    subTitle={item.description}
+                    bgColor={currentChain.selectBgColor}
+                    style={getCardWidth()}
+                  >
+                    Form
+                  </AllInOneCardView>
+                );
+              })}
             </StyledContent>
           )
         }

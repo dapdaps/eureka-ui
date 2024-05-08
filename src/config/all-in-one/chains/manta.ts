@@ -12,10 +12,12 @@ export default {
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Manta.Swap',
+      description: 'Trade by best price on Manta',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Manta.Lending',
+      description: 'Trade by best price on Manta',
     },
   },
 };

@@ -12,14 +12,17 @@ export default {
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Mantle.Swap.Dex',
+      description: 'Trade by best price on Mantle',
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Mantle.GAMMA',
+      description: 'Trade by best price on Mantle',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Mantle.Lending',
+      description: 'Trade by best price on Mantle',
     },
   },
 };

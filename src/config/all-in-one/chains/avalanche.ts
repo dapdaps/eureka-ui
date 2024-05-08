@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Avalanche.Bridge',
+      description: 'Trade by best price on Avalanche',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Avalanche.Swap',
+      description: 'Trade by best price on Avalanche',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Avalanche.Lending',
+      description: 'Trade by best price on Avalanche',
     },
   },
 };

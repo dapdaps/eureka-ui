@@ -12,14 +12,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Bsc.Bridge',
+      description: 'Trade by best price on BNB Chain',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Bsc.Swap.Dex',
+      description: 'Trade by best price on BNB Chain',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Bsc.Lending',
+      description: 'Trade by best price on BNB Chain',
     },
   },
 };
