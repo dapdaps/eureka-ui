@@ -123,4 +123,20 @@ export const mode: { [key: string]: Token } = {
     name: 'StakeStone Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreih3upiejskutko5ochkysbzuihf4t7ngopshrdefi3zjknmnmou6i',
   },
+  lab: {
+    chainId: CHAIN_ID,
+    address: '0xFE67e16313f4B38743a153f74D5762F7C83e59aE',
+    decimals: 18,
+    symbol: 'LAB',
+    name: 'LineaBank Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce',
+  },
+  wrseth: {
+    chainId: CHAIN_ID,
+    address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
+    decimals: 18,
+    symbol: 'wrsETH',
+    name: 'rsETHWrapper',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty',
+  },
 };
