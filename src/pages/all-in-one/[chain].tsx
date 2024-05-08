@@ -83,6 +83,10 @@ const Container = styled.div`
       text-align: center;
       border-radius: 8px;
       margin-right: 8px;
+      .select-chain-img {
+        /* width: 80%;
+        height: 80%; */
+      }
     }
     .selsect-item-text {
       padding-top: 16px;
@@ -282,7 +286,7 @@ const AllInOne: NextPageWithLayout = () => {
                 backgroundColor: currentChain.bgColor,
               }}
             >
-              <img src={currentChain.icon} alt="" />
+              <img className="select-chain-img" src={currentChain.icon} alt="" />
             </div>
             <div className="selsect-item-text">
               <p> {currentChain.title}</p>

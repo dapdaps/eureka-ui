@@ -45,6 +45,21 @@ const ROUTE_CONFIG = {
       '--claim-color': '#1aca8a',
     },
   },
+  hyperlock: {
+    type: 'staking',
+    theme: {
+      '--primary': '#e9fb46',
+      '--button-color': '#e9fb46',
+      '--button-text-color': '#000',
+    },
+  },
+  penpad: {
+    type: 'staking',
+    theme: {
+      '--button-color': '#29C8A5',
+      '--button-text-color': '#000',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;

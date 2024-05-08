@@ -12,6 +12,7 @@ import zkSync from './zkSync';
 import polygonZkevm from './polygon-zkevm';
 import manta from './manta';
 import scroll from './scroll';
+import blast from './blast';
 
 export default {
   42161: arbitrum,
@@ -28,4 +29,5 @@ export default {
   1101: polygonZkevm,
   169: manta,
   534352: scroll,
+  81457: blast,
 } as { [key: number]: any };

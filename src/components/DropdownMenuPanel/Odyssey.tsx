@@ -111,7 +111,7 @@ const Odyssey = function ({ setShow }: any) {
   return (
     <StyledOdyssey>
       <StyledFlex alignItems="flex-start" gap="70px" style={{ width: '100%' }}>
-        <StyledFlex alignItems='flex-start' gap='17px' style={{ marginTop: 41, }}>
+        <StyledFlex alignItems="flex-start" gap="17px" style={{ marginTop: 41 }}>
           <StyledFlex
             flexDirection="column"
             alignItems="flex-start"
@@ -125,17 +125,23 @@ const Odyssey = function ({ setShow }: any) {
               Obtain spins through on-chain interactive quests as you explore the untapped potential of Ethereum L2s.
             </StyledFont>
           </StyledFlex>
-          {/* <StyledSvg style={{
-            cursor: "pointer"
-          }} onClick={() => {
-            router.push("/odyssey/homepage")
-            setShow(false);
-          }}>
+          <StyledSvg
+            style={{
+              cursor: 'pointer',
+            }}
+            onClick={() => {
+              router.push('/odyssey/homepage');
+              setShow(false);
+            }}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-              <path d="M10.2929 28.2929C9.90237 28.6834 9.90237 29.3166 10.2929 29.7071C10.6834 30.0976 11.3166 30.0976 11.7071 29.7071L10.2929 28.2929ZM29 12C29 11.4477 28.5523 11 28 11L19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13L27 13L27 21C27 21.5523 27.4477 22 28 22C28.5523 22 29 21.5523 29 21L29 12ZM11.7071 29.7071L28.7071 12.7071L27.2929 11.2929L10.2929 28.2929L11.7071 29.7071Z" fill="#979ABE" />
+              <path
+                d="M10.2929 28.2929C9.90237 28.6834 9.90237 29.3166 10.2929 29.7071C10.6834 30.0976 11.3166 30.0976 11.7071 29.7071L10.2929 28.2929ZM29 12C29 11.4477 28.5523 11 28 11L19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13L27 13L27 21C27 21.5523 27.4477 22 28 22C28.5523 22 29 21.5523 29 21L29 12ZM11.7071 29.7071L28.7071 12.7071L27.2929 11.2929L10.2929 28.2929L11.7071 29.7071Z"
+                fill="#979ABE"
+              />
               <rect x="0.5" y="0.5" width="39" height="39" rx="5.5" stroke="#979ABE" stroke-opacity="0.3" />
             </svg>
-          </StyledSvg> */}
+          </StyledSvg>
         </StyledFlex>
         <StyledOdysseyWrapper>
           <StyledOdysseyContainer>
@@ -181,23 +187,27 @@ const Odyssey = function ({ setShow }: any) {
           </StyledOdysseyContainer>
           {showBeginMask && <StyledMask style={{ left: '0px', transform: 'rotate(-180deg)' }} />}
           {showEndMask && compassList?.length > 2 && <StyledMask style={{ right: '0px' }} />}
-          <LeftButton
-            onClick={() => {
-              swiperRef.current && swiperRef.current.slidePrev();
-              setShowEndMask(!swiperRef.current?.isEnd);
-              setShowBeginMask(!swiperRef.current?.isBeginning);
-            }}
-          />
-          <RightButton
-            onClick={() => {
-              swiperRef.current && swiperRef.current.slideNext();
-              setShowEndMask(!swiperRef.current?.isEnd);
-              setShowBeginMask(!swiperRef.current?.isBeginning);
-            }}
-          />
+          {compassList.length > 2 && (
+            <>
+              <LeftButton
+                onClick={() => {
+                  swiperRef.current && swiperRef.current.slidePrev();
+                  setShowEndMask(!swiperRef.current?.isEnd);
+                  setShowBeginMask(!swiperRef.current?.isBeginning);
+                }}
+              />
+              <RightButton
+                onClick={() => {
+                  swiperRef.current && swiperRef.current.slideNext();
+                  setShowEndMask(!swiperRef.current?.isEnd);
+                  setShowBeginMask(!swiperRef.current?.isBeginning);
+                }}
+              />
+            </>
+          )}
         </StyledOdysseyWrapper>
       </StyledFlex>
-    </StyledOdyssey >
+    </StyledOdyssey>
   );
 };
 export default memo(Odyssey);

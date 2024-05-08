@@ -74,8 +74,20 @@ const nextConfig = {
       destination: 'https://www.shush.fi/:path*',
     },
     {
-      source: '/pool/fee-apr',
-      destination: 'https://ro81h8hq6b.execute-api.us-east-1.amazonaws.com/pool/fee-apr',
+      source: '/blast/bridge/:path*',
+      destination: 'https://waitlist-api.prod.blast.io/:path*',
+    },
+    {
+      source: '/renzo/:path*',
+      destination: 'https://app.renzoprotocol.com/:path*',
+    },
+    {
+      source: '/lido/:path*',
+      destination: 'https://stake.lido.fi/:path*',
+    },
+    {
+      source: '/pac/:path*',
+      destination: api_url + '/pac/:path*',
     },
   ],
   images: {
@@ -107,6 +119,45 @@ const nextConfig = {
     ],
   },
   transpilePackages: ['ahooks'],
+  experimental: {
+    esmExternals: 'loose',
+  },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // console.log(config.resolve)
+    config.resolve.alias['stream'] = 'stream-browserify'
+    config.resolve.alias['stream'] = 'stream-browserify'
+    config.module.rules.push({
+          test: /super-bridge-sdk/,
+          use: [
+                {
+                    loader: 'ts-loader',
+                    options: {
+                      compilerOptions: {noEmit: false},
+                      onlyCompileBundledFiles: true,
+                      allowTsInNodeModules: true
+                    }
+                }
+            ]
+         
+    })
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      path: false,
+      url: false,
+      "fs": false,
+      "constants": false,
+      "querystring": false,
+      "os": false,
+      "http": require.resolve("http-browserify"),
+      "https": require.resolve("https-browserify"),
+      "stream": require.resolve("stream-browserify"),
+      // "stream": false,
+      "crypto": require.resolve("crypto-browserify"),
+      // "zlib": require.resolve('browserify-zlib'),
+      // "vm": require.resolve("vm-browserify"),
+    }
+    return config
+  },
 };
 
 module.exports = nextConfig;

@@ -112,7 +112,7 @@ export default function ShuShView() {
         />
         <PreviousOrders tokens={tokens} />
 
-        <Quests questList={questList} loading={questingLoading} />
+        {/* <Quests questList={questList} loading={questingLoading} /> */}
 
         <SelectTokens
           display={showModal}

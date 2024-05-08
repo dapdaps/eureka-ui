@@ -67,7 +67,7 @@ const Button = ({
   const spender = useMemo(() => {
     if (!inputChain || !inputToken || inputChain.chainId !== Number(connectedChain?.id)) return '';
     if (!chainCofig[inputChain?.chainId]) {
-      return ''
+      return '';
     }
     return inputToken.isNative ? chainCofig[inputChain.chainId].ethRouter : chainCofig[inputChain?.chainId].router;
   }, [inputChain, inputToken, connectedChain?.id]);
@@ -75,7 +75,6 @@ const Button = ({
   const { approved, approve, approving } = useApprove({
     token: inputToken,
     amount,
-    chain: inputChain,
     spender,
   });
 
@@ -127,7 +126,7 @@ const Button = ({
           route,
           onSuccess,
           onFail,
-        })
+        });
       }}
       disabled={swaping || !inputToken || !inputChain || !outputToken || !outputChain}
     >

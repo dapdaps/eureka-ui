@@ -120,7 +120,7 @@ const Container = styled.div`
     z-index: 1;
     width: 100%;
     position: relative;
-    padding-top: 150px;
+    padding-top: 60px;
     /* position: absolute; */
   }
   .select-bg-icon {
@@ -130,10 +130,11 @@ const Container = styled.div`
     left: 50%;
     transform: translate(-50%);
     .select-bg-content {
-      padding-top: 150px;
+      padding-top: 40px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
+      font-size: 20px;
       img {
         width: 24px;
         margin-right: 10px;
@@ -233,7 +234,8 @@ const AllInOne: NextPageWithLayout = () => {
         </div>
         <div className="content-page">
           <ComponentWrapperPage
-            src="bluebiu.near/widget/Scroll.BridgeXY.Index"
+            // src="bluebiu.near/widget/Blast.BridgeXY.Index"
+            src={chainConfig?.dapp_network[0].dapp_src}
             componentProps={{
               addAction,
               multicall,

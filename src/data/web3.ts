@@ -280,6 +280,12 @@ export const onboard = init({
       label: 'Scroll',
       rpcUrl: 'https://rpc.scroll.io',
     },
+    {
+      id: 81457,
+      token: 'Blast',
+      label: 'Blast',
+      rpcUrl: 'https://rpc.blast.io',
+    },
   ],
   appMetadata: {
     name: 'NEAR',
