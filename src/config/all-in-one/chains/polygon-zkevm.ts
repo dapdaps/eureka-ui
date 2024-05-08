@@ -14,7 +14,7 @@ export default {
       path: 'guessme.near/widget/ZKEVMSwap.zkevm-bridge',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/PolygonZkevm.Swap.Dex',
     },
     Liquidity: {

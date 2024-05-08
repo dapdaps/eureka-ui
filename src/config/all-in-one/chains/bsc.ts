@@ -14,7 +14,7 @@ export default {
       path: 'bluebiu.near/widget/Bsc.Bridge',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Bsc.Swap.Dex',
     },
     Lending: {

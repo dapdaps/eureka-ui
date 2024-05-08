@@ -10,7 +10,7 @@ export default {
   defaultTab: 'Swap',
   menuConfig: {
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Gnosis.Swap.Dex',
     },
     Lending: {

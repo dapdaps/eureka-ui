@@ -14,7 +14,7 @@ export default {
       path: 'bluebiu.near/widget/Scroll.Bridge.Index',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Scroll.Swap',
     },
     Lending: {

@@ -15,7 +15,7 @@ export default {
       path: 'bluebiu.near/widget/Linea.Bridge',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Linea.Swap.Dex',
     },
     Liquidity: {

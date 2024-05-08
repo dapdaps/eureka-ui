@@ -14,7 +14,7 @@ export default {
       path: 'bluebiu.near/widget/Polygon.Bridge',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Polygon.Swap.Dex',
     },
     Lending: {

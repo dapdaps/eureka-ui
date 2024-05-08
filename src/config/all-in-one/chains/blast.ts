@@ -14,7 +14,7 @@ export default {
       path: 'bluebiu.near/widget/Blast.BridgeAuthority.Index',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Blast.Swap',
     },
     // Lending: {

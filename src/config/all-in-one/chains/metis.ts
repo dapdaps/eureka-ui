@@ -14,7 +14,7 @@ export default {
       path: 'bluebiu.near/widget/Metis.Bridge',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Metis.Swap.Dex',
     },
   },

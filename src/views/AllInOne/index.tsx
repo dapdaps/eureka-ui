@@ -1,25 +1,56 @@
-import { memo, useState } from 'react';
-import styled from 'styled-components';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { StyledFlex } from "@/styled/styles";
+import {
+  StyledArrowIconWrap,
+  StyledContainer,
+  StyledContent,
+  StyledHeader,
+  StyledImage,
+  StyledLogo,
+  StyledLogoBg,
+  StyledLogoContainer,
+  StyledMainHeader,
+  StyledMainLogo,
+  StyledPopup,
+  StyledPopupImg,
+  StyledPopupItem,
+  StyledPopupText,
+  StyledShadow,
+  StyledTitle,
+} from '@/views/AllInOne/styles';
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import popupsData from '@/config/all-in-one/chains';
+import { useDebounceFn } from 'ahooks';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import { useSetChain } from '@web3-onboard/react';
+import useReport from '@/views/Landing/hooks/useReport';
+import AllInOneCardView from '@/views/AllInOne/components/Card';
 
-function isNonEmptyObject(obj) {
-  return typeof obj === 'object' && obj !== null && Object.keys(obj).length > 0;
-}
+const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
 
 const AllInOneView = (props: Props) => {
-  const { currentChain } = props;
+  const { chain } = props;
 
-  const [currTab, setCurrTab] = useState();
-  console.log(currentChain);
+  const { check } = useAuthCheck({ isNeedAk: false });
+  const [{}, setChain] = useSetChain();
+  const { handleReport } = useReport();
 
-  const currentChainTabs = isNonEmptyObject(currentChain.menuConfig) ? Object.values(currentChain.menuConfig).filter(i => isNonEmptyObject(i)) : [];
-  const ArrowIcon = () => {
-    return (
-      <svg width={11.5} height={4.6} viewBox="0 0 17 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M1 1L8.5 7.5L16 1" stroke="#979abe" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    );
-  }
+  const popupRef = useRef<HTMLDivElement | null>(null);
+
+  const [currentChain, setCurrentChain] = useState<any>({});
+  const [showComponent, setShowComponent] = useState(false);
+  const [isSelectItemClicked, setIsSelectItemClicked] = useState(false);
+
+  const currentChainMenuList = useMemo(() => {
+    if (!currentChain.menuConfig) return [];
+    return Object.values(currentChain.menuConfig).map((it: any) => {
+      const menuItem = {
+        ...it,
+      };
+      return menuItem;
+    });
+  }, [currentChain]);
+
   const SelectBg: React.FC<{
     bgColor: string;
   }> = ({ bgColor }) => (
@@ -51,145 +82,128 @@ const AllInOneView = (props: Props) => {
     </svg>;
 
   }
-  const StyledLogoContainer = styled.div<{ selectBgColor: string }>`
-      width: 60px;
-      height: 60px;
-      border-radius: 16px;
-      background: ${(props) => props.selectBgColor};
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 16px;
-  `;
-  const StyledLogo = styled.div`
-      width: 40px;
-      height: 40px;
-      overflow: hidden;
-      .chain-logo {
-          width: 100%;
-          height: 100%;
+
+  const handleSelectItemClick = () => {
+    setIsSelectItemClicked(!isSelectItemClicked);
+  };
+
+  const handleItemClick = (path: string) => {
+    check(async () => {
+      setIsSelectItemClicked(false);
+      const currentChain = popupsData[path];
+      const result = await setChain({ chainId: `0x${currentChain.chainId.toString(16)}` });
+      if (result) {
+        setShowComponent(false);
+        props.onRouterPush(`/all-in-one/${currentChain.path}`);
       }
-  `;
-  const StyledImage = styled.img<{iconColor: string}>`
-      transform: translateX(40px);
-      -webkit-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-      -moz-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-      -ms-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-      filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-      width: 100%;
-      height: 100%;`
+    });
+  };
 
-  const StyledTitle = styled.div`
-    font-size: 26px;
-      font-weight: bolder;
-      line-height: 1;
-      white-space: nowrap;
-  `;
-  const StyledHeader = styled.div`
-    position: relative;
-      width: 948px;
-  `;
+  const { run } = useDebounceFn(
+    () => {
+      const _currentChain = popupsData[chain] || popupsData['arbitrum'];
+      setCurrentChain(_currentChain);
+      setShowComponent(true);
+    },
+    { wait: 500 },
+  );
 
-  const StyledLogoBg = styled.img`
-      width: 200px;
-      height: 200px;
-      opacity: 0.1;
-      position: absolute;
-  `;
-  const StyledMainHeader = styled.div`
-    position: relative;
-      width: 200px;
-      height: 200px;
-      margin: 0 auto;
-  `;
+  useEffect(() => {
+    run();
+  }, [chain]);
 
-  const StyledContent = styled.div`
-    position: relative;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      align-items: center;
-  `;
-
-  const StyledMainLogo = styled.div`
-    position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-  `;
-
-  const StyledShadow = styled.div`
-      position: absolute;
-      top: 35%;
-      left: 50%;
-      transform: translate(-50%, 0);
-    `;
-
-  const StyledCard = styled.div`
-    //width: 360px;
-    //  height: 400px;
-      background: #16181D;
-      border: 1px solid #373A53;
-      border-radius: 16px;
-      padding: 28px 24px 0 24px;
-      transition: all .2s ease;
-      &:hover {
-          transform: scale(1.04);
-          .card-arrow {
-              transform: scale(1.5);
-              path {
-                  stroke: #fff;
-              }
-          }
+  useEffect(() => {
+    const handleClickOutside = (event: { target: any }) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setIsSelectItemClicked(false);
       }
-  ;
-  `;
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    handleReport('all-in-one');
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  console.log(currentChainMenuList);
+
   return (
-    <>
-      <StyledFlex flexDirection={'column'} justifyContent={'center'}>
+    <StyledContainer>
+      <StyledFlex flexDirection="column" justifyContent="center">
         <StyledHeader>
           <StyledMainHeader>
             <StyledLogoBg src={currentChain.bgIcon} />
             <StyledMainLogo>
-          <StyledLogoContainer selectBgColor={currentChain.selectBgColor}>
-            {
-              currentChain.iconColor ?  <StyledLogo><StyledImage src={currentChain.icon} iconColor={currentChain.iconColor}/>  </StyledLogo>:
-                <StyledLogo><img src={currentChain.icon} alt={currentChain.title} className={"chain-logo"}/></StyledLogo>
-            }
-        </StyledLogoContainer>
-          <StyledFlex gap={'14px'}>
-            <StyledTitle>{currentChain.title}</StyledTitle>
-            <ArrowIcon />
-          </StyledFlex>
+              <StyledLogoContainer selectBgColor={currentChain.selectBgColor}>
+                {
+                  currentChain.iconColor ?
+                    (
+                      <StyledLogo>
+                        <StyledImage src={currentChain.icon} iconColor={currentChain.iconColor}/>
+                      </StyledLogo>
+                    ) :
+                    (
+                      <StyledLogo>
+                        <img src={currentChain.icon} alt={currentChain.title} className="chain-logo" />
+                      </StyledLogo>
+                    )
+                }
+              </StyledLogoContainer>
+              <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">
+                <StyledTitle>{currentChain.title}</StyledTitle>
+                <StyledArrowIconWrap style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                  <ArrowIcon size={11.5}  />
+                </StyledArrowIconWrap>
+              </StyledFlex>
+              {isSelectItemClicked && (
+                <StyledPopup ref={popupRef}>
+                  {Object.values(popupsData).map((item) => (
+                    <StyledPopupItem
+                      className={`${chain === item.path ? 'selected' : ''}`}
+                      key={item.path}
+                      onClick={() => handleItemClick(item.path)}
+                      data-bp="10014-003"
+                    >
+                      <StyledPopupImg style={{ backgroundColor: item.bgColor }}>
+                        <img src={item.icon} alt="" />
+                      </StyledPopupImg>
+                      <StyledPopupText>{item.title}</StyledPopupText>
+                      <div className="flex-grow"></div>
+                      {chain === item.path && (
+                        <div className="check-mark">
+                          <img src={checkMark} alt="check-mark" />
+                        </div>
+                      )}
+                    </StyledPopupItem>
+                  ))}
+                </StyledPopup>
+              )}
             </StyledMainLogo>
           </StyledMainHeader>
-          <StyledShadow><SelectBg bgColor={currentChain.selectBgColor} /></StyledShadow>
+          <StyledShadow>
+            <SelectBg bgColor={currentChain.selectBgColor} />
+          </StyledShadow>
         </StyledHeader>
 
-        <StyledContent>
-          {currentChainTabs.length ? currentChainTabs.map(item => <StyledCard>
-            <StyledFlex justifyContent={'space-between'}>
-              <StyledTitle>{item.tab}</StyledTitle>
-              <ArrowTopRight classname={'card-arrow'}/>
-            </StyledFlex>
-
-          </StyledCard>) : null }
-        </StyledContent>
-
-
-
+        {
+          showComponent && (
+            <StyledContent>
+              {currentChainMenuList.map((item: any) => (
+                <AllInOneCardView key={item.tab} title={item.tab}>
+                  Form
+                </AllInOneCardView>
+              ))}
+            </StyledContent>
+          )
+        }
       </StyledFlex>
-    </>
-);
+    </StyledContainer>
+  );
 };
 
 export default memo(AllInOneView);
 
 interface Props {
-  currentChain: any;
+  chain: string;
+  onRouterPush(path: string): void;
 }

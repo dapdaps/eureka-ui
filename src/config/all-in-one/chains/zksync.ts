@@ -14,7 +14,7 @@ export default {
       path: 'bluebiu.near/widget/zkSync.Bridge.Index',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/zkSync.Swap.Dex',
     },
     Lending: {
