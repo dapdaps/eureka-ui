@@ -47,6 +47,14 @@ export const chains = [
         rpcUrls: ['https://rpc.blast.io'],
         blockExplorers: 'https://blastscan.io',
     },
+    {
+        chainId: 34443,
+        chainName: 'Mode',
+        icon: '/images/chains/mode.png',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: ['https://mainnet.mode.network'],
+        blockExplorers: 'https://modescan.io',
+    },
 ]
 
 export const tokens: any =  {
@@ -115,5 +123,17 @@ export const tokens: any =  {
             isNative: true,
             address: 'native',
         },
+        
     ],
+    34443: [
+        {
+            chainId: 34443,
+            name: 'ETH',
+            symbol: 'ETH',
+            icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+            decimals: 18,
+            isNative: true,
+            address: 'native',
+        },
+    ]
 }

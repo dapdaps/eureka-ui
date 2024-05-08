@@ -219,7 +219,7 @@ export const Stake = () => {
 
         {
             chainTokenShow ? <ChainTokens
-                chains={chains.filter((item: any) => [1,42161,56,59144,8453].indexOf(item.chainId) > -1)}
+                chains={chains.filter((item: any) => [1,42161,56,59144,8453,34443].indexOf(item.chainId) > -1)}
                 tokens={tokens}
                 chain={currentChain}
                 token={currentToken}
