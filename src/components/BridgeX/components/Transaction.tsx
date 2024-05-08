@@ -137,8 +137,6 @@ export default function Transaction(
         setIsLoading(true)
         const transactionObj = getTransaction(storageKey)
 
-        console.log('transactionObj: ', transactionObj)
-
         const transactionList: any = []
         let proccessSum = 0
 

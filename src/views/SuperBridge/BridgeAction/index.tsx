@@ -5,7 +5,11 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { useDebounce } from 'ahooks';
 import Big from 'big.js'
 
+import { saveTransaction } from '@/components/BridgeX/Utils'
+import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useAccount from '@/hooks/useAccount';
+import useToast from '@/hooks/useToast';
+import useAddAction from '@/hooks/useAddAction';
 import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 
 import ChainTokenAmount from '../ChainTokenAmount';
@@ -13,6 +17,7 @@ import PublicTitle from '../PublicTitle';
 import RouteSelected from '../RouteSelected';
 import SubmitBtn from '../SubmitBtn'
 import SettingModal from './SettingModal';
+import ConfirmModal from "../SubmitBtn/ConfirmModal";
 
 import useQuote from "../hooks/useQuote";
 
@@ -83,7 +88,8 @@ export default function BirdgeAction(
     chainList,
   }: Props) {
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false)
-  const { account, chainId } = useAccount();
+  const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false)
+  const { account, chainId, provider } = useAccount();
   const [chainToken, setChainToken] = useState<any>({})
   const [fromChain, setFromChain] = useState<Chain>(chainList[0])
   const [toChain, setToChain] = useState<Chain>(chainList[1])
@@ -94,11 +100,25 @@ export default function BirdgeAction(
   const [selectedRoute, setSelectedRoute] = useState<QuoteResponse | null>(null)
   const [identification, setIdentification] = useState(Date.now())
   const [routeSortType, setRouteSortType] = useState(1)
+  const [sendDisabled, setSendDisabled] = useState<boolean>(false)
+  const [disableText, setDisableText] = useState<string>('Bridge')
+  const [isSending, setIsSending] = useState<boolean>(false)
   const inputValue = useDebounce(sendAmount, { wait: 500 });
 
+  const { addAction } = useAddAction('dapp');
+  const { fail, success } = useToast()
   const [quoteReques, setQuoteRequest] = useState<QuoteRequest | null>(null)
 
   const { routes, loading } = useQuote(quoteReques, identification)
+
+  // console.log('routes:', routes)
+
+  const { balance } = useTokenBalance({
+    currency: fromToken,
+    updater: 1,
+    isNative: fromChain?.nativeCurrency.symbol === fromToken?.symbol,
+    isPure: false,
+  })
 
   useEffect(() => {
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
@@ -110,9 +130,7 @@ export default function BirdgeAction(
     }
 
     const identification = Date.now()
-
     setIdentification(identification)
-
     setQuoteRequest({
       fromChainId: fromChain?.chainId.toString(),
       toChainId: toChain?.chainId.toString(),
@@ -132,7 +150,37 @@ export default function BirdgeAction(
       identification,
     })
 
+
   }, [fromChain, toChain, fromToken, toToken, account, inputValue])
+
+  useEffect(() => {
+    if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
+      setSendDisabled(true)
+      setDisableText('Bridge')
+      return
+    }
+
+    if (Number(inputValue) <= 0) {
+      setSendDisabled(true)
+      setDisableText('Bridge')
+      return
+    }
+
+    if (balance && Number(inputValue) >= Number(balance)) {
+      setSendDisabled(true)
+      setDisableText('Insufficient balance')
+      return
+    }
+
+    if (!routes?.length) {
+      setSendDisabled(true)
+      setDisableText('No route')
+      return
+    }
+
+    setSendDisabled(false)
+    setDisableText('Bridge')
+  }, [fromChain, toChain, fromToken, toToken, account, inputValue, balance, routes])
 
   useEffect(() => {
     getAllToken().then((res: any) => {
@@ -203,19 +251,105 @@ export default function BirdgeAction(
       chainList={chainList}
     />
     {
-      toToken && routes?.length && <RouteSelected 
-      routeSortType={routeSortType} 
-      onRouteSelected={(route: QuoteResponse | null) => {
-        setSelectedRoute(route)
-      }} toToken={toToken} routes={routes}/>
+      toToken && routes?.length && <RouteSelected
+        routeSortType={routeSortType}
+        onRouteSelected={(route: QuoteResponse | null) => {
+          setSelectedRoute(route)
+        }} toToken={toToken} routes={routes} />
     }
     <Sep height={20} />
-    <SubmitBtn />
+    <SubmitBtn
+      isLoading={loading}
+      text={disableText}
+      fromChain={fromChain}
+      onClick={() => {
+        if (selectedRoute) {
+          setConfirmModalShow(true)
+          // execute(selectedRoute, provider.getSigner())
+        }
+      }}
+      disabled={sendDisabled}
+    />
 
     {
       settingModalShow && <SettingModal onSortTypeChange={(val) => {
         setRouteSortType(val)
       }} routeSortType={routeSortType} onClose={() => { setSettingModalShow(false) }} />
+    }
+
+    {
+      confirmModalShow && <ConfirmModal
+        fromChain={fromChain}
+        toChain={toChain}
+        fromToken={fromToken}
+        toToken={toToken}
+        amount={inputValue}
+        reciveAmount={reciveAmount}
+        toAddress={account as string}
+        route={selectedRoute}
+        onClose={() => {
+          setConfirmModalShow(false)
+        }}
+        isLoading={isSending}
+        onClick={async () => {
+          if (selectedRoute && !isSending) {
+            setIsSending(true)
+            try {
+              const txHash = await execute(selectedRoute, provider?.getSigner())
+              
+              if (!txHash) {
+                  return
+              }
+
+              saveTransaction(`bridge-${account}-super`, {
+                hash: txHash,
+                link: getChainScan(fromChain.chainId),
+                duration: selectedRoute.duration,
+                fromChainId: fromChain.chainId,
+                fromChainName: fromChain.chainName,
+                fromChainLogo: fromChain.icon,
+                fromTokenLogo: fromToken?.logoURI,
+                fromAmount: inputValue,
+                fromTokenSymbol: fromToken?.symbol,
+                toChainId: toChain.chainId,
+                toChainName: toChain.chainName,
+                toChainLogo: toChain.icon,
+                toTokenLogo: toToken?.logoURI,
+                toAmout: reciveAmount,
+                toTokenSymbol: toToken?.symbol,
+                time: Date.now(),
+                tool: selectedRoute.bridgeName,
+                fromAddress: account,
+                toAddress: account,
+            })
+
+            addAction({
+                type: "Bridge",
+                fromChainId: fromChain.chainId,
+                toChainId: toChain.chainId,
+                token: fromToken,
+                amount: inputValue,
+                template: 'super bridge',
+                add: false,
+                status: 1,
+                transactionHash: txHash,
+            })
+
+            success({
+                title: 'Transaction success',
+                text: '',
+            })
+
+            } catch(err: any) {
+              fail({
+                title: 'Transaction failed',
+                text: err.message || err.toString(),
+            })
+            }
+            setIsSending(false)
+          }
+        }}
+      />
     }
 
   </Container>

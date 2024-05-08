@@ -54,6 +54,7 @@ export default function RouteSelected(
     const [routeSelected, setRouteSelected] = useState<QuoteResponse | null>(null)
     const [best, setBest] = useState<QuoteResponse | null>(null)
     const [fast, setFast] = useState<QuoteResponse | null>(null)
+    const [sortedRoutes, setSortedRoutes] = useState<QuoteResponse[] | null>([])
 
     useEffect(() => {
         let bestRoute: QuoteResponse | null = null
@@ -81,7 +82,20 @@ export default function RouteSelected(
             onRouteSelected(fastRoute)
         }
         
-    }, [routes])
+    }, [routes, routeSortType])
+
+    useEffect(() => {
+        if (routes) {
+            if (routeSortType === 1) {
+                routes.sort((a, b) => Number(b.receiveAmount) - Number(a.receiveAmount))
+            } else {
+                routes.sort((a, b) => Number(a.duration) - Number(b.duration))
+            }
+            setSortedRoutes(routes)
+        } else {
+            setSortedRoutes(null)
+        }
+    }, [routes, routeSortType])
 
     return <Container>
         <TitleWapper>
@@ -96,7 +110,18 @@ export default function RouteSelected(
             routeSelected && <Route best={best} fast={fast} toToken={toToken} route={routeSelected} active/>
         }
         {
-            routeModalShow && <RouteModal best={best} fast={fast} toToken={toToken} routeSelected={routeSelected} routes={routes} onClose={() => { setRouteModalShow(false) }} />
+            routeModalShow && <RouteModal 
+            best={best} 
+            fast={fast} 
+            toToken={toToken} 
+            routeSelected={routeSelected} 
+            routes={sortedRoutes} 
+            onClose={() => { setRouteModalShow(false) }} 
+            onRouteSelected={(route) => { 
+                setRouteSelected(route)
+                onRouteSelected(route)
+             }}
+            />
         }
     </Container>
 }

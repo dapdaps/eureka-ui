@@ -229,7 +229,7 @@ export default function ChainTokenAmount({
                                 <img className='token' src={currentToken?.logoURI} />
                                 <img className='chain' src={currentChain?.icon} />
                             </TokenGroupImg>
-                            <TokenGroupName>ETH</TokenGroupName>
+                            <TokenGroupName>{ currentToken?.symbol }</TokenGroupName>
                         </> : <>Select a Token</>
                     }
                     <ArrowDown />

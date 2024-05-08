@@ -22,16 +22,18 @@ interface Props {
     best: QuoteResponse | null;
     fast: QuoteResponse | null;
     routeSelected: QuoteResponse | null;
+    onRouteSelected: (val: QuoteResponse) => void;
 }
 
-export default function RouteModal({ onClose, routes, toToken, best, fast, routeSelected }: Props) {
+export default function RouteModal({ onClose, routes, toToken, best, fast, routeSelected, onRouteSelected }: Props) {
 
     return <Modal title="Bridge Route" onClose={onClose}>
         <ListWapper>
         {
             routes?.map((route: QuoteResponse, index) => {
                 return <Route route={route} fast={fast} best={best} active={routeSelected === route} toToken={toToken} onClick={() => {
-                    
+                    onRouteSelected(route)
+                    onClose && onClose()
                 }} showOutputTitle={false} key={route.bridgeType + index}/>
             })
         }
