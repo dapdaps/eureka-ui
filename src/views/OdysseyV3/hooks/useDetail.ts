@@ -18,7 +18,7 @@ export default function useDetail() {
         const _rules = JSON.parse(result.data.rule);
         let i = 0;
         _rules.forEach((rule: number) => {
-          if (result.data.user?.total_reward - rule > 0) {
+          if (result.data.user?.total_reward - rule >= 0 && result.data.user?.total_reward > 0) {
             i++;
           }
         });
