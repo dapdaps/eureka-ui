@@ -38,8 +38,8 @@ export default function OdysseyV4() {
     redirect_uri: `${window.location.origin}${window.location.pathname}?id=4`,
   });
 
-  console.log('quests--', quests);
-  console.log('detail--', detail);
+  // console.log('quests--', quests);
+
   quests.swap.sort((a: any, b: any) => {
     return a.order - b.order;
   });
