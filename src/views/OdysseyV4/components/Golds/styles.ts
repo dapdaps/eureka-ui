@@ -58,6 +58,9 @@ export const Head = styled.div`
   &.bg-ambient {
     background-image: url('/images/odyssey/v4/bg-ambient.png');
   }
+  &.bg-metastreet {
+    background-image: url('/images/odyssey/v4/bg-metastreet.png');
+  }
 `;
 export const HeadLeft = styled.div`
   display: flex;
@@ -142,6 +145,13 @@ export const BodyRight = styled.div`
   .foot {
     display: flex;
     justify-content: flex-end;
+    b {
+      font-weight: 700;
+    }
+    .custom-btn {
+      flex-direction: column;
+      gap: 1px;
+    }
   }
 `;
 
