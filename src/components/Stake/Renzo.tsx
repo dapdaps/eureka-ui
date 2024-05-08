@@ -90,6 +90,8 @@ export const Stake = () => {
         isPure: false,
     })
 
+    console.log('currentChain:', currentChain)
+
     const { apr } = useRenzoDetail(currentChain)
     const { rate, recived, exchangeRate, transactionCost, deposit, isLoading } = useTrade({
         amount: inputValue,
@@ -213,7 +215,6 @@ export const Stake = () => {
                 setUpdater(updater + 1)
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>
-
 
         <Msg exchangeRate={exchangeRate} transactionCostMoney={transactionCostMoney} rewardFee="10%" symbol="ezETH" />
 

@@ -202,14 +202,18 @@ async function getTransactionData(value: string, chainId: number, minOut: string
             contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
         case 8453:
             contractAddress = '0xf25484650484de3d554fb0b7125e7696efa4ab99'
-        case 5234:
+        case 34443:
             contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
         default:
+            console.log('contractAddress:', contractAddress)
+
             DepositContract = new Contract(
                 contractAddress as string,
                 L2Abi,
                 signer,
             );
+
+            console.log('contractAddress:', contractAddress)
 
             transactionData = await DepositContract.populateTransaction.depositETH(
                 minOut,
