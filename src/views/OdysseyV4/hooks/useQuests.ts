@@ -73,7 +73,7 @@ export default function useQuests(id: any) {
           _result.staking.push(item);
         }
         if (item.category_id === 6) {
-          if (item.name !== 'Particle') {
+          if (item.name !== 'Particle' && item.name !== 'MetaStreet') {
             _result.yield.push(item);
           }
         }

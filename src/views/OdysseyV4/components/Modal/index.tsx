@@ -20,9 +20,7 @@ export default function Modal({ type, children, onClose, bgColor }: any) {
           <Image src="/images/odyssey/v4/modal-shape-3.svg" alt="" width={213} height={140} className="shape shape3" />
         );
       case 'type4':
-        return (
-          <Image src="/images/odyssey/v4/modal-shape-4.svg" alt="" width={166} height={128} className="shape shape4" />
-        );
+        return <Image src="/images/odyssey/v4/star3.svg" alt="" width={166} height={128} className="shape shape4" />;
       case 'type5':
         return (
           <Image src="/images/odyssey/v4/modal-shape-5.svg" alt="" width={126} height={126} className="shape shape5" />

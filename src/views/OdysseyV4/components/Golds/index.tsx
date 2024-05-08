@@ -59,6 +59,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         rank3: 40,
         reward: '2700',
         desc: 'Get ready to boost your rewards with Particle! Particle is a powerful dapp in the Blast ecosystem. When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
+        type: '',
       },
     ],
     [
@@ -72,6 +73,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         rank3: 40,
         reward: '1300',
         desc: 'Ring Protocol offers seamless asset trading and lending services within the Blast ecosystem. Explore DeFi with Ring Protocol on DapDap today! <br />Participate in our latest Odyssey campaign and earn additional Gold rewards. The top traders with the highest volume will be rewarded with special Gold bonuses.',
+        type: '',
       },
     ],
     [
@@ -85,6 +87,23 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         rank3: 40,
         reward: '800',
         desc: 'Ambient is a Zero-to-One Decentralised Trading Protocol on Blast, offering cutting-edge trading solutions.<br />Complete trades on Ambient to earn extra Gold rewards. Trade actively and climb the leaderboard to stand a chance to win one of the top three prizes!',
+        type: '',
+      },
+    ],
+    [
+      'MetaStreet',
+      {
+        logo: '/images/odyssey/v4/logo-metastreet.svg',
+        hyperlockLink: `${location.origin}/dapp/hyperlock`,
+        thrusterLink: `${location.origin}/dapp/thruster-finance`,
+        particleLink: 'https://app.particle.trade/0xe557Fa3DA7c728E9c7e7E76555773BAF00205654',
+        bgClass: 'bg-metastreet',
+        rank1: 100,
+        rank2: 60,
+        rank3: 40,
+        reward: '1500',
+        desc: '',
+        type: 'metastreet',
       },
     ],
   ]);
