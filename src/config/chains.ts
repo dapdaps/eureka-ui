@@ -152,6 +152,14 @@ const chainCofig = {
     rpcUrls: ['https://rpc.blast.io'],
     blockExplorers: 'https://blastscan.io',
   },
+  34443: {
+    chainId: 34443,
+    chainName: 'Mode',
+    icon: '/images/chains/mode.png',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://mainnet.mode.network'],
+    blockExplorers: 'https://modescan.io',
+  },
 } as { [key: number]: Chain };
 
 export default chainCofig;

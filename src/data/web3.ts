@@ -286,6 +286,12 @@ export const onboard = init({
       label: 'Blast',
       rpcUrl: 'https://rpc.blast.io',
     },
+    {
+      id: 34443,
+      token: 'Mode',
+      label: 'Mode',
+      rpcUrl: 'https://mainnet.mode.network',
+    },
   ],
   appMetadata: {
     name: 'NEAR',

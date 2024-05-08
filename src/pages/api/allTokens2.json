@@ -6860,6 +6860,27 @@
                 "logoURI": "https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png"
             }
         ],
+        "34443": [
+            {
+                "symbol": "ETH",
+                "name": "ETH",
+                "chainId": 34443,
+                "address": "0x0000000000000000000000000000000000000000",
+                "chain": "Mode",
+                "decimals": 18,
+                "logoURI": "https://s3.openocean.finance/token_logos/logos/1690850882500_3869056607396706.png",
+                "isNative": true
+            },
+            {
+                "symbol": "ezETH",
+                "name": "ezETH",
+                "chainId": 34443,
+                "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
+                "chain": "blast",
+                "decimals": 18,
+                "logoURI": "https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png"
+            }
+        ],
         "5000": [
             {
                 "symbol": "axlUSDC",
