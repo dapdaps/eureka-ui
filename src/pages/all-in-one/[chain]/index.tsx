@@ -8,12 +8,7 @@ const AllInOne: NextPageWithLayout = () => {
   const chain = router.query.chain as string;
 
   return chain ? (
-    <AllInOneView
-      chain={chain}
-      onRouterPush={(path) => {
-        router.push(path);
-      }}
-    />
+    <AllInOneView chain={chain} />
   ) : (
     <div />
   );

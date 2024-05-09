@@ -1,176 +1,32 @@
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo } from 'react';
 import { StyledFlex } from "@/styled/styles";
-import {
-  StyledArrowIconWrap,
-  StyledContainer,
-  StyledContent,
-  StyledHeader,
-  StyledImage,
-  StyledLogo,
-  StyledLogoBg,
-  StyledLogoContainer,
-  StyledMainHeader,
-  StyledMainLogo,
-  StyledPopup,
-  StyledPopupImg,
-  StyledPopupItem,
-  StyledPopupText,
-  StyledShadow,
-  StyledTitle,
-} from '@/views/AllInOne/styles';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
-import popupsData from '@/config/all-in-one/chains';
-import { useDebounceFn } from 'ahooks';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import { useSetChain } from '@web3-onboard/react';
-import useReport from '@/views/Landing/hooks/useReport';
+import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
+import AllInOneHeaderView from '@/views/AllInOne/components/Header';
+import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
-import Trade from './components/Trade';
-import Bridge from './components/Bridge';
-import Lending from './components/Lending';
-import Liquidity from './components/Liquidity';
-
-const MenuConfig: {[k: string]: any} = {
-  Trade,
-  Bridge,
-  Lending,
-  Liquidity,
-};
-
-const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
 
 const AllInOneView = (props: Props) => {
   const { chain } = props;
-
-  const { check } = useAuthCheck({ isNeedAk: false });
-  const [{}, setChain] = useSetChain();
-  const { handleReport } = useReport();
-
-  const popupRef = useRef<HTMLDivElement | null>(null);
-
-  const [currentChain, setCurrentChain] = useState<any>({});
-  const [showComponent, setShowComponent] = useState(false);
-  const [isSelectItemClicked, setIsSelectItemClicked] = useState(false);
-
-  const currentChainMenuList = useMemo(() => {
-    if (!currentChain.menuConfig) return [];
-    return Object.values(currentChain.menuConfig).map((it: any) => {
-      const menuItem = {
-        ...it,
-        component: MenuConfig[it.tab],
-      };
-      return menuItem;
-    });
-  }, [currentChain]);
-
-  const handleSelectItemClick = () => {
-    setIsSelectItemClicked(!isSelectItemClicked);
-  };
-
-  const handleItemClick = (path: string) => {
-    check(async () => {
-      setIsSelectItemClicked(false);
-      const currentChain = popupsData[path];
-      const result = await setChain({ chainId: `0x${currentChain.chainId.toString(16)}` });
-      if (result) {
-        setShowComponent(false);
-        props.onRouterPush(`/all-in-one/${currentChain.path}`);
-      }
-    });
-  };
-
-  const { run } = useDebounceFn(
-    () => {
-      const _currentChain = popupsData[chain] || popupsData['arbitrum'];
-      setCurrentChain(_currentChain);
-      setShowComponent(true);
-    },
-    { wait: 500 },
-  );
-
-  useEffect(() => {
-    run();
-  }, [chain]);
-
-  useEffect(() => {
-    const handleClickOutside = (event: { target: any }) => {
-      if (popupRef.current && !popupRef.current.contains(event.target)) {
-        setIsSelectItemClicked(false);
-      }
-    };
-    document.addEventListener('mousedown', handleClickOutside);
-    handleReport('all-in-one');
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
+  
+  const { currentChain, showComponent, setShowComponent, currentChainMenuList } = useChain(props);
+  
   console.log(currentChain);
 
   return (
     <StyledContainer>
-      <StyledFlex flexDirection="column" justifyContent="center">
-        <StyledHeader>
-          <StyledMainHeader>
-            <StyledLogoBg src={currentChain.bgIcon} />
-            <StyledMainLogo>
-              <StyledLogoContainer selectBgColor={currentChain.selectBgColor}>
-                {
-                  currentChain.iconColor ?
-                    (
-                      <StyledLogo>
-                        <StyledImage src={currentChain.icon} iconColor={currentChain.iconColor}/>
-                      </StyledLogo>
-                    ) :
-                    (
-                      <StyledLogo>
-                        <img src={currentChain.icon} alt={currentChain.title} className="chain-logo" />
-                      </StyledLogo>
-                    )
-                }
-              </StyledLogoContainer>
-              <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">
-                <StyledTitle>{currentChain.title}</StyledTitle>
-                <StyledArrowIconWrap style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-                  <ArrowIcon size={11.5}  />
-                </StyledArrowIconWrap>
-              </StyledFlex>
-              {isSelectItemClicked && (
-                <StyledPopup ref={popupRef}>
-                  {Object.values(popupsData).map((item) => (
-                    <StyledPopupItem
-                      className={`${chain === item.path ? 'selected' : ''}`}
-                      key={item.path}
-                      onClick={() => handleItemClick(item.path)}
-                      data-bp="10014-003"
-                    >
-                      <StyledPopupImg style={{ backgroundColor: item.bgColor }}>
-                        <img src={item.icon} alt="" />
-                      </StyledPopupImg>
-                      <StyledPopupText>{item.title}</StyledPopupText>
-                      <div className="flex-grow"></div>
-                      {chain === item.path && (
-                        <div className="check-mark">
-                          <img src={checkMark} alt="check-mark" />
-                        </div>
-                      )}
-                    </StyledPopupItem>
-                  ))}
-                </StyledPopup>
-              )}
-            </StyledMainLogo>
-          </StyledMainHeader>
-          <StyledShadow>
-            <Gradient
-              bgColor={currentChain.selectBgColor}
-              width={720}
-              height={241}
-              rx={280}
-              ry={40.5}
-            />
-          </StyledShadow>
-        </StyledHeader>
+      <StyledFlex
+        flexDirection="column"
+        justifyContent="center"
+        className="all-in-one-wrapper"
+      >
+        <AllInOneHeaderView
+          chain={chain}
+          currentChain={currentChain}
+          handleShowComponent={(visible) => {
+            setShowComponent(visible);
+          }}
+        />
 
         {
           showComponent && (
@@ -196,6 +52,7 @@ const AllInOneView = (props: Props) => {
                     subTitle={item.description}
                     bgColor={currentChain.selectBgColor}
                     style={getCardWidth()}
+                    path={currentChain.path}
                   >
                     <item.component chain={currentChain}/>
                   </AllInOneCardView>
@@ -205,6 +62,15 @@ const AllInOneView = (props: Props) => {
           )
         }
       </StyledFlex>
+      <StyledBg>
+        <Gradient
+          bgColor={currentChain.selectBgColor}
+          width={720}
+          height={241}
+          rx={280}
+          ry={40.5}
+        />
+      </StyledBg>
     </StyledContainer>
   );
 };
@@ -213,5 +79,4 @@ export default memo(AllInOneView);
 
 interface Props {
   chain: string;
-  onRouterPush(path: string): void;
 }

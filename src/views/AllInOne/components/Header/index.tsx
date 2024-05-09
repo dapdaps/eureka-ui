@@ -1,0 +1,137 @@
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { StyledFlex } from '@/styled/styles';
+import {
+  StyledArrowIconWrap, StyledBgLogo,
+  StyledHeader,
+  StyledImage,
+  StyledLogo,
+  StyledLogoContainer,
+  StyledMainLogo,
+  StyledPopup,
+  StyledPopupImg,
+  StyledPopupItem,
+  StyledPopupText,
+  StyledTitle,
+} from '@/views/AllInOne/components/Header/styles';
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import popupsData from '@/config/all-in-one/chains';
+import useReport from '@/views/Landing/hooks/useReport';
+import { Gradient } from '@/views/AllInOne/components/Gradient';
+import Loading from '@/components/Icons/Loading';
+import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
+
+const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
+
+const AllInOneHeaderView = (props: Props) => {
+  const { chain, currentChain, handleShowComponent } = props;
+
+  const { handleReport } = useReport();
+
+  const { handleClick } = useChainSelect({
+    onRouterBefore: () => {
+      handleShowComponent(false);
+    },
+    onCheckAfter: () => {
+      setIsSelectItemClicked(false);
+    },
+  });
+
+  const popupRef = useRef<HTMLDivElement | null>(null);
+
+  const [isSelectItemClicked, setIsSelectItemClicked] = useState(false);
+
+  const handleSelectItemClick = () => {
+    setIsSelectItemClicked(!isSelectItemClicked);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: { target: any }) => {
+      if (popupRef.current && !popupRef.current.contains(event.target)) {
+        setIsSelectItemClicked(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    handleReport('all-in-one');
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <>
+      {
+        currentChain?.title ? (
+          <StyledHeader>
+            <StyledMainLogo>
+              <StyledLogoContainer selectBgColor={currentChain.selectBgColor}>
+                {
+                  currentChain.iconColor ?
+                    (
+                      <StyledLogo>
+                        <StyledImage src={currentChain.icon} iconColor={currentChain.iconColor} />
+                      </StyledLogo>
+                    ) :
+                    (
+                      <StyledLogo>
+                        <img src={currentChain.icon} alt={currentChain.title} className="chain-logo" />
+                      </StyledLogo>
+                    )
+                }
+              </StyledLogoContainer>
+              <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">
+                <StyledTitle>{currentChain.title}</StyledTitle>
+                <StyledArrowIconWrap style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                  <ArrowIcon size={11.5} />
+                </StyledArrowIconWrap>
+              </StyledFlex>
+              {isSelectItemClicked && (
+                <StyledPopup ref={popupRef}>
+                  {Object.values(popupsData).map((item) => (
+                    <StyledPopupItem
+                      className={`${chain === item.path ? 'selected' : ''}`}
+                      key={item.path}
+                      onClick={() => handleClick(item.path)}
+                      data-bp="10014-003"
+                    >
+                      <StyledPopupImg style={{ backgroundColor: item.bgColor }}>
+                        <img src={item.icon} alt="" />
+                      </StyledPopupImg>
+                      <StyledPopupText>{item.title}</StyledPopupText>
+                      <div className="flex-grow"></div>
+                      {chain === item.path && (
+                        <div className="check-mark">
+                          <img src={checkMark} alt="check-mark" />
+                        </div>
+                      )}
+                    </StyledPopupItem>
+                  ))}
+                </StyledPopup>
+              )}
+            </StyledMainLogo>
+            <StyledBgLogo src={currentChain.bgIcon} />
+            {/*#region Magical bug: In Chrome, if this component is not referenced on here, this component cannot be rendered normally in the parent component*/}
+            <div style={{ display: 'none' }}>
+              <Gradient
+                bgColor="#ffffff"
+                width={720}
+                height={241}
+                rx={280}
+                ry={40.5}
+              />
+            </div>
+            {/*#endregion*/}
+          </StyledHeader>
+        ) : <Loading />
+      }
+    </>
+  );
+};
+
+export default memo(AllInOneHeaderView);
+
+interface Props {
+  chain: string;
+  currentChain: any;
+
+  handleShowComponent(visible: boolean): void;
+}

@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
-import { StyledCard, StyledContent, StyledTitle } from '@/views/AllInOne/components/Card/styles';
+import { StyledCard, StyledContent, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
 import { StyledFlex } from '@/styled/styles';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
+import { useRouter } from 'next/router';
 
 const AllInOneCardView: React.FC<Props> = (props) => {
   const {
@@ -10,10 +11,23 @@ const AllInOneCardView: React.FC<Props> = (props) => {
     bgColor,
     subTitle,
     style,
+    type = 'normal',
+    onSelect = () => {
+    },
   } = props;
 
+  const router = useRouter();
+
+  const handleDetail = () => {
+    router.push(`/all-in-one/${props.path}/${title}`);
+  };
+
+  const handleSelect = () => {
+    onSelect();
+  };
+
   return (
-    <StyledCard style={style}>
+    <StyledCard style={style} className={type} bgColor={bgColor} onClick={handleSelect}>
       <Gradient
         classname="card-active-bg"
         bgColor={bgColor as string}
@@ -24,13 +38,15 @@ const AllInOneCardView: React.FC<Props> = (props) => {
         opacity={1}
       />
       <StyledFlex justifyContent="space-between" alignItems="flex-start">
-        <StyledTitle>
+        <StyledTitle className={type}>
           <h3>{title}</h3>
-          <div>{subTitle}</div>
+          <div className="sub-title">{subTitle}</div>
         </StyledTitle>
-        <ArrowTopRight classname="arrow-top-right" />
+        <StyledPointer onClick={handleDetail}>
+          <ArrowTopRight classname="arrow-top-right" />
+        </StyledPointer>
       </StyledFlex>
-      <StyledContent>
+      <StyledContent className={type}>
         {children}
       </StyledContent>
     </StyledCard>
@@ -39,6 +55,8 @@ const AllInOneCardView: React.FC<Props> = (props) => {
 
 export default memo(AllInOneCardView);
 
+type CardType = 'normal' | 'nav';
+
 interface Props {
   key?: string;
   children?: React.ReactNode;
@@ -46,9 +64,17 @@ interface Props {
   bgColor?: string;
   subTitle?: string;
   style?: React.CSSProperties;
+  path?: string;
+  type?: CardType;
+  onSelect?(): void;
 }
 
-const ArrowTopRight = ({ size = 14, color = '#979ABE', classname, strokeWidth = 1.5 }: { size?: number, color?: string, classname: string, strokeWidth?: number }) => {
+const ArrowTopRight = ({ size = 14, color = '#979ABE', classname, strokeWidth = 1.5 }: {
+  size?: number,
+  color?: string,
+  classname: string,
+  strokeWidth?: number
+}) => {
   return (
     <svg
       className={classname}
@@ -61,4 +87,4 @@ const ArrowTopRight = ({ size = 14, color = '#979ABE', classname, strokeWidth = 
       <path d="M1 15L15 1M15 1H1M15 1V15" stroke={color} stroke-width={strokeWidth} />
     </svg>
   );
-}
+};
