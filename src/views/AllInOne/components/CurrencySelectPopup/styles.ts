@@ -80,3 +80,45 @@ export const Empty = styled.div`
 export const CloseIcon = styled.div`
 cursor: pointer;
 `;
+
+export const CurrencyRow = styled.div`
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  margin: 10px 0px;
+  border-radius: 16px;
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  &.active {
+    background-color: #004bfc;
+    pointer-events: none;
+  }
+`;
+
+export const CurrencyLabel = styled.div`
+  display: flex;
+  align-items: center;
+`;
+export const CurrencySymbol = styled.div`
+  font-size: 18px;
+  font-weight: 500px;
+  color: #fff;
+`;
+export const CurrencyName = styled.div`
+  font-size: 14px;
+  color: #fff;
+`;
+export const CurrencyIcon = styled.img`
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 20px;
+`;
+export const CurrencyAmount = styled.div`
+  font-size: 18px;
+  font-weight: 500px;
+  color: #fff;
+`;

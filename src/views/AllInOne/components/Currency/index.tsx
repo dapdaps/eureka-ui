@@ -1,14 +1,21 @@
 import { StyledTradeBlock, StyledTradeTitle, StyledTradeInputContainer, StyledSelectToken, CurrencyIcon, CurrencyTitle, StyledTradeBalance} from './styles';
-import CurrencyInput from '../CurrencyInput';
+import CurrencyInput from '@/views/AllInOne/components/CurrencyInput/index';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { useState } from 'react';
-import CurrencySelectPopup from '@/views/AllInOne/components/Trade/components/CurrencySelectPopup/index';
-const Currency = (props) => {
+import CurrencySelectPopup from '../CurrencySelectPopup';
+
+type Props = {
+  onAmountChange?: (amount: number | string) => void;
+  title: string;
+  disabled?: boolean;
+  textUnderline?: boolean;
+}
+const Currency = (props: Props) => {
   console.log(props);
   const { onAmountChange, title, disabled, textUnderline } = props;
-  const [amount, setAmount] = useState<number>(1);
+  const [amount, setAmount] = useState<number | string>(1);
   const [show, setShow] = useState<boolean>(false);
-  const onCurrencyChange = (m: number) => {
+  const onCurrencyChange = (m: number | string) => {
     setAmount(m);
     onAmountChange?.(m);
   }

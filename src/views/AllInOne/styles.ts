@@ -49,7 +49,7 @@ export const StyledArrowIconWrap = styled.div`
 `;
 export const StyledHeader = styled.div`
   position: relative;
-  width: 948px;
+  //width: 948px;
 `;
 
 export const StyledLogoBg = styled.img`

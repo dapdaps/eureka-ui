@@ -99,7 +99,7 @@ const AllInOneView = (props: Props) => {
 
   return (
     <StyledContainer>
-      <StyledFlex flexDirection="column" justifyContent="center">
+      {/*<StyledFlex flexDirection="column" justifyContent="center">*/}
         <StyledHeader>
           <StyledMainHeader>
             <StyledLogoBg src={currentChain.bgIcon} />
@@ -160,40 +160,40 @@ const AllInOneView = (props: Props) => {
             />
           </StyledShadow>
         </StyledHeader>
-
-        {
-          showComponent && (
-            <StyledContent>
-              {currentChainMenuList.map((item: any, idx: number) => {
-                const len = currentChainMenuList.length;
-                const getCardWidth = () => {
-                  const index = idx + 1;
-                  if (len >= 4) {
-                    if ([1, 0].includes(index % 4)) {
-                      return { width: `calc(40% - 6px)`, flexShrink: 0, flexGrow: 0 };
-                    }
-                    if ([2, 3].includes(index % 4)) {
-                      return { width: `calc(60% - 6px)`, flexShrink: 0, flexGrow: 0 };
-                    }
-                  }
-                  return { flex: 1 };
-                };
-                return (
-                  <AllInOneCardView
-                    key={item.tab}
-                    title={item.tab}
-                    subTitle={item.description}
-                    bgColor={currentChain.selectBgColor}
-                    style={getCardWidth()}
-                  >
-                    <Trade chain={currentChain}/>
-                  </AllInOneCardView>
-                );
-              })}
-            </StyledContent>
-          )
-        }
-      </StyledFlex>
+        <Trade chain={currentChain}/>
+        {/*{*/}
+        {/*  showComponent && (*/}
+        {/*    <StyledContent>*/}
+        {/*      {currentChainMenuList.map((item: any, idx: number) => {*/}
+        {/*        const len = currentChainMenuList.length;*/}
+        {/*        const getCardWidth = () => {*/}
+        {/*          const index = idx + 1;*/}
+        {/*          if (len >= 4) {*/}
+        {/*            if ([1, 0].includes(index % 4)) {*/}
+        {/*              return { width: `calc(40% - 6px)`, flexShrink: 0, flexGrow: 0 };*/}
+        {/*            }*/}
+        {/*            if ([2, 3].includes(index % 4)) {*/}
+        {/*              return { width: `calc(60% - 6px)`, flexShrink: 0, flexGrow: 0 };*/}
+        {/*            }*/}
+        {/*          }*/}
+        {/*          return { flex: 1 };*/}
+        {/*        };*/}
+        {/*        return (*/}
+        {/*          <AllInOneCardView*/}
+        {/*            key={item.tab}*/}
+        {/*            title={item.tab}*/}
+        {/*            subTitle={item.description}*/}
+        {/*            bgColor={currentChain.selectBgColor}*/}
+        {/*            style={getCardWidth()}*/}
+        {/*          >*/}
+        {/*            <Trade chain={currentChain}/>*/}
+        {/*          </AllInOneCardView>*/}
+        {/*        );*/}
+        {/*      })}*/}
+        {/*    </StyledContent>*/}
+        {/*  )*/}
+        {/*}*/}
+      {/*</StyledFlex>*/}
     </StyledContainer>
   );
 };

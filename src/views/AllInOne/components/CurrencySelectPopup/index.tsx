@@ -1,11 +1,31 @@
-import {Dialog, Content, Title, InputWarpper, Input, Empty, Header, Overlay, CurrencyList, CloseIcon} from './styles';
-const CurrencySelectPopup = (props) => {
+import { ChangeEvent } from 'react';
+import {Dialog, Content, Title, InputWarpper, Input, Empty, Header, Overlay, CurrencyList, CloseIcon, CurrencyRow, CurrencyAmount, CurrencyIcon, CurrencyLabel, CurrencyName, CurrencySymbol } from './styles';
 
+type Props = {
+  // title: string;
+  // tokens: Record<string, any>[];
+  // account: string;
+  display: boolean;
+  onClose: () => void;
+}
+const CurrencySelectPopup = (props: Props) => {
+  // const { title, tokens, account } = props;
 
-  const { title, tokens, account } = props;
+  const currency = {
+    icon: '',
+    symbol: 'ETH',
+    name: 'eth'
+  }
 
-
-  const handleSearch = (e) => {
+const balanceFormated = () => {
+    // if (!currency.address) return "-";
+    // if (!currency.balanceLoaded) return "Loading";
+    // if (currency.balance === "0" || Big(currency.balance).eq(0)) return "0";
+    // if (Big(currency.balance).lt(0.0001)) return "<0.0001";
+    // return Big(currency.balance).toFixed(4);
+  return '-';
+  }
+  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
     // State.update({
     //   tokens: e.target.value
     //     ? props.tokens.filter((token) => {
@@ -48,6 +68,16 @@ const CurrencySelectPopup = (props) => {
             />
           </InputWarpper>
           <CurrencyList>
+            <CurrencyRow>
+              <CurrencyLabel>
+                <CurrencyIcon src={currency.icon} />
+                <div>
+                  <CurrencySymbol>{currency.symbol}</CurrencySymbol>
+                  <CurrencyName>{currency.name}</CurrencyName>
+                </div>
+              </CurrencyLabel>
+              <CurrencyAmount>{balanceFormated()}</CurrencyAmount>
+            </CurrencyRow>
             <Empty>No token.</Empty>
           </CurrencyList>
         </Content>
