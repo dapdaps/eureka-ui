@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
-const AllInOneBridgeView = () => {
+const BridgeView = () => {
   
   return (
     <>Bridge</>
   );
 };
 
-export default memo(AllInOneBridgeView);
+export default memo(BridgeView);

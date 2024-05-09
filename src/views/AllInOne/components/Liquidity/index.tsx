@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
-const AllInOneLiquidityView = () => {
+const LiquidityView = () => {
   
   return (
     <>Liquidity</>
   );
 };
 
-export default memo(AllInOneLiquidityView);
+export default memo(LiquidityView);

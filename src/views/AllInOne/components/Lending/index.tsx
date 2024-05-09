@@ -1,20 +1,18 @@
-import { useDebounceFn } from 'ahooks';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
-import popupsData from '@/config/all-in-one/chains';
-import lendingConfig from '@/config/lending/networks';
 import useAccount from '@/hooks/useAccount';
+import Tabs from '@/views/AllInOne/components/Tabs/index';
+import MarketItems from '@/views/AllInOne/components/MarketItems/index';
+import popupsData from '@/config/all-in-one/chains';
+import { useState, useEffect, memo } from 'react';
 import useAddAction from '@/hooks/useAddAction';
-import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
+import lendingConfig from '@/config/lending/networks';
 import { usePriceStore } from '@/stores/price';
 import { StyledFlex } from '@/styled/styles';
 import { multicall } from '@/utils/multicall';
-import MarketItems from '@/views/AllInOne/components/MarketItems/index';
-import Tabs from '@/views/AllInOne/components/Tabs/index';
-
+import { useDebounceFn } from 'ahooks';
+import { useRouter } from 'next/router';
 import { Theme } from './styles';
+import useToast from '@/hooks/useToast';
 
 const tabsList = [
   {
@@ -28,51 +26,47 @@ const tabsList = [
     value: 'Yours',
   },
 ];
+
 const Lending = () => {
   const router = useRouter();
+  const toast = useToast();
   const { account, chainId } = useAccount();
   const { addAction } = useAddAction('all-in-one');
   const [currTab, setCurrTab] = useState<string>(tabsList[0].key);
-  const [currMarket, setCurrMarket] = useState<string>('');
+  const [tabConfig, setTabConfig] = useState<any>({ dapps: {} });
   const prices = usePriceStore((store) => store.price);
 
-  // console.log(lendingConfig[59144], prices);
-
-  const onMarketChange = (market: string) => {
-    setCurrMarket(market)
-  }
-  const onTabChange = (tab: string) => {
-    setCurrTab(tab);
-  }
   const chain = router.query.chain as string;
-  const cachedTabsStore: any = useAllInOneTabCachedStore();
-  const [currentChain, setCurrentChain] = useState<any>();
+  const [currentChain, setCurrentChain] = useState<any>({});
+  const [currMarket, setCurrMarket] = useState<string>('');
+  const [showDialog, setShowDialog] = useState(false);
+  const [tableButtonClickData, setTableButtonClickData] = useState<any>(null);
+  const [timestamp, setTimestamp] = useState(Date.now());
   const { run } = useDebounceFn(
     () => {
       const _currentChain = popupsData[chain] || popupsData['arbitrum'];
+      const _tabConfig = lendingConfig[_currentChain?.chainId];
+      console.log(_tabConfig);
       setCurrentChain(_currentChain);
-      // setShowComponent(true);
-      // const cachedTab = cachedTabsStore.chains[_currentChain.chainId];
-      // if (sourceTab) {
-      //   setTab(sourceTab);
-      // } else if (cachedTab) {
-      //   setTab(cachedTab);
-      // } else {
-      //   setTab(_currentChain.defaultTab);
-      // }
+      setTabConfig(_tabConfig);
+      setCurrMarket(_tabConfig?.defaultDapp ?? 'All Market');
     },
     { wait: 500 },
   );
   useEffect(() => {
     run();
   }, [chain]);
-  const tabConfig = lendingConfig[59144] || {};
 
-  console.log(tabConfig.dapps[tabConfig.defaultDapp]);
+  const onMarketChange = (market: string) => {
+    const _market = market === 'All' ? (Object.values(tabConfig.dapps).length === Object.values(marketsInfo.dapps).length ? '' : market) : market;
+    setCurrMarket(_market);
+    setTimestamp(Date.now());
+  };
+  const onTabChange = (tab: string) => {
+    setCurrTab(tab);
+  };
+  const [marketsInfo, setMarketsInfo] = useState<any>({ markets: {}, dapps: {} });
 
-  const [ currentDapp, setCurrentDapp ] = useState(tabConfig.defaultDapp || 'All');
-
-  const [ marketsInfo, setMarketsInfo ] = useState({markets:{}, dapps: {}});
   return (
     <div>
       <StyledFlex justifyContent="space-between">
@@ -82,59 +76,103 @@ const Lending = () => {
           currTab={currTab} />
         <MarketItems
           currMarket={currMarket}
-          list={[]}
+          list={Object.values(tabConfig.dapps) ?? []}
           onMarketChange={onMarketChange} />
       </StyledFlex>
       <Theme>
-      {tabConfig.defaultDapp && (
-        <>
-          {(tabConfig.defaultDapp === "All" || !tabConfig.dapps[tabConfig.defaultDapp]) && (
-            <ComponentWrapperPage src="bluebiu.near/widget/0vix.LendingSpinner" />
-          )}
-
-          <ComponentWrapperPage
-            src="bluebiu.near/widget/Avalanche.Lending.Data"
-            componentProps={{
-              update: tabConfig.defaultDapp,
-              dapps: tabConfig.dapps,
-              chainId,
-              multicall,
-              ...tabConfig,
-              prices,
-              account,
-              onLoad: (data: Record<string, any>) => {
-                const { markets, dapp } = data;
-                const dapps: any = {};
-                dapps[dapp.dappName] = dapp;
-                const _markets = {  ...markets };
-                console.log(dapps);
-                console.log('------5-----', _markets);
-                setMarketsInfo({
-                  markets: _markets,
-                  dapps,
-                });
-              },
-            }}
-          />
-        </>
-      )}
-      {
-        Object.keys(marketsInfo.markets).length > 0 ? <ComponentWrapperPage
-          src="bluebiu.near/widget/Avalanche.Lending.Market"
+        {tabConfig.defaultDapp && (
+          <>
+            {(tabConfig.defaultDapp === 'All' || !tabConfig.dapps[tabConfig.defaultDapp]) && (
+              <ComponentWrapperPage src="bluebiu.near/widget/0vix.LendingSpinner" />
+            )}
+            <ComponentWrapperPage
+              src="bluebiu.near/widget/Avalanche.Lending.Data"
+              componentProps={{
+                update: currMarket,
+                chainId,
+                multicall,
+                ...tabConfig,
+                prices,
+                account,
+                onLoad: (data: Record<string, any>) => {
+                  const { markets, dapp } = data;
+                  const dapps: any = {};
+                  dapps[dapp.dappName] = dapp;
+                  const _markets = { ...markets };
+                  setMarketsInfo({
+                    markets: _markets,
+                    dapps,
+                  });
+                },
+              }}
+            />
+          </>
+        )}
+        {
+          currTab === 'Market' ? (
+            <ComponentWrapperPage
+              src="bluebiu.near/widget/Avalanche.Lending.Market"
+              componentProps={{
+                currentDapp: currMarket,
+                ...marketsInfo,
+                timestamp: timestamp,
+                onButtonClick: (address: string, actionText: any) => {
+                  const market = marketsInfo.markets[address];
+                  const dapp = marketsInfo.dapps[market.dapp];
+                  const dappConfig = tabConfig.dapps[market.dapp];
+                  setTableButtonClickData({
+                    ...dapp,
+                    ...market,
+                    config: { ...dappConfig, wethAddress: tabConfig?.wethAddress},
+                    actionText,
+                  })
+                  ;
+                  setShowDialog(true);
+                },
+                account,
+              }}
+            />
+          ) : null
+        }
+        {
+          currTab === 'Yours' && (
+            <ComponentWrapperPage
+              src="bluebiu.near/widget/Avalanche.Lending.Yours"
+              componentProps={{
+                currentDapp: currMarket,
+                ...marketsInfo,
+                dappsConfig: tabConfig.dapps,
+                toast,
+                account,
+                onButtonClick: () => {
+                },
+                onSuccess: (dapp: string) => {
+                  setCurrMarket(dapp);
+                },
+              }}
+            />
+          )
+        }
+        <ComponentWrapperPage
+          src="bluebiu.near/widget/Avalanche.Lending.Dialog"
           componentProps={{
-            currentDapp: tabConfig.defaultDapp,
-            ...marketsInfo,
-            timestamp: Date.now(),
-            onButtonClick: () => {
-              console.log('oisfopi');
-            },
+            display: showDialog,
+            data: tableButtonClickData,
+            chainId,
+            addAction,
+            toast,
             account,
+            onClose: () => {
+              setShowDialog(false)
+            },
+            onSuccess: () => {
+              setCurrMarket(tableButtonClickData?.dappName);
+            },
           }}
-        /> : null
-      }
-        </Theme>
+        />
+      </Theme>
     </div>
   );
 };
 
-export default Lending;
+export default memo(Lending);

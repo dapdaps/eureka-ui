@@ -3,19 +3,19 @@ import { useEffect, useMemo, useState } from 'react';
 
 import popupsData from '@/config/all-in-one/chains';
 import Bridge from '@/views/AllInOne/components/Bridge';
-import Lending from '@/views/AllInOne/components/Lending';
-import Liquidity from '@/views/AllInOne/components/Liquidity';
+import LendingEntry from '@/views/AllInOne/components/Lending/Entry';
+import LiquidityEntry from '@/views/AllInOne/components/Liquidity/Entry';
 import Trade from '@/views/AllInOne/components/Trade';
 
 const MenuConfig: { [k: string]: any } = {
   Trade,
   Bridge,
-  Lending,
-  Liquidity,
+  Lending: LendingEntry,
+  Liquidity: LiquidityEntry,
 };
 
 export function useChain(props: Props) {
-  const { chain, menu } = props;
+  const { chain } = props;
 
   const [currentChain, setCurrentChain] = useState<any>({});
   const [showComponent, setShowComponent] = useState(false);
@@ -30,12 +30,6 @@ export function useChain(props: Props) {
       return menuItem;
     });
   }, [currentChain]);
-
-  const currentMenu = useMemo(() => {
-    if (!currentChain.menuConfig) return null;
-    const currMenu = currentChainMenuList.find((it: any) => it.tab === menu);
-    return currMenu || false;
-  }, [currentChain, currentChainMenuList, menu]);
 
   const { run } = useDebounceFn(
     () => {
@@ -56,7 +50,6 @@ export function useChain(props: Props) {
     showComponent,
     setShowComponent,
     currentChainMenuList,
-    currentMenu,
   };
 }
 

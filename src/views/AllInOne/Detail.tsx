@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
@@ -8,6 +8,11 @@ import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
+
+import Bridge from '@/views/AllInOne/components/Bridge';
+import Lending from '@/views/AllInOne/components/Lending';
+import Liquidity from '@/views/AllInOne/components/Liquidity';
+import Trade from '@/views/AllInOne/components/Trade';
 
 const AllInOneDetailView = (props: Props) => {
   const { chain, menu } = props;
@@ -18,7 +23,6 @@ const AllInOneDetailView = (props: Props) => {
     currentChain,
     showComponent,
     setShowComponent,
-    currentMenu,
     currentChainMenuList,
   } = useChain(props);
 
@@ -26,10 +30,13 @@ const AllInOneDetailView = (props: Props) => {
     router.replace(`/all-in-one/${currentChain.path}/${tab}`);
   };
 
-  console.log(currentMenu);
-  if (currentMenu === false) {
-    router.back();
-  }
+  const currentMenu = useMemo<any>(() => {
+    const defaultMenu = { tab: menu, description: "" };
+    if (!currentChain) return defaultMenu;
+    if (!currentChain.menuConfig) return defaultMenu;
+    const currMenu = Object.values(currentChain.menuConfig).find((it: any) => it.tab === menu);
+    return currMenu || defaultMenu;
+  }, [menu, currentChain]);
 
   return (
     <StyledContainer>
@@ -48,14 +55,33 @@ const AllInOneDetailView = (props: Props) => {
 
         <StyledContent>
           {
-            showComponent && currentMenu && (
+            showComponent && (
               <AllInOneDetailCardView
-                key={currentMenu.tab}
-                title={currentMenu.tab}
+                key={menu}
+                title={menu}
                 subTitle={currentMenu.description}
                 bgColor={currentChain.selectBgColor}
               >
-                <currentMenu.component chain={currentChain} />
+                {
+                  menu === 'Bridge' && (
+                    <Bridge />
+                  )
+                }
+                {
+                  menu === 'Lending' && (
+                    <Lending />
+                  )
+                }
+                {
+                  menu === 'Liquidity' && (
+                    <Liquidity />
+                  )
+                }
+                {
+                  menu === 'Trade' && (
+                    <Trade chain={currentChain} />
+                  )
+                }
               </AllInOneDetailCardView>
             )
           }

@@ -13,16 +13,18 @@ export const StyledMarketListItem = styled.div`
   height: 54px;
   text-align: center;
   font-size: 12px;
-  opacity: 0.5;
+  color: #979ABE;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   overflow: hidden;
   cursor: pointer;
-
+  transition: all 0.15s ease;
+  &.active,
   &:hover {
-    opacity: 1;
+    background: #32364B;
+    color: #fff;
   }
 `;
 
@@ -35,4 +37,8 @@ export const StyledItemIcon = styled.img`
 export const StyledItemName = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
+  padding: 0 2px;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 2px;
 `;

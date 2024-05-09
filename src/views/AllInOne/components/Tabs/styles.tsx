@@ -9,6 +9,8 @@ export const StyledTabsContainer = styled.div`
   border-radius: 8px;
   font-size: 14px;
   width: fit-content;
+  color: #979ABE;
+
 `;
 export const StyledTabItem = styled.div`
   min-width: 76px;
@@ -22,5 +24,6 @@ export const StyledTabItem = styled.div`
   &.active {
     border: 1px solid #373A53;
     background: #32364B;
+    color: #fff;
   }
 `;

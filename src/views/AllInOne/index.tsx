@@ -11,8 +11,6 @@ const AllInOneView = (props: Props) => {
   const { chain } = props;
   
   const { currentChain, showComponent, setShowComponent, currentChainMenuList } = useChain(props);
-  
-  console.log(currentChain);
 
   return (
     <StyledContainer>
