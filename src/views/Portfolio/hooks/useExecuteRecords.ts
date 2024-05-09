@@ -25,18 +25,19 @@ export default function useExecuteRecords({ currentPage }: any) {
           start_time: currentPage === 1 ? '' : records.slice(-1)[0].tx_time,
         }),
       });
+
       setRecords(
         result.data.list
-          .filter((record: any) => record.token_in)
+          .filter((record: any) => record.token_in && record)
           .map((record: any) => {
             return {
               id: record.id,
               quest: formatQuest(record),
               action: upperFirst(record.type),
               gas: formatGas(record),
-              dapp_logo: record.dapp.logo,
-              dapp_name: record.dapp.show_name,
-              name: record.dapp.name,
+              dapp_logo: record.dapp?.logo,
+              dapp_name: record.dapp?.show_name,
+              name: record.dapp?.name,
               tx_time: record.tx_time,
               tx_hash: record.tx_hash,
               chain_id: record.chain_id,

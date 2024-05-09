@@ -31,12 +31,9 @@ export default function useTokens() {
         }
         _totalBalance = _totalBalance.add(record.usd || 0);
       });
-      const _tokens = result?.data?.list.map((record: any) => {
-        const percent = _totalBalance.eq(0) ? '0' : new Big(record.usd || 0).div(_totalBalance).mul(100).toFixed(2);
-        return { ...record, percent };
-      });
+
       setLoading(false);
-      setTokens(_tokens);
+      setTokens(result?.data?.list);
       setNetworks(Object.values(_networks));
       setTotalBalance(_totalBalance);
     } catch (error) {

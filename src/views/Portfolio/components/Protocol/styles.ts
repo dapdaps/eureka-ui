@@ -119,21 +119,21 @@ export const ProtocolCard = styled.div`
   }
 `;
 
-export const ProtocolArrowWrapper = styled.div<{ isExpand: boolean }>`
+export const ProtocolArrowWrapper = styled.div<{ $isExpand: boolean }>`
   height: 32px;
   width: 32px;
   border-radius: 8px;
-  background: ${(p) => (p.isExpand ? '#373a53' : 'none')};
+  background: ${(p) => (p.$isExpand ? '#373a53' : 'none')};
   display: flex;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   border: 1px solid #373a53;
-  transform: ${(p) => (p.isExpand ? 'rotate(180deg)' : 'none')};
+  transform: ${(p) => (p.$isExpand ? 'rotate(180deg)' : 'none')};
   transition: 0.3s;
 `;
 
-export const ProtocolTable = styled.div<{ titleColor: string; titleBg: string }>`
+export const ProtocolTable = styled.div<{ titleColor: string; $titleBg: string }>`
   background: #25283a;
   width: 100%;
   border-radius: 16px;
@@ -186,7 +186,7 @@ export const ProtocolTable = styled.div<{ titleColor: string; titleBg: string }>
     letter-spacing: 0em;
     text-align: left;
     color: ${(p) => p.titleColor};
-    background: ${(p) => p.titleBg};
+    background: ${(p) => p.$titleBg};
   }
   table {
     width: 100%;

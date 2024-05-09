@@ -82,7 +82,7 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
             onClick={() => {
               setThisCardExpand((b) => !b);
             }}
-            isExpand={thisCardExpand}
+            $isExpand={thisCardExpand}
           >
             {ProtocolArrowDown}
           </ProtocolArrowWrapper>

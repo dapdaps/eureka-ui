@@ -29,11 +29,10 @@ const colorConfig: { [key: string]: any } = {
 };
 
 const ProtocolTableGenerator = ({ columns, rows, name, type }: any) => {
-  console.log(type, name);
   return (
     <ProtocolTable
       titleColor={(colorConfig[type] || colorConfig['default']).titleColor}
-      titleBg={(colorConfig[type] || colorConfig['default']).titleBg}
+      $titleBg={(colorConfig[type] || colorConfig['default']).$titleBg}
     >
       <div className="type-title">{upperFirst(name)}</div>
       <table>

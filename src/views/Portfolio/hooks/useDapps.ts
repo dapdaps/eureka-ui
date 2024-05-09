@@ -17,7 +17,7 @@ export default function useDapps() {
       setDapps([]);
       const result = await get(`/db3`, {
         url: 'api/balance/dapp/list',
-        params: JSON.stringify({ address: '0xC25d79fc4970479B88068Ce8891eD9bE5799210D' }),
+        params: JSON.stringify({ address: account }),
       });
       const _dapps: any = result?.data?.list
         // .filter((record: any) => record.name === 'juice')

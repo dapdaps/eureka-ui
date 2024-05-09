@@ -34,16 +34,20 @@ const Wallet = ({ tokens, totalBalance, filterFunc, loading }: any) => {
   const typedList = useMemo(() => {
     if (!tokens) return [];
     if (type === 'Default') return tokens;
-    const _list: any = {};
+    const _data: any = {};
     tokens.forEach((token: any) => {
-      if (_list[token.symbol]) {
-        _list[token.symbol].chain_ids.push(token.chain_id);
-        _list[token.symbol].usd = new Big(_list[token.symbol].usd || 0).plus(token.usd || 0).toString();
+      if (_data[token.symbol]) {
+        _data[token.symbol].chain_ids.push(token.chain_id);
+        _data[token.symbol].usd = new Big(_data[token.symbol].usd || 0).plus(token.usd || 0).toString();
       } else {
-        _list[token.symbol] = { ...token, chain_ids: [token.chain_id] };
+        _data[token.symbol] = { ...token, chain_ids: [token.chain_id] };
       }
     });
-    return Object.values(_list);
+
+    return Object.values(_data).map((record: any) => {
+      const percent = totalBalance.eq(0) ? '0' : new Big(record.usd || 0).div(totalBalance).mul(100).toFixed(2);
+      return { ...record, percent };
+    });
   }, [tokens, type]);
 
   const filteredList = useMemo(() => {
