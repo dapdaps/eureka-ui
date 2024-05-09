@@ -27,6 +27,16 @@ import useReport from '@/views/Landing/hooks/useReport';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import Trade from './components/Trade';
+import Bridge from './components/Bridge';
+import Lending from './components/Lending';
+import Liquidity from './components/Liquidity';
+
+const MenuConfig: {[k: string]: any} = {
+  Trade,
+  Bridge,
+  Lending,
+  Liquidity,
+};
 
 const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
 
@@ -48,6 +58,7 @@ const AllInOneView = (props: Props) => {
     return Object.values(currentChain.menuConfig).map((it: any) => {
       const menuItem = {
         ...it,
+        component: MenuConfig[it.tab],
       };
       return menuItem;
     });
@@ -99,7 +110,7 @@ const AllInOneView = (props: Props) => {
 
   return (
     <StyledContainer>
-      {/*<StyledFlex flexDirection="column" justifyContent="center">*/}
+      <StyledFlex flexDirection="column" justifyContent="center">
         <StyledHeader>
           <StyledMainHeader>
             <StyledLogoBg src={currentChain.bgIcon} />
@@ -160,40 +171,40 @@ const AllInOneView = (props: Props) => {
             />
           </StyledShadow>
         </StyledHeader>
-        <Trade chain={currentChain}/>
-        {/*{*/}
-        {/*  showComponent && (*/}
-        {/*    <StyledContent>*/}
-        {/*      {currentChainMenuList.map((item: any, idx: number) => {*/}
-        {/*        const len = currentChainMenuList.length;*/}
-        {/*        const getCardWidth = () => {*/}
-        {/*          const index = idx + 1;*/}
-        {/*          if (len >= 4) {*/}
-        {/*            if ([1, 0].includes(index % 4)) {*/}
-        {/*              return { width: `calc(40% - 6px)`, flexShrink: 0, flexGrow: 0 };*/}
-        {/*            }*/}
-        {/*            if ([2, 3].includes(index % 4)) {*/}
-        {/*              return { width: `calc(60% - 6px)`, flexShrink: 0, flexGrow: 0 };*/}
-        {/*            }*/}
-        {/*          }*/}
-        {/*          return { flex: 1 };*/}
-        {/*        };*/}
-        {/*        return (*/}
-        {/*          <AllInOneCardView*/}
-        {/*            key={item.tab}*/}
-        {/*            title={item.tab}*/}
-        {/*            subTitle={item.description}*/}
-        {/*            bgColor={currentChain.selectBgColor}*/}
-        {/*            style={getCardWidth()}*/}
-        {/*          >*/}
-        {/*            <Trade chain={currentChain}/>*/}
-        {/*          </AllInOneCardView>*/}
-        {/*        );*/}
-        {/*      })}*/}
-        {/*    </StyledContent>*/}
-        {/*  )*/}
-        {/*}*/}
-      {/*</StyledFlex>*/}
+
+        {
+          showComponent && (
+            <StyledContent>
+              {currentChainMenuList.map((item: any, idx: number) => {
+                const len = currentChainMenuList.length;
+                const getCardWidth = () => {
+                  const index = idx + 1;
+                  if (len >= 4) {
+                    if ([1, 0].includes(index % 4)) {
+                      return { width: `calc(40% - 12px)`, flexShrink: 0, flexGrow: 0 };
+                    }
+                    if ([2, 3].includes(index % 4)) {
+                      return { width: `calc(60% - 12px)`, flexShrink: 0, flexGrow: 0 };
+                    }
+                  }
+                  return { flex: 1 };
+                };
+                return (
+                  <AllInOneCardView
+                    key={item.tab}
+                    title={item.tab}
+                    subTitle={item.description}
+                    bgColor={currentChain.selectBgColor}
+                    style={getCardWidth()}
+                  >
+                    <item.component chain={currentChain}/>
+                  </AllInOneCardView>
+                );
+              })}
+            </StyledContent>
+          )
+        }
+      </StyledFlex>
     </StyledContainer>
   );
 };

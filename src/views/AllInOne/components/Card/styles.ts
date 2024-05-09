@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledCard = styled.div`
   border: 1px solid #373A53;
   border-radius: 16px;
-  padding: 28px 24px 0 24px;
+  padding: 28px 24px 28px 24px;
   transition: all .3s ease;
   min-width: 300px;
   min-height: 250px;

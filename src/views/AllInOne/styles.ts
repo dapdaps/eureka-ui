@@ -70,7 +70,7 @@ export const StyledContent = styled.div`
   width: 100%;
   position: relative;
   display: flex;
-  gap: 12px;
+  gap: 24px;
   flex-wrap: wrap;
 `;
 
