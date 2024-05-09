@@ -77,10 +77,6 @@ export const Empty = styled.div`
   color: #fff;
 `;
 
-export const CloseIcon = styled.div`
-cursor: pointer;
-`;
-
 export const CurrencyRow = styled.div`
   padding: 10px;
   display: flex;

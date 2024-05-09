@@ -1,4 +1,12 @@
-import { StyledTradeBlock, StyledTradeTitle, StyledTradeInputContainer, StyledSelectToken, CurrencyIcon, CurrencyTitle, StyledTradeBalance} from './styles';
+import {
+  StyledTradeBlock,
+  StyledTradeTitle,
+  StyledTradeInputContainer,
+  StyledSelectToken,
+  CurrencyIcon,
+  CurrencyTitle,
+  StyledTradeBalance,
+} from './styles';
 import CurrencyInput from '@/views/AllInOne/components/CurrencyInput/index';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { useState } from 'react';
@@ -18,14 +26,16 @@ const Currency = (props: Props) => {
   const onCurrencyChange = (m: number | string) => {
     setAmount(m);
     onAmountChange?.(m);
-  }
+  };
   const onShowSelect = () => {
     setShow(true);
   };
-  return <><StyledTradeBlock>
+  return (
+    <>
+    <StyledTradeBlock>
     <StyledTradeTitle>{title}</StyledTradeTitle>
     <StyledTradeInputContainer>
-      <CurrencyInput amount={amount} onAmountChange={onCurrencyChange} disabled={disabled}/>
+      <CurrencyInput amount={amount} onAmountChange={onCurrencyChange} disabled={disabled} />
       <StyledSelectToken onClick={onShowSelect}>
         <CurrencyIcon src={''} alt={'www'} />
         <CurrencyTitle>wdd</CurrencyTitle>
@@ -38,7 +48,8 @@ const Currency = (props: Props) => {
     </StyledTradeBalance>
   </StyledTradeBlock>
     <CurrencySelectPopup display={show} onClose={() => setShow(false)} />
-    </>
-}
+  </>
+  );
+};
 
 export default Currency;

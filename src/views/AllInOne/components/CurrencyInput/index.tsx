@@ -11,7 +11,9 @@ const CurrencyInput = (props: PropsType) => {
     if (isNaN(Number(ev.target.value))) return;
     onAmountChange?.(ev.target.value.replace(/\s+/g, ""));
   }
-  return <input value={amount} disabled={disabled} onChange={handleInputChange}/>
+  return (
+    <input value={amount} disabled={disabled} onChange={handleInputChange}/>
+  )
 }
 
 export default CurrencyInput;

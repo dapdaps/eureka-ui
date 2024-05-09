@@ -4,7 +4,7 @@ export const StyledTradeBlock = styled.div`
   background: #262836;
   border: 1px solid #373A53;
   border-radius: 16px;
-  padding: 16px 18px;
+  padding: 12px 18px;
 `;
 export const StyledTradeTitle = styled.div`
   color: #979ABE;

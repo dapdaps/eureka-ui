@@ -1,6 +1,6 @@
 import { ChangeEvent } from 'react';
-import {Dialog, Content, Title, InputWarpper, Input, Empty, Header, Overlay, CurrencyList, CloseIcon, CurrencyRow, CurrencyAmount, CurrencyIcon, CurrencyLabel, CurrencyName, CurrencySymbol } from './styles';
-
+import {Dialog, Content, Title, InputWarpper, Input, Empty, Header, Overlay, CurrencyList, CurrencyRow, CurrencyAmount, CurrencyIcon, CurrencyLabel, CurrencyName, CurrencySymbol } from './styles';
+import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
 type Props = {
   // title: string;
   // tokens: Record<string, any>[];
@@ -52,14 +52,7 @@ const balanceFormated = () => {
         >
           <Header>
             <Title>Select a token</Title>
-            <CloseIcon onClick={props?.onClose}>
-              <svg width="18" height="18" viewBox="0 0 20 20" fill="none"
-                   xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.5 5L5.5 15M5.5 5L15.5 15" stroke="currentColor" stroke-width="1.66667"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"></path>
-              </svg>
-            </CloseIcon>
+            <CloseIcon onClose={props.onClose} size={18}/>
           </Header>
           <InputWarpper>
             <Input

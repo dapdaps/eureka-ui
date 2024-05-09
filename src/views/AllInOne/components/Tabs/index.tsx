@@ -1,0 +1,35 @@
+import { StyledTabsContainer,StyledTabItem } from './styles';
+
+type Props = {
+  tabs: {
+    key: string;
+    label: string;
+    value: string;
+  }[];
+  currTab: string;
+  onTabChange: (tab: string) => void;
+}
+const Tabs = (props: Props) => {
+  const {
+    currTab,
+    tabs = [],
+    onTabChange
+  } = props;
+  const tab = currTab ?? tabs?.[0]?.key ?? '';
+  const onChange = (current: string) => {
+    props.onTabChange(current);
+  }
+  console.log(props, tab);
+
+  return (
+    <StyledTabsContainer>
+      {
+        tabs.map(item => <StyledTabItem className={currTab === item.key ? 'active' : ''} onClick={() => onChange(item.key)}>
+          {item.label}
+        </StyledTabItem>)
+      }
+    </StyledTabsContainer>
+  );
+}
+
+export default Tabs;

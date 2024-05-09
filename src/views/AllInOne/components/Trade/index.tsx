@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import Currency from '@/views/AllInOne/components/Currency/index';
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
+import { StyledFlex } from '@/styled/styles';
 import {
   StyledTradeContainer,
   StyledTradeIcon,
@@ -18,14 +22,15 @@ import {
   StyledMarketItemName,
   StyledMarketItemToken,
   StyledMarketItemBalance,
-  StyledMarketArrow
-
+  StyledMarketArrow,
+  StyledMarketItemDetail,
+  StyledMarketItemContent,
+  StyledMarketItemTextLeft,
+  StyledMarketItemTextRight,
+  StyledMarketItemText,
 } from '@/views/AllInOne/components/Trade/styles';
-import Currency from '@/views/AllInOne/components/Currency/index';
-import { StyledFlex } from '@/styled/styles';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 
-const Trade = (props: { chain: any }) => {
+const Trade = (props: { chain: Record<string, any> }) => {
   const { chain } = props;
   const [amount, setAmount] = useState<number | string>(1);
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
@@ -49,50 +54,116 @@ const Trade = (props: { chain: any }) => {
 
   const onSelectMarket = (item: string) => {
     setSelectedMarket(item);
-  }
-  return <>
-    <StyledTradeContainer>
-      <div className="from-currency_margin">
-        <Currency title="Swap From" textUnderline={true} onAmountChange={onFromChange} />
-      </div>
-      <StyledTradeIcon>
-        <TradeIcon />
-      </StyledTradeIcon>
-      <Currency title="To" disabled={true} />
-    </StyledTradeContainer>
-    <StyledTradeButton bgColor={chain.selectBgColor} color={chain.iconColor ?? '#fff'}>Swap</StyledTradeButton>
-    <StyledTradeFooter>
-      <StyledTradeEth>1 ETH = 3422.2502675 USDC</StyledTradeEth>
-      <StyledFlex gap="8px">
-        <StyledMarketIcon url=""></StyledMarketIcon>
-        <StyledMarketTitle>soidspoi</StyledMarketTitle>
-        <StyledMarketTag>Best Price</StyledMarketTag>
-        <StyledFlex className={isDropdown ? 'light' : 'dark'} gap="8px">
-          <StyledMarketCount onClick={showMarketDropdown}>3 Markets</StyledMarketCount>
-          <ArrowWrap isDropdown={isDropdown} onClick={showMarketDropdown}>
-            <ArrowIcon size={10}></ArrowIcon>
-          </ArrowWrap>
-        </StyledFlex>
-      </StyledFlex>
-    </StyledTradeFooter>
-    <StyledMarketsContainer className={!!selectedMarket ? 'active-market' : ''}>
-      { ['1', '2', '3'].map((i: string) => <StyledMarketItem onClick={() => onSelectMarket(i)} active={i === selectedMarket} color={chain.selectBgColor}>
-        <StyledMarketItemLeft>
-          <StyledMarketItemIcon />
-          <StyledMarketItemName>SyncSwap</StyledMarketItemName>
+  };
+
+  const onClose = () => {
+    setSelectedMarket('');
+  };
+
+  const markets = [
+    {
+      key: '1',
+      label: 'Minimum Received',
+      value: '0.04508452 ETH',
+    },
+    {
+      key: '2',
+      label: 'Price Impact',
+      value: '1.67%',
+    },
+    {
+      key: '3',
+      label: 'Fees',
+      value: '$0.777594',
+    },
+    {
+      key: '4',
+      label: 'Route',
+      value: 'USDC > ETH',
+    },
+  ];
+
+  const getMarketItemLeft = () => (
+    <StyledMarketItemLeft>
+      <StyledMarketItemIcon />
+      <StyledMarketItemName>SyncSwap</StyledMarketItemName>
+      <StyledMarketTag>Best Price</StyledMarketTag>
+    </StyledMarketItemLeft>
+  );
+
+  const getMarketItemElement = (marketItem: any) => {
+    return <StyledMarketItem onClick={() => onSelectMarket(marketItem)} active={marketItem === selectedMarket}
+                             color={chain.selectBgColor}>
+      {getMarketItemLeft()}
+      <StyledMarketItemRight>
+        <StyledMarketItemToken />
+        <StyledMarketItemBalance>3420.77</StyledMarketItemBalance>
+        <StyledMarketArrow>
+          <ArrowIcon size={10}></ArrowIcon>
+        </StyledMarketArrow>
+      </StyledMarketItemRight>
+    </StyledMarketItem>;
+  };
+
+  const marketsClassNames = () => {
+    let classname = '';
+    if (!!selectedMarket) {
+      classname += ' active-market';
+    }
+    if (isDropdown) {
+      classname += ' open-market';
+    }
+    return classname;
+  };
+
+  return (
+    <div>
+      <StyledTradeContainer>
+        <div className="from-currency_margin">
+          <Currency title="Swap From" textUnderline={true} onAmountChange={onFromChange} />
+        </div>
+        <StyledTradeIcon>
+          <TradeIcon />
+        </StyledTradeIcon>
+        <Currency title="To" disabled={true} />
+      </StyledTradeContainer>
+      <StyledTradeButton bgColor={chain?.selectBgColor} color={chain?.iconColor ?? '#fff'}>Swap</StyledTradeButton>
+      <StyledTradeFooter>
+        <StyledTradeEth>1 ETH = 3422.2502675 USDC</StyledTradeEth>
+        <StyledFlex gap="8px">
+          <StyledMarketIcon url=""></StyledMarketIcon>
+          <StyledMarketTitle>soidspoi</StyledMarketTitle>
           <StyledMarketTag>Best Price</StyledMarketTag>
-        </StyledMarketItemLeft>
-        <StyledMarketItemRight>
-          <StyledMarketItemToken />
-          <StyledMarketItemBalance>3420.77</StyledMarketItemBalance>
-          <StyledMarketArrow>
-            <ArrowIcon size={10}></ArrowIcon>
-          </StyledMarketArrow>
-        </StyledMarketItemRight>
-      </StyledMarketItem>) }
-    </StyledMarketsContainer>
-  </>
-;
+          <StyledFlex className={isDropdown ? 'light' : 'dark'} gap="8px">
+            <StyledMarketCount onClick={showMarketDropdown}>3 Markets</StyledMarketCount>
+            <ArrowWrap isDropdown={isDropdown} onClick={showMarketDropdown}>
+              <ArrowIcon size={10}></ArrowIcon>
+            </ArrowWrap>
+          </StyledFlex>
+        </StyledFlex>
+      </StyledTradeFooter>
+      <StyledMarketsContainer className={marketsClassNames()}>
+        {
+          ['1', '2', '3'].map((i: string) => {
+            return selectedMarket ? (selectedMarket === i ? <StyledMarketItemDetail>
+              <StyledMarketItem className="market-item_detail">
+                {getMarketItemLeft()}
+                <CloseIcon onClose={onClose} />
+              </StyledMarketItem>
+              <StyledMarketItemContent>
+                {
+                  markets.map(i => <StyledMarketItemText>
+                    <StyledMarketItemTextLeft>{i.label}</StyledMarketItemTextLeft>
+                    <StyledMarketItemTextRight>{i.value}</StyledMarketItemTextRight>
+                  </StyledMarketItemText>)
+                }
+              </StyledMarketItemContent>
+            </StyledMarketItemDetail> : null) : getMarketItemElement(i);
+          })
+        }
+      </StyledMarketsContainer>
+    </div>
+  );
 };
 
 export default Trade;
