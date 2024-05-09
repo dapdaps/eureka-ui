@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import useToast from '@/hooks/useToast';
 import { post } from '@/utils/http';
 
-export default function useParticleReport(onSuccess: VoidFunction) {
+export default function useParticleReport(onSuccess: any) {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
