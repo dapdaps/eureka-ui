@@ -262,4 +262,28 @@ export const blast: { [key: string]: Token } = {
     name: 'KelpDao Restaked ETH',
     icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
   },
+  deus: {
+    address: '0xDE55B113A27Cc0c5893CAa6Ee1C020b6B46650C0',
+    chainId: CHAIN_ID,
+    symbol: 'DEUS',
+    decimals: 18,
+    name: 'DEUS',
+    icon: 'https://ipfs.near.social/ipfs/bafkreielpapejnsqu3cbohttepntbzw77au2vt7cptlfa4l4c66shqv3qe',
+  },
+  pxeth: {
+    chainId: CHAIN_ID,
+    address: '0x9E0d7D79735e1c63333128149c7b616a0dC0bBDb',
+    decimals: 18,
+    symbol: 'pxETH',
+    name: 'Pirex Ether OFT',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiepil46e3xesbiq623ucwrwg3b4wxmynfejaks5osx2rhpyfv5gai',
+  },
+  'usd+': {
+    chainId: CHAIN_ID,
+    address: '0x4fEE793d435c6D2c10C135983BB9d6D4fC7B9BBd',
+    decimals: 18,
+    symbol: 'USD+',
+    name: 'USD+',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiccxz5kzr7fnbbnlzpe5e25zuxuhwp2mtf6rdqvcjtmz4jvi33zgu',
+  },
 };
