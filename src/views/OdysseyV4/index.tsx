@@ -72,7 +72,7 @@ export default function OdysseyV4() {
         />
 
         <Golds list={quests.golds} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
-        <Explores />
+        <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />
         <Lending list={lendingList} onRefreshDetail={queryDetail} />
