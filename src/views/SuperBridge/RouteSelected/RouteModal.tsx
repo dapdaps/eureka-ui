@@ -5,7 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { ArrowDown } from '../Arrow'
 import Modal from "../Modal";
 import Route from "../Route";
-import { Token } from "@/types";
+import type { Token } from "@/types";
 
 const ListWapper = styled.div`
     &>:not(:first-child) {

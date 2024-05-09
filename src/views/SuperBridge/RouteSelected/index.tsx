@@ -5,7 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { ArrowRight } from '../Arrow'
 import Route from '../Route'
 import RouteModal from './RouteModal';
-import { Token } from "@/types";
+import type { Token } from "@/types";
 
 const Container = styled.div`
     margin-top: 20px;

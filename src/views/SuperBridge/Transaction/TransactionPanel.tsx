@@ -181,7 +181,7 @@ export default function TransactionPanel(
                 <tbody>
                     {
                         transactionList?.map(tx => {
-                            return <tr>
+                            return <tr key={tx.hash}>
                                 <td>
                                     <div className="flex-line">
                                         <div className="hash">

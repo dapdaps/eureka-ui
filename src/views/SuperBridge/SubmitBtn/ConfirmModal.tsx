@@ -6,7 +6,7 @@ import { balanceFormated, percentFormated, addressFormated } from '@/utils/balan
 import Loading from '@/components/Icons/Loading';
 
 import Modal from "../Modal";
-import { Chain, Token } from '@/types';
+import type { Chain, Token } from '@/types';
 
 const Box = styled.div`
     background-color: rgba(55, 58, 83, 0.5);
