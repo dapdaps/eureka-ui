@@ -13,6 +13,7 @@ import polygonZkevm from './polygon-zkevm';
 import manta from './manta';
 import scroll from './scroll';
 import blast from './blast';
+import mode from './mode';
 
 export default {
   42161: arbitrum,
@@ -30,4 +31,5 @@ export default {
   169: manta,
   534352: scroll,
   81457: blast,
+  34443: mode,
 } as { [key: number]: any };

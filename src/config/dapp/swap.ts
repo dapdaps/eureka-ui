@@ -485,4 +485,18 @@ export default {
       '--button-text-color': '#000',
     },
   },
+  'kim-exchange': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#FF4500',
+      '--button-text-color': '#fff',
+    },
+  },
+  'sup-swap': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#2432f4',
+      '--button-text-color': '#fff',
+    },
+  },
 };
