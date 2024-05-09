@@ -147,4 +147,12 @@ export const mode: { [key: string]: Token } = {
     name: 'rsETHWrapper',
     icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty',
   },
+  mode: {
+    address: '0xDfc7C877a950e49D2610114102175A06C2e3167a',
+    chainId: CHAIN_ID,
+    symbol: 'MODE',
+    decimals: 18,
+    name: 'MODE',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihyh7mw7dieuobllbdpzs2irqadepophuc764rtdxbwdn36csz5ei',
+  },
 };

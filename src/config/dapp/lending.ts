@@ -700,6 +700,29 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#fff',
     },
   },
+  'ironclad-finance': {
+    type: 'lending',
+    theme: {
+      '--button-color': '#9A80FE',
+      '--switch-color': '#9A80FE',
+      '--button-text-color': '#fff',
+      '--supply-color': '#9A80FE',
+      '--yours-table-title': '#fff',
+      '--borrow-color': '#9A80FE',
+      '--withdraw-bg-color': '#9A80FE',
+      '--withdraw-border-color': '#9A80FE',
+      '--withdraw-bg-hover-color': '#9A80FE',
+      '--repay-bg-color': '#9A80FE',
+      '--repay-border-color': '#9A80FE',
+      '--repay-bg-hover-color': '#9A80FE',
+      '--claim-bg-hover-color': '#9A80FE',
+      '--claim-bg-color': '#9A80FE',
+      '--claim-border-color': '#9A80FE',
+      '--withdraw-color': '#fff',
+      '--replay-color': '#fff',
+      '--claim-color': '#fff',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
