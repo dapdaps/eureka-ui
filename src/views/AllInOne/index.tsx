@@ -1,10 +1,11 @@
 import { memo } from 'react';
+
 import { StyledFlex } from "@/styled/styles";
-import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
+import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
+import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
 
 const AllInOneView = (props: Props) => {
   const { chain } = props;

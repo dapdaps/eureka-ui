@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-const AllInOneBridgeView = (props: Props) => {
+const AllInOneBridgeView = () => {
   
   return (
     <>Bridge</>
@@ -8,5 +8,3 @@ const AllInOneBridgeView = (props: Props) => {
 };
 
 export default memo(AllInOneBridgeView);
-
-interface Props {}

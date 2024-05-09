@@ -1,17 +1,19 @@
+import { useDebounceFn } from 'ahooks';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
-import useAccount from '@/hooks/useAccount';
-import Tabs from '@/views/AllInOne/components/Tabs/index';
-import MarketItems from '@/views/AllInOne/components/MarketItems/index';
 import popupsData from '@/config/all-in-one/chains';
-import { useState, useMemo, useEffect } from 'react';
-import useAddAction from '@/hooks/useAddAction';
 import lendingConfig from '@/config/lending/networks';
+import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
+import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { usePriceStore } from '@/stores/price';
 import { StyledFlex } from '@/styled/styles';
 import { multicall } from '@/utils/multicall';
-import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
-import { useDebounceFn } from 'ahooks';
-import { useRouter } from 'next/router';
+import MarketItems from '@/views/AllInOne/components/MarketItems/index';
+import Tabs from '@/views/AllInOne/components/Tabs/index';
+
 import { Theme } from './styles';
 
 const tabsList = [

@@ -1,8 +1,9 @@
-import React, { memo } from 'react';
-import { StyledCard, StyledContent, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
-import { StyledFlex } from '@/styled/styles';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
 import { useRouter } from 'next/router';
+import React, { memo } from 'react';
+
+import { StyledFlex } from '@/styled/styles';
+import { StyledCard, StyledContent, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
+import { Gradient } from '@/views/AllInOne/components/Gradient';
 
 const AllInOneCardView: React.FC<Props> = (props) => {
   const {

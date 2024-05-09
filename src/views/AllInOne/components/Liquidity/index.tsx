@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-const AllInOneLiquidityView = (props: Props) => {
+const AllInOneLiquidityView = () => {
   
   return (
     <>Liquidity</>
@@ -8,5 +8,3 @@ const AllInOneLiquidityView = (props: Props) => {
 };
 
 export default memo(AllInOneLiquidityView);
-
-interface Props {}

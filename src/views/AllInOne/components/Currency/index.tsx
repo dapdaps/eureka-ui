@@ -1,16 +1,18 @@
+import { useState } from 'react';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import CurrencyInput from '@/views/AllInOne/components/CurrencyInput/index';
+
+import CurrencySelectPopup from '../CurrencySelectPopup';
 import {
-  StyledTradeBlock,
-  StyledTradeTitle,
-  StyledTradeInputContainer,
-  StyledSelectToken,
   CurrencyIcon,
   CurrencyTitle,
+  StyledSelectToken,
   StyledTradeBalance,
+  StyledTradeBlock,
+  StyledTradeInputContainer,
+  StyledTradeTitle,
 } from './styles';
-import CurrencyInput from '@/views/AllInOne/components/CurrencyInput/index';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
-import { useState } from 'react';
-import CurrencySelectPopup from '../CurrencySelectPopup';
 
 type Props = {
   onAmountChange?: (amount: number | string) => void;

@@ -1,5 +1,10 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import Loading from '@/components/Icons/Loading';
+import popupsData from '@/config/all-in-one/chains';
 import { StyledFlex } from '@/styled/styles';
+import { Gradient } from '@/views/AllInOne/components/Gradient';
 import {
   StyledArrowIconWrap, StyledBgLogo,
   StyledHeader,
@@ -13,12 +18,8 @@ import {
   StyledPopupText,
   StyledTitle,
 } from '@/views/AllInOne/components/Header/styles';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
-import popupsData from '@/config/all-in-one/chains';
-import useReport from '@/views/Landing/hooks/useReport';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
-import Loading from '@/components/Icons/Loading';
 import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
+import useReport from '@/views/Landing/hooks/useReport';
 
 const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
 

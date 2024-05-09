@@ -1,7 +1,8 @@
-import { useRouter } from 'next/router';
-import useAuthCheck from '@/hooks/useAuthCheck';
 import { useSetChain } from '@web3-onboard/react';
+import { useRouter } from 'next/router';
+
 import popupsData from '@/config/all-in-one/chains';
+import useAuthCheck from '@/hooks/useAuthCheck';
 
 export function useChainSelect(props: Props) {
   const {

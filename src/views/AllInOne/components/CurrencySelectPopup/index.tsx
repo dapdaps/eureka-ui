@@ -1,6 +1,9 @@
-import { ChangeEvent } from 'react';
-import {Dialog, Content, Title, InputWarpper, Input, Empty, Header, Overlay, CurrencyList, CurrencyRow, CurrencyAmount, CurrencyIcon, CurrencyLabel, CurrencyName, CurrencySymbol } from './styles';
+import type { ChangeEvent } from 'react';
+
 import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
+
+import {Content, CurrencyAmount, CurrencyIcon, CurrencyLabel, CurrencyList, CurrencyName, CurrencyRow, CurrencySymbol,Dialog, Empty, Header, Input, InputWarpper, Overlay, Title } from './styles';
+
 type Props = {
   // title: string;
   // tokens: Record<string, any>[];

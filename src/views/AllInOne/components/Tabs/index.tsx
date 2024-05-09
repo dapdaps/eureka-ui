@@ -24,9 +24,15 @@ const Tabs = (props: Props) => {
   return (
     <StyledTabsContainer>
       {
-        tabs.map(item => <StyledTabItem className={currTab === item.key ? 'active' : ''} onClick={() => onChange(item.key)}>
-          {item.label}
-        </StyledTabItem>)
+        tabs.map(item => (
+          <StyledTabItem
+            key={item.key}
+            className={currTab === item.key ? 'active' : ''}
+            onClick={() => onChange(item.key)}
+          >
+            {item.label}
+          </StyledTabItem>
+        ))
       }
     </StyledTabsContainer>
   );

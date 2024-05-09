@@ -1,12 +1,13 @@
+import { useRouter } from 'next/router';
 import { memo } from 'react';
+
 import { StyledFlex } from '@/styled/styles';
-import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
+import AllInOneCardView from '@/views/AllInOne/components/Card';
+import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
+import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
-import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
-import { useRouter } from 'next/router';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
-import AllInOneCardView from '@/views/AllInOne/components/Card';
+import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
 
 const AllInOneDetailView = (props: Props) => {
   const { chain, menu } = props;

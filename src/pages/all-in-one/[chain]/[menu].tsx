@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 import AllInOneDetailView from '@/views/AllInOne/Detail';

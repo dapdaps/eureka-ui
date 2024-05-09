@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react';
 import { useDebounceFn } from 'ahooks';
+import { useEffect, useMemo, useState } from 'react';
+
 import popupsData from '@/config/all-in-one/chains';
-import Trade from '@/views/AllInOne/components/Trade';
 import Bridge from '@/views/AllInOne/components/Bridge';
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
+import Trade from '@/views/AllInOne/components/Trade';
 
 const MenuConfig: { [k: string]: any } = {
   Trade,

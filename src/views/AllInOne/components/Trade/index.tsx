@@ -1,33 +1,34 @@
 import { useState } from 'react';
-import Currency from '@/views/AllInOne/components/Currency/index';
+
 import ArrowIcon from '@/components/Icons/ArrowIcon';
-import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
 import { StyledFlex } from '@/styled/styles';
+import Currency from '@/views/AllInOne/components/Currency/index';
+import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
 import {
-  StyledTradeContainer,
-  StyledTradeIcon,
-  StyledTradeButton,
-  StyledTradeFooter,
-  StyledTradeEth,
-  StyledMarketIcon,
-  StyledMarketTitle,
-  StyledMarketTag,
-  StyledMarketCount,
   ArrowWrap,
-  StyledMarketsContainer,
-  StyledMarketItem,
-  StyledMarketItemLeft,
-  StyledMarketItemRight,
-  StyledMarketItemIcon,
-  StyledMarketItemName,
-  StyledMarketItemToken,
-  StyledMarketItemBalance,
   StyledMarketArrow,
-  StyledMarketItemDetail,
+  StyledMarketCount,
+  StyledMarketIcon,
+  StyledMarketItem,
+  StyledMarketItemBalance,
   StyledMarketItemContent,
+  StyledMarketItemDetail,
+  StyledMarketItemIcon,
+  StyledMarketItemLeft,
+  StyledMarketItemName,
+  StyledMarketItemRight,
+  StyledMarketItemText,
   StyledMarketItemTextLeft,
   StyledMarketItemTextRight,
-  StyledMarketItemText,
+  StyledMarketItemToken,
+  StyledMarketsContainer,
+  StyledMarketTag,
+  StyledMarketTitle,
+  StyledTradeButton,
+  StyledTradeContainer,
+  StyledTradeEth,
+  StyledTradeFooter,
+  StyledTradeIcon,
 } from '@/views/AllInOne/components/Trade/styles';
 
 const Trade = (props: { chain: Record<string, any> }) => {
@@ -152,10 +153,12 @@ const Trade = (props: { chain: Record<string, any> }) => {
               </StyledMarketItem>
               <StyledMarketItemContent>
                 {
-                  markets.map(i => <StyledMarketItemText>
-                    <StyledMarketItemTextLeft>{i.label}</StyledMarketItemTextLeft>
-                    <StyledMarketItemTextRight>{i.value}</StyledMarketItemTextRight>
-                  </StyledMarketItemText>)
+                  markets.map(i => (
+                    <StyledMarketItemText key={i.key}>
+                      <StyledMarketItemTextLeft>{i.label}</StyledMarketItemTextLeft>
+                      <StyledMarketItemTextRight>{i.value}</StyledMarketItemTextRight>
+                    </StyledMarketItemText>
+                  ))
                 }
               </StyledMarketItemContent>
             </StyledMarketItemDetail> : null) : getMarketItemElement(i);

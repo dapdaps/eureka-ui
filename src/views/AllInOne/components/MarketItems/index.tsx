@@ -1,4 +1,4 @@
-import {StyledMarketList, StyledMarketListItem, StyledItemIcon, StyledItemName} from './styles';
+import { StyledItemIcon, StyledItemName,StyledMarketList, StyledMarketListItem } from './styles';
 type ListItem = {
   icon?: string;
   name: string;
@@ -21,22 +21,36 @@ const MarketItems = (props: Props) => {
   const onChange = (currMarket: string) => {
     onMarketChange(currMarket);
   }
-  const getMarketItem = (item: ListItem, names?: string[]) => <StyledMarketListItem className={item.name === market ? 'active' : ''} onChange={() => onChange(item.name)}>
-    { item.icon && <StyledItemIcon /> }
-    {
-      names?.length ? names.map(name => <StyledItemName >{name}</StyledItemName>) : <StyledItemName >{item.name}</StyledItemName>
-    }
-
-  </StyledMarketListItem>;
+  const getMarketItem = (item: ListItem, names?: string[]) => (
+    <StyledMarketListItem
+      className={item.name === market ? 'active' : ''}
+      onChange={() => onChange(item.name)}
+    >
+      { item.icon && <StyledItemIcon /> }
+      {
+        names?.length ? names.map((name, idx) => (
+          <StyledItemName key={idx}>{name}</StyledItemName>
+        )) : (
+          <StyledItemName >{item.name}</StyledItemName>
+        )
+      }
+    </StyledMarketListItem>
+  );
 
   return (
     <StyledMarketList>
-      { getMarketItem(All, AllList) }
+      {getMarketItem(All, AllList)}
       {
-        list.map(item => <StyledMarketListItem className={item.name === market ? 'active' : ''} onChange={() => onChange(item.name)}>
-          { item.icon && <StyledItemIcon /> }
-          <StyledItemName >{item.name}</StyledItemName>
-        </StyledMarketListItem>)
+        list.map((item, idx) => (
+          <StyledMarketListItem
+            key={idx}
+            className={item.name === market ? 'active' : ''}
+            onChange={() => onChange(item.name)}
+          >
+            { item.icon && <StyledItemIcon /> }
+            <StyledItemName >{item.name}</StyledItemName>
+          </StyledMarketListItem>
+        ))
       }
 
     </StyledMarketList>

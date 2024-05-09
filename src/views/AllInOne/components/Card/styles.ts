@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { hexToRgb } from '@/views/AllInOne/utils';
 
 export const StyledCard = styled.div<{ bgColor?: string }>`
