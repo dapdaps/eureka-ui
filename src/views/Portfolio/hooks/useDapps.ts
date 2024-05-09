@@ -34,10 +34,7 @@ export default function useDapps() {
                   ? _totalBalance.minus(asset.usd || 0)
                   : _totalBalance.add(asset.usd || 0);
 
-              _typeTotalBalance =
-                _type.toLowerCase() === 'borrow'
-                  ? _typeTotalBalance.minus(asset.usd || 0)
-                  : _typeTotalBalance.add(asset.usd || 0);
+              _typeTotalBalance = _typeTotalBalance.add(asset.usd || 0);
             });
             if (items[_type]) {
               items[_type].push(item);
