@@ -117,6 +117,7 @@ export default function Comfirm({
     disabled,
     color,
     onSend,
+    tool,
 }: any) {
     return <ConfirmBox>
         <PopWapper>
@@ -169,7 +170,10 @@ export default function Comfirm({
 
             <ButtonWapper>
 
-                <SubmitBtn style={{ background: color }} onClick={async () => {
+                <SubmitBtn style={{ 
+                    background: color,
+                    color: tool === 'stargate' ? '#000' : '#fff'
+                }} onClick={async () => {
                     !disabled && onSend()
                 }}>{loading ? <Loading size={18} /> : null} Confirm and Send</SubmitBtn>
             </ButtonWapper>

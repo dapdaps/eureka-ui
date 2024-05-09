@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import Big from 'big.js'
 import { useDebounce } from 'ahooks';
 
+import allTokens from '@/config/bridge/allTokens';
 import useToast from '@/hooks/useToast';
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
@@ -143,11 +144,11 @@ export default function BridgeX({
     const [updater, setUpdater] = useState(1)
     const [chainFrom, setChainFrom] = useState<any>(null)
     const [chainTo, setChainTo] = useState<any>(null)
-    const [allTokens, setAllTokens] = useState<any>({})
-    const [loadedAllTokens, setLoadedAllTokens] = useState(false)
+    // const [allTokens, setAllTokens] = useState<any>({})
+    const [loadedAllTokens, setLoadedAllTokens] = useState(true)
     const [otherAddressChecked, setOtherAddressChecked] = useState(false)
-    const [inputTokens, setInputTokens] = useState([])
-    const [outputTokens, setOutputTokens] = useState([])
+    const [inputTokens, setInputTokens] = useState<any[]>([])
+    const [outputTokens, setOutputTokens] = useState<any[]>([])
     const [selectInputToken, setSelectInputToken] = useState<any>(null)
     const [selectOutputToken, setSelectOutputToken] = useState<any>(null)
     const [sendAmount, setSendAmount] = useState('')
@@ -208,10 +209,10 @@ export default function BridgeX({
     }, [])
 
     useEffect(() => {
-        getAllToken().then((res: any) => {
-            setLoadedAllTokens(true)
-            setAllTokens(res)
-        })
+        // getAllToken().then((res: any) => {
+        //     setLoadedAllTokens(true)
+        //     setAllTokens(res)
+        // })
     }, [])
 
     useEffect(() => {
@@ -503,7 +504,11 @@ export default function BridgeX({
             }
             <TokenSpace height={'12px'} />
             
-            <SubmitBtn style={{ opacity: ((!route || !canRoute) && account ) ? 0.2 : 1, background: color }} onClick={async () => {
+            <SubmitBtn style={{ 
+                opacity: ((!route || !canRoute) && account ) ? 0.2 : 1, 
+                background: color,
+                color: tool === 'stargate' ? '#000' : '#fff'
+            }} onClick={async () => {
                 if (!account) {
                     onConnect()
                     return
@@ -533,7 +538,8 @@ export default function BridgeX({
                 disabled={isSendingDisabled}
                 toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
                 duration={duration}
-                gasCostUSD={gasCostUSD}
+                tool={tool}
+                gasCostUSD={balanceFormated(gasCostUSD)}
                 sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
                 receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
                 onClose={() => {
@@ -547,7 +553,6 @@ export default function BridgeX({
 
                     try {
                         const txHash: any = await execute(route, provider.getSigner())
-                        console.log('txHash: ', txHash)
                         if (!txHash) {
                             return
                         }
@@ -562,12 +567,12 @@ export default function BridgeX({
                             duration: duration,
                             fromChainId: chainFrom.chainId,
                             fromChainLogo: chainFrom.icon,
-                            fromTokenLogo: selectInputToken.logoURI,
+                            fromTokenLogo: selectInputToken.icon,
                             fromAmount: sendAmount,
                             fromTokenSymbol: selectInputToken.symbol,
                             toChainId: chainTo.chainId,
                             toChainLogo: chainTo.icon,
-                            toTokenLogo: selectOutputToken.logoURI,
+                            toTokenLogo: selectOutputToken.icon,
                             toAmout: receiveAmount,
                             toToenSymbol: selectOutputToken.symbol,
                             time: Date.now(),

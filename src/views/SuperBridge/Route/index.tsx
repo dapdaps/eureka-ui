@@ -129,7 +129,7 @@ export default function Route(
                 {
                     showOutputTitle && <div className="title">Est. output</div>
                 }
-                <img className="token-icon" src={toToken.logoURI} />
+                <img className="token-icon" src={toToken.icon} />
                 <div className="token-amount">~{ balanceFormated(route.receiveAmount ? new Big(route.receiveAmount).div(10 ** toToken.decimals).toString() : '') }</div>
                 {/* <div> + </div>
                 <img className="token-icon" src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a" />

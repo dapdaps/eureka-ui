@@ -6887,12 +6887,14 @@
                 "name": "axlUSDC",
                 "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
                 "chain": "mantle",
+                "chainId": 34443,
                 "decimals": 6,
                 "logoURI": "https://raw.githubusercontent.com/polkaswitch/assets/master/blockchains/mantle/assets/0x09bc4e0d864854c6afb6eb9a9cdf58ac190d0df9/logo.png"
             },
             {
                 "symbol": "cETH",
                 "name": "cETH",
+                "chainId": 34443,
                 "address": "0xa84bdecd44e6cee1c588a3c97fcc4482831fde05",
                 "chain": "mantle",
                 "decimals": 18,

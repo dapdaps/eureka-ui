@@ -76,7 +76,7 @@ export default function TokenRow({ token, chain, isSelected, onTokenChange }: Pr
     }}>
         <div className="left">
             <div className="img-wapper">
-                <img className="token-icon" src={token.logoURI} />
+                <img className="token-icon" src={token.icon} />
                 <img className="chain-icon" src={chain.icon} />
             </div>
             <div className="token-name">{token.symbol}</div>

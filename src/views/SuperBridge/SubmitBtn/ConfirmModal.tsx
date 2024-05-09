@@ -131,7 +131,7 @@ export default function ConfirmModal({
                     <div className="chain">{ fromChain?.chainName}</div>
                     <div className="token">
                         <div className="icon-wapper">
-                            <img className="token-img" src={fromToken?.logoURI}/>
+                            <img className="token-img" src={fromToken?.icon}/>
                             <img className="chain-img" src={fromChain?.icon}/>
                         </div>
                         <div className="amount">{ amount && balanceFormated(amount) } {fromToken?.symbol}</div>
@@ -146,7 +146,7 @@ export default function ConfirmModal({
                     <div className="chain">{ toChain?.chainName}</div>
                     <div className="token">
                         <div className="icon-wapper">
-                            <img className="token-img" src={toToken?.logoURI}/>
+                            <img className="token-img" src={toToken?.icon}/>
                             <img className="chain-img" src={toChain?.icon}/>
                         </div>
                         <div className="amount">{ reciveAmount && balanceFormated(reciveAmount) } {fromToken?.symbol}</div>

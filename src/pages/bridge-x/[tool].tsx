@@ -83,6 +83,7 @@ const Bridge: NextPageWithLayout = () => {
                         console.log(res)
                         setTemplate(res.data.name)
                         setName(res.data.name)
+                        setIcon(res.data.logo)
                         // setChainConfig(res.data)
                     }
                 })

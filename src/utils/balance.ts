@@ -41,3 +41,8 @@ export function addressFormated(address: string) {
       return `${_2}...${_4}`
   })
 }
+
+
+export function timeDurationFormated(time: number) {
+  return Math.floor((Date.now() - time) / 1000 / 60) + ' min ago'
+}

@@ -226,7 +226,7 @@ export default function ChainTokenAmount({
                     {
                         currentToken ? <>
                             <TokenGroupImg>
-                                <img className='token' src={currentToken?.logoURI} />
+                                <img className='token' src={currentToken?.icon} />
                                 <img className='chain' src={currentChain?.icon} />
                             </TokenGroupImg>
                             <TokenGroupName>{ currentToken?.symbol }</TokenGroupName>

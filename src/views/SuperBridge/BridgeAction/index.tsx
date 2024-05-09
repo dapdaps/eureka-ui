@@ -5,6 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { useDebounce } from 'ahooks';
 import Big from 'big.js'
 
+import allTokens from '@/config/bridge/allTokens';
 import { saveTransaction } from '@/components/BridgeX/Utils'
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useAccount from '@/hooks/useAccount';
@@ -90,7 +91,7 @@ export default function BirdgeAction(
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false)
   const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false)
   const { account, chainId, provider } = useAccount();
-  const [chainToken, setChainToken] = useState<any>({})
+  // const [chainToken, setChainToken] = useState<any>({})
   const [fromChain, setFromChain] = useState<Chain>(chainList[0])
   const [toChain, setToChain] = useState<Chain>(chainList[1])
   const [fromToken, setFromToken] = useState<Token>()
@@ -182,11 +183,11 @@ export default function BirdgeAction(
     setDisableText('Bridge')
   }, [fromChain, toChain, fromToken, toToken, account, inputValue, balance, routes])
 
-  useEffect(() => {
-    getAllToken().then((res: any) => {
-      setChainToken(res)
-    })
-  }, [])
+  // useEffect(() => {
+  //   // getAllToken().then((res: any) => {
+  //   //   setChainToken(res)
+  //   // })
+  // }, [])
 
   useEffect(() => {
     if (selectedRoute && toToken) {
@@ -221,13 +222,21 @@ export default function BirdgeAction(
       }}
       currentChain={fromChain}
       currentToken={fromToken}
-      chainToken={chainToken}
+      chainToken={allTokens}
       title="From"
       amount={sendAmount}
       address={addressFormated(account as string)}
       chainList={chainList}
     />
-    <ArrowSwap>
+    <ArrowSwap onClick={() => {
+      const [_toChain, _fromChain] = [fromChain, toChain]
+      const [_toToken, _fromToken] = [fromToken, toToken]
+
+      setFromChain(_fromChain)
+      setToChain(_toChain)
+      setFromToken(_fromToken)
+      setToToken(_toToken)
+    }}>
       <div className="arrow">
         <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M6.49992 1V11.5M6.49992 11.5L1 6M6.49992 11.5L12 6" stroke="white" stroke-width="2" stroke-linecap="round" />
@@ -244,7 +253,7 @@ export default function BirdgeAction(
       inputDisabled
       currentChain={toChain}
       currentToken={toToken}
-      chainToken={chainToken}
+      chainToken={allTokens}
       amount={reciveAmount}
       title="To"
       address={addressFormated(account as string)}
@@ -308,13 +317,13 @@ export default function BirdgeAction(
                 fromChainId: fromChain.chainId,
                 fromChainName: fromChain.chainName,
                 fromChainLogo: fromChain.icon,
-                fromTokenLogo: fromToken?.logoURI,
+                fromTokenLogo: fromToken?.icon,
                 fromAmount: inputValue,
                 fromTokenSymbol: fromToken?.symbol,
                 toChainId: toChain.chainId,
                 toChainName: toChain.chainName,
                 toChainLogo: toChain.icon,
-                toTokenLogo: toToken?.logoURI,
+                toTokenLogo: toToken?.icon,
                 toAmout: reciveAmount,
                 toTokenSymbol: toToken?.symbol,
                 time: Date.now(),

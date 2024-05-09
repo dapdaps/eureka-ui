@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
+import useToast from '@/hooks/useToast';
 import { formateTxDate } from '@/utils/date';
+
 import { ArrowRight } from '../Arrow'
 
 const Container = styled.div`
@@ -122,8 +124,9 @@ const Content = styled.div`
                 .j-end {
                     /* justify-content: end; */
                 }
-
-                
+                .hash-copy {
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -144,6 +147,8 @@ interface Porps {
 export default function TransactionPanel(
     { onClose, transactionList }: Porps
 ) {
+    const { success, fail } = useToast()
+
     return <Container>
         <Header>
             <div className="back" onClick={onClose}>
@@ -182,13 +187,26 @@ export default function TransactionPanel(
                                         <div className="hash">
                                             {addressFormated(tx.hash)}
                                         </div>
-                                        <div className="hash-copy">
+                                        <div className="hash-copy" onClick={async () => {
+                                            try {
+                                                await navigator.clipboard.writeText(tx.hash)
+                                                success({
+                                                    title: 'Copy Success'
+                                                })
+                                            } catch(e) {
+                                                fail({
+                                                    title: 'Copy Fail'
+                                                })
+                                            }
+                                        }}>
                                             <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M4.19232 5.38462C4.19232 4.55619 4.86389 3.88462 5.69232 3.88462H11.0769C11.9054 3.88462 12.5769 4.55619 12.5769 5.38462V11C12.5769 11.8284 11.9054 12.5 11.0769 12.5H5.69232C4.86389 12.5 4.19232 11.8284 4.19232 11V5.38462ZM5.69232 4.88462C5.41618 4.88462 5.19232 5.10847 5.19232 5.38462V11C5.19232 11.2761 5.41618 11.5 5.69232 11.5H11.0769C11.3531 11.5 11.5769 11.2761 11.5769 11V5.38462C11.5769 5.10847 11.3531 4.88462 11.0769 4.88462H5.69232Z" fill="#979ABE" />
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 2C0.5 1.17157 1.17157 0.5 2 0.5H7.38462C8.21304 0.5 8.88461 1.17157 8.88461 2V3.11538H7.88462V2C7.88462 1.72386 7.66076 1.5 7.38462 1.5H2C1.72386 1.5 1.5 1.72386 1.5 2V7.61539C1.5 7.89153 1.72386 8.11539 2 8.11539H2.84615V9.11539H2C1.17157 9.11539 0.5 8.44381 0.5 7.61539V2Z" fill="#979ABE" />
                                             </svg>
                                         </div>
-                                        <div className="hash-copy">
+                                        <div className="hash-copy" onClick={() => {
+                                            window.open(`${tx.link}/tx/${tx.hash}`)
+                                        }}>
                                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 12C0.5 12.8284 1.17157 13.5 2 13.5L8.8 13.5C9.62843 13.5 10.3 12.8284 10.3 12L10.3 9.15L9.3 9.15L9.3 12C9.3 12.2761 9.07614 12.5 8.8 12.5L2 12.5C1.72386 12.5 1.5 12.2761 1.5 12L1.5 5.2C1.5 4.92386 1.72386 4.7 2 4.7L4.85 4.7L4.85 3.7L2 3.7C1.17157 3.7 0.499999 4.37157 0.499999 5.2L0.5 12Z" fill="#979ABE" />
                                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M11.5 7.50001L11.5 3.00001C11.5 2.72387 11.2762 2.50001 11 2.50001H6.50001C6.22387 2.50001 6.00001 2.72387 6.00001 3.00001C6.00001 3.27615 6.22387 3.50001 6.50001 3.50001H9.79291L5.04647 8.24645C4.85121 8.44171 4.85121 8.75829 5.04647 8.95355C5.24173 9.14881 5.55832 9.14881 5.75358 8.95355L10.5 4.20712L10.5 7.50001C10.5 7.77615 10.7239 8.00001 11 8.00001C11.2762 8.00001 11.5 7.77615 11.5 7.50001Z" fill="#979ABE" />
