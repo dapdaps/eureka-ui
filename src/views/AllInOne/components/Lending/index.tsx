@@ -12,6 +12,7 @@ import { multicall } from '@/utils/multicall';
 import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useDebounceFn } from 'ahooks';
 import { useRouter } from 'next/router';
+import { Theme } from './styles';
 
 const tabsList = [
   {
@@ -69,7 +70,7 @@ const Lending = () => {
 
   const [ currentDapp, setCurrentDapp ] = useState(tabConfig.defaultDapp || 'All');
 
-  const [ marketsInfo, setMarketsInfo ] = useState({markets:[], dapps: {}});
+  const [ marketsInfo, setMarketsInfo ] = useState({markets:{}, dapps: {}});
   return (
     <div>
       <StyledFlex justifyContent="space-between">
@@ -82,12 +83,13 @@ const Lending = () => {
           list={[]}
           onMarketChange={onMarketChange} />
       </StyledFlex>
-
+      <Theme>
       {tabConfig.defaultDapp && (
         <>
-          {/*{(tabConfig.defaultDapp === "All" || !tabConfig.dapps[tabConfig.defaultDapp]) && (*/}
-          {/*  <ComponentWrapperPage src="bluebiu.near/widget/0vix.LendingSpinner" />*/}
-          {/*)}*/}
+          {(tabConfig.defaultDapp === "All" || !tabConfig.dapps[tabConfig.defaultDapp]) && (
+            <ComponentWrapperPage src="bluebiu.near/widget/0vix.LendingSpinner" />
+          )}
+
           <ComponentWrapperPage
             src="bluebiu.near/widget/Avalanche.Lending.Data"
             componentProps={{
@@ -100,9 +102,10 @@ const Lending = () => {
               account,
               onLoad: (data: Record<string, any>) => {
                 const { markets, dapp } = data;
-                const dapps = tabConfig.dapps;
+                const dapps: any = {};
                 dapps[dapp.dappName] = dapp;
                 const _markets = {  ...markets };
+                console.log(dapps);
                 console.log('------5-----', _markets);
                 setMarketsInfo({
                   markets: _markets,
@@ -114,7 +117,7 @@ const Lending = () => {
         </>
       )}
       {
-        marketsInfo?.markets?.length ?<ComponentWrapperPage
+        Object.keys(marketsInfo.markets).length > 0 ? <ComponentWrapperPage
           src="bluebiu.near/widget/Avalanche.Lending.Market"
           componentProps={{
             currentDapp: tabConfig.defaultDapp,
@@ -127,7 +130,7 @@ const Lending = () => {
           }}
         /> : null
       }
-
+        </Theme>
     </div>
   );
 };
