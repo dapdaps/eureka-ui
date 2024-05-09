@@ -4,7 +4,7 @@ import { linea } from '@/config/tokens/linea';
 const basic = {
   name: 'Pancake Swap',
   logo: '/images/apps/pancake.png',
-  amountOutFn: 'bluebiu.near/widget/PolygonZkevm.Swap.PancakeSwapAmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   1101: {
