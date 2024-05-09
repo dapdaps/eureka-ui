@@ -123,6 +123,14 @@ export const mode: { [key: string]: Token } = {
     name: 'StakeStone Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreih3upiejskutko5ochkysbzuihf4t7ngopshrdefi3zjknmnmou6i',
   },
+  lab: {
+    chainId: CHAIN_ID,
+    address: '0xFE67e16313f4B38743a153f74D5762F7C83e59aE',
+    decimals: 18,
+    symbol: 'LAB',
+    name: 'LineaBank Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce',
+  },
   kim: {
     chainId: CHAIN_ID,
     address: '0x6863fb62Ed27A9DdF458105B507C15b5d741d62e',

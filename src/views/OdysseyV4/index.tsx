@@ -19,7 +19,7 @@ import Trade from './components/Trade';
 import Treasure from './components/Treasure';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
-import { StyledContainer, StyledContent } from './styles';
+import { StyledBg, StyledContainer, StyledContent } from './styles';
 
 export default function OdysseyV4() {
   const router = useRouter();
@@ -56,15 +56,16 @@ export default function OdysseyV4() {
     <StyledContainer>
       <StyledContent>
         {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null}
+        <StyledBg>
+          <Banner />
+          <Summary data={detail} loading={loading} />
 
-        <Banner />
-        <Summary data={detail} loading={loading} />
-
-        <Pilcrow
-          title="Blast Treasure Strategies"
-          desc="Explore Blast treasure strategies, maximize your Blast Gold earnings!"
-        />
-        <Treasure />
+          <Pilcrow
+            title="Blast Treasure Strategies"
+            desc="Explore Blast treasure strategies, maximize your Blast Gold earnings!"
+          />
+          <Treasure />
+        </StyledBg>
         <Pilcrow
           title="Win Extra Gold With Partner DApps"
           desc="Interact with popular Blast dApps via DapDap, secure extra Gold"

@@ -202,6 +202,8 @@ async function getTransactionData(value: string, chainId: number, minOut: string
             contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
         case 8453:
             contractAddress = '0xf25484650484de3d554fb0b7125e7696efa4ab99'
+        case 34443:
+            contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
         default:
             DepositContract = new Contract(
                 contractAddress as string,
@@ -237,7 +239,7 @@ export default function useTrade({
     const [exchangeRate, setExchangeRate] = useState('')
     const [transactionCost, setTransactionCost] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    const [gasEstimate, setGasEstimate] = useState(192000)
+    const [gasEstimate, setGasEstimate] = useState(1920000)
 
     async function deposit(value: string, signer: Signer) {
         try {
@@ -265,7 +267,6 @@ export default function useTrade({
     async function ethereumDeposit(value: string, signer: Signer) {
         const _minOut = new Big(recived).mul(10 ** 18).toString().split('.')[0]
         const transactionData = await getTransactionData(value, chainId, _minOut, signer)
-        console.log('transactionData:', transactionData)
 
         if (chainId === 56) {
             await approve('0x2170Ed0880ac9A755fd29B2688956BD959F933F8', new Big(value), '0xf25484650484DE3d554fB0b7125e7696efA4ab99', signer)
@@ -273,7 +274,7 @@ export default function useTrade({
 
         const tx = await signer.sendTransaction({
             ...transactionData,
-            gasLimit: chainId === 1 ? gasEstimate : 1920000,
+            gasLimit: (chainId === 1 && gasEstimate) ? gasEstimate : 1920000,
         })
         return tx.wait()
     }
@@ -308,7 +309,7 @@ export default function useTrade({
                     )
                 } else {
                     setTransactionCost('')
-                    setGasEstimate(192000)
+                    setGasEstimate(1920000)
                 }
             })
         } else {
