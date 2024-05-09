@@ -18,24 +18,31 @@ import { blast } from '@/config/tokens/blast'
 
 import type { Token } from '@/types';
 
+const mapFn = (item: Token) => {
+    if (item.address === 'native') {
+        item.address = '0x0000000000000000000000000000000000000000'
+    }
+    return item
+}
+
 const allTokens: { [key: number]: Token[] } = {
-    42161: Object.values(arbitrum),
-    43114: Object.values(avalanche),
-    8453: Object.values(base),
-    56: Object.values(bsc),
-    1: Object.values(ethereum),
-    100: Object.values(gnosis),
-    59144: Object.values(linea),
-    169: Object.values(manta),
-    5000: Object.values(mantle),
-    1088: Object.values(metis),
-    34443: Object.values(mode),
-    137: Object.values(polygon),
-    1101: Object.values(polygonZkevm),
-    534352: Object.values(scroll),
-    324: Object.values(zkSync),
-    10: Object.values(optimism),
-    81457: Object.values(blast),
+    42161: Object.values(arbitrum).map(mapFn),
+    43114: Object.values(avalanche).map(mapFn),
+    8453: Object.values(base).map(mapFn),
+    56: Object.values(bsc).map(mapFn),
+    1: Object.values(ethereum).map(mapFn),
+    100: Object.values(gnosis).map(mapFn),
+    59144: Object.values(linea).map(mapFn),
+    169: Object.values(manta).map(mapFn),
+    5000: Object.values(mantle).map(mapFn),
+    1088: Object.values(metis).map(mapFn),
+    34443: Object.values(mode).map(mapFn),
+    137: Object.values(polygon).map(mapFn),
+    1101: Object.values(polygonZkevm).map(mapFn),
+    534352: Object.values(scroll).map(mapFn),
+    324: Object.values(zkSync).map(mapFn),
+    10: Object.values(optimism).map(mapFn),
+    81457: Object.values(blast).map(mapFn),
 }
 
 export default allTokens
