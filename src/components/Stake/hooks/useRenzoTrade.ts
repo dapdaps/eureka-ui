@@ -299,9 +299,9 @@ export default function useTrade({
     }, [amount, rate])
 
     useEffect(() => {
-        if (amount && !isNaN(Number(amount)) && !isError) {
+        if (amount && !isNaN(Number(amount)) && !isError && provider) {
             const _amount = new Big(amount.toString()).mul(10 ** 18).toString()
-            getEstimateGas(_amount, chainId, recived, provider.getSigner()).then(res => {
+            getEstimateGas(_amount, chainId, recived, provider?.getSigner()).then(res => {
                 if (res) {
                     setGasEstimate(res.gasEstimate)
                     setTransactionCost(

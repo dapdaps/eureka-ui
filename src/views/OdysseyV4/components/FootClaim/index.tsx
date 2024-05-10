@@ -11,7 +11,6 @@ export default function FootClaim({ unclaimed, totalReward, unlocked, onRefreshD
     borderColor: '#FFDD4D',
     corner: 34,
   };
-  console.log('FootClaim--', totalReward, unclaimed, unlocked);
 
   return unclaimed > 0 ? (
     <StyledContainer>

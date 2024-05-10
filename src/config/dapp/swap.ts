@@ -48,7 +48,7 @@ export default {
       '--button-text-color': '#000',
     },
   },
-  'chronos-v1': {
+  'chronos-v2': {
     type: 'swap',
     theme: {
       '--button-color': 'linear-gradient(to right, rgb(63, 74, 179), rgb(122, 100, 208))',
