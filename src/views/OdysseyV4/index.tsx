@@ -31,11 +31,12 @@ export default function OdysseyV4() {
   const { userInfo, queryUserInfo } = useUserInfo();
 
   const [showNoti, setShowNoti] = useState(true);
+
   useAuthBind({
     onSuccess: () => {
       queryUserInfo();
     },
-    redirect_uri: `${window.location.origin}${window.location.pathname}?id=4`,
+    redirect_uri: `${window.location.origin}${window.location.pathname}?id=${id}`,
   });
 
   // console.log('quests--', quests);
@@ -72,7 +73,7 @@ export default function OdysseyV4() {
         />
 
         <Golds list={quests.golds} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
-        <Explores />
+        <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />
         <Lending list={lendingList} onRefreshDetail={queryDetail} />
