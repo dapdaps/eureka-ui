@@ -16,6 +16,7 @@ const ChainSelector = (props: ChainSelectorProps) => {
     chainId,
     styles,
     popupStyles,
+    disabled,
     onSelect = () => {
     }
   } = props;
@@ -33,6 +34,7 @@ const ChainSelector = (props: ChainSelectorProps) => {
   }, [chainId, chainList]);
 
   const handleOpen = () => {
+    if (disabled) return;
     setVisible(true);
   };
 
@@ -99,6 +101,7 @@ export interface ChainSelectorProps {
   chainId?: number;
   popupStyles?: React.CSSProperties;
   styles?: React.CSSProperties;
+  disabled?: boolean;
 
   onSelect?(chainId: number, chain: Chain): void;
 }

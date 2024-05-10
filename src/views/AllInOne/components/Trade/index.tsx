@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
-import {StyledFlex} from '@/styled/styles';
+import { StyledFlex } from '@/styled/styles';
 import Currency from '@/views/AllInOne/components/Trade/Currency/index';
 import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
 import {
@@ -24,6 +24,7 @@ import {
   StyledMarketsContainer,
   StyledMarketTag,
   StyledMarketTitle,
+  StyledTrade,
   StyledTradeContainer,
   StyledTradeEth,
   StyledTradeFooter,
@@ -32,8 +33,8 @@ import {
 import Arrow2Down from '@/views/AllInOne/components/Arrow2Down';
 import AllInOneButton from "@/views/AllInOne/components/Button";
 
-const Trade = (props: { chain: Record<string, any> }) => {
-  const {chain} = props;
+const Trade = (props: { chain: Record<string, any>, disabled?: boolean }) => {
+  const { chain, disabled } = props;
   const [amount, setAmount] = useState<number | string>(1);
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
   const [selectedMarket, setSelectedMarket] = useState<string>('');
@@ -42,10 +43,12 @@ const Trade = (props: { chain: Record<string, any> }) => {
   };
 
   const showMarketDropdown = () => {
+    if (disabled) return;
     setIsDropdown(!isDropdown);
   };
 
   const onSelectMarket = (item: string) => {
+    if (disabled) return;
     setSelectedMarket(item);
   };
 
@@ -78,7 +81,7 @@ const Trade = (props: { chain: Record<string, any> }) => {
 
   const getMarketItemLeft = () => (
     <StyledMarketItemLeft>
-      <StyledMarketItemIcon/>
+      <StyledMarketItemIcon />
       <StyledMarketItemName>SyncSwap</StyledMarketItemName>
       <StyledMarketTag>Best Price</StyledMarketTag>
     </StyledMarketItemLeft>
@@ -89,7 +92,7 @@ const Trade = (props: { chain: Record<string, any> }) => {
                              color={chain.selectBgColor}>
       {getMarketItemLeft()}
       <StyledMarketItemRight>
-        <StyledMarketItemToken/>
+        <StyledMarketItemToken />
         <StyledMarketItemBalance>3420.77</StyledMarketItemBalance>
         <StyledMarketArrow>
           <ArrowIcon size={10}></ArrowIcon>
@@ -110,21 +113,27 @@ const Trade = (props: { chain: Record<string, any> }) => {
   };
 
   return (
-    <div>
-      <StyledTradeContainer>
+    <StyledTradeContainer className={disabled ? "disabled" : ""}>
+      <StyledTrade>
         <div className="from-currency_margin">
-          <Currency title="Swap From" textUnderline={true} onAmountChange={onFromChange}/>
+          <Currency
+            title="Swap From"
+            textUnderline={true}
+            onAmountChange={onFromChange}
+            disabled={disabled}
+          />
         </div>
-        <StyledTradeIcon>
-          <Arrow2Down/>
+        <StyledTradeIcon disabled={disabled}>
+          <Arrow2Down />
         </StyledTradeIcon>
-        <Currency title="To" disabled={true}/>
-      </StyledTradeContainer>
+        <Currency title="To" disabled />
+      </StyledTrade>
       <AllInOneButton
         $background={chain?.selectBgColor}
         $borderColor={chain?.selectBgColor}
         color={chain?.iconColor}
         styles={{ marginTop: 20, marginBottom: 20 }}
+        disabled={disabled}
       >
         Swap
       </AllInOneButton>
@@ -148,7 +157,7 @@ const Trade = (props: { chain: Record<string, any> }) => {
             return selectedMarket ? (selectedMarket === i ? <StyledMarketItemDetail>
               <StyledMarketItem className="market-item_detail">
                 {getMarketItemLeft()}
-                <CloseIcon onClose={onClose}/>
+                <CloseIcon onClose={onClose} />
               </StyledMarketItem>
               <StyledMarketItemContent>
                 {
@@ -164,7 +173,7 @@ const Trade = (props: { chain: Record<string, any> }) => {
           })
         }
       </StyledMarketsContainer>
-    </div>
+    </StyledTradeContainer>
   );
 };
 

@@ -4,7 +4,7 @@ import useTokensAndChains from "@/components/Bridge/hooks/useTokensAndChains";
 import Arrow2Down from '@/views/AllInOne/components/Arrow2Down';
 import BridgeCard from "@/views/AllInOne/components/Bridge/Card";
 import {
-  StyledBody,
+  StyledBody, StyledBridgeContainer,
   StyledContainer,
   StyledDownIcon,
   StyledFoot,
@@ -12,7 +12,7 @@ import {
 import AllInOneButton from "@/views/AllInOne/components/Button";
 
 const BridgeView = (props: Props) => {
-  const { chain } = props;
+  const { chain, disabled } = props;
 
   const { tokens } = useTokensAndChains();
 
@@ -50,7 +50,7 @@ const BridgeView = (props: Props) => {
   };
 
   return (
-    <>
+    <StyledBridgeContainer className={disabled ? "disabled" : ""}>
       <StyledContainer>
         <StyledBody>
           <BridgeCard
@@ -60,8 +60,9 @@ const BridgeView = (props: Props) => {
             poolId={fromPoolId}
             onChainSelect={(chainId) => handleChainSelect('from', chainId)}
             onTokenSelect={(poolId) => handleTokenSelect('from', poolId)}
+            disabled={disabled}
           />
-          <StyledDownIcon>
+          <StyledDownIcon disabled={disabled}>
             <Arrow2Down />
           </StyledDownIcon>
           <BridgeCard
@@ -72,6 +73,7 @@ const BridgeView = (props: Props) => {
             onChainSelect={(chainId) => handleChainSelect('to', chainId)}
             onTokenSelect={(poolId) => handleTokenSelect('to', poolId)}
             tokenEditable
+            disabled={disabled}
           />
         </StyledBody>
         <StyledFoot>
@@ -80,13 +82,13 @@ const BridgeView = (props: Props) => {
             $borderColor={chain?.selectBgColor}
             color={chain?.iconColor}
             loading={false}
-            disabled={false}
+            disabled={disabled}
           >
             Input Amount
           </AllInOneButton>
         </StyledFoot>
       </StyledContainer>
-    </>
+    </StyledBridgeContainer>
   );
 };
 
@@ -94,6 +96,7 @@ export default memo(BridgeView);
 
 interface Props {
   chain?: any;
+  disabled?: boolean;
 }
 
 

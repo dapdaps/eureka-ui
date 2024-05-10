@@ -13,6 +13,23 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
   min-height: 250px;
   background: #16181D;
   overflow: hidden;
+  cursor: pointer;
+
+  /**TODO why not use the following code?
+  /* It will cause a strange bug with the head drop-down menu
+  /* it make the drop-down menu flash
+  **/
+  //&::after {
+  //  content: "";
+  //  display: block;
+  //  position: absolute;
+  //  z-index: 1;
+  //  width: 100%;
+  //  height: 100%;
+  //  left: 0;
+  //  top: 0;
+  //  background: rgba(0, 0, 0, 0.1);
+  //}
 
   .card-active-bg {
     position: absolute;
@@ -43,7 +60,6 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
   &.nav {
     width: 225px;
     border-radius: 16px;
-    cursor: pointer;
 
     .arrow-top-right {
       opacity: 0;
@@ -107,21 +123,11 @@ export const StyledTitle = styled.div`
 
 export const StyledContent = styled.div`
   margin-top: 20px;
-  
-  &.nav {
-    position: relative;
+  position: relative;
 
-    &::after {
-      content: "";
-      display: block;
-      position: absolute;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      left: 0;
-      top: 0;
-      background: rgba(0, 0, 0, 0.1);
-    }
+  
+
+  &.nav {
   }
 `;
 

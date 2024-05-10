@@ -18,6 +18,7 @@ const TokenSelector = (props: TokenSelectorProps) => {
     chainId,
     styles,
     popupStyles,
+    disabled,
     onSelect = () => {
     }
   } = props;
@@ -44,6 +45,7 @@ const TokenSelector = (props: TokenSelectorProps) => {
   }, [poolId, currentTokenList]);
 
   const handleOpen = () => {
+    if (disabled) return;
     setVisible(true);
   };
 

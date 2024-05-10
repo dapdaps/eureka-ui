@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const StyledBridgeContainer = styled.div`
+  &.disabled {
+    cursor: pointer !important;
+  }
+`;
 export const StyledContainer = styled.div`
   position: relative;
 `;
@@ -9,7 +14,7 @@ export const StyledBody = styled.div`
 export const StyledFoot = styled.div`
   margin-top: 20px;
 `;
-export const StyledDownIcon = styled.div`
+export const StyledDownIcon = styled.div<{ disabled?: boolean }>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -27,7 +32,7 @@ export const StyledDownIcon = styled.div`
   z-index: 1;
 
   &:hover {
-    background: #1f212d;
+    background: ${({ disabled }) => disabled ? '#2E3142' : '#1f212d'};
   }
 `;
 

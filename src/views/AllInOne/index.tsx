@@ -6,11 +6,18 @@ import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
+import { useRouter } from "next/router";
 
 const AllInOneView = (props: Props) => {
   const { chain } = props;
-  
+
+  const router = useRouter();
+
   const { currentChain, showComponent, setShowComponent, currentChainMenuList } = useChain(props);
+
+  const handleMenuSelect = (tab: string) => {
+    router.push(`/all-in-one/${currentChain.path}/${tab}`);
+  };
 
   return (
     <StyledContainer>
@@ -52,8 +59,11 @@ const AllInOneView = (props: Props) => {
                     bgColor={currentChain.selectBgColor}
                     style={getCardWidth()}
                     path={currentChain.path}
+                    onSelect={() => {
+                      handleMenuSelect(item.tab);
+                    }}
                   >
-                    <item.component chain={currentChain}/>
+                    <item.component chain={currentChain} disabled />
                   </AllInOneCardView>
                 );
               })}

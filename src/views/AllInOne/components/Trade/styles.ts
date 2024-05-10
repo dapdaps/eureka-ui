@@ -1,13 +1,21 @@
 import styled from 'styled-components';
 
 export const StyledTradeContainer = styled.div`
+  &.disabled {
+    cursor: pointer !important;
+  }
+`;
+
+export const StyledTrade = styled.div`
   position: relative;
   margin-bottom: 20px;
 
   .from-currency_margin {
     margin-bottom: 10px;
-  }`;
-export const StyledTradeIcon = styled.div`
+  }
+`;
+
+export const StyledTradeIcon = styled.div<{ disabled?: boolean }>`
   position: absolute;
   top: 50%;
   left: 50%;
@@ -24,7 +32,7 @@ export const StyledTradeIcon = styled.div`
   transition: all .3s ease;
 
   &:hover {
-    background: #1f212d;
+    background: ${({ disabled }) => disabled ? '#2E3142' : '#1f212d'}
   }
 `;
 

@@ -94,4 +94,8 @@ export const StyledGasToken = styled.button`
   gap: 8px;
   white-space: nowrap;
   padding: 0 10px;
+
+  &[disabled] {
+    cursor: pointer;
+  }
 `;

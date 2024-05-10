@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
@@ -16,12 +15,6 @@ const AllInOneCardView: React.FC<Props> = (props) => {
     onSelect = () => {
     },
   } = props;
-
-  const router = useRouter();
-
-  const handleDetail = () => {
-    router.push(`/all-in-one/${props.path}/${title}`);
-  };
 
   const handleSelect = () => {
     onSelect();
@@ -43,7 +36,7 @@ const AllInOneCardView: React.FC<Props> = (props) => {
           <h3>{title}</h3>
           <div className="sub-title">{subTitle}</div>
         </StyledTitle>
-        <StyledPointer onClick={handleDetail}>
+        <StyledPointer>
           <ArrowTopRight classname="arrow-top-right" />
         </StyledPointer>
       </StyledFlex>
@@ -67,6 +60,7 @@ interface Props {
   style?: React.CSSProperties;
   path?: string;
   type?: CardType;
+
   onSelect?(): void;
 }
 
