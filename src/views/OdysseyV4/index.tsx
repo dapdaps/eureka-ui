@@ -31,11 +31,12 @@ export default function OdysseyV4() {
   const { userInfo, queryUserInfo } = useUserInfo();
 
   const [showNoti, setShowNoti] = useState(true);
+
   useAuthBind({
     onSuccess: () => {
       queryUserInfo();
     },
-    redirect_uri: `${window.location.origin}${window.location.pathname}?id=4`,
+    redirect_uri: `${window.location.origin}${window.location.pathname}?id=${id}`,
   });
 
   // console.log('quests--', quests);
