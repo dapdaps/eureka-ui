@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, {useState} from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
-import { StyledFlex } from '@/styled/styles';
-import Currency from '@/views/AllInOne/components/Currency/index';
+import {StyledFlex} from '@/styled/styles';
+import Currency from '@/views/AllInOne/components/Trade/Currency/index';
 import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
 import {
   ArrowWrap,
@@ -24,30 +24,22 @@ import {
   StyledMarketsContainer,
   StyledMarketTag,
   StyledMarketTitle,
-  StyledTradeButton,
   StyledTradeContainer,
   StyledTradeEth,
   StyledTradeFooter,
   StyledTradeIcon,
 } from '@/views/AllInOne/components/Trade/styles';
+import Arrow2Down from '@/views/AllInOne/components/Arrow2Down';
+import AllInOneButton from "@/views/AllInOne/components/Button";
 
 const Trade = (props: { chain: Record<string, any> }) => {
-  const { chain } = props;
+  const {chain} = props;
   const [amount, setAmount] = useState<number | string>(1);
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
   const [selectedMarket, setSelectedMarket] = useState<string>('');
   const onFromChange = (m: number | string) => {
     setAmount(m);
   };
-
-  const TradeIcon = () => (
-    <svg width="42" height="43" viewBox="0 0 42 43" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="2" y="2.25586" width="38" height="38" rx="10" fill="#2E3142" stroke="#16181D" stroke-width="4" />
-      <path d="M21.4999 15.7559V26.2559M21.4999 26.2559L16 20.7559M21.4999 26.2559L27 20.7559" stroke="white"
-            stroke-width="2" stroke-linecap="round" />
-    </svg>
-
-  );
 
   const showMarketDropdown = () => {
     setIsDropdown(!isDropdown);
@@ -86,7 +78,7 @@ const Trade = (props: { chain: Record<string, any> }) => {
 
   const getMarketItemLeft = () => (
     <StyledMarketItemLeft>
-      <StyledMarketItemIcon />
+      <StyledMarketItemIcon/>
       <StyledMarketItemName>SyncSwap</StyledMarketItemName>
       <StyledMarketTag>Best Price</StyledMarketTag>
     </StyledMarketItemLeft>
@@ -97,7 +89,7 @@ const Trade = (props: { chain: Record<string, any> }) => {
                              color={chain.selectBgColor}>
       {getMarketItemLeft()}
       <StyledMarketItemRight>
-        <StyledMarketItemToken />
+        <StyledMarketItemToken/>
         <StyledMarketItemBalance>3420.77</StyledMarketItemBalance>
         <StyledMarketArrow>
           <ArrowIcon size={10}></ArrowIcon>
@@ -121,14 +113,21 @@ const Trade = (props: { chain: Record<string, any> }) => {
     <div>
       <StyledTradeContainer>
         <div className="from-currency_margin">
-          <Currency title="Swap From" textUnderline={true} onAmountChange={onFromChange} />
+          <Currency title="Swap From" textUnderline={true} onAmountChange={onFromChange}/>
         </div>
         <StyledTradeIcon>
-          <TradeIcon />
+          <Arrow2Down/>
         </StyledTradeIcon>
-        <Currency title="To" disabled={true} />
+        <Currency title="To" disabled={true}/>
       </StyledTradeContainer>
-      <StyledTradeButton bgColor={chain?.selectBgColor} color={chain?.iconColor ?? '#fff'}>Swap</StyledTradeButton>
+      <AllInOneButton
+        $background={chain?.selectBgColor}
+        $borderColor={chain?.selectBgColor}
+        color={chain?.iconColor}
+        styles={{ marginTop: 20, marginBottom: 20 }}
+      >
+        Swap
+      </AllInOneButton>
       <StyledTradeFooter>
         <StyledTradeEth>1 ETH = 3422.2502675 USDC</StyledTradeEth>
         <StyledFlex gap="8px">
@@ -149,7 +148,7 @@ const Trade = (props: { chain: Record<string, any> }) => {
             return selectedMarket ? (selectedMarket === i ? <StyledMarketItemDetail>
               <StyledMarketItem className="market-item_detail">
                 {getMarketItemLeft()}
-                <CloseIcon onClose={onClose} />
+                <CloseIcon onClose={onClose}/>
               </StyledMarketItem>
               <StyledMarketItemContent>
                 {

@@ -64,7 +64,7 @@ const AllInOneDetailView = (props: Props) => {
               >
                 {
                   menu === 'Bridge' && (
-                    <Bridge />
+                    <Bridge chain={currentChain} />
                   )
                 }
                 {

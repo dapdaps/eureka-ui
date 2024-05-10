@@ -12,17 +12,20 @@ export const StyledTradeIcon = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  border: 4px solid #16181D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #2E3142;
+  cursor: pointer;
+  transition: all .3s ease;
 
-export const StyledTradeButton = styled.button<{ bgColor: string, color: string }>`
-  background: ${props => props.bgColor};
-  color: ${props => props.color};
-  padding: 19px 0;
-  text-align: center;
-  width: 100%;
-  font-weight: bolder;
-  border-radius: 10px;
-  margin-bottom: 12px;
+  &:hover {
+    background: #1f212d;
+  }
 `;
 
 export const StyledTradeFooter = styled.div`
