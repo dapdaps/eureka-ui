@@ -23,6 +23,7 @@ export const StyledContent = styled.div`
   flex-wrap: wrap;
   justify-content: center;
   padding: 0 24px 24px;
+  z-index: 0;
 `;
 
 export const StyledBg = styled.div`

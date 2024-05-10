@@ -58,13 +58,15 @@ const AllInOneHeaderView = (props: Props) => {
     };
   }, []);
 
+  console.log(currentChain);
+
   return (
     <>
       {
         currentChain?.title ? (
           <StyledHeader>
             <StyledMainLogo>
-              <StyledLogoContainer selectBgColor={currentChain.selectBgColor}>
+              <StyledLogoContainer selectBgColor={currentChain.bgColor}>
                 {
                   currentChain.iconColor ?
                     (

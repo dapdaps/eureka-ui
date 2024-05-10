@@ -15,21 +15,17 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
   overflow: hidden;
   cursor: pointer;
 
-  /**TODO why not use the following code?
-  /* It will cause a strange bug with the head drop-down menu
-  /* it make the drop-down menu flash
-  **/
-  //&::after {
-  //  content: "";
-  //  display: block;
-  //  position: absolute;
-  //  z-index: 1;
-  //  width: 100%;
-  //  height: 100%;
-  //  left: 0;
-  //  top: 0;
-  //  background: rgba(0, 0, 0, 0.1);
-  //}
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.1);
+  }
 
   .card-active-bg {
     position: absolute;

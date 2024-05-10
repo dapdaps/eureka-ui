@@ -34,7 +34,7 @@ const AllInOneDetailView = (props: Props) => {
     const defaultMenu = { tab: menu, description: "" };
     if (!currentChain) return defaultMenu;
     if (!currentChain.menuConfig) return defaultMenu;
-    const currMenu = Object.values(currentChain.menuConfig).find((it: any) => it.tab === menu);
+    const currMenu = Object.values(currentChain.menuConfig).find((it: any) => it.tab.toLowerCase() === menu);
     return currMenu || defaultMenu;
   }, [menu, currentChain]);
 
@@ -58,27 +58,27 @@ const AllInOneDetailView = (props: Props) => {
             showComponent && (
               <AllInOneDetailCardView
                 key={menu}
-                title={menu}
+                title={currentMenu?.tab}
                 subTitle={currentMenu.description}
                 bgColor={currentChain.selectBgColor}
               >
                 {
-                  menu === 'Bridge' && (
+                  menu === 'bridge' && (
                     <Bridge chain={currentChain} />
                   )
                 }
                 {
-                  menu === 'Lending' && (
+                  menu === 'lending' && (
                     <Lending />
                   )
                 }
                 {
-                  menu === 'Liquidity' && (
+                  menu === 'liquidity' && (
                     <Liquidity />
                   )
                 }
                 {
-                  menu === 'Trade' && (
+                  menu === 'trade' && (
                     <Trade chain={currentChain} />
                   )
                 }
@@ -97,8 +97,9 @@ const AllInOneDetailView = (props: Props) => {
                 bgColor={currentChain.selectBgColor}
                 path={currentChain.path}
                 onSelect={() => {
-                  if (item.tab === menu) return;
-                  handleMenuSelect(item.tab);
+                  const _tab = item.tab.toLowerCase();
+                  if (_tab === menu) return;
+                  handleMenuSelect(_tab);
                 }}
               >
                 <item.component chain={currentChain} />

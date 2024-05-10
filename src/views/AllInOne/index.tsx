@@ -60,7 +60,7 @@ const AllInOneView = (props: Props) => {
                     style={getCardWidth()}
                     path={currentChain.path}
                     onSelect={() => {
-                      handleMenuSelect(item.tab);
+                      handleMenuSelect(item.tab.toLowerCase());
                     }}
                   >
                     <item.component chain={currentChain} disabled />

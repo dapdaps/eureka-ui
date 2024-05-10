@@ -7,7 +7,10 @@ import AllInOneDetailView from '@/views/AllInOne/Detail';
 const AllInOneDetail: NextPageWithLayout = () => {
   const router = useRouter();
   const chain = router.query.chain as string;
-  const menu = router.query.menu as string;
+  let menu = router.query.menu as string;
+  if (menu) {
+    menu = menu.toLowerCase();
+  }
   
   return chain ? (
     <AllInOneDetailView chain={chain} menu={menu} />

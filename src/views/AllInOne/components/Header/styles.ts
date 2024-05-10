@@ -11,11 +11,11 @@ export const StyledHeader = styled.div`
 `;
 
 export const StyledImage = styled.img<{ iconColor: string }>`
-  transform: translateX(40px);
-  -webkit-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-  -moz-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-  -ms-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-  filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
+  // transform: translateX(40px);
+  // -webkit-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
+  // -moz-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
+  // -ms-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
+  // filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
   width: 100%;
   height: 100%;
 `;
