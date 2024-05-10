@@ -6,7 +6,8 @@ import popupsData from '@/config/all-in-one/chains';
 import { StyledFlex } from '@/styled/styles';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import {
-  StyledArrowIconWrap, StyledBgLogo,
+  StyledArrowIconWrap,
+  StyledBgLogo,
   StyledHeader,
   StyledImage,
   StyledLogo,
@@ -20,8 +21,7 @@ import {
 } from '@/views/AllInOne/components/Header/styles';
 import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
 import useReport from '@/views/Landing/hooks/useReport';
-
-const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
+import SelectedCheck from "@/views/AllInOne/components/SelectedCheck";
 
 const AllInOneHeaderView = (props: Props) => {
   const { chain, currentChain, handleShowComponent } = props;
@@ -101,7 +101,7 @@ const AllInOneHeaderView = (props: Props) => {
                       <div className="flex-grow"></div>
                       {chain === item.path && (
                         <div className="check-mark">
-                          <img src={checkMark} alt="check-mark" />
+                          <SelectedCheck />
                         </div>
                       )}
                     </StyledPopupItem>
