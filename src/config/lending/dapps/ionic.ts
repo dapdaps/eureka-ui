@@ -2,16 +2,16 @@ import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'Ionic',
-  data: 'bluebiu.near/widget/Lending.Data.LayerBank',
-  handler: 'bluebiu.near/widget/Lending.Handler.LayerBank',
-  handlerClaim: 'bluebiu.near/widget/Linea.Lending.LayerBankHandlerClaim',
+  data: 'bluebiu.near/widget/Lending.Data.Ionic',
+  handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  // handlerClaim: 'bluebiu.near/widget/Linea.Lending.LayerBankHandlerClaim',
 };
 
 const networks = {
   34443: {
-    unitrollerAddress: '0x80980869D90A737aff47aBA6FbaA923012C1FF50',
-    oracleAddress: '0x310E183416d7f266C150e7244733d1DcB1470172',
-    rateModelSlopeAddress: '0x16Cd8DAcE8569c7bd4e903c864444367b9F7b1af',
+    unitrollerAddress: '0x8b2B6a9dC8Cd73309Cef8d64920831d4C73F43a7',
+    oracleAddress: '0x2BAF3A2B667A5027a83101d218A9e8B73577F117',
+    rateModelSlopeAddress: '0x21a455cEd9C79BC523D4E340c2B97521F4217817',
     // distributionAddress: '',
     defaultMarket: '',
     markets: {
@@ -46,7 +46,7 @@ const networks = {
         underlyingToken: mode['usdt'],
       },
     },
-    rewardToken: mode['lab'],
+    // rewardToken: mode['lab'],
   },
 };
 
