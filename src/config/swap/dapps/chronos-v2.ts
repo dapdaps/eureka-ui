@@ -8,10 +8,11 @@ const basic = {
 const networks = {
   42161: {
     defaultCurrencies: {
-      input: arbitrum['weth'],
+      input: arbitrum['eth'],
       output: arbitrum['usdc'],
     },
     tokens: [
+      arbitrum['eth'],
       arbitrum['wusdrv3'],
       arbitrum['usdc'],
       arbitrum['frax'],
