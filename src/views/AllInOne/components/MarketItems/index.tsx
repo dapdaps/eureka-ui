@@ -1,15 +1,7 @@
 import { memo } from 'react';
-import {StyledMarketList, StyledMarketListItem, StyledItemIcon, StyledItemName} from './styles';
 
-type ListItem = {
-  icon?: string;
-  name: string;
-};
-type Props = {
-  list: ListItem[];
-  currMarket: string;
-  onMarketChange: (market: string) => void;
-}
+import { StyledItemIcon, StyledItemName, StyledMarketList, StyledMarketListItem } from './styles';
+
 const MarketItems = (props: Props) => {
 
   const { list, currMarket, onMarketChange } = props;
@@ -22,6 +14,7 @@ const MarketItems = (props: Props) => {
   ];
 
   const market = props.currMarket ?? list?.[0]?.name ?? '';
+
   const onChange = (currMarket: string) => {
     onMarketChange(currMarket);
   }
@@ -35,7 +28,7 @@ const MarketItems = (props: Props) => {
             className={item.name === market ? 'active' : ''}
             onClick={() => onChange(item.name)}
           >
-            { item.icon && <StyledItemIcon src={item.icon} alt={item.name}/> }
+            {item.icon && <StyledItemIcon src={item.icon} alt={item.name} />}
             {
               item.name === 'All' ? (
                 <>
@@ -52,3 +45,14 @@ const MarketItems = (props: Props) => {
 }
 
 export default memo(MarketItems);
+
+type ListItem = {
+  icon?: string;
+  name: string;
+};
+
+type Props = {
+  list: ListItem[];
+  currMarket: string;
+  onMarketChange: (market: string) => void;
+}

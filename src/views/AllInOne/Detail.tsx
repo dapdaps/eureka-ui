@@ -38,6 +38,15 @@ const AllInOneDetailView = (props: Props) => {
     return currMenu || defaultMenu;
   }, [menu, currentChain]);
 
+  const cardWidth = useMemo(() => {
+    if (['liquidity', 'lending'].includes(menu)) return '100%';
+    return undefined;
+  }, [menu]);
+
+  const cardConfig = useMemo(() => {
+    return !['liquidity', 'lending'].includes(menu);
+  }, [menu]);
+
   return (
     <StyledContainer>
       <StyledFlex
@@ -53,7 +62,7 @@ const AllInOneDetailView = (props: Props) => {
           }}
         />
 
-        <StyledContent>
+        <StyledContent className="detail">
           {
             showComponent && (
               <AllInOneDetailCardView
@@ -61,6 +70,8 @@ const AllInOneDetailView = (props: Props) => {
                 title={currentMenu?.tab}
                 subTitle={currentMenu.description}
                 bgColor={currentChain.selectBgColor}
+                style={{ width: cardWidth }}
+                config={cardConfig}
               >
                 {
                   menu === 'bridge' && (
@@ -69,12 +80,12 @@ const AllInOneDetailView = (props: Props) => {
                 }
                 {
                   menu === 'lending' && (
-                    <Lending />
+                    <Lending chain={currentChain} />
                   )
                 }
                 {
                   menu === 'liquidity' && (
-                    <Liquidity />
+                    <Liquidity chain={currentChain} />
                   )
                 }
                 {

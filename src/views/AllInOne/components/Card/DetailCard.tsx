@@ -10,6 +10,7 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
     title,
     subTitle,
     style,
+    config,
   } = props;
 
   const router = useRouter();
@@ -30,9 +31,13 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
           </StyledFlex>
           <div className="sub-title">{subTitle}</div>
         </StyledTitle>
-        <StyledPointer>
-          <Gear classname="setting" />
-        </StyledPointer>
+        {
+          config && (
+            <StyledPointer>
+              <Gear classname="setting" />
+            </StyledPointer>
+          )
+        }
       </StyledFlex>
       <StyledContent>
         {children}
@@ -50,6 +55,7 @@ interface Props {
   bgColor?: string;
   subTitle?: string;
   style?: React.CSSProperties;
+  config?: boolean;
 }
 
 const ArrowBack = ({ classname }: { classname?: string }) => {

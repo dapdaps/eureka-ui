@@ -1,4 +1,4 @@
-import { StyledTabsContainer,StyledTabItem } from './styles';
+import { StyledTabsContainer, StyledTabItem } from './styles';
 
 type Props = {
   tabs: {
@@ -13,13 +13,12 @@ const Tabs = (props: Props) => {
   const {
     currTab,
     tabs = [],
-    onTabChange
+    onTabChange = () => {},
   } = props;
   const tab = currTab ?? tabs?.[0]?.key ?? '';
   const onChange = (current: string) => {
-    props.onTabChange(current);
+    onTabChange(current);
   }
-  console.log(props, tab);
 
   return (
     <StyledTabsContainer>

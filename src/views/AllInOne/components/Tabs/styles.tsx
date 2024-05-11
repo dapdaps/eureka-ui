@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 export const StyledTabsContainer = styled.div`
   padding: 4px;
   background: #212330;

@@ -82,3 +82,6 @@ export const StyledBadge = styled.div`
   flex-grow: 0;
   font-size: 14px;
 `;
+export const StyledContent = styled.div`
+  margin-top: 12px;
+`;

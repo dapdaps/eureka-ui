@@ -36,6 +36,7 @@ export const StyledCardHeadLeft = styled.div`
   }
 `;
 export const StyledCardHeadRight = styled.div`
+  width: 0;
   font-size: 16px;
   font-weight: 400;
   line-height: 19px;
@@ -43,7 +44,11 @@ export const StyledCardHeadRight = styled.div`
   color: #979ABE;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 export const StyledCardHeadEdit = styled.button`
   display: block;
