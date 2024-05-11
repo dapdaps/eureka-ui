@@ -31,7 +31,6 @@ export default function useTokenBalance({
       console.error('Invalid _chainId or chains is undefined');
       return;
     }
-    console.log('_chainId:', chains[_chainId])
     const rpcUrl = _chainId ? chains[_chainId].rpcUrls[0] : '';
 
     const getBalance = async () => {

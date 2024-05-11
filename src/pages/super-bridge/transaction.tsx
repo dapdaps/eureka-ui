@@ -9,8 +9,11 @@ import Transaction from '@/views/SuperBridge/Transaction';
 import Medal from '@/views/SuperBridge/Medal';
 
 import chainCofig from '@/config/chains'
-
+import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import { usePriceStore } from '@/stores/price';
+import { useDebounceFn } from 'ahooks';
 
 import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
@@ -33,18 +36,23 @@ const Sep = styled.div`
 const chainList = Object.values(chainCofig)
 
 const Bridge: NextPageWithLayout = () => {
+  const handlerList = useRef<any[]>([])
+  const [toChainId, setToChain] = useState<number>(chainList[1].chainId)
   const router = useRouter();
+  // const tool = router.query.tool as string;
+  const { account, chainId } = useAccount();
+  const prices = usePriceStore((store) => store.price);
+  const { addAction } = useAddAction('all-in-one');
+
+  const [{ settingChain, connectedChain }, setChain] = useSetChain();
+
+  // const { icon, name, color } = getBridgeMsg(tool)
+
+
 
   return (
     <Container>
-      <BridgeAction
-        chainList={chainList}
-      />
-      <RightContainer>
-        <Transaction />
-        <Sep />
-        <Medal />
-      </RightContainer>
+        <Transaction initModalShow={true} />
     </Container>
   )
 };

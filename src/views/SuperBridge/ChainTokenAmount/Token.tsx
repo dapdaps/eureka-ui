@@ -58,10 +58,12 @@ interface Props {
     token: Token;
     chain: Chain;
     isSelected: boolean;
+    loading: boolean;
+    balances: any;
     onTokenChange: (token: Token) => void;
 }
 
-export default function TokenRow({ token, chain, isSelected, onTokenChange }: Props) {
+export default function TokenRow({ token, chain, isSelected, loading, balances, onTokenChange }: Props) {
 
     // const { balance, loading } = useTokenBalance({
     //     currency: token,
@@ -69,6 +71,8 @@ export default function TokenRow({ token, chain, isSelected, onTokenChange }: Pr
     //     isNative: chain?.nativeCurrency.symbol === token?.symbol,
     //     isPure: false,
     // })
+
+    const balanceKey = token.isNative ? 'native' : token.address
 
     return <Container className={isSelected ? 'active' : ''} onClick={() => {
         onTokenChange(token)
@@ -82,9 +86,9 @@ export default function TokenRow({ token, chain, isSelected, onTokenChange }: Pr
             <div className="token-name">{token.symbol}</div>
         </div>
         <div className="right">
-            {/* {
-                loading ? <Loading size={12} /> : <span>{ balanceFormated(balance) }</span>
-            } */}
+            {
+                loading ? <></> : <span>{ balanceFormated(balances[balanceKey]) }</span>
+            }
         </div>
     </Container>
 }

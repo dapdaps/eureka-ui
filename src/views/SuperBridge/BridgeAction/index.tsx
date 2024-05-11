@@ -19,6 +19,7 @@ import RouteSelected from '../RouteSelected';
 import SubmitBtn from '../SubmitBtn'
 import SettingModal from './SettingModal';
 import ConfirmModal from "../SubmitBtn/ConfirmModal";
+import ConfirmSuccessModal from "../SubmitBtn/ConfirmSuccessModal";
 
 import useQuote from "../hooks/useQuote";
 
@@ -90,6 +91,7 @@ export default function BirdgeAction(
   }: Props) {
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false)
   const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false)
+  const [confirmSuccessModalShow, setConfirmSuccessModalShow] = useState<boolean>(false)
   const { account, chainId, provider } = useAccount();
   // const [chainToken, setChainToken] = useState<any>({})
   const [fromChain, setFromChain] = useState<Chain>(chainList[0])
@@ -305,9 +307,9 @@ export default function BirdgeAction(
             setIsSending(true)
             try {
               const txHash = await execute(selectedRoute, provider?.getSigner())
-              
+
               if (!txHash) {
-                  return
+                return
               }
 
               saveTransaction(`bridge-${account}-super`, {
@@ -327,12 +329,12 @@ export default function BirdgeAction(
                 toAmout: reciveAmount,
                 toTokenSymbol: toToken?.symbol,
                 time: Date.now(),
-                tool: selectedRoute.bridgeName,
+                tool: selectedRoute.bridgeType,
                 fromAddress: account,
                 toAddress: account,
-            })
+              })
 
-            addAction({
+              addAction({
                 type: "Bridge",
                 fromChainId: fromChain.chainId,
                 toChainId: toChain.chainId,
@@ -342,23 +344,48 @@ export default function BirdgeAction(
                 add: false,
                 status: 1,
                 transactionHash: txHash,
-            })
+              })
 
-            success({
+              success({
                 title: 'Transaction success',
                 text: '',
-            })
+              })
 
-            } catch(err: any) {
+              setConfirmSuccessModalShow(true)
+              setConfirmModalShow(false)
+
+            } catch (err: any) {
               fail({
                 title: 'Transaction failed',
                 text: err.message || err.toString(),
-            })
+              })
             }
             setIsSending(false)
           }
         }}
       />
+    }
+
+    {
+      confirmSuccessModalShow && <ConfirmSuccessModal
+        fromChain={fromChain}
+        toChain={toChain}
+        fromToken={fromToken}
+        toToken={toToken}
+        amount={inputValue}
+        reciveAmount={reciveAmount}
+        toAddress={account as string}
+        route={selectedRoute}
+        onClose={() => {
+          setConfirmSuccessModalShow(false)
+        }}
+        onTransactionClick={() => {
+
+        }}
+        isLoading={isSending}
+        onClick={async () => {
+          setConfirmSuccessModalShow(false)
+        }} />
     }
 
   </Container>

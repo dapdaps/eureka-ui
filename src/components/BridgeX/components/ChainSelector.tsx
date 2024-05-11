@@ -13,6 +13,8 @@ const ChainListModal = styled.div`
     border-radius: 12px;
     padding: 12px 0;
     z-index: 21;
+    max-height: 500px;
+    overflow: auto;
 `
 
 const ChainRow = styled.div`

@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useRouter } from 'next/router';
 import useAccount from '@/hooks/useAccount';
 import { balanceFormated, percentFormated, addressFormated, timeDurationFormated } from '@/utils/balance';
 import useToast from '@/hooks/useToast';
@@ -166,6 +167,7 @@ export default function Transactions() {
     const [sum, setSum] = useState(0)
     const [transactionList, setTransactionList] = useState<any>([])
     const [showDetail, setShowDetail] = useState(false)
+    const router = useRouter();
 
     const storageKey = `bridge-${account}-super`
     useEffect(() => {
@@ -187,7 +189,9 @@ export default function Transactions() {
                 ? <DetailWapper>
                     <div className="detail-top">
                         <div className="dt-title">{transactionList.length || 0} Pending Transactions</div>
-                        <div className="dt-view">View All</div>
+                        <div className="dt-view" onClick={() => {
+                            router.push('/super-bridge/transaction')
+                        }}>View All</div>
                     </div>
                     {
                         transactionList.map((tx: any) => {

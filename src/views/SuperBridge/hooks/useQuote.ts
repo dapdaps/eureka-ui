@@ -19,16 +19,17 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
         }
         setLoading(true)
         setRoutes(null)
+        const routes: QuoteResponse[] = []
         let stop = false
 
         setTimeout(() => {
-            if (stop) {
+            if (!stop) {
                 stop = true
                 setLoading(false)
             }
         }, timeout)
 
-        const routes: QuoteResponse[] = []
+        
         const _routes = await getQuote(quoteRequest, provider?.getSigner(), function(val: QuoteResponse) {
             if (stop) {
                 return

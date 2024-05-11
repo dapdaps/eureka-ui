@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
+import { useRouter } from 'next/router';
 
 import useAccount from '@/hooks/useAccount';
 import { getTransaction, saveAllTransaction } from '@/components/BridgeX/Utils'
@@ -63,14 +64,18 @@ const Input = styled.input`
     color: #fff;
 `
 
+interface Props {
+    initModalShow?: boolean;
+}
 
-
-export default function Transaction() {
+export default function Transaction({ initModalShow = false }: Props) {
     const [transactionModalShow, setTransactionModalShow] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [transactionList, setTransactionList] = useState([])
     const [proccessSum, setProccessSum] = useState(0)
     const { account, chainId, provider } = useAccount();
+    const router = useRouter();
+
 
     const storageKey = `bridge-${account}-super`
 
@@ -82,7 +87,7 @@ export default function Transaction() {
         setIsLoading(true)
         const transactionObj = getTransaction(storageKey)
 
-        console.log('transactionObj: ', transactionObj)
+        // console.log('transactionObj: ', transactionObj)
 
         const transactionList: any = []
         let proccessSum = 0
@@ -138,6 +143,11 @@ export default function Transaction() {
         })
     }
 
+    useEffect(() => {
+        if (initModalShow) {
+            setTransactionModalShow(true)
+        }
+    }, [initModalShow])
 
     useEffect(() => {
         if (!account) {
@@ -195,7 +205,12 @@ export default function Transaction() {
 
         {
             transactionModalShow && <TransactionPanel transactionList={transactionList} onClose={() => {
-                setTransactionModalShow(false)
+                if (initModalShow) {
+                    router.back()
+                } else {
+                    setTransactionModalShow(false)
+                }
+                
             }}/>
         }
     </Container>

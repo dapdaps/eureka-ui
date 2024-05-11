@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import styled from 'styled-components';
 import { useDebounce } from 'ahooks';
 
+import useTokensBalance from "@/components/BridgeX/hooks/useTokensBalance";
 import { ArrowDown } from '../Arrow'
 import Modal from "../Modal";
 import TokenRow from './Token'
@@ -107,6 +108,8 @@ export default function TokenSelectModal({
     const [searchVal, setSearchVal] = useState('')
     const [filterTokenList, setFilterTokenList] = useState([])
 
+    const { loading, balances, currentChainId } = useTokensBalance(filterTokenList)
+
     const inputValue = useDebounce(searchVal, { wait: 500 });
 
     useEffect(() => {
@@ -114,20 +117,24 @@ export default function TokenSelectModal({
             setFilterTokenList(tokenList)
             return
         }
+
         const filterTokenList = tokenList.filter((token: Token) => {
             return token.symbol.toUpperCase().indexOf(inputValue.toUpperCase()) > -1 
             || token.address.indexOf(inputValue) > -1
         })
-        setFilterTokenList(filterTokenList || [])
 
+        setFilterTokenList(filterTokenList || [])
     }, [tokenList, inputValue])
 
     useEffect(() => {
         if (tempChain && chainToken) {
             const tokenList = chainToken[tempChain.chainId]
+            // if (balances && Object.keys(balances).length > 0) {
+            //     tokenList.sort((a, b) => balances[a])
+            // }
             setTokenList(tokenList)
         }
-    }, [tempChain, chainToken])
+    }, [tempChain, chainToken, balances])
 
     return <Modal paddingSize={0} onClose={onClose}>
         <Container>
@@ -164,14 +171,16 @@ export default function TokenSelectModal({
                         }} className="input" placeholder="search token or paste address" />
                     </div>
                 </TokenTop>
-                <TokenList>
+                <TokenList key={tempChain?.chainId}>
                     {
                         filterTokenList?.map((token: Token) => {
                             return <TokenRow
                                 isSelected={currentToken?.symbol === token.symbol}
-                                key={token.address}
+                                key={token.symbol + token.address}
                                 token={token}
-                                chain={currentChain as Chain}
+                                loading={loading}
+                                balances={currentChainId === tempChain?.chainId ? balances : {}}
+                                chain={tempChain as Chain}
                                 onTokenChange={(token: Token) => {
                                     onChainChange(tempChain as Chain)
                                     onTokenChange(token)

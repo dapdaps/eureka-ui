@@ -20,7 +20,10 @@ import type { Token } from '@/types';
 
 const mapFn = (item: Token) => {
     if (item.address === 'native') {
-        item.address = '0x0000000000000000000000000000000000000000'
+        return {
+            ...item,
+            address: '0x0000000000000000000000000000000000000000'
+        }
     }
     return item
 }
