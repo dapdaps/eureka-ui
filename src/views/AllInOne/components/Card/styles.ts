@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { hexToRgb } from '@/views/AllInOne/utils';
+import { StyledLendingEntry } from "@/views/AllInOne/components/Lending/styles";
 
 export const StyledCard = styled.div<{ bgColor?: string }>`
   display: block;
@@ -24,7 +25,7 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
     height: 100%;
     left: 0;
     top: 0;
-    background: rgba(0, 0, 0, 0.1);
+    background: linear-gradient(rgba(0, 0, 0, 0), 80%, rgba(22, 24, 29, 1));
   }
 
   .card-active-bg {
@@ -56,6 +57,7 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
   &.nav {
     width: 225px;
     border-radius: 16px;
+    padding: 16px;
 
     .arrow-top-right {
       opacity: 0;
@@ -91,6 +93,7 @@ export const StyledTitle = styled.div`
   cursor: default;
   display: flex;
   flex-direction: column;
+  flex: 1;
 
   h3 {
     font-size: 1em;
@@ -101,6 +104,7 @@ export const StyledTitle = styled.div`
     font-size: 0.654em;
     color: #979ABE;
     line-height: 17px;
+    white-space: wrap;
   }
 
   .title-text-wrap {
@@ -121,9 +125,25 @@ export const StyledContent = styled.div`
   margin-top: 20px;
   position: relative;
 
-  
-
   &.nav {
+    margin-top: 5px;
+
+    > [class*="StyledBridgeContainer"] {
+      transform: scale(0.8);
+      transform-origin: left top;
+    }
+    > [class*="StyledTradeContainer"] {
+      transform: scale(0.9);
+      transform-origin: left top;
+    }
+    > [class*="StyledLiquidityEntry"] {
+      transform: scale(0.22);
+      transform-origin: left top;
+    }
+    > [class*="StyledLendingEntry"] {
+      transform: scale(0.41);
+      transform-origin: left top;
+    }
   }
 `;
 
@@ -137,4 +157,6 @@ export const StyledPointer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-shrink: 0;
+  flex-grow: 0;
 `;

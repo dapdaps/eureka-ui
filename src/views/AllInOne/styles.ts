@@ -40,7 +40,7 @@ export const StyledNavList = styled.div`
   align-items: stretch;
   flex-wrap: nowrap;
   height: 144px;
-  padding-top: 20px;
+  padding-top: 40px;
   gap: 16px;
   margin-top: 140px;
   overflow: hidden;

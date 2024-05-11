@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { memo } from 'react';
 
 import { StyledFlex } from "@/styled/styles";
@@ -6,7 +7,6 @@ import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
-import { useRouter } from "next/router";
 
 const AllInOneView = (props: Props) => {
   const { chain } = props;
@@ -37,27 +37,14 @@ const AllInOneView = (props: Props) => {
         {
           showComponent && (
             <StyledContent>
-              {currentChainMenuList.map((item: any, idx: number) => {
-                const len = currentChainMenuList.length;
-                const getCardWidth = () => {
-                  const index = idx + 1;
-                  if (len >= 4) {
-                    if ([1, 0].includes(index % 4)) {
-                      return { width: `calc(40% - 12px)`, flexShrink: 0, flexGrow: 0 };
-                    }
-                    if ([2, 3].includes(index % 4)) {
-                      return { width: `calc(60% - 12px)`, flexShrink: 0, flexGrow: 0 };
-                    }
-                  }
-                  return { flex: 1 };
-                };
+              {currentChainMenuList.map((item: any) => {
                 return (
                   <AllInOneCardView
                     key={item.tab}
                     title={item.tab}
                     subTitle={item.description}
                     bgColor={currentChain.selectBgColor}
-                    style={getCardWidth()}
+                    style={item.entryCardWidth}
                     path={currentChain.path}
                     onSelect={() => {
                       handleMenuSelect(item.tab.toLowerCase());
