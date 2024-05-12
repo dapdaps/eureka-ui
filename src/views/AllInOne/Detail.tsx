@@ -80,12 +80,12 @@ const AllInOneDetailView = (props: Props) => {
                 }
                 {
                   menu === 'lending' && (
-                    <Lending chain={currentChain} />
+                    <Lending chain={currentChain} menu={currentMenu} />
                   )
                 }
                 {
                   menu === 'liquidity' && (
-                    <Liquidity chain={currentChain} />
+                    <Liquidity chain={currentChain} menu={currentMenu} />
                   )
                 }
                 {
@@ -113,7 +113,7 @@ const AllInOneDetailView = (props: Props) => {
                   handleMenuSelect(_tab);
                 }}
               >
-                <item.component chain={currentChain} />
+                <item.component chain={currentChain} menu={item} />
               </AllInOneCardView>
             );
           })}
