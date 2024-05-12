@@ -7,6 +7,7 @@ import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
+import { StyledLending } from "@/views/AllInOne/components/Lending/styles";
 
 const Lending = (props: Props) => {
   const { chain, menu } = props;
@@ -23,7 +24,7 @@ const Lending = (props: Props) => {
   }, [chain, menu]);
 
   return (
-    <div>
+    <StyledLending>
       <ComponentWrapperPage
         src={menu.path}
         componentProps={{
@@ -38,7 +39,7 @@ const Lending = (props: Props) => {
           },
         }}
       />
-    </div>
+    </StyledLending>
   );
 };
 

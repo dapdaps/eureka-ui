@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 
+export const StyledLending = styled.div`
+  max-width: 1000px;
+`;
 export const StyledLendingEntry = styled.div`
   min-width: 650px;
 `;

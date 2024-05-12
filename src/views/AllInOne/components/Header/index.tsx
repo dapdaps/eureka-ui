@@ -58,8 +58,6 @@ const AllInOneHeaderView = (props: Props) => {
     };
   }, []);
 
-  console.log(currentChain);
-
   return (
     <>
       {

@@ -123,7 +123,6 @@ const LiquidityEntry = () => {
     res.forEach((chainItem) => {
       chainItem.tokens = Object.values(tokens).filter((it) => it.chainId === chainItem.chainId);
     });
-    console.log(res);
     setTableList(res);
   };
 
