@@ -746,6 +746,29 @@ const ROUTE_CONFIG = {
       '--claim-color': '#FFFFFF',
     },
   },
+  sturdy: {
+    type: 'lending',
+    theme: {
+      '--button-color': '#2B55D0',
+      '--switch-color': '#2B55D0',
+      '--button-text-color': '#FFFFFF',
+      '--supply-color': '#2B55D0',
+      '--yours-table-title': '#FFFFFF',
+      '--borrow-color': '#2B55D0',
+      '--withdraw-bg-color': '#2B55D0',
+      '--withdraw-border-color': '#2B55D0',
+      '--withdraw-bg-hover-color': '#2B55D0',
+      '--repay-bg-color': '#2B55D0',
+      '--repay-border-color': '#2B55D0',
+      '--repay-bg-hover-color': '#2B55D0',
+      '--claim-bg-hover-color': '#2B55D0',
+      '--claim-bg-color': '#2B55D0',
+      '--claim-border-color': '#2B55D0',
+      '--withdraw-color': '#fff',
+      '--replay-color': '#FFFFFF',
+      '--claim-color': '#FFFFFF',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
