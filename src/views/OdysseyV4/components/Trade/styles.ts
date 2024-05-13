@@ -2,9 +2,8 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  margin: 0 auto;
+  margin: 0 auto 100px;
   width: 1188px;
-  margin-bottom: 132px;
 `;
 
 export const StyledContent = styled.div`
