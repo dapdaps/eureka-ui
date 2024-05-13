@@ -5,11 +5,10 @@ import { gnosis } from '@/config/tokens/gnosis';
 const basic = {
   name: 'Balancer',
   logo: '/images/apps/balancer.png',
-  amountOutFn: 'bluebiu.near/widget/PolygonZkevm.Swap.BalancerAmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   1101: {
-    routerAddress: '0xBA12222222228d8Ba445958a75a0704d566BF2C8',
     defaultCurrencies: {
       input: polygonZkevm['eth'],
       output: polygonZkevm['usdc'],
@@ -51,71 +50,11 @@ const networks = {
     ],
   },
   8453: {
-    routerAddress: '0xBA12222222228d8Ba445958a75a0704d566BF2C8',
     defaultCurrencies: {
       input: base['eth'],
       output: base['usdc'],
     },
     tokens: [base['eth'], base['usdc'], base['weth'], base['usdbc'], base['dai'], base['cbeth']],
-    pools: [
-      [
-        [base['weth'].address.toLowerCase(), base['usdbc'].address.toLowerCase()],
-        '0x6b1baa0a046c9ebb7da8668b66e9282a896e1edb000200000000000000000094',
-      ],
-      [
-        [base['weth'].address.toLowerCase(), base['usdc'].address.toLowerCase(), ''],
-        '0x433f09ca08623e48bac7128b7105de678e37d988000100000000000000000047',
-      ],
-      [
-        [base['cbeth'].address.toLowerCase(), base['weth'].address.toLowerCase(), ''],
-        '0xfb4c2e6e6e27b5b4a07a36360c89ede29bb3c9b6000000000000000000000026',
-      ],
-      [
-        [base['dai'].address.toLowerCase(), '', base['usdbc'].address.toLowerCase()],
-        '0x6fbfcf88db1aada31f34215b2a1df7fafb4883e900000000000000000000000c',
-      ],
-      [
-        [
-          '',
-          base['usdc'].address.toLowerCase(),
-          base['usdbc'].address.toLowerCase(),
-          base['axlusdc'].address.toLowerCase(),
-        ],
-        '0x0c659734f1eef9c63b7ebdf78a164cdd745586db000000000000000000000046',
-      ],
-      [
-        [base['usdbc'].address.toLowerCase(), '', base['axlusdc'].address.toLowerCase()],
-        '0xe58ca65f418d4121d6c70d4c133e60cf6fda363c000000000000000000000013',
-      ],
-      [
-        [base['weth'].address.toLowerCase(), base['usdbc'].address.toLowerCase()],
-        '0x012e776cc3ed4c5adea3eda8677e82343e4de396000200000000000000000015',
-      ],
-      [
-        [base['weth'].address.toLowerCase(), base['dai'].address.toLowerCase()],
-        '0x2423d6e341270bcd5add138bc3d4058857d5455f00020000000000000000000e',
-      ],
-      [
-        [base['weth'].address.toLowerCase(), base['usdc'].address.toLowerCase()],
-        '0xdad0cf7940078ec8537df85e9499fb235d32c3d100020000000000000000006f',
-      ],
-      [
-        [base['usdc'].address.toLowerCase(), base['usdbc'].address.toLowerCase()],
-        '0xe431ed76d1ad5b262230037ea16463c6398591ad00020000000000000000006e',
-      ],
-      [
-        [base['dai'].address.toLowerCase(), base['usdbc'].address.toLowerCase()],
-        '0xb301f96097f1ab4f189f04a4662c751c822ef38f00020000000000000000006d',
-      ],
-      [
-        [base['dai'].address.toLowerCase(), base['usdc'].address.toLowerCase()],
-        '0xfb7c21f274139011dab38898ba66401d111144350002000000000000000000c3',
-      ],
-      [
-        [base['weth'].address.toLowerCase(), base['axlusdc'].address.toLowerCase()],
-        '0xf912fe5769800bb19c66706cb7f61c97c7122f22000200000000000000000082',
-      ],
-    ],
   },
   100: {
     routerAddress: '0xBA12222222228d8Ba445958a75a0704d566BF2C8',
