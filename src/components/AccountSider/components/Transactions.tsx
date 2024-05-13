@@ -169,16 +169,13 @@ export default function Transactions() {
     const [showDetail, setShowDetail] = useState(false)
     const router = useRouter();
 
-    const storageKey = `bridge-${account}-super`
     useEffect(() => {
         if (account) {
-            const val = getTransaction(storageKey)
-            if (val) {
-                const transactionList = Object.values(val)
+            getTransaction().then(transactionList => {
                 setSum(transactionList?.length || 0)
                 const _transactionList = transactionList.filter((item: any) => item.status !== 2)
                 setTransactionList(_transactionList)
-            }
+            })
         }
 
     }, [account])

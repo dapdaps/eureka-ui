@@ -312,7 +312,7 @@ export default function BirdgeAction(
                 return
               }
 
-              saveTransaction(`bridge-${account}-super`, {
+              saveTransaction({
                 hash: txHash,
                 link: getChainScan(fromChain.chainId),
                 duration: selectedRoute.duration,
@@ -355,6 +355,7 @@ export default function BirdgeAction(
               setConfirmModalShow(false)
 
             } catch (err: any) {
+              console.log(err)
               fail({
                 title: 'Transaction failed',
                 text: err.message || err.toString(),

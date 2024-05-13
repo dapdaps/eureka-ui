@@ -3,7 +3,7 @@ import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainSc
 import { useRouter } from 'next/router';
 
 import useAccount from '@/hooks/useAccount';
-import { getTransaction, saveAllTransaction } from '@/components/BridgeX/Utils'
+import { getTransaction, saveTransaction } from '@/components/BridgeX/Utils'
 import PublicTitle from '../PublicTitle';
 import { ArrowRight } from '../Arrow'
 import TransactionPanel from './TransactionPanel';
@@ -76,71 +76,39 @@ export default function Transaction({ initModalShow = false }: Props) {
     const { account, chainId, provider } = useAccount();
     const router = useRouter();
 
-
-    const storageKey = `bridge-${account}-super`
-
-    function refreshTransactionList() {
+    async function refreshTransactionList() {
         if (!account) {
             return
         }
 
         setIsLoading(true)
-        const transactionObj = getTransaction(storageKey)
-
-        // console.log('transactionObj: ', transactionObj)
-
-        const transactionList: any = []
-        let proccessSum = 0
-
-        const pList = Object.values(transactionObj).map((item: any) => {
-            if (item.status === 2) {
-                transactionList.push(item)
-                return
-            }
-
-            return getStatus({
+        const transactionList = await getTransaction()
+        const pendingList = transactionList.filter((item: any) => item.status === 3)
+        pendingList.forEach((item: any) => {
+            getStatus({
                 hash: item.hash,
                 chainId: item.fromChainId,
-                address: account,
+                address: item.fromAddress,
                 fromChainId: item.fromChainId,
                 toChainId: item.toChainId,
             }, item.tool, provider?.getSigner()).then((isComplate: boolean) => {
                 if (isComplate) {
                     item.status = 2
+                    saveTransaction(item)
                 } else {
-                    proccessSum++
                     item.status = 3
                 }
 
-                transactionObj[item.hash] = item
-                transactionList.push(item)
             }).catch((err: any) => {
                 item.status = 3
-                transactionList.push(item)
+
             })
         })
 
-        Promise.all(pList).then(() => {
-            if (transactionList.length > 0) {
-                saveAllTransaction(storageKey, transactionObj)
-            }
-
-            transactionList.sort((a: any, b: any) => b.time - a.time)
-            setTransactionList(transactionList)
-            setIsLoading(false)
-            setProccessSum(proccessSum)
-            
-        }).catch(err => {
-            // if (transactionList.length > 0) {
-            //     saveAllTransaction(storageKey, transactionList)
-            // }
-            // saveAllTransaction(storageKey, transactionList)
-            const isFold = proccessSum > 0
-            transactionList.sort((a: any, b: any) => b.time - a.time)
-            setTransactionList(transactionList)
-            setIsLoading(false)
-            setProccessSum(proccessSum)
-        })
+        transactionList.sort((a: any, b: any) => b.time - a.time)
+        setTransactionList(transactionList)
+        setIsLoading(false)
+        setProccessSum(pendingList?.length || 0)
     }
 
     useEffect(() => {
@@ -200,7 +168,7 @@ export default function Transaction({ initModalShow = false }: Props) {
                 <circle cx="8.73312" cy="8.73311" r="6.01829" transform="rotate(16.6277 8.73312 8.73311)" stroke="#979ABE" stroke-width="2" />
                 <rect x="15.5457" y="13.5139" width="6.141" height="2.63186" rx="1.31593" transform="rotate(46.6277 15.5457 13.5139)" fill="#979ABE" />
             </svg>
-            <Input placeholder='Search by address or Tx Hash'/>
+            <Input placeholder='Search by address or Tx Hash' />
         </InputWapper>
 
         {
@@ -210,8 +178,8 @@ export default function Transaction({ initModalShow = false }: Props) {
                 } else {
                     setTransactionModalShow(false)
                 }
-                
-            }}/>
+
+            }} />
         }
     </Container>
 }

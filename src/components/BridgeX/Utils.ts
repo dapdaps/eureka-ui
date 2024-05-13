@@ -1,4 +1,24 @@
 import Big from 'big.js'
+import { SuperBridgeStore } from 'super-bridge-sdk'
+
+let gloabalSbs: SuperBridgeStore
+async function initDb() {
+    const sbs = new SuperBridgeStore('dapdap', 'transaction')
+    await sbs.init()
+    gloabalSbs = sbs
+    return sbs
+}
+
+async function getDb(): Promise<SuperBridgeStore> {
+    if (!gloabalSbs) {
+        return initDb()
+    }
+    return gloabalSbs
+}
+
+if (typeof window !== 'undefined') {
+    initDb()
+}
 
 
 export function balanceFormated(balance: any, digits?: any) {
@@ -21,26 +41,28 @@ export function addressFormated(address: string) {
     })
 }
 
-export function saveTransaction(transaction_key: any, config: any) {
-    const transactionObj = getTransaction(transaction_key)
-    transactionObj[config.hash] = config
-    saveAllTransaction(transaction_key, transactionObj)
+export async function saveTransaction(item: any) {
+    const sbs = await getDb()
+    await sbs.update(item)
 }
 
 export function saveAllTransaction(transaction_key: any, transactionObj: any) {
-    localStorage.setItem(transaction_key, JSON.stringify(transactionObj))
+    // localStorage.setItem(transaction_key, JSON.stringify(transactionObj))
 }
 
-export function getTransaction(transaction_key: any): any {
-    let transactionObj: any = localStorage.getItem(transaction_key)
-
-    if (!transactionObj) {
-        transactionObj = {}
-    } else {
-        transactionObj = JSON.parse(transactionObj)
+export async function getTransaction(tool?: string) {
+    const sbs = await getDb()
+    const list: any = await sbs.readAll()
+    
+    if (!list) {
+        return []
+    }
+    
+    if (!tool) {
+        return list
     }
 
-    return transactionObj
+    return list.filter((item: any) => item.tool.toLowerCase() === tool.toLowerCase()) || []
 }
 
 export function isNumeric(value: any): boolean {

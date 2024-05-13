@@ -297,12 +297,6 @@ export default function BridgeX({
     }, [account, currentChainId, inputValue, inputBalance, route, loading, chainFrom])
 
 
-    function refreshTransactionList() {
-        const transactionObj = getTransaction(`bridge-${account}-${tool}`)
-
-        setTransactionList(transactionObj.transactionList)
-    }
-
     function validateInput() {
         if (!account || !chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
             return false
@@ -561,7 +555,7 @@ export default function BridgeX({
                         setIsSending(false)
                         setIsSendingDisabled(false)
 
-                        saveTransaction(`bridge-${account}-${tool}`, {
+                        saveTransaction({
                             hash: txHash,
                             link: getChainScan(chainFrom.chainId),
                             duration: duration,
@@ -574,8 +568,11 @@ export default function BridgeX({
                             toChainLogo: chainTo.icon,
                             toTokenLogo: selectOutputToken.icon,
                             toAmout: receiveAmount,
-                            toToenSymbol: selectOutputToken.symbol,
+                            toTokenSymbol: selectOutputToken.symbol,
                             time: Date.now(),
+                            tool: tool,
+                            fromAddress: account,
+                            toAddress: account,
                         })
 
                         addAction({
@@ -596,7 +593,6 @@ export default function BridgeX({
                         })
 
                         setUpdater(updater + 1)
-                        refreshTransactionList()
 
                     } catch(err: any) {
                         console.log(err)
@@ -614,15 +610,11 @@ export default function BridgeX({
         }
 
         <Transaction
-            transactionList={transactionList}
             updater={transitionUpdate}
             storageKey={`bridge-${account}-${tool}`}
             getStatus={getStatus}
             tool={tool}
             account={account}
-            onRefresh={() => {
-                refreshTransactionList()
-            }}
         />
 
     </BridgePanel>

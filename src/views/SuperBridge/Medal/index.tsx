@@ -45,6 +45,8 @@ const JuniorWapper = styled.div`
     }
 `
 
+
+
 export default function Transaction() {
     return <Container>
         <PublicTitle
@@ -63,6 +65,6 @@ export default function Transaction() {
             </div>
         </JuniorWapper>
 
-        
+
     </Container>
 }
