@@ -185,12 +185,6 @@ export default function BirdgeAction(
     setDisableText('Bridge')
   }, [fromChain, toChain, fromToken, toToken, account, inputValue, balance, routes])
 
-  // useEffect(() => {
-  //   // getAllToken().then((res: any) => {
-  //   //   setChainToken(res)
-  //   // })
-  // }, [])
-
   useEffect(() => {
     if (selectedRoute && toToken) {
       const reciveAmount = new Big(selectedRoute.receiveAmount).div(10 ** toToken.decimals).toString()
@@ -332,6 +326,7 @@ export default function BirdgeAction(
                 tool: selectedRoute.bridgeType,
                 fromAddress: account,
                 toAddress: account,
+                status: 2,
               })
 
               addAction({

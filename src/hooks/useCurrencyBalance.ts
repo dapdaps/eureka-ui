@@ -77,7 +77,6 @@ export default function useTokenBalance({
       try {
         const provider = new providers.JsonRpcProvider(rpcUrl);
         const amount = await provider.getBalance(account);
-        console.log('amount:', amount)
         setBalance(isPure ? amount.toString() : utils.formatUnits(amount.toString(), currency?.decimals).toString());
         setLoading(false);
       } catch (err) {

@@ -83,7 +83,7 @@ export default function Transaction({ initModalShow = false }: Props) {
 
         setIsLoading(true)
         const transactionList = await getTransaction()
-        const pendingList = transactionList.filter((item: any) => item.status === 3)
+        const pendingList = transactionList.filter((item: any) => item.status !== 2)
         pendingList.forEach((item: any) => {
             getStatus({
                 hash: item.hash,

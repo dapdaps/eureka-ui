@@ -573,6 +573,7 @@ export default function BridgeX({
                             tool: tool,
                             fromAddress: account,
                             toAddress: account,
+                            status: 2,
                         })
 
                         addAction({
