@@ -4,6 +4,7 @@ const basic = {
   logo: '/images/apps/fenix.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
+
 const networks = {
   81457: {
     defaultCurrencies: {
