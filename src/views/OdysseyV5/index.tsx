@@ -10,13 +10,13 @@ import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 import Banner from './components/Banner';
 import Bridge from './components/Bridge';
 import Explores from './components/Explores';
-import FootClaim from './components/FootClaim';
 import Lending from './components/Lending';
 import Noti from './components/Noti';
 import Trade from './components/Trade';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import { StyledContainer, StyledContent } from './styles';
+import Claim from '@/views/OdysseyV5/components/Claim';
 
 export default function OdysseyV5() {
   const router = useRouter();
@@ -47,6 +47,8 @@ export default function OdysseyV5() {
     setLendingList(_list);
   }, [quests]);
 
+  console.log(quests.social);
+
   return (
     <StyledContainer>
       <StyledContent>
@@ -59,14 +61,7 @@ export default function OdysseyV5() {
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />
         <Lending list={lendingList} onRefreshDetail={queryDetail} />
-
-        <FootClaim
-          unclaimed={detail?.user?.unclaimed_reward}
-          totalReward={detail?.user?.total_reward}
-          unlocked={quests.unlockedAmount}
-          onRefreshDetail={queryDetail}
-          id={id}
-        />
+        <Claim />
       </StyledContent>
     </StyledContainer>
   );

@@ -5,7 +5,7 @@ import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useLayoutStore } from '@/stores/layout';
 
 import useCheck from '../../hooks/useCheck';
-import ArrowIcon from '../ArrowIcon';
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Card from '../Card';
 import LockStatus from '../LockStatus';
 import RefreshButton from '../RefreshButton';
@@ -18,6 +18,13 @@ import {
   StyledFooter,
   StyledFooterActions,
   StyledTop,
+  StyledCardTagContainer,
+  StyledCardTag,
+  StyledTagIcon,
+  StyledTagText,
+  StyledFooterLeft,
+  StyledFooterRight,
+  StyledCardTagTip
 } from './styles';
 
 const ICON_MAP: any = {
@@ -90,9 +97,16 @@ export default function DappCard({
             <StyledDappDesc>{description}</StyledDappDesc>
           </StyledDappTitleWrapper>
         </StyledDappWrapper>
-        <ArrowIcon style={{ marginTop: '6px' }} />
+        <StyledCardTagContainer>
+          <StyledCardTag className='tag'>
+            <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
+            <StyledTagText>4x Points</StyledTagText>
+            {/*<StyledCardTagTip className='display'>ETH/Eigenlayer staking APR</StyledCardTagTip>*/}
+          </StyledCardTag>
+        </StyledCardTagContainer>
       </StyledTop>
       <StyledFooter>
+        <StyledFooterLeft>
         <LockStatus status={total_spins > 0 || execution > 0} />
         <StyledFooterActions>
           <RefreshButton
@@ -103,6 +117,10 @@ export default function DappCard({
             loading={checking}
           />
         </StyledFooterActions>
+        </StyledFooterLeft>
+        <StyledFooterRight className='card_active_arrow'>
+          <ArrowIcon />
+        </StyledFooterRight>
       </StyledFooter>
     </Card>
   );

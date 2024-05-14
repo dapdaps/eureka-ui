@@ -1,24 +1,24 @@
 import styled from 'styled-components';
 
 const Wrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  //display: flex;
+  //align-items: center;
+  //justify-content: space-between;
 `;
-const Left = styled.div``;
+const Left = styled.div`
+  margin-bottom: 30px;
+`;
 const StyledTitle = styled.div`
   color: #fff;
-  font-family: Montserrat;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 700;
+  font-family: Chakra Petch;
+  font-size: 26px;
   text-transform: capitalize;
+  margin-bottom: 15px;;
 `;
 
 const StyledSubtitle = styled.div`
-  margin-top: 14px;
   color: #979abe;
-  font-family: Montserrat;
+  font-family: Chakra Petch Light;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;

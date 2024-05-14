@@ -3,19 +3,18 @@ import styled from 'styled-components';
 const StyledContainer = styled.div<{ $status: string }>`
   display: flex;
   align-items: center;
-  height: 36px;
-  padding: 0 12px;
-  font-family: Montserrat;
-  font-size: 16px;
+  padding: 6px 8px;
+  font-family: Chakra Petch Light;
+  font-size: 14px;
   font-style: normal;
   font-weight: 400;
   border-radius: 4px;
-  border: 1px solid #3d405a;
-  color: ${({ $status }) => ($status === 'unlocked' ? '#00FFD1' : '#979abe')};
-  background-color: ${({ $status }) => ($status === 'unlocked' ? 'rgba(0, 255, 209, .5)' : 'transparent')};
+  border: 1px solid #3D405A;
+  color: ${({ $status }) => ($status === 'unlocked' ? '#979abe' : '#979abe')};
+  background-color: ${({ $status }) => ($status === 'unlocked' ? '#000' : '#000')};
   &.explored {
-    background: rgba(0, 255, 209, 0.5);
-    color: #00ffd1;
+    background: rgba(223, 254, 0, 0.3);
+    color: rgba(223, 254, 0, 1);
   }
 `;
 const Icon = styled.img`
@@ -29,7 +28,7 @@ export default function LockStatus({ status }: any) {
     <StyledContainer $status={status}>Unexplored</StyledContainer>
   ) : (
     <StyledContainer $status={status} className="explored">
-      <Icon src="/images/odyssey/v4/done.svg" />
+      <Icon src="/images/odyssey/v5/explore-finished.svg" />
       Explored
     </StyledContainer>
   );

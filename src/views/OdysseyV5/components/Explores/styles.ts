@@ -1,81 +1,70 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  font-family: Montserrat;
-  margin: 0 auto 100px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .poly-btn {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    /* gap: 6px; */
-    padding: 0 10px;
-    width: 266px;
-    height: 60px;
-    background-color: #121212;
-    color: #fff;
-    font-family: Montserrat;
-    font-size: 16px;
-    cursor: pointer;
-    .poly-mask {
-      position: absolute;
-      display: none;
-    }
-    &:hover {
-      .poly-mask {
-        display: block;
-      }
-    }
-    &.large {
-      width: 276px;
-    }
-    &.renzo {
-      background-repeat: no-repeat;
-      /* background-size: contain; */
-      background-position: center;
-      background-image: url('/images/odyssey/v4/bg-renzo.png');
-    }
-    &.lido {
-      background-repeat: no-repeat;
-      /* background-size: contain; */
-      background-position: center;
-      background-image: url('/images/odyssey/v4/bg-lido.png');
-    }
-  }
-  .poly-lp {
-  }
-  .poly-lp-last {
+  margin: 0 auto 100px auto;
+  max-width: 1286px;
+  width: 100%;
+  padding-left: 50px;
+  padding-right: 50px;
+  position: relative;
+  font-family: Chakra Petch;
+  .head-img {
+    border-radius: 4px;
     position: absolute;
-    margin-left: -14px;
+    top: -188px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 `;
 
-export const StyledContent = styled.div`
-  margin: 0 auto 100px;
-  width: 1188px;
-`;
 export const StyledItemWrap = styled.div`
   padding-top: 20px;
+  position: relative;
+  z-index: 1;
 `;
-export const Title = styled.div`
+export const StyledTitle = styled.div`
   color: #fff;
   text-align: center;
-  margin-bottom: 20px;
-  font-size: 42px;
-  font-style: normal;
-  font-weight: 800;
+  font-size: 52px;
   text-transform: capitalize;
+  padding-top: 238px;
+  .hilight {
+    color: ${() => `var(--odyssey-primary-color)`};
+  }
 `;
-export const Desc = styled.div`
+export const StyledDesc = styled.div`
   color: #fff;
   text-align: center;
   font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  margin-bottom: 30px;
+  margin-bottom: 80px;
+  line-height: 1;
+  font-family: Chakra Petch Light;
+`;
+
+export const StyledExploreContainer = styled.div`
+`;
+
+export const StyledExploreTitle = styled.div`
+  font-size: 26px;
+  color: #fff;
+  position: relative;
+  &:before {
+    display: block;
+    content: '';
+    width: 480px;
+    height: 480px;
+    opacity: 0.3;
+    position: absolute;
+    top: -106px;
+    left: -100px;
+    background: radial-gradient(50% 50% at 50% 50%, #DFFE00 0%, rgba(223, 254, 0, 0) 100%);
+  }
+`;
+
+export const StyledExploreDesc = styled.div`
+  font-family: Chakra Petch Light;
+  color: #fff;
+  font-size: 18px;
 `;
 
 export const Btns = styled.div`
@@ -90,12 +79,13 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
   border: 1px solid #373a53;
   background: #1e2028;
   box-sizing: border-box;
-  padding: 14px 28px 14px 16px;
+  padding: 14px 5px 14px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
   margin-bottom: 16px;
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -104,11 +94,7 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
 export const StyledItemTitle = styled.div`
   flex-shrink: 0;
   color: #fff;
-  font-family: Gantari;
   font-size: 20px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 120%; /* 24px */
 `;
 
 export const StyledItemLeft = styled.div`
@@ -121,14 +107,29 @@ export const StyledItemRight = styled.div`
   display: flex;
   gap: 15px;
   align-items: center;
+  position: relative;
 `;
 
 export const Unexplored = styled.div`
   color: #979abe;
   text-align: center;
-  font-family: Montserrat;
+  font-family: Chakra Petch Light;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+`;
+
+export const ArrowContainer = styled.div`
+  color: #fff;
+  transform: rotate(-90deg);
+`;
+
+export const StyledItemShadow = styled.div`
+  .item-mask {
+    position: absolute;
+    top: 50%;
+    right: -6px;
+    transform: translateY(-50%);
+  }
 `;

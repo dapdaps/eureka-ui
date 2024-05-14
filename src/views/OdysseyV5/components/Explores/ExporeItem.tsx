@@ -1,12 +1,13 @@
 import { memo, useEffect, useState } from 'react';
+import Image from 'next/image';
 
 import useCheck from '../../hooks/useCheck';
 import useReport from '../../hooks/useReport';
-import ArrowIcon from '../ArrowIcon';
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 import LockStatus from '../LockStatus';
 import RefreshIcon from '../RefreshButton';
 import CardInput from './CardInput';
-import { StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored } from './styles';
+import { StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored, ArrowContainer, StyledItemShadow } from './styles';
 
 const ExporeItem = ({
   userInfo,
@@ -18,7 +19,7 @@ const ExporeItem = ({
   spins = 0,
   total_spins = 0,
   times = 0,
-  onRefreshDetail,
+  onRefreshDetail
 }: any) => {
   const [finished, setFinished] = useState(false);
   const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins }, (_times: number) => {
@@ -83,9 +84,14 @@ const ExporeItem = ({
               }}
               loading={checking}
             />
-            <ArrowIcon />
+            <ArrowContainer>
+              <ArrowIcon />
+            </ArrowContainer>
           </>
         )}
+        <StyledItemShadow>
+          <Image src='/images/odyssey/v5/explore-mask.svg' alt='' className='item-mask' width={395} height={70} />
+        </StyledItemShadow>
       </StyledItemRight>
     </StyledItem>
   );
