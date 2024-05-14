@@ -139,7 +139,7 @@ const Trade = (props: { chain: Record<string, any>, disabled?: boolean }) => {
       </AllInOneButton>
       <StyledTradeFooter>
         <StyledTradeEth>1 ETH = 3422.2502675 USDC</StyledTradeEth>
-        <StyledFlex gap="8px">
+        <StyledFlex gap='8px'>
           <StyledMarketIcon url=""></StyledMarketIcon>
           <StyledMarketTitle>soidspoi</StyledMarketTitle>
           <StyledMarketTag>Best Price</StyledMarketTag>

@@ -39,7 +39,7 @@ const AllInOneDetailView = (props: Props) => {
   }, [menu, currentChain]);
 
   const cardWidth = useMemo(() => {
-    if (['liquidity', 'lending'].includes(menu)) return '100%';
+    if (['liquidity', 'lending'].includes(menu)) return '1244px';
     return undefined;
   }, [menu]);
 

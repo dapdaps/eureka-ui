@@ -72,11 +72,13 @@ export const StyledMarketTag = styled.div`
   padding: 2px 5px;
   color: #33B65F;
   font-size: 12px;
+  white-space: nowrap;
 `;
 export const StyledMarketCount = styled.div`
   font-size: 14px;
   text-decoration: underline;
   cursor: pointer;
+  white-space: nowrap;
 `;
 
 export const ArrowWrap = styled.div<{ isDropdown: boolean }>`
