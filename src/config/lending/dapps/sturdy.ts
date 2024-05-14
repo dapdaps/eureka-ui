@@ -51,7 +51,7 @@ const networks = {
         POOL_MANAGER: '0x810539C09B61112Fb7Aa749a0D17dD2A60c8E00a',
       },
     ],
-    TOKENS: [mode['weth'], mode['wrseth'], mode['ezeth'], mode['usdc'], mode['mode']],
+    TOKENS: [mode['we-eth.mode'], mode['weth'], mode['wrseth'], mode['ezeth'], mode['usdc'], mode['mode']],
   },
 };
 
