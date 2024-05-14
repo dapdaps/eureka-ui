@@ -33,6 +33,7 @@ const FloatAnimation = `
 export const StyledContent = styled.div`
   ${Image};
   width: 100%;
+  max-width: ${() => `var(--odyssey-container-width)`};
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -89,6 +90,7 @@ export const StyledTitle = styled.div`
       font-size: 24px;
       font-weight: 400;
       line-height: 24px;
+      margin-top: 19px;
     }
   }
 

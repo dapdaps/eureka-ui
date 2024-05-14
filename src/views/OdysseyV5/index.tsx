@@ -15,12 +15,71 @@ import Noti from './components/Noti';
 import Trade from './components/Trade';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
-import { StyledContainer, StyledContent } from './styles';
+import { StyledContainer, StyledContent, StyledNavigator } from './styles';
+import { useDebounceFn } from "ahooks";
 import Claim from '@/views/OdysseyV5/components/Claim';
 
 export default function OdysseyV5() {
   const router = useRouter();
   const { id } = router.query;
+
+  const navigatorList = [
+    {
+      key: 1,
+      title: 'Home',
+      target: 'odysseySectionHome',
+    },
+    {
+      key: 2,
+      title: 'Airdrop Mastery',
+      target: 'odysseySectionAirdropMastery',
+    },
+    {
+      key: 3,
+      title: 'Mode DApp Blitz',
+      target: 'odysseySectionModeDAppBlitz',
+    },
+    {
+      key: 4,
+      title: 'Dive into DApp Diversity',
+      target: 'odysseySectionDiveIntoDAppDiversity',
+    },
+    {
+      key: 5,
+      title: 'Climb to Leaderboard',
+      target: 'odysseySectionClimbToLeaderboard',
+    },
+  ];
+  const [navigatorActive, setNavigatorActive] = useState(navigatorList[0].key);
+
+  const handleNavigation = (nav: any) => {
+    const target = document.getElementById(nav.target);
+    if (!target) return;
+    window.scrollTo({
+      top: target.offsetTop,
+      behavior: 'smooth',
+    });
+    setNavigatorActive(nav.key);
+  };
+
+  const handleScrollEvent = () => {
+    let _navigatorActive = navigatorActive;
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    for (const navigator of navigatorList) {
+      const target = document.getElementById(navigator.target);
+      if (!target) continue;
+      if (scrollTop >= target.offsetTop) _navigatorActive = navigator.key;
+    }
+    setNavigatorActive(_navigatorActive);
+  };
+  const { run: handleScrollEventDebounce } = useDebounceFn(handleScrollEvent, { wait: 500 });
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScrollEventDebounce);
+    return () => {
+      window.removeEventListener('scroll', handleScrollEventDebounce);
+    };
+  }, []);
 
   const authConfig = useAuthConfig();
   const { detail, loading, queryDetail } = useDetail(id);
@@ -47,8 +106,6 @@ export default function OdysseyV5() {
     setLendingList(_list);
   }, [quests]);
 
-  console.log(quests.social);
-
   return (
     <StyledContainer>
       <StyledContent>
@@ -63,6 +120,20 @@ export default function OdysseyV5() {
         <Lending list={lendingList} onRefreshDetail={queryDetail} />
         <Claim />
       </StyledContent>
+      <StyledNavigator>
+        {
+          navigatorList.map((nav) => (
+            <div
+              className={`nav-item ${navigatorActive === nav.key ? 'active' : ''}`}
+              key={nav.key}
+              onClick={() => handleNavigation(nav)}
+            >
+              <div className="pointer"></div>
+              <div className="title">{nav.title}</div>
+            </div>
+          ))
+        }
+      </StyledNavigator>
     </StyledContainer>
   );
 }

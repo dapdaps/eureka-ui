@@ -13,7 +13,7 @@ import Summary from "@/views/OdysseyV5/components/Summary";
 
 export default function Banner(props: any) {
   return (
-    <StyledContainer>
+    <StyledContainer id="odysseySectionHome">
       <StyledMoon>
         <Image src="/images/odyssey/v5/banner/moon.svg" alt="" width={799} height={799} />
       </StyledMoon>
