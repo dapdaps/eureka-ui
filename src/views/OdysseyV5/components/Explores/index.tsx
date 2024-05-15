@@ -16,7 +16,7 @@ import {
 export default function Explores({ list, userInfo, authConfig, onRefreshDetail }: any) {
   return (
     <>
-      <StyledContainer>
+      <StyledContainer id='odysseySectionDiveIntoDAppDiversity'>
        <Image src='/images/odyssey/v5/dive-head.svg' alt='Dive into DApp Diversity' width={305} height={305} className='head-img' />
         <StyledTitle>Dive into <span className='hilight'>DApp Diversity</span></StyledTitle>
         <StyledDesc>Exploring Mode&lsquo;s DApp Ecosystem for Richer Rewards</StyledDesc>

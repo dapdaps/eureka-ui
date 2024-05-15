@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+import type { MouseEvent } from 'react';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useLayoutStore } from '@/stores/layout';
@@ -24,8 +24,11 @@ import {
   StyledTagText,
   StyledFooterLeft,
   StyledFooterRight,
-  StyledCardTagTip
+  StyledDappName,
+  StyledCardTagTip,
+  StyledCardContainer
 } from './styles';
+import { ca } from 'date-fns/locale';
 
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
@@ -44,6 +47,7 @@ export default function DappCard({
   spins,
   total_spins,
   onRefreshDetail,
+  key
 }: any) {
   const [execution, setExecution] = useState(0);
 
@@ -54,6 +58,22 @@ export default function DappCard({
   const { open: dappOpen } = useDappOpen();
   const setLayout = useLayoutStore((store?: any) => store.set);
   const setCachedTab = useAllInOneTabCachedStore((store: any) => store.setCachedTab);
+
+  const tagNum = 1;
+  const _defaultTip = {
+    right: 0,
+    top: 0,
+    left: 0,
+    show: false,
+    text: ''
+  }
+  const [tip, setTip] = useState<{
+    right?: number,
+    top: number,
+    left?: number,
+    show: boolean,
+    text?: string
+  }>(_defaultTip);
 
   const handleDappRedirect = (dapp: any) => {
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
@@ -84,26 +104,73 @@ export default function DappCard({
     setExecution(total_spins / spins);
   }, [total_spins, spins]);
 
+  const showCardTip = (event: MouseEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const cardEl = document.getElementById(`card${id}`)?.getBoundingClientRect();
+    const tagEl = document.getElementById(`tag${id}`)?.getBoundingClientRect();
+    if (!cardEl || !tagEl) {
+      return;
+    }
+    const _position: { top:number, left?:number, right?: number } = {
+      top: tagEl.top - cardEl.top,
+      left: tagEl.left - cardEl.left + tagEl?.width + 6
+    }
+    const _maxWidth = window.innerWidth;
+    if ((cardEl.left + cardEl.width + 200) >= _maxWidth) {
+      _position.left = tagEl.left - cardEl.left - 6;
+      _position.top = tagEl.top - cardEl.top + tagEl.height + 6;
+    }
+    setTip({ ..._position, show: true });
+  }
+  //
+  // console.log(key);
+
   return (
-    <Card
+    <StyledCardContainer id={`card${id}`}>
+      <Card
       onClick={onItemClick}
       // disabled={times === 0 ? false : execution >= times}
     >
       <StyledTop>
         <StyledDappWrapper>
           <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
-          <StyledDappTitleWrapper>
-            <StyledDappTitle>{name}</StyledDappTitle>
-            <StyledDappDesc>{description}</StyledDappDesc>
-          </StyledDappTitleWrapper>
+          {
+            tagNum <= 1 ? <StyledDappTitleWrapper>
+              <StyledDappTitle>
+                <StyledDappName>{name}</StyledDappName>
+                <StyledCardTagContainer>
+                  <StyledCardTag id={`tag${id}`} onMouseEnter={showCardTip} onMouseLeave={() => setTip(_defaultTip)}>
+                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+                  <StyledTagText>4x Points</StyledTagText>
+                </StyledCardTag>
+                </StyledCardTagContainer>
+              </StyledDappTitle>
+              <StyledDappDesc>{description}</StyledDappDesc>
+            </StyledDappTitleWrapper> : <>
+              <StyledDappTitleWrapper>
+                <StyledDappTitle>
+                  <StyledDappName>{name}</StyledDappName>
+                </StyledDappTitle>
+                <StyledDappDesc>{description}</StyledDappDesc>
+              </StyledDappTitleWrapper>
+              <StyledCardTagContainer>
+                <StyledCardTag className='tag' onMouseEnter={(e) => showCardTip(e)}>
+                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
+                  <StyledTagText>4x Points</StyledTagText>
+                </StyledCardTag>
+                <StyledCardTag className='tag'>
+                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
+                  <StyledTagText>4x Points</StyledTagText>
+                </StyledCardTag>
+                <StyledCardTag className='tag'>
+                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
+                  <StyledTagText>4x Points</StyledTagText>
+                </StyledCardTag>
+              </StyledCardTagContainer>
+            </>
+          }
         </StyledDappWrapper>
-        <StyledCardTagContainer>
-          <StyledCardTag className='tag'>
-            <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
-            <StyledTagText>4x Points</StyledTagText>
-            {/*<StyledCardTagTip className='display'>ETH/Eigenlayer staking APR</StyledCardTagTip>*/}
-          </StyledCardTag>
-        </StyledCardTagContainer>
       </StyledTop>
       <StyledFooter>
         <StyledFooterLeft>
@@ -123,5 +190,7 @@ export default function DappCard({
         </StyledFooterRight>
       </StyledFooter>
     </Card>
+      <StyledCardTagTip { ...tip }>ETH/Eigenlayer staking APR</StyledCardTagTip>
+    </StyledCardContainer>
   );
 }

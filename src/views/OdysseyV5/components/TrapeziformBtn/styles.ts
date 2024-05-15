@@ -5,7 +5,6 @@ export const StyledContainer = styled.div<{
   $height: string;
 }>`
   position: relative;
-  font-family: Montserrat;
   display: flex;
   align-items: center;
   justify-content: center;

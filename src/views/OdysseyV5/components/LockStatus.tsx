@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const StyledContainer = styled.div<{ $status: string }>`
   display: flex;
   align-items: center;
-  padding: 6px 8px;
+  padding: 8px;
   font-family: Chakra Petch Light;
   font-size: 14px;
   font-style: normal;

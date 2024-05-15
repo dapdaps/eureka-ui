@@ -1,13 +1,16 @@
 import styled from 'styled-components';
 
 export const StyledTop = styled.div`
-  display: flex;
-  justify-content: space-between;
+`;
+
+export const StyledCardContainer = styled.div`
+  position: relative;
 `;
 
 export const StyledDappWrapper = styled.div`
   display: flex;
   gap: 16px;
+  align-items: flex-start;
 `;
 
 export const StyledDappIcon = styled.img`
@@ -15,19 +18,23 @@ export const StyledDappIcon = styled.img`
   height: 72px;
   border: 3px solid #202329;
   flex-shrink: 0;
-  border-radius: 12px;
+  border-radius: 22px;
 `;
 
 export const StyledDappTitleWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  flex-grow: 1;
 `;
 
 export const StyledDappTitle = styled.div`
-  color: #fff;
   font-family: Chakra Petch;
-  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 6px;
+  flex-grow: 1;
 `;
 
 export const StyledDappDesc = styled.div`
@@ -36,6 +43,11 @@ export const StyledDappDesc = styled.div`
   font-size: 16px;
   font-style: normal;
   line-height: normal;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 `;
 
 export const StyledFooter = styled.div`
@@ -43,15 +55,6 @@ export const StyledFooter = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-top: 15px;
-`;
-
-export const StyledExecution = styled.div`
-  color: #979abe;
-  font-family: Montserrat;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 300;
-  line-height: normal;
 `;
 
 export const StyledFooterActions = styled.div`
@@ -63,6 +66,8 @@ export const StyledFooterActions = styled.div`
 
 export const StyledCardTagContainer = styled.div`
   position: relative;
+  height: 100%;
+  flex-shrink: 0;
 `;
 
 export const StyledCardTag = styled.div`
@@ -70,12 +75,14 @@ export const StyledCardTag = styled.div`
   display: flex;
   align-items: center;
   color: #fff;
+  min-width: 80px;
+  max-width: 100px;
   //background: #DFFE00;
   background: #2A2A2A;
   padding: 1px 8px 1px 0;
-  min-width: 80px;
-  max-width: 100px;
   overflow: hidden;
+  position: relative;;
+  flex-shrink: 0;
 
   &:not(&:last-child) {
     margin-bottom: 8px;
@@ -87,7 +94,6 @@ export const StyledCardTag = styled.div`
     }
   }
 `;
-
 
 export const StyledTagIcon = styled.img`
   width: 16px;
@@ -118,16 +124,31 @@ export const StyledFooterRight = styled.div`
   color: #fff;
 `;
 
-export const StyledCardTagTip = styled.div`
+export const StyledCardTagTip = styled.div<{show: boolean, top: number, left?:number, right?: number}>`
   position: absolute;
-  left: 90px;
   font-style: italic;
   padding: 4px 10px;
-  display: none;
   border-radius: 8px;
   border: 1px solid #373A53;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
   background: #262836;
-  max-width: 300px;
+  max-width: 200px;
+  max-height: 100px;
+  width: fit-content;
+  overflow: auto;
   z-index: 999;
+  font-size: 12px;
+  color: #fff;
+  display: ${props => props.show ? 'block' : 'none'};
+  top: ${props => props.top ? `${props.top}px` : 0};
+  left: ${props => props?.left ? `${props.left}px` : 'unset'};
+  right: ${props => props?.right ? `${props.right}px` : 'unset'};
+`;
+
+export const StyledDappName = styled.div`
+  color: #fff;
+  font-size: 20px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 `;

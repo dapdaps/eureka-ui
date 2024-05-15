@@ -4,6 +4,7 @@ export const StyledContainer = styled.div`
   width: 100%;
   max-width: 1192px;
   margin: 0 auto;
+  position: relative;
 `;
 
 export const StyledTitle = styled.div`
@@ -21,13 +22,13 @@ export const StyledSubTitle = styled.div`
   font-size: 20px;
   margin-top: 12px;
   font-family: Chakra Petch Light;
-  margin-bottom: 52px;
+  margin-bottom: 42px;
 `;
 
 export const StlyedDesc = styled.div`
   display: flex;
   align-items: center;
-  justify-content: center;
+  padding-left: 72px;
   column-gap: 8px;
   margin-bottom: 18px;
 `;
@@ -96,3 +97,16 @@ export const StyledListItemIcon = styled.div<{ url?: string }>`
 `;
 
 export const StyledListItemText = styled.div``;
+
+export const StyledPlate = styled.div`
+  position: absolute;
+  top: -50px;
+  left: -40px;
+  z-index: 0;
+`;
+
+export const StyledAllContainer = styled.div`
+  width: 100%;
+  position: relative;
+  padding-top: 100px;
+`;

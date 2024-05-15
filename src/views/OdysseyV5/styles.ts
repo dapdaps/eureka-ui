@@ -46,7 +46,7 @@ export const StyledNavigator = styled.div`
       height: 12px;
       border-radius: 50%;
       background: #979ABE;
-      transition: all 0.3s linear;
+      transition: all 0.15s linear;
     }
     
     .title {

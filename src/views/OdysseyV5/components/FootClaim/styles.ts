@@ -6,27 +6,30 @@ export const StyledContainer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 7;
-  background-color: #000;
-  .content {
-    display: flex;
-    align-items: center;
-    width: 1266px;
-    margin: 0 auto -1px;
-    height: 120px;
-    padding: 0 26px 0 40px;
-    justify-content: space-between;
-    .txt {
-      color: #fff;
-      font-family: Montserrat;
-      font-size: 20px;
-      font-style: normal;
-      font-weight: 400;
-    }
-    .count {
-      color: #ebf479;
-      font-weight: 700;
-    }
-  }
+  background-color: ${() => `var(--odyssey-primary-color)`};
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  width: 100%;
+  max-width: 1244px;
+  margin: 0 auto;
+  padding: 21px 22px;
 `;
 
-export const StyledContent = styled.div``;
+export const StyledContent = styled.div`
+  display: flex;
+  align-items: center;
+  padding-bottom: 0;
+  justify-content: space-between;
+  .txt {
+    color: #000;
+    font-family: Chakra Petch;
+    font-size: 20px;
+    font-weight: 400;
+  }
+  .count {
+    color: #000;
+    font-style: italic;
+    font-family: Chakra Petch;
+    font-weight: 700;
+  }
+`;

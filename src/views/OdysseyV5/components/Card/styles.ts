@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div<{ $disabled: boolean }>`
   width: 380px;
-  min-height: 168px;
+  height: 168px;
   flex-shrink: 0;
   border-radius: 10px;
   border: 1px solid #1c1e2d;
@@ -13,6 +13,7 @@ export const StyledContainer = styled.div<{ $disabled: boolean }>`
   transition: 0.3s;
   position: relative;
   overflow: hidden;
+  z-index: 2;
 
   ${({ $disabled }) =>
     !$disabled
@@ -41,7 +42,6 @@ export const StyledBg = styled.div`
   height: 268px;
   flex-shrink: 0;
   position: absolute;
-  z-index: 1;
   top: -80%;
   left: 50%;
   transform: translateX(-50%);

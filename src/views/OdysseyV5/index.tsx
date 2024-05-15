@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import useUserInfo from '@/hooks/useUserInfo';
-import Blitz from "@/views/OdysseyV5/components/Blitz";
-import Mastery from "@/views/OdysseyV5/components/Mastery";
+import Blitz from '@/views/OdysseyV5/components/Blitz';
+import Mastery from '@/views/OdysseyV5/components/Mastery';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
@@ -16,8 +16,9 @@ import Trade from './components/Trade';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import { StyledContainer, StyledContent, StyledNavigator } from './styles';
-import { useDebounceFn } from "ahooks";
+import { useDebounceFn } from 'ahooks';
 import Claim from '@/views/OdysseyV5/components/Claim';
+import FootClaim from '@/views/OdysseyV5/components/FootClaim';
 
 export default function OdysseyV5() {
   const router = useRouter();
@@ -92,7 +93,7 @@ export default function OdysseyV5() {
     redirect_uri: `${window.location.origin}${window.location.pathname}?id=${id}`,
   });
 
-  const [lendingList, setLendingList] = useState<any>();
+  const [lendingList, setLendingList] = useState<any>([]);
 
   quests.swap.sort((a: any, b: any) => {
     return a.order - b.order;
@@ -120,6 +121,12 @@ export default function OdysseyV5() {
         <Lending list={lendingList} onRefreshDetail={queryDetail} />
         <Claim />
       </StyledContent>
+      <FootClaim
+        unclaimed={detail?.user?.unclaimed_reward}
+        totalReward={detail?.user?.total_reward}
+        unlocked={quests.unlockedAmount}
+        onRefreshDetail={queryDetail}
+        id={id} />
       <StyledNavigator>
         {
           navigatorList.map((nav) => (
