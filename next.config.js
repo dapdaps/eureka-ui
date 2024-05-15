@@ -89,6 +89,10 @@ const nextConfig = {
       source: '/pac/:path*',
       destination: api_url + '/pac/:path*',
     },
+    {
+      source: '/pool/fee-apr',
+      destination: 'https://ro81h8hq6b.execute-api.us-east-1.amazonaws.com/pool/fee-apr',
+    },
   ],
   images: {
     remotePatterns: [

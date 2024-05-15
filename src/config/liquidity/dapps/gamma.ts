@@ -280,7 +280,7 @@ const networks = {
       WBTC: '0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6',
       WETH: '0x7ceb23fd6bc0add59e62ac25578270cff1b9f619',
       WMATIC: '0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270',
-      USDC: '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
+      "USDC.e": '0x2791bca1f2de4661ed88a30c99a7a9449aa84174',
       USDT: '0xc2132d05d31c914a87c6611c10748aeb04b58e8f',
 
       'N WBTC-WETH-0': '0x4b9e26a02121a1c541403a611b542965bd4b68ce',

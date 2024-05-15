@@ -98,7 +98,8 @@ const networks = {
       token1: "STONE",
       decimals0: 18,
       decimals1: 18,
-      stakingAddress: '0xda3B0De674EbbC0C7e4511736BA64F9Fb4bF4434'
+      stakingAddress: '0xda3B0De674EbbC0C7e4511736BA64F9Fb4bF4434',
+      poolAddress: '0xa5101d48355d5d731c2bedd273aa0eb7ed55d0c7'
     }, {
       id: "W wUSDM-STONE",
       strategy: "Dynamic",
@@ -107,7 +108,8 @@ const networks = {
       token1: "STONE",
       decimals0: 18,
       decimals1: 18,
-      stakingAddress: '0xd24dcf41c944e12800d240915f17b31f8a845e7a'
+      stakingAddress: '0xd24dcf41c944e12800d240915f17b31f8a845e7a',
+      poolAddress: '0x1a6378383258a5d8ae40d383200ae29c53e85af9'
     }, {
       id: "N USDC-USDT",
       strategy: "Dynamic",
@@ -116,7 +118,8 @@ const networks = {
       token1: "USDT",
       decimals0: 6,
       decimals1: 6,
-      stakingAddress: '0xe651604d065200db4ceb552524f58fd6c5b65220'
+      stakingAddress: '0xe651604d065200db4ceb552524f58fd6c5b65220',
+      poolAddress: '0x462609c41ca27bd4240778c53c0908542b59b972'
     }, {
       id: "N USDC-wUSDM",
       strategy: "Dynamic",
@@ -125,7 +128,8 @@ const networks = {
       token1: "wUSDM",
       decimals0: 6,
       decimals1: 18,
-      stakingAddress: '0xbb91f8734a3947ac5f8846c3d3b6e2aab05a9ba3'
+      stakingAddress: '0xbb91f8734a3947ac5f8846c3d3b6e2aab05a9ba3',
+      poolAddress: '0xba411f7a5be3dff6663ee3fa1918fcdcdda53055'
     }, {
       id: "W WETH-USDC",
       strategy: "Dynamic",
@@ -134,7 +138,8 @@ const networks = {
       token1: "USDC",
       decimals0: 18,
       decimals1: 6,
-      stakingAddress: '0xea5f7c83724d74d5348280fce32c1efd7bf18ecd'
+      stakingAddress: '0xea5f7c83724d74d5348280fce32c1efd7bf18ecd',
+      poolAddress: '0x739ee4c59ed05fcaab772ee6cee1f39d360740be'
     }, {
       id: "N WETH-WBTC",
       strategy: "Dynamic",
@@ -143,7 +148,8 @@ const networks = {
       token1: "WBTC",
       decimals0: 18,
       decimals1: 8,
-      stakingAddress: '0x8848cfc66f2d24f97c4456931b44da2aa2a7664b'
+      stakingAddress: '0x8848cfc66f2d24f97c4456931b44da2aa2a7664b',
+      poolAddress: '0xfc9ffc1c6e0ebf7be3ce93245b309f4d3b593101'
     }, {
       id: "N WETH-MANTA",
       strategy: "Dynamic",
@@ -152,7 +158,8 @@ const networks = {
       token1: "MANTA",
       decimals0: 18,
       decimals1: 18,
-      stakingAddress: '0x232246aca060a711f79a956a2368dff28cb1da49'
+      stakingAddress: '0x232246aca060a711f79a956a2368dff28cb1da49',
+      poolAddress: '0x97433019b560c1c20055ba5edc8eef226f2d1be7'
     }, {
       id: "W MANTA-STONE",
       strategy: "Dynamic",
@@ -161,7 +168,8 @@ const networks = {
       token1: "STONE",
       decimals0: 18,
       decimals1: 18,
-      stakingAddress: '0xaf413a5e60d18ed3567d48d03ad305cf1761d645'
+      stakingAddress: '0xaf413a5e60d18ed3567d48d03ad305cf1761d645',
+      poolAddress: '0x665b3941a7801900d8a9cf0e6b5a3299d31afd7b'
     },],
     addresses: {
       WETH: "0x0dc808adce2099a9f62aa87d9670745aba741746",

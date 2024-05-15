@@ -70,7 +70,7 @@ const networks = {
         token1: 'AVAX',
         decimals0: 18,
         decimals1: 18,
-        poolAddress: '0x2d8d49fb07a43ceb793f3bc46af1c81c96e31a0e',
+        poolAddress: '0x9bdda0c0cd56d98a8165fddabdeb7f9aee2d993e',
       },
       {
         id: 'B WETH.e-AVAX',

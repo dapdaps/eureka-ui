@@ -120,7 +120,7 @@ const networks = {
         token1: 'STONE',
         "decimals0": 18,
         "decimals1": 18,
-        "poolAddress": "0x92930F343c8Fb1da3656D4908d2F59b543A54056",
+        "poolAddress": "0x5FE8B6Ed86703e66Ea727cD06C44ac5a6DF9076f",
       },
       {
         id: 'P WETH-MANTA',
