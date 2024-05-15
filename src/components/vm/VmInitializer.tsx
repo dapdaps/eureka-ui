@@ -34,7 +34,6 @@ import { useVmStore } from '@/stores/vm';
 import { recordWalletConnect, reset as resetSegment } from '@/utils/analytics';
 import { networkId, signInContractId } from '@/utils/config';
 import { KEYPOM_OPTIONS } from '@/utils/keypom-options';
-import useMobile from '@/hooks/useMobile';
 
 export default function VmInitializer() {
   const [signedIn, setSignedIn] = useState(false);
@@ -50,7 +49,6 @@ export default function VmInitializer() {
   const setAuthStore = useAuthStore((state) => state.set);
   const setVmStore = useVmStore((store) => store.set);
   const { requestAuthentication, saveCurrentUrl } = useSignInRedirect();
-  useMobile()
 
   useEffect(() => {
     initNear &&
