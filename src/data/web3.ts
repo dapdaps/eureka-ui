@@ -23,11 +23,11 @@ export const onboard = init({
   wallets: [injected, walletConnect, ledger],
   chains: [
     {
-      id: 59144,
+      id: 84532,
       token: 'ETH',
-      label: 'Linea Mainnet',
-      rpcUrl: 'https://rpc.linea.build',
-      icon: 'https://ipfs.near.social/ipfs/bafkreib57cxzdodeqejjh6y7psgb4hjvnt3wpjhq2hdpjcu2tynhwnw2iq',
+      label: 'Base Sepolia Testnet',
+      rpcUrl: 'https://sepolia.base.org',
+      icon: 'https://ipfs.near.social/ipfs/bafkreie5bhns75smpybjndl3utvzpaftrlrwqrblwg44ntzjsnit6lajzm',
       color: 'transparent',
     },
   ],
