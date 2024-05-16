@@ -15,7 +15,12 @@ export default function useTicks({ fee = 3000, token0, token1 }: any) {
   const [reverse, setReverse] = useState(false);
 
   useEffect(() => {
-    if (!token0 || !token1 || !fee || !provider) return;
+    if (!token0 || !token1 || !fee || !provider) {
+      setLowerTick(undefined);
+      setHighTick(undefined);
+      setCurrentTick(undefined);
+      return;
+    }
     const getTicks = async () => {
       try {
         setLoading(true);

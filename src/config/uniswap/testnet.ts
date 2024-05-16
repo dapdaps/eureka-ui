@@ -29,13 +29,21 @@ export default {
       isNative: true,
       address: 'native',
     },
-    usdc: {
+    '0x9571566D7ECb2fc899477bF295248a20FF4Adb61': {
       chainId: 84532,
-      name: 'USDC',
-      symbol: 'USDC',
-      icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+      name: 'USDT',
+      symbol: 'USDT',
+      icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
       decimals: 6,
-      address: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+      address: '0x9571566D7ECb2fc899477bF295248a20FF4Adb61',
+    },
+    '0x78F942F8F9110067c08183183c45903e5Dc2763A': {
+      chainId: 84532,
+      address: '0x78F942F8F9110067c08183183c45903e5Dc2763A',
+      name: 'Wrapped BTC',
+      symbol: 'WBTC',
+      icon: `https://assets.dapdap.net/images/${'0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4'.toLowerCase()}.png`,
+      decimals: 8,
     },
   },
 };

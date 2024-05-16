@@ -11,9 +11,9 @@ const StyledTips = styled.div`
   margin-top: 20px;
 `;
 const StyledInput = styled.input`
-  border-radius: 16px;
-  border: 1px solid #303030;
-  background: #1b1b1b;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  background: rgba(0, 0, 0, 0.5);
   padding: 8px 15px 11px;
   color: #fff;
   font-size: 20px;

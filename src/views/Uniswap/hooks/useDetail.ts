@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useTokens from './useTokens';
-
 import { getPosition, getPositionCollect, getTokenAmounts } from '../utils/getPosition';
 import { getPoolSlot } from '../utils/getPool';
 import { getTokenURI } from '../utils/getNft';
 import { getTokenAddress } from '../utils';
+import config from '@/config/uniswap';
 
 export default function useDetail(tokenId: string) {
   const [detail, setDetail] = useState<any>();
@@ -35,12 +35,12 @@ export default function useDetail(tokenId: string) {
       const _token1 = tokens[getTokenAddress(position.token1)];
 
       const [liquidityToken0, liquidityToken1] = await getTokenAmounts({
-        liquidity: position.liquidity,
+        liquidity: position.liquidity.toString(),
         tickLower: position.tickLower,
         tickUpper: position.tickUpper,
         currentTick: pool.tick,
-        token0: _token0,
-        token1: _token1,
+        token0: _token0.isNative ? { ..._token0, address: config.wethToken.address } : _token0,
+        token1: _token1.isNative ? { ..._token1, address: config.wethToken.address } : _token1,
       });
       const _detail: { [key: string]: any } = {
         fee: position.fee,

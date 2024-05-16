@@ -13,8 +13,6 @@
   --currency-empty-border-color: rgba(255, 255, 255, 0.8);
   --currency-empty-bg-color: rgba(255, 255, 255, 0.8);
   --currency-empty-text-color: #000;
-  --button-no-account-bg: #ff684b;
-  --button-no-account-text: #ffffff;
   --button-bg-color: linear-gradient(90deg, #0038ff 0%, #f2f6ff 100%);
   --button-text-color: #131313;
   --bridge-bg: linear-gradient(90deg, #0038ff 0%, #040c2b 100%);

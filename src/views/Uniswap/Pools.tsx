@@ -126,6 +126,7 @@ const Pools = () => {
   const { chainId } = useAccount();
   const [userHideClosedPositions, setUserHideClosedPositions] = useState<boolean>(false);
   const { positions, loading } = usePositions();
+
   const [openPositions, closedPositions] = positions?.reduce(
     (acc: any[], p: any) => {
       acc[new Big(p.liquidity || 0).eq(0) ? 1 : 0].push(p);
