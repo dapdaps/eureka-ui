@@ -130,10 +130,9 @@ const StyledInputPriceBox = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #303030;
-  border-radius: 16px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.5);
   padding: 12px 18px;
-  background-color: #1b1b1b;
 `;
 const StyledPrice = styled.div`
   display: flex;
@@ -216,7 +215,7 @@ const InputPriceBox = ({ type, tick, setTick, token0, token1, reverse, fee }: an
     let _tick = await getTickFromPrice({
       token0,
       token1,
-      price: price,
+      price,
       fee,
       type,
       provider,

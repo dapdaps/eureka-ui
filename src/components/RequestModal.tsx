@@ -30,10 +30,10 @@ const StyledText = styled.div`
 `;
 const StyledButton = styled.button`
   width: 414px;
-  height: 62px;
-  border-radius: 12px;
-  background: var(--primary-color);
-  color: var(--text-color);
+  height: 56px;
+  border-radius: 6px;
+  background: var(--button-bg-color);
+  color: var(--button-text-color);
   text-align: center;
   font-size: 16px;
   font-weight: 600;
@@ -47,13 +47,14 @@ const StyledButton = styled.button`
   }
 `;
 const StyledLink = styled.a`
-  color: var(--primary-color);
+  color: #777e94;
   text-align: center;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   margin-top: 16px;
+  text-decoration: underline;
 `;
 const StyledDesc = styled.div`
   color: #8e8e8e;
@@ -99,10 +100,10 @@ export default function RequestModal({ isOpen, data, onRequestClose }: any) {
       <StyledContent>
         {status === 0 && (
           <svg xmlns="http://www.w3.org/2000/svg" width="66" height="66" viewBox="0 0 66 66" fill="none">
-            <circle cx="33" cy="33" r="30" stroke="#5EE0FF" strokeWidth="5" strokeLinecap="round" />
+            <circle cx="33" cy="33" r="30" stroke="var(--primary-color)" strokeWidth="5" strokeLinecap="round" />
             <path
               d="M30.5 47C30.5 48.3807 31.6193 49.5 33 49.5C34.3807 49.5 35.5 48.3807 35.5 47L30.5 47ZM34.7678 16.2322C33.7915 15.2559 32.2085 15.2559 31.2322 16.2322L15.3223 32.1421C14.346 33.1184 14.346 34.7014 15.3223 35.6777C16.2986 36.654 17.8816 36.654 18.8579 35.6777L33 21.5355L47.1421 35.6777C48.1184 36.654 49.7014 36.654 50.6777 35.6777C51.654 34.7014 51.654 33.1184 50.6777 32.1421L34.7678 16.2322ZM35.5 47L35.5 18L30.5 18L30.5 47L35.5 47Z"
-              fill="#5EE0FF"
+              fill="var(--primary-color)"
             />
           </svg>
         )}

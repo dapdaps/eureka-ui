@@ -4,9 +4,9 @@ import styled from 'styled-components';
 
 const StyledContainer = styled.div`
   padding: 24px;
-  border: 1px solid #3d363d;
-  border-radius: 24px;
-  background-color: #131313;
+  border-radius: 8px;
+  border: 1px solid #313540;
+  background: #1e2026;
   @media (max-width: 768px) {
     width: 100vw;
     box-sizing: border-box;

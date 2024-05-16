@@ -29,5 +29,13 @@ export default {
       isNative: true,
       address: 'native',
     },
+    usdc: {
+      chainId: 84532,
+      name: 'USDC',
+      symbol: 'USDC',
+      icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+      decimals: 6,
+      address: '0x036CbD53842c5426634e7929541eC2318f3dCF7e',
+    },
   },
 };

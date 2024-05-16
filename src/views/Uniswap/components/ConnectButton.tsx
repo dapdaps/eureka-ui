@@ -8,10 +8,10 @@ import { useLayoutStore } from '@/stores/layout';
 import { ellipsAccount } from '@/utils/account';
 
 const StyledButton = styled.button`
-  width: 93px;
+  width: 117px;
   height: 36px;
-  border-radius: 12px;
-  background-color: #fff;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #0038ff 0%, #f2f6ff 100%);
   border: none;
   font-size: 16px;
   font-weight: 500;

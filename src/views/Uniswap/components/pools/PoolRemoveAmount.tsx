@@ -2,9 +2,8 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledWrap = styled.div`
-  border: 1px solid #303030;
-  background-color: #1b1b1b;
-  border-radius: 16px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.5);
   padding: 16px;
   margin-top: 14px;
   .title {
@@ -44,12 +43,14 @@ const StyledItem = styled.div`
   width: 82px;
   height: 32px;
   border-radius: 6px;
-  background-color: var(--primary-color-3);
+  background-color: #1e2026;
   font-size: 14px;
-  color: var(--primary-color);
+  color: #777e94;
   cursor: pointer;
+  border: 1px solid #313540;
   &.active {
-    border: 1px solid var(--primary-color);
+    border: 1px solid #777e94;
+    color: #ffffff;
   }
   @media (max-width: 768px) {
     width: 48px;
@@ -70,7 +71,7 @@ const StyledInputRange = styled.div`
   }
   input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background-color: var(--primary-color);
+    background-color: var(#fff);
     width: 20px;
     height: 20px;
     border-radius: 50%;
@@ -88,7 +89,7 @@ const PoolRemoveAmount = ({ percent, setPercent }: any) => {
           {PERCENTS.map((p) => {
             return (
               <StyledItem
-                className="hvc"
+                className={`hvc ${p === percent && 'active'}`}
                 key={p}
                 onClick={() => {
                   setPercent(p);

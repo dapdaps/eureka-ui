@@ -26,20 +26,19 @@ const StyledWrap = styled.div`
 const StyledSwitchButton = styled.div<{ on: boolean }>`
   display: flex;
   align-items: center;
-  width: 66px;
-  height: 36px;
-  border: 1px solid ${(props) => (props.on ? '#62DDFF' : '#303030')};
-  padding: 4px;
-  background-color: #1b1b1b;
+  width: 46px;
+  height: 26px;
+  padding: 2px;
+  background-color: ${(props) => (props.on ? 'var(--primary-color)' : '#000')};
   border-radius: 200px;
   cursor: pointer;
   justify-content: ${(props) => (props.on ? 'flex-end' : 'flex-start')};
   .roll {
     flex-shrink: 0;
-    width: 26px;
-    height: 26px;
+    width: 22px;
+    height: 22px;
     border-radius: 100px;
-    background-color: ${(props) => (props.on ? '#62DDFF' : '#4E4E4E')};
+    background-color: ${(props) => (props.on ? '#fff' : '#313540')};
   }
 `;
 const PoolRemoveCollect = ({ useWeth, setUseWeth }: any) => {

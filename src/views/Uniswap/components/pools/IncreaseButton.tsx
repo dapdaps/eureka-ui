@@ -12,12 +12,14 @@ const StyledWrapper = styled.div<{ disabled?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 62px;
-  border-radius: 16px;
-  background-color: var(--primary-color);
-  font-size: 18px;
-  color: var(--text-color);
-  font-weight: 600;
+  height: 56px;
+  background: var(--button-bg-color);
+  color: var(--button-text-color);
+  border-radius: 6px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
   margin-top: 15px;
   ${({ disabled }) => (disabled ? 'opacity: 0.3; cursor: not-allowed;' : 'cursor: pointer;')}
   flex-grow: 1;

@@ -1,25 +1,21 @@
 :root {
   --primary-color: rgba(0, 56, 255, 1);
-  --primary-color-1: rgba(0, 56, 255, 0.1);
-  --primary-color-3: rgba(0, 56, 255, 0.3);
-  --primary-color-5: rgba(0, 56, 255, 0.5);
-  --primary-color-8: rgba(0, 56, 255, 0.8);
-  --panel-bg-color: rgba(223, 228, 246, 0.1);
   --text-color: #fff;
   --exchange-icon-color: #fff;
-  --secondary-text-color: rgba(255,255,255, 0.6);
-  --input-bg-color: rgba(223, 228, 246, 0.1);
-  --input-active-border-color: rgba(62, 90, 191, 1);
+  --secondary-text-color: rgba(255, 255, 255, 0.6);
+  --input-bg-color: rgba(0, 0, 0, 0.5);
+  --input-active-border-color: #777e94;
   --input-text-color: #fff;
   --currency-border-color: #fff;
   --currency-bg-color: #ffffff;
-  --currency-text-color: #101010;
-  --currency-label-color: rgba(255,255,255, 0.8);
-  --currency-empty-border-color: rgba(255,255,255, 0.8);
-  --currency-empty-bg-color: rgba(255,255,255, 0.8);
+  --currency-text-color: #fff;
+  --currency-label-color: rgba(255, 255, 255, 0.8);
+  --currency-empty-border-color: rgba(255, 255, 255, 0.8);
+  --currency-empty-bg-color: rgba(255, 255, 255, 0.8);
   --currency-empty-text-color: #000;
   --button-no-account-bg: #ff684b;
   --button-no-account-text: #ffffff;
-  --button-bg-color: rgba(0, 56, 255, 1);
-  --button-text-color: #fff;
+  --button-bg-color: linear-gradient(90deg, #0038ff 0%, #f2f6ff 100%);
+  --button-text-color: #131313;
+  --bridge-bg: linear-gradient(90deg, #0038ff 0%, #040c2b 100%);
 }

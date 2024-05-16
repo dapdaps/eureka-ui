@@ -17,7 +17,11 @@ const nextConfig = {
   rewrites: async () => [
     {
       source: '/dapdap/:path*',
-      destination: 'https://api.dapdap.net/api/:path*',
+      destination: 'https://test-api.dapdap.net/api/:path*',
+    },
+    {
+      source: '/api/:path*',
+      destination: 'https://test-api.dapdap.net/api/:path*',
     },
   ],
 };

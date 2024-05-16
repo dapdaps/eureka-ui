@@ -6,9 +6,9 @@ import { tickToPrice, nearestUsableTick } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/sortTokens';
 
 const StyledWrap = styled.div<{ type?: string }>`
-  ${(props) => (props.type == '1' ? 'margin-top: 20px;' : 'border: 1px solid #3d363d;padding: 20px;margin-top: 15px;')}
-  border-radius: 24px;
-  background-color: #131313;
+  ${(props) => (props.type == '1' ? 'margin-top: 20px;' : 'border: 1px solid #313540;padding: 20px;margin-top: 15px;')}
+  border-radius: 8px;
+  background: #1e2026;
   .vchb {
     display: flex;
     align-items: center;

@@ -80,5 +80,6 @@ export default function usePositions() {
       if (provider && account && chainId === config.chainId) getPositions();
     }, 300);
   }, [provider, account, chainId]);
+
   return { loading, positions };
 }

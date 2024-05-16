@@ -71,10 +71,11 @@ const StyledLFWrap = styled.div`
 const StyledBase = styled.div`
   display: flex;
   flex-direction: column;
-  border: 1px solid #3d363d;
-  border-radius: 24px;
+  border-radius: 8px;
+  border: 1px solid #313540;
+  background: #1e2026;
   padding: 20px;
-  background-color: #131313;
+
   width: 100%;
   gap: 16px;
   .title {
@@ -240,11 +241,15 @@ const UnclaimedFees = ({
 
 const StyledSolidWrap = styled.div`
   height: 35px;
-  background-color: var(--primary-color);
-  border-radius: 12px;
+  background: var(--button-bg-color);
+  color: var(--button-text-color);
+  border-radius: 6px;
   padding: 0 12px;
   cursor: pointer;
-  color: var(--text-color)
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 
 export default memo(PoolBaseData);

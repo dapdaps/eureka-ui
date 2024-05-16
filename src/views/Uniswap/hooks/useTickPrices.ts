@@ -52,6 +52,7 @@ export default function useTicks({ fee = 3000, token0, token1 }: any) {
   }, [token0, token1, fee, provider]);
 
   const setCurrentTickFromPrice = async (price: any, _token0?: any, _token1?: any) => {
+    if (!price) return;
     // const TICK_SPACING: any = {
     //   100: 1,
     //   500: 10,

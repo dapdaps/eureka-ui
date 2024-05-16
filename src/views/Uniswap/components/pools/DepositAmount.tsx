@@ -29,6 +29,7 @@ const InputBoxs = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin-top: 10px;
 `;
 
 const DepositAmount = ({
@@ -295,10 +296,9 @@ const DepositAmount = ({
 };
 
 const StyledInputBox = styled.div`
-  border: 1px solid #303030;
-  border-radius: 16px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.5);
   padding: 14px;
-  background-color: #1b1b1b;
 `;
 const StyledTop = styled.div`
   display: flex;
@@ -320,11 +320,11 @@ const StyledTop = styled.div`
     margin: 0;
   }
   .token {
-    background-color: #131313;
-    border: 1px solid #242424;
+    border-radius: 6px;
+    border: 1px solid #313540;
+    background: #1e2026;
     padding: 6px;
     padding-right: 12px;
-    border-radius: 18px;
     img {
       width: 22px;
       height: 22px;
@@ -365,15 +365,19 @@ const StyledBottom = styled.div`
   }
 `;
 const NoToken = styled.button`
-  border-radius: 16px;
-  background: var(--primary-color);
+  border-radius: 6px;
+  border: 1px solid #313540;
+  background: #1e2026;
   width: 138px;
   height: 36px;
-  color: #131313;
+  color: #777e94;
   font-size: 16px;
   font-weight: 600;
   line-height: normal;
-  border: none;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 const InputBox = ({ token, value, setValue, balance, loading }: any) => {
   const prices = usePriceStore((store) => store.price);

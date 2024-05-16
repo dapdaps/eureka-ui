@@ -24,10 +24,10 @@ const StyledSelectedFeeArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid #3d363d;
   padding: 12px;
-  border-radius: 12px;
+  border-radius: 6px;
   min-height: 50px;
+  background-color: rgba(0, 0, 0, 0.5);
   .pendingTip {
     font-size: 12px;
     color: #8e8e8e;
@@ -131,9 +131,10 @@ const Fee = ({ fee, token0, token1, disabled, onSelectFee }: any) => {
 export default memo(Fee);
 
 const StyledCell = styled.div<{ isSelected: boolean; i: number }>`
-  border: ${({ isSelected }) => (isSelected ? '2px solid #5EE0FF' : '1px solid #3d363d')};
+  border: ${({ isSelected }) => (isSelected ? '1px solid #777E94' : '1px solid transparent')};
   padding: 8px 6px;
-  border-radius: 12px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.5);
   cursor: pointer;
   width: 25%;
   box-sizing: border-box;
@@ -191,10 +192,10 @@ const FeeCell = ({
         <span>{value}</span>
         {isSelected && (
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="10" cy="10" r="10" fill="#5EE0FF" />
+            <circle cx="10" cy="10" r="10" fill="var(--primary-color)" />
             <path
               d="M6 9.5L9 12.5L14.5 7"
-              stroke="#131313"
+              stroke="#fff"
               strokeWidth="2"
               strokeLinecap="round"
               stroke-linejoin="round"

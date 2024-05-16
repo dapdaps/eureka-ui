@@ -23,9 +23,9 @@ import { getTickFromPrice } from './utils/getTick';
 
 const StyledContainer = styled.div`
   width: 605px;
-  border-radius: 24px;
-  border: 1px solid #3d363d;
-  background-color: #131313;
+  border-radius: 8px;
+  border: 1px solid #313540;
+  background: #1e2026;
   margin-bottom: 20px;
 
   @media (max-width: 768px) {

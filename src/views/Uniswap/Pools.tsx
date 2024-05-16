@@ -39,12 +39,12 @@ const Positions = styled.div`
 const PositionButton = styled.button`
   width: 130px;
   height: 35px;
-  border-radius: 12px;
+  border-radius: 6px;
   border: none;
-  background-color: var(--input-active-border-color);
+  background: var(--button-bg-color);
   font-size: 14px;
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--button-text-color);
 `;
 const StyledPanel = styled(Panel)`
   min-height: 300px;
@@ -54,7 +54,6 @@ const PanelHeader = styled.div`
   padding: 20px;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #3d363d;
   align-items: center;
   @media (max-width: 768px) {
     padding: 18px 15px 15px;

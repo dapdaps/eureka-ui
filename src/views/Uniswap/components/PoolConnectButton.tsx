@@ -8,11 +8,11 @@ import chains from '@/config/chains';
 import config from '@/config/uniswap';
 
 const StyledButton = styled.button`
-  border-radius: 16px;
-  background: var(--primary-color);
+  border-radius: 6px;
+  background: var(--button-bg-color);
   width: 446px;
   height: 62px;
-  color: var(--text-color);
+  color: var(--button-text-color);
   font-size: 18px;
   font-weight: 600;
   line-height: normal;

@@ -11,8 +11,8 @@ const StyledEmptyBox = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 45px;
-  border-radius: 16px;
-  background-color: var(--primary-color);
+  border-radius: 6px;
+  background: var(--button-bg-color);
   padding: 5px 14px;
   font-size: 16px;
   color: #1b1b1b;
@@ -25,8 +25,9 @@ const StyledContentBox = styled.div`
   align-items: center;
   justify-content: space-between;
   height: 45px;
-  border-radius: 16px;
-  border: 1px solid #3d363d;
+  border-radius: 6px;
+  border: 1px solid #313540;
+  background: #1e2026;
   padding: 5px 14px;
   font-size: 16px;
   color: #fff;
