@@ -48,6 +48,16 @@ export default {
     rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
     tips: 'Explore, Trade, Earn - Go for Gold!',
   },
+  5: {
+    path: '/odyssey/home?id=5',
+    video: '',
+    chainsImg: '/images/odyssey/v5/chains.png',
+    chainsHeight: '56px',
+    reward: '6,900',
+    rewardDisableIcon: '/images/odyssey/v5/rewardDisable.svg',
+    rewardEnableIcon: '/images/odyssey/v5/rewardEnable.svg',
+    tips: 'Explore, Trade, Earn - Go for Gold!',
+  },
 } as {
   [key: string]: {
     path: string;
