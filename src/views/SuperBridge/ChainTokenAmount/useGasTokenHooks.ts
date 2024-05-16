@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import Big from 'Big.js'
+import Big from 'big.js'
 import { ethers, Contract, providers, utils } from "ethers";
 import { approve } from 'super-bridge-sdk'
 
@@ -11,7 +11,6 @@ import { abi } from './abi'
 import type { Chain, Token } from "@/types";
 
 const contractAddress = '0xe1dA6F46d757699f6D783a2876E01937a1eCa9a9'
-
 
 
 interface GasTokenParams {
