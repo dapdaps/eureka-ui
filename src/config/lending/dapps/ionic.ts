@@ -20,48 +20,56 @@ const networks = {
         decimals: 18,
         symbol: 'ionWETH',
         address: '0x71ef7EDa2Be775E5A7aa8afD02C45F059833e9d2', // cToken
+        loanToValue: 0.74,
         underlyingToken: mode['weth'],
       },
       '0x49950319aBE7CE5c3A6C90698381b45989C99b46': {
         decimals: 18,
         symbol: 'ionwrsETH',
         address: '0x49950319aBE7CE5c3A6C90698381b45989C99b46', // cToken
+        loanToValue: 0.63,
         underlyingToken: mode['wrseth'],
       },
       '0x59e710215d45F584f44c0FEe83DA6d43D762D857': {
         decimals: 18,
         symbol: 'ionezETH',
         address: '0x59e710215d45F584f44c0FEe83DA6d43D762D857', // cToken
+        loanToValue: 0.63,
         underlyingToken: mode['ezeth'],
       },
       '0xA0D844742B4abbbc43d8931a6Edb00C56325aA18': {
         decimals: 18,
         symbol: 'ionweETH.mode',
         address: '0xA0D844742B4abbbc43d8931a6Edb00C56325aA18', // cToken
+        loanToValue: 0.63,
         underlyingToken: mode['we-eth.mode'],
       },
       '0x94812F2eEa03A49869f95e1b5868C6f3206ee3D3': {
         decimals: 6,
         symbol: 'ionUSDT',
         address: '0x94812F2eEa03A49869f95e1b5868C6f3206ee3D3', // cToken
+        loanToValue: 0.8,
         underlyingToken: mode['usdt'],
       },
       '0x2BE717340023C9e14C1Bb12cb3ecBcfd3c3fB038': {
         decimals: 6,
         symbol: 'ionUSDC',
         address: '0x2BE717340023C9e14C1Bb12cb3ecBcfd3c3fB038', // cToken
+        loanToValue: 0.8,
         underlyingToken: mode['usdc'],
       },
       '0xd70254C3baD29504789714A7c69d60Ec1127375C': {
         decimals: 8,
         symbol: 'ionWBTC',
         address: '0xd70254C3baD29504789714A7c69d60Ec1127375C', // cToken
+        loanToValue: 0.74,
         underlyingToken: mode['wbtc'],
       },
       '0x959FA710CCBb22c7Ce1e59Da82A247e686629310': {
         decimals: 18,
         symbol: 'ionSTONE',
         address: '0x959FA710CCBb22c7Ce1e59Da82A247e686629310', // cToken
+        loanToValue: 0.63,
         underlyingToken: mode['stone'],
       },
     },
