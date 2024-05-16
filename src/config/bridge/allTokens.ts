@@ -46,6 +46,31 @@ const allTokens: { [key: number]: Token[] } = {
     324: Object.values(zkSync).map(mapFn),
     10: Object.values(optimism).map(mapFn),
     81457: Object.values(blast).map(mapFn),
+    11155111: [{
+        address: '0x0000000000000000000000000000000000000000',
+        isNative: true,
+        chainId: 11155111,
+        symbol: 'ETH',
+        decimals: 18,
+        name: 'Ether',
+        icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+      }, {
+        chainId: 11155111,
+        address: '0x5561e620f8Be78ae6D962f8Aaa50369302eB4afF',
+        decimals: 6,
+        symbol: 'USDT',
+        name: 'Tether USD',
+        icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i',
+      }],
+      421614: [{
+        address: '0x0000000000000000000000000000000000000000',
+        isNative: true,
+        chainId: 421614,
+        symbol: 'ETH',
+        decimals: 18,
+        name: 'Ether',
+        icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+      }]
 }
 
 export default allTokens

@@ -177,14 +177,4 @@ export default function ConfirmModal({
         }
         
     </Modal>
-
-    // if (isLoading) {
-    //     return <Container><Loading size={16} /> Bridge</Container>  
-    // }
-
-    // if (disabled) {
-    //     return <Container className="disbaled">{text}</Container>
-    // }
-
-    // return <Container onClick={onClick}>Confirm</Container>
 }

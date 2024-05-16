@@ -11,7 +11,7 @@ import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
+import { balanceFormated, percentFormated, addressFormated, errorFormated } from '@/utils/balance';
 
 import ChainTokenAmount from '../ChainTokenAmount';
 import PublicTitle from '../PublicTitle';
@@ -20,8 +20,10 @@ import SubmitBtn from '../SubmitBtn'
 import SettingModal from './SettingModal';
 import ConfirmModal from "../SubmitBtn/ConfirmModal";
 import ConfirmSuccessModal from "../SubmitBtn/ConfirmSuccessModal";
+import GasModal from '../ChainTokenAmount/GasModal';
 
 import useQuote from "../hooks/useQuote";
+import { useGasTokenHooks } from '../ChainTokenAmount/useGasTokenHooks'
 
 import type { Chain, Token } from '@/types';
 
@@ -105,6 +107,7 @@ export default function BirdgeAction(
   const [routeSortType, setRouteSortType] = useState(1)
   const [sendDisabled, setSendDisabled] = useState<boolean>(false)
   const [disableText, setDisableText] = useState<string>('Bridge')
+  const [gasModalShow, setGasModalShow] = useState<boolean>(false)
   const [isSending, setIsSending] = useState<boolean>(false)
   const inputValue = useDebounce(sendAmount, { wait: 500 });
 
@@ -122,6 +125,12 @@ export default function BirdgeAction(
     isNative: fromChain?.nativeCurrency.symbol === fromToken?.symbol,
     isPure: false,
   })
+
+  const { isSupported } = useGasTokenHooks({
+    fromChain,
+    fromToken,
+    toChain,
+})
 
   useEffect(() => {
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
@@ -220,6 +229,7 @@ export default function BirdgeAction(
       currentToken={fromToken}
       chainToken={allTokens}
       title="From"
+      needGas={false}
       amount={sendAmount}
       address={addressFormated(account as string)}
       chainList={chainList}
@@ -247,10 +257,14 @@ export default function BirdgeAction(
         setToToken(token)
       }}
       inputDisabled
+      needGas={isSupported}
       currentChain={toChain}
       currentToken={toToken}
       chainToken={allTokens}
       amount={reciveAmount}
+      onGasTrigger={() => {
+        setGasModalShow(true)
+      }}
       title="To"
       address={addressFormated(account as string)}
       chainList={chainList}
@@ -350,10 +364,10 @@ export default function BirdgeAction(
               setConfirmModalShow(false)
 
             } catch (err: any) {
-              console.log(err)
+              console.log(err.title, err.message, err)
               fail({
                 title: 'Transaction failed',
-                text: err.message || err.toString(),
+                text: errorFormated(err),
               })
             }
             setIsSending(false)
@@ -383,6 +397,19 @@ export default function BirdgeAction(
           setConfirmSuccessModalShow(false)
         }} />
     }
+
+    {
+          gasModalShow &&  <GasModal
+                fromChain={fromChain}
+                fromToken={fromToken}
+                toChain={toChain}
+                toAddress={ account as string }
+                onClick={() => {
+                    console.log(11)
+                }}
+                onClose={() => { setGasModalShow(false) }}
+            />
+        }
 
   </Container>
 }

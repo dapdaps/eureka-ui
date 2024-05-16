@@ -30,7 +30,33 @@ const Sep = styled.div`
   margin-top: 20px;
 `
 
+const chainListSort = [1, 42161, 10, 8453, 81457, 5000, 324, 59144, 169, 34443, 1088, 534352, 1101, 137, 56, 43114, 100]
+
 const chainList = Object.values(chainCofig)
+
+chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId))
+
+const TestChains: Chain[] = [
+  {
+    chainId: 11155111,
+    chainName: 'Sepolia',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
+    blockExplorers: 'https://sepolia.etherscan.io',
+    icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+  },
+  {
+    chainId: 421614,
+    chainName: 'Arbitrum Sepolia',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
+    blockExplorers: 'https://basescan.org',
+    icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+  },
+]
+
+chainList.unshift(TestChains[1])
+chainList.unshift(TestChains[0])
 
 const Bridge: NextPageWithLayout = () => {
   const router = useRouter();

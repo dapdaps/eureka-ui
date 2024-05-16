@@ -107,7 +107,9 @@ export default function RouteSelected(
         </TitleWapper>
         <Sep />
         {
-            routeSelected && <Route best={best} fast={fast} toToken={toToken} route={routeSelected} active/>
+            routeSelected && <Route onClick={() => {
+                setRouteModalShow(true)
+            }} best={best} fast={fast} toToken={toToken} route={routeSelected} active/>
         }
         {
             routeModalShow && <RouteModal 

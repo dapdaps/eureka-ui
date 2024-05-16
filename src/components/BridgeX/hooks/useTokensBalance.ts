@@ -7,8 +7,10 @@ import { multicall } from '@/utils/multicall';
 import multicallAddresses from '@/config/contract/multicall';
 
 const rpcs: any = {
-  1: 'https://eth-mainnet.public.blastapi.io',
+  11155111: 'https://ethereum-sepolia-rpc.publicnode.com',
+  421614: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'
 }
+
 
 export default function useTokensBalance(tokens: any) {
   const [loading, setLoading] = useState(false);
@@ -23,8 +25,10 @@ export default function useTokensBalance(tokens: any) {
       setLoading(true);
       const chainId = tokens[0].chainId
       setCurrentChainId(chainId)
-      const rpcUrl = chainId ? chains[chainId].rpcUrls[0] : '';
-      // const rpcUrl = chainId ? rpcs[chainId] : '';
+      const rpcUrl = chainId ? (rpcs[chainId] ? rpcs[chainId] : chains[chainId]?.rpcUrls[0]) : '';
+
+      console.log('rpcUrl:', rpcUrl)
+
       if (!rpcUrl) {
         throw 'No rpcUrl';
       }
@@ -43,6 +47,8 @@ export default function useTokensBalance(tokens: any) {
       }));
 
       const multicallAddress = multicallAddresses[tokens[0].chainId];
+
+      console.log('multicallAddress:', multicallAddress)
 
       const requests = [
         multicall({

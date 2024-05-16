@@ -42,7 +42,14 @@ export function addressFormated(address: string) {
   })
 }
 
-
 export function timeDurationFormated(time: number) {
   return Math.floor((Date.now() - time) / 1000 / 60) + ' min ago'
+}
+
+export function errorFormated(error: any) {
+  if (error.toString().indexOf('user rejected transaction')) {
+    return 'user rejected transaction'
+  }
+
+  return error.message
 }

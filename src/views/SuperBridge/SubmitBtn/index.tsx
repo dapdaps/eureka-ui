@@ -29,11 +29,11 @@ interface Props {
     text: string;
     fromChain: Chain | null;
     onClick: () => void;
-    
+    defaultText?: string;   
 }
 
 export default function SubmitBtn({
-    isLoading, disabled, onClick, text, fromChain
+    isLoading, disabled, onClick, text, fromChain, defaultText = 'Bridge'
 } : Props) {
     const { onConnect } = useConnectWallet();
     const { account, chainId, provider } = useAccount();
@@ -44,7 +44,7 @@ export default function SubmitBtn({
     }
 
     if (isLoading) {
-        return <Container><Loading size={16} /> Bridge</Container>  
+        return <Container><Loading size={16} /> {defaultText}</Container>  
     }
 
     if (disabled) {
@@ -57,5 +57,5 @@ export default function SubmitBtn({
          }}>Switch Chain</Container>
     }
 
-    return <Container onClick={onClick}>Bridge</Container>
+    return <Container onClick={onClick}>{ defaultText }</Container>
 }
