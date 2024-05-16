@@ -1,0 +1,83 @@
+import styled from 'styled-components';
+
+export const LoadingWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 145px;
+`;
+
+export const StyledContainer = styled.div`
+  position: relative;
+  width: 100%;
+  min-width: 786px;
+  height: 145px;
+  display: flex;
+  margin-top: 109px;
+  align-items: center;
+  background: rgba(22, 24, 29, 0.8);
+  backdrop-filter: blur(5px);
+
+  .corner {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+  }
+  .leftTop {
+    top: 0;
+    left: 0;
+    border-left: ${() => `1px solid var(--odyssey-primary-color)`};
+    border-top: ${() => `1px solid var(--odyssey-primary-color)`};
+  }
+  .rightTop {
+    top: 0;
+    right: 0;
+    border-right: ${() => `1px solid var(--odyssey-primary-color)`};
+    border-top: ${() => `1px solid var(--odyssey-primary-color)`};
+  }
+  .leftBottom {
+    bottom: 0;
+    left: 0;
+    border-left: ${() => `1px solid var(--odyssey-primary-color)`};
+    border-bottom: ${() => `1px solid var(--odyssey-primary-color)`};
+  }
+  .rightBottom {
+    bottom: 0;
+    right: 0;
+    border-right: ${() => `1px solid var(--odyssey-primary-color)`};
+    border-bottom: ${() => `1px solid var(--odyssey-primary-color)`};
+  }
+`;
+export const Item = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-right: 1px solid #fff;
+  &:last-child {
+    border-right: none;
+  }
+`;
+export const Title = styled.div`
+  color: #fff;
+  text-align: center;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  text-transform: capitalize;
+`;
+export const Value = styled.div`
+  color: #fff;
+  text-align: center;
+  font-size: 30px;
+  font-weight: 700;
+  text-transform: capitalize;
+`;
+
+// export const StyledContent = styled.div`
+//   padding-top: 36px;
+//   gap: 20px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// `;
