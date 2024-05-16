@@ -1,3 +1,4 @@
+import EarnedCard from "@/views/OdysseyV5/components/EarnedCard";
 import MasteryCard from "@/views/OdysseyV5/components/Mastery/Card";
 import {
   StyledContainer,
@@ -5,7 +6,6 @@ import {
   StyledEarnedList, StyledInner,
   StyledTitle
 } from "@/views/OdysseyV5/components/Mastery/styles";
-import EarnedCard from "@/views/OdysseyV5/components/EarnedCard";
 
 const MasteryData = [
   {
@@ -42,6 +42,7 @@ const MasteryData = [
           'Borrow 50% value in USDC (current borrow APR ~ -8.73%)',
         ],
         submit: 'Supply',
+        link: '/dapp/ironclad-finance',
       },
       {
         key: 2,
@@ -52,6 +53,7 @@ const MasteryData = [
           'Add ETH-USDC liquidity',
         ],
         submit: 'Trade',
+        link: '/dapp/kim-exchange',
       },
     ],
   },
@@ -88,6 +90,7 @@ const MasteryData = [
           'Borrow 50% value in USDC (current borrow APR ~ -8.73%)',
         ],
         submit: 'Supply',
+        link: '/dapp/ironclad-finance',
       },
       {
         key: 2,
@@ -97,6 +100,7 @@ const MasteryData = [
           'Supply ezETH (current APR ~26%)',
         ],
         submit: 'Supply',
+        link: '/dapp/sturdy',
       },
     ],
   },
@@ -139,6 +143,11 @@ const Mastery = () => {
                           paddingRight: 20,
                           flex: 1,
                       }}
+                        handleSubmit={() => {
+                          if (earn.link) {
+                            window.open(`${window.origin}${earn.link}`, '_blank');
+                          }
+                        }}
                       >
                         <StyledEarnedContent>
                           {

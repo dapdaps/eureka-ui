@@ -5,44 +5,49 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
-export default function useDetail(id: any) {
+export default function useDetail(id: any, option: { quests: any[], setExploredAmount: any, setQuests: any }) {
+  const { quests, setExploredAmount, setQuests } = option;
+
   const [detail, setDetail] = useState<any>();
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
-  const queryDetail = useCallback(async () => {
+  const queryDetail = useCallback(async (currentDappId?: any, currnetDappTimes?: any) => {
+    if (loading) {
+      return;
+    }
     try {
       setLoading(true);
       const result = await get('/api/compass/v4/detail', { id });
 
       if (result.code === 0 && result.data) {
-        // const _rules = JSON.parse(result.data.rule);
-        // let i = 0;
-        // _rules.forEach((rule: number) => {
-        //   if (result.data.user?.total_reward - rule > 0) {
-        //     i++;
-        //   }
-        // });
         setDetail({ ...result.data });
-        // setDetail({
-        //   rules: _rules,
-        //   total_transactions,
-        //   total_users,
-        //   trading_volume,
-        //   // available_rewards: result.data.user?.unclaimed_reward || 0,
-        //   // total_reward: result.data.user?.total_reward || 0,
-        //   // total_spins: result.data.user?.total_spins || 0,
-        //   synthesizedIndex: i,
-        // });
       } else {
         setDetail({});
+      }
+      if (currentDappId) {
+        try {
+          let _exploredAmount = 0;
+          const _quests = quests;
+          for (const arr of Object.values(_quests)) {
+            for (const it of arr) {
+              if (it.id === currentDappId) {
+                it.exploredAmount = currnetDappTimes;
+              }
+              _exploredAmount += it.exploredAmount;
+            }
+          }
+          setQuests(_quests);
+          setExploredAmount(_exploredAmount);
+        } catch (err) {
+        }
       }
       setLoading(false);
     } catch (err) {
       setLoading(false);
     }
-  }, []);
+  }, [quests, loading]);
 
   const { run } = useDebounceFn(
     () => {

@@ -1,14 +1,12 @@
-import { useState } from 'react';
-
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
+import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
 import DappCard from '../DappCard';
 import Title from '../Title';
 import { StyledContainer, StyledContent } from './styles';
-import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
-export default function Trade({ list, onRefreshDetail, loading }: any) {
+export default function Trade({ list, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
   return (
     <StyledContainer>
       <Title title="Trade" subtitle="Seamlessly interact with assets in Mode within dapdap" />
@@ -18,7 +16,15 @@ export default function Trade({ list, onRefreshDetail, loading }: any) {
             <Loading size={30} />
           </StyledLoadingWrapper> : (
             list?.length ? list.map((item: any) => (
-                <DappCard type="trade" key={item.id} {...item} onRefreshDetail={onRefreshDetail} />))
+                <DappCard
+                  type="trade"
+                  key={item.id}
+                  {...item}
+                  onRefreshDetail={onRefreshDetail}
+                  detailLoading={detailLoading}
+                  setDetailLoading={setDetailLoading}
+                />
+              ))
               : <EmptyContainer>No Data</EmptyContainer>
           )
         }

@@ -11,7 +11,16 @@ import {
 } from "@/views/OdysseyV5/components/EarnedCard/styles";
 
 const EarnedCard = (props: Props) => {
-  const { title, icon, iconBorder, reload } = props;
+  const {
+    title,
+    icon,
+    iconBorder,
+    reload,
+    handleSubmit = () => {
+    },
+    handleReload = () => {
+    },
+  } = props;
 
   return (
     <StyledContainer style={props.styles}>
@@ -27,13 +36,13 @@ const EarnedCard = (props: Props) => {
         {props.children}
       </StyledContent>
       <StyledFoot>
-        <StyledBtn>
+        <StyledBtn onClick={handleSubmit}>
           {props.submit}
           <Image src="/images/odyssey/v5/arrow.svg" alt="" width={19} height={12} />
         </StyledBtn>
         {
           reload && (
-            <StyledReloadBtn>
+            <StyledReloadBtn onClick={handleReload}>
               <Image src="/images/odyssey/v5/reload.svg" alt="" width={18} height={18} />
             </StyledReloadBtn>
           )
@@ -46,11 +55,14 @@ const EarnedCard = (props: Props) => {
 export default EarnedCard;
 
 interface Props {
-  children: React.ReactElement|React.ReactElement[];
+  children: React.ReactElement | React.ReactElement[];
   icon: string;
   iconBorder?: string;
   title: string;
   submit: string;
   reload?: boolean;
   styles?: React.CSSProperties;
+
+  handleSubmit?(): void;
+  handleReload?(): void;
 }

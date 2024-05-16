@@ -2,19 +2,20 @@ import Image from 'next/image';
 
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
-import ExporeItem from './ExporeItem';
-import {
-  StyledDesc,
-  StyledContainer,
-  StyledItemWrap,
-  StyledTitle,
-  StyledExploreContainer,
-  StyledExploreTitle,
-  StyledExploreDesc,
-} from './styles';
 import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
-export default function Explores({ list, userInfo, authConfig, onRefreshDetail, loading }: any) {
+import ExporeItem from './ExporeItem';
+import {
+  StyledContainer,
+  StyledDesc,
+  StyledExploreContainer,
+  StyledExploreDesc,
+  StyledExploreTitle,
+  StyledItemWrap,
+  StyledTitle,
+} from './styles';
+
+export default function Explores({ list, userInfo, authConfig, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
   return (
     <>
       <StyledContainer id="odysseySectionDiveIntoDAppDiversity">
@@ -38,6 +39,8 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail, 
                     authConfig={authConfig}
                     userInfo={userInfo}
                     onRefreshDetail={onRefreshDetail}
+                    detailLoading={detailLoading}
+                    setDetailLoading={setDetailLoading}
                   />
                 ))
                 : <EmptyContainer>No Data</EmptyContainer>)

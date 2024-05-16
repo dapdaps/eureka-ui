@@ -16,7 +16,7 @@ import Trade from './components/Trade';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import { StyledContainer, StyledContent, StyledNavigator } from './styles';
-import { useDebounceFn } from 'ahooks';
+import { useDebounceFn, useThrottleFn } from 'ahooks';
 import Claim from '@/views/OdysseyV5/components/Claim';
 import FootClaim from '@/views/OdysseyV5/components/FootClaim';
 
@@ -27,7 +27,7 @@ export default function OdysseyV5() {
   const navigatorList = [
     {
       key: 1,
-      title: 'Home',
+      title: 'DapDap X Mode',
       target: 'odysseySectionHome',
     },
     {
@@ -52,6 +52,8 @@ export default function OdysseyV5() {
     },
   ];
   const [navigatorActive, setNavigatorActive] = useState(navigatorList[0].key);
+  const [exploredAmount, setExploredAmount] = useState(0);
+  const [exploredAmountLoading, setExploredAmountLoading] = useState(false);
 
   const handleNavigation = (nav: any) => {
     const target = document.getElementById(nav.target);
@@ -69,7 +71,7 @@ export default function OdysseyV5() {
     for (const navigator of navigatorList) {
       const target = document.getElementById(navigator.target);
       if (!target) continue;
-      if (scrollTop >= target.offsetTop) _navigatorActive = navigator.key;
+      if (scrollTop >= target.offsetTop - 80) _navigatorActive = navigator.key;
     }
     setNavigatorActive(_navigatorActive);
   };
@@ -83,8 +85,13 @@ export default function OdysseyV5() {
   }, []);
 
   const authConfig = useAuthConfig();
-  const { detail, loading, queryDetail } = useDetail(id);
-  const { quests, loading: questsLoading } = useQuests(id);
+  const { quests, loading: questsLoading, setQuests } = useQuests(id);
+  const { detail, loading, queryDetail } = useDetail(id, {
+    quests,
+    setExploredAmount,
+    setQuests,
+  });
+  const { run: queryDetailThrottle } = useThrottleFn(queryDetail, { wait: 500 });
   const { userInfo, queryUserInfo } = useUserInfo();
   useAuthBind({
     onSuccess: () => {
@@ -100,11 +107,20 @@ export default function OdysseyV5() {
   });
 
   useEffect(() => {
-    if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
-    const orbit = quests.lending.find((item: any) => item.name === 'Orbit');
-    const pac = quests.lending.find((item: any) => item.name === 'Pac Finance');
-    const _list = [...quests.yield, orbit, ...quests.liquidity, pac, ...quests.staking];
+    // if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
+    // const orbit = quests.lending.find((item: any) => item.name === 'Orbit');
+    // const pac = quests.lending.find((item: any) => item.name === 'Pac Finance');
+    const _list = [...quests.yield, ...quests.liquidity, ...quests.staking, ...quests.lending];
     setLendingList(_list);
+  }, [quests]);
+  useEffect(() => {
+    let _exploredAmount = 0;
+    Object.values(quests).forEach((arr: any) => {
+      arr.forEach((it: any) => {
+        _exploredAmount += it.exploredAmount;
+      });
+    });
+    setExploredAmount(_exploredAmount);
   }, [quests]);
 
   return (
@@ -115,18 +131,43 @@ export default function OdysseyV5() {
         <Mastery />
         <Blitz />
 
-        <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail}
-                  loading={questsLoading} />
-        <Bridge list={quests.bridge} onRefreshDetail={queryDetail} loading={questsLoading} />
-        <Trade list={quests.swap} onRefreshDetail={queryDetail} loading={questsLoading} />
-        <Lending list={lendingList} onRefreshDetail={queryDetail} loading={questsLoading} />
+        <Explores
+          list={quests.social}
+          userInfo={userInfo}
+          authConfig={authConfig}
+          onRefreshDetail={queryDetailThrottle}
+          loading={questsLoading}
+          detailLoading={exploredAmountLoading}
+          setDetailLoading={setExploredAmountLoading}
+        />
+        <Bridge
+          list={quests.bridge}
+          onRefreshDetail={queryDetailThrottle}
+          loading={questsLoading}
+          detailLoading={exploredAmountLoading}
+          setDetailLoading={setExploredAmountLoading}
+        />
+        <Trade
+          list={quests.swap}
+          onRefreshDetail={queryDetailThrottle}
+          loading={questsLoading}
+          detailLoading={exploredAmountLoading}
+          setDetailLoading={setExploredAmountLoading}
+        />
+        <Lending
+          list={lendingList}
+          onRefreshDetail={queryDetailThrottle}
+          loading={questsLoading}
+          detailLoading={exploredAmountLoading}
+          setDetailLoading={setExploredAmountLoading}
+        />
         <Claim id={id} />
       </StyledContent>
       <FootClaim
         unclaimed={detail?.user?.unclaimed_reward}
         totalReward={detail?.user?.total_reward}
-        unlocked={quests.unlockedAmount}
-        onRefreshDetail={queryDetail}
+        explored={exploredAmount}
+        onRefreshDetail={queryDetailThrottle}
         id={id} />
       <StyledNavigator>
         {

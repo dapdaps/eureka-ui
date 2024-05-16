@@ -7,6 +7,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
 import { GOLD_QUESTS } from '../const';
+import Big from "big.js";
 
 const defaultQuests: any = {
   social: [],
@@ -36,11 +37,9 @@ export default function useQuests(id: any) {
       }
       const _result = cloneDeep(defaultQuests);
 
-      const _unlockedAmount = result.data.filter((item: any) => item.total_spins > 0).length;
-
-      _result.unlockedAmount = _unlockedAmount;
-
       result.data.forEach((item: any) => {
+        item.exploredAmount = new Big(item.total_spins).div(item.spins).toNumber() || 0;
+
         if (GOLD_QUESTS.includes(item.name)) {
           _result.golds.push(item);
         }
@@ -99,5 +98,5 @@ export default function useQuests(id: any) {
     run();
   }, [account]);
 
-  return { loading, quests: quests || defaultQuests };
+  return { loading, quests: quests || defaultQuests, setQuests };
 }

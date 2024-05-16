@@ -1,13 +1,17 @@
 import {
   StyledContainer,
-  StyledContent, StyledEarnedCardContent, StyledEarnedItem,
+  StyledContent,
+  StyledEarnedCardContent,
+  StyledEarnedItem,
   StyledFoot,
-  StyledHead, StyledInner,
+  StyledHead,
+  StyledInner,
   StyledTitle
-} from "@/views/OdysseyV5/components/Blitz/styles";
-import EarnedCard from "@/views/OdysseyV5/components/EarnedCard";
-import Image from "next/image";
-import React from "react";
+} from '@/views/OdysseyV5/components/Blitz/styles';
+import EarnedCard from '@/views/OdysseyV5/components/EarnedCard';
+import Image from 'next/image';
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const EarnList = [
   {
@@ -100,6 +104,66 @@ const EarnList = [
     ],
     submit: 'Supply',
   },
+  {
+    key: 4,
+    name: 'RENZO',
+    icon: '/images/odyssey/v5/mastery/temp/renzo.svg',
+    tips: 'Use Renzo to complete transactions on dapdap and get extra Orbs/Photons rewards',
+    earned: [
+      {
+        key: 1,
+        icon: '/images/odyssey/v5/mastery/temp/photons.svg',
+        name: 'Mode Photons',
+        type: 'rect',
+      },
+      {
+        key: 2,
+        icon: '/images/odyssey/v5/mastery/temp/mode.svg',
+        name: 'Mode Points',
+        type: 'bound',
+      },
+      {
+        key: 3,
+        icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
+        name: 'RENZO POINTS',
+        type: 'bound',
+      },
+    ],
+    conditions: [
+      'Transaction volume >100$',
+    ],
+    submit: 'Supply',
+  },
+  {
+    key: 5,
+    name: 'RENZO',
+    icon: '/images/odyssey/v5/mastery/temp/renzo.svg',
+    tips: 'Use Renzo to complete transactions on dapdap and get extra Orbs/Photons rewards',
+    earned: [
+      {
+        key: 1,
+        icon: '/images/odyssey/v5/mastery/temp/photons.svg',
+        name: 'Mode Photons',
+        type: 'rect',
+      },
+      {
+        key: 2,
+        icon: '/images/odyssey/v5/mastery/temp/mode.svg',
+        name: 'Mode Points',
+        type: 'bound',
+      },
+      {
+        key: 3,
+        icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
+        name: 'RENZO POINTS',
+        type: 'bound',
+      },
+    ],
+    conditions: [
+      'Transaction volume >100$',
+    ],
+    submit: 'Supply',
+  },
 ];
 
 const Blitz = () => {
@@ -118,50 +182,59 @@ const Blitz = () => {
           </StyledTitle>
         </StyledHead>
         <StyledContent>
-          {
-            EarnList.map((earn) => (
-              <EarnedCard
-                key={earn.key}
-                title={earn.name}
-                icon={earn.icon}
-                iconBorder="#DFFE00"
-                submit={earn.submit}
-                styles={{
-                  flex: 1,
-                }}
-                reload
-              >
-                <StyledEarnedCardContent>
-                  <div className="tips">
-                    {earn.tips}
-                  </div>
-                  <section className="section earned">
-                    <div className="title">NFT & Points earned:</div>
-                    <ul className="list">
-                      {
-                        earn.earned.map((item) => (
-                          <StyledEarnedItem className="item" key={item.key} type={item.type}>
-                            <Image src={item.icon} alt="" width={30} height={30} />
-                            {item.name.toUpperCase()}
-                          </StyledEarnedItem>
-                        ))
-                      }
-                    </ul>
-                  </section>
-                  <section className="section requirements">
-                    <div className="title">NFT & Points earned:</div>
-                    <ul className="list">
-                      {
-                        earn.conditions.map((condition, idx) => (
-                          <li className="item" key={idx}>{condition}</li>
-                        ))
-                      }
-                    </ul>
-                  </section>
-                </StyledEarnedCardContent>
-              </EarnedCard>
-            ))
-          }
+          <Swiper
+            slidesPerView={3}
+            spaceBetween={27}
+            centeredSlides={false}
+            modules={[]}
+            className="modeDappBlitzSwiper"
+          >
+            {
+              EarnList.map((earn) => (
+                <SwiperSlide key={earn.key}>
+                  <EarnedCard
+                    title={earn.name}
+                    icon={earn.icon}
+                    iconBorder="#DFFE00"
+                    submit={earn.submit}
+                    styles={{
+                      flex: 1,
+                    }}
+                    reload
+                  >
+                    <StyledEarnedCardContent>
+                      <div className="tips">
+                        {earn.tips}
+                      </div>
+                      <section className="section earned">
+                        <div className="title">NFT & Points earned:</div>
+                        <ul className="list">
+                          {
+                            earn.earned.map((item) => (
+                              <StyledEarnedItem className="item" key={item.key} type={item.type}>
+                                <Image src={item.icon} alt="" width={30} height={30} />
+                                {item.name.toUpperCase()}
+                              </StyledEarnedItem>
+                            ))
+                          }
+                        </ul>
+                      </section>
+                      <section className="section requirements">
+                        <div className="title">NFT & Points earned:</div>
+                        <ul className="list">
+                          {
+                            earn.conditions.map((condition, idx) => (
+                              <li className="item" key={idx}>{condition}</li>
+                            ))
+                          }
+                        </ul>
+                      </section>
+                    </StyledEarnedCardContent>
+                  </EarnedCard>
+                </SwiperSlide>
+              ))
+            }
+          </Swiper>
         </StyledContent>
         <StyledFoot>
           <div className="summary">
@@ -169,7 +242,7 @@ const Blitz = () => {
             <div className="value">&lt; 25,668 &gt;</div>
           </div>
           <div className="summary">
-            <div className="title">Your Mode Orbs</div>
+            <div className="title">Your Mode Photons</div>
             <div className="value">&lt; 25,668 &gt;</div>
           </div>
         </StyledFoot>

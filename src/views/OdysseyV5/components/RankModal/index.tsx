@@ -23,9 +23,9 @@ export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
   };
 
   const RankMap = new Map([
-    [1, '/images/odyssey/v4/rank1.svg'],
-    [2, '/images/odyssey/v4/rank2.svg'],
-    [3, '/images/odyssey/v4/rank3.svg'],
+    [1, '/images/odyssey/v5/rank1.svg'],
+    [2, '/images/odyssey/v5/rank2.svg'],
+    [3, '/images/odyssey/v5/rank3.svg'],
   ]);
 
   const formatRank = (myRank: any) => {
@@ -53,7 +53,7 @@ export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
           </span>
           <Image
             onClick={onClose}
-            src="/images/odyssey/v4/close.svg"
+            src="/images/odyssey/v5/close.svg"
             alt=""
             width={12}
             height={12}

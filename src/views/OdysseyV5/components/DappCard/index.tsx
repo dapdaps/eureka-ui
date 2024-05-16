@@ -49,13 +49,15 @@ export default function DappCard({
    total_spins,
    onRefreshDetail,
    type,
+   detailLoading,
+   setDetailLoading,
   }: any) {
   const [execution, setExecution] = useState(0);
 
   const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
-    onRefreshDetail();
-    setExecution(_times);
-  });
+    onRefreshDetail(id, _times);
+    setExecution(id);
+  }, detailLoading, setDetailLoading);
   const { open: dappOpen } = useDappOpen();
   const setLayout = useLayoutStore((store?: any) => store.set);
   const setCachedTab = useAllInOneTabCachedStore((store: any) => store.setCachedTab);
@@ -220,7 +222,7 @@ export default function DappCard({
               <RefreshButton
                 onClick={(ev: any) => {
                   ev.stopPropagation();
-                  if (!checking) handleRefresh();
+                  if (!checking && !detailLoading) handleRefresh();
                 }}
                 loading={checking}
               />

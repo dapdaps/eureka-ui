@@ -78,13 +78,13 @@ export const ModalHead = styled.div`
   background-repeat: no-repeat;
   background-size: contain;
   &.bg-particle {
-    background-image: url('/images/odyssey/v4/bg-particle.png');
+    background-image: url('/images/odyssey/v5/bg-particle.png');
   }
   &.bg-ring {
-    background-image: url('/images/odyssey/v4/bg-ring.png');
+    background-image: url('/images/odyssey/v5/bg-ring.png');
   }
   &.bg-ambient {
-    background-image: url('/images/odyssey/v4/bg-ambient.png');
+    background-image: url('/images/odyssey/v5/bg-ambient.png');
   }
   .smoke {
     position: absolute;

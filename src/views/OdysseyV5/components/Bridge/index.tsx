@@ -5,7 +5,7 @@ import Title from '../Title';
 import { StyledContainer, StyledContent } from './styles';
 import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
-export default function Bridge({ list, onRefreshDetail, loading }: any) {
+export default function Bridge({ list, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
   return (
     <StyledContainer>
       <Title
@@ -18,7 +18,15 @@ export default function Bridge({ list, onRefreshDetail, loading }: any) {
               <Loading size={30} />
             </StyledLoadingWrapper>
             : (list?.length > 0 ? list.map((item: any) => (
-                <DappCard type="bridge" key={item.id} {...item} onRefreshDetail={onRefreshDetail} />))
+                <DappCard
+                  type="bridge"
+                  key={item.id}
+                  {...item}
+                  onRefreshDetail={onRefreshDetail}
+                  detailLoading={detailLoading}
+                  setDetailLoading={setDetailLoading}
+                />
+              ))
               :
               <EmptyContainer>No Data</EmptyContainer>)
         }

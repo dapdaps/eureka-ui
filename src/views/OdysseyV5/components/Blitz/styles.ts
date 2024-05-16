@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 export const StyledContainer = styled.div`
   background: url("/images/odyssey/v5/blitz/bg.png") no-repeat center / cover;
@@ -11,11 +11,6 @@ export const StyledInner = styled.div`
 `;
 export const StyledHead = styled.div``;
 export const StyledContent = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
-  flex-wrap: wrap;
-  gap: 27px;
   margin-top: 88px;
 `;
 export const StyledFoot = styled.div`
@@ -67,6 +62,13 @@ export const StyledEarnedCardContent = styled.div`
   justify-content: flex-start;
   gap: 33px;
 
+  .modeDappBlitzSwiper {
+    width: 100%;
+    overflow: hidden;
+    .swiper-slide {
+      width: 430px;
+    }
+  }
   .tips {
     padding-bottom: 23px;
     font-size: 16px;

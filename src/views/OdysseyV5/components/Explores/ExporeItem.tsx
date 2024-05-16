@@ -19,13 +19,15 @@ const ExporeItem = ({
   spins = 0,
   total_spins = 0,
   times = 0,
-  onRefreshDetail
+  onRefreshDetail,
+  detailLoading,
+  setDetailLoading,
 }: any) => {
   const [finished, setFinished] = useState(false);
   const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins }, (_times: number) => {
     setFinished(true);
-    onRefreshDetail();
-  });
+    onRefreshDetail(id, _times);
+  }, detailLoading, setDetailLoading);
   const { handleReport } = useReport();
 
   const onItemClick = () => {
@@ -64,7 +66,7 @@ const ExporeItem = ({
         ) : category === 'password' ? (
           <CardInput
             onConfirm={(val: string) => {
-              if (!checking) handleRefresh(val);
+              if (!checking && !detailLoading) handleRefresh(val);
             }}
           />
         ) : (
@@ -73,7 +75,7 @@ const ExporeItem = ({
             <RefreshIcon
               onClick={(ev: any) => {
                 ev.stopPropagation();
-                if (checking) return;
+                if (checking || detailLoading) return;
 
                 if (category.startsWith('twitter')) {
                   const clicked = sessionStorage.getItem('_clicked_twitter_' + id);

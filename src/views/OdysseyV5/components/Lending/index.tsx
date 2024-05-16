@@ -3,9 +3,9 @@ import { StyledLoadingWrapper } from '@/styled/styles';
 
 import DappCard from '../DappCard';
 import Title from '../Title';
-import { StyledContainer, StyledContent, EmptyContainer } from './styles';
+import { EmptyContainer,StyledContainer, StyledContent } from './styles';
 
-export default function Lending({ list, onRefreshDetail, loading }: any) {
+export default function Lending({ list, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
 
   return (
     <StyledContainer>
@@ -19,7 +19,16 @@ export default function Lending({ list, onRefreshDetail, loading }: any) {
             <Loading size={30} />
           </StyledLoadingWrapper>
             : (
-              list?.length ? list.map((item: any) => (<DappCard type='lending' key={item.id} {...item} onRefreshDetail={onRefreshDetail} />))
+              list?.length ? list.map((item: any) => (
+                <DappCard
+                  type='lending'
+                  key={item.id}
+                  {...item}
+                  onRefreshDetail={onRefreshDetail}
+                  detailLoading={detailLoading}
+                  setDetailLoading={setDetailLoading}
+                />
+                ))
                 : <EmptyContainer>
                     No Data
                 </EmptyContainer>
