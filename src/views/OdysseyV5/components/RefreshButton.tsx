@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  width: 37px;
-  height: 37px;
-  border-radius: 6px;
+  width: 36px;
+  height: 36px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
@@ -12,6 +11,8 @@ const StyledContainer = styled.div`
   cursor: pointer;
   border-radius: 4px;
   border: 1px solid #3d405a;
+  position: relative;
+  z-index: 1;
 
   &:hover {
     border: 1px solid #000;

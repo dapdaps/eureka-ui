@@ -26,9 +26,10 @@ import {
   StyledFooterRight,
   StyledDappName,
   StyledCardTagTip,
-  StyledCardContainer
+  StyledCardContainer,
+  StyledTagIconDefault,
 } from './styles';
-import { ca } from 'date-fns/locale';
+import { PTS_MAP, RENZO_CONFIG } from '@/views/OdysseyV5/const';
 
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
@@ -37,18 +38,18 @@ const ICON_MAP: any = {
 };
 
 export default function DappCard({
-  id,
-  operators,
-  name,
-  category_name,
-  source,
-  description,
-  times,
-  spins,
-  total_spins,
-  onRefreshDetail,
-  key
-}: any) {
+   id,
+   operators,
+   name,
+   category_name,
+   source,
+   description,
+   times,
+   spins,
+   total_spins,
+   onRefreshDetail,
+   type,
+  }: any) {
   const [execution, setExecution] = useState(0);
 
   const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
@@ -58,15 +59,13 @@ export default function DappCard({
   const { open: dappOpen } = useDappOpen();
   const setLayout = useLayoutStore((store?: any) => store.set);
   const setCachedTab = useAllInOneTabCachedStore((store: any) => store.setCachedTab);
-
-  const tagNum = 1;
   const _defaultTip = {
     right: 0,
     top: 0,
     left: 0,
     show: false,
-    text: ''
-  }
+    text: '',
+  };
   const [tip, setTip] = useState<{
     right?: number,
     top: number,
@@ -80,7 +79,6 @@ export default function DappCard({
   };
 
   const onItemClick = () => {
-    console.log('onItemClick--', source, operators);
 
     if (operators?.length) {
       handleDappRedirect(operators[0]);
@@ -104,93 +102,136 @@ export default function DappCard({
     setExecution(total_spins / spins);
   }, [total_spins, spins]);
 
-  const showCardTip = (event: MouseEvent<HTMLDivElement>) => {
+  const showCardTip = (event: MouseEvent<HTMLDivElement>, text: string, tagId: string) => {
+    if (!isRenzo) {
+      return;
+    }
     event.preventDefault();
     event.stopPropagation();
     const cardEl = document.getElementById(`card${id}`)?.getBoundingClientRect();
-    const tagEl = document.getElementById(`tag${id}`)?.getBoundingClientRect();
+    const tagEl = document.getElementById(tagId)?.getBoundingClientRect();
     if (!cardEl || !tagEl) {
       return;
     }
-    const _position: { top:number, left?:number, right?: number } = {
+    const _position: { top: number, left?: number, right?: number } = {
       top: tagEl.top - cardEl.top,
-      left: tagEl.left - cardEl.left + tagEl?.width + 6
-    }
+      left: tagEl.left - cardEl.left + tagEl?.width + 6,
+    };
     const _maxWidth = window.innerWidth;
     if ((cardEl.left + cardEl.width + 200) >= _maxWidth) {
       _position.left = tagEl.left - cardEl.left - 6;
       _position.top = tagEl.top - cardEl.top + tagEl.height + 6;
     }
-    setTip({ ..._position, show: true });
-  }
-  //
-  // console.log(key);
+    setTip({ ..._position, show: true, text });
+  };
+
+  const closeCardTip = () => {
+    setTip(_defaultTip);
+  };
+
+  const isRenzo = name === 'Renzo';
+
+  const getTagText = () => {
+    if (['bridge', 'trade'].includes(type)) {
+      return '4x Points';
+    }
+    if (['lending'].includes(type)) {
+      return isRenzo ? 'Mode Points' : '2x Points';
+    }
+  };
+
+  const defaultTag = () => (
+    <StyledCardTag className="main">
+      <StyledTagIconDefault url={'/images/odyssey/v5/mode-icon.svg'} />
+      <StyledTagText>
+        {getTagText()}
+      </StyledTagText>
+    </StyledCardTag>
+  );
+
+  const names = () => (
+    <StyledDappName>{name}</StyledDappName>
+  )
+
+  const desc = () => (
+    <StyledDappDesc>{description}</StyledDappDesc>
+  )
 
   return (
     <StyledCardContainer id={`card${id}`}>
       <Card
-      onClick={onItemClick}
-      // disabled={times === 0 ? false : execution >= times}
-    >
-      <StyledTop>
-        <StyledDappWrapper>
-          <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+        onClick={onItemClick}
+        // disabled={times === 0 ? false : execution >= times}
+      >
+        <StyledTop>
           {
-            tagNum <= 1 ? <StyledDappTitleWrapper>
-              <StyledDappTitle>
-                <StyledDappName>{name}</StyledDappName>
+            PTS_MAP.has(name)
+              ? <StyledDappWrapper>
+                <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+                <StyledDappTitleWrapper>
+                  <StyledDappTitle>
+                    {names()}
+                  </StyledDappTitle>
+                    {desc()}
+                </StyledDappTitleWrapper>
                 <StyledCardTagContainer>
-                  <StyledCardTag id={`tag${id}`} onMouseEnter={showCardTip} onMouseLeave={() => setTip(_defaultTip)}>
-                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
-                  <StyledTagText>4x Points</StyledTagText>
-                </StyledCardTag>
+                  {defaultTag()}
+                  {
+                    isRenzo ?
+                      <StyledCardTag className="text" id="renzo-text"
+                                     onMouseEnter={(e) => showCardTip(e, RENZO_CONFIG.otherText, 'renzo-text')}
+                                     onMouseLeave={closeCardTip}>
+                        <StyledTagText>{RENZO_CONFIG.otherText}</StyledTagText>
+                      </StyledCardTag>
+                      : null
+                  }
+                  {
+                    PTS_MAP.has(name) ?
+                      <StyledCardTag id={isRenzo ? 'renzo-pts' : ''}
+                                     onMouseEnter={(e) => showCardTip(e, `${PTS_MAP.get(name)} PTS`, 'renzo-pts')}
+                                     onMouseLeave={closeCardTip}>
+                        <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+                        {isRenzo && <StyledTagIconDefault className="other" url={RENZO_CONFIG.otherIcon} />}
+                        <StyledTagText
+                          className={isRenzo ? 'renzo-text' : ''}>{`${PTS_MAP.get(name)} PTS`}</StyledTagText>
+                      </StyledCardTag>
+                      : null
+                  }
                 </StyledCardTagContainer>
-              </StyledDappTitle>
-              <StyledDappDesc>{description}</StyledDappDesc>
-            </StyledDappTitleWrapper> : <>
-              <StyledDappTitleWrapper>
-                <StyledDappTitle>
-                  <StyledDappName>{name}</StyledDappName>
-                </StyledDappTitle>
-                <StyledDappDesc>{description}</StyledDappDesc>
-              </StyledDappTitleWrapper>
-              <StyledCardTagContainer>
-                <StyledCardTag className='tag' onMouseEnter={(e) => showCardTip(e)}>
-                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
-                  <StyledTagText>4x Points</StyledTagText>
-                </StyledCardTag>
-                <StyledCardTag className='tag'>
-                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
-                  <StyledTagText>4x Points</StyledTagText>
-                </StyledCardTag>
-                <StyledCardTag className='tag'>
-                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo}></StyledTagIcon>
-                  <StyledTagText>4x Points</StyledTagText>
-                </StyledCardTag>
-              </StyledCardTagContainer>
-            </>
+              </StyledDappWrapper>
+              : <StyledDappWrapper>
+                <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+                <StyledDappTitleWrapper>
+                  <StyledDappTitle>
+                    <StyledDappName>{name}</StyledDappName>
+                    <StyledCardTagContainer>
+                      {defaultTag()}
+                    </StyledCardTagContainer>
+                  </StyledDappTitle>
+                    {desc()}
+                </StyledDappTitleWrapper>
+              </StyledDappWrapper>
           }
-        </StyledDappWrapper>
-      </StyledTop>
-      <StyledFooter>
-        <StyledFooterLeft>
-        <LockStatus status={total_spins > 0 || execution > 0} />
-        <StyledFooterActions>
-          <RefreshButton
-            onClick={(ev: any) => {
-              ev.stopPropagation();
-              if (!checking) handleRefresh();
-            }}
-            loading={checking}
-          />
-        </StyledFooterActions>
-        </StyledFooterLeft>
-        <StyledFooterRight className='card_active_arrow'>
-          <ArrowIcon />
-        </StyledFooterRight>
-      </StyledFooter>
-    </Card>
-      <StyledCardTagTip { ...tip }>ETH/Eigenlayer staking APR</StyledCardTagTip>
+        </StyledTop>
+        <StyledFooter>
+          <StyledFooterLeft>
+            <LockStatus status={total_spins > 0 || execution > 0} />
+            <StyledFooterActions>
+              <RefreshButton
+                onClick={(ev: any) => {
+                  ev.stopPropagation();
+                  if (!checking) handleRefresh();
+                }}
+                loading={checking}
+              />
+            </StyledFooterActions>
+          </StyledFooterLeft>
+          <StyledFooterRight className="card_active_arrow">
+            <ArrowIcon />
+          </StyledFooterRight>
+        </StyledFooter>
+      </Card>
+      <StyledCardTagTip {...tip}>{tip.text}</StyledCardTagTip>
     </StyledCardContainer>
   );
 }

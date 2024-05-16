@@ -18,7 +18,6 @@ const StyledTitle = styled.div`
 
 const StyledSubtitle = styled.div`
   color: #979abe;
-  font-family: Chakra Petch Light;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;

@@ -3,9 +3,10 @@ import { StyledLoadingWrapper } from '@/styled/styles';
 
 import DappCard from '../DappCard';
 import Title from '../Title';
-import { StyledContainer, StyledContent } from './styles';
+import { StyledContainer, StyledContent, EmptyContainer } from './styles';
 
-export default function Lending({ list, onRefreshDetail }: any) {
+export default function Lending({ list, onRefreshDetail, loading }: any) {
+
   return (
     <StyledContainer>
       <Title
@@ -13,13 +14,17 @@ export default function Lending({ list, onRefreshDetail }: any) {
         subtitle="Participate in lending, liquidity providing, and restaking to earn more rewards"
       />
       <StyledContent>
-        {list?.length ? (
-          list.map((item: any) => <DappCard key={item.id} {...item} onRefreshDetail={onRefreshDetail} />)
-        ) : (
-          <StyledLoadingWrapper $h="100px">
+        {
+          loading ? <StyledLoadingWrapper $h="100px">
             <Loading size={30} />
           </StyledLoadingWrapper>
-        )}
+            : (
+              list?.length ? list.map((item: any) => (<DappCard type='lending' key={item.id} {...item} onRefreshDetail={onRefreshDetail} />))
+                : <EmptyContainer>
+                    No Data
+                </EmptyContainer>
+            )
+        }
       </StyledContent>
     </StyledContainer>
   );

@@ -84,7 +84,7 @@ export default function OdysseyV5() {
 
   const authConfig = useAuthConfig();
   const { detail, loading, queryDetail } = useDetail(id);
-  const { quests } = useQuests(id);
+  const { quests, loading: questsLoading } = useQuests(id);
   const { userInfo, queryUserInfo } = useUserInfo();
   useAuthBind({
     onSuccess: () => {
@@ -115,11 +115,12 @@ export default function OdysseyV5() {
         <Mastery />
         <Blitz />
 
-        <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
-        <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
-        <Trade list={quests.swap} onRefreshDetail={queryDetail} />
-        <Lending list={lendingList} onRefreshDetail={queryDetail} />
-        <Claim />
+        <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail}
+                  loading={questsLoading} />
+        <Bridge list={quests.bridge} onRefreshDetail={queryDetail} loading={questsLoading} />
+        <Trade list={quests.swap} onRefreshDetail={queryDetail} loading={questsLoading} />
+        <Lending list={lendingList} onRefreshDetail={queryDetail} loading={questsLoading} />
+        <Claim id={id} />
       </StyledContent>
       <FootClaim
         unclaimed={detail?.user?.unclaimed_reward}

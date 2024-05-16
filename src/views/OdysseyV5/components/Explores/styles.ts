@@ -38,7 +38,7 @@ export const StyledDesc = styled.div`
   font-size: 20px;
   margin-bottom: 80px;
   line-height: 1;
-  font-family: Chakra Petch Light;
+  font-weight: 300;
 `;
 
 export const StyledExploreContainer = styled.div`
@@ -62,9 +62,11 @@ export const StyledExploreTitle = styled.div`
 `;
 
 export const StyledExploreDesc = styled.div`
-  font-family: Chakra Petch Light;
   color: #fff;
   font-size: 18px;
+  position: relative;
+  z-index: 1;
+  font-weight: 300;
 `;
 
 export const Btns = styled.div`
@@ -108,15 +110,15 @@ export const StyledItemRight = styled.div`
   gap: 15px;
   align-items: center;
   position: relative;
+  z-index: 1;
 `;
 
 export const Unexplored = styled.div`
   color: #979abe;
   text-align: center;
-  font-family: Chakra Petch Light;
   font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: normal;
 `;
 
@@ -131,5 +133,6 @@ export const StyledItemShadow = styled.div`
     top: 50%;
     right: -6px;
     transform: translateY(-50%);
+    z-index: 0;
   }
 `;

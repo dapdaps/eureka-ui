@@ -6,19 +6,22 @@ import { StyledLoadingWrapper } from '@/styled/styles';
 import DappCard from '../DappCard';
 import Title from '../Title';
 import { StyledContainer, StyledContent } from './styles';
+import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
-export default function Trade({ list, onRefreshDetail }: any) {
+export default function Trade({ list, onRefreshDetail, loading }: any) {
   return (
     <StyledContainer>
-      <Title title="Trade" subtitle="Execute a flawless trade in Blast" />
+      <Title title="Trade" subtitle="Seamlessly interact with assets in Mode within dapdap" />
       <StyledContent>
-        {list?.length ? (
-          list.map((item: any) => <DappCard key={item.id} {...item} onRefreshDetail={onRefreshDetail} />)
-        ) : (
-          <StyledLoadingWrapper $h="100px">
+        {
+          loading ? <StyledLoadingWrapper $h="100px">
             <Loading size={30} />
-          </StyledLoadingWrapper>
-        )}
+          </StyledLoadingWrapper> : (
+            list?.length ? list.map((item: any) => (
+                <DappCard type="trade" key={item.id} {...item} onRefreshDetail={onRefreshDetail} />))
+              : <EmptyContainer>No Data</EmptyContainer>
+          )
+        }
       </StyledContent>
     </StyledContainer>
   );

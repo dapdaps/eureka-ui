@@ -39,7 +39,7 @@ export const StyledDappTitle = styled.div`
 
 export const StyledDappDesc = styled.div`
   color: #979abe;
-  font-family: Chakra Petch Light;
+  font-weight: 300;
   font-size: 16px;
   font-style: normal;
   line-height: normal;
@@ -68,6 +68,10 @@ export const StyledCardTagContainer = styled.div`
   position: relative;
   height: 100%;
   flex-shrink: 0;
+  top: -12px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 export const StyledCardTag = styled.div`
@@ -75,14 +79,18 @@ export const StyledCardTag = styled.div`
   display: flex;
   align-items: center;
   color: #fff;
-  min-width: 80px;
   max-width: 100px;
-  //background: #DFFE00;
+  height: 20px;
   background: #2A2A2A;
-  padding: 1px 8px 1px 0;
-  overflow: hidden;
-  position: relative;;
-  flex-shrink: 0;
+  padding-right: 7px;
+  &.main {
+    background: #DFFE00;
+    color: #000;
+    font-style: italic;
+  }
+  &.text {
+    padding: 0 6px;
+  }
 
   &:not(&:last-child) {
     margin-bottom: 8px;
@@ -101,6 +109,13 @@ export const StyledTagIcon = styled.img`
   border-radius: 50%;
   border: 2px solid #343434;
   position: relative;
+  object-fit: contain;
+  flex-shrink: 0;
+  box-sizing: content-box;
+  left: -2px;
+  &:not(&:first-child) {
+    left: -7px;
+  }
 `;
 
 export const StyledTagText = styled.div`
@@ -109,8 +124,12 @@ export const StyledTagText = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 100%;
- padding-left: 4px;
+  flex-grow: 1;
+  line-height: 1;
+  &.renzo-text {
+    position: relative;
+    left: -4px;
+  }
 `;
 
 export const StyledFooterLeft = styled.div`
@@ -132,13 +151,11 @@ export const StyledCardTagTip = styled.div<{show: boolean, top: number, left?:nu
   border: 1px solid #373A53;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25);
   background: #262836;
-  max-width: 200px;
-  max-height: 100px;
-  width: fit-content;
-  overflow: auto;
+  max-width: 500px;
   z-index: 999;
   font-size: 12px;
   color: #fff;
+  white-space: nowrap;
   display: ${props => props.show ? 'block' : 'none'};
   top: ${props => props.top ? `${props.top}px` : 0};
   left: ${props => props?.left ? `${props.left}px` : 'unset'};
@@ -151,4 +168,20 @@ export const StyledDappName = styled.div`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+`;
+
+export const StyledTagIconDefault = styled.div<{url: string}>`
+  background: ${props => props.url ? `url(${props.url}) center no-repeat` : 'transparent'};
+  width: 16px;
+  height: 16px;
+  border: 2px solid #343434;
+  border-radius: 50%;
+  position: relative;
+  box-sizing: content-box;
+  left: -2px;
+  flex-shrink: 0;
+  &.other {
+    background-color: #fff;
+    left: -7px;
+  }
 `;

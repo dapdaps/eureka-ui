@@ -15,14 +15,28 @@ import {
   StyledAllContainer
 } from './styles';
 import Image from 'next/image';
+import useLeaderBoard from '@/views/OdysseyV5/hooks/useLeaderBoard';
+import { StyledLoadingWrapper } from '@/styled/styles';
+import Loading from '@/components/Icons/Loading';
+import { useUserStore } from '@/stores/user';
+import { ellipsAccount } from '@/utils/account';
+import { simplifyNum } from '@/utils/format-number';
 
-const iconList = [
-  'champion.svg',
-  'runner-up.svg',
-  'third-runner-up.svg',
-];
+const iconList =  new Map([
+    [1, 'champion.svg'],
+    [2, 'runner-up.svg'],
+    [3, 'third-runner-up.svg']
+  ]);
 
-const Claim = () => {
+
+const Claim = (props: { id: any }) => {
+  const { ranks, loading } = useLeaderBoard(props.id);
+  const userInfo = useUserStore((store: any) => store.user);
+  const formatRank = (myRank: any) => {
+    if (isNaN(Number(myRank))) return '-';
+    if (Number(myRank) === 0) return '-';
+    return myRank;
+  };
 
   return (
     <StyledAllContainer id='odysseySectionClimbToLeaderboard'>
@@ -49,32 +63,39 @@ const Claim = () => {
             <StyledListItem>Trading Volume</StyledListItem>
           </StyledList>
           {
-            [...new Array(10).map((i, idx) => idx)].map((item, idx) => (
+            !loading && ranks?.data?.length ?
+              ranks.data.map((item: any, idx: number) => (
               <StyledList key={idx}>
                 <StyledListItem>
-                  <StyledListItemIcon url={`/images/odyssey/v5/${iconList[idx]}` ?? ''} />
-                  <StyledListItemText>{idx + 1}</StyledListItemText>
+                  <StyledListItemIcon src={iconList.get(item.rank) ? `/images/odyssey/v5/${iconList.get(item.rank)}` : ''} />
+                  <StyledListItemText>{item.rank}</StyledListItemText>
                 </StyledListItem>
                 <StyledListItem>
-                  <StyledListItemIcon />
-                  <StyledListItemText>0x3bcb...4e26</StyledListItemText>
+                  <StyledListItemIcon src={item?.account?.avatar}/>
+                  <StyledListItemText>{ellipsAccount(item.account.address)}</StyledListItemText>
                 </StyledListItem>
-                <StyledListItem>$21.5K</StyledListItem>
+                <StyledListItem>${simplifyNum(item.trading_volume)}</StyledListItem>
               </StyledList>
-            ))
+            )) : <StyledLoadingWrapper $h="100px">
+                <Loading size={30} />
+              </StyledLoadingWrapper>
           }
         </StyledListContainer>
-        <StyledText>Your current rank</StyledText>
-        <StyledListContainer>
-          <StyledList one={true}>
-            <StyledListItem>#2,345</StyledListItem>
-            <StyledListItem>
-              <StyledListItemIcon />
-              <StyledListItemText>0x3bcb...4e26</StyledListItemText>
-            </StyledListItem>
-            <StyledListItem>$535</StyledListItem>
-          </StyledList>
-        </StyledListContainer>
+        {
+          ranks?.user && (<>
+            <StyledText>Your current rank</StyledText>
+            <StyledListContainer>
+              <StyledList one={true}>
+                <StyledListItem># {formatRank(ranks?.user?.rank)}</StyledListItem>
+                <StyledListItem>
+                  <StyledListItemIcon src={userInfo?.avatar}/>
+                  <StyledListItemText>{ellipsAccount(userInfo?.address)}</StyledListItemText>
+                </StyledListItem>
+                <StyledListItem>${simplifyNum(ranks?.user?.trading_volume)}</StyledListItem>
+              </StyledList>
+            </StyledListContainer>
+          </>)
+        }
       </StyledContainer>
     </StyledAllContainer>
   );

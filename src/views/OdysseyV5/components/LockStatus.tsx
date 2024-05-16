@@ -4,7 +4,6 @@ const StyledContainer = styled.div<{ $status: string }>`
   display: flex;
   align-items: center;
   padding: 8px;
-  font-family: Chakra Petch Light;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;

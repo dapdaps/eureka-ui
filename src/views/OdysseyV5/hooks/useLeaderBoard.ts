@@ -9,7 +9,7 @@ export default function useLeaderBoard(id: any) {
   const fetchData = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get('/api/compass/v4/quest/leaderboard', { quest_id: id });
+      const result = await get('/api/compass/leaderboard', { id });
 
       if (result.code === 0 && result.data) {
         setRanks({ ...result.data });

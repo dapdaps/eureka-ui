@@ -11,7 +11,7 @@ export default function FootClaim({ unclaimed, totalReward, unlocked, onRefreshD
     <StyledContainer>
       <StyledContent>
         <div className="txt">
-          You have explored <span className="count">{unlocked}</span> times on Blast by DapDap,
+          You have explored <span className="count">{unlocked}</span> times on Mode by DapDap,
           <span className="count"> {totalReward - unclaimed} </span> PTS has been claimed.
         </div>
 

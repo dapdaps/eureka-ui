@@ -10,6 +10,8 @@ const StyledContainer = styled.div`
   background: #171717;
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 1;
 `;
 
 const StyledInput = styled.input`

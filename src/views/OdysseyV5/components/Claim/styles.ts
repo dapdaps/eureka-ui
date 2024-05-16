@@ -21,8 +21,8 @@ export const StyledSubTitle = styled.div`
   text-align: center;
   font-size: 20px;
   margin-top: 12px;
-  font-family: Chakra Petch Light;
   margin-bottom: 42px;
+  font-weight: 300;
 `;
 
 export const StlyedDesc = styled.div`
@@ -39,7 +39,7 @@ export const StyledDescIcon =  styled.div`
 export const StyledDescText =  styled.div`
   font-size: 16px;
   color: #979ABE;
-  font-family: Chakra Petch Light;
+  font-weight: 400;
 `;
 
 
@@ -70,7 +70,7 @@ export const StyledList = styled.div<{ one?: boolean }>`
 
 export const StyledListItem = styled.div`
   width: 100%;
-  font-family: Chakra Petch Light;
+  font-weight: 400;
   display: flex;
   align-items: center;
   column-gap: 16px;
@@ -82,18 +82,17 @@ export const StyledListItem = styled.div`
 
 export const StyledText = styled.div`
   font-size: 20px;
-  font-family: Chakra Petch Light;
+  font-weight: 300;
   color: #fff;
   margin: 18px 0;
   padding-left: 10px;
 `;
 
-export const StyledListItemIcon = styled.div<{ url?: string }>`
+export const StyledListItemIcon = styled.img`
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background-size: contain;
-  background: ${props => props.url ? `url(${props.url}) center no-repeat` : 'conic-gradient(from 180deg at 50% 50%, #00D1FF 0deg, #FF008A 360deg);'}
+  object-fit: contain;
 `;
 
 export const StyledListItemText = styled.div``;
