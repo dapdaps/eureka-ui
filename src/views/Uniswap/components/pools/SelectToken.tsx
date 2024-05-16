@@ -12,7 +12,7 @@ const StyledEmptyBox = styled.div`
   justify-content: space-between;
   height: 45px;
   border-radius: 16px;
-  background-color: #5ee0ff;
+  background-color: var(--primary-color);
   padding: 5px 14px;
   font-size: 16px;
   color: #1b1b1b;

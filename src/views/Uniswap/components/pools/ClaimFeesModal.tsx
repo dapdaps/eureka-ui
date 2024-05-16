@@ -76,9 +76,9 @@ const StyledCollectButton = styled.div<{ disabled?: boolean }>`
   gap: 6px;
   height: 62px;
   border-radius: 16px;
-  background-color: #62ddff;
+  background-color: var(--primary-color);
   font-size: 18px;
-  color: #1b1b1b;
+  color: var(--text-color);
   font-weight: 600;
   margin-top: 15px;
   ${({ disabled }) => (disabled ? 'opacity: 0.6; cursor: not-allowed;' : 'cursor: pointer;')}

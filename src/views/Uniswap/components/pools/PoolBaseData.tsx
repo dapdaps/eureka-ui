@@ -240,11 +240,11 @@ const UnclaimedFees = ({
 
 const StyledSolidWrap = styled.div`
   height: 35px;
-  background-color: #5ee0ff;
+  background-color: var(--primary-color);
   border-radius: 12px;
   padding: 0 12px;
   cursor: pointer;
-  color: #131313;
+  color: var(--text-color)
 `;
 
 export default memo(PoolBaseData);

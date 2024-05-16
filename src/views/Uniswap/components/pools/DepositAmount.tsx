@@ -366,7 +366,7 @@ const StyledBottom = styled.div`
 `;
 const NoToken = styled.button`
   border-radius: 16px;
-  background: #5ee0ff;
+  background: var(--primary-color);
   width: 138px;
   height: 36px;
   color: #131313;

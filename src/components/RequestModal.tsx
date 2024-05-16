@@ -32,8 +32,8 @@ const StyledButton = styled.button`
   width: 414px;
   height: 62px;
   border-radius: 12px;
-  background: #5ee0ff;
-  color: #131313;
+  background: var(--primary-color);
+  color: var(--text-color);
   text-align: center;
   font-size: 16px;
   font-weight: 600;
@@ -47,7 +47,7 @@ const StyledButton = styled.button`
   }
 `;
 const StyledLink = styled.a`
-  color: #5ee0ff;
+  color: var(--primary-color);
   text-align: center;
   font-size: 14px;
   font-style: normal;
@@ -65,16 +65,16 @@ const StyledDesc = styled.div`
   margin-top: 30px;
 `;
 const LoadingWrapper = styled.div`
-  color: #5ee0ff;
+  color: var(--primary-color);
 `;
 const ErrorIcon = styled.div`
-  color: #5ee0ff;
+  color: var(--primary-color);
   pointer-events: none;
   margin-bottom: -40px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 4px solid #5ee0ff;
+  border: 4px solid var(--primary-color);
   margin-bottom: 2px;
 `;
 const StyledTradeText = styled.div`
@@ -134,7 +134,7 @@ export default function RequestModal({ isOpen, data, onRequestClose }: any) {
         {(status === 1 || status === 2) && text && <StyledTradeText>{text}</StyledTradeText>}
         {status !== 1 && !!tx && (
           <StyledLink href={config.explor + '/tx/' + tx} target="_blank">
-            View on Linea scan
+            View on Base scan
           </StyledLink>
         )}
         {status === 1 && <StyledDesc>Confirm this transaction in your wallet</StyledDesc>}

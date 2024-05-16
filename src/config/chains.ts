@@ -11,6 +11,14 @@ export default {
     rpcUrls: ['https://developer-access-mainnet.base.org'],
     blockExplorers: 'https://basescan.org',
   },
+  84532: {
+    chainId: 84532,
+    chainName: 'Base Sepolia Testnet',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie5bhns75smpybjndl3utvzpaftrlrwqrblwg44ntzjsnit6lajzm',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://sepolia.base.org'],
+    blockExplorers: 'https://sepolia.basescan.org',
+  },
   5000: {
     chainId: 5000,
     chainName: 'Mantle',
@@ -19,7 +27,6 @@ export default {
     rpcUrls: ['https://mantle-mainnet.public.blastapi.io'],
     blockExplorers: 'https://mantlescan.info',
   },
-
   1: {
     chainId: 1,
     chainName: 'Ethereum',

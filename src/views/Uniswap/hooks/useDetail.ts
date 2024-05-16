@@ -38,10 +38,9 @@ export default function useDetail(tokenId: string) {
         liquidity: position.liquidity,
         tickLower: position.tickLower,
         tickUpper: position.tickUpper,
-        tick: pool.tick,
-        decimal0: _token0.decimals,
-        decimal1: _token1.decimals,
-        provider,
+        currentTick: pool.tick,
+        token0: _token0,
+        token1: _token1,
       });
       const _detail: { [key: string]: any } = {
         fee: position.fee,

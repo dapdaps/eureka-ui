@@ -27,10 +27,9 @@ export default function useIncreaseDetail(tokenId?: string) {
         liquidity: position.liquidity,
         tickLower: position.tickLower,
         tickUpper: position.tickUpper,
-        tick: poolInfo.currentTick,
-        decimal0: _token0.decimals,
-        decimal1: _token1.decimals,
-        provider,
+        currentTick: poolInfo.currentTick,
+        token0: _token0,
+        token1: _token1,
       });
       const status =
         position.tickLower <= poolInfo.currentTick && poolInfo.currentTick <= position.tickUpper ? 'in' : 'out';

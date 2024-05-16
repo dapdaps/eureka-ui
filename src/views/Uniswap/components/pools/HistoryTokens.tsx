@@ -10,6 +10,7 @@ const StyledWrap = styled.div`
   margin-top: 16px;
 `;
 const HistoryTokens = ({ tokens, onSelectToken }: any) => {
+
   return (
     <StyledWrap>
       {tokens.map((token: any) => {

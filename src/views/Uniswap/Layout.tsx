@@ -13,12 +13,10 @@ const StyledContainer = styled.div`
   height: 100vh;
   overflow-y: auto;
   background-color: #131313;
-  background-image: url(/images/uniswap/right_bg.png);
   background-repeat: no-repeat;
   background-position: right top;
   @media (max-width: 768px) {
     background-position: left 20px;
-    background-image: url(/images/uniswap/right_m_bg.png);
   }
 `;
 const StyledContent = styled.div`

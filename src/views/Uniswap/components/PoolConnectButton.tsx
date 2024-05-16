@@ -9,10 +9,10 @@ import config from '@/config/uniswap';
 
 const StyledButton = styled.button`
   border-radius: 16px;
-  background: #62ddff;
+  background: var(--primary-color);
   width: 446px;
   height: 62px;
-  color: #1b1b1b;
+  color: var(--text-color);
   font-size: 18px;
   font-weight: 600;
   line-height: normal;
@@ -51,7 +51,7 @@ export default function PoolConnectButton() {
         }}
       >
         {switching && <Loading />}
-        Switch to the Linea Chain
+        Switch to the Base Chain
       </StyledButton>
     );
   }

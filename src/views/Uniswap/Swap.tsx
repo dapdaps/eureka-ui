@@ -9,7 +9,6 @@ import { useTransactionsStore } from '@/stores/transactions';
 import useRequestModal from '@/hooks/useRequestModal';
 import useAccount from '@/hooks/useAccount';
 import { useDebounce } from 'usehooks-ts';
-import { LeftBg } from './styles';
 import { useSetChain } from '@web3-onboard/react';
 
 const StyledContainer = styled.div`
@@ -46,7 +45,7 @@ export default function Swap() {
           },
           onOpenCode: () => {
             window.open(
-              'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Linea.Uniswap.Swap.Dex&tab=source',
+              'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Base.Uniswap.Swap.Dex&tab=source',
               '_blank',
             );
           },
@@ -62,9 +61,8 @@ export default function Swap() {
           toast,
           addTransaction,
         }}
-        src={'dapdapbos.near/widget/Linea.Uniswap.Swap.Dex'}
+        src={'dapdapbos.near/widget/Base.Uniswap.Swap.Dex'}
       />
-      <LeftBg style={{ top: '370px' }} />
     </StyledContainer>
   );
 }

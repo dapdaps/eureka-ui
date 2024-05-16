@@ -131,12 +131,12 @@ export default memo(PoolPair);
 
 const StyledLineWrap = styled.div`
   height: 35px;
-  border: 1px solid #5ee0ff;
+  border: 1px solid var(--primary-color);
   background-color: #131313;
   border-radius: 12px;
   padding: 0 12px;
   cursor: pointer;
-  color: #5ee0ff;
+  color: var(--primary-color);
   @media (max-width: 768px) {
     width: 50%;
     height: 42px;
@@ -145,11 +145,11 @@ const StyledLineWrap = styled.div`
 
 const StyledSolidWrap = styled.div`
   height: 35px;
-  background-color: #5ee0ff;
+  background-color: var(--primary-color);
   border-radius: 12px;
   padding: 0 12px;
   cursor: pointer;
-  color: #131313;
+  color: var(--text-color);
   @media (max-width: 768px) {
     width: 50%;
     height: 42px;

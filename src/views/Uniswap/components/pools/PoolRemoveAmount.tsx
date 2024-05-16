@@ -44,12 +44,12 @@ const StyledItem = styled.div`
   width: 82px;
   height: 32px;
   border-radius: 6px;
-  background-color: rgba(98, 221, 255, 0.1);
+  background-color: var(--primary-color-3);
   font-size: 14px;
-  color: #62ddff;
+  color: var(--primary-color);
   cursor: pointer;
   &.active {
-    border: 1px solid #62ddff;
+    border: 1px solid var(--primary-color);
   }
   @media (max-width: 768px) {
     width: 48px;
@@ -62,7 +62,7 @@ const StyledInputRange = styled.div`
     width: 100%;
     appearance: none;
     -webkit-appearance: none;
-    background: #62ddff;
+    background: var(--primary-color);
     height: 2px;
     border-radius: 5px;
     margin: 0 auto;
@@ -70,7 +70,7 @@ const StyledInputRange = styled.div`
   }
   input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background-color: #62ddff;
+    background-color: var(--primary-color);
     width: 20px;
     height: 20px;
     border-radius: 50%;

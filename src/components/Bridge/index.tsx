@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import { utils } from 'ethers';
-import { debounce } from 'lodash';
+import { chain, debounce } from 'lodash';
 import { memo, useCallback, useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import useAccount from '@/hooks/useAccount';
@@ -49,7 +49,7 @@ const StyledExchangeIcon = styled.div`
   margin: 20px auto 0px;
 `;
 
-const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
+const InnerBridge = ({ onSuccess,account,chainId,tokens,chains }: any) => {
   const [showTokenDialog, setShowTokenDialog] = useState<boolean>(false);
   const [showChainDialog, setShowChainDialog] = useState<boolean>(false);
   const [selectedTokenAddress, setSelectedTokenAddress] = useState<string>('');
@@ -59,8 +59,8 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
   const [clickType, setClickType] = useState<'in' | 'out'>();
   const [, setUpdater] = useState<number>(0);
   const [amount, setAmount] = useState<string>();
-  const { account, chainId } = useAccount();
-  const { tokens, chains } = useTokensAndChains();
+
+
   const { inputToken, outputToken, inputChain, outputChain, selectToken, selectChain, onExchange } = useBridge({
     chains,
     tokens,
@@ -73,10 +73,10 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
   });
   const { checked, setChecked, destination, setDestination } = useDestination();
   const { getBestRoute, gasCost, trade, checking, swap, swaping } = useBestRoute();
-  const selectableTokens = useMemo<Token[]>(() => {
+  const selectableTokens = useMemo<any>(() => {
     return Object.values(tokens)
-      .filter((token) => (inputChain?.chainId || 1) === token.chainId)
-      .sort((a, b) => {
+      .filter((token:any) => (inputChain?.chainId || 1) === token.chainId)
+      .sort((a:any, b) => {
         return a.chainId === inputChain?.chainId ? -1 : 1;
       });
   }, [inputChain]);
@@ -132,12 +132,6 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
 
   return (
     <Container>
-      {!account && <Empty>Please connect wallet.</Empty>}
-      {chainId && !chains[chainId] && (
-        <Container>
-          <Empty>Comming soon.</Empty>
-        </Container>
-      )}
       {account && chainId && chains[chainId] && (
         <>
           <>
@@ -215,4 +209,18 @@ const Bridge = ({ onSuccess }: { onSuccess: () => void }) => {
   );
 };
 
-export default memo(Bridge);
+const BridgeWrapper = ({ onSuccess }: { onSuccess: () => void }) => {
+  const { account, chainId } = useAccount();
+  const { tokens, chains } = useTokensAndChains();
+  return  <Container>
+  {!account && <Empty>Please connect wallet.</Empty>}
+  {chainId && !chains[chainId] && (
+    <Container>
+      <Empty>Comming soon.</Empty>
+    </Container>
+  )}
+  {account && chainId && chains[chainId] && <InnerBridge onSuccess={onSuccess} account={account} chainId={chainId} tokens={tokens} chains={chains}/>}
+  </Container>
+}
+
+export default memo(BridgeWrapper);

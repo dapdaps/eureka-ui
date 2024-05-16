@@ -2,7 +2,8 @@ import { Contract } from 'ethers';
 import Big from 'big.js';
 import config from '@/config/uniswap/index';
 import positionAbi from '../abi/positionAbi';
-import { getSqrtRatioAtTick } from '../utils/getTick';
+import {sortTokens} from './sortTokens'
+
 
 export async function getPosition(tokenId: string, provider: any) {
   const PositionContract = new Contract(config.contracts.positionAddress, positionAbi, provider);
@@ -18,55 +19,65 @@ export async function getPositionCollect(args: string[], provider: any) {
   ]);
 }
 
-export async function getTokenAmounts({ liquidity, tickLower, tickUpper, tick, decimal0, decimal1, provider }: any) {
-  const [sqrtRatioLower, sqrtRatioUpper, sqrtRatio] = await Promise.all([
-    getSqrtRatioAtTick(tickLower, provider),
-    getSqrtRatioAtTick(tickUpper, provider),
-    getSqrtRatioAtTick(tick, provider),
-  ]);
+ function tickToPrice({ tick, token0, token1 }: any) {
+  const [_token0, _token1] = sortTokens(token0, token1);
+  const decimals = _token1.decimals - _token0.decimals;
+  const isReverse = _token1.address === token0.address;
+  const price = new Big(1.0001 ** tick).div(10 ** decimals).toNumber();
+  return isReverse ? 1 / price : price;
+}
+
+export function getTokenAmounts({ liquidity, tickLower, tickUpper, currentTick, token0, token1 }: any) {
+  const lowerPrice = tickToPrice({ tick: tickLower, token0, token1 });
+  const currentPrice = tickToPrice({ tick: currentTick, token0, token1 });
+  const upperPrice = tickToPrice({ tick: tickUpper, token0, token1 });
+
+  const q96 = 2 ** 96;
+
+  const sqrtpLower = Math.sqrt(lowerPrice) * q96;
+  const sqrtpCurrent = Math.sqrt(currentPrice) * q96;
+  const sqrtpUpper = Math.sqrt(upperPrice) * q96;
 
   let _amount0 = '0';
   let _amount1 = '0';
 
-  const q96 = 2 ** 96;
-
   function calc_amount0() {
-    if (tick < tickLower || tick < tickUpper) {
-      const _current0 = tick < tickLower ? new Big(sqrtRatioLower) : new Big(sqrtRatio);
-      const _reverse0 = new Big(sqrtRatioUpper).gt(_current0);
-      const _sqrtRatio0A = _reverse0 ? new Big(_current0) : new Big(sqrtRatioUpper);
-      const _sqrtRatio0B = _reverse0 ? new Big(sqrtRatioUpper) : new Big(_current0);
+    if (currentTick < tickLower || currentTick < tickUpper) {
+      const _current0 = currentTick < tickLower ? new Big(sqrtpLower) : new Big(sqrtpCurrent);
+      const _reverse0 = new Big(sqrtpUpper).gt(_current0);
+      const _sqrtRatio0A = _reverse0 ? new Big(_current0) : new Big(sqrtpUpper);
+      const _sqrtRatio0B = _reverse0 ? new Big(sqrtpUpper) : new Big(_current0);
       const _diff0 = _sqrtRatio0B.minus(_sqrtRatio0A);
       const amount0 = new Big(liquidity)
         .mul(q96)
         .mul(_diff0)
         .div(_sqrtRatio0A)
         .div(_sqrtRatio0B)
-        .div(10 ** decimal0);
-      _amount0 = amount0.toFixed(decimal0);
+        .div(10 ** token0.decimals);
+      _amount0 = amount0.toFixed(token0.decimals);
     } else {
       _amount0 = '0';
     }
   }
 
   function calc_amount1() {
-    if (tick < tickLower) {
+    if (currentTick < tickLower) {
       _amount1 = '0';
     } else {
-      const _current1 = tick < tickUpper ? new Big(sqrtRatio) : new Big(sqrtRatioUpper);
-      const _reverse1 = new Big(sqrtRatioLower).gt(_current1);
-      const _sqrtRatio1A = _reverse1 ? new Big(_current1) : new Big(sqrtRatioLower);
-      const _sqrtRatio1B = _reverse1 ? new Big(sqrtRatioLower) : new Big(_current1);
+      const _current1 = currentTick < tickUpper ? new Big(sqrtpCurrent) : new Big(sqrtpUpper);
+      const _reverse1 = new Big(sqrtpLower).gt(_current1);
+      const _sqrtRatio1A = _reverse1 ? new Big(_current1) : new Big(sqrtpLower);
+      const _sqrtRatio1B = _reverse1 ? new Big(sqrtpLower) : new Big(_current1);
       const _diff1 = _sqrtRatio1B.minus(_sqrtRatio1A);
 
       const amount1 =
-        tick < tickLower
+        currentTick < tickLower
           ? new Big(0)
           : new Big(liquidity)
               .mul(_diff1)
               .div(q96)
-              .div(10 ** decimal1);
-      _amount1 = amount1.toFixed(decimal1);
+              .div(10 ** token1.decimals);
+      _amount1 = amount1.toFixed(token1.decimals);
     }
   }
 

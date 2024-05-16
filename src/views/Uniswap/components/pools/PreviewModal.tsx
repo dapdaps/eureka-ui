@@ -84,9 +84,9 @@ const StyledAdd = styled.div<{ disabled?: boolean }>`
   justify-content: center;
   height: 62px;
   border-radius: 16px;
-  background-color: #62ddff;
+  background-color: var(--primary-color);
   font-size: 18px;
-  color: #1b1b1b;
+  color: var(--text-color);
   font-weight: 600;
   margin-top: 15px;
   gap: 6px;

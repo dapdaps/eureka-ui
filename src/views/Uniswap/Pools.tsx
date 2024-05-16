@@ -5,7 +5,6 @@ import Loading from '@/components/Icons/Loading';
 import Big from 'big.js';
 import Panel from './components/Panel';
 import PositionItem from './components/PositionItem';
-import { LeftBg } from './styles';
 import PoolConnectButton from './components/PoolConnectButton';
 
 import usePositions from './hooks/usePositions';
@@ -42,10 +41,10 @@ const PositionButton = styled.button`
   height: 35px;
   border-radius: 12px;
   border: none;
-  background-color: #5ee0ff;
+  background-color: var(--input-active-border-color);
   font-size: 14px;
   font-weight: 600;
-  color: #1b1b1b;
+  color: var(--text-color);
 `;
 const StyledPanel = styled(Panel)`
   min-height: 300px;
@@ -205,7 +204,7 @@ const Pools = () => {
           className="view-code"
           onClick={() => {
             window.open(
-              'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Linea.Uniswap.Swap.Dex&tab=source',
+              'https://near.org/near/widget/ComponentDetailsPage?src=dapdapbos.near/widget/Base.Uniswap.Swap.Dex&tab=source',
               '_blank',
             );
           }}
@@ -227,7 +226,6 @@ const Pools = () => {
         </div>
         <div>Powered by DapDap & NEAR</div>
       </PowerBy>
-      <LeftBg />
     </StyledContainer>
   );
 };

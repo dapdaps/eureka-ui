@@ -98,7 +98,7 @@ const StyledUnderstandButton = styled.div`
   width: 200px;
   height: 36px;
   cursor: pointer;
-  background-color: #5ee0ff;
+  background-color: var(--primary-color);
   font-size: 16px;
   color: #131313;
   font-weight: 600;

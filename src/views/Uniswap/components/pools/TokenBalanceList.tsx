@@ -234,9 +234,9 @@ const StyledImportRow = styled(StyledRow)`
     cursor: pointer;
     padding: 0 24px;
     font-size: 16px;
-    color: #131313;
+    color: var(--text-color);
     font-weight: 600;
-    background-color: #5ee0ff;
+    background-color: var(--primary-color);
     border-radius: 18px;
   }
 `;
