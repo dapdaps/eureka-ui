@@ -38,12 +38,12 @@ const networks = {
         // Rate: 0.02,
         // APY: 0.02,
       },
-      {
-        POOL_NAME: 'WETH-USDC',
-        TOKEN_A: { ...mode['weth'] },
-        TOKEN_B: { ...mode['usdc'] },
-        POOL_MANAGER: '0x9c896B5fc1b8b7d322e6F15826D150b7d0ACb140',
-      },
+      // {
+      //   POOL_NAME: 'WETH-USDC',
+      //   TOKEN_A: { ...mode['weth'] },
+      //   TOKEN_B: { ...mode['usdc'] },
+      //   POOL_MANAGER: '0x9c896B5fc1b8b7d322e6F15826D150b7d0ACb140',
+      // },
       {
         POOL_NAME: 'USDC-WETH',
         TOKEN_A: { ...mode['usdc'] },

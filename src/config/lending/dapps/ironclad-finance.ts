@@ -3,7 +3,7 @@ import { mode } from '@/config/tokens/mode';
 const basic = {
   name: 'Ironclad Finance',
   data: 'bluebiu.near/widget/Lending.Data.Ironclad',
-  handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
+  handler: 'bluebiu.near/widget/Lending.Handler.IronClad',
   // handlerClaim: 'bluebiu.near/widget/Arbitrum.Lending.RadiantClaimHandler',
   type: 'aave2',
 };
