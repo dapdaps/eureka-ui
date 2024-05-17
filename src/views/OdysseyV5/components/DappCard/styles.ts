@@ -9,7 +9,6 @@ export const StyledCardContainer = styled.div`
 
 export const StyledDappWrapper = styled.div`
   display: flex;
-  gap: 16px;
   align-items: flex-start;
 `;
 
@@ -19,6 +18,7 @@ export const StyledDappIcon = styled.img`
   border: 3px solid #202329;
   flex-shrink: 0;
   border-radius: 22px;
+  margin-right: 16px;
 `;
 
 export const StyledDappTitleWrapper = styled.div`

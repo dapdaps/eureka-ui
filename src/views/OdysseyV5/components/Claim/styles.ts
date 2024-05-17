@@ -73,7 +73,7 @@ export const StyledListItem = styled.div`
   font-weight: 400;
   display: flex;
   align-items: center;
-  column-gap: 16px;
+  column-gap: 11px;
   &:last-child {
     text-align: right;
     justify-content: end;

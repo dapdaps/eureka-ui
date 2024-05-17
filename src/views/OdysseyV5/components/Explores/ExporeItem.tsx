@@ -44,7 +44,7 @@ const ExporeItem = ({
     }
 
     if (!source) return;
-    if (source === '/network/blast') handleReport(id);
+    if (source === '/network/mode') handleReport(id);
     window.open(source, '_blank');
   };
 
