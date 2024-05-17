@@ -13,20 +13,10 @@ export default function useDetail() {
   const queryDetail = async (id: number) => {
     try {
       setLoading(true);
-      const url: any = {
-        1: "/api/compass",
-        2: "/api/compass/v2/detail",
-        3: "/api/compass/v3/detail"
-      }[id]
-      const result = await get(url, { id });
+      const result = await get("/api/compass/reward", { id });
       if (result.code === 0 && result.data) {
         setDetail({
-          total_users: result.data.total_users,
-          total_players: result.data.total_players,
-          claimed_reward: result.data.claimed_reward,
-          available_spins: result.data.user?.available_spins,
-          unclaimed_reward: result.data.user?.unclaimed_reward,
-          total_spins: result.data.user?.total_spins,
+          unclaimed_reward: result.data?.unclaimed_reward,
         });
       } else {
         setDetail({});
