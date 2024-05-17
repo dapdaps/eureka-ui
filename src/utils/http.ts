@@ -23,25 +23,20 @@ export const objectToQueryString = (obj: Record<string, any>): string => {
   }
   return keyValuePairs.join('&');
 };
-const BASE_URL = 'https://api.dapdap.net';
-
-const getUrl = (url: string) => {
-  return url.startsWith('http') ? url : `${BASE_URL}${url}`;
-};
 
 const get = async (url: string, query?: Record<string, any>) => {
   const options = {
     method: 'GET',
   };
   if (!query) {
-    const res = await fetch(getUrl(url), options);
+    const res = await fetch(url, options);
     return res.json() as any;
   }
 
   query = removeEmptyKeys(query);
   const queryStr = objectToQueryString(query);
 
-  const res = await fetch(`${getUrl(url)}?${queryStr}`, options);
+  const res = await fetch(`${url}?${queryStr}`, options);
   return res.json() as any;
 };
 
