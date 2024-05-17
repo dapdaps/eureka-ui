@@ -23,7 +23,7 @@ import ConfirmSuccessModal from "../SubmitBtn/ConfirmSuccessModal";
 import GasModal from '../ChainTokenAmount/GasModal';
 
 import useQuote from "../hooks/useQuote";
-import { useGasTokenHooks } from '../ChainTokenAmount/useGasTokenHooks'
+import { useGasTokenHooks } from '../hooks/useGasTokenHooks'
 
 import type { Chain, Token } from '@/types';
 
@@ -417,6 +417,7 @@ export default function BirdgeAction(
                 fromToken={fromToken}
                 toChain={toChain}
                 toAddress={ account as string }
+                maxBalance={ balance }
                 onClick={() => {
                     console.log(11)
                 }}

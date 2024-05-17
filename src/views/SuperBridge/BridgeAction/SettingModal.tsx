@@ -97,7 +97,7 @@ export default function SettingModal({ onClose, routeSortType, onSortTypeChange 
         setSelectSort(selectSort!)
     }, [routeSortType, sortList])
 
-    return <Modal title="Setting" onClose={onClose}>
+    return <Modal title="Setting" top="19%" onClose={onClose}>
         <ItemWapper>
             <div className="title">Preference for Route</div>
             <div className="select-wapper" ref={domRef}>

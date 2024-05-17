@@ -6,6 +6,12 @@ import type { Token } from '@/types';
 
 import useAccount from './useAccount';
 
+const rpcs: any = {
+  11155111: 'https://ethereum-sepolia-rpc.publicnode.com',
+  421614: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'
+}
+
+
 export default function useTokenBalance({
   currency,
   updater,
@@ -27,11 +33,14 @@ export default function useTokenBalance({
 
     const _chainId = currency?.chainId || chainId;
 
-    if (!_chainId || !chains || !chains[_chainId]) {
+    if (!_chainId || !chains || (!chains[_chainId] && !rpcs[_chainId])) {
       console.error('Invalid _chainId or chains is undefined');
       return;
     }
-    const rpcUrl = _chainId ? chains[_chainId].rpcUrls[0] : '';
+
+    // const rpcUrl = _chainId ? chains[_chainId].rpcUrls[0] : '';
+    const rpcUrl = chainId ? (rpcs[_chainId] ? rpcs[_chainId] : chains[_chainId]?.rpcUrls[0]) : '';
+
 
     const getBalance = async () => {
       if (!currency || !rpcUrl || !account || !currency.address) return;

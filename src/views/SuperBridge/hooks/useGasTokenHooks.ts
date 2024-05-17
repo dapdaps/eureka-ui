@@ -6,7 +6,7 @@ import { approve } from 'super-bridge-sdk'
 import type { Signer } from 'ethers'
 import { balanceFormated, percentFormated, addressFormated, errorFormated } from '@/utils/balance'
 import useToast from '@/hooks/useToast';
-import { abi } from './abi'
+import { abi } from '../ChainTokenAmount/abi'
 
 import type { Chain, Token } from "@/types";
 
@@ -26,7 +26,9 @@ let supportedChains: any = null
 async function getAllSupportedChains(fromChain: Chain, toChain: Chain) {
     if (!supportedChains) {
         const res = await fetch(`${BASE_URL}/supportedChains`).then(res => res.json())
-        supportedChains = res.data
+        if (res && res.data) {
+            supportedChains = res.data
+        }
     }
 
     const hasFrom = supportedChains
@@ -130,7 +132,6 @@ export function useGasAmount({
             if (fromToken?.isNative) {
                 await depositEth(account, value, signer)
             } else {
-                console.log(222)
                 await depositToken(tokenAddress, account, value, signer)
             }
 
