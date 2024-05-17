@@ -7,7 +7,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 const StyledContainer = styled.div`
   position: absolute;
   right: -190px;
-  top: -10px;
+  top: 4px;
   z-index: -1;
   /* width: 96.5px;
   height: 31.209px;
@@ -72,12 +72,13 @@ export default function OdysseyIcon() {
     <StyledContainer
       onClick={() => {
         check(() => {
-          router.push('/odyssey/home?id=4');
+          router.push('/odyssey/home?id=5');
         });
       }}
     >
-      <Image src="/images/odyssey/v4/ody-logo.svg" alt="" width={149} height={51} />
-      <Image src="/images/odyssey/v4/ody-light.svg" alt="" width={51} height={51} className="light" />
+      <Image src="/images/odyssey/v5/ody-logo.svg" alt="" width={112} height={40} />
+      {/*<Image src="/images/odyssey/v4/ody-logo.svg" alt="" width={149} height={51} />*/}
+      {/*<Image src="/images/odyssey/v4/ody-light.svg" alt="" width={149} height={51} className="light" />*/}
       {/* <StyledIcon /> */}
     </StyledContainer>
   );

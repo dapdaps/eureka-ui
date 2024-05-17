@@ -20,7 +20,7 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  max-width: 900px;
+  max-width: 1200px;
   display: flex;
   height: 58px;
   align-items: center;

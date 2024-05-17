@@ -19,8 +19,7 @@ export default function Noti() {
         <LottieEyes />
         <div className="text">
           When completing a transaction, please stay on the component page briefly to prevent any failure in reporting
-          information. If you completed a transaction but not confirmed, manually try entering the transaction Tx
-          address.
+          information.
         </div>
       </StyledContent>
       <Image
