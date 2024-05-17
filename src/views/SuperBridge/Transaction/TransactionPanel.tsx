@@ -1,10 +1,13 @@
 import styled from 'styled-components';
+import { useDebounce } from 'ahooks';
 
 import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 import useToast from '@/hooks/useToast';
 import { formateTxDate } from '@/utils/date';
 
+
 import { ArrowRight } from '../Arrow'
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
     background-color: rgba(38, 40, 54, 1);
@@ -101,6 +104,7 @@ const Content = styled.div`
                     .icon {
                         width: 22px;
                         height: 22px;
+                        border-radius: 22px;
                     }
                     .trans-chain-name {
                         color: #fff;
@@ -148,6 +152,34 @@ export default function TransactionPanel(
     { onClose, transactionList }: Porps
 ) {
     const { success, fail } = useToast()
+    const [filterTransactionList, setFilterTransactionList] = useState(transactionList)
+    const [value, setValue] = useState('')
+    const inputValue = useDebounce(value, { wait: 500 });
+    
+    useEffect(() => {
+        if (inputValue && transactionList) {
+            const filterTransactionList = transactionList.filter(item => {
+                if (item.hash.indexOf(inputValue) > -1) {
+                    return true
+                }
+
+                if (item.fromAddress.indexOf(inputValue) > -1) {
+                    return true
+                }
+
+                if (item.toAddress.indexOf(inputValue) > -1) {
+                    return true
+                }
+
+                return false
+            })
+
+            setFilterTransactionList(filterTransactionList)
+        } else {
+            setFilterTransactionList(transactionList)
+        }
+
+    }, [inputValue, transactionList])
 
     return <Container>
         <Header>
@@ -163,7 +195,9 @@ export default function TransactionPanel(
                     <circle cx="8.73312" cy="8.73311" r="6.01829" transform="rotate(16.6277 8.73312 8.73311)" stroke="#979ABE" stroke-width="2" />
                     <rect x="15.5457" y="13.514" width="6.141" height="2.63186" rx="1.31593" transform="rotate(46.6277 15.5457 13.514)" fill="#979ABE" />
                 </svg>
-                <input placeholder="Search by address or Tx Hash" />
+                <input value={value} onChange={e => {
+                    setValue(e.target.value)
+                }} placeholder="Search by address or Tx Hash" />
             </div>
         </Header>
         <Content>
@@ -180,7 +214,7 @@ export default function TransactionPanel(
                 </thead>
                 <tbody>
                     {
-                        transactionList?.map(tx => {
+                        filterTransactionList?.map(tx => {
                             return <tr key={tx.hash}>
                                 <td>
                                     <div className="flex-line">

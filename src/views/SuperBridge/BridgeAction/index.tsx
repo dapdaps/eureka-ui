@@ -11,7 +11,7 @@ import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
-import { balanceFormated, percentFormated, addressFormated, errorFormated } from '@/utils/balance';
+import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
 
 import ChainTokenAmount from '../ChainTokenAmount';
 import PublicTitle from '../PublicTitle';
@@ -101,6 +101,7 @@ export default function BirdgeAction(
   const [fromToken, setFromToken] = useState<Token>()
   const [toToken, setToToken] = useState<Token>()
   const [sendAmount, setSendAmount] = useState('')
+  const [updateBanlance, setUpdateBanlance] = useState(1)
   const [reciveAmount, setReciveAmount] = useState('')
   const [selectedRoute, setSelectedRoute] = useState<QuoteResponse | null>(null)
   const [identification, setIdentification] = useState(Date.now())
@@ -141,6 +142,12 @@ export default function BirdgeAction(
       return
     }
 
+    if (fromChain === toChain && fromToken === toToken) {
+      return
+    }
+
+    setReciveAmount('')
+
     const identification = Date.now()
     setIdentification(identification)
     setQuoteRequest({
@@ -162,7 +169,6 @@ export default function BirdgeAction(
       identification,
     })
 
-
   }, [fromChain, toChain, fromToken, toToken, account, inputValue])
 
   useEffect(() => {
@@ -178,7 +184,7 @@ export default function BirdgeAction(
       return
     }
 
-    if (balance && Number(inputValue) >= Number(balance)) {
+    if (balance && Number(inputValue) > Number(balance)) {
       setSendDisabled(true)
       setDisableText('Insufficient balance')
       return
@@ -196,8 +202,10 @@ export default function BirdgeAction(
 
   useEffect(() => {
     if (selectedRoute && toToken) {
-      const reciveAmount = new Big(selectedRoute.receiveAmount).div(10 ** toToken.decimals).toString()
-      setReciveAmount(reciveAmount)
+      console.log('selectedRoute:', selectedRoute)
+      const reciveAmount = new Big(selectedRoute.receiveAmount).div(10 ** toToken.decimals).toNumber()
+      console.log('reciveAmount:', reciveAmount)
+      setReciveAmount(getFullNum(reciveAmount))
     } else {
       setReciveAmount('')
     }
@@ -225,6 +233,7 @@ export default function BirdgeAction(
       onAmountChange={value => {
         setSendAmount(value)
       }}
+      updateBanlance={updateBanlance}
       currentChain={fromChain}
       currentToken={fromToken}
       chainToken={allTokens}
@@ -257,6 +266,7 @@ export default function BirdgeAction(
         setToToken(token)
       }}
       inputDisabled
+      updateBanlance={updateBanlance}
       needGas={isSupported}
       currentChain={toChain}
       currentToken={toToken}
@@ -311,6 +321,7 @@ export default function BirdgeAction(
         }}
         isLoading={isSending}
         onClick={async () => {
+
           if (selectedRoute && !isSending) {
             setIsSending(true)
             try {
@@ -362,6 +373,8 @@ export default function BirdgeAction(
 
               setConfirmSuccessModalShow(true)
               setConfirmModalShow(false)
+
+              setUpdateBanlance(updateBanlance + 1)
 
             } catch (err: any) {
               console.log(err.title, err.message, err)

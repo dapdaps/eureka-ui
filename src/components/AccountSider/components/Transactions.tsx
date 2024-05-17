@@ -175,6 +175,11 @@ export default function Transactions() {
                 setSum(transactionList?.length || 0)
                 const _transactionList = transactionList.filter((item: any) => item.status !== 2)
                 setTransactionList(_transactionList)
+                if (_transactionList?.length > 0) {
+                    setShowDetail(true)
+                } else {
+                    setShowDetail(false)
+                }
             })
         }
 
@@ -197,7 +202,8 @@ export default function Transactions() {
                     }
                 </DetailWapper>
                 : <Summary onClick={() => {
-                    setShowDetail(true)
+                    // setShowDetail(true)
+                    router.push('/super-bridge/transaction')
                 }}>
                     <div className="icon1">
                         <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">

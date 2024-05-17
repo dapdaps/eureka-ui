@@ -11,9 +11,12 @@ const Contanier = styled.div<{active: boolean, canClick: any}>`
     /* background-color: rgba(55, 58, 83, 1); */
     min-height: 78px;
     border-radius: 10px;
-    border: ${({ active }) => `1px solid ${active ? 'rgba(235, 244, 121, .3)': 'rgba(55, 58, 83, 1)'}`} ;
+    border: ${({ active }) => `2px solid ${active ? 'rgba(235, 244, 121, .3)': 'rgba(55, 58, 83, 1)'}`} ;
     padding: 10px 16px;
     cursor: ${({ canClick }) => `${canClick ? 'pointer' : 'default'}`} ;
+    .name {
+        color: ${({ active }) => !active ? 'rgba(151, 154, 190, 1)' : '#fff'} ;
+    }
 `
 
 const BridgeSummary = styled.div`
@@ -32,7 +35,6 @@ const BridgeSummary = styled.div`
         .name {
             font-size: 16px;
             font-weight: 500;
-            color: #fff;
         }
     }
     .tags {

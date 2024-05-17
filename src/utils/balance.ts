@@ -47,9 +47,18 @@ export function timeDurationFormated(time: number) {
 }
 
 export function errorFormated(error: any) {
-  if (error.toString().indexOf('user rejected transaction')) {
+  if (error.toString().indexOf('user rejected transaction') > -1) {
     return 'user rejected transaction'
   }
 
-  return error.message
+  return error.title || error.message
+}
+
+export function getFullNum(num: any){
+  if(isNaN(num)){return num};
+  
+  const str = '' + num;
+  if(!/e/i.test(str)){return num;};
+  
+  return (num).toFixed(18).replace(/\.?0+$/, "");
 }

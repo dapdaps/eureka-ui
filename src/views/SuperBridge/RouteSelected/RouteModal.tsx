@@ -33,7 +33,7 @@ export default function RouteModal({ onClose, routes, toToken, best, fast, route
             routes?.map((route: QuoteResponse, index) => {
                 return <Route route={route} fast={fast} best={best} active={routeSelected === route} toToken={toToken} onClick={() => {
                     onRouteSelected(route)
-                    onClose && onClose()
+                    // onClose && onClose()
                 }} showOutputTitle={false} key={route.bridgeType + index}/>
             })
         }

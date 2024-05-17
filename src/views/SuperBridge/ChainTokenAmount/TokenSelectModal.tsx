@@ -112,6 +112,8 @@ export default function TokenSelectModal({
 
     const inputValue = useDebounce(searchVal, { wait: 500 });
 
+    console.log('currentChainId: ', currentChainId)
+
     useEffect(() => {
         if (!inputValue) {
             setFilterTokenList(tokenList)

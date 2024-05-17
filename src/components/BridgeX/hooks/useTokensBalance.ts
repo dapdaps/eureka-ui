@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import { utils, providers } from 'ethers';
 
@@ -15,7 +15,8 @@ const rpcs: any = {
 export default function useTokensBalance(tokens: any) {
   const [loading, setLoading] = useState(false);
   const [balances, setBalances] = useState<any>({});
-  const [currentChainId, setCurrentChainId] = useState(null)
+  const currentChainId =  useRef<any>()
+  // const [currentChainId, setCurrentChainId] = useState(null)
   const { account } = useAccount();
 
   const queryBalance = useCallback(async () => {
@@ -24,11 +25,9 @@ export default function useTokensBalance(tokens: any) {
     try {
       setLoading(true);
       const chainId = tokens[0].chainId
-      setCurrentChainId(chainId)
       const rpcUrl = chainId ? (rpcs[chainId] ? rpcs[chainId] : chains[chainId]?.rpcUrls[0]) : '';
-
-      console.log('rpcUrl:', rpcUrl)
-
+      currentChainId.current = chainId
+      setBalances({})
       if (!rpcUrl) {
         throw 'No rpcUrl';
       }
@@ -47,8 +46,6 @@ export default function useTokensBalance(tokens: any) {
       }));
 
       const multicallAddress = multicallAddresses[tokens[0].chainId];
-
-      console.log('multicallAddress:', multicallAddress)
 
       const requests = [
         multicall({
@@ -91,5 +88,5 @@ export default function useTokensBalance(tokens: any) {
     queryBalance();
   }, [tokens, account]);
 
-  return { loading, balances, queryBalance, currentChainId };
+  return { loading, balances, queryBalance, currentChainId: currentChainId.current };
 }

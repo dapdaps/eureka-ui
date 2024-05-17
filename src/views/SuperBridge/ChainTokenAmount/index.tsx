@@ -202,6 +202,7 @@ interface Props {
     inputDisabled?: boolean;
     amount: string;
     needGas: boolean;
+    updateBanlance: number;
     onChainChange: (chain: Chain) => void;
     onTokenChange: (token: Token) => void;
     onAmountChange?: (value: string) => void;
@@ -209,14 +210,14 @@ interface Props {
 }
 
 export default function ChainTokenAmount({
-    title, address, chainList, needGas = false, chainToken, currentChain, currentToken, amount, inputDisabled = false, onChainChange, onTokenChange, onAmountChange, onGasTrigger,
+    title, address, chainList, needGas = false, updateBanlance = 1, chainToken, currentChain, currentToken, amount, inputDisabled = false, onChainChange, onTokenChange, onAmountChange, onGasTrigger,
 }: Props) {
     const prices = usePriceStore((store) => store.price);
     const [tokenModalShow, setTokenModalShow] = useState<boolean>(false)
    
     const { balance, loading } = useTokenBalance({
         currency: currentToken,
-        updater: 1,
+        updater: updateBanlance,
         isNative: currentChain?.nativeCurrency.symbol === currentToken?.symbol,
         isPure: false,
     })

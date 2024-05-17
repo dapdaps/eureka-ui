@@ -81,6 +81,11 @@ export default function RouteSelected(
             setRouteSelected(fastRoute)
             onRouteSelected(fastRoute)
         }
+
+        if (!routes || routes.length === 0) {
+            setRouteSelected(null)
+            onRouteSelected(null)
+        }
         
     }, [routes, routeSortType])
 
