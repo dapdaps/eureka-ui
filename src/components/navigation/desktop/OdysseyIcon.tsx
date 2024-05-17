@@ -9,12 +9,12 @@ const StyledContainer = styled.div`
   right: -190px;
   top: 4px;
   z-index: -1;
-  /* width: 96.5px;
-  height: 31.209px;
-  background-image: url(/images/odyssey/v3/nav-bg.png);
-  background-repeat: no-repeat; */
   background-size: 100%;
   cursor: pointer;
+  border: 1px solid #DFFE00;
+  border-radius: 6px;
+  overflow: hidden;
+
   .light {
     position: absolute;
     left: 0;
