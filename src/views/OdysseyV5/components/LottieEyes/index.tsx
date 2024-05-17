@@ -12,8 +12,8 @@ export default function LottieControl({}: any) {
   return (
     <Lottie
       options={defaultOptions}
-      height={58}
-      width={58}
+      height={38}
+      width={38}
       style={{
         margin: 0,
         transform: 'rotate(-180deg)',
