@@ -64,14 +64,20 @@ export const StyledMoonDark = styled.div`
   transform: translateX(-460px);
 `;
 
-export const StyledMountain = styled.div<{ src: string }>`
+export const StyledMountain = styled.div`
   ${Image};
   z-index: 2;
-  height: 627px;
+  height: 628px;
   left: 0;
   right: 0;
   bottom: -2px;
-  background: ${({ src }) => `url("${src}") no-repeat center bottom / cover`};
+
+  img {
+    width: 100%;
+    min-width: 1545px;
+    margin-left: 50%;
+    transform: translateX(-50%);
+  }
 `;
 
 export const StyledSlogan = styled.div`

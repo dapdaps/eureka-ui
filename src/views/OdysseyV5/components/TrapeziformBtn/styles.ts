@@ -1,28 +1,16 @@
 import styled from 'styled-components';
 
-export const StyledContainer = styled.div<{
-  $width: string;
-  $height: string;
-}>`
+export const StyledContainer = styled.div`
+  width: 202px;
+  height: 61px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 600;
   font-size: 16px;
-  gap: 9px;
+  gap: 6px;
   cursor: pointer;
-  background-color: #ebf479;
-  width: ${({ $width }) => `${$width}` || 'auto'};
-  height: ${({ $height }) => `${$height}` || 'auto'};
-  clip-path: polygon(
-    20px 0,
-    100% 0,
-    100% 20px,
-    100% calc(100% - 20px),
-    calc(100% - 20px) 100%,
-    20px 100%,
-    0 100%,
-    0 20px
-  );
+  background: url('/images/odyssey/v5/foot-claim/btn-bg.svg') no-repeat center center / 202px 61px;
+  flex-shrink: 0;
 `;

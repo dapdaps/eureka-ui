@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const StyledContainer = styled.div`
   position: relative;
-  background: url("/images/odyssey/v5/mastery/bg.svg") no-repeat left 50% top -110px / 100%;
+  background: url("/images/odyssey/v5/mastery/bg.svg") no-repeat left 50% top -80px / 927px 927px;
 `;
 export const StyledInner = styled.div`
   padding: ${() => `116px var(--odyssey-container-gutter) 137px`};
@@ -67,15 +67,29 @@ export const StyledEarnedContent = styled.ul`
     line-height: 19px;
     color: #ffffff;
     white-space: wrap;
+    position: relative;
     
     &:first-child {
       margin-top: 0;
     }
+
+    &:not(&:last-child) {
+      &::after {
+        content: "";
+        display: block;
+        width: 1px;
+        background: #3D405A;
+        position: absolute;
+        height: calc(100% + 49px - 30px);
+        left: 5px;
+        top: 24px;
+      }
+    }
   }
-  
+
   .point {
-    width: 10px;
-    height: 10px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
     background: ${() => `var(--odyssey-primary-color)`};
     margin-top: 4px;

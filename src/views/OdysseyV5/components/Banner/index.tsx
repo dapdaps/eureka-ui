@@ -1,5 +1,7 @@
 import Image from 'next/image';
 
+import Summary from "@/views/OdysseyV5/components/Summary";
+
 import {
   StyledContainer,
   StyledContent,
@@ -9,7 +11,6 @@ import {
   StyledSlogan,
   StyledTitle
 } from './styles';
-import Summary from "@/views/OdysseyV5/components/Summary";
 
 export default function Banner(props: any) {
   return (
@@ -20,7 +21,9 @@ export default function Banner(props: any) {
       <StyledMoonDark>
         <Image src="/images/odyssey/v5/banner/moon-dark.svg" alt="" width={483} height={361} />
       </StyledMoonDark>
-      <StyledMountain src="/images/odyssey/v5/banner/mountain.png" />
+      <StyledMountain>
+        <img src="/images/odyssey/v5/banner/mountain.png" alt="" />
+      </StyledMountain>
       <StyledContent>
         <StyledSlogan>
           <Image src="/images/odyssey/v5/banner/slogan.svg" alt="" width={425} height={42} />
