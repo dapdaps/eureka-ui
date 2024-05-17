@@ -20,6 +20,7 @@ export const StyledFoot = styled.div`
   flex-wrap: nowrap;
   gap: 461px;
   margin-top: 116px;
+  white-space: nowrap;
 
   .title {
     font-size: 18px;
