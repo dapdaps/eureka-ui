@@ -47,7 +47,6 @@ const ChainName = styled.div`
   }
 `;
 const ChainList = styled.div<{ display?: boolean }>`
-  width: 204px;
   border: 1px solid #373a53;
   border-radius: 8px;
   background-color: rgba(55, 58, 83);
