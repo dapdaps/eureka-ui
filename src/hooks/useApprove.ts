@@ -23,32 +23,41 @@ export default function useApprove({
 }) {
   const [approved, setApproved] = useState(false);
   const [approving, setApproving] = useState(false);
+  const [checking, setChecking] = useState(false);
   const { account, provider } = useAccount();
   const toast = useToast();
   const addTransaction = useTransactionsStore((store: any) => store.addTransaction);
 
   const checkApproved = async () => {
     if (!token?.address || !amount || !spender) return;
-    const _provider = chain ? new JsonRpcProvider(chain?.rpcUrls[0]) : provider;
-    const TokenContract = new Contract(
-      token.address,
-      [
-        {
-          inputs: [
-            { internalType: 'address', name: '', type: 'address' },
-            { internalType: 'address', name: '', type: 'address' },
-          ],
-          name: 'allowance',
-          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
-          stateMutability: 'view',
-          type: 'function',
-        },
-      ],
-      _provider,
-    );
-    const allowanceRes = await TokenContract.allowance(account, spender);
-    const needApproved = new Big(utils.formatUnits(allowanceRes.toString(), token.decimals)).lt(amount);
-    setApproved(!needApproved);
+
+    try {
+      setChecking(true);
+      const _provider = chain ? new JsonRpcProvider(chain?.rpcUrls[0]) : provider;
+
+      const TokenContract = new Contract(
+        token.address,
+        [
+          {
+            inputs: [
+              { internalType: 'address', name: '', type: 'address' },
+              { internalType: 'address', name: '', type: 'address' },
+            ],
+            name: 'allowance',
+            outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function',
+          },
+        ],
+        _provider,
+      );
+      const allowanceRes = await TokenContract.allowance(account, spender);
+      const needApproved = new Big(utils.formatUnits(allowanceRes.toString(), token.decimals)).lt(amount);
+      setApproved(!needApproved);
+      setChecking(false);
+    } catch (err) {
+      setChecking(false);
+    }
   };
 
   const approve = async () => {
@@ -115,5 +124,5 @@ export default function useApprove({
     if (token && amount && (chain || provider) && spender) checkApproved();
   }, [token, amount, chain, spender]);
 
-  return { approved, approve, approving };
+  return { approved, approve, approving, checking };
 }

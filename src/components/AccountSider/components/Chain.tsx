@@ -6,7 +6,7 @@ import useAccount from '@/hooks/useAccount';
 import useSwitchChain from '@/hooks/useSwitchChain';
 
 const StyledContainer = styled.div<{ mt?: number; showName?: boolean }>`
-  width: ${({ showName }) => (showName ? '204px' : '70px')};
+  width: ${({ showName }) => (showName ? '244px' : '70px')};
   height: 38px;
   margin: 0 auto;
   border: 1px solid #373a53;

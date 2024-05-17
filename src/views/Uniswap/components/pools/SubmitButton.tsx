@@ -37,6 +37,7 @@ const SubmitButton = ({ token0, value0, token1, value1, errorTips, onPreview }: 
     approved: token0Approved,
     approve: token0Approve,
     approving: token0Approving,
+    checking: token0Checking,
   } = useApprove({
     token: token0,
     amount: value0,
@@ -47,6 +48,7 @@ const SubmitButton = ({ token0, value0, token1, value1, errorTips, onPreview }: 
     approved: token1Approved,
     approve: token1Approve,
     approving: token1Approving,
+    checking: token1Checking,
   } = useApprove({
     token: token1,
     amount: value1,
@@ -83,7 +85,13 @@ const SubmitButton = ({ token0, value0, token1, value1, errorTips, onPreview }: 
       </StyledWrapper>
     );
   }
-
+  if (token0Checking || token1Checking) {
+    return (
+      <StyledWrapper disabled={true}>
+        <Loading />
+      </StyledWrapper>
+    );
+  }
   if (errorTips) {
     return <StyledWrapper disabled>{errorTips}</StyledWrapper>;
   }
