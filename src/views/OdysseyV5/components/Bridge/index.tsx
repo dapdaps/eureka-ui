@@ -10,7 +10,7 @@ export default function Bridge({ list, onRefreshDetail, loading, detailLoading, 
     <StyledContainer>
       <Title
         title="Bridge"
-        subtitle="Construct a bridge in Mode to new opportunities"
+        subtitle="Cross a bridge to Mode and discover new opportunities make sure the descriptions say assets not asset"
       />
       <StyledContent>
         {

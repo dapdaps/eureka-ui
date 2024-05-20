@@ -97,8 +97,8 @@ export const StyledEarnedCardContent = styled.div`
       list-style: none;
     }
     .item {
-      font-size: 20px;
       font-weight: 400;
+      font-size: 16px;
       line-height: 24px;
       text-align: left;
       color: #ffffff;
@@ -115,12 +115,15 @@ export const StyledEarnedItem = styled.li<{ type?: string }>`
   align-items: center;
   gap: 8px;
   font-size: 16px;
-  font-weight: 400;
   line-height: 19px;
   text-align: left;
   color: #ffffff;
   background: #2A2A2A;
   height: 34px;
-  border-radius: ${({ type }) => type === 'rect' ? '4px' : '17px'};
+  border-radius: 17px;
   white-space: nowrap;
+  .hilight {
+    color: ${() => `var(--odyssey-primary-color)`};
+    font-weight: 600;
+  }
 `;

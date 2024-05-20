@@ -5,6 +5,8 @@ export const StyledContainer = styled.div`
   max-width: 1192px;
   margin: 0 auto;
   position: relative;
+  padding-left: 50px;
+  padding-right: 50px;
 `;
 
 export const StyledTitle = styled.div`

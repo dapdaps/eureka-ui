@@ -26,6 +26,12 @@ export const StyledTitle = styled.div`
       font-weight: 300;
       line-height: 20px;
       margin-top: 20px;
+      .logo {
+        color: #fff;
+        &:hover {
+          color: #ebf479;
+        }
+      }
     }
     
     .primary {

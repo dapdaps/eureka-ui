@@ -130,9 +130,17 @@ export default function OdysseyV5() {
     <StyledContainer>
       <StyledContent>
         <Noti />
-        <Banner detail={detail} loading={loading} />
+        <Banner
+          detail={detail}
+          loading={loading}
+       />
         <Mastery />
-        <Blitz />
+        <Blitz
+          onRefreshDetail={queryDetailThrottle}
+          detailLoading={exploredAmountLoading}
+          setDetailLoading={setExploredAmountLoading}
+          list={quests.mode}
+          loading={questsLoading}/>
 
         <Explores
           list={quests.social}
