@@ -26,6 +26,11 @@ export const StyledTitle = styled.div`
       font-weight: 300;
       line-height: 20px;
       margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+
       .logo {
         color: #fff;
         &:hover {
@@ -45,6 +50,10 @@ export const StyledContent = styled.div`
   align-items: stretch;
   gap: 20px;
   margin-top: 50px;
+
+  .modeDappMasterySwiper {
+    width: 100%;
+  }
 `;
 export const StyledEarnedList = styled.div`
   display: flex;
@@ -114,6 +123,7 @@ export const StyledCardContainer = styled.div`
   justify-content: flex-start;
   align-items: stretch;
   gap: 30px;
+  height: 100%;
 `;
 export const StyledCardHead = styled.div`
   font-size: 36px;
@@ -189,4 +199,40 @@ export const StyledCardFoot = styled.div`
   margin-top: auto;
   padding-top: 54px;
 `;
+
+export const StyledLeftBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledRightBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledPageBtn = styled.div`
+  .btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(33, 35, 42, 0.9);
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+
+export const StyledArrow = styled.div`
+transform: rotate(-180deg);`;
 

@@ -19,7 +19,7 @@ export const StyledFoot = styled.div`
   align-items: center;
   flex-wrap: nowrap;
   gap: 461px;
-  margin-top: 116px;
+  margin-top: 212px;
   white-space: nowrap;
 
   .title {
@@ -65,10 +65,6 @@ export const StyledEarnedCardContent = styled.div`
 
   .modeDappBlitzSwiper {
     width: 100%;
-    overflow: hidden;
-    .swiper-slide {
-      width: 430px;
-    }
   }
   .tips {
     padding-bottom: 23px;
@@ -127,3 +123,39 @@ export const StyledEarnedItem = styled.li<{ type?: string }>`
     font-weight: 600;
   }
 `;
+
+export const StyledLeftBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledRightBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledPageBtn = styled.div`
+  .btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(33, 35, 42, 0.9);
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+
+export const StyledArrow = styled.div`
+transform: rotate(-180deg);`;
