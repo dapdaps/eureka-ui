@@ -258,6 +258,7 @@ export default function useTrade({
             return tx.transactionHash
         } catch (err: any) {
             console.log(err)
+
             fail({
                 title: err.name ? err.name : 'Transaction failed',
                 text: formatException(err.message),
@@ -276,9 +277,19 @@ export default function useTrade({
             await approve('0x2170Ed0880ac9A755fd29B2688956BD959F933F8', new Big(value), '0xf25484650484DE3d554fB0b7125e7696efA4ab99', signer)
         }
 
+        // let gasLimit = (chainId === 1 && gasEstimate) ? gasEstimate :  1920000
+        let gasLimit = 1920000
+        if (chainId === 1 && gasEstimate) {
+            gasLimit = gasEstimate
+        } else if (chainId === 56) {
+            gasLimit = 5920000
+        } else {
+            gasLimit = 1920000
+        }
+
         const tx = await signer.sendTransaction({
             ...transactionData,
-            gasLimit: (chainId === 1 && gasEstimate) ? gasEstimate : 1920000,
+            gasLimit,
         })
         return tx.wait()
     }

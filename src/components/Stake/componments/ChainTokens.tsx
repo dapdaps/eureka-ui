@@ -127,15 +127,22 @@ export const ChainTokens = ({
                 })
             }
         </ChainList>
-        <TokenList>
-            {
-                tokenList?.map((tokenItem: any) => {
-                    return <TokenRow onClick={() => {
-                        onClose && onClose()
-                    }} key={tokenItem.symbol} chain={chain} token={token} tokenItem={tokenItem}></TokenRow>
-                })
-            }
-        </TokenList>
+        {
+            chains.map((item: any) => {
+                if (item.chainId !== chain?.chainId) {
+                    return null
+                }
+                return <TokenList key={item.chainId} >
+                    {
+                        tokens[item.chainId as number]?.map((tokenItem: any) => {
+                            return <TokenRow onClick={() => {
+                                onClose && onClose()
+                            }} key={tokenItem.symbol} chain={item} token={token} tokenItem={tokenItem}></TokenRow>
+                        })
+                    }
+                </TokenList>
+            })
+        }
     </Container>
 
 };
