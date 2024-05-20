@@ -42,8 +42,9 @@ export function formatTitle(record: any) {
     }
     return (
       <>
-        Supply <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
-        {record.template}
+        {record.action_title}
+        {/* Supply <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {record.template} */}
       </>
     );
   }
