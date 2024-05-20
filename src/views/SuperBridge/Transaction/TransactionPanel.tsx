@@ -146,10 +146,11 @@ const Arrow = () => {
 interface Porps {
     onClose: () => void;
     transactionList: any[];
+    addressOrHash?: string;
 }
 
 export default function TransactionPanel(
-    { onClose, transactionList }: Porps
+    { onClose, transactionList, addressOrHash }: Porps
 ) {
     const { success, fail } = useToast()
     const [filterTransactionList, setFilterTransactionList] = useState(transactionList)
@@ -180,6 +181,13 @@ export default function TransactionPanel(
         }
 
     }, [inputValue, transactionList])
+
+    useEffect(() => {
+        if (addressOrHash) {
+            setValue(addressOrHash)
+        }
+    }, [addressOrHash])
+
 
     return <Container>
         <Header>

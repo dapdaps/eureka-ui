@@ -73,6 +73,7 @@ export default function Transaction({ initModalShow = false }: Props) {
     const [isLoading, setIsLoading] = useState(false)
     const [transactionList, setTransactionList] = useState([])
     const [proccessSum, setProccessSum] = useState(0)
+    const [value, setValue] = useState('')
     const { account, chainId, provider } = useAccount();
     const router = useRouter();
 
@@ -131,6 +132,7 @@ export default function Transaction({ initModalShow = false }: Props) {
         }
     }, [account])
 
+ 
     return <Container>
         <PublicTitle
             title="My transactions"
@@ -168,11 +170,15 @@ export default function Transaction({ initModalShow = false }: Props) {
                 <circle cx="8.73312" cy="8.73311" r="6.01829" transform="rotate(16.6277 8.73312 8.73311)" stroke="#979ABE" stroke-width="2" />
                 <rect x="15.5457" y="13.5139" width="6.141" height="2.63186" rx="1.31593" transform="rotate(46.6277 15.5457 13.5139)" fill="#979ABE" />
             </svg>
-            <Input placeholder='Search by address or Tx Hash' />
+            <Input placeholder='Search by address or Tx Hash' value={value} onChange={e => setValue(e.target.value)} onKeyDown={e => {
+                if (e.code === 'Enter') {
+                    setTransactionModalShow(true)
+                }
+            }} />
         </InputWapper>
 
         {
-            transactionModalShow && <TransactionPanel transactionList={transactionList} onClose={() => {
+            transactionModalShow && <TransactionPanel addressOrHash={value} transactionList={transactionList} onClose={() => {
                 if (initModalShow) {
                     router.back()
                 } else {

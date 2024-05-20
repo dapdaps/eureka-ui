@@ -75,8 +75,12 @@ export default function useTokensBalance(tokens: any) {
         const token = tokensAddress[i];
         _balance[token.address] = utils.formatUnits(results[i]?.[0] || 0, token.decimals);
       }
-      setBalances(_balance);
-      setLoading(false);
+
+      if (tokensAddress.length && tokensAddress[0].chainId === currentChainId.current) {
+        setBalances(_balance);
+        setLoading(false);
+      }
+      
     } catch (err) {
       console.log(err);
       setLoading(false);

@@ -129,12 +129,9 @@ export default function TokenSelectModal({
     useEffect(() => {
         if (tempChain && chainToken) {
             const tokenList = chainToken[tempChain.chainId]
-            // if (balances && Object.keys(balances).length > 0) {
-            //     tokenList.sort((a, b) => balances[a])
-            // }
             setTokenList(tokenList)
         }
-    }, [tempChain, chainToken, balances])
+    }, [tempChain, chainToken])
 
     return <Modal paddingSize={0} onClose={onClose}>
         <Container>
@@ -173,7 +170,13 @@ export default function TokenSelectModal({
                 </TokenTop>
                 <TokenList key={tempChain?.chainId}>
                     {
-                        filterTokenList?.map((token: Token) => {
+                        filterTokenList?.sort((a: any, b: any) => {
+                            if (Object.keys(balances).length === 0) {
+                                return 0
+                            }
+
+                            return Number(balances[b.address]) - Number(balances[a.address])
+                        }).map((token: Token) => {
                             return <TokenRow
                                 isSelected={currentToken?.symbol === token.symbol}
                                 key={token.symbol + token.address}
