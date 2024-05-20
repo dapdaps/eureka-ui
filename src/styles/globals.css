@@ -134,7 +134,7 @@
 @font-face {
   font-family: 'Chakra Petch';
   src: url('/fonts/ChakraPetch-Regular.woff2') format('woff2');
-  font-weight: 200 900;
+  /*font-weight: 200 900;*/
   font-stretch: 75% 125%;
 }
 

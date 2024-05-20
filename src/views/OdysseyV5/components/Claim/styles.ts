@@ -2,9 +2,11 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   width: 100%;
-  max-width: 1192px;
+  max-width: 1292px;
   margin: 0 auto;
   position: relative;
+  padding-left: 50px;
+  padding-right: 50px;
 `;
 
 export const StyledTitle = styled.div`

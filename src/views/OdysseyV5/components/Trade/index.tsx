@@ -9,7 +9,7 @@ import { StyledContainer, StyledContent } from './styles';
 export default function Trade({ list, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
   return (
     <StyledContainer>
-      <Title title="Trade" subtitle="Seamlessly interact with assets in Mode within dapdap" />
+      <Title title="Trade" subtitle="Seamlessly trade your favourite assets on Mode within DapDap" />
       <StyledContent>
         {
           loading ? <StyledLoadingWrapper $h="100px">

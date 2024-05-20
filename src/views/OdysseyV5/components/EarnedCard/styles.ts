@@ -58,7 +58,7 @@ export const StyledBtn = styled.button`
   text-align: center;
   background: ${() => 'var(--odyssey-primary-color)'};
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   color: #000000;
   display: flex;
   justify-content: center;

@@ -126,6 +126,7 @@ export const StyledTagText = styled.div`
   text-overflow: ellipsis;
   flex-grow: 1;
   line-height: 1;
+  padding-right: 4px;
   &.renzo-text {
     position: relative;
     left: -4px;

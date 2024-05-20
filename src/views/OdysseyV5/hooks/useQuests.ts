@@ -18,6 +18,7 @@ const defaultQuests: any = {
   golds: [],
   staking: [],
   yield: [],
+  mode: []
 };
 
 export default function useQuests(id: any) {
@@ -75,6 +76,9 @@ export default function useQuests(id: any) {
           if (item.name !== 'Particle' && item.name !== 'MetaStreet') {
             _result.yield.push(item);
           }
+        }
+        if (item.extra_data === 'mode') {
+          _result.mode.push(item);
         }
       });
       setQuests(_result);
