@@ -4,6 +4,9 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import BridgeAction from '@/views/SuperBridge/BridgeAction';
+import Transaction from '@/views/SuperBridge/Transaction';
+import Medal from '@/views/SuperBridge/Medal';
 
 import chainCofig from '@/config/chains'
 
@@ -60,7 +63,14 @@ const Bridge: NextPageWithLayout = () => {
 
   return (
     <Container>
-     111
+      <BridgeAction
+        chainList={chainList}
+      />
+      <RightContainer>
+        <Transaction />
+        <Sep />
+        <Medal />
+      </RightContainer>
     </Container>
   )
 };
