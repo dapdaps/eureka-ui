@@ -84,8 +84,6 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
   };
 
-  const list1 =  list.concat(list).concat(list).concat(list).concat(list);
-
   return (
     <StyledContainer id="odysseySectionModeDAppBlitz">
       <StyledInner>
@@ -103,7 +101,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
           <Swiper
             slidesPerView={3}
             spaceBetween={27}
-            centeredSlides={false}
+            centeredSlides={true}
             modules={[]}
             className="modeDappBlitzSwiper"
             onSwiper={(swiper) => {
@@ -116,7 +114,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
                     <Loading size={30} />
                   </StyledLoadingWrapper>
               ) : (
-                list?.length ? list1.map(
+                list?.length ? list.map(
                   (earn) => (
                     <SwiperSlide key={earn.id}>
                       <EarnedCard
@@ -173,7 +171,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
               )
             }
           </Swiper>
-          {list1.length > 3 && (
+          {list?.length > 3 && (
             <StyledPageBtn>
               <StyledLeftBtn
                 className='btn'
