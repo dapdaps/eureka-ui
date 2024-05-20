@@ -1,15 +1,16 @@
-import { memo, useEffect, useState } from 'react';
 import Image from 'next/image';
+import { memo, useEffect, useMemo, useState } from 'react';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 
 import useCheck from '../../hooks/useCheck';
 import useReport from '../../hooks/useReport';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 import LockStatus from '../LockStatus';
 import RefreshIcon from '../RefreshButton';
 import CardInput from './CardInput';
-import { StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored, ArrowContainer, StyledItemShadow } from './styles';
+import { ArrowContainer, StyledItem, StyledItemLeft, StyledItemRight, StyledItemShadow,StyledItemTitle, Unexplored } from './styles';
 
-const ExporeItem = ({
+const ExploreItem = ({
   userInfo,
   authConfig,
   id,
@@ -31,7 +32,7 @@ const ExporeItem = ({
   const { handleReport } = useReport();
 
   const onItemClick = () => {
-    if (finished) return;
+    if (finished && !['page', 'favorite_dapp'].includes(category)) return;
 
     if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
@@ -53,8 +54,13 @@ const ExporeItem = ({
     setFinished(offers <= total_spins);
   }, [total_spins, times, spins]);
 
+  const itemDisabled = useMemo(() => {
+    if (['page', 'favorite_dapp'].includes(category)) return false;
+    return times !== 0;
+  }, [category, times]);
+
   return (
-    <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished}>
+    <StyledItem onClick={onItemClick} $disabled={itemDisabled}>
       <StyledItemLeft>
         <StyledItemTitle>{name}</StyledItemTitle>
       </StyledItemLeft>
@@ -62,6 +68,13 @@ const ExporeItem = ({
         {finished ? (
           <>
             <LockStatus status={true} />
+            {
+              ['page', 'favorite_dapp'].includes(category)  && (
+                <ArrowContainer>
+                  <ArrowIcon />
+                </ArrowContainer>
+              )
+            }
           </>
         ) : category === 'password' ? (
           <CardInput
@@ -99,4 +112,4 @@ const ExporeItem = ({
   );
 };
 
-export default memo(ExporeItem);
+export default memo(ExploreItem);

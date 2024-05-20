@@ -4,7 +4,7 @@ import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
 import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
-import ExporeItem from './ExporeItem';
+import ExploreItem from './ExploreItem';
 import {
   StyledContainer,
   StyledDesc,
@@ -19,9 +19,16 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail, 
   return (
     <>
       <StyledContainer id="odysseySectionDiveIntoDAppDiversity">
-        <Image src="/images/odyssey/v5/dive-head.svg" alt="Dive into DApp Diversity" width={305} height={305}
-               className="head-img" />
-        <StyledTitle>Dive into <span className="hilight">DApp Diversity</span></StyledTitle>
+        <Image
+          src="/images/odyssey/v5/dive-head.svg"
+          alt="Dive into DApp Diversity"
+          width={305}
+          height={305}
+          className="head-img"
+        />
+        <StyledTitle>
+          Dive into <span className="hilight">DApp Diversity</span>
+        </StyledTitle>
         <StyledDesc>Exploring Mode&lsquo;s DApp Ecosystem for Richer Rewards</StyledDesc>
         <StyledExploreContainer>
           <StyledExploreTitle>Explore Mode</StyledExploreTitle>
@@ -33,7 +40,7 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail, 
                 <Loading size={30} />
               </StyledLoadingWrapper>
               : (list?.length ? list.map((item: any) => (
-                  <ExporeItem
+                  <ExploreItem
                     key={item.id}
                     {...item}
                     authConfig={authConfig}

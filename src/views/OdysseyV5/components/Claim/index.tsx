@@ -1,33 +1,33 @@
+import Image from 'next/image';
+
+import Loading from '@/components/Icons/Loading';
+import { useUserStore } from '@/stores/user';
+import { StyledLoadingWrapper } from '@/styled/styles';
+import { ellipsAccount } from '@/utils/account';
+import { simplifyNum } from '@/utils/format-number';
+import useLeaderBoard from '@/views/OdysseyV5/hooks/useLeaderBoard';
+
 import {
-  StyledContainer,
-  StyledTitle,
-  StyledSubTitle,
   StlyedDesc,
+  StyledAllContainer,
+  StyledContainer,
   StyledDescIcon,
   StyledDescText,
-  StyledListContainer,
   StyledList,
+  StyledListContainer,
   StyledListItem,
-  StyledText,
   StyledListItemIcon,
   StyledListItemText,
   StyledPlate,
-  StyledAllContainer
-} from './styles';
-import Image from 'next/image';
-import useLeaderBoard from '@/views/OdysseyV5/hooks/useLeaderBoard';
-import { StyledLoadingWrapper } from '@/styled/styles';
-import Loading from '@/components/Icons/Loading';
-import { useUserStore } from '@/stores/user';
-import { ellipsAccount } from '@/utils/account';
-import { simplifyNum } from '@/utils/format-number';
+  StyledSubTitle,
+  StyledText,
+  StyledTitle} from './styles';
 
 const iconList =  new Map([
     [1, 'champion.svg'],
     [2, 'runner-up.svg'],
     [3, 'third-runner-up.svg']
   ]);
-
 
 const Claim = (props: { id: any }) => {
   const { ranks, loading } = useLeaderBoard(props.id);

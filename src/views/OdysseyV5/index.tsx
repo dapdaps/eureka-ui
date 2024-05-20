@@ -1,8 +1,11 @@
+import { useDebounceFn, useThrottleFn } from 'ahooks';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 import useUserInfo from '@/hooks/useUserInfo';
 import Blitz from '@/views/OdysseyV5/components/Blitz';
+import Claim from '@/views/OdysseyV5/components/Claim';
+import FootClaim from '@/views/OdysseyV5/components/FootClaim';
 import Mastery from '@/views/OdysseyV5/components/Mastery';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
@@ -16,9 +19,6 @@ import Trade from './components/Trade';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import { StyledContainer, StyledContent, StyledNavigator } from './styles';
-import { useDebounceFn, useThrottleFn } from 'ahooks';
-import Claim from '@/views/OdysseyV5/components/Claim';
-import FootClaim from '@/views/OdysseyV5/components/FootClaim';
 
 export default function OdysseyV5() {
   const router = useRouter();
@@ -71,11 +71,14 @@ export default function OdysseyV5() {
     for (const navigator of navigatorList) {
       const target = document.getElementById(navigator.target);
       if (!target) continue;
-      if (scrollTop >= target.offsetTop - 80) _navigatorActive = navigator.key;
+      if (scrollTop >= target.offsetTop - 200) _navigatorActive = navigator.key;
+    }
+    if (scrollTop >= document.body.scrollHeight - window.innerHeight - 50) {
+      _navigatorActive = navigatorList[navigatorList.length - 1].key;
     }
     setNavigatorActive(_navigatorActive);
   };
-  const { run: handleScrollEventDebounce } = useDebounceFn(handleScrollEvent, { wait: 500 });
+  const { run: handleScrollEventDebounce } = useDebounceFn(handleScrollEvent, { wait: 50 });
 
   useEffect(() => {
     window.addEventListener('scroll', handleScrollEventDebounce);

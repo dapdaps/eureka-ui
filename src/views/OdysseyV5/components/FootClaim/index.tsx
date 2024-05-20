@@ -15,7 +15,7 @@ export default function FootClaim({ unclaimed, totalReward, explored, onRefreshD
           <span className="count"> {totalReward - unclaimed} </span> PTS has been claimed.
         </div>
 
-        <TrapeziformBtn width="202px" height="61px" handleClick={onClaim} loading={loading}>
+        <TrapeziformBtn handleClick={onClaim} loading={loading}>
           Claim {unclaimed}
           <Image src="/images/odyssey/v5/coin.svg" alt="" width={21} height={21} />
         </TrapeziformBtn>

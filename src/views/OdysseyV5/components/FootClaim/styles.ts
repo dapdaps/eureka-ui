@@ -6,20 +6,22 @@ export const StyledContainer = styled.div`
   right: 0;
   bottom: 0;
   z-index: 7;
-  background-color: ${() => `var(--odyssey-primary-color)`};
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
   width: 100%;
-  max-width: 1244px;
+  max-width: ${() => `var(--odyssey-container-width)`};
   margin: 0 auto;
-  padding: 21px 22px;
+  padding-left: ${() => `var(--odyssey-container-gutter)`};
+  padding-right: ${() => `var(--odyssey-container-gutter)`};
 `;
 
 export const StyledContent = styled.div`
   display: flex;
   align-items: center;
-  padding-bottom: 0;
   justify-content: space-between;
+  background-color: ${() => `var(--odyssey-primary-color)`};
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  padding: 20px 20px 22px 30px;
+
   .txt {
     color: #000;
     font-family: Chakra Petch;

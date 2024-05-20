@@ -108,4 +108,5 @@ export const StyledAllContainer = styled.div`
   width: 100%;
   position: relative;
   padding-top: 100px;
+  padding-bottom: 144px;
 `;
