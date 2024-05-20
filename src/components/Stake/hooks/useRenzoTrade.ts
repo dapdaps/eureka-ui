@@ -257,7 +257,7 @@ export default function useTrade({
 
             fail({
                 title: err.name ? err.name : 'Transaction failed',
-                text: formatException(err.message),
+                text: formatException(err?.message),
             })
             setIsLoading(false)
         }
@@ -270,15 +270,7 @@ export default function useTrade({
         const transactionData = await getTransactionData(value, chainId, _minOut, signer)
         
         if (chainId === 56) {
-            let approveSuccess = true
-            try {
-                approveSuccess = await approve('0x2170Ed0880ac9A755fd29B2688956BD959F933F8', new Big(value), '0xf25484650484DE3d554fB0b7125e7696efA4ab99', signer)
-            } catch(e) {
-                approveSuccess = false
-            }
-            if (!approveSuccess) {
-                throw 'approve failed'
-            }
+            await approve('0x2170Ed0880ac9A755fd29B2688956BD959F933F8', new Big(value), '0xf25484650484DE3d554fB0b7125e7696efA4ab99', signer)
         }
 
         let gasLimit = 1920000
