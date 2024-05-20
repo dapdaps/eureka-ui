@@ -271,7 +271,6 @@ export default function useTrade({
     async function ethereumDeposit(value: string, signer: Signer) {
         const _minOut = new Big(recived).mul(10 ** 18).toString().split('.')[0]
         const transactionData = await getTransactionData(value, chainId, _minOut, signer)
-        console.log('transactionData:', transactionData)
 
         if (chainId === 56) {
             await approve('0x2170Ed0880ac9A755fd29B2688956BD959F933F8', new Big(value), '0xf25484650484DE3d554fB0b7125e7696efA4ab99', signer)

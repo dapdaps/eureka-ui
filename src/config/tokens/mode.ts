@@ -131,12 +131,28 @@ export const mode: { [key: string]: Token } = {
     name: 'LineaBank Token',
     icon: 'https://ipfs.near.social/ipfs/bafkreihjcqx2wtmzq6l2dobpx7oe5zb5epz3frvgzw6wfnojkps7d6cjce',
   },
-  wrseth: {
+  kim: {
     chainId: CHAIN_ID,
-    address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
+    address: '0x6863fb62Ed27A9DdF458105B507C15b5d741d62e',
     decimals: 18,
+    symbol: 'KIM',
+    name: 'KIM',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidiekbdac2oxzv3wue537e22wi7hvb62wqwp3tkmy3oquolbsedf4',
+  },
+  wrseth: {
+    address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
+    chainId: CHAIN_ID,
     symbol: 'wrsETH',
+    decimals: 18,
     name: 'rsETHWrapper',
     icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty',
+  },
+  mode: {
+    address: '0xDfc7C877a950e49D2610114102175A06C2e3167a',
+    chainId: CHAIN_ID,
+    symbol: 'MODE',
+    decimals: 18,
+    name: 'MODE',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihyh7mw7dieuobllbdpzs2irqadepophuc764rtdxbwdn36csz5ei',
   },
 };

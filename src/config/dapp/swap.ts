@@ -478,4 +478,25 @@ export default {
       '--button-text-color': '#fff',
     },
   },
+  'swap-mode': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(rgb(223, 254, 0) 50%, rgb(96, 254, 0))',
+      '--button-text-color': '#000',
+    },
+  },
+  'kim-exchange': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#FF4500',
+      '--button-text-color': '#fff',
+    },
+  },
+  'sup-swap': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#2432f4',
+      '--button-text-color': '#fff',
+    },
+  },
 };

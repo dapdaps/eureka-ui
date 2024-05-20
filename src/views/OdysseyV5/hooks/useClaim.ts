@@ -1,0 +1,31 @@
+import { useCallback, useState } from 'react';
+
+import useToast from '@/hooks/useToast';
+import { post } from '@/utils/http';
+
+export default function useClaim(id: string, onSuccess: VoidFunction) {
+  const [loading, setLoading] = useState(false);
+  const toast = useToast();
+
+  const onClaim = useCallback(async () => {
+    setLoading(true);
+    try {
+      const result = await post('/api/compass/claim', { id });
+      if (result.code === 0) {
+        onSuccess();
+        toast.success({
+          title: 'Claim successfully',
+        });
+      } else {
+        toast.fail({
+          title: result.msg || 'Claim failed',
+        });
+      }
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+    }
+  }, []);
+
+  return { loading, onClaim };
+}

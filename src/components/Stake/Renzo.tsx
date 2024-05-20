@@ -18,6 +18,7 @@ import { usePriceStore } from '@/stores/price';
 import { useChainsStore } from '@/stores/chains';
 
 
+
 import ChainTokens from './componments/ChainTokens';
 import Header from './componments/Header';
 import Msg from './componments/Msg';
@@ -199,19 +200,22 @@ export const Stake = () => {
 
             if (!isError && !isLoading) {
                 const transactionHash = await deposit(inputValue, provider.getSigner())
-                addAction({
-                    type: "Staking",
-                    fromChainId: currentChain.chainId,
-                    toChainId: currentChain.chainId,
-                    token: currentToken,
-                    amount: amount,
-                    template: "Renzo Stake",
-                    add: false,
-                    status: 1,
-                    action: 'Staking',
-                    transactionHash,
-                    action_network_id: currentChain.chainName,
-                });
+                if (transactionHash) {
+                    addAction({
+                        type: "Staking",
+                        fromChainId: currentChain.chainId,
+                        toChainId: currentChain.chainId,
+                        token: currentToken,
+                        amount: amount,
+                        template: "Renzo Stake",
+                        add: false,
+                        status: 1,
+                        action: 'Staking',
+                        transactionHash,
+                        action_network_id: currentChain.chainName,
+                    });
+                }
+
                 setUpdater(updater + 1)
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>
@@ -220,7 +224,7 @@ export const Stake = () => {
 
         {
             chainTokenShow ? <ChainTokens
-                chains={chains.filter((item: any) => [1,42161,56,59144,8453,34443].indexOf(item.chainId) > -1)}
+                chains={chains.filter((item: any) => [1, 42161, 56, 59144, 8453, 34443].indexOf(item.chainId) > -1)}
                 tokens={tokens}
                 chain={currentChain}
                 token={currentToken}
