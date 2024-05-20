@@ -8,6 +8,8 @@ import { basic as xfaiBasic, networks as xfaiNetworks } from '../dapps/xfai';
 import { basic as lynexBasic, networks as lynexNetworks } from '../dapps/lynex';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
+import { basic as nileBasic, networks as nileNetworks } from '../dapps/nile';
+import { basic as sectaBasic, networks as sectaNetworks } from '../dapps/secta-finance';
 import chains from '../../chains';
 
 const CHAIN_ID = 59144;
@@ -20,8 +22,12 @@ export default {
     noAccountTips: 'Linea Dex Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Linea Chain.',
   },
-  defalutDex: 'SyncSwap',
+  defalutDex: 'Nile',
   dexs: {
+    Nile: {
+      ...nileBasic,
+      ...nileNetworks[CHAIN_ID],
+    },
     SyncSwap: {
       ...SyncSwapBasic,
       ...SyncSwapNetworks[CHAIN_ID],
@@ -50,6 +56,10 @@ export default {
     'Velocore V2': {
       ...VelocoreV2Basic,
       ...VelocoreV2Networks[CHAIN_ID],
+    },
+    'Secta Finance': {
+      ...sectaBasic,
+      ...sectaNetworks[CHAIN_ID],
     },
     'XY Finance': {
       ...xyBasic,
