@@ -32,7 +32,7 @@ export default function OdysseyV5() {
     },
     {
       key: 2,
-      title: 'Airdrop Mastery',
+      title: 'Airdrop Strategies',
       target: 'odysseySectionAirdropMastery',
     },
     {
