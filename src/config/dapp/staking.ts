@@ -60,6 +60,13 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#000',
     },
   },
+  kelp: {
+    type: 'staking',
+    theme: {
+      '--button-color': '#075a5a',
+      '--button-text-color': '#fff',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
