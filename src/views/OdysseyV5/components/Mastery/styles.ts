@@ -32,10 +32,7 @@ export const StyledTitle = styled.div`
       gap: 4px;
 
       .logo {
-        color: #fff;
-        &:hover {
-          color: #ebf479;
-        }
+        color: #ebf479;
       }
     }
     
