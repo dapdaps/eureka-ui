@@ -61,7 +61,7 @@ export const StyledEarnedList = styled.div`
   align-items: stretch;
   gap: 17px;
   flex-wrap: wrap;
-  
+  height: 100%;
   > div {
     flex: 1;
   }
@@ -117,7 +117,7 @@ export const StyledCardContainer = styled.div`
   min-height: 785px;
   border-radius: 16px;
   background: #1A1A1A;
-  padding: 38px 32px 28px;
+  padding: 38px 30px 28px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -133,6 +133,7 @@ export const StyledCardHead = styled.div`
   color: ${() => `var(--odyssey-primary-color)`};
 `;
 export const StyledCardContent = styled.div`
+  min-height: 242px;
   .section {
     &.points-earned {
       .item {
@@ -183,7 +184,7 @@ export const StyledCardContent = styled.div`
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 15px 8px;
     margin: 14px 0 0;
     padding: 0;
     list-style: none;
@@ -198,6 +199,7 @@ export const StyledCardContent = styled.div`
 export const StyledCardFoot = styled.div`
   margin-top: auto;
   padding-top: 54px;
+  height: 100%;
 `;
 
 export const StyledLeftBtn = styled.div`

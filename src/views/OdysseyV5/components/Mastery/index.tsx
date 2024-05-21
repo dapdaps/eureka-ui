@@ -128,6 +128,11 @@ const MasteryData = [
         name: 'Kelp Miles',
       },
       {
+        key: 5,
+        icon: '',
+        name: ''
+      },
+      {
         key: 3,
         icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
         name: 'Ironclad embers',
@@ -253,7 +258,7 @@ const Mastery = () => {
             }}
           >
           {
-            MasteryData.map((item) => (
+            MasteryData.map((item, idx) => (
               <SwiperSlide key={item.key}>
                 <MasteryCard
                   key={item.key}
@@ -272,8 +277,8 @@ const Mastery = () => {
                           submit={earn.submit}
                           styles={{
                             background: '#2A2A2A',
-                            paddingLeft: 20,
-                            paddingRight: 20,
+                            paddingLeft: idx === MasteryData.length - 1 ? 15 : 20,
+                            paddingRight: idx === MasteryData.length - 1 ? 15 : 20,
                             flex: 1,
                           }}
                           handleSubmit={() => {
