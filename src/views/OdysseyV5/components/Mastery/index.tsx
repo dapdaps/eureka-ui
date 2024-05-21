@@ -19,22 +19,22 @@ import {
 const MasteryData = [
   {
     key: 1,
-    title: 'Minor leverage long (1.25x)',
+    title: 'Minor Leverage Long (1.25x)',
     pointsEarned: [
       {
         key: 1,
         icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'Ironclad embers',
+        name: 'IRONCLAD EMBERS',
       },
       {
         key: 2,
         icon: '/images/odyssey/v5/mastery/temp/kim.svg',
-        name: 'Kim points',
+        name: 'KIM & xKIM',
       },
       {
         key: 3,
         icon: '/images/odyssey/v5/mastery/temp/mode.svg',
-        name: 'Mode Points',
+        name: 'MODE POINTS',
       },
     ],
     result: [
@@ -73,17 +73,12 @@ const MasteryData = [
       {
         key: 1,
         icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'Ironclad embers',
+        name: 'IRONCLAD EMBERS',
       },
       {
         key: 2,
-        icon: '/images/odyssey/v5/mastery/temp/kim.svg',
-        name: 'Kim points',
-      },
-      {
-        key: 3,
         icon: '/images/odyssey/v5/mastery/temp/ezeth.svg',
-        name: 'ezETH points',
+        name: 'EZETH POINTS',
       },
     ],
     result: [
@@ -115,17 +110,17 @@ const MasteryData = [
   },
   {
     key: 3,
-    title: 'Use rsETH and explore rewards',
+    title: 'Use wrsETH And Explore Rewards',
     pointsEarned: [
       {
         key: 1,
         icon: '/images/odyssey/v5/mastery/temp/mode.svg',
-        name: 'Mode Points',
+        name: 'MODE POINTS',
       },
       {
         key: 2,
         icon: '/images/odyssey/v5/mastery/temp/kelp.svg',
-        name: 'Kelp Miles',
+        name: 'KELP MILES',
       },
       {
         key: 5,
@@ -135,17 +130,17 @@ const MasteryData = [
       {
         key: 3,
         icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'Ironclad embers',
+        name: 'IRONCLAD EMBERS',
       },
       {
         key: 4,
         icon: '/images/odyssey/v5/mastery/temp/eigenlayer.svg',
-        name: 'EigenLayer points',
+        name: 'EIGENLAYER POINTS',
       },
       {
         key: 5,
         icon: '/images/odyssey/v5/mastery/temp/ionic.svg',
-        name: 'Ionic Points',
+        name: 'IONIC POINTS',
       }
     ],
     result: [

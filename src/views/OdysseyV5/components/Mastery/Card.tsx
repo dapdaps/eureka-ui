@@ -25,7 +25,7 @@ const MasteryCard = (props: Props) => {
                 item.name ?
                   <li className="item" key={item.key}>
                   <Image src={item.icon} alt="" width={34} height={34} />
-                  {item.name.toUpperCase()}
+                  {item.name}
                 </li> : <li style={{ width: '200px' }} key={item.key}></li>
               ))
             }
