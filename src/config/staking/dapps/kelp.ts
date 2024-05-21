@@ -21,6 +21,21 @@ const networks = {
       ...linea['wrseth'],
     },
   },
+  // mode
+  34443: {
+    DepositPool: '0xbDf612E616432AA8e8D7d8cC1A9c934025371c5C',
+    StakeTokens: [
+      {
+        ...linea['eth'],
+      },
+      // {
+      //   ...linea['weth'],
+      // },
+    ],
+    ExchangeToken: {
+      ...linea['wrseth'],
+    },
+  },
   1: {
     //TODO
     DepositPool: '0x036676389e48133B63a802f8635AD39E752D375D',
