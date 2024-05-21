@@ -9,18 +9,18 @@ import { StyledContainer, StyledContent } from './styles';
 
 export default function Bridge({ list, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
   return (
-    <StyledContainer>
+    <StyledContainer id='odysseySectionExploreModularMode'>
       <StyledTitle className='bridge-title'>
         Explore Modular <span className="hilight">Mode</span>
       </StyledTitle>
       <StyledDesc>Navigate a Curated Selection of Partner dApps Across the Mode Ecosystem</StyledDesc>
       <Title
         title="Bridge"
-        subtitle="Cross a bridge to Mode and discover new opportunities make sure the descriptions say assets not asset"
+        subtitle="Cross a bridge to Mode and discover new opportunities"
       />
       <StyledContent>
         {
-          loading ? <StyledLoadingWrapper $h="100px">
+          loading ? <StyledLoadingWrapper $h="100px" className='loading'>
               <Loading size={30} />
             </StyledLoadingWrapper>
             : (list?.length > 0 ? list.map((item: any) => (

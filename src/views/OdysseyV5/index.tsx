@@ -47,6 +47,11 @@ export default function OdysseyV5() {
     },
     {
       key: 5,
+      title: 'Explore Modular Mode',
+      target: 'odysseySectionExploreModularMode'
+    },
+    {
+      key: 6,
       title: 'Climb to Leaderboard',
       target: 'odysseySectionClimbToLeaderboard',
     },

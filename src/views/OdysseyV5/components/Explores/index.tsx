@@ -8,9 +8,6 @@ import ExploreItem from './ExploreItem';
 import {
   StyledContainer,
   StyledDesc,
-  StyledExploreContainer,
-  StyledExploreDesc,
-  StyledExploreTitle,
   StyledItemWrap,
   StyledTitle,
 } from './styles';
@@ -30,10 +27,6 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail, 
           Dive into <span className="hilight">DapDap Social</span>
         </StyledTitle>
         <StyledDesc>Explore DapDap&lsquo;s Social Features, Receive Points</StyledDesc>
-        <StyledExploreContainer>
-          <StyledExploreTitle>Explore Mode</StyledExploreTitle>
-          <StyledExploreDesc>Complete tasks easily to earn DapDap PTS</StyledExploreDesc>
-        </StyledExploreContainer>
         <StyledItemWrap>
           {
             loading ? <StyledLoadingWrapper $h="100px">

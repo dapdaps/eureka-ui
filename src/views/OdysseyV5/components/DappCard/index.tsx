@@ -134,7 +134,7 @@ export default function DappCard({
   const isRenzo = name === 'Renzo';
 
   const getTagText = () => {
-    if (['bridge', 'trade'].includes(type)) {
+    if (['trade'].includes(type)) {
       return '4x Points';
     }
     if (['lending'].includes(type)) {
@@ -142,14 +142,14 @@ export default function DappCard({
     }
   };
 
-  const defaultTag = () => (
-    <StyledCardTag className="main">
+  const defaultTag = () => {
+    return type !== 'bridge' ? <StyledCardTag className="main">
       <StyledTagIconDefault url={'/images/odyssey/v5/mode-icon.svg'} />
       <StyledTagText>
         {getTagText()}
       </StyledTagText>
-    </StyledCardTag>
-  );
+    </StyledCardTag> : null
+  }
 
   const names = () => (
     <StyledDappName>{name}</StyledDappName>

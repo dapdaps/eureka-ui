@@ -6,7 +6,7 @@ export const StyledContainer = styled.div`
   padding-left: 50px;
   padding-right: 50px;
   .bridge-title {
-    padding-top: 25px;
+    padding-top: 100px;
   }
 `;
 
@@ -16,4 +16,7 @@ export const StyledContent = styled.div`
   gap: 24px;
   align-items: center;
   flex-wrap: wrap;
+  .loading {
+    position: relative;
+  }
 `;
