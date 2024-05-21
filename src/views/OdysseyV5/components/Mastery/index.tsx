@@ -19,7 +19,7 @@ import {
 const MasteryData = [
   {
     key: 1,
-    title: 'Minor leverage long (1.25x)',
+    title: 'Minor Leverage Long (1.25x)',
     pointsEarned: [
       {
         key: 1,
@@ -110,7 +110,7 @@ const MasteryData = [
   },
   {
     key: 3,
-    title: 'Use wrsETH and explore rewards',
+    title: 'Use wrsETH And Explore Rewards',
     pointsEarned: [
       {
         key: 1,
