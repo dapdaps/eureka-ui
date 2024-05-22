@@ -129,7 +129,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
                         styles={{
                           flex: 1
                         }}
-                        reload={true}
+                        reload={false}
                         refreshDetail={onRefreshDetail}
                         detailLoading={detailLoading}
                         setDetailLoading={setDetailLoading}
