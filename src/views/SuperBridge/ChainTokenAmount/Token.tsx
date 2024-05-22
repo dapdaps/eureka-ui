@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { balanceFormated, percentFormated } from '@/utils/balance';
-
+import { usePriceStore } from '@/stores/price';
 import Loading from '@/components/Icons/Loading';
 
 import type { Chain, Token } from '@/types';
@@ -51,6 +51,11 @@ const Container = styled.div`
         font-weight: 400;
         line-height: 16.8px;
         color: #fff;
+        text-align: right;
+        .r-price {
+            color: rgba(151, 154, 190, 1);
+            margin-top: 3px;
+        }
     }
 `
 
@@ -71,7 +76,7 @@ export default function TokenRow({ token, chain, isSelected, loading, balances, 
     //     isNative: chain?.nativeCurrency.symbol === token?.symbol,
     //     isPure: false,
     // })
-
+    const prices = usePriceStore((store) => store.price);
     const balanceKey = token.isNative ? 'native' : token.address
 
     return <Container className={isSelected ? 'active' : ''} onClick={() => {
@@ -87,7 +92,10 @@ export default function TokenRow({ token, chain, isSelected, loading, balances, 
         </div>
         <div className="right">
             {
-                loading ? <></> : <span>{ balanceFormated(balances[balanceKey]) }</span>
+                loading ? <></> : <div>
+                    <div>{ balanceFormated(balances[balanceKey]) }</div>
+                    <div className="r-price">${ balanceFormated(Number(prices[token.symbol]) * balances[balanceKey], 2) }</div>
+                </div>
             }
         </div>
     </Container>

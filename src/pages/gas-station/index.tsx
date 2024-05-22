@@ -4,21 +4,15 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import BridgeAction from '@/views/SuperBridge/BridgeAction';
-import Transaction from '@/views/SuperBridge/Transaction';
-import Medal from '@/views/SuperBridge/Medal';
-
 import chainCofig from '@/config/chains'
-
 import { useDefaultLayout } from '@/hooks/useLayout';
+
+import GasStation from '@/views/GasStation';
 
 import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
 
 const Container = styled.div`
-  display: flex;
-  justify-content: center;
-  gap: 20px;
   padding-top: 80px;
 `;
 
@@ -28,6 +22,17 @@ const RightContainer = styled.div`
 
 const Sep = styled.div`
   margin-top: 20px;
+`
+
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 23.66px;
+  gap: 10px;
 `
 
 const chainListSort = [1, 42161, 10, 8453, 81457, 5000, 324, 59144, 169, 34443, 1088, 534352, 1101, 137, 56, 43114, 100]
@@ -63,14 +68,11 @@ const Bridge: NextPageWithLayout = () => {
 
   return (
     <Container>
-      <BridgeAction
-        chainList={chainList}
-      />
-      <RightContainer>
-        <Transaction />
-        <Sep />
-        <Medal />
-      </RightContainer>
+      <Title>
+        ⛽
+        <span>Gas Station</span>
+      </Title>
+      <GasStation chainList={chainList} />
     </Container>
   )
 };

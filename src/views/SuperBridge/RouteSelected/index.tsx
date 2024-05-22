@@ -5,7 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { ArrowRight } from '../Arrow'
 import Route from '../Route'
 import RouteModal from './RouteModal';
-import type { Token } from "@/types";
+import type { Chain, Token } from "@/types";
 
 const Container = styled.div`
     margin-top: 20px;
@@ -41,6 +41,7 @@ const Sep = styled.div`
 `
 
 interface Props {
+    fromChain: Chain;
     routes: QuoteResponse[] | null;
     toToken: Token;
     routeSortType: number;
@@ -48,7 +49,7 @@ interface Props {
 }
 
 export default function RouteSelected(
-    { routes, toToken, routeSortType, onRouteSelected }: Props
+    { routes, toToken, routeSortType, fromChain, onRouteSelected }: Props
 ) {
     const [routeModalShow, setRouteModalShow] = useState<boolean>(false)
     const [routeSelected, setRouteSelected] = useState<QuoteResponse | null>(null)
@@ -114,7 +115,7 @@ export default function RouteSelected(
         {
             routeSelected && <Route onClick={() => {
                 setRouteModalShow(true)
-            }} best={best} fast={fast} toToken={toToken} route={routeSelected} active/>
+            }} fromChain={fromChain} best={best} fast={fast} toToken={toToken} route={routeSelected} active/>
         }
         {
             routeModalShow && <RouteModal 
@@ -123,6 +124,7 @@ export default function RouteSelected(
             toToken={toToken} 
             routeSelected={routeSelected} 
             routes={sortedRoutes} 
+            fromChain={fromChain}
             onClose={() => { setRouteModalShow(false) }} 
             onRouteSelected={(route) => { 
                 setRouteSelected(route)

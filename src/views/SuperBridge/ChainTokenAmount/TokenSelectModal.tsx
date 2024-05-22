@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import styled from 'styled-components';
 import { useDebounce } from 'ahooks';
 
+import { usePriceStore } from '@/stores/price';
 import useTokensBalance from "@/components/BridgeX/hooks/useTokensBalance";
 import { ArrowDown } from '../Arrow'
 import Modal from "../Modal";
@@ -107,6 +108,7 @@ export default function TokenSelectModal({
     const [tempChain, setTempChain] = useState(currentChain)
     const [searchVal, setSearchVal] = useState('')
     const [filterTokenList, setFilterTokenList] = useState([])
+    
 
     const { loading, balances, currentChainId } = useTokensBalance(filterTokenList)
 

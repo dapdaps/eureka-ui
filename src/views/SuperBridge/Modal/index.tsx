@@ -61,7 +61,9 @@ export default function Modal({
     width, height, onClose, title, children, paddingSize = 20, top = '30%'
 }: Props) {
     return <div>
-        <Layer />
+        <Layer onClick={() => {
+            onClose && onClose()
+        }}/>
         <Container size={paddingSize} style={{ top }}>
             <CloseWapper onClick={() => {
                 onClose && onClose()

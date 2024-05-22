@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
 
 import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
@@ -11,6 +11,7 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
     const [routes, setRoutes] = useState<QuoteResponse[] | null>(null)
     const [loading, setLoading] = useState(false)
     const {chainId, provider} = useAccount()
+    const newestIdentification = useRef(identification)
 
     async function getRoutes() {
         if (!quoteRequest) {
@@ -34,7 +35,10 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
             if (stop) {
                 return
             }
-            if (val.identification === identification) {
+
+            console.log('val.identification:', val.identification, identification)
+
+            if (val.identification === newestIdentification.current) {
                 routes.push(val)
                 // console.log('routes.length: ', routes.length)
                 setRoutes([
@@ -51,6 +55,10 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
     useEffect(() => {
         getRoutes()
     }, [quoteRequest])
+
+    useEffect(() => {
+        newestIdentification.current = identification
+    }, [identification])
 
     return {
         routes,

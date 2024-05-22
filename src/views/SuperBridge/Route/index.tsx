@@ -4,7 +4,7 @@ import Big from 'big.js';
 import { usePriceStore } from '@/stores/price';
 import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 
-import type { Token } from '@/types';
+import type { Token, Chain } from '@/types';
 import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
 
 const Contanier = styled.div<{active: boolean, canClick: any}>`
@@ -94,6 +94,7 @@ const BridgeAmount = styled.div`
 `
 
 interface Props {
+    fromChain: Chain;
     showOutputTitle?: boolean;
     active?: boolean;
     route: QuoteResponse;
@@ -104,7 +105,7 @@ interface Props {
 }
 
 export default function Route(
-    { showOutputTitle = true, active = false, onClick, route, best, fast, toToken } : Props
+    { showOutputTitle = true, active = false, onClick, route, best, fast, fromChain, toToken } : Props
     ) {
     const prices = usePriceStore((store) => store.price);
         
@@ -138,7 +139,7 @@ export default function Route(
                 <div className="token-amount">~3380.49</div> */}
             </div>
             <div className="cost-wapper">
-                <div>~{route.duration} min｜Fee ${ balanceFormated(route.feeType === 1 ? (prices as any)['ETH'] * Number(route.gas) : route.gas) }</div>
+                <div>~{route.duration} min｜Fee ${ balanceFormated(route.feeType === 1 ? (prices as any)[fromChain.nativeCurrency.symbol] * Number(route.gas) : route.gas) }</div>
             </div>
         </BridgeAmount>
     </Contanier>

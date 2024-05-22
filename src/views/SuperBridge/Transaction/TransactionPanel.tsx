@@ -15,7 +15,8 @@ const Container = styled.div`
     border-radius: 16px;
     position: absolute;
     width: 1234px;
-    height: 857px;
+    margin-bottom: 100px;
+    height: 670px;
     left: 50%;
     transform: translateX(-50%);
     top: 80px;
@@ -66,7 +67,6 @@ const Header = styled.div`
 `
 
 const Content = styled.div`
-    height: 680px;
     overflow: auto;
     padding: 0 66px;
     table  {

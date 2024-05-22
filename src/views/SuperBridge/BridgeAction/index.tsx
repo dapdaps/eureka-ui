@@ -131,7 +131,7 @@ export default function BirdgeAction(
     fromChain,
     fromToken,
     toChain,
-})
+  })
 
   useEffect(() => {
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
@@ -202,9 +202,7 @@ export default function BirdgeAction(
 
   useEffect(() => {
     if (selectedRoute && toToken) {
-      console.log('selectedRoute:', selectedRoute)
       const reciveAmount = new Big(selectedRoute.receiveAmount).div(10 ** toToken.decimals).toNumber()
-      console.log('reciveAmount:', reciveAmount)
       setReciveAmount(getFullNum(reciveAmount))
     } else {
       setReciveAmount('')
@@ -281,6 +279,7 @@ export default function BirdgeAction(
     />
     {
       toToken && routes?.length && <RouteSelected
+        fromChain={fromChain}
         routeSortType={routeSortType}
         onRouteSelected={(route: QuoteResponse | null) => {
           setSelectedRoute(route)
@@ -412,18 +411,18 @@ export default function BirdgeAction(
     }
 
     {
-          gasModalShow &&  <GasModal
-                fromChain={fromChain}
-                fromToken={fromToken}
-                toChain={toChain}
-                toAddress={ account as string }
-                maxBalance={ balance }
-                onClick={() => {
-                    console.log(11)
-                }}
-                onClose={() => { setGasModalShow(false) }}
-            />
-        }
+      gasModalShow && <GasModal
+        fromChain={fromChain}
+        fromToken={fromToken}
+        toChain={toChain}
+        toAddress={account as string}
+        maxBalance={balance}
+        onClick={() => {
+          console.log(11)
+        }}
+        onClose={() => { setGasModalShow(false) }}
+      />
+    }
 
   </Container>
 }

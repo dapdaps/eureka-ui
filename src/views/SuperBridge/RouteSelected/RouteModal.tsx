@@ -5,7 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { ArrowDown } from '../Arrow'
 import Modal from "../Modal";
 import Route from "../Route";
-import type { Token } from "@/types";
+import type { Chain, Token } from "@/types";
 
 const ListWapper = styled.div`
     &>:not(:first-child) {
@@ -17,6 +17,7 @@ const ListWapper = styled.div`
 
 interface Props {
     onClose?: () => void; 
+    fromChain: Chain;
     routes: QuoteResponse[] | null;
     toToken: Token;
     best: QuoteResponse | null;
@@ -25,13 +26,13 @@ interface Props {
     onRouteSelected: (val: QuoteResponse) => void;
 }
 
-export default function RouteModal({ onClose, routes, toToken, best, fast, routeSelected, onRouteSelected }: Props) {
+export default function RouteModal({ onClose, fromChain, routes, toToken, best, fast, routeSelected, onRouteSelected }: Props) {
 
     return <Modal title="Bridge Route" onClose={onClose}>
         <ListWapper>
         {
             routes?.map((route: QuoteResponse, index) => {
-                return <Route route={route} fast={fast} best={best} active={routeSelected === route} toToken={toToken} onClick={() => {
+                return <Route fromChain={fromChain} route={route} fast={fast} best={best} active={routeSelected === route} toToken={toToken} onClick={() => {
                     onRouteSelected(route)
                     // onClose && onClose()
                 }} showOutputTitle={false} key={route.bridgeType + index}/>
