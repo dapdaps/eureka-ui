@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { FreeMode } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import Loading from '@/components/Icons/Loading';
@@ -76,13 +77,45 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
   const { open: dappOpen } = useDappOpen();
   const swiperRef = useRef<any>();
 
-  const handleDappRedirect = (operatorsList: Record<string, any>[]) => {
-    if (!operatorsList.length) {
+  const handleDappRedirect = (earnItem: any) => {
+    if (earnItem.website) {
+      window.open(earnItem.website);
       return;
     }
-    const dapp = operatorsList[0];
-    dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
+    if (!earnItem.operators || !earnItem.operators.length) {
+      return;
+    }
+    const dapp = earnItem.operators[0];
+    if (dapp.route) {
+      dappOpen({
+        dapp: { ...dapp, route: `/${dapp.route}` },
+        from: 'quest',
+        isCurrentTab: false,
+      });
+    }
   };
+
+  const getEarnedList = (earnItem: any) => {
+    if (earnItem.earned) return earnItem.earned;
+    return earned;
+  };
+
+  const getEarnedHeadIconList = (earnItem: any) => {
+    if (earnItem.operators && earnItem.operators.length) {
+      return earnItem.operators.map((it: any) => it.dapp_logo);
+    }
+    return ICON_MAP[earnItem.name];
+  };
+
+  useEffect(() => {
+    if (list.length === 2 && swiperRef.current) {
+      const containerWidth = parseFloat(getComputedStyle(swiperRef.current.el).width);
+      const timer = setTimeout(() => {
+        swiperRef.current.setTranslate(containerWidth / 6);
+        clearTimeout(timer);
+      }, 300);
+    }
+  }, [list]);
 
   return (
     <StyledContainer id="odysseySectionModeDAppBlitz">
@@ -99,10 +132,12 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
         </StyledHead>
         <StyledContent>
           <Swiper
+            style={{ width: '100%' }}
             slidesPerView={3}
             spaceBetween={27}
             centeredSlides={true}
-            modules={[]}
+            modules={[FreeMode]}
+            freeMode={true}
             className="modeDappBlitzSwiper"
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
@@ -121,13 +156,14 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
                         id={earn.id}
                         total_spins={earn.total_spins}
                         spins={earn.spins}
-                        handleSubmit={() => handleDappRedirect(earn?.operators ?? [])}
+                        handleSubmit={() => handleDappRedirect(earn)}
                         title={earn.name}
-                        icon={ICON_MAP[earn.name] || earn.operators?.[0]?.dapp_logo}
+                        icon={getEarnedHeadIconList(earn)}
                         iconBorder="#DFFE00"
-                        submit={submit}
+                        submit={earn.submit || submit}
                         styles={{
-                          flex: 1
+                          flex: 1,
+                          height: '100%',
                         }}
                         reload={false}
                         refreshDetail={onRefreshDetail}
@@ -142,7 +178,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
                             <div className="title">Tokens & Points earned:</div>
                             <ul className="list">
                               {
-                                earned.map((item) => (
+                                getEarnedList(earn).map((item: any) => (
                                     item.text ? (
                                       <StyledEarnedItem className="item" key={item.key}>
                                         <Image src={item.icon} alt="" width={30} height={30} />
@@ -157,8 +193,17 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
                           </section>
                           <section className="section requirements">
                             <div className="title">Requirements:</div>
-                            <ul className="list">
-                              <li className="item">Swap through {earn.name} on DapDap to earn token rewards based on your trading volume.</li>
+                            <ul className={`list ${earn.requirements ? 'styled' : ''}`}>
+                              {
+                                earn.requirements ? earn.requirements.map((requirement: string, idx: number) => (
+                                  <li key={idx} className="item" dangerouslySetInnerHTML={{ __html: requirement }} />
+                                )) : (
+                                  <li className="item">
+                                    Swap through {earn.name} on DapDap to earn token rewards based on your trading
+                                    volume.
+                                  </li>
+                                )
+                              }
                             </ul>
                           </section>
                         </StyledEarnedCardContent>
