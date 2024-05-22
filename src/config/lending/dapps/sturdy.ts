@@ -2,7 +2,7 @@ import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'Sturdy',
-  data: 'bluebiu.near/widget/Lending.Data.Sturdy',
+  data: 'bluebiu.near/widget/Lending.Sturdy.Data',
   // handler: '',
   type: '',
 };
