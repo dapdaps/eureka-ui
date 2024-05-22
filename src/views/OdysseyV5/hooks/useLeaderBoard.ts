@@ -17,7 +17,9 @@ export default function useLeaderBoard(id: any) {
       const result = await get('/api/compass/leaderboard', { id });
 
       if (result.code === 0 && result.data) {
-        setRanks({ ...result.data });
+        const _rank = (result.data?.data ?? []).slice(0, 10);
+        const _user = result.data?.user;
+        setRanks({ data: _rank, user: _user});
       } else {
         setRanks({});
       }
@@ -38,7 +40,7 @@ export default function useLeaderBoard(id: any) {
   useEffect(() => {
     if (!id) return;
     run();
-  }, [id]);
+  }, [id, account]);
 
   return { ranks, loading, fetchData };
 }

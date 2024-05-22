@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   --odyssey-container-gutter: 100px;
-  --odyssey-container-width: 1542px;
+  --odyssey-container-width: 1544px;
   --odyssey-primary-color: #DFFE00;
 
   background: #000;

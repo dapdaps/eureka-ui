@@ -3,7 +3,8 @@ import { linea } from '@/config/tokens/linea';
 const BORROW_TOKEN = 'LYU';
 const BORROW_URL = 'https://ipfs.near.social/ipfs/bafkreigeatxpoa3mn2dbhgmbhltia2wqonqsaesafvyhxsugeiyno2rryi';
 
-const MIN_DEBT = 200;
+const MIN_DEBT = 1000;
+const ONE_TIME_FEE = 1;
 
 const basic = {
   name: 'Lyve',
@@ -30,9 +31,8 @@ const networks = {
         BORROW_TOKEN,
         BORROW_URL,
         MAX_LTV: 0.91,
-        ONE_TIME_FEE: 1,
+        ONE_TIME_FEE,
         MIN_DEBT,
-        // MINTED: 23822,
         MINTED_CAP: 1000000,
       },
       [linea['weth'].address]: {
@@ -41,9 +41,8 @@ const networks = {
         BORROW_TOKEN,
         BORROW_URL,
         MAX_LTV: 0.91,
-        ONE_TIME_FEE: 1,
+        ONE_TIME_FEE,
         MIN_DEBT,
-        // MINTED: 22897,
         MINTED_CAP: 1000000,
       },
     },

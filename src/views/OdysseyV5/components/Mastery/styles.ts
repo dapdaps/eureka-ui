@@ -26,6 +26,14 @@ export const StyledTitle = styled.div`
       font-weight: 300;
       line-height: 20px;
       margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+
+      .logo {
+        color: #ebf479;
+      }
     }
     
     .primary {
@@ -39,6 +47,10 @@ export const StyledContent = styled.div`
   align-items: stretch;
   gap: 20px;
   margin-top: 50px;
+
+  .modeDappMasterySwiper {
+    width: 100%;
+  }
 `;
 export const StyledEarnedList = styled.div`
   display: flex;
@@ -46,7 +58,7 @@ export const StyledEarnedList = styled.div`
   align-items: stretch;
   gap: 17px;
   flex-wrap: wrap;
-  
+  height: 100%;
   > div {
     flex: 1;
   }
@@ -102,12 +114,13 @@ export const StyledCardContainer = styled.div`
   min-height: 785px;
   border-radius: 16px;
   background: #1A1A1A;
-  padding: 38px 32px 28px;
+  padding: 38px 30px 28px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
   gap: 30px;
+  height: 100%;
 `;
 export const StyledCardHead = styled.div`
   font-size: 36px;
@@ -117,6 +130,7 @@ export const StyledCardHead = styled.div`
   color: ${() => `var(--odyssey-primary-color)`};
 `;
 export const StyledCardContent = styled.div`
+  min-height: 242px;
   .section {
     &.points-earned {
       .item {
@@ -167,7 +181,7 @@ export const StyledCardContent = styled.div`
     justify-content: flex-start;
     align-items: center;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 15px 8px;
     margin: 14px 0 0;
     padding: 0;
     list-style: none;
@@ -182,5 +196,42 @@ export const StyledCardContent = styled.div`
 export const StyledCardFoot = styled.div`
   margin-top: auto;
   padding-top: 54px;
+  height: 100%;
 `;
+
+export const StyledLeftBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledRightBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledPageBtn = styled.div`
+  .btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(33, 35, 42, 0.9);
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+
+export const StyledArrow = styled.div`
+transform: rotate(-180deg);`;
 
