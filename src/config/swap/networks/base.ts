@@ -5,7 +5,6 @@ import { basic as synthSwapBasic, networks as synthSwapNetworks } from '../dapps
 import { basic as horizonDexBasic, networks as horizonDexNetworks } from '../dapps/horizon-dex';
 import { basic as sharkBasic, networks as sharkNetworks } from '../dapps/shark-swap';
 import { basic as aerodromeBasic, networks as aerodromeNetworks } from '../dapps/aerodrome';
-import { basic as sobalBasic, networks as sobalNetworks } from '../dapps/sobal';
 import { basic as velocimeterV2Basic, networks as velocimeterV2Networks } from '../dapps/velocimeter-v2';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
@@ -54,10 +53,6 @@ export default {
     Synthswap: {
       ...synthSwapBasic,
       ...synthSwapNetworks[CHAIN_ID],
-    },
-    Sobal: {
-      ...sobalBasic,
-      ...sobalNetworks[CHAIN_ID],
     },
     SharkSwap: {
       ...sharkBasic,

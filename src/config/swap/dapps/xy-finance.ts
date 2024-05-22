@@ -4,7 +4,7 @@ import { linea } from '@/config/tokens/linea';
 const basic = {
   name: 'XY Finance',
   logo: '/images/apps/xy-finance.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.XYFinance',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   534352: {

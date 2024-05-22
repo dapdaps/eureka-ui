@@ -1,3 +1,4 @@
+import { useSize } from 'ahooks';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
@@ -10,7 +11,6 @@ import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import { useSize } from "ahooks";
 
 import useCompassList from './hooks/useCompassList';
 import {
@@ -31,7 +31,7 @@ import {
   StyledRadialBg2,
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
-  StyledSwiperWrapper
+  StyledSwiperWrapper,
 } from './styles';
 
 const iconRight = (
@@ -87,7 +87,7 @@ const Card = function ({ compass }: any) {
 };
 const Compass = () => {
   const router = useRouter();
-  const size: any = useSize(window.document.getElementsByTagName("body")[0]);
+  const size: any = useSize(window.document.getElementsByTagName('body')[0]);
   const { loading, compassList } = useCompassList();
   const swiperRef = useRef<any>();
 
@@ -172,6 +172,7 @@ const Compass = () => {
                           right: -8,
                           top: 45,
                           textAlign: 'center',
+                          fontWeight: 900,
                           transform: 'rotate(-15deg)',
                         }}
                       >

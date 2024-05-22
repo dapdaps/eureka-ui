@@ -3,11 +3,10 @@ import { scroll } from '@/config/tokens/scroll';
 const basic = {
   name: 'DODO',
   logo: '/images/apps/dodo.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.DodoAmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   534352: {
-    rpc: 'https://rpc.scroll.io',
     defaultCurrencies: {
       input: scroll['eth'],
       output: scroll['usdc'],

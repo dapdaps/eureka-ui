@@ -30,12 +30,14 @@ export default function useIncrease({
   const { contracts, dapp } = useDappConfig();
   const toast = useToast();
   const slippage = useSettingsStore((store: any) => store.slippage);
+
   const { addAction } = useAddAction('dapp');
 
   const onIncrease = async () => {
     setLoading(true);
     const { PositionManager } = contracts[token0.chainId];
     let toastId = toast.loading({ title: 'Confirming...' });
+
     try {
       const [_token0, _token1] = sortTokens(wrapNativeToken(token0), wrapNativeToken(token1));
       const hasNativeToken = token0.isNative ? token0 : token1.isNative ? token1 : '';
@@ -46,8 +48,8 @@ export default function useIncrease({
       const _value1 = isReverse ? value0 : value1;
       const _amount0 = new Big(_value0 || 1).mul(10 ** _token0.decimals).toFixed(0);
       const _amount1 = new Big(_value1 || 1).mul(10 ** _token1.decimals).toFixed(0);
-      const _amount0Min = new Big(_amount0).mul(1 - slippage).toFixed(0);
-      const _amount1Min = new Big(_amount1).mul(1 - slippage).toFixed(0);
+      const _amount0Min = new Big(_amount0).mul(1 - (slippage || 0.05)).toFixed(0);
+      const _amount1Min = new Big(_amount1).mul(1 - (slippage || 0.05)).toFixed(0);
       const _deadline = Math.ceil(Date.now() / 1000) + 600;
 
       if (noPair) {
@@ -138,7 +140,7 @@ export default function useIncrease({
           estimateGas = new Big(3000000);
         }
       }
-
+      console.log('estimateGas', estimateGas.toString());
       const gasPrice = await provider.getGasPrice();
       const newTxn = {
         ...txn,
