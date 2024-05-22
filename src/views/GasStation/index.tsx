@@ -1,5 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { useDebounce } from 'ahooks';
+
+import { useGasTokenHooks, useGasAmount } from '@/views/SuperBridge/hooks/useGasTokenHooks';
+import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance'
+import { usePriceStore } from '@/stores/price';
+import allTokens from '@/config/bridge/allTokens';
+
 
 import ChainSelector from './ChainSelector/index';
 import TokenSeletor from './TokenSelector/index'
@@ -87,29 +94,101 @@ const DefaultTokenList = [{
     decimals: 18,
     isNative: true,
     address: 'native',
-  },
-  {
+},
+{
     chainId: 1,
     address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
     name: 'USDC',
     symbol: 'USDC',
     icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
     decimals: 6,
-  },
-    {
+},
+{
     chainId: 1,
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     name: 'Tether USD',
     symbol: 'USDT',
     icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
     decimals: 6,
-  }]
+}]
+
+const symbols = DefaultTokenList.map(item => item.symbol)
 
 export default function GasStation({ chainList }: Props) {
-    const [fromChain, setFromChain] = useState<Chain | null>(null)
-    const [toChain, setToChain] = useState<Chain | null>(null)
-    const [amount, setAmount] = useState<string | number | null>(null)
+    const [fromChain, setFromChain] = useState<Chain | undefined>(undefined)
+    const [toChain, setToChain] = useState<Chain | undefined>(undefined)
+    const [amount, setAmount] = useState<string | number | undefined>(undefined)
+    const [inputVal, setInputVal] = useState<string | number>(0)
     const [tokenList, setTokenList] = useState<Token[]>([])
+    const [fromToken, setFromToken] = useState<Token>()
+    const [chainFromToken, setChainFromToken] = useState<Token | undefined>()
+    const [gasAmountParam, setGasAmountParam] = useState<any>({
+        fromChain,
+        toChain,
+        fromToken: chainFromToken,
+        value: inputVal,
+    })
+    const prices = usePriceStore((store) => store.price);
+    const inputGasAmountParam = useDebounce(gasAmountParam, { wait: 500 });
+    const { isSupported } = useGasTokenHooks({
+        fromChain,
+        toChain,
+        fromToken: chainFromToken
+    })
+
+    // const { receive, isLoading, deposit } = useGasAmount({
+    //     fromChain,
+    //     toChain,
+    //     fromToken: chainFromToken,
+    //     value: inputVal,
+    // })
+
+    const { receive, isLoading, deposit } = useGasAmount(inputGasAmountParam)
+
+    const { balances } = useTokensBalance(tokenList)
+
+    useEffect(() => {
+        if (fromChain) {
+            const _tokenList = allTokens[fromChain.chainId]
+            const tokenList = _tokenList.filter(token => symbols.indexOf(token.symbol) > -1)
+            setTokenList(tokenList)
+        }
+    }, [fromChain])
+
+    useEffect(() => {
+        if (tokenList && fromToken) {
+            const _filter = tokenList.filter(token => {
+                return token.symbol === fromToken.symbol
+            })
+            if (_filter && _filter.length) {
+                setChainFromToken(_filter[0])
+            } else {
+                setChainFromToken(undefined)
+            }
+        } else {
+            setChainFromToken(undefined)
+        }
+    }, [fromToken, tokenList])
+
+    useEffect(() => {
+        if (amount && chainFromToken && toChain && prices) {
+            const _amount = Number(amount) / Number(prices[chainFromToken.symbol])
+            setInputVal(_amount)
+        } else {
+            setInputVal(0)
+        }
+    }, [amount, chainFromToken, toChain, prices])
+
+    useEffect(() => {
+        setGasAmountParam({
+            fromChain,
+            toChain,
+            fromToken: chainFromToken,
+            value: inputVal,
+        })
+    }, [fromChain, toChain, chainFromToken, inputVal])
+
+    console.log('receive:', receive)
 
     return <Container>
         <Header>
@@ -130,25 +209,35 @@ export default function GasStation({ chainList }: Props) {
                 onToChainChange={(chain: Chain) => setToChain(chain)}
                 chainList={chainList}
                 fromChain={fromChain}
-                toChain={toChain} 
+                toChain={toChain}
             />
 
-            <div style={{ marginTop: 20 }}></div>    
+            <div style={{ marginTop: 20 }}></div>
 
-            <TokenSeletor tokenList={DefaultTokenList}/>
+            <TokenSeletor
+                selectedToken={fromToken}
+                balances={balances}
+                tokenList={DefaultTokenList}
+                chainTokenList={tokenList}
+                onTokenChoose={(token) => {
+                    setFromToken(token)
+                }}
+            />
 
-            <div style={{ marginTop: 20 }}></div>    
+            <div style={{ marginTop: 20 }}></div>
             <Amount value={amount} onChange={(v) => {
                 setAmount(v)
-            }}/>
+            }} />
 
-            <div style={{ marginTop: 20 }}></div>  
-            <DestinationAddress value={amount} onChange={(v) => {
-                setAmount(v)
-            }}/>
+            <div style={{ marginTop: 20 }}></div>
+            <DestinationAddress />
 
-            <div style={{ marginTop: 20 }}></div>  
-            <ReceiveDesc />
+            {
+                isSupported && receive && <div>
+                    <div style={{ marginTop: 20 }}></div>
+                    <ReceiveDesc receive={receive} loading={isLoading} toChain={toChain}/>
+                </div>
+            }
 
             <SubmitPanel />
         </Content>

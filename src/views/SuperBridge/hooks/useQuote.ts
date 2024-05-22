@@ -36,8 +36,6 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
                 return
             }
 
-            console.log('val.identification:', val.identification, identification)
-
             if (val.identification === newestIdentification.current) {
                 routes.push(val)
                 // console.log('routes.length: ', routes.length)

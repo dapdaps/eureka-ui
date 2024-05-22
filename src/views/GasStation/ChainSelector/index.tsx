@@ -195,8 +195,8 @@ const ChainTriggerCom = ({ cls, paddingLeft, title, chainList, onChainChange, ch
 
 interface Props {
     chainList: Chain[];
-    fromChain: Chain | null;
-    toChain: Chain | null;
+    fromChain: Chain | undefined;
+    toChain: Chain | undefined;
     onFromChainChange: (chain: Chain) => void;
     onToChainChange: (chain: Chain) => void;
 }

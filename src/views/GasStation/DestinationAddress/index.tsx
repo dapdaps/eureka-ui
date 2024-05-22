@@ -35,11 +35,10 @@ const AddBtn = styled.div`
 
 
 interface Props {
-    value: number | string | null;
-    onChange: (v: number) => void;
+   
 }
 
-export default function Amount({ value, onChange } : Props) {
+export default function Amount({  } : Props) {
     return <Container>
         <AddBtn>
             <div className="plus">+</div>

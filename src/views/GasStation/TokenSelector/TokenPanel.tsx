@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { balanceFormated, percentFormated } from '@/utils/balance';
 import type { Token } from '@/types';
 
 import bg from './bg.svg'
@@ -14,9 +15,10 @@ const Container = styled.div`
         background-color: rgba(46, 49, 66, 1);
         border-radius: 10px;
         padding: 10px 0;
+        transition: all .3s;
         .token-desc {
             color: #fff;
-            font-size: 12px;
+            font-size: 14px;
             font-weight: 500;
             line-height: 14.2px;
             text-align: center;
@@ -27,7 +29,7 @@ const Container = styled.div`
             border-radius: 10px; 
             background: linear-gradient(180deg, #0C0E1A 0%, #262836 100%);
             height: 154px;
-            margin: 10px 10px;
+            margin: 10px;
         }
         .token-bg {
             width: 40px;
@@ -36,6 +38,7 @@ const Container = styled.div`
             background-size: 100% 100%;
             margin: 10px auto 0;
             text-align: center;
+            transition: all .3s;
             .token-icon {
                 width: 30px;
                 height: 30px;
@@ -48,18 +51,31 @@ const Container = styled.div`
 
 
 interface Props {
-    token: Token
+    token: Token;
+    balance: any;
+    active: boolean;
+    onTokenChoose: (token: Token) => void;
 }
 
-export default function Token({ token }: Props) {
-    return <Container>
-        <div className="panel">
+const backgroundMap: any = {
+    'ETH': 'linear-gradient(180deg, #627EEA 0%, #262836 100%)',
+    'USDC': 'linear-gradient(180deg, #4596EE 0%, #262836 100%)',
+    'USDT': 'linear-gradient(180deg, #3DBB94 0%, #262836 100%)',
+}
+
+export default function Token({ token, balance, onTokenChoose, active }: Props) {
+    return <Container onClick={() => {
+        onTokenChoose && onTokenChoose(token)
+    }}>
+        <div className="panel" style={{
+            background: active ? backgroundMap[token.symbol] : 'rgba(46, 49, 66, 1)'
+        }}>
             <div className="token-desc">
-                <div>-</div>
+                <div>{ balance ? balanceFormated(balance) : '-' }</div>
                 <div>{ token.symbol }</div>
             </div>
-            <div className="bg">
-                <div className="token-bg">
+            <div className="bg" >
+                <div className="token-bg" style={{ marginTop: active ? 0 : 10 }}>
                     <img className="token-icon" src={token.icon} />
                 </div>
             </div>

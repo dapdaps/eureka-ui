@@ -196,11 +196,14 @@ export function useGasAmount({
             return
         }
 
+        console.log(222)
+
         getAllSupportedChains(fromChain, toChain).then(({ hasFrom, hasTo }: any) => {
             const _fromChain = hasFrom[0]
             const _toChain = hasTo[0]
             const _value = new Big(value).mul(10 ** fromToken.decimals)
             getTokenReceived(_fromChain, _toChain, fromToken, _value).then(res => {
+                console.log('res:', res)
                 setReceive(new Big(res).div(10 ** toChain.nativeCurrency.decimals).toString())
             })
         })

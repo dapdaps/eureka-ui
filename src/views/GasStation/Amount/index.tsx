@@ -42,7 +42,7 @@ const AmountList = styled.div`
 const amountList = [10, 20, 50, 100, 200]
 
 interface Props {
-    value: number | string | null;
+    value: number | string | undefined;
     onChange: (v: number) => void;
 }
 

@@ -24,16 +24,51 @@ const TokenContainer = styled.div`
 `
 
 interface Props {
-    tokenList: Token[]
+    selectedToken: Token | undefined;
+    tokenList: Token[];
+    chainTokenList: Token[];
+    balances: any;
+    onTokenChoose: (token: Token) => void;
 }
 
-export default function TokenSeletor({ tokenList }: Props) {
+export default function TokenSeletor({ tokenList, balances, chainTokenList, selectedToken, onTokenChoose }: Props) {
+    const [filterBalance, setFilterBalance] = useState<any>({})
+
+    useEffect(() => {
+        if (chainTokenList && chainTokenList.length && balances) {
+            const _balances: any = {}
+            tokenList.forEach(token => {
+                const filterTokens = chainTokenList.filter(_token => _token.symbol === token.symbol)
+                if (filterTokens && filterTokens.length) {
+                    const filterToken = filterTokens[0]
+                    if (filterToken.isNative) {
+                        _balances[filterToken.symbol] = balances['native']
+                        return
+                    }
+
+                    _balances[filterToken.symbol] = balances[filterToken.address]
+                }
+            })
+
+            setFilterBalance(_balances)
+        } else {
+            setFilterBalance({})
+        }
+
+    }, [chainTokenList, balances, tokenList])
+
     return <Container>
         <Title>Source Token</Title>
         <TokenContainer>
             {
                 tokenList.map(token => {
-                    return <TokenPanel token={token} key={token.symbol} />
+                    return <TokenPanel
+                        active={selectedToken?.symbol === token.symbol}
+                        balance={filterBalance[token.symbol]}
+                        token={token}
+                        key={token.symbol} 
+                        onTokenChoose={onTokenChoose}
+                        />
                 })
             }
         </TokenContainer>

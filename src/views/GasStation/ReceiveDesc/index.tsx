@@ -1,5 +1,8 @@
+import type { Chain } from '@/types';
 import { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
 const Container = styled.div`
     border: 1px solid rgba(55, 58, 83, 1);
@@ -34,16 +37,19 @@ const Apart = styled.div`
 
 
 interface Props {
-    value: number | string | null;
-    onChange: (v: number) => void;
+    receive: number | string;
+    loading: boolean;
+    toChain: Chain | undefined;
 }
 
-export default function ReceiveDesc() {
+export default function ReceiveDesc({
+    receive, loading, toChain
+}: Props) {
     return <Container>
         <Apart>
             <div className="title">Receiving Amount</div>
             <div className="amount-wapper ">
-                <div className="amount">0.0045 ETH</div>
+                <div className="amount">{balanceFormated(receive)} {toChain?.nativeCurrency.symbol}</div>
                 <div className="price">(~$18.16)</div>
             </div>
         </Apart>
