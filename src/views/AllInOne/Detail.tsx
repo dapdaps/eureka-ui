@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
@@ -14,10 +14,14 @@ import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
 
+import Settings from './components/Setting/index'
+
 const AllInOneDetailView = (props: Props) => {
   const { chain, menu } = props;
 
   const router = useRouter();
+
+  const [showSettings, setShowSettings] = useState<boolean>(false);
 
   const {
     currentChain,
@@ -48,87 +52,91 @@ const AllInOneDetailView = (props: Props) => {
   }, [menu]);
 
   return (
-    <StyledContainer>
-      <StyledFlex
-        flexDirection="column"
-        justifyContent="center"
-        className="all-in-one-wrapper"
-      >
-        <AllInOneHeaderView
-          chain={chain}
-          currentChain={currentChain}
-          handleShowComponent={(visible) => {
-            setShowComponent(visible);
-          }}
-        />
+    <>
+      <StyledContainer>
+        <StyledFlex
+          flexDirection="column"
+          justifyContent="center"
+          className="all-in-one-wrapper"
+        >
+          <AllInOneHeaderView
+            chain={chain}
+            currentChain={currentChain}
+            handleShowComponent={(visible) => {
+              setShowComponent(visible);
+            }}
+          />
 
-        <StyledContent className="detail">
-          {
-            showComponent && (
-              <AllInOneDetailCardView
-                key={menu}
-                title={currentMenu?.tab}
-                subTitle={currentMenu.description}
-                bgColor={currentChain.selectBgColor}
-                style={{ width: cardWidth }}
-                config={cardConfig}
-              >
-                {
-                  menu === 'bridge' && (
-                    <Bridge chain={currentChain} />
-                  )
-                }
-                {
-                  menu === 'lending' && (
-                    <Lending chain={currentChain} menu={currentMenu} />
-                  )
-                }
-                {
-                  menu === 'liquidity' && (
-                    <Liquidity chain={currentChain} menu={currentMenu} />
-                  )
-                }
-                {
-                  menu === 'trade' && (
-                    <Trade chain={currentChain} />
-                  )
-                }
-              </AllInOneDetailCardView>
-            )
-          }
-        </StyledContent>
-        <StyledNavList>
-          {currentChainMenuList.map((item: any) => {
-            return (
-              <AllInOneCardView
-                type="nav"
-                key={item.tab}
-                title={item.tab}
-                subTitle={item.description}
-                bgColor={currentChain.selectBgColor}
-                path={currentChain.path}
-                onSelect={() => {
-                  const _tab = item.tab.toLowerCase();
-                  if (_tab === menu) return;
-                  handleMenuSelect(_tab);
-                }}
-              >
-                <item.component chain={currentChain} menu={item} />
-              </AllInOneCardView>
-            );
-          })}
-        </StyledNavList>
-      </StyledFlex>
-      <StyledBg>
-        <Gradient
-          bgColor={currentChain.selectBgColor}
-          width={720}
-          height={241}
-          rx={280}
-          ry={40.5}
-        />
-      </StyledBg>
-    </StyledContainer>
+          <StyledContent className="detail">
+            {
+              showComponent && (
+                <AllInOneDetailCardView
+                  key={menu}
+                  title={currentMenu?.tab}
+                  subTitle={currentMenu.description}
+                  bgColor={currentChain.selectBgColor}
+                  style={{ width: cardWidth }}
+                  config={cardConfig}
+                  onShowSettings={() => setShowSettings(true)}
+                >
+                  {
+                    menu === 'bridge' && (
+                      <Bridge chain={currentChain} />
+                    )
+                  }
+                  {
+                    menu === 'lending' && (
+                      <Lending chain={currentChain} menu={currentMenu} />
+                    )
+                  }
+                  {
+                    menu === 'liquidity' && (
+                      <Liquidity chain={currentChain} menu={currentMenu} />
+                    )
+                  }
+                  {
+                    menu === 'trade' && (
+                      <Trade chain={currentChain} />
+                    )
+                  }
+                </AllInOneDetailCardView>
+              )
+            }
+          </StyledContent>
+          <StyledNavList>
+            {currentChainMenuList.map((item: any) => {
+              return (
+                <AllInOneCardView
+                  type="nav"
+                  key={item.tab}
+                  title={item.tab}
+                  subTitle={item.description}
+                  bgColor={currentChain.selectBgColor}
+                  path={currentChain.path}
+                  onSelect={() => {
+                    const _tab = item.tab.toLowerCase();
+                    if (_tab === menu) return;
+                    handleMenuSelect(_tab);
+                  }}
+                >
+                  <item.component chain={currentChain} menu={item} />
+                </AllInOneCardView>
+              );
+            })}
+          </StyledNavList>
+        </StyledFlex>
+        <StyledBg>
+          <Gradient
+            bgColor={currentChain.selectBgColor}
+            width={720}
+            height={241}
+            rx={280}
+            ry={40.5}
+          />
+        </StyledBg>
+      </StyledContainer>
+      <Settings display={showSettings} onClose={() => setShowSettings(false)}/>
+    </>
   );
 };
 

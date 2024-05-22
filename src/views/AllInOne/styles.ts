@@ -38,7 +38,7 @@ export const StyledContainer = styled.div`
     position: relative;
     z-index: 1;
     height: 100%;
-    overflow: hidden;
+    //overflow: hidden;
   }
 `;
 

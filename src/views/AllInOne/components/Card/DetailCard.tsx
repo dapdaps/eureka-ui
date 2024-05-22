@@ -11,6 +11,7 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
     subTitle,
     style,
     config,
+    onShowSettings = () => {}
   } = props;
 
   const router = useRouter();
@@ -18,6 +19,10 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
   const handleBack = () => {
     router.back();
   };
+
+  const handleShowPointer = () => {
+    onShowSettings()
+  }
 
   return (
     <StyledDetailCard style={style}>
@@ -33,7 +38,7 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
         </StyledTitle>
         {
           config && (
-            <StyledPointer>
+            <StyledPointer onClick={handleShowPointer}>
               <Gear classname="setting" />
             </StyledPointer>
           )
@@ -56,6 +61,7 @@ interface Props {
   subTitle?: string;
   style?: React.CSSProperties;
   config?: boolean;
+  onShowSettings?: () => void;
 }
 
 const ArrowBack = ({ classname }: { classname?: string }) => {
