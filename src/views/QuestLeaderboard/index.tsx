@@ -1,16 +1,17 @@
+import { useRouter } from 'next/router';
 import { memo, useMemo, useState } from 'react';
-import useCampaignList from '@/views/Quest/hooks/useCampaignList';
-import useCategoryList from '@/views/Quest/hooks/useCategoryList';
-import useQuestList from '@/views/bns/hooks/useQuestList';
-import Breadcrumb from '@/components/Breadcrumb';
 
+import Breadcrumb from '@/components/Breadcrumb';
 import useUserInfo from '@/hooks/useUserInfo';
 import useUserReward from '@/hooks/useUserReward';
+import useQuestList from '@/views/bns/hooks/useQuestList';
+import useCampaignList from '@/views/Quest/hooks/useCampaignList';
+import useCategoryList from '@/views/Quest/hooks/useCategoryList';
+
 import Yours from '../Quest/components/Yours';
 import Quests from './components/Quests';
-import { StyledWrapper, StyledContainer } from './styles';
+import { StyledContainer, StyledWrapper } from './styles';
 import type { Tab } from './types';
-import { useRouter } from 'next/router';
 
 const QuestLeaderboardView = (props: any) => {
   const router = useRouter();

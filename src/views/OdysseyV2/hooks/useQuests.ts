@@ -25,7 +25,7 @@ export default function useQuests() {
       const _result = cloneDeep(defaultQuests);
 
       result.data.forEach((item: any) => {
-        if (item.category_id === 0) {
+        if (item.category_id === 0 && item.category !== 'twitter_retweet') {
           _result.social.push(item);
         }
         if (item.category_id === 1) {

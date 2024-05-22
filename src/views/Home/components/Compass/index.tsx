@@ -1,16 +1,18 @@
+import { useSize } from 'ahooks';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { memo, useRef } from 'react';
+import { Autoplay } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
-import WinPtsIcon from '@/components/Icons/WinPts';
-import useToast from '@/hooks/useToast';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import { get } from '@/utils/http';
-import { useRouter } from 'next/router';
-import { memo, useMemo, useRef, useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper/modules';
 import odyssey from '@/config/odyssey';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import useToast from '@/hooks/useToast';
+import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+
 import useCompassList from './hooks/useCompassList';
-import { useDebounceFn } from 'ahooks';
 import {
   StyledCard,
   StyledCardBackgroundImage,
@@ -18,6 +20,8 @@ import {
   StyledCardDesc,
   StyledCardMainContent,
   StyledCardTitle,
+  StyledChainsImg,
+  StyledCominsoon,
   StyledCompassIcon,
   StyledContainer,
   StyledContent,
@@ -25,13 +29,9 @@ import {
   StyledLoadingWrapper,
   StyledRadialBg,
   StyledRadialBg2,
-  StyledTitle,
-  StyledWinPtsIcon,
-  StyledSwiperWrapper,
-  StyledSwiperPrevButton,
   StyledSwiperNextButton,
-  StyledChainsImg,
-  StyledCominsoon,
+  StyledSwiperPrevButton,
+  StyledSwiperWrapper,
 } from './styles';
 
 const iconRight = (
@@ -53,6 +53,7 @@ const Card = function ({ compass }: any) {
     if (!odyssey[compass.id]) return;
     router.push(odyssey[compass.id].path);
   };
+
   return (
     <StyledCard>
       <StyledCardBackgroundImage width={646} height={323} src={compass.banner} alt={compass.name} />
@@ -85,6 +86,8 @@ const Card = function ({ compass }: any) {
   );
 };
 const Compass = () => {
+  const router = useRouter();
+  const size: any = useSize(window.document.getElementsByTagName('body')[0]);
   const { loading, compassList } = useCompassList();
   const swiperRef = useRef<any>();
 
@@ -99,7 +102,28 @@ const Compass = () => {
         <StyledRadialBg2 />
 
         <StyledInner>
-          <StyledTitle>Odyssey</StyledTitle>
+          <StyledFlex justifyContent="space-between" style={{ padding: '41px 0 30px' }}>
+            <StyledFont color="#FFF" fontSize="36px" fontWeight="700" lineHeight="165%">
+              Odyssey
+            </StyledFont>
+            <StyledFlex
+              gap="8px"
+              style={{ cursor: 'pointer' }}
+              onClick={() => {
+                router.push('/odyssey/homepage');
+              }}
+            >
+              <StyledFont color="#EBF479">Explore all</StyledFont>
+              <StyledSvg>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
+                  <path
+                    d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
+                    fill="#EBF479"
+                  />
+                </svg>
+              </StyledSvg>
+            </StyledFlex>
+          </StyledFlex>
           <StyledSwiperWrapper>
             <Swiper
               width={1244}
@@ -107,8 +131,8 @@ const Compass = () => {
               slidesPerView={1}
               autoplay={{ delay: 3000 }}
               speed={1000}
-              spaceBetween={(window.innerWidth - 1244) / 2 + 100}
-              loop
+              spaceBetween={(size?.width - 1244) / 2 + 100}
+              updateOnWindowResize={true}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
@@ -119,10 +143,42 @@ const Compass = () => {
                   <StyledCompassIcon>
                     <CompassIcon />
                   </StyledCompassIcon>
-                  {odyssey[compass.id]?.reward && (
+                  {/* {odyssey[compass.id]?.reward && (
                     <StyledWinPtsIcon>
                       <WinPtsIcon num={odyssey[compass.id].reward} />
                     </StyledWinPtsIcon>
+                  )} */}
+                  {odyssey[compass.id]?.reward && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        right: -34,
+                        top: 0,
+                        zIndex: 20,
+                      }}
+                    >
+                      {['ended', 'un_start'].includes(compass.status) ? (
+                        <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
+                      ) : (
+                        <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={111} height={111} />
+                      )}
+                      <StyledFont
+                        fontSize="18px"
+                        fontWeight="700"
+                        lineHeight="150%"
+                        style={{
+                          position: 'absolute',
+                          left: 0,
+                          right: -8,
+                          top: 45,
+                          textAlign: 'center',
+                          fontWeight: 900,
+                          transform: 'rotate(-15deg)',
+                        }}
+                      >
+                        {odyssey[compass.id]?.reward}
+                      </StyledFont>
+                    </div>
                   )}
                 </SwiperSlide>
               ))}

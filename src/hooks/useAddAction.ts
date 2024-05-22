@@ -111,9 +111,9 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Staking') {
         params = {
-          action_title: `${data.action} ${data.token.symbol} on ${data.template}`,
+          action_title: data.token ? `${data.action} ${data.amount} ${data.token?.symbol} on ${data.template}` : '',
           action_type: 'Staking',
-          action_tokens: JSON.stringify([`${data.token.symbol}`]),
+          action_tokens: data.token ? JSON.stringify([`${data.token.symbol}`]) : '',
           action_amount: data.amount,
           account_id: account,
           account_info: uuid,
@@ -121,7 +121,25 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
-          action_network_id: currentChain.name,
+          action_network_id: currentChain?.name || data.action_network_id,
+          chain_id: chainId,
+          extra_data: data.extra_data,
+        };
+      }
+
+      if (data.type === 'Yield') {
+        params = {
+          action_title: `${data.action} ${data?.token0 + (data?.token1 ? '-' + data.token1 : '')} on ${data.template}`,
+          action_type: data.type,
+          action_tokens: JSON.stringify([data?.token0 ?? '', data?.token1 ?? '']),
+          action_amount: data.amount,
+          account_id: account,
+          account_info: uuid,
+          template: data.template,
+          action_switch: data.add ? 1 : 0,
+          action_status: data.status === 1 ? 'Success' : 'Failed',
+          tx_id: data.transactionHash,
+          action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
         };
       }

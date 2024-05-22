@@ -560,7 +560,11 @@ const DappsDetailsColumn: NextPageWithLayout = () => {
                 {data &&
                   data.dapp_network.map((item: any, index: number) => {
                     const networkItem = chains.find((network: any) => network.id === item.network_id);
-                    const logo = networkItem ? networkItem.logo : '';
+                    let logo = networkItem ? networkItem.logo : '';
+                    if (item.chain_id === 1) {
+                      logo =
+                        'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg';
+                    }
                     return (
                       <div key={index} style={{ display: 'inline-block' }}>
                         <img src={logo} alt="" />

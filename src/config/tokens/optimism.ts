@@ -37,7 +37,7 @@ export const optimism: { [key: string]: Token } = {
   },
   native: {
     chainId: CHAIN_ID,
-    address: 'native',
+    address: '',
     decimals: 18,
     symbol: 'ETH',
     name: 'Ether',

@@ -17,6 +17,7 @@ import { usePriceStore } from '@/stores/price';
 import { useDebounceFn } from 'ahooks';
 import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
+import { get } from '@/utils/http'
 import { ethers } from 'ethers'
 import type { NextPageWithLayout } from '@/utils/types';
 
@@ -30,32 +31,6 @@ const arrow = (
 const narrowUrl = 'https://assets.dapdap.net/images/bafkreien4qagdjuudb6yj53wutsj4f6zfodrgv4ztftzjgkvcdtjnjk564.svg';
 
 const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
-
-interface SelectBgProps {
-  bgColor: string;
-}
-const SelectBg: React.FC<SelectBgProps> = ({ bgColor }) => (
-  <svg width="720" height="241" viewBox="0 0 720 241" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <g opacity="0.5" filter="url(#filter0_f_510_1870)">
-      <ellipse cx="360" cy="120.5" rx="280" ry="40.5" fill={bgColor} />
-    </g>
-    <defs>
-      <filter
-        id="filter0_f_510_1870"
-        x="0"
-        y="0"
-        width="720"
-        height="241"
-        filterUnits="userSpaceOnUse"
-        colorInterpolationFilters="sRGB"
-      >
-        <feFlood floodOpacity="0" result="BackgroundImageFix" />
-        <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
-        <feGaussianBlur stdDeviation="40" result="effect1_foregroundBlur_510_1870" />
-      </filter>
-    </defs>
-  </svg>
-);
 
 const Container = styled.div`
   margin: 0 8%;
@@ -149,28 +124,25 @@ const Container = styled.div`
     z-index: 1;
     width: 100%;
     position: relative;
-    padding-top: 150px;
+    padding-top: 50px;
     /* position: absolute; */
   }
   .select-bg-icon {
     z-index: 0;
     position: absolute;
     top: 60px;
-    left: 45%;
+    left: 50%;
+    transform: translate(-50%);
+    font-size: 20px;
+    font-weight: 700;
     .select-bg-content {
-      width: 560px;
-      height: 80px;
-      position: relative;
+      padding-top: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
       img {
-        width: 124px;
-        opacity: 0.1;
-        position: absolute;
-        left: 7%;
-      }
-      .select-bg {
-        position: absolute;
-        right: 20%;
-        top: -60%;
+        width: 24px;
+        margin-right: 10px;
       }
     }
   }
@@ -213,8 +185,7 @@ const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
   const chain = router.query.chain as string;
   const [currentChain, setCurrentChain] = useState<any>();
-  const [isSelectItemClicked, setIsSelectItemClicked] = useState(false);
-  const [showComponent, setShowComponent] = useState(false);
+  const [chainConfig, setChainConfig] = useState<any>(null)
   const { account, chainId } = useAccount();
   const [ checkSumAccount, setCheckSumAccount ] = useState<string>()
   const [{ settingChain }, setChain] = useSetChain();
@@ -231,13 +202,28 @@ const AllInOne: NextPageWithLayout = () => {
     () => {
       const _currentChain = popupsData[chain] || popupsData['arbitrum'];
       setCurrentChain(_currentChain);
+      if (chain) {
+      }
     },
     { wait: 500 },
   );
 
   useEffect(() => {
+    if (currentChain && !chainConfig) {
+      // get(`https://api.dapdap.net/api/dapp?route=bridge-chain/${currentChain.path}`)
+      get(`/api/dapp?route=bridge-chain/${currentChain.path}`)
+      .then(res => {
+        if (res.code === 0) {
+          setChainConfig(res.data)
+        }
+      })
+    }
+  }, [currentChain, chainConfig])
+
+  useEffect(() => {
     run();
   }, [chain]);
+
 
   useEffect(() => {
     if (account) {
@@ -249,18 +235,24 @@ const AllInOne: NextPageWithLayout = () => {
 
   return currentChain ? (
     <Container key={chain}>
+      <BreadCrumbs>
+        <Link href="/">Home</Link>
+        {arrow}
+        <Link href="/alldapps">dApps</Link>
+        {arrow}
+        <span>{currentChain.title} Bridge</span>
+      </BreadCrumbs>
       <>
         <div className="select-bg-icon">
           <div className="select-bg-content">
-            <img src={currentChain.bgIcon || currentChain.icon} alt="" />
-            <div className="select-bg">
-              <SelectBg bgColor={currentChain.selectBgColor} />
-            </div>
+            <img src={chainConfig?.logo} alt="" />
+            <span>{ chainConfig?.name }</span>
           </div>
         </div>
         <div className="content-page">
           <ComponentWrapperPage
-            src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
+            // src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
+            src={chainConfig?.dapp_network[0].dapp_src}
             componentProps={{
               addAction,
               multicall,

@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 export const MenuContainer = styled(motion.div)`
   z-index: 100;
@@ -94,7 +94,7 @@ export const StyledExploreArrow = styled.div`
 export const StyledMenu = styled.div`
   display: flex;
   margin-top: 30px;
-  border-top: 1px solid #21232a;
+  border-top: 1px solid #393c47;
   padding-top: 30px;
 `;
 

@@ -57,7 +57,7 @@ export async function approve(
     provider.getSigner(account),
     );
 
-    const tx = await TokenContract.approve(spender, new Big(amount).mul(10 ** decimals).toString())
+    const tx = await TokenContract.approve(spender, new Big(amount).mul( decimals).toString())
     const res = await tx.wait();
     return res.status === 1
 }

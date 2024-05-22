@@ -19,7 +19,17 @@ const wcV2InitOptions: any = {
 const walletConnect = walletConnectModule(wcV2InitOptions);
 const injected = injectedModule({
   // display specific unavailable wallets
-  displayUnavailable: [ProviderLabel.MetaMask],
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Coin98Wallet],
+  sort: (wallets) => {
+    const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask);
+    const coin98 = wallets.find(({ label }) => label === ProviderLabel.Coin98Wallet);
+
+    return [
+      metaMask,
+      coin98,
+      ...wallets.filter(({ label }) => label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coin98Wallet),
+    ] as any[];
+  },
 });
 const bitgetWallet = bitgetWalletModule();
 
@@ -280,6 +290,12 @@ export const onboard = init({
       label: 'Scroll',
       rpcUrl: 'https://rpc.scroll.io',
     },
+    {
+      id: 81457,
+      token: 'Blast',
+      label: 'Blast',
+      rpcUrl: 'https://rpc.blast.io',
+    },
   ],
   appMetadata: {
     name: 'NEAR',
@@ -298,7 +314,6 @@ export const onboard = init({
       position: 'bottomRight',
     },
   },
-
   containerElements: {},
 });
 
