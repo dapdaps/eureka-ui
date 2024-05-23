@@ -10,8 +10,8 @@ export default {
   multicallAddress: multicall[CHAIN_ID],
   wethAddress: weth[CHAIN_ID],
   connectProps: {
-    noAccountTips: 'Polygon Liquidity Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Polygon Chain.',
+    noAccountTips: `${CHAIN_NAME} Liquidity Collection`,
+    wrongNetworkTips: `To proceed, kindly switch to ${CHAIN_NAME} Chain.`,
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
