@@ -163,7 +163,7 @@ interface Props {
     onTokenChange: (token: Token) => void;
 }
 
-const TokenListComp = forwardRef(({ chain, chainToken, currentToken, groupId, searchTxt, onChainChange, onTokenChange, onClose }: {
+const TokenListComp = forwardRef(function TokenListComp({ chain, chainToken, currentToken, groupId, searchTxt, onChainChange, onTokenChange, onClose }: {
     chain: Chain;
     chainToken: any;
     groupId: string;
@@ -172,7 +172,7 @@ const TokenListComp = forwardRef(({ chain, chainToken, currentToken, groupId, se
     onTokenChange: (token: Token) => void;
     onClose?: () => void;
     searchTxt: string;
-}, ref: any) => {
+}, ref: any) {
 
     const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
 
@@ -309,6 +309,7 @@ function TokenSelectModal({
                     {
                         sortedChainList.map(chain => {
                             return <TokenListComp
+                                key={chain.chainId}
                                 chain={chain}
                                 chainToken={chainToken}
                                 currentToken={currentToken}
