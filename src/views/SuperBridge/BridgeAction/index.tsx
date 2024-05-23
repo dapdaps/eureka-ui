@@ -347,7 +347,7 @@ export default function BirdgeAction(
                 tool: selectedRoute.bridgeType,
                 fromAddress: account,
                 toAddress: account,
-                status: 2,
+                status: 3,
               })
 
               addAction({

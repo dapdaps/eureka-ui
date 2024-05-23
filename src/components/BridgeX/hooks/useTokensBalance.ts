@@ -7,10 +7,9 @@ import { multicall } from '@/utils/multicall';
 import multicallAddresses from '@/config/contract/multicall';
 
 const rpcs: any = {
-  11155111: 'https://ethereum-sepolia-rpc.publicnode.com',
+  11155111: 'https://rpc2.sepolia.org',
   421614: 'https://public.stackup.sh/api/v1/node/arbitrum-sepolia'
 }
-
 
 export default function useTokensBalance(tokens: any) {
   const [loading, setLoading] = useState(false);
