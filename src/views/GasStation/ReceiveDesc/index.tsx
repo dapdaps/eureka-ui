@@ -40,17 +40,18 @@ interface Props {
     receive: number | string;
     loading: boolean;
     toChain: Chain | undefined;
+    receivePrice: string | number;
 }
 
 export default function ReceiveDesc({
-    receive, loading, toChain
+    receive, loading, toChain, receivePrice,
 }: Props) {
     return <Container>
         <Apart>
             <div className="title">Receiving Amount</div>
             <div className="amount-wapper ">
                 <div className="amount">{balanceFormated(receive)} {toChain?.nativeCurrency.symbol}</div>
-                <div className="price">(~$18.16)</div>
+                <div className="price">(~${balanceFormated(receivePrice, 2)})</div>
             </div>
         </Apart>
         <Apart>

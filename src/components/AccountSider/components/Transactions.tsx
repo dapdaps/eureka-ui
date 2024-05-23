@@ -168,6 +168,7 @@ export default function Transactions() {
     const [transactionList, setTransactionList] = useState<any>([])
     const [showDetail, setShowDetail] = useState(false)
     const router = useRouter();
+    const [updater, setUpdater] = useState(Date.now())
 
     useEffect(() => {
         if (account) {
@@ -183,7 +184,17 @@ export default function Transactions() {
             })
         }
 
-    }, [account])
+    }, [account, updater])
+
+    useEffect(() => {
+        const inter = setInterval(() => {
+            setUpdater(Date.now())
+        }, 30000)
+
+        return () => {
+            clearInterval(inter)
+        }
+    }, [])
 
     return <Container>
         {

@@ -66,9 +66,10 @@ const Input = styled.input`
 
 interface Props {
     initModalShow?: boolean;
+    updater: number;
 }
 
-export default function Transaction({ initModalShow = false }: Props) {
+export default function Transaction({ initModalShow = false, updater = 1 }: Props) {
     const [transactionModalShow, setTransactionModalShow] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
     const [transactionList, setTransactionList] = useState([])
@@ -131,6 +132,14 @@ export default function Transaction({ initModalShow = false }: Props) {
             clearInterval(inter)
         }
     }, [account])
+
+    useEffect(() => {
+        if (!account) {
+            return
+        }
+        refreshTransactionList()
+
+    }, [account, updater])
 
  
     return <Container>

@@ -69,6 +69,8 @@ const Header = styled.div`
 const Content = styled.div`
     overflow: auto;
     padding: 0 66px;
+    height: 500px;
+    overflow: auto;
     table  {
         width: 100%;
         margin-top: 20px;

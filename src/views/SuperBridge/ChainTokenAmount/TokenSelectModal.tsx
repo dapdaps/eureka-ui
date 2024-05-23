@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useState, useRef, useCallback, useEffect, forwardRef, useMemo, memo } from "react";
 import styled from 'styled-components';
 import { useDebounce } from 'ahooks';
 
@@ -9,6 +9,7 @@ import Modal from "../Modal";
 import TokenRow from './Token'
 
 import type { Chain, Token } from '@/types';
+import { chain } from "lodash";
 
 const Container = styled.div`
     display: flex;
@@ -22,9 +23,27 @@ const ChainWapper = styled.div`
     max-height: 100%;
     min-height: 100px;
     
+    .chain-tip {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 50px;
+        line-height: 50px;
+        left: 70px;
+        display: flex;
+        align-items: center;
+        z-index: 12;
+        background-color: rgba(49, 51, 70, 1);
+        border-radius: 0 12px 12px 0;
+        border: 1px solid rgba(55, 58, 83, 1);
+        border-left: 0;
+        padding: 0 17px 0 10px;
+    }
+
     .chain-list {
         height: calc(100% - 20px);
         overflow-y: auto;
+        /* overflow-x: hidden; */
         margin-top: 5px;
         .chain {
             width: 50px;
@@ -33,6 +52,7 @@ const ChainWapper = styled.div`
             border: 1px solid rgba(55, 58, 83, 1);
             cursor: pointer;
             margin-top: 8px;
+            position: relative;
             .img {
                 width: 32px;
                 height: 32px;
@@ -42,12 +62,36 @@ const ChainWapper = styled.div`
                 border: 1px solid rgba(252, 196, 44, 1);
                 background-color: rgba(252, 196, 44, 0.1);
             }
+            .detail {
+                display: none;
+            }
+            &:hover {
+               /* .detail {
+                    display: block;
+                    height: 100%;
+                    line-height: 50px;
+                    background-color: red;
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    width: 500px;
+               } */
+               background-color: rgba(49, 51, 70, 1);
+               border-right: 0;
+               border-radius: 12px 0 0 12px;
+            }
         }
     }
+
+    
 `
 
 const TokenWapper = styled.div`
     flex: 1;
+    .ctg-wapper {
+        height: calc(100% - 120px);
+        overflow: auto;
+    }
     
 `
 
@@ -81,9 +125,33 @@ const TokenTop = styled.div`
 `
 
 const TokenList = styled.div`
-    height: calc(100% - 120px);
-    overflow: auto;
+    /* height: calc(100% - 120px);
+    overflow: auto; */
 `
+
+const ChainGroup = styled.div`
+    .cur-chian {
+        display: flex;
+        align-items: center;
+        color: #fff;
+        gap: 10px;
+        font-size: 14px;
+        font-weight: 600;
+        padding-left: 20px;
+        .img {
+            width: 32px;
+            height: 32px;
+        }
+    }
+    .ct-title {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.8px;
+        color: rgba(151, 154, 190, 1);
+        padding: 10px 20px;
+    }
+`
+
 
 interface Props {
     onClose?: () => void;
@@ -95,7 +163,60 @@ interface Props {
     onTokenChange: (token: Token) => void;
 }
 
-export default function TokenSelectModal({
+const TokenListComp = forwardRef(({ chain, chainToken, currentToken, groupId, searchTxt, onChainChange, onTokenChange, onClose }: {
+    chain: Chain;
+    chainToken: any;
+    groupId: string;
+    currentToken: Token | undefined;
+    onChainChange: (chain: Chain) => void;
+    onTokenChange: (token: Token) => void;
+    onClose?: () => void;
+    searchTxt: string;
+}, ref: any) => {
+
+    const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
+
+    useEffect(() => {
+        
+    }, [searchTxt])
+
+    return <ChainGroup>
+        <div className="ct-title" id={`${groupId}-${chain.chainId}`}>Chain</div>
+        <div className="cur-chian">
+            <img className="img" src={chain.icon} />
+            <div>{chain.chainName}</div>
+        </div>
+        <div className="ct-title" style={{ paddingBottom: 0, paddingTop: 20 }}>Token</div>
+        <TokenList key={chain.chainId}>
+            {
+                chainToken[chain.chainId]
+                    .sort((a: any, b: any) => {
+                        if (Object.keys(balances).length === 0) {
+                            return 0
+                        }
+                        return Number(balances[b.address]) - Number(balances[a.address])
+                    })
+                    .map((token: Token) => {
+                        return <TokenRow
+                            isSelected={currentToken?.symbol === token.symbol}
+                            key={token.symbol + token.address}
+                            token={token}
+                            loading={loading}
+                            balances={balances}
+                            chain={chain as Chain}
+                            onTokenChange={(token: Token) => {
+                                onChainChange(chain)
+                                onTokenChange(token)
+                                onClose && onClose()
+                            }}
+                        />
+                    })
+            }
+        </TokenList>
+    </ChainGroup>
+})
+
+function TokenSelectModal({
     onClose,
     chainList,
     chainToken,
@@ -104,55 +225,69 @@ export default function TokenSelectModal({
     onChainChange,
     onTokenChange,
 }: Props) {
-    const [tokenList, setTokenList] = useState([]);
     const [tempChain, setTempChain] = useState(currentChain)
     const [searchVal, setSearchVal] = useState('')
-    const [filterTokenList, setFilterTokenList] = useState([])
-    
-
-    const { loading, balances, currentChainId } = useTokensBalance(filterTokenList)
+    const [sortedChainList, setSortedChainList] = useState<Chain[]>([])
+    const [hoverChain, setHoverChain] = useState<Chain | null>(null)
+    const [tipTop, setTipTop] = useState(0)
+    const [idSuffix, setIdSuffix] = useState(Date.now() + '')
+    const wapperRef = useRef<any>()
 
     const inputValue = useDebounce(searchVal, { wait: 500 });
 
     useEffect(() => {
-        if (!inputValue) {
-            setFilterTokenList(tokenList)
-            return
+        if (chainList) {
+            const all = chainList.map(item => item)
+            const top3 = all.splice(0, 3)
+
+            const _sortedChainList = all.sort((a, b) => {
+                return a.chainName.localeCompare(b.chainName)
+            })
+            const _all = top3.concat(_sortedChainList)
+            setSortedChainList(_all)
         }
+    }, [chainList])
 
-        const filterTokenList = tokenList.filter((token: Token) => {
-            return token.symbol.toUpperCase().indexOf(inputValue.toUpperCase()) > -1 
-            || token.address.indexOf(inputValue) > -1
-        })
 
-        setFilterTokenList(filterTokenList || [])
-    }, [tokenList, inputValue])
-
-    useEffect(() => {
-        if (tempChain && chainToken) {
-            const tokenList = chainToken[tempChain.chainId]
-            setTokenList(tokenList)
-        }
-    }, [tempChain, chainToken])
-
-    return <Modal paddingSize={0} onClose={onClose}>
+    return <Modal ref={wapperRef} paddingSize={0} onClose={onClose}>
         <Container>
             <ChainWapper>
                 <Title>Chain</Title>
-                <div className="chain-list">
+                {
+                    hoverChain && <div style={{ top: tipTop }} className="chain-tip">
+                        <div>{hoverChain.chainName}</div>
+                    </div>
+                }
+                <div className="chain-list" onScroll={() => {
+                    setHoverChain(null)
+                }}>
                     {
-                        chainList?.map(chian => {
+                        sortedChainList?.map(chain => {
                             return <div
-                                key={chian.chainId}
+                                key={chain.chainId}
                                 onClick={() => {
-                                    setTempChain(chian)
+                                    setTempChain(chain)
+                                    document.getElementById(`${idSuffix}-${chain.chainId}`)!.scrollIntoView()
                                 }}
-                                className={`chain ${tempChain?.chainId === chian.chainId ? 'active' : ''}`}>
-                                <img src={chian.icon} className="img" />
+                                onMouseEnter={(e) => {
+                                    setHoverChain(chain)
+                                    let ele: any = e.target
+                                    if (ele.tagName.toUpperCase() !== 'DIV') {
+                                        ele = ele.parentNode
+                                    }
+                                    const wapperSize = wapperRef.current.getBoundingClientRect()
+                                    const chainSize = ele.getBoundingClientRect();
+                                    const top = chainSize.top - wapperSize.top
+                                    setTipTop(top - 1)
+                                }}
+                                onMouseLeave={() => {
+                                    setHoverChain(null)
+                                }}
+                                className={`chain ${tempChain?.chainId === chain.chainId ? 'active' : ''}`}>
+                                <img src={chain.icon} className="img" />
                             </div>
                         })
                     }
-
                 </div>
             </ChainWapper>
             <TokenWapper>
@@ -170,32 +305,25 @@ export default function TokenSelectModal({
                         }} className="input" placeholder="search token or paste address" />
                     </div>
                 </TokenTop>
-                <TokenList key={tempChain?.chainId}>
+                <div className="ctg-wapper">
                     {
-                        filterTokenList?.sort((a: any, b: any) => {
-                            if (Object.keys(balances).length === 0) {
-                                return 0
-                            }
-
-                            return Number(balances[b.address]) - Number(balances[a.address])
-                        }).map((token: Token) => {
-                            return <TokenRow
-                                isSelected={currentToken?.symbol === token.symbol}
-                                key={token.symbol + token.address}
-                                token={token}
-                                loading={loading}
-                                balances={currentChainId === tempChain?.chainId ? balances : {}}
-                                chain={tempChain as Chain}
-                                onTokenChange={(token: Token) => {
-                                    onChainChange(tempChain as Chain)
-                                    onTokenChange(token)
-                                    onClose && onClose()
-                                }}
+                        sortedChainList.map(chain => {
+                            return <TokenListComp
+                                chain={chain}
+                                chainToken={chainToken}
+                                currentToken={currentToken}
+                                groupId={idSuffix}
+                                onChainChange={onChainChange}
+                                onTokenChange={onTokenChange}
+                                onClose={onClose}
+                                searchTxt={inputValue}
                             />
                         })
                     }
-                </TokenList>
+                </div>
             </TokenWapper>
         </Container>
     </Modal>
 }
+
+export default memo(TokenSelectModal)

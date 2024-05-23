@@ -1,3 +1,4 @@
+import { forwardRef } from 'react'
 import styled from 'styled-components';
 
 const Layer = styled.div`
@@ -57,14 +58,14 @@ interface Props {
     paddingSize?: number | string;
 }
 
-export default function Modal({
+function Modal({
     width, height, onClose, title, children, paddingSize = 20, top = '30%'
-}: Props) {
+}: Props, ref: any) {
     return <div>
         <Layer onClick={() => {
             onClose && onClose()
         }}/>
-        <Container size={paddingSize} style={{ top }}>
+        <Container ref={ref} size={paddingSize} style={{ top }}>
             <CloseWapper onClick={() => {
                 onClose && onClose()
             }}>
@@ -83,3 +84,5 @@ export default function Modal({
         </Container>
     </div>
 }
+
+export default forwardRef(Modal)

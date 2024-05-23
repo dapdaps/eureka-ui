@@ -1,7 +1,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { balanceFormated, percentFormated } from '@/utils/balance';
 import SubmitBtn from './SubmitBtn';
+import type { Chain, Token } from '@/types';
 
 const Container = styled.div`
     position: absolute;
@@ -66,22 +68,34 @@ const Record = styled.div`
 `
 
 interface Props {
-    value: number | string | null;
-    onChange: (v: number) => void;
+    disabled: boolean;
+    payPrice: number | string | undefined;
+    pay: number | string | undefined;
+    token: Token | undefined;
+    loading: boolean;
+    fromChain: Chain | undefined;
+    onClick: () => void;
 }
 
-export default function SubmitPanel() {
+export default function SubmitPanel({
+    disabled, payPrice, pay, token, loading, fromChain, onClick
+}: Props) {
     return <Container>
         <SubEar />
         <SubPanel>
             <div className="total-wapper">
                 <div className="total">Total</div>
-                <div className="amount">0.006527 ETH</div>
-                <div className="dollar">(~$20.00)</div>
+                <div className="amount">{pay ? balanceFormated(pay, 4) : '-'} {token?.symbol}</div>
+                <div className="dollar">(~${payPrice ? balanceFormated(payPrice, 2) : '-'})</div>
             </div>
-            <SubmitBtn />
+            <SubmitBtn
+                disabled={disabled}
+                loading={loading}
+                fromChain={fromChain}
+                onClick={onClick}
+            />
             <Record>Records</Record>
         </SubPanel>
-       
+
     </Container>
 }

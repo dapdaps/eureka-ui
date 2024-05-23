@@ -5,7 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 
 import useAccount from '@/hooks/useAccount';
 
-const timeout = 1000 * 30
+const timeout = 1000 * 60
 
 export default function useQuote(quoteRequest: QuoteRequest | null, identification: string | number) {
     const [routes, setRoutes] = useState<QuoteResponse[] | null>(null)

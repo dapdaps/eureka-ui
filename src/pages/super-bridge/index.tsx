@@ -60,14 +60,18 @@ chainList.unshift(TestChains[0])
 
 const Bridge: NextPageWithLayout = () => {
   const router = useRouter();
+  const [updater, setUpdater] = useState(1)
 
   return (
     <Container>
       <BridgeAction
         chainList={chainList}
+        onTransactionUpdate={() => {
+          setUpdater(updater + 1)
+        }}
       />
       <RightContainer>
-        <Transaction />
+        <Transaction updater={updater}/>
         <Sep />
         <Medal />
       </RightContainer>

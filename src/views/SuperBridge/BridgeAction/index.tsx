@@ -80,16 +80,12 @@ const ArrowSwap = styled.div`
 
 interface Props {
   chainList: Chain[];
-  // getAllTokens: () => any;
-  // getChainScan: (value: number | string) => string;
-  // getStatus: () => any;
-  // getQuote: () => any;
-  // execute: () => any;
+  onTransactionUpdate: () => void;
 }
 
 export default function BirdgeAction(
   {
-    chainList,
+    chainList, onTransactionUpdate
   }: Props) {
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false)
   const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false)
@@ -147,6 +143,7 @@ export default function BirdgeAction(
     }
 
     setReciveAmount('')
+    setSelectedRoute(null)
 
     const identification = Date.now()
     setIdentification(identification)
@@ -374,6 +371,7 @@ export default function BirdgeAction(
               setConfirmModalShow(false)
 
               setUpdateBanlance(updateBanlance + 1)
+              onTransactionUpdate && onTransactionUpdate()
 
             } catch (err: any) {
               console.log(err.title, err.message, err)
