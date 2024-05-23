@@ -139,7 +139,7 @@ const networks = {
         token0: 'WETH',
         token1: 'USDC',
         "decimals0": 18,
-        "decimals1": 18,
+        "decimals1": 6,
         "poolAddress": "0x92930F343c8Fb1da3656D4908d2F59b543A54056",
       },
       {
