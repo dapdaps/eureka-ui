@@ -52,7 +52,7 @@ const Bridge: NextPageWithLayout = () => {
 
   return (
     <Container>
-        <Transaction initModalShow={true} />
+        <Transaction initModalShow={true} updater={1} />
     </Container>
   )
 };
