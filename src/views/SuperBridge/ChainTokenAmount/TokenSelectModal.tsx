@@ -176,6 +176,8 @@ const TokenListComp = forwardRef(function TokenListComp({ chain, chainToken, cur
 
     const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
 
+    console.log('balances:', balances)
+
     return <ChainGroup>
         {
             chainToken[chain.chainId] && <>
@@ -195,7 +197,17 @@ const TokenListComp = forwardRef(function TokenListComp({ chain, chainToken, cur
                         if (Object.keys(balances).length === 0) {
                             return 0
                         }
-                        return Number(balances[b.address]) - Number(balances[a.address])
+
+                        const aAddress = a.isNative ? 'native' : a.address
+                        const bAddress = b.isNative ? 'native' : b.address
+
+                        // console.log('a', balances[a.address])
+
+                        const aNumber = Number(balances[aAddress] || 0)
+                        const bNumber = Number(balances[bAddress] || 0)
+
+
+                        return bNumber - aNumber
                     })
                     .map((token: Token) => {
                         return <TokenRow
@@ -233,6 +245,7 @@ function TokenSelectModal({
     const [tipTop, setTipTop] = useState(0)
     const [idSuffix, setIdSuffix] = useState(Date.now() + '')
     const [filterChainVal, setFilterChainVal] = useState();
+    const [searchAll, setSearchAll] = useState(false)
     const wapperRef = useRef<any>()
 
     const inputValue = useDebounce(searchVal, { wait: 500 });
@@ -266,6 +279,7 @@ function TokenSelectModal({
                         })
                         if (filterList && filterList.length) {
                             filterChainToken[chain.chainId] = filterList
+                            setSearchAll(true)
                         }
                     })
                 }
@@ -281,6 +295,7 @@ function TokenSelectModal({
                         filterChainToken[key] = filterList
                     }
                 })
+                setSearchAll(false)
             }
             setFilterChainVal(filterChainToken)
         } else {
@@ -364,6 +379,10 @@ function TokenSelectModal({
                 <div className="ctg-wapper">
                     {
                         sortedChainList.map(chain => {
+                            if (chain.chainId !== tempChain?.chainId && !searchAll) {
+                                return null
+                            }
+
                             return <TokenListComp
                                 key={chain.chainId}
                                 chain={chain}
