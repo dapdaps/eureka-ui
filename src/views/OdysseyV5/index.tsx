@@ -125,7 +125,7 @@ export default function OdysseyV5() {
     let _exploredAmount = 0;
     Object.values(quests).forEach((arr: any) => {
       arr.forEach((it: any) => {
-        _exploredAmount += it.exploredAmount;
+        _exploredAmount += it.exploredAmount || 0;
       });
     });
     setExploredAmount(_exploredAmount);
