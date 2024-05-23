@@ -140,7 +140,6 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
         refreshTransactionList()
 
     }, [account, updater])
-
  
     return <Container>
         <PublicTitle

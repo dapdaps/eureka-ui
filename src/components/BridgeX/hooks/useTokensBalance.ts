@@ -20,7 +20,7 @@ export default function useTokensBalance(tokens: any) {
   const { account } = useAccount();
 
   const queryBalance = useCallback(async () => {
-    if (!account || !tokens.length) return;
+    if (!account || !tokens || !tokens.length) return;
 
     try {
       setLoading(true);

@@ -176,20 +176,21 @@ const TokenListComp = forwardRef(function TokenListComp({ chain, chainToken, cur
 
     const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
 
-    useEffect(() => {
-        
-    }, [searchTxt])
-
     return <ChainGroup>
-        <div className="ct-title" id={`${groupId}-${chain.chainId}`}>Chain</div>
-        <div className="cur-chian">
-            <img className="img" src={chain.icon} />
-            <div>{chain.chainName}</div>
-        </div>
-        <div className="ct-title" style={{ paddingBottom: 0, paddingTop: 20 }}>Token</div>
+        {
+            chainToken[chain.chainId] && <>
+                <div className="ct-title" id={`${groupId}-${chain.chainId}`}>Chain</div>
+                <div className="cur-chian">
+                    <img className="img" src={chain.icon} />
+                    <div>{chain.chainName}</div>
+                </div>
+                <div className="ct-title" style={{ paddingBottom: 0, paddingTop: 20 }}>Token</div>
+            </>
+        }
+
         <TokenList key={chain.chainId}>
             {
-                chainToken[chain.chainId]
+                chainToken[chain.chainId] && chainToken[chain.chainId]
                     .sort((a: any, b: any) => {
                         if (Object.keys(balances).length === 0) {
                             return 0
@@ -231,6 +232,7 @@ function TokenSelectModal({
     const [hoverChain, setHoverChain] = useState<Chain | null>(null)
     const [tipTop, setTipTop] = useState(0)
     const [idSuffix, setIdSuffix] = useState(Date.now() + '')
+    const [filterChainVal, setFilterChainVal] = useState();
     const wapperRef = useRef<any>()
 
     const inputValue = useDebounce(searchVal, { wait: 500 });
@@ -247,6 +249,44 @@ function TokenSelectModal({
             setSortedChainList(_all)
         }
     }, [chainList])
+
+    useEffect(() => {
+        if (inputValue) {
+            const lowerVal = inputValue.toLowerCase()
+            const filterChainToken: any = {}
+            const [keyChainName, tokenSymbol] = lowerVal.split(':')
+            if (keyChainName && tokenSymbol) {
+                const filterChain = chainList.filter(chain => chain.chainName.toLowerCase().indexOf(keyChainName) > -1)
+                if (filterChain && filterChain.length) {
+                    filterChain.forEach(chain => {
+                        const tokenList = chainToken[chain.chainId]
+                        const filterList = tokenList.filter((token: Token) => {
+                            return (token.symbol.toLowerCase().indexOf(tokenSymbol) > -1
+                                || token.address.toLowerCase().indexOf(tokenSymbol) > -1)
+                        })
+                        if (filterList && filterList.length) {
+                            filterChainToken[chain.chainId] = filterList
+                        }
+                    })
+                }
+            } else {
+                Object.keys(chainToken).forEach(key => {
+                    const tokenList = chainToken[key]
+                    const filterList = tokenList.filter((token: Token) => {
+                        return (token.symbol.toLowerCase().indexOf(lowerVal) > -1
+                            || token.address.toLowerCase().indexOf(lowerVal) > -1)
+                    })
+
+                    if (filterList && filterList.length > 0) {
+                        filterChainToken[key] = filterList
+                    }
+                })
+            }
+            setFilterChainVal(filterChainToken)
+        } else {
+            setFilterChainVal(chainToken)
+        }
+    }, [chainList, inputValue, chainToken])
 
 
     return <Modal ref={wapperRef} paddingSize={0} onClose={onClose}>
@@ -267,7 +307,11 @@ function TokenSelectModal({
                                 key={chain.chainId}
                                 onClick={() => {
                                     setTempChain(chain)
-                                    document.getElementById(`${idSuffix}-${chain.chainId}`)!.scrollIntoView()
+                                    const ele = document.getElementById(`${idSuffix}-${chain.chainId}`)
+                                    if (ele) {
+                                        ele.scrollIntoView()
+                                    }
+                                    
                                 }}
                                 onMouseEnter={(e) => {
                                     setHoverChain(chain)
@@ -311,7 +355,7 @@ function TokenSelectModal({
                             return <TokenListComp
                                 key={chain.chainId}
                                 chain={chain}
-                                chainToken={chainToken}
+                                chainToken={filterChainVal}
                                 currentToken={currentToken}
                                 groupId={idSuffix}
                                 onChainChange={onChainChange}
