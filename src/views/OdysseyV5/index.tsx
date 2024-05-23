@@ -123,11 +123,12 @@ export default function OdysseyV5() {
   }, [quests]);
   useEffect(() => {
     let _exploredAmount = 0;
-    Object.values(quests).forEach((arr: any) => {
-      arr.forEach((it: any) => {
+    for (const questKey in quests) {
+      if (questKey === 'mode') continue;
+      quests[questKey].forEach((it: any) => {
         _exploredAmount += it.exploredAmount || 0;
       });
-    });
+    }
     setExploredAmount(_exploredAmount);
   }, [quests]);
 
