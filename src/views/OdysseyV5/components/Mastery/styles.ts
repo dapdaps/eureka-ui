@@ -66,20 +66,24 @@ export const StyledEarnedList = styled.div`
 export const StyledEarnedContent = styled.ul`
   margin: 37px 0 0;
   padding: 0;
+  list-style: none;
   
-  li {
+  .condition-item {
     margin: 49px 0 0;
     padding: 0;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    gap: 14px;
     font-size: 16px;
     font-weight: 400;
     line-height: 19px;
     color: #ffffff;
     white-space: wrap;
     position: relative;
+
+    .condition-item-inner {
+      display: flex;
+      justify-content: flex-start;
+      align-items: flex-start;
+      gap: 14px;
+    }
     
     &:first-child {
       margin-top: 0;
@@ -108,6 +112,54 @@ export const StyledEarnedContent = styled.ul`
     flex-shrink: 0;
     flex-grow: 0;
   }
+
+  .kim-liquidity-coins {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .coin-item {
+      margin: 0;
+      padding: 0;
+      
+      display: flex;
+      align-items: center;
+      gap: 0;
+      color: #979ABE;
+      font-family: Gantari;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+
+      .item-icon {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 0;
+
+        > img {
+          flex-shrink: 0;
+          flex-grow: 0;
+
+          &:last-child {
+            transform: translateX(-7px);
+          }
+        }
+      }
+
+      .item-name {
+        margin-left: -3px;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
 `;
 
 export const StyledCardContainer = styled.div`
@@ -131,6 +183,7 @@ export const StyledCardHead = styled.div`
 `;
 export const StyledCardContent = styled.div`
   min-height: 242px;
+  margin-bottom: 54px;
   .section {
     &.points-earned {
       .item {
@@ -192,11 +245,14 @@ export const StyledCardContent = styled.div`
       list-style: none;
     }
   }
+  .primary-text {
+    color: ${() => `var(--odyssey-primary-color)`};
+  }
 `;
 export const StyledCardFoot = styled.div`
   margin-top: auto;
-  padding-top: 54px;
   height: 100%;
+  padding-top: 30px;
 `;
 
 export const StyledLeftBtn = styled.div`

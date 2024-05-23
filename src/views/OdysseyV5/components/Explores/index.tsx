@@ -27,7 +27,7 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail, 
           Dive into <span className="hilight">DapDap Social</span>
         </StyledTitle>
         <StyledDesc>Explore DapDap&lsquo;s Social Features, Receive Points</StyledDesc>
-        <StyledItemWrap>
+        <StyledItemWrap show={!loading && list?.length}>
           {
             loading ? <StyledLoadingWrapper $h="100px">
                 <Loading size={30} />

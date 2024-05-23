@@ -17,12 +17,12 @@ export const StyledContainer = styled.div`
   }
 `;
 
-export const StyledItemWrap = styled.div`
+export const StyledItemWrap = styled.div<{ show: boolean }>`
   padding-top: 20px;
   position: relative;
   z-index: 1;
   &:before {
-    display: block;
+    display: ${(props) => props.show ? 'block' : 'none'};
     content: '';
     width: 480px;
     height: 480px;

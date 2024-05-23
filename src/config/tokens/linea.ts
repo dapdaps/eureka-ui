@@ -187,4 +187,12 @@ export const linea: { [key: string]: Token } = {
   //   name: 'KelpDao Restaked ETH',
   //   icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
   // },
+  lusdc: {
+    chainId: CHAIN_ID,
+    address: '0x4af215dbe27fc030f37f73109b85f421fab45b7a',
+    decimals: 6,
+    symbol: 'LUSDC',
+    name: 'Ledgity USDC',
+    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+  },
 };

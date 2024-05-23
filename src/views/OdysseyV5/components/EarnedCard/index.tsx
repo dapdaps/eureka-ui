@@ -7,9 +7,9 @@ import {
   StyledContent,
   StyledFoot,
   StyledHead,
-  StyledIcon,
-  StyledTitle
-} from "@/views/OdysseyV5/components/EarnedCard/styles";
+  StyledIcon, StyledIconWrapper,
+  StyledTitle,
+} from '@/views/OdysseyV5/components/EarnedCard/styles';
 import RefreshButton from '@/views/OdysseyV5/components/RefreshButton';
 import useCheck from '@/views/OdysseyV5/hooks/useCheck';
 
@@ -38,9 +38,24 @@ const EarnedCard = (props: Props) => {
   return (
     <StyledContainer style={props.styles}>
       <StyledHead>
-        <StyledIcon borderColor={iconBorder}>
-          <Image src={icon} alt="" width={54} height={54} />
-        </StyledIcon>
+        <StyledIconWrapper>
+          {
+            Array.isArray(icon) ? icon.map((ic, idx) => (
+              <StyledIcon
+                key={idx}
+                borderColor={iconBorder}
+                left={7 * idx}
+                zIndex={icon.length - idx}
+              >
+                <Image src={ic} alt="" width={54} height={54} />
+              </StyledIcon>
+            )) : (
+              <StyledIcon borderColor={iconBorder}>
+                <Image src={icon} alt="" width={54} height={54} />
+              </StyledIcon>
+            )
+          }
+        </StyledIconWrapper>
         <StyledTitle>
           {title.toUpperCase()}
         </StyledTitle>
@@ -73,7 +88,7 @@ export default EarnedCard;
 
 interface Props {
   children: React.ReactElement | React.ReactElement[];
-  icon: string;
+  icon: string|string[];
   iconBorder?: string;
   title: string;
   submit: string;

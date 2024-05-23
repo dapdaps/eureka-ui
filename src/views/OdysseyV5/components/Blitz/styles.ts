@@ -12,6 +12,7 @@ export const StyledInner = styled.div`
 export const StyledHead = styled.div``;
 export const StyledContent = styled.div`
   margin-top: 88px;
+  display: flex;
 `;
 export const StyledFoot = styled.div`
   display: flex;
@@ -80,7 +81,7 @@ export const StyledEarnedCardContent = styled.div`
       font-weight: 400;
       line-height: 19px;
       text-align: left;
-      color: ${() => `var(--odyssey-primary-color)`};;
+      color: ${() => `var(--odyssey-primary-color)`};
     }
     .list {
       display: flex;
@@ -91,6 +92,10 @@ export const StyledEarnedCardContent = styled.div`
       margin: 14px 0 0;
       padding: 0;
       list-style: none;
+
+      &.styled {
+        list-style: decimal;
+      }
     }
     .item {
       font-weight: 400;
@@ -98,6 +103,14 @@ export const StyledEarnedCardContent = styled.div`
       line-height: 24px;
       text-align: left;
       color: #ffffff;
+
+      .primary-text {
+        color: ${() => `var(--odyssey-primary-color)`};
+      }
+
+      a {
+        text-decoration: underline;
+      }
     }
     &.earned {}
     &.requirements {}

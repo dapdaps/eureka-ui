@@ -149,7 +149,7 @@ export default function ConfirmModal({
                             <img className="token-img" src={toToken?.icon}/>
                             <img className="chain-img" src={toChain?.icon}/>
                         </div>
-                        <div className="amount">{ reciveAmount && balanceFormated(reciveAmount) } {toToken?.symbol}</div>
+                        <div className="amount">{ reciveAmount  && balanceFormated(reciveAmount) } {toToken?.symbol}</div>
                     </div>
                 </div>
             </ChainTokens>
@@ -166,7 +166,7 @@ export default function ConfirmModal({
             <FeeBox>
                 <div className="fee-line">
                     <div>Total Fee</div>
-                    <div>${route &&  balanceFormated(route?.feeType === 1 ? (prices as any)['ETH'] * Number(route.gas) : route?.gas) }</div>
+                    <div>${route && fromChain &&  balanceFormated(route?.feeType === 1 ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.gas) : route?.gas) }</div>
                 </div>
             </FeeBox>
         </Box>

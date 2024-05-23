@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -123,11 +124,6 @@ const MasteryData = [
         name: 'KELP MILES',
       },
       {
-        key: 5,
-        icon: '',
-        name: ''
-      },
-      {
         key: 3,
         icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
         name: 'IRONCLAD EMBERS',
@@ -178,6 +174,98 @@ const MasteryData = [
         submit: 'Supply',
         link: '/dapp/ionic',
       }
+    ]
+  },
+  {
+    key: 4,
+    title: 'Unlock Kim\'s Hidden Wealth',
+    pointsEarned: [
+      {
+        key: 1,
+        icon: '/images/odyssey/v5/mastery/temp/mode.svg',
+        name: 'MODE POINTS',
+      },
+      {
+        key: 2,
+        icon: '/images/odyssey/v5/mastery/temp/kim.svg',
+        name: '<span class="primary-text">200K</span> KIM & XKIM',
+      },
+    ],
+    result: [
+      'Protocol yield distribution, participate in 200k reward allocation, accumulate points',
+    ],
+    earned: [
+      {
+        key: 1,
+        name: 'KIM',
+        icon: '/images/odyssey/v5/mastery/temp/kim-rect.svg',
+        conditions: [
+          'Swap KIM and stake to obtain xKIM'
+        ],
+        submit: 'Trade',
+        link: '/dapp/kim-exchange',
+      },
+      {
+        key: 2,
+        name: 'KIM',
+        icon: '/images/odyssey/v5/mastery/temp/kim-rect.svg',
+        conditions: [
+          'Providing LP on top pools'
+        ],
+        submit: 'Add Liquidity',
+        link: '/dapp/kim-exchange-liquidity',
+        coinList: [
+          {
+            key: 1,
+            coin1Name: 'KIM',
+            coin2Name: 'MODE',
+            coin1: '/images/odyssey/v5/mastery/coin/kim.svg',
+            coin2: '/images/odyssey/v5/mastery/coin/mode.svg',
+          },
+          {
+            key: 2,
+            coin1Name: 'ETH',
+            coin2Name: 'KIM',
+            coin1: '/images/odyssey/v5/mastery/coin/eth.svg',
+            coin2: '/images/odyssey/v5/mastery/coin/kim.svg',
+          },
+          {
+            key: 3,
+            coin1Name: 'ETH',
+            coin2Name: 'USDC',
+            coin1: '/images/odyssey/v5/mastery/coin/eth.svg',
+            coin2: '/images/odyssey/v5/mastery/coin/usdc.svg',
+          },
+          {
+            key: 4,
+            coin1Name: 'ETH',
+            coin2Name: 'MODE',
+            coin1: '/images/odyssey/v5/mastery/coin/eth.svg',
+            coin2: '/images/odyssey/v5/mastery/coin/mode.svg',
+          },
+          {
+            key: 5,
+            coin1Name: 'ezETH',
+            coin2Name: 'ETH',
+            coin1: '/images/odyssey/v5/mastery/coin/ez-eth.svg',
+            coin2: '/images/odyssey/v5/mastery/coin/eth.svg',
+          },
+          {
+            key: 6,
+            coin1Name: 'ETH',
+            coin2Name: 'wrsETH',
+            coin1: '/images/odyssey/v5/mastery/coin/eth.svg',
+            coin2: '/images/odyssey/v5/mastery/coin/wrs-eth.svg',
+          },
+          {
+            key: 7,
+            coin1Name: '(NEW) weETH.mode',
+            coin2Name: 'ETH',
+            coin1: '/images/odyssey/v5/mastery/coin/we-eth.svg',
+            coin2: '/images/odyssey/v5/mastery/coin/eth.svg',
+          },
+        ],
+      },
     ]
   },
 ];
@@ -285,9 +373,32 @@ const Mastery = () => {
                           <StyledEarnedContent>
                             {
                               earn.conditions.map((condition, idx) => (
-                                <li key={idx}>
-                                  <div className="point" />
-                                  {condition}
+                                <li className="condition-item" key={idx}>
+                                  <div className="condition-item-inner">
+                                    <div className="point" />
+                                    {condition}
+                                  </div>
+                                  {
+                                    // special content: will display the kim liquidity pools
+                                    earn.coinList && (
+                                      <ul className="kim-liquidity-coins">
+                                        {
+                                          earn.coinList.map((coin) => (
+                                            <li className="coin-item" key={coin.key}>
+                                              <div className="item-icon">
+                                                <Image className="coin-icon" src={coin.coin1} alt={coin.coin1Name} width={20} height={20} />
+                                                <Image className="coin-icon" src={coin.coin2} alt={coin.coin2Name} width={20} height={20} />
+                                              </div>
+                                              <div className="item-name">
+                                                <i>{coin.coin1Name} / </i>
+                                                <i>{coin.coin2Name}</i>
+                                              </div>
+                                            </li>
+                                          ))
+                                        }
+                                      </ul>
+                                    )
+                                  }
                                 </li>
                               ))
                             }

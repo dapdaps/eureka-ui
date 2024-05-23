@@ -5,7 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 
 import useAccount from '@/hooks/useAccount';
 
-const timeout = 1000 * 60
+const timeout = 1000 * 30
 
 export default function useQuote(quoteRequest: QuoteRequest | null, identification: string | number) {
     const [routes, setRoutes] = useState<QuoteResponse[] | null>(null)
@@ -46,7 +46,10 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
            
         })
         // console.log('routes:', routes)
-        // setRoutes(_routes)
+        if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {
+            setRoutes(_routes)
+        }
+        
         setLoading(false)
     } 
 

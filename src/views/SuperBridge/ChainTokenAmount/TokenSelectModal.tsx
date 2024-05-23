@@ -289,6 +289,18 @@ function TokenSelectModal({
     }, [chainList, inputValue, chainToken])
 
 
+    useEffect(() => {
+        if (currentChain && idSuffix) {
+            setTimeout(() => {
+                const ele = document.getElementById(`${idSuffix}-${currentChain.chainId}`)
+                if (ele) {
+                    ele.scrollIntoView()
+                }
+            }, 500)
+        }
+        
+    }, [idSuffix, currentChain])
+
     return <Modal ref={wapperRef} paddingSize={0} onClose={onClose}>
         <Container>
             <ChainWapper>

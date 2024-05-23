@@ -8,7 +8,7 @@ import multicallAddresses from '@/config/contract/multicall';
 
 const rpcs: any = {
   11155111: 'https://ethereum-sepolia-rpc.publicnode.com',
-  421614: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'
+  421614: 'https://public.stackup.sh/api/v1/node/arbitrum-sepolia'
 }
 
 
