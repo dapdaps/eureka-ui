@@ -43,7 +43,7 @@ export default function useIncrease({
       const hasNativeToken = token0.isNative ? token0 : token1.isNative ? token1 : '';
       const Interface = new utils.Interface(positionAbi);
       const calldatas: string[] = [];
-      const isReverse = _token0.address !== token0.address;
+      const isReverse = _token0.address !== token0.address && _token1.address !== token1.address;
       const _value0 = isReverse ? value1 : value0;
       const _value1 = isReverse ? value0 : value1;
       const _amount0 = new Big(_value0 || 1).mul(10 ** _token0.decimals).toFixed(0);
@@ -118,10 +118,9 @@ export default function useIncrease({
       let value = '0';
 
       if (hasNativeToken) {
-        value = token0.isNative ? _amount0 : _amount1;
+        value = _token0.isNative ? _amount0 : _amount1;
         calldatas.push(Interface.encodeFunctionData('refundETH'));
       }
-
       const txn: any = {
         to: PositionManager,
         data: calldatas.length === 1 ? calldatas[0] : Interface.encodeFunctionData('multicall', [calldatas]),

@@ -103,7 +103,7 @@ export default function useData() {
     (stepType: 'add' | 'minus', type: 'upper' | 'lower') => {
       const tickLower = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
 
-      const tickUpper = upperPrice === priceToUsableTick({ price: upperPrice, token0, token1, fee });
+      const tickUpper = priceToUsableTick({ price: upperPrice, token0, token1, fee });
 
       let tick = type === 'lower' ? tickLower : tickUpper;
 

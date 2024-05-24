@@ -83,6 +83,7 @@
     "firebase": "^10.6.0",
     "framer-motion": "^10.16.5",
     "iframe-resizer-react": "^1.1.0",
+    "jsbi": "^4.3.0",
     "keccak": "^3.0.4",
     "lite-merkle-patricia-tree": "^1.0.1",
     "local-storage": "^2.0.0",
@@ -114,7 +115,6 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
-    "ts-loader": "^9.5.1",
     "@0xsquid/squid-types": "^0.1.59",
     "@types/analytics-node": "^3.1.14",
     "@types/big.js": "^6.2.2",
@@ -127,6 +127,7 @@
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "http-browserify": "^1.7.0",
     "https-browserify": "^1.0.0",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "ts-loader": "^9.5.1"
   }
 }

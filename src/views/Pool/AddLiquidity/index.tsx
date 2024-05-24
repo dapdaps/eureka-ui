@@ -18,6 +18,7 @@ import SelectTokens from './components/SelectTokens';
 import PreviewModal from './components/PreviewModal';
 import useData from './hooks/useData';
 import useDappConfig from '../hooks/useDappConfig';
+import useIncrease from '@/views/Pool/IncreaseLiquidity/hooks/useIncrease';
 import { StyledContainer, StyledContent, LoadingWrapper } from './styles';
 
 const Add = () => {
@@ -53,6 +54,22 @@ const Add = () => {
     setValue1,
     setCurrentPrice,
   } = useData();
+
+  const { loading: adding, onIncrease } = useIncrease({
+    token0,
+    token1,
+    value0,
+    value1,
+    fee,
+    noPair,
+    currentPrice,
+    lowerPrice,
+    upperPrice,
+    onSuccess: () => {
+      setShowPreviewModal(false);
+      router.push(`/dapp/${router.query.dappRoute}`);
+    },
+  });
 
   return (
     <StyledContainer style={{ ...theme }}>
@@ -173,10 +190,8 @@ const Add = () => {
           onClose={() => {
             setShowPreviewModal(false);
           }}
-          onSuccess={() => {
-            setShowPreviewModal(false);
-            router.push(`/dapp/${router.query.dappRoute}`);
-          }}
+          loading={adding}
+          onClick={onIncrease}
         />
       </StyledContent>
     </StyledContainer>

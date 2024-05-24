@@ -11860,7 +11860,7 @@ js-yaml@^4.1.0:
 
 jsbi@^4.3.0:
   version "4.3.0"
-  resolved "https://registry.npmmirror.com/jsbi/-/jsbi-4.3.0.tgz#b54ee074fb6fcbc00619559305c8f7e912b04741"
+  resolved "https://registry.npmjs.org/jsbi/-/jsbi-4.3.0.tgz#b54ee074fb6fcbc00619559305c8f7e912b04741"
   integrity sha512-SnZNcinB4RIcnEyZqFPdGPVgrg2AcnykiBy0sHVJQKHYeaLUvi3Exj+iaPpLnFVkDPZIV4U0yvgC9/R4uEAZ9g==
 
 jsbn@~0.1.0:
@@ -15468,10 +15468,10 @@ stylis@^4.3.0:
   resolved "https://registry.npmjs.org/stylis/-/stylis-4.3.0.tgz#abe305a669fc3d8777e10eefcfc73ad861c5588c"
   integrity sha512-E87pIogpwUsUwXw7dNyU4QDjdgVMy52m+XEOPEKUn161cCzWjjhPSQhByfd1CcNvrOLnXQ6OnnZDwnJrz/Z4YQ==
 
-super-bridge-sdk@0.0.9-7:
-  version "0.0.9-7"
-  resolved "https://registry.npmmirror.com/super-bridge-sdk/-/super-bridge-sdk-0.0.9-7.tgz#ca0e8e346b04895fe8256a8fed4f3e8bf81debec"
-  integrity sha512-TLlRfcE4cMlAimtejYhb9ufifvnpnP7zONXCaCwMbYeYbYjtvUpbQvoKlG61rfihc5chTSRKgmn4jQPNHw7/Uw==
+super-bridge-sdk@0.0.9-11:
+  version "0.0.9-11"
+  resolved "https://registry.npmjs.org/super-bridge-sdk/-/super-bridge-sdk-0.0.9-11.tgz#845a4bc18db0960fd2ae1791c08bc81ef7267c79"
+  integrity sha512-TVLhpnxg1YOWj2LgvDlquMIy4Jvw6M94rBnjvh4E312OlotXnunDcctfuBYvppIkqCeN+qSRT54LJK79johSYQ==
   dependencies:
     "@0xsquid/sdk" "^2.8.10"
     "@lifi/sdk" "^2.5.0"

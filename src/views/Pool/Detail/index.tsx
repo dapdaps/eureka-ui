@@ -19,9 +19,9 @@ import { StyledContainer, StyledLoadingWrapper, StyledPanels } from './styles';
 const Detail = () => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showIncreaseModal, setShowIncreaseModal] = useState(false);
-  const { theme = {}, tokenId } = useDappConfig();
+  const { theme = {}, tokenId, contracts } = useDappConfig();
   const { detail = {}, loading, queryDetail } = usePoolDetail(tokenId);
-  const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId);
+  const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId, contracts);
   const _token0 = useToken(detail?.token0, detail?.chainId);
   const _token1 = useToken(detail?.token1, detail?.chainId);
 
