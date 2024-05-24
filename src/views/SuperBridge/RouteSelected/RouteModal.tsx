@@ -28,7 +28,7 @@ interface Props {
 
 export default function RouteModal({ onClose, fromChain, routes, toToken, best, fast, routeSelected, onRouteSelected }: Props) {
 
-    return <Modal title="Bridge Route" onClose={onClose}>
+    return <Modal title="Bridge Route" top="40%" onClose={onClose}>
         <ListWapper>
         {
             routes?.map((route: QuoteResponse, index) => {

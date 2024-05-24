@@ -59,7 +59,7 @@ const ItemWapper = styled.div`
 
 const sorts = [{
     key: 1,
-    name: 'Best Return',
+    name: 'Cheapest',
 }, {
     key: 2,
     name: 'Fastest',

@@ -162,12 +162,34 @@ export function useGasAmount({
         }
         setIsLoading(true)
         
+        
         try {
+            let hash
             if (fromToken?.isNative) {
-                await depositEth(account, value, signer)
+                hash = await depositEth(account, value, signer)
             } else {
-                await depositToken(tokenAddress, account, value, signer)
+                hash = await depositToken(tokenAddress, account, value, signer)
             }
+
+            if (!hash) {
+                fail({
+                    title: 'Transaction failed',
+                })
+                setIsLoading(false)
+                return
+            }
+            
+            await saveTransaction({
+                hash,
+                status: 3,
+                fromChainName: fromChain?.chainName,
+                fromChainId: fromChain?.chainId,
+                fromAddress: account,
+                toChainName: toChain?.chainName,
+                toChainId: toChain?.chainId,
+                toAddress: account,
+                time: Date.now()
+            })
 
             success({
                 title: 'Transaction success',
@@ -198,7 +220,7 @@ export function useGasAmount({
             value
         })
 
-        const res = await v.wait()
+        return v.wait()
     }
 
     async function depositToken(tokenAddress: string, account: string, value: string, signer: Signer) {
@@ -220,8 +242,8 @@ export function useGasAmount({
             toChain?.chainId, 
             true, 
           )
-    
-        const res = await v.wait()
+
+        return v.wait()
     }
 
     useEffect(() => {
@@ -229,8 +251,6 @@ export function useGasAmount({
             setReceive('0')
             return
         }
-
-        console.log(222)
 
         getAllSupportedChains(fromChain, toChain).then(({ hasFrom, hasTo }: any) => {
             const _fromChain = hasFrom[0]

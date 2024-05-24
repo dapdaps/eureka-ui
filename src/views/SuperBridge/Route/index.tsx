@@ -120,7 +120,7 @@ export default function Route(
             </div>
             <div className="tags">
                 {
-                    best === route && <div className="tag best-return">Best Return</div>
+                    best === route && <div className="tag best-return">Cheapest</div>
                 }
                 {
                     fast === route && <div className="tag fastest">Fastest</div>
