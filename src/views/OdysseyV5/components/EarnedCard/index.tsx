@@ -7,8 +7,11 @@ import {
   StyledContent,
   StyledFoot,
   StyledHead,
-  StyledIcon, StyledReloadBtn, StyledTitle
-} from "@/views/OdysseyV5/components/EarnedCard/styles";
+  StyledIcon, StyledIconWrapper,
+  StyledTitle,
+} from '@/views/OdysseyV5/components/EarnedCard/styles';
+import RefreshButton from '@/views/OdysseyV5/components/RefreshButton';
+import useCheck from '@/views/OdysseyV5/hooks/useCheck';
 
 const EarnedCard = (props: Props) => {
   const {
@@ -16,18 +19,43 @@ const EarnedCard = (props: Props) => {
     icon,
     iconBorder,
     reload,
+    spins = 0,
+    total_spins = 0,
+    id = '',
     handleSubmit = () => {
     },
-    handleReload = () => {
+    refreshDetail = () => {
     },
+    detailLoading = false,
+    setDetailLoading =() => {
+  }
   } = props;
+
+  const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
+    refreshDetail(id, _times);
+  }, detailLoading, setDetailLoading);
 
   return (
     <StyledContainer style={props.styles}>
       <StyledHead>
-        <StyledIcon borderColor={iconBorder}>
-          <Image src={icon} alt="" width={54} height={54} />
-        </StyledIcon>
+        <StyledIconWrapper>
+          {
+            Array.isArray(icon) ? icon.map((ic, idx) => (
+              <StyledIcon
+                key={idx}
+                borderColor={iconBorder}
+                left={7 * idx}
+                zIndex={icon.length - idx}
+              >
+                <Image src={ic} alt="" width={54} height={54} />
+              </StyledIcon>
+            )) : (
+              <StyledIcon borderColor={iconBorder}>
+                <Image src={icon} alt="" width={54} height={54} />
+              </StyledIcon>
+            )
+          }
+        </StyledIconWrapper>
         <StyledTitle>
           {title.toUpperCase()}
         </StyledTitle>
@@ -42,9 +70,13 @@ const EarnedCard = (props: Props) => {
         </StyledBtn>
         {
           reload && (
-            <StyledReloadBtn onClick={handleReload}>
-              <Image src="/images/odyssey/v5/reload.svg" alt="" width={18} height={18} />
-            </StyledReloadBtn>
+            <RefreshButton
+              onClick={(ev: any) => {
+                ev.stopPropagation();
+                if (!checking && !detailLoading) handleRefresh();
+              }}
+              loading={checking}
+            />
           )
         }
       </StyledFoot>
@@ -56,13 +88,18 @@ export default EarnedCard;
 
 interface Props {
   children: React.ReactElement | React.ReactElement[];
-  icon: string;
+  icon: string|string[];
   iconBorder?: string;
   title: string;
   submit: string;
   reload?: boolean;
   styles?: React.CSSProperties;
+  detailLoading?: boolean;
+  id?: string;
+  total_spins?: number;
+  spins?: number;
 
   handleSubmit?(): void;
-  handleReload?(): void;
+  refreshDetail?(id: string, times: number): void;
+  setDetailLoading?(): void;
 }

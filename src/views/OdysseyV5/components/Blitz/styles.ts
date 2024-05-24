@@ -12,6 +12,7 @@ export const StyledInner = styled.div`
 export const StyledHead = styled.div``;
 export const StyledContent = styled.div`
   margin-top: 88px;
+  display: flex;
 `;
 export const StyledFoot = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ export const StyledFoot = styled.div`
   align-items: center;
   flex-wrap: nowrap;
   gap: 461px;
-  margin-top: 116px;
+  margin-top: 212px;
   white-space: nowrap;
 
   .title {
@@ -65,10 +66,6 @@ export const StyledEarnedCardContent = styled.div`
 
   .modeDappBlitzSwiper {
     width: 100%;
-    overflow: hidden;
-    .swiper-slide {
-      width: 430px;
-    }
   }
   .tips {
     padding-bottom: 23px;
@@ -84,7 +81,7 @@ export const StyledEarnedCardContent = styled.div`
       font-weight: 400;
       line-height: 19px;
       text-align: left;
-      color: ${() => `var(--odyssey-primary-color)`};;
+      color: ${() => `var(--odyssey-primary-color)`};
     }
     .list {
       display: flex;
@@ -95,13 +92,25 @@ export const StyledEarnedCardContent = styled.div`
       margin: 14px 0 0;
       padding: 0;
       list-style: none;
+
+      &.styled {
+        list-style: decimal;
+      }
     }
     .item {
-      font-size: 20px;
       font-weight: 400;
+      font-size: 16px;
       line-height: 24px;
       text-align: left;
       color: #ffffff;
+
+      .primary-text {
+        color: ${() => `var(--odyssey-primary-color)`};
+      }
+
+      a {
+        text-decoration: underline;
+      }
     }
     &.earned {}
     &.requirements {}
@@ -115,12 +124,51 @@ export const StyledEarnedItem = styled.li<{ type?: string }>`
   align-items: center;
   gap: 8px;
   font-size: 16px;
-  font-weight: 400;
   line-height: 19px;
   text-align: left;
   color: #ffffff;
   background: #2A2A2A;
   height: 34px;
-  border-radius: ${({ type }) => type === 'rect' ? '4px' : '17px'};
+  border-radius: 17px;
   white-space: nowrap;
+  .hilight {
+    color: ${() => `var(--odyssey-primary-color)`};
+    font-weight: 600;
+  }
 `;
+
+export const StyledLeftBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledRightBtn = styled.div`
+  color: #979ABE;
+  border: 2px solid transparent;
+  &:hover {
+    color: ${() => `var(--odyssey-primary-color)`};
+    border: 2px solid #979ABE;
+  }
+`;
+export const StyledPageBtn = styled.div`
+  .btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(33, 35, 42, 0.9);
+    margin-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+
+export const StyledArrow = styled.div`
+transform: rotate(-180deg);`;

@@ -1,4 +1,5 @@
 import { useDebounceFn } from 'ahooks';
+import Big from 'big.js';
 import { cloneDeep } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -7,7 +8,6 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
 import { GOLD_QUESTS } from '../const';
-import Big from "big.js";
 
 const defaultQuests: any = {
   social: [],
@@ -18,7 +18,56 @@ const defaultQuests: any = {
   golds: [],
   staking: [],
   yield: [],
+  mode: [],
 };
+
+// Static DApp Data
+const defaultModeQuest = [
+  {
+    id: 'static_quest_1',
+    name: 'S1 | Ironclad',
+    description: 'Join Ironclad Launchpad via DapDap on S1 for Whitelist Rewards!',
+    extra_data: 'mode',
+    spins: 1,
+    times: 1,
+    total_spins: 0,
+    operators: [
+      {
+        'dapp_id': 'static_quest_11',
+        'dapp_name': 'S1',
+        'dapp_logo': '/images/odyssey/v5/mastery/temp/s1-rect.svg',
+        'default_chain_id': 0,
+        'route': 'dapp/swap-mode',
+        'theme': '{"swap_color":""}',
+        'dapp_network': [],
+      },
+      {
+        'dapp_id': 179,
+        'dapp_name': 'Ironclad',
+        'dapp_logo': '/images/odyssey/v5/mastery/temp/ironclad-rect.svg',
+        'default_chain_id': 34443,
+        'route': 'dapp/ironclad-finance',
+        'theme': '{"swap_color":""}',
+        'dapp_network': [],
+      },
+    ],
+    earned: [
+      {
+        key: 1,
+        icon: '/images/odyssey/v5/mastery/temp/white-list.svg',
+        text: 'WHITELIST',
+        lightText: '50-100'
+      },
+    ],
+    requirements: [
+      'Register on S1: Sign up using <a href="https://www.s1.xyz/projects/ironclad" target="_blank" class="primary-text">DapDap\'s referral link.<a>',
+      'Participate in Ironclad Launchpad: Complete KYC.',
+      'Enter Whitelist Draw: When registrations exceed 500, everyone who participated has a chance to win whitelist rewards',
+    ],
+    submit: 'Sign Up',
+    website: 'https://www.s1.xyz/projects/ironclad',
+  },
+];
 
 export default function useQuests(id: any) {
   const [quests, setQuests] = useState(null);
@@ -76,7 +125,12 @@ export default function useQuests(id: any) {
             _result.yield.push(item);
           }
         }
+        // ⚠️ be careful, mode will not participate in calculating the number of total times
+        if (item.extra_data === 'mode') {
+          _result.mode.push(item);
+        }
       });
+      _result.mode.push(defaultModeQuest[0]);
       setQuests(_result);
     } catch (err) {
       setLoading(false);

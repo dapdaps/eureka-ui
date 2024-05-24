@@ -36,18 +36,28 @@ export const StyledTitle = styled.div`
   text-align: center;
   color: ${() => 'var(--odyssey-primary-color)'};
 `;
-export const StyledIcon = styled.div<{ borderColor?: string }>`
-  width: 60px;
-  height: 60px;
-  border-radius: 12px;
-  border: ${({ borderColor }) => `3px solid ${borderColor || '#1A1A1A'}`};
-  background: ${({ borderColor }) => `${borderColor || '#1A1A1A'}`};
-  position: absolute;
-  z-index: 1;
+export const StyledIconWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
   left: 50%;
   transform: translateX(-50%);
   top: -30px;
+  height: 60px;
+  position: absolute;
+  z-index: 1;
+`;
+export const StyledIcon = styled.div<{ borderColor?: string, left?: number, zIndex?: number }>`
+  width: 60px;
+  height: 100%;
+  border-radius: 12px;
+  border: ${({ borderColor }) => `3px solid ${borderColor || '#1A1A1A'}`};
+  background: ${({ borderColor }) => `${borderColor || '#1A1A1A'}`};
+  transform: ${({ left }) => `translateX(-${left}px)`};
   overflow: hidden;
+  position: relative;
+  z-index: ${({ zIndex }) => zIndex || 1};
 `;
 export const StyledBtn = styled.button`
   flex: 1;
@@ -58,7 +68,7 @@ export const StyledBtn = styled.button`
   text-align: center;
   background: ${() => 'var(--odyssey-primary-color)'};
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 600;
   color: #000000;
   display: flex;
   justify-content: center;
@@ -67,6 +77,8 @@ export const StyledBtn = styled.button`
   flex-wrap: nowrap;
   padding: 0 15px;
   transition: all .3s linear;
+  white-space: nowrap;
+  overflow: hidden;
   
   &:hover {
     filter: brightness(0.85);

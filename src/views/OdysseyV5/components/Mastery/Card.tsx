@@ -24,7 +24,7 @@ const MasteryCard = (props: Props) => {
               pointsEarned.map((item) => (
                 <li className="item" key={item.key}>
                   <Image src={item.icon} alt="" width={34} height={34} />
-                  {item.name.toUpperCase()}
+                  <span dangerouslySetInnerHTML={{ __html: item.name }}></span>
                 </li>
               ))
             }

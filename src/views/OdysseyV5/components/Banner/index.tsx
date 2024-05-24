@@ -31,7 +31,7 @@ export default function Banner(props: any) {
         <StyledTitle>
           <h1 className="title">DapDap X <text className="dark">Mode</text>:</h1>
           <h1 className="title">The Airdrop Ascendancy</h1>
-          <h5 className="title sub">Forge Your Future Wealth in the Mode Ecosystem</h5>
+          <h5 className="title sub">Forge Your DeFi Future within the Mode Ecosystem</h5>
         </StyledTitle>
         <Summary data={props.detail} loading={props.loading} />
       </StyledContent>

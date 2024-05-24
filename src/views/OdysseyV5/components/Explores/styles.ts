@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  margin: 0 auto 100px auto;
+  margin: 0 auto 20px auto;
   max-width: 1286px;
   width: 100%;
   padding-left: 50px;
@@ -17,10 +17,21 @@ export const StyledContainer = styled.div`
   }
 `;
 
-export const StyledItemWrap = styled.div`
+export const StyledItemWrap = styled.div<{ show: boolean }>`
   padding-top: 20px;
   position: relative;
   z-index: 1;
+  &:before {
+    display: ${(props) => props.show ? 'block' : 'none'};
+    content: '';
+    width: 480px;
+    height: 480px;
+    opacity: 0.3;
+    position: absolute;
+    top: -106px;
+    left: -100px;
+    background: radial-gradient(50% 50% at 50% 50%, #DFFE00 0%, rgba(223, 254, 0, 0) 100%);
+  }
 `;
 export const StyledTitle = styled.div`
   color: #fff;
@@ -38,34 +49,6 @@ export const StyledDesc = styled.div`
   font-size: 20px;
   margin-bottom: 80px;
   line-height: 1;
-  font-weight: 300;
-`;
-
-export const StyledExploreContainer = styled.div`
-`;
-
-export const StyledExploreTitle = styled.div`
-  font-size: 26px;
-  color: #fff;
-  position: relative;
-  &:before {
-    display: block;
-    content: '';
-    width: 480px;
-    height: 480px;
-    opacity: 0.3;
-    position: absolute;
-    top: -106px;
-    left: -100px;
-    background: radial-gradient(50% 50% at 50% 50%, #DFFE00 0%, rgba(223, 254, 0, 0) 100%);
-  }
-`;
-
-export const StyledExploreDesc = styled.div`
-  color: #fff;
-  font-size: 18px;
-  position: relative;
-  z-index: 1;
   font-weight: 300;
 `;
 
@@ -87,6 +70,7 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
   justify-content: space-between;
   cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
   margin-bottom: 16px;
+  position: relative;
 
   &:last-child {
     margin-bottom: 0;

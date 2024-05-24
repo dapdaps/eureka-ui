@@ -1,20 +1,26 @@
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
+import { StyledDesc, StyledTitle } from '@/views/OdysseyV5/components/Explores/styles';
+import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
+
 import DappCard from '../DappCard';
 import Title from '../Title';
 import { StyledContainer, StyledContent } from './styles';
-import { EmptyContainer } from '@/views/OdysseyV5/components/Lending/styles';
 
 export default function Bridge({ list, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
   return (
-    <StyledContainer>
+    <StyledContainer id='odysseySectionExploreModularMode'>
+      <StyledTitle className='bridge-title'>
+        Explore Modular <span className="hilight">Mode</span>
+      </StyledTitle>
+      <StyledDesc>Navigate a Curated Selection of Partner dApps Across the Mode Ecosystem</StyledDesc>
       <Title
         title="Bridge"
-        subtitle="Construct a bridge in Mode to new opportunities"
+        subtitle="Cross a bridge to Mode and discover new opportunities"
       />
       <StyledContent>
         {
-          loading ? <StyledLoadingWrapper $h="100px">
+          loading ? <StyledLoadingWrapper $h="100px" className='loading'>
               <Loading size={30} />
             </StyledLoadingWrapper>
             : (list?.length > 0 ? list.map((item: any) => (

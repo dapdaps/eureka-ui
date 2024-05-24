@@ -134,7 +134,7 @@ export default function DappCard({
   const isRenzo = name === 'Renzo';
 
   const getTagText = () => {
-    if (['bridge', 'trade'].includes(type)) {
+    if (['trade'].includes(type)) {
       return '4x Points';
     }
     if (['lending'].includes(type)) {
@@ -142,14 +142,14 @@ export default function DappCard({
     }
   };
 
-  const defaultTag = () => (
-    <StyledCardTag className="main">
+  const defaultTag = () => {
+    return type !== 'bridge' ? <StyledCardTag className="main">
       <StyledTagIconDefault url={'/images/odyssey/v5/mode-icon.svg'} />
       <StyledTagText>
         {getTagText()}
       </StyledTagText>
-    </StyledCardTag>
-  );
+    </StyledCardTag> : null
+  }
 
   const names = () => (
     <StyledDappName>{name}</StyledDappName>
@@ -190,12 +190,12 @@ export default function DappCard({
                   {
                     PTS_MAP.has(name) ?
                       <StyledCardTag id={isRenzo ? 'renzo-pts' : ''}
-                                     onMouseEnter={(e) => showCardTip(e, `${PTS_MAP.get(name)} PTS`, 'renzo-pts')}
+                                     onMouseEnter={(e) => showCardTip(e, PTS_MAP.get(name) ?? '', 'renzo-pts')}
                                      onMouseLeave={closeCardTip}>
                         <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
                         {isRenzo && <StyledTagIconDefault className="other" url={RENZO_CONFIG.otherIcon} />}
                         <StyledTagText
-                          className={isRenzo ? 'renzo-text' : ''}>{`${PTS_MAP.get(name)} PTS`}</StyledTagText>
+                          className={isRenzo ? 'renzo-text' : ''}>{PTS_MAP.get(name) ?? ''}</StyledTagText>
                       </StyledCardTag>
                       : null
                   }

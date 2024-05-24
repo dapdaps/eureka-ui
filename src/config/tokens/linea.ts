@@ -171,4 +171,28 @@ export const linea: { [key: string]: Token } = {
     name: 'Gravita Debt Token',
     icon: 'https://ipfs.near.social/ipfs/bafkreic62f4fvqgjso3trvpbyveldzk5ejt5ggb43jy56l2m5rjm7fzdtu',
   },
+  wrseth: {
+    chainId: CHAIN_ID,
+    address: '0xD2671165570f41BBB3B0097893300b6EB6101E6C',
+    decimals: 18,
+    symbol: 'wrsETH',
+    name: 'rsETHWrapper',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty',
+  },
+  rseth: {
+    chainId: CHAIN_ID,
+    address: 'rsETH',
+    decimals: 18,
+    symbol: 'rsETH',
+    name: 'KelpDao Restaked ETH',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
+  },
+  lusdc: {
+    chainId: CHAIN_ID,
+    address: '0x4af215dbe27fc030f37f73109b85f421fab45b7a',
+    decimals: 6,
+    symbol: 'LUSDC',
+    name: 'Ledgity USDC',
+    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+  },
 };

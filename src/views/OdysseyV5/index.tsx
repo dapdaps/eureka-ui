@@ -32,7 +32,7 @@ export default function OdysseyV5() {
     },
     {
       key: 2,
-      title: 'Airdrop Mastery',
+      title: 'Airdrop Strategies',
       target: 'odysseySectionAirdropMastery',
     },
     {
@@ -47,6 +47,11 @@ export default function OdysseyV5() {
     },
     {
       key: 5,
+      title: 'Explore Modular Mode',
+      target: 'odysseySectionExploreModularMode'
+    },
+    {
+      key: 6,
       title: 'Climb to Leaderboard',
       target: 'odysseySectionClimbToLeaderboard',
     },
@@ -118,11 +123,12 @@ export default function OdysseyV5() {
   }, [quests]);
   useEffect(() => {
     let _exploredAmount = 0;
-    Object.values(quests).forEach((arr: any) => {
-      arr.forEach((it: any) => {
-        _exploredAmount += it.exploredAmount;
+    for (const questKey in quests) {
+      if (questKey === 'mode') continue;
+      quests[questKey].forEach((it: any) => {
+        _exploredAmount += it.exploredAmount || 0;
       });
-    });
+    }
     setExploredAmount(_exploredAmount);
   }, [quests]);
 
@@ -130,9 +136,17 @@ export default function OdysseyV5() {
     <StyledContainer>
       <StyledContent>
         <Noti />
-        <Banner detail={detail} loading={loading} />
+        <Banner
+          detail={detail}
+          loading={loading}
+       />
         <Mastery />
-        <Blitz />
+        <Blitz
+          onRefreshDetail={queryDetailThrottle}
+          detailLoading={exploredAmountLoading}
+          setDetailLoading={setExploredAmountLoading}
+          list={quests.mode}
+          loading={questsLoading}/>
 
         <Explores
           list={quests.social}

@@ -2,7 +2,12 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   margin: 0 auto 100px;
-  width: 1188px;
+  width: 1288px;
+  padding-left: 50px;
+  padding-right: 50px;
+  .bridge-title {
+    padding-top: 100px;
+  }
 `;
 
 export const StyledContent = styled.div`
@@ -11,4 +16,7 @@ export const StyledContent = styled.div`
   gap: 24px;
   align-items: center;
   flex-wrap: wrap;
+  .loading {
+    position: relative;
+  }
 `;
