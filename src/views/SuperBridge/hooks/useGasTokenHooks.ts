@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import Big from 'big.js'
 import { ethers, Contract, providers, utils } from "ethers";
-import { approve } from 'super-bridge-sdk'
+import { approve, SuperBridgeStore } from 'super-bridge-sdk'
 
 import type { Signer } from 'ethers'
 import { balanceFormated, percentFormated, addressFormated, errorFormated } from '@/utils/balance'
@@ -9,6 +9,41 @@ import useToast from '@/hooks/useToast';
 import { abi } from '../ChainTokenAmount/abi'
 
 import type { Chain, Token } from "@/types";
+
+let gloabalSbs: SuperBridgeStore
+async function initDb() {
+    const sbs = new SuperBridgeStore('dapdap', 'gas')
+    await sbs.init()
+    gloabalSbs = sbs
+    return sbs
+}
+
+async function getDb(): Promise<SuperBridgeStore> {
+    if (!gloabalSbs) {
+        return initDb()
+    }
+    return gloabalSbs
+}
+
+if (typeof window !== 'undefined') {
+    initDb()
+}
+
+export async function saveTransaction(item: any) {
+    const sbs = await getDb()
+    await sbs.update(item)
+}
+
+export async function getTransaction() {
+    const sbs = await getDb()
+    const list: any = await sbs.readAll()
+    
+    if (!list) {
+        return []
+    }
+    
+    return list
+}
 
 const contractAddress = '0xe1dA6F46d757699f6D783a2876E01937a1eCa9a9'
 
@@ -80,7 +115,6 @@ export function useGasTokenHooks({
     fromToken,
 }: GasTokenParams) {
     const [isSupported, setIsSupported] = useState(false)
-
 
     useEffect(() => {
         if (fromChain && toChain && fromToken) {

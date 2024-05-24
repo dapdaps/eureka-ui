@@ -21,7 +21,7 @@ const Container = styled.div`
 const ChainWapper = styled.div`
     width: 85px;
     border-right: 1px solid rgba(55, 58, 83, 1);
-    padding: 20px 0 20px 20px;
+    padding: 20px 0 20px 0;
     max-height: 100%;
     min-height: 100px;
     
@@ -40,11 +40,13 @@ const ChainWapper = styled.div`
         border: 1px solid rgba(55, 58, 83, 1);
         border-left: 0;
         padding: 0 17px 0 10px;
+        box-shadow: 10px 0px 15px 2px rgba(0, 0, 0, .3);
     }
 
     .chain-list {
         height: calc(100% - 20px);
         overflow-y: auto;
+        padding-left: 20px;
         /* overflow-x: hidden; */
         margin-top: 5px;
         .chain {
@@ -79,12 +81,14 @@ const ChainWapper = styled.div`
                     width: 500px;
                } */
                background-color: rgba(49, 51, 70, 1);
-               border-right: 0;
+               
                border-radius: 12px 0 0 12px;
+               border: 1px solid rgba(55, 58, 83, 1);
+               border-right: 0;
+               box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .3);
             }
         }
     }
-
     
 `
 
@@ -317,7 +321,7 @@ function TokenSelectModal({
     return <Modal ref={wapperRef} paddingSize={0} onClose={onClose}>
         <Container>
             <ChainWapper>
-                <Title>Chain</Title>
+                <Title style={{ paddingLeft: 20 }}>Chain</Title>
                 {
                     hoverChain && <div style={{ top: tipTop }} className="chain-tip">
                         <div>{hoverChain.chainName}</div>
@@ -336,7 +340,6 @@ function TokenSelectModal({
                                     if (ele) {
                                         ele.scrollIntoView()
                                     }
-                                    
                                 }}
                                 onMouseEnter={(e) => {
                                     setHoverChain(chain)

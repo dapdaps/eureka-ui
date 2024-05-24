@@ -15,6 +15,7 @@ import Amount from './Amount/index'
 import DestinationAddress from './DestinationAddress/index'
 import ReceiveDesc from './ReceiveDesc/index'
 import SubmitPanel from './SubmitPanel/index'
+import SubmitProcess from './SubmitPanel/SubmitProcess'
 
 import type { Chain, Token } from '@/types';
 import Big from 'big.js';
@@ -118,14 +119,15 @@ const symbols = DefaultTokenList.map(item => item.symbol)
 
 export default function GasStation({ chainList }: Props) {
     const { account, chainId, provider } = useAccount()
-    const [fromChain, setFromChain] = useState<Chain | undefined>(undefined)
-    const [toChain, setToChain] = useState<Chain | undefined>(undefined)
+    const [fromChain, setFromChain] = useState<Chain | undefined>(chainList[0])
+    const [toChain, setToChain] = useState<Chain | undefined>(chainList[1])
     const [amount, setAmount] = useState<string | number | undefined>(undefined)
     const [inputVal, setInputVal] = useState<string | number>(0)
     const [tokenList, setTokenList] = useState<Token[]>([])
     const [fromToken, setFromToken] = useState<Token>()
     const [canSend, setCanSend] = useState<boolean>(false)
     const [chainFromToken, setChainFromToken] = useState<Token | undefined>()
+    const [submitProcessShow, setSubmitProcessShow] = useState(true)
     const [gasAmountParam, setGasAmountParam] = useState<any>({
         fromChain,
         toChain,
@@ -264,6 +266,16 @@ export default function GasStation({ chainList }: Props) {
                     }
                 }}
             />
+
+            {
+                submitProcessShow && <SubmitProcess 
+                fromChain={fromChain}
+                toChain={toChain}
+                onClose={() => {
+                    setSubmitProcessShow(false)
+                }}/>
+            }
+            
         </Content>
     </Container>
 }

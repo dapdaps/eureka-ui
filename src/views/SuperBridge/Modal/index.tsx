@@ -59,13 +59,13 @@ interface Props {
 }
 
 function Modal({
-    width, height, onClose, title, children, paddingSize = 20, top = '30%'
+    width = 468, height, onClose, title, children, paddingSize = 20, top = '30%'
 }: Props, ref: any) {
     return <div>
         <Layer onClick={() => {
             onClose && onClose()
         }}/>
-        <Container ref={ref} size={paddingSize} style={{ top }}>
+        <Container ref={ref} size={paddingSize} style={{ top, width }}>
             <CloseWapper onClick={() => {
                 onClose && onClose()
             }}>

@@ -17,7 +17,8 @@ const Wapper = styled.div`
     min-height: 145px;
     border-radius: 12px;
     border: 1px solid rgba(55, 58, 83, 1);
-    background-color: rgba(46, 49, 66, 1);
+    transition: all .3s;
+    /* background-color: ${(focus) => !focus ? 'red' : 'rgba(46, 49, 66, 1)'}; */
 `
 const Header = styled.div`
     display: flex;
@@ -214,6 +215,7 @@ export default function ChainTokenAmount({
 }: Props) {
     const prices = usePriceStore((store) => store.price);
     const [tokenModalShow, setTokenModalShow] = useState<boolean>(false)
+    const [focus, setFocus] = useState<boolean>(false)
    
     const { balance, loading } = useTokenBalance({
         currency: currentToken,
@@ -228,7 +230,7 @@ export default function ChainTokenAmount({
         symbol: currentToken?.symbol
     })
 
-    return <Wapper>
+    return <Wapper style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
         <Header>
             <ChainWapper>
                 <ChainName>{title}</ChainName>
@@ -244,7 +246,11 @@ export default function ChainTokenAmount({
         </Header>
         <Content>
             <AmountWapper>
-                <AmountInput value={amount} onChange={e => {
+                <AmountInput value={amount} onFocus={() => {
+                    setFocus(true)
+                }} onBlur={() => {
+                    setFocus(false)
+                }} onChange={e => {
                     onAmountChange && !inputDisabled && onAmountChange(e.target.value)
                 }} type="number" disabled={inputDisabled} placeholder='0' />
                 <PriceWapper>{usdVal}</PriceWapper>
