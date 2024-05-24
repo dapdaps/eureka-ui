@@ -5,6 +5,7 @@ import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
 import Loading from '@/components/Icons/Loading';
+import Image from './Image'
 
 import type { Chain, Token } from '@/types';
 
@@ -85,8 +86,8 @@ export default function TokenRow({ token, chain, isSelected, loading, balances, 
     }}>
         <div className="left">
             <div className="img-wapper">
-                <img className="token-icon" src={token.icon} />
-                <img className="chain-icon" src={chain.icon} />
+                <Image cls="token-icon" src={token.icon} />
+                <Image cls="chain-icon" src={chain.icon} />
             </div>
             <div className="token-name">{token.symbol}</div>
         </div>

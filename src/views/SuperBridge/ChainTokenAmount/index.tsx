@@ -235,7 +235,7 @@ export default function ChainTokenAmount({
                 <ChainTrigger onClick={() => {
                     setTokenModalShow(true)
                 }}>
-                    <ChainGroupImg src={currentChain?.icon} />
+                    <ChainGroupImg src={currentChain?.icon} key={currentChain?.icon} />
                     <ChainGroupName>{currentChain?.chainName}</ChainGroupName>
                     <ArrowDown />
                 </ChainTrigger>

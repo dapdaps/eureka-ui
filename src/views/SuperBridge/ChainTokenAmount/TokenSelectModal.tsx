@@ -5,6 +5,8 @@ import { useDebounce } from 'ahooks';
 import { usePriceStore } from '@/stores/price';
 import useTokensBalance from "@/components/BridgeX/hooks/useTokensBalance";
 import { ArrowDown } from '../Arrow'
+import Image from './Image'
+
 import Modal from "../Modal";
 import TokenRow from './Token'
 
@@ -153,6 +155,7 @@ const ChainGroup = styled.div`
 `
 
 
+
 interface Props {
     onClose?: () => void;
     chainList: Chain[];
@@ -176,14 +179,12 @@ const TokenListComp = forwardRef(function TokenListComp({ chain, chainToken, cur
 
     const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
 
-    console.log('balances:', balances)
-
     return <ChainGroup>
         {
             chainToken[chain.chainId] && <>
                 <div className="ct-title" id={`${groupId}-${chain.chainId}`}>Chain</div>
                 <div className="cur-chian">
-                    <img className="img" src={chain.icon} />
+                    <Image cls="img" src={chain.icon}/>
                     <div>{chain.chainName}</div>
                 </div>
                 <div className="ct-title" style={{ paddingBottom: 0, paddingTop: 20 }}>Token</div>
@@ -201,11 +202,8 @@ const TokenListComp = forwardRef(function TokenListComp({ chain, chainToken, cur
                         const aAddress = a.isNative ? 'native' : a.address
                         const bAddress = b.isNative ? 'native' : b.address
 
-                        // console.log('a', balances[a.address])
-
                         const aNumber = Number(balances[aAddress] || 0)
                         const bNumber = Number(balances[bAddress] || 0)
-
 
                         return bNumber - aNumber
                     })
@@ -355,7 +353,7 @@ function TokenSelectModal({
                                     setHoverChain(null)
                                 }}
                                 className={`chain ${tempChain?.chainId === chain.chainId ? 'active' : ''}`}>
-                                <img src={chain.icon} className="img" />
+                                <Image cls="img" src={chain.icon}/>
                             </div>
                         })
                     }

@@ -115,7 +115,7 @@ export default function Route(
     }}>
         <BridgeSummary>
             <div className="bridge-names">
-                <img className="img" src={route.icon} />
+                <img className="img" src={route.icon} key={route.icon} />
                 <div className="name">{route.bridgeType}: {route.bridgeName}</div>
             </div>
             <div className="tags">

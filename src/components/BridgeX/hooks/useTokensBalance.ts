@@ -15,7 +15,7 @@ export default function useTokensBalance(tokens: any) {
   const [loading, setLoading] = useState(false);
   const [balances, setBalances] = useState<any>({});
   const currentChainId =  useRef<any>()
-  // const [currentChainId, setCurrentChainId] = useState(null)
+  const currentRpc =  useRef<any>(0)
   const { account } = useAccount();
 
   const queryBalance = useCallback(async () => {
@@ -24,7 +24,7 @@ export default function useTokensBalance(tokens: any) {
     try {
       setLoading(true);
       const chainId = tokens[0].chainId
-      const rpcUrl = chainId ? (rpcs[chainId] ? rpcs[chainId] : chains[chainId]?.rpcUrls[0]) : '';
+      const rpcUrl = chainId ? (rpcs[chainId] ? rpcs[chainId] : chains[chainId]?.rpcUrls[currentRpc.current]) : '';
       currentChainId.current = chainId
       setBalances({})
       if (!rpcUrl) {
@@ -80,10 +80,16 @@ export default function useTokensBalance(tokens: any) {
         setLoading(false);
       }
       
-    } catch (err) {
+    } catch (err: any) {
       console.log(err);
-      setLoading(false);
-      setBalances({})
+      if (currentRpc.current < 2) {
+        currentRpc.current += 1
+       
+        queryBalance()
+      } else {
+        setLoading(false);
+        setBalances({})
+      }
     }
   }, [tokens, account]);
 
