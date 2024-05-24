@@ -25,7 +25,115 @@ import {
   Treasure3,
   Treasure4,
   Treasure5,
+  Treasure6,
 } from './styles';
+import CoinGroup from '@/views/OdysseyV4/components/Treasure/CoinGroup';
+import { StyledFlex } from '@/styled/styles';
+
+const ThrusterCoinListStep1 = [
+  {
+    key: 1,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-juice.svg'],
+    name: ['WETH', 'JUICE'],
+  },
+  {
+    key: 2,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-pac.svg'],
+    name: ['WETH', 'PAC'],
+  },
+  {
+    key: 3,
+    icon: ['/images/odyssey/v4/coin-kap.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['KAP', 'WETH'],
+  },
+  {
+    key: 4,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-yield.svg'],
+    name: ['WETH', 'YIELD'],
+  },
+  {
+    key: 5,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-glory.svg'],
+    name: ['WETH', 'GLORY'],
+  },
+  {
+    key: 6,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-ole.svg'],
+    name: ['WETH', 'OLE'],
+  },
+  {
+    key: 7,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-sss.svg'],
+    name: ['WETH', 'SSS'],
+  },
+  {
+    key: 8,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-andy.svg'],
+    name: ['WETH', 'ANDY'],
+  },
+  {
+    key: 9,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-early.svg'],
+    name: ['WETH', 'EARLY'],
+  },
+  {
+    key: 10,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-mia.svg'],
+    name: ['WETH', 'MIA'],
+  },
+  {
+    key: 11,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-wai.svg'],
+    name: ['WETH', 'WAI'],
+  },
+  {
+    key: 12,
+    icon: ['/images/odyssey/v4/coin-orbit.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['ORBIT', 'WETH'],
+  },
+  {
+    key: 13,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-baja.svg'],
+    name: ['WETH', 'BAJA'],
+  },
+  {
+    key: 14,
+    icon: ['/images/odyssey/v4/coin-weth2.svg', '/images/odyssey/v4/coin-bag.svg'],
+    name: ['WETH', 'BAG'],
+  },
+  {
+    key: 15,
+    icon: ['/images/odyssey/v4/coin-pump.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['PUMP', 'WETH'],
+  },
+];
+const ThrusterCoinListStep2 = [
+  {
+    key: 1,
+    icon: ['/images/odyssey/v4/coin-weth1.svg', '/images/odyssey/v4/coin-juice.svg'],
+    name: ['WETH', 'JUICE'],
+  },
+  {
+    key: 2,
+    icon: ['/images/odyssey/v4/coin-weth1.svg', '/images/odyssey/v4/coin-pac.svg'],
+    name: ['WETH', 'PAC'],
+  },
+  {
+    key: 3,
+    icon: ['/images/odyssey/v4/coin-kap.svg', '/images/odyssey/v4/coin-weth1.svg'],
+    name: ['KAP', 'WETH'],
+  },
+  {
+    key: 4,
+    icon: ['/images/odyssey/v4/coin-weth1.svg', '/images/odyssey/v4/coin-yield.svg'],
+    name: ['WETH', 'YIELD'],
+  },
+  {
+    key: 5,
+    icon: ['/images/odyssey/v4/coin-weth1.svg', '/images/odyssey/v4/coin-glory.svg'],
+    name: ['WETH', 'GLORY'],
+  },
+];
 
 export default function Treasure() {
   const [showModal1, setShowModal1] = useState(false);
@@ -33,6 +141,7 @@ export default function Treasure() {
   const [showModal3, setShowModal3] = useState(false);
   const [showModal4, setShowModal4] = useState(false);
   const [showModal5, setShowModal5] = useState(false);
+  const [showModal6, setShowModal6] = useState(false);
   const [showRenzo, setShowRenzo] = useState(false);
   const linkRef = useRef<any>();
 
@@ -651,15 +760,121 @@ export default function Treasure() {
           </ModalBody>
         </Modal>
       ) : null}
+      {showModal6 ? (
+        <Modal
+          type="type6"
+          onClose={() => setShowModal6(false)}
+          className="modal-6"
+          style={{
+            left: '50%',
+            transform: 'translateX(-50%)',
+            top: 150,
+            marginBottom: 100,
+          }}
+        >
+          <ModalTitle>
+            How to participate in a 2x Gold boosted strategy on Thruster and Hyperlock?
+          </ModalTitle>
+          <ModalDesc>
+            Utilize the 2x boosted Thruster and Hyperlock Gold Rush events by adding liquidity to the top 15 Blast native coin pools. Maximize your gains effortlessly!
+          </ModalDesc>
+          <ModalBody>
+            <Trapeziform {...TrapLayout} className="modal-list">
+              <div className="modal-list-head">
+                <div className="head-left">
+                  <StyledFlex gap="7px" className="head-title">
+                    <span>Step 1. Create a new position on</span>
+                    <Image src="/images/odyssey/v4/thruster-rect.svg" alt="" width={156} height={36} />
+                    <span>to gain 2x Gold.</span>
+                  </StyledFlex>
+                </div>
+              </div>
+              <StyledFlex
+                justifyContent="flex-start"
+                alignItems="center"
+                style={{
+                  marginTop: 15,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {
+                  ThrusterCoinListStep1.map((coin) => (
+                    <CoinGroup
+                      key={coin.key}
+                      icon={coin.icon}
+                      name={coin.name}
+                      style={{
+                        flexBasis: '25%',
+                        marginBottom: 20,
+                      }}
+                    />
+                  ))
+                }
+              </StyledFlex>
+              <div className="modal-list-foot">
+                <TrapeziformBtn
+                  width="286px"
+                  height="42px"
+                  handleClick={(e: any) => openLink(`${location.origin}/dapp/thruster-liquidity`)}
+                >
+                  Deposit WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                </TrapeziformBtn>
+              </div>
+            </Trapeziform>
+            <Trapeziform {...TrapLayout} className="modal-list">
+              <div className="modal-list-head">
+                <div className="head-left">
+                  <StyledFlex gap="7px" className="head-title">
+                    <span>Step 2. Staking LP on</span>
+                    <Image src="/images/odyssey/v4/hyperlock-rect.svg" alt="" width={140} height={36} />
+                    <span>to get exclusive 2x Gold.</span>
+                  </StyledFlex>
+                </div>
+              </div>
+              <StyledFlex
+                justifyContent="flex-start"
+                alignItems="center"
+                style={{
+                  marginTop: 15,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {
+                  ThrusterCoinListStep2.map((coin) => (
+                    <CoinGroup
+                      key={coin.key}
+                      icon={coin.icon}
+                      name={coin.name}
+                      style={{
+                        flexBasis: '25%',
+                        marginBottom: 20,
+                      }}
+                    />
+                  ))
+                }
+              </StyledFlex>
+              <div className="modal-list-foot">
+                <TrapeziformBtn
+                  width="286px"
+                  height="42px"
+                  handleClick={(e: any) => openLink(`${location.origin}/dapp/hyperlock`)}
+                >
+                  Stake LP <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                </TrapeziformBtn>
+              </div>
+            </Trapeziform>
+          </ModalBody>
+        </Modal>
+      ) : null}
 
-      <StyledContent>
+      <StyledContent className="row-top">
         <Treasure1 onClick={() => setShowModal1(true)}>
           <Line />
           <Image
             src="/images/odyssey/v4/star-particle.svg"
             alt=""
-            width={302}
-            height={206}
+            width={266}
+            height={180}
             className="scale"
             style={{ marginTop: -23 }}
           />
@@ -684,7 +899,7 @@ export default function Treasure() {
             height={60}
             className="scale star hyperlock"
           /> */}
-          <Image src="/images/odyssey/v4/star3.svg" alt="" width={362} height={208} className="scale star3" />
+          <Image src="/images/odyssey/v4/star3.svg" alt="" width={313} height={180} className="scale star3" />
           <Title className="title">Extra Points</Title>
           <IconGroup className="td2">
             <Image src="/images/odyssey/v4/icon-thruster.svg" alt="" width={22} height={22} className="" />
@@ -694,16 +909,12 @@ export default function Treasure() {
         </Treasure2>
         <Treasure3 onClick={() => setShowModal5(true)}>
           <Line />
-          <Image src="/images/odyssey/v4/juice.svg" alt="" width={208} height={208} className="scale" />
+          <Image src="/images/odyssey/v4/juice.svg" alt="" width={170} height={170} className="scale" />
           <Title className="title">Multiple Points</Title>
           <Image src="/images/odyssey/v4/td3.svg" alt="" width={79} height={22} className="td3" />
         </Treasure3>
       </StyledContent>
-      <StyledContent
-        style={{
-          justifyContent: 'space-evenly',
-        }}
-      >
+      <StyledContent className="row-bot">
         <Treasure4 onClick={() => setShowModal2(true)}>
           <Line />
           {/* <Image src="/images/odyssey/v4/track1.svg" alt="" width={478} height={164} className="track1" />
@@ -724,7 +935,7 @@ export default function Treasure() {
             className="scale star hyperlock"
           />
           <Image src="/images/odyssey/v4/renzo.svg" alt="" width={118} height={118} className="scale star renzo" /> */}
-          <Image src="/images/odyssey/v4/star4.svg" alt="" width={504} height={249} className="scale star4" />
+          <Image src="/images/odyssey/v4/star4.svg" alt="" width={363} height={249} className="scale star4" />
           <Title className="title">Extra Points</Title>
           <Image src="/images/odyssey/v4/td4.svg" alt="" width={79} height={22} className="td4" />
         </Treasure4>
@@ -739,6 +950,15 @@ export default function Treasure() {
           </IconGroup>
           <Title className="title title2">& 3x Assets</Title>
         </Treasure5>
+        <Treasure6 onClick={() => setShowModal6(true)}>
+          <Line />
+          <Image src="/images/odyssey/v4/star6.svg" alt="" width={221} height={228} className="scale pac" />
+          <Title className="title title1">2x Boosted</Title>
+          <div className="badge">
+            <Image src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
+            <span>2x</span>
+          </div>
+        </Treasure6>
       </StyledContent>
       {showRenzo && (
         <SkakeModel
