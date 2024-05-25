@@ -160,7 +160,7 @@ export default function SubmitPanel({
                             </svg>
                         </div>
                     </div>
-                    <div className="amount-wapper">0.01882 ETH</div>
+                    <div className="amount-wapper">0.01282 ETH</div>
                 </div>
             </div>
         </DestinationAddress>
