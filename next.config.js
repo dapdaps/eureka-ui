@@ -93,6 +93,10 @@ const nextConfig = {
       source: '/kelpdao/:path*',
       destination: 'https://universe.kelpdao.xyz/:path*',
     },
+    {
+      source: '/teahouse/:path*',
+      destination: 'https://vault-api.teahouse.finance/:path*',
+    },
   ],
   images: {
     remotePatterns: [

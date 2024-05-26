@@ -74,6 +74,13 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#fff',
     },
   },
+  'teahouse-finance': {
+    type: 'staking',
+    theme: {
+      '--button-color': '#d5fa69',
+      '--button-text-color': '#000',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
