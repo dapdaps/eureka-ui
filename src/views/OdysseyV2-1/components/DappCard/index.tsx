@@ -16,6 +16,7 @@ import {
   StyledFooter,
   StyledExecution,
   StyledFooterActions,
+  StyledArrowIcon
 } from './styles';
 import LockStatus from '@/views/OdysseyV2-1/components/LockStatus';
 
@@ -35,12 +36,17 @@ export default function DappCard({
   spins,
   total_spins,
   onRefreshDetail,
+  detailLoading,
+  setDetailLoading,
 }: any) {
+
   const [execution, setExecution] = useState(0);
+
   const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
     onRefreshDetail();
     setExecution(_times);
-  });
+  }, detailLoading, setDetailLoading);
+
   const { open: dappOpen } = useDappOpen();
   const setLayout = useLayoutStore((store?: any) => store.set);
   const setCachedTab = useAllInOneTabCachedStore((store: any) => store.setCachedTab);
@@ -82,7 +88,9 @@ export default function DappCard({
             <StyledDappDesc>{description}</StyledDappDesc>
           </StyledDappTitleWrapper>
         </StyledDappWrapper>
-        <ArrowIcon style={{ marginTop: '6px' }} />
+        <StyledArrowIcon>
+          <ArrowIcon/>
+        </StyledArrowIcon>
       </StyledTop>
       <StyledFooter>
 

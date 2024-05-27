@@ -10,7 +10,8 @@ export const LoadingWrap = styled.div`
 export const StyledContainer = styled.div`
   position: relative;
   z-index: 1;
-  width: 1049px;
+  min-width: 768px;
+  width: 100%;
   height: 145px;
   display: flex;
   align-items: center;
@@ -71,11 +72,3 @@ export const Value = styled.div`
   font-weight: 700;
   text-transform: capitalize;
 `;
-
-// export const StyledContent = styled.div`
-//   padding-top: 36px;
-//   gap: 20px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// `;

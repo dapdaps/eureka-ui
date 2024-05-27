@@ -1,14 +1,19 @@
 import { useCallback, useState } from 'react';
 import useToast from '@/hooks/useToast';
 import { get } from '@/utils/http';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 
-export default function useCheck(quest: any, cb: any) {
+export default function useCheck(quest: any, cb: any, detailLoading: boolean, setDetailLoading: any) {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
+  const account = useAccount();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
-  const handleRefresh = useCallback(async (data?: string) => {
-    if (loading) return;
+  const fetchData = async (data?: string) => {
+    if (loading || detailLoading) return;
     setLoading(true);
+    setDetailLoading(true);
     const toastId = toast.loading({
       title: data ? 'Action confirming' : 'Action refreshing',
     });
@@ -17,6 +22,7 @@ export default function useCheck(quest: any, cb: any) {
       const result = await get(`/api/compass/check_quest`, params);
       if (result.code !== 0) throw new Error(result.msg);
       setLoading(false);
+      setDetailLoading(false);
       toast.dismiss(toastId);
       if (!data) {
         toast.success({
@@ -41,12 +47,26 @@ export default function useCheck(quest: any, cb: any) {
     } catch (err) {
       console.log(err);
       setLoading(false);
+      setDetailLoading(false);
       toast.dismiss(toastId);
       toast.fail({
         title: data ? 'Action confirmed failed' : `Action refreshed failed`,
       });
     }
-  }, []);
+  }
+
+  const handleRefresh = useCallback(
+    async (d?: string) => {
+      fetchData(d);
+      // if (!account) {
+      //   fetchData(d);
+      //   return;
+      // }
+      // check(fetchData);
+    },
+    [quest, detailLoading],
+  );
+
 
   return { checking: loading, handleRefresh };
 }

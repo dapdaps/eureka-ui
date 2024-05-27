@@ -19,9 +19,8 @@ export const StyledBannerContainer = styled.div`
   `;
 
 export const StyledContent = styled.div`
-  max-width: 1340px;
-  padding-top: 140px;
-  padding-bottom: 70px;
+  padding: 140px 75px 70px 75px;
+  max-width: ${() => `var(--odyssey2-container-width)`};
   width: 100%;
   display: flex;
   align-items: center;
@@ -50,3 +49,10 @@ export const BannerDesc = styled.div`
   font-style: italic;
   font-weight: 600;
 `;
+
+export const StyledBannerPadding = styled.div`
+  padding: 0 ${() => `var(--odyssey2-container-gutter)`};
+  max-width: ${() => `var(--odyssey2-container-width)`};
+  width: 100%;
+  min-width: 1080px;
+  `;

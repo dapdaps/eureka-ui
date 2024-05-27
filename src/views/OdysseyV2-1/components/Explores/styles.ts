@@ -3,11 +3,23 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   position: relative;
   width: 100%;
+  &::after {
+    display: block;
+    content: '';
+    background: url('/images/odyssey/v2-1/explore-box.svg');
+    width: 165px;
+    height: 166px;
+    background-size: contain;
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
 `;
 
 export const StyledContent = styled.div`
-  margin: 47px auto 100px;
-  width: 1188px;
+  padding: 0 ${() => `var(--odyssey2-container-gutter)`};
+  max-width: ${() => `var(--odyssey2-content-width)`};
+  margin: 47px auto 120px;
 `;
 
 export const StyledItemWrap = styled.div<{ show: boolean }>`
@@ -115,16 +127,6 @@ export const StyledItemShadow = styled.div`
     transform: translateY(-50%);
     z-index: 0;
   }
-`;
-
-export const StyledTitleBox = styled.div`
-  background: url('/images/odyssey/v2-1/explore-box.svg');
-  width: 165px;
-  height: 166px;
-  background-size: contain;
-  position: absolute;
-  top: 0;
-  right: 0;
 `;
 
 export const StyledArrowIcon = styled.div`

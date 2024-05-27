@@ -3,7 +3,17 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   width: 100%;
   position: relative;
-  margin-bottom: 100px;
+  &::after {
+    background: url('/images/odyssey/v2-1/plate-left.svg') center center no-repeat;
+    background-size: contain;
+    width: 52px;
+    height: 235px;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    display: block;
+    content: '';
+  }
 `;
 
 export const StyledContent = styled.div`
@@ -11,6 +21,8 @@ export const StyledContent = styled.div`
   gap: 24px;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 80px;
+  position: relative;
 `;
 
 export const StyledTitle = styled.div`
@@ -35,17 +47,24 @@ export const StyledSubTitle = styled.div`
   `;
 
 export const StyledBody = styled.div`
-  max-width: 1186px;
+  padding: 0 ${() => `var(--odyssey2-container-gutter)`};
+  max-width: ${() => `var(--odyssey2-content-width)`};
   width: 100%;
   margin: 0 auto;
 `;
 
-export const StyledLeftPlate = styled.div`
-  background: url('/images/odyssey/v2-1/plate-left.svg') center center no-repeat;
-  background-size: contain;
-  width: 52px;
-  height: 235px;
-  position: absolute;
-  top: 68px;
-  left: 0;
+export const StyledQuestWrap = styled.div`
+  width: 100%;
+  position: relative;
+  &.lending::after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: -388px;
+    right: 0;
+    width: 582px;
+    height: 552px;
+    background-size: contain;
+    background: url('/images/odyssey/v2-1/rocket.svg') center no-repeat;
+  }
 `;

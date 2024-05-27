@@ -4,6 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDebounceFn } from 'ahooks';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import Big from 'big.js';
 
 const defaultQuests: any = { social: [], bridge: [], swap: [], lending: [], staking: [] };
 
@@ -25,6 +26,8 @@ export default function useQuests() {
       const _result = cloneDeep(defaultQuests);
 
       result.data.forEach((item: any) => {
+        item.exploredAmount = new Big(item.total_spins).div(item.spins).toNumber() || 0;
+
         if (item.category_id === 0 && item.category !== 'twitter_retweet') {
           _result.social.push(item);
         }
@@ -62,5 +65,5 @@ export default function useQuests() {
     run();
   }, [account]);
 
-  return { loading, quests: quests || defaultQuests };
+  return { loading, quests: quests || defaultQuests, setQuests };
 }

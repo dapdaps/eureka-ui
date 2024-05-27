@@ -5,8 +5,9 @@ import {
   StyledMatrixTag,
   StyledTitle,
   StyledSubTitle,
-  StyledGameContainer
+  StyledMatrixLogo
 } from './styles';
+import MatrixGame from '@/views/OdysseyV2-1/components/Matrix/MatrixGame';
 
 const Matrix = () => {
   return <StyledMatrixContainer>
@@ -15,11 +16,12 @@ const Matrix = () => {
         DAPDAP ODYSSEY VOL.2*
       </StyledMatrixTag>
       <StyledTitleContainer>
+        <StyledMatrixLogo />
         <StyledTitle>The Matrix</StyledTitle>
-        <StyledSubTitle>By exploring the dApp to light up the card, unlock the horizontal or vertical of cards to earn PTS</StyledSubTitle>
-        <StyledGameContainer></StyledGameContainer>
       </StyledTitleContainer>
-  </StyledMatrixBorder>
+      <StyledSubTitle>By exploring the dApp to light up the card, unlock the horizontal or vertical of cards to earn PTS</StyledSubTitle>
+      <MatrixGame />
+    </StyledMatrixBorder>
 </StyledMatrixContainer>
   ;
 }

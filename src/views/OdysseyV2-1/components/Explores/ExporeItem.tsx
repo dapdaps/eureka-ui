@@ -20,12 +20,14 @@ const ExporeItem = ({
   total_spins = 0,
   times = 0,
   onRefreshDetail,
+  detailLoading,
+  setDetailLoading,
 }: any) => {
   const [finished, setFinished] = useState(false);
   const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins }, (_times: number) => {
     setFinished(true);
     onRefreshDetail();
-  });
+  }, detailLoading, setDetailLoading);
   const { handleReport } = useReport();
 
   const onItemClick = () => {
@@ -42,7 +44,7 @@ const ExporeItem = ({
     }
 
     if (!source) return;
-    if (source === '/network/blast') handleReport(id);
+    if (source === '/network/linea') handleReport(id);
     window.open(source, '_blank');
   };
 
@@ -71,7 +73,6 @@ const ExporeItem = ({
           <>
             <Unexplored>Unexplored</Unexplored>
               <RefreshIcon onClick={(ev: any) => {
-                console.log('dsodosid');
                 ev.stopPropagation();
                 if (checking) return;
 

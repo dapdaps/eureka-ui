@@ -5,11 +5,11 @@ import { Item, StyledContainer, Title, Value } from './styles';
 const ITEMS = [
   {
     label: 'Trading Volume',
-    key: 'total_users',
+    key: 'trading_volume',
   },
   {
     label: 'Total Transactions',
-    key: 'total_players',
+    key: 'total_transactions',
   },
   {
     label: 'Total Users',
@@ -17,10 +17,9 @@ const ITEMS = [
   },
 ];
 
-export default function Summary({ detail }: any) {
+export default function Summary({ detail, loading }: any) {
 
   const duration = 2;
-  console.log(detail);
 
   return (
     <StyledContainer>

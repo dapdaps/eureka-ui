@@ -3,6 +3,7 @@ import styled from 'styled-components';
 export const StyledTop = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
 `;
 
 export const StyledDappWrapper = styled.div`
@@ -61,4 +62,10 @@ export const StyledFooterActions = styled.div`
   justify-content: flex-end;
   gap: 9px;
   align-items: center;
+`;
+
+export const StyledArrowIcon = styled.div`
+  flex-shrink: 0;
+  height: 100%;
+  line-height: 1;
 `;
