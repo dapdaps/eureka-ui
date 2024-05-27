@@ -427,7 +427,7 @@ function TokenSelectModal({
                         </div>
                         <input onChange={(e) => {
                             setSearchVal(e.target.value)
-                        }} className="input" placeholder="e.g. ethereum:eth" />
+                        }} value={searchVal} className="input" placeholder="e.g. ethereum:eth" />
                     </div>
                 </TokenTop>
                 <div className="ctg-wapper">
