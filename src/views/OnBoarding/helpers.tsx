@@ -38,7 +38,7 @@ export function formatTitle(record: any) {
             </div>
           ));
         }
-      } catch (err) {}
+      } catch (err) { }
     }
     return (
       <>
@@ -78,11 +78,18 @@ export function formatTitle(record: any) {
             {record.template}
           </>
         );
+      } else {
+        <>
+          {parsedExtraData.action}{' '}
+          <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span> {tokens[0]} and{' '}
+          <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span> {tokens[1]} on{' '}
+          {record.template}
+        </>
       }
-    } catch (err) {}
+    } catch (err) { }
     return (
       <>
-        Deposit <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
+        Withdraw <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
         {tokens[1]}
       </>
     );
@@ -102,7 +109,7 @@ export function formatTitle(record: any) {
           </>
         );
       }
-    } catch (err) {}
+    } catch (err) { }
     const action = record.action_title.split(' ')[0];
     return (
       <>
