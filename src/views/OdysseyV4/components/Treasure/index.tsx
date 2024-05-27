@@ -817,7 +817,7 @@ export default function Treasure() {
                   height="42px"
                   handleClick={(e: any) => openLink(`${location.origin}/dapp/thruster-liquidity`)}
                 >
-                  Deposit WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                  Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                 </TrapeziformBtn>
               </div>
             </Trapeziform>
