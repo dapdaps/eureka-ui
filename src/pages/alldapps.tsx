@@ -437,7 +437,6 @@ const AllDappsColumn: NextPageWithLayout = () => {
   const [loading, setLoading] = useState(true);
 
   const networkRef = useRef<any>(null);
-  const isFirstLoad = useRef<boolean>(false);
 
   function getCategoryNames(dappCategories: any, categoryArray: any[]) {
     const categories = Array.isArray(dappCategories) ? dappCategories : Object.values(dappCategories);
@@ -633,18 +632,8 @@ const AllDappsColumn: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    if (isFirstLoad.current) {
-      showHiddenDapp();
-      isFirstLoad.current = false;
-    }
-  }, [networkRef.current])
-
-  useEffect(() => {
-    isFirstLoad.current = true;
-    return () => {
-      isFirstLoad.current = false;
-    }
-  }, []);
+    showHiddenDapp();
+  }, [networkRef.current]);
 
   useEffect(() => {
     const categoryFromQuery = router.query.category ? (router.query.category as string).split(',') : [];
