@@ -1,8 +1,14 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  padding-bottom: 60px;
+  --portfolio-width: 1100px;
+  --portfolio-gutter: 50px;
   --switch-color: #ebf479;
+  font-family: Gantari;
+  padding: 40px 0 60px;
+  background: #101115;
+  min-height: 100vh;
+  
   .frcs-gm {
     display: flex;
     gap: 5px;
@@ -33,7 +39,7 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  width: 1000px;
+  max-width: ${() => `var(--portfolio-width)`};
+  padding: 0  ${() => `var(--portfolio-gutter)`};
   margin: 0 auto;
-  padding-top: 20px;
 `;

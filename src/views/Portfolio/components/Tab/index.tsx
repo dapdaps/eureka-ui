@@ -1,24 +1,25 @@
 import { memo } from 'react';
-import { PortfolioTabs } from './styles';
+import { PortfolioTabs, PortfolioTabContent, PortfolioTabHead, StyledTabItem } from './styles';
 
-const Tab = ({ tab, setTab }: any) => {
+const Tab = ({ tab, setTab, children, tabs }: any) => {
   return (
     <PortfolioTabs>
-      {['Wallet', 'Protocol', 'Execution Records'].map((_tab) => {
-        const isActive = tab === _tab.toString();
-        return (
-          <div
-            key={_tab}
-            className={`item ${isActive ? 'active' : ''}`}
-            onClick={() => {
-              setTab(_tab as 'Wallet' | 'Protocol' | 'Execution Records');
-            }}
-          >
-            {_tab}
-            {isActive && <div className="active-bar" />}
-          </div>
-        );
-      })}
+      <PortfolioTabHead>
+        {tabs.map((_tab: { key: string, title: string }) => {
+          return (
+            <StyledTabItem
+              key={_tab.key}
+              className={`${tab === _tab.key ? 'active' : ''}`}
+              onClick={() => {
+                setTab(_tab.key as 'Wallet' | 'Protocol' | 'Execution Records');
+              }}
+            >
+              {_tab.title}
+            </StyledTabItem>
+          );
+        })}
+      </PortfolioTabHead>
+      <PortfolioTabContent>{ children }</PortfolioTabContent>
     </PortfolioTabs>
   );
 };

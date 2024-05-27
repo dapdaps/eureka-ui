@@ -18,9 +18,11 @@ export default function useTokens() {
       setLoading(true);
       setTokens([]);
       const result = await get(`/db3`, { url: 'api/balance/list', params: JSON.stringify({ address: account }) });
+      console.log(result);
+      const _data = result?.data?.list ?? [];
       const _networks: any = {};
       let _totalBalance = new Big(0);
-      result?.data?.list.forEach((record: any) => {
+      _data.forEach((record: any) => {
         if (_networks[record.chain_id]) {
           _networks[record.chain_id].usd += Number(record.usd || 0);
         } else {
@@ -33,7 +35,7 @@ export default function useTokens() {
       });
 
       setLoading(false);
-      setTokens(result?.data?.list);
+      setTokens(_data);
       setNetworks(Object.values(_networks));
       setTotalBalance(_totalBalance);
     } catch (error) {

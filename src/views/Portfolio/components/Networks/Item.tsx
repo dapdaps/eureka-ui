@@ -2,10 +2,17 @@ import { memo, useMemo } from 'react';
 import chains from '@/config/chains';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
 import { getChainLogo } from '../../helpers';
-import { NetWorkTab } from './styles';
+import {
+  StyledItemContent,
+  StyledItemIcon,
+  StyledItemName,
+  StyledItemNum,
+  StyledItemUSD,
+  StyledTabItem,
+} from './styles';
 import Big from 'big.js';
 
-const Item = ({ chainId, usd, totalBalance, network, setNetwork }: any) => {
+const Item = ({ chainId, usd, totalBalance, network, setNetwork, icon }: any) => {
   const chain = useMemo(() => {
     return chains[chainId];
   }, [chainId]);
@@ -15,27 +22,18 @@ const Item = ({ chainId, usd, totalBalance, network, setNetwork }: any) => {
   }, [totalBalance, usd]);
 
   return (
-    <NetWorkTab
-      active={network === chainId}
-      onClick={() => {
-        setNetwork(chainId);
-      }}
-      className="frcs-gm"
-    >
-      {chain?.icon ? (
-        <img className="network-icon-chain" src={getChainLogo(chain.chainName)} />
-      ) : (
-        <div className="default-icon network-icon" />
-      )}
-
-      <div>
-        <div className="network-name">{chain?.chainName}</div>
-        <div className="value-filed frcs-gm">
-          <div className="usd-value">${formateValueWithThousandSeparator(usd, 2)}</div>
-          <div className="usd-value-percent">{percentage}%</div>
-        </div>
-      </div>
-    </NetWorkTab>
+    <StyledTabItem className={ network === chainId ? 'active' : '' } onClick={() => {
+      setNetwork(chainId);
+    }}>
+      <StyledItemIcon className='item-icon' url={icon ? '' : getChainLogo(chain.chainName)}>{icon ?? null}</StyledItemIcon>
+      <StyledItemContent>
+        <StyledItemName>{chain?.chainName}</StyledItemName>
+        <StyledItemNum>
+          <StyledItemUSD>${formateValueWithThousandSeparator(usd, 2)}</StyledItemUSD>
+          { percentage && <StyledItemName>{percentage}%</StyledItemName> }
+        </StyledItemNum>
+      </StyledItemContent>
+    </StyledTabItem>
   );
 };
 

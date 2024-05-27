@@ -178,3 +178,58 @@ export const HoldingTable = styled.table`
 export const SortArrowDownWrapper = styled.div<{ active: boolean }>`
   color: ${(p) => (p.active ? '#7C7F96' : '#373A53')};
 `;
+
+
+export const StyledWalletContainer = styled.div`
+  border-radius: 12px;
+  border: 1px solid #373A53;
+  background: #262836;
+`;
+
+export const  StyledWalletTable = styled.div``;
+
+export const  StyledWalletTableItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 27px;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 400;
+  &:first-child {
+    color: #7C7F96;
+    border-bottom: 1px solid #373a53;
+    padding-bottom: 10px;
+  }
+`;
+
+export const  StyledTableItemTxt = styled.div`
+  width: 21%;
+  margin-right: 20px;
+  display: flex;
+  align-items: center;
+  column-gap: 14px;
+  &:first-child {
+    width: 52%;
+  }
+  &:last-child {
+    width: 10%;
+    margin-right: 0;
+  }
+  `;
+
+export const StyledTokenIcon = styled.div`
+  width: 26px;
+  height: 26px;
+  position: relative;
+  border: 1px solid red;
+  .token {
+    width: 12px;
+    height: 12px;
+    border-radius: 2px;
+    border: 2px solid #262836;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+`;

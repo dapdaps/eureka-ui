@@ -1,103 +1,77 @@
 import styled from 'styled-components';
 
-export const NetworkTabWrapper = styled.div`
+export const StyledNetworkTabWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
   flex-wrap: wrap;
+  margin-bottom: 38px;
+`;
 
-  > div {
-    cursor: pointer;
+export const StyledTabItem = styled.div`
+  border-radius: 8px;
+  border: 1px solid #282A3C;
+  background: #1B1D25;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 14px;
+  width: 158px;
+  cursor: pointer;
+  
+  &.hover,
+  &.active {
+    border: 1px solid #EBF479;
+    background: rgba(53, 55, 73, 0.50);
+    .item-icon {
+      color: #EBF479;
+    }
   }
 `;
 
-export const AllNetWorkTab = styled.div<{ active: boolean }>`
-  width: 152px;
-  height: 50px;
-  background: ${(p) => (p.active ? 'linear-gradient(180deg, #EEF3BF 0%, #E9F456 100%)' : '#35374980')};
+export const StyledItemIcon = styled.div<{ url?: string }>`
+  color: #2D2F42;
+  width: 36px;
+  height: 36px;
+  background: ${props => props?.url ? `url(${props.url}) center no-repeat`: 'unset' };
+  background-size: contain;
   border-radius: 10px;
-  padding: 16px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  border: 1px solid transparent;
-  transition: 0.3s;
-
-  > div {
-    cursor: pointer;
-  }
-  .network-name {
-    font-family: Gantari;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 16px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #7c7f96;
-  }
-  .usd-value {
-    font-family: Gantari;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: ${(p) => (p.active ? '#2D2F42' : 'white')};
-  }
+  justify-content: center;
+  flex-shrink: 0;
 `;
 
-export const NetWorkTab = styled.div<{ active: boolean }>`
-  min-width: 152px;
-  max-width: max-content;
-  height: 50px;
-  border-radius: 10px;
-  background: ${(p) => (p.active ? 'linear-gradient(180deg, #EEF3BF 0%, #E9F456 100%)' : '#35374980')};
-  border: 1px solid transparent;
-  padding: 8px;
+export const StyledItemContent = styled.div`
+  color: #2D2F42;
+`;
+
+export const StyledItemName = styled.div`
+  color: #7C7F96;
+  font-size: 13px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  line-height: 1;
+  white-space: nowrap;
+`;
+
+export const StyledItemNum = styled.div`
   display: flex;
-  align-items: center;
-  transition: 0.3s;
+  align-items: flex-end;
+  text-overflow: ellipsis;
+  overflow:hidden;
+  line-height: 1;
+  white-space: nowrap;
+  column-gap: 5px;
+  margin-top: 4px;
+  
+`;
 
-  .network-icon-chain {
-    width: 36px;
-    height: 36px;
-    border-radius: 12px;
-  }
-  .network-name {
-    font-family: Gantari;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 16px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #7c7f96;
-    padding-bottom: 2px;
-  }
-  .value-filed {
-    display: flex;
-    align-items: flex-end;
-    gap: 5px;
-  }
-  .usd-value {
-    font-family: Gantari;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: ${(p) => (p.active ? '#2D2F42' : 'white')};
-  }
-  .usd-value-percent {
-    font-family: Gantari;
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 16px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #7c7f96;
-  }
-
-  &:hover {
-    border-color: #ebf479;
-  }
+export const StyledItemUSD = styled.div`
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
 `;

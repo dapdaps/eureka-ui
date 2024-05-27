@@ -1,20 +1,61 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  height: 204px;
-  background-image: url('/images/portfolio/top_bg.webp');
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: top center;
+  text-align: center;
+  margin-bottom: 40px;
 `;
 
-export const StyledContent = styled.div`
-  width: 1000px;
-  height: 204px;
-  margin: 0 auto;
-  padding-top: 48px;
-  box-sizing: border-box;
+export const StyledTitle = styled.div`
   position: relative;
+  font-family: Montserrat;
+  font-size: 90px;
+  font-style: normal;
+  font-weight: 700;
+  background: linear-gradient(90deg, #16181D 0%, #979ABE 26%, #979ABE 79%, #16181D 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  &::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -40px;
+    left: 40.5%;
+    transform: translateX(-40.5%);
+    width: 187px;
+    height: 95px;
+    background: url('/images/portfolio/logto-text.svg') center no-repeat;
+    background-size: contain;
+  }
+`;
+
+export const StyledAccount = styled.div`
+  color: #FFF;
+  text-align: center;
+  font-family: Gantari;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 6px 42px;
+  line-height: 1;
+  border-radius: 22px;
+  border: 1px solid #3D405A;
+  background: #1E2028;
+  width: fit-content;
+  position: relative;
+  top: -20px;
+  left: 135px;
+`;
+
+export const StyledAvatar = styled.div<{ url: string }>`
+  background: ${props => `url(${props.url}) center no-repeat`};
+  background-size: contain;
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  position: absolute;
+  top: 46px;
+  left: 148px;
 `;
 
 export const StyledUserInfoWrapper = styled.div`

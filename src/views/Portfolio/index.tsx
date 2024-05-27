@@ -1,16 +1,33 @@
 import { useState } from 'react';
 import Top from './components/Top';
 import Networks from './components/Networks';
-import Wallet from './components/Wallet';
+import Wallet from './components/Wallet/index';
 import Protocol from './components/Protocol';
 import ExecuteRecords from './components/ExecuteRecords';
 import useTokens from './hooks/useTokens';
 import useDapps from './hooks/useDapps';
 import useExecuteRecords from './hooks/useExecuteRecords';
 import { StyledContainer, StyledContent } from './styles';
+import Tab from '@/views/Portfolio/components/Tab';
+
+const TABS = [
+  {
+    key: '1',
+    title: 'Wallet'
+  },
+  {
+    key: '2',
+    title: 'Protocol'
+  },
+  {
+    key: '3',
+    title: 'Execution Records'
+  },
+]
+
 
 export default function Portfolio() {
-  const [tab, setTab] = useState('Wallet');
+  const [tab, setTab] = useState(TABS[0].key);
   const [network, setNetwork] = useState('all');
   const [currentPage, setCurrentPage] = useState(1);
   const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens();
@@ -27,16 +44,17 @@ export default function Portfolio() {
   };
   return (
     <StyledContainer>
-      <Top tab={tab} setTab={setTab} />
       <StyledContent>
-        {tab !== 'Execution Records' && (
-          <Networks networks={networks} totalBalance={totalBalance} network={network} setNetwork={setNetwork} />
+        <Top />
+        <Tab tab={tab} setTab={setTab} tabs={TABS}>
+        {tab === TABS[0].key && (
+          <>
+            <Networks networks={networks} totalBalance={totalBalance} network={network} setNetwork={setNetwork} />
+            <Wallet loading={tokensLoading} filterFunc={filterFunc} tokens={tokens} totalBalance={totalBalance} />
+          </>
         )}
-        {tab === 'Wallet' && (
-          <Wallet loading={tokensLoading} filterFunc={filterFunc} tokens={tokens} totalBalance={totalBalance} />
-        )}
-        {tab === 'Protocol' && <Protocol loading={dappsLoading} filterFunc={filterFunc} dapps={dapps} />}
-        {tab === 'Execution Records' && (
+        {tab === TABS[1].key && <Protocol loading={dappsLoading} filterFunc={filterFunc} dapps={dapps} />}
+        {tab === TABS[2].key && (
           <ExecuteRecords
             loading={recordsLoading}
             records={records}
@@ -45,6 +63,7 @@ export default function Portfolio() {
             setCurrentPage={setCurrentPage}
           />
         )}
+        </Tab>
       </StyledContent>
     </StyledContainer>
   );
