@@ -155,4 +155,12 @@ export const mode: { [key: string]: Token } = {
     name: 'MODE',
     icon: 'https://ipfs.near.social/ipfs/bafkreihyh7mw7dieuobllbdpzs2irqadepophuc764rtdxbwdn36csz5ei',
   },
+  rseth: {
+    chainId: CHAIN_ID,
+    address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
+    decimals: 18,
+    symbol: 'rsETH',
+    name: 'rsETHWrapper',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
+  },
 };

@@ -179,14 +179,14 @@ export const linea: { [key: string]: Token } = {
     name: 'rsETHWrapper',
     icon: 'https://ipfs.near.social/ipfs/bafkreiablktwaz4gul2cnx4zkkfl5zqolg76imnp7dzjaqkdywknvadzty',
   },
-  // rseth: {
-  //   chainId: CHAIN_ID,
-  //   address: 'rsETH',
-  //   decimals: 18,
-  //   symbol: 'rsETH',
-  //   name: 'KelpDao Restaked ETH',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
-  // },
+  rseth: {
+    chainId: CHAIN_ID,
+    address: '0x4186BFC76E2E237523CBC30FD220FE055156b41F',
+    decimals: 18,
+    symbol: 'rsETH',
+    name: 'KelpDao Restaked ETH',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
+  },
   lusdc: {
     chainId: CHAIN_ID,
     address: '0x4af215dbe27fc030f37f73109b85f421fab45b7a',

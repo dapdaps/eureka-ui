@@ -83,4 +83,12 @@ export const ethereum: { [key: string]: Token } = {
     "name": "ezETH",
     "icon": "https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png",
   },
+  rsETH: {
+    "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+    "chainId": 1,
+    "symbol": "rsETH",
+    "decimals": 18,
+    "name": "rsETH",
+    "icon": "https://etherscan.io/token/images/kelprseth_32.png",
+  },
 };

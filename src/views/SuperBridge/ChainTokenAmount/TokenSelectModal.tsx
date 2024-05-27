@@ -455,6 +455,7 @@ function TokenSelectModal({
                                             })
                                         }
                                     }, 40)
+                                    setSearchVal('')
                                 }}
                                 onTokenChange={onTokenChange}
                                 onClose={onClose}
