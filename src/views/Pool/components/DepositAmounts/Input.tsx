@@ -52,7 +52,7 @@ const Input = ({ value, token, setValue, prices, disabled, onLoad }: any) => {
         )}
       </StyledInputTokenBox>
       <StyledDesc>
-        <div>${!isNaN(Number(value)) ? valueFormated(value, prices[token?.symbol]) : '-'}</div>
+        <div>${!isNaN(Number(value)) ? valueFormated(value, prices[token?.priceKey || token?.symbol]) : '-'}</div>
         <div>
           Balance:{' '}
           {isLoading ? (

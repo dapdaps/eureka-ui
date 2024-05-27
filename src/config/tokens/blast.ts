@@ -317,6 +317,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'MIA',
     name: 'Mia',
     icon: 'https://ipfs.near.social/ipfs/bafkreigqpqthx4b24mkd7rfx6vkt3cezbgpvkjij7hwsbrhmsouu4fsmgu',
+    priceKey: 'mia-2d4b',
   },
   baja: {
     chainId: CHAIN_ID,
