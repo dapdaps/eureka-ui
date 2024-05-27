@@ -486,4 +486,11 @@ export default {
       '--button-text-color': '#fff',
     },
   },
+  'blade-swap': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'rgb(67, 67, 60)',
+      '--button-text-color': '#9BA885',
+    },
+  },
 };

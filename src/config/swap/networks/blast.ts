@@ -6,6 +6,7 @@ import { basic as monoswapV2Basic, networks as monoswapV2Networks } from '../dap
 import { basic as ringBasic, networks as ringNetworks } from '../dapps/ring-protocol';
 import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
 import { basic as fenixFinanceBasic, networks as fenixFinanceNetworks } from '../dapps/fenix-finance';
+import { basic as bladeBasic, networks as bladeNetworks } from '../dapps/blade-swap';
 
 const CHAIN_ID = 81457;
 
@@ -31,6 +32,10 @@ export default {
     Ambient: {
       ...ambientBasic,
       ...ambientNetworks[CHAIN_ID],
+    },
+    BladeSwap: {
+      ...bladeBasic,
+      ...bladeNetworks[CHAIN_ID],
     },
     'MonoSwap V3': {
       ...monoswapV3Basic,
