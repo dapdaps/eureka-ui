@@ -127,7 +127,8 @@ export default function GasStation({ chainList }: Props) {
     const [fromToken, setFromToken] = useState<Token>()
     const [canSend, setCanSend] = useState<boolean>(false)
     const [chainFromToken, setChainFromToken] = useState<Token | undefined>()
-    const [submitProcessShow, setSubmitProcessShow] = useState(true)
+    const [submitProcessShow, setSubmitProcessShow] = useState(false)
+    const [step, setStep] = useState(0)
     const [gasAmountParam, setGasAmountParam] = useState<any>({
         fromChain,
         toChain,
@@ -136,7 +137,7 @@ export default function GasStation({ chainList }: Props) {
     })
     const prices = usePriceStore((store) => store.price);
     const inputGasAmountParam = useDebounce(gasAmountParam, { wait: 500 });
-    const { isSupported } = useGasTokenHooks({
+    const { isSupported, supportedChainFrom, getStatus } = useGasTokenHooks({
         fromChain,
         toChain,
         fromToken: chainFromToken
@@ -188,12 +189,12 @@ export default function GasStation({ chainList }: Props) {
     }, [fromChain, toChain, chainFromToken, inputVal])
 
     useEffect(() => {
-        if (fromChain && toChain && chainFromToken && inputVal && receive) {
+        if (fromChain && toChain && chainFromToken && inputVal && receive && balances) {
             setCanSend(true)
         } else {
             setCanSend(false)
         }
-    }, [fromChain, toChain, chainFromToken, inputVal, receive])
+    }, [fromChain, toChain, chainFromToken, inputVal, receive, balances])
 
     return <Container>
         <Header>
@@ -250,19 +251,23 @@ export default function GasStation({ chainList }: Props) {
 
             <SubmitPanel
                 disabled={!canSend}
-                payPrice={fromToken && Number(inputVal) * Number(prices[fromToken?.symbol])}
+                payPrice={fromToken && amount}
                 pay={inputVal}
                 token={fromToken}
                 loading={isLoading}
                 fromChain={fromChain}
-                onClick={() => {
+                onClick={async () => {
                     if (canSend && chainFromToken) {
-                        deposit(
+                        setSubmitProcessShow(true)
+                        setStep(0)
+                        const hash = await deposit(
                             chainFromToken.address,
                             account as string,
                             new Big(inputVal).mul(10 ** chainFromToken?.decimals).toString(),
                             provider.getSigner()
                         )
+                        setStep(1)
+                        await getStatus(supportedChainFrom, hash)
                     }
                 }}
             />
@@ -271,6 +276,12 @@ export default function GasStation({ chainList }: Props) {
                 submitProcessShow && <SubmitProcess 
                 fromChain={fromChain}
                 toChain={toChain}
+                fromToken={fromToken}
+                payPrice={fromToken && amount}
+                address={account as string}
+                pay={inputVal}
+                step={step}
+                disabled={isLoading}
                 onClose={() => {
                     setSubmitProcessShow(false)
                 }}/>

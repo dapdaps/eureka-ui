@@ -126,6 +126,10 @@ const TokenTop = styled.div`
             color: #fff;
             flex: 1;
             margin-left: 5px;
+            font-size: 14px;
+            &::placeholder {
+                color: rgba(255, 255, 255, .2);
+            }
         }
     }
 `
@@ -144,9 +148,20 @@ const ChainGroup = styled.div`
         font-size: 14px;
         font-weight: 600;
         padding-left: 20px;
+        margin-top: 10px;
+        &.cc-selected {
+            justify-content: space-between;
+            padding-right: 10px;
+        }
         .img {
             width: 32px;
             height: 32px;
+        }
+        .chain-selected {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            
         }
     }
     .ct-title {
@@ -170,27 +185,47 @@ interface Props {
     onTokenChange: (token: Token) => void;
 }
 
-const TokenListComp = forwardRef(function TokenListComp({ chain, chainToken, currentToken, groupId, searchTxt, onChainChange, onTokenChange, onClose }: {
-    chain: Chain;
-    chainToken: any;
-    groupId: string;
-    currentToken: Token | undefined;
-    onChainChange: (chain: Chain) => void;
-    onTokenChange: (token: Token) => void;
-    onClose?: () => void;
-    searchTxt: string;
-}, ref: any) {
+const TokenListComp = forwardRef(function TokenListComp({
+    chain, chainToken, currentToken, groupId, searchTxt, filterChain, onChainChange, onTokenChange, onClose }: {
+        chain: Chain;
+        chainToken: any;
+        groupId: string;
+        filterChain: Chain[] | null;
+        currentToken: Token | undefined;
+        onChainChange: (chain: Chain) => void;
+        onTokenChange: (token: Token) => void;
+        onClose?: () => void;
+        searchTxt: string;
+    }, ref: any) {
 
     const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
 
     return <ChainGroup>
         {
-            chainToken[chain.chainId] && <>
+            <>
                 <div className="ct-title" id={`${groupId}-${chain.chainId}`}>Chain</div>
-                <div className="cur-chian">
-                    <Image cls="img" src={chain.icon}/>
+                <div className="cur-chian cc-selected" style={{ marginTop: 0 }}>
+                    <div className="chain-selected">
+                    <Image cls="img" src={chain.icon} />
                     <div>{chain.chainName}</div>
+                    </div>
+                    <div style={{ justifySelf: 'end' }}>
+                        <svg width="13" height="11" viewBox="0 0 13 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 4.80952L4.78125 9L12 1" stroke="#EBF479" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                    </div>
                 </div>
+                {
+                    filterChain?.map(item => {
+                        if (item.chainId === chain.chainId) {
+                            return
+                        }
+                        return <div key={item.chainId} className="cur-chian">
+                            <Image cls="img" src={item.icon} />
+                            <div>{item.chainName}</div>
+                        </div>
+                    })
+                }
                 <div className="ct-title" style={{ paddingBottom: 0, paddingTop: 20 }}>Token</div>
             </>
         }
@@ -247,6 +282,7 @@ function TokenSelectModal({
     const [tipTop, setTipTop] = useState(0)
     const [idSuffix, setIdSuffix] = useState(Date.now() + '')
     const [filterChainVal, setFilterChainVal] = useState();
+    const [filterChain, setSearchedChain] = useState<Chain[] | null>([]);
     const [searchAll, setSearchAll] = useState(false)
     const wapperRef = useRef<any>()
 
@@ -267,7 +303,7 @@ function TokenSelectModal({
 
     useEffect(() => {
         if (inputValue) {
-            const lowerVal = inputValue.toLowerCase()
+            const lowerVal = inputValue.trim().toLowerCase()
             const filterChainToken: any = {}
             const [keyChainName, tokenSymbol] = lowerVal.split(':')
             if (keyChainName && tokenSymbol) {
@@ -285,12 +321,20 @@ function TokenSelectModal({
                         }
                     })
                 }
+
+                setSearchedChain([])
             } else {
+                const filterChain = chainList.filter((item: Chain) => {
+                    return item.chainName.toLowerCase().indexOf(lowerVal) > -1
+                })
+
+                setSearchedChain(filterChain)
+
                 Object.keys(chainToken).forEach(key => {
                     const tokenList = chainToken[key]
                     const filterList = tokenList.filter((token: Token) => {
                         return (token.symbol.toLowerCase().indexOf(lowerVal) > -1
-                            || token.address.toLowerCase().indexOf(lowerVal) > -1)
+                            || token.address.toLowerCase() === lowerVal)
                     })
 
                     if (filterList && filterList.length > 0) {
@@ -302,6 +346,8 @@ function TokenSelectModal({
             setFilterChainVal(filterChainToken)
         } else {
             setFilterChainVal(chainToken)
+            setSearchedChain([])
+            setSearchAll(false)
         }
     }, [chainList, inputValue, chainToken])
 
@@ -315,7 +361,7 @@ function TokenSelectModal({
                 }
             }, 500)
         }
-        
+
     }, [idSuffix, currentChain])
 
     return <Modal ref={wapperRef} paddingSize={0} onClose={onClose}>
@@ -356,7 +402,7 @@ function TokenSelectModal({
                                     setHoverChain(null)
                                 }}
                                 className={`chain ${tempChain?.chainId === chain.chainId ? 'active' : ''}`}>
-                                <Image cls="img" src={chain.icon}/>
+                                <Image cls="img" src={chain.icon} />
                             </div>
                         })
                     }
@@ -374,7 +420,7 @@ function TokenSelectModal({
                         </div>
                         <input onChange={(e) => {
                             setSearchVal(e.target.value)
-                        }} className="input" placeholder="search token or paste address" />
+                        }} className="input" placeholder="e.g. ethereum:eth" />
                     </div>
                 </TokenTop>
                 <div className="ctg-wapper">
@@ -384,12 +430,15 @@ function TokenSelectModal({
                                 return null
                             }
 
+                            console.log('filterChainVal:', filterChainVal)
+
                             return <TokenListComp
                                 key={chain.chainId}
                                 chain={chain}
                                 chainToken={filterChainVal}
                                 currentToken={currentToken}
                                 groupId={idSuffix}
+                                filterChain={filterChain}
                                 onChainChange={onChainChange}
                                 onTokenChange={onTokenChange}
                                 onClose={onClose}

@@ -12,7 +12,7 @@ import type { Chain, Token } from "@/types";
 
 let gloabalSbs: SuperBridgeStore
 async function initDb() {
-    const sbs = new SuperBridgeStore('dapdap', 'gas')
+    const sbs = new SuperBridgeStore('dapdap-v2', 'gas')
     await sbs.init()
     gloabalSbs = sbs
     return sbs
@@ -22,6 +22,7 @@ async function getDb(): Promise<SuperBridgeStore> {
     if (!gloabalSbs) {
         return initDb()
     }
+
     return gloabalSbs
 }
 
@@ -58,7 +59,7 @@ const BASE_URL = 'https://refueler.bobdev.link/api/v1/refuel'
 
 let supportedChains: any = null
 
-async function getAllSupportedChains(fromChain: Chain, toChain: Chain) {
+async function getAllSupportedChains(fromChain: Chain, toChain: Chain | null) {
     if (!supportedChains) {
         const res = await fetch(`${BASE_URL}/supportedChains`).then(res => res.json())
         if (res && res.data) {
@@ -66,10 +67,16 @@ async function getAllSupportedChains(fromChain: Chain, toChain: Chain) {
         }
     }
 
-    const hasFrom = supportedChains
+    let hasFrom, hasTo
+    if (fromChain) {
+        hasFrom = supportedChains
         .supported_src_chains?.filter((item: any) => Number(item.chain_id) === fromChain.chainId)
-    const hasTo = supportedChains
+    }
+    
+    if (toChain) {
+        hasTo = supportedChains
         .supported_dst_chains?.filter((item: any) => Number(item.chain_id) === toChain.chainId)
+    }
 
     return {
         hasFrom,
@@ -115,6 +122,7 @@ export function useGasTokenHooks({
     fromToken,
 }: GasTokenParams) {
     const [isSupported, setIsSupported] = useState(false)
+    const [supportedChainFrom, setSupportedChainFrom] = useState<any>()
 
     useEffect(() => {
         if (fromChain && toChain && fromToken) {
@@ -123,19 +131,28 @@ export function useGasTokenHooks({
                     getSupportedToken(hasFrom[0], fromToken)
                         .then(res => {
                             setIsSupported(res)
+                            setSupportedChainFrom(hasFrom[0])
                         })
                 } else {
                     setIsSupported(false)
+                    setSupportedChainFrom(null)
                 }
             })
         } else {
             setIsSupported(false)
+            setSupportedChainFrom(null)
         }
 
     }, [fromChain, toChain, fromToken])
 
+    const getStatus = async (chainFrom: any, hash: string) => {
+        const res = fetch(`${BASE_URL}/${chainFrom.chain_name}/${chainFrom.chain_id}/${hash}/sendGasStatus`).then(res => res.json())
+    }
+
     return {
-        isSupported
+        isSupported,
+        supportedChainFrom,
+        getStatus
     }
 }
 
@@ -161,14 +178,15 @@ export function useGasAmount({
             return
         }
         setIsLoading(true)
-        
-        
+
         try {
             let hash
             if (fromToken?.isNative) {
-                hash = await depositEth(account, value, signer)
+                const transaction = await depositEth(account, value, signer)
+                hash = transaction.transactionHash
             } else {
-                hash = await depositToken(tokenAddress, account, value, signer)
+                const transaction = await depositToken(tokenAddress, account, value, signer)
+                hash = transaction.transactionHash
             }
 
             if (!hash) {
@@ -184,10 +202,15 @@ export function useGasAmount({
                 status: 3,
                 fromChainName: fromChain?.chainName,
                 fromChainId: fromChain?.chainId,
+                fromChainIcon: fromChain?.icon,
                 fromAddress: account,
                 toChainName: toChain?.chainName,
                 toChainId: toChain?.chainId,
+                toChainIcon: toChain?.icon,
                 toAddress: account,
+                fromTokenSymbol: fromToken?.symbol,
+                fromTokenIcon: fromToken?.icon,
+                amount: new Big(value).mul(10 ** fromToken!.decimals).toString(),
                 time: Date.now()
             })
 
@@ -197,6 +220,8 @@ export function useGasAmount({
             })
 
             setIsLoading(false)
+
+            return hash
         } catch (err) {
             fail({
                 title: 'Transaction failed',
@@ -224,7 +249,6 @@ export function useGasAmount({
     }
 
     async function depositToken(tokenAddress: string, account: string, value: string, signer: Signer) {
-        console.log('tokenAddress', tokenAddress, value, account)
 
         const _value = parseInt(value).toString()
         await approve(tokenAddress, new Big(_value), contractAddress, signer)
@@ -257,7 +281,6 @@ export function useGasAmount({
             const _toChain = hasTo[0]
             const _value = new Big(value).mul(10 ** fromToken.decimals)
             getTokenReceived(_fromChain, _toChain, fromToken, _value).then(res => {
-                console.log('res:', res)
                 setReceive(new Big(res).div(10 ** toChain.nativeCurrency.decimals).toString())
             })
         })
@@ -267,5 +290,53 @@ export function useGasAmount({
         receive,
         isLoading,
         deposit,
+    }
+}
+
+export function useTransction() {
+    const [transactionList, setTransactionList] = useState<any[]>([])
+
+    useEffect(() => {
+        refreshTransaction()
+        const inter = setInterval(() => {
+            refreshTransaction()
+        }, 30000)
+
+        return () => {
+            clearInterval(inter)
+        }
+    }, [])
+
+    async function refreshTransaction() {
+        getTransaction().then(res => {
+            if (res && Array.isArray(res)) {
+                res.forEach(async item => {
+                    if (item.status === 3) {
+                        const isComplete = await getStatus({ chainId: item.fromChainId}, item.hash)
+                        if (isComplete) {
+                            item.status = 2
+                            saveTransaction(item)
+                        }
+                    }
+                })
+            }
+            setTransactionList(res || [])
+        })
+    }
+
+    const getStatus = async (chainFrom: any, hash: string) => {
+        const { hasFrom } = await getAllSupportedChains(chainFrom, null)
+        if (hasFrom && hasFrom.length) {
+            const res = await fetch(`${BASE_URL}/${hasFrom[0].chain_name}/${hasFrom[0].chain_id}/${hash}/sendGasStatus`).then(res => res.json())
+            if (res.returnCode === 20000 && res.data.status !== 'processing') {
+                return true
+            }
+        }
+        return false
+    }
+
+    return {
+        transactionList,
+        refreshTransaction
     }
 }

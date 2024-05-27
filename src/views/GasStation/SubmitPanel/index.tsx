@@ -1,5 +1,6 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 import { balanceFormated, percentFormated } from '@/utils/balance';
 import SubmitBtn from './SubmitBtn';
@@ -80,6 +81,8 @@ interface Props {
 export default function SubmitPanel({
     disabled, payPrice, pay, token, loading, fromChain, onClick
 }: Props) {
+    const router = useRouter();
+
     return <Container>
         <SubEar />
         <SubPanel>
@@ -94,7 +97,9 @@ export default function SubmitPanel({
                 fromChain={fromChain}
                 onClick={onClick}
             />
-            <Record>Records</Record>
+            <Record onClick={() => {
+                router.push('/gas-station/transaction')
+            }}>Records</Record>
         </SubPanel>
 
     </Container>

@@ -65,7 +65,9 @@ const backgroundMap: any = {
 
 export default function Token({ token, balance, onTokenChoose, active }: Props) {
     return <Container onClick={() => {
-        onTokenChoose && onTokenChoose(token)
+        if (balance) {
+            onTokenChoose && onTokenChoose(token)
+        }
     }}>
         <div className="panel" style={{
             background: active ? backgroundMap[token.symbol] : 'rgba(46, 49, 66, 1)'
