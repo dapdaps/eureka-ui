@@ -153,6 +153,9 @@ const ChainGroup = styled.div`
             justify-content: space-between;
             padding-right: 10px;
         }
+        &.can-click-chain {
+            cursor: pointer;
+        }
         .img {
             width: 32px;
             height: 32px;
@@ -186,7 +189,7 @@ interface Props {
 }
 
 const TokenListComp = forwardRef(function TokenListComp({
-    chain, chainToken, currentToken, groupId, searchTxt, filterChain, onChainChange, onTokenChange, onClose }: {
+    chain, chainToken, currentToken, groupId, searchTxt, filterChain, onChainChange, onTokenChange, onClose, onTempChainChange }: {
         chain: Chain;
         chainToken: any;
         groupId: string;
@@ -196,6 +199,7 @@ const TokenListComp = forwardRef(function TokenListComp({
         onTokenChange: (token: Token) => void;
         onClose?: () => void;
         searchTxt: string;
+        onTempChainChange: (chain: Chain) => void;
     }, ref: any) {
 
     const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
@@ -220,7 +224,9 @@ const TokenListComp = forwardRef(function TokenListComp({
                         if (item.chainId === chain.chainId) {
                             return
                         }
-                        return <div key={item.chainId} className="cur-chian">
+                        return <div onClick={() => {
+                            onTempChainChange(item)
+                        }} key={item.chainId} className="cur-chian can-click-chain">
                             <Image cls="img" src={item.icon} />
                             <div>{item.chainName}</div>
                         </div>
@@ -380,6 +386,7 @@ function TokenSelectModal({
                         sortedChainList?.map(chain => {
                             return <div
                                 key={chain.chainId}
+                                id={`${idSuffix}-${chain.chainId}-p`}
                                 onClick={() => {
                                     setTempChain(chain)
                                     const ele = document.getElementById(`${idSuffix}-${chain.chainId}`)
@@ -430,8 +437,6 @@ function TokenSelectModal({
                                 return null
                             }
 
-                            console.log('filterChainVal:', filterChainVal)
-
                             return <TokenListComp
                                 key={chain.chainId}
                                 chain={chain}
@@ -440,6 +445,17 @@ function TokenSelectModal({
                                 groupId={idSuffix}
                                 filterChain={filterChain}
                                 onChainChange={onChainChange}
+                                onTempChainChange={(item) => {
+                                    setTempChain(item)
+                                    setTimeout(() => {
+                                        const ele = document.getElementById(`${idSuffix}-${item.chainId}-p`)
+                                        if (ele) {
+                                            ele.scrollIntoView({
+                                                behavior: 'smooth',
+                                            })
+                                        }
+                                    }, 40)
+                                }}
                                 onTokenChange={onTokenChange}
                                 onClose={onClose}
                                 searchTxt={inputValue}

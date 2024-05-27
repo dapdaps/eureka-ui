@@ -38,12 +38,37 @@ const RefuelAmount = styled.div`
     }
 `
 
-const Range = styled.input`
+const Range = styled.input<{ max: any, value: any }>`
     width: 100%;
+    -webkit-appearance: none; /* 去掉底部的 track 默认样式，就是整个灰条 */
+    background: transparent; 
     &::-webkit-slider-thumb {
-        border: solid 0.125em rgba(205, 224, 230, 0.5); 
-        box-shadow: 0 .125em .125em #3b4547; 
+        /* -webkit-appearance: none; */
     }
+    &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        border: 2px solid #000000;
+        height: 16px;
+        width: 16px;
+        border-radius: 16px;
+        background: rgba(235, 244, 121, 1);
+        cursor: pointer;
+        margin-top: -4px; 
+    }
+    &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 8.4px;
+        cursor: pointer;
+        box-shadow: none;
+        background: #3071a9;
+        border-radius: 8px;
+        border: none;
+        background: linear-gradient(to right, 
+            rgba(235, 244, 121, 1) 0%, 
+            rgba(235, 244, 121, 1) ${({ max, value }) => (value / max * 100) + '%'},
+            #eee ${({ max, value }) => (value / max * 100) + '%'}, #eee); 
+    }
+    
 `
 
 const Container = styled.div<{ disabled?: boolean }>`
