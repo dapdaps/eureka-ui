@@ -13,7 +13,7 @@ export const yellowbg =
 export const bluebg =
   'https://assets.dapdap.net/images/bafkreicqa3b3urjhrrc2xt3kgnyhfuntagepjj7zfnley74u6gjqfmjm44.svg';
 
-export const StyledInviteCodePage = styled.div{ $logined: boolean; $loading: boolean }>`
+export const StyledInviteCodePage = styled.div<{ $logined: boolean; $loading: boolean }>`
   font-family: Gantari;
   background-color: #000;
   height: 100vh;
