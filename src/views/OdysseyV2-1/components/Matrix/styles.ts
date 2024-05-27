@@ -1,11 +1,10 @@
 import styled from 'styled-components';
+import { DAPP_STATUS } from '@/views/OdysseyV2-1/config';
 
 export const StyledMatrixContainer = styled.div`
-  padding: 0 ${() => `var(--odyssey2-container-gutter)`};
-  max-width: ${() => `var(--odyssey2-container-width)`};
-  width: 100%;
   border-radius: 10px;
-  margin-bottom: 120px;
+  width: 1200px;
+  margin: 0 auto 120px;
 `;
 
 export const StyledMatrixBorder = styled.div`
@@ -56,89 +55,109 @@ export const StyledSubTitle = styled.div`
   margin-bottom: 40px;
 `;
 
-export const StyledCardContainer = styled.div<{ count: number }>`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border-radius: 12px;
-  width: calc((100% - 50px) / 6);
+export const StyledCardContainer = styled.div<{ count: number, status: DAPP_STATUS }>`
+  width: 182px;
   height: 120px;
+  flex-shrink: 0;
+  flex-grow: 0;
+  transform: scale(1);
+  transform-style: preserve-3d;
+  transition: transform 0.5s;
+  border-radius: 12px;
   position: relative;
   border: 1px solid #373A53;
-  background: #000;
   cursor: pointer;
+  
+  ${({ status }) => {
+    if (status === DAPP_STATUS.FINISHED) {
+      return `transform: rotateY(180deg);`;
+    }
+    return ``;
+  }}
+`;
 
-  &::before {
-    opacity: 0.3;
-    position: absolute;
-    display: block;
-    content: '';
-    background: #000;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    border-radius: 12px;
-  }
+export const StyledGameClaim = styled.div`
+  .claim-cell {
+    width: 182px;
+    height: 120px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    visibility: hidden;
+    opacity: 0;
 
-  &.active {
-    background: linear-gradient(180deg, #323232 0%, #000 100%);
-    border: 1px solid #464B56;
-
-    &::before {
+    &.active {
+      visibility: visible;
       opacity: 1;
-      display: block;
-      content: '';
-      position: absolute;
-      top: 8px;
-      left: 8px;
-      width: calc(100% - 16px);
-      height: calc(100% - 16px);
-      border: 1px solid red;
-      border-radius: 8px;
-      background: unset;
     }
   }
-  
-  &.column-pts::after,
-  &.row-pts::after {
-    background: url('/images/odyssey/v2-1/matrix-pts.svg') center no-repeat;
-    background-size: contain;
-    width: 91px;
-    height: 47px;
-    color: #000;
-    text-align: center;
-    font-family: Trans-America;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 80%;
+  .claim-row,
+  .claim-col {
+    position: absolute;
+    z-index: 1;
+    gap: 10px;
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-    content: '';
+    flex-wrap: nowrap;
   }
-  &.column-pts::after {
-    position: absolute;
-    bottom: -36px;
-    left: 50%;
-    transform: translateX(-50%);
+  .claim-row {
+    width: 91px;
+    height: 100%;
+    right: -26px;
+    top: 0;
+    flex-direction: column;
+    
+    .claim-cell {
+      width: 100%;
+    }
   }
-  
-  &.row-pts::after {
-    position: absolute;
-    right: -66px;
-    top: 50%;
-    transform: translateY(-50%);
+  .claim-col {
+    top: unset;
+    bottom: -29px;
+    
+    .claim-cell {
+      height: 100%;
+      justify-content: center;
+      align-items: flex-start;
+    }
   }
 `;
 
-export const StyledCardIcon = styled.div`
-  background: url('/images/odyssey/v2-1/matrix-logo.svg') center no-repeat;
-  background-size: contain;
-  width: 100px;
-  height: 60px;
+export const StyledCardFront = styled.img`
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  user-select: none;
+  -webkit-user-drag: none;
+  position: absolute;
+  border-radius: 12px;
+  transform: rotateY(180deg);
+`;
+
+export const StyledCardBack = styled.div`
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  user-select: none;
+  -webkit-user-drag: none;
+  position: absolute;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background: #000;
+  color: #FFF;
+  padding: 20px 20px 16px;
+  
+  .card-name {
+    opacity: 0.3;
+  }
+`;
+
+export const StyledCardIcon = styled.img`
+  opacity: 0.3;
 `;
 
 export const StyledGameContainer = styled.div`
@@ -154,10 +173,6 @@ export const StyledMatrixLogo = styled.div`
   background-size: contain;
   width: 100px;
   height: 62px;
-`;
-export const StyledCardName = styled.div`
-  font-size: 18px;
-  color: #fff;
 `;
 
 export const StyledGameFooter = styled.div`
