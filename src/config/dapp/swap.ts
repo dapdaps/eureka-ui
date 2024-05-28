@@ -489,8 +489,8 @@ export default {
   'blade-swap': {
     type: 'swap',
     theme: {
-      '--button-color': 'rgb(67, 67, 60)',
-      '--button-text-color': '#9BA885',
+      '--button-color': 'linear-gradient(180deg, #22a079 0%, #9ba885 100%)',
+      '--button-text-color': '#fff',
     },
   },
 };
