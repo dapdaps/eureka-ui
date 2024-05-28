@@ -10,16 +10,7 @@ const networks = {
       input: blast['eth'],
       output: blast['usdb'],
     },
-    tokens: [
-      blast['eth'],
-      blast['weth'],
-      blast['usdb'],
-      blast['blade'],
-      blast['ezeth'],
-      blast['ve-blade'],
-      blast['aso'],
-      blast['mclb'],
-    ],
+    tokens: [blast['eth'], blast['weth'], blast['usdb'], blast['blade'], blast['ezeth']],
   },
 };
 
