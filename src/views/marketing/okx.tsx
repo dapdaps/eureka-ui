@@ -283,10 +283,18 @@ const LandingPC: FC<IProps> = ({ from, inviteCode, platform }) => {
   }, [updater, isBlur]);
 
   const renderButton = () => {
-    if (address) {
+    if (wallet && address) {
       return basicQuests.map((item: any) => {
         return item.is_claimed ? (
-          <Styles.Button id={item.id}>Reward Already Claimed</Styles.Button>
+          <Styles.Button
+            id={item.id}
+            style={{ cursor: 'not-allowed' }}
+            // onClick={() => {
+            //   console.log(3333, address, wallet);
+            // }}
+          >
+            Reward Already Claimed
+          </Styles.Button>
         ) : (
           <>
             <Styles.Button id={item.id} onClick={(e) => handleClaim(item)}>
