@@ -176,12 +176,11 @@ const ChainGroup = styled.div`
     }
 `
 
-
-
 interface Props {
     onClose?: () => void;
     chainList: Chain[];
     chainToken: any;
+
     currentChain: Chain | undefined;
     currentToken: Token | undefined;
     onChainChange: (chain: Chain) => void;
@@ -189,7 +188,7 @@ interface Props {
 }
 
 const TokenListComp = forwardRef(function TokenListComp({
-    chain, chainToken, currentToken, groupId, searchTxt, filterChain, onChainChange, onTokenChange, onClose, onTempChainChange }: {
+    chain, chainToken, currentToken, groupId, searchTxt, filterChain, searchAll, onChainChange, onTokenChange, onClose, onTempChainChange }: {
         chain: Chain;
         chainToken: any;
         groupId: string;
@@ -199,10 +198,19 @@ const TokenListComp = forwardRef(function TokenListComp({
         onTokenChange: (token: Token) => void;
         onClose?: () => void;
         searchTxt: string;
+        searchAll: boolean;
         onTempChainChange: (chain: Chain) => void;
     }, ref: any) {
 
-    const { loading, balances, currentChainId } = useTokensBalance(chainToken[chain.chainId])
+    const displayChainId = searchAll && filterChain && filterChain.length 
+    ? filterChain[0].chainId 
+    : chain.chainId
+
+    const disPlayChain = searchAll && filterChain && filterChain.length 
+    ? filterChain[0]
+    : chain
+
+    const { loading, balances, currentChainId } = useTokensBalance(chainToken[displayChainId])
 
     return <ChainGroup>
         {
@@ -236,9 +244,9 @@ const TokenListComp = forwardRef(function TokenListComp({
             </>
         }
 
-        <TokenList key={chain.chainId}>
+        <TokenList key={displayChainId}>
             {
-                chainToken[chain.chainId] && chainToken[chain.chainId]
+                chainToken[displayChainId] && chainToken[displayChainId]
                     .sort((a: any, b: any) => {
                         if (Object.keys(balances).length === 0) {
                             return 0
@@ -254,12 +262,12 @@ const TokenListComp = forwardRef(function TokenListComp({
                     })
                     .map((token: Token) => {
                         return <TokenRow
-                            isSelected={currentToken?.symbol === token.symbol}
+                            isSelected={currentToken?.symbol === token.symbol && !searchAll}
                             key={token.symbol + token.address}
                             token={token}
                             loading={loading}
                             balances={balances}
-                            chain={chain as Chain}
+                            chain={disPlayChain as Chain}
                             onTokenChange={(token: Token) => {
                                 onChainChange(chain)
                                 onTokenChange(token)
@@ -319,16 +327,17 @@ function TokenSelectModal({
                         const tokenList = chainToken[chain.chainId]
                         const filterList = tokenList.filter((token: Token) => {
                             return (token.symbol.toLowerCase().indexOf(tokenSymbol) > -1
-                                || token.address.toLowerCase().indexOf(tokenSymbol) > -1)
+                                || token.address.toLowerCase() === tokenSymbol)
                         })
                         if (filterList && filterList.length) {
                             filterChainToken[chain.chainId] = filterList
                             setSearchAll(true)
+                            setSearchedChain(filterChain)
                         }
                     })
                 }
-
-                setSearchedChain([])
+                // setSearchAll(true)
+                // setSearchedChain([])
             } else {
                 const filterChain = chainList.filter((item: Chain) => {
                     return item.chainName.toLowerCase().indexOf(lowerVal) > -1
@@ -433,13 +442,14 @@ function TokenSelectModal({
                 <div className="ctg-wapper">
                     {
                         sortedChainList.map(chain => {
-                            if (chain.chainId !== tempChain?.chainId && !searchAll) {
+                            if (chain.chainId !== tempChain?.chainId) {
                                 return null
                             }
 
                             return <TokenListComp
                                 key={chain.chainId}
                                 chain={chain}
+                                searchAll={searchAll}
                                 chainToken={filterChainVal}
                                 currentToken={currentToken}
                                 groupId={idSuffix}

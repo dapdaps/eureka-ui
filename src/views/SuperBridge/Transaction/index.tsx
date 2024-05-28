@@ -75,6 +75,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
     const [transactionList, setTransactionList] = useState([])
     const [proccessSum, setProccessSum] = useState(0)
     const [value, setValue] = useState('')
+    const [searchValue, setSearchValueValue] = useState('')
     const { account, chainId, provider } = useAccount();
     const router = useRouter();
 
@@ -180,13 +181,15 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
             </svg>
             <Input placeholder='Search by address or Tx Hash' value={value} onChange={e => setValue(e.target.value)} onKeyDown={e => {
                 if (e.code === 'Enter') {
+                    setSearchValueValue(value)
                     setTransactionModalShow(true)
+                    setValue('')
                 }
             }} />
         </InputWapper>
 
         {
-            transactionModalShow && <TransactionPanel addressOrHash={value} transactionList={transactionList} onClose={() => {
+            transactionModalShow && <TransactionPanel addressOrHash={searchValue} transactionList={transactionList} onClose={() => {
                 if (initModalShow) {
                     router.back()
                 } else {
