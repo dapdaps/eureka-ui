@@ -5,6 +5,7 @@ import Loading from '@/components/Icons/Loading';
 import Empty from './Empty';
 import { useRouter } from 'next/router';
 import usePoolInfo from '../hooks/usePoolInfo';
+import useAccount from '@/hooks/useAccount';
 import { formateValue } from '@/utils/formate';
 import { checkIsFullRange, tickToPrice } from '@/views/Pool/utils/tickMath';
 import {
@@ -98,17 +99,21 @@ const Position = ({ token0, token1, tickLower, tickUpper, liquidity, address, on
   );
 };
 
-const YourPositions = ({ pools, loading }: any) => {
+const YourPositions = ({ pools, loading, currentChain }: any) => {
   const router = useRouter();
+  const { chainId } = useAccount();
+
   return (
     <StyledContainer>
-      <StyledHeader>
-        {COLUMNS.map((column) => (
-          <div key={column.key} style={{ width: column.width }}>
-            {column.label}
-          </div>
-        ))}
-      </StyledHeader>
+      {!!pools?.length && (
+        <StyledHeader>
+          {COLUMNS.map((column) => (
+            <div key={column.key} style={{ width: column.width }}>
+              {column.label}
+            </div>
+          ))}
+        </StyledHeader>
+      )}
       {loading ? (
         <LoadingWrapper>
           <Loading size={30} />
@@ -130,7 +135,7 @@ const YourPositions = ({ pools, loading }: any) => {
               }}
             />
           ))}
-          {pools.length === 0 && <Empty />}
+          {pools.length === 0 && <Empty isChainSupport={currentChain.chain_id === chainId} chain={currentChain} />}
         </>
       )}
     </StyledContainer>

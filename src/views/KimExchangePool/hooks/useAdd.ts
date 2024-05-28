@@ -178,7 +178,6 @@ export default function useAdd({
       });
       setLoading(false);
     } catch (err: any) {
-      console.log(err);
       toast.dismiss(toastId);
       setLoading(false);
       toast.fail({

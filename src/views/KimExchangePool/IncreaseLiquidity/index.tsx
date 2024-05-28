@@ -1,4 +1,5 @@
 import { memo, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import Header from '@/views/Pool/AddLiquidity/components/Header';
 import Tokens from '@/views/Pool/Detail/components/Tokens';
 import Loading from '@/components/Icons/Loading';
@@ -21,6 +22,7 @@ const IncreaseLiquidity = () => {
   const [value1, setValue1] = useState('');
   const [errorTips, setErrorTips] = useState('');
   const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const router = useRouter();
 
   const [amount0, amount1] = useMemo(() => {
     if (!detail) return [0, 0];
@@ -73,14 +75,16 @@ const IncreaseLiquidity = () => {
     currentPrice,
     lowerPrice,
     upperPrice,
+    tokenId,
     onSuccess: () => {
       setShowPreviewModal(false);
+      router.back();
     },
   });
 
   return (
     <StyledContainer style={{ ...theme, width: '1078px' }}>
-      <Header isAlign={false} title="Increase Liquidity" />
+      <Header isAlign={false} title="Increase Liquidity" tab="positions" />
       {loading || !detail ? (
         <StyledLoadingWrapper>
           <Loading size={36} />

@@ -1,10 +1,12 @@
 import styled from 'styled-components';
+import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
 
 const StyledContainer = styled.div`
   height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   gap: 24px;
   color: #777e94;
   font-size: 14px;
@@ -13,7 +15,7 @@ const StyledContainer = styled.div`
   line-height: normal;
 `;
 
-export default function Empty() {
+export default function Empty({ isChainSupport, chain }: any) {
   return (
     <StyledContainer>
       <svg xmlns="http://www.w3.org/2000/svg" width="42" height="34" viewBox="0 0 42 34" fill="none">
@@ -25,6 +27,7 @@ export default function Empty() {
         />
       </svg>
       <div>Your active V3 liquidity positions will appear here.</div>
+      {!isChainSupport && <SwitchNetworkButton chain={chain} style={{ width: '400px', height: 60 }} />}
     </StyledContainer>
   );
 }

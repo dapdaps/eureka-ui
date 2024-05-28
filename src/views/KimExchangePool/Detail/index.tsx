@@ -42,7 +42,7 @@ const Detail = () => {
 
   return (
     <StyledContainer style={{ ...theme }}>
-      <Header />
+      <Header tab="positions" />
       {loading || !detail ? (
         <StyledLoadingWrapper>
           <Loading size={36} />
