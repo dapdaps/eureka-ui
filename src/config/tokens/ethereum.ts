@@ -77,7 +77,7 @@ export const ethereum: { [key: string]: Token } = {
   },
   ezETH: {
     "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
-    "chainId": 1,
+    "chainId": CHAIN_ID,
     "symbol": "ezETH",
     "decimals": 18,
     "name": "ezETH",
@@ -85,7 +85,7 @@ export const ethereum: { [key: string]: Token } = {
   },
   rsETH: {
     "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
-    "chainId": 1,
+    "chainId": CHAIN_ID,
     "symbol": "rsETH",
     "decimals": 18,
     "name": "rsETH",

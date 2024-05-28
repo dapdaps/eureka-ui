@@ -4,6 +4,7 @@ import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainSc
 import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
 import { useDebounce } from 'ahooks';
 import Big from 'big.js'
+import { useRouter } from 'next/router';
 
 import allTokens from '@/config/bridge/allTokens';
 import { saveTransaction } from '@/components/BridgeX/Utils'
@@ -106,6 +107,8 @@ export default function BirdgeAction(
   const [disableText, setDisableText] = useState<string>('Bridge')
   const [gasModalShow, setGasModalShow] = useState<boolean>(false)
   const [isSending, setIsSending] = useState<boolean>(false)
+  const router = useRouter()
+
   const inputValue = useDebounce(sendAmount, { wait: 500 });
 
   const { addAction } = useAddAction('dapp');
@@ -205,6 +208,44 @@ export default function BirdgeAction(
       setReciveAmount('')
     }
   }, [selectedRoute, toToken])
+
+
+  useEffect(() => {
+    if (router?.query) {
+      const { fromChainId, toChainId, fromToken, toToken } = router.query
+      if (fromChainId) {
+        const fromChain = chainList.filter(chain => chain.chainId === Number(fromChainId))
+        if (fromChain && fromChain.length) {
+          setFromChain(fromChain[0])
+        }
+
+        if (fromToken) {
+          const tokenList = allTokens[Number(fromChainId)]
+          const filterFromToken = tokenList.filter(token => token.symbol === fromToken)
+          if (filterFromToken && filterFromToken.length) {
+            setFromToken(filterFromToken[0])
+          }
+        }
+      }
+
+      if (toChainId) {
+        const toChain = chainList.filter(chain => chain.chainId === Number(toChainId))
+        if (toChain && toChain.length) {
+          setToChain(toChain[0])
+        }
+
+        if (toToken) {
+          const tokenList = allTokens[Number(toChainId)]
+          const filterToToken = tokenList.filter(token => token.symbol === toToken)
+          if (filterToToken && filterToToken.length) {
+            setToToken(filterToToken[0])
+          }
+        }
+      }
+
+    }
+    console.log(router?.query)
+  }, [chainList, router])
 
   return <Container>
     <PublicTitle
