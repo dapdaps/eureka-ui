@@ -181,7 +181,7 @@ export const linea: { [key: string]: Token } = {
   },
   rseth: {
     chainId: CHAIN_ID,
-    address: 'rsETH',
+    address: '0x4186bfc76e2e237523cbc30fd220fe055156b41f',
     decimals: 18,
     symbol: 'rsETH',
     name: 'KelpDao Restaked ETH',
