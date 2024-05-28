@@ -34,7 +34,6 @@ export default function usePoolInfo(address: string) {
         multicallAddress,
         provider,
       });
-
       setInfo({
         currentTick: globalState.tick,
         liquidity: liquidity.toString(),
@@ -46,12 +45,13 @@ export default function usePoolInfo(address: string) {
       setLoading(false);
       setInfo(null);
     }
-  }, [address]);
+  }, [address, chainId]);
 
   useEffect(() => {
-    if (!address) return;
+    if (!address || !chainId) return;
+
     queryPool();
-  }, [address]);
+  }, [address, chainId]);
 
   return { info, loading };
 }
