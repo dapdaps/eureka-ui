@@ -1,18 +1,15 @@
 import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { colors } from '@/config/chains';
 import { useLayoutStore } from '@/stores/layout';
 import { useUserStore } from '@/stores/user';
 import InviteFirendsModal from '@/views/QuestProfile/components/InviteFirendsModal';
 import useInviteList from '@/hooks/useInviteList';
 
-import useTxs from '../Bridge/hooks/useTxs';
-import AccountWrapper from './components/AccountWrapper';
-import BridgeWrapper from './components/BridgeWrapper';
 import Footer from './components/Footer';
 import Header from './components/Header';
 import InviteLink from './components/InviteLink';
+import Transactions from './components/Transactions';
 
 const StyledContainer = styled.div<{ display: number }>`
   width: 352px;
@@ -59,21 +56,7 @@ const Main = styled.div`
     display: none;
   }
 `;
-const Bg = styled.div<{ $chain: number }>`
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(
-    45deg,
-    rgba(${({ $chain }) => colors[$chain] || colors[0]}, 0.2) 10%,
-    rgba(20, 20, 20, 0.8) 50%
-  );
 
-  position: absolute;
-  z-index: 51;
-  bottom: 0px;
-  left: 0px;
-  border-radius: 0px 0px 32px 32px;
-`;
 const CloseIcon = styled.div`
   position: absolute;
   padding: 5px;
@@ -94,21 +77,10 @@ const CloseIcon = styled.div`
 const AccountSider = () => {
   const layoutStore = useLayoutStore();
   const userInfo = useUserStore((store: any) => store.user);
-  const defaultTab = layoutStore.defaultTab;
-  const [tab, setTab] = useState<'bridge' | 'account'>('account');
   const [showChains, setShowChains] = useState(false);
   const [showCodes, setShowCodes] = useState(false);
   const [showInviteLink, setShowInviteLink] = useState(false);
   const { inviteInfo, queryInviteList } = useInviteList();
-
-  useEffect(() => {
-    if (layoutStore.showAccountSider && defaultTab === 'bridge') {
-      setTab('bridge');
-    }
-  }, [layoutStore.showAccountSider, defaultTab]);
-
-  const [updater, setUpdater] = useState(1);
-  const { count, txs, loading: txLoading } = useTxs(updater);
 
   useEffect(() => {
     if (showChains) setShowCodes(false);
@@ -139,25 +111,9 @@ const AccountSider = () => {
             {showInviteLink && <InviteLink showCodes={showCodes} setShowCodes={setShowCodes} />}
             <Footer />
             <Main>
-              {tab === 'account' && (
-                <AccountWrapper count={count} setTab={setTab} showChains={showChains} setShowChains={setShowChains} />
-              )}
-              {tab === 'bridge' && (
-                <BridgeWrapper
-                  onBack={() => {
-                    setTab('account');
-                  }}
-                  count={count}
-                  txs={txs}
-                  txLoading={txLoading}
-                  refreshTxs={() => {
-                    setUpdater(Date.now());
-                  }}
-                />
-              )}
+              <Transactions />
             </Main>
           </Content>
-          {/* <Bg $chain={chainId || 0} /> */}
         </StyledPanel>
         {layoutStore.showAccountSider && (
           <CloseIcon

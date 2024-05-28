@@ -81,9 +81,9 @@ export const ChainTokens = ({
     onClick: () => void;
 }) => {
     const { balance, loading } = useTokenBalance({
-        currency: token, 
+        currency: tokenItem, 
         updater: 1, 
-        isNative: token.isNative, 
+        isNative: tokenItem.isNative, 
         isPure: false,
     })
 

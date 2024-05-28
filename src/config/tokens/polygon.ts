@@ -62,14 +62,14 @@ export const polygon: { [key: string]: Token } = {
     icon: 'https://assets.coingecko.com/coins/images/12895/small/hnys.png?1614100588',
   },
 
-  pcomb: {
-    chainId: CHAIN_ID,
-    address: '0x37D1EbC3Af809b8fADB45DCE7077eFc629b2B5BB',
-    decimals: 18,
-    symbol: 'pCOMB',
-    name: 'Polygon Native Comb',
-    icon: 'https://polygonscan.com/token/images/1hiveofc_32.png',
-  },
+  // pcomb: {
+  //   chainId: CHAIN_ID,
+  //   address: '0x37D1EbC3Af809b8fADB45DCE7077eFc629b2B5BB',
+  //   decimals: 18,
+  //   symbol: 'pCOMB',
+  //   name: 'Polygon Native Comb',
+  //   icon: 'https://polygonscan.com/token/images/1hiveofc_32.png',
+  // },
 
   mimatic: {
     chainId: CHAIN_ID,

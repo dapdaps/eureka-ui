@@ -251,7 +251,7 @@ const AllInOne: NextPageWithLayout = () => {
         </div>
         <div className="content-page">
           <ComponentWrapperPage
-            // src="bluebiu.near/widget/Scroll.BridgeAuthority.Index"
+            // src="bluebiu.near/widget/Mode.BridgeAuthority.Index"
             src={chainConfig?.dapp_network[0].dapp_src}
             componentProps={{
               addAction,

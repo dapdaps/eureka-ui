@@ -35,14 +35,14 @@ export const optimism: { [key: string]: Token } = {
     icon: 'https://ipfs.near.social/ipfs/bafkreihne6zw3myw5dwh72giml63vjjksmixrf435hf7cnsg5f3ubgdnde',
     decimals: 18,
   },
-  native: {
-    chainId: CHAIN_ID,
-    address: '',
-    decimals: 18,
-    symbol: 'ETH',
-    name: 'Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
-  },
+  // native: {
+  //   chainId: CHAIN_ID,
+  //   address: '',
+  //   decimals: 18,
+  //   symbol: 'ETH',
+  //   name: 'Ether',
+  //   icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+  // },
   'usdc.e': {
     chainId: CHAIN_ID,
     address: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607',

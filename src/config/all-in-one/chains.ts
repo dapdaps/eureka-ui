@@ -8,6 +8,7 @@ import linea from './chains/linea';
 import manta from './chains/manta';
 import mantle from './chains/mantle';
 import metis from './chains/metis';
+import mode from './chains/mode';
 import optimism from './chains/optimism';
 import polygon from './chains/polygon';
 import polygonZkevm from './chains/polygon-zkevm';
@@ -38,6 +39,7 @@ const popupsData: {
   manta,
   mantle,
   metis,
+  mode,
   optimism,
   polygon,
   'polygon-zkevm': polygonZkevm,

@@ -56,6 +56,18 @@ export const onboard = init({
       rpcUrl: 'https://rpc.ankr.com/eth_goerli',
     },
     {
+      id: 11155111,
+      token: 'ETH',
+      label: 'Sepolia - Ethereum Testnet',
+      rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
+    },
+    {
+      id: 421614,
+      token: 'ETH',
+      label: 'Arbitrum Sepolia',
+      rpcUrl: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public',
+    },
+    {
       id: 10,
       token: 'ETH',
       label: 'Optimism',
@@ -295,6 +307,12 @@ export const onboard = init({
       token: 'Blast',
       label: 'Blast',
       rpcUrl: 'https://rpc.blast.io',
+    },
+    {
+      id: 34443,
+      token: 'Mode',
+      label: 'Mode',
+      rpcUrl: 'https://mainnet.mode.network',
     },
   ],
   appMetadata: {
