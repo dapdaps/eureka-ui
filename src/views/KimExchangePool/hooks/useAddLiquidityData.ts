@@ -97,7 +97,7 @@ export default function useAddLiquidityData() {
   }, [token0, token1]);
 
   const rangeType = useMemo(() => {
-    if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice) return 0;
+    if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice || !info) return 0;
     if (lowerPrice === '0' || upperPrice === '∞') return 3;
     const lowerTick = priceToUsableTick({ price: lowerPrice, token0, token1, fee: 3000 });
     const upperTick = priceToUsableTick({ price: upperPrice, token0, token1, fee: 3000 });

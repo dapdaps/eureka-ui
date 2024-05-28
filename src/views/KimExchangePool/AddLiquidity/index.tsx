@@ -1,8 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 import useAddLiquidityData from '../hooks/useAddLiquidityData';
 import useAdd from '../hooks/useAdd';
+import useAccount from '@/hooks/useAccount';
 import Header from '@/views/Pool/AddLiquidity/components/Header';
 import SelectPair from './SelectPair';
 import PoolNoExsitHints from '@/views/Pool/AddLiquidity/components/PoolNoExsitHints';
@@ -29,7 +30,7 @@ import {
 } from './styles';
 
 const AddLiquidity = () => {
-  const { theme = {} } = useDappConfig();
+  const { theme = {}, currentChain } = useDappConfig();
   const [showSettings, setShowSettings] = useState(false);
   const [showSelectTokens, setShowSelectTokens] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
@@ -37,6 +38,12 @@ const AddLiquidity = () => {
   const inputType = useRef<0 | 1>(0);
   const router = useRouter();
   const [errorTips, setErrorTips] = useState('');
+  const { chainId } = useAccount();
+
+  const isChainSupport = useMemo(() => {
+    if (!chainId || !currentChain) return false;
+    return chainId === currentChain.chain_id;
+  }, [chainId, currentChain]);
 
   const {
     token0,
@@ -120,10 +127,10 @@ const AddLiquidity = () => {
             </StyledLoadingWrapper>
           ) : (
             <>
-              {noPair && token0 && token1 && <PoolNoExsitHints />}{' '}
-              {[1, 2].includes(rangeType) && !noPair && <OutRangeHints type={rangeType} />}
-              {noPair && token0 && token1 && <PoolHints />}
-              {noPair && (
+              {noPair && token0 && token1 && isChainSupport && <PoolNoExsitHints />}{' '}
+              {[1, 2].includes(rangeType) && !noPair && isChainSupport && <OutRangeHints type={rangeType} />}
+              {noPair && token0 && token1 && isChainSupport && <PoolHints />}
+              {noPair && isChainSupport && (
                 <StartingPrice
                   token0={token0}
                   token1={token1}
