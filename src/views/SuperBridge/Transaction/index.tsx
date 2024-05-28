@@ -158,7 +158,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
                 </AmountWapper>
             </SingleStatus>
             <Sep />
-            <SingleStatus onClick={() => { setTransactionModalShow(true) }}>
+            <SingleStatus onClick={() => { setSearchValueValue(value); setTransactionModalShow(true) }}>
                 <AmountWapper>
                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="1" y="1" width="14" height="15" rx="3" stroke="#979ABE" stroke-width="2" />

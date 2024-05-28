@@ -164,7 +164,6 @@ const ChainGroup = styled.div`
             display: flex;
             align-items: center;
             gap: 10px;
-            
         }
     }
     .ct-title {
@@ -180,7 +179,6 @@ interface Props {
     onClose?: () => void;
     chainList: Chain[];
     chainToken: any;
-
     currentChain: Chain | undefined;
     currentToken: Token | undefined;
     onChainChange: (chain: Chain) => void;
@@ -188,7 +186,8 @@ interface Props {
 }
 
 const TokenListComp = forwardRef(function TokenListComp({
-    chain, chainToken, currentToken, groupId, searchTxt, filterChain, searchAll, onChainChange, onTokenChange, onClose, onTempChainChange }: {
+    chain, chainToken, currentToken, groupId, searchTxt, filterChain, searchAll, onChainChange, onTokenChange, onClose, onTempChainChange 
+}: {
         chain: Chain;
         chainToken: any;
         groupId: string;
@@ -269,7 +268,7 @@ const TokenListComp = forwardRef(function TokenListComp({
                             balances={balances}
                             chain={disPlayChain as Chain}
                             onTokenChange={(token: Token) => {
-                                onChainChange(chain)
+                                onChainChange(disPlayChain)
                                 onTokenChange(token)
                                 onClose && onClose()
                             }}
