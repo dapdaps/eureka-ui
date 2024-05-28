@@ -1,12 +1,12 @@
 import Image from 'next/image';
+
 import {
-  StyledBannerContainer,
-  StyledContent,
-  BannerTitle,
-  BannerMain,
   BannerDesc,
-  StyledBannerPadding
-} from '@/views/OdysseyV2-1/components/Banner/styles';
+  BannerMain,
+  BannerTitle,
+  StyledBannerContainer,
+  StyledBannerPadding,
+  StyledContent} from '@/views/OdysseyV2-1/components/Banner/styles';
 import Summary from '@/views/OdysseyV2-1/components/Summary';
 
 const Banner = (props: {

@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
+import { useCallback, useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import { get } from '@/utils/http';
 
 export default function useDetail(id: any, option: { quests: any[], setExploredAmount: any, setQuests: any }) {
   const { quests, setExploredAmount, setQuests } = option;
@@ -17,16 +18,16 @@ export default function useDetail(id: any, option: { quests: any[], setExploredA
     }
     try {
       setLoading(true);
-      const result = await get('/api/compass/v2/detail', { id: 2 });
+      const result = await get('/api/compass/v4/detail', { id: 6 });
       if (result.code === 0 && result.data) {
         setDetail({
           total_users: result.data.total_users,
-          total_players: result.data.total_players,
-          claimed_reward: result.data.claimed_reward,
-          available_spins: result.data.user?.available_spins,
+          total_transactions: result.data.total_transactions,
+          trading_volume: result.data.trading_volume,
           unclaimed_reward: result.data.user?.unclaimed_reward,
-          total_spins: result.data.user?.total_spins,
+          total_reward: result.data.user?.total_reward,
         });
+        console.log(JSON.parse(result.data.rule));
       } else {
         setDetail({});
       }
