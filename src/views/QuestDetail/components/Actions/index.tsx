@@ -106,13 +106,13 @@ const Actions = ({
             {' '}
             <span>You&apos;ve got</span>
             <StyledCoin $size={20} />
-            <span>{rewards} PTS</span>
+            <span>{rewards + (isBitGetUser || isCoin98User ? Number(rewards * 0.1) : 0)} PTS</span>
           </>
         ) : (
           <>
             <span>Claim</span>
             <StyledCoin $size={20} />
-            <span>{rewards + (isBitGetUser || isCoin98User ? Number(rewards * 0.1) : 0)} PTS</span>
+            <span>{rewards + (completedCount === actions.length && (isBitGetUser || isCoin98User) ? Number(rewards * 0.1) : 0)} PTS</span>
           </>
         )}
       </StyledButton>
