@@ -26,6 +26,7 @@ export default function useAdd({
 }: any) {
   const [loading, setLoading] = useState(false);
   const { account, provider, chainId } = useAccount();
+
   const { contracts, dapp } = useDappConfig();
   const toast = useToast();
   const slippage = useSettingsStore((store: any) => store.slippage);
@@ -46,10 +47,10 @@ export default function useAdd({
       const isReverse = _token0.address !== token0.address && _token1.address !== token1.address;
       const _value0 = isReverse ? value1 : value0;
       const _value1 = isReverse ? value0 : value1;
-      const _amount0 = new Big(_value0 || 1).mul(10 ** _token0.decimals).toFixed(0);
-      const _amount1 = new Big(_value1 || 1).mul(10 ** _token1.decimals).toFixed(0);
-      const _amount0Min = new Big(_amount0).mul(1 - (slippage || 0.05)).toFixed(0);
-      const _amount1Min = new Big(_amount1).mul(1 - (slippage || 0.05)).toFixed(0);
+      const _amount0 = new Big(_value0 || 0).mul(10 ** _token0.decimals).toFixed(0);
+      const _amount1 = new Big(_value1 || 0).mul(10 ** _token1.decimals).toFixed(0);
+      const _amount0Min = new Big(_amount0).mul(1 - (slippage || 0.005)).toFixed(0);
+      const _amount1Min = new Big(_amount1).mul(1 - (slippage || 0.005)).toFixed(0);
       const _deadline = Math.ceil(Date.now() / 1000) + 600;
 
       if (noPair) {
@@ -119,12 +120,6 @@ export default function useAdd({
         value = _token0.isNative ? _amount0 : _amount1;
         calldatas.push(Interface.encodeFunctionData('refundNativeToken'));
       }
-
-      console.log({
-        _token0,
-        _token1,
-        value,
-      });
 
       const txn: any = {
         to: PositionManager,

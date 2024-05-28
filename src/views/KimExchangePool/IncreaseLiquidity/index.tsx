@@ -92,7 +92,7 @@ const IncreaseLiquidity = () => {
       ) : (
         <StyledContent>
           <div style={{ width: '50%' }}>
-            <Tokens {...detail} />
+            <Tokens {...detail} from="add" rangeType={rangeType} />
             <CurrentAmount token0={detail.token0} token1={detail.token1} amount0={amount0} amount1={amount1} />
             <Range
               token0={detail.token0}

@@ -28,7 +28,7 @@ const Tokens = ({
         {fee && <Fee fee={fee} />}
       </StyledLeft>
       <Status
-        from="add"
+        from={from}
         rangeType={rangeType}
         tickLower={tickLower}
         tickUpper={tickUpper}
