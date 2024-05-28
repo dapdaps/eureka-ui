@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 import usePoolDetail from '../hooks/usePoolDetail';
 import useCollectInfo from '@/views/Pool/Detail/hooks/useCollectInfo';
-import useRemove from '@/views/Pool/RemoveLiquidity/hooks/useRemove';
+import useRemove from '../hooks/useRemove';
 import useAccount from '@/hooks/useAccount';
 import { StyledContainer, StyledLoadingWrapper, StyledHeader, StyledContent } from './styles';
 
@@ -37,6 +37,7 @@ const RemoveLiquidity = () => {
   }, [detail]);
 
   const { loading: removing, onRemove } = useRemove({
+    tokenId,
     detail,
     percent,
     amount0,
