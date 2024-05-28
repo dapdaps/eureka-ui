@@ -103,7 +103,7 @@ const LandingPC: FC<IProps> = ({ from, inviteCode, platform }) => {
 
   useEffect(() => {
     if (wallet) {
-      setAddress((wallet as any)['accounts'][0].address);
+      setAddress((wallet as any)['accounts'][0]?.address);
     }
   }, [wallet]);
 
@@ -219,6 +219,8 @@ const LandingPC: FC<IProps> = ({ from, inviteCode, platform }) => {
   };
 
   const handleClaim = async (data: any) => {
+    console.log('handleClaim--', address, data);
+
     if (!address) return;
     if (data.status !== 'completed') return;
     if (data.is_claimed) return;
@@ -391,12 +393,12 @@ const LandingPC: FC<IProps> = ({ from, inviteCode, platform }) => {
           <Styles.AllRewardsIcon src="/images/marketing/coin.svg" />
         </Styles.AllRewards> */}
       </Styles.Banner>
-      {tab === 'Quests' && (
-        <Styles.Box>
-          <Styles.Sub>Complete wallet connections to unlock your PTS.</Styles.Sub>
-          <Styles.Step>{renderButton()}</Styles.Step>
-        </Styles.Box>
-      )}
+
+      <Styles.Box>
+        <Styles.Sub>Complete wallet connections to unlock your PTS.</Styles.Sub>
+        <Styles.Step>{renderButton()}</Styles.Step>
+      </Styles.Box>
+
       <Styles.Foot>
         <Styles.FootTxt>Ready to Ignite the Spark?</Styles.FootTxt>
         <Styles.Star src="/images/marketing/star.png"></Styles.Star>
