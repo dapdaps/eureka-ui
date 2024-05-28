@@ -1,13 +1,14 @@
+import { useDebounceFn } from 'ahooks';
+import Big from 'big.js';
 import { useCallback, useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
-import { useDebounceFn } from 'ahooks';
 import { get } from '@/utils/http';
-import Big from 'big.js';
 
 export default function useTokens() {
   const [loading, setLoading] = useState(true);
-  const [tokens, setTokens] = useState<any>();
+  const [tokens, setTokens] = useState<any>([]);
   const [networks, setNetworks] = useState<any>();
   const [totalBalance, setTotalBalance] = useState<any>();
   const { account } = useAccount();
@@ -18,7 +19,17 @@ export default function useTokens() {
       setLoading(true);
       setTokens([]);
       const result = await get(`/db3`, { url: 'api/balance/list', params: JSON.stringify({ address: account }) });
-      console.log(result);
+      // result.data.list = [
+      //   {
+      //     id: 57149967,
+      //     address: '0x4300000000000000000000000000000000000004',
+      //     chain_id: 81457,
+      //     symbol: 'WETH',
+      //     price: '3850.640000000',
+      //     amount: '0.00003191477472727',
+      //     usd: '0.122892308155814953',
+      //   },
+      // ];
       const _data = result?.data?.list ?? [];
       const _networks: any = {};
       let _totalBalance = new Big(0);

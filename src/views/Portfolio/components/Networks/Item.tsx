@@ -1,6 +1,9 @@
+import Big from 'big.js';
 import { memo, useMemo } from 'react';
+
 import chains from '@/config/chains';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+
 import { getChainLogo } from '../../helpers';
 import {
   StyledItemContent,
@@ -10,7 +13,6 @@ import {
   StyledItemUSD,
   StyledTabItem,
 } from './styles';
-import Big from 'big.js';
 
 const Item = ({ chainId, usd, totalBalance, network, setNetwork, icon }: any) => {
   const chain = useMemo(() => {
@@ -22,15 +24,23 @@ const Item = ({ chainId, usd, totalBalance, network, setNetwork, icon }: any) =>
   }, [totalBalance, usd]);
 
   return (
-    <StyledTabItem className={ network === chainId ? 'active' : '' } onClick={() => {
-      setNetwork(chainId);
-    }}>
-      <StyledItemIcon className='item-icon' url={icon ? '' : getChainLogo(chain.chainName)}>{icon ?? null}</StyledItemIcon>
+    <StyledTabItem
+      className={network === chainId ? 'active' : ''}
+      onClick={() => {
+        setNetwork(chainId);
+      }}
+    >
+      <StyledItemIcon
+        className="item-icon"
+        url={icon ? '' : getChainLogo(chain.chainName)}
+      >
+        {icon ?? null}
+      </StyledItemIcon>
       <StyledItemContent>
         <StyledItemName>{chain?.chainName}</StyledItemName>
         <StyledItemNum>
           <StyledItemUSD>${formateValueWithThousandSeparator(usd, 2)}</StyledItemUSD>
-          { percentage && <StyledItemName>{percentage}%</StyledItemName> }
+          {percentage && <StyledItemName>{percentage}%</StyledItemName>}
         </StyledItemNum>
       </StyledItemContent>
     </StyledTabItem>

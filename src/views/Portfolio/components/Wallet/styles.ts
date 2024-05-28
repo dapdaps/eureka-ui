@@ -1,30 +1,5 @@
 import styled from 'styled-components';
 
-export const HoldingTitle = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  color: white;
-  padding: 40px 10px 10px;
-
-  .holding-text {
-    font-family: Gantari;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: 24px;
-    letter-spacing: 0em;
-    text-align: left;
-  }
-
-  .holding-value {
-    font-family: Gantari;
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 29px;
-    letter-spacing: 0em;
-  }
-`;
-
 export const ProtocolSelectBox = styled.div`
   width: max-content;
   background: #303142;
@@ -65,128 +40,21 @@ export const ProtocolSelectBox = styled.div`
   }
 `;
 
-export const HoldingTableWrapper = styled.div`
-  position: relative;
-  border-radius: 16px;
-  border: 1px solid #373a53;
-  background-color: #262836;
+export const StyledWalletContainer = styled.div``;
+
+export const StyledLoading = styled.div<{ height?: string }>`
+  height: ${({ height }) => height};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const HoldingTable = styled.table`
-  width: 100%;
-  border-radius: 16px;
-  background: #262836;
-
-  position: relative;
-  z-index: 10;
-
-  padding-bottom: 8px;
-
-  thead {
-    border-bottom: 1px solid #373a53;
-  }
-
-  thead th {
-    font-family: Gantari;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: #7c7f96;
-    padding: 14px 0;
-    position: relative;
-
-    > div {
-      cursor: pointer;
-      width: max-content;
-    }
-  }
-
-  thead tr:first-child th:first-child {
-    padding-left: 20px;
-  }
-
-  thead tr:first-child th:nth-child(2) {
-  }
-
-  thead tr:first-child th:nth-child(3) {
-  }
-
-  thead tr:first-child th:last-child {
-    padding-right: 20px;
-    > div {
-      cursor: pointer;
-      width: 100%;
-    }
-  }
-
-  tbody td {
-    font-family: Gantari;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 17px;
-    letter-spacing: 0em;
-    text-align: left;
-    color: white;
-    padding: 14px 0px;
-    position: relative;
-  }
-
-  tbody tr td:first-child {
-    padding-left: 20px;
-  }
-
-  tbody tr td:last-child {
-    padding-right: 20px;
-  }
-
-  .token-info {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    .token-icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 100%;
-    }
-
-    .chain-info {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding-top: 2px;
-    }
-
-    .chain-icon {
-      height: 16px;
-      width: 16px;
-      border-radius: 8px;
-    }
-    .chain-name {
-      font-family: Gantari;
-      font-size: 14px;
-      font-weight: 400;
-      line-height: 17px;
-      letter-spacing: 0em;
-      text-align: left;
-      color: #7c7f96;
-    }
-  }
-`;
-
-export const SortArrowDownWrapper = styled.div<{ active: boolean }>`
-  color: ${(p) => (p.active ? '#7C7F96' : '#373A53')};
-`;
-
-
-export const StyledWalletContainer = styled.div`
+export const  StyledWalletTable = styled.div`
   border-radius: 12px;
   border: 1px solid #373A53;
   background: #262836;
+  overflow: hidden;
 `;
-
-export const  StyledWalletTable = styled.div``;
 
 export const  StyledWalletTableItem = styled.div`
   display: flex;
@@ -216,20 +84,38 @@ export const  StyledTableItemTxt = styled.div`
     width: 10%;
     margin-right: 0;
   }
-  `;
+`;
 
 export const StyledTokenIcon = styled.div`
   width: 26px;
   height: 26px;
   position: relative;
-  border: 1px solid red;
-  .token {
-    width: 12px;
-    height: 12px;
-    border-radius: 2px;
+  overflow: visible;
+
+  .chain-logo {
+    width: 16px;
+    height: 16px;
     border: 2px solid #262836;
+    background: #262836;
+    border-radius: 2px;
     position: absolute;
-    bottom: 0;
-    right: 0;
+    z-index: 1;
+    right: -1px;
+    bottom: -2px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+    }
   }
+`;
+
+export const StyledTokenIconImg = styled.div<{ src: string }>`
+  width: 100%;
+  height: 100%;
+  background: ${({ src }) => `url("${src}") no-repeat center / contain`};
 `;

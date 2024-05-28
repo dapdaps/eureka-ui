@@ -1,11 +1,13 @@
 import styled from 'styled-components';
 
-export const StyledNetworkTabWrapper = styled.div`
+export const StyledNetworkTabWrapper = styled.div<{fold: boolean}>`
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 38px;
+  height: ${({ fold }) => fold ? '110px' : 'unset'};
+  overflow: hidden;
 `;
 
 export const StyledTabItem = styled.div`

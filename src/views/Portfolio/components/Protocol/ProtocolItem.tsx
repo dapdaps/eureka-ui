@@ -1,16 +1,17 @@
-import { memo, useEffect, useState, useMemo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { memo, useEffect, useMemo, useState } from 'react';
+
+import chains from '@/config/chains';
 import {
   formateValue,
   formateValueWithThousandSeparator,
   formateValueWithThousandSeparatorAndFont,
 } from '@/utils/formate';
-import chains from '@/config/chains';
-import ProtocolTableGenerator from './ProtocolTableGenerator';
-import Position from './Position';
+
 import { getChainLogo, getDappLogo } from '../../helpers';
-import { ProtocolCard, ProtocolArrowWrapper, ProtocolTableRow } from './styles';
-import Big from 'big.js';
+import Position from './Position';
+import ProtocolTableGenerator from './ProtocolTableGenerator';
+import { ProtocolArrowWrapper, ProtocolCard, ProtocolTableRow } from './styles';
 
 const Columns = [
   { name: 'Position', width: '40%' },

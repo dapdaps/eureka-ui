@@ -15,10 +15,10 @@ export const NoAssetWrapper = styled.div`
   align-items: center;
   justify-content: center;
 
-  border: 1px solid #373a53;
+  border: 0;
   flex-direction: column;
 
-  background: #181a27;
+  background: #262836;
 
   border-radius: 16px;
 

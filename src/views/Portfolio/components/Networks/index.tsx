@@ -1,14 +1,16 @@
-import { memo } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
+
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+
 import Item from './Item';
 import {
-  StyledNetworkTabWrapper,
-  StyledTabItem,
-  StyledItemIcon,
   StyledItemContent,
+  StyledItemIcon,
   StyledItemName,
   StyledItemNum,
   StyledItemUSD,
+  StyledNetworkTabWrapper,
+  StyledTabItem,
 } from './styles';
 
 export const AllNetWorkIcon = (
@@ -26,9 +28,47 @@ const ALL = {
 }
 
 const Networks = ({ networks, totalBalance, network, setNetwork }: any) => {
+  const wrapperRef = useRef(null);
+  const [foldVisible, setFoldVisible] = useState(false);
+  const [cols, setCols] = useState(6);
+  const [fold, setFold] = useState(true);
+  const [displayNetworks, setDisplayNetworks] = useState([]);
+  const [hiddenNetworks, setHiddenNetworks] = useState([]);
+
+  const handleFold = () => {
+    setFold(!fold);
+  };
+
+  useEffect(() => {
+    const itemWidth = 158;
+    const itemGap = 10;
+    const handleChainNav = () => {
+      if (!wrapperRef.current || !networks) return;
+      const wrapperWidth = parseFloat(getComputedStyle(wrapperRef.current).width);
+      const contentLength = networks.length + 1;
+      const _cols = Math.floor((wrapperWidth + itemGap) / (itemWidth + itemGap));
+      const _rows = Math.ceil(contentLength / _cols);
+      setCols(_cols);
+      if (_rows > 2) {
+        setFoldVisible(true);
+        setDisplayNetworks(networks.slice(0, _cols * 2 - 2));
+        setHiddenNetworks(networks.slice(_cols * 2 - 2));
+      } else {
+        setFoldVisible(false);
+        setDisplayNetworks(networks);
+        setHiddenNetworks([]);
+        setFold(false);
+      }
+    };
+    handleChainNav();
+    window.addEventListener('resize', handleChainNav);
+    return () => {
+      window.removeEventListener('resize', handleChainNav);
+    };
+  }, [networks]);
 
   return (
-    <StyledNetworkTabWrapper>
+    <StyledNetworkTabWrapper ref={wrapperRef} fold={fold}>
       <StyledTabItem className={ network === ALL.key ? 'active' : '' } onClick={() => {
         setNetwork('all');
       }}>
@@ -42,7 +82,7 @@ const Networks = ({ networks, totalBalance, network, setNetwork }: any) => {
           </StyledItemNum>
         </StyledItemContent>
       </StyledTabItem>
-      {networks?.map((chain: any) => {
+      {displayNetworks?.map((chain: any) => {
         return (
           <Item
             key={chain.id}
@@ -54,7 +94,32 @@ const Networks = ({ networks, totalBalance, network, setNetwork }: any) => {
           />
         );
       })}
-      <StyledTabItem><StyledItemName>unfold 4 chains</StyledItemName></StyledTabItem>
+      {
+        foldVisible && fold && (
+          <StyledTabItem style={{ marginLeft: 'auto' }} onClick={handleFold}>
+            <StyledItemName>unfold {networks.length - cols * 2 + 2} chains</StyledItemName>
+          </StyledTabItem>
+        )
+      }
+      {hiddenNetworks?.map((chain: any) => {
+        return (
+          <Item
+            key={chain.id}
+            chainId={chain.id}
+            totalBalance={totalBalance}
+            network={network}
+            setNetwork={setNetwork}
+            usd={chain.usd}
+          />
+        );
+      })}
+      {
+        foldVisible && !fold && (
+          <StyledTabItem style={{ marginLeft: 'auto' }} onClick={handleFold}>
+            <StyledItemName>fold {networks.length - cols * 2 + 2} chains</StyledItemName>
+          </StyledTabItem>
+        )
+      }
     </StyledNetworkTabWrapper>
   );
 };
