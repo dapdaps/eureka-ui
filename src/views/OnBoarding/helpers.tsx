@@ -79,12 +79,14 @@ export function formatTitle(record: any) {
           </>
         );
       } else {
-        <>
-          {parsedExtraData.action}{' '}
-          <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span> {tokens[0]} and{' '}
-          <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span> {tokens[1]} on{' '}
-          {record.template}
-        </>
+        return (
+          <>
+            {parsedExtraData.action}{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span> {tokens[0]} and{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span> {tokens[1]} on{' '}
+            {record.template}
+          </>
+        )
       }
     } catch (err) { }
     return (
