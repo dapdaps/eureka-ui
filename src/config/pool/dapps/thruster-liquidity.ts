@@ -24,6 +24,16 @@ const tokens: { [key: number]: any } = {
     blast['yield'],
     blast['ole'],
     blast['pac'],
+    blast['kap'],
+    blast['glory'],
+    blast['andy'],
+    blast['early'],
+    blast['mia'],
+    blast['orbit'],
+    blast['baja'],
+    blast['bag'],
+    blast['pump'],
+    blast['$wai'],
   ]
     .map((token) => formatToken(token))
     .reduce((acc, curr) => ({ ...acc, [formatTokenKey(curr)]: curr }), {}),
