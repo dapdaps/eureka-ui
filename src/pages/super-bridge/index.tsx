@@ -55,8 +55,8 @@ const TestChains: Chain[] = [
   },
 ]
 
-chainList.unshift(TestChains[1])
-chainList.unshift(TestChains[0])
+// chainList.unshift(TestChains[1])
+// chainList.unshift(TestChains[0])
 
 const Bridge: NextPageWithLayout = () => {
   const router = useRouter();
