@@ -21,7 +21,7 @@ const networks = {
   59144: {
     pairs: [
       {
-        id: '',
+        id: 'USDC-USDT-Oku',
         strategy: 'Oku',
         token0: 'USDC',
         token1: 'USDT',
@@ -31,7 +31,7 @@ const networks = {
         vaultAddress: '0x73d9ccd3017B41E9b29F1E4A49D5468B52bd17c6',
       },
       {
-        id: '',
+        id: 'USDC-USDT-PancakeSwap',
         strategy: 'PancakeSwap',
         token0: 'USDC',
         token1: 'USDT',
@@ -61,7 +61,7 @@ const networks = {
         vaultAddress: '0x0F3CC3Ea42b989323e7c7e499b5B6A343eA55c18',
       },
       {
-        id: '',
+        id: 'USDC-WETH-PancakeSwap',
         strategy: 'PancakeSwap',
         token0: 'USDC',
         token1: 'WETH',
