@@ -37,6 +37,14 @@ export default {
     rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
     tips: 'Explore, Trade, Earn - Go for Gold!',
   },
+  6: {
+    path: '/odyssey/home?id=6',
+    video: '',
+    chainsImg: '/images/odyssey/v2/chains.png',
+    chainsHeight: '56px',
+    reward: '',
+    tips: 'Unleash the Linea Surge',
+  },
   7: {
     // fot v4 test
     path: '/odyssey/home?id=7',

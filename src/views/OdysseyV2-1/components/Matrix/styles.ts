@@ -158,6 +158,8 @@ export const StyledCardBack = styled.div`
 
 export const StyledCardIcon = styled.img`
   opacity: 0.3;
+  width: 56px;
+  height: 56px;
 `;
 
 export const StyledGameContainer = styled.div`
@@ -166,6 +168,7 @@ export const StyledGameContainer = styled.div`
   gap: 10px;
   flex-wrap: wrap;
   position: relative;
+  margin: 0 auto;
 `;
 
 export const StyledMatrixLogo = styled.div`
@@ -235,4 +238,21 @@ export const StyledCount = styled.div`
 
 export const StyledText = styled.div`
   font-size: 20px;
+`;
+
+export const StyledPTS = styled.div`
+  width: 91px;
+  height: 47px;
+  background: url("/images/odyssey/v2-1/matrix-pts.svg") no-repeat center / contain;
+  color: #000;
+  text-align: center;
+  font-family: Trans-America;
+  font-size: 16px;
+  line-height: 1;
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

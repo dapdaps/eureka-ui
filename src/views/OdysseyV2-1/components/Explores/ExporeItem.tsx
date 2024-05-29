@@ -1,13 +1,13 @@
 import { memo, useEffect, useState } from 'react';
-import Image from 'next/image';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 
 import useCheck from '../../hooks/useCheck';
 import useReport from '../../hooks/useReport';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
-import RefreshIcon from '../RefreshButton';
 import LockStatus from '../LockStatus';
+import RefreshIcon from '../RefreshButton';
 import CardInput from './CardInput';
-import { StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored, StyledArrowIcon } from './styles';
+import { StyledArrowIcon,StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored } from './styles';
 
 const ExporeItem = ({
   userInfo,
@@ -24,9 +24,9 @@ const ExporeItem = ({
   setDetailLoading,
 }: any) => {
   const [finished, setFinished] = useState(false);
-  const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins }, (_times: number) => {
+  const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins }, (_times: number, total_spins: number) => {
     setFinished(true);
-    onRefreshDetail();
+    onRefreshDetail(id, total_spins);
   }, detailLoading, setDetailLoading);
   const { handleReport } = useReport();
 

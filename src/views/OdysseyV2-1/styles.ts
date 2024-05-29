@@ -7,7 +7,6 @@ export const StyledOdysseyV2Container = styled.div`
  --odyssey2-primary-color: #DFFE00;
  
   background-color: #000;
-  font-family: 'Chekra Petch';
   min-height: 100vh;
   padding-bottom: 102px;
   display: flex;
@@ -19,4 +18,5 @@ export const StyledEmptyContainer = styled.div`
   color: #fff;
   font-size: 20px;
   margin: 20px auto;
+  text-align: center;
 `;

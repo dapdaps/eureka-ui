@@ -1,15 +1,17 @@
-import { get } from '@/utils/http';
+import { useDebounceFn } from 'ahooks';
+import Big from 'big.js';
 import { cloneDeep } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
-import { useDebounceFn } from 'ahooks';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
-import Big from 'big.js';
+import { get } from '@/utils/http';
 
 const defaultQuests: any = { social: [], bridge: [], swap: [], lending: [], staking: [] };
 
 export default function useQuests() {
   const [quests, setQuests] = useState(null);
+  const [questsList, setQuestsList] = useState([]);
   const [loading, setLoading] = useState(true);
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
@@ -17,7 +19,7 @@ export default function useQuests() {
   const queryQuests = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get('/api/compass/v2/quest_list', { id: 2 });
+      const result = await get('/api/compass/v2/quest_list', { id: 6 });
       setLoading(false);
       if (result.code !== 0 || !result.data?.length) {
         setQuests(defaultQuests);
@@ -25,9 +27,9 @@ export default function useQuests() {
       }
       const _result = cloneDeep(defaultQuests);
 
-      result.data.forEach((item: any) => {
-        item.exploredAmount = new Big(item.total_spins).div(item.spins).toNumber() || 0;
+      setQuestsList(result.data);
 
+      result.data.forEach((item: any) => {
         if (item.category_id === 0 && item.category !== 'twitter_retweet') {
           _result.social.push(item);
         }
@@ -65,5 +67,5 @@ export default function useQuests() {
     run();
   }, [account]);
 
-  return { loading, quests: quests || defaultQuests, setQuests };
+  return { loading, quests: quests || defaultQuests, setQuests, questsList };
 }

@@ -1,24 +1,26 @@
+import Big from 'big.js';
 import { useEffect, useState } from 'react';
-import useCheck from '../../hooks/useCheck';
-import { useLayoutStore } from '@/stores/layout';
-import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
+
 import useDappOpen from '@/hooks/useDappOpen';
-import Card from '../Card';
+import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
+import { useLayoutStore } from '@/stores/layout';
+import LockStatus from '@/views/OdysseyV2-1/components/LockStatus';
+
+import useCheck from '../../hooks/useCheck';
 import ArrowIcon from '../ArrowIcon';
+import Card from '../Card';
 import RefreshButton from '../RefreshButton';
 import {
-  StyledTop,
-  StyledDappWrapper,
-  StyledDappIcon,
-  StyledDappTitleWrapper,
-  StyledDappTitle,
+  StyledArrowIcon,
   StyledDappDesc,
+  StyledDappIcon,
+  StyledDappTitle,
+  StyledDappTitleWrapper,
+  StyledDappWrapper,
   StyledFooter,
-  StyledExecution,
   StyledFooterActions,
-  StyledArrowIcon
+  StyledTop,
 } from './styles';
-import LockStatus from '@/views/OdysseyV2-1/components/LockStatus';
 
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
@@ -40,11 +42,11 @@ export default function DappCard({
   setDetailLoading,
 }: any) {
 
-  const [execution, setExecution] = useState(0);
+  const [finishedTimes, setFinishedTimes] = useState(0);
 
-  const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
-    onRefreshDetail();
-    setExecution(_times);
+  const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number, total_spins: number) => {
+    onRefreshDetail(id, total_spins);
+    setFinishedTimes(_times);
   }, detailLoading, setDetailLoading);
 
   const { open: dappOpen } = useDappOpen();
@@ -75,11 +77,11 @@ export default function DappCard({
   };
 
   useEffect(() => {
-    setExecution(total_spins / spins);
+    setFinishedTimes(Big(total_spins).div(spins).toNumber());
   }, [total_spins, spins]);
 
   return (
-    <Card onClick={onItemClick} disabled={times === 0 ? false : execution > times}>
+    <Card onClick={onItemClick}>
       <StyledTop>
         <StyledDappWrapper>
           <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
@@ -95,14 +97,18 @@ export default function DappCard({
       <StyledFooter>
 
         <StyledFooterActions>
-          <LockStatus status={false} border={true}/>
-          <RefreshButton
-            onClick={(ev: any) => {
-              ev.stopPropagation();
-              if (!checking) handleRefresh();
-            }}
-            loading={checking}
-          />
+          <LockStatus status={finishedTimes >= times} border={true}/>
+          {
+            finishedTimes >= times ? null : (
+              <RefreshButton
+                onClick={(ev: any) => {
+                  ev.stopPropagation();
+                  if (!checking) handleRefresh();
+                }}
+                loading={checking}
+              />
+            )
+          }
         </StyledFooterActions>
       </StyledFooter>
     </Card>

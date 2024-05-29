@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
-import useToast from '@/hooks/useToast';
-import { get } from '@/utils/http';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useToast from '@/hooks/useToast';
+import { get } from '@/utils/http';
 
 export default function useCheck(quest: any, cb: any, detailLoading: boolean, setDetailLoading: any) {
   const [loading, setLoading] = useState(false);
@@ -30,7 +31,7 @@ export default function useCheck(quest: any, cb: any, detailLoading: boolean, se
         });
       }
       if (result.data && result.data.total_completed_times > quest.total_spins / quest.spins) {
-        cb(result.data.total_completed_times);
+        cb(result.data.total_completed_times, result.data.total_spins);
         if (data) {
           toast.success({
             title: 'Action confirmed successfully',
@@ -57,12 +58,12 @@ export default function useCheck(quest: any, cb: any, detailLoading: boolean, se
 
   const handleRefresh = useCallback(
     async (d?: string) => {
-      fetchData(d);
-      // if (!account) {
-      //   fetchData(d);
-      //   return;
-      // }
-      // check(fetchData);
+      // fetchData(d);
+      if (!account) {
+        fetchData(d);
+        return;
+      }
+      check(fetchData);
     },
     [quest, detailLoading],
   );

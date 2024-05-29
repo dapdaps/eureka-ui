@@ -10,7 +10,7 @@ import {
   StyledTitleContainer,
 } from './styles';
 
-const Matrix = () => {
+const Matrix = (props: any) => {
   return (
     <StyledMatrixContainer>
       <StyledMatrixBorder>
@@ -23,7 +23,7 @@ const Matrix = () => {
         </StyledTitleContainer>
         <StyledSubTitle>By exploring the dApp to light up the card, unlock the horizontal or vertical of cards to earn
           PTS</StyledSubTitle>
-        <MatrixGame />
+        <MatrixGame {...props} />
       </StyledMatrixBorder>
     </StyledMatrixContainer>
   );

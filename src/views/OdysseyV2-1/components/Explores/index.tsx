@@ -1,12 +1,11 @@
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
-import ExporeItem from './ExporeItem';
-import {  StyledContent, StyledItemWrap, StyledTitle,  StyledSubTitle, StyledContainer } from './styles';
 import { StyledEmptyContainer } from '@/views/OdysseyV2-1/styles';
 
+import ExporeItem from './ExporeItem';
+import {  StyledContainer,StyledContent, StyledItemWrap, StyledSubTitle, StyledTitle } from './styles';
+
 export default function Explores({ list, userInfo, authConfig, onRefreshDetail, loading, detailLoading, setDetailLoading }: any) {
-
-
   return (
     <StyledContainer>
       <StyledTitle>Dive into DapDap Social</StyledTitle>

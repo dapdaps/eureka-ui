@@ -1,9 +1,10 @@
-import DappCard from '../DappCard';
-import { StyledContainer, StyledContent, StyledSubTitle, StyledTitle, StyledBody, StyledQuestWrap } from './styles';
-import Title from '@/views/OdysseyV2-1/components/Title';
-import { StyledLoadingWrapper } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
+import { StyledLoadingWrapper } from '@/styled/styles';
+import Title from '@/views/OdysseyV2-1/components/Title';
 import { StyledEmptyContainer } from '@/views/OdysseyV2-1/styles';
+
+import DappCard from '../DappCard';
+import { StyledBody, StyledContainer, StyledContent, StyledQuestWrap,StyledSubTitle, StyledTitle } from './styles';
 
 const Quest_List = [
   {
@@ -53,7 +54,8 @@ const Quest = ({ list, onRefreshDetail, loading, detailLoading, setDetailLoading
                               {...item}
                               detailLoading={detailLoading}
                               setDetailLoading={setDetailLoading}
-                              onRefreshDetail={onRefreshDetail} />))
+                              onRefreshDetail={onRefreshDetail} />
+                          ))
                           : <StyledEmptyContainer>No data</StyledEmptyContainer>)
                   }
                 </StyledContent>

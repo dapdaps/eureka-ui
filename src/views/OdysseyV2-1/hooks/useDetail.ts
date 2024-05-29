@@ -5,14 +5,15 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
-export default function useDetail(id: any, option: { quests: any[], setExploredAmount: any, setQuests: any }) {
-  const { quests, setExploredAmount, setQuests } = option;
-  const [detail, setDetail] = useState<any>();
+export default function useDetail(id: any, option: { quests: any[], setQuests: any }) {
+  const { quests, setQuests } = option;
+  const [detail, setDetail] = useState<any>({});
+  const [gameMatrixConfig, setMatrixConfig] = useState<any>({ column_reward: 0, row_reward: 0, quests : [] });
   const [loading, setLoading] = useState(false);
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
-  const queryDetail = useCallback(async (currentDappId?: any, currentDappTimes?: any) => {
+  const queryDetail = useCallback(async (currentDappId?: any, total_spins?: number) => {
     if (loading) {
       return;
     }
@@ -27,26 +28,25 @@ export default function useDetail(id: any, option: { quests: any[], setExploredA
           unclaimed_reward: result.data.user?.unclaimed_reward,
           total_reward: result.data.user?.total_reward,
         });
-        console.log(JSON.parse(result.data.rule));
+        if (result.data.rule) {
+          const rule = JSON.parse(result.data.rule);
+          setMatrixConfig(rule);
+        }
       } else {
         setDetail({});
       }
       if (currentDappId) {
         try {
-          let _exploredAmount = 0;
           const _quests = quests;
           for (const questKey in _quests) {
-            if (questKey === 'mode') continue;
             const arr = _quests[questKey];
             for (const it of arr) {
               if (it.id === currentDappId) {
-                it.exploredAmount = currentDappTimes;
+                it.total_spins = total_spins;
               }
-              _exploredAmount += it.exploredAmount;
             }
           }
           setQuests(_quests);
-          setExploredAmount(_exploredAmount);
         } catch (err) {
         }
       }
@@ -54,7 +54,7 @@ export default function useDetail(id: any, option: { quests: any[], setExploredA
     } catch (err) {
       setLoading(false);
     }
-  }, []);
+  }, [quests, loading]);
 
   const { run } = useDebounceFn(
     () => {
@@ -71,5 +71,5 @@ export default function useDetail(id: any, option: { quests: any[], setExploredA
     run();
   }, [account]);
 
-  return { detail: detail || {}, loading, queryDetail };
+  return { detail: detail || {}, loading, queryDetail, gameMatrixConfig };
 }

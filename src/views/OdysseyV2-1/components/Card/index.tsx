@@ -1,4 +1,4 @@
-import { StyledContainer, StyledContent, StyledBg } from './styles';
+import { StyledBg,StyledContainer, StyledContent } from './styles';
 
 export default function Card({ onClick, disabled, children }: any) {
   return (

@@ -1,8 +1,9 @@
-import { post } from '@/utils/http';
 import { useCallback, useState } from 'react';
-import useToast from '@/hooks/useToast';
 
-export default function useClaim(id: string, onSuccess: VoidFunction) {
+import useToast from '@/hooks/useToast';
+import { post } from '@/utils/http';
+
+export default function useClaim(id: any, onSuccess: VoidFunction) {
   const [loading, setLoading] = useState(false);
   const toast = useToast();
 
