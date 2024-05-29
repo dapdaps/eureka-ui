@@ -4,6 +4,16 @@ export const StyledTradeContainer = styled.div`
   &.disabled {
     cursor: pointer !important;
   }
+
+  .price-impact-0 {
+    color: #33b65f;
+  }
+  .price-impact-1 {
+    color: #ff9445;
+  }
+  .price-impact-2 {
+    color: #ff547d;
+  }
 `;
 
 export const StyledTrade = styled.div`
@@ -23,16 +33,16 @@ export const StyledTradeIcon = styled.div<{ disabled?: boolean }>`
   width: 38px;
   height: 38px;
   border-radius: 8px;
-  border: 4px solid #16181D;
+  border: 4px solid #16181d;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #2E3142;
+  background: #2e3142;
   cursor: pointer;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
 
   &:hover {
-    background: ${({ disabled }) => disabled ? '#2E3142' : '#1f212d'}
+    background: ${({ disabled }) => (disabled ? '#2E3142' : '#1f212d')};
   }
 `;
 
@@ -47,30 +57,31 @@ export const StyledTradeFooter = styled.div`
   }
 
   .dark {
-    color: #979ABE;
+    color: #979abe;
   }
 `;
 
 export const StyledTradeEth = styled.div`
   font-size: 14px;
-  color: #979ABE;
+  color: #979abe;
 `;
 
 export const StyledMarketIcon = styled.div<{ url: string }>`
   width: 20px;
   height: 20px;
-  background: ${props => props.url ? `url(${props.url})` : 'none'} center no-repeat;
+  background: ${(props) => (props.url ? `url(${props.url})` : 'none')} center no-repeat;
   background-size: contain;
 `;
 
 export const StyledMarketTitle = styled.div`
   font-size: 14px;
-  color: #fff`;
+  color: #fff;
+`;
 export const StyledMarketTag = styled.div`
   background: rgba(51, 182, 95, 0.2);
   border-radius: 4px;
   padding: 2px 5px;
-  color: #33B65F;
+  color: #33b65f;
   font-size: 12px;
   white-space: nowrap;
 `;
@@ -82,7 +93,7 @@ export const StyledMarketCount = styled.div`
 `;
 
 export const ArrowWrap = styled.div<{ isDropdown: boolean }>`
-  transform: ${props => props.isDropdown ? 'rotate(180deg)' : 'rotate(0deg)'};
+  transform: ${(props) => (props.isDropdown ? 'rotate(180deg)' : 'rotate(0deg)')};
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 `;
@@ -96,7 +107,7 @@ export const StyledMarketsContainer = styled.div`
     padding: 10px;
     width: auto;
     height: auto;
-    border: 1px solid #373A53;
+    border: 1px solid #373a53;
     border-radius: 12px;
     display: grid;
     grid-template-columns: auto auto;
@@ -108,18 +119,20 @@ export const StyledMarketsContainer = styled.div`
     padding: 0;
   }
 `;
-export const StyledMarketItem = styled.div<{ active?: boolean, color?: string }>`
-  background: #1E2128;
+export const StyledMarketItem = styled.div<{ active?: boolean; color?: string }>`
+  background: #1e2128;
   padding: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-wrap: nowrap;
   border-radius: 12px;
-  cursor: ${ props => props.active ? 'arrow' : 'pointer' };
-  border: 1px solid transparent;
+  cursor: ${(props) => (props.active ? 'arrow' : 'pointer')};
+  border: 1px solid ${(props) => (props.active ? props?.color : 'transparent')};
+  transition: 0.5s;
   &:hover {
-    border: ${props => `1px solid ${!props?.active ? (props?.color ?? 'transparent') : 'transparent'}`};
+    border: ${(props) => `1px solid ${props?.color}`};
+    opacity: 0.5;
   }
   &.market-item_detail {
     padding: 0;
@@ -163,10 +176,10 @@ export const StyledMarketItemBalance = styled.div`
 `;
 export const StyledMarketArrow = styled.div`
   transform: rotate(-90deg);
-  color: #979ABE;
+  color: #979abe;
 `;
 export const StyledMarketItemDetail = styled.div`
-  background: #1E2128;
+  background: #1e2128;
   border-radius: 12px;
   padding: 18px;
 `;
@@ -174,8 +187,9 @@ export const StyledMarketItemDetail = styled.div`
 export const StyledMarketItemContent = styled.div`
   display: grid;
   grid-template-columns: auto auto;
-  gap: 10px 40px;
-  color: #979ABE;
+  gap: 10px 26px;
+  color: #979abe;
+  grid: repeat(2, 50%) / auto-flow 48%;
 `;
 
 export const StyledMarketItemText = styled.div`
@@ -194,7 +208,7 @@ export const StyledMarketItemTextLeft = styled.div`
     content: '';
     height: 1px;
     width: 100%;
-    border: 1px dashed #373A53;
+    border: 1px dashed #373a53;
     margin: 0 6px;
   }
 `;
@@ -202,7 +216,7 @@ export const StyledMarketItemTextLeft = styled.div`
 export const StyledMarketItemTextRight = styled.div`
   flex-shrink: 0;
   &.active {
-    color: #33B65F;
+    color: #33b65f;
   }
   &.underline {
     text-decoration: underline;

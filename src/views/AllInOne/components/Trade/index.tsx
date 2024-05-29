@@ -1,27 +1,13 @@
-import React, { useState } from 'react';
-
+import React, { useCallback, useEffect, useState } from 'react';
+import Big from 'big.js';
+import { balanceFormated } from '@/utils/balance';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { StyledFlex } from '@/styled/styles';
 import Currency from '@/views/AllInOne/components/Trade/Currency/index';
-import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
 import {
   ArrowWrap,
-  StyledMarketArrow,
   StyledMarketCount,
   StyledMarketIcon,
-  StyledMarketItem,
-  StyledMarketItemBalance,
-  StyledMarketItemContent,
-  StyledMarketItemDetail,
-  StyledMarketItemIcon,
-  StyledMarketItemLeft,
-  StyledMarketItemName,
-  StyledMarketItemRight,
-  StyledMarketItemText,
-  StyledMarketItemTextLeft,
-  StyledMarketItemTextRight,
-  StyledMarketItemToken,
-  StyledMarketsContainer,
   StyledMarketTag,
   StyledMarketTitle,
   StyledTrade,
@@ -31,149 +17,177 @@ import {
   StyledTradeIcon,
 } from '@/views/AllInOne/components/Trade/styles';
 import Arrow2Down from '@/views/AllInOne/components/Arrow2Down';
-import AllInOneButton from "@/views/AllInOne/components/Button";
+import CurrencySelectPopup from './CurrencySelectPopup';
+import Button from './Button';
+import Markets from './Markets';
+import { useDebounceFn } from 'ahooks';
+import networks from '@/config/swap/networks';
+import useTrade from '../../hooks/useTrade';
+import type { Token } from '@/types';
 
-const Trade = (props: { chain: Record<string, any>, disabled?: boolean }) => {
+const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
   const { chain, disabled } = props;
-  const [amount, setAmount] = useState<number | string>(1);
+
+  const [updater, setUpdater] = useState(1);
+  const [inputCurrencyAmount, setInputCurrencyAmount] = useState<string>('');
+  const [inputCurrency, setInputCurrency] = useState<Token>(networks[chain.chainId].defalutInputCurrency);
+  const [outputCurrency, setOutputCurrency] = useState<Token>();
+  const [selectType, setSelectType] = useState<'in' | 'out'>('in');
+  const [showTokensSelector, setShowTokensSelector] = useState<boolean>(false);
   const [isDropdown, setIsDropdown] = useState<boolean>(false);
-  const [selectedMarket, setSelectedMarket] = useState<string>('');
-  const onFromChange = (m: number | string) => {
-    setAmount(m);
-  };
+  const [errorTips, setErrorTips] = useState('');
+  const [inputBlance, setInputBalance] = useState('0');
+
+  const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap } = useTrade({
+    chainId: chain.chainId,
+    onSuccess() {
+      setUpdater(Date.now());
+    },
+  });
+
+  const { run: runQuoter } = useDebounceFn(
+    () => {
+      onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+    },
+    {
+      wait: 500,
+    },
+  );
 
   const showMarketDropdown = () => {
     if (disabled) return;
     setIsDropdown(!isDropdown);
   };
 
-  const onSelectMarket = (item: string) => {
-    if (disabled) return;
-    setSelectedMarket(item);
-  };
-
-  const onClose = () => {
-    setSelectedMarket('');
-  };
-
-  const markets = [
-    {
-      key: '1',
-      label: 'Minimum Received',
-      value: '0.04508452 ETH',
+  const onSelectToken = useCallback(
+    (token: any) => {
+      const _inputCurrency =
+        selectType === 'in' ? token : token.address === outputCurrency?.address ? null : inputCurrency;
+      const _outputCurrency =
+        selectType === 'out' ? token : token.address === inputCurrency?.address ? null : outputCurrency;
+      setInputCurrency(_inputCurrency);
+      setOutputCurrency(_outputCurrency);
+      setShowTokensSelector(false);
     },
-    {
-      key: '2',
-      label: 'Price Impact',
-      value: '1.67%',
-    },
-    {
-      key: '3',
-      label: 'Fees',
-      value: '$0.777594',
-    },
-    {
-      key: '4',
-      label: 'Route',
-      value: 'USDC > ETH',
-    },
-  ];
-
-  const getMarketItemLeft = () => (
-    <StyledMarketItemLeft>
-      <StyledMarketItemIcon />
-      <StyledMarketItemName>SyncSwap</StyledMarketItemName>
-      <StyledMarketTag>Best Price</StyledMarketTag>
-    </StyledMarketItemLeft>
+    [selectType, inputCurrency, outputCurrency, inputCurrencyAmount],
   );
 
-  const getMarketItemElement = (marketItem: any) => {
-    return <StyledMarketItem onClick={() => onSelectMarket(marketItem)} active={marketItem === selectedMarket}
-                             color={chain.selectBgColor}>
-      {getMarketItemLeft()}
-      <StyledMarketItemRight>
-        <StyledMarketItemToken />
-        <StyledMarketItemBalance>3420.77</StyledMarketItemBalance>
-        <StyledMarketArrow>
-          <ArrowIcon size={10}></ArrowIcon>
-        </StyledMarketArrow>
-      </StyledMarketItemRight>
-    </StyledMarketItem>;
-  };
+  useEffect(() => {
+    if (!inputCurrency || !outputCurrency) {
+      setErrorTips('Select a token');
+      return;
+    }
+    if (Number(inputCurrencyAmount || 0) === 0) {
+      setErrorTips('Enter an amount');
+      return;
+    }
+    if (Big(inputCurrencyAmount).gt(inputBlance)) {
+      setErrorTips(`Insufficient ${inputCurrency?.symbol} Balance`);
+      return;
+    }
 
-  const marketsClassNames = () => {
-    let classname = '';
-    if (!!selectedMarket) {
-      classname += ' active-market';
-    }
-    if (isDropdown) {
-      classname += ' open-market';
-    }
-    return classname;
-  };
+    setErrorTips('');
+    onSelectMarket(null);
+    runQuoter();
+  }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
   return (
-    <StyledTradeContainer className={disabled ? "disabled" : ""}>
-      <StyledTrade>
-        <div className="from-currency_margin">
+    <>
+      <StyledTradeContainer className={disabled ? 'disabled' : ''}>
+        <StyledTrade>
+          <div className="from-currency_margin">
+            <Currency
+              title="Swap From"
+              isFrom={true}
+              amount={inputCurrencyAmount}
+              currency={inputCurrency}
+              onAmountChange={(amount: any) => {
+                setInputCurrencyAmount(amount);
+              }}
+              disabled={disabled}
+              key={updater}
+              onTokenSelect={() => {
+                setSelectType('in');
+                setShowTokensSelector(true);
+              }}
+              onLoad={(balance: string) => {
+                setInputBalance(balance);
+              }}
+            />
+          </div>
+          <StyledTradeIcon disabled={disabled}>
+            <Arrow2Down />
+          </StyledTradeIcon>
           <Currency
-            title="Swap From"
-            textUnderline={true}
-            onAmountChange={onFromChange}
-            disabled={disabled}
+            title="To"
+            amount={trade?.outputCurrencyAmount}
+            currency={outputCurrency}
+            disabled
+            key={updater}
+            onTokenSelect={() => {
+              setSelectType('out');
+              setShowTokensSelector(true);
+            }}
           />
-        </div>
-        <StyledTradeIcon disabled={disabled}>
-          <Arrow2Down />
-        </StyledTradeIcon>
-        <Currency title="To" disabled />
-      </StyledTrade>
-      <AllInOneButton
-        $background={chain?.selectBgColor}
-        $borderColor={chain?.selectBgColor}
-        color={chain?.iconColor}
-        styles={{ marginTop: 20, marginBottom: 20 }}
-        disabled={disabled}
-      >
-        Swap
-      </AllInOneButton>
-      <StyledTradeFooter>
-        <StyledTradeEth>1 ETH = 3422.2502675 USDC</StyledTradeEth>
-        <StyledFlex gap='8px'>
-          <StyledMarketIcon url=""></StyledMarketIcon>
-          <StyledMarketTitle>soidspoi</StyledMarketTitle>
-          <StyledMarketTag>Best Price</StyledMarketTag>
-          <StyledFlex className={isDropdown ? 'light' : 'dark'} gap="8px">
-            <StyledMarketCount onClick={showMarketDropdown}>3 Markets</StyledMarketCount>
-            <ArrowWrap isDropdown={isDropdown} onClick={showMarketDropdown}>
-              <ArrowIcon size={10}></ArrowIcon>
-            </ArrowWrap>
-          </StyledFlex>
-        </StyledFlex>
-      </StyledTradeFooter>
-      <StyledMarketsContainer className={marketsClassNames()}>
-        {
-          ['1', '2', '3'].map((i: string) => {
-            return selectedMarket ? (selectedMarket === i ? <StyledMarketItemDetail>
-              <StyledMarketItem className="market-item_detail">
-                {getMarketItemLeft()}
-                <CloseIcon onClose={onClose} />
-              </StyledMarketItem>
-              <StyledMarketItemContent>
-                {
-                  markets.map(i => (
-                    <StyledMarketItemText key={i.key}>
-                      <StyledMarketItemTextLeft>{i.label}</StyledMarketItemTextLeft>
-                      <StyledMarketItemTextRight>{i.value}</StyledMarketItemTextRight>
-                    </StyledMarketItemText>
-                  ))
-                }
-              </StyledMarketItemContent>
-            </StyledMarketItemDetail> : null) : getMarketItemElement(i);
-          })
-        }
-      </StyledMarketsContainer>
-    </StyledTradeContainer>
+        </StyledTrade>
+        <Button chain={chain} errorTips={errorTips} token={inputCurrency} loading={loading} onClick={onSwap} />
+        <StyledTradeFooter>
+          <StyledTradeEth>
+            {trade && (
+              <span>
+                1 {outputCurrency?.symbol} ={' '}
+                {balanceFormated(
+                  Big(inputCurrencyAmount || 0)
+                    .div(Big(trade.outputCurrencyAmount || 0).eq(0) ? 1 : trade.outputCurrencyAmount)
+                    .toString(),
+                  4,
+                )}{' '}
+                {inputCurrency?.symbol}
+              </span>
+            )}
+          </StyledTradeEth>
+          {!!markets.length && (
+            <StyledFlex gap="8px">
+              {trade && (
+                <>
+                  <StyledMarketIcon url={trade.logo}></StyledMarketIcon>
+                  <StyledMarketTitle>{trade.name}</StyledMarketTitle>
+                  {trade.name === bestTrade.name && <StyledMarketTag>Best Price</StyledMarketTag>}
+                </>
+              )}
+              <StyledFlex className={isDropdown ? 'light' : 'dark'} gap="8px">
+                <StyledMarketCount onClick={showMarketDropdown}>{markets.length}Markets</StyledMarketCount>
+                {!!markets.length && (
+                  <ArrowWrap isDropdown={isDropdown} onClick={showMarketDropdown}>
+                    <ArrowIcon size={10} />
+                  </ArrowWrap>
+                )}
+              </StyledFlex>
+            </StyledFlex>
+          )}
+        </StyledTradeFooter>
+        {!!markets.length && (
+          <Markets
+            isDropdown={isDropdown}
+            chain={chain}
+            disabled={disabled}
+            bestTrade={bestTrade}
+            markets={markets}
+            market={trade}
+            inputCurrency={inputCurrency}
+            outputCurrency={outputCurrency}
+            onSelectMarket={onSelectMarket}
+          />
+        )}
+      </StyledTradeContainer>
+      <CurrencySelectPopup
+        tokens={tokens || []}
+        display={showTokensSelector}
+        onClose={() => setShowTokensSelector(false)}
+        currency={selectType === 'in' ? inputCurrency : outputCurrency}
+        onSelect={onSelectToken}
+      />
+    </>
   );
 };
 

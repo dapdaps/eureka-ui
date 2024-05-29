@@ -10,12 +10,7 @@ export const StyledHeader = styled.div`
   z-index: 1;
 `;
 
-export const StyledImage = styled.img<{ iconColor: string }>`
-  // transform: translateX(40px);
-  // -webkit-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-  // -moz-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-  // -ms-filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
-  // filter: ${props => `drop-shadow(${props.iconColor} -40px 0 0);`};
+export const StyledImage = styled.img`
   width: 100%;
   height: 100%;
 `;
@@ -28,7 +23,7 @@ export const StyledLogo = styled.div`
   .chain-logo {
     width: 100%;
     height: 100%;
-    
+
     &:not([src]) {
       opacity: 0;
     }
@@ -59,8 +54,8 @@ export const StyledMainLogo = styled.div`
 
 export const StyledPopup = styled.div`
   position: absolute;
-  top: calc(100% - 30px);
-  left: 0;
+  top: 160px;
+  left: calc(50% - 120px);
   background: #303142;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   border-radius: 12px;
@@ -68,6 +63,7 @@ export const StyledPopup = styled.div`
   width: 249px;
   max-height: 450px;
   overflow-y: auto;
+  z-index: 2;
 `;
 
 export const StyledPopupImg = styled.div`
@@ -119,7 +115,7 @@ export const StyledBgLogo = styled.img`
   top: 0;
   z-index: 0;
   opacity: 0.1;
-  
+
   &:not([src]) {
     opacity: 0;
   }

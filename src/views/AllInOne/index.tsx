@@ -1,7 +1,7 @@
-import { useRouter } from "next/router";
+import { useRouter } from 'next/router';
 import { memo } from 'react';
 
-import { StyledFlex } from "@/styled/styles";
+import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
@@ -21,11 +21,7 @@ const AllInOneView = (props: Props) => {
 
   return (
     <StyledContainer>
-      <StyledFlex
-        flexDirection="column"
-        justifyContent="center"
-        className="all-in-one-wrapper"
-      >
+      <StyledFlex flexDirection="column" justifyContent="center" className="all-in-one-wrapper">
         <AllInOneHeaderView
           chain={chain}
           currentChain={currentChain}
@@ -34,38 +30,30 @@ const AllInOneView = (props: Props) => {
           }}
         />
 
-        {
-          showComponent && (
-            <StyledContent>
-              {currentChainMenuList.map((item: any) => {
-                return (
-                  <AllInOneCardView
-                    key={item.tab}
-                    title={item.tab}
-                    subTitle={item.description}
-                    bgColor={currentChain.selectBgColor}
-                    style={item.entryCardWidth}
-                    path={currentChain.path}
-                    onSelect={() => {
-                      handleMenuSelect(item.tab.toLowerCase());
-                    }}
-                  >
-                    <item.component chain={currentChain} disabled />
-                  </AllInOneCardView>
-                );
-              })}
-            </StyledContent>
-          )
-        }
+        {showComponent && (
+          <StyledContent>
+            {currentChainMenuList.map((item: any) => {
+              return (
+                <AllInOneCardView
+                  key={item.tab}
+                  title={item.tab}
+                  subTitle={item.description}
+                  bgColor={currentChain.selectBgColor}
+                  style={item.entryCardWidth}
+                  path={currentChain.path}
+                  onSelect={() => {
+                    handleMenuSelect(item.tab.toLowerCase());
+                  }}
+                >
+                  <item.component chain={currentChain} disabled />
+                </AllInOneCardView>
+              );
+            })}
+          </StyledContent>
+        )}
       </StyledFlex>
       <StyledBg>
-        <Gradient
-          bgColor={currentChain.selectBgColor}
-          width={720}
-          height={241}
-          rx={280}
-          ry={40.5}
-        />
+        <Gradient bgColor={currentChain.selectBgColor} width={720} height={241} rx={280} ry={40.5} />
       </StyledBg>
     </StyledContainer>
   );

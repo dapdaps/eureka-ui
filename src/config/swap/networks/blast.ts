@@ -1,23 +1,15 @@
-import weths from '../../contract/weth';
 import { basic as thrusterBasic, networks as thrusterNetworks } from '../dapps/thruster-finance';
 import { basic as mimswapBasic, networks as mimswapNetworks } from '../dapps/mimswap';
 import { basic as monoswapV3Basic, networks as monoswapV3Networks } from '../dapps/monoswap-v3';
 import { basic as monoswapV2Basic, networks as monoswapV2Networks } from '../dapps/monoswap-v2';
 import { basic as ringBasic, networks as ringNetworks } from '../dapps/ring-protocol';
 import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
-
+import { blast } from '@/config/tokens/blast';
 const CHAIN_ID = 81457;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Blast',
-  displayChainName: 'BLAST',
-  wethAddress: weths[CHAIN_ID],
-  connectProps: {
-    noAccountTips: 'Blast Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Blast Chain.',
-  },
-  defalutDex: 'Thruster Finance',
+  defalutInputCurrency: blast['eth'],
   dexs: {
     'Thruster Finance': {
       ...thrusterBasic,
