@@ -225,5 +225,5 @@ export const ProtocolTableRow = styled.tr``;
 
 
 export const StyledContainer = styled.div`
-  height: 200px;
+  
 `;

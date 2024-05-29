@@ -6,6 +6,7 @@ export const StyledContainer = styled.div`
   width: 574px;
   height: 347px;
   flex-shrink: 0;
+  flex-grow: 1;
   border-radius: 10px;
   background: #1B1D25;
   backdrop-filter: blur(10px);
@@ -96,15 +97,20 @@ export const StyledContainer = styled.div`
         flex-direction: column;
         align-items: stretch;
       }
+
       .dropdown-item {
         padding: 4px 12px;
         transition: all .3s linear;
-        
+
         &:hover,
         &.selected {
           background: #000;
         }
       }
+    }
+
+    .arrow {
+      transition: transform .1s linear;
     }
   }
 
@@ -215,7 +221,7 @@ const ChartComponent = (props: any) => {
         </div>
         <div className="head-right" onClick={handleDropdown} ref={dropdownRef}>
           <span>{dropdownShown}</span>
-          <span className="arrow">
+          <span className="arrow" style={{ transform: dropdownVisible ? 'rotate(180deg)' : 'rotate(0deg)' }}>
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
               <path d="M1 1L6 5L11 1" stroke="#979ABE" stroke-width="1.6" stroke-linecap="round" />
             </svg>
