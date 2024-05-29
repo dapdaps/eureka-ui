@@ -8,8 +8,10 @@ import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
+import chainCofig from '@/config/chains'
 
 import Bridge from '@/views/AllInOne/components/Bridge';
+import SuperBridge from '@/views/SuperBridge/BridgeAction'
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
@@ -81,7 +83,9 @@ const AllInOneDetailView = (props: Props) => {
                 >
                   {
                     menu === 'bridge' && (
-                      <Bridge chain={currentChain} />
+                      // <Bridge chain={currentChain} />
+
+                      <SuperBridge chainList={[chainCofig[1], chainCofig[2], currentChain]}/>
                     )
                   }
                   {

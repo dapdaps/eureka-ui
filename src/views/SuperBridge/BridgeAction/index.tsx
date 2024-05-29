@@ -81,7 +81,7 @@ const ArrowSwap = styled.div`
 
 interface Props {
   chainList: Chain[];
-  onTransactionUpdate: () => void;
+  onTransactionUpdate?: () => void;
 }
 
 export default function BirdgeAction(

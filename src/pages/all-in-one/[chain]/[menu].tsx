@@ -11,7 +11,7 @@ const AllInOneDetail: NextPageWithLayout = () => {
   if (menu) {
     menu = menu.toLowerCase();
   }
-  
+
   return chain ? (
     <AllInOneDetailView chain={chain} menu={menu} />
   ) : (
