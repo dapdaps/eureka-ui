@@ -29,6 +29,7 @@ const Actions = ({
   isLive,
   isBitGetUser,
   isCoin98User,
+  isOkxUser,
   claimed,
   onSuccess,
   onClaimed,
@@ -44,6 +45,7 @@ const Actions = ({
   isLive: boolean;
   isBitGetUser: boolean;
   isCoin98User: boolean;
+  isOkxUser: boolean;
   claimed: boolean;
   onSuccess: VoidFunction;
   onClaimed: VoidFunction;
@@ -57,7 +59,6 @@ const Actions = ({
   const [cbCompleted, setCbCompleted] = useState(0);
   const completedCount = useMemo(() => completed + cbCompleted, [completed, cbCompleted]);
   const config = useAuthConfig();
-  // const isBitGetUser = useMemo(() => (userInfo.source === 'bitget' || userInfo.source === 'bitget_wallet'), [userInfo])
   return (
     <StyledContainer>
       <StyledHeader>
@@ -106,13 +107,13 @@ const Actions = ({
             {' '}
             <span>You&apos;ve got</span>
             <StyledCoin $size={20} />
-            <span>{rewards + (isBitGetUser || isCoin98User ? Number(rewards * 0.1) : 0)} PTS</span>
+            <span>{rewards + (isBitGetUser || isCoin98User || isOkxUser ? Number(rewards * 0.1) : 0)} PTS</span>
           </>
         ) : (
           <>
             <span>Claim</span>
             <StyledCoin $size={20} />
-            <span>{rewards + (completedCount === actions.length && (isBitGetUser || isCoin98User) ? Number(rewards * 0.1) : 0)} PTS</span>
+            <span>{rewards + (completedCount === actions.length && (isBitGetUser || isCoin98User || isOkxUser) ? Number(rewards * 0.1) : 0)} PTS</span>
           </>
         )}
       </StyledButton>
@@ -124,6 +125,11 @@ const Actions = ({
       {isCoin98User && (
         <StyledAward>
           💡 You will get an extra 10% - <span>{Number(rewards * 0.1).toFixed(0)} PTS</span> as a Coin98 user.
+        </StyledAward>
+      )}
+      {isOkxUser && (
+        <StyledAward>
+          💡 You will get an extra 10% - <span>{Number(rewards * 0.1).toFixed(0)} PTS</span> as a Okx user.
         </StyledAward>
       )}
     </StyledContainer>
