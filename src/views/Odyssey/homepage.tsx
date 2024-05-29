@@ -210,9 +210,7 @@ const Index = function () {
       swiperRef.current && swiperRef.current.slideNext();
     }
   };
-  useEffect(() => {
-    queryDetail(currentCompass?.id);
-  }, [currentCompass]);
+
   useEffect(() => {
     if (compassList.length > 0) {
       const middleIndex = Math.floor(compassList.length / 2);
@@ -227,8 +225,8 @@ const Index = function () {
   }, [compassList]);
 
   useEffect(() => {
-    queryDetail(currentCompass?.id);
-  }, [wallet]);
+    wallet && currentCompass?.id && queryDetail(currentCompass?.id);
+  }, [currentCompass, wallet]);
   return (
     <StyledContainer
       style={{

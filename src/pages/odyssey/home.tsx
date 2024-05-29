@@ -5,9 +5,11 @@ import CompassApp from '@/views/Compass/home';
 import OdysseyV2 from '@/views/OdysseyV2';
 import OdysseyV3 from '@/views/OdysseyV3';
 import OdysseyV4 from '@/views/OdysseyV4';
+import OdysseyV5 from '@/views/OdysseyV5';
 
 function Compass() {
   const router = useRouter();
+  // if (router.query.id === '5') return <OdysseyV5 />;
   if (router.query.id === '4' || router.query.id === '7') return <OdysseyV4 />;
   if (router.query.id === '3') return <OdysseyV3 />;
   if (router.query.id === '2') return <OdysseyV2 />;

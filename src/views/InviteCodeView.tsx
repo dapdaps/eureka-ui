@@ -7,6 +7,7 @@ import { inviteCodeActivate, getAccessToken } from '@/apis';
 import LoadingIcon from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import useAuth from '@/hooks/useAuth';
+import { useConnectWallet } from '@web3-onboard/react';
 
 export const yellowbg =
   'https://assets.dapdap.net/images/bafkreicy6iwoxezg764uhfezusxpc6xd7r3s3hg2nnjdcgt5ktazdnsyje.svg';
@@ -28,9 +29,9 @@ export const StyledInviteCodePage = styled.div<{ $logined: boolean; $loading: bo
     font-size: 16px;
     text-align: center;
     ${(props) =>
-      props.$logined
-        ? ''
-        : `
+    props.$logined
+      ? ''
+      : `
     background: url('/images/bg-invite-code.svg') no-repeat;
     background-size: 100% 100%;
     `}
@@ -140,6 +141,7 @@ const ErrorTips = styled.div`
 `;
 
 export default function InviteCodeView() {
+  const [{ wallet }] = useConnectWallet();
   const { account } = useAccount();
   const [code, setCode] = useState('');
   const [loading, setLoading] = useState(false);
@@ -151,7 +153,9 @@ export default function InviteCodeView() {
     if (!account || !code || loading) return;
     setLoading(true);
     try {
-      const { isSuccess, errorMsg } = await inviteCodeActivate(account, code);
+      const isBitget = wallet?.label.toLowerCase().includes('bitget');
+      const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
+      const { isSuccess, errorMsg } = await inviteCodeActivate(account, code, isBitget ? 'bitget_wallet' : isCoin98 ? 'coin98_wallet' : '');
       setLoading(false);
       if (!isSuccess) {
         setErrorTips(errorMsg);

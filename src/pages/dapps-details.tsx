@@ -3,21 +3,21 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import Dapps from '@/components/Dapps';
+import Empty from '@/components/Empty';
 import { QUEST_PATH } from '@/config/quest';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import { useChainsStore } from '@/stores/chains';
 import { get } from '@/utils/http';
 import type { NextPageWithLayout } from '@/utils/types';
+import { formatTitle } from '@/views/OnBoarding/helpers';
 import ProcessBar from '@/views/Quest/components/ProcessBar';
 import Steps from '@/views/Quest/components/QuestItem/step-icon';
-import Dapps from '@/components/Dapps';
 import { StyledCoin, StyledProcessBars, StyledTag } from '@/views/Quest/components/QuestItem/styles';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 import useLike from '@/views/Quest/hooks/useLike';
 import { StyledHeartBox } from '@/views/QuestDetail/components/Details/styles';
-import { useChainsStore } from '@/stores/chains';
-import Empty from '@/components/Empty';
-import { formatTitle } from '@/views/OnBoarding/helpers';
 
 const arrow = (
   <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">

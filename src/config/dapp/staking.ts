@@ -60,6 +60,20 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#000',
     },
   },
+  kelp: {
+    type: 'staking',
+    theme: {
+      '--button-color': '#075a5a',
+      '--button-text-color': '#fff',
+    },
+  },
+  ledgity: {
+    type: 'staking',
+    theme: {
+      '--button-color': '#3396FF',
+      '--button-text-color': '#fff',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;

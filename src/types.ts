@@ -10,6 +10,7 @@ export interface Token {
   name?: string;
   symbol: string;
   icon: string;
+  logoURI?: string;
   decimals: number;
   isNative?: boolean;
   priceKey?: string;

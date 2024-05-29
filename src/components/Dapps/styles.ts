@@ -83,7 +83,6 @@ export const StyledDappTags = styled.div`
 
 export const StyledDappTag = styled.div`
   border-radius: 30px;
-  border: 1px solid #acfced;
   padding: 0px 8px;
   height: 20px;
   line-height: 18px;

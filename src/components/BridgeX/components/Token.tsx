@@ -116,6 +116,22 @@ const CurrencyWrapper = styled.div`
   display: flex;
   align-items: center;
   height: 32px;
+  .token-chain-img {
+    height: 32px;
+    width: 32px;
+    position: relative;
+    .token-img {
+        width: 100%;
+        height: 100%;
+    }
+    .chain-img {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        right: 0;
+        bottom: 0;
+    }
+  }
   @media (max-width: 768px) {
     width: calc(100% - 12px);
   }
@@ -208,7 +224,13 @@ export default function Token({
                         setTokensDisplay(true)
                     }}>
                         <CurrencyWrapper>
-                            {selectToken?.logoURI && <CurrencyIcon src={selectToken.logoURI} />}
+                            {
+                                selectToken && <div className="token-chain-img">
+                                    <img src={selectToken?.icon} className="token-img" />
+                                    <img src={currentChain?.icon} className="chain-img" />
+                                </div>
+                            }
+                            {/* {selectToken?.icon && <CurrencyIcon src={selectToken.icon} />} */}
                             <CurrencySymbol>
                                 {selectToken?.symbol || (
                                     <span className="fz-14">Select a token</span>

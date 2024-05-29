@@ -130,6 +130,14 @@
   font-stretch: 75% 125%;
 }
 
+/*Chakra Petch Used for odyssey vol.5*/
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/ChakraPetch-Regular.woff2') format('woff2');
+  /*font-weight: 200 900;*/
+  font-stretch: 75% 125%;
+}
+
 body,
 html {
   --body-top-padding: 24px;

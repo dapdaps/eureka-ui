@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   font-family: Montserrat;
-  padding: 67px 0 80px;
+  margin: 0 auto 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -54,11 +54,11 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  padding-top: 36px;
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0 auto 100px;
+  width: 1188px;
+`;
+export const StyledItemWrap = styled.div`
+  padding-top: 20px;
 `;
 export const Title = styled.div`
   color: #fff;
@@ -82,4 +82,53 @@ export const Btns = styled.div`
   display: flex;
   gap: 20px;
   margin-bottom: 16px;
+`;
+
+export const StyledItem = styled.div<{ $disabled: boolean }>`
+  height: 70px;
+  border-radius: 12px;
+  border: 1px solid #373a53;
+  background: #1e2028;
+  box-sizing: border-box;
+  padding: 14px 28px 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
+  margin-bottom: 16px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const StyledItemTitle = styled.div`
+  flex-shrink: 0;
+  color: #fff;
+  font-family: Gantari;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 120%; /* 24px */
+`;
+
+export const StyledItemLeft = styled.div`
+  display: flex;
+  gap: 26px;
+  align-items: center;
+`;
+
+export const StyledItemRight = styled.div`
+  display: flex;
+  gap: 15px;
+  align-items: center;
+`;
+
+export const Unexplored = styled.div`
+  color: #979abe;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 `;

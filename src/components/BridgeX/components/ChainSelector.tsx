@@ -11,8 +11,10 @@ const ChainListModal = styled.div`
     top: 102%;
     background: #2E3142;
     border-radius: 12px;
-    padding: 12px;
+    padding: 12px 0;
     z-index: 21;
+    max-height: 500px;
+    overflow: auto;
 `
 
 const ChainRow = styled.div`
@@ -21,6 +23,10 @@ const ChainRow = styled.div`
     gap: 10px;
     cursor: pointer;
     height: 42px;
+    padding: 0 12px;
+    &:hover {
+        background: #676d93;
+    }
 `
 
 
