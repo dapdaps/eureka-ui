@@ -97,6 +97,10 @@ const nextConfig = {
       source: '/teahouse/:path*',
       destination: 'https://vault-api.teahouse.finance/:path*',
     },
+    {
+      source: '/beefy/:path*',
+      destination: 'https://api.beefy.finance/:path*',
+    },
   ],
   images: {
     remotePatterns: [

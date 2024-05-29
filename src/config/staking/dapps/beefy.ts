@@ -19,14 +19,13 @@ const networks = {
   59144: {
     pairs: [
       {
-        id: '',
+        id: 'lynex-gamma-wbtc-weth',
         strategy: 'Lynex (Gamma)',
         token0: 'ETH',
         token1: 'WBTC',
-        decimals0: 18,
-        decimals1: 8,
-        fee: '0.01',
-        vaultAddress: '0x73d9ccd3017B41E9b29F1E4A49D5468B52bd17c6',
+        // decimals0: 18,
+        // decimals1: 8,
+        vaultAddress: '0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c',
       },
     ],
     addresses: {
