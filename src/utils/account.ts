@@ -7,7 +7,7 @@ export function ellipsAccount(account?: string) {
 
 export function ellipsAll(account?: string) {
   if (!account) return '-';
-  return account.slice(0, 6) + '...' + account.slice(-4);
+  return account.slice(0, 6) + '...';
 }
 
 export function ellipsLongAccount(account?: string) {
