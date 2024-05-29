@@ -31,6 +31,17 @@ const Summary = styled.div`
     .middle-title {
         color: rgba(151, 154, 190, 1);
     }
+    .bridge-enter {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(235, 244, 121, 1);
+        font-size: 16px;
+        font-weight: bold;
+        svg {
+            margin-top: -2px;
+        }
+    }
 `
 
 const DetailWapper = styled.div`
@@ -53,6 +64,10 @@ const DetailWapper = styled.div`
             cursor: pointer;
         }
     }
+`
+
+const Sep = styled.div`
+    height: 10px;
 `
 
 const Arrow = () => {
@@ -138,21 +153,21 @@ function Transaction({ tx }: any) {
                     </svg>
                 </div>
             </div>
-            <div className="part">{ timeDurationFormated(tx.time) }</div>
+            <div className="part">{timeDurationFormated(tx.time)}</div>
         </div>
         <div className="transaction-line">
             <div className="part" style={{ gap: '5px' }}>
                 <div>{balanceFormated(tx.fromAmount)}</div>
                 <div className="token-chain-img">
-                    <img src={tx.fromTokenLogo} className="token-img"/>
-                    <img src={tx.fromChainLogo} className="chain-img"/>
+                    <img src={tx.fromTokenLogo} className="token-img" />
+                    <img src={tx.fromChainLogo} className="chain-img" />
                 </div>
                 <div>{tx.fromTokenSymbol}</div>
                 <Arrow />
                 <div>{balanceFormated(tx.toAmout)}</div>
                 <div className="token-chain-img">
-                    <img src={tx.toTokenLogo} className="token-img"/>
-                    <img src={tx.toChainLogo} className="chain-img"/>
+                    <img src={tx.toTokenLogo} className="token-img" />
+                    <img src={tx.toChainLogo} className="chain-img" />
                 </div>
                 <div>{tx.toTokenSymbol}</div>
             </div>
@@ -198,6 +213,23 @@ export default function Transactions() {
     }, [])
 
     return <Container>
+        <Summary onClick={() => {
+            router.push('/super-bridge')
+        }}>
+            <div className="bridge-enter">
+                <svg width="25" height="17" viewBox="0 0 25 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M24.9383 17C24.3112 11.9467 18.9817 8 12.5 8C6.01836 8 0.688923 11.9467 0.0617676 17H4.21067C5.06961 12.992 8.45483 10 12.5 10C16.5453 10 19.9305 12.992 20.7894 17H24.9383Z" fill="#EBF479" />
+                    <path d="M13.3985 1.56096C13.2307 1.21769 12.8821 1 12.5 1C12.1179 1 11.7693 1.21769 11.6015 1.56096L10.0782 4.67842L6.62553 6.07276C6.2475 6.22543 6 6.5923 6 7C6 7.4077 6.2475 7.77457 6.62553 7.92724L10.0782 9.32158L11.6015 12.439C11.7693 12.7823 12.1179 13 12.5 13C12.8821 13 13.2307 12.7823 13.3985 12.439L14.9218 9.32158L18.3745 7.92724C18.7525 7.77457 19 7.4077 19 7C19 6.5923 18.7525 6.22543 18.3745 6.07276L14.9218 4.67842L13.3985 1.56096Z" fill="#EBF479" stroke="#2F3145" stroke-width="2" stroke-linejoin="round" />
+                </svg>
+                <div>Super Bridge</div>
+            </div>
+            <div >
+                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 11L5 6L1 1" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </div>
+        </Summary>
+        <Sep />
         {
             showDetail
                 ? <DetailWapper>
@@ -213,27 +245,30 @@ export default function Transactions() {
                         })
                     }
                 </DetailWapper>
-                : <Summary onClick={() => {
-                    // setShowDetail(true)
-                    router.push('/super-bridge/transaction')
-                }}>
-                    <div className="icon1">
-                        <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect x="1" y="1.92857" width="16" height="17.1429" rx="3" stroke="#979ABE" stroke-width="2" />
-                            <path d="M5.57153 7.64286H12.4287" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
-                            <path d="M5.57153 12.2143H10.143" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                        <div className="middle-title">
-                            {sum || 0} History Transactions
-                        </div>
-                    </div>
-                    <div >
-                        <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 11L5 6L1 1" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                    </div>
-                </Summary>
+                : null
         }
+        <Sep />
+        <Summary onClick={() => {
+            // setShowDetail(true)
+            router.push('/super-bridge/transaction')
+        }}>
+            <div className="icon1">
+                <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="1" y="1.92857" width="16" height="17.1429" rx="3" stroke="#979ABE" stroke-width="2" />
+                    <path d="M5.57153 7.64286H12.4287" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+                    <path d="M5.57153 12.2143H10.143" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                <div className="middle-title">
+                    {sum || 0} History Transactions
+                </div>
+            </div>
+            <div >
+                <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 11L5 6L1 1" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
+                </svg>
+            </div>
+        </Summary>
+
 
     </Container>
 }
