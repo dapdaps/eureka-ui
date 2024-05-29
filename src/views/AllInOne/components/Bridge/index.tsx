@@ -1,15 +1,16 @@
 import React, { memo, useState } from 'react';
 
-import useTokensAndChains from "@/components/Bridge/hooks/useTokensAndChains";
+import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import Arrow2Down from '@/views/AllInOne/components/Arrow2Down';
-import BridgeCard from "@/views/AllInOne/components/Bridge/Card";
+import BridgeCard from '@/views/AllInOne/components/Bridge/Card';
 import {
-  StyledBody, StyledBridgeContainer,
+  StyledBody,
+  StyledBridgeContainer,
   StyledContainer,
   StyledDownIcon,
   StyledFoot,
 } from '@/views/AllInOne/components/Bridge/styles';
-import AllInOneButton from "@/views/AllInOne/components/Button";
+import AllInOneButton from '@/views/AllInOne/components/Button';
 
 const BridgeView = (props: Props) => {
   const { chain, disabled } = props;
@@ -50,7 +51,7 @@ const BridgeView = (props: Props) => {
   };
 
   return (
-    <StyledBridgeContainer className={disabled ? "disabled" : ""}>
+    <StyledBridgeContainer className={disabled ? 'disabled' : ''}>
       <StyledContainer>
         <StyledBody>
           <BridgeCard
@@ -83,6 +84,7 @@ const BridgeView = (props: Props) => {
             color={chain?.iconColor}
             loading={false}
             disabled={disabled}
+            onClick={() => {}}
           >
             Input Amount
           </AllInOneButton>
@@ -98,11 +100,3 @@ interface Props {
   chain?: any;
   disabled?: boolean;
 }
-
-
-
-
-
-
-
-

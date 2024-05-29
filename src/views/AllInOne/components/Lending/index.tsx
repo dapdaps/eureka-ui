@@ -11,9 +11,13 @@ import MarketItems from '@/views/AllInOne/components/MarketItems/index';
 import Tabs from '@/views/AllInOne/components/Tabs/index';
 import { useSetChain } from '@web3-onboard/react';
 
-
-import { Theme } from '@/views/AllInOne/styles';
-import { StyledContent, StyledConnectButton,StyledAccountContainer,StyledAccountTip, StyledSwitchButton } from "@/views/AllInOne/components/Lending/styles";
+import {
+  StyledContent,
+  StyledConnectButton,
+  StyledAccountContainer,
+  StyledAccountTip,
+  StyledSwitchButton,
+} from '@/views/AllInOne/components/Lending/styles';
 import { dapps } from '@/config/dapps';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
@@ -61,14 +65,11 @@ const Lending = (props: Props) => {
   const onMarketChange = (market: string) => {
     setCurrMarket(market);
     setTimestamp(Date.now());
-    let _updateDapp = "";
+    let _updateDapp = '';
     if (market == 'All') {
-      _updateDapp =
-        Object.values(tabConfig.dapps).length === Object.values(dappsInfo).length
-          ? ''
-          : 'All';
+      _updateDapp = Object.values(tabConfig.dapps).length === Object.values(dappsInfo).length ? '' : 'All';
     } else {
-      _updateDapp = !dappsInfo[market] ? market : "";
+      _updateDapp = !dappsInfo[market] ? market : '';
     }
     setUpdateData(_updateDapp);
   };
@@ -94,16 +95,12 @@ const Lending = (props: Props) => {
     onMarketChange(_tabConfig?.defaultDapp ?? 'All');
   }, [chain]);
 
-  const RestTheme = chain.menuConfig.Lending?.Theme ?? Theme;
+  const RestTheme = chain.menuConfig.Lending?.Theme;
 
   const getMarketsElement = () => (
     <>
       <StyledFlex justifyContent="space-between">
-        <Tabs
-          tabs={tabsList}
-          onTabChange={onTabChange}
-          currTab={currTab}
-        />
+        <Tabs tabs={tabsList} onTabChange={onTabChange} currTab={currTab} />
         <MarketItems
           currMarket={currMarket}
           list={Object.values(tabConfig.dapps) ?? []}
@@ -133,53 +130,48 @@ const Lending = (props: Props) => {
               />
             </>
           )}
-          {
-            currTab === 'Market' ? (
-              <ComponentWrapperPage
-                src="bluebiu.near/widget/Avalanche.Lending.Market"
-                componentProps={{
-                  currentDapp: currMarket,
-                  dapps: dappsInfo,
-                  markets: marketsInfo,
-                  timestamp: timestamp,
-                  account,
-                  onButtonClick: (address: string, actionText: any) => {
-                    const market = marketsInfo[address];
-                    const dapp = dappsInfo[market.dapp];
-                    const dappConfig = tabConfig.dapps[market.dapp];
-                    setTableButtonClickData({
-                      ...dapp,
-                      ...market,
-                      config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
-                      actionText,
-                    })
-                    ;
-                    setShowDialog(true);
-                  },
-                }}
-              />
-            ) : null
-          }
-          {
-            currTab === 'Yours' && (
-              <ComponentWrapperPage
-                src="bluebiu.near/widget/Avalanche.Lending.Yours"
-                componentProps={{
-                  currentDapp: currMarket,
-                  dapps: dappsInfo,
-                  markets: marketsInfo,
-                  dappsConfig: tabConfig.dapps,
-                  toast,
-                  account,
-                  onButtonClick: () => {},
-                  onSuccess: (dapp: string) => {
-                    setUpdateData(dapp);
-                    setCurrMarket(dapp);
-                  },
-                }}
-              />
-            )
-          }
+          {currTab === 'Market' ? (
+            <ComponentWrapperPage
+              src="bluebiu.near/widget/Avalanche.Lending.Market"
+              componentProps={{
+                currentDapp: currMarket,
+                dapps: dappsInfo,
+                markets: marketsInfo,
+                timestamp: timestamp,
+                account,
+                onButtonClick: (address: string, actionText: any) => {
+                  const market = marketsInfo[address];
+                  const dapp = dappsInfo[market.dapp];
+                  const dappConfig = tabConfig.dapps[market.dapp];
+                  setTableButtonClickData({
+                    ...dapp,
+                    ...market,
+                    config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
+                    actionText,
+                  });
+                  setShowDialog(true);
+                },
+              }}
+            />
+          ) : null}
+          {currTab === 'Yours' && (
+            <ComponentWrapperPage
+              src="bluebiu.near/widget/Avalanche.Lending.Yours"
+              componentProps={{
+                currentDapp: currMarket,
+                dapps: dappsInfo,
+                markets: marketsInfo,
+                dappsConfig: tabConfig.dapps,
+                toast,
+                account,
+                onButtonClick: () => {},
+                onSuccess: (dapp: string) => {
+                  setUpdateData(dapp);
+                  setCurrMarket(dapp);
+                },
+              }}
+            />
+          )}
           <ComponentWrapperPage
             src="bluebiu.near/widget/Avalanche.Lending.Dialog"
             componentProps={{
@@ -190,7 +182,7 @@ const Lending = (props: Props) => {
               toast,
               account,
               onClose: () => {
-                setShowDialog(false)
+                setShowDialog(false);
               },
               onSuccess: () => {
                 setCurrMarket(tableButtonClickData?.dappName);
@@ -200,7 +192,7 @@ const Lending = (props: Props) => {
         </RestTheme>
       </StyledContent>
     </>
-  )
+  );
   const getAccount = () => {
     let _textTip = '';
     if (!account && tabConfig?.connectProps?.noAccountTips) {
@@ -213,27 +205,25 @@ const Lending = (props: Props) => {
 
     const onButtonClick = () => {
       if (!account) {
-        onConnect()
+        onConnect();
         return;
       }
       setChain({ chainId: `0x${chain.chainId.toString(16)}` });
       const _tabConfig = lendingConfig[chain?.chainId];
       setTabConfig(_tabConfig);
       onMarketChange(_tabConfig?.defaultDapp ?? 'All');
-    }
-    return <StyledAccountContainer>
-      <StyledAccountTip>{_textTip}</StyledAccountTip>
-      <StyledConnectButton onClick={onButtonClick} bg={chain.selectBgColor} color={chain?.iconColor}>{_buttonText}</StyledConnectButton>
-    </StyledAccountContainer>
-  }
+    };
+    return (
+      <StyledAccountContainer>
+        <StyledAccountTip>{_textTip}</StyledAccountTip>
+        <StyledConnectButton onClick={onButtonClick} bg={chain.selectBgColor} color={chain?.iconColor}>
+          {_buttonText}
+        </StyledConnectButton>
+      </StyledAccountContainer>
+    );
+  };
 
-  return (
-    <div>
-      {
-        (account && isRightNetwork) ? getMarketsElement() : getAccount()
-      }
-    </div>
-  );
+  return <div>{account && isRightNetwork ? getMarketsElement() : getAccount()}</div>;
 };
 
 export default memo(Lending);
@@ -242,5 +232,3 @@ interface Props {
   chain: any;
   menu: any;
 }
-
-
