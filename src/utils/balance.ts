@@ -31,3 +31,34 @@ export function balanceShortFormated(balance?: string | number, digits = 1) {
 export function percentFormated(value: string | number, needMul = false): string {
   return (Number(value) * (needMul ? 100 : 1)).toFixed(2) + '%';
 }
+
+const addressReg = /(\w{6})(.*)(\w{4})/
+export function addressFormated(address: string) {
+  if (!address) {
+      return ''
+  }
+  return address.replace(addressReg, (_1: string, _2: string, _3: string, _4: string) => {
+      return `${_2}...${_4}`
+  })
+}
+
+export function timeDurationFormated(time: number) {
+  return Math.floor((Date.now() - time) / 1000 / 60) + ' min ago'
+}
+
+export function errorFormated(error: any) {
+  if (error.toString().indexOf('user rejected transaction') > -1) {
+    return 'user rejected transaction'
+  }
+
+  return error.title || error.message
+}
+
+export function getFullNum(num: any){
+  if(isNaN(num)){return num};
+  
+  const str = '' + num;
+  if(!/e/i.test(str)){return num;};
+  
+  return (num).toFixed(18).replace(/\.?0+$/, "");
+}

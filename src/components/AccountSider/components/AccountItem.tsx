@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import CopyButton from '@/components/CopyButton';
 import useAccount from '@/hooks/useAccount';
 import { useUserStore } from '@/stores/user';
-import { ellipsAccount } from '@/utils/account';
+import { ellipsAccount, ellipsAll } from '@/utils/account';
 
 const StyledItem = styled.div`
   display: flex;
@@ -61,6 +61,7 @@ const AccountItem = ({
 }) => {
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
+
   const [ready, setReady] = useState(false);
   useEffect(() => {
     setReady(true);
@@ -99,7 +100,7 @@ const AccountItem = ({
       <div>
         <Account>
           {userInfo?.username ? (
-            userInfo?.username
+            ellipsAll(userInfo?.username)
           ) : (
             <>
               {ellipsAccount(account)}

@@ -27,7 +27,7 @@ export default function useLike(id: string, category: string) {
       if (loading) return;
       setLoading(true);
       const toastId = toast.loading({
-        title: 'Liking',
+        title: 'Pending...',
       });
       try {
         const result = await post(`${QUEST_PATH}/api/user/favorite`, {
@@ -38,7 +38,7 @@ export default function useLike(id: string, category: string) {
         if (result.code !== 0) throw new Error(result.msg);
         toast.dismiss(toastId);
         toast.success({
-          title: `${favorite ? 'Liked' : 'Unliked'} successfully`,
+          title: `${favorite ? 'Favourited' : 'Unfavourited'} successfully`,
         });
         setLike(favorite);
         setLoading(false);
@@ -46,7 +46,7 @@ export default function useLike(id: string, category: string) {
         setLoading(false);
         toast.dismiss(toastId);
         toast.fail({
-          title: `${favorite ? 'Liked' : 'Unliked'} failed`,
+          title: `${favorite ? 'Favourited' : 'Unfavourited'} failed`,
         });
       }
     },

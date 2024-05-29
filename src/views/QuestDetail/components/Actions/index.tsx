@@ -28,6 +28,7 @@ const Actions = ({
   userInfo,
   isLive,
   isBitGetUser,
+  isCoin98User,
   claimed,
   onSuccess,
   onClaimed,
@@ -42,6 +43,7 @@ const Actions = ({
   userInfo: any;
   isLive: boolean;
   isBitGetUser: boolean;
+  isCoin98User: boolean;
   claimed: boolean;
   onSuccess: VoidFunction;
   onClaimed: VoidFunction;
@@ -104,19 +106,24 @@ const Actions = ({
             {' '}
             <span>You&apos;ve got</span>
             <StyledCoin $size={20} />
-            <span>{rewards} PTS</span>
+            <span>{rewards + (isBitGetUser || isCoin98User ? Number(rewards * 0.1) : 0)} PTS</span>
           </>
         ) : (
           <>
             <span>Claim</span>
             <StyledCoin $size={20} />
-            <span>{rewards} PTS</span>
+            <span>{rewards + (completedCount === actions.length && (isBitGetUser || isCoin98User) ? Number(rewards * 0.1) : 0)} PTS</span>
           </>
         )}
       </StyledButton>
       {isBitGetUser && (
         <StyledAward>
           💡 You will get an extra 10% - <span>{Number(rewards * 0.1).toFixed(0)} PTS</span> as a Bitget user.
+        </StyledAward>
+      )}
+      {isCoin98User && (
+        <StyledAward>
+          💡 You will get an extra 10% - <span>{Number(rewards * 0.1).toFixed(0)} PTS</span> as a Coin98 user.
         </StyledAward>
       )}
     </StyledContainer>

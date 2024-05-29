@@ -50,7 +50,11 @@ const BreadCrumbs = styled.div`
   }
 `;
 
+const chainListSort = [1, 42161, 10, 8453, 81457, 5000, 324, 59144, 169, 34443, 1088, 534352, 1101, 137, 56, 43114, 100]
+
 const chainList = Object.values(chainCofig)
+
+chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId))
 
 const Bridge: NextPageWithLayout = () => {
     const handlerList = useRef<any[]>([])
@@ -83,6 +87,7 @@ const Bridge: NextPageWithLayout = () => {
                         console.log(res)
                         setTemplate(res.data.name)
                         setName(res.data.name)
+                        setIcon(res.data.logo)
                         // setChainConfig(res.data)
                     }
                 })

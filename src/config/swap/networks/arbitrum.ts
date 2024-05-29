@@ -1,6 +1,6 @@
 import { basic as camelotBasic, networks as camelotNetworks } from '../dapps/camelot';
 import { basic as apeBasic, networks as apeNetworks } from '../dapps/ape';
-import { basic as chronosV1Basic, networks as chronosV1Networks } from '../dapps/chronos-v1';
+import { basic as chronosV1Basic, networks as chronosV1Networks } from '../dapps/chronos-v2';
 import { basic as ramsesV1Basic, networks as ramsesV1Networks } from '../dapps/ramses-v1';
 import { basic as ramsesV2Basic, networks as ramsesV2Networks } from '../dapps/ramses-v2';
 import { basic as spartaBasic, networks as spartaNetworks } from '../dapps/sparta';
@@ -34,7 +34,7 @@ export default {
       ...sushiBasic,
       ...sushiNetworks[CHAIN_ID],
     },
-    'Chronos V1': {
+    'Chronos V2': {
       ...chronosV1Basic,
       ...chronosV1Networks[CHAIN_ID],
     },

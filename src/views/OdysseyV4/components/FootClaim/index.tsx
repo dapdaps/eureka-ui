@@ -11,13 +11,12 @@ export default function FootClaim({ unclaimed, totalReward, unlocked, onRefreshD
     borderColor: '#FFDD4D',
     corner: 34,
   };
-  console.log('FootClaim--', totalReward, unclaimed, unlocked);
 
   return unclaimed > 0 ? (
     <StyledContainer>
       <Trapeziform {...TrapLayout} className="content">
         <div className="txt">
-          You have explored <span className="count">{unlocked}</span> dApps on Blast by DapDap,
+          You have explored <span className="count">{unlocked}</span> times on Blast by DapDap,
           <span className="count">{totalReward - unclaimed}</span> PTS has been claimed.
         </div>
 

@@ -8,7 +8,7 @@ const basic = {
 const networks = {
   1088: {
     defaultCurrencies: {
-      input: metis['eth'],
+      input: metis['weth'],
       output: metis['m.usdc'],
     },
     tokens: [metis['weth'], metis['metis'], metis['m.usdc'], metis['m.usdt'], metis['hermes'], metis['m.dai']],

@@ -2,6 +2,7 @@ import { linea } from '@/config/tokens/linea';
 import { mantle } from '@/config/tokens/mantle';
 import { manta } from '@/config/tokens/manta';
 import { scroll } from '@/config/tokens/scroll';
+import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'iZiSwap',
@@ -46,6 +47,13 @@ const networks = {
       output: scroll['usdc'],
     },
     tokens: [scroll['weth'], scroll['usdc'], scroll['dai'], scroll['wbtc'], scroll['izi'], scroll['wsteth']],
+  },
+  34443: {
+    defaultCurrencies: {
+      input: mode['eth'],
+      output: mode['usdt'],
+    },
+    tokens: [mode['eth'], mode['weth'], mode['usdc'], mode['usdt'], mode['ezeth'], mode['m-btc'], mode['we-eth.mode']],
   },
 };
 

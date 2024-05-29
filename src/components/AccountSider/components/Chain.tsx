@@ -4,9 +4,10 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { overlay } from '@/components/animation';
+import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
-import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
+import useSortChains from '@/hooks/useSortChains';
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '70px')};
@@ -111,13 +112,15 @@ const Chain = ({
   bp?: string;
 }) => {
   const { chains } = useTokensAndChains();
+  const { sortedChains } = useSortChains();
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
-  const currentChain = useMemo(
+  const currentChain: any = useMemo(
     () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
     [connectedChain?.id],
   );
   const [showList, setShowList] = useState(false);
   const [showEmptyChainTips, setShowEmptyChainTips] = useState(false);
+
   useEffect(() => {
     const hideList = () => {
       showName ? setShowChains?.(false) : setShowList(false);
@@ -184,7 +187,7 @@ const Chain = ({
         <ArrowIcon size={12} />
       </ArrowIconWrapper>
       <ChainList display={showName ? Number(showChains || 0) : Number(showList || 0)}>
-        {Object.values(chains).map((chain) => (
+        {sortedChains.map((chain) => (
           <ChainItem
             key={chain.chainId}
             onClick={() => {
