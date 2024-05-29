@@ -1,4 +1,5 @@
 import { upperFirst } from 'lodash';
+
 import { formateValue } from '@/utils/formate';
 
 export const formatQuest = (record: any) => {
@@ -14,7 +15,7 @@ export const formatQuest = (record: any) => {
     method = record.method;
   }
 
-  const name = record.dapp ? 'on ' + record.dapp.show_name : '';
+  const name = record.dapp ? 'on ' + record.dapp : '';
   const key = record.sub_type === 'remove' ? 'token_out' : 'token_in';
 
   let amount = `${formateValue(record[key].amount, 4)} ${record[key].symbol}`;
@@ -39,3 +40,14 @@ export const getDappLogo = (name: string) =>
 
 export const getTokenLogo = (name: string) =>
   name ? `https://s3.amazonaws.com/db3.app/token/${name.toLowerCase()}.png` : '/images/tokens/default_icon.png';
+
+export function getTime(timeStr: number) {
+  const date = new Date(timeStr * 1000);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const hour = String(date.getHours()).padStart(2, '0');
+  const minute = String(date.getMinutes()).padStart(2, '0');
+  const second = String(date.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}

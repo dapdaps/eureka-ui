@@ -1,6 +1,7 @@
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import styled from 'styled-components';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Dropdown from '@/views/Portfolio/components/Dropdown';
 
 export const StyledContainer = styled.div`
   width: 574px;
@@ -56,62 +57,6 @@ export const StyledContainer = styled.div`
   }
 
   .head-right {
-    height: 26px;
-    color: #979ABE;
-    text-align: right;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    padding: 0 10px 0 9px;
-    border-radius: 6px;
-    border: 1px solid #3D405A;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 9px;
-    cursor: pointer;
-    position: relative;
-
-    .dropdown {
-      width: 100%;
-      position: absolute;
-      z-index: 1;
-      right: 0;
-      top: 24px;
-      background: #1B1D25;
-      border-bottom-left-radius: 6px;
-      border-bottom-right-radius: 6px;
-      border: 1px solid #3D405A;
-      display: none;
-
-      &.visible {
-        display: block;
-      }
-
-      .dropdown-list {
-        list-style: none;
-        padding: 4px 0;
-        margin: 0;
-        display: flex;
-        text-align: left;
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      .dropdown-item {
-        padding: 4px 12px;
-        transition: all .3s linear;
-
-        &:hover,
-        &.selected {
-          background: #000;
-        }
-      }
-    }
-
-    .arrow {
-      transition: transform .1s linear;
-    }
   }
 
   .chart-wrapper {
@@ -123,10 +68,12 @@ export const StyledContainer = styled.div`
 const dropdownList = [
   {
     key: 1,
+    value: 1,
     label: 'Day',
   },
   {
     key: 2,
+    value: 2,
     label: 'Month',
   },
 ];
@@ -178,36 +125,11 @@ const ChartComponent = (props: any) => {
     },
   ];
 
-  const dropdownRef = useRef(null);
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-  const [dropdown, setDropdown] = useState(dropdownList[0].key);
-
-  const handleDropdown = () => {
-    setDropdownVisible(!dropdownVisible);
-  };
+  const [dropdown, setDropdown] = useState(dropdownList[0].value);
 
   const handleDropdownSelect = (value: any) => {
     setDropdown(value);
-    setDropdownVisible(false);
   };
-
-  const dropdownShown = useMemo(() => {
-    return dropdownList.find((it) => it.key === dropdown)?.label;
-  }, [dropdown]);
-
-  useEffect(() => {
-    const handleDropdownVisible = (e: any) => {
-      if (!dropdownRef.current) return;
-      if ((dropdownRef.current as HTMLElement).contains(e.target)) {
-        return;
-      }
-      setDropdownVisible(false);
-    };
-    document.body.addEventListener('click', handleDropdownVisible);
-    return () => {
-      document.body.removeEventListener('click', handleDropdownVisible);
-    };
-  }, []);
 
   return (
     <StyledContainer>
@@ -219,29 +141,12 @@ const ChartComponent = (props: any) => {
             <div className="rate">+1.23%</div>
           </div>
         </div>
-        <div className="head-right" onClick={handleDropdown} ref={dropdownRef}>
-          <span>{dropdownShown}</span>
-          <span className="arrow" style={{ transform: dropdownVisible ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
-              <path d="M1 1L6 5L11 1" stroke="#979ABE" stroke-width="1.6" stroke-linecap="round" />
-            </svg>
-          </span>
-          <div className={`dropdown ${dropdownVisible ? 'visible' : ''}`}>
-            <ul className="dropdown-list">
-              {
-                dropdownList.map((it) => (
-                  <li
-                    className={`dropdown-item ${dropdown === it.key ? 'selected' : ''}`}
-                    key={it.key}
-                    onClick={() => handleDropdownSelect(it.key)}
-                  >
-                    {it.label}
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-        </div>
+        <Dropdown
+          className="head-right"
+          list={dropdownList}
+          value={dropdown}
+          onSelect={handleDropdownSelect}
+        />
       </div>
       <div className="chart-wrapper">
         <ResponsiveContainer width="100%" height="100%">

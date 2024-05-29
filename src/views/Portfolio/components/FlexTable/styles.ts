@@ -11,6 +11,14 @@ export interface Column<Item = any> {
 }
 export const StyledTable = styled.div`
   background: #2E3142;
+  
+  .empty-text {
+    text-align: center;
+    color: #5E617E;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+  }
 `;
 export const StyledTableHead = styled.div`
   border-bottom: 1px solid #373A53;
@@ -29,7 +37,6 @@ export const StyledTableBody = styled.div`
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
-  gap: 8px;
   align-items: stretch;
 `;
 export const StyledTableRow = styled.div<{ bg?: string, borderColor?: string, border?: boolean, align?: RowAlign }>`
@@ -63,4 +70,15 @@ export const StyledTableCol = styled.div<{ align?: Align, width?: string, ellips
     if (!ellipsis) return '';
     return `white-space: nowrap;word-break: unset;text-overflow: ellipsis;`;
   }};
+`;
+export const StyledTableFoot = styled.div`
+  padding: 20px 24px 17px;
+  color: #7C7F96;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;

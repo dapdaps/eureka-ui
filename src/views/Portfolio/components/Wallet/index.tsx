@@ -31,6 +31,7 @@ const TABLE_HEAD = [
     title: 'USD Value',
   },
 ];
+
 const Wallet = ({ loading, tokens }: any) => {
 
   const getChain = useCallback((chainId: number) => {

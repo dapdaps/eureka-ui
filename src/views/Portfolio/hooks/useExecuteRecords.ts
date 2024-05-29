@@ -1,10 +1,12 @@
+import { useDebounceFn } from 'ahooks';
+import { upperFirst } from 'lodash';
 import { useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
-import { useDebounceFn } from 'ahooks';
 import { get } from '@/utils/http';
-import { upperFirst } from 'lodash';
-import { formatQuest, formatGas } from '../helpers';
+
+import { formatGas, formatQuest } from '../helpers';
 
 export default function useExecuteRecords({ currentPage }: any) {
   const { account } = useAccount();
@@ -31,13 +33,13 @@ export default function useExecuteRecords({ currentPage }: any) {
           .filter((record: any) => record.token_in && record)
           .map((record: any) => {
             return {
+              key: record.id,
               id: record.id,
-              quest: formatQuest(record),
+              executed: formatQuest(record),
               action: upperFirst(record.type),
               gas: formatGas(record),
-              dapp_logo: record.dapp?.logo,
-              dapp_name: record.dapp?.show_name,
-              name: record.dapp?.name,
+              dapp_logo: undefined,
+              dapp_name: record.dapp,
               tx_time: record.tx_time,
               tx_hash: record.tx_hash,
               chain_id: record.chain_id,
