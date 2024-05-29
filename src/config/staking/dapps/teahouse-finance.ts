@@ -3,9 +3,6 @@ import { linea } from '@/config/tokens/linea';
 const basic = {
   name: 'Teahouse',
   //   data: 'bluebiu.near/widget/Staking.Teahouse.Data',
-  //   icon: '/images/apps/gamma.png',
-  //   logo: 'https://ipfs.near.social/ipfs/bafkreibgmu62fb5o3n3s54srlzyf7ppn2c42racp5q3gnukcjgkfwkzuse',
-  amountOutFn: 'bluebiu.near/widget/Liquidity.Gamma',
   ICON_VAULT_MAP: {
     USDC: linea['usdc'].icon,
     USDT: linea['usdt'].icon,
@@ -109,7 +106,6 @@ const networks = {
       wrsETH: linea['wrseth'].address,
       wstETH: linea['wsteth'].address,
     },
-    proxyAddress: '0xFc13Ebe7FEB9595D70195E9168aA7F3acE153621',
   },
 };
 

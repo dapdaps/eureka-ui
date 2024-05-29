@@ -81,6 +81,13 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#000',
     },
   },
+  beefy: {
+    type: 'staking',
+    theme: {
+      '--button-color': '#4DB258',
+      '--button-text-color': 'white',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
