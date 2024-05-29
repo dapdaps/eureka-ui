@@ -19,7 +19,7 @@ const wcV2InitOptions: any = {
 const walletConnect = walletConnectModule(wcV2InitOptions);
 const injected = injectedModule({
   // display specific unavailable wallets
-  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Coin98Wallet],
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Coin98Wallet, ProviderLabel.OKXWallet],
   sort: (wallets) => {
     const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask);
     const coin98 = wallets.find(({ label }) => label === ProviderLabel.Coin98Wallet);
