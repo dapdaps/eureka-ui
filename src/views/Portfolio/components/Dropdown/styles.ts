@@ -29,6 +29,9 @@ export const StyledContainer = styled.div`
     border-bottom-right-radius: 6px;
     border: 1px solid #3D405A;
     display: none;
+    max-height: 350px;
+    overflow-y: auto;
+    overflow-x: hidden;
 
     &.visible {
       display: block;
@@ -47,6 +50,9 @@ export const StyledContainer = styled.div`
     .dropdown-item {
       padding: 4px 12px;
       transition: all .3s linear;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
 
       &:hover,
       &.selected {

@@ -24,11 +24,11 @@ export const StyledChain = styled.div<{ src: string }>`
 `;
 
 const DAppIconWithChain = (props: any) => {
-  const { icon, chaonIcon, style, size = '32px' } = props;
+  const { icon, chainIcon, style, size = '32px' } = props;
 
   return (
     <StyledContainer style={style} src={icon || DefaultIcon} size={size}>
-      <StyledChain src={chaonIcon || DefaultIcon}></StyledChain>
+      <StyledChain src={chainIcon || DefaultIcon}></StyledChain>
     </StyledContainer>
   );
 };

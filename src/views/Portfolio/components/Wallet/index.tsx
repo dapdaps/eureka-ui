@@ -32,7 +32,7 @@ const TABLE_HEAD = [
   },
 ];
 
-const Wallet = ({ loading, tokens }: any) => {
+const Wallet = ({ loading, tokens, filterFunc }: any) => {
 
   const getChain = useCallback((chainId: number) => {
     return chains[chainId];
@@ -55,7 +55,7 @@ const Wallet = ({ loading, tokens }: any) => {
               }
             </StyledWalletTableItem>
             {
-              tokens.length ? tokens.map((token: any) => (
+              tokens.length ? tokens.filter((token: any) => filterFunc(token)).map((token: any) => (
                 <StyledWalletTableItem key={token.id}>
                   <StyledTableItemTxt>
                     <StyledTokenIcon>

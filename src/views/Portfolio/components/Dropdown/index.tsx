@@ -51,6 +51,7 @@ const Dropdown = (props: Props) => {
                 className={`dropdown-item ${value === it.value ? 'selected' : ''}`}
                 key={it.key || it.value}
                 onClick={() => handleDropdownSelect(it.value, it, index)}
+                title={it.label as string}
               >
                 {it.label}
               </li>

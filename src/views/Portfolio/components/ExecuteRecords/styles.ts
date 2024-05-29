@@ -42,4 +42,7 @@ export const StyledPagination = styled.div`
   .current-page {
     padding: 0 7px;
   }
+  .page-btn {
+    cursor: pointer;
+  }
 `;

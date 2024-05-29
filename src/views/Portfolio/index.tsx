@@ -30,7 +30,6 @@ const TABS = [
 export default function Portfolio() {
   const [tab, setTab] = useState(TABS[0].key);
   const [network, setNetwork] = useState('all');
-  const [currentPage, setCurrentPage] = useState(1);
 
   const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens();
   const { loading: dappsLoading, dapps } = useDapps();
@@ -38,9 +37,16 @@ export default function Portfolio() {
     hasMore,
     records,
     loading: recordsLoading,
-  } = useExecuteRecords({
-    currentPage,
-  });
+    chain,
+    dapp,
+    handleChain,
+    handleDapp,
+    pageIndex,
+    handlePrev,
+    handleNext,
+    handleFirst,
+    handleLast,
+  } = useExecuteRecords();
 
   const filterFunc = (token: any) => {
     return network === 'all' || token.chain_id === network;
@@ -63,7 +69,6 @@ export default function Portfolio() {
               loading={tokensLoading}
               filterFunc={filterFunc}
               tokens={tokens}
-              totalBalance={totalBalance}
             />
           </>
         )}
@@ -79,8 +84,17 @@ export default function Portfolio() {
             loading={recordsLoading}
             records={records}
             hasMore={hasMore}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            networks={networks}
+            dapps={dapps}
+            chain={chain}
+            dapp={dapp}
+            handleChain={handleChain}
+            handleDapp={handleDapp}
+            pageIndex={pageIndex}
+            handlePrev={handlePrev}
+            handleNext={handleNext}
+            handleFirst={handleFirst}
+            handleLast={handleLast}
           />
         )}
         </Tab>
