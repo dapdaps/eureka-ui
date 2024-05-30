@@ -69,7 +69,7 @@ const LendingEntry = () => {
   }, []);
 
   return (
-    <StyledLendingEntry>
+    <StyledLendingEntry className="StyledLendingEntry">
       <FlexTable columns={columns} list={tableList} rowAlign="center" />
     </StyledLendingEntry>
   );

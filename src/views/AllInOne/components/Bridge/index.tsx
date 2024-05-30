@@ -51,7 +51,7 @@ const BridgeView = (props: Props) => {
   };
 
   return (
-    <StyledBridgeContainer className={disabled ? 'disabled' : ''}>
+    <StyledBridgeContainer className={`StyledBridgeContainer ${disabled ? 'disabled' : ''}`}>
       <StyledContainer>
         <StyledBody>
           <BridgeCard
