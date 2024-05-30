@@ -24,7 +24,7 @@ const useDapps = () => {
   const init = useCallback(async () => {
     try {
       setLoading(true);
-      await Promise.all([queryDapps('Y')]);
+      await Promise.all([queryDapps('Y'), queryDapps('')]);
       setLoading(false);
     } catch (err) {
       setLoading(false);
