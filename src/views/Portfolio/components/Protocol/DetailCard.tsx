@@ -5,6 +5,8 @@ import { formateValueWithThousandSeparator, formateValueWithThousandSeparatorAnd
 import FlexTable from '@/views/Portfolio/components/FlexTable';
 import type { Column } from '@/views/Portfolio/components/FlexTable/styles';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
+import { useMemo } from 'react';
+import { getTokenLogo } from '@/views/Portfolio/helpers';
 
 export const StyledContainer = styled.div`
   border-radius: 12px;
@@ -58,7 +60,7 @@ export const StyledHead = styled.div`
 `;
 export const StyledContent = styled.div``;
 export const StyledFoot = styled.div``;
-export const StyledManageButton = styled.button`
+export const StyledManageButton = styled.a`
   color: #000;
   font-size: 14px;
   font-style: normal;
@@ -74,6 +76,12 @@ export const StyledManageButton = styled.button`
   align-items: center;
   gap: 5px;
   margin-left: 6px;
+  text-decoration: none;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+  }
 `;
 export const StyledIcon = styled.div<{ src: string }>`
   width: 26px;
@@ -94,8 +102,8 @@ const DetailCard = (props: any) => {
       render: (text, record) => {
         return (
           <StyledFlex gap="14px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
-            <StyledIcon src={record.icon} />
-            {record.name}
+            <StyledIcon src={getTokenLogo(record.symbol)} />
+            {record.symbol}
           </StyledFlex>
         );
       },
@@ -112,26 +120,33 @@ const DetailCard = (props: any) => {
       title: 'Amount',
       dataIndex: 'amount',
       align: 'left',
+      render: (text, record) => {
+        return `${record.amount} ${record.symbol}`;
+      },
     },
     {
       title: 'Value',
       dataIndex: 'value',
       align: 'left',
       render: (text, record) => {
-        return `$${formateValueWithThousandSeparator(record.value, 2)}`;
+        return `$${formateValueWithThousandSeparator(record.usd, 2)}`;
       },
     },
   ];
 
-  const tableList = [
-    {
-      key: 1,
-      name: 'WETH',
-      price: '1234.7645',
-      amount: '1234.7645',
-      value: '1234.7645',
-    },
-  ];
+  const tableList = useMemo<any[]>(() => {
+    const list: any[] = [];
+    // sub type, such as borrow, supply
+    dapp.assets.forEach((assetType: any) => {
+      assetType.assets.forEach((assetItem: any) => {
+        assetItem.assets.forEach((asset: any) => {
+          list.push(asset);
+        });
+      });
+    });
+
+    return list;
+  }, [dapp]);
 
   return (
     <StyledContainer style={style}>
@@ -139,11 +154,11 @@ const DetailCard = (props: any) => {
         <DAppIconWithChain
           size="32px"
           icon={dapp.icon}
-          chainIcon={undefined}
+          chainIcon={dapp.chainIcon}
         />
         <div className="name">{dapp.name}</div>
         <div className="category">{dapp.category}</div>
-        <StyledManageButton>
+        <StyledManageButton href="/" target="_blank">
           Manage
           <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -156,8 +171,8 @@ const DetailCard = (props: any) => {
           </svg>
         </StyledManageButton>
         <div className="summary">
-          ${formateValueWithThousandSeparatorAndFont(188.03, 2).integer}
-          <span className="sm">{formateValueWithThousandSeparatorAndFont(188.03, 2).decimal}</span>
+          ${formateValueWithThousandSeparatorAndFont(dapp.usd, 2).integer}
+          <span className="sm">{formateValueWithThousandSeparatorAndFont(dapp.usd, 2).decimal}</span>
         </div>
       </StyledHead>
       <StyledContent>

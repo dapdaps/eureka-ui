@@ -75,7 +75,9 @@ export default function Portfolio() {
         {tab === TABS[1].key && (
           <Protocol
             loading={dappsLoading}
+            chainLoading={tokensLoading}
             filterFunc={filterFunc}
+            networks={networks}
             dapps={dapps}
           />
         )}

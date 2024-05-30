@@ -2,9 +2,11 @@ import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { useCallback, useEffect, useState } from 'react';
 
+import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
+import { getChainLogo } from '@/views/Portfolio/helpers';
 
 export default function useTokens() {
   const [loading, setLoading] = useState(true);
@@ -19,17 +21,6 @@ export default function useTokens() {
       setLoading(true);
       setTokens([]);
       const result = await get(`/db3`, { url: 'api/balance/list', params: JSON.stringify({ address: account }) });
-      // result.data.list = [
-      //   {
-      //     id: 57149967,
-      //     address: '0x4300000000000000000000000000000000000004',
-      //     chain_id: 81457,
-      //     symbol: 'WETH',
-      //     price: '3850.640000000',
-      //     amount: '0.00003191477472727',
-      //     usd: '0.122892308155814953',
-      //   },
-      // ];
       const _data = result?.data?.list ?? [];
       const _networks: any = {};
       let _totalBalance = new Big(0);
@@ -40,6 +31,7 @@ export default function useTokens() {
           _networks[record.chain_id] = {
             id: record.chain_id,
             usd: Number(record.usd || 0),
+            icon: getChainLogo(chains[record.chain_id].chainName),
           };
         }
         _totalBalance = _totalBalance.add(record.usd || 0);

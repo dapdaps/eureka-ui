@@ -48,7 +48,7 @@ const DAppCard = (props: any) => {
       <DAppIconWithChain
         size="32px"
         icon={dapp.icon}
-        chainIcon={undefined}
+        chainIcon={dapp.chainIcon}
       />
       <StyledContent>
         <div className="name">{dapp.name}</div>

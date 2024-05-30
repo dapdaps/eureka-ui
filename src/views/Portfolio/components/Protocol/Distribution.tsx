@@ -3,6 +3,8 @@ import { useMemo, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+
 export const StyledContainer = styled.div`
   width: 410px;
   height: 347px;
@@ -170,7 +172,7 @@ const Distribution = (props: any) => {
   };
 
   const calcChartRate = useMemo(() => {
-    if (!displayChartData || activePie < 0) return;
+    if (!displayChartData || !displayChartData.length || activePie < 0) return;
     const total = displayChartData
       .map((chain: any) => chain.usd)
       .reduce((a: number, b: number) => Big(a).plus(b).toNumber());
@@ -224,12 +226,14 @@ const Distribution = (props: any) => {
           </PieChart>
         </ResponsiveContainer>
         <div className="pie-tooltip">
-          <div className="icon"
-               style={{ backgroundImage: `url("https://assets.dapdap.net/images/bafkreib5v3jonanuknj5db5ysuhb6ubowv2pqnopyg3yraknfr3jn7el4u.svg")` }}></div>
-          <div className="name">{displayChartData[activePie].name}</div>
+          <div
+            className="icon"
+            style={{ backgroundImage: `url("${displayChartData[activePie]?.icon}")` }}
+          />
+          <div className="name">{displayChartData[activePie]?.name}</div>
           <div className="usd">
-            ${displayChartData[activePie].usd?.toString().split('.')[0]}
-            <span className="sm">.{displayChartData[activePie].usd?.toString().split('.')[1]}</span>
+            ${formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).integer}
+            <span className="sm">.{formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).decimal}</span>
           </div>
           <div className="rate">{calcChartRate}%</div>
         </div>

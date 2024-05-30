@@ -1,6 +1,7 @@
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { useState } from 'react';
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, YAxis } from 'recharts';
 import styled from 'styled-components';
-import { useEffect, useMemo, useRef, useState } from 'react';
+
 import Dropdown from '@/views/Portfolio/components/Dropdown';
 
 export const StyledContainer = styled.div`
@@ -83,45 +84,31 @@ const ChartComponent = (props: any) => {
   const data = [
     {
       name: 'Page A',
-      uv: 4000,
-      pv: 2400,
-      amt: 2400,
+      uv: 0,
     },
     {
       name: 'Page B',
-      uv: 3000,
-      pv: 1398,
-      amt: 2210,
+      uv: 4000,
     },
     {
       name: 'Page C',
-      uv: 2000,
-      pv: 9800,
-      amt: 2290,
+      uv: 4000,
     },
     {
       name: 'Page D',
-      uv: 2780,
-      pv: 3908,
-      amt: 2000,
+      uv: 4000,
     },
     {
       name: 'Page E',
-      uv: 1890,
-      pv: 4800,
-      amt: 2181,
+      uv: 4000,
     },
     {
       name: 'Page F',
-      uv: 2390,
-      pv: 3800,
-      amt: 2500,
+      uv: 4000,
     },
     {
       name: 'Page G',
-      uv: 3490,
-      pv: 4300,
-      amt: 2100,
+      uv: 4000,
     },
   ];
 
@@ -137,8 +124,8 @@ const ChartComponent = (props: any) => {
         <div className="head-left">
           <div className="title">Total Worth</div>
           <div className="summary">
-            <div className="usd">$1,234<span className="sm">.67</span></div>
-            <div className="rate">+1.23%</div>
+            <div className="usd">$0<span className="sm">.00</span></div>
+            <div className="rate">+0.00%</div>
           </div>
         </div>
         <Dropdown
@@ -182,7 +169,6 @@ const ChartComponent = (props: any) => {
               tickLine={false}
               domain={['dataMin', 'dataMax']}
             />
-            <Tooltip />
             <Area
               dataKey="uv"
               type="linear"

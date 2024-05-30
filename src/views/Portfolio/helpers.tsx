@@ -2,6 +2,7 @@ import { upperFirst } from 'lodash';
 
 import { formateValue, formateValueWithThousandSeparator } from '@/utils/formate';
 import { styled } from 'styled-components';
+import Big from 'big.js';
 
 const StyledRecord = styled.div`
   display: flex;
@@ -38,6 +39,30 @@ export const formatQuest = (record: any) => {
     method = record.method;
   }
 
+  // // 0:- 1:sub 2:sub 3:sub 4:sub 5:-
+  // const types = ['swap', 'liquidity', 'lending', 'farming', 'yield', 'bridge'];
+  // // 0:+ 1:- 2:+ 3:+ 4:- 5:+ 6:-
+  // const subTypes = ['withdraw', 'repayborrow', 'supply', 'add', 'remove', 'borrow', 'deposit'];
+  //
+  // let diff = 0;
+  // if ([types[0], types[5]].includes(record.type.toLowerCase())) {
+  //   diff = Big(-record.token_in.amount).toNumber();
+  //   if (record.token_out) {
+  //     diff = Big(diff).plus(record.token_out.amount).toNumber();
+  //   }
+  // }
+  // else {
+  //   // remove
+  //   if ([subTypes[4]].includes(record.sub_type.toLowerCase())) {
+  //
+  //   }
+  //   if ([subTypes[1], subTypes[4], subTypes[6]].includes(record.sub_type.toLowerCase())) {
+  //     diff = Big(-record.token_in.amount).toNumber();
+  //   } else {
+  //
+  //   }
+  // }
+
   // const name = record.dapp ? 'on ' + record.dapp : '';
   const key = record.sub_type === 'remove' ? 'token_out' : 'token_in';
 
@@ -53,8 +78,7 @@ export const formatQuest = (record: any) => {
     <>
       <span className="token-name">{record[key].symbol}</span>
       <img className="token-icon" src={getTokenLogo(record[key].symbol)} alt="" />
-      <span className={`token-value ${record[key].amount > 0 ? 'plus' : 'sub'}`}>
-        {record[key].amount > 0 ? '+' : '-'}
+      <span className={`token-value`}>
         {formateValue(record[key].amount, 4)}({formatUsd(record[key].usd)})
       </span>
     </>
@@ -66,8 +90,7 @@ export const formatQuest = (record: any) => {
         {amount}/
         <span className="token-name">{record[`${key}_1`].symbol}</span>
         <img className="token-icon" src={getTokenLogo(record[`${key}_1`].symbol)} alt="" />
-        <span className={`token-value ${record[key].amount > 0 ? 'plus' : 'sub'}`}>
-          {record[key].amount > 0 ? '+' : '-'}
+        <span className={`token-value`}>
           {formateValue(record[`${key}_1`].amount, 4)}({formatUsd(record[key].usd)})
         </span>
       </>

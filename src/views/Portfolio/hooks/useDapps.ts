@@ -1,13 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
-import useAccount from '@/hooks/useAccount';
-import useAuthCheck from '@/hooks/useAuthCheck';
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
+import { useCallback, useEffect, useState } from 'react';
+
+import chains from '@/config/chains';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
+import { getChainLogo, getDappLogo } from '@/views/Portfolio/helpers';
 
 export default function useDapps() {
   const [loading, setLoading] = useState(false);
-  const [dapps, setDapps] = useState<any>();
+  const [dapps, setDapps] = useState<any>([]);
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
@@ -20,7 +23,6 @@ export default function useDapps() {
         params: JSON.stringify({ address: account }),
       });
       const _dapps: any = result?.data?.list
-        // .filter((record: any) => record.name === 'juice')
         .map((record: any) => {
           let _totalBalance = new Big(0);
           const items: any = {};
@@ -54,6 +56,8 @@ export default function useDapps() {
               usd: _typeBalance[item],
             })),
             usd: _totalBalance,
+            icon: getDappLogo(record.name),
+            chainIcon: getChainLogo(chains[record.chain_id].chainName),
           };
         });
       setDapps(_dapps);

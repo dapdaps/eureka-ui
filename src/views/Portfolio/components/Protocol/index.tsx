@@ -1,42 +1,58 @@
-import { memo, useMemo, useState } from 'react';
-import ChartComponent from '@/views/Portfolio/components/Protocol/Chart';
-import { StyledContainer } from '@/views/Portfolio/components/Protocol/styles';
-import Distribution from '@/views/Portfolio/components/Protocol/Distribution';
-import { StyledFlex } from '@/styled/styles';
-import { CategoryList } from '@/views/Portfolio/config';
+import Big from 'big.js';
+import { uniqBy } from 'lodash';
+import React, { memo, useMemo } from 'react';
+
+import popupsData from '@/config/all-in-one/chains';
+import chains from '@/config/chains';
+import { StyledFlex, StyledLoadingWrapper } from '@/styled/styles';
 import Category from '@/views/Portfolio/components/Protocol/Category';
-import Title from '@/views/Portfolio/components/Protocol/Title';
 import ChainCard from '@/views/Portfolio/components/Protocol/ChainCard';
+import ChartComponent from '@/views/Portfolio/components/Protocol/Chart';
 import DAppCard from '@/views/Portfolio/components/Protocol/DAppCard';
 import DetailCard from '@/views/Portfolio/components/Protocol/DetailCard';
+import Distribution from '@/views/Portfolio/components/Protocol/Distribution';
+import { StyledContainer } from '@/views/Portfolio/components/Protocol/styles';
+import Title from '@/views/Portfolio/components/Protocol/Title';
+import { CategoryList } from '@/views/Portfolio/config';
+import Loading from '@/components/Icons/Loading';
 
-const Protocol = ({ dapps, filterFunc, loading }: any) => {
+const Protocol = ({ dapps, networks, chainLoading, loading }: any) => {
+  const chainList = useMemo<any[]>(() => {
+    if (!networks) return [];
+    const _networks = networks.map((it: any) => {
+      const currChain = Object.values(popupsData).find((chainConf) => chainConf.chainId === it.id);
+      return {
+        chain_id: it.id,
+        usd: it.usd,
+        name: chains[it.id].chainName,
+        bgColor: currChain?.selectBgColor,
+        icon: it.icon,
+      };
+    });
+    return uniqBy(_networks, 'chain_id');
+  }, [networks]);
 
-  const chainData = [
-    { chain_id: 1, name: 'Polygon zkEVM', usd: 215.78, bgColor: '#3C225F' },
-    { chain_id: 2, name: 'Chain2', usd: 150.22, bgColor: '#5D4D39' },
-    { chain_id: 3, name: 'Chain3', usd: 100.33, bgColor: '#4C4C03' },
-    { chain_id: 4, name: 'Chain4', usd: 50.45, bgColor: '#001880' },
-    { chain_id: 5, name: 'Chain5', usd: 45.67, bgColor: '#0E4658' },
-    { chain_id: 6, name: 'Chain6', usd: 30.12, bgColor: '#163719' },
-    { chain_id: 7, name: 'Chain7', usd: 10.50, bgColor: '#454E00' },
-    { chain_id: 8, name: 'Chain8', usd: 1.23, bgColor: '#ff5f00' },
-  ];
-  const dAppData = [
-    { id: 1, name: 'PenPad', usd: 515.78, category: 'Staking' },
-    { id: 2, name: 'DApp2', usd: 450.22, category: 'Bridge' },
-    { id: 3, name: 'DApp3', usd: 200.33, category: 'Bridge' },
-    { id: 4, name: 'DApp4', usd: 150.45, category: 'Bridge' },
-    { id: 5, name: 'DApp5', usd: 95.67, category: 'Staking' },
-    { id: 6, name: 'DApp6', usd: 60.12, category: 'Staking' },
-    { id: 7, name: 'DApp7', usd: 40.50, category: 'Staking' },
-  ];
+  const dappList = useMemo<any[]>(() => {
+    if (!dapps) return [];
+    const _dapps = dapps.map((it: any) => {
+      return {
+        id: it.name,
+        name: it.show_name,
+        usd: Big(it.usd).toNumber(),
+        category: it.type,
+        icon: it.icon,
+        chainIcon: it.chainIcon,
+        assets: it.assets || [],
+      };
+    });
+    return uniqBy(_dapps, 'id');
+  }, [dapps]);
 
   return (
     <StyledContainer>
       <StyledFlex justifyContent="space-between" alignItems="stretch" gap="16px" style={{ flexWrap: 'wrap' }}>
         <ChartComponent />
-        <Distribution chainData={chainData} dAppData={dAppData} />
+        <Distribution chainData={chainList} dAppData={dappList} />
       </StyledFlex>
       <StyledFlex justifyContent="space-between" alignItems="stretch" gap="10px" style={{ flexWrap: 'wrap', marginTop: 16 }}>
         {
@@ -54,26 +70,47 @@ const Protocol = ({ dapps, filterFunc, loading }: any) => {
       <Title title="Chain Distribution" style={{ marginTop: 50 }}>
         <StyledFlex justifyContent="flex-start" alignItems="stretch" gap="12px" style={{ flexWrap: 'wrap' }}>
           {
-            chainData.map((chain) => (
+            chainList.map((chain) => (
               <ChainCard key={chain.chain_id} chain={chain} />
             ))
           }
         </StyledFlex>
+        {
+          chainLoading && (
+            <StyledLoadingWrapper $h="100px">
+              <Loading size={22} />
+            </StyledLoadingWrapper>
+          )
+        }
       </Title>
       <Title title="dApp Distribution" style={{ marginTop: 50 }}>
         <StyledFlex justifyContent="flex-start" alignItems="stretch" gap="10px" style={{ flexWrap: 'wrap' }}>
           {
-            dAppData.map((dapp) => (
+            dappList.map((dapp) => (
               <DAppCard key={dapp.id} dapp={dapp} />
             ))
           }
         </StyledFlex>
+        {
+          loading && (
+            <StyledLoadingWrapper $h="100px">
+              <Loading size={22} />
+            </StyledLoadingWrapper>
+          )
+        }
       </Title>
       <Title title="Detail" style={{ marginTop: 50 }}>
         {
-          dAppData.map((dapp) => (
+          dappList.map((dapp) => (
             <DetailCard key={dapp.id} dapp={dapp} style={{ marginBottom: 20 }} />
           ))
+        }
+        {
+          loading && (
+            <StyledLoadingWrapper $h="100px">
+              <Loading size={22} />
+            </StyledLoadingWrapper>
+          )
         }
       </Title>
     </StyledContainer>
