@@ -2,7 +2,7 @@ import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'Secta Finance',
-  logo: '/images/apps/1.png',
+  logo: '/images/apps/secta-finance.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {

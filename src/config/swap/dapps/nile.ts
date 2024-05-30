@@ -2,7 +2,7 @@ import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'Nile',
-  logo: '/images/apps/1.png',
+  logo: '/images/apps/nile.png',
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
