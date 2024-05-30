@@ -5,6 +5,9 @@ const BORROW_URL = 'https://ipfs.near.social/ipfs/bafkreigeatxpoa3mn2dbhgmbhltia
 
 const MIN_DEBT = 1000;
 const ONE_TIME_FEE = 1;
+const Liquidation_Reserve = 15;
+const _upperHint = '0x5a23bcc42da0129fcf1274428e44fd9e0af8e789';
+const _lowerHint = '0xad5d9b9e062555ef621fbed3c8bd86e618f2f0d3';
 
 const basic = {
   name: 'Lyve',
@@ -34,6 +37,9 @@ const networks = {
         ONE_TIME_FEE,
         MIN_DEBT,
         MINTED_CAP: 1000000,
+        Liquidation_Reserve,
+        _upperHint,
+        _lowerHint,
       },
       [linea['weth'].address]: {
         decimals: 18,
@@ -44,6 +50,9 @@ const networks = {
         ONE_TIME_FEE,
         MIN_DEBT,
         MINTED_CAP: 1000000,
+        Liquidation_Reserve,
+        _upperHint,
+        _lowerHint,
       },
     },
   },
