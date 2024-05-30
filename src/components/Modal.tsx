@@ -28,9 +28,10 @@ const Overlay = styled(motion.div)`
     align-items: flex-end;
   }
 `;
-const Main = styled(motion.div)<{ $width: number }>`
+const Main = styled(motion.div) <{ $width: number, $hidden: boolean }>`
   position: relative;
   width: ${({ $width }) => $width + 'px'};
+  overflow: ${($hidden) => $hidden ? 'hidden' : 'normal'};
   border-radius: 20px;
   border: 1px solid #373a53;
   background: #262836;
@@ -65,13 +66,15 @@ const Modal = ({
   display,
   title = '',
   width = 460,
+  hidden = false,
   content,
   showHeader = true,
-  onClose = () => {},
+  onClose = () => { },
 }: {
   display: boolean;
   title?: string | ReactNode;
   width?: number;
+  hidden?: boolean;
   showHeader?: boolean;
   content: ReactNode;
   onClose?: () => void;
@@ -84,6 +87,7 @@ const Modal = ({
             <Main
               {...modal}
               $width={width}
+              $hidden={hidden}
               onClick={(ev) => {
                 ev.stopPropagation();
               }}
