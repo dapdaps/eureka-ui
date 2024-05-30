@@ -1,23 +1,23 @@
 import styled from 'styled-components';
 
 import { hexToRgb } from '@/views/AllInOne/utils';
-import { StyledLendingEntry } from "@/views/AllInOne/components/Lending/styles";
+import { StyledLendingEntry } from '@/views/AllInOne/components/Lending/styles';
 
 export const StyledCard = styled.div<{ bgColor?: string }>`
   display: block;
   position: relative;
-  border: 1px solid #373A53;
+  border: 1px solid #373a53;
   border-radius: 16px;
   padding: 28px 24px 28px 24px;
-  transition: all .3s ease;
+  transition: all 0.3s ease;
   min-width: 300px;
   min-height: 250px;
-  background: #16181D;
+  background: #16181d;
   overflow: hidden;
   cursor: pointer;
 
   &::after {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     z-index: 1;
@@ -61,7 +61,7 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
 
     .arrow-top-right {
       opacity: 0;
-      transition: all .3s ease;
+      transition: all 0.3s ease;
     }
 
     &:hover {
@@ -102,7 +102,7 @@ export const StyledTitle = styled.div`
 
   .sub-title {
     font-size: 0.654em;
-    color: #979ABE;
+    color: #979abe;
     line-height: 17px;
     white-space: wrap;
   }
@@ -110,7 +110,7 @@ export const StyledTitle = styled.div`
   .title-text-wrap {
     font-size: 1em;
   }
-  
+
   &.nav {
     font-size: 18px;
     line-height: 22px;
@@ -128,19 +128,19 @@ export const StyledContent = styled.div`
   &.nav {
     margin-top: 5px;
 
-    > [class*="StyledBridgeContainer"] {
+    > [class*='StyledBridgeContainer'] {
       transform: scale(0.8);
       transform-origin: left top;
     }
-    > [class*="StyledTradeContainer"] {
+    > [class*='StyledTradeContainer'] {
       transform: scale(0.9);
       transform-origin: left top;
     }
-    > [class*="StyledLiquidityEntry"] {
+    > [class*='StyledLiquidityEntry'] {
       transform: scale(0.22);
       transform-origin: left top;
     }
-    > [class*="StyledLendingEntry"] {
+    > [class*='StyledLendingEntry'] {
       transform: scale(0.41);
       transform-origin: left top;
     }
@@ -159,4 +159,18 @@ export const StyledPointer = styled.div`
   align-items: center;
   flex-shrink: 0;
   flex-grow: 0;
+`;
+
+export const StyledIcons = styled.div`
+  display: flex;
+  align-items: center;
+  margin-right: 16px;
+`;
+
+export const StyledIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  margin-left: -5px;
+  border-radius: 8px;
+  border: 2px solid #16181d;
 `;

@@ -41,6 +41,7 @@ const AllInOneView = (props: Props) => {
                   bgColor={currentChain.selectBgColor}
                   style={item.entryCardWidth}
                   path={currentChain.path}
+                  chainId={currentChain.chainId}
                   onSelect={() => {
                     handleMenuSelect(item.tab.toLowerCase());
                   }}
