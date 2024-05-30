@@ -2,17 +2,16 @@ import { useRouter } from 'next/router';
 import { memo, useMemo, useState } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
+import Bridge from '@/views/AllInOne/components/Bridge';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
-import { useChain } from '@/views/AllInOne/hooks/useChain';
-import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
-
-import Bridge from '@/views/AllInOne/components/Bridge';
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
+import { useChain } from '@/views/AllInOne/hooks/useChain';
+import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
 
 import Settings from './components/Setting/index';
 
