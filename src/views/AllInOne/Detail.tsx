@@ -11,7 +11,7 @@ import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views
 import chainCofig from '@/config/chains'
 
 import Bridge from '@/views/AllInOne/components/Bridge';
-import SuperBridge from '@/views/SuperBridge/BridgeAction'
+import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent'
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
@@ -53,6 +53,7 @@ const AllInOneDetailView = (props: Props) => {
     return !['liquidity', 'lending'].includes(menu);
   }, [menu]);
 
+
   return (
     <>
       <StyledContainer>
@@ -84,8 +85,11 @@ const AllInOneDetailView = (props: Props) => {
                   {
                     menu === 'bridge' && (
                       // <Bridge chain={currentChain} />
-
-                      <SuperBridge chainList={[chainCofig[1], chainCofig[2], currentChain]}/>
+                      <SuperBridge
+                        theme={currentChain.selectBgColor}
+                        showTitle={false}
+                        chainList={[chainCofig[1], chainCofig[currentChain.chainId]]}
+                      />
                     )
                   }
                   {
@@ -139,7 +143,7 @@ const AllInOneDetailView = (props: Props) => {
           />
         </StyledBg>
       </StyledContainer>
-      <Settings display={showSettings} onClose={() => setShowSettings(false)}/>
+      <Settings display={showSettings} onClose={() => setShowSettings(false)} />
     </>
   );
 };

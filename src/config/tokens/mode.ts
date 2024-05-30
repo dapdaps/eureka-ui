@@ -157,10 +157,10 @@ export const mode: { [key: string]: Token } = {
   },
   rseth: {
     chainId: CHAIN_ID,
-    address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
+    address: '0x4186BFC76E2E237523CBC30FD220FE055156b41F',
     decimals: 18,
     symbol: 'rsETH',
-    name: 'rsETHWrapper',
+    name: 'KelpDao Restaked ETH',
     icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
   },
 };
