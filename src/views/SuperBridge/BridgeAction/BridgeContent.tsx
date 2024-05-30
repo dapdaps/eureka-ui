@@ -119,8 +119,6 @@ export default function BirdgeAction(
 
   const { routes, loading } = useQuote(quoteReques, identification)
 
-  // console.log('routes:', routes)
-
   const { balance } = useTokenBalance({
     currency: fromToken,
     updater: 1,
@@ -246,7 +244,6 @@ export default function BirdgeAction(
       }
 
     }
-    console.log(router?.query)
   }, [chainList, router])
 
   return <>

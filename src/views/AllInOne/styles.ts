@@ -17,19 +17,13 @@ export const StyledContainer = styled.div`
 
 export const StyledContent = styled.div`
   width: 100%;
-<<<<<<< HEAD
   /* position: relative; */
-=======
->>>>>>> 007da0ba4c681be628c26f1b34a38505f8710068
   display: flex;
   gap: 24px;
   flex-wrap: wrap;
   justify-content: center;
   padding: 0 24px 24px;
-<<<<<<< HEAD
   /* z-index: 0; */
-=======
->>>>>>> 007da0ba4c681be628c26f1b34a38505f8710068
 `;
 
 export const StyledBg = styled.div`
