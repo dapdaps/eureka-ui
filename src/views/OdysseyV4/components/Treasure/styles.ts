@@ -249,6 +249,31 @@ export const ModalTitle = styled.div`
   font-weight: 700;
   margin-bottom: 20px;
 `;
+
+export const ModalSub = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: -15px;
+  margin-bottom: 15px;
+`;
+
+export const ModalStep = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 33px;
+  .step {
+    color: #ebf479;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .gap {
+    height: 1px;
+    width: 40px;
+    border: 1px dashed #979abe;
+  }
+`;
 export const ModalDesc = styled.div`
   color: white;
   font-family: Montserrat;
@@ -308,6 +333,12 @@ export const ModalBody = styled.div`
     align-items: center;
     background-color: #000000;
     padding: 14px 0 50px;
+  }
+  .modal-sec-3 {
+    height: 380px;
+    flex-grow: 1;
+    background-color: #000000;
+    padding: 30px 18px 18px;
   }
   .coin-title {
     margin-top: 13px;
@@ -486,6 +517,37 @@ export const ModalBody = styled.div`
     display: flex;
     justify-content: flex-end;
     margin-top: 16px;
+  }
+  .reward-list {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 356px;
+    margin-bottom: 14px;
+  }
+  .juice-btn {
+    margin: 0 auto;
+  }
+  .txt {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .gap {
+    flex-grow: 1;
+    height: 1px;
+    border: 1px dashed #979abe;
+  }
+  .reward-desc {
+    position: relative;
+    width: 356px;
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
   }
 `;
 export const ModalList = styled.div``;

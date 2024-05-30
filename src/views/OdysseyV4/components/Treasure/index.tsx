@@ -19,6 +19,8 @@ import {
   ModalBody,
   ModalDesc,
   ModalIconGroup,
+  ModalStep,
+  ModalSub,
   ModalTitle,
   StyledContainer,
   StyledContent,
@@ -618,95 +620,163 @@ export default function Treasure() {
         </Modal>
       ) : null}
       {showModal5 ? (
-        <Modal type="type5" onClose={() => setShowModal5(false)}>
-          <ModalTitle>
-            How to earn <Image src="/images/odyssey/v4/td3.svg" alt="" width={79} height={22} /> on Juice?
-          </ModalTitle>
+        <Modal type="type5" style={{ width: 914 }} onClose={() => setShowModal5(false)}>
+          <ModalTitle>How to participate in Gold Rush: 3x Leverage on Juice?</ModalTitle>
+          <ModalSub>
+            <Image src="/images/odyssey/v4/td3.svg" alt="" width={79} height={22} />
+            <Badge className="">
+              <Image className="badge-icon" src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
+              <span className="badge-title">extra Gold</span>
+            </Badge>
+          </ModalSub>
           <ModalDesc>
-            This strategy enables users to earn Etherfi points/ Eigen Layer points/ Hyperlock Points/ Thruster Credits/
+            This strategy enables users to earn Etherfi points/ Eigen Layer points/ Hyperlock Points/ Thruster Points/
             Juice Points/ Blast Gold + Blast points.
           </ModalDesc>
+          <ModalStep>
+            <span className="step">Create sub account on Juice</span>
+            <div className="gap"></div>
+            <span className="step">Create sub account on Juice</span>
+            <div className="gap"></div>
+            <span className="step">Borrow WETH & USDB</span>
+          </ModalStep>
           <ModalBody>
-            <Trapeziform {...TrapLayout} className="modal-list">
-              <div className="modal-list-head">
-                <div className="head-left">
-                  <div className="head-title">Step 1. Create sub account and Deposit WETH on</div>
+            <div className="modal-body-2">
+              <Trapeziform {...TrapLayout} className="modal-sec-3">
+                <div className="step" style={{ width: 350, textAlign: 'left', marginBottom: 15 }}>
+                  Join Vaults: <br />
+                  V3 Thruster &lt;&gt; Hyperlock
                 </div>
-              </div>
-              <div className="modal-desc">* If you don’t have WETH, you can wrap ETH to WETH on this page</div>
-              <div className="modal-list-body">
-                <div className="body-left" style={{ gap: 5 }}>
-                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
-
-                  <div className="body-left-content">
-                    <div className="body-left-content-title">WETH</div>
+                <section>
+                  <div className="reward-list">
+                    <span className="txt">V3 USDB/WETH</span>
+                    <div className="gap"></div>
+                    <Badge>
+                      <Image
+                        className="badge-icon"
+                        src="/images/odyssey/v4/icon-gold.svg"
+                        alt=""
+                        width={40}
+                        height={40}
+                      />
+                      <span className="badge-title">50,000</span>
+                    </Badge>
                   </div>
-                </div>
-                <div className="body-right">
-                  <TrapeziformBtn
-                    width="286px"
-                    height="42px"
-                    handleClick={(e: any) => openLink(`${location.origin}/dapp/juice`)}
-                  >
-                    Deposit WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                  </TrapeziformBtn>
-                </div>
-              </div>
-            </Trapeziform>
-            <Trapeziform {...TrapLayout} className="modal-list">
-              <div className="modal-list-head">
-                <div className="head-left">
-                  <div className="head-title">Step 2.Borrow 3x WETH</div>
-                </div>
-              </div>
-              <div className="modal-list-body">
-                <div className="body-left" style={{ gap: 5 }}>
-                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
-
-                  <div className="body-left-content">
-                    <div className="body-left-content-title">WETH</div>
+                  <div className="reward-list">
+                    <span className="txt">etherfi V3</span>
+                    <div className="gap"></div>
+                    <Badge>
+                      <Image
+                        className="badge-icon"
+                        src="/images/odyssey/v4/icon-gold.svg"
+                        alt=""
+                        width={40}
+                        height={40}
+                      />
+                      <span className="badge-title">45,000</span>
+                    </Badge>
                   </div>
+                  <div className="reward-list">
+                    <span className="txt">RenzoProtocol</span>
+                    <div className="gap"></div>
+                    <Badge>
+                      <Image
+                        className="badge-icon"
+                        src="/images/odyssey/v4/icon-gold.svg"
+                        alt=""
+                        width={40}
+                        height={40}
+                      />
+                      <span className="badge-title">55,000</span>
+                    </Badge>
+                  </div>
+                  <div className="reward-list">
+                    <span className="txt">KelpDAO</span>
+                    <div className="gap"></div>
+                    <Badge>
+                      <Image
+                        className="badge-icon"
+                        src="/images/odyssey/v4/icon-gold.svg"
+                        alt=""
+                        width={40}
+                        height={40}
+                      />
+                      <span className="badge-title">10,000</span>
+                    </Badge>
+                  </div>
+                </section>
+                <div className="reward-desc" style={{ marginBottom: 13 }}>
+                  Juice/WETH Lps are also actively earning 2x Gold
+                  <Badge style={{ position: 'absolute', left: 44, top: 24 }}>
+                    <Image
+                      className="badge-icon"
+                      src="/images/odyssey/v4/icon-gold.svg"
+                      alt=""
+                      width={40}
+                      height={40}
+                    />
+                    <span className="badge-title">2x</span>
+                  </Badge>
                 </div>
-                <div className="body-right">
-                  <TrapeziformBtn
-                    width="286px"
-                    height="42px"
-                    handleClick={(e: any) => openLink(`${location.origin}/dapp/juice`)}
-                  >
-                    Borrow WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                  </TrapeziformBtn>
+                <TrapeziformBtn
+                  width="236px"
+                  height="42px"
+                  className="juice-btn"
+                  handleClick={(e: any) => openLink(`${location.origin}/dapp/juice`)}
+                >
+                  Go to Juice <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                </TrapeziformBtn>
+              </Trapeziform>
+              <Trapeziform {...TrapLayout} className="modal-sec-3">
+                <div className="step" style={{ width: 350, textAlign: 'left', marginBottom: 15 }}>
+                  Join Vaults: <br />
+                  Particle Boosted Points
                 </div>
-              </div>
-            </Trapeziform>
-            <Trapeziform {...TrapLayout} className="modal-list">
-              <div className="modal-list-head">
-                <div className="head-left">
-                  <div className="head-title">Step 3.Deposit borrowed WETH in EtherFi V3 LP Vault</div>
+                <section>
+                  <div className="reward-list">
+                    <span className="txt">USDB</span>
+                    <div className="gap"></div>
+                    <Badge>
+                      <Image
+                        className="badge-icon"
+                        src="/images/odyssey/v4/icon-gold.svg"
+                        alt=""
+                        width={40}
+                        height={40}
+                      />
+                      <span className="badge-title">20,000</span>
+                    </Badge>
+                  </div>
+                </section>
+                <div className="reward-list">
+                  <span className="txt">WETH</span>
+                  <div className="gap"></div>
+                  <Badge>
+                    <Image
+                      className="badge-icon"
+                      src="/images/odyssey/v4/icon-gold.svg"
+                      alt=""
+                      width={40}
+                      height={40}
+                    />
+                    <span className="badge-title">20,000</span>
+                  </Badge>
                 </div>
-              </div>
-              <div className="modal-list-body">
-                <div className="body-left" style={{ gap: 5 }}>
-                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
+                <div className="reward-desc" style={{ margin: '44px 0 62px' }}>
+                  Earn Particle & Duo points, Blast Gold, Juice points, and variable boosted Blast points.
+                </div>
 
-                  <div className="body-left-content-title">WETH</div>
-
-                  <Image src="/images/odyssey/v4/dash-arrow.svg" alt="" width={33} height={16} />
-                  <Image src="/images/odyssey/v4/icon-hyperlock.svg" alt="" width={26} height={26} />
-
-                  <div className="body-left-content-title">HYPLP</div>
-                </div>
-                <div className="body-right">
-                  <TrapeziformBtn
-                    width="286px"
-                    height="42px"
-                    handleClick={(e: any) => openLink(`${location.origin}/dapp/juice`)}
-                  >
-                    Stake LP
-                    <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                  </TrapeziformBtn>
-                </div>
-              </div>
-            </Trapeziform>
+                <TrapeziformBtn
+                  width="236px"
+                  height="42px"
+                  className="juice-btn"
+                  loading={reportLoading}
+                  handleClick={(e: any) => openLink(`${location.origin}/dapp/juice`)}
+                >
+                  Go to Juice <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                </TrapeziformBtn>
+              </Trapeziform>
+            </div>
           </ModalBody>
         </Modal>
       ) : null}
