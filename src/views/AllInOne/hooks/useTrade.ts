@@ -128,6 +128,7 @@ export default function useTrade({ chainId }: any) {
         const network = networks[inputCurrency.chainId];
         const dexs = network.dexs;
         const _markets = data
+          .filter((item: any) => item.txn)
           .sort((a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount)
           .map((item: any) => {
             const _trade = formatTrade({
