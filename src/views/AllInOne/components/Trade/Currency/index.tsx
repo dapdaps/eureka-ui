@@ -1,9 +1,10 @@
-import { useState } from 'react';
-
+import Big from 'big.js';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import CurrencyInput from '@/views/AllInOne/components/Trade/CurrencyInput';
-
-import CurrencySelectPopup from '../CurrencySelectPopup';
+import { balanceFormated, valueFormated } from '@/utils/balance';
+import Loading from '@/components/Icons/Loading';
+import useTokenBalance from '@/hooks/useTokenBalance';
+import { usePriceStore } from '@/stores/price';
 import {
   CurrencyIcon,
   CurrencyTitle,
@@ -13,45 +14,72 @@ import {
   StyledTradeInputContainer,
   StyledTradeTitle,
 } from './styles';
+import type { Token } from '@/types';
+import { useEffect } from 'react';
 
 type Props = {
-  onAmountChange?: (amount: number | string) => void;
   title: string;
   disabled?: boolean;
-  textUnderline?: boolean;
-}
-const Currency = (props: Props) => {
-  const { onAmountChange, title, disabled, textUnderline } = props;
-  const [amount, setAmount] = useState<number | string>(1);
-  const [show, setShow] = useState<boolean>(false);
+  isFrom?: boolean;
+  amount: string;
+  currency?: Token;
+  onTokenSelect: VoidFunction;
+  onAmountChange?: (amount: number | string) => void;
+  onLoad?: (balance: string) => void;
+};
+const Currency = ({
+  onAmountChange = () => {},
+  onTokenSelect,
+  onLoad,
+  amount,
+  currency,
+  title,
+  disabled,
+  isFrom,
+}: Props) => {
+  const prices = usePriceStore((store) => store.price);
 
-  const onCurrencyChange = (m: number | string) => {
-    setAmount(m);
-    onAmountChange?.(m);
-  };
+  const { tokenBalance: balance, isLoading } = useTokenBalance(currency?.address || '', currency?.decimals || 0);
 
-  const onShowSelect = () => {
-    setShow(true);
-  };
+  useEffect(() => {
+    if (!isFrom) return;
+    onLoad?.(balance);
+  }, [balance]);
 
   return (
     <>
       <StyledTradeBlock>
         <StyledTradeTitle>{title}</StyledTradeTitle>
         <StyledTradeInputContainer>
-          <CurrencyInput amount={amount} onAmountChange={onCurrencyChange} disabled={disabled} />
-          <StyledSelectToken onClick={onShowSelect}>
-            <CurrencyIcon src={''} alt={'www'} />
-            <CurrencyTitle>wdd</CurrencyTitle>
-            <div className={'arrow-icon'}><ArrowIcon size={11.5} /></div>
+          <CurrencyInput amount={amount} onAmountChange={onAmountChange} disabled={disabled} />
+          <StyledSelectToken onClick={onTokenSelect}>
+            {currency && <CurrencyIcon src={currency.icon} alt={currency.symbol} />}
+            <CurrencyTitle>{currency ? currency.symbol : 'Select a Token'}</CurrencyTitle>
+            <div className={'arrow-icon'}>
+              <ArrowIcon size={11.5} />
+            </div>
           </StyledSelectToken>
         </StyledTradeInputContainer>
-        <StyledTradeBalance underline={textUnderline}>
-          <div>$5984950</div>
-          <div className={'trade-balance'}>balance: 0</div>
+        <StyledTradeBalance underline={isFrom}>
+          <div>$ {!isNaN(Number(amount)) && currency ? valueFormated(amount, prices[currency?.symbol]) : '-'}</div>
+          <div>
+            balance:{' '}
+            {isLoading ? (
+              <Loading size={16} />
+            ) : (
+              <span
+                className="trade-balance"
+                onClick={() => {
+                  if (isNaN(Number(balance))) return;
+                  onAmountChange(balanceFormated(new Big(balance).toFixed(18), 18));
+                }}
+              >
+                {!balance ? '-' : balanceFormated(balance, 4)}
+              </span>
+            )}
+          </div>
         </StyledTradeBalance>
       </StyledTradeBlock>
-      <CurrencySelectPopup display={show} onClose={() => setShow(false)} />
     </>
   );
 };

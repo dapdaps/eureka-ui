@@ -21,7 +21,7 @@ import {
 } from '@/views/AllInOne/components/Header/styles';
 import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
 import useReport from '@/views/Landing/hooks/useReport';
-import SelectedCheck from "@/views/AllInOne/components/SelectedCheck";
+import SelectedCheck from '@/views/AllInOne/components/SelectedCheck';
 
 const AllInOneHeaderView = (props: Props) => {
   const { chain, currentChain, handleShowComponent } = props;
@@ -60,70 +60,60 @@ const AllInOneHeaderView = (props: Props) => {
 
   return (
     <>
-      {
-        currentChain?.title ? (
-          <StyledHeader>
-            <StyledMainLogo>
-              <StyledLogoContainer selectBgColor={currentChain.bgColor}>
-                {
-                  currentChain.iconColor ?
-                    (
-                      <StyledLogo>
-                        <StyledImage src={currentChain.icon} iconColor={currentChain.iconColor} />
-                      </StyledLogo>
-                    ) :
-                    (
-                      <StyledLogo>
-                        <img src={currentChain.icon} alt={currentChain.title} className="chain-logo" />
-                      </StyledLogo>
-                    )
-                }
-              </StyledLogoContainer>
-              <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">
-                <StyledTitle>{currentChain.title}</StyledTitle>
-                <StyledArrowIconWrap style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}>
-                  <ArrowIcon size={11.5} />
-                </StyledArrowIconWrap>
-              </StyledFlex>
-              {isSelectItemClicked && (
-                <StyledPopup ref={popupRef}>
-                  {Object.values(popupsData).map((item) => (
-                    <StyledPopupItem
-                      className={`${chain === item.path ? 'selected' : ''}`}
-                      key={item.path}
-                      onClick={() => handleClick(item.path)}
-                      data-bp="10014-003"
-                    >
-                      <StyledPopupImg style={{ backgroundColor: item.bgColor }}>
-                        <img src={item.icon} alt="" />
-                      </StyledPopupImg>
-                      <StyledPopupText>{item.title}</StyledPopupText>
-                      <div className="flex-grow"></div>
-                      {chain === item.path && (
-                        <div className="check-mark">
-                          <SelectedCheck />
-                        </div>
-                      )}
-                    </StyledPopupItem>
-                  ))}
-                </StyledPopup>
+      {currentChain?.title ? (
+        <StyledHeader>
+          <StyledMainLogo>
+            <StyledLogoContainer selectBgColor={currentChain.bgColor}>
+              {currentChain.iconColor ? (
+                <StyledLogo>
+                  <StyledImage src={currentChain.icon} />
+                </StyledLogo>
+              ) : (
+                <StyledLogo>
+                  <img src={currentChain.icon} alt={currentChain.title} className="chain-logo" />
+                </StyledLogo>
               )}
-            </StyledMainLogo>
-            <StyledBgLogo src={currentChain.bgIcon} />
-            {/*#region Magical bug: In Chrome, if this component is not referenced on here, this component cannot be rendered normally in the parent component*/}
-            <div style={{ display: 'none' }}>
-              <Gradient
-                bgColor="#ffffff"
-                width={720}
-                height={241}
-                rx={280}
-                ry={40.5}
-              />
-            </div>
-            {/*#endregion*/}
-          </StyledHeader>
-        ) : <Loading />
-      }
+            </StyledLogoContainer>
+            <StyledFlex gap="14px" onClick={handleSelectItemClick} data-bp="10014-002">
+              <StyledTitle>{currentChain.title}</StyledTitle>
+              <StyledArrowIconWrap style={{ transform: isSelectItemClicked ? 'rotate(180deg)' : 'rotate(0deg)' }}>
+                <ArrowIcon size={11.5} />
+              </StyledArrowIconWrap>
+            </StyledFlex>
+          </StyledMainLogo>
+          <StyledBgLogo src={currentChain.bgIcon} />
+          {/*#region Magical bug: In Chrome, if this component is not referenced on here, this component cannot be rendered normally in the parent component*/}
+          <div style={{ display: 'none' }}>
+            <Gradient bgColor="#ffffff" width={720} height={241} rx={280} ry={40.5} />
+          </div>
+          {/*#endregion*/}
+        </StyledHeader>
+      ) : (
+        <Loading />
+      )}
+      {isSelectItemClicked && (
+        <StyledPopup ref={popupRef}>
+          {Object.values(popupsData).map((item) => (
+            <StyledPopupItem
+              className={`${chain === item.path ? 'selected' : ''}`}
+              key={item.path}
+              onClick={() => handleClick(item.path)}
+              data-bp="10014-003"
+            >
+              <StyledPopupImg style={{ backgroundColor: item.bgColor }}>
+                <img src={item.icon} alt="" />
+              </StyledPopupImg>
+              <StyledPopupText>{item.title}</StyledPopupText>
+              <div className="flex-grow"></div>
+              {chain === item.path && (
+                <div className="check-mark">
+                  <SelectedCheck />
+                </div>
+              )}
+            </StyledPopupItem>
+          ))}
+        </StyledPopup>
+      )}
     </>
   );
 };

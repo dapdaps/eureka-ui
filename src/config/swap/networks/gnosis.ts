@@ -3,19 +3,12 @@ import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-s
 import { basic as swaprBasic, networks as swaprNetworks } from '../dapps/swapr';
 import { basic as elkBasic, networks as elkNetworks } from '../dapps/elk';
 import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
-
+import { gnosis } from '@/config/tokens/gnosis';
 const CHAIN_ID = 100;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Gnosis',
-  displayChainName: 'Gnosis',
-  wethAddress: '0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d',
-  connectProps: {
-    noAccountTips: 'Gnosis Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Gnosis Chain.',
-  },
-  defalutDex: 'Balancer',
+  defalutInputCurrency: gnosis['xdai'],
   dexs: {
     Balancer: {
       ...balancerBasic,

@@ -1,85 +1,115 @@
-import type { ChangeEvent } from 'react';
-
-import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
-
-import {Content, CurrencyAmount, CurrencyIcon, CurrencyLabel, CurrencyList, CurrencyName, CurrencyRow, CurrencySymbol,Dialog, Empty, Header, Input, InputWarpper, Overlay, Title } from './styles';
+import { useMemo, useState } from 'react';
+import Modal from '@/components/Modal';
+import Loading from '@/components/Icons/Loading';
+import useTokensBalance from '@/hooks/useTokensBalance';
+import { usePriceStore } from '@/stores/price';
+import { balanceFormated, valueFormated } from '@/utils/balance';
+import {
+  Content,
+  CurrencyAmount,
+  CurrencyIcon,
+  CurrencyLabel,
+  CurrencyList,
+  CurrencyName,
+  CurrencyRow,
+  CurrencySymbol,
+  Empty,
+  Input,
+  InputWarpper,
+  StyledBalanceWrap,
+  StyledRowR,
+  StyledTokenNameWrapper,
+} from './styles';
+import type { Token } from '@/types';
 
 type Props = {
-  // title: string;
-  // tokens: Record<string, any>[];
-  // account: string;
+  tokens: Token[];
   display: boolean;
+  currency?: Token;
   onClose: () => void;
-}
-const CurrencySelectPopup = (props: Props) => {
-  // const { title, tokens, account } = props;
+  onSelect: (token: Token) => void;
+};
+const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: Props) => {
+  const prices = usePriceStore((store) => store.price);
+  const [searchVal, setSearchVal] = useState('');
+  const { loading, balances = {} } = useTokensBalance(tokens);
 
-  const currency = {
-    icon: '',
-    symbol: 'ETH',
-    name: 'eth'
-  }
+  const filterTokens = useMemo(() => {
+    return tokens.filter((token: any) => {
+      if (!searchVal) {
+        return true;
+      }
+      return (
+        token.address.toLowerCase() === searchVal?.toLowerCase() ||
+        token.name.toLowerCase().includes(searchVal?.toLowerCase())
+      );
+    });
+  }, [tokens, searchVal]);
 
-const balanceFormated = () => {
-    // if (!currency.address) return "-";
-    // if (!currency.balanceLoaded) return "Loading";
-    // if (currency.balance === "0" || Big(currency.balance).eq(0)) return "0";
-    // if (Big(currency.balance).lt(0.0001)) return "<0.0001";
-    // return Big(currency.balance).toFixed(4);
-  return '-';
-  }
-  const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-    // State.update({
-    //   tokens: e.target.value
-    //     ? props.tokens.filter((token) => {
-    //       return (
-    //         token.address === e.target.value ||
-    //         token.name.toLowerCase().includes(e.target.value?.toLowerCase()) ||
-    //         token.symbol.toLowerCase().includes(e.target.value?.toLowerCase())
-    //       );
-    //     })
-    //     : props.tokens,
-    // });
-  };
   return (
-    <Dialog className={props.display ? 'display' : ''}>
-      <Overlay
-        onClick={() => {
-          props.onClose();
-        }}
-      >
+    <Modal
+      display={display}
+      onClose={onClose}
+      title="Select a token"
+      width={462}
+      content={
         <Content
           onClick={(ev) => {
             ev.stopPropagation();
           }}
         >
-          <Header>
-            <Title>Select a token</Title>
-            <CloseIcon onClose={props.onClose} size={18}/>
-          </Header>
           <InputWarpper>
             <Input
               placeholder="Search name or paste address"
-              onChange={handleSearch}
+              onChange={(ev) => {
+                setSearchVal(ev.target.value);
+              }}
             />
           </InputWarpper>
           <CurrencyList>
-            <CurrencyRow>
-              <CurrencyLabel>
-                <CurrencyIcon src={currency.icon} />
-                <div>
-                  <CurrencySymbol>{currency.symbol}</CurrencySymbol>
-                  <CurrencyName>{currency.name}</CurrencyName>
-                </div>
-              </CurrencyLabel>
-              <CurrencyAmount>{balanceFormated()}</CurrencyAmount>
-            </CurrencyRow>
-            <Empty>No token.</Empty>
+            {filterTokens.map((token) => {
+              const balance = balances[token.address];
+
+              return (
+                <CurrencyRow
+                  key={token.address}
+                  onClick={() => {
+                    onSelect(token);
+                  }}
+                >
+                  <CurrencyLabel>
+                    <CurrencyIcon src={token.icon} />
+                    <StyledTokenNameWrapper>
+                      <CurrencyName>{token.name}</CurrencyName>
+                      <CurrencySymbol>{token.symbol}</CurrencySymbol>
+                    </StyledTokenNameWrapper>
+                  </CurrencyLabel>
+                  <StyledRowR>
+                    {token.address === currency?.address && (
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" fill="none">
+                        <path d="M1 5L6 10L15 1" stroke="var(--border-color)" strokeWidth="2" strokeLinecap="round" />
+                      </svg>
+                    )}
+                    {loading ? (
+                      <Loading />
+                    ) : (
+                      <StyledBalanceWrap>
+                        <span className="balance">{balanceFormated(balance, 4)}</span>
+                        <CurrencyAmount>
+                          ${valueFormated(balance, prices[token.priceKey || token.symbol])}
+                        </CurrencyAmount>
+                      </StyledBalanceWrap>
+                    )}
+                  </StyledRowR>
+                </CurrencyRow>
+              );
+            })}
+            {!filterTokens.length && <Empty>No token.</Empty>}
           </CurrencyList>
         </Content>
-      </Overlay>
-    </Dialog>
+      }
+    />
   );
-}
+};
 
 export default CurrencySelectPopup;

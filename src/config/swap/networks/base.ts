@@ -8,19 +8,12 @@ import { basic as aerodromeBasic, networks as aerodromeNetworks } from '../dapps
 import { basic as velocimeterV2Basic, networks as velocimeterV2Networks } from '../dapps/velocimeter-v2';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
-
+import { base } from '@/config/tokens/base';
 const CHAIN_ID = 8453;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Base',
-  displayChainName: 'BASE',
-  wethAddress: '0x4200000000000000000000000000000000000006',
-  connectProps: {
-    noAccountTips: 'Base Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Base Chain.',
-  },
-  defalutDex: 'Aerodrome',
+  defalutInputCurrency: base['eth'],
   dexs: {
     Aerodrome: {
       ...aerodromeBasic,
