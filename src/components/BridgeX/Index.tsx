@@ -162,7 +162,7 @@ export default function BridgeX({
     const [showWarning, setShowWarning] = useState(false)
     const [loading, setLoading] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
-    const [route, setRoute] = useState(null)
+    const [route, setRoute] = useState<any>(null)
     const [canRoute, setCanRoute] = useState(false)
     const [isSending, setIsSending] = useState(false)
     const [sendingDisabeld, setSendingDisabeld] = useState(false)
@@ -573,6 +573,7 @@ export default function BridgeX({
                             toTokenSymbol: selectOutputToken.symbol,
                             time: Date.now(),
                             tool: tool,
+                            bridgeType: route.bridgeType,
                             fromAddress: account,
                             toAddress: account,
                             status: 3,
