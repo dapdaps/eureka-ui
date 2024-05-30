@@ -3,12 +3,25 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+
+  .modal-6 {
+    display: block;
+    padding-bottom: 100px;
+  }
 `;
 
 export const StyledContent = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  
+  &.row-top {
+    padding-right: 12.9%;
+  }
+  &.row-bot {
+    padding-left: 5.8%;
+    justify-content: flex-end;
+  }
 `;
 export const IconGroup = styled.div`
   position: absolute;
@@ -25,6 +38,10 @@ const Treasure = styled.div`
   flex-direction: column;
   height: 350px;
   cursor: pointer;
+
+  .title {
+    white-space: nowrap;
+  }
   .star {
     position: absolute;
   }
@@ -43,21 +60,23 @@ const Treasure = styled.div`
 
 export const Treasure1 = styled(Treasure)`
   .title {
-    left: 162px;
+    left: calc(50% + 17px);
     width: 230px;
   }
   .td1 {
     position: absolute;
-    left: 152px;
+    left: calc(50% + 7px);
     top: 23px;
   }
 `;
 export const Treasure2 = styled(Treasure)`
+  margin-left: 13.47%;
+
   .title {
-    left: 0;
+    left: calc(50% + 17px);
   }
   .td2 {
-    left: 110px;
+    left: calc(50% + 22px);
     top: 31px;
   }
   .particle {
@@ -70,24 +89,28 @@ export const Treasure2 = styled(Treasure)`
   }
 `;
 export const Treasure3 = styled(Treasure)`
+  margin-left: 23.77%;
+
   .title {
-    left: -105px;
+    right: calc(50% + 17px);
   }
   .td3 {
     position: absolute;
-    left: 15px;
+    right: calc(50% + 17px);
     top: 33px;
   }
 `;
 export const Treasure4 = styled(Treasure)`
-  width: 503px;
+  width: 363px;
   height: 300px;
+  margin-right: 14.12%;
+
   .title {
-    left: 262px;
+    left: calc(50% + 17px);
   }
   .td4 {
     position: absolute;
-    left: 260px;
+    left: calc(50% + 17px);
     top: 31px;
   }
   .track1 {
@@ -114,18 +137,20 @@ export const Treasure4 = styled(Treasure)`
   }
 `;
 export const Treasure5 = styled(Treasure)`
-  width: 503px;
+  width: 346px;
   height: 300px;
+  margin-right: 13.41%;
+
   .title1 {
-    left: 136px;
+    right: calc(50% + 17px);
   }
   .title2 {
-    left: 84px;
+    right: calc(50% + 17px);
     top: 58px;
   }
   .td5 {
     position: absolute;
-    left: 206px;
+    right: calc(50% + 17px);
     top: 35px;
   }
   .pac {
@@ -139,6 +164,37 @@ export const Treasure5 = styled(Treasure)`
     left: 223px;
     top: 88px;
     z-index: 1;
+  }
+`;
+export const Treasure6 = styled(Treasure)`
+  width: 263px;
+  height: 300px;
+ 
+  .title {
+    right: calc(50% + 17px);
+  }
+
+  .badge {
+    position: absolute;
+    top: 31px;
+    right: calc(50% + 17px);
+    height: 26px;
+    border-radius: 13px;
+    background: rgba(249, 249, 37, 0.20);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    color: #ebf479;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    padding: 3px 3px 3px 29px;
+
+    > img {
+      position: absolute;
+      left: -7px;
+    }
   }
 `;
 
@@ -396,6 +452,11 @@ export const ModalBody = styled.div`
         line-height: 150%; /* 18px */
       }
     }
+  }
+  .modal-list-foot {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
   }
 `;
 export const ModalList = styled.div``;
