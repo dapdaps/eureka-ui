@@ -14,7 +14,7 @@ export const StyledContent = styled.div`
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  
+
   &.row-top {
     padding-right: 12.9%;
   }
@@ -47,8 +47,8 @@ const Treasure = styled.div`
   }
   .star4 {
     position: absolute;
-    top: 21px;
-    left: 57px;
+    top: 97px;
+    left: -15px;
   }
   .scale {
     transition: transform 0.3s;
@@ -65,19 +65,23 @@ export const Treasure1 = styled(Treasure)`
   }
   .td1 {
     position: absolute;
-    left: calc(50% + 7px);
-    top: 23px;
+    left: calc(50% + 14px);
+    top: 60px;
   }
 `;
 export const Treasure2 = styled(Treasure)`
-  margin-left: 13.47%;
+  margin-left: 15.47%;
 
   .title {
     left: calc(50% + 17px);
   }
   .td2 {
-    left: calc(50% + 22px);
-    top: 31px;
+    position: absolute;
+    width: 180px;
+    gap: 5px;
+    display: flex;
+    left: calc(50% + 14px);
+    top: 59px;
   }
   .particle {
     left: 7px;
@@ -97,7 +101,10 @@ export const Treasure3 = styled(Treasure)`
   .td3 {
     position: absolute;
     right: calc(50% + 17px);
-    top: 33px;
+    top: 58px;
+    width: 190px;
+    display: flex;
+    justify-content: space-between;
   }
 `;
 export const Treasure4 = styled(Treasure)`
@@ -141,27 +148,25 @@ export const Treasure5 = styled(Treasure)`
   height: 300px;
   margin-right: 13.41%;
 
-  .title1 {
+  .title {
     right: calc(50% + 17px);
+    text-align: right;
   }
-  .title2 {
-    right: calc(50% + 17px);
-    top: 58px;
-  }
+
   .td5 {
     position: absolute;
     right: calc(50% + 17px);
-    top: 35px;
+    top: 55px;
   }
   .pac {
     position: absolute;
-    left: 16px;
+    left: -55px;
     top: 100px;
     z-index: 2;
   }
   .ring {
     position: absolute;
-    left: 223px;
+    left: 142px;
     top: 88px;
     z-index: 1;
   }
@@ -169,18 +174,22 @@ export const Treasure5 = styled(Treasure)`
 export const Treasure6 = styled(Treasure)`
   width: 263px;
   height: 300px;
- 
+
   .title {
     right: calc(50% + 17px);
   }
+  .td6 {
+    top: 34px;
+    right: calc(50% + 15px);
+  }
 
-  .badge {
+  /* .badge {
     position: absolute;
     top: 31px;
     right: calc(50% + 17px);
     height: 26px;
     border-radius: 13px;
-    background: rgba(249, 249, 37, 0.20);
+    background: rgba(249, 249, 37, 0.2);
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -195,6 +204,26 @@ export const Treasure6 = styled(Treasure)`
       position: absolute;
       left: -7px;
     }
+  } */
+`;
+
+export const Badge = styled.div`
+  height: 26px;
+  border-radius: 13px;
+  background: rgba(249, 249, 37, 0.2);
+  display: flex;
+  align-items: center;
+  color: #ebf479;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 3px 13px 3px 3px;
+
+  .badge-icon {
+    margin-left: -7px;
+  }
+  .badge-title {
+    margin-left: -5px;
   }
 `;
 
