@@ -386,6 +386,7 @@ export default function BirdgeAction(
                 toTokenSymbol: toToken?.symbol,
                 time: Date.now(),
                 tool: selectedRoute.bridgeType,
+                bridgeType: selectedRoute.bridgeType,
                 fromAddress: account,
                 toAddress: account,
                 status: 3,
