@@ -32,7 +32,7 @@ const Item = ({ chainId, usd, totalBalance, network, setNetwork, icon }: any) =>
     >
       <StyledItemIcon
         className="item-icon"
-        url={icon ? '' : getChainLogo(chain.chainName)}
+        url={icon ? '' : getChainLogo(chain?.chainName)}
       >
         {icon ?? null}
       </StyledItemIcon>

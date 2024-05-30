@@ -12,7 +12,7 @@ import { formatGas, formatQuest, getChainLogo, getDappLogo } from '../helpers';
 export default function useExecuteRecords() {
   const { account } = useAccount();
   const [hasMore, setHasMore] = useState(false);
-  const [records, setRecords] = useState<any>();
+  const [records, setRecords] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [chain, setChain] = useState('all');
   const [dapp, setDapp] = useState('all');

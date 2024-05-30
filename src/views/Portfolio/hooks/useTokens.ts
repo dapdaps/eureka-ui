@@ -11,7 +11,7 @@ import { getChainLogo } from '@/views/Portfolio/helpers';
 export default function useTokens() {
   const [loading, setLoading] = useState(true);
   const [tokens, setTokens] = useState<any>([]);
-  const [networks, setNetworks] = useState<any>();
+  const [networks, setNetworks] = useState<any>([]);
   const [totalBalance, setTotalBalance] = useState<any>();
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
@@ -31,7 +31,7 @@ export default function useTokens() {
           _networks[record.chain_id] = {
             id: record.chain_id,
             usd: Number(record.usd || 0),
-            icon: getChainLogo(chains[record.chain_id].chainName),
+            icon: getChainLogo(chains[record.chain_id]?.chainName),
           };
         }
         _totalBalance = _totalBalance.add(record.usd || 0);

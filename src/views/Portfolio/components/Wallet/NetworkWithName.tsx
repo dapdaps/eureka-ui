@@ -26,8 +26,8 @@ const NetworkWithName = ({ chainId }: any) => {
   }, [chainId]);
   return chain ? (
     <StyledNetworkWithName>
-      <StyledLogo src={getChainLogo(chain.chainName)} />
-      <StyledName>{chain.chainName}</StyledName>
+      <StyledLogo src={getChainLogo(chain?.chainName)} />
+      <StyledName>{chain?.chainName}</StyledName>
     </StyledNetworkWithName>
   ) : null;
 };

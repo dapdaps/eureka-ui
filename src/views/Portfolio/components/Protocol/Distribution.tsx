@@ -225,18 +225,23 @@ const Distribution = (props: any) => {
             </Pie>
           </PieChart>
         </ResponsiveContainer>
-        <div className="pie-tooltip">
-          <div
-            className="icon"
-            style={{ backgroundImage: `url("${displayChartData[activePie]?.icon}")` }}
-          />
-          <div className="name">{displayChartData[activePie]?.name}</div>
-          <div className="usd">
-            ${formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).integer}
-            <span className="sm">.{formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).decimal}</span>
-          </div>
-          <div className="rate">{calcChartRate}%</div>
-        </div>
+        {
+          displayChartData[activePie] && (
+            <div className="pie-tooltip">
+              <div
+                className="icon"
+                style={{ backgroundImage: `url("${displayChartData[activePie]?.icon}")` }}
+              />
+              <div className="name">{displayChartData[activePie]?.name}</div>
+              <div className="usd">
+                ${formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).integer}
+                <span
+                  className="sm">.{formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).decimal}</span>
+              </div>
+              <div className="rate">{calcChartRate}%</div>
+            </div>
+          )
+        }
       </div>
     </StyledContainer>
   );

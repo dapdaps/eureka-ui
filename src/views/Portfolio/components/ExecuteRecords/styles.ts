@@ -37,7 +37,7 @@ export const StyledPagination = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
   
   .current-page {
     padding: 0 7px;

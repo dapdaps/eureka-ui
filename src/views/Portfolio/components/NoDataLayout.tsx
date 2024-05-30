@@ -18,15 +18,13 @@ export const NoAssetWrapper = styled.div`
   border: 0;
   flex-direction: column;
 
-  background: #262836;
-
   border-radius: 16px;
 
   gap: 12px;
   top: 10px;
   left: -1px;
   width: calc(100% + 2px);
-  padding: 100px 0px;
+  padding: 50px 0px;
 `;
 
 export const NoAssetsIcon = (
@@ -46,7 +44,7 @@ export const NoAssetsIcon = (
   </svg>
 );
 
-export const NoDataLayout = ({ shrink }: { shrink?: boolean }) => {
+export const NoDataLayout = ({ shrink, tips }: { shrink?: boolean, tips?: any }) => {
   return (
     <NoAssetWrapper
       style={{
@@ -55,7 +53,7 @@ export const NoDataLayout = ({ shrink }: { shrink?: boolean }) => {
     >
       {NoAssetsIcon}
 
-      <NoAssetText>No assets yet</NoAssetText>
+      <NoAssetText>{tips || 'No assets yet'}</NoAssetText>
     </NoAssetWrapper>
   );
 };

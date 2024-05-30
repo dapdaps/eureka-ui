@@ -57,7 +57,7 @@ export default function useDapps() {
             })),
             usd: _totalBalance,
             icon: getDappLogo(record.name),
-            chainIcon: getChainLogo(chains[record.chain_id].chainName),
+            chainIcon: getChainLogo(chains[record.chain_id]?.chainName),
           };
         });
       setDapps(_dapps);

@@ -50,12 +50,12 @@ const ProtocolItem = ({ isExpand, protocol, isHide }: any) => {
         <div className="title-filed">
           <div className="icon-filed">
             <img className="protocol-icon" src={getDappLogo(protocol.name)} />
-            <img className="chain-icon " src={getChainLogo(chain.chainName)} />
+            <img className="chain-icon " src={getChainLogo(chain?.chainName)} />
           </div>
 
           <div>
             <div className="protocol-name">{protocol.show_name}</div>
-            <div className="chain-name">{chain.chainName}</div>
+            <div className="chain-name">{chain?.chainName}</div>
           </div>
         </div>
 

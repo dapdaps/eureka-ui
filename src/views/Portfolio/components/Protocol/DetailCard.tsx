@@ -99,6 +99,7 @@ const DetailCard = (props: any) => {
       title: 'Pool',
       dataIndex: 'pool',
       align: 'left',
+      width: '150px',
       render: (text, record) => {
         return (
           <StyledFlex gap="14px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
@@ -112,6 +113,7 @@ const DetailCard = (props: any) => {
       title: 'Price',
       dataIndex: 'price',
       align: 'left',
+      width: '150px',
       render: (text, record) => {
         return `$${formateValueWithThousandSeparator(record.price, 2)}`;
       },
@@ -120,6 +122,7 @@ const DetailCard = (props: any) => {
       title: 'Amount',
       dataIndex: 'amount',
       align: 'left',
+      width: '280px',
       render: (text, record) => {
         return `${record.amount} ${record.symbol}`;
       },
@@ -128,6 +131,7 @@ const DetailCard = (props: any) => {
       title: 'Value',
       dataIndex: 'value',
       align: 'left',
+      width: '150px',
       render: (text, record) => {
         return `$${formateValueWithThousandSeparator(record.usd, 2)}`;
       },
