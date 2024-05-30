@@ -65,7 +65,7 @@ const MatrixGame = (props: any) => {
               dappSplit && [...new Array(Math.ceil(dappList.length / dappSplit)).keys()].map((i) => (
                 <div key={i + ''} className={`claim-cell ${calcClaim('rows', i + 1) ? 'active' : ''}`}>
                   <StyledPTS>
-                    <div>{config ? Big(config.row_reward).div(Math.ceil(dappList.length / dappSplit)).toNumber() : 0}</div>
+                    <div>{config ? config.row_reward : 0}</div>
                     <div>PTS</div>
                   </StyledPTS>
                 </div>
@@ -77,7 +77,7 @@ const MatrixGame = (props: any) => {
               dappSplit && [...new Array(dappSplit).keys()].map((i) => (
                 <div key={i + ''} className={`claim-cell ${calcClaim('cols', i + 1) ? 'active' : ''}`}>
                   <StyledPTS>
-                    <div>{config ? Big(config.column_reward).div(dappSplit).toNumber() : 0}</div>
+                    <div>{config ?config.column_reward : 0}</div>
                     <div>PTS</div>
                   </StyledPTS>
                 </div>
