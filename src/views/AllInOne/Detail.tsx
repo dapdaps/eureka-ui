@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 import Bridge from '@/views/AllInOne/components/Bridge';
@@ -26,8 +26,8 @@ const AllInOneDetailView = (props: Props) => {
 
   const { currentChain, showComponent, setShowComponent, currentChainMenuList } = useChain(props);
 
-  const handleMenuSelect = (tab: string) => {
-    router.replace(`/all-in-one/${currentChain.path}/${tab}`);
+  const handleMenuSelect = (tab: string, reload?: boolean) => {
+    router.replace(`/all-in-one/${currentChain.path}/${tab}`).then(() => reload && setShowComponent(true));
   };
 
   const currentMenu = useMemo<any>(() => {
@@ -113,7 +113,13 @@ const AllInOneDetailView = (props: Props) => {
                   chainId={currentChain.chainId}
                   onSelect={() => {
                     const _tab = item.tab.toLowerCase();
-                    if (_tab === menu) return;
+                    if (_tab === menu) {
+                      setShowComponent(() => {
+                        handleMenuSelect(_tab, true);
+                        return false;
+                      })
+                      return;
+                    }
                     handleMenuSelect(_tab);
                   }}
                 >

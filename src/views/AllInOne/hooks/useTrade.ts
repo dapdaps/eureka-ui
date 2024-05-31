@@ -33,9 +33,9 @@ export default function useTrade({ chainId }: any) {
     const _tokens: { [key: string]: any } = {};
     dexs.forEach((dex: any) => {
       dex.tokens.forEach((token: any) => {
-        const _dexs = _tokens[token.address]?.dexs || [];
+        const _dexs = _tokens[token?.address]?.dexs || [];
         _dexs.push(dex.name);
-        _tokens[token.address] = { ...token, dexs: _dexs };
+        _tokens[token?.address] = { ...token, dexs: _dexs };
       });
     });
     setTokens(Object.values(_tokens));
