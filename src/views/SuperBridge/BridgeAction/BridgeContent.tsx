@@ -355,6 +355,7 @@ export default function BirdgeAction(
         reciveAmount={reciveAmount}
         toAddress={account as string}
         route={selectedRoute}
+        theme={theme}
         onClose={() => {
           setConfirmModalShow(false)
         }}
@@ -439,6 +440,7 @@ export default function BirdgeAction(
         reciveAmount={reciveAmount}
         toAddress={account as string}
         route={selectedRoute}
+        theme={theme}
         onClose={() => {
           setConfirmSuccessModalShow(false)
         }}

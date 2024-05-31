@@ -63,7 +63,7 @@ export const StyledPopup = styled.div`
   width: 249px;
   max-height: 450px;
   overflow-y: auto;
-  z-index: 2;
+  z-index: 52;
 `;
 
 export const StyledPopupImg = styled.div`

@@ -14,7 +14,7 @@ import AllInOneButton from '@/views/AllInOne/components/Button';
 
 const BridgeView = (props: Props) => {
   const { chain, disabled } = props;
-
+ 
   const { tokens } = useTokensAndChains();
 
   const [fromChainId, setFromChainId] = useState<number>();
@@ -73,7 +73,6 @@ const BridgeView = (props: Props) => {
             poolId={toPoolId}
             onChainSelect={(chainId) => handleChainSelect('to', chainId)}
             onTokenSelect={(poolId) => handleTokenSelect('to', poolId)}
-            tokenEditable
             disabled={disabled}
           />
         </StyledBody>
