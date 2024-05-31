@@ -47,7 +47,6 @@ const AllInOneDetailView = (props: Props) => {
     return !['liquidity', 'lending'].includes(menu);
   }, [menu]);
 
-
   return (
     <>
       <StyledContainer>
@@ -76,7 +75,7 @@ const AllInOneDetailView = (props: Props) => {
                     menu === 'bridge' && (
                       // <Bridge chain={currentChain} />
                       <SuperBridge
-                        theme={currentChain.selectBgColor}
+                        theme={currentChain}
                         showTitle={false}
                         chainList={[chainCofig[1], chainCofig[currentChain.chainId]]}
                       />

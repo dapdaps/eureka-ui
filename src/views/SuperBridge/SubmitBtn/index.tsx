@@ -30,7 +30,7 @@ interface Props {
     fromChain: Chain | null;
     onClick: () => void;
     defaultText?: string;   
-    theme: string;
+    theme: any;
 }
 
 export default function SubmitBtn({
@@ -40,23 +40,25 @@ export default function SubmitBtn({
     const { account, chainId, provider } = useAccount();
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
 
+    const styles = { backgroundColor: theme.selectBgColor, color: theme.textColor }
+
     if (!account) {
-        return <Container style={{ backgroundColor: theme }} onClick={() => { onConnect() }}>Connect Wallet</Container>
+        return <Container style={styles} onClick={() => { onConnect() }}>Connect Wallet</Container>
     }
 
     if (isLoading) {
-        return <Container style={{ backgroundColor: theme }}><Loading size={16} /> {defaultText}</Container>  
+        return <Container style={styles}><Loading size={16} /> {defaultText}</Container>  
     }
 
     if (disabled) {
-        return <Container style={{ backgroundColor: theme }} className="disbaled">{text}</Container>
+        return <Container style={styles} className="disbaled">{text}</Container>
     }
 
     if (chainId !== fromChain?.chainId) {
-        return <Container style={{ backgroundColor: theme }} onClick={() => { 
+        return <Container style={styles} onClick={() => { 
             setChain({ chainId: `0x${fromChain?.chainId?.toString(16)}` })
          }}>Switch Chain</Container>
     }
 
-    return <Container style={{ backgroundColor: theme }} onClick={onClick}>{ defaultText }</Container>
+    return <Container style={styles} onClick={onClick}>{ defaultText }</Container>
 }

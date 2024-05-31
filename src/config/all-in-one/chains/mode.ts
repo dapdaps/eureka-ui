@@ -1,3 +1,4 @@
+
 export default {
   title: 'Mode',
   path: 'mode',
@@ -12,12 +13,13 @@ export default {
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
-      path: '',
-      description: 'Trade by best price on Mode',
+      path: 'bluebiu.near/widget/Linea.Bridge',
+      description: 'Bridge assets from other chains to Mode',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Mode.Swap',
+      description: 'Trade by best price on Swap',
     },
   },
 };
