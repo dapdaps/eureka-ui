@@ -1,7 +1,10 @@
 import React from "react";
 
+import useAccount from '@/hooks/useAccount';
 import type { Token } from "@/components/Bridge/types";
 import { StyledFlex } from "@/styled/styles";
+import { ellipsAccount, ellipsAll } from '@/utils/account';
+
 import {
   StyledCard,
   StyledCardBody,
@@ -29,6 +32,7 @@ const BridgeCard = (props: BridgeCardProps) => {
     tokenEditable,
     disabled,
   } = props;
+  const { account, provider } = useAccount();
 
   const handleGas = () => {
     if (disabled) return;
@@ -48,7 +52,7 @@ const BridgeCard = (props: BridgeCardProps) => {
           />
         </StyledCardHeadLeft>
         <StyledCardHeadRight>
-          0xc25...9210d
+          { ellipsAccount(account) }
           {
             tokenEditable && (
               <StyledCardHeadEdit>
@@ -88,7 +92,7 @@ const BridgeCard = (props: BridgeCardProps) => {
                     Need Gas Token
                   </StyledGasToken>
                 ) : (
-                  <div className="balance">balance: 123.23</div>
+                  <div className="balance">balance: -</div>
                 )
               }
             </StyledFlex>

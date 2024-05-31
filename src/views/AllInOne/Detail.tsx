@@ -7,6 +7,8 @@ import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
+import chainCofig from '@/config/chains'
+import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent'
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
@@ -45,6 +47,7 @@ const AllInOneDetailView = (props: Props) => {
     return !['liquidity', 'lending'].includes(menu);
   }, [menu]);
 
+
   return (
     <>
       <StyledContainer>
@@ -58,22 +61,45 @@ const AllInOneDetailView = (props: Props) => {
           />
 
           <StyledContent className="detail">
-            {showComponent && (
-              <AllInOneDetailCardView
-                key={menu}
-                title={currentMenu?.tab}
-                subTitle={currentMenu.description}
-                bgColor={currentChain.selectBgColor}
-                style={{ width: cardWidth }}
-                config={cardConfig}
-                onShowSettings={() => setShowSettings(true)}
-              >
-                {menu === 'bridge' && <Bridge chain={currentChain} />}
-                {menu === 'lending' && <Lending chain={currentChain} menu={currentMenu} />}
-                {menu === 'liquidity' && <Liquidity chain={currentChain} menu={currentMenu} />}
-                {menu === 'trade' && <Trade chain={currentChain} />}
-              </AllInOneDetailCardView>
-            )}
+            {
+              showComponent && (
+                <AllInOneDetailCardView
+                  key={menu}
+                  title={currentMenu?.tab}
+                  subTitle={currentMenu.description}
+                  bgColor={currentChain.selectBgColor}
+                  style={{ width: cardWidth }}
+                  config={cardConfig}
+                  onShowSettings={() => setShowSettings(true)}
+                >
+                  {
+                    menu === 'bridge' && (
+                      // <Bridge chain={currentChain} />
+                      <SuperBridge
+                        theme={currentChain.selectBgColor}
+                        showTitle={false}
+                        chainList={[chainCofig[1], chainCofig[currentChain.chainId]]}
+                      />
+                    )
+                  }
+                  {
+                    menu === 'lending' && (
+                      <Lending chain={currentChain} menu={currentMenu} />
+                    )
+                  }
+                  {
+                    menu === 'liquidity' && (
+                      <Liquidity chain={currentChain} menu={currentMenu} />
+                    )
+                  }
+                  {
+                    menu === 'trade' && (
+                      <Trade chain={currentChain} />
+                    )
+                  }
+                </AllInOneDetailCardView>
+              )
+            }
           </StyledContent>
           <StyledNavList>
             {currentChainMenuList.map((item: any) => {

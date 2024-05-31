@@ -30,32 +30,33 @@ interface Props {
     fromChain: Chain | null;
     onClick: () => void;
     defaultText?: string;   
+    theme: string;
 }
 
 export default function SubmitBtn({
-    isLoading, disabled, onClick, text, fromChain, defaultText = 'Bridge'
+    isLoading, disabled, onClick, text, fromChain, defaultText = 'Bridge', theme
 } : Props) {
     const { onConnect } = useConnectWallet();
     const { account, chainId, provider } = useAccount();
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
 
     if (!account) {
-        return <Container onClick={() => { onConnect() }}>Connect Wallet</Container>
+        return <Container style={{ backgroundColor: theme }} onClick={() => { onConnect() }}>Connect Wallet</Container>
     }
 
     if (isLoading) {
-        return <Container><Loading size={16} /> {defaultText}</Container>  
+        return <Container style={{ backgroundColor: theme }}><Loading size={16} /> {defaultText}</Container>  
     }
 
     if (disabled) {
-        return <Container className="disbaled">{text}</Container>
+        return <Container style={{ backgroundColor: theme }} className="disbaled">{text}</Container>
     }
 
     if (chainId !== fromChain?.chainId) {
-        return <Container onClick={() => { 
+        return <Container style={{ backgroundColor: theme }} onClick={() => { 
             setChain({ chainId: `0x${fromChain?.chainId?.toString(16)}` })
          }}>Switch Chain</Container>
     }
 
-    return <Container onClick={onClick}>{ defaultText }</Container>
+    return <Container style={{ backgroundColor: theme }} onClick={onClick}>{ defaultText }</Container>
 }

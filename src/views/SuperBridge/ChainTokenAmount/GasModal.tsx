@@ -108,6 +108,7 @@ interface Props {
     toChain: Chain | undefined;
     toAddress: string;
     maxBalance: string | undefined;
+    theme: string;
     onClick: () => void;
     onClose: () => void;
 }
@@ -115,7 +116,7 @@ interface Props {
 const max$ = 200
 
 export default function GasModal({
-    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance
+    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, theme
 } : Props) {
     const { account, chainId, provider } = useAccount();
     const prices = usePriceStore((store) => store.price);
@@ -210,6 +211,7 @@ export default function GasModal({
             isLoading={isLoading}
             disabled={disabled}
             text="Confirm"
+            theme={theme}
             fromChain={fromChain as Chain}
             onClick={senGas}
             defaultText="Confirm"

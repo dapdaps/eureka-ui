@@ -108,6 +108,7 @@ const InviteFirendsModal = ({
       display={open}
       title={<StyledTitle>Invite</StyledTitle>}
       width={954}
+      hidden={true}
       onClose={onClose}
       content={
         <>

@@ -112,13 +112,14 @@ interface Props {
     amount: string;
     reciveAmount: string | null;
     toAddress: string;
+    theme: string;
     route: QuoteResponse | null;
     onClick: () => void;
     onClose: () => void;
 }
 
 export default function ConfirmModal({
-    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, toAddress, route, reciveAmount, isLoading
+    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, theme, toAddress, route, reciveAmount, isLoading
 } : Props) {
     const prices = usePriceStore((store) => store.price);
 
@@ -172,8 +173,8 @@ export default function ConfirmModal({
         </Box>
         {
             isLoading 
-            ? <Container disabled> <Loading size={20}/> Sending</Container>
-            : <Container onClick={onClick}>Confirm</Container>
+            ? <Container style={{ backgroundColor: theme }} disabled> <Loading size={20}/> Sending</Container>
+            : <Container style={{ backgroundColor: theme }} onClick={onClick}>Confirm</Container>
         }
         
     </Modal>

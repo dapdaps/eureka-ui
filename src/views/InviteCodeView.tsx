@@ -155,7 +155,8 @@ export default function InviteCodeView() {
     try {
       const isBitget = wallet?.label.toLowerCase().includes('bitget');
       const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
-      const { isSuccess, errorMsg } = await inviteCodeActivate(account, code, isBitget ? 'bitget_wallet' : isCoin98 ? 'coin98_wallet' : '');
+      const isOkx = wallet?.label.toLowerCase().includes('okx');
+      const { isSuccess, errorMsg } = await inviteCodeActivate(account, code, isBitget ? 'bitget_wallet' : (isCoin98 ? 'coin98_wallet' : (isOkx ? 'okx_wallet' : '')));
       setLoading(false);
       if (!isSuccess) {
         setErrorTips(errorMsg);

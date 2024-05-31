@@ -200,8 +200,6 @@ export default function useTrade({
 
     async function ethereumDeposit(value: string, signer: Signer) {
         const transactionData = await getTransactionData(value, signer)
-        console.log('transactionData:', transactionData, )
-        console.log('gasEstimate: ', gasEstimate)
         const tx = await signer.sendTransaction({
             ...transactionData,
             // gasLimit: 19200,

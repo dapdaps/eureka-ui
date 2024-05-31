@@ -148,7 +148,7 @@ export default function Transaction(
                 address: item.fromAddress,
                 fromChainId: item.fromChainId,
                 toChainId: item.toChainId,
-            }, item.tool, provider?.getSigner()).then((isComplate: boolean) => {
+            }, (item.bridgeType || item.tool), provider?.getSigner()).then((isComplate: boolean) => {
                 if (isComplate) {
                     item.status = 2
                     saveTransaction(item)
