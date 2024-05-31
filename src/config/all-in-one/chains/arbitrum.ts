@@ -34,6 +34,7 @@ export default {
   bgColor: '#3564AB',
   bgIcon: '/images/chains/arbitrum_white.svg',
   selectBgColor: '#3564AB',
+  textColor: '#fff',
   chainId: 42161,
   rpcUrls: ['https://arb1.arbitrum.io/rpc'],
   defaultTab: 'Bridge',
@@ -52,7 +53,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Arbitrum.Lending',
       description: 'Trade by best price on Arbitrum',
-      Theme
+      Theme,
     },
   },
 };

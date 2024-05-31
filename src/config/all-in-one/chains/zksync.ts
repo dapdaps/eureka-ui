@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Theme = styled.div`
   --button-text-color: #fff;
@@ -34,6 +34,7 @@ export default {
   bgColor: '#FFFFFF',
   bgIcon: '/images/chains/zksync_white.svg',
   selectBgColor: '#3b6bdc',
+  textColor: '#000',
   chainId: 324,
   rpcUrls: ['https://mainnet.era.zksync.io'],
   defaultTab: 'Swap',
@@ -52,7 +53,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/zkSync.Lending',
       description: 'Trade by best price on zkSync',
-      Theme
+      Theme,
     },
   },
 };

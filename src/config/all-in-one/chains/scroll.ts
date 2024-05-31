@@ -34,6 +34,7 @@ export default {
   bgIcon: '/images/chains/scroll_white.svg',
   bgColor: '#fff',
   selectBgColor: '#EBC28E',
+  textColor: '#000',
   chainId: 534352,
   rpcUrls: ['https://rpc.scroll.io'],
   defaultTab: 'Swap',
@@ -52,7 +53,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Scroll.Lending',
       description: 'Trade by best price on Scroll',
-      Theme
+      Theme,
     },
   },
 };

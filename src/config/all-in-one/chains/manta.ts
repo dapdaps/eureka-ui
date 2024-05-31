@@ -34,6 +34,7 @@ export default {
   bgColor: '#fff',
   bgIcon: '/images/chains/manta_white.svg',
   selectBgColor: '#35bde3',
+  textColor: '#000',
   chainId: 169,
   rpcUrls: ['https://1rpc.io/manta'],
   defaultTab: 'Swap',
@@ -47,7 +48,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Manta.Lending',
       description: 'Trade by best price on Manta',
-      Theme
+      Theme,
     },
   },
 };

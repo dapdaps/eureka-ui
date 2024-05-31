@@ -34,6 +34,7 @@ export default {
   bgColor: '#04795B',
   bgIcon: '/images/chains/gnosis_white.svg',
   selectBgColor: '#04795B',
+  textColor: '#fff',
   chainId: 100,
   rpcUrls: ['https://rpc.ankr.com/gnosis'],
   defaultTab: 'Swap',
@@ -47,7 +48,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Gnosis.Lending',
       description: 'Trade by best price on Gnosis',
-      Theme
+      Theme,
     },
   },
 };

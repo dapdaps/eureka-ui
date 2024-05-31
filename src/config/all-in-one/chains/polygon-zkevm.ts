@@ -5,6 +5,7 @@ export default {
   bgColor: '#A55FFF',
   bgIcon: '/images/chains/polygon_zkevm_white.svg',
   selectBgColor: '#A55FFF',
+  textColor: '#fff',
   chainId: 1101,
   rpcUrls: ['https://zkevm-rpc.com'],
   defaultTab: 'Bridge',

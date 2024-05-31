@@ -34,6 +34,7 @@ export default {
   bgColor: '#CA0C0C',
   bgIcon: '/images/chains/optimism_white.svg',
   selectBgColor: '#CA0C0C',
+  textColor: '#fff',
   chainId: 10,
   rpcUrls: ['https://rpc.ankr.com/optimism'],
   defaultTab: 'Bridge',
@@ -52,7 +53,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Optimism.Lending',
       description: 'Trade by best price on Optimism',
-      Theme
+      Theme,
     },
   },
 };

@@ -33,6 +33,7 @@ export default {
   bgColor: '#AF1616',
   bgIcon: '/images/chains/avalanche_white.svg',
   selectBgColor: '#AF1616',
+  textColor: '#fff',
   chainId: 43114,
   rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
   defaultTab: 'Bridge',
@@ -51,7 +52,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Avalanche.Lending',
       description: 'Trade by best price on Avalanche',
-      Theme
+      Theme,
     },
   },
 };
