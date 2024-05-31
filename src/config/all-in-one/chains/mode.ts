@@ -10,6 +10,11 @@ export default {
   rpcUrls: ['https://mainnet.mode.network'],
   defaultTab: 'Swap',
   menuConfig: {
+    Bridge: {
+      tab: 'Bridge',
+      path: '',
+      description: 'Trade by best price on Mode',
+    },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Mode.Swap',

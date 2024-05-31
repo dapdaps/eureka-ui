@@ -39,6 +39,11 @@ export default {
   rpcUrls: ['https://rpc.ankr.com/gnosis'],
   defaultTab: 'Swap',
   menuConfig: {
+    Bridge: {
+      tab: 'Bridge',
+      path: '',
+      description: 'Trade by best price on Gnosis',
+    },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Gnosis.Swap.Dex',

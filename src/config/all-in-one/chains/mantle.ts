@@ -38,6 +38,11 @@ export default {
   rpcUrls: ['https://mantle-mainnet.public.blastapi.io'],
   defaultTab: 'Swap',
   menuConfig: {
+    Bridge: {
+      tab: 'Bridge',
+      path: '',
+      description: 'Trade by best price on Mantle',
+    },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Mantle.Swap.Dex',
