@@ -25,6 +25,7 @@ import {
   StyledTags,
   StyledText,
   StyledTimerBox,
+  StyledTips,
   StyledTitle,
   StyledWrapper,
 } from './styles';
@@ -164,11 +165,15 @@ const Index = ({ onLoad, campaigns, categories, bp }: any) => {
   return (
     <StyledCampaipnsContainer>
       <StyledHeader style={{ marginTop: 40, marginBottom: 20 }}>Quests Campaign</StyledHeader>
-      <StyledFlex $direction="column" $gap="30px">
-        {campaigns.map((campaign: any) => (
-          <QuestCampaign key={campaign.id} campaign={campaign} categories={categories} bp={bp} />
-        ))}
-      </StyledFlex>
+      {Array.isArray(campaigns) && campaigns.length ? (
+        <StyledFlex $direction="column" $gap="30px">
+          {campaigns.map((campaign: any) => (
+            <QuestCampaign key={campaign.id} campaign={campaign} categories={categories} bp={bp} />
+          ))}
+        </StyledFlex>
+      ) : (
+        <StyledTips>More Quests are coming soon, stay tuned...</StyledTips>
+      )}
     </StyledCampaipnsContainer>
   );
 };

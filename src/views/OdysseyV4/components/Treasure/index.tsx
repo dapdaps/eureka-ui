@@ -190,7 +190,11 @@ export default function Treasure() {
               >
                 Trade on Particle <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
               </TrapeziformBtn>
-              <TrapeziformBtn width="236px" height="42px" loading={reportLoading} handleClick={(e: any) => {}}>
+              <TrapeziformBtn
+                width="236px"
+                height="42px"
+                // handleClick={(e: any) => openLink(`${location.origin}/dapp/duo`)}
+              >
                 Trade on DUO <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
               </TrapeziformBtn>
             </div>
@@ -636,7 +640,7 @@ export default function Treasure() {
           <ModalStep>
             <span className="step">Create sub account on Juice</span>
             <div className="gap"></div>
-            <span className="step">Create sub account on Juice</span>
+            <span className="step">Deposit 3x WETH & USDB</span>
             <div className="gap"></div>
             <span className="step">Borrow WETH & USDB</span>
           </ModalStep>
