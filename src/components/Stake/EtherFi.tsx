@@ -15,6 +15,7 @@ import useTrade from './hooks/useEtherFiTrade'
 import useValue from './hooks/useValue';
 import { usePriceStore } from '@/stores/price';
 
+import ChainTokens from './componments/ChainTokens';
 import Header from './componments/Header';
 import TokenAction from './componments/TokenAction';
 import { chains, tokens } from './chain';
@@ -25,6 +26,7 @@ const Container = styled.div`
    border-radius: 16px;
    margin: 20px auto;
    padding: 20px 0;
+   position: relative;
 `
 
 const InputActionWapper = styled.div`
@@ -110,6 +112,7 @@ export const Stake = ({
     const { chainId, account, provider } = useAccount();
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')
+    const [chainTokenShow, setChainTokenShow] = useState<boolean>(false);
     const { onConnect } = useConnectWallet();
 
     const { addAction } = useAddAction('dapp');
@@ -119,7 +122,7 @@ export const Stake = ({
     const [isError, setIsError] = useState(false)
     const [btnMsg, setBtnMsg] = useState('Confirm')
     const [updater, setUpdater] = useState(1)
-    const ezToken = ezTokens[currentChain.chainId]
+    const [ezToken, setEzToken] = useState<any>(ezTokens[currentChain.chainId])
 
     const prices = usePriceStore((store) => store.price);
 
@@ -220,9 +223,9 @@ export const Stake = ({
                 // title="Restake"
                 balanceLoading={ethLoading}
                 tokenAmountChange={setAmount}
-                // tokenChange={() => {
-                //     setChainTokenShow(true)
-                // }}
+                tokenChange={() => {
+                    setChainTokenShow(true)
+                }}
             />
 
             <InputActionTitle>
@@ -273,7 +276,21 @@ export const Stake = ({
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>
 
-
+        {
+            chainTokenShow ? <ChainTokens
+                chains={chains.filter((item: any) => [81457, 59144, 8453, 34443].indexOf(item.chainId) > -1)}
+                tokens={tokens}
+                chain={currentChain}
+                token={currentToken}
+                onClose={() => {
+                    setChainTokenShow(false)
+                }}
+                onChainTokenChange={(chain, token) => {
+                    setCurrentChain(chain)
+                    setCurrentToken(token)
+                    setEzToken(ezTokens[chain.chainId])
+                }} /> : null
+        }
     </Container>
 
 };
