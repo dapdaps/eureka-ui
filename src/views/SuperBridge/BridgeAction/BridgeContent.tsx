@@ -83,12 +83,15 @@ interface Props {
   chainList: Chain[];
   onTransactionUpdate?: () => void;
   showTitle?: boolean;
-  theme?: string;
+  theme?: any;
 }
 
 export default function BirdgeAction(
   {
-    chainList, onTransactionUpdate, showTitle = true, theme = 'rgba(235, 244, 121, 1)'
+    chainList, onTransactionUpdate, showTitle = true, theme = {
+      selectBgColor: 'rgba(235, 244, 121, 1)',
+      textColor: 'rgba(55, 58, 83, 1)'
+    }
   }: Props) {
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false)
   const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false)

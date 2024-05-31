@@ -39,6 +39,11 @@ export default {
   rpcUrls: ['https://1rpc.io/manta'],
   defaultTab: 'Swap',
   menuConfig: {
+    Bridge: {
+      tab: 'Bridge',
+      path: '',
+      description: 'Trade by best price on Manta',
+    },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Manta.Swap',

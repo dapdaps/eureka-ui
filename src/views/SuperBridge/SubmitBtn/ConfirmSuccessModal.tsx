@@ -68,7 +68,7 @@ interface Props {
     fromToken: Token | undefined;
     toToken: Token | undefined;
     amount: string;
-    theme: string;
+    theme: any;
     reciveAmount: string | null;
     toAddress: string;
     route: QuoteResponse | null;
@@ -82,6 +82,8 @@ export default function ConfirmModal({
 } : Props) {
     const prices = usePriceStore((store) => store.price);
     const router = useRouter();
+
+    const styles = { backgroundColor: theme.selectBgColor, color: theme.textColor }
 
     return <Modal onClose={() => {
         onClose()
@@ -101,7 +103,7 @@ export default function ConfirmModal({
             }}>My Transactions </span>page.
         </Desc>
        
-        <Container style={{ backgroundColor: theme }} onClick={onClick}>+ New Transfer</Container>
+        <Container style={styles} onClick={onClick}>+ New Transfer</Container>
         
     </Modal>
 }

@@ -19,6 +19,8 @@ const AllInOneView = (props: Props) => {
     router.push(`/all-in-one/${currentChain.path}/${tab}`);
   };
 
+  console.log('currentChainMenuList: ', currentChainMenuList)
+
   return (
     <StyledContainer>
       <StyledFlex flexDirection="column" justifyContent="center" className="all-in-one-wrapper">

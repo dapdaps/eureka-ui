@@ -39,7 +39,7 @@ const popupsData: {
   manta,
   mantle,
   metis,
-  // mode,
+  mode,
   optimism,
   polygon,
   'polygon-zkevm': polygonZkevm,
