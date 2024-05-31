@@ -10,7 +10,7 @@ const BaseButton = ({ chain, disabled, loading, onClick, children }: any) => {
     <AllInOneButton
       $background={chain?.selectBgColor}
       $borderColor={chain?.selectBgColor}
-      color={chain?.iconColor}
+      color={chain?.textColor}
       styles={{ marginTop: 20, marginBottom: 20 }}
       disabled={disabled}
       loading={loading}
@@ -21,7 +21,7 @@ const BaseButton = ({ chain, disabled, loading, onClick, children }: any) => {
   );
 };
 
-const TradeButton = ({ chain, spender, token, amount, loading, errorTips, onClick }: any) => {
+const TradeButton = ({ chain, spender, token, amount, loading, errorTips, disabled, onClick }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
@@ -76,7 +76,7 @@ const TradeButton = ({ chain, spender, token, amount, loading, errorTips, onClic
   }
 
   return (
-    <BaseButton chain={chain} onClick={onClick}>
+    <BaseButton chain={chain} onClick={onClick} disabled={disabled}>
       Swap
     </BaseButton>
   );

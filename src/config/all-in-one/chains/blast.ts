@@ -4,6 +4,7 @@ export default {
   icon: '/images/chains/blast.svg',
   bgColor: '#FDFE03',
   bgIcon: '/images/chains/blast_white.svg',
+  textColor: '#000',
   selectBgColor: '#FDFE03',
   chainId: 81457,
   rpcUrls: ['https://rpc.blast.io'],

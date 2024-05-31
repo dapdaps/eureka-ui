@@ -5,6 +5,7 @@ export default {
   bgColor: '#DFFE00',
   bgIcon: '/images/chains/mode_white.svg',
   selectBgColor: '#DFFE00',
+  textColor: '#000',
   chainId: 34443,
   rpcUrls: ['https://mainnet.mode.network'],
   defaultTab: 'Swap',

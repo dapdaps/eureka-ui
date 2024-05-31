@@ -34,6 +34,7 @@ export default {
   bgColor: '#5C28D8',
   bgIcon: '/images/chains/polygon_white.svg',
   selectBgColor: '#5C28D8',
+  textColor: '#fff',
   chainId: 137,
   rpcUrls: ['https://polygon.llamarpc.com'],
   defaultTab: 'Bridge',
@@ -52,7 +53,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Polygon.Lending',
       description: 'Trade by best price on Polygon',
-      Theme
+      Theme,
     },
   },
 };

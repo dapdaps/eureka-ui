@@ -130,7 +130,14 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
             }}
           />
         </StyledTrade>
-        <Button chain={chain} errorTips={errorTips} token={inputCurrency} loading={loading} onClick={onSwap} />
+        <Button
+          chain={chain}
+          errorTips={errorTips}
+          token={inputCurrency}
+          loading={loading}
+          onClick={onSwap}
+          disabled={!trade?.txn}
+        />
         <StyledTradeFooter>
           <StyledTradeEth>
             {trade && (

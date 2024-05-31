@@ -33,6 +33,7 @@ export default {
   bgColor: '#FFBF19',
   bgIcon: '/images/chains/bnb_white.svg',
   selectBgColor: '#FFBF19',
+  textColor: '#fff',
   chainId: 56,
   rpcUrls: ['https://binance.llamarpc.com'],
   defaultTab: 'Bridge',
@@ -51,7 +52,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Bsc.Lending',
       description: 'Trade by best price on BNB Chain',
-      Theme
+      Theme,
     },
   },
 };

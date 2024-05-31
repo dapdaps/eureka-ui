@@ -5,6 +5,7 @@ export default {
   bgColor: '#000000',
   bgIcon: '/images/chains/metis_white.svg',
   selectBgColor: '#00dacc',
+  textColor: '#fff',
   chainId: 1088,
   rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
   defaultTab: 'Bridge',

@@ -34,6 +34,7 @@ export default {
   bgColor: '#0038FF',
   bgIcon: '/images/chains/base_white.svg',
   selectBgColor: '#0038FF',
+  textColor: '#fff',
   chainId: 8453,
   rpcUrls: ['https://developer-access-mainnet.base.org'],
   defaultTab: 'Bridge',
@@ -52,7 +53,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Base.Lending',
       description: 'Trade by best price on Base',
-      Theme
+      Theme,
     },
   },
 };

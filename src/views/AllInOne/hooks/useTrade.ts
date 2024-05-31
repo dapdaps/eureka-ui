@@ -144,7 +144,7 @@ export default function useTrade({ chainId }: any) {
           });
 
         setBestTrade(_markets[0]);
-        setTrade(_markets[0]);
+        setTrade({ ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency });
         setMarkets(_markets);
         setLoading(false);
       } catch (err) {
@@ -168,6 +168,7 @@ export default function useTrade({ chainId }: any) {
   const onSwap = useCallback(async () => {
     const signer = provider.getSigner(account);
     const wethAddress = weth[trade.inputCurrency.chainId];
+
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });
     try {
@@ -189,7 +190,7 @@ export default function useTrade({ chainId }: any) {
         inputCurrency: trade.inputCurrency,
         outputCurrencyAmount: trade.outputCurrencyAmount,
         outputCurrency: trade.outputCurrency,
-        template: wethAddress === trade.routerAddress ? 'Wrap and Unwrap' : trade.template,
+        template: wethAddress === trade.routerAddress ? 'Wrap and Unwrap' : trade.name,
         status,
         transactionHash,
         add: 0,

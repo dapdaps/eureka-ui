@@ -33,6 +33,7 @@ export default {
   bgColor: '#000000',
   bgIcon: '/images/chains/mantle_white.svg',
   selectBgColor: 'rgb(0,255,224)',
+  textColor: '#fff',
   chainId: 5000,
   rpcUrls: ['https://mantle-mainnet.public.blastapi.io'],
   defaultTab: 'Swap',
@@ -51,7 +52,7 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Mantle.Lending',
       description: 'Trade by best price on Mantle',
-      Theme
+      Theme,
     },
   },
 };
