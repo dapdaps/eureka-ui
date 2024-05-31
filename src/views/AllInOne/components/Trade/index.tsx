@@ -61,10 +61,18 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
 
   const onSelectToken = useCallback(
     (token: any) => {
-      const _inputCurrency =
-        selectType === 'in' ? token : token.address === outputCurrency?.address ? null : inputCurrency;
-      const _outputCurrency =
-        selectType === 'out' ? token : token.address === inputCurrency?.address ? null : outputCurrency;
+      let _inputCurrency = null;
+      let _outputCurrency = null;
+
+      if (selectType === 'in') {
+        _inputCurrency = token;
+        if (token.address === outputCurrency?.address) _outputCurrency = null;
+      }
+      if (selectType === 'out') {
+        _outputCurrency = token;
+        if (token.address === inputCurrency?.address) _inputCurrency = null;
+      }
+
       setInputCurrency(_inputCurrency);
       setOutputCurrency(_outputCurrency);
       setShowTokensSelector(false);
