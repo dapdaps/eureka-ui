@@ -21,11 +21,6 @@ const networks = {
       blast['wrseth'],
       blast['orbit'],
       blast['axlusdc'],
-      blast['juice'],
-      blast['yield'],
-      blast['$wai'],
-      blast['ole'],
-      blast['andy'],
     ],
   },
 };
