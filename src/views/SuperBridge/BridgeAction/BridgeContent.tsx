@@ -460,6 +460,7 @@ export default function BirdgeAction(
         toChain={toChain}
         toAddress={account as string}
         maxBalance={balance}
+        theme={theme}
         onClick={() => {
           console.log(11)
         }}
