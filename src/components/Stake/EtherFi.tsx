@@ -61,29 +61,65 @@ const SubmitBtn = styled.button`
     background: linear-gradient(90deg, #3E9BF1 0%, #9C5DF3 100%);
 `
 
-const ezToken = {
-    chainId: 81457,
-    name: 'weETH',
-    symbol: 'weETH',
-    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
-    decimals: 18,
-    isNative: false,
-    address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+const ezTokens: any = {
+    81457: {
+        chainId: 81457,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+    },
+    59144: {
+        chainId: 59144,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6',
+    },
+    34443: {
+        chainId: 34443,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+    },
+    8453: {
+        chainId: 34443,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+    }
 }
 
-export const Stake = () => {
+interface Props {
+    chainIndex: number;
+}
+
+export const Stake = ({
+    chainIndex
+}: Props) => {
     const { chainId, account, provider } = useAccount();
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')
     const { onConnect } = useConnectWallet();
 
     const { addAction } = useAddAction('dapp');
-    const [currentChain, setCurrentChain] = useState<any>(chains[4]);
-    const [currentToken, setCurrentToken] = useState<any>(tokens[chains[4].chainId][0]);
+    const [currentChain, setCurrentChain] = useState<any>(chains[chainIndex]);
+    const [currentToken, setCurrentToken] = useState<any>(tokens[chains[chainIndex].chainId][0]);
     const [needChainSwitch, setNeedChainSwitch] = useState(false)
     const [isError, setIsError] = useState(false)
     const [btnMsg, setBtnMsg] = useState('Confirm')
     const [updater, setUpdater] = useState(1)
+    const ezToken = ezTokens[currentChain.chainId]
 
     const prices = usePriceStore((store) => store.price);
 
@@ -109,7 +145,7 @@ export const Stake = () => {
         provider: provider,
         account: account as string,
         isError: isError,
-        chainId: Number(currentChain?.chainId),
+        chain: currentChain,
     })
 
     const { value: inputMoney } = useValue({
