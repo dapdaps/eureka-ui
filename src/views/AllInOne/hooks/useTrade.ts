@@ -104,7 +104,7 @@ export default function useTrade({ chainId }: any) {
           setLoading(false);
           return { noPair: true, txn: null, outputCurrencyAmount: '', routerAddress: '' };
         }
-        const response = await fetch('/dapdap/quoter', {
+        const response = await fetch('https://api.dapdap.net/quoter', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -128,7 +128,7 @@ export default function useTrade({ chainId }: any) {
         const network = networks[inputCurrency.chainId];
         const dexs = network.dexs;
         const _markets = data
-          .filter((item: any) => item.txn)
+          .filter((item: any) => item.txn && item.outputCurrencyAmount)
           .sort((a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount)
           .map((item: any) => {
             const _trade = formatTrade({

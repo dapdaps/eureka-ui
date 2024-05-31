@@ -7,7 +7,7 @@ const CHAIN_ID = 169;
 
 export default {
   chainId: CHAIN_ID,
-  defalutInputCurrency: manta['eth'],
+  defalutInputCurrency: manta['weth'],
   dexs: {
     QuickSwap: {
       ...quickSwapBasic,
