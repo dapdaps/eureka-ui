@@ -129,11 +129,15 @@ export const StyledContent = styled.div`
     margin-top: 5px;
 
     > [class*='StyledBridgeContainer'] {
-      transform: scale(0.8);
+      width: 532px;
+      transform: scale(0.5);
+      flex-shrink: 0;
       transform-origin: left top;
     }
     > [class*='StyledTradeContainer'] {
-      transform: scale(0.9);
+      width: 532px;
+      transform: scale(0.5);
+      flex-shrink: 0;
       transform-origin: left top;
     }
     > [class*='StyledLiquidityEntry'] {

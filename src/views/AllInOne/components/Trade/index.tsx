@@ -93,7 +93,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
 
   return (
     <>
-      <StyledTradeContainer className={disabled ? 'disabled' : ''}>
+      <StyledTradeContainer className={`StyledTradeContainer ${disabled ? 'disabled' : ''}`}>
         <StyledTrade>
           <div className="from-currency_margin">
             <Currency

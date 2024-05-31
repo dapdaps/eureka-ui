@@ -131,7 +131,7 @@ const LiquidityEntry = () => {
   }, []);
 
   return (
-    <StyledLiquidityEntry>
+    <StyledLiquidityEntry className="StyledLiquidityEntry">
       <FlexTable columns={columns} list={tableList} />
     </StyledLiquidityEntry>
   );
