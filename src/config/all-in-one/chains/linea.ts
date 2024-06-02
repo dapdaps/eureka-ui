@@ -41,22 +41,22 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Linea.Bridge',
-      description: 'Bridge assets from other chains to Linea',
+      description: 'Intuitively across different network to Linea',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Linea.Swap.Dex',
-      description: 'Trade by best price on Linea',
+      description: 'Efficiently from/to any assets on Linea',
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Linea.Liquidity.GAMMA',
-      description: 'Trade by best price on Linea',
+      description: 'Seamlessly adding LP to any pair',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Linea.Lending',
-      description: 'Trade by best price on Linea',
+      description: 'Maximize asset utilization across Linea markets',
       Theme,
     },
   },

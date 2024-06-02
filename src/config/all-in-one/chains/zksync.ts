@@ -42,17 +42,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/zkSync.Bridge.Index',
-      description: 'Trade by best price on zkSync',
+      description: 'Intuitively across different network to zkSync',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/zkSync.Swap.Dex',
-      description: 'Trade by best price on zkSync',
+      description: 'Efficiently from/to any assets on zkSync',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/zkSync.Lending',
-      description: 'Trade by best price on zkSync',
+      description: 'Maximize asset utilization across zkSync markets',
       Theme,
     },
   },

@@ -41,17 +41,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Bsc.Bridge',
-      description: 'Trade by best price on BNB Chain',
+      description: 'Intuitively across different network to BNB Chain',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Bsc.Swap.Dex',
-      description: 'Trade by best price on BNB Chain',
+      description: 'Efficiently from/to any assets on BNB Chain',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Bsc.Lending',
-      description: 'Trade by best price on BNB Chain',
+      description: 'Maximize asset utilization across BNB Chain markets',
       Theme,
     },
   },

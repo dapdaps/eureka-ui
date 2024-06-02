@@ -13,12 +13,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Metis.Bridge',
-      description: 'Trade by best price on Metis',
+      description: 'Intuitively across different network to Metis',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Metis.Swap.Dex',
-      description: 'Trade by best price on Metis',
+      description: 'Efficiently from/to any assets on Metis',
     },
   },
 };

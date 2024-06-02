@@ -13,12 +13,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Blast.BridgeAuthority.Index',
-      description: 'Trade by best price on Blast',
+      description: 'Intuitively across different network to Blast',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Blast.Swap',
-      description: 'Trade by best price on Blast',
+      description: 'Efficiently from/to any assets on Blast',
     },
     // Lending: {
     //   tab: 'Lending',

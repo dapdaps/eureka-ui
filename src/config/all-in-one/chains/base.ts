@@ -42,17 +42,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Base.Bridge',
-      description: 'Trade by best price on Base',
+      description: ' Intuitively across different network to Base',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Base.BaseDex',
-      description: 'Trade by best price on Base',
+      description: 'Efficiently from/to any assets on Base',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Base.Lending',
-      description: 'Trade by best price on Base',
+      description: 'Maximize asset utilization across Base markets',
       Theme,
     },
   },

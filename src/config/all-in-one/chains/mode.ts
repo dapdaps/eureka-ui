@@ -14,12 +14,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Linea.Bridge',
-      description: 'Bridge assets from other chains to Mode',
+      description: 'Intuitively across different network to Mode',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Mode.Swap',
-      description: 'Trade by best price on Swap',
+      description: 'Efficiently from/to any assets on Mode',
     },
   },
 };

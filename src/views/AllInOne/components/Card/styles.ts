@@ -105,6 +105,8 @@ export const StyledTitle = styled.div`
     color: #979abe;
     line-height: 17px;
     white-space: wrap;
+    font-weight: 400;
+    margin-top: 10px;
   }
 
   .title-text-wrap {

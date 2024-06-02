@@ -41,22 +41,22 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Trade by best price on Mantle',
+      description: 'Intuitively across different network to Mantle',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Mantle.Swap.Dex',
-      description: 'Trade by best price on Mantle',
+      description: 'Efficiently from/to any assets on Mantle',
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Mantle.GAMMA',
-      description: 'Trade by best price on Mantle',
+      description: 'Seamlessly adding LP to any pair',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Mantle.Lending',
-      description: 'Trade by best price on Mantle',
+      description: 'Maximize asset utilization across Mantle markets',
       Theme,
     },
   },

@@ -42,17 +42,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Trade by best price on Gnosis',
+      description: 'Intuitively across different network to Gnosis',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Gnosis.Swap.Dex',
-      description: 'Trade by best price on Gnosis',
+      description: 'Efficiently from/to any assets on Gnosis',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Gnosis.Lending',
-      description: 'Trade by best price on Gnosis',
+      description: 'Maximize asset utilization across Gnosis markets',
       Theme,
     },
   },

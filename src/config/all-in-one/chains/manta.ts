@@ -42,17 +42,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Trade by best price on Manta',
+      description: 'Intuitively across different network to Manta',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Manta.Swap',
-      description: 'Trade by best price on Manta',
+      description: 'Efficiently from/to any assets on Manta',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Manta.Lending',
-      description: 'Trade by best price on Manta',
+      description: 'Maximize asset utilization across Manta markets',
       Theme,
     },
   },

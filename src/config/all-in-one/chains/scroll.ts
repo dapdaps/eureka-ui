@@ -42,17 +42,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Scroll.Bridge.Index',
-      description: 'Trade by best price on Scroll',
+      description: 'Intuitively across different network to Scroll',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Scroll.Swap',
-      description: 'Trade by best price on Scroll',
+      description: 'Efficiently from/to any assets on Scroll',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Scroll.Lending',
-      description: 'Trade by best price on Scroll',
+      description: 'Maximize asset utilization across Scroll markets',
       Theme,
     },
   },

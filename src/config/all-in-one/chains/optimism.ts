@@ -42,17 +42,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Optimism.Bridge',
-      description: 'Trade by best price on Optimism',
+      description: 'Intuitively across different network to Optimism',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Optimism.Dex',
-      description: 'Trade by best price on Optimism',
+      description: 'Efficiently from/to any assets on Optimism',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Optimism.Lending',
-      description: 'Trade by best price on Optimism',
+      description: 'Maximize asset utilization across Optimism markets',
       Theme,
     },
   },

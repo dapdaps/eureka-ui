@@ -42,17 +42,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Arbitrum.Bridge',
-      description: 'Trade by best price on Arbitrum',
+      description: 'Intuitively across different network to Arbitrum',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Arbitrum.Swap.Dex',
-      description: 'Trade by best price on Arbitrum',
+      description: 'Efficiently from/to any assets on Arbitrum',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Arbitrum.Lending',
-      description: 'Trade by best price on Arbitrum',
+      description: 'Maximize asset utilization across Arbitrum markets',
       Theme,
     },
   },

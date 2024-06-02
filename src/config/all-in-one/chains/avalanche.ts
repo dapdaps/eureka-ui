@@ -41,17 +41,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Avalanche.Bridge',
-      description: 'Trade by best price on Avalanche',
+      description: 'Intuitively across different network to Avalanche',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Avalanche.Swap',
-      description: 'Trade by best price on Avalanche',
+      description: 'Efficiently from/to any assets on Avalanche',
     },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Avalanche.Lending',
-      description: 'Trade by best price on Avalanche',
+      description: 'Maximize asset utilization across Avalanche markets',
       Theme,
     },
   },
