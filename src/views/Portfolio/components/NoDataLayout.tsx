@@ -44,16 +44,16 @@ export const NoAssetsIcon = (
   </svg>
 );
 
-export const NoDataLayout = ({ shrink, tips }: { shrink?: boolean, tips?: any }) => {
+export const NoDataLayout = ({ shrink, tips, icon }: { shrink?: boolean, tips?: any, icon?: boolean }) => {
   return (
     <NoAssetWrapper
       style={{
         padding: shrink ? '20px 0px' : '',
       }}
     >
-      {NoAssetsIcon}
+      {icon && NoAssetsIcon}
 
-      <NoAssetText>{tips || 'No assets yet'}</NoAssetText>
+      <NoAssetText>{tips || 'No asset found'}</NoAssetText>
     </NoAssetWrapper>
   );
 };
