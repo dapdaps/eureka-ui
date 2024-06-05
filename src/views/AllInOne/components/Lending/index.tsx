@@ -164,7 +164,18 @@ const Lending = (props: Props) => {
                 dappsConfig: tabConfig.dapps,
                 toast,
                 account,
-                onButtonClick: () => {},
+                onButtonClick: (address: string, actionText: any) => {
+                  const market = marketsInfo[address];
+                  const dapp = dappsInfo[market.dapp];
+                  const dappConfig = tabConfig.dapps[market.dapp];
+                  setTableButtonClickData({
+                    ...dapp,
+                    ...market,
+                    config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
+                    actionText,
+                  });
+                  setShowDialog(true);
+                },
                 onSuccess: (dapp: string) => {
                   setUpdateData(dapp);
                   setCurrMarket(dapp);
