@@ -7,9 +7,9 @@ const MarketItems = (props: Props) => {
   const { list, currMarket, onMarketChange } = props;
 
   const markets = [
-    {
-      name: 'All',
-    },
+    // {
+    //   name: 'All',
+    // },
     ...list
   ];
 
