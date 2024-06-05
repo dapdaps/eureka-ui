@@ -193,7 +193,7 @@ export default function Treasure() {
               <TrapeziformBtn
                 width="236px"
                 height="42px"
-                // handleClick={(e: any) => openLink(`${location.origin}/dapp/duo`)}
+                handleClick={(e: any) => openLink(`${location.origin}/dapp/duo`)}
               >
                 Trade on DUO <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
               </TrapeziformBtn>
