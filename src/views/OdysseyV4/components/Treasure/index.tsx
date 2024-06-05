@@ -14,7 +14,6 @@ import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
 import {
   Badge,
-  Desc,
   IconGroup,
   ModalBody,
   ModalDesc,
