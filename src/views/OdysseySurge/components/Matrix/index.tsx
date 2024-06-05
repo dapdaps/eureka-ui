@@ -1,4 +1,4 @@
-import MatrixGame from '@/views/OdysseyV2-1/components/Matrix/MatrixGame';
+import MatrixGame from '@/views/OdysseySurge/components/Matrix/MatrixGame';
 
 import {
   StyledMatrixBorder,

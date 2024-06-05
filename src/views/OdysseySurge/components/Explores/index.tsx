@@ -1,6 +1,6 @@
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
-import { StyledEmptyContainer } from '@/views/OdysseyV2-1/styles';
+import { StyledEmptyContainer } from '@/views/OdysseySurge/styles';
 
 import ExporeItem from './ExporeItem';
 import {  StyledContainer,StyledContent, StyledItemWrap, StyledSubTitle, StyledTitle } from './styles';

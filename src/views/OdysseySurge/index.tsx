@@ -3,22 +3,22 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 import useUserInfo from '@/hooks/useUserInfo';
-import Banner from '@/views/OdysseyV2-1/components/Banner';
-import Explores from '@/views/OdysseyV2-1/components/Explores';
-import FootClaim from '@/views/OdysseyV2-1/components/FootClaim';
-import Matrix from '@/views/OdysseyV2-1/components/Matrix';
-import Quest from '@/views/OdysseyV2-1/components/Quest/index';
-import useDetail from '@/views/OdysseyV2-1/hooks/useDetail';
-import { useGame } from '@/views/OdysseyV2-1/hooks/useGame';
-import useQuests from '@/views/OdysseyV2-1/hooks/useQuests';
+import Banner from '@/views/OdysseySurge/components/Banner';
+import Explores from '@/views/OdysseySurge/components/Explores';
+import FootClaim from '@/views/OdysseySurge/components/FootClaim';
+import Matrix from '@/views/OdysseySurge/components/Matrix';
+import Quest from '@/views/OdysseySurge/components/Quest/index';
+import useDetail from '@/views/OdysseySurge/hooks/useDetail';
+import { useGame } from '@/views/OdysseySurge/hooks/useGame';
+import useQuests from '@/views/OdysseySurge/hooks/useQuests';
 import {
   StyledOdysseyV2Container
-} from '@/views/OdysseyV2-1/styles';
+} from '@/views/OdysseySurge/styles';
 import Noti from '@/views/OdysseyV4/components/Noti';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
-import useClaim from '@/views/OdysseyV2-1/hooks/useClaim';
+import useClaim from '@/views/OdysseySurge/hooks/useClaim';
 
-const OdysseyV21 = () => {
+const OdysseySurge = () => {
   const router = useRouter();
   const { id } = router.query;
 
@@ -92,4 +92,4 @@ const OdysseyV21 = () => {
 }
 
 
-export default OdysseyV21;
+export default OdysseySurge;

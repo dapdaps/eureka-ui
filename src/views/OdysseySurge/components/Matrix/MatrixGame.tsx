@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import ClaimButton from '@/views/OdysseyV2-1/components/ClaimButton';
+import ClaimButton from '@/views/OdysseySurge/components/ClaimButton';
 import {
   StyledCardBack,
   StyledCardContainer,
@@ -12,7 +12,7 @@ import {
   StyledGameFooter, StyledPTS,
   StyledText,
   StyledTextContainer,
-} from '@/views/OdysseyV2-1/components/Matrix/styles';
+} from '@/views/OdysseySurge/components/Matrix/styles';
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
 import Big from 'big.js';

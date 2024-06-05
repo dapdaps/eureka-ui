@@ -6,8 +6,8 @@ import {
   BannerTitle,
   StyledBannerContainer,
   StyledBannerPadding,
-  StyledContent} from '@/views/OdysseyV2-1/components/Banner/styles';
-import Summary from '@/views/OdysseyV2-1/components/Summary';
+  StyledContent} from '@/views/OdysseySurge/components/Banner/styles';
+import Summary from '@/views/OdysseySurge/components/Summary';
 
 const Banner = (props: {
   detail: Record<string, any>;

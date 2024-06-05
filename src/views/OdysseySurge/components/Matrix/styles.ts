@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { DAPP_STATUS } from '@/views/OdysseyV2-1/config';
+import { DAPP_STATUS } from '@/views/OdysseySurge/config';
 
 export const StyledMatrixContainer = styled.div`
   border-radius: 10px;

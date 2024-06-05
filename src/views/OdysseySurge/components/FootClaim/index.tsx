@@ -1,4 +1,4 @@
-import ClaimButton from '@/views/OdysseyV2-1/components/ClaimButton';
+import ClaimButton from '@/views/OdysseySurge/components/ClaimButton';
 
 import { StyledContainer, StyledContentText } from './styles';
 

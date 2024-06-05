@@ -1,7 +1,7 @@
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
-import Title from '@/views/OdysseyV2-1/components/Title';
-import { StyledEmptyContainer } from '@/views/OdysseyV2-1/styles';
+import Title from '@/views/OdysseySurge/components/Title';
+import { StyledEmptyContainer } from '@/views/OdysseySurge/styles';
 
 import DappCard from '../DappCard';
 import { StyledBody, StyledContainer, StyledContent, StyledQuestWrap,StyledSubTitle, StyledTitle } from './styles';

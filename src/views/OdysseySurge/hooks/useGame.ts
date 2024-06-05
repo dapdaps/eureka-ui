@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useLayoutStore } from '@/stores/layout';
-import { DAPP_STATUS, ODYSSEY_GAME_DAPPS } from '@/views/OdysseyV2-1/config';
+import { DAPP_STATUS, ODYSSEY_GAME_DAPPS } from '@/views/OdysseySurge/config';
 import Big from 'big.js';
 
 export function useGame(props: any) {

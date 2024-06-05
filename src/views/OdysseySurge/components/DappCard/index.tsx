@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useLayoutStore } from '@/stores/layout';
-import LockStatus from '@/views/OdysseyV2-1/components/LockStatus';
+import LockStatus from '@/views/OdysseySurge/components/LockStatus';
 
 import useCheck from '../../hooks/useCheck';
 import ArrowIcon from '../ArrowIcon';
