@@ -9,7 +9,7 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
   border: 1px solid #373a53;
   border-radius: 16px;
   padding: 28px 24px 28px 24px;
-  transition: all 0.3s ease;
+  transition: all 0.6s ease-in-out;
   min-width: 300px;
   min-height: 250px;
   background: #16181d;

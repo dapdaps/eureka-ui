@@ -44,4 +44,6 @@ export const StyledNavList = styled.div`
   gap: 16px;
   overflow: hidden;
   margin-top: 100px;
+  position: fixed;
+  bottom: 0;
 `;

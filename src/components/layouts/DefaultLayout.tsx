@@ -44,6 +44,11 @@ export function DefaultLayout({ children }: Props) {
     updateAccount();
   }, [account]);
 
+  const hideFooterRoutes = [
+    '^/uniswap$',
+    '^\/all-in-one\/[\\s\\S]+\/[\\s\\S]+$',
+  ];
+
   return (
     <Layout
       style={{
@@ -58,7 +63,7 @@ export function DefaultLayout({ children }: Props) {
         </div> */}
         {children}
       </div>
-      {pathName !== '/uniswap' && <Footer />}
+      {!hideFooterRoutes.some((reg) => new RegExp(reg).test(pathName)) && <Footer />}
       <AccountSider />
     </Layout>
   );
