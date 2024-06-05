@@ -629,7 +629,7 @@ export default function Treasure() {
             <Image src="/images/odyssey/v4/td3.svg" alt="" width={79} height={22} />
             <Badge className="">
               <Image className="badge-icon" src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
-              <span className="badge-title">extra Gold</span>
+              <span className="badge-title">Extra Gold</span>
             </Badge>
           </ModalSub>
           <ModalDesc>
@@ -905,7 +905,7 @@ export default function Treasure() {
           </div> */}
           <Badge className="td1">
             <Image className="badge-icon" src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
-            <span className="badge-title">extra Gold</span>
+            <span className="badge-title">Extra Gold</span>
           </Badge>
         </Treasure1>
         <Treasure2 onClick={() => setShowModal6(true)}>
@@ -923,7 +923,7 @@ export default function Treasure() {
             </Badge>
             <Badge>
               <Image className="badge-icon" src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
-              <span className="badge-title">extra Gold</span>
+              <span className="badge-title">Extra Gold</span>
             </Badge>
           </div>
         </Treasure2>
@@ -938,7 +938,7 @@ export default function Treasure() {
             <Image src="/images/odyssey/v4/td3.svg" alt="" width={79} height={22} />
             <Badge>
               <Image className="badge-icon" src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
-              <span className="badge-title">extra Gold</span>
+              <span className="badge-title">Extra Gold</span>
             </Badge>
           </div>
         </Treasure3>
