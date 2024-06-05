@@ -93,6 +93,10 @@ const nextConfig = {
       source: '/kelpdao/:path*',
       destination: 'https://universe.kelpdao.xyz/:path*',
     },
+    {
+      source: '/duo/exchange/:path*',
+      destination: 'https://www.duo.exchange/api/:path*',
+    },
   ],
   images: {
     remotePatterns: [
