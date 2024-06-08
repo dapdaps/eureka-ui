@@ -861,7 +861,10 @@ export default function Treasure() {
       )}
       <AddLiquidityModal
         open={!!selectedPool}
-        dapp="thruster-liquidity"
+        dapp={{
+          path: 'thruster-liquidity',
+          name: 'Thruster Pool',
+        }}
         chain={{
           chain_id: 81457,
           name: 'Blast',

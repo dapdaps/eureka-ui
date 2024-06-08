@@ -27,7 +27,11 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
         fee,
       );
 
-      if (!poolAddress || poolAddress === '0x0000000000000000000000000000000000000000') return {};
+      if (!poolAddress || poolAddress === '0x0000000000000000000000000000000000000000') {
+        setInfo(null);
+        setLoading(false);
+        return;
+      }
 
       const calls = [
         {
