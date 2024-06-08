@@ -3,13 +3,13 @@ import { useRouter } from 'next/navigation';
 
 import { StyledContainer, StyledTitle, StyledActions, StyledClearAll, StyledIconButton } from './styles';
 
-const Header = ({ setShowSettings, onCleanAll }: any) => {
+const Header = ({ setShowSettings, onCleanAll, from, onClose }: any) => {
   const router = useRouter();
   return (
     <StyledContainer>
       <StyledIconButton
         onClick={() => {
-          router.back();
+          from === 'modal' ? onClose() : router.back();
         }}
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="9" height="13" viewBox="0 0 9 13" fill="none">

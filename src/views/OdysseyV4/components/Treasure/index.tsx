@@ -12,6 +12,7 @@ import Line from '../Line';
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
+import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
 import {
   Badge,
   IconGroup,
@@ -84,19 +85,9 @@ const ThrusterCoinListStep1 = [
     name: ['MIA', 'WETH'],
   },
   {
-    key: 11,
-    icon: ['/images/odyssey/v4/coin-wai.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['WAI', 'WETH'],
-  },
-  {
     key: 12,
     icon: ['/images/odyssey/v4/coin-orbit.svg', '/images/odyssey/v4/coin-weth2.svg'],
     name: ['ORBIT', 'WETH'],
-  },
-  {
-    key: 13,
-    icon: ['/images/odyssey/v4/coin-baja.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['BAJA', 'WETH'],
   },
   {
     key: 14,
@@ -145,6 +136,7 @@ export default function Treasure() {
   const [showModal5, setShowModal5] = useState(false);
   const [showModal6, setShowModal6] = useState(false);
   const [showRenzo, setShowRenzo] = useState(false);
+  const [selectedPool, setSelectedPool] = useState('');
   const linkRef = useRef<any>();
 
   const TrapLayout = {
@@ -828,6 +820,9 @@ export default function Treasure() {
                       flexBasis: '25%',
                       marginBottom: 20,
                     }}
+                    onClick={() => {
+                      setSelectedPool(coin.name.join(','));
+                    }}
                   />
                 ))}
               </StyledFlex>
@@ -982,6 +977,18 @@ export default function Treasure() {
           }}
         />
       )}
+      <AddLiquidityModal
+        open={!!selectedPool}
+        dapp="thruster-liquidity"
+        chain={{
+          chain_id: 81457,
+          name: 'Blast',
+        }}
+        defaultTokens={selectedPool}
+        onClose={() => {
+          setSelectedPool('');
+        }}
+      />
     </StyledContainer>
   );
 }
