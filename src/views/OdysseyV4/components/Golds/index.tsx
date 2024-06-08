@@ -58,7 +58,7 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         rank2: 60,
         rank3: 40,
         reward: '2700',
-        desc: 'Get ready to boost your rewards with Particle! Particle is a powerful dapp in the Blast ecosystem. When you use Particle Trade by Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
+        desc: 'Get ready to boost your rewards with Particle! Particle is a powerful dapp in the Blast ecosystem. When you trade with Particle on DapDap, you not only receive the same Blast Gold rewards as you would on other platforms but also an additional bonus from a pool of Gold allocated to DapDap.',
         type: '',
       },
     ],

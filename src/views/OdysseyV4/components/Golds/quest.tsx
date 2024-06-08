@@ -151,7 +151,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any)
               handleClick={(e: any) => openMetaStreetLink(thrusterLink)}
             >
               <span>
-                Trade by <b>Thruster</b>
+                Trade with <b>Thruster</b>
               </span>
               <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
             </TrapeziformBtn>
@@ -163,7 +163,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any)
               loading={reportLoading}
             >
               <span>
-                Trade by <b>Particle</b>
+                Trade with <b>Particle</b>
               </span>{' '}
               <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
             </TrapeziformBtn>
@@ -174,7 +174,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any)
               handleClick={(e: any) => openMetaStreetLink(hyperlockLink)}
             >
               <span>
-                Stake on <b>Hyperlock</b>
+                Stake with <b>Hyperlock</b>
               </span>{' '}
               <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
             </TrapeziformBtn>
