@@ -175,7 +175,11 @@ const Add = ({ from, onClose }: any) => {
           }}
           onSuccess={() => {
             setShowPreviewModal(false);
-            router.push(`/dapp/${router.query.dappRoute}`);
+            if (from === 'modal') {
+              onClose();
+            } else {
+              router.push(`/dapp/${router.query.dappRoute}`);
+            }
           }}
         />
       </StyledContent>

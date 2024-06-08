@@ -16,13 +16,13 @@ const AddLiquidityModal = ({ open, dapp, chain, defaultTokens, onClose }: any) =
   const [tokens, setTokens] = useState<any>([]);
 
   const getLocalConfig = useCallback(async () => {
-    if (!dapp) {
+    if (!dapp.path) {
       setLocalConfig(null);
       return;
     }
-    const config = dappConfig[dapp];
+    const config = dappConfig[dapp.path];
 
-    const result: any = (await import(`@/config/pool/dapps/${dapp}`))?.default;
+    const result: any = (await import(`@/config/pool/dapps/${dapp.path}`))?.default;
 
     setLocalConfig({ ...result, theme: config.theme });
   }, [dapp]);

@@ -69,7 +69,7 @@ export default function useData() {
   }, [token0, token1]);
 
   const rangeType = useMemo(() => {
-    if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice) return 0;
+    if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice || !info) return 0;
     if (lowerPrice === '0' || upperPrice === '∞') return 3;
     const lowerTick = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
     const upperTick = priceToUsableTick({ price: upperPrice, token0, token1, fee });
@@ -137,6 +137,9 @@ export default function useData() {
     setNoPair(!info);
     if (!info) {
       setLoading(false);
+      setCurrentPrice('');
+      setLowerPrice('');
+      setUpperPrice('');
       return;
     }
     const { currentTick, tickSpacing } = info;
