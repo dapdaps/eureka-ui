@@ -4,7 +4,7 @@ import { StyledActionIcon, StyledActions, StyledContainer } from './styles';
 const ACTIONS = [
   {
     title: <div>Explore Ethereum L2&apos;s</div>,
-    desc: 'Discover the most popular Ethereum roll-ups and EVMs across the market. ',
+    desc: 'Discover the most popular Ethereum roll-ups and EVMs across the market.',
     icon: (
       <StyledActionIcon style={{ width: '100px', height: '104px', right: '18px', top: '-36px' }}>
         <svg xmlns="http://www.w3.org/2000/svg" width="156" height="131" viewBox="0 0 156 131" fill="none">

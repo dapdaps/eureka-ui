@@ -174,7 +174,7 @@ export default function Quest({ data, showRank, bgClass, onRefreshDetail }: any)
               handleClick={(e: any) => openMetaStreetLink(hyperlockLink)}
             >
               <span>
-                Stake with <b>Hyperlock</b>
+                Trade with <b>Hyperlock</b>
               </span>{' '}
               <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
             </TrapeziformBtn>
