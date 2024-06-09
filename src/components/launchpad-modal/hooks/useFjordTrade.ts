@@ -1,12 +1,13 @@
 import type { Chain, Token } from '@/types'
 import { useEffect, useState } from 'react';
-import { Contract, providers, utils, Signer } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import { getQuote, getStatus, execute, approve } from 'super-bridge-sdk'
 import { useSetChain } from '@web3-onboard/react';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
 
 import type { QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+import type { Signer } from 'ethers';
 
 
 import tokenConfig from './tokenConfig'
@@ -497,10 +498,9 @@ export function useBuyTrade({
 
             await approve(midToken.address, assetsIn, pool, signer)
 
-            const hash = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.split('.')[0], recipient)
-
-            console.log('hash: ', hash)
-
+            const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.split('.')[0], recipient)
+            await tx.await()
+            console.log('hash: ', tx.hash)
             setLoading(false)
 
             success({
@@ -508,7 +508,7 @@ export function useBuyTrade({
                 text: '',
             })
 
-            return hash
+            return tx.hash
         } catch (err) {
             setLoading(false)
 
@@ -517,8 +517,9 @@ export function useBuyTrade({
                 text: errorFormated(err),
             })
         }
-
     }
+
+    
 
     return {
         excuteBuyTrade,
@@ -631,8 +632,9 @@ export function useSellTrade({
             )
 
             const minAssetsOut = new Big(assetOut).mul(10 ** 18).mul(1 - 0.0025).toString()
-            const hash = await PoolContract.swapExactSharesForAssets(amount, minAssetsOut.split('.')[0], recipient)
-            console.log(hash)
+            const tx = await PoolContract.swapExactSharesForAssets(amount, minAssetsOut.split('.')[0], recipient)
+            await tx.await()
+            console.log(tx.hash)
 
             setLoading(false)
 
@@ -641,7 +643,7 @@ export function useSellTrade({
                 text: '',
             })
 
-            return hash
+            return tx.hash
         } catch (err) {
             setLoading(false)
             fail({
@@ -652,8 +654,20 @@ export function useSellTrade({
 
     }
 
+    async function excuteRedeemTrade(signer: Signer) {
+        const PoolContract = new Contract(
+            pool,
+            poolAbi,
+            signer,
+        )
+
+        const hash = await PoolContract.redeem()    
+
+    }
+
     return {
         excuteSellTrade,
+        excuteRedeemTrade,
         loading,
     }
 }

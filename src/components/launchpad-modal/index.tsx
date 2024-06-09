@@ -33,7 +33,9 @@ import {
 import SubmitBtn from './SubmitBtn';
 import Tabs from './tabs';
 import Timer from './timer';
-import { useBuyQuote, useSellQuote, useBuyTrade, useSellTrade, useDetail, QuoteProps, QuoteResProps, TradeProps } from './hooks/useFjordTrade'
+import { useBuyQuote, useSellQuote, useBuyTrade, useSellTrade, useDetail } from './hooks/useFjordTrade'
+
+import type { QuoteProps } from './hooks/useFjordTrade'
 
 interface IProps {
   onClose: () => void;
