@@ -2,6 +2,9 @@ import type { Chain, Token } from '@/types'
 import { useEffect, useState } from 'react';
 import { Contract, providers, utils, Signer } from 'ethers';
 import { getQuote, getStatus, execute, approve } from 'super-bridge-sdk'
+import { useSetChain } from '@web3-onboard/react';
+import useToast from '@/hooks/useToast';
+import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
 
 import type { QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
 
@@ -9,7 +12,7 @@ import type { QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
 import tokenConfig from './tokenConfig'
 import Big from 'big.js';
 
-interface QuoteProps {
+export interface QuoteProps {
     fromChain: Chain;
     fromToken: Token;
     amount: Big;
@@ -17,25 +20,24 @@ interface QuoteProps {
     address: string;
 }
 
-interface QuoteResProps {
+export interface QuoteResProps {
     shareVal: string;
     loading: boolean;
     bridgeRoute: QuoteResponse | null;
     receiveAmount: string;
     tradeType: number;
-    pool: string;
     midToken: Token | null;
 }
 
-interface TradeProps {
+export interface TradeProps {
     shareVal: string;
     bridgeRoute: QuoteResponse | null;
     receiveAmount: string;
     tradeType: number;
     pool: string;
     midToken: Token | null;
-    recipient: string;
-    quote: QuoteProps,
+    recipient: string | undefined;
+    quote: QuoteProps | undefined,
 }
 
 const poolAbi = [
@@ -318,7 +320,7 @@ const executorAbi = [
     },
 ]
 
-export function useBuyQuote(quote: QuoteProps): QuoteResProps {
+export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
     const [loading, setLoading] = useState(false)
     const [shareVal, setShareVal] = useState('')
     const [receiveAmount, setReceiveAmount] = useState('')
@@ -327,37 +329,9 @@ export function useBuyQuote(quote: QuoteProps): QuoteResProps {
     const [midToken, setMidToken] = useState<Token | null>(null)
 
     useEffect(() => {
-        if (midToken) {
-            setLoading(true)
-            setShareVal('')
-
-            const provider = new providers.JsonRpcProvider('https://eth.llamarpc.com');
-            const PoolContract = new Contract(
-                quote.pool,
-                poolAbi,
-                provider,
-            )
-
-            try {
-                if (quote.fromChain.chainId === 1 && quote.fromToken.address === midToken.address) {
-                    getAssetRuote(quote, midToken, PoolContract, provider)
-                    setTradeType(1)
-                } else if (quote.fromChain.chainId === 1 && quote.fromToken.address !== midToken.address) {
-                    getBridgeRuote(quote, midToken, PoolContract, provider)
-                    setTradeType(3)
-                } else {
-                    getBridgeRuote(quote, midToken, PoolContract, provider)
-                    setTradeType(3)
-                }
-                
-            } catch (e) {
-                setShareVal('')
-                setBridgeRoute(null)
-                setReceiveAmount('')
-                setLoading(false)
-            }
+        if (quote && midToken) {
+            excuteQuote(quote, midToken)
         }
-        
     }, [quote, midToken])
 
     useEffect(() => {
@@ -366,12 +340,43 @@ export function useBuyQuote(quote: QuoteProps): QuoteResProps {
         }
     }, [quote])
 
+    async function excuteQuote(quote: QuoteProps, midToken: Token,) {
+        setLoading(true)
+        setShareVal('')
+
+        const provider = new providers.JsonRpcProvider('https://eth.llamarpc.com');
+        const PoolContract = new Contract(
+            quote.pool,
+            poolAbi,
+            provider,
+        )
+
+        try {
+            if (quote.fromChain.chainId === 1 && quote.fromToken.address === midToken.address) {
+                await getAssetRuote(quote, midToken, PoolContract, provider)
+                setTradeType(1)
+            } else if (quote.fromChain.chainId === 1 && quote.fromToken.address !== midToken.address) {
+                await getBridgeRuote(quote, midToken, PoolContract, provider)
+                setTradeType(3)
+            } else {
+                await getBridgeRuote(quote, midToken, PoolContract, provider)
+                setTradeType(3)
+            }
+
+        } catch (e) {
+            setShareVal('')
+            setBridgeRoute(null)
+            setReceiveAmount('')
+            setLoading(false)
+        }
+    }
+
     async function getBridgeRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, provider: any) {
-        
         setBridgeRoute(null)
         setReceiveAmount('')
 
-        
+        quote.fromChain.chainId
+
         const bridgeQuote = await getQuote({
             fromChainId: quote.fromChain.chainId.toString(),
             toChainId: '1',
@@ -386,16 +391,21 @@ export function useBuyQuote(quote: QuoteProps): QuoteResProps {
 
         console.log('bridgeQuote: ', bridgeQuote)
         if (!bridgeQuote.length) {
+            setLoading(false)
             return false
         }
 
-        const route = bridgeQuote[0]
+        let maxRoute = bridgeQuote[0]
+        for(let i = 0;i<bridgeQuote.length;i++) {
+            if (Number(bridgeQuote[i]) > Number(maxRoute.receiveAmount)) {
+                maxRoute = bridgeQuote[i]
+            }
+        }
 
+        const route = maxRoute
         const receiveAmount = route.receiveAmount
-
         const targetShareVal = await PoolContract.previewSharesOut(receiveAmount)
 
-        console.log('targetShareVal: ', new Big(targetShareVal).div(10 ** 18).toString())
         setShareVal(new Big(targetShareVal).div(10 ** 18).toString())
         setBridgeRoute(route)
         setReceiveAmount(receiveAmount)
@@ -404,7 +414,6 @@ export function useBuyQuote(quote: QuoteProps): QuoteResProps {
 
     async function getAssetRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, provider: any) {
         const targetShareVal = await PoolContract.previewSharesOut(quote.amount.toString())
-        console.log('targetShareVal: ', new Big(targetShareVal).div(10 ** 18).toString())
         setShareVal(new Big(targetShareVal).div(10 ** 18).toString())
         setReceiveAmount(quote.amount.toString())
         setLoading(false)
@@ -412,14 +421,10 @@ export function useBuyQuote(quote: QuoteProps): QuoteResProps {
 
     async function getMidToken(pool: string) {
         const PoolContract = getPoolContract(pool)
-
         const middleTokenAddress = await PoolContract.asset()
-
         const midToken = tokenConfig[middleTokenAddress]
         setMidToken(midToken)
     }
-
-    
 
     return {
         shareVal,
@@ -427,7 +432,6 @@ export function useBuyQuote(quote: QuoteProps): QuoteResProps {
         bridgeRoute,
         receiveAmount,
         tradeType,
-        pool: quote.pool,
         midToken,
     }
 }
@@ -442,24 +446,39 @@ export function useBuyTrade({
     recipient,
     quote,
 }: TradeProps) {
+    const [loading, setLoading] = useState(false)
+    const { fail, success } = useToast()
+
+    const [{ settingChain, connectedChain }, setChain] = useSetChain();
 
     async function excuteBuyTrade(signer: Signer) {
-        if (!midToken) {
+        if (!midToken || !recipient) {
             return
         }
 
-        if (tradeType === 3 && bridgeRoute) { // 1:bridge 2:asset token => target 
-            const bridgeHash = await execute(bridgeRoute, signer)
-            for (let i = 0; i < 999; i++) {
-                const isSuccess = await getStatus(bridgeHash, 'liFi', signer)
-                if (isSuccess) {
-                    break;
+        try {
+            setLoading(true)
+
+            if (tradeType === 3 && bridgeRoute) { // 1:bridge 2:asset token => target 
+                const bridgeHash = await execute(bridgeRoute, signer)
+
+                for (let i = 0; i < 999; i++) {
+                    const isSuccess = await getStatus({
+                        hash: bridgeHash
+                    }, 'liFi', signer)
+                    if (isSuccess) {
+                        break;
+                    }
+                    await sleep(1000 * 30)
                 }
-                sleep(10000)
             }
-        }
-        
-        if (tradeType === 3 || tradeType === 1) { // 
+
+            
+
+            if (quote?.fromChain.chainId !== 1) {
+                await setChain({ chainId: `0x${(1).toString(16)}` })
+            }
+
             const PoolContract = new Contract(
                 pool,
                 poolAbi,
@@ -471,7 +490,7 @@ export function useBuyTrade({
             let _receiveAmount = receiveAmount
             if (Number(midTokenBalance) < Number(receiveAmount)) {
                 _receiveAmount = midTokenBalance
-            }    
+            }
 
             const assetsIn = new Big(_receiveAmount)
             const minSharesOut = new Big(shareVal).mul(10 ** 18).mul(1 - 0.0025).toString()
@@ -479,61 +498,114 @@ export function useBuyTrade({
             await approve(midToken.address, assetsIn, pool, signer)
 
             const hash = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.split('.')[0], recipient)
-            
+
             console.log('hash: ', hash)
+
+            setLoading(false)
+
+            success({
+                title: 'Transaction success',
+                text: '',
+            })
+
             return hash
+        } catch (err) {
+            setLoading(false)
+
+            fail({
+                title: 'Transaction failed',
+                text: errorFormated(err),
+            })
         }
 
-        if (tradeType === 2) {
-            // const ExecutorContract = new Contract(
-            //     '0x2dfaDAB8266483beD9Fd9A292Ce56596a2D1378D',
-            //     executorAbi,
-            //     signer,
-            // )
-
-            // const apprroveAddress = await ExecutorContract.erc20Proxy()
-
-            // await approve(quote.fromToken.address, quote.amount, apprroveAddress, signer)
-        }
     }
 
     return {
         excuteBuyTrade,
+        loading,
     }
 }
 
 export function useSellQuote({
-    amount, pool, account
+    amount, pool, recipient
 }: {
-    amount: string, pool: string, account: string
+    amount: string, pool: string, recipient: string | null
 }) {
     const [assetOut, setAssetOut] = useState('')
     const [balance, setBalance] = useState('')
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setLoading(true)
-        const PoolContract = getPoolContract(pool)
-        PoolContract.previewAssetsOut(amount).then((res: string) => {
-            // console.log(new Big(res.toString()).div(10 ** 18).toString())
-            setAssetOut(new Big(res.toString()).div(10 ** 18).toString())
-            setLoading(false)
-        })
-
-    }, [amount])
+        if (amount && recipient) {
+            setLoading(true)
+            const _amount = new Big(amount).mul(10 ** 18).toString()
+            const PoolContract = getPoolContract(pool)
+            PoolContract.previewAssetsOut(_amount).then((res: string) => {
+                setAssetOut(new Big(res.toString()).div(10 ** 18).toString())
+                setLoading(false)
+            })
+        }
+    }, [amount, recipient])
 
     useEffect(() => {
-        const PoolContract = getPoolContract(pool)
-        PoolContract.purchasedShares(account).then((res: string) => {
-            console.log('balance: ',res.toString())
-            setBalance(new Big(res.toString()).div(10 ** 18).toString())
-        })
-    }, [])
+        if (recipient) {
+            const PoolContract = getPoolContract(pool)
+            PoolContract.purchasedShares(recipient).then((res: string) => {
+                setBalance(new Big(res.toString()).div(10 ** 18).toString())
+            })
+        }
+    }, [recipient])
+
 
     return {
         assetOut, loading, balance
     }
 }
+
+export function useDetail(pool: string, updater: number) {
+    const [startTime, setStartTime] = useState('')
+    const [endTime, setEndTime] = useState('')
+    const [isClosed, setIsClosed] = useState(false)
+    const [midToken, setMidToken] = useState<Token | null>(null)
+
+
+    async function saleStart() {
+        const PoolContract = getPoolContract(pool)
+        const time = await PoolContract.saleStart()
+        setStartTime(time.toString())
+    }
+
+    async function saleEnd() {
+        const PoolContract = getPoolContract(pool)
+        const time = await PoolContract.saleEnd()
+        setEndTime(time.toString())
+    }
+
+    async function getClosed() {
+        const PoolContract = getPoolContract(pool)
+        const isClosed = await PoolContract.closed()
+        setIsClosed(isClosed)
+    }
+
+    async function getMidToken() {
+        const PoolContract = getPoolContract(pool)
+        const middleTokenAddress = await PoolContract.asset()
+        const midToken = tokenConfig[middleTokenAddress]
+        setMidToken(midToken)
+    }
+
+    useEffect(() => {
+        saleStart()
+        saleEnd()
+        getClosed()
+        getMidToken()
+    }, [updater])
+
+    return {
+        startTime, endTime, isClosed, midToken
+    }
+}
+
 
 export function useSellTrade({
     pool,
@@ -546,48 +618,43 @@ export function useSellTrade({
     assetOut: string;
     recipient: string;
 }) {
+    const [loading, setLoading] = useState(false)
+    const { fail, success } = useToast()
+
     async function excuteSellTrade(signer: Signer) {
-        const PoolContract = new Contract(
-            pool,
-            poolAbi,
-            signer,
-        )
+        setLoading(true)
+        try {
+            const PoolContract = new Contract(
+                pool,
+                poolAbi,
+                signer,
+            )
 
-        const minAssetsOut = new Big(assetOut).mul(10 ** 18).mul(1 - 0.0025).toString()
+            const minAssetsOut = new Big(assetOut).mul(10 ** 18).mul(1 - 0.0025).toString()
+            const hash = await PoolContract.swapExactSharesForAssets(amount, minAssetsOut.split('.')[0], recipient)
+            console.log(hash)
 
-        const hash = await PoolContract.swapExactSharesForAssets(amount,  minAssetsOut.split('.')[0], recipient)
+            setLoading(false)
 
-        console.log(hash)
+            success({
+                title: 'Transaction success',
+                text: '',
+            })
 
-        return hash
+            return hash
+        } catch (err) {
+            setLoading(false)
+            fail({
+                title: 'Transaction failed',
+                text: errorFormated(err),
+            })
+        }
+
     }
-
-    async function saleStart() {
-        const PoolContract = getPoolContract(pool)
-        const time = await PoolContract.saleStart()
-        console.log('start-time:', time)
-    }
-
-    async function saleEnd() {
-        const PoolContract = getPoolContract(pool)
-        const time = await PoolContract.saleEnd()
-        console.log('end-time:', time)
-    }
-
-    async function getClosed() {
-        const PoolContract = getPoolContract(pool)
-        const time = await PoolContract.closed()
-        console.log('close-time:', time)
-    }
-
-    useEffect(() => {
-        saleStart()
-        saleEnd()
-        getClosed()
-    }, [])
 
     return {
-        excuteSellTrade
+        excuteSellTrade,
+        loading,
     }
 }
 
@@ -627,7 +694,7 @@ async function getBalance(rpcUrl: string, account: string, currency: Token) {
 };
 
 
-function sleep(time: number){
+function sleep(time: number) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
 

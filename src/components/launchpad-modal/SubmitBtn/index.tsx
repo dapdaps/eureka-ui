@@ -51,7 +51,7 @@ export default function SubmitBtn({
         return <Container className="disbaled">{text}</Container>
     }
 
-    if (chainId !== fromChain?.chainId) {
+    if (fromChain && chainId !== fromChain.chainId) {
         return <Container onClick={() => { 
             setChain({ chainId: `0x${fromChain?.chainId?.toString(16)}` })
          }}>Switch Chain</Container>

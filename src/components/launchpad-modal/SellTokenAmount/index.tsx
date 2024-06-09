@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+import type { Chain, Token } from '@/types'
 
 import Loading from '@/components/Icons/Loading';
 import { usePriceStore } from '@/stores/price';
@@ -88,6 +89,7 @@ const SellToken = styled.div`
   display: flex;
   height: 30px;
   gap: 5px;
+  justify-content: end;
 `;
 const SellImg = styled.img`
   width: 20px;
@@ -115,11 +117,12 @@ interface Props {
   balance: string;
   amount: string;
   readOnly: boolean;
+  token?: Token | undefined;
   // needGas: boolean;
   // updateBanlance: number;
   // onChainChange: (chain: Chain) => void;
   // onTokenChange: (token: Token) => void;
-  // onAmountChange?: (value: string) => void;
+  onAmountChange?: (value: string) => void;
   // onGasTrigger?: () => void;
 }
 
@@ -134,6 +137,8 @@ export default function ChainTokenAmount({
   // chainToken,
   // currentChain,
   // currentToken,
+  onAmountChange,
+  token,
   amount, // inputDisabled = false,
   // onTokenChange,
 } // onChainChange,
@@ -156,6 +161,9 @@ export default function ChainTokenAmount({
     amount,
     symbol: '',
   });
+
+  const icon = token ? token.icon : 'https://ipfs.near.social/ipfs/bafkreidgui7lyuedwj7xk6zt2tpy6sezzgi3gj37rt43xo5bked5o5cmtm'
+  const name = token ? token.symbol : 'CTG'
 
   return (
     <Wapper style={{ background: readOnly ? '#2E3142' : '#1B1E27' }}>
@@ -184,9 +192,9 @@ export default function ChainTokenAmount({
             onBlur={() => {
               setFocus(false);
             }}
-            // onChange={(e) => {
-            //   onAmountChange && !inputDisabled && onAmountChange(e.target.value);
-            // }}
+            onChange={(e) => {
+              onAmountChange && onAmountChange(e.target.value);
+            }}
             type="number"
             // disabled={inputDisabled}
             placeholder="0"
@@ -196,31 +204,16 @@ export default function ChainTokenAmount({
         </AmountWapper>
         <TokenWapper>
           <SellToken>
-            <SellImg src="https://ipfs.near.social/ipfs/bafkreidgui7lyuedwj7xk6zt2tpy6sezzgi3gj37rt43xo5bked5o5cmtm" />
-            <SellSymbol>CTG</SellSymbol>
+            <SellImg src={icon} />
+            <SellSymbol>{ name }</SellSymbol>
           </SellToken>
           <BalanceWapper>
             <span>balance: </span>
             <span
               className="num"
-              // onClick={() => {
-              //   onAmountChange && !inputDisabled && balance && onAmountChange(balance);
-              // }}
             >
               {balanceFormated(balance)}
             </span>
-            {/* {loading ? (
-                <Loading size={12} />
-              ) : (
-                <span
-                  className="num"
-                  // onClick={() => {
-                  //   onAmountChange && !inputDisabled && balance && onAmountChange(balance);
-                  // }}
-                >
-                  {balanceFormated(balance)}
-                </span>
-              )} */}
           </BalanceWapper>
         </TokenWapper>
       </Content>

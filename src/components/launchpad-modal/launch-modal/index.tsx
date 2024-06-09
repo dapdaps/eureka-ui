@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, forwardRef } from 'react';
 
 import { Wrapper } from './style.modal';
 
@@ -7,13 +7,14 @@ interface IProps {
   children?: ReactNode;
 }
 
-const Modal: FC<IProps> = ({ children }) => {
+const Modal = ({ children }: IProps, ref: any) => {
   return (
     <Wrapper>
       <div className="mask"></div>
-      <section className="base-modal">{children}</section>
+      <section ref={ref} className="base-modal">{children}</section>
     </Wrapper>
   );
 };
 
-export default Modal;
+export default forwardRef(Modal)
+

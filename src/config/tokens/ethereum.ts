@@ -19,6 +19,14 @@ export const ethereum: { [key: string]: Token } = {
     icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
     decimals: 6,
   },
+  weth: {
+    chainId: CHAIN_ID,
+    address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    name: 'WETH',
+    symbol: 'WETH',
+    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295',
+    decimals: 18,
+  },
   usdt: {
     chainId: CHAIN_ID,
     address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
@@ -83,6 +91,7 @@ export const ethereum: { [key: string]: Token } = {
     "name": "ezETH",
     "icon": "https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png",
   },
+  
   rsETH: {
     "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
     "chainId": CHAIN_ID,
