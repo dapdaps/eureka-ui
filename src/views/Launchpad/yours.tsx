@@ -10,7 +10,8 @@ import {
 } from '@/styled/styles';
 import { formatThousandsSeparator } from '@/utils/format-number';
 import Big from 'big.js';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import useUser from './hooks/useUser';
 import useUserPools from './hooks/useUserPools';
@@ -93,31 +94,60 @@ const StyledParticipatedButton = styled.div`
   justify-content: center;
 `
 export default function LaunchpadYoursPage() {
+  const router = useRouter();
   const userStore = useUserStore((store: any) => store.user);
   const { loading, userPools, queryUserPools } = useUserPools()
   const { user, queryUser } = useUser()
   const [categoryIndex, setCategoryIndex] = useState(0)
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
+  const [inProgressNumber, setInProgressNumber] = useState(0)
 
   const handleQueryUserPools = function () {
     userStore.address && queryUserPools({
       status: categoryIndex === 0 ? 'ongoing' : 'completed'
     })
   }
-  const handleBuyOrSell = function (data: any) {
-    setCheckedPoolAddress(data?.pool)
-    setLaunchPadModalShow(true)
+  const handleRedeem = function (data: any) {
+
+  }
+  const handleBuyOrSellOrRedeem = function (data: any) {
+    if (['upcoming', 'ongoing'].includes(data.launchpad_lbp.status)) {
+      setCheckedPoolAddress(data?.pool)
+      setLaunchPadModalShow(true)
+    } else {
+      handleRedeem(data)
+    }
   }
   useEffect(() => {
     userStore.address && queryUser()
   }, [userStore.address])
 
   useEffect(() => {
+    if (categoryIndex === 0 && userPools) {
+      setInProgressNumber(userPools?.length ?? 0)
+    }
+  }, [userPools, categoryIndex])
+
+  useEffect(() => {
     userStore.address && handleQueryUserPools()
   }, [userStore.address, categoryIndex])
   return (
-    <StyledContainer style={{ width: 1124, margin: '60px auto 0' }}>
+    <StyledContainer style={{ width: 1124, margin: '30px auto 0' }}>
+      <StyledFlex
+        gap='8px'
+        style={{ marginBottom: 33, cursor: "pointer" }}
+        onClick={() => {
+          router.back()
+        }}
+      >
+        <StyledSvg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="5" height="8" viewBox="0 0 5 8" fill="none">
+            <path d="M4 7L1 4L4 1" stroke="#979ABE" stroke-linecap="round" />
+          </svg>
+        </StyledSvg>
+        <StyledFont color='#979ABE' fontSize='14px' fontFamily='Gantari'>Back</StyledFont>
+      </StyledFlex>
       <StyledLinearGradientFont fontSize='26px' fontWeight='700'>You  Participated</StyledLinearGradientFont>
       <StyledFlex style={{ marginTop: 20, marginBottom: 60 }}>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
@@ -142,7 +172,7 @@ export default function LaunchpadYoursPage() {
         </StyledFlex>
       </StyledFlex>
       <StyledCategoryContainer>
-        <StyledCategory className={categoryIndex === 0 ? "active" : ""} onClick={() => setCategoryIndex(0)}>In progress (2)</StyledCategory>
+        <StyledCategory className={categoryIndex === 0 ? "active" : ""} onClick={() => setCategoryIndex(0)}>In progress ({inProgressNumber})</StyledCategory>
         <StyledCategory className={categoryIndex === 1 ? "active" : ""} onClick={() => setCategoryIndex(1)}>History</StyledCategory>
       </StyledCategoryContainer>
       {
@@ -222,13 +252,13 @@ export default function LaunchpadYoursPage() {
                       </StyledFlex>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(userPool?.trading_volume)} / ${formatThousandsSeparator(userPool?.launchpad_lbp?.price ?? 0)}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>${Big(formatThousandsSeparator(userPool?.trading_volume ?? 0)).toFixed(4)} / ${Big(formatThousandsSeparator(userPool?.launchpad_lbp?.price ?? 0)).toFixed(4)}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color='#47C33C' fontSize='16px'>+230%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>{formatThousandsSeparator(userPool?.launchpad_lbp?.purchased_shares ?? 0)}</StyledFont>
+                      <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatThousandsSeparator(userPool?.launchpad_lbp?.purchased_shares ?? 0)}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd style={{ flex: 1.5 }}>
                       <StyledFlex
@@ -236,8 +266,8 @@ export default function LaunchpadYoursPage() {
                         style={{ width: '100%', paddingRight: 15 }}
                       >
                         <StyledFont color='#FFF' fontSize='16px'>{userPool?.launchpad_lbp?.status}</StyledFont>
-                        <StyledParticipatedButton onClick={() => handleBuyOrSell(userPool)}>
-                          <StyledFont fontSize='18px' fontWeight='500'>Sell</StyledFont>
+                        <StyledParticipatedButton style={{ backgroundColor: ['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#EBF479' : '#50FFE9' }} onClick={() => handleBuyOrSellOrRedeem(userPool)}>
+                          <StyledFont fontSize='18px' fontWeight='500'>{['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? 'Buy / Sell' : 'Redeem'}</StyledFont>
                         </StyledParticipatedButton>
                       </StyledFlex>
 
@@ -328,7 +358,9 @@ export default function LaunchpadYoursPage() {
                       </StyledFlex>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(userPool?.trading_volume)} / ${formatThousandsSeparator(userPool?.launchpad_lbp?.price ?? 0)}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>
+                        ${Big(formatThousandsSeparator(userPool?.trading_volume ?? 0)).toFixed(4)} / ${Big(formatThousandsSeparator(userPool?.launchpad_lbp?.price ?? 0)).toFixed(4)}
+                      </StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color='#47C33C' fontSize='16px'>+230%</StyledFont>

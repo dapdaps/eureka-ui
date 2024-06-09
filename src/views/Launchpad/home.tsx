@@ -330,7 +330,6 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                     <StyledProjectButtonContainer>
                       <StyledProjectButton onClick={() => handleBuyOrSell(pool)}>Buy / Sell</StyledProjectButton>
-                      <StyledProjectButton style={{ background: '#979ABE' }}>View More</StyledProjectButton>
                     </StyledProjectButtonContainer>
                   </StyledFlex>
                 </StyledContainer>
