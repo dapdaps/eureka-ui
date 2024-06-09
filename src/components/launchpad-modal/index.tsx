@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Big from 'big.js';
 import { useDebounce } from 'ahooks';
 
+import useAddAction from '@/hooks/useAddAction';
 import allTokens from '@/config/bridge/allTokens';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
@@ -62,6 +63,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
   const [sellAmount, setSellAmount] = useState('');
   const [updateBanlance, setUpdateBanlance] = useState(1);
   const [duration, setDuration] = useState(0);
+  const { addAction } = useAddAction('dapp');
   const [buyQuote, setBuyQuote] = useState<QuoteProps>()
   const [btnDisbaled, setBtnDisbaled] = useState<boolean>(false)
   const [text, setText] = useState<string>('')
@@ -99,6 +101,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
     recipient: account as string,
     amount: _sellAmount,
     assetOut,
+    midToken,
   })
 
   const [currentTab, setCurrentTab] = useState('BUY');
@@ -222,11 +225,44 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
             text={text}
             fromChain={fromChain}
             onClick={async () => {
+              let hash
               if (currentTab === 'BUY') {
-                await excuteBuyTrade(provider?.getSigner())
+                hash = await excuteBuyTrade(provider?.getSigner())
               } else if (currentTab === 'SELL') {
-                await excuteSellTrade(provider?.getSigner())
+                hash = await excuteSellTrade(provider?.getSigner())
               }
+
+              if (hash) {
+                let amount, trade_type, token0, token1
+                if (currentTab === 'BUY') {
+                  amount = sendAmount
+                  trade_type = 'buy'
+                  token0 = {
+                    ...midToken,
+                    amount: receiveAmount,
+                  }
+                } else {
+                  amount = sellAmount
+                  trade_type = 'sell'
+                }
+
+                addAction({
+                  type: "launchpad",
+                  fromChainId: fromChain.chainId,
+                  token: fromToken,
+                  amount: amount,
+                  template: 'launchpad',
+                  add: false,
+                  status: 1,
+                  transactionHash: hash,
+                  token0,
+                  token1: {
+                    
+                  },
+                  trade_type: trade_type
+                })
+              }
+              
               setUpdateBanlance(updateBanlance + 1)
             }}
             disabled={btnDisbaled}

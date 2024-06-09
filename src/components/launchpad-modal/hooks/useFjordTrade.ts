@@ -499,7 +499,7 @@ export function useBuyTrade({
             await approve(midToken.address, assetsIn, pool, signer)
 
             const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.split('.')[0], recipient)
-            await tx.await()
+            await tx.wait()
             console.log('hash: ', tx.hash)
             setLoading(false)
 
@@ -613,11 +613,13 @@ export function useSellTrade({
     amount,
     assetOut,
     recipient,
+    midToken,
 }: {
     pool: string;
     amount: string;
     assetOut: string;
     recipient: string;
+    midToken: Token;
 }) {
     const [loading, setLoading] = useState(false)
     const { fail, success } = useToast()
@@ -631,11 +633,10 @@ export function useSellTrade({
                 signer,
             )
 
-            const minAssetsOut = new Big(assetOut).mul(10 ** 18).mul(1 - 0.0025).toString()
-            const tx = await PoolContract.swapExactSharesForAssets(amount, minAssetsOut.split('.')[0], recipient)
-            await tx.await()
-            console.log(tx.hash)
-
+            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - 0.0025).toString()
+            const tx = await PoolContract.swapExactSharesForAssets(new Big(amount).mul(10 ** 18).toString(), minAssetsOut.split('.')[0], recipient)
+            await tx.wait()
+            console.log(tx)
             setLoading(false)
 
             success({
@@ -661,8 +662,9 @@ export function useSellTrade({
             signer,
         )
 
-        const hash = await PoolContract.redeem()    
-
+        const tx = await PoolContract.redeem()    
+        await tx.wait()
+        console.log(tx.hash)
     }
 
     return {

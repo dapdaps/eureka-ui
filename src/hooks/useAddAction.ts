@@ -146,6 +146,29 @@ export default function useAddAction(source: string) {
         };
       }
 
+      if (data.type === 'launchpad' || data.type === 'Launchpad') {
+        params = {
+          action_title: `${data.action} ${data?.token0 + (data?.token1 ? '-' + data.token1 : '')} on ${data.template}`,
+          action_type: data.type,
+          action_tokens: JSON.stringify([data?.token0 ?? '', data?.token1 ?? '']),
+          action_amount: data.amount,
+          account_id: account,
+          account_info: uuid,
+          template: data.template,
+          action_switch: data.add ? 1 : 0,
+          action_status: data.status === 1 ? 'Success' : 'Failed',
+          tx_id: data.transactionHash,
+          action_network_id: currentChain?.name || data.action_network_id,
+          chain_id: chainId,
+          extra_data: JSON.stringify({
+            token0: data?.token0,
+            token1: data?.token1,
+            type: data.type,
+            trade_type: data.trade_type,
+          }),
+        };
+      }
+
       params.ss = getSignature(
         `template=${data.template}&action_type=${data.type}&tx_hash=${
           data.transactionHash
