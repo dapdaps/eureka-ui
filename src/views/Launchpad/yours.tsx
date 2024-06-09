@@ -252,7 +252,7 @@ export default function LaunchpadYoursPage() {
                       </StyledFlex>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>${Big(formatThousandsSeparator(userPool?.trading_volume ?? 0)).toFixed(4)} / ${Big(formatThousandsSeparator(userPool?.launchpad_lbp?.price ?? 0)).toFixed(4)}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color='#47C33C' fontSize='16px'>+230%</StyledFont>
@@ -358,9 +358,7 @@ export default function LaunchpadYoursPage() {
                       </StyledFlex>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>
-                        ${Big(formatThousandsSeparator(userPool?.trading_volume ?? 0)).toFixed(4)} / ${Big(formatThousandsSeparator(userPool?.launchpad_lbp?.price ?? 0)).toFixed(4)}
-                      </StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color='#47C33C' fontSize='16px'>+230%</StyledFont>
