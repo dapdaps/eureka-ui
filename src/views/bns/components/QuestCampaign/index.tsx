@@ -165,9 +165,15 @@ const Index = ({ onLoad, campaigns, categories, bp }: any) => {
     <StyledCampaipnsContainer>
       <StyledHeader style={{ marginTop: 40, marginBottom: 20 }}>Quests Campaign</StyledHeader>
       <StyledFlex $direction="column" $gap="30px">
-        {campaigns.map((campaign: any) => (
-          <QuestCampaign key={campaign.id} campaign={campaign} categories={categories} bp={bp} />
-        ))}
+        {campaigns.length ? (
+          campaigns.map((campaign: any) => (
+            <QuestCampaign key={campaign.id} campaign={campaign} categories={categories} bp={bp} />
+          ))
+        ) : (
+          <div style={{ padding: 20, fontSize: 18, color: 'rgb(151, 154, 190)' }}>
+            More Quests are coming soon,stay tuned...
+          </div>
+        )}
       </StyledFlex>
     </StyledCampaipnsContainer>
   );
