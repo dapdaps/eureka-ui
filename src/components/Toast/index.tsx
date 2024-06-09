@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import styled from 'styled-components';
-
+import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 import { useChainsStore } from '@/stores/chains';
 
 import Loading from '../Icons/Loading';
@@ -55,7 +55,7 @@ const IconWrapper = styled.div`
   flex-shrink: 0;
 `;
 
-export default function Toast({ type, title, text, tx, chainId, closeToast }: any) {
+export default function Toast({ type, title, text, tx, chainId, token, closeToast }: any) {
   const chains = useChainsStore((store: any) => store.chains);
   const txLink = useMemo(() => {
     if (!tx || !chainId) return '';
@@ -63,6 +63,7 @@ export default function Toast({ type, title, text, tx, chainId, closeToast }: an
     if (!currentChain) return '';
     return `${currentChain.block_explorer}/tx/${tx}`;
   }, [tx, chainId]);
+  const { add } = useAddTokenToWallet();
   return (
     <StyledToast>
       <IconWrapper>
@@ -89,9 +90,22 @@ export default function Toast({ type, title, text, tx, chainId, closeToast }: an
         <StyledDesc>
           <StyledTitle>{title}</StyledTitle>
           <StyledSecondaryText>{text}</StyledSecondaryText>
+          {token && (
+            <StyledSecondaryText>
+              Please be sure you already{' '}
+              <span
+                style={{ textDecoration: 'underline', color: '#fff', cursor: 'pointer' }}
+                onClick={() => {
+                  add(token);
+                }}
+              >
+                add {token.symbol} in MetaMask.
+              </span>
+            </StyledSecondaryText>
+          )}
           {tx && chainId && (
             <StyledSecondaryText
-              style={{ textDecoration: 'underline' }}
+              style={{ textDecoration: 'underline', color: '#fff' }}
               onClick={() => {
                 window.open(txLink, '_blank');
               }}
