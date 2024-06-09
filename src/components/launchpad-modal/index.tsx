@@ -72,7 +72,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
   const _sellAmount = useDebounce(sellAmount, { wait: 500 });
 
   
-  const { midToken, startTime, endTime, isClosed } = useDetail(pool, updateBanlance)
+  const { midToken, startTime, endTime, isClosed, balance } = useDetail(pool, account as string ,updateBanlance)
 
   const { shareVal, loading: buyQuoteLoading, bridgeRoute, receiveAmount, tradeType } = useBuyQuote(buyQuote)
 
@@ -89,7 +89,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
 
 
   const {
-    assetOut, loading: sellQuoteLoading, balance
+    assetOut, loading: sellQuoteLoading
   } = useSellQuote({
     pool,
     amount: _sellAmount,

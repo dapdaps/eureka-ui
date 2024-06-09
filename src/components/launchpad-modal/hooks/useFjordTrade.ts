@@ -533,7 +533,7 @@ export function useSellQuote({
     amount: string, pool: string, recipient: string | null
 }) {
     const [assetOut, setAssetOut] = useState('')
-    const [balance, setBalance] = useState('')
+    
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -548,26 +548,20 @@ export function useSellQuote({
         }
     }, [amount, recipient])
 
-    useEffect(() => {
-        if (recipient) {
-            const PoolContract = getPoolContract(pool)
-            PoolContract.purchasedShares(recipient).then((res: string) => {
-                setBalance(new Big(res.toString()).div(10 ** 18).toString())
-            })
-        }
-    }, [recipient])
+   
 
 
     return {
-        assetOut, loading, balance
+        assetOut, loading
     }
 }
 
-export function useDetail(pool: string, updater: number) {
+export function useDetail(pool: string, recipient: string, updater: number) {
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
     const [isClosed, setIsClosed] = useState(false)
     const [midToken, setMidToken] = useState<Token | null>(null)
+    const [balance, setBalance] = useState('')
 
 
     async function saleStart() {
@@ -596,6 +590,15 @@ export function useDetail(pool: string, updater: number) {
     }
 
     useEffect(() => {
+        if (recipient) {
+            const PoolContract = getPoolContract(pool)
+            PoolContract.purchasedShares(recipient).then((res: string) => {
+                setBalance(new Big(res.toString()).div(10 ** 18).toString())
+            })
+        }
+    }, [recipient, updater])
+
+    useEffect(() => {
         saleStart()
         saleEnd()
         getClosed()
@@ -603,7 +606,7 @@ export function useDetail(pool: string, updater: number) {
     }, [updater])
 
     return {
-        startTime, endTime, isClosed, midToken
+        startTime, endTime, isClosed, midToken, balance,
     }
 }
 
@@ -619,12 +622,16 @@ export function useSellTrade({
     amount: string;
     assetOut: string;
     recipient: string;
-    midToken: Token;
+    midToken: Token | null;
 }) {
     const [loading, setLoading] = useState(false)
     const { fail, success } = useToast()
 
     async function excuteSellTrade(signer: Signer) {
+        if (!midToken) {
+            return
+        }
+
         setLoading(true)
         try {
             const PoolContract = new Contract(
