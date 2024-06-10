@@ -7,7 +7,7 @@ export default {
     reward: '10,000',
     rewardDisableIcon: '/images/odyssey/v1/rewardDisable.svg',
     rewardEnableIcon: '/images/odyssey/v1/rewardEnable.svg',
-    tips: 'Effortlessly sift through a curated selection of dApps and identify your favourites.',
+    tips: 'Effortlessly shift through a curated selection of dApps and identify your favourites.',
   },
   2: {
     path: '/odyssey/home?id=2',
