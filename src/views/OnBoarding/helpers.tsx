@@ -81,9 +81,10 @@ export function formatTitle(record: any) {
         );
       }
     } catch (err) {}
+    const _actionType = record.action_title?.includes('Withdraw') ? 'Withdraw' : 'Deposit';
     return (
       <>
-        Deposit <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
+        {_actionType} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
         {tokens[1]}
       </>
     );
