@@ -5,13 +5,14 @@ import Big from 'big.js'
 import type { Signer }  from 'ethers';
 
 import useToast from '@/hooks/useToast';
+import type { Chain } from "@/types";
 
 interface Request {
     amount: string | number;
     account: string;
     provider: any;
     isError: boolean;
-    chainId: number;
+    chain: Chain;
 }
 
 interface Result {
@@ -95,11 +96,17 @@ const EtherfiL2ModeSyncPoolETHAbi = [
     }
 ]
 
+const amountTokenAddress: any = {
+    81457: '0xc42853c0C6624F42fcB8219aCeb67Ad188087DCB',
+    59144: '0x241a91F095B2020890Bc8518bea168C195518344',
+    34443: '0xc42853c0C6624F42fcB8219aCeb67Ad188087DCB',
+    8453: '0xF2c5519c634796B73dE90c7Dc27B4fEd560fC3ca'
+}
 
-async function getConversionAmount(amount: string): Promise<string> {
-    const provider = new providers.JsonRpcProvider('https://rpc.blast.io');
+async function getConversionAmount(amount: string, chain: Chain): Promise<string> {
+    const provider = new providers.JsonRpcProvider(chain.rpcUrls[0]);
     const RateContract = new Contract(
-        '0xc42853c0C6624F42fcB8219aCeb67Ad188087DCB',
+        amountTokenAddress[chain.chainId],
         EtherfiL2ExchangeRateProviderAbi,
         provider,
     );
@@ -117,9 +124,9 @@ async function getConversionAmount(amount: string): Promise<string> {
 }
 
 
-async function getEstimateGas(value: string, signer: any) {
+async function getEstimateGas(value: string, chain: Chain, signer: any) {
     try {
-        const transactionData = await getTransactionData(value, signer)
+        const transactionData = await getTransactionData(value, chain, signer)
 
         const gasPrice = await signer.getGasPrice();
 
@@ -141,9 +148,20 @@ async function getEstimateGas(value: string, signer: any) {
     return null
 }
 
-async function getTransactionData(value: string, signer: Signer) {
+const tokenAddress: any = {
+    81457: '0x52c4221cb805479954cde5accff8c4dcaf96623b',
+    59144: '0x823106E745A62D0C2FC4d27644c62aDE946D9CCa',
+    34443: '0x52c4221Cb805479954CDE5accfF8C4DcaF96623B',
+    8453: '0xc38e046dFDAdf15f7F56853674242888301208a5'
+}
+
+async function getTransactionData(value: string, chain: Chain, signer: Signer) {
+    if (!tokenAddress[chain.chainId]) {
+        return
+    }
+
     const DepositContract = new Contract(
-        '0x52c4221cb805479954cde5accff8c4dcaf96623b',
+        tokenAddress[chain.chainId],
         EtherfiL2ModeSyncPoolETHAbi,
         signer,
     );
@@ -167,7 +185,7 @@ export default function useTrade({
     provider,
     account,
     isError,
-    chainId,
+    chain,
 }: Request): Result {
     const { fail, success } = useToast()
     const [rate, setRate] = useState(0)
@@ -199,9 +217,7 @@ export default function useTrade({
     }
 
     async function ethereumDeposit(value: string, signer: Signer) {
-        const transactionData = await getTransactionData(value, signer)
-        console.log('transactionData:', transactionData, )
-        console.log('gasEstimate: ', gasEstimate)
+        const transactionData = await getTransactionData(value, chain, signer)
         const tx = await signer.sendTransaction({
             ...transactionData,
             // gasLimit: 19200,
@@ -212,7 +228,7 @@ export default function useTrade({
     useEffect(() => {
         if (amount && !isNaN(Number(amount))) {
             const _amount = new Big(amount.toString()).mul(10 ** 18).toString()
-            getConversionAmount(_amount).then(setRecived)
+            getConversionAmount(_amount, chain).then(setRecived)
         } else {
             setRecived('')
         }
@@ -221,7 +237,7 @@ export default function useTrade({
     useEffect(() => {
         if (amount && !isNaN(Number(amount)) && !isError && provider) {
             const _amount = new Big(amount.toString()).mul(10 ** 18).toString()
-            getEstimateGas(_amount, provider?.getSigner()).then(res => {
+            getEstimateGas(_amount, chain, provider?.getSigner()).then(res => {
                 if (res) {
                     setGasEstimate(res.gasEstimate)
                     setTransactionCost(
@@ -238,7 +254,7 @@ export default function useTrade({
 
     useEffect(() => {
         const _amount = new Big(1).mul(10 ** 18).toString()
-        getConversionAmount(_amount).then(setExchangeRate)
+        getConversionAmount(_amount, chain).then(setExchangeRate)
 
     }, [])
 

@@ -64,6 +64,8 @@ const QuestDetailView = () => {
   }, [quest, campaigns]);
 
   const isBitGetUser = useMemo(() => userInfo.source === 'bitget' || userInfo.source === 'bitget_wallet', [userInfo]);
+  const isCoin98User = useMemo(() => userInfo.source === 'coin98_wallet', [userInfo]);
+  const isOkxUser = useMemo(() => userInfo.source === 'okx_wallet', [userInfo]);
   useEffect(() => {
     if (wallet?.label.toLowerCase().includes('bitget')) {
       handleReport('bitget_wallet');
@@ -90,6 +92,8 @@ const QuestDetailView = () => {
                 userInfo={userInfo}
                 isLive={info.quest.status === 'ongoing'}
                 isBitGetUser={isBitGetUser}
+                isCoin98User={isCoin98User}
+                isOkxUser={isOkxUser}
                 claimed={info.quest.is_claimed}
                 onSuccess={() => {
                   queryUserReward();
@@ -108,6 +112,8 @@ const QuestDetailView = () => {
               open={showSuccessModal}
               reward={info.quest.reward}
               isBitGetUser={isBitGetUser}
+              isCoin98User={isCoin98User}
+              isOkxUser={isOkxUser}
               onClose={() => {
                 setShowSuccessModal(false);
               }}

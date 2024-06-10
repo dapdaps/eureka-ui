@@ -21,12 +21,16 @@ export default function ClaimedSuccessModal({
   reward = 0,
   recommends,
   isBitGetUser,
+  isCoin98User,
+  isOkxUser,
   onClose,
 }: {
   open: boolean;
   reward: number;
   recommends: any;
   isBitGetUser?: boolean;
+  isCoin98User?: boolean;
+  isOkxUser?: boolean;
   onClose: VoidFunction;
 }) {
   const [current, setCurrent] = useState(0);
@@ -43,7 +47,8 @@ export default function ClaimedSuccessModal({
           <StyledIcon src="/images/success.gif" />
           <StyledTitle>Congrats!</StyledTitle>
           <StyledDesc>
-            <span>You’ve got {isBitGetUser ? Number(reward * 1.1).toFixed(0) : reward}</span> <StyledCoin $size={21} />
+            <span>You’ve got {isBitGetUser || isCoin98User || isOkxUser ? Number(reward * 1.1).toFixed(0) : reward}</span>{' '}
+            <StyledCoin $size={21} />
             <span>PTS</span>
           </StyledDesc>
           <StyledMoreHints>Do more quests and get more rewards</StyledMoreHints>

@@ -11,7 +11,7 @@ import { ArrowDown, ArrowUp } from './Arrows'
 
 import { 
     getTransaction,
-    saveAllTransaction
+    saveTransaction
  } from '../Utils'
 
 const TransactionWapper = styled.div`
@@ -133,77 +133,42 @@ export default function Transaction(
 
     const { chainId, provider } = useAccount();
 
-    function refreshTransactionList() {
+    async function refreshTransactionList() {
+        if (!account) {
+            return
+        }
+
         setIsLoading(true)
-        const transactionObj = getTransaction(storageKey)
-
-        console.log('transactionObj: ', transactionObj)
-
-        const transactionList: any = []
-        let proccessSum = 0
-
-        const pList = Object.values(transactionObj).map((item: any) => {
-            console.log(1111)
-            if (item.status === 2) {
-                transactionList.push(item)
-                return
-            }
-
-            return getStatus({
+        const transactionList = await getTransaction(tool)
+        const pendingList = transactionList.filter((item: any) => item.status === 3)
+        pendingList.forEach((item: any) => {
+            getStatus({
                 hash: item.hash,
                 chainId: item.fromChainId,
-                address: account,
+                address: item.fromAddress,
                 fromChainId: item.fromChainId,
                 toChainId: item.toChainId,
-            }, tool, provider.getSigner()).then((isComplate: boolean) => {
-                console.log('isComplate:', isComplate)
+            }, (item.bridgeType || item.tool), provider?.getSigner()).then((isComplate: boolean) => {
                 if (isComplate) {
                     item.status = 2
+                    saveTransaction(item)
                 } else {
-                    proccessSum++
                     item.status = 3
                 }
 
-                transactionObj[item.hash] = item
-                transactionList.push(item)
             }).catch((err: any) => {
                 item.status = 3
-                transactionList.push(item)
+
             })
         })
 
-        
-
-        Promise.all(pList).then(() => {
-            if (transactionList.length > 0) {
-                saveAllTransaction(storageKey, transactionObj)
-            }
-
-            console.log('proccessSum:', proccessSum)
-            const isFold = proccessSum > 0
-
-            transactionList.sort((a: any, b: any) => b.time - a.time)
-            setTransactionList(transactionList)
-            setIsLoading(false)
-            setProccessSum(proccessSum)
-            // setIsFold(isFold)
-            
-        }).catch(err => {
-            // if (transactionList.length > 0) {
-            //     saveAllTransaction(storageKey, transactionList)
-            // }
-            // saveAllTransaction(storageKey, transactionList)
-            const isFold = proccessSum > 0
-            transactionList.sort((a: any, b: any) => b.time - a.time)
-            setTransactionList(transactionList)
-            setIsLoading(false)
-            setProccessSum(proccessSum)
-            // setIsFold(isFold)
-        })
+        transactionList.sort((a: any, b: any) => b.time - a.time)
+        setTransactionList(transactionList)
+        setIsLoading(false)
+        setProccessSum(pendingList?.length || 0)
     }
 
     useEffect(() => {
-        console.log(111)
         refreshTransactionList()
     }, [updater])
 

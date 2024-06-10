@@ -75,4 +75,20 @@ export const ethereum: { [key: string]: Token } = {
     icon: 'https://assets.coingecko.com/coins/images/15264/standard/mimatic-red.png?1696514916',
     decimals: 18,
   },
+  ezETH: {
+    "address": "0xbf5495Efe5DB9ce00f80364C8B423567e58d2110",
+    "chainId": CHAIN_ID,
+    "symbol": "ezETH",
+    "decimals": 18,
+    "name": "ezETH",
+    "icon": "https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png",
+  },
+  rsETH: {
+    "address": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+    "chainId": CHAIN_ID,
+    "symbol": "rsETH",
+    "decimals": 18,
+    "name": "rsETH",
+    "icon": "https://etherscan.io/token/images/kelprseth_32.png",
+  },
 };

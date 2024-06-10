@@ -117,6 +117,7 @@ export default function Comfirm({
     disabled,
     color,
     onSend,
+    tool,
 }: any) {
     return <ConfirmBox>
         <PopWapper>
@@ -168,23 +169,11 @@ export default function Comfirm({
             </List>
 
             <ButtonWapper>
-                {/* <Widget
-                src="dapdapbos.near/widget/UI.Button"
-                props={{
-                    text: 'Confirm and Send',
-                    type: 'primary',
-                    block: true,
-                    className: 'pink',
-                    loading,
-                    style: { backgroundColor: color },
-                    disabled,
-                    onClick: () => {
-                        !disabled && props.onSend()
-                    }
-                }}
-            /> */}
 
-                <SubmitBtn style={{ background: color }} onClick={async () => {
+                <SubmitBtn style={{ 
+                    background: color,
+                    color: tool === 'stargate' ? '#000' : '#fff'
+                }} onClick={async () => {
                     !disabled && onSend()
                 }}>{loading ? <Loading size={18} /> : null} Confirm and Send</SubmitBtn>
             </ButtonWapper>
