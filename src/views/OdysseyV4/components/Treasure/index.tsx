@@ -10,6 +10,7 @@ import Line from '../Line';
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
+import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
 import {
   Desc,
   IconGroup,
@@ -27,6 +28,101 @@ import {
   Treasure5,
 } from './styles';
 
+const ThrusterCoinListStep1 = [
+  {
+    key: 1,
+    icon: ['/images/odyssey/v4/coin-juice.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['JUICE', 'WETH'],
+  },
+  {
+    key: 2,
+    icon: ['/images/odyssey/v4/coin-pac.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['PAC', 'WETH'],
+  },
+  {
+    key: 3,
+    icon: ['/images/odyssey/v4/coin-kap.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['KAP', 'WETH'],
+  },
+  {
+    key: 4,
+    icon: ['/images/odyssey/v4/coin-yield.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['YIELD', 'WETH'],
+  },
+  {
+    key: 5,
+    icon: ['/images/odyssey/v4/coin-glory.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['GLORY', 'WETH'],
+  },
+  {
+    key: 6,
+    icon: ['/images/odyssey/v4/coin-ole.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['OLE', 'WETH'],
+  },
+  {
+    key: 7,
+    icon: ['/images/odyssey/v4/coin-sss.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['SSS', 'WETH'],
+  },
+  {
+    key: 8,
+    icon: ['/images/odyssey/v4/coin-andy.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['ANDY', 'WETH'],
+  },
+  {
+    key: 9,
+    icon: ['/images/odyssey/v4/coin-early.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['EARLY', 'WETH'],
+  },
+  {
+    key: 10,
+    icon: ['/images/odyssey/v4/coin-mia.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['MIA', 'WETH'],
+  },
+  {
+    key: 12,
+    icon: ['/images/odyssey/v4/coin-orbit.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['ORBIT', 'WETH'],
+  },
+  {
+    key: 14,
+    icon: ['/images/odyssey/v4/coin-bag.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['BAG', 'WETH'],
+  },
+  {
+    key: 15,
+    icon: ['/images/odyssey/v4/coin-pump.svg', '/images/odyssey/v4/coin-weth2.svg'],
+    name: ['PUMP', 'WETH'],
+  },
+];
+const ThrusterCoinListStep2 = [
+  {
+    key: 1,
+    icon: ['/images/odyssey/v4/coin-juice.svg', '/images/odyssey/v4/coin-weth1.svg'],
+    name: ['JUICE', 'WETH'],
+  },
+  {
+    key: 2,
+    icon: ['/images/odyssey/v4/coin-pac.svg', '/images/odyssey/v4/coin-weth1.svg'],
+    name: ['PAC', 'WETH'],
+  },
+  {
+    key: 3,
+    icon: ['/images/odyssey/v4/coin-kap.svg', '/images/odyssey/v4/coin-weth1.svg'],
+    name: ['KAP', 'WETH'],
+  },
+  {
+    key: 4,
+    icon: ['/images/odyssey/v4/coin-yield.svg', '/images/odyssey/v4/coin-weth1.svg'],
+    name: ['YIELD', 'WETH'],
+  },
+  {
+    key: 5,
+    icon: ['/images/odyssey/v4/coin-glory.svg', '/images/odyssey/v4/coin-weth1.svg'],
+    name: ['GLORY', 'WETH'],
+  },
+];
+
 export default function Treasure() {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
@@ -34,6 +130,7 @@ export default function Treasure() {
   const [showModal4, setShowModal4] = useState(false);
   const [showModal5, setShowModal5] = useState(false);
   const [showRenzo, setShowRenzo] = useState(false);
+  const [selectedPool, setSelectedPool] = useState('');
   const linkRef = useRef<any>();
 
   const TrapLayout = {
@@ -600,23 +697,37 @@ export default function Treasure() {
                   <div className="head-title">Step 2.Borrow 3x WETH</div>
                 </div>
               </div>
-              <div className="modal-list-body">
-                <div className="body-left" style={{ gap: 5 }}>
-                  <Image src="/images/odyssey/v4/coin-weth.svg" alt="" width={26} height={26} />
-
-                  <div className="body-left-content">
-                    <div className="body-left-content-title">WETH</div>
-                  </div>
-                </div>
-                <div className="body-right">
-                  <TrapeziformBtn
-                    width="286px"
-                    height="42px"
-                    handleClick={(e: any) => openLink(`${location.origin}/dapp/juice`)}
-                  >
-                    Borrow WETH <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                  </TrapeziformBtn>
-                </div>
+              <StyledFlex
+                justifyContent="flex-start"
+                alignItems="center"
+                style={{
+                  marginTop: 15,
+                  flexWrap: 'wrap',
+                }}
+              >
+                {ThrusterCoinListStep1.map((coin) => (
+                  <CoinGroup
+                    key={coin.key}
+                    icon={coin.icon}
+                    name={coin.name}
+                    style={{
+                      flexBasis: '25%',
+                      marginBottom: 20,
+                    }}
+                    onClick={() => {
+                      setSelectedPool(coin.name.join(','));
+                    }}
+                  />
+                ))}
+              </StyledFlex>
+              <div className="modal-list-foot">
+                <TrapeziformBtn
+                  width="286px"
+                  height="42px"
+                  handleClick={(e: any) => openLink(`${location.origin}/dapp/thruster-liquidity`)}
+                >
+                  Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                </TrapeziformBtn>
               </div>
             </Trapeziform>
             <Trapeziform {...TrapLayout} className="modal-list">
@@ -748,6 +859,18 @@ export default function Treasure() {
           }}
         />
       )}
+      <AddLiquidityModal
+        open={!!selectedPool}
+        dapp="thruster-liquidity"
+        chain={{
+          chain_id: 81457,
+          name: 'Blast',
+        }}
+        defaultTokens={selectedPool}
+        onClose={() => {
+          setSelectedPool('');
+        }}
+      />
     </StyledContainer>
   );
 }
