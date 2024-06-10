@@ -375,4 +375,20 @@ export const blast: { [key: string]: Token } = {
     name: 'PUMP',
     icon: 'https://ipfs.near.social/ipfs/bafkreihukx3msdv34esnf2haial5xlbbrevis3pdphfzlyygp6nuklbbga',
   },
+  dusd: {
+    chainId: CHAIN_ID,
+    address: '0x1a3d9b2fa5c6522c8c071dc07125ce55df90b253',
+    decimals: 18,
+    symbol: 'DUSD',
+    name: 'DUSD',
+    icon: '/images/tokens/dusd.png',
+  },
+  deth: {
+    chainId: CHAIN_ID,
+    address: '0x1Da40C742F32bBEe81694051c0eE07485fC630f6',
+    decimals: 18,
+    symbol: 'DETH',
+    name: 'DETH',
+    icon: '/images/tokens/deth.png',
+  },
 };

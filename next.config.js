@@ -93,6 +93,10 @@ const nextConfig = {
       source: '/kelpdao/:path*',
       destination: 'https://universe.kelpdao.xyz/:path*',
     },
+    {
+      source: '/api/app/agentfi/:path*',
+      destination: 'https://app.agentfi.io/api/:path*',
+    },
   ],
   images: {
     remotePatterns: [
