@@ -68,7 +68,7 @@ const networks = {
         vaultAddress: '0x07811284e36fDc45f65cd56FC7c6929855d6A0cc',
       },
       {
-        id: '',
+        id: 'USDC-WETH-Oku',
         strategy: 'Oku',
         token0: 'USDC',
         token1: 'WETH',
