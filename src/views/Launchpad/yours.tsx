@@ -15,6 +15,7 @@ import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import useUser from './hooks/useUser';
 import useUserPools from './hooks/useUserPools';
+import tokenConfig from '@/components/launchpad-modal/hooks/tokenConfig'
 
 import type { Chain, Token } from '@/types';
 
@@ -104,6 +105,8 @@ export default function LaunchpadYoursPage() {
   const [categoryIndex, setCategoryIndex] = useState(0)
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
+  const [midToken, setMidToken] = useState<Token>()
+  const [chainId, setChainId] = useState(1)
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
   const [inProgressNumber, setInProgressNumber] = useState(0)
 
@@ -128,6 +131,20 @@ export default function LaunchpadYoursPage() {
         decimals: data.share_token_decimal,
         isNative: false,
       })
+
+      setMidToken({
+        chainId: data.chain_id,
+        address: data.asset_token_address,
+        name: data.asset_token_symbol,
+        symbol: data.asset_token_symbol,
+        icon: tokenConfig[data.asset_token_symbol].icon,
+        logoURI: tokenConfig[data.asset_token_symbol].icon,
+        decimals: data.asset_token_decimal,
+        isNative: false,
+      })
+  
+      setChainId(data.chain_id)
+
       setLaunchPadModalShow(true)
     } else {
       handleRedeem(data)
@@ -400,6 +417,8 @@ export default function LaunchpadYoursPage() {
           <LaunchPadModal
             pool={checkedPoolAddress}
             token={poolToken as Token}
+            midToken={midToken as Token}
+            chainId={chainId}
             onClose={() => {
               setCheckedPoolAddress('')
               setLaunchPadModalShow(false)

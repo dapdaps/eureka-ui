@@ -182,7 +182,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
         setBtnDisbaled(true)
         setText('No route')
         return
-      } 
+      }
 
       if (_sellAmount && Number(balance) < Number(_sellAmount)) {
         setBtnDisbaled(true)
