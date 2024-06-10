@@ -209,7 +209,7 @@ export function useGasAmount({
                 toAddress: account,
                 fromTokenSymbol: fromToken?.symbol,
                 fromTokenIcon: fromToken?.icon,
-                amount: new Big(value).mul(10 ** fromToken!.decimals).toString(),
+                amount: new Big(value).div(10 ** fromToken!.decimals).toString(),
                 time: Date.now()
             })
 

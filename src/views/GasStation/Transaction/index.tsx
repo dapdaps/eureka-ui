@@ -168,7 +168,7 @@ export default function Transaction({
                                         </div>
                                     </div>
                                 </td>
-                                <td>{ balanceFormated(item.amount, 4) } { item.fromTokenSymbol }</td>
+                                <td>{  } { item.fromTokenSymbol }</td>
                                 <td>
                                     <div className="mul-ele">
                                         { addressFormated(item.hash) } 
