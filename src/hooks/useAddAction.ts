@@ -146,7 +146,7 @@ export default function useAddAction(source: string) {
         };
       }
 
-      if (data.type === 'launchpad' || data.type === 'Launchpad') {
+      if (data.template === 'launchpad' || data.template === 'Launchpad') {
         params = {
           action_title: `${data.action} ${data?.token0.symbol + (data?.token1.symbol ? '-' + data.token1.symbol : '')} on ${data.template}`,
           action_type: 'Swap',

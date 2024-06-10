@@ -325,7 +325,7 @@ const executorAbi = [
     },
 ]
 
-export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token): QuoteResProps {
+export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, signer: Signer): QuoteResProps {
     const [loading, setLoading] = useState(false)
     const [shareVal, setShareVal] = useState('')
     const [receiveAmount, setReceiveAmount] = useState('')
@@ -348,13 +348,16 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token): Quo
         setLoading(true)
         setShareVal('')
 
-        const provider = new providers.JsonRpcProvider('https://eth.llamarpc.com');
+        const rpc = chainCofig[quote.chainId].rpcUrls[0]
+
+        const provider = new providers.JsonRpcProvider(rpc);
         const PoolContract = new Contract(
             quote.pool,
             poolAbi,
             provider,
         )
 
+        getPoolContract(quote.pool, quote.chainId)
 
         try {
             if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.symbol === midToken.symbol) {
@@ -362,14 +365,15 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token): Quo
                 await getAssetRuote(quote, midToken, PoolContract, provider)
                 setTradeType(1)
             } else if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.symbol !== midToken.symbol) {
-                await getBridgeRuote(quote, midToken, PoolContract, provider)
+                await getBridgeRuote(quote, midToken, PoolContract, signer)
                 setTradeType(3)
             } else {
-                await getBridgeRuote(quote, midToken, PoolContract, provider)
+                await getBridgeRuote(quote, midToken, PoolContract, signer)
                 setTradeType(3)
             }
 
         } catch (e) {
+            console.log(e)
             setShareVal('')
             setBridgeRoute(null)
             setReceiveAmount('')
@@ -377,11 +381,9 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token): Quo
         }
     }
 
-    async function getBridgeRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, provider: any) {
+    async function getBridgeRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, signer: any) {
         setBridgeRoute(null)
         setReceiveAmount('')
-
-        quote.fromChain.chainId
 
         const bridgeQuote = await getQuote({
             fromChainId: quote.fromChain.chainId.toString(),
@@ -392,8 +394,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token): Quo
             destAddress: quote.address,
             amount: quote.amount,
             identification: Date.now(),
-            engine: ['liFi'],
-        }, provider?.getSigner())
+        }, signer)
 
         console.log('bridgeQuote: ', bridgeQuote)
         if (!bridgeQuote.length) {
@@ -420,6 +421,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token): Quo
 
     async function getAssetRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, provider: any) {
         const targetShareVal = await PoolContract.previewSharesOut(quote.amount.toString())
+
         setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
         setReceiveAmount(quote.amount.toString())
         setLoading(false)
@@ -469,7 +471,7 @@ export function useBuyTrade({
                 for (let i = 0; i < 999; i++) {
                     const isSuccess = await getStatus({
                         hash: bridgeHash
-                    }, 'liFi', signer)
+                    }, bridgeRoute.bridgeType, signer)
                     if (isSuccess) {
                         break;
                     }
@@ -506,7 +508,6 @@ export function useBuyTrade({
 
             const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut, recipient)
             await tx.wait()
-            console.log('hash: ', tx.hash)
             setLoading(false)
 
             success({
@@ -577,9 +578,6 @@ export function useDetail(pool: string, recipient: string, toToken: Token, chain
 
         const PoolContract = getPoolContract(pool, chainId)
         const time = await PoolContract.saleStart()
-
-        console.log('time:', time)
-
         setStartTime(time.toString())
     }
 
@@ -668,7 +666,6 @@ export function useSellTrade({
 
             const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient)
             const v = await tx.wait()
-            console.log('----', tx, v)
             setLoading(false)
 
             success({
@@ -698,7 +695,6 @@ export function useSellTrade({
 
         const tx = await PoolContract.redeem()    
         await tx.wait()
-        console.log(tx.hash)
     }
 
     return {
