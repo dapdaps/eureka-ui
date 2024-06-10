@@ -2,6 +2,7 @@
 
 import Loading from '@/components/Icons/Loading';
 import LaunchPadModal from '@/components/launchpad-modal';
+import tokenConfig from '@/components/launchpad-modal/hooks/tokenConfig';
 import chainCofig from '@/config/chains';
 import { useUserStore } from '@/stores/user';
 import {
@@ -12,15 +13,15 @@ import {
   StyledSvg
 } from '@/styled/styles';
 import { formatThousandsSeparator } from '@/utils/format-number';
+import Big from 'big.js';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Timer from './components/Timer';
 import usePools from './hooks/usePools';
 import useUser from './hooks/useUser';
-import tokenConfig from '@/components/launchpad-modal/hooks/tokenConfig'
 
-import type { Chain, Token } from '@/types';
+import type { Token } from '@/types';
 
 const StyledLinearGradientFont = styled(StyledFont)`
   background: linear-gradient(180deg, #FFF 38.5%, #677079 100%);
@@ -45,11 +46,12 @@ const StyledProjectContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  margin-bottom: 116px;
 
 `
 const StyledProject = styled.div`
   position: relative;
-  margin-bottom: 116px;
+  /* margin-bottom: 116px; */
   padding: 14px 30px 14px 14px;
   display: flex;
   align-items: center;
@@ -71,6 +73,7 @@ const StyledProjectImageContainer = styled.div`
   height: 335px;
   border-radius: 16px;
   background: #0D0E12;
+  overflow: hidden;
 `
 const StyledProjectImage = styled.img`
   width: 100%;
@@ -90,6 +93,13 @@ const StyledProjectStatus = styled.div`
   border: 1px solid #61FD53;
   background: rgba(14, 80, 8, 0.20);
   backdrop-filter: blur(5px);
+  &.upcoming {
+    border-color: #FFAE63;
+    background-color: rgba(156, 95, 38, 0.20);
+    span {
+      color: #FFAE63;
+    }
+  }
   span {
     color: #61FD53;
     font-family: Montserrat;
@@ -205,12 +215,15 @@ const StyledTokenImageContainer = styled.div`
 const StyledTokenImage = styled.img`
   width: 100%;
 `
-
+const STATUS_TXT_MAPPING: any = {
+  'ongoing': 'Live Now',
+  'upcoming': 'Coming Soon'
+}
 export default function LaunchpadHomePage() {
 
   const router = useRouter();
   const userStore = useUserStore((store: any) => store.user);
-  const { loading, pools, queryPools } = usePools()
+  const { loading, pools, queryPools, sharesMapping } = usePools()
   const { user, queryUser } = useUser()
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
@@ -257,12 +270,12 @@ export default function LaunchpadHomePage() {
   }
 
   useEffect(() => {
-    queryPools()
-  }, [])
-
-  useEffect(() => {
-    userStore.address && queryUser()
+    if (userStore.address) {
+      queryUser()
+      queryPools(userStore.address)
+    }
   }, [userStore.address])
+
 
   return (
     <StyledContainer style={{ width: 1124, margin: '80px auto 0' }}>
@@ -279,24 +292,28 @@ export default function LaunchpadHomePage() {
       }}>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px' fontWeight='500'>Your Total Cost</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>${formatThousandsSeparator(user?.total_cost ?? 0)}</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>${formatThousandsSeparator(user?.trading_volume_usd ?? 0)}</StyledLinearGradientFont>
         </StyledFlex>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px' fontWeight='500'>Your Avg. Rate of Return</StyledLinearGradientFont>
           <StyledLinearGradientFont fontSize='26px' fontWeight='500'>{user?.rate_return_avg ?? 0}%</StyledLinearGradientFont>
         </StyledFlex>
-        <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
-          <StyledLinearGradientFont fontSize='18px' fontWeight='500'>In Progress</StyledLinearGradientFont>
-          <StyledFlex>
-            {
-              user?.lbps?.map((lbp: any, index: number) => (
-                <StyledLogoContainer key={index} style={{ marginLeft: index > 0 ? -9 : 0 }}>
-                  <StyledLogo src={lbp.logo} />
-                </StyledLogoContainer>
-              )) ?? (<></>)
-            }
-          </StyledFlex>
-        </StyledFlex>
+        {
+          user?.lbps?.length > 0 && (
+            <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
+              <StyledLinearGradientFont fontSize='18px' fontWeight='500'>In Progress</StyledLinearGradientFont>
+              <StyledFlex>
+                {
+                  user?.lbps?.map((lbp: any, index: number) => (
+                    <StyledLogoContainer key={index} style={{ marginLeft: index > 0 ? -9 : 0 }}>
+                      <StyledLogo src={lbp.logo} />
+                    </StyledLogoContainer>
+                  )) ?? (<></>)
+                }
+              </StyledFlex>
+            </StyledFlex>
+          )
+        }
         <StyledFlex>
           <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
             <path d="M6.52391 4.21913C7.02432 4.61945 7.02432 5.38054 6.52391 5.78087L1.6247 9.70024C0.969933 10.2241 -4.70242e-07 9.75788 -4.3359e-07 8.91937L-9.0947e-08 1.08062C-5.42947e-08 0.242118 0.969932 -0.224055 1.62469 0.299755L6.52391 4.21913Z" fill="#979ABE" />
@@ -314,11 +331,11 @@ export default function LaunchpadHomePage() {
             upcomingAndOngoingPools && upcomingAndOngoingPools.length > 0 ? upcomingAndOngoingPools.map((pool, index) => (
               <StyledProject key={index}>
                 <StyledProjectImageContainer>
-                  <StyledProjectStatus>
+                  <StyledProjectStatus className={pool.status}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
-                      <circle cx="5.04456" cy="5.04456" r="5.04456" fill="#61FD53" />
+                      <circle cx="5.04456" cy="5.04456" r="5.04456" fill={pool.status === "ongoing" ? "#61FD53" : "#FFAE63"} />
                     </svg>
-                    <span>Live Now</span>
+                    <span>{STATUS_TXT_MAPPING[pool.status]}</span>
                   </StyledProjectStatus>
                   <StyledProjectSupportChain>
                     <StyledChainImage src={chainCofig[pool?.chain_id].icon} />
@@ -353,13 +370,13 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Price</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{pool?.price ? `$ ${pool?.price}` : '-'}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{pool?.price ? `$ ${Big(pool?.price).toFixed(3)}` : '-'}</StyledFont>
                     </StyledFlex>
                   </StyledFlex>
                   <StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{pool.purchased_shares}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{sharesMapping[pool?.pool ?? ''] || '-'}</StyledFont>
                     </StyledFlex>
                     <StyledProjectButtonContainer>
                       <StyledProjectButton onClick={() => handleBuyOrSell(pool)}>Buy / Sell</StyledProjectButton>
@@ -441,7 +458,6 @@ export default function LaunchpadHomePage() {
                 <StyledCompletedSalesTr key={index}>
                   <StyledCompletedSalesTd>
                     <StyledFlex style={{ paddingLeft: 20 }}>
-                      {/* <StyledCompletedSalesImage></StyledCompletedSalesImage> */}
                       <StyledFlex flexDirection='column' alignItems='flex-start' gap='4px'>
                         <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool.share_token_symbol}</StyledFont>
                         <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{pool.share_token_symbol} Exchange</StyledFont>
@@ -449,7 +465,7 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>230%</StyledFont>
+                    <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{pool?.rate_return_usd}%</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
                     <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool?.funds_raised ? `$${pool?.funds_raised}` : '-'}</StyledFont>
