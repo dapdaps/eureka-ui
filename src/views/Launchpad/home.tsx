@@ -18,6 +18,7 @@ import styled from 'styled-components';
 import Timer from './components/Timer';
 import usePools from './hooks/usePools';
 import useUser from './hooks/useUser';
+import tokenConfig from '@/components/launchpad-modal/hooks/tokenConfig'
 
 import type { Chain, Token } from '@/types';
 
@@ -213,6 +214,8 @@ export default function LaunchpadHomePage() {
   const { user, queryUser } = useUser()
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
+  const [midToken, setMidToken] = useState<Token>()
+  const [chainId, setChainId] = useState(1)
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
 
   const upcomingAndOngoingPools = useMemo(() => {
@@ -222,11 +225,12 @@ export default function LaunchpadHomePage() {
     return pools.filter(pool => pool.status === 'completed')
   }, [pools])
   const handleBuyOrSell = function (data: any) {
-    console.log(data)
+    console.log('data:', data)
 
     setCheckedPoolAddress(data.pool)
+
     setPoolToken({
-      chainId: 1,
+      chainId: data.chain_id,
       address: data.share_token_address,
       name: data.share_token_name,
       symbol: data.share_token_symbol,
@@ -235,6 +239,20 @@ export default function LaunchpadHomePage() {
       decimals: data.share_token_decimal,
       isNative: false,
     })
+
+    setMidToken({
+      chainId: data.chain_id,
+      address: data.asset_token_address,
+      name: data.asset_token_symbol,
+      symbol: data.asset_token_symbol,
+      icon: tokenConfig[data.asset_token_symbol].icon,
+      logoURI: tokenConfig[data.asset_token_symbol].icon,
+      decimals: data.asset_token_decimal,
+      isNative: false,
+    })
+
+    setChainId(data.chain_id)
+
     setLaunchPadModalShow(true)
   }
 
@@ -483,6 +501,8 @@ export default function LaunchpadHomePage() {
           <LaunchPadModal
             pool={checkedPoolAddress}
             token={poolToken as Token}
+            midToken={midToken as Token}
+            chainId={chainId}
             onClose={() => {
               setCheckedPoolAddress('')
               setLaunchPadModalShow(false)

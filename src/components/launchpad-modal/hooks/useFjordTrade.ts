@@ -6,6 +6,7 @@ import { useSetChain } from '@web3-onboard/react';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
+import chainCofig from '@/config/chains';
 
 import type { QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
 import type { Signer } from 'ethers';
@@ -21,6 +22,7 @@ export interface QuoteProps {
     pool: string;
     address: string;
     toToken: Token;
+    chainId: number;
 }
 
 export interface QuoteResProps {
@@ -29,7 +31,6 @@ export interface QuoteResProps {
     bridgeRoute: QuoteResponse | null;
     receiveAmount: string;
     tradeType: number;
-    midToken: Token | null;
 }
 
 export interface TradeProps {
@@ -40,7 +41,8 @@ export interface TradeProps {
     pool: string;
     midToken: Token | null;
     recipient: string | undefined;
-    quote: QuoteProps | undefined,
+    quote: QuoteProps | undefined;
+    chainId: number;
 }
 
 const poolAbi = [
@@ -323,13 +325,12 @@ const executorAbi = [
     },
 ]
 
-export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
+export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token): QuoteResProps {
     const [loading, setLoading] = useState(false)
     const [shareVal, setShareVal] = useState('')
     const [receiveAmount, setReceiveAmount] = useState('')
     const [bridgeRoute, setBridgeRoute] = useState<QuoteResponse | null>(null)
     const [tradeType, setTradeType] = useState<number>(1)
-    const [midToken, setMidToken] = useState<Token | null>(null)
 
     useEffect(() => {
         if (quote && midToken) {
@@ -354,11 +355,13 @@ export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
             provider,
         )
 
+
         try {
-            if (quote.fromChain.chainId === 1 && quote.fromToken.address === midToken.address) {
+            if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.symbol === midToken.symbol) {
+                setReceiveAmount(quote.amount.toString())
                 await getAssetRuote(quote, midToken, PoolContract, provider)
                 setTradeType(1)
-            } else if (quote.fromChain.chainId === 1 && quote.fromToken.address !== midToken.address) {
+            } else if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.symbol !== midToken.symbol) {
                 await getBridgeRuote(quote, midToken, PoolContract, provider)
                 setTradeType(3)
             } else {
@@ -382,7 +385,7 @@ export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
 
         const bridgeQuote = await getQuote({
             fromChainId: quote.fromChain.chainId.toString(),
-            toChainId: '1',
+            toChainId: quote.chainId.toString(),
             fromToken: quote.fromToken,
             toToken: midToken,
             fromAddress: quote.address,
@@ -423,10 +426,9 @@ export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
     }
 
     async function getMidToken(pool: string) {
-        const PoolContract = getPoolContract(pool)
+        const PoolContract = getPoolContract(pool, quote?.chainId as number)
         const middleTokenAddress = await PoolContract.asset()
         const midToken = tokenConfig[middleTokenAddress]
-        setMidToken(midToken)
     }
 
     return {
@@ -435,7 +437,6 @@ export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
         bridgeRoute,
         receiveAmount,
         tradeType,
-        midToken,
     }
 }
 
@@ -460,8 +461,6 @@ export function useBuyTrade({
         }
 
         try {
-
-
             setLoading(true)
 
             if (tradeType === 3 && bridgeRoute) { // 1:bridge 2:asset token => target 
@@ -480,8 +479,8 @@ export function useBuyTrade({
 
             
 
-            if (quote?.fromChain.chainId !== 1) {
-                await setChain({ chainId: `0x${(1).toString(16)}` })
+            if (Number(quote?.fromChain.chainId) !== Number(quote.chainId)) {
+                await setChain({ chainId: `0x${(quote.chainId).toString(16)}` })
             }
 
             const PoolContract = new Contract(
@@ -490,7 +489,9 @@ export function useBuyTrade({
                 signer,
             )
 
-            const midTokenBalance = await getBalance('https://eth.llamarpc.com', recipient, midToken)
+            const rpcUrl = chainCofig[quote.chainId].rpcUrls[0]
+
+            const midTokenBalance = await getBalance(rpcUrl, recipient, midToken)
 
             let _receiveAmount = receiveAmount
             if (Number(midTokenBalance) < Number(receiveAmount)) {
@@ -498,11 +499,12 @@ export function useBuyTrade({
             }
 
             const assetsIn = new Big(_receiveAmount)
-            const minSharesOut = new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - 0.0025).toString()
+            const minSharesOut = new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - 0.0025).toNumber().toFixed(0)
 
             await approve(midToken.address, assetsIn, pool, signer)
 
-            const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.split('.')[0], recipient)
+
+            const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut, recipient)
             await tx.wait()
             console.log('hash: ', tx.hash)
             setLoading(false)
@@ -533,9 +535,9 @@ export function useBuyTrade({
 }
 
 export function useSellQuote({
-    amount, pool, recipient, toToken, midToken
+    amount, pool, recipient, toToken, midToken, chainId
 }: {
-    amount: string, pool: string, recipient: string | null, toToken: Token, midToken: Token
+    amount: string, pool: string, recipient: string | null, toToken: Token, midToken: Token, chainId: number
 }) {
     const [assetOut, setAssetOut] = useState('')
     
@@ -545,7 +547,7 @@ export function useSellQuote({
         if (amount && recipient) {
             setLoading(true)
             const _amount = new Big(amount).mul(10 ** toToken.decimals).toNumber()
-            const PoolContract = getPoolContract(pool)
+            const PoolContract = getPoolContract(pool, chainId)
 
             PoolContract.previewAssetsOut(BigInt(_amount).toString()).then((res: string) => {
                 setAssetOut(new Big(res.toString()).div(10 ** midToken.decimals).toString())
@@ -562,7 +564,7 @@ export function useSellQuote({
     }
 }
 
-export function useDetail(pool: string, recipient: string, toToken: Token, updater: number) {
+export function useDetail(pool: string, recipient: string, toToken: Token, chainId: number, updater: number) {
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
     const [isClosed, setIsClosed] = useState(false)
@@ -571,25 +573,30 @@ export function useDetail(pool: string, recipient: string, toToken: Token, updat
 
 
     async function saleStart() {
-        const PoolContract = getPoolContract(pool)
+        console.log('pool', pool)
+
+        const PoolContract = getPoolContract(pool, chainId)
         const time = await PoolContract.saleStart()
+
+        console.log('time:', time)
+
         setStartTime(time.toString())
     }
 
     async function saleEnd() {
-        const PoolContract = getPoolContract(pool)
+        const PoolContract = getPoolContract(pool, chainId)
         const time = await PoolContract.saleEnd()
         setEndTime(time.toString())
     }
 
     async function getClosed() {
-        const PoolContract = getPoolContract(pool)
+        const PoolContract = getPoolContract(pool, chainId)
         const isClosed = await PoolContract.closed()
         setIsClosed(isClosed)
     }
 
     async function getMidToken() {
-        const PoolContract = getPoolContract(pool)
+        const PoolContract = getPoolContract(pool, chainId)
         const middleTokenAddress = await PoolContract.asset()
         const midToken = tokenConfig[middleTokenAddress]
         setMidToken(midToken)
@@ -597,7 +604,7 @@ export function useDetail(pool: string, recipient: string, toToken: Token, updat
 
     useEffect(() => {
         if (recipient) {
-            const PoolContract = getPoolContract(pool)
+            const PoolContract = getPoolContract(pool, chainId)
             PoolContract.purchasedShares(recipient).then((res: string) => {
                 setBalance(new Big(res.toString()).div(10 ** toToken.decimals).toString())
             })
@@ -624,6 +631,7 @@ export function useSellTrade({
     recipient,
     toToken,
     midToken,
+    chainId: tragetChainId,
 }: {
     pool: string;
     amount: string;
@@ -631,6 +639,7 @@ export function useSellTrade({
     recipient: string;
     toToken: Token,
     midToken: Token | null;
+    chainId: number;
 }) {
     const [loading, setLoading] = useState(false)
     const { fail, success } = useToast()
@@ -644,8 +653,8 @@ export function useSellTrade({
 
         setLoading(true)
         try {
-            if (Number(chainId) !== 1) {
-                await setChain({ chainId: `0x${(1).toString(16)}` })
+            if (Number(chainId) !== Number(chainId)) {
+                await setChain({ chainId: `0x${(Number(chainId)).toString(16)}` })
             }
 
             const PoolContract = new Contract(
@@ -654,8 +663,9 @@ export function useSellTrade({
                 signer,
             )
 
-            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - 0.0025).toNumber().toFixed(0)
+            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - 0.1025).toNumber().toFixed(0)
             const _amount = BigInt(new Big(amount).mul(10 ** toToken.decimals).toNumber()).toString()
+
             const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient)
             const v = await tx.wait()
             console.log('----', tx, v)
@@ -668,6 +678,8 @@ export function useSellTrade({
 
             return tx.hash
         } catch (err) {
+            console.log('err:', err)
+
             setLoading(false)
             fail({
                 title: 'Transaction failed',
@@ -736,8 +748,10 @@ function sleep(time: number) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-function getPoolContract(pool: string) {
-    const provider = new providers.JsonRpcProvider('https://eth.llamarpc.com');
+function getPoolContract(pool: string, chainId: number) {
+    const rpcUrl = chainCofig[chainId].rpcUrls[0]
+
+    const provider = new providers.JsonRpcProvider(rpcUrl);
     const PoolContract = new Contract(
         pool,
         poolAbi,

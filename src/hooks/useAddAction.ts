@@ -148,9 +148,9 @@ export default function useAddAction(source: string) {
 
       if (data.type === 'launchpad' || data.type === 'Launchpad') {
         params = {
-          action_title: `${data.action} ${data?.token0 + (data?.token1 ? '-' + data.token1 : '')} on ${data.template}`,
-          action_type: data.type,
-          action_tokens: JSON.stringify([data?.token0 ?? '', data?.token1 ?? '']),
+          action_title: `${data.action} ${data?.token0.symbol + (data?.token1.symbol ? '-' + data.token1.symbol : '')} on ${data.template}`,
+          action_type: 'Swap',
+          action_tokens: JSON.stringify([data?.token0.symbol ?? '', data?.token1.symbol ?? '']),
           action_amount: data.amount,
           account_id: account,
           account_info: uuid,
@@ -163,8 +163,9 @@ export default function useAddAction(source: string) {
           extra_data: JSON.stringify({
             token0: data?.token0,
             token1: data?.token1,
-            type: data.type,
+            type: 'Swap',
             trade_type: data.trade_type,
+            shareTokenPrice: data.shareTokenPrice,
           }),
         };
       }
