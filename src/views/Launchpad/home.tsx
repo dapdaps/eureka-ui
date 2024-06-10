@@ -19,6 +19,8 @@ import Timer from './components/Timer';
 import usePools from './hooks/usePools';
 import useUser from './hooks/useUser';
 
+import type { Chain, Token } from '@/types';
+
 const StyledLinearGradientFont = styled(StyledFont)`
   background: linear-gradient(180deg, #FFF 38.5%, #677079 100%);
   background-clip: text;
@@ -210,6 +212,7 @@ export default function LaunchpadHomePage() {
   const { loading, pools, queryPools } = usePools()
   const { user, queryUser } = useUser()
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
+  const [poolToken, setPoolToken] = useState<Token>()
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
 
   const upcomingAndOngoingPools = useMemo(() => {
@@ -219,7 +222,19 @@ export default function LaunchpadHomePage() {
     return pools.filter(pool => pool.status === 'completed')
   }, [pools])
   const handleBuyOrSell = function (data: any) {
+    console.log(data)
+
     setCheckedPoolAddress(data.pool)
+    setPoolToken({
+      chainId: 1,
+      address: data.share_token_address,
+      name: data.share_token_name,
+      symbol: data.share_token_symbol,
+      icon: data.logo,
+      logoURI: data.logo,
+      decimals: data.share_token_decimal,
+      isNative: false,
+    })
     setLaunchPadModalShow(true)
   }
 
@@ -467,6 +482,7 @@ export default function LaunchpadHomePage() {
         launchPadModalShow && checkedPoolAddress && (
           <LaunchPadModal
             pool={checkedPoolAddress}
+            token={poolToken as Token}
             onClose={() => {
               setCheckedPoolAddress('')
               setLaunchPadModalShow(false)

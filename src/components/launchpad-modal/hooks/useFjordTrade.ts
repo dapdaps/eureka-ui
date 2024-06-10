@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Contract, providers, utils } from 'ethers';
 import { getQuote, getStatus, execute, approve } from 'super-bridge-sdk'
 import { useSetChain } from '@web3-onboard/react';
+import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
 
@@ -19,6 +20,7 @@ export interface QuoteProps {
     amount: Big;
     pool: string;
     address: string;
+    toToken: Token;
 }
 
 export interface QuoteResProps {
@@ -407,7 +409,7 @@ export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
         const receiveAmount = route.receiveAmount
         const targetShareVal = await PoolContract.previewSharesOut(receiveAmount)
 
-        setShareVal(new Big(targetShareVal).div(10 ** 18).toString())
+        setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
         setBridgeRoute(route)
         setReceiveAmount(receiveAmount)
         setLoading(false)
@@ -415,7 +417,7 @@ export function useBuyQuote(quote: QuoteProps | undefined): QuoteResProps {
 
     async function getAssetRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, provider: any) {
         const targetShareVal = await PoolContract.previewSharesOut(quote.amount.toString())
-        setShareVal(new Big(targetShareVal).div(10 ** 18).toString())
+        setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
         setReceiveAmount(quote.amount.toString())
         setLoading(false)
     }
@@ -453,11 +455,13 @@ export function useBuyTrade({
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
 
     async function excuteBuyTrade(signer: Signer) {
-        if (!midToken || !recipient) {
+        if (!midToken || !recipient || !quote) {
             return
         }
 
         try {
+
+
             setLoading(true)
 
             if (tradeType === 3 && bridgeRoute) { // 1:bridge 2:asset token => target 
@@ -494,7 +498,7 @@ export function useBuyTrade({
             }
 
             const assetsIn = new Big(_receiveAmount)
-            const minSharesOut = new Big(shareVal).mul(10 ** 18).mul(1 - 0.0025).toString()
+            const minSharesOut = new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - 0.0025).toString()
 
             await approve(midToken.address, assetsIn, pool, signer)
 
@@ -528,9 +532,9 @@ export function useBuyTrade({
 }
 
 export function useSellQuote({
-    amount, pool, recipient
+    amount, pool, recipient, toToken, midToken
 }: {
-    amount: string, pool: string, recipient: string | null
+    amount: string, pool: string, recipient: string | null, toToken: Token, midToken: Token
 }) {
     const [assetOut, setAssetOut] = useState('')
     
@@ -539,10 +543,11 @@ export function useSellQuote({
     useEffect(() => {
         if (amount && recipient) {
             setLoading(true)
-            const _amount = new Big(amount).mul(10 ** 18).toString()
+            const _amount = new Big(amount).mul(10 ** toToken.decimals).toNumber()
             const PoolContract = getPoolContract(pool)
-            PoolContract.previewAssetsOut(_amount).then((res: string) => {
-                setAssetOut(new Big(res.toString()).div(10 ** 18).toString())
+
+            PoolContract.previewAssetsOut(BigInt(_amount).toString()).then((res: string) => {
+                setAssetOut(new Big(res.toString()).div(10 ** midToken.decimals).toString())
                 setLoading(false)
             })
         }
@@ -556,7 +561,7 @@ export function useSellQuote({
     }
 }
 
-export function useDetail(pool: string, recipient: string, updater: number) {
+export function useDetail(pool: string, recipient: string, toToken: Token, updater: number) {
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
     const [isClosed, setIsClosed] = useState(false)
@@ -593,7 +598,7 @@ export function useDetail(pool: string, recipient: string, updater: number) {
         if (recipient) {
             const PoolContract = getPoolContract(pool)
             PoolContract.purchasedShares(recipient).then((res: string) => {
-                setBalance(new Big(res.toString()).div(10 ** 18).toString())
+                setBalance(new Big(res.toString()).div(10 ** toToken.decimals).toString())
             })
         }
     }, [recipient, updater])
@@ -616,16 +621,20 @@ export function useSellTrade({
     amount,
     assetOut,
     recipient,
+    toToken,
     midToken,
 }: {
     pool: string;
     amount: string;
     assetOut: string;
     recipient: string;
+    toToken: Token,
     midToken: Token | null;
 }) {
     const [loading, setLoading] = useState(false)
     const { fail, success } = useToast()
+    const [{ settingChain, connectedChain }, setChain] = useSetChain();
+    const { account, chainId, provider } = useAccount();
 
     async function excuteSellTrade(signer: Signer) {
         if (!midToken) {
@@ -634,14 +643,19 @@ export function useSellTrade({
 
         setLoading(true)
         try {
+            if (Number(chainId) !== 1) {
+                await setChain({ chainId: `0x${(1).toString(16)}` })
+            }
+
             const PoolContract = new Contract(
                 pool,
                 poolAbi,
                 signer,
             )
 
-            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - 0.0025).toString()
-            const tx = await PoolContract.swapExactSharesForAssets(new Big(amount).mul(10 ** 18).toString(), minAssetsOut.split('.')[0], recipient)
+            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - 0.0025).toNumber().toFixed(0)
+            const _amount = BigInt(new Big(amount).mul(10 ** toToken.decimals).toNumber()).toString()
+            const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient)
             await tx.wait()
             console.log(tx)
             setLoading(false)

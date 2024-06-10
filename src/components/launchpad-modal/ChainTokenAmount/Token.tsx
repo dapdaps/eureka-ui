@@ -22,7 +22,7 @@ const Container = styled.div`
     .left {
         display: flex;
         align-items: center;
-        
+        color: #fff;
         .img-wapper {
             position: relative;
             width: 26px;

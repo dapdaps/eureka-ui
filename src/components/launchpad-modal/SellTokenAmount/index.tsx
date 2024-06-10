@@ -211,6 +211,9 @@ export default function ChainTokenAmount({
             <span>balance: </span>
             <span
               className="num"
+              onClick={() => {
+                onAmountChange && onAmountChange(balance)
+              }}
             >
               {balanceFormated(balance)}
             </span>

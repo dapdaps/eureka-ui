@@ -35,6 +35,7 @@ const ChainWapper = styled.div`
     display: flex;
     align-items: center;
     z-index: 12;
+    color: #fff;
     background-color: rgba(49, 51, 70, 1);
     border-radius: 0 12px 12px 0;
     border: 1px solid rgba(55, 58, 83, 1);

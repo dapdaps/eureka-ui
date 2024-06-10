@@ -7,6 +7,8 @@ import useAddAction from '@/hooks/useAddAction';
 import allTokens from '@/config/bridge/allTokens';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+
 import type { Chain, Token } from '@/types';
 import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
 
@@ -41,6 +43,7 @@ import type { QuoteProps } from './hooks/useFjordTrade'
 interface IProps {
   onClose: () => void;
   pool: string;
+  token: Token;
 }
 const chainList = Object.values(chainCofig);
 
@@ -53,12 +56,11 @@ const CloseIcon = (
   </svg>
 );
 
-const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
+const LaunchPadModal: FC<IProps> = ({ onClose, pool, token }) => {
   const { account, chainId, provider } = useAccount();
   const [fromChain, setFromChain] = useState<Chain>(chainList[0]);
   const [toChain, setToChain] = useState<Chain>(chainList[1]);
   const [fromToken, setFromToken] = useState<Token>();
-  const [toToken, setToToken] = useState<Token>();
   const [sendAmount, setSendAmount] = useState('');
   const [sellAmount, setSellAmount] = useState('');
   const [updateBanlance, setUpdateBanlance] = useState(1);
@@ -71,8 +73,8 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
   const _sendAmount = useDebounce(sendAmount, { wait: 500 });
   const _sellAmount = useDebounce(sellAmount, { wait: 500 });
 
-  
-  const { midToken, startTime, endTime, isClosed, balance } = useDetail(pool, account as string ,updateBanlance)
+
+  const { midToken, startTime, endTime, isClosed, balance } = useDetail(pool, account as string, token, updateBanlance)
 
   const { shareVal, loading: buyQuoteLoading, bridgeRoute, receiveAmount, tradeType } = useBuyQuote(buyQuote)
 
@@ -93,6 +95,8 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
   } = useSellQuote({
     pool,
     amount: _sellAmount,
+    toToken: token,
+    midToken: midToken as Token,
     recipient: account as string,
   })
 
@@ -101,6 +105,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
     recipient: account as string,
     amount: _sellAmount,
     assetOut,
+    toToken: token,
     midToken,
   })
 
@@ -120,6 +125,20 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
     setCurrentTab(key);
   };
 
+  const { balance: inputBalance } = useTokenBalance({
+    currency: fromToken,
+    updater: updateBanlance,
+    isNative: fromChain?.nativeCurrency.symbol === fromToken?.symbol,
+    isPure: false,
+  })
+
+  const { balance: outputBalance } = useTokenBalance({
+    currency: midToken as Token,
+    updater: updateBanlance,
+    isNative: false,
+    isPure: false,
+  })
+
   useEffect(() => {
     if (currentTab === 'BUY') {
       if (account && fromChain && fromToken && Number(_sendAmount) > 0) {
@@ -128,6 +147,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
           fromToken,
           amount: new Big(_sendAmount).mul(10 ** fromToken.decimals),
           pool,
+          toToken: token,
           address: account,
         })
       }
@@ -139,20 +159,35 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
       if (!shareVal && !buyQuoteLoading && _sendAmount) {
         setBtnDisbaled(true)
         setText('No route')
-      } else {
-        setBtnDisbaled(false)
+        return
       }
+
+      if (_sendAmount && Number(inputBalance) < Number(_sendAmount)) {
+        setBtnDisbaled(true)
+        setText('Insufficient balance')
+        return
+      }
+
+      setBtnDisbaled(false)
     }
 
     if (currentTab === 'SELL') {
       if (!assetOut && !sellQuoteLoading && _sellAmount) {
         setBtnDisbaled(true)
         setText('No route')
-      } else {
-        setBtnDisbaled(false)
+        return
+      } 
+
+      if (_sellAmount && Number(balance) < Number(_sellAmount)) {
+        setBtnDisbaled(true)
+        setText('Insufficient balance')
+        return
       }
+
+      setBtnDisbaled(false)
     }
-  }, [shareVal, currentTab, buyQuoteLoading, _sendAmount, sellQuoteLoading, _sellAmount])
+  }, [shareVal, currentTab, buyQuoteLoading, _sendAmount, sellQuoteLoading, _sellAmount, inputBalance, balance])
+
 
 
   return (
@@ -163,14 +198,14 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
             <Logo src="https://ipfs.near.social/ipfs/bafkreidgui7lyuedwj7xk6zt2tpy6sezzgi3gj37rt43xo5bked5o5cmtm" />
             <HeadContent>
               <HeadTitle>
-                CTG
+                {token.symbol}
                 {
                   !isClosed && <Status>
                     <b className="dot"></b>Live Now
                   </Status>
                 }
               </HeadTitle>
-              <HeadSub>Contango</HeadSub>
+              <HeadSub>{token.name}</HeadSub>
             </HeadContent>
           </HeadLeft>
           <CloseBtn onClick={() => onClose()}>{CloseIcon}</CloseBtn>
@@ -196,12 +231,13 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
               chainList={chainList}
               shareVal={shareVal}
               balance={balance}
+              toToken={token as Token}
             />
           </TabBody>
         )}
         {currentTab === 'SELL' && (
           <TabBody>
-            <SellTokenAmount title="Collateral Token" amount={sellAmount} onAmountChange={value => setSellAmount(value)} balance={balance} readOnly={false} />
+            <SellTokenAmount token={token} title="Collateral Token" amount={sellAmount} onAmountChange={value => setSellAmount(value)} balance={balance} readOnly={false} />
             <ArrowSwap>
               <div className="arrow">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -214,7 +250,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
                 </svg>
               </div>
             </ArrowSwap>
-            <SellTokenAmount token={midToken as Token} title="Project Input" amount={assetOut} balance="0.00" readOnly={true} />
+            <SellTokenAmount token={midToken as Token} title="Project Input" amount={assetOut} balance={outputBalance as string} readOnly={true} />
           </TabBody>
         )}
         <FootWrap>
@@ -223,7 +259,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
             isLoading={buyQuoteLoading || buyExcuteLoading || sellQuoteLoading || sellLoading}
             defaultText={currentTab === 'BUY' ? 'Buy' : 'Sell'}
             text={text}
-            fromChain={fromChain}
+            fromChain={currentTab === 'BUY' ? fromChain : { chainId: 1 } as Chain}
             onClick={async () => {
               let hash
               if (currentTab === 'BUY') {
@@ -257,12 +293,12 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool }) => {
                   transactionHash: hash,
                   token0,
                   token1: {
-                    
+
                   },
                   trade_type: trade_type
                 })
               }
-              
+
               setUpdateBanlance(updateBanlance + 1)
             }}
             disabled={btnDisbaled}

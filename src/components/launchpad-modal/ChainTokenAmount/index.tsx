@@ -124,6 +124,7 @@ const TokenTrigger = styled.div`
   transition: all 0.3s;
   width: 160px;
   margin: 0 0 0 auto;
+  color: #fff;
   &:hover {
     border: 1px solid rgba(235, 244, 121, 0.3);
   }

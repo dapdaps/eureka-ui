@@ -70,11 +70,11 @@ export default function BirdgeAction() {
         </div>
 
 
-        {
+        {/* {
             launchPadModalShow && <LaunchPadModal pool="0x31BE063F26E5db02Fda4b6B11D037e8Ad8a98988" onClose={() => {
                 setLaunchPadModalShow(false)
             }}/>
-        }
+        } */}
         
 
     </div>
