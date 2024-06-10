@@ -15,6 +15,9 @@ import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import useUser from './hooks/useUser';
 import useUserPools from './hooks/useUserPools';
+
+import type { Chain, Token } from '@/types';
+
 const StyledLinearGradientFont = styled(StyledFont)`
   background: linear-gradient(180deg, #FFF 38.5%, #677079 100%);
   background-clip: text;
@@ -100,6 +103,7 @@ export default function LaunchpadYoursPage() {
   const { user, queryUser } = useUser()
   const [categoryIndex, setCategoryIndex] = useState(0)
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
+  const [poolToken, setPoolToken] = useState<Token>()
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
   const [inProgressNumber, setInProgressNumber] = useState(0)
 
@@ -114,6 +118,16 @@ export default function LaunchpadYoursPage() {
   const handleBuyOrSellOrRedeem = function (data: any) {
     if (['upcoming', 'ongoing'].includes(data.launchpad_lbp.status)) {
       setCheckedPoolAddress(data?.pool)
+      setPoolToken({
+        chainId: 1,
+        address: data.share_token_address,
+        name: data.share_token_name,
+        symbol: data.share_token_symbol,
+        icon: data.logo,
+        logoURI: data.logo,
+        decimals: data.share_token_decimal,
+        isNative: false,
+      })
       setLaunchPadModalShow(true)
     } else {
       handleRedeem(data)
@@ -385,6 +399,7 @@ export default function LaunchpadYoursPage() {
         launchPadModalShow && checkedPoolAddress && (
           <LaunchPadModal
             pool={checkedPoolAddress}
+            token={poolToken as Token}
             onClose={() => {
               setCheckedPoolAddress('')
               setLaunchPadModalShow(false)
