@@ -656,8 +656,8 @@ export function useSellTrade({
             const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - 0.0025).toNumber().toFixed(0)
             const _amount = BigInt(new Big(amount).mul(10 ** toToken.decimals).toNumber()).toString()
             const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient)
-            await tx.wait()
-            console.log(tx)
+            const v = await tx.wait()
+            console.log('----', tx, v)
             setLoading(false)
 
             success({

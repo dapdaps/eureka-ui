@@ -277,9 +277,15 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, token }) => {
                     ...midToken,
                     amount: receiveAmount,
                   }
+                  token1 = token
                 } else {
                   amount = sellAmount
                   trade_type = 'sell'
+                  token0 = {
+                    ...token,
+                    amout: _sellAmount,
+                  }
+                  token1 = midToken
                 }
 
                 addAction({
@@ -292,9 +298,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, token }) => {
                   status: 1,
                   transactionHash: hash,
                   token0,
-                  token1: {
-
-                  },
+                  token1,
                   trade_type: trade_type
                 })
               }
