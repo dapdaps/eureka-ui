@@ -89,6 +89,25 @@ export const abi = [
         "anonymous": false,
         "inputs": [
             {
+                "indexed": false,
+                "internalType": "address",
+                "name": "sender",
+                "type": "address"
+            },
+            {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "amount",
+                "type": "uint256"
+            }
+        ],
+        "name": "ContractReceived",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
                 "indexed": true,
                 "internalType": "address",
                 "name": "token",
@@ -117,12 +136,6 @@ export const abi = [
                 "internalType": "uint256",
                 "name": "chainId",
                 "type": "uint256"
-            },
-            {
-                "indexed": false,
-                "internalType": "bool",
-                "name": "isUserDeposit",
-                "type": "bool"
             }
         ],
         "name": "DepositToken",
@@ -340,11 +353,6 @@ export const abi = [
                 "internalType": "address",
                 "name": "_toAddress",
                 "type": "address"
-            },
-            {
-                "internalType": "bool",
-                "name": "isUserDeposit",
-                "type": "bool"
             }
         ],
         "name": "depositEth",
@@ -373,11 +381,6 @@ export const abi = [
                 "internalType": "uint256",
                 "name": "_dstChainId",
                 "type": "uint256"
-            },
-            {
-                "internalType": "bool",
-                "name": "isUserDeposit",
-                "type": "bool"
             }
         ],
         "name": "depositToken",

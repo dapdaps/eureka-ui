@@ -38,16 +38,15 @@ export async function saveTransaction(item: any) {
 export async function getTransaction() {
     const sbs = await getDb()
     const list: any = await sbs.readAll()
-    
+
     if (!list) {
         return []
     }
-    
+
     return list
 }
 
-const contractAddress = '0xe1dA6F46d757699f6D783a2876E01937a1eCa9a9'
-
+const contractAddress = '0xa8faD25d4352470dD03681aE697800069326f27b'
 
 interface GasTokenParams {
     fromChain: Chain | undefined;
@@ -70,12 +69,12 @@ async function getAllSupportedChains(fromChain: Chain, toChain: Chain | null) {
     let hasFrom, hasTo
     if (fromChain) {
         hasFrom = supportedChains
-        .supported_src_chains?.filter((item: any) => Number(item.chain_id) === fromChain.chainId)
+            .supported_src_chains?.filter((item: any) => Number(item.chain_id) === fromChain.chainId)
     }
-    
+
     if (toChain) {
         hasTo = supportedChains
-        .supported_dst_chains?.filter((item: any) => Number(item.chain_id) === toChain.chainId)
+            .supported_dst_chains?.filter((item: any) => Number(item.chain_id) === toChain.chainId)
     }
 
     return {
@@ -196,7 +195,7 @@ export function useGasAmount({
                 setIsLoading(false)
                 return
             }
-            
+
             await saveTransaction({
                 hash,
                 status: 3,
@@ -232,7 +231,7 @@ export function useGasAmount({
         }
     }
 
-        
+
 
     async function depositEth(account: string, value: string, signer: Signer) {
         const tokenContract = new Contract(
@@ -241,7 +240,7 @@ export function useGasAmount({
             signer,
         )
 
-        const v = await tokenContract.depositEth(toChain?.chainId, account, true, {
+        const v = await tokenContract.depositEth(toChain?.chainId, account, {
             value
         })
 
@@ -252,20 +251,19 @@ export function useGasAmount({
 
         const _value = parseInt(value).toString()
         await approve(tokenAddress, new Big(_value), contractAddress, signer)
-    
+
         const tokenContract = new Contract(
             contractAddress,
             abi,
             signer,
         )
-    
+
         const v = await tokenContract.depositToken(
             tokenAddress,
             _value,
-            account, 
-            toChain?.chainId, 
-            true, 
-          )
+            account,
+            toChain?.chainId,
+        )
 
         return v.wait()
     }
@@ -312,7 +310,7 @@ export function useTransction() {
             if (res && Array.isArray(res)) {
                 res.forEach(async item => {
                     if (item.status === 3) {
-                        const isComplete = await getStatus({ chainId: item.fromChainId}, item.hash)
+                        const isComplete = await getStatus({ chainId: item.fromChainId }, item.hash)
                         if (isComplete) {
                             item.status = 2
                             saveTransaction(item)
