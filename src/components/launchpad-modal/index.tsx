@@ -78,7 +78,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
   const price = usePriceStore((store) => store.price);
   const { startTime, endTime, isClosed, balance } = useDetail(pool, account as string, token, targetChainId, updateBanlance)
 
-  const { shareVal, loading: buyQuoteLoading, bridgeRoute, receiveAmount, tradeType } = useBuyQuote(buyQuote, midToken)
+  const { shareVal, loading: buyQuoteLoading, bridgeRoute, receiveAmount, tradeType } = useBuyQuote(buyQuote, midToken, provider?.getSigner())
 
   const { excuteBuyTrade, loading: buyExcuteLoading } = useBuyTrade({
     shareVal,
@@ -277,8 +277,8 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
               if (hash) {
                 let amount, trade_type, token0, token1, shareTokenPrice
                 if (currentTab === 'BUY') {
-                  amount = sendAmount
                   const _receiveAmount = new Big(receiveAmount).div(10 ** midToken.decimals).toString()
+                  amount = _receiveAmount
                   trade_type = 'buy'
                   token0 = {
                     ...midToken,
@@ -286,7 +286,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
                   }
                   token1 = token
 
-                  shareTokenPrice = Number(price[midToken.symbol]) * Number(_receiveAmount) / Number(shareVal)
+                  shareTokenPrice = (Number(price[midToken.symbol]) * Number(_receiveAmount) / Number(shareVal)).toString()
 
                 } else {
                   amount = _sellAmount
@@ -296,12 +296,12 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
                     amout: _sellAmount,
                   }
                   token1 = midToken
-                  shareTokenPrice = Number(price[midToken.symbol]) * Number(assetOut) / Number(_sellAmount)
+                  shareTokenPrice = (Number(price[midToken.symbol]) * Number(assetOut) / Number(_sellAmount)).toString()
 
                 }
 
                 addAction({
-                  type: "launchpad",
+                  type: "Swap",
                   fromChainId: fromChain.chainId,
                   token: fromToken,
                   amount: amount,

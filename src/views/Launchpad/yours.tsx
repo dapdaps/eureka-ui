@@ -18,6 +18,7 @@ import useUserPools from './hooks/useUserPools';
 import tokenConfig from '@/components/launchpad-modal/hooks/tokenConfig'
 
 import type { Chain, Token } from '@/types';
+import { differenceInDays, format } from 'date-fns';
 
 const StyledLinearGradientFont = styled(StyledFont)`
   background: linear-gradient(180deg, #FFF 38.5%, #677079 100%);
@@ -142,7 +143,7 @@ export default function LaunchpadYoursPage() {
         decimals: data.asset_token_decimal,
         isNative: false,
       })
-  
+
       setChainId(data.chain_id)
 
       setLaunchPadModalShow(true)
@@ -189,18 +190,22 @@ export default function LaunchpadYoursPage() {
           <StyledLinearGradientFont fontSize='18px'>Your Avg. Rate of Return</StyledLinearGradientFont>
           <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{user?.rate_return_avg ?? 0}%</StyledLinearGradientFont>
         </StyledFlex>
-        <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
-          <StyledLinearGradientFont fontSize='18px'>In Progress</StyledLinearGradientFont>
-          <StyledFlex>
-            {
-              user?.lbps?.map((lbp: any, index: number) => (
-                <StyledLogoContainer key={index} style={{ marginLeft: index > 0 ? -9 : 0 }}>
-                  <StyledLogo src={lbp.logo} />
-                </StyledLogoContainer>
-              )) ?? (<></>)
-            }
-          </StyledFlex>
-        </StyledFlex>
+        {
+          user?.lbps?.length > 0 && (
+            <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
+              <StyledLinearGradientFont fontSize='18px'>In Progress</StyledLinearGradientFont>
+              <StyledFlex>
+                {
+                  user?.lbps?.map((lbp: any, index: number) => (
+                    <StyledLogoContainer key={index} style={{ marginLeft: index > 0 ? -9 : 0 }}>
+                      <StyledLogo src={lbp.logo} />
+                    </StyledLogoContainer>
+                  )) ?? (<></>)
+                }
+              </StyledFlex>
+            </StyledFlex>
+          )
+        }
       </StyledFlex>
       <StyledCategoryContainer>
         <StyledCategory className={categoryIndex === 0 ? "active" : ""} onClick={() => setCategoryIndex(0)}>In progress ({inProgressNumber})</StyledCategory>
@@ -286,7 +291,7 @@ export default function LaunchpadYoursPage() {
                       <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#47C33C' fontSize='16px'>+230%</StyledFont>
+                      <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.launchpad_lbp?.rate_return_usd ?? 0).lt(0) ? '-' : '+') + userPool?.launchpad_lbp?.rate_return_usd ?? 0}%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatThousandsSeparator(userPool?.launchpad_lbp?.purchased_shares ?? 0)}</StyledFont>
@@ -392,13 +397,13 @@ export default function LaunchpadYoursPage() {
                       <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#47C33C' fontSize='16px'>+230%</StyledFont>
+                      <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.launchpad_lbp?.rate_return_usd ?? 0).lt(0) ? '-' : '+') + userPool?.launchpad_lbp?.rate_return_usd ?? 0}%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color={Big(userPool?.purchased_shares ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>+$2,305.02</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>2/25/2024 - 3/25/2024</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>{format(userPool?.launchpad_lbp.start_time, 'MM/d/yyyy')} - {format(userPool?.launchpad_lbp.end_time, 'MM/d/yyyy')}</StyledFont>
                     </StyledParticipatedTd>
                   </StyledParticipatedTr>
                 )) : (
