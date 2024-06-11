@@ -584,8 +584,6 @@ export function useDetail(pool: string, recipient: string, toToken: Token, chain
 
 
     async function saleStart() {
-        console.log('pool', pool)
-
         const PoolContract = getPoolContract(pool, chainId)
         const time = await PoolContract.saleStart()
         setStartTime(time.toString())
@@ -675,10 +673,28 @@ export function useSellTrade({
 
             const _slippage = Number(slippage) / 100
 
-            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - _slippage).toNumber().toFixed(0)
-            const _amount = BigInt(new Big(amount).mul(10 ** toToken.decimals).toNumber()).toString()
+            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - _slippage).toNumber().toFixed(0).toString()
 
-            const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient)
+            // const amountBig = new Big(amount).mul(10 ** toToken.decimals).toString()
+            const balnace = (await PoolContract.purchasedShares(recipient)).toString()
+            let _amount = BigInt(new Big(amount).mul(10 ** toToken.decimals).toNumber()).toString()
+
+            if (new Big(_amount).gte(new Big(balnace))) {
+                _amount = balnace
+            }
+
+            console.log('minAssetsOut:', _amount, minAssetsOut)
+
+            let gasLimit = 19200
+            try {
+                gasLimit = (await PoolContract.estimateGas.swapExactSharesForAssets(_amount, minAssetsOut, recipient)).toNumber()
+            } catch(e) {
+                console.log(e)
+            }
+
+            const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient, { 
+                gasLimit: gasLimit
+            })
             const v = await tx.wait()
             setLoading(false)
 
