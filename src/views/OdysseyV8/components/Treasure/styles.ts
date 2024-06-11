@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
-
+  background: url('/images/odyssey/v8/treasure-bg.png');
   .modal-6 {
     display: block;
     padding-bottom: 100px;

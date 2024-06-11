@@ -13,6 +13,7 @@ import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
 import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
+import Pilcrow from '../Pilcrow';
 import {
   Badge,
   IconGroup,
@@ -266,11 +267,13 @@ export default function Treasure() {
                 </div>
                 <div className="modal-list-body">
                   <div className="body-left">
-                    <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
-                    <Image src="/images/odyssey/v4/coin-weth2.svg" alt="" width={26} height={26} className="lp-img" />
-                    <div className="body-left-content">
-                      <div className="body-left-content-title">ezETH / WETH</div>
-                    </div>
+                    <CoinGroup
+                      icon={['/images/odyssey/v4/coin-ezeth.svg', '/images/odyssey/v4/coin-weth2.svg']}
+                      name={['ezETH', 'WETH']}
+                      onClick={() => {
+                        setSelectedPool('ezETH,WETH');
+                      }}
+                    />
                   </div>
                   <div className="body-right">
                     <TrapeziformBtn
@@ -515,11 +518,13 @@ export default function Treasure() {
                 </div>
                 <div className="modal-list-body">
                   <div className="body-left">
-                    <Image src="/images/odyssey/v4/coin-mwesteth.svg" alt="" width={26} height={26} />
-                    <Image src="/images/odyssey/v4/coin-weth2.svg" alt="" width={26} height={26} className="lp-img" />
-                    <div className="body-left-content">
-                      <div className="body-left-content-title">mwstETH-WPUNKS / WETH</div>
-                    </div>
+                    <CoinGroup
+                      icon={['/images/odyssey/v4/coin-mwesteth.svg', '/images/odyssey/v4/coin-weth2.svg']}
+                      name={['mwstETH-WPUNKS', 'WETH']}
+                      onClick={() => {
+                        setSelectedPool('mwstETH-WPUNKS:20,WETH');
+                      }}
+                    />
                   </div>
                   <div className="body-right">
                     <TrapeziformBtn
@@ -876,7 +881,10 @@ export default function Treasure() {
           </ModalBody>
         </Modal>
       ) : null}
-
+      <Pilcrow
+        title="Blast Treasure Strategies"
+        desc="Explore Blast treasure strategies, maximize your Blast Gold earnings!"
+      />
       <StyledContent className="row-top">
         <Treasure1 onClick={() => setShowModal1(true)}>
           <Line />

@@ -28,9 +28,8 @@ const StyledContainer = styled.div<{ $clickable: boolean }>`
   flex-wrap: nowrap;
   gap: 6px;
   color: #fff;
-  width: 168px;
   height: 42px;
-  padding-left: 6px;
+  padding: 6px;
   border-radius: 4px;
   .coin-icon-wrap {
   }

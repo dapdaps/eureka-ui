@@ -11,7 +11,6 @@ import FootClaim from './components/FootClaim';
 import Spins from './components/Spins';
 import Lending from './components/Lending';
 import Noti from './components/Noti';
-import Pilcrow from './components/Pilcrow';
 import Summary from './components/Summary';
 import Trade from './components/Trade';
 import Treasure from './components/Treasure';
@@ -85,17 +84,9 @@ export default function OdysseyV4() {
         <StyledBg>
           <Banner />
           <Summary data={detail} loading={loading} />
-
-          <Pilcrow
-            title="Blast Treasure Strategies"
-            desc="Explore Blast treasure strategies, maximize your Blast Gold earnings!"
-          />
           <Treasure />
         </StyledBg>
-        <Pilcrow
-          title="Earn Extra Gold / Bonus Spins!"
-          desc="Interact with popular dApps in Blast on DapDap, earn extra Gold and spin to win!"
-        />
+
         <SlotMachine
           chainList={chainList}
           handleSpin={handleSpin}

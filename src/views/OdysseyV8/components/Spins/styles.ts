@@ -33,7 +33,7 @@ const Bg = styled.div`
 `;
 
 export const BgFoot = styled(Bg)`
-  margin-top: -230px;
+  margin-top: -200px;
   background-image: url('/images/odyssey/v4/ellipse-foot.png');
 `;
 

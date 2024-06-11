@@ -26,12 +26,22 @@ import yellowRightImg from './img/yellow-right.svg';
 import bgImg from './img/bg.svg';
 
 import DisabledMark from './DisabledMark';
+import Pilcrow from '../Pilcrow';
+import { BgFoot } from '../Spins/styles';
 
 const Wapper = styled.div`
   width: var(--main-width);
-  margin: 0px auto 70px;
+  margin: 60px auto 70px;
   position: relative;
-  background: radial-gradient(50% 40% at 50% 35%, #ebf479 0%, rgba(235, 244, 121, 0) 100%);
+  background-color: #000;
+`;
+
+const HeaderBg = styled(BgFoot)`
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  transform: rotate(180deg);
+  top: 130px;
 `;
 
 const Bg = styled.div`
@@ -344,7 +354,12 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
 
   return (
     <Wapper>
+      <HeaderBg />
       <Bg />
+      <Pilcrow
+        title="Earn Extra Gold / Bonus Spins!"
+        desc="Interact with popular dApps in Blast on DapDap, earn extra Gold and spin to win!"
+      />
       <Screen>
         <DisabledMark />
         <Title>DAPDAP JACKPOT</Title>
