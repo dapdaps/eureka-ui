@@ -37,29 +37,8 @@ export default {
     rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
     tips: 'Explore, Trade, Earn - Go for Gold!',
   },
-  7: {
-    // fot v4 test
-    path: '/odyssey/home?id=7',
-    video: '',
-    chainsImg: '/images/odyssey/v4/chains.png',
-    chainsHeight: '56px',
-    reward: '6,900',
-    rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
-    rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
-    tips: 'Explore, Trade, Earn - Go for Gold!',
-  },
   5: {
     path: '/odyssey/home?id=5',
-    video: '',
-    chainsImg: '/images/odyssey/v5/chains.svg',
-    chainsHeight: '56px',
-    reward: '3,400',
-    rewardDisableIcon: '/images/odyssey/v5/rewardDisable.svg',
-    rewardEnableIcon: '/images/odyssey/v5/rewardEnable.svg',
-    tips: 'Forge Your Future Wealth in the Mode Ecosystem',
-  },
-  8: {
-    path: '/odyssey/home?id=8',
     video: '',
     chainsImg: '/images/odyssey/v4/chains.png',
     chainsHeight: '56px',
@@ -68,15 +47,4 @@ export default {
     rewardEnableIcon: '/images/odyssey/v3/rewardEnable.svg',
     tips: '',
   },
-} as {
-  [key: string]: {
-    path: string;
-    video: string;
-    chainsImg: string;
-    reward: string;
-    rewardDisableIcon?: string;
-    rewardEnableIcon?: string;
-    chainsHeight: string;
-    tips: string;
-  };
 };
