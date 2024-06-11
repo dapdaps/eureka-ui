@@ -414,6 +414,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
       <ActionBar>
         <Rules
           pressed={disabled}
+          style={{ cursor: 'not-allowed' }}
           onClick={() => {
             setRuleShow(true);
             setRulePressed(true);
@@ -424,9 +425,9 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
         />
         <BtnWapper>
           <BtnBg />
-          <Btn className={isPressed ? 'press' : ''} onClick={handleBtnPress} />
+          <Btn className={isPressed ? 'press' : ''} onClick={handleBtnPress} style={{ cursor: 'not-allowed' }} />
         </BtnWapper>
-        <Clam pressed={disabled} onClick={() => {}} />
+        <Clam pressed={disabled} onClick={() => {}} style={{ cursor: 'not-allowed' }} />
       </ActionBar>
       {ruleShow && <RuleModal onClose={() => setRuleShow(false)} />}
       {prizeShow && <PrizeModal prize={reward} onClose={() => setPrizeShow(false)} />}

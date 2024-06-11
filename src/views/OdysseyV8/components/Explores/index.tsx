@@ -25,7 +25,7 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail }
     <>
       <StyledContainer>
         <Title>Explore more dApps on Blast</Title>
-        <Desc>Interact with popular dApps in Blast on DapDap, win 200 DapDap PTS for each.</Desc>
+        <Desc>Interact with popular dApps in Blast on DapDap, win spins and win big prizes.</Desc>
         <Btns>
           <Trapeziform
             {...TrapLayout}
@@ -91,7 +91,7 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail }
         />
       </StyledContainer>
       <StyledContent>
-        <CompTitle title="" subtitle="Complete tasks easily to earn DapDap PTS" />
+        <CompTitle title="" subtitle="Complete tasks easily to earn Spin to win" />
         <StyledItemWrap>
           {list?.length ? (
             list

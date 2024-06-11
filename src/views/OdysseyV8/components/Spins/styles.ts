@@ -42,6 +42,8 @@ export const Head = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+  z-index: 1;
 `;
 export const QuestBg = styled.div<{ $color: string }>`
   width: 420px;
@@ -54,6 +56,7 @@ export const QuestBg = styled.div<{ $color: string }>`
   border-radius: 420px;
   opacity: 0.3;
   background: radial-gradient(50% 50% at 50% 50%, ${({ $color }) => $color} 0%, rgba(0, 0, 0, 0) 100%);
+  z-index: 1;
 `;
 export const HeadLeft = styled.div`
   display: flex;
@@ -81,6 +84,8 @@ export const HeadRight = styled.div`
 `;
 export const Body = styled.div`
   padding: 0px 30px 30px;
+  position: relative;
+  z-index: 2;
 `;
 export const BodyLeft = styled.div`
   width: 414px;

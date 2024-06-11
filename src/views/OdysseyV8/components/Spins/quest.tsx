@@ -35,7 +35,6 @@ export default function Quest({ data, bgClass, onRefreshDetail }: any) {
     }
   };
 
-  // disabled={times === 0 ? false : execution >= times}
   return (
     <Trapeziform borderColor="#3C3D00" corner={34} className="quest-item">
       <QuestBg $color={bgColor} />
