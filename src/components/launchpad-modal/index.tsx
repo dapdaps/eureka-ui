@@ -61,7 +61,7 @@ const CloseIcon = (
 
 const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, token, midToken }) => {
   const { account, chainId, provider } = useAccount();
-  const [fromChain, setFromChain] = useState<Chain>(chainList[0]);
+  const [fromChain, setFromChain] = useState<Chain>(chainCofig[targetChainId]);
   const [fromToken, setFromToken] = useState<Token>();
   const [sendAmount, setSendAmount] = useState('');
   const [sellAmount, setSellAmount] = useState('');
