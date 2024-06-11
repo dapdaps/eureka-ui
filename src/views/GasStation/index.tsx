@@ -190,7 +190,12 @@ export default function GasStation({ chainList }: Props) {
 
     useEffect(() => {
         if (fromChain && toChain && chainFromToken && inputVal && receive && balances) {
-            setCanSend(true)
+            const address = chainFromToken.isNative ? 'native' : chainFromToken.address
+            if (balances[address] && Number(balances[address]) >  Number(receive)) {
+                setCanSend(true)
+            } else {
+                setCanSend(false)
+            }
         } else {
             setCanSend(false)
         }
