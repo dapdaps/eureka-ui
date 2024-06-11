@@ -1,7 +1,7 @@
 import chains from '@/config/chains';
 import { get } from '@/utils/http';
 import Big from 'big.js';
-import { Contract, providers } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import _ from 'lodash';
 import { useCallback, useState } from 'react';
 export default function usePools() {
@@ -43,7 +43,7 @@ export default function usePools() {
         contract.purchasedShares(sender).then((res: any) => {
           setSharesMapping((prev: any) => {
             const curr = _.cloneDeep(prev)
-            curr[element.pool] = Big(res).toFixed()
+            curr[element.pool] = Big(utils.formatUnits(res, 18)).toFixed(3)
             return curr
           })
         })

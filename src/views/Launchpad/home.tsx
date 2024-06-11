@@ -20,7 +20,7 @@ import styled from 'styled-components';
 import Timer from './components/Timer';
 import usePools from './hooks/usePools';
 import useUser from './hooks/useUser';
-
+import { format } from 'date-fns';
 import type { Token } from '@/types';
 
 const StyledLinearGradientFont = styled(StyledFont)`
@@ -219,6 +219,29 @@ const STATUS_TXT_MAPPING: any = {
   'ongoing': 'Live Now',
   'upcoming': 'Coming Soon'
 }
+const COLUMN_LIST = [{
+  key: "symobl",
+  label: "Token & Project",
+}, {
+  key: "rate_return_usd",
+  label: "Rate of Return",
+  sortable: true
+}, {
+  key: "funds_raised",
+  label: "Funds Raised",
+  sortable: true
+}, {
+  key: "participants",
+  label: "Participants",
+  sortable: true
+}, {
+  key: "chain_id",
+  label: "Chain",
+}, {
+  key: "start_time",
+  label: "Start Date",
+  sortable: true
+}]
 export default function LaunchpadHomePage() {
 
   const router = useRouter();
@@ -229,17 +252,22 @@ export default function LaunchpadHomePage() {
   const [poolToken, setPoolToken] = useState<Token>()
   const [midToken, setMidToken] = useState<Token>()
   const [chainId, setChainId] = useState(1)
+  const [sortKey, setSortKey] = useState('')
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
 
   const upcomingAndOngoingPools = useMemo(() => {
-    return pools.filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
-  }, [pools])
+    return pools
+      .filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
+      .sort((prev, next) => prev[sortKey] - next[sortKey])
+  }, [pools, sortKey])
   const completedPools = useMemo(() => {
     return pools.filter(pool => pool.status === 'completed')
   }, [pools])
   const handleBuyOrSell = function (data: any) {
     console.log('data:', data)
-
+    if (data.status === 'upcoming') {
+      return
+    }
     setCheckedPoolAddress(data.pool)
 
     setPoolToken({
@@ -268,7 +296,9 @@ export default function LaunchpadHomePage() {
 
     setLaunchPadModalShow(true)
   }
-
+  const handleSort = function (key?: any) {
+    key && setSortKey(key === sortKey ? "" : key)
+  }
   useEffect(() => {
     if (userStore.address) {
       queryUser()
@@ -292,11 +322,11 @@ export default function LaunchpadHomePage() {
       }}>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px' fontWeight='500'>Your Total Cost</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>${formatThousandsSeparator(user?.trading_volume_usd ?? 0)}</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>${formatThousandsSeparator(Big(user?.total_cost ?? 0).toFixed(2))}</StyledLinearGradientFont>
         </StyledFlex>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px' fontWeight='500'>Your Avg. Rate of Return</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>{user?.rate_return_avg ?? 0}%</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>{Big(user?.rate_return_avg ?? 0).toFixed(0)}%</StyledLinearGradientFont>
         </StyledFlex>
         {
           user?.lbps?.length > 0 && (
@@ -366,11 +396,11 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{pool?.funds_raised ? `$ ${pool?.funds_raised}` : '-'}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>$ {Big(pool?.funds_raised ?? 0).toFixed(3)}</StyledFont>
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Price</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{pool?.price ? `$ ${Big(pool?.price).toFixed(3)}` : '-'}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>$ {Big(pool?.price ?? 0).toFixed(3)}</StyledFont>
                     </StyledFlex>
                   </StyledFlex>
                   <StyledFlex>
@@ -378,8 +408,15 @@ export default function LaunchpadHomePage() {
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
                       <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{sharesMapping[pool?.pool ?? ''] || '-'}</StyledFont>
                     </StyledFlex>
+
                     <StyledProjectButtonContainer>
-                      <StyledProjectButton onClick={() => handleBuyOrSell(pool)}>Buy / Sell</StyledProjectButton>
+                      <StyledProjectButton
+                        style={{
+                          backgroundColor: pool.status === "upcoming" ? "#979ABE" : "#EBF479",
+                          cursor: pool.status === "upcoming" ? "not-allowed" : "pointer"
+                        }}
+                        onClick={() => handleBuyOrSell(pool)}
+                      >Buy / Sell</StyledProjectButton>
                     </StyledProjectButtonContainer>
                   </StyledFlex>
                 </StyledContainer>
@@ -404,49 +441,36 @@ export default function LaunchpadHomePage() {
         <StyledLinearGradientFont fontSize='26px' fontWeight='700'>Completed Token Sales</StyledLinearGradientFont>
         <StyledCompletedSalesTable>
           <StyledCompletedSalesTHeader>
-            <StyledCompletedSalesTh>
-              <StyledFont
-                color="#979ABE"
-                fontSize="16px"
-                fontWeight="500"
-                style={{ paddingLeft: 26 }}
-              >Token & Project</StyledFont>
-            </StyledCompletedSalesTh>
-            <StyledCompletedSalesTh>
-              <StyledFont color="#979ABE" fontSize="16px" fontWeight="500">Rate of Return</StyledFont>
-              <StyledSvg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                  <path d="M5.78087 7.02391C5.38055 7.52432 4.61946 7.52432 4.21913 7.02391L0.299758 2.1247C-0.224053 1.46993 0.242119 0.499999 1.08063 0.499999L8.91938 0.5C9.75788 0.5 10.2241 1.46993 9.70024 2.12469L5.78087 7.02391Z" fill="#979ABE" />
-                </svg>
-              </StyledSvg>
-            </StyledCompletedSalesTh>
-            <StyledCompletedSalesTh>
-              <StyledFont color="#979ABE" fontSize="16px" fontWeight="500">Funds Raised</StyledFont>
-              <StyledSvg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                  <path d="M5.78087 7.02391C5.38055 7.52432 4.61946 7.52432 4.21913 7.02391L0.299758 2.1247C-0.224053 1.46993 0.242119 0.499999 1.08063 0.499999L8.91938 0.5C9.75788 0.5 10.2241 1.46993 9.70024 2.12469L5.78087 7.02391Z" fill="#979ABE" />
-                </svg>
-              </StyledSvg>
-            </StyledCompletedSalesTh>
-            <StyledCompletedSalesTh>
-              <StyledFont color="#979ABE" fontSize="16px" fontWeight="500">Participants</StyledFont>
-              <StyledSvg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                  <path d="M5.78087 7.02391C5.38055 7.52432 4.61946 7.52432 4.21913 7.02391L0.299758 2.1247C-0.224053 1.46993 0.242119 0.499999 1.08063 0.499999L8.91938 0.5C9.75788 0.5 10.2241 1.46993 9.70024 2.12469L5.78087 7.02391Z" fill="#979ABE" />
-                </svg>
-              </StyledSvg>
-            </StyledCompletedSalesTh>
-            <StyledCompletedSalesTh style={{ flex: 0.5 }}>
-              <StyledFont color="#979ABE" fontSize="16px" fontWeight="500">Chain</StyledFont>
-            </StyledCompletedSalesTh>
-            <StyledCompletedSalesTh>
-              <StyledFont color="#979ABE" fontSize="16px" fontWeight="500">Start Date</StyledFont>
-              <StyledSvg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                  <path d="M5.78087 7.02391C5.38055 7.52432 4.61946 7.52432 4.21913 7.02391L0.299758 2.1247C-0.224053 1.46993 0.242119 0.499999 1.08063 0.499999L8.91938 0.5C9.75788 0.5 10.2241 1.46993 9.70024 2.12469L5.78087 7.02391Z" fill="#979ABE" />
-                </svg>
-              </StyledSvg>
-            </StyledCompletedSalesTh>
+            {
+              COLUMN_LIST.map((column, index) => (
+                <StyledCompletedSalesTh
+                  key={index}
+                  style={{
+                    cursor: column.sortable ? 'pointer' : 'unset',
+                    flex: column.key === 'chain_id' ? 0.5 : 1
+                  }}
+                  onClick={() => column.sortable && handleSort(column.key)}
+                >
+                  <StyledFont
+                    color="#979ABE"
+                    fontSize="16px"
+                    fontWeight="500"
+                    style={{
+                      paddingLeft: index === 0 ? 26 : 0,
+                    }}
+                  >{column.label}</StyledFont>
+                  {
+                    column?.sortable && (
+                      <StyledSvg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+                          <path d="M5.78087 7.02391C5.38055 7.52432 4.61946 7.52432 4.21913 7.02391L0.299758 2.1247C-0.224053 1.46993 0.242119 0.499999 1.08063 0.499999L8.91938 0.5C9.75788 0.5 10.2241 1.46993 9.70024 2.12469L5.78087 7.02391Z" fill={sortKey === column.key ? "#FFF" : "#979ABE"} />
+                        </svg>
+                      </StyledSvg>
+                    )
+                  }
+                </StyledCompletedSalesTh>
+              ))
+            }
           </StyledCompletedSalesTHeader>
           <StyledCompletedSalesTBody>
             {loading ? (
@@ -457,7 +481,10 @@ export default function LaunchpadHomePage() {
               completedPools && completedPools.length > 0 ? completedPools.map((pool, index) => (
                 <StyledCompletedSalesTr key={index}>
                   <StyledCompletedSalesTd>
-                    <StyledFlex style={{ paddingLeft: 20 }}>
+                    <StyledFlex gap='10px' style={{ paddingLeft: 20 }}>
+                      <StyledTokenImageContainer style={{ width: 36, height: 36 }}>
+                        <StyledTokenImage src={pool.logo} />
+                      </StyledTokenImageContainer>
                       <StyledFlex flexDirection='column' alignItems='flex-start' gap='4px'>
                         <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool.share_token_symbol}</StyledFont>
                         <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{pool.share_token_symbol} Exchange</StyledFont>
@@ -465,32 +492,22 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{pool?.rate_return_usd}%</StyledFont>
+                    <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{pool?.rate_return_usd ?? 0}%</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool?.funds_raised ? `$${pool?.funds_raised}` : '-'}</StyledFont>
+                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>${Big(pool?.funds_raised ?? 0).toFixed(2)}</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>123</StyledFont>
+                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool?.participants ?? 0}</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd style={{ flex: 0.5 }}>
-                    <StyledSvg>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <rect width="20" height="20" rx="4" fill="#ECEFF0" />
-                        <path d="M9.94927 2.29993L9.84546 2.65255V12.8841L9.94927 12.9876L14.6985 10.1803L9.94927 2.29993Z" fill="#343434" />
-                        <path d="M9.94909 2.29993L5.19971 10.1803L9.94909 12.9876V8.02155V2.29993Z" fill="#8C8C8C" />
-                        <path d="M9.94913 13.8868L9.89062 13.9582V17.6028L9.94913 17.7736L14.7013 11.0809L9.94913 13.8868Z" fill="#3C3C3B" />
-                        <path d="M9.94909 17.7736V13.8868L5.19971 11.0809L9.94909 17.7736Z" fill="#8C8C8C" />
-                        <path d="M9.94922 12.9875L14.6985 10.1801L9.94922 8.02136V12.9875Z" fill="#141414" />
-                        <path d="M5.19971 10.1801L9.94909 12.9875V8.02136L5.19971 10.1801Z" fill="#393939" />
-                      </svg>
-                    </StyledSvg>
+                    <StyledChainImage src={chainCofig[pool?.chain_id].icon} />
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
                     <StyledFlex style={{ width: '100%', paddingRight: 23 }}>
                       <StyledFlex flexDirection='column' gap='4px'>
-                        <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>4th Jun 2024</StyledFont>
-                        <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>21:00 PM - UTC</StyledFont>
+                        <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{format(new Date(pool.start_time * 1000), 'do LLL yyyy')}</StyledFont>
+                        <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{format(new Date(pool.start_time * 1000), 'HH:mm aa')} - UTC</StyledFont>
                       </StyledFlex>
                       <StyledContainer style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
                         <StyledSvg>

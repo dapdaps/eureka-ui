@@ -183,12 +183,12 @@ export default function LaunchpadYoursPage() {
       <StyledLinearGradientFont fontSize='26px' fontWeight='700'>You  Participated</StyledLinearGradientFont>
       <StyledFlex style={{ marginTop: 20, marginBottom: 60 }}>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
-          <StyledLinearGradientFont fontSize='18px'>Your Total Value</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>${formatThousandsSeparator(user?.total_cost ?? 0)}</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='18px'>Total Cost</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>${formatThousandsSeparator(Big(user?.total_cost ?? 0).toFixed(2))}</StyledLinearGradientFont>
         </StyledFlex>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px'>Your Avg. Rate of Return</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{user?.rate_return_avg ?? 0}%</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{Big(user?.rate_return_avg ?? 0).toFixed(0)}%</StyledLinearGradientFont>
         </StyledFlex>
         {
           user?.lbps?.length > 0 && (
@@ -291,7 +291,7 @@ export default function LaunchpadYoursPage() {
                       <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.launchpad_lbp?.rate_return_usd ?? 0).lt(0) ? '-' : '+') + userPool?.launchpad_lbp?.rate_return_usd ?? 0}%</StyledFont>
+                      <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.rate_return_usd ?? 0).lt(0) ? '' : '+') + Big(userPool?.rate_return_usd).toFixed(0) ?? 0}%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatThousandsSeparator(userPool?.launchpad_lbp?.purchased_shares ?? 0)}</StyledFont>
@@ -397,13 +397,13 @@ export default function LaunchpadYoursPage() {
                       <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.launchpad_lbp?.rate_return_usd ?? 0).lt(0) ? '-' : '+') + userPool?.launchpad_lbp?.rate_return_usd ?? 0}%</StyledFont>
+                      <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.rate_return_usd ?? 0).lt(0) ? '' : '+') + Big(userPool?.rate_return_usd).toFixed(0) ?? 0}%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color={Big(userPool?.purchased_shares ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>+$2,305.02</StyledFont>
+                      <StyledFont color={Big(userPool?.profit_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.profit_usd ?? 0).lt(0) ? '-$' : '+$') + userPool?.profit_usd ?? 0}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>{format(userPool?.launchpad_lbp.start_time, 'MM/d/yyyy')} - {format(userPool?.launchpad_lbp.end_time, 'MM/d/yyyy')}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>{format(userPool?.created_at, 'MM/d/yyyy')} - {format(userPool?.launchpad_lbp.end_time, 'MM/d/yyyy')}</StyledFont>
                     </StyledParticipatedTd>
                   </StyledParticipatedTr>
                 )) : (
