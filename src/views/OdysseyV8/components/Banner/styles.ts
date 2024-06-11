@@ -118,9 +118,72 @@ export const Rush = styled.div`
       text-shadow: -2px 0 blue;
       left: 2px;
       clip-path: inset(0 0 0 0);
-      animation: ani1 2s infinite linear alternate-reverse;
+      animation: ani2 2s infinite linear alternate-reverse;
     }
     @keyframes ani1 {
+      0% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      5% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      15% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      20% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      25% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      30% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      35% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      40% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      45% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      50% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      55% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      60% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      65% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      70% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      75% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      80% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      85% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      90% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      95% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+      100% {
+        clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
+      }
+    }
+
+    @keyframes ani2 {
       0% {
         clip-path: inset(${() => `${Math.random() * 100}px 0 ${Math.random() * 100}px 0`});
       }

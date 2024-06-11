@@ -41,7 +41,7 @@ const ExporeItem = ({
     }
 
     if (!source) return;
-    if (source === '/network/blast') handleReport(id);
+    if (category === 'page') handleReport(id);
     window.open(source, '_blank');
   };
 
