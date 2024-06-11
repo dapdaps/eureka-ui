@@ -68,4 +68,4 @@ export default {
     rewardEnableIcon: '/images/odyssey/v3/rewardEnable.svg',
     tips: '',
   },
-};
+} as any;
