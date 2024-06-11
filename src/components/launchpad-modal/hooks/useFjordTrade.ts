@@ -5,6 +5,7 @@ import { getQuote, getStatus, execute, approve } from 'super-bridge-sdk'
 import { useSetChain } from '@web3-onboard/react';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
+
 import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
 import chainCofig from '@/config/chains';
 
@@ -474,7 +475,11 @@ export function useBuyTrade({
 
                 for (let i = 0; i < 999; i++) {
                     const isSuccess = await getStatus({
-                        hash: bridgeHash
+                        hash: bridgeHash,
+                        chainId: quote.fromChain.chainId.toString(),
+                        address: quote.address,
+                        fromChainId: quote.fromChain.chainId.toString(),
+                        toChainId: quote.chainId.toString(),
                     }, bridgeRoute.bridgeType, signer)
                     if (isSuccess) {
                         break;

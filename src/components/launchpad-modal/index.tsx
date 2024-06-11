@@ -9,6 +9,7 @@ import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
+import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 
 import type { Chain, Token } from '@/types';
 import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
@@ -76,6 +77,8 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
 
   const _sendAmount = useDebounce(sendAmount, { wait: 500 });
   const _sellAmount = useDebounce(sellAmount, { wait: 500 });
+
+  const { add: addToken } = useAddTokenToWallet();
 
   const price = usePriceStore((store) => store.price);
   const { startTime, endTime, isClosed, balance } = useDetail(pool, account as string, token, targetChainId, updateBanlance)
@@ -333,7 +336,9 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
 
           <Foot>
             <span>Price impact 0.07%</span>
-            <span className="addToken">Add CTG to MetaMask</span>
+            <span onClick={() => {
+              addToken(token)
+            }} className="addToken">Add { token.symbol } to MetaMask</span>
           </Foot>
         </FootWrap>
       </Body>
