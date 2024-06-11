@@ -8,7 +8,7 @@ export default function Modal({ type, children, onClose, bgColor, style, classNa
   const renderShape = () => {
     switch (type) {
       case 'type1':
-        return <Image src="/images/odyssey/v4/star1.svg" alt="" width={179} height={121} className="shape shape1" />;
+        return <Image src="/images/odyssey/v8/star1.svg" alt="" width={179} height={121} className="shape shape1" />;
       case 'type2':
         return (
           <Image src="/images/odyssey/v4/modal-shape-2.svg" alt="" width={214} height={177} className="shape shape2" />

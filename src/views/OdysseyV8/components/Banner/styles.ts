@@ -88,11 +88,12 @@ export const Rush = styled.div`
   position: relative;
   color: #fff;
   text-align: center;
-  font-family: 'Trans-America Bold Italic';
+  font-family: 'Trans-America';
   font-size: 100px;
   font-style: italic;
   font-weight: bold;
   line-height: 100%; /* 80px */
+  font-style: italic;
   text-transform: capitalize;
   width: 100%;
   position: absolute;

@@ -556,3 +556,50 @@ export const ModalBody = styled.div`
 `;
 export const ModalList = styled.div``;
 export const ModalSection = styled.div``;
+export const ToDappButton = styled.div`
+  width: 206px;
+  height: 42px;
+  flex-shrink: 0;
+  color: #ebf479;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.5s;
+  border: 1px solid #ebf479;
+  position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-right: 1px solid #ebf479;
+    background-color: #000000;
+    top: -7px;
+    left: -7px;
+    transform: rotate(45deg);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-left: 1px solid #ebf479;
+    background-color: #000000;
+    bottom: -7px;
+    right: -7px;
+    transform: rotate(45deg);
+  }
+  &:hover {
+    background-color: #ebf479;
+    color: #1e202f;
+  }
+  &:active {
+    opacity: 0.9;
+  }
+`;

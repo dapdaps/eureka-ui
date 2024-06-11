@@ -32,6 +32,7 @@ import {
   Treasure4,
   Treasure5,
   Treasure6,
+  ToDappButton,
 } from './styles';
 
 const ThrusterCoinListStep1 = [
@@ -828,14 +829,21 @@ export default function Treasure() {
                   />
                 ))}
               </StyledFlex>
-              <div className="modal-list-foot">
-                <TrapeziformBtn
-                  width="286px"
-                  height="42px"
-                  handleClick={(e: any) => openLink(`${location.origin}/dapp/thruster-liquidity`)}
-                >
-                  Add Liquidity <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
-                </TrapeziformBtn>
+              <div
+                className="modal-list-foot"
+                style={{
+                  justifyContent: 'flex-start',
+                }}
+              >
+                <ToDappButton onClick={(e: any) => openLink(`${location.origin}/dapp/thruster-liquidity`)}>
+                  <span>Thruster dApp</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16" fill="none">
+                    <path
+                      d="M1 7C0.447715 7 -4.82822e-08 7.44772 0 8C4.82822e-08 8.55228 0.447715 9 1 9L1 7ZM21.7071 8.7071C22.0976 8.31658 22.0976 7.68342 21.7071 7.29289L15.3431 0.928931C14.9526 0.538407 14.3195 0.538407 13.9289 0.928931C13.5384 1.31946 13.5384 1.95262 13.9289 2.34314L19.5858 8L13.9289 13.6569C13.5384 14.0474 13.5384 14.6805 13.9289 15.0711C14.3195 15.4616 14.9526 15.4616 15.3431 15.0711L21.7071 8.7071ZM1 9L21 9L21 7L1 7L1 9Z"
+                      fill="currentColor"
+                    />
+                  </svg>
+                </ToDappButton>
               </div>
             </Trapeziform>
             <Trapeziform {...TrapLayout} className="modal-list" style={{ padding: '20px 12px' }}>
@@ -889,7 +897,7 @@ export default function Treasure() {
         <Treasure1 onClick={() => setShowModal1(true)}>
           <Line />
           <Image
-            src="/images/odyssey/v4/star1.svg"
+            src="/images/odyssey/v8/star1.svg"
             alt=""
             width={314}
             height={170}

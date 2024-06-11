@@ -7,7 +7,7 @@ export default function Summary({ data, loading }: any) {
 
   let golds = 0;
   if (!loading) {
-    golds = 3500;
+    golds = 10400;
   }
 
   const duration = 2;

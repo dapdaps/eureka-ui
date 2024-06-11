@@ -356,79 +356,87 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
     <Wapper>
       <HeaderBg />
       <Bg />
-      <Pilcrow
-        title="Earn Extra Gold / Bonus Spins!"
-        desc="Interact with popular dApps in Blast on DapDap, earn extra Gold and spin to win!"
-      />
-      <Screen>
-        <DisabledMark />
-        <Title>DAPDAP JACKPOT</Title>
-        <ChainIcons src={chainIconsImg.src} />
-        <CompassWapper />
-        <ControllerWapper>
-          <Controller />
-          <ControllerBg></ControllerBg>
-        </ControllerWapper>
-        <ScrollWapper>
-          <ControllerBtnBgWapper className="bg">
-            <ControllerBtnBg className="left" />
-            <ControllerBtnBg className="mid" />
-            <ControllerBtnBg className="mid" />
-            <ControllerBtnBg className="mid" />
-            <ControllerBtnBg className="right" />
-          </ControllerBtnBgWapper>
-          <ControllerBtnBgWapper className="bg">
-            {chainList.map((item, index) => {
-              return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item} />;
-            })}
-          </ControllerBtnBgWapper>
-          <Cover />
-        </ScrollWapper>
-        <ScoreWapper>
-          <Score>
-            <Spin
-              renderChildren={() => (
-                <ScoreBg>
-                  <ScoreText>Spins:</ScoreText>
-                  <ScoreText>
-                    {availableSpins} / {totalSpins}
-                  </ScoreText>
-                </ScoreBg>
-              )}
-            />
-          </Score>
-          <Score>
-            <Spin
-              renderChildren={() => (
-                <ScoreBg>
-                  <ScoreText>you win:</ScoreText>
-                  {/* <ScoreText>{newUnclaimedReward} pts</ScoreText> */}
-                  <ScoreText>Not start yet!</ScoreText>
-                </ScoreBg>
-              )}
-            />
-          </Score>
-        </ScoreWapper>
-      </Screen>
-
-      <ActionBar>
-        <Rules
-          pressed={disabled}
-          style={{ cursor: 'not-allowed' }}
-          onClick={() => {
-            setRuleShow(true);
-            setRulePressed(true);
-            setTimeout(() => {
-              setRulePressed(false);
-            }, 100);
-          }}
+      <div style={{ position: 'relative', zIndex: 2 }}>
+        <Pilcrow
+          title="Spin to Win for Crazy Prizes"
+          desc="Spin to Win Coming Soon! Use Spins for a Chance at Big Prizes!"
         />
-        <BtnWapper>
-          <BtnBg />
-          <Btn className={isPressed ? 'press' : ''} onClick={handleBtnPress} style={{ cursor: 'not-allowed' }} />
-        </BtnWapper>
-        <Clam pressed={disabled} onClick={() => {}} style={{ cursor: 'not-allowed' }} />
-      </ActionBar>
+        <Screen>
+          <DisabledMark />
+          <Title>DAPDAP JACKPOT</Title>
+          <ChainIcons src={chainIconsImg.src} />
+          <CompassWapper />
+          <ControllerWapper>
+            <Controller />
+            <ControllerBg></ControllerBg>
+          </ControllerWapper>
+          <ScrollWapper>
+            <ControllerBtnBgWapper className="bg">
+              <ControllerBtnBg className="left" />
+              <ControllerBtnBg className="mid" />
+              <ControllerBtnBg className="mid" />
+              <ControllerBtnBg className="mid" />
+              <ControllerBtnBg className="right" />
+            </ControllerBtnBgWapper>
+            <ControllerBtnBgWapper className="bg">
+              {chainList.map((item, index) => {
+                return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item} />;
+              })}
+            </ControllerBtnBgWapper>
+            <Cover />
+          </ScrollWapper>
+          <ScoreWapper>
+            <Score>
+              <Spin
+                renderChildren={() => (
+                  <ScoreBg>
+                    <ScoreText>Spins:</ScoreText>
+                    <ScoreText>
+                      {availableSpins} / {totalSpins}
+                    </ScoreText>
+                  </ScoreBg>
+                )}
+              />
+            </Score>
+            <Score>
+              <Spin
+                renderChildren={() => (
+                  <ScoreBg>
+                    <ScoreText>you win:</ScoreText>
+                    {/* <ScoreText>{newUnclaimedReward} pts</ScoreText> */}
+                    <ScoreText>Not start yet!</ScoreText>
+                  </ScoreBg>
+                )}
+              />
+            </Score>
+          </ScoreWapper>
+        </Screen>
+
+        <ActionBar>
+          <Rules
+            pressed={disabled}
+            style={{ cursor: 'not-allowed' }}
+            onClick={() => {
+              // setRuleShow(true);
+              // setRulePressed(true);
+              // setTimeout(() => {
+              //   setRulePressed(false);
+              // }, 100);
+            }}
+          />
+          <BtnWapper>
+            <BtnBg />
+            <Btn
+              className={isPressed ? 'press' : ''}
+              onClick={() => {
+                // handleBtnPress()
+              }}
+              style={{ cursor: 'not-allowed' }}
+            />
+          </BtnWapper>
+          <Clam pressed={disabled} onClick={() => {}} style={{ cursor: 'not-allowed' }} />
+        </ActionBar>
+      </div>
       {ruleShow && <RuleModal onClose={() => setRuleShow(false)} />}
       {prizeShow && <PrizeModal prize={reward} onClose={() => setPrizeShow(false)} />}
     </Wapper>

@@ -21,7 +21,7 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
     [
       'Ring Protocol',
       {
-        logo: '/images/odyssey/v4/logo-ring.png',
+        logo: '/images/odyssey/v8/logo-ring.svg',
         link: `${location.origin}/dapp/ring-protocol`,
         rewardHints: 'Spin to win for more rewards',
         desc: 'Ring Protocol offers seamless asset trading and lending services within the Blast ecosystem. Explore DeFi with Ring Protocol on DapDap today!Participate in our latest Odyssey campaign and earn additional spin rewards. ',
@@ -33,7 +33,7 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
     [
       'Ambient',
       {
-        logo: '/images/odyssey/v4/logo-ambient.png',
+        logo: '/images/odyssey/v8/logo-ambient.svg',
         link: `${location.origin}/dapp/ambient`,
         rewardHints: 'To divide up extra Gold',
         desc: `Ambient is a Zero-to-One Decentralised Trading Protocol on Blast, offering cutting-edge trading solutions.Complete trades on Ambient to get spin opportunities and hit more big prizes in subsequent "spin to win" games`,
@@ -62,8 +62,8 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
   return (
     <StyledContainer>
       <Pilcrow
-        title="Earn Extra Gold / Bonus Spins!"
-        desc="Interact with popular dApps in Blast on DapDap, earn extra Gold and spin to win!"
+        title="Earn Extra Gold / Bonus!"
+        desc="Interact with popular dApps in Blast on DapDap, earn extra Gold / Bonus"
       />
       <StyledContent>
         {loading ? (
