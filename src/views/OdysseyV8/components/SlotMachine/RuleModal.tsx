@@ -37,7 +37,7 @@ function RuleModal({ onClose }: { onClose: () => void }) {
       <Title>Welcome to DapDap Odyssey ‘Spin to Win’ !</Title>
       <SubTitle>How to Play?</SubTitle>
       <Context>Earn Spins: Complete tasks on the Odyssey event page to earn spins.</Context>
-      <Context>Use Spins: Consume your spins to play the slot machine by pressing the "Spin" button.</Context>
+      <Context>Use Spins: Consume your spins to play the slot machine by pressing the &quot;Spin&quot; button.</Context>
       <Context>
         Winning Conditions: The slot machine has 5 symbols. Match 3 or more identical symbols on a spin to win a prize.
       </Context>
