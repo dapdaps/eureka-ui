@@ -94,7 +94,7 @@ export default function Quest({ data, bgClass, onRefreshDetail }: any) {
         </div>
         <QuestGoldHints>{rewardHints}</QuestGoldHints>
         <QuestGold>+{reward}</QuestGold>
-        <div className="quest-desc" dangerouslySetInnerHTML={{ __html: desc }}></div>
+        <div className="quest-desc">{desc}</div>
         <div className="foot">
           <TrapeziformBtn width="100%" height="50px" handleClick={handleTrade} loading={reportLoading}>
             Trade <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />

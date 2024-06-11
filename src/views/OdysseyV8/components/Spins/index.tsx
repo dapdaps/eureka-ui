@@ -48,7 +48,7 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
         logo: '/images/odyssey/v4/logo-BladeSwap.png',
         link: `${location.origin}/dapp/blade-swap`,
         rewardHints: 'To divide up extra Gold',
-        desc: `BladeSwap focuses on providing a convenient and web2-like experience that saves your precious time and gas fees by supporting native batch transactions.Complete trades on Bladeswap to earn spin opportunities and win bigger prizes in the "spin to win" games.`,
+        desc: `BladeSwap focuses on providing a convenient and web2-like experience that saves your precious time and gas fees by supporting native batch transactions. Complete trades on Bladeswap to earn spin opportunities and win bigger prizes in the "spin to win" games.`,
         bgColor: '#FFA100',
         isGold: true,
         reward: '1000 Gold',
