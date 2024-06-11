@@ -57,9 +57,21 @@ export default function usePools() {
     try {
       const result = await get(`/api/launchpad/pools`);
       const data = result.data || []
-      setPools(data);
+      const map: any = {
+      }
+      for (let i = 0; i < data.length; i++) {
+        const element = data[i];
+        map[element.status] = map[element.status] ? map[element.status] : []
+        map[element.status].push(element)
+      }
+      const sortPools = [
+        ...(map["ongoing"] ?? {}),
+        ...(map["upcoming"] ?? {}),
+        ...(map["completed"] ?? {})
+      ]
+      setPools(sortPools);
       setLoading(false);
-      querySharesMapping(data, sender)
+      querySharesMapping(sortPools, sender)
     } catch (err) {
       setLoading(false);
     }
