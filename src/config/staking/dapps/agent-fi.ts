@@ -180,6 +180,9 @@ const networks = {
             },
           ],
           contract: '0x5eAda3477F15A0636D1eDCa309ECcd0A6e8Ab77F',
+          formatBigInt: (value: string | number) => {
+            return BigInt(value);
+          },
         },
         formContent: 'bluebiu.near/widget/Staking.AgentFi.Liquidity',
       },
