@@ -1,16 +1,17 @@
 import chains from '@/config/chains';
+import { usePriceStore } from '@/stores/price';
 import { get } from '@/utils/http';
-import Big from 'big.js';
 import { Contract, providers, utils } from 'ethers';
 import _ from 'lodash';
-import { useCallback, useState } from 'react';
-export default function usePools() {
+import { useCallback, useEffect, useState } from 'react';
+export default function usePools(sender: any) {
+  const prices = usePriceStore((store) => store.price);
   const [pools, setPools] = useState<any[]>([]);
-  const [sharesMapping, setSharesMapping] = useState<any>({
+  const [contractDataMapping, setContractDataMapping] = useState<any>({
 
   })
   const [loading, setLoading] = useState(false);
-  const querySharesMapping = function (data: any, sender: any) {
+  const queryContractDataMapping = function (data: any) {
     const abi = [{
       "inputs": [
         {
@@ -29,6 +30,80 @@ export default function usePools() {
       ],
       "stateMutability": "view",
       "type": "function"
+    }, {
+      "inputs": [],
+      "name": "args",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "asset",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "share",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "assets",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "shares",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "virtualAssets",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "virtualShares",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "weightStart",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "weightEnd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "saleStart",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "saleEnd",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalPurchased",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "maxSharePrice",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct Pool",
+          "name": "",
+          "type": "tuple"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
     }]
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
@@ -40,18 +115,33 @@ export default function usePools() {
           abi,
           provider,
         )
-        contract.purchasedShares(sender).then((res: any) => {
-          setSharesMapping((prev: any) => {
-            const curr = _.cloneDeep(prev)
-            curr[element.pool] = Big(utils.formatUnits(res, 18)).toFixed(3)
-            return curr
+        if (sender) {
+          contract.purchasedShares(sender).then((res: any) => {
+            setContractDataMapping((prev: any) => {
+              const curr = _.cloneDeep(prev)
+              const _contractData = curr[element.pool] || {}
+              _contractData["purchased_shares"] = utils.formatUnits(res, 18)
+              curr[element.pool] = _contractData
+              return curr
+            })
           })
-        })
+        }
+        // contract.args().then((res: any) => {
+        //   setContractDataMapping((prev: any) => {
+        //     const curr = _.cloneDeep(prev)
+        //     const _contractData = curr[element.pool] || {}
+        //     console.log('===res', res)
+        //     console.log(res[2], '=utils.formatUnits(res[2], element.asset_token_decimal)', utils.formatUnits(res[2], element.asset_token_decimal))
+        //     _contractData["funds_raised"] = Big(utils.formatUnits(res[2], 18)).times(prices[element.asset_token_symbol])
+        //     curr[element.pool] = _contractData
+        //     return curr
+        //   })
+        // }).catch(error => console.log('=error', error))
       }
 
     }
   }
-  const queryPools = useCallback(async (sender?: string) => {
+  const queryPools = useCallback(async () => {
     if (loading) return;
     setLoading(true);
     try {
@@ -71,13 +161,14 @@ export default function usePools() {
       ]
       setPools(sortPools);
       setLoading(false);
-      querySharesMapping(sortPools, sender)
+
     } catch (err) {
       setLoading(false);
     }
   }, [loading]);
 
-
-
-  return { loading, pools, sharesMapping, queryPools };
+  useEffect(() => {
+    pools.length > 0 && queryContractDataMapping(pools)
+  }, [pools, sender])
+  return { loading, pools, contractDataMapping, queryPools };
 }
