@@ -44,7 +44,7 @@ export default {
     chainsHeight: '56px',
     reward: '3,500',
     rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
-    rewardEnableIcon: '/images/odyssey/v3/rewardEnable.svg',
+    rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
     tips: '',
   },
 } as any;
