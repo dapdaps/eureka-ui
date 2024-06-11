@@ -23,12 +23,21 @@ import coverTopImg from './img/cover-top.png';
 import yellowLeftImg from './img/yellow-left.svg';
 import yellowMidImg from './img/yellow-mid.svg';
 import yellowRightImg from './img/yellow-right.svg';
+import bgImg from './img/bg.svg';
 
 const Wapper = styled.div`
   width: var(--main-width);
   margin: 0px auto 70px;
   position: relative;
   background: radial-gradient(50% 40% at 50% 35%, #ebf479 0%, rgba(235, 244, 121, 0) 100%);
+`;
+
+const Bg = styled.div`
+  width: 100%;
+  height: 440px;
+  background: url(${bgImg.src}) center center no-repeat;
+  position: absolute;
+  bottom: -123px;
 `;
 
 const Screen = styled.div`
@@ -195,6 +204,8 @@ const ActionBar = styled.div`
   align-items: center;
   gap: 30px;
   padding: 0 60px;
+  position: relative;
+  z-index: 2;
 `;
 
 const Rules = styled.div<{ pressed: boolean }>`
@@ -233,13 +244,13 @@ const BtnBg = styled.div`
 `;
 
 const Btn = styled.div`
-  width: 100%;
+  width: 564px;
   height: 82px;
   background-image: url(${btnImg.src});
   background-size: 100% 100%;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0px;
+  left: 22px;
   cursor: pointer;
   transition: all 0.3s;
   &.press {
@@ -333,6 +344,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
 
   return (
     <Wapper>
+      <Bg />
       <Screen>
         <Title>DAPDAP JACKPOT</Title>
         <ChainIcons src={chainIconsImg.src} />
