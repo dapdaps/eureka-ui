@@ -94,6 +94,10 @@ const nextConfig = {
       destination: 'https://universe.kelpdao.xyz/:path*',
     },
     {
+      source: '/duo/exchange/:path*',
+      destination: 'https://www.duo.exchange/api/:path*',
+    },
+    {
       source: '/teahouse/:path*',
       destination: 'https://vault-api.teahouse.finance/:path*',
     },
