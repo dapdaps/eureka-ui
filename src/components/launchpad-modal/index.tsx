@@ -326,6 +326,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
                   token1,
                   trade_type: trade_type,
                   shareTokenPrice,
+                  pool,
                 })
               }
 
