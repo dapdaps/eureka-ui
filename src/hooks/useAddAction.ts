@@ -160,12 +160,14 @@ export default function useAddAction(source: string) {
           tx_id: data.transactionHash,
           action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
+          pool: data.pool,
           extra_data: JSON.stringify({
             token0: data?.token0,
             token1: data?.token1,
             type: 'Swap',
             trade_type: data.trade_type,
             shareTokenPrice: data.shareTokenPrice,
+            pool: data.pool,
           }),
         };
       }
