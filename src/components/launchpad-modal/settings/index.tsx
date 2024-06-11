@@ -76,9 +76,11 @@ const InputGroup = styled.div`
 
 interface IProps {
   style?: any;
+  amount: string;
+  onAmountChange: (v: string) => void;
 }
 
-const Settings: FC<IProps> = ({ style }) => {
+const Settings: FC<IProps> = ({ style, amount, onAmountChange }) => {
   const [showSettings, setShowSettings] = useState(false);
   const [currentTab, setCurrentTab] = useState('AUTO');
   const tabData = [
@@ -134,7 +136,15 @@ const Settings: FC<IProps> = ({ style }) => {
             <Content>
               <Tabs tabData={tabData} current={currentTab} onTabsChange={onTabsChange}></Tabs>
               <InputGroup>
-                <AmountInput />
+                <AmountInput type='number' disabled={currentTab === 'AUTO'} value={amount} onChange={(e) => {
+                  const value = e.target.value
+                  if (value === '') {
+                    onAmountChange && onAmountChange(e.target.value)
+                    return
+                  }
+
+                  onAmountChange && onAmountChange(e.target.value)
+                }}/>
                 <Suffix>%</Suffix>
               </InputGroup>
             </Content>

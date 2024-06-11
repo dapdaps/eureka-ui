@@ -43,6 +43,7 @@ export interface TradeProps {
     recipient: string | undefined;
     quote: QuoteProps | undefined;
     chainId: number;
+    slippage: string;
 }
 
 const poolAbi = [
@@ -404,7 +405,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
 
         let maxRoute = bridgeQuote[0]
         for(let i = 0;i<bridgeQuote.length;i++) {
-            if (Number(bridgeQuote[i]) > Number(maxRoute.receiveAmount)) {
+            if (Number(bridgeQuote[i].duration) < 10 && Number(bridgeQuote[i].receiveAmount) > Number(maxRoute.receiveAmount)) {
                 maxRoute = bridgeQuote[i]
             }
         }
@@ -412,6 +413,8 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
         const route = maxRoute
         const receiveAmount = route.receiveAmount
         const targetShareVal = await PoolContract.previewSharesOut(receiveAmount)
+
+        console.log('maxRoute:', maxRoute)
 
         setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
         setBridgeRoute(route)
@@ -450,6 +453,7 @@ export function useBuyTrade({
     pool,
     midToken,
     recipient,
+    slippage,
     quote,
 }: TradeProps) {
     const [loading, setLoading] = useState(false)
@@ -500,11 +504,12 @@ export function useBuyTrade({
                 _receiveAmount = midTokenBalance
             }
 
+            const _slippage = Number(slippage) / 100
+
             const assetsIn = new Big(_receiveAmount)
-            const minSharesOut = new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - 0.0025).toNumber().toFixed(0)
+            const minSharesOut = new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - _slippage).toNumber().toFixed(0)
 
             await approve(midToken.address, assetsIn, pool, signer)
-
 
             const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut, recipient)
             await tx.wait()
@@ -630,6 +635,7 @@ export function useSellTrade({
     toToken,
     midToken,
     chainId: tragetChainId,
+    slippage,
 }: {
     pool: string;
     amount: string;
@@ -638,6 +644,7 @@ export function useSellTrade({
     toToken: Token,
     midToken: Token | null;
     chainId: number;
+    slippage: string;
 }) {
     const [loading, setLoading] = useState(false)
     const { fail, success } = useToast()
@@ -661,7 +668,9 @@ export function useSellTrade({
                 signer,
             )
 
-            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - 0.1025).toNumber().toFixed(0)
+            const _slippage = Number(slippage) / 100
+
+            const minAssetsOut = new Big(assetOut).mul(10 ** midToken.decimals).mul(1 - _slippage).toNumber().toFixed(0)
             const _amount = BigInt(new Big(amount).mul(10 ** toToken.decimals).toNumber()).toString()
 
             const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient)

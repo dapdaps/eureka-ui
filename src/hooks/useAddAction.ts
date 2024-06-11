@@ -18,7 +18,7 @@ export default function useAddAction(source: string) {
       const currentChain = chains.find((chain: any) => chain.chain_id === chainId);
       console.info('addAction data: ', data);
 
-      if (data.type === 'Swap') {
+      if (data.type === 'Swap' && data.template !== 'launchpad' ) {
         params = {
           // action_title: `Swap ${Number(data.inputCurrencyAmount)} ${data.inputCurrency.symbol} on ${data.template}`,
           action_title: `Swap ${data.inputCurrency.symbol} on ${data.template}`,
@@ -148,7 +148,7 @@ export default function useAddAction(source: string) {
 
       if (data.template === 'launchpad' || data.template === 'Launchpad') {
         params = {
-          action_title: `${data.action} ${data?.token0.symbol + (data?.token1.symbol ? '-' + data.token1.symbol : '')} on ${data.template}`,
+          action_title: `Launchpad ${data?.token0.symbol + (data?.token1.symbol ? '-' + data.token1.symbol : '')} on ${data.template}`,
           action_type: 'Swap',
           action_tokens: JSON.stringify([data?.token0.symbol ?? '', data?.token1.symbol ?? '']),
           action_amount: data.amount,

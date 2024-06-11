@@ -67,6 +67,8 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
   const [sellAmount, setSellAmount] = useState('');
   const [updateBanlance, setUpdateBanlance] = useState(1);
   const [duration, setDuration] = useState(0);
+  const [buySlippage, setBuySlippage] = useState('0.25')
+  const [sellSlippage, setSellSlippage] = useState('0.25')
   const { addAction } = useAddAction('dapp');
   const [buyQuote, setBuyQuote] = useState<QuoteProps>()
   const [btnDisbaled, setBtnDisbaled] = useState<boolean>(false)
@@ -90,6 +92,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
     recipient: account as string,
     quote: buyQuote,
     chainId: targetChainId,
+    slippage: buySlippage,
   })
 
 
@@ -112,6 +115,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
     toToken: token,
     midToken,
     chainId: targetChainId,
+    slippage: sellSlippage,
   })
 
   const [currentTab, setCurrentTab] = useState('BUY');
@@ -219,7 +223,13 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
         <TimerEnd>End in</TimerEnd>
         <Timer color="white" endTime={Number(endTime)} />
         <Tabs tabData={tabData} current={currentTab} onTabsChange={onTabsChange} style={{ marginTop: 4 }}></Tabs>
-        <Settings style={{ position: 'absolute', right: 17, bottom: 24 }} />
+        <Settings style={{ position: 'absolute', right: 17, bottom: 24 }} amount={ currentTab === 'BUY' ? buySlippage : sellSlippage } onAmountChange={(value) => {
+          if (currentTab === 'BUY') {
+            setBuySlippage(value)
+          } else {
+            setSellSlippage(value)
+          }
+        }}/>
       </Panel>
       <Body>
         {currentTab === 'BUY' && (
