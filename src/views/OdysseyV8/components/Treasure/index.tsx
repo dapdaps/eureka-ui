@@ -905,7 +905,7 @@ export default function Treasure() {
             style={{ marginTop: -5 }}
           />
           <Title className="title">
-            Particle & Ring: <br />
+            Particle & Duo & Ring: <br />
             Maximise Points or Yield?
           </Title>
           {/* <Image src="/images/odyssey/v4/icon-gold.svg" alt="" width={42} height={42} className="td1" /> */}
