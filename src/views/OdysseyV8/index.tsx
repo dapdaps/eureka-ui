@@ -100,9 +100,9 @@ export default function OdysseyV4() {
           chainList={chainList}
           handleSpin={handleSpin}
           handleClaim={handlClaim}
-          totalSpins={0}
-          availableSpins={0}
-          unclaimedReward={0}
+          totalSpins={detail?.user?.total_spins}
+          availableSpins={detail?.user?.available_spins}
+          unclaimedReward={detail?.user?.unclaimed_reward}
           reward={reward}
           isSpining={isSpining}
           isClaiming={isClaiming}

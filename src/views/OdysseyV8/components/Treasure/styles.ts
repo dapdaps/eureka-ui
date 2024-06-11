@@ -41,6 +41,7 @@ const Treasure = styled.div`
 
   .title {
     white-space: nowrap;
+    top: -16px;
   }
   .star {
     position: absolute;
@@ -59,6 +60,7 @@ const Treasure = styled.div`
 `;
 
 export const Treasure1 = styled(Treasure)`
+  margin-left: -2%;
   .title {
     left: calc(50% + 17px);
     width: 230px;
@@ -70,7 +72,7 @@ export const Treasure1 = styled(Treasure)`
   }
 `;
 export const Treasure2 = styled(Treasure)`
-  margin-left: 15.47%;
+  margin-left: 20%;
 
   .title {
     left: calc(50% + 17px);
@@ -93,7 +95,7 @@ export const Treasure2 = styled(Treasure)`
   }
 `;
 export const Treasure3 = styled(Treasure)`
-  margin-left: 23.77%;
+  margin-left: 30%;
 
   .title {
     right: calc(50% + 17px);
@@ -174,6 +176,7 @@ export const Treasure5 = styled(Treasure)`
 export const Treasure6 = styled(Treasure)`
   width: 263px;
   height: 300px;
+  margin-right: -3%;
 
   .title {
     right: calc(50% + 17px);

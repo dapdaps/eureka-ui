@@ -1,16 +1,13 @@
 import CountUp from 'react-countup';
 
-import Loading from '@/components/Icons/Loading';
-import { formatThousandsSeparator } from '@/utils/format-number';
-
-import { Item, LoadingWrap, StyledContainer, Title, Value } from './styles';
+import { Item, StyledContainer, Title, Value } from './styles';
 
 export default function Summary({ data, loading }: any) {
   const { total_transactions = 0, total_users = 0, trading_volume = 0 } = data;
 
   let golds = 0;
   if (!loading) {
-    golds = 6900;
+    golds = 3500;
   }
 
   const duration = 2;

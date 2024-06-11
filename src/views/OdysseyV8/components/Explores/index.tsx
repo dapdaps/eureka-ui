@@ -15,7 +15,7 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail }
   const [stakeShow, setStakeShow] = useState<boolean>(false);
   const [showWrapAndUnwrap, setShowWrapAndUnwrap] = useState(false);
   const [stakeType, setStakeType] = useState<string>('renzo');
-
+  console.log('list', list);
   const TrapLayout = {
     borderColor: '#1C1E2D',
     corner: 10,
@@ -94,15 +94,17 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail }
         <CompTitle title="" subtitle="Complete tasks easily to earn DapDap PTS" />
         <StyledItemWrap>
           {list?.length ? (
-            list.map((item: any) => (
-              <ExporeItem
-                key={item.id}
-                {...item}
-                authConfig={authConfig}
-                userInfo={userInfo}
-                onRefreshDetail={onRefreshDetail}
-              />
-            ))
+            list
+              .filter((item: any) => item.name !== 'Particle')
+              .map((item: any) => (
+                <ExporeItem
+                  key={item.id}
+                  {...item}
+                  authConfig={authConfig}
+                  userInfo={userInfo}
+                  onRefreshDetail={onRefreshDetail}
+                />
+              ))
           ) : (
             <StyledLoadingWrapper $h="100px">
               <Loading size={30} />

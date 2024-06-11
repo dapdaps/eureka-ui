@@ -20,26 +20,6 @@ export const StyledContainer = styled.div`
   }
 `;
 
-export const StyledTitle = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  color: #fff;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  gap: 8px;
-  padding-bottom: 60px;
-`;
-
-export const StyledTitleAmount = styled.div`
-  color: #00ffd1;
-  font-size: 32px;
-  font-weight: 700;
-  line-height: 100%; /* 32px */
-`;
-
 export const StyledContent = styled.div`
   display: flex;
   flex-wrap: wrap;

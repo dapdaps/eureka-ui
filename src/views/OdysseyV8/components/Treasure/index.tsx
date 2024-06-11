@@ -793,10 +793,10 @@ export default function Treasure() {
             native coin pools. Maximize your gains effortlessly!
           </ModalDesc>
           <ModalBody>
-            <Trapeziform {...TrapLayout} className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list" style={{ padding: '20px 12px' }}>
               <div className="modal-list-head">
                 <div className="head-left">
-                  <StyledFlex gap="7px" className="head-title">
+                  <StyledFlex gap="7px" className="head-title" style={{ paddingLeft: '5px' }}>
                     <span>Step 1. Create a new position on</span>
                     <Image src="/images/odyssey/v4/thruster-rect.svg" alt="" width={156} height={36} />
                     <span>to gain 2x Gold.</span>
@@ -809,6 +809,7 @@ export default function Treasure() {
                 style={{
                   marginTop: 15,
                   flexWrap: 'wrap',
+                  gap: '10px 8px',
                 }}
               >
                 {ThrusterCoinListStep1.map((coin) => (
@@ -816,10 +817,6 @@ export default function Treasure() {
                     key={coin.key}
                     icon={coin.icon}
                     name={coin.name}
-                    style={{
-                      flexBasis: '25%',
-                      marginBottom: 20,
-                    }}
                     onClick={() => {
                       setSelectedPool(coin.name.join(','));
                     }}
@@ -836,10 +833,10 @@ export default function Treasure() {
                 </TrapeziformBtn>
               </div>
             </Trapeziform>
-            <Trapeziform {...TrapLayout} className="modal-list">
+            <Trapeziform {...TrapLayout} className="modal-list" style={{ padding: '20px 12px' }}>
               <div className="modal-list-head">
                 <div className="head-left">
-                  <StyledFlex gap="7px" className="head-title">
+                  <StyledFlex gap="7px" className="head-title" style={{ paddingLeft: '5px' }}>
                     <span>Step 2. Staking LP on</span>
                     <Image src="/images/odyssey/v4/hyperlock-rect.svg" alt="" width={140} height={36} />
                     <span>to get exclusive 2x Gold.</span>
@@ -892,8 +889,8 @@ export default function Treasure() {
             style={{ marginTop: -5 }}
           />
           <Title className="title">
-            Gold Rush: <br />
-            Maximize Point or Yield?
+            Particle & Ring: <br />
+            Maximise Points or Yield?
           </Title>
           {/* <Image src="/images/odyssey/v4/icon-gold.svg" alt="" width={42} height={42} className="td1" /> */}
           {/* <div className="badge">
@@ -907,8 +904,8 @@ export default function Treasure() {
           <Line />
           <Image src="/images/odyssey/v4/star6.svg" alt="" width={221} height={228} className="scale pac" />
           <Title className="title title1">
-            Gold Rush: <br />
-            2x Boosted
+            Thruster & Hyperlock: <br />
+            2x Booster Pools
           </Title>
 
           <div className="td2">
@@ -925,9 +922,10 @@ export default function Treasure() {
         <Treasure3 onClick={() => setShowModal5(true)}>
           <Line />
           <Image src="/images/odyssey/v4/juice.svg" alt="" width={170} height={170} className="scale" />
-          <Title className="title" style={{ textAlign: 'right' }}>
-            Gold Rush: <br />
-            3x Leverage
+          <Title className="title" style={{ textAlign: 'right', top: '-26px' }}>
+            Juice: <br />
+            3x Leverage <br />
+            Vaults
           </Title>
           <div className="td3">
             <Image src="/images/odyssey/v4/td3.svg" alt="" width={106} height={26} />
@@ -942,7 +940,7 @@ export default function Treasure() {
         <Treasure4 onClick={() => setShowModal2(true)}>
           <Line />
           <Image src="/images/odyssey/v4/star4.svg" alt="" width={408} height={221} className="scale star4" />
-          <Title className="title">LRTs Stacking</Title>
+          <Title className="title">Renzo LRT</Title>
           <Image src="/images/odyssey/v4/td4.svg" alt="" width={118} height={26} className="td4" />
         </Treasure4>
         <Treasure5 onClick={() => setShowModal3(true)}>
@@ -950,8 +948,9 @@ export default function Treasure() {
           <Image src="/images/odyssey/v4/pac.svg" alt="" width={336} height={188} className="scale pac" />
           <Image src="/images/odyssey/v4/ring.svg" alt="" width={169} height={114} className="scale ring" />
           <Title className="title">
-            Airdrop
-            <br />& 3x Assets
+            Ring & Pac:
+            <br />
+            Trade & Loop 3x
           </Title>
           <IconGroup className="td5">
             <Image src="/images/odyssey/v4/icon-mouth.svg" alt="" width={26} height={26} className="" />
@@ -961,7 +960,12 @@ export default function Treasure() {
         <Treasure6 onClick={() => setShowModal4(true)}>
           <Line />
           <Image src="/images/odyssey/v4/star3.svg" alt="" width={340} height={196} className="scale star3" />
-          <Title className="title">ERC404 Stacking</Title>
+          <Title className="title">
+            Metastreet ERC404:
+            <br />
+            Swap & Add LP
+            <br />
+          </Title>
           <IconGroup className="td6">
             <Image src="/images/odyssey/v4/icon-thruster.svg" alt="" width={26} height={26} className="" />
             <Image src="/images/odyssey/v4/icon-particle.svg" alt="" width={26} height={26} className="" />

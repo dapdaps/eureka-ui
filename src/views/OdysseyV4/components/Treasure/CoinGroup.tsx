@@ -28,7 +28,10 @@ const StyledContainer = styled.div<{ $clickable: boolean }>`
   flex-wrap: nowrap;
   gap: 6px;
   color: #fff;
-
+  width: 168px;
+  height: 42px;
+  padding-left: 6px;
+  border-radius: 4px;
   .coin-icon-wrap {
   }
   .coin-icon {
@@ -55,11 +58,36 @@ const StyledContainer = styled.div<{ $clickable: boolean }>`
     `
     cursor: pointer; 
     transition: 0.5s;
+    border: 1px solid #EBF479;
+    position: relative;
+    &::before{
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-right: 1px solid #EBF479;
+      background-color: #000000;
+      top: -7px;
+      left: -7px;
+      transform: rotate(45deg);
+    }
+    &::after{
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      border-left: 1px solid #EBF479;
+      background-color: #000000;
+      bottom: -7px;
+      right: -7px;
+      transform: rotate(45deg);
+    }
     &:hover{
-      color: rgba(235, 244, 121,0.8);
+      background-color: #EBF479;
+      color: #1E202F;
     };
     &:active{
-      color: rgba(235, 244, 121,0.6);
+     opacity: 0.9;
     }
     `}
 `;

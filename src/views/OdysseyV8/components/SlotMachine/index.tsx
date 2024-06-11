@@ -25,6 +25,8 @@ import yellowMidImg from './img/yellow-mid.svg';
 import yellowRightImg from './img/yellow-right.svg';
 import bgImg from './img/bg.svg';
 
+import DisabledMark from './DisabledMark';
+
 const Wapper = styled.div`
   width: var(--main-width);
   margin: 0px auto 70px;
@@ -48,6 +50,7 @@ const Screen = styled.div`
   border: 1px;
   background: linear-gradient(180deg, #2f3445 0%, #1c1f29 100%);
   position: relative;
+  overflow: hidden;
 `;
 
 const ChainIcons = styled.img`
@@ -186,10 +189,8 @@ const ScoreText = styled.div`
   color: #00ffd1;
   text-align: center;
   font-family: '5squared pixel';
-  font-size: 32px;
-  font-style: normal;
+  font-size: 26px;
   font-weight: 400;
-  line-height: 150%; /* 48px */
   text-transform: capitalize;
   text-shadow: 2px 2px 10px #00ffd1;
 `;
@@ -223,7 +224,6 @@ const Clam = styled.div<{ pressed: boolean }>`
   background: url(${({ pressed }) => (pressed ? clamPressImg.src : clamImg.src)}) left top no-repeat;
   background-size: 100% 100%;
   cursor: pointer;
-  opacity: 0.1;
   margin-right: 80px;
 `;
 
@@ -346,6 +346,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
     <Wapper>
       <Bg />
       <Screen>
+        <DisabledMark />
         <Title>DAPDAP JACKPOT</Title>
         <ChainIcons src={chainIconsImg.src} />
         <CompassWapper />
@@ -369,48 +370,35 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
           <Cover />
         </ScrollWapper>
         <ScoreWapper>
-          {disabled ? (
-            <Score>
-              <Spin
-                renderChildren={() => (
-                  <ScoreBg style={{ justifyContent: 'center' }}>
-                    <ScoreText>Jack pot is coming soon!</ScoreText>
-                  </ScoreBg>
-                )}
-              />
-            </Score>
-          ) : (
-            <>
-              <Score>
-                <Spin
-                  renderChildren={() => (
-                    <ScoreBg>
-                      <ScoreText>Spins:</ScoreText>
-                      <ScoreText>
-                        {availableSpins} / {totalSpins}
-                      </ScoreText>
-                    </ScoreBg>
-                  )}
-                />
-              </Score>
-              <Score>
-                <Spin
-                  renderChildren={() => (
-                    <ScoreBg>
-                      <ScoreText>you win:</ScoreText>
-                      <ScoreText>{newUnclaimedReward} pts</ScoreText>
-                    </ScoreBg>
-                  )}
-                />
-              </Score>
-            </>
-          )}
+          <Score>
+            <Spin
+              renderChildren={() => (
+                <ScoreBg>
+                  <ScoreText>Spins:</ScoreText>
+                  <ScoreText>
+                    {availableSpins} / {totalSpins}
+                  </ScoreText>
+                </ScoreBg>
+              )}
+            />
+          </Score>
+          <Score>
+            <Spin
+              renderChildren={() => (
+                <ScoreBg>
+                  <ScoreText>you win:</ScoreText>
+                  {/* <ScoreText>{newUnclaimedReward} pts</ScoreText> */}
+                  <ScoreText>Not start yet!</ScoreText>
+                </ScoreBg>
+              )}
+            />
+          </Score>
         </ScoreWapper>
       </Screen>
 
       <ActionBar>
         <Rules
-          pressed={rulePressed}
+          pressed={disabled}
           onClick={() => {
             setRuleShow(true);
             setRulePressed(true);
@@ -423,7 +411,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
           <BtnBg />
           <Btn className={isPressed ? 'press' : ''} onClick={handleBtnPress} />
         </BtnWapper>
-        <Clam pressed={disabled} onClick={() => {}} style={{ opacity: newUnclaimedReward <= 0 ? '.3' : '1' }} />
+        <Clam pressed={disabled} onClick={() => {}} />
       </ActionBar>
       {ruleShow && <RuleModal onClose={() => setRuleShow(false)} />}
       {prizeShow && <PrizeModal prize={reward} onClose={() => setPrizeShow(false)} />}
