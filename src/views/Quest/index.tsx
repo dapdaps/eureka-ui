@@ -2,13 +2,13 @@ import { memo, useState } from 'react';
 
 import Breadcrumb from '@/components/Breadcrumb';
 import { useRewardStore } from '@/stores/reward';
+import useQuestList from '@/views/bns/hooks/useQuestList';
 
 import Campaign from './components/Campaign';
 import QuestLists from './components/QuestLists';
 import Yours from './components/Yours';
 import useCampaignList from './hooks/useCampaignList';
 import useCategoryList from './hooks/useCategoryList';
-import useQuestList from '@/views/bns/hooks/useQuestList';
 import { StyledContainer } from './styles';
 
 const QuestView = () => {

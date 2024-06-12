@@ -125,7 +125,7 @@ export const Stake = () => {
 
         if (!inputValue || isNaN(Number(inputValue))) {
             setIsError(true)
-            setBtnMsg('Illegal value')
+            setBtnMsg('Enter an amount')
             return
         }
 

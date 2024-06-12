@@ -7,7 +7,7 @@ export default {
     reward: '10,000',
     rewardDisableIcon: '/images/odyssey/v1/rewardDisable.svg',
     rewardEnableIcon: '/images/odyssey/v1/rewardEnable.svg',
-    tips: 'Effortlessly sift through a curated selection of dApps and identify your favourites.',
+    tips: 'Effortlessly shift through a curated selection of dApps and identify your favourites.',
   },
   2: {
     path: '/odyssey/home?id=2',
@@ -58,15 +58,14 @@ export default {
     rewardEnableIcon: '/images/odyssey/v5/rewardEnable.svg',
     tips: 'Forge Your Future Wealth in the Mode Ecosystem',
   },
-} as {
-  [key: string]: {
-    path: string;
-    video: string;
-    chainsImg: string;
-    reward: string;
-    rewardDisableIcon?: string;
-    rewardEnableIcon?: string;
-    chainsHeight: string;
-    tips: string;
-  };
-};
+  8: {
+    path: '/odyssey/home?id=8',
+    video: '',
+    chainsImg: '/images/odyssey/v4/chains.png',
+    chainsHeight: '56px',
+    reward: '3,500',
+    rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
+    rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
+    tips: '',
+  },
+} as any;

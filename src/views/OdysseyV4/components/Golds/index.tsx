@@ -106,8 +106,25 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
         type: 'metastreet',
       },
     ],
+    [
+      'BladeSwap',
+      {
+        logo: '/images/odyssey/v4/logo-BladeSwap.png',
+        link: `${location.origin}/dapp/blade-swap`,
+        bgClass: 'bg-particle',
+        rank1: 100,
+        rank2: 60,
+        rank3: 40,
+        reward: '1000',
+        desc: 'BladeSwap focuses on providing a convenient and web2-like experience that saves your precious time and gas fees by supporting native batch transactions.<br />Trade using BladeSwap on DapDap and earn an extra 1% Blast Gold reward! The top 3 users with the highest trading volume will receive additional exclusive rewards.',
+        type: '',
+      },
+    ],
   ]);
-
+  list.sort((a: any, b: any) => {
+    return a.gold_order - b.gold_order;
+  });
+  console.log('list--', list);
   return (
     <StyledContainer>
       {showRankModal ? (
@@ -125,7 +142,12 @@ export default function Golds({ loading, list, data, onRefreshDetail }: any) {
               key={item.name}
               showRank={showRank}
               bgClass={GoldsMap.get(item.name)?.bgClass}
-              data={{ ...GoldsMap.get(item.name), ...item, start_time: data.start_time, end_time: data.end_time }}
+              data={{
+                ...GoldsMap.get(item.name),
+                ...item,
+                start_time: data.start_time,
+                end_time: data.end_time,
+              }}
               onRefreshDetail={onRefreshDetail}
             />
           ))
