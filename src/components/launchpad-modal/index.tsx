@@ -99,6 +99,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
     slippage: buySlippage,
   })
 
+  console.log('buyQuoteLoading:', buyQuoteLoading)
 
   const {
     assetOut, loading: sellQuoteLoading

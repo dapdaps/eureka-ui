@@ -349,6 +349,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
     async function excuteQuote(quote: QuoteProps, midToken: Token,) {
         setLoading(true)
         setShareVal('')
+        console.log(111111)
 
         const rpc = chainCofig[quote.chainId].rpcUrls[0]
 
@@ -366,12 +367,14 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
                 setReceiveAmount(quote.amount.toString())
                 await getAssetRuote(quote, midToken, PoolContract, provider)
                 setTradeType(1)
-            } else if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.symbol !== midToken.symbol) {
-                await getBridgeRuote(quote, midToken, PoolContract, signer)
-                setTradeType(3)
             } else {
-                await getBridgeRuote(quote, midToken, PoolContract, signer)
-                setTradeType(3)
+                try {
+                    await getBridgeRuote(quote, midToken, PoolContract, signer)
+                    setTradeType(3)
+                } catch(e) {
+                    
+                }
+                
             }
 
         } catch (e) {
