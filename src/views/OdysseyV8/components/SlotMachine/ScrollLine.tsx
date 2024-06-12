@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-import g0Img from '../../img/g-new/g0.svg';
 import g1Img from '../../img/g-new/g1.svg';
 import g2Img from '../../img/g-new/g2.svg';
 import g3Img from '../../img/g-new/g3.svg';
@@ -45,20 +44,18 @@ const ScrollIconItemsImg = styled.img`
   width: 50%;
 `;
 
-// const list = [
-//   g6Img.src,
-//   g1Img.src,
-//   g2Img.src,
-//   g3Img.src,
-//   g4Img.src,
-//   g5Img.src,
-//   g7Img.src,
-//   g8Img.src,
-//   g6Img.src,
-//   g1Img.src,
-// ];
-
-const list = [g0Img.src, g0Img.src];
+const list = [
+  g6Img.src,
+  g1Img.src,
+  g2Img.src,
+  g3Img.src,
+  g4Img.src,
+  g5Img.src,
+  g7Img.src,
+  g8Img.src,
+  g6Img.src,
+  g1Img.src,
+];
 
 const zeroLocation = -90 * (list.length - 1) + (140 - 90) / 2;
 

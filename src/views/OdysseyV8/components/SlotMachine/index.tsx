@@ -9,6 +9,7 @@ import PrizeModal from './PrizeModal';
 import titleImg from './img/title.svg';
 import compassImg from './img/gold-rush.svg';
 import controllerImg from './img/ctr.svg';
+import controllerActiveImg from './img/ctr-active.svg';
 import actionBg from './img/action-bg.svg';
 
 import ruleImg from './img/rule.svg';
@@ -17,6 +18,7 @@ import rulePressImg from './img/rule-press.svg';
 import clamPressImg from './img/clam-press.svg';
 import btnBgImg from './img/btn-bg.svg';
 import btnImg from './img/btn.svg';
+import btnActiveImg from './img/btn-active.svg';
 import chainIconsImg from './img/chianIcons.svg';
 import coverTopImg from './img/cover-top.png';
 
@@ -28,6 +30,7 @@ import bgImg from './img/bg.svg';
 import DisabledMark from './DisabledMark';
 import Pilcrow from '../Pilcrow';
 import { BgFoot } from '../Spins/styles';
+import useSwitcher from '../../hooks/useSwitcher';
 
 const Wapper = styled.div`
   width: var(--main-width);
@@ -97,16 +100,15 @@ const ControllerWapper = styled.div`
   right: 50px;
 `;
 
-const Controller = styled.div`
+const Controller = styled.div<{ $active: boolean }>`
   width: 100px;
   height: 104px;
-  background: url(${controllerImg.src}) center 0 no-repeat;
+  background: url(${({ $active }) => ($active ? controllerActiveImg.src : controllerImg.src)}) center 0 no-repeat;
   background-size: auto 100%;
   position: absolute;
   z-index: 3;
   left: 0;
   top: 0;
-  filter: grayscale(0.6);
 `;
 
 const ControllerBg = styled.div`
@@ -253,10 +255,10 @@ const BtnBg = styled.div`
   bottom: 0;
 `;
 
-const Btn = styled.div`
+const Btn = styled.div<{ $active: boolean }>`
   width: 564px;
   height: 82px;
-  background-image: url(${btnImg.src});
+  background-image: url(${({ $active }) => ($active ? btnActiveImg.src : btnImg.src)});
   background-size: 100% 100%;
   position: absolute;
   top: 0px;
@@ -297,7 +299,7 @@ function playSound(url: string): void {
 }
 
 function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, handleSpin, reward }: Props) {
-  const disabled = true;
+  const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
   const [isPressing, setIsPressing] = useState(false);
   const [newUnclaimedReward, setNewunclaimedReward] = useState(unclaimedReward);
@@ -308,6 +310,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
   const unclaimedRewardRef = useRef(unclaimedReward);
 
   const [rulePressed, setRulePressed] = useState(false);
+  const [claimPressed, setClaimPressed] = useState(false);
 
   useEffect(() => {
     rewardRef.current = reward;
@@ -321,10 +324,6 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
   }, [unclaimedReward]);
 
   const handleBtnPress = useCallback(() => {
-    if (isPressing || isPressed || availableSpins <= 0) {
-      return;
-    }
-
     playSound('/images/compass/audio/rolling.mp4');
 
     setTimeout(() => {
@@ -358,16 +357,16 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
       <Bg />
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Pilcrow
-          title="Spin to Win for Crazy Prizes"
-          desc="Spin to Win Coming Soon! Use Spins for a Chance at Big Prizes!"
+          title="SPIN-TO-WIN"
+          desc="Each mission you complete grants you spins, which can earn you rewards like gold, points, and tokens"
         />
         <Screen>
-          <DisabledMark />
+          {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}
           <Title>DAPDAP JACKPOT</Title>
           <ChainIcons src={chainIconsImg.src} />
           <CompassWapper />
           <ControllerWapper>
-            <Controller />
+            <Controller $active={isStart} />
             <ControllerBg></ControllerBg>
           </ControllerWapper>
           <ScrollWapper>
@@ -403,8 +402,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
                 renderChildren={() => (
                   <ScoreBg>
                     <ScoreText>you win:</ScoreText>
-                    {/* <ScoreText>{newUnclaimedReward} pts</ScoreText> */}
-                    <ScoreText>Not start yet!</ScoreText>
+                    {isStart ? <ScoreText>{newUnclaimedReward} pts</ScoreText> : <ScoreText>Not start yet!</ScoreText>}
                   </ScoreBg>
                 )}
               />
@@ -414,27 +412,43 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
 
         <ActionBar>
           <Rules
-            pressed={disabled}
-            style={{ cursor: 'not-allowed' }}
+            pressed={!isStart || rulePressed}
+            style={{ cursor: isStart ? 'pointer' : 'not-allowed' }}
             onClick={() => {
-              // setRuleShow(true);
-              // setRulePressed(true);
-              // setTimeout(() => {
-              //   setRulePressed(false);
-              // }, 100);
+              if (!isStart) return;
+              setRuleShow(true);
+              setRulePressed(true);
+              setTimeout(() => {
+                setRulePressed(false);
+              }, 100);
             }}
           />
           <BtnWapper>
             <BtnBg />
             <Btn
               className={isPressed ? 'press' : ''}
+              $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
               onClick={() => {
-                // handleBtnPress()
+                if (!isStart) return;
+                if (isPressing || isPressed || availableSpins <= 0) {
+                  return;
+                }
+                handleBtnPress();
               }}
-              style={{ cursor: 'not-allowed' }}
+              style={{ cursor: isStart ? 'pointer' : 'not-allowed' }}
             />
           </BtnWapper>
-          <Clam pressed={disabled} onClick={() => {}} style={{ cursor: 'not-allowed' }} />
+          <Clam
+            pressed={!isStart || claimPressed}
+            onClick={() => {
+              if (!isStart) return;
+              setClaimPressed(true);
+              setTimeout(() => {
+                setClaimPressed(false);
+              }, 100);
+            }}
+            style={{ cursor: isStart ? 'pointer' : 'not-allowed' }}
+          />
         </ActionBar>
       </div>
       {ruleShow && <RuleModal onClose={() => setRuleShow(false)} />}

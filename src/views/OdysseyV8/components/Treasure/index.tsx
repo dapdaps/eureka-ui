@@ -637,9 +637,9 @@ export default function Treasure() {
           <ModalStep>
             <span className="step">Create sub account on Juice</span>
             <div className="gap"></div>
-            <span className="step">Deposit 3x WETH & USDB</span>
+            <span className="step">Deposit WETH & USDB</span>
             <div className="gap"></div>
-            <span className="step">Borrow WETH & USDB</span>
+            <span className="step">Borrow 3x WETH & USDB</span>
           </ModalStep>
           <ModalBody>
             <div className="modal-body-2">
@@ -660,7 +660,7 @@ export default function Treasure() {
                         width={40}
                         height={40}
                       />
-                      <span className="badge-title">50,000</span>
+                      <span className="badge-title">30,000</span>
                     </Badge>
                   </div>
                   <div className="reward-list">
@@ -731,11 +731,11 @@ export default function Treasure() {
               <Trapeziform {...TrapLayout} className="modal-sec-3">
                 <div className="step" style={{ width: 350, textAlign: 'left', marginBottom: 15 }}>
                   Join Vaults: <br />
-                  Particle Boosted Points
+                  Particle & Wasabi
                 </div>
                 <section>
                   <div className="reward-list">
-                    <span className="txt">USDB</span>
+                    <span className="txt">Particle</span>
                     <div className="gap"></div>
                     <Badge>
                       <Image
@@ -750,7 +750,7 @@ export default function Treasure() {
                   </div>
                 </section>
                 <div className="reward-list">
-                  <span className="txt">WETH</span>
+                  <span className="txt">Wasabi</span>
                   <div className="gap"></div>
                   <Badge>
                     <Image
@@ -760,7 +760,7 @@ export default function Treasure() {
                       width={40}
                       height={40}
                     />
-                    <span className="badge-title">20,000</span>
+                    <span className="badge-title">10,000</span>
                   </Badge>
                 </div>
                 <div className="reward-desc" style={{ margin: '44px 0 62px' }}>
@@ -852,7 +852,7 @@ export default function Treasure() {
                   <StyledFlex gap="7px" className="head-title" style={{ paddingLeft: '5px' }}>
                     <span>Step 2. Staking LP on</span>
                     <Image src="/images/odyssey/v4/hyperlock-rect.svg" alt="" width={140} height={36} />
-                    <span>to get exclusive 2x Gold.</span>
+                    <span>to get exclusive Gold.</span>
                   </StyledFlex>
                 </div>
               </div>

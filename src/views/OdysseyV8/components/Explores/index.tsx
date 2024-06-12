@@ -15,7 +15,7 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail }
   const [stakeShow, setStakeShow] = useState<boolean>(false);
   const [showWrapAndUnwrap, setShowWrapAndUnwrap] = useState(false);
   const [stakeType, setStakeType] = useState<string>('renzo');
-  console.log('list', list);
+
   const TrapLayout = {
     borderColor: '#1C1E2D',
     corner: 10,

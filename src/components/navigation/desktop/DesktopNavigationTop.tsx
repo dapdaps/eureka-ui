@@ -237,7 +237,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
               <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
             </div>
-            {/* <OdysseyIcon /> */}
+            <OdysseyIcon />
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}
