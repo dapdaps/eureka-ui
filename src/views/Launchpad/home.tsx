@@ -300,7 +300,18 @@ export default function LaunchpadHomePage() {
   const handleSort = function (key?: any) {
     key && setSortKey(key === sortKey ? "" : key)
   }
-  const formatValueDecimal = function (value: any, unit = '', decimal = 0) {
+  const simplifyNumber = function (number: number, decimal: number) {
+    if (typeof Number(number) !== 'number') return 0;
+    if (isNaN(Number(number))) return 0;
+    if (number >= 1E3 && number < 1E6) {
+      return Big(number).div(1E3).toFixed(decimal) + 'K';
+    } else if (number >= 1E6) {
+      return Big(number).div(1E6).toFixed(decimal) + 'M';
+    } else {
+      return Big(number).toFixed(decimal);
+    }
+  }
+  const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
     const target = Big(1).div(Math.pow(10, decimal))
     if (Big(value).eq(0)) {
       return '-'
@@ -308,10 +319,10 @@ export default function LaunchpadHomePage() {
       if (Big(value).lt(target)) {
         return `<${unit}${target}`
       } else {
-        return Big(value).toFixed(decimal)
+        return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
       }
     } else {
-      return Big(value).toFixed(decimal)
+      return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
     }
   }
   useEffect(() => {
@@ -339,7 +350,7 @@ export default function LaunchpadHomePage() {
       }}>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px' fontWeight='500'>Your Total Cost</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>${formatThousandsSeparator(Big(user?.total_cost ?? 0).toFixed(2))}</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='500'>{formatValueDecimal(user?.total_cost ?? 0, '$', 4)}</StyledLinearGradientFont>
         </StyledFlex>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px' fontWeight='500'>Your Avg. Rate of Return</StyledLinearGradientFont>
@@ -413,7 +424,7 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2)}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</StyledFont>
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Price</StyledFont>

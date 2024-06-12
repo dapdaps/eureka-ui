@@ -120,7 +120,7 @@ export default function useUserPools(sender: any) {
     }]
     for (let i = 0; i < data.length; i++) {
       const element = data[i];
-      const rpcUrl = chains[element.chain_id]?.rpcUrls[0] ?? ''
+      const rpcUrl = chains[element?.launchpad_lbp?.chain_id]?.rpcUrls[0] ?? ''
       if (rpcUrl) {
         const provider = new providers.JsonRpcProvider(rpcUrl);
         const contract = new Contract(

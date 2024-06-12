@@ -138,7 +138,7 @@ export default function LaunchpadYoursPage() {
         isNative: false,
       })
 
-      
+
 
       setMidToken({
         chainId: data.chain_id,
@@ -158,7 +158,18 @@ export default function LaunchpadYoursPage() {
       handleRedeem(data)
     }
   }
-  const formatValueDecimal = function (value: any, unit = '', decimal = 0) {
+  const simplifyNumber = function (number: number, decimal: number) {
+    if (typeof Number(number) !== 'number') return 0;
+    if (isNaN(Number(number))) return 0;
+    if (number >= 1E3 && number < 1E6) {
+      return Math.floor(number / 1E3) + 'K';
+    } else if (number >= 1E6) {
+      return Math.floor(number / 1E6) + 'M';
+    } else {
+      return Big(number).toFixed(decimal);
+    }
+  }
+  const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
     const target = Big(1).div(Math.pow(10, decimal))
     if (Big(value).eq(0)) {
       return '-'
@@ -166,10 +177,10 @@ export default function LaunchpadYoursPage() {
       if (Big(value).lt(target)) {
         return `<${unit}${target}`
       } else {
-        return Big(value).toFixed(decimal)
+        return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
       }
     } else {
-      return Big(value).toFixed(decimal)
+      return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
     }
   }
   useEffect(() => {
@@ -205,11 +216,11 @@ export default function LaunchpadYoursPage() {
       <StyledFlex style={{ marginTop: 20, marginBottom: 60 }}>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px'>Total Cost</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{formatValueDecimal(user?.total_cost ?? 0, '$', 2)}</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{formatValueDecimal(user?.total_cost ?? 0, '$', 4)}</StyledLinearGradientFont>
         </StyledFlex>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px'>Your Avg. Rate of Return</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{formatValueDecimal(user?.rate_return_avg ?? 0)}%</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{formatValueDecimal(user?.rate_return_avg_usd ?? 0)}%</StyledLinearGradientFont>
         </StyledFlex>
         {
           user?.lbps?.length > 0 && (
@@ -315,7 +326,7 @@ export default function LaunchpadYoursPage() {
                       <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.rate_return_usd ?? 0).lt(0) ? '' : '+') + Big(userPool?.rate_return_usd).toFixed(0) ?? 0}%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatValueDecimal(contractDataMapping[userPool?.launchpad_lbp?.pool]?.purchased_shares ?? 0)}</StyledFont>
+                      <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatValueDecimal(contractDataMapping[userPool?.launchpad_lbp?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd style={{ flex: 1.5 }}>
                       <StyledFlex
