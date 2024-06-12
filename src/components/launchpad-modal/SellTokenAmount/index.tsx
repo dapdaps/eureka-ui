@@ -118,6 +118,7 @@ interface Props {
   amount: string;
   readOnly: boolean;
   token?: Token | undefined;
+  shareUsdPrice?: string | undefined;
   // needGas: boolean;
   // updateBanlance: number;
   // onChainChange: (chain: Chain) => void;
@@ -139,7 +140,9 @@ export default function ChainTokenAmount({
   // currentToken,
   onAmountChange,
   token,
-  amount, // inputDisabled = false,
+  amount, 
+  shareUsdPrice,
+  // inputDisabled = false,
   // onTokenChange,
 } // onChainChange,
 // onAmountChange,
@@ -159,7 +162,7 @@ export default function ChainTokenAmount({
   const { value: usdVal } = usePriceValue({
     prices,
     amount,
-    symbol: '',
+    symbol: token?.symbol,
   });
 
   const icon = token ? token.icon : 'https://ipfs.near.social/ipfs/bafkreidgui7lyuedwj7xk6zt2tpy6sezzgi3gj37rt43xo5bked5o5cmtm'
@@ -200,7 +203,7 @@ export default function ChainTokenAmount({
             placeholder="0"
             readOnly={readOnly}
           />
-          <PriceWapper>{usdVal}</PriceWapper>
+          <PriceWapper>{shareUsdPrice || usdVal}</PriceWapper>
         </AmountWapper>
         <TokenWapper>
           <SellToken>

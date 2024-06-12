@@ -21,10 +21,11 @@ interface Props {
   shareVal: string;
   balance: string;
   toToken: Token;
+  shareTokenPrice: string;
 }
 
 export default function Buy({
-  setFromChain, setFromToken, setSendAmount, fromChain, fromToken, allTokens, sendAmount, chainList, updateBanlance, address, shareVal, balance, toToken,
+  setFromChain, setFromToken, setSendAmount, fromChain, fromToken, allTokens, sendAmount, chainList, updateBanlance, address, shareVal, balance, toToken, shareTokenPrice,
 }: Props) {
 
   return <>
@@ -59,6 +60,6 @@ export default function Buy({
         </svg>
       </div>
     </ArrowSwap>
-    <SellTokenAmount token={toToken} title="Collateral Token" amount={shareVal} balance={balance} readOnly />
+    <SellTokenAmount shareUsdPrice={shareVal? '$' + balanceFormated((Number(shareTokenPrice) * Number(shareVal)).toString(), 2) : '$~'} token={toToken} title="Collateral Token" amount={shareVal} balance={balance} readOnly />
   </>
 }

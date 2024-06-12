@@ -48,6 +48,7 @@ interface IProps {
   chainId: number;
   token: Token;
   midToken: Token;
+  price: string;
 }
 const chainList = Object.values(chainCofig);
 
@@ -60,7 +61,7 @@ const CloseIcon = (
   </svg>
 );
 
-const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, token, midToken }) => {
+const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, token, midToken, price: shareTokenPrice }) => {
   const { account, chainId, provider } = useAccount();
   const [fromChain, setFromChain] = useState<Chain>(chainCofig[targetChainId]);
   const [fromToken, setFromToken] = useState<Token>();
@@ -251,12 +252,13 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
               shareVal={shareVal}
               balance={balance}
               toToken={token as Token}
+              shareTokenPrice={shareTokenPrice}
             />
           </TabBody>
         )}
         {currentTab === 'SELL' && (
           <TabBody>
-            <SellTokenAmount token={token} title="Collateral Token" amount={sellAmount} onAmountChange={value => setSellAmount(value)} balance={balance} readOnly={false} />
+            <SellTokenAmount shareUsdPrice={sellAmount? '$' + balanceFormated((Number(shareTokenPrice) * Number(sellAmount)).toString(), 2) : '$~'} token={token} title="Collateral Token" amount={sellAmount} onAmountChange={value => setSellAmount(value)} balance={balance} readOnly={false} />
             <ArrowSwap>
               <div className="arrow">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -298,19 +300,16 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
                     amount: _receiveAmount,
                   }
                   token1 = token
-
                   shareTokenPrice = (Number(price[midToken.symbol]) * Number(_receiveAmount) / Number(shareVal)).toString()
-
                 } else {
                   amount = _sellAmount
                   trade_type = 'sell'
                   token0 = {
                     ...token,
-                    amout: _sellAmount,
+                    amount: _sellAmount,
                   }
                   token1 = midToken
                   shareTokenPrice = (Number(price[midToken.symbol]) * Number(assetOut) / Number(_sellAmount)).toString()
-
                 }
 
                 addAction({
@@ -336,7 +335,8 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
           />
 
           <Foot>
-            <span>Price impact 0.07%</span>
+            {/* <span>Price impact 0.07%</span> */}
+            <span></span>
             <span onClick={() => {
               addToken(token)
             }} className="addToken">Add { token.symbol } to MetaMask</span>

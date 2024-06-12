@@ -110,6 +110,7 @@ export default function LaunchpadYoursPage() {
   const [poolToken, setPoolToken] = useState<Token>()
   const [midToken, setMidToken] = useState<Token>()
   const [chainId, setChainId] = useState(1)
+  const [price, setPrice] = useState('0')
   const { account, provider } = useAccount();
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
   const [inProgressNumber, setInProgressNumber] = useState(0)
@@ -151,7 +152,7 @@ export default function LaunchpadYoursPage() {
       })
 
       setChainId(data.chain_id)
-
+      setPrice(data.price_usd)
       setLaunchPadModalShow(true)
     } else {
       handleRedeem(data)
@@ -448,6 +449,7 @@ export default function LaunchpadYoursPage() {
             token={poolToken as Token}
             midToken={midToken as Token}
             chainId={chainId}
+            price={price}
             onClose={() => {
               setCheckedPoolAddress('')
               setLaunchPadModalShow(false)
