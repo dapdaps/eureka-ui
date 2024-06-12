@@ -1,10 +1,13 @@
 import Loading from '@/components/Icons/Loading';
-import Pilcrow from '../Pilcrow';
 import { ParticleLink } from '../../const';
 import Quest from './quest';
+import useSwitcher from '../../hooks/useSwitcher';
 import { BgFoot, LoadingWrap, StyledContainer, StyledContent } from './styles';
+import UnStart from './unStart';
 
 export default function Spins({ loading, list, data, onRefreshDetail }: any) {
+  const { isStart, secondsRemaining } = useSwitcher();
+
   const GoldsMap = new Map([
     [
       'Particle',
@@ -55,18 +58,20 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
       },
     ],
   ]);
+
   list.sort((a: any, b: any) => {
     return a.gold_order - b.gold_order;
   });
 
   return (
     <StyledContainer>
-      <Pilcrow
-        title="Earn Extra Gold / Bonus!"
-        desc="Interact with popular dApps in Blast on DapDap, earn extra Gold / Bonus"
-      />
+      <div style={{ color: '#fff', fontSize: '26px', paddingBottom: '54px', textAlign: 'center' }}>
+        Earn Spins by completing missions below
+      </div>
       <StyledContent>
-        {loading ? (
+        {!isStart ? (
+          <UnStart secondsRemaining={secondsRemaining} />
+        ) : loading ? (
           <LoadingWrap>
             <Loading size={30} />
           </LoadingWrap>

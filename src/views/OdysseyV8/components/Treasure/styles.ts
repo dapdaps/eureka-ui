@@ -603,3 +603,8 @@ export const ToDappButton = styled.div`
     opacity: 0.9;
   }
 `;
+
+export const TrapLayout = {
+  borderColor: '#FFDD4D',
+  corner: 34,
+};
