@@ -101,6 +101,10 @@ const nextConfig = {
       source: '/teahouse/:path*',
       destination: 'https://vault-api.teahouse.finance/:path*',
     },
+    {
+      source: '/api/app/agentfi/:path*',
+      destination: 'https://app.agentfi.io/api/:path*',
+    },
   ],
   images: {
     remotePatterns: [
