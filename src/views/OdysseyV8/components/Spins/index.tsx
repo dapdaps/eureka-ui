@@ -67,7 +67,7 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
   return (
     <StyledContainer>
       <Pilcrow
-        title="Earn Extra Gold / Bonus!"
+        title="Earn Spins by completing missions below"
         desc="Interact with popular dApps in Blast on DapDap, earn extra Gold / Bonus"
       />
       <StyledContent>

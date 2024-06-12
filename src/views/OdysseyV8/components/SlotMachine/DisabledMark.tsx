@@ -12,12 +12,12 @@ const StyledContainer = styled.div`
   z-index: 3;
   color: #000;
   font-family: 'Trans-America';
-  font-size: 28px;
+  font-size: 26px;
   font-style: normal;
   font-weight: 400;
   line-height: 75.173px;
   box-sizing: border-box;
-  padding-left: 60px;
+  padding-left: 38px;
 `;
 
 export default function DisabledMark({ secondsRemaining }: any) {
@@ -25,7 +25,7 @@ export default function DisabledMark({ secondsRemaining }: any) {
 
   return secondsRemaining ? (
     <StyledContainer>
-      Open it in {timeLeft.days} day{timeLeft.days > 0 ? 's' : ''} {timeLeft.hours} hour
+      Coming soon in {timeLeft.days} day{timeLeft.days > 0 ? 's' : ''} {timeLeft.hours} hour
       {timeLeft.days > 0 ? 's' : ''}
     </StyledContainer>
   ) : null;
