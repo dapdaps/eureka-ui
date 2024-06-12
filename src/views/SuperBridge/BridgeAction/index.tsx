@@ -244,7 +244,6 @@ export default function BirdgeAction(
       }
 
     }
-    console.log(router?.query)
   }, [chainList, router])
 
   return <Container>
@@ -368,7 +367,7 @@ export default function BirdgeAction(
                 return
               }
 
-              saveTransaction({
+              const actionParams = {
                 hash: txHash,
                 link: getChainScan(fromChain.chainId),
                 duration: selectedRoute.duration,
@@ -390,7 +389,9 @@ export default function BirdgeAction(
                 fromAddress: account,
                 toAddress: account,
                 status: 3,
-              })
+              }
+
+              saveTransaction(actionParams)
 
               addAction({
                 type: "Bridge",
@@ -402,6 +403,7 @@ export default function BirdgeAction(
                 add: false,
                 status: 1,
                 transactionHash: txHash,
+                extra_data: actionParams
               })
 
               success({
