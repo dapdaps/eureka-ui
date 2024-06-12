@@ -258,11 +258,10 @@ export default function LaunchpadHomePage() {
   const upcomingAndOngoingPools = useMemo(() => {
     return pools
       .filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
-      .sort((prev, next) => prev[sortKey] - next[sortKey])
-  }, [pools, sortKey])
-  const completedPools = useMemo(() => {
-    return pools.filter(pool => pool.status === 'completed')
   }, [pools])
+  const completedPools = useMemo(() => {
+    return pools.filter(pool => pool.status === 'completed').sort((prev, next) => prev[sortKey] - next[sortKey])
+  }, [pools, sortKey])
   const handleBuyOrSell = function (data: any) {
     console.log('data:', data)
     if (data.status === 'upcoming') {

@@ -126,17 +126,6 @@ export default function usePools(sender: any) {
             })
           })
         }
-        // contract.args().then((res: any) => {
-        //   setContractDataMapping((prev: any) => {
-        //     const curr = _.cloneDeep(prev)
-        //     const _contractData = curr[element.pool] || {}
-        //     console.log('===res', res)
-        //     console.log(res[2], '=utils.formatUnits(res[2], element.asset_token_decimal)', utils.formatUnits(res[2], element.asset_token_decimal))
-        //     _contractData["funds_raised"] = Big(utils.formatUnits(res[2], 18)).times(prices[element.asset_token_symbol])
-        //     curr[element.pool] = _contractData
-        //     return curr
-        //   })
-        // }).catch(error => console.log('=error', error))
       }
 
     }
@@ -155,14 +144,15 @@ export default function usePools(sender: any) {
         map[element.status].push(element)
       }
       const sortPools = [
-        ...(map["ongoing"] ?? {}),
-        ...(map["upcoming"] ?? {}),
-        ...(map["completed"] ?? {})
+        ...(map["ongoing"] || []),
+        ...(map["upcoming"] || []),
+        ...(map["completed"] || [])
       ]
       setPools(sortPools);
       setLoading(false);
 
     } catch (err) {
+      console.log('=err', err)
       setLoading(false);
     }
   }, [loading]);
