@@ -349,7 +349,6 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
     async function excuteQuote(quote: QuoteProps, midToken: Token,) {
         setLoading(true)
         setShareVal('')
-        console.log(111111)
 
         const rpc = chainCofig[quote.chainId].rpcUrls[0]
 
