@@ -63,7 +63,7 @@ const zeroLocation = -90 * (list.length - 1) + (140 - 90) / 2;
 
 export default function ScrollLine({ no, startAni, noIndex }: { no: number; startAni: boolean; noIndex: number }) {
   const [isScoll, setIsScroll] = useState<boolean>(false);
-  const [location, setLocation] = useState<number | undefined>(-(noIndex * 90) - 65);
+  const [location, setLocation] = useState<number | undefined>(-(noIndex * 90) - (noIndex === 4 ? 24 : 65));
   const [transition, setTransition] = useState('none');
   const numRef = useRef(no);
 

@@ -157,18 +157,12 @@ const ControllerBtnBg = styled.div`
   background-size: 100% 100%;
   &.left {
     background-image: url(${yellowLeftImg.src});
-    filter: grayscale(1);
-    opacity: 0.5;
   }
   &.mid {
     background-image: url(${yellowMidImg.src});
-    filter: grayscale(1);
-    opacity: 0.5;
   }
   &.right {
     background-image: url(${yellowRightImg.src});
-    filter: grayscale(1);
-    opacity: 0.5;
   }
 `;
 
@@ -264,9 +258,10 @@ const Btn = styled.div<{ $active: boolean }>`
   top: 0px;
   left: 22px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: 0.1s;
+  transform: translateY(0px);
   &.press {
-    top: 11px;
+    transform: translateY(11px);
   }
 `;
 

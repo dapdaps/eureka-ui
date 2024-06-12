@@ -90,7 +90,7 @@ export default function PrizeModal({ onClose, prize }: { onClose: () => void; pr
   const [getMoreShow, setGetMoreShow] = useState(false);
 
   return (
-    <Modal onClose={onClose} width={450}>
+    <Modal onClose={onClose}>
       {prize <= 0 ? (
         <>
           <Iocn className="fail" src={smImg.src} />
