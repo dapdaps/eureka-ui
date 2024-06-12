@@ -15,7 +15,7 @@ export default function Modal({ type, children, onClose, bgColor, style, classNa
         );
       case 'type3':
         return (
-          <Image src="/images/odyssey/v4/modal-shape-3.svg" alt="" width={213} height={140} className="shape shape3" />
+          <Image src="/images/odyssey/v8/treasure5.svg" alt="" width={262} height={182} className="shape shape3" />
         );
       case 'type4':
         return <Image src="/images/odyssey/v4/star3.svg" alt="" width={166} height={128} className="shape shape4" />;
@@ -54,7 +54,7 @@ export default function Modal({ type, children, onClose, bgColor, style, classNa
           width={37}
           height={37}
         /> */}
-        {children}
+        <div style={{ position: 'relative', zIndex: 2 }}>{children}</div>
       </StyledContent>
     </StyledContainer>
   );

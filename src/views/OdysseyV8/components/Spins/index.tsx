@@ -1,5 +1,4 @@
 import Loading from '@/components/Icons/Loading';
-import Pilcrow from '../Pilcrow';
 import { ParticleLink } from '../../const';
 import Quest from './quest';
 import useSwitcher from '../../hooks/useSwitcher';
@@ -66,10 +65,9 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
 
   return (
     <StyledContainer>
-      <Pilcrow
-        title="Earn Spins by completing missions below"
-        desc="Interact with popular dApps in Blast on DapDap, earn extra Gold / Bonus"
-      />
+      <div style={{ color: '#fff', fontSize: '26px', paddingBottom: '54px', textAlign: 'center' }}>
+        Spin to Win Coming Soon! Use Spins for a Chance at Big Prizes!
+      </div>
       <StyledContent>
         {!isStart ? (
           <UnStart secondsRemaining={secondsRemaining} />

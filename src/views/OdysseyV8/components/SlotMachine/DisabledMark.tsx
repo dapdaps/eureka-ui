@@ -15,9 +15,9 @@ const StyledContainer = styled.div`
   font-size: 26px;
   font-style: normal;
   font-weight: 400;
-  line-height: 75.173px;
   box-sizing: border-box;
   padding-left: 38px;
+  line-height: 100%;
 `;
 
 export default function DisabledMark({ secondsRemaining }: any) {
@@ -25,8 +25,12 @@ export default function DisabledMark({ secondsRemaining }: any) {
 
   return secondsRemaining ? (
     <StyledContainer>
-      Coming soon in {timeLeft.days} day{timeLeft.days > 0 ? 's' : ''} {timeLeft.hours} hour
-      {timeLeft.days > 0 ? 's' : ''}
+      <div style={{ marginTop: 10, marginLeft: 108 }}> Coming soon in</div>
+      <div style={{ marginLeft: 50 }}>
+        {timeLeft.days} day{timeLeft.days > 0 ? 's' : ''} {timeLeft.hours} hour
+        {timeLeft.days > 0 ? 's' : ''} {timeLeft.minutes} min
+        {timeLeft.minutes > 0 ? 's' : ''}
+      </div>
     </StyledContainer>
   ) : null;
 }

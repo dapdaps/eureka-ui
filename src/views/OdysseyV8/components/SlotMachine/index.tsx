@@ -29,6 +29,7 @@ import bgImg from './img/bg.svg';
 
 import DisabledMark from './DisabledMark';
 import Pilcrow from '../Pilcrow';
+import PrizePoolModal from './PrizePoolModal';
 import { BgFoot } from '../Spins/styles';
 import useSwitcher from '../../hooks/useSwitcher';
 
@@ -91,6 +92,14 @@ const CompassWapper = styled.div`
   height: 68px;
   top: 46px;
   right: 30px;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 0.8;
+  }
 `;
 
 const ControllerWapper = styled.div`
@@ -300,6 +309,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
   const [newUnclaimedReward, setNewunclaimedReward] = useState(unclaimedReward);
   const [ruleShow, setRuleShow] = useState(false);
   const [prizeShow, setPrizeShow] = useState(false);
+  const [prizePoolShow, setPrizePoolShow] = useState(false);
 
   const rewardRef = useRef(reward);
   const unclaimedRewardRef = useRef(unclaimedReward);
@@ -359,7 +369,11 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
           {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}
           <Title>DAPDAP JACKPOT</Title>
           <ChainIcons src={chainIconsImg.src} />
-          <CompassWapper />
+          <CompassWapper
+            onClick={() => {
+              setPrizePoolShow(true);
+            }}
+          />
           <ControllerWapper>
             <Controller $active={isStart} />
             <ControllerBg></ControllerBg>
@@ -448,6 +462,13 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
       </div>
       {ruleShow && <RuleModal onClose={() => setRuleShow(false)} />}
       {prizeShow && <PrizeModal prize={reward} onClose={() => setPrizeShow(false)} />}
+      {prizePoolShow && (
+        <PrizePoolModal
+          onClose={() => {
+            setPrizePoolShow(false);
+          }}
+        />
+      )}
     </Wapper>
   );
 }

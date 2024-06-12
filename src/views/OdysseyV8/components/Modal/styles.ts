@@ -23,18 +23,20 @@ export const StyledContent = styled.div<{ $bgColor: string; ref: any }>`
   background-color: ${(props) => props.$bgColor || '#191b1f'};
   padding: 35px 55px;
   border: 1px solid #3c3d00;
+  z-index: 2;
   .shape {
     position: absolute;
     left: -60px;
     top: -80px;
+    z-index: 1;
   }
   .shape2 {
     left: -80px;
     top: -96px;
   }
   .shape3 {
-    left: -143px;
-    top: -68px;
+    left: -169px;
+    top: -83px;
   }
   .shape4 {
     left: -82px;
