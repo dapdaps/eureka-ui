@@ -101,6 +101,10 @@ const nextConfig = {
       source: '/beefy/:path*',
       destination: 'https://api.beefy.finance/:path*',
     },
+    {
+      source: '/duo/exchange/:path*',
+      destination: 'https://www.duo.exchange/api/:path*',
+    },
   ],
   images: {
     remotePatterns: [

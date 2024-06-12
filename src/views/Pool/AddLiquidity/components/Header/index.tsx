@@ -1,9 +1,9 @@
-import { memo } from 'react';
 import { useRouter } from 'next/navigation';
+import { memo } from 'react';
 
-import { StyledContainer, StyledTitle, StyledActions, StyledClearAll, StyledIconButton } from './styles';
+import { StyledActions, StyledClearAll, StyledContainer, StyledIconButton, StyledTitle } from './styles';
 
-const Header = ({ setShowSettings, onCleanAll, isAlign = true, title = 'Add Liquidity' }: any) => {
+const Header = ({ setShowSettings, onCleanAll, from, onClose, isAlign = true, title = 'Add Liquidity' }: any) => {
   const router = useRouter();
   return (
     <StyledContainer>
@@ -15,7 +15,7 @@ const Header = ({ setShowSettings, onCleanAll, isAlign = true, title = 'Add Liqu
       >
         <StyledIconButton
           onClick={() => {
-            router.back();
+            from === 'modal' ? onClose() : router.back();
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="9" height="13" viewBox="0 0 9 13" fill="none">

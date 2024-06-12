@@ -27,7 +27,11 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
         fee,
       );
 
-      if (!poolAddress || poolAddress === '0x0000000000000000000000000000000000000000') return {};
+      if (!poolAddress || poolAddress === '0x0000000000000000000000000000000000000000') {
+        setInfo(null);
+        setLoading(false);
+        return;
+      }
 
       const calls = [
         {
@@ -66,7 +70,7 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
         token1: _token1[0],
         sqrtPriceX96: slot0.sqrtPriceX96.toString(),
         poolAddress,
-        liquidity: liquidity.toString(),
+        liquidity: liquidity ? liquidity.toString() : '0',
       });
 
       setLoading(false);
@@ -75,7 +79,7 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
       setLoading(false);
       setInfo(null);
     }
-  }, [token0, token1, fee]);
+  }, [token0, token1, fee, chainId]);
 
   useEffect(() => {
     if (!token0 || !token1 || !fee) return;

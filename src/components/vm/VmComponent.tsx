@@ -17,7 +17,6 @@ export function VmComponent(props: Props) {
   if (!EthersProvider || !redirectMapStore.hasResolved) {
     return <Spinner />;
   }
-
   return (
     <EthersProvider value={ethersContext}>
       <Widget

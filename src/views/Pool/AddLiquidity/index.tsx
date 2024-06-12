@@ -1,27 +1,29 @@
-import { memo, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { memo, useRef, useState } from 'react';
+
 import Loading from '@/components/Icons/Loading';
-import Header from './components/Header';
-import SelectPair from './components/SelectPair';
-import SelectFee from './components/SelectFee';
-import PoolNoExsitHints from './components/PoolNoExsitHints';
-import SelectPriceRange from './components/SelectPriceRange';
-import Chart from './components/Chart';
-import DepositAmounts from '../components/DepositAmounts';
 import AddButton from '@/views/Pool/IncreaseLiquidity/components/Button';
+import useIncrease from '@/views/Pool/IncreaseLiquidity/hooks/useIncrease';
+
+import DepositAmounts from '../components/DepositAmounts';
 import Setting from '../components/Setting';
+import useDappConfig from '../hooks/useDappConfig';
+import Chart from './components/Chart';
+import Empty from './components/Empty';
+import Header from './components/Header';
 import OutRangeHints from './components/OutRangeHints';
 import PoolHints from './components/PoolHints';
-import StartingPrice from './components/StartingPrice';
-import Empty from './components/Empty';
-import SelectTokens from './components/SelectTokens';
+import PoolNoExsitHints from './components/PoolNoExsitHints';
 import PreviewModal from './components/PreviewModal';
+import SelectFee from './components/SelectFee';
+import SelectPair from './components/SelectPair';
+import SelectPriceRange from './components/SelectPriceRange';
+import SelectTokens from './components/SelectTokens';
+import StartingPrice from './components/StartingPrice';
 import useData from './hooks/useData';
-import useDappConfig from '../hooks/useDappConfig';
-import useIncrease from '@/views/Pool/IncreaseLiquidity/hooks/useIncrease';
-import { StyledContainer, StyledContent, LoadingWrapper } from './styles';
+import { LoadingWrapper, StyledContainer, StyledContent } from './styles';
 
-const Add = () => {
+const Add = ({ from, onClose }: any) => {
   const [showSettings, setShowSettings] = useState(false);
   const [showSelectTokens, setShowSelectTokens] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
@@ -72,8 +74,8 @@ const Add = () => {
   });
 
   return (
-    <StyledContainer style={{ ...theme }}>
-      <Header setShowSettings={setShowSettings} onCleanAll={onCleanAll} />
+    <StyledContainer style={{ ...theme, margin: from !== 'modal' ? '20px auto 0px' : '0px' }}>
+      <Header setShowSettings={setShowSettings} onCleanAll={onCleanAll} from={from} onClose={onClose} />
       <StyledContent>
         <SelectPair
           token0={token0}
@@ -190,8 +192,14 @@ const Add = () => {
           onClose={() => {
             setShowPreviewModal(false);
           }}
-          loading={adding}
-          onClick={onIncrease}
+          onSuccess={() => {
+            setShowPreviewModal(false);
+            if (from === 'modal') {
+              onClose();
+            } else {
+              router.push(`/dapp/${router.query.dappRoute}`);
+            }
+          }}
         />
       </StyledContent>
     </StyledContainer>

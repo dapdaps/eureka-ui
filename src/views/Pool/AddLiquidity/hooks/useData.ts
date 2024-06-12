@@ -12,9 +12,9 @@ import { sortTokens } from '../../utils/token';
 import { FEES, MIN_TICK, MAX_TICK } from '@/config/pool/index';
 
 export default function useData() {
-  const { defaultFee } = useDappConfig();
-  const [token0, setToken0] = useState<any>();
-  const [token1, setToken1] = useState<any>();
+  const { defaultFee, defaultTokens = [] } = useDappConfig();
+  const [token0, setToken0] = useState<any>(defaultTokens[0]);
+  const [token1, setToken1] = useState<any>(defaultTokens[1]);
   const [value0, setValue0] = useState<any>();
   const [value1, setValue1] = useState<any>();
   const [fee, setFee] = useState<any>(defaultFee);
@@ -69,7 +69,7 @@ export default function useData() {
   }, [token0, token1]);
 
   const rangeType = useMemo(() => {
-    if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice) return 0;
+    if (!token0 || !token1 || !lowerPrice || !upperPrice || !currentPrice || !info) return 0;
     if (lowerPrice === '0' || upperPrice === '∞') return 3;
     const lowerTick = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
     const upperTick = priceToUsableTick({ price: upperPrice, token0, token1, fee });
@@ -123,6 +123,13 @@ export default function useData() {
   );
 
   useEffect(() => {
+    if (!defaultTokens || defaultTokens.length === 0) return;
+
+    setToken0(defaultTokens[0]);
+    setToken1(defaultTokens[1]);
+  }, [defaultTokens]);
+
+  useEffect(() => {
     if (infoLoading) {
       setLoading(true);
       return;
@@ -130,17 +137,20 @@ export default function useData() {
     setNoPair(!info);
     if (!info) {
       setLoading(false);
+      setCurrentPrice('');
+      setLowerPrice('');
+      setUpperPrice('');
       return;
     }
     const { currentTick, tickSpacing } = info;
     const _currentPrice = tickToPrice({ token0, token1, tick: currentTick });
-    setCurrentPrice(_currentPrice);
+    setCurrentPrice(_currentPrice === Infinity ? 0 : _currentPrice);
     const nearestLowTick = Math.floor(currentTick / tickSpacing) * tickSpacing;
     const nearestHighTick = Math.floor(currentTick / tickSpacing) * tickSpacing + tickSpacing;
     const _lowerPrice = tickToPrice({ token0, token1, tick: reverse ? nearestHighTick : nearestLowTick });
     const _upperPrice = tickToPrice({ token0, token1, tick: reverse ? nearestLowTick : nearestHighTick });
-    setLowerPrice(_lowerPrice);
-    setUpperPrice(_upperPrice);
+    setLowerPrice(_lowerPrice === Infinity ? 0 : _lowerPrice);
+    setUpperPrice(_upperPrice === Infinity ? '∞' : _upperPrice);
     setLoading(false);
   }, [info, infoLoading]);
 

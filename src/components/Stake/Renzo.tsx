@@ -30,7 +30,6 @@ const Container = styled.div`
    
 `
 
-
 const InputActionWapper = styled.div`
     padding: 10px 20px 20px;
 `
@@ -91,8 +90,6 @@ export const Stake = () => {
         isPure: false,
     })
 
-    console.log('currentChain:', currentChain)
-
     const { apr } = useRenzoDetail(currentChain)
     const { rate, recived, exchangeRate, transactionCost, deposit, isLoading } = useTrade({
         amount: inputValue,
@@ -137,7 +134,7 @@ export const Stake = () => {
 
         if (!inputValue || isNaN(Number(inputValue))) {
             setIsError(true)
-            setBtnMsg('Illegal value')
+            setBtnMsg('Enter an amount')
             return
         }
 

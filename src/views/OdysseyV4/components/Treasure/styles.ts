@@ -3,12 +3,25 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+
+  .modal-6 {
+    display: block;
+    padding-bottom: 100px;
+  }
 `;
 
 export const StyledContent = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+
+  &.row-top {
+    padding-right: 12.9%;
+  }
+  &.row-bot {
+    padding-left: 5.8%;
+    justify-content: flex-end;
+  }
 `;
 export const IconGroup = styled.div`
   position: absolute;
@@ -25,13 +38,17 @@ const Treasure = styled.div`
   flex-direction: column;
   height: 350px;
   cursor: pointer;
+
+  .title {
+    white-space: nowrap;
+  }
   .star {
     position: absolute;
   }
   .star4 {
     position: absolute;
-    top: 21px;
-    left: 57px;
+    top: 97px;
+    left: -15px;
   }
   .scale {
     transition: transform 0.3s;
@@ -43,22 +60,28 @@ const Treasure = styled.div`
 
 export const Treasure1 = styled(Treasure)`
   .title {
-    left: 162px;
+    left: calc(50% + 17px);
     width: 230px;
   }
   .td1 {
     position: absolute;
-    left: 152px;
-    top: 23px;
+    left: calc(50% + 14px);
+    top: 60px;
   }
 `;
 export const Treasure2 = styled(Treasure)`
+  margin-left: 15.47%;
+
   .title {
-    left: 0;
+    left: calc(50% + 17px);
   }
   .td2 {
-    left: 110px;
-    top: 31px;
+    position: absolute;
+    width: 180px;
+    gap: 5px;
+    display: flex;
+    left: calc(50% + 14px);
+    top: 59px;
   }
   .particle {
     left: 7px;
@@ -70,24 +93,31 @@ export const Treasure2 = styled(Treasure)`
   }
 `;
 export const Treasure3 = styled(Treasure)`
+  margin-left: 23.77%;
+
   .title {
-    left: -105px;
+    right: calc(50% + 17px);
   }
   .td3 {
     position: absolute;
-    left: 15px;
-    top: 33px;
+    right: calc(50% + 17px);
+    top: 58px;
+    width: 190px;
+    display: flex;
+    justify-content: space-between;
   }
 `;
 export const Treasure4 = styled(Treasure)`
-  width: 503px;
+  width: 363px;
   height: 300px;
+  margin-right: 14.12%;
+
   .title {
-    left: 262px;
+    left: calc(50% + 17px);
   }
   .td4 {
     position: absolute;
-    left: 260px;
+    left: calc(50% + 17px);
     top: 31px;
   }
   .track1 {
@@ -114,31 +144,86 @@ export const Treasure4 = styled(Treasure)`
   }
 `;
 export const Treasure5 = styled(Treasure)`
-  width: 503px;
+  width: 346px;
   height: 300px;
-  .title1 {
-    left: 136px;
+  margin-right: 13.41%;
+
+  .title {
+    right: calc(50% + 17px);
+    text-align: right;
   }
-  .title2 {
-    left: 84px;
-    top: 58px;
-  }
+
   .td5 {
     position: absolute;
-    left: 206px;
-    top: 35px;
+    right: calc(50% + 17px);
+    top: 55px;
   }
   .pac {
     position: absolute;
-    left: 16px;
+    left: -55px;
     top: 100px;
     z-index: 2;
   }
   .ring {
     position: absolute;
-    left: 223px;
+    left: 142px;
     top: 88px;
     z-index: 1;
+  }
+`;
+export const Treasure6 = styled(Treasure)`
+  width: 263px;
+  height: 300px;
+
+  .title {
+    right: calc(50% + 17px);
+  }
+  .td6 {
+    top: 34px;
+    right: calc(50% + 15px);
+  }
+
+  /* .badge {
+    position: absolute;
+    top: 31px;
+    right: calc(50% + 17px);
+    height: 26px;
+    border-radius: 13px;
+    background: rgba(249, 249, 37, 0.2);
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-wrap: nowrap;
+    color: #ebf479;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    padding: 3px 3px 3px 29px;
+
+    > img {
+      position: absolute;
+      left: -7px;
+    }
+  } */
+`;
+
+export const Badge = styled.div`
+  height: 26px;
+  border-radius: 13px;
+  background: rgba(249, 249, 37, 0.2);
+  display: flex;
+  align-items: center;
+  color: #ebf479;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  padding: 3px 13px 3px 3px;
+
+  .badge-icon {
+    margin-left: -7px;
+  }
+  .badge-title {
+    margin-left: -5px;
   }
 `;
 
@@ -163,6 +248,31 @@ export const ModalTitle = styled.div`
   font-style: normal;
   font-weight: 700;
   margin-bottom: 20px;
+`;
+
+export const ModalSub = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: -15px;
+  margin-bottom: 15px;
+`;
+
+export const ModalStep = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 33px;
+  .step {
+    color: #ebf479;
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .gap {
+    height: 1px;
+    width: 40px;
+    border: 1px dashed #979abe;
+  }
 `;
 export const ModalDesc = styled.div`
   color: white;
@@ -223,6 +333,12 @@ export const ModalBody = styled.div`
     align-items: center;
     background-color: #000000;
     padding: 14px 0 50px;
+  }
+  .modal-sec-3 {
+    height: 380px;
+    flex-grow: 1;
+    background-color: #000000;
+    padding: 30px 18px 18px;
   }
   .coin-title {
     margin-top: 13px;
@@ -396,6 +512,42 @@ export const ModalBody = styled.div`
         line-height: 150%; /* 18px */
       }
     }
+  }
+  .modal-list-foot {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+  }
+  .reward-list {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 356px;
+    margin-bottom: 14px;
+  }
+  .juice-btn {
+    margin: 0 auto;
+  }
+  .txt {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+  }
+  .gap {
+    flex-grow: 1;
+    height: 1px;
+    border: 1px dashed #979abe;
+  }
+  .reward-desc {
+    position: relative;
+    width: 356px;
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
   }
 `;
 export const ModalList = styled.div``;

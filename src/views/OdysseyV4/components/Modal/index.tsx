@@ -4,13 +4,11 @@ import { useRef } from 'react';
 
 import { StyledContainer, StyledContent } from './styles';
 
-export default function Modal({ type, children, onClose, bgColor }: any) {
+export default function Modal({ type, children, onClose, bgColor, style, className }: any) {
   const renderShape = () => {
     switch (type) {
       case 'type1':
-        return (
-          <Image src="/images/odyssey/v4/star-particle.svg" alt="" width={179} height={121} className="shape shape1" />
-        );
+        return <Image src="/images/odyssey/v4/star1.svg" alt="" width={179} height={121} className="shape shape1" />;
       case 'type2':
         return (
           <Image src="/images/odyssey/v4/modal-shape-2.svg" alt="" width={214} height={177} className="shape shape2" />
@@ -25,6 +23,10 @@ export default function Modal({ type, children, onClose, bgColor }: any) {
         return (
           <Image src="/images/odyssey/v4/modal-shape-5.svg" alt="" width={126} height={126} className="shape shape5" />
         );
+      case 'type6':
+        return (
+          <Image src="/images/odyssey/v4/modal-shape-6.svg" alt="" width={123} height={127} className="shape shape5" />
+        );
     }
   };
 
@@ -37,8 +39,8 @@ export default function Modal({ type, children, onClose, bgColor }: any) {
     }
   };
   return (
-    <StyledContainer onClick={clickMask}>
-      <StyledContent $bgColor={bgColor} ref={bodyRef}>
+    <StyledContainer onClick={clickMask} className={className}>
+      <StyledContent $bgColor={bgColor} ref={bodyRef} style={style}>
         {renderShape()}
         <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={12} height={12} />
         <div className="corner-left"></div>

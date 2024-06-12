@@ -88,6 +88,14 @@ const ROUTE_CONFIG = {
       '--button-text-color': 'white',
     },
   },
+  duo: {
+    type: 'staking',
+    theme: {
+      '--button-color': 'linear-gradient(120deg, #e67819, #dead1f 10%, #ead966 15%, #dbbf22 20%, #dd761e 85%, #be6417)',
+      '--switch-color': 'linear-gradient(120deg, #e67819, #dead1f 10%, #ead966 15%, #dbbf22 20%, #dd761e 85%, #be6417)',
+      '--button-text-color': '#ffffff',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
