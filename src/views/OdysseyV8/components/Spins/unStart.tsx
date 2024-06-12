@@ -16,19 +16,14 @@ const LIST = [
     name: 'Particle',
   },
   {
-    bgColor: '#FF37C7',
-    logo: '/images/odyssey/v8/logo-ring.svg',
-    name: 'Ring',
-  },
-  {
-    bgColor: '#FFA100',
-    logo: '/images/odyssey/v4/logo-BladeSwap.png',
-    name: 'BladeSwap',
-  },
-  {
     bgColor: '#AB55EC',
     logo: '/images/odyssey/v4/icon-juice.svg',
     name: 'Juice',
+  },
+  {
+    bgColor: '#FF37C7',
+    logo: '/images/odyssey/v8/logo-ring.svg',
+    name: 'Ring',
   },
   {
     bgColor: '#9B37FF',
@@ -36,29 +31,9 @@ const LIST = [
     name: 'Ambient',
   },
   {
-    bgColor: '#7EE8B6',
-    logo: '/images/odyssey/v8/super-sushi-samurai.png',
-    name: 'Super Sushi Samurai',
-  },
-  {
-    bgColor: '#EAC97C',
-    logo: '/images/odyssey/v8/cap&co.png',
-    name: 'Cap&Co',
-  },
-  {
-    bgColor: '#71AB32',
-    logo: '/images/odyssey/v8/early.png',
-    name: 'Early',
-  },
-  {
-    bgColor: '#71AB32',
-    logo: '/images/odyssey/v8/crypto-valleys.png',
-    name: 'Crypto Valleys',
-  },
-  {
-    bgColor: '#71EAE5',
-    logo: '/images/odyssey/v8/baja.png',
-    name: 'Baja',
+    bgColor: '#FFA100',
+    logo: '/images/odyssey/v4/logo-BladeSwap.png',
+    name: 'BladeSwap',
   },
   {
     bgColor: '#E55A00',
@@ -69,6 +44,31 @@ const LIST = [
     bgColor: '#EAC97C',
     logo: '/images/odyssey/v8/andy.png',
     name: 'Andy',
+  },
+  {
+    bgColor: '#71EAE5',
+    logo: '/images/odyssey/v8/baja.png',
+    name: 'Baja',
+  },
+  {
+    bgColor: '#7EE8B6',
+    logo: '/images/odyssey/v8/super-sushi-samurai.png',
+    name: 'Super Sushi Samurai',
+  },
+  {
+    bgColor: '#71AB32',
+    logo: '/images/odyssey/v8/crypto-valleys.png',
+    name: 'Crypto Valleys',
+  },
+  {
+    bgColor: '#EAC97C',
+    logo: '/images/odyssey/v8/cap&co.png',
+    name: 'Cap&Co',
+  },
+  {
+    bgColor: '#71AB32',
+    logo: '/images/odyssey/v8/early.png',
+    name: 'Early',
   },
 ];
 
