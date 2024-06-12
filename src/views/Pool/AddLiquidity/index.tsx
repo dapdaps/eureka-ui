@@ -20,7 +20,7 @@ import useData from './hooks/useData';
 import useDappConfig from '../hooks/useDappConfig';
 import { StyledContainer, StyledContent, LoadingWrapper } from './styles';
 
-const Add = () => {
+const Add = ({ from, onClose }: any) => {
   const [showSettings, setShowSettings] = useState(false);
   const [showSelectTokens, setShowSelectTokens] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
@@ -55,8 +55,8 @@ const Add = () => {
   } = useData();
 
   return (
-    <StyledContainer style={{ ...theme }}>
-      <Header setShowSettings={setShowSettings} onCleanAll={onCleanAll} />
+    <StyledContainer style={{ ...theme, margin: from !== 'modal' ? '20px auto 0px' : '0px' }}>
+      <Header setShowSettings={setShowSettings} onCleanAll={onCleanAll} from={from} onClose={onClose} />
       <StyledContent>
         <SelectPair
           token0={token0}
@@ -175,7 +175,11 @@ const Add = () => {
           }}
           onSuccess={() => {
             setShowPreviewModal(false);
-            router.push(`/dapp/${router.query.dappRoute}`);
+            if (from === 'modal') {
+              onClose();
+            } else {
+              router.push(`/dapp/${router.query.dappRoute}`);
+            }
           }}
         />
       </StyledContent>

@@ -74,6 +74,21 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#fff',
     },
   },
+  duo: {
+    type: 'staking',
+    theme: {
+      '--button-color': 'linear-gradient(120deg, #e67819, #dead1f 10%, #ead966 15%, #dbbf22 20%, #dd761e 85%, #be6417)',
+      '--switch-color': 'linear-gradient(120deg, #e67819, #dead1f 10%, #ead966 15%, #dbbf22 20%, #dd761e 85%, #be6417)',
+      '--button-text-color': '#ffffff',
+    },
+  },
+  'teahouse-finance': {
+    type: 'staking',
+    theme: {
+      '--button-color': '#d5fa69',
+      '--button-text-color': '#000',
+    },
+  },
   'agent-fi': {
     type: 'staking',
     theme: {

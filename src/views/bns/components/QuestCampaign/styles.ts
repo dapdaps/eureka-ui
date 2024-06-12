@@ -145,3 +145,11 @@ export const StyledSwiperButton = styled.div`
     right: 10px;
   }
 `;
+
+export const StyledTips = styled.div`
+  color: #979abe;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 600;
+  padding: 50px 0 40px;
+`;

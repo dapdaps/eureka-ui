@@ -37,11 +37,7 @@ const App: FC<IProps> = ({ data }) => {
               <Styles.Icon color={item.color}></Styles.Icon>
               {map[item.name]}
             </Styles.Key>
-            {item.name === 'users' ? (
-              <Styles.Value>{formatThousandsSeparator(item.value)}</Styles.Value>
-            ) : (
-              <Styles.Value>{item.value}</Styles.Value>
-            )}
+            <Styles.Value>{item.value}</Styles.Value>
           </Styles.Item>
         ))}
       </Styles.CustomTooltip>

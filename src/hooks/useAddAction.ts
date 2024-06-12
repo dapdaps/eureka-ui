@@ -61,10 +61,7 @@ export default function useAddAction(source: string) {
             tx_id: data.transactionHash,
             chain_id: data.fromChainId,
             to_chain_id: data.toChainId,
-            extra_data: JSON.stringify({
-              from: fromChain?.name,
-              to: toChain?.name,
-            }),
+            extra_data: JSON.stringify(data.extra_data),
           };
           console.info('params:', params);
         } catch (error) {
@@ -158,5 +155,6 @@ export default function useAddAction(source: string) {
     },
     [chainId, account],
   );
+
   return { addAction };
 }
