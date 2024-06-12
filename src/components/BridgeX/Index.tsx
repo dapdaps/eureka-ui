@@ -10,7 +10,7 @@ import useAccount from '@/hooks/useAccount';
 import { useSetChain } from '@web3-onboard/react';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated } from '@/utils/balance';
+import { balanceFormated, percentFormated, errorFormated } from '@/utils/balance';
 
 import ChainSelector from './components/ChainSelector'
 import FeeMsg from './components/FeeMsg';
@@ -555,7 +555,8 @@ export default function BridgeX({
                         setIsSending(false)
                         setIsSendingDisabled(false)
 
-                        saveTransaction({
+
+                        const actionParams = {
                             hash: txHash,
                             link: getChainScan(chainFrom.chainId),
                             duration: duration,
@@ -577,7 +578,9 @@ export default function BridgeX({
                             fromAddress: account,
                             toAddress: account,
                             status: 3,
-                        })
+                        }
+
+                        saveTransaction(actionParams)
 
                         addAction({
                             type: "Bridge",
@@ -589,6 +592,7 @@ export default function BridgeX({
                             add: false,
                             status: 1,
                             transactionHash: txHash,
+                            extra_data: actionParams
                         })
 
                         success({
@@ -602,7 +606,7 @@ export default function BridgeX({
                         console.log(err)
                         fail({
                             title: 'Transaction failed',
-                            text: err.message || err.toString(),
+                            text: errorFormated(err),
                         })
 
                         setIsSending(false)
