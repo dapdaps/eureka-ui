@@ -573,9 +573,9 @@ export default function Treasure() {
               <div className="modal-list-head">
                 <div className="head-left">
                   <StyledFlex gap="7px" className="head-title" style={{ paddingLeft: '5px' }}>
-                    <span>Step 2. Staking LP on</span>
+                    <span>Step 2. Stake your LPs on</span>
                     <Image src="/images/odyssey/v4/hyperlock-rect.svg" alt="" width={140} height={36} />
-                    <span>to get exclusive Gold.</span>
+                    <span> and get extra another Gold from them</span>
                   </StyledFlex>
                 </div>
               </div>
