@@ -1,4 +1,5 @@
 import Loading from '@/components/Icons/Loading';
+import useAccount from '@/hooks/useAccount';
 import LaunchPadModal from '@/components/launchpad-modal';
 import { useUserStore } from '@/stores/user';
 import {
@@ -16,6 +17,7 @@ import styled from 'styled-components';
 import useUser from './hooks/useUser';
 import useUserPools from './hooks/useUserPools';
 import tokenConfig from '@/components/launchpad-modal/hooks/tokenConfig'
+import { useRedeem } from '@/components/launchpad-modal/hooks/useFjordTrade'
 
 import type { Chain, Token } from '@/types';
 import { differenceInDays, format } from 'date-fns';
@@ -108,16 +110,18 @@ export default function LaunchpadYoursPage() {
   const [poolToken, setPoolToken] = useState<Token>()
   const [midToken, setMidToken] = useState<Token>()
   const [chainId, setChainId] = useState(1)
+  const { account, provider } = useAccount();
   const [launchPadModalShow, setLaunchPadModalShow] = useState(false)
   const [inProgressNumber, setInProgressNumber] = useState(0)
+  const { excuteRedeemTrade } = useRedeem()
 
   const handleQueryUserPools = function () {
     userStore.address && queryUserPools({
       status: categoryIndex === 0 ? 'ongoing' : 'completed'
     })
   }
-  const handleRedeem = function (data: any) {
-
+  const handleRedeem = async function (data: any) {
+    excuteRedeemTrade(data.pool, provider?.getSigner())
   }
   const handleBuyOrSellOrRedeem = function (data: any) {
     if (['upcoming', 'ongoing'].includes(data.launchpad_lbp.status)) {
@@ -132,6 +136,8 @@ export default function LaunchpadYoursPage() {
         decimals: data.share_token_decimal,
         isNative: false,
       })
+
+      
 
       setMidToken({
         chainId: data.chain_id,
@@ -259,7 +265,7 @@ export default function LaunchpadYoursPage() {
                 </StyledLoadingWrapper>
               ) : (
                 userPools && userPools.length > 0 ? userPools.map((userPool, index) => (
-                  < StyledParticipatedTr key={index}>
+                  <StyledParticipatedTr key={index}>
                     <StyledParticipatedTd>
                       <StyledFlex gap='10px' style={{ paddingLeft: 20 }}>
                         <StyledLogoContainer>

@@ -716,21 +716,40 @@ export function useSellTrade({
 
     }
 
-    async function excuteRedeemTrade(signer: Signer) {
-        const PoolContract = new Contract(
-            pool,
-            poolAbi,
-            signer,
-        )
+    return {
+        excuteSellTrade,
+        loading,
+    }
+}
 
-        const tx = await PoolContract.redeem()    
-        await tx.wait()
+export function useRedeem() {
+    const { fail, success } = useToast()
+
+    async function excuteRedeemTrade(pool: string, signer: Signer) {
+        try {
+            const PoolContract = new Contract(
+                pool,
+                poolAbi,
+                signer,
+            )
+    
+            const tx = await PoolContract.redeem()    
+            await tx.wait()
+            success({
+                title: 'Transaction success',
+                text: '',
+            })
+            return tx.hahh
+        } catch(err) {
+            fail({
+                title: 'Transaction failed',
+                text: errorFormated(err),
+            })
+        }
     }
 
     return {
-        excuteSellTrade,
-        excuteRedeemTrade,
-        loading,
+        excuteRedeemTrade
     }
 }
 
