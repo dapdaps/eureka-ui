@@ -63,7 +63,7 @@ export default {
     video: '',
     chainsImg: '/images/odyssey/v4/chains.png',
     chainsHeight: '56px',
-    reward: '3,500',
+    reward: '13,500',
     rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
     rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
     tips: '',
