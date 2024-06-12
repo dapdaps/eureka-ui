@@ -103,7 +103,7 @@ const StyledParticipatedButton = styled.div`
 export default function LaunchpadYoursPage() {
   const router = useRouter();
   const userStore = useUserStore((store: any) => store.user);
-  const { loading, userPools, queryUserPools } = useUserPools()
+  const { loading, userPools, queryUserPools, contractDataMapping } = useUserPools(userStore.address)
   const { user, queryUser } = useUser()
   const [categoryIndex, setCategoryIndex] = useState(0)
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
@@ -124,7 +124,7 @@ export default function LaunchpadYoursPage() {
     excuteRedeemTrade(data.pool, provider?.getSigner())
   }
   const handleBuyOrSellOrRedeem = function (data: any) {
-    if (['upcoming', 'ongoing'].includes(data.launchpad_lbp.status)) {
+    if (['upcoming', 'ongoing'].includes(data.status)) {
       setCheckedPoolAddress(data?.pool)
       setPoolToken({
         chainId: 1,
@@ -294,13 +294,13 @@ export default function LaunchpadYoursPage() {
                       </StyledFlex>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price_usd ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.rate_return_usd ?? 0).lt(0) ? '' : '+') + Big(userPool?.rate_return_usd).toFixed(0) ?? 0}%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatThousandsSeparator(userPool?.launchpad_lbp?.purchased_shares ?? 0)}</StyledFont>
+                      <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatThousandsSeparator(contractDataMapping[userPool?.launchpad_lbp?.pool]?.purchased_shares ?? 0)}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd style={{ flex: 1.5 }}>
                       <StyledFlex
@@ -308,7 +308,7 @@ export default function LaunchpadYoursPage() {
                         style={{ width: '100%', paddingRight: 15 }}
                       >
                         <StyledFont color='#FFF' fontSize='16px'>{userPool?.launchpad_lbp?.status}</StyledFont>
-                        <StyledParticipatedButton style={{ backgroundColor: ['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#EBF479' : '#50FFE9' }} onClick={() => handleBuyOrSellOrRedeem(userPool)}>
+                        <StyledParticipatedButton style={{ backgroundColor: ['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#EBF479' : '#50FFE9' }} onClick={() => handleBuyOrSellOrRedeem(userPool.launchpad_lbp)}>
                           <StyledFont fontSize='18px' fontWeight='500'>{['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? 'Buy / Sell' : 'Redeem'}</StyledFont>
                         </StyledParticipatedButton>
                       </StyledFlex>
@@ -400,7 +400,7 @@ export default function LaunchpadYoursPage() {
                       </StyledFlex>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price ?? 0).toFixed(4))}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price_usd ?? 0).toFixed(4))}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.rate_return_usd ?? 0).lt(0) ? '' : '+') + Big(userPool?.rate_return_usd).toFixed(0) ?? 0}%</StyledFont>
@@ -408,9 +408,13 @@ export default function LaunchpadYoursPage() {
                     <StyledParticipatedTd>
                       <StyledFont color={Big(userPool?.profit_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.profit_usd ?? 0).lt(0) ? '-$' : '+$') + userPool?.profit_usd ?? 0}</StyledFont>
                     </StyledParticipatedTd>
-                    <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>{format(userPool?.created_at, 'MM/d/yyyy')} - {format(userPool?.launchpad_lbp.end_time, 'MM/d/yyyy')}</StyledFont>
-                    </StyledParticipatedTd>
+                    {
+                      userPool?.created_at && userPool?.launchpad_lbp.end_time && (
+                        <StyledParticipatedTd>
+                          <StyledFont color='#FFF' fontSize='16px'>{format(new Date(userPool?.created_at), 'MM/d/yyyy')} - {format(new Date(userPool?.launchpad_lbp.end_time), 'MM/d/yyyy')}</StyledFont>
+                        </StyledParticipatedTd>
+                      )
+                    }
                   </StyledParticipatedTr>
                 )) : (
                   <StyledFlex justifyContent='center' style={{ paddingTop: 60 }}>

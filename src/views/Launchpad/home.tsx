@@ -246,7 +246,7 @@ export default function LaunchpadHomePage() {
 
   const router = useRouter();
   const userStore = useUserStore((store: any) => store.user);
-  const { loading, pools, queryPools, sharesMapping } = usePools()
+  const { loading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
   const { user, queryUser } = useUser()
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
@@ -299,10 +299,26 @@ export default function LaunchpadHomePage() {
   const handleSort = function (key?: any) {
     key && setSortKey(key === sortKey ? "" : key)
   }
+  const formatValueDecimal = function (value: any, unit = '', decimal = 0) {
+    const target = Big(1).div(Math.pow(10, decimal))
+    if (Big(value).eq(0)) {
+      return '-'
+    } else if (Big(value).gt(0)) {
+      if (Big(value).lt(target)) {
+        return `<${unit}${target}`
+      } else {
+        return Big(value).toFixed(decimal)
+      }
+    } else {
+      return Big(value).toFixed(decimal)
+    }
+  }
+  useEffect(() => {
+    queryPools()
+  }, [])
   useEffect(() => {
     if (userStore.address) {
       queryUser()
-      queryPools(userStore.address)
     }
   }, [userStore.address])
 
@@ -392,21 +408,21 @@ export default function LaunchpadHomePage() {
                   <StyledFlex justifyContent='space-between' style={{ marginBottom: 30 }}>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Participants</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{pool?.participants}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.participants)}</StyledFont>
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>$ {Big(pool?.funds_raised ?? 0).toFixed(3)}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.funds_raised ?? 0, '$', 2)}</StyledFont>
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Price</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>$ {Big(pool?.price ?? 0).toFixed(3)}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</StyledFont>
                     </StyledFlex>
                   </StyledFlex>
                   <StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{sharesMapping[pool?.pool ?? ''] || '-'}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
                     </StyledFlex>
 
                     <StyledProjectButtonContainer>
@@ -492,13 +508,13 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{pool?.rate_return_usd ?? 0}%</StyledFont>
+                    <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.rate_return_usd ?? 0)}%</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>${Big(pool?.funds_raised ?? 0).toFixed(2)}</StyledFont>
+                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.funds_raised ?? 0, '$', 2)}</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool?.participants ?? 0}</StyledFont>
+                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.participants ?? 0)}</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd style={{ flex: 0.5 }}>
                     <StyledChainImage src={chainCofig[pool?.chain_id].icon} />
