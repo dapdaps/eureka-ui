@@ -362,8 +362,8 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
       <Bg />
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Pilcrow
-          title="SPIN-TO-WIN"
-          desc="Each mission you complete grants you spins, which can earn you rewards like gold, points, and tokens"
+          title="Earn Spins by completing the missions below"
+          desc="Each mission you complete grants you spins, which can earn you rewards like gold, points, and tokens."
         />
         <Screen>
           {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}

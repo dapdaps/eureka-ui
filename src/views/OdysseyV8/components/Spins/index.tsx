@@ -66,7 +66,7 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
   return (
     <StyledContainer>
       <div style={{ color: '#fff', fontSize: '26px', paddingBottom: '54px', textAlign: 'center' }}>
-        Spin to Win Coming Soon! Use Spins for a Chance at Big Prizes!
+        Earn Spins by completing missions below
       </div>
       <StyledContent>
         {!isStart ? (
