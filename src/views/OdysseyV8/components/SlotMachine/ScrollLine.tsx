@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
-import g1Img from '../../img/g-new/g1.svg';
-import g2Img from '../../img/g-new/g2.svg';
-import g3Img from '../../img/g-new/g3.svg';
+import particleImg from '../../img/g-new/g1.svg';
+import hyperlockImg from '../../img/g-new/g2.svg';
+import ringImg from '../../img/g-new/g3.svg';
 import g4Img from '../../img/g-new/g4.svg';
 import g5Img from '../../img/g-new/g5.svg';
 import g6Img from '../../img/g-new/g6.svg';
@@ -46,22 +46,24 @@ const ScrollIconItemsImg = styled.img`
 
 const list = [
   g6Img.src,
-  g1Img.src,
-  g2Img.src,
-  g3Img.src,
+  '/images/odyssey/v8/logo-thruster.svg',
+  ringImg.src,
+  '/images/odyssey/v4/logo-BladeSwap.png',
+  particleImg.src,
+  hyperlockImg.src,
   g4Img.src,
   g5Img.src,
   g7Img.src,
   g8Img.src,
   g6Img.src,
-  g1Img.src,
+  '/images/odyssey/v8/logo-thruster.svg',
 ];
 
 const zeroLocation = -90 * (list.length - 1) + (140 - 90) / 2;
 
 export default function ScrollLine({ no, startAni, noIndex }: { no: number; startAni: boolean; noIndex: number }) {
   const [isScoll, setIsScroll] = useState<boolean>(false);
-  const [location, setLocation] = useState<number | undefined>();
+  const [location, setLocation] = useState<number | undefined>(-(noIndex * 90) - 65);
   const [transition, setTransition] = useState('none');
   const numRef = useRef(no);
 

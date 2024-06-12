@@ -7,7 +7,7 @@ import { Head, HeadLeft, QuestBg } from './styles';
 const LIST = [
   {
     bgColor: '#FF6D63',
-    logo: '/images/odyssey/v4/logo-thruster.svg',
+    logo: '/images/odyssey/v8/logo-thruster.svg',
     name: 'Thruster',
   },
   {

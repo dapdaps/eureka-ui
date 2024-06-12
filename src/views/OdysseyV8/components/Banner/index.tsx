@@ -22,7 +22,7 @@ export default function Banner() {
         <StyledLeftBg />
         <StyledRightBg />
         <StyledBottomBg />
-        <Image src="/images/odyssey/v4/logo.svg" alt="" width={425} height={42} />
+        <Image src="/images/odyssey/v8/logo.svg" alt="" width={425} height={42} />
         <Rush>
           <div className="animation-title" data-text="GOLD RUSH">
             GOLD RUSH
