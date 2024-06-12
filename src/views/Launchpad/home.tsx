@@ -412,7 +412,7 @@ export default function LaunchpadHomePage() {
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
-                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.funds_raised ?? 0, '$', 2)}</StyledFont>
+                      <StyledFont color='#262836' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2)}</StyledFont>
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#262836' fontSize='16px' fontWeight='500'>Price</StyledFont>
@@ -511,7 +511,7 @@ export default function LaunchpadHomePage() {
                     <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.rate_return_usd ?? 0)}%</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
-                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.funds_raised ?? 0, '$', 2)}</StyledFont>
+                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2)}</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
                     <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.participants ?? 0)}</StyledFont>

@@ -151,6 +151,20 @@ export default function LaunchpadYoursPage() {
       handleRedeem(data)
     }
   }
+  const formatValueDecimal = function (value: any, unit = '', decimal = 0) {
+    const target = Big(1).div(Math.pow(10, decimal))
+    if (Big(value).eq(0)) {
+      return '-'
+    } else if (Big(value).gt(0)) {
+      if (Big(value).lt(target)) {
+        return `<${unit}${target}`
+      } else {
+        return Big(value).toFixed(decimal)
+      }
+    } else {
+      return Big(value).toFixed(decimal)
+    }
+  }
   useEffect(() => {
     userStore.address && queryUser()
   }, [userStore.address])
@@ -184,11 +198,11 @@ export default function LaunchpadYoursPage() {
       <StyledFlex style={{ marginTop: 20, marginBottom: 60 }}>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px'>Total Cost</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>${formatThousandsSeparator(Big(user?.total_cost ?? 0).toFixed(2))}</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{formatValueDecimal(user?.total_cost ?? 0, '$', 2)}</StyledLinearGradientFont>
         </StyledFlex>
         <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
           <StyledLinearGradientFont fontSize='18px'>Your Avg. Rate of Return</StyledLinearGradientFont>
-          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{Big(user?.rate_return_avg ?? 0).toFixed(0)}%</StyledLinearGradientFont>
+          <StyledLinearGradientFont fontSize='26px' fontWeight='600'>{formatValueDecimal(user?.rate_return_avg ?? 0)}%</StyledLinearGradientFont>
         </StyledFlex>
         {
           user?.lbps?.length > 0 && (
@@ -288,13 +302,13 @@ export default function LaunchpadYoursPage() {
                       </StyledFlex>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color='#FFF' fontSize='16px'>${formatThousandsSeparator(Big(userPool?.trading_volume ?? 0).toFixed(4))} / ${formatThousandsSeparator(Big(userPool?.launchpad_lbp?.price_usd ?? 0).toFixed(4))}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='16px'>{formatValueDecimal(userPool?.trading_volume ?? 0, '$', 4)} / {formatValueDecimal(userPool?.launchpad_lbp?.price_usd ?? 0, '$', 4)}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
                       <StyledFont color={Big(userPool?.rate_return_usd ?? 0).lt(0) ? '#FF508F' : '#47C33C'} fontSize='16px'>{(Big(userPool?.rate_return_usd ?? 0).lt(0) ? '' : '+') + Big(userPool?.rate_return_usd).toFixed(0) ?? 0}%</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd>
-                      <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatThousandsSeparator(contractDataMapping[userPool?.launchpad_lbp?.pool]?.purchased_shares ?? 0)}</StyledFont>
+                      <StyledFont color={['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#FFF' : '#979ABE'} fontSize='16px'>{formatValueDecimal(contractDataMapping[userPool?.launchpad_lbp?.pool]?.purchased_shares ?? 0)}</StyledFont>
                     </StyledParticipatedTd>
                     <StyledParticipatedTd style={{ flex: 1.5 }}>
                       <StyledFlex
