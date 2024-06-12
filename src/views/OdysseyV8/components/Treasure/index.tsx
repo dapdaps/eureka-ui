@@ -641,7 +641,7 @@ export default function Treasure() {
         </Treasure1>
         <Treasure2 onClick={() => setShowModal6(true)}>
           <Line />
-          <Image src="/images/odyssey/v4/star6.svg" alt="" width={221} height={228} className="scale pac" />
+          <Image src="/images/odyssey/v8/star2.svg" alt="" width={363} height={170} className="scale pac" />
           <Title className="title title1">
             Thruster & Hyperlock: <br />
             2x Booster Pools

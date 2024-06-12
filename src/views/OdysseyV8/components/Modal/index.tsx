@@ -24,9 +24,7 @@ export default function Modal({ type, children, onClose, bgColor, style, classNa
           <Image src="/images/odyssey/v4/modal-shape-5.svg" alt="" width={126} height={126} className="shape shape5" />
         );
       case 'type6':
-        return (
-          <Image src="/images/odyssey/v4/modal-shape-6.svg" alt="" width={123} height={127} className="shape shape5" />
-        );
+        return <Image src="/images/odyssey/v8/star2.svg" alt="" width={318} height={149} className="shape shape6" />;
     }
   };
 

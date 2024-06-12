@@ -45,6 +45,10 @@ export const StyledContent = styled.div<{ $bgColor: string; ref: any }>`
   .shape5 {
     top: -60px;
   }
+  .shape6 {
+    left: -100px;
+    top: -90px;
+  }
   .close {
     position: absolute;
     right: 15px;
