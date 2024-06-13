@@ -21,6 +21,7 @@ const networks = {
       blast['wrseth'],
       blast['orbit'],
       blast['axlusdc'],
+      blast['usde'],
     ],
   },
 };
