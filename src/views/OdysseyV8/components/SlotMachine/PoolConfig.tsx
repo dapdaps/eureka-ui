@@ -6,7 +6,7 @@ export default [
   },
   {
     icon: '/images/odyssey/v8/credit.svg',
-    name: 'Thurster Credits',
+    name: 'Thruster Credits',
     value: '10M',
   },
   {
