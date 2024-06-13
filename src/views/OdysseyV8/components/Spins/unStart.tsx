@@ -90,8 +90,9 @@ export default function UnStart({ secondsRemaining }: any) {
           </div>
           <div>
             <Button>
-              Coming soon in <span className="bold">{timeLeft.days}</span> day{timeLeft.days > 0 ? 's' : ''}{' '}
+              <span className="bold">{timeLeft.days}</span> day{timeLeft.days > 0 ? 's' : ''}{' '}
               <span className="bold">{timeLeft.hours}</span> hour{timeLeft.days > 0 ? 's' : ''}
+              <span className="bold">{timeLeft.minutes}</span> min{timeLeft.days > 0 ? 's' : ''}
             </Button>
           </div>
         </Trapeziform>
