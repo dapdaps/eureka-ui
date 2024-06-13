@@ -284,7 +284,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
         <FootWrap>
           {buyQuoteLoading}
           <SubmitBtn
-            isLoading={buyQuoteLoading || buyExcuteLoading || sellQuoteLoading || sellLoading}
+            isLoading={currentTab === 'BUY' ? (buyQuoteLoading || buyExcuteLoading) : (sellQuoteLoading || sellLoading)}
             defaultText={currentTab === 'BUY' ? 'Buy' : 'Sell'}
             text={text}
             fromChain={currentTab === 'BUY' ? fromChain : { chainId: Number(targetChainId) } as Chain}

@@ -67,7 +67,7 @@ const chainCofig = {
     chainName: 'BNB Chain',
     icon: 'https://assets.dapdap.net/images/bafkreibtexscwwgqupgb7anrseqdpogvt4cckyv4kavr7o3jgtcqzjkx5m.svg',
     nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
-    rpcUrls: ['https://binance.llamarpc.com', 'https://bsc.blockpi.network/v1/rpc/public', 'https://bsc-rpc.publicnode.com'],
+    rpcUrls: ['https://bsc.blockpi.network/v1/rpc/public', 'https://binance.llamarpc.com', 'https://bsc-rpc.publicnode.com'],
     blockExplorers: 'https://bscscan.com',
   },
   59144: {
