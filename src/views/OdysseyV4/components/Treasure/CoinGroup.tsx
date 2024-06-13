@@ -4,7 +4,7 @@ import { styled } from 'styled-components';
 import { StyledFlex } from '@/styled/styles';
 
 const CoinGroup = (props: any) => {
-  const { icon, name, style, onClick } = props;
+  const { icon, name, fee, style, onClick } = props;
 
   return (
     <StyledContainer style={style} $clickable={!!onClick} onClick={onClick}>
@@ -14,6 +14,7 @@ const CoinGroup = (props: any) => {
       </StyledFlex>
       <div className="coin-name">
         {name[0]}/{name[1]}
+        {fee && ` - ${fee}`}
       </div>
     </StyledContainer>
   );
