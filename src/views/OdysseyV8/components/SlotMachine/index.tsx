@@ -30,6 +30,7 @@ import bgImg from './img/bg.svg';
 import DisabledMark from './DisabledMark';
 import Pilcrow from '../Pilcrow';
 import PrizePoolModal from './PrizePoolModal';
+import RewardsModal from './RewardsModal';
 import { BgFoot } from '../Spins/styles';
 import useSwitcher from '../../hooks/useSwitcher';
 
@@ -302,7 +303,16 @@ function playSound(url: string): void {
   sound.play();
 }
 
-function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, handleSpin, reward }: Props) {
+function SlotMachine({
+  totalSpins,
+  availableSpins,
+  unclaimedReward,
+  chainList,
+  handleSpin,
+  handleClaim,
+  isClaiming,
+  reward,
+}: Props) {
   const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
   const [isPressing, setIsPressing] = useState(false);
@@ -310,6 +320,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
   const [ruleShow, setRuleShow] = useState(false);
   const [prizeShow, setPrizeShow] = useState(false);
   const [prizePoolShow, setPrizePoolShow] = useState(false);
+  const [rewardShow, setRewardShow] = useState(false);
 
   const rewardRef = useRef(reward);
   const unclaimedRewardRef = useRef(unclaimedReward);
@@ -451,6 +462,7 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
             pressed={!isStart || claimPressed}
             onClick={() => {
               if (!isStart) return;
+              setRewardShow(true);
               setClaimPressed(true);
               setTimeout(() => {
                 setClaimPressed(false);
@@ -467,6 +479,18 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
           onClose={() => {
             setPrizePoolShow(false);
           }}
+        />
+      )}
+      {rewardShow && (
+        <RewardsModal
+          onClose={() => {
+            setRewardShow(false);
+          }}
+          onClaim={() => {
+            handleClaim();
+          }}
+          unclaimedReward={unclaimedReward}
+          isClaiming={isClaiming}
         />
       )}
     </Wapper>

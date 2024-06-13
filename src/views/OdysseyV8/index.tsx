@@ -20,7 +20,7 @@ import useQuests from './hooks/useQuests';
 import useSpin from './hooks/useSpin';
 import { StyledBg, StyledContainer, StyledContent } from './styles';
 
-export default function OdysseyV4() {
+export default function OdysseyV8() {
   const router = useRouter();
   const { id } = router.query;
 
@@ -58,16 +58,14 @@ export default function OdysseyV4() {
     });
   }, [isSpining]);
 
-  const unclaimedReward = 0;
-
-  const handlClaim = useCallback(() => {
-    if (unclaimedReward <= 0 || isClaiming) {
+  const handleClaim = useCallback(() => {
+    if (isClaiming) {
       return;
     }
     startCliam().then(() => {
       queryDetail();
     });
-  }, [unclaimedReward, isClaiming]);
+  }, [isClaiming]);
 
   useEffect(() => {
     if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
@@ -90,7 +88,7 @@ export default function OdysseyV4() {
         <SlotMachine
           chainList={chainList}
           handleSpin={handleSpin}
-          handleClaim={handlClaim}
+          handleClaim={handleClaim}
           totalSpins={detail?.user?.total_spins}
           availableSpins={detail?.user?.available_spins}
           unclaimedReward={detail?.user?.unclaimed_reward}

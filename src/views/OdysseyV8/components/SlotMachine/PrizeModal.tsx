@@ -28,7 +28,7 @@ const Title = styled.div`
   line-height: 38px;
   text-align: center;
   color: #fff;
-  padding-top: 70px;
+  padding-top: 100px;
 `;
 
 const Content = styled.div`
@@ -44,7 +44,7 @@ const Content = styled.div`
   }
 `;
 
-const Btn = styled.div`
+export const Btn = styled.button`
   width: 360px;
   height: 48px;
   border-radius: 10px;
@@ -54,8 +54,20 @@ const Btn = styled.div`
   font-size: 18px;
   font-weight: 700;
   text-align: center;
-  margin: 45px auto 0px;
   cursor: pointer;
+  transition: 0.5s;
+  margin-top: 40px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 0.8;
+  }
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
 `;
 
 const CcImg = styled.img`
@@ -90,7 +102,7 @@ export default function PrizeModal({ onClose, prize }: { onClose: () => void; pr
   const [getMoreShow, setGetMoreShow] = useState(false);
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} style={{ width: 450, padding: '0px 20px 30px', textAlign: 'center' }}>
       {prize <= 0 ? (
         <>
           <Iocn className="fail" src={smImg.src} />
