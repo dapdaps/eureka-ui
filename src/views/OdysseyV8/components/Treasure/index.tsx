@@ -514,6 +514,7 @@ export default function Treasure() {
             transform: 'translateX(-50%)',
             top: 150,
             marginBottom: 100,
+            width: 924,
           }}
         >
           <ModalTitle>How to participate in a 2x Gold boosted strategy on Thruster and Hyperlock?</ModalTitle>
