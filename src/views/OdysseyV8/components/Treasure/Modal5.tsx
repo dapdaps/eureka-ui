@@ -28,7 +28,7 @@ export default function Modal5({ setShowModal5, openLink, reportLoading }: any) 
       </ModalStep>
       <ModalBody>
         <div className="modal-body-2">
-          <Trapeziform {...TrapLayout} className="modal-sec-3">
+          <Trapeziform {...TrapLayout} className="modal-sec-3" style={{ height: 428 }}>
             <div className="step" style={{ width: 350, textAlign: 'left', marginBottom: 15 }}>
               Join Vaults: <br />
               V3 Thruster &lt;&gt; Hyperlock
@@ -39,7 +39,7 @@ export default function Modal5({ setShowModal5, openLink, reportLoading }: any) 
                 <div className="gap"></div>
                 <Badge>
                   <Image className="badge-icon" src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
-                  <span className="badge-title">30,000</span>
+                  <span className="badge-title">50,000</span>
                 </Badge>
               </div>
               <div className="reward-list">
@@ -66,6 +66,14 @@ export default function Modal5({ setShowModal5, openLink, reportLoading }: any) 
                   <span className="badge-title">10,000</span>
                 </Badge>
               </div>
+              <div className="reward-list">
+                <span className="txt">Ethena V3</span>
+                <div className="gap"></div>
+                <Badge>
+                  <Image className="badge-icon" src="/images/odyssey/v4/icon-gold.svg" alt="" width={40} height={40} />
+                  <span className="badge-title">30,000</span>
+                </Badge>
+              </div>
             </section>
             <div className="reward-desc" style={{ marginBottom: 13 }}>
               Juice/WETH Lps are also actively earning 2x Gold
@@ -83,7 +91,7 @@ export default function Modal5({ setShowModal5, openLink, reportLoading }: any) 
               Go to Juice <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
             </TrapeziformBtn>
           </Trapeziform>
-          <Trapeziform {...TrapLayout} className="modal-sec-3">
+          <Trapeziform {...TrapLayout} className="modal-sec-3" style={{ height: 428 }}>
             <div className="step" style={{ width: 350, textAlign: 'left', marginBottom: 15 }}>
               Join Vaults: <br />
               Particle & Wasabi
@@ -106,7 +114,7 @@ export default function Modal5({ setShowModal5, openLink, reportLoading }: any) 
                 <span className="badge-title">10,000</span>
               </Badge>
             </div>
-            <div className="reward-desc" style={{ margin: '44px 0 62px' }}>
+            <div className="reward-desc" style={{ margin: '44px 0 98px' }}>
               Earn Particle & Duo points, Blast Gold, Juice points, and variable boosted Blast points.
             </div>
 
