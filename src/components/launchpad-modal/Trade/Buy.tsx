@@ -22,10 +22,11 @@ interface Props {
   balance: string;
   toToken: Token;
   shareTokenPrice: string;
+  buyQuoteLoading: boolean;
 }
 
 export default function Buy({
-  setFromChain, setFromToken, setSendAmount, fromChain, fromToken, allTokens, sendAmount, chainList, updateBanlance, address, shareVal, balance, toToken, shareTokenPrice,
+  setFromChain, setFromToken, setSendAmount, fromChain, fromToken, allTokens, sendAmount, chainList, updateBanlance, address, shareVal, balance, toToken, shareTokenPrice, buyQuoteLoading
 }: Props) {
 
   return <>
@@ -47,6 +48,7 @@ export default function Buy({
       amount={sendAmount}
       address={address}
       chainList={chainList}
+      inputDisabled={buyQuoteLoading}
     />
     <ArrowSwap>
       <div className="arrow">

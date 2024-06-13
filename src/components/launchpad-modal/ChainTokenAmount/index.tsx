@@ -201,7 +201,6 @@ interface Props {
   onChainChange: (chain: Chain) => void;
   onTokenChange: (token: Token) => void;
   onAmountChange?: (value: string) => void;
-  onGasTrigger?: () => void;
 }
 
 export default function ChainTokenAmount({
@@ -217,7 +216,6 @@ export default function ChainTokenAmount({
   onChainChange,
   onTokenChange,
   onAmountChange,
-  onGasTrigger,
 }: Props) {
   const prices = usePriceStore((store) => store.price);
   const [tokenModalShow, setTokenModalShow] = useState<boolean>(false);

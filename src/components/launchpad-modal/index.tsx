@@ -99,8 +99,6 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
     slippage: buySlippage,
   })
 
-  console.log('buyQuoteLoading:', buyQuoteLoading)
-
   const {
     assetOut, loading: sellQuoteLoading
   } = useSellQuote({
@@ -228,13 +226,13 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
         <TimerEnd>End in</TimerEnd>
         <Timer color="white" endTime={Number(endTime)} />
         <Tabs tabData={tabData} current={currentTab} onTabsChange={onTabsChange} style={{ marginTop: 4 }}></Tabs>
-        <Settings style={{ position: 'absolute', right: 17, bottom: 24 }} amount={ currentTab === 'BUY' ? buySlippage : sellSlippage } onAmountChange={(value) => {
+        <Settings style={{ position: 'absolute', right: 17, bottom: 24 }} amount={currentTab === 'BUY' ? buySlippage : sellSlippage} onAmountChange={(value) => {
           if (currentTab === 'BUY') {
             setBuySlippage(value)
           } else {
             setSellSlippage(value)
           }
-        }}/>
+        }} />
       </Panel>
       <Body>
         {currentTab === 'BUY' && (
@@ -253,13 +251,21 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
               shareVal={shareVal}
               balance={balance}
               toToken={token as Token}
+              buyQuoteLoading={buyQuoteLoading}
               shareTokenPrice={shareTokenPrice}
             />
           </TabBody>
         )}
         {currentTab === 'SELL' && (
           <TabBody>
-            <SellTokenAmount shareUsdPrice={sellAmount? '$' + balanceFormated((Number(shareTokenPrice) * Number(sellAmount)).toString(), 2) : '$~'} token={token} title="Collateral Token" amount={sellAmount} onAmountChange={value => setSellAmount(value)} balance={balance} readOnly={false} />
+            <SellTokenAmount
+              shareUsdPrice={sellAmount ? '$' + balanceFormated((Number(shareTokenPrice) * Number(sellAmount)).toString(), 2) : '$~'}
+              token={token}
+              title="Collateral Token"
+              amount={sellAmount}
+              onAmountChange={value => setSellAmount(value)}
+              balance={balance}
+              readOnly={sellQuoteLoading} />
             <ArrowSwap>
               <div className="arrow">
                 <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -340,7 +346,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
             <span></span>
             <span onClick={() => {
               addToken(token)
-            }} className="addToken">Add { token.symbol } to MetaMask</span>
+            }} className="addToken">Add {token.symbol} to MetaMask</span>
           </Foot>
         </FootWrap>
       </Body>

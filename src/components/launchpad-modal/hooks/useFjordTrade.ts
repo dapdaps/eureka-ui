@@ -359,25 +359,18 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
             provider,
         )
 
-        getPoolContract(quote.pool, quote.chainId)
-
         try {
             if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.symbol === midToken.symbol) {
                 setReceiveAmount(quote.amount.toString())
                 await getAssetRuote(quote, midToken, PoolContract, provider)
                 setTradeType(1)
             } else {
-                try {
-                    await getBridgeRuote(quote, midToken, PoolContract, signer)
-                    setTradeType(3)
-                } catch(e) {
-                    
-                }
-                
+                await getBridgeRuote(quote, midToken, PoolContract, signer)
+                setTradeType(3)
             }
 
         } catch (e) {
-            console.log(e)
+            console.log('e:', e)
             setShareVal('')
             setBridgeRoute(null)
             setReceiveAmount('')
@@ -412,6 +405,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
                 maxRoute = bridgeQuote[i]
             }
         }
+
 
         const route = maxRoute
         const receiveAmount = route.receiveAmount
