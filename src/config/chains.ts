@@ -159,6 +159,38 @@ const chainCofig = {
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io',
   },
+  11155111: {
+    chainId: 11155111,
+    chainName: 'Sepolia',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
+    blockExplorers: 'https://sepolia.etherscan.io',
+    icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+  },
+  421614: {
+    chainId: 421614,
+    chainName: 'Arbitrum Sepolia',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
+    blockExplorers: 'https://basescan.org',
+    icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+  },
+  300: {
+    chainId: 300,
+    chainName: 'zkSync Sepolia',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://zksync-era-sepolia.blockpi.network/v1/rpc/public'],
+    blockExplorers: 'https://basescan.org',
+    icon: 'https://assets.dapdap.net/images/bafkreibcq6agazqmv5euwf355v7x7hlinz3jkuins2bkfffdbp3jgbjj6u.svg',
+  },
+  5003: {
+    chainId: 5003,
+    chainName: 'Mantle Sepolia',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://rpc.sepolia.mantle.xyz'],
+    blockExplorers: 'https://basescan.org',
+    icon: 'https://assets.dapdap.net/images/bafkreicmbhykgsvj4rdujduh2fujbsrgp3mkqpqlw2weyuxdfqpwtka6la.svg',
+  }
 } as { [key: number]: Chain };
 
 export default chainCofig;

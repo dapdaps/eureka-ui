@@ -46,7 +46,27 @@ export async function getTransaction() {
     return list
 }
 
-const contractAddress = '0xa8faD25d4352470dD03681aE697800069326f27b'
+const contracts: any = {
+    11155111: '0xa8faD25d4352470dD03681aE697800069326f27b',
+    421614: '0xa8faD25d4352470dD03681aE697800069326f27b',
+    43113: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    84532: '0x993F6B0F74D392ebE2388CC963c73e89Cf39c139',
+    168587773: '0x5f2bDd7328f5C198ae6aD4210E731B2D0254AB04',
+    97: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    10200: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    59141: '0xa8faD25d4352470dD03681aE697800069326f27b',
+    3441006: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    5003: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    59902: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    919: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    11155420: '0x5f2bDd7328f5C198ae6aD4210E731B2D0254AB04',
+    80002: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    2442: '0x5f2bDd7328f5C198ae6aD4210E731B2D0254AB04',
+    534351: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
+    300: '0xF0b5701e97b2D01DB22AAeB4b36064d280bC5123',
+}
+
+// const contractAddress = '0xa8faD25d4352470dD03681aE697800069326f27b'
 
 interface GasTokenParams {
     fromChain: Chain | undefined;
@@ -171,6 +191,8 @@ export function useGasAmount({
     const [receive, setReceive] = useState('0')
     const [isLoading, setIsLoading] = useState(false)
     const { fail, success } = useToast()
+
+    const contractAddress = fromChain ? contracts[Number(fromChain?.chainId)] : ''
 
     async function deposit(tokenAddress: string, account: string, value: string, signer: Signer) {
         if (isLoading) {
