@@ -186,7 +186,7 @@ const chainCofig = {
   5003: {
     chainId: 5003,
     chainName: 'Mantle Sepolia',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    nativeCurrency: { name: 'MNT', symbol: 'MNT', decimals: 18 },
     rpcUrls: ['https://rpc.sepolia.mantle.xyz'],
     blockExplorers: 'https://basescan.org',
     icon: 'https://assets.dapdap.net/images/bafkreicmbhykgsvj4rdujduh2fujbsrgp3mkqpqlw2weyuxdfqpwtka6la.svg',

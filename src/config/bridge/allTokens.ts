@@ -95,8 +95,8 @@ const allTokens: { [key: number]: Token[] } = {
         icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
       }, ],
       5003: [{
-        address: '0x0000000000000000000000000000000000000000',
-        isNative: true,
+        address: '0x193859664CF07E331e1cE3FAe623e7E499F2a200',
+        isNative: false,
         chainId: 5003,
         symbol: 'ETH',
         decimals: 18,

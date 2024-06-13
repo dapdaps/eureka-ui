@@ -112,7 +112,7 @@ interface Props {
     onClose: () => void;
 }
 
-const max$ = 200
+const max$ = 500 * 3497
 
 export default function GasModal({
     onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance
