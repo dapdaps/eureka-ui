@@ -6,6 +6,9 @@ import Quest from './quest';
 import useSwitcher from '../../hooks/useSwitcher';
 import { BgFoot, LoadingWrap, StyledContainer, StyledContent } from './styles';
 import UnStart from './unStart';
+import DappsConfig from '../../DappsConfig';
+
+const _list = Object.values(DappsConfig)
 
 export default function Spins({ loading, list, data, onRefreshDetail }: any) {
   const { isStart, secondsRemaining } = useSwitcher();
@@ -65,6 +68,8 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
     return a.gold_order - b.gold_order;
   });
 
+  
+
   return (
     <AnimatePresence mode="wait">
       <StyledContainer {...container}>
@@ -79,15 +84,10 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
               <Loading size={30} />
             </LoadingWrap>
           ) : (
-            list.map((item: any) => (
+            _list.map((item: any) => (
               <Quest
                 key={item.name}
-                data={{
-                  ...GoldsMap.get(item.name),
-                  ...item,
-                  start_time: data.start_time,
-                  end_time: data.end_time,
-                }}
+                data={item}
                 onRefreshDetail={onRefreshDetail}
               />
             ))

@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
+import goldImg from './img/gold.svg'
+
 export const StyledContainer = styled(motion.div)`
   width: 1260px;
   margin: 30px auto 0px;
@@ -39,7 +41,7 @@ export const BgFoot = styled(Bg)`
 `;
 
 export const Head = styled.div`
-  padding: 28px;
+  padding: 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -66,7 +68,7 @@ export const HeadLeft = styled.div`
   .name {
     color: #fff;
     text-align: center;
-    font-size: 24px;
+    font-size: 26px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
@@ -82,7 +84,104 @@ export const LoadingWrap = styled.div`
 export const HeadRight = styled.div`
   display: flex;
   flex-direction: column;
+  width: 119px;
+  height: 54px;
+  background: url(${goldImg.src}) no-repeat 0 0;
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 1);
+  padding: 17px 0 0 68px;
+  cursor: pointer;
+  position: relative;
+  .tip {
+    position: absolute;
+    width: 200px;
+    border-radius: 6px;
+    border: 1px solid rgba(55, 58, 83, 1);
+    background-color: rgba(38, 40, 54, 1);
+    top: 0;
+    right: 100%;
+    padding: 10px;
+    color: #fff;
+    display: none;
+  }
+  &:hover {
+    .tip {
+      display: block;
+    }
+  }
 `;
+
+export const Desc = styled.div`
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 27px;
+  color: #fff;
+  padding: 0 24px;
+`
+
+export const GoldWapper = styled.div`
+  display: flex;
+  padding: 10px 24px 0;
+  justify-content: space-between;
+`
+
+export const Gold = styled.div`
+  display: flex;
+  gap: 10px;
+  img {
+    width: 26px;
+  }
+  span {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 24px;
+  }
+`
+
+export const QuestTitle = styled.div`
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 27px;
+  color: #fff;
+  padding: 25px 24px 10px;
+`
+
+export const SpinLine = styled.div`
+  margin: 0 24px;
+  background: rgba(217, 217, 217, 0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  padding: 10px;
+  gap: 10px;
+  border-radius: 4px;
+  border: 1px solid rgba(217, 217, 217, 0);
+  &:not(:first-child) {
+    margin-top: 10px;
+  }
+  &:hover {
+    border: 1px solid rgba(0, 255, 209, 1);
+  }
+  .spin-count {
+    color: rgba(0, 255, 209, 1);
+    font-family: '5squared pixel';
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    white-space: nowrap;
+  }
+  .spin-title {
+    color: rgba(255, 255, 255, 1);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    flex: 1;
+  }
+`
+
 export const Body = styled.div`
   padding: 0px 30px 30px;
   position: relative;

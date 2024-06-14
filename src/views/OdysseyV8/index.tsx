@@ -82,7 +82,7 @@ export default function OdysseyV8() {
   return (
     <StyledContainer>
       <StyledContent>
-        {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null}
+        {/* {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null} */}
         <Banner />
         <Summary data={detail} loading={loading} />
         <SlotMachine
@@ -101,6 +101,7 @@ export default function OdysseyV8() {
           queryRewards={queryRewards}
           rewardLoading={rewardLoading}
         />
+
         <Tabs quests={quests.golds} detail={detail} queryDetail={queryDetail} questingLoading={questingLoading} />
 
         <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
