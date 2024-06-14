@@ -4,7 +4,7 @@ import { container } from '@/components/animation';
 import { ParticleLink } from '../../const';
 import Quest from './quest';
 import useSwitcher from '../../hooks/useSwitcher';
-import { BgFoot, LoadingWrap, StyledContainer, StyledContent } from './styles';
+import { LoadingWrap, StyledContainer, StyledContent } from './styles';
 import UnStart from './unStart';
 import DappsConfig from '../../DappsConfig';
 
@@ -93,7 +93,6 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
             ))
           )}
         </StyledContent>
-        <BgFoot />
       </StyledContainer>
     </AnimatePresence>
   );

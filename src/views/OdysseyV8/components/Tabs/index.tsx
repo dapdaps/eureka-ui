@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { useState } from 'react';
 import Treasure from '../Treasure';
 import Spins from '../Spins';
+import { BgFoot } from '../Spins/styles';
 
 const Wrapper = styled.div`
   display: flex;
@@ -101,6 +102,7 @@ export default function Tabs({ quests, detail, queryDetail, questingLoading }: a
       {active === 'Single Mission' && (
         <Spins list={quests} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
       )}
+      <BgFoot />
     </>
   );
 }

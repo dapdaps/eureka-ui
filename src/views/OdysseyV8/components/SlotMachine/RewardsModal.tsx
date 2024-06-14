@@ -21,8 +21,8 @@ export default function RewardsModal({ loading, rewards = {}, onClose }: any) {
           marginTop: 10,
         }}
       >
-        You've won rewards through the "Spin to Win" in Odyssey Vol.4+ will be settled after the conclusion of the
-        event. Wishing you the best of luck in winning big prizes!
+        You&apos;ve won rewards through the &quot;Spin to Win&quot; in Odyssey Vol.4+ will be settled after the
+        conclusion of the event. Wishing you the best of luck in winning big prizes!
       </div>
       {loading ? (
         <div style={{ display: 'flex', height: 200, justifyContent: 'center', alignItems: 'center' }}>

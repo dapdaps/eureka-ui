@@ -366,7 +366,14 @@ function SlotMachine({
           />
         </ActionBar>
       </div>
-      {ruleShow && <RuleModal onClose={() => setRuleShow(false)} />}
+      {ruleShow && (
+        <RuleModal
+          onClose={() => setRuleShow(false)}
+          onShowModal={() => {
+            setPrizePoolShow(true);
+          }}
+        />
+      )}
       {prizeShow && <PrizeModal prize={reward} onClose={() => setPrizeShow(false)} />}
       {prizePoolShow && (
         <PrizePoolModal

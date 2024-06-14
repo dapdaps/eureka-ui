@@ -37,6 +37,7 @@ import {
 import Modal1 from './Modal1';
 import Modal5 from './Modal5';
 import Modal3 from './Modal3';
+import Spins from './Spins';
 
 const ThrusterCoinListStep2 = [
   {
@@ -121,7 +122,7 @@ export default function Treasure() {
                 <Trapeziform {...TrapLayout} className="modal-list">
                   <div className="modal-list-head">
                     <div className="head-left">
-                      <div className="head-title">Step 1. Get ezETH from </div>
+                      <div className="head-title">Step 1-A. Get ezETH from </div>
                       <div className="tag-thr">
                         <Image src="/images/odyssey/v4/tag-renzo.svg" alt="" width={93} height={24} />
                       </div>
@@ -154,6 +155,39 @@ export default function Treasure() {
                         height="42px"
                       >
                         Restake
+                        <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
+                      </TrapeziformBtn>
+                    </div>
+                  </div>
+                </Trapeziform>
+                <Trapeziform {...TrapLayout} className="modal-list">
+                  <div className="modal-list-head">
+                    <div className="head-left">
+                      <div className="head-title">Step 1-B. Use Super Bridge bridge ezETH to Blast </div>
+                    </div>
+                  </div>
+                  <div className="modal-list-body">
+                    <div className="body-left" style={{ color: 'white' }}>
+                      <Image src="/images/odyssey/v4/coin-ezeth.svg" alt="" width={26} height={26} />
+                      ezETH
+                      <Image src="/images/odyssey/v4/arrow-white.svg" alt="" width={19} height={16} />
+                      <Image
+                        src="https://s3.amazonaws.com/dapdap.prod/images/blast.png"
+                        alt=""
+                        width={26}
+                        height={26}
+                      />
+                      Blast
+                    </div>
+                    <div className="body-right">
+                      <TrapeziformBtn
+                        onClick={() => {
+                          openLink('/super-bridge');
+                        }}
+                        width="286px"
+                        height="42px"
+                      >
+                        Bridge now
                         <Image src="/images/odyssey/v4/arrow.svg" alt="" width={23} height={16} />
                       </TrapeziformBtn>
                     </div>
@@ -550,12 +584,13 @@ export default function Treasure() {
           </Modal>
         ) : null}
 
-        <div style={{ color: '#979ABE', fontSize: '20px', paddingBottom: '100px', textAlign: 'center' }}>
+        <div style={{ color: '#979ABE', fontSize: '20px', paddingBottom: '160px', textAlign: 'center' }}>
           Explore Blast treasure strategy, maximize your Blast Gold earnings and get 10 spins for each!
         </div>
 
         <StyledContent className="row-top">
           <Treasure1 onClick={() => setShowModal1(true)}>
+            <Spins />
             <Line />
             <Image
               src="/images/odyssey/v8/star1.svg"
@@ -578,6 +613,11 @@ export default function Treasure() {
             </Badge>
           </Treasure1>
           <Treasure2 onClick={() => setShowModal6(true)}>
+            <Spins
+              style={{
+                left: 172,
+              }}
+            />
             <Line />
             <Image src="/images/odyssey/v8/star2.svg" alt="" width={363} height={170} className="scale pac" />
             <Title className="title title1">
@@ -597,6 +637,11 @@ export default function Treasure() {
             </div>
           </Treasure2>
           <Treasure3 onClick={() => setShowModal5(true)}>
+            <Spins
+              style={{
+                left: -12,
+              }}
+            />
             <Line />
             <Image src="/images/odyssey/v4/juice.svg" alt="" width={170} height={170} className="scale" />
             <Title className="title" style={{ textAlign: 'right', top: '-26px' }}>
@@ -613,8 +658,13 @@ export default function Treasure() {
             </div>
           </Treasure3>
         </StyledContent>
-        <StyledContent className="row-bot">
+        <StyledContent className="row-bot" style={{ marginTop: 60 }}>
           <Treasure4 onClick={() => setShowModal2(true)}>
+            <Spins
+              style={{
+                left: 172,
+              }}
+            />
             <Line />
             <Image
               src="/images/odyssey/v4/star4.svg"
@@ -630,6 +680,11 @@ export default function Treasure() {
             <Image src="/images/odyssey/v4/td4.svg" alt="" width={118} height={26} className="td4" />
           </Treasure4>
           <Treasure5 onClick={() => setShowModal3(true)}>
+            <Spins
+              style={{
+                left: 170,
+              }}
+            />
             <Line />
             <Image
               src="/images/odyssey/v8/treasure5.svg"
@@ -659,6 +714,11 @@ export default function Treasure() {
             </IconGroup>
           </Treasure5>
           <Treasure6 onClick={() => setShowModal4(true)}>
+            <Spins
+              style={{
+                left: 30,
+              }}
+            />
             <Line />
             <Image
               src="/images/odyssey/v4/star3.svg"
