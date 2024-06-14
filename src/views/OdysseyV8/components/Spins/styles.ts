@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-import goldImg from './img/gold.svg'
+import goldImg from './img/gold.svg';
 
 export const StyledContainer = styled(motion.div)`
   width: 1260px;
@@ -119,13 +119,13 @@ export const Desc = styled.div`
   line-height: 27px;
   color: #fff;
   padding: 0 24px;
-`
+`;
 
 export const GoldWapper = styled.div`
   display: flex;
   padding: 10px 24px 0;
   justify-content: space-between;
-`
+`;
 
 export const Gold = styled.div`
   display: flex;
@@ -139,7 +139,7 @@ export const Gold = styled.div`
     font-weight: 700;
     line-height: 24px;
   }
-`
+`;
 
 export const QuestTitle = styled.div`
   font-size: 18px;
@@ -147,7 +147,7 @@ export const QuestTitle = styled.div`
   line-height: 27px;
   color: #fff;
   padding: 25px 24px 10px;
-`
+`;
 
 export const SpinLine = styled.div`
   margin: 0 24px;
@@ -159,6 +159,7 @@ export const SpinLine = styled.div`
   gap: 10px;
   border-radius: 4px;
   border: 1px solid rgba(217, 217, 217, 0);
+  cursor: pointer;
   &:not(:first-child) {
     margin-top: 10px;
   }
@@ -180,7 +181,7 @@ export const SpinLine = styled.div`
     line-height: 16px;
     flex: 1;
   }
-`
+`;
 
 export const Body = styled.div`
   padding: 0px 30px 30px;

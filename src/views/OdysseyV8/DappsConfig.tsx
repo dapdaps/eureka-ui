@@ -5,6 +5,7 @@ export default {
       width: 46,
       height: 51.43,
     },
+    bgColor: '#BA69F3',
     name: 'Juice',
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
@@ -20,10 +21,12 @@ export default {
       {
         spin: 1,
         label: 'Swap min $25 in JUICE on Thruster.',
+        link: '/dapp/juice',
       },
       {
         spin: 1,
         label: 'Stake min $25 JUICE/WETH to Hyperlock',
+        link: '/dapp/hyperlock',
       },
       {
         spin: 1,
@@ -38,6 +41,7 @@ export default {
       width: 47,
       height: 47,
     },
+    bgColor: '#FF6156',
     name: 'Thruster',
     rewards: [
       {
@@ -49,10 +53,12 @@ export default {
       {
         spin: 1,
         label: 'Swap $25 minimum',
+        link: '/dapp/thruster-finance',
       },
       {
         spin: 1,
         label: 'Stake $15 WETH/USDB 0.05% to Hyperlock',
+        link: '/dapp/hyperlock',
       },
       {
         spin: 1,
@@ -67,6 +73,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#fff',
     name: 'Particle',
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
@@ -85,19 +92,18 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'LP min $25 on Particle',
-      },
-      {
-        spin: 1,
         label: 'Deposit min $50 in ETH on Duo',
+        link: '/dapp/duo',
       },
       {
         spin: 1,
         label: 'Deposit min $50 in WETH on Duo',
+        link: '/dapp/duo',
       },
       {
         spin: 1,
         label: 'Deposit min $50 in USDB on Duo',
+        link: '/dapp/duo',
       },
     ],
   },
@@ -107,6 +113,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#FF37C7',
     name: 'Ring',
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
@@ -126,6 +133,7 @@ export default {
       {
         spin: 1,
         label: 'Swap min $25 on Ring',
+        link: '/dapp/ring-protocol',
       },
       {
         spin: 1,
@@ -140,6 +148,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#C0977E',
     name: 'BladeSwap',
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
@@ -159,6 +168,7 @@ export default {
       {
         spin: 1,
         label: 'Swap min $25 ETH on Blade',
+        link: '/dapp/blade-swap',
       },
       {
         spin: 1,
@@ -168,11 +178,12 @@ export default {
     ],
   },
   ambient: {
-    icon: '/images/odyssey/v8/logo-ambient.png',
+    icon: '/images/odyssey/v8/logo-ambient.svg',
     iconStyle: {
       width: 46,
       height: 46,
     },
+    bgColor: '#8569F3',
     name: 'Ambient',
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
@@ -188,6 +199,7 @@ export default {
       {
         spin: 1,
         label: 'Swap min $25 ETH on Ambient',
+        link: '/dapp/ambient',
       },
       {
         spin: 1,
@@ -202,6 +214,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#EAC97C',
     name: 'Cap&Co',
     rewards: [
       {
@@ -213,10 +226,12 @@ export default {
       {
         spin: 1,
         label: 'Swap min $15 in KAP on Thruster',
+        link: '/dapp/thruster-finance',
       },
       {
         spin: 1,
         label: 'Stake min $15 KAP/WETH to Hyperlock',
+        link: '/dapp/hyperlock',
       },
       {
         spin: 1,
@@ -231,6 +246,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#EB5E17',
     name: 'Early',
     rewards: [
       {
@@ -242,10 +258,12 @@ export default {
       {
         spin: 1,
         label: 'Swap min $15 in EARLY on Thruster',
+        link: '/dapp/thruster-finance',
       },
       {
         spin: 1,
         label: 'Stake min $15 EARLY/WETH to Hyperlock',
+        link: '/dapp/hyperlock',
       },
       {
         spin: 1,
@@ -260,6 +278,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#84C17F',
     name: 'Super Sushi Samurai',
     rewards: [
       {
@@ -271,10 +290,12 @@ export default {
       {
         spin: 1,
         label: 'Getting users to sign up for SSS',
+        link: 'https://sss.game',
       },
       {
         spin: 1,
         label: 'Swap min $15 in SSS on Thruster',
+        link: '/dapp/thruster-finance',
       },
       {
         spin: 1,
@@ -289,6 +310,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#EB5E17',
     name: 'Fenix',
     extraGold: {
       icon: '/images/odyssey/v8/fenix.png',
@@ -304,6 +326,7 @@ export default {
       {
         spin: 1,
         label: 'Swap $50 minimum ETH',
+        link: '/dapp/fenix-finance',
       },
       {
         spin: 1,
@@ -318,6 +341,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#F7E99D',
     name: 'Andy',
     rewards: [
       {
@@ -329,8 +353,9 @@ export default {
       {
         spin: 1,
         label: 'LP min $15 in ANDY/WETH on Thruster',
+        link: '/dapp/thruster-finance',
       },
-      { spin: 1, label: 'Stake ANDY/WETH to Hyperlock' },
+      { spin: 1, label: 'Stake ANDY/WETH to Hyperlock', link: '/dapp/hyperlock' },
       {
         spin: 1,
         label: 'Share quest on X',
@@ -344,6 +369,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#73E9E4',
     name: 'Baja',
     rewards: [
       {
@@ -355,8 +381,9 @@ export default {
       {
         spin: 1,
         label: 'Swap min $15 in BAJA on Thruster',
+        link: '/dapp/thruster-finance',
       },
-      { spin: 1, label: 'Stake min BAJA/WETH to Hyperlock' },
+      { spin: 1, label: 'Stake min BAJA/WETH to Hyperlock', link: '/dapp/hyperlock' },
       {
         spin: 1,
         label: 'Share quest on X',
@@ -370,6 +397,7 @@ export default {
       width: 46,
       height: 46,
     },
+    bgColor: '#73AA34',
     name: 'Crypto Valleys',
     rewards: [
       {
@@ -381,8 +409,9 @@ export default {
       {
         spin: 1,
         label: 'Swap min $15 in YIELD on Thruster',
+        link: '/dapp/thruster-finance',
       },
-      { spin: 1, label: 'Stake min $15 YIELD/WETH to Hyperlock' },
+      { spin: 1, label: 'Stake min $15 YIELD/WETH to Hyperlock', link: '/dapp/hyperlock' },
       {
         spin: 1,
         label: 'Share quest on X',

@@ -32,6 +32,7 @@ import Title from './Title';
 import SubTitle from './SubTitle';
 import Rewards from './Rewards';
 import useSwitcher from '../../hooks/useSwitcher';
+import { DAPPS } from './config';
 
 const Wapper = styled.div`
   width: var(--main-width);
@@ -244,6 +245,7 @@ function SlotMachine({
   const [prizeShow, setPrizeShow] = useState(false);
   const [prizePoolShow, setPrizePoolShow] = useState(false);
   const [rewardShow, setRewardShow] = useState(false);
+  const [list, setList] = useState<any>([]);
 
   const rewardRef = useRef(reward);
 
@@ -253,6 +255,12 @@ function SlotMachine({
   useEffect(() => {
     rewardRef.current = reward;
   }, [reward]);
+
+  useEffect(() => {
+    const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
+    const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);
+    setList([...tempList, tempList[0], tempList[1]]);
+  }, []);
 
   const handleBtnPress = useCallback(() => {
     playSound('/images/compass/audio/rolling.mp4');
@@ -314,7 +322,7 @@ function SlotMachine({
             </ControllerBtnBgWapper>
             <ControllerBtnBgWapper className="bg">
               {chainList.map((item: any, index: number) => {
-                return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item} />;
+                return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item - 1} list={list} />;
               })}
             </ControllerBtnBgWapper>
             <Cover />

@@ -102,7 +102,14 @@ export default function OdysseyV8() {
           rewardLoading={rewardLoading}
         />
 
-        <Tabs quests={quests.golds} detail={detail} queryDetail={queryDetail} questingLoading={questingLoading} />
+        <Tabs
+          quests={quests.golds}
+          detail={detail}
+          queryDetail={queryDetail}
+          questingLoading={questingLoading}
+          userInfo={userInfo}
+          authConfig={authConfig}
+        />
 
         <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />

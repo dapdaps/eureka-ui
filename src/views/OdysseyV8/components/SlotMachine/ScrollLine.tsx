@@ -1,13 +1,5 @@
 import styled from 'styled-components';
 
-import particleImg from '../../img/g-new/particle.svg';
-import hyperlockImg from '../../img/g-new/hyperlock.svg';
-import ringImg from '../../img/g-new/ring.svg';
-import juiceImg from '../../img/g-new/juice.svg';
-import andyImg from '../../img/g-new/andy.svg';
-import bajaImg from '../../img/g-new/baja.svg';
-import ambientImg from '../../img/g-new/ambient.svg';
-import dapdapImg from '@/views/Compass/img/g-new/g6.svg';
 import { useCallback, useEffect, useState, useRef } from 'react';
 
 const ScrollLineWapper = styled.div`
@@ -44,43 +36,17 @@ const ScrollIconItemsImg = styled.img`
   width: 50%;
 `;
 
-const LIST = [
-  '/images/odyssey/v8/logo-thruster.svg',
-  '/images/odyssey/v4/logo-BladeSwap.png',
-  '/images/odyssey/v8/fenix.png',
-  '/images/odyssey/v8/crypto-valleys.png',
-  '/images/odyssey/v8/super-sushi-samurai.png',
-  '/images/odyssey/v8/cap&co.png',
-  '/images/odyssey/v8/gold.svg',
-  '/images/odyssey/v8/early.png',
-  ringImg.src,
-  particleImg.src,
-  hyperlockImg.src,
-  juiceImg.src,
-  bajaImg.src,
-  ambientImg.src,
-  andyImg.src,
-  dapdapImg.src,
-];
-
 const zeroLocation = -90 * (7 - 1) + (140 - 90) / 2;
 
-export default function ScrollLine({ no, startAni, noIndex }: { no: number; startAni: boolean; noIndex: number }) {
+export default function ScrollLine({ no, startAni, noIndex, list }: any) {
   const [isScoll, setIsScroll] = useState<boolean>(false);
   const [location, setLocation] = useState<number | undefined>(-(noIndex * 90) - (noIndex === 4 ? 24 : 65));
   const [transition, setTransition] = useState('none');
   const numRef = useRef(no);
-  const [list, setList] = useState<any>([]);
 
   useEffect(() => {
     numRef.current = no;
   }, [no]);
-
-  useEffect(() => {
-    const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
-    const tempList = randomList.filter((item, i) => i < 5).map((item) => LIST[item]);
-    setList([tempList[0], tempList[1], ...tempList]);
-  }, []);
 
   const scrollAni = useCallback(() => {
     setTimeout(

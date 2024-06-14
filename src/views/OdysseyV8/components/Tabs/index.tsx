@@ -55,7 +55,7 @@ const Slider = styled(motion.div)`
   background: #d9d9d9;
 `;
 
-export default function Tabs({ quests, detail, queryDetail, questingLoading }: any) {
+export default function Tabs({ quests, detail, queryDetail, questingLoading, userInfo, authConfig }: any) {
   const [active, setActive] = useState('Optimized Strategies');
   return (
     <>
@@ -100,7 +100,14 @@ export default function Tabs({ quests, detail, queryDetail, questingLoading }: a
       </Wrapper>
       {active === 'Optimized Strategies' && <Treasure />}
       {active === 'Single Mission' && (
-        <Spins list={quests} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
+        <Spins
+          list={quests}
+          data={detail}
+          onRefreshDetail={queryDetail}
+          loading={questingLoading}
+          userInfo={userInfo}
+          authConfig={authConfig}
+        />
       )}
       <BgFoot />
     </>
