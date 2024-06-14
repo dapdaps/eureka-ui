@@ -57,7 +57,7 @@ export default function Rewards({ rewards = {} }: any) {
         >
           you win:
         </div>
-        {!!Object.entries(rewards).length ? (
+        {rewards && !!Object.entries(rewards).length ? (
           <Box className="animation left">
             {[1, 2].map((item) => (
               <Texts key={item}>
