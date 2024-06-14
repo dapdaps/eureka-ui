@@ -1,20 +1,16 @@
 import Loading from '@/components/Icons/Loading';
 import { AnimatePresence } from 'framer-motion';
 import { container } from '@/components/animation';
-import { ParticleLink } from '../../const';
 import Quest from './quest';
 import useSwitcher from '../../hooks/useSwitcher';
 import { LoadingWrap, StyledContainer, StyledContent } from './styles';
 import UnStart from './unStart';
-import DappsConfig from '../../DappsConfig';
 
-const _list = Object.values(DappsConfig);
-
-export default function Spins({ loading, list, data, onRefreshDetail, authConfig, userInfo }: any) {
+export default function Spins({ loading, list, onRefreshDetail, authConfig, userInfo }: any) {
   const { isStart, secondsRemaining } = useSwitcher();
 
   list.sort((a: any, b: any) => {
-    return a.gold_order - b.gold_order;
+    return a.index - b.index;
   });
 
   return (
@@ -32,7 +28,7 @@ export default function Spins({ loading, list, data, onRefreshDetail, authConfig
             </LoadingWrap>
           ) : (
             <>
-              {_list.map((item: any) => (
+              {list.map((item: any) => (
                 <Quest
                   key={item.name}
                   data={item}

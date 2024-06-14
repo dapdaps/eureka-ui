@@ -1,5 +1,6 @@
 export default {
-  juice: {
+  Juice: {
+    index: 1,
     icon: '/images/odyssey/v8/logo-juice.svg',
     iconStyle: {
       width: 46,
@@ -35,7 +36,8 @@ export default {
       },
     ],
   },
-  thruster: {
+  Thruster: {
+    index: 2,
     icon: '/images/odyssey/v8/logo-thruster.svg',
     iconStyle: {
       width: 47,
@@ -67,7 +69,8 @@ export default {
       },
     ],
   },
-  particle: {
+  Particle: {
+    index: 3,
     icon: '/images/odyssey/v8/logo-particle.svg',
     iconStyle: {
       width: 46,
@@ -107,7 +110,8 @@ export default {
       },
     ],
   },
-  ring: {
+  Ring: {
+    index: 4,
     icon: '/images/odyssey/v8/logo-ring.svg',
     iconStyle: {
       width: 46,
@@ -142,7 +146,8 @@ export default {
       },
     ],
   },
-  bladeswap: {
+  BladeSwap: {
+    index: 5,
     icon: '/images/odyssey/v8/logo-bladeswap.png',
     iconStyle: {
       width: 46,
@@ -177,7 +182,8 @@ export default {
       },
     ],
   },
-  ambient: {
+  Ambient: {
+    index: 6,
     icon: '/images/odyssey/v8/logo-ambient.svg',
     iconStyle: {
       width: 46,
@@ -208,7 +214,8 @@ export default {
       },
     ],
   },
-  'cap&co': {
+  'Cap&Co': {
+    index: 7,
     icon: '/images/odyssey/v8/cap&co.png',
     iconStyle: {
       width: 46,
@@ -240,7 +247,8 @@ export default {
       },
     ],
   },
-  early: {
+  Early: {
+    index: 8,
     icon: '/images/odyssey/v8/early.png',
     iconStyle: {
       width: 46,
@@ -272,7 +280,8 @@ export default {
       },
     ],
   },
-  sss: {
+  'Super Sushi Samurai': {
+    index: 9,
     icon: '/images/odyssey/v8/super-sushi-samurai.png',
     iconStyle: {
       width: 46,
@@ -304,7 +313,8 @@ export default {
       },
     ],
   },
-  fenix: {
+  Fenix: {
+    index: 10,
     icon: '/images/odyssey/v8/fenix.png',
     iconStyle: {
       width: 46,
@@ -335,7 +345,8 @@ export default {
       },
     ],
   },
-  andy: {
+  Andy: {
+    index: 11,
     icon: '/images/odyssey/v8/andy.png',
     iconStyle: {
       width: 46,
@@ -363,7 +374,8 @@ export default {
       },
     ],
   },
-  baja: {
+  Baja: {
+    index: 12,
     icon: '/images/odyssey/v8/baja.png',
     iconStyle: {
       width: 46,
@@ -391,7 +403,8 @@ export default {
       },
     ],
   },
-  'crypto-valleys': {
+  'Crypto Valleys': {
+    index: 13,
     icon: '/images/odyssey/v8/crypto-valleys.png',
     iconStyle: {
       width: 46,
@@ -419,4 +432,4 @@ export default {
       },
     ],
   },
-};
+} as any;

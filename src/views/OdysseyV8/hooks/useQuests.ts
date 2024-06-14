@@ -5,8 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-
-import { GOLD_QUESTS } from '../const';
+import DappsConfig from '../DappsConfig';
 
 const defaultQuests: any = {
   social: [],
@@ -14,7 +13,7 @@ const defaultQuests: any = {
   swap: [],
   lending: [],
   liquidity: [],
-  golds: [],
+  spins: [],
   staking: [],
   yield: [],
 };
@@ -41,6 +40,9 @@ export default function useQuests(id: any) {
       _result.unlockedAmount = _unlockedAmount;
 
       result.data.forEach((item: any) => {
+        if (DappsConfig[item.source]) {
+          _result.spins.push(DappsConfig[item.source]);
+        }
         if (
           item.category_id === 0 &&
           item.category !== 'twitter_retweet' &&

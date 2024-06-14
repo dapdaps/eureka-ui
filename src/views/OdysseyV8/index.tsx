@@ -104,7 +104,7 @@ export default function OdysseyV8() {
         />
 
         <Tabs
-          quests={quests.golds}
+          spins={quests.spins}
           detail={detail}
           queryDetail={queryDetail}
           questingLoading={questingLoading}
