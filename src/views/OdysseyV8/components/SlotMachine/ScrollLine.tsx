@@ -1,13 +1,14 @@
 import styled from 'styled-components';
 
-import particleImg from '../../img/g-new/g1.svg';
-import hyperlockImg from '../../img/g-new/g2.svg';
-import ringImg from '../../img/g-new/g3.svg';
-import g4Img from '../../img/g-new/g4.svg';
-import g5Img from '../../img/g-new/g5.svg';
-import g6Img from '../../img/g-new/g6.svg';
-import g7Img from '../../img/g-new/g7.svg';
-import g8Img from '../../img/g-new/g8.svg';
+import particleImg from '../../img/g-new/particle.svg';
+import hyperlockImg from '../../img/g-new/hyperlock.svg';
+import ringImg from '../../img/g-new/ring.svg';
+import juiceImg from '../../img/g-new/juice.svg';
+import kapImg from '../../img/g-new/kap.svg';
+import andyImg from '../../img/g-new/andy.svg';
+import balaImg from '../../img/g-new/bala.svg';
+import ambientImg from '../../img/g-new/ambient.svg';
+import dapdapImg from '@/views/Compass/img/g-new/g6.svg';
 import { useCallback, useEffect, useState, useRef } from 'react';
 
 const ScrollLineWapper = styled.div`
@@ -44,28 +45,31 @@ const ScrollIconItemsImg = styled.img`
   width: 50%;
 `;
 
-const list = [
-  g6Img.src,
+const LIST = [
   '/images/odyssey/v8/logo-thruster.svg',
-  ringImg.src,
   '/images/odyssey/v4/logo-BladeSwap.png',
+  '/images/odyssey/v8/fenix.png',
+  '/images/odyssey/v8/crypto-valleys.png',
+  ringImg.src,
   particleImg.src,
   hyperlockImg.src,
-  g4Img.src,
-  g5Img.src,
-  g7Img.src,
-  g8Img.src,
-  g6Img.src,
-  '/images/odyssey/v8/logo-thruster.svg',
+  juiceImg.src,
+  kapImg.src,
+  balaImg.src,
+  ambientImg.src,
+  andyImg.src,
+  dapdapImg.src,
 ];
-
-const zeroLocation = -90 * (list.length - 1) + (140 - 90) / 2;
 
 export default function ScrollLine({ no, startAni, noIndex }: { no: number; startAni: boolean; noIndex: number }) {
   const [isScoll, setIsScroll] = useState<boolean>(false);
   const [location, setLocation] = useState<number | undefined>(-(noIndex * 90) - (noIndex === 4 ? 24 : 65));
   const [transition, setTransition] = useState('none');
   const numRef = useRef(no);
+
+  const list: any = [];
+
+  const zeroLocation = -90 * (list.length - 1) + (140 - 90) / 2;
 
   useEffect(() => {
     numRef.current = no;
@@ -102,7 +106,7 @@ export default function ScrollLine({ no, startAni, noIndex }: { no: number; star
   return (
     <ScrollLineWapper>
       <ScrollIcons delay={noIndex * 0.5} className={isScoll ? 'ani' : ''} style={transformStyle}>
-        {list.map((item, index) => {
+        {list.map((item: any, index: number) => {
           return (
             <ScrollIconItems key={item + index}>
               <ScrollIconItemsImg src={item} />

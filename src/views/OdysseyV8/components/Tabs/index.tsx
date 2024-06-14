@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
+import Treasure from '../Treasure';
+import Spins from '../Spins';
 
 const Wrapper = styled.div`
   display: flex;
@@ -17,7 +19,6 @@ const Tab = styled(motion.div)`
   padding: 28px 30px 28px 10px;
   color: #fff;
   text-align: center;
-  font-family: 'Space Grotesk';
   font-size: 32px;
   font-style: normal;
   font-weight: 700;
@@ -48,51 +49,58 @@ const Slider = styled(motion.div)`
   width: 100%;
   height: 7px;
   bottom: 0px;
+  left: 0px;
   position: absolute;
   background: #d9d9d9;
 `;
 
-export default function Tabs() {
+export default function Tabs({ quests, detail, queryDetail, questingLoading }: any) {
   const [active, setActive] = useState('Optimized Strategies');
   return (
-    <Wrapper>
-      {[
-        {
-          label: 'Optimized Strategies',
-          tag: '+10/Strategy',
-        },
-        {
-          label: 'Single Mission',
-          tag: '+1/mission',
-        },
-      ].map((item, i) => (
-        <Tab
-          key={item.label}
-          onClick={() => {
-            setActive(item.label);
-          }}
-        >
-          <span>{item.label}</span>
-          <Tag>{item.tag}</Tag>
-          {active === item.label && (
-            <Slider
-              initial="hidden"
-              animate="show"
-              variants={{
-                hidden: {
-                  x: i === 0 ? '50%' : '-50%',
-                },
-                show: {
-                  x: '0%',
-                  transition: {
-                    staggerChildren: 0.5,
+    <>
+      <Wrapper>
+        {[
+          {
+            label: 'Optimized Strategies',
+            tag: '+10/Strategy',
+          },
+          {
+            label: 'Single Mission',
+            tag: '+1/mission',
+          },
+        ].map((item, i) => (
+          <Tab
+            key={item.label}
+            onClick={() => {
+              setActive(item.label);
+            }}
+          >
+            <span>{item.label}</span>
+            <Tag>{item.tag}</Tag>
+            {active === item.label && (
+              <Slider
+                initial="hidden"
+                animate="show"
+                variants={{
+                  hidden: {
+                    x: i === 0 ? '50%' : '-50%',
                   },
-                },
-              }}
-            />
-          )}
-        </Tab>
-      ))}
-    </Wrapper>
+                  show: {
+                    x: '0%',
+                    transition: {
+                      staggerChildren: 0.5,
+                    },
+                  },
+                }}
+              />
+            )}
+          </Tab>
+        ))}
+      </Wrapper>
+      {active === 'Optimized Strategies' && <Treasure />}
+      {active === 'Single Mission' && (
+        <Spins list={quests} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
+      )}
+    </>
   );
 }

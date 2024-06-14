@@ -220,20 +220,6 @@ const Cover = styled.div`
   background-size: 100% 100%;
 `;
 
-interface Props {
-  totalSpins: number;
-  availableSpins: number;
-  unclaimedReward: number;
-  chainList: number[];
-  handleSpin: () => void;
-  handleClaim: () => void;
-  isSpining: boolean;
-  isClaiming: boolean;
-  reward: number;
-  onRefresh: VoidFunction;
-  loading: boolean;
-}
-
 function playSound(url: string): void {
   const sound = new window.Audio(url);
   sound.play();
@@ -244,11 +230,13 @@ function SlotMachine({
   availableSpins,
   chainList,
   handleSpin,
-  isClaiming,
+  queryRewards,
   reward,
   onRefresh,
   loading,
-}: Props) {
+  rewards,
+  rewardLoading,
+}: any) {
   const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
   const [isPressing, setIsPressing] = useState(false);
@@ -325,14 +313,14 @@ function SlotMachine({
               <ControllerBtnBg className="right" />
             </ControllerBtnBgWapper>
             <ControllerBtnBgWapper className="bg">
-              {chainList.map((item, index) => {
+              {chainList.map((item: any, index: number) => {
                 return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item} />;
               })}
             </ControllerBtnBgWapper>
             <Cover />
           </ScrollWapper>
           <ScoreWapper>
-            <Rewards />
+            <Rewards rewards={rewards} />
           </ScoreWapper>
         </Screen>
         <ActionBar>
@@ -367,6 +355,7 @@ function SlotMachine({
             pressed={!isStart || claimPressed}
             onClick={() => {
               if (!isStart) return;
+              queryRewards();
               setRewardShow(true);
               setClaimPressed(true);
               setTimeout(() => {
@@ -391,7 +380,8 @@ function SlotMachine({
           onClose={() => {
             setRewardShow(false);
           }}
-          isClaiming={isClaiming}
+          loading={rewardLoading}
+          rewards={rewards}
         />
       )}
     </Wapper>

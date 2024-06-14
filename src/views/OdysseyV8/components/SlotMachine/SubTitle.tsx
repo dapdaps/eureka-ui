@@ -96,6 +96,7 @@ export const ScoreText = styled.div`
   font-size: 26px;
   font-weight: 400;
   text-transform: capitalize;
+  display: inline-block;
 `;
 
 export default function SubTitle({ setPrizePoolShow, availableSpins, totalSpins, refreshing, onRefresh }: any) {

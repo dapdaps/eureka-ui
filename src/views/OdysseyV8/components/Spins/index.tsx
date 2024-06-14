@@ -1,4 +1,6 @@
 import Loading from '@/components/Icons/Loading';
+import { AnimatePresence } from 'framer-motion';
+import { container } from '@/components/animation';
 import { ParticleLink } from '../../const';
 import Quest from './quest';
 import useSwitcher from '../../hooks/useSwitcher';
@@ -64,33 +66,35 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
   });
 
   return (
-    <StyledContainer>
-      <div style={{ color: '#fff', fontSize: '26px', paddingBottom: '54px', textAlign: 'center' }}>
-        Earn Spins by completing missions below
-      </div>
-      <StyledContent>
-        {!isStart ? (
-          <UnStart secondsRemaining={secondsRemaining} />
-        ) : loading ? (
-          <LoadingWrap>
-            <Loading size={30} />
-          </LoadingWrap>
-        ) : (
-          list.map((item: any) => (
-            <Quest
-              key={item.name}
-              data={{
-                ...GoldsMap.get(item.name),
-                ...item,
-                start_time: data.start_time,
-                end_time: data.end_time,
-              }}
-              onRefreshDetail={onRefreshDetail}
-            />
-          ))
-        )}
-      </StyledContent>
-      <BgFoot />
-    </StyledContainer>
+    <AnimatePresence mode="wait">
+      <StyledContainer {...container}>
+        <div style={{ color: '#979ABE', fontSize: '20px', paddingBottom: '60px', textAlign: 'center' }}>
+          Earn Spins by completing missions below
+        </div>
+        <StyledContent>
+          {!isStart ? (
+            <UnStart secondsRemaining={secondsRemaining} />
+          ) : loading ? (
+            <LoadingWrap>
+              <Loading size={30} />
+            </LoadingWrap>
+          ) : (
+            list.map((item: any) => (
+              <Quest
+                key={item.name}
+                data={{
+                  ...GoldsMap.get(item.name),
+                  ...item,
+                  start_time: data.start_time,
+                  end_time: data.end_time,
+                }}
+                onRefreshDetail={onRefreshDetail}
+              />
+            ))
+          )}
+        </StyledContent>
+        <BgFoot />
+      </StyledContainer>
+    </AnimatePresence>
   );
 }

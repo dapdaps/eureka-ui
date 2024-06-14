@@ -1,10 +1,9 @@
 import styled from 'styled-components';
-
+import Image from 'next/image';
 import Modal from '../Modal';
-
 import lbImg from './img/Congrates.gif';
 import smImg from './img/sm.svg';
-import ccmg from './img/cc.svg';
+import RewardIcons from '../../RewardIcons';
 import { useState } from 'react';
 
 const Iocn = styled.img`
@@ -70,40 +69,10 @@ export const Btn = styled.button`
   }
 `;
 
-const CcImg = styled.img`
-  width: 20px;
-  height: 20px;
-  margin-top: -4px;
-`;
-
-const GetTitle = styled.div`
-  cursor: pointer;
-  text-decoration: underline;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 19px;
-  text-align: center;
-  color: #ebf479;
-  margin-top: 20px;
-`;
-
-const GetContent = styled.div`
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
-  margin-top: 20px;
-  color: #979abe;
-  .sp {
-    color: #fff;
-  }
-`;
-
-export default function PrizeModal({ onClose, prize }: { onClose: () => void; prize: number }) {
-  const [getMoreShow, setGetMoreShow] = useState(false);
-
+export default function PrizeModal({ onClose, prize }: { onClose: () => void; prize: any }) {
   return (
     <Modal onClose={onClose} style={{ width: 450, padding: '0px 20px 30px', textAlign: 'center' }}>
-      {prize <= 0 ? (
+      {Object.entries(prize).length === 0 ? (
         <>
           <Iocn className="fail" src={smImg.src} />
           <Title>Oops!</Title>
@@ -114,9 +83,53 @@ export default function PrizeModal({ onClose, prize }: { onClose: () => void; pr
         <>
           <Iocn src={lbImg.src} />
           <Title>Congrats!</Title>
-          <Content>
-            You’ve got {prize} <CcImg src={ccmg.src} /> PTS
-          </Content>
+          <Content>You’ve got</Content>
+
+          <div style={{ marginTop: 30 }}>
+            {Object.entries(prize).map(([key, value]) => (
+              <>
+                <div
+                  key={key}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 10,
+                    marginBottom: 20,
+                  }}
+                >
+                  <Image src={RewardIcons[key].icon} width={26} height={26} alt="" />
+                  <div
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      flexShrink: 0,
+                      color: '#fff',
+                    }}
+                  >
+                    {RewardIcons[key].label}
+                  </div>
+                  <div
+                    style={{
+                      flexGrow: 1,
+                      width: '100%',
+                      height: 1,
+                      borderBottom: '1px dashed #979ABE',
+                    }}
+                  ></div>
+                  <div
+                    style={{
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                      flexShrink: 0,
+                      color: '#fff',
+                    }}
+                  >
+                    {value as string}
+                  </div>
+                </div>
+              </>
+            ))}
+          </div>
           <Btn
             onClick={() => {
               onClose();
@@ -124,21 +137,6 @@ export default function PrizeModal({ onClose, prize }: { onClose: () => void; pr
           >
             Continue
           </Btn>
-          <GetTitle
-            onClick={() => {
-              setGetMoreShow(!getMoreShow);
-            }}
-          >
-            Get more PTS
-          </GetTitle>
-          {getMoreShow ? (
-            <GetContent>
-              Share your win on Twitter by taking a screenshot of this page to enter the final grand prize draw! To
-              qualify, your screenshot needs to include the DapDap logo at the top of your page and wallet address. You
-              should also tag <span className="sp">@DapDapMeUp</span> and <span className="sp">#DapDapOdyssey</span> in
-              your post.
-            </GetContent>
-          ) : null}
         </>
       )}
     </Modal>

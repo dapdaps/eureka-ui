@@ -5,7 +5,7 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get, post } from '@/utils/http';
 
-export default function useDetail(id: any) {
+export default function useDetail(id: any, cb: any) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(true);
   const { account } = useAccount();
@@ -20,7 +20,8 @@ export default function useDetail(id: any) {
       });
     }
     queryDetail();
-  }, [id]);
+    cb?.();
+  }, [id, cb]);
 
   const queryDetail = useCallback(async () => {
     try {

@@ -8,17 +8,17 @@ import Banner from './components/Banner';
 import Bridge from './components/Bridge';
 import Explores from './components/Explores';
 import FootClaim from './components/FootClaim';
-import Spins from './components/Spins';
+
 import Lending from './components/Lending';
 import Noti from './components/Noti';
 import Summary from './components/Summary';
 import Trade from './components/Trade';
-import Treasure from './components/Treasure';
 import SlotMachine from './components/SlotMachine';
 import Tabs from './components/Tabs';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import useSpin from './hooks/useSpin';
+import useRewards from './hooks/useRewards';
 import { StyledContainer, StyledContent } from './styles';
 
 export default function OdysseyV8() {
@@ -26,7 +26,10 @@ export default function OdysseyV8() {
   const { id } = router.query;
 
   const authConfig = useAuthConfig();
-  const { detail, loading, queryDetail } = useDetail(id);
+  const { rewards, loading: rewardLoading, query: queryRewards } = useRewards(id as string);
+  const { detail, loading, queryDetail } = useDetail(id, () => {
+    queryRewards();
+  });
   const { loading: questingLoading, quests } = useQuests(id);
   const { userInfo, queryUserInfo } = useUserInfo();
 
@@ -94,11 +97,12 @@ export default function OdysseyV8() {
           isClaiming={isClaiming}
           onRefresh={queryDetail}
           loading={loading}
+          rewards={rewards}
+          queryRewards={queryRewards}
+          rewardLoading={rewardLoading}
         />
-        <Tabs />
-        <Treasure />
+        <Tabs quests={quests.golds} detail={detail} queryDetail={queryDetail} questingLoading={questingLoading} />
 
-        <Spins list={quests.golds} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
         <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />
         <Trade list={quests.swap} onRefreshDetail={queryDetail} />

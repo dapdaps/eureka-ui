@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-export const StyledContainer = styled.div`
+export const StyledContainer = styled(motion.div)`
   width: 1260px;
-  margin: 0 auto;
+  margin: 30px auto 0px;
   .quest-item {
     width: 400px;
     position: relative;
