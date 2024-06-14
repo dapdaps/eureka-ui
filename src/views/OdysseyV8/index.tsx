@@ -82,7 +82,7 @@ export default function OdysseyV8() {
   return (
     <StyledContainer>
       <StyledContent>
-        {/* {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null} */}
+        {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null}
         <Banner />
         <Summary data={detail} loading={loading} />
         <SlotMachine

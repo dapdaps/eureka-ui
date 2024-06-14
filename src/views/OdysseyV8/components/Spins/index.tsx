@@ -31,15 +31,18 @@ export default function Spins({ loading, list, data, onRefreshDetail, authConfig
               <Loading size={30} />
             </LoadingWrap>
           ) : (
-            _list.map((item: any) => (
-              <Quest
-                key={item.name}
-                data={item}
-                onRefreshDetail={onRefreshDetail}
-                authConfig={authConfig}
-                userInfo={userInfo}
-              />
-            ))
+            <>
+              {_list.map((item: any) => (
+                <Quest
+                  key={item.name}
+                  data={item}
+                  onRefreshDetail={onRefreshDetail}
+                  authConfig={authConfig}
+                  userInfo={userInfo}
+                />
+              ))}
+              <div className="more-is-coming">MORE IS COMING...</div>
+            </>
           )}
         </StyledContent>
       </StyledContainer>

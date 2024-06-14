@@ -27,6 +27,15 @@ export const StyledContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  .more-is-coming {
+    font-size: 20px;
+    font-weight: 500;
+    color: rgba(235, 244, 121, 1);
+    font-family: Montserrat;
+    width: 400px;
+    text-align: center;
+    line-height: 400px;
+  }
 `;
 const Bg = styled.div`
   height: 497px;
