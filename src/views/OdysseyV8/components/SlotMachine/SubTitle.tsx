@@ -96,16 +96,19 @@ export const ScoreText = styled.div`
   font-size: 26px;
   font-weight: 400;
   text-transform: capitalize;
-  text-shadow: 2px 2px 10px #00ffd1;
 `;
 
-export default function SubTitle({ setPrizePoolShow, availableSpins, totalSpins, onRefresh }: any) {
+export default function SubTitle({ setPrizePoolShow, availableSpins, totalSpins, refreshing, onRefresh }: any) {
   return (
     <Wrapper>
       <BtnWrapper>
         <BtnBg />
-        <Btn onClick={() => {}}>
-          <StyledRefresh refreshing={true} />
+        <Btn
+          onClick={() => {
+            if (!refreshing) onRefresh();
+          }}
+        >
+          <StyledRefresh refreshing={refreshing} />
           <span>Refresh Spin</span>
         </Btn>
       </BtnWrapper>

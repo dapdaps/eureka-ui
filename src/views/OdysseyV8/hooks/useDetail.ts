@@ -12,15 +12,19 @@ export default function useDetail(id: any) {
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
+  const init = useCallback(async () => {
+    if (router.query.from === 'parter' && id) {
+      await post('/api/compass/invite', {
+        id,
+        source: 'parter',
+      });
+    }
+    queryDetail();
+  }, [id]);
+
   const queryDetail = useCallback(async () => {
     try {
       setLoading(true);
-      if (router.query.from === 'parter' && id) {
-        await post('/api/compass/invite', {
-          id,
-          source: 'parter',
-        });
-      }
       const result = await get('/api/compass/v5/detail', { id });
 
       if (result.code === 0 && result.data) {
@@ -40,7 +44,7 @@ export default function useDetail(id: any) {
         queryDetail();
         return;
       }
-      check(queryDetail);
+      check(init);
     },
     { wait: detail ? 600 : 3000 },
   );

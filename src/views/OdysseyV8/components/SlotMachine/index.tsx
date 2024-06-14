@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 
-import Spin from './Spin';
 import ScrollLine from './ScrollLine';
 import RuleModal from './RuleModal';
 import PrizeModal from './PrizeModal';
@@ -30,12 +29,13 @@ import PrizePoolModal from './PrizePoolModal';
 import RewardsModal from './RewardsModal';
 import { BgFoot } from '../Spins/styles';
 import Title from './Title';
-import SubTitle, { Score, ScoreBg, ScoreText } from './SubTitle';
+import SubTitle from './SubTitle';
+import Rewards from './Rewards';
 import useSwitcher from '../../hooks/useSwitcher';
 
 const Wapper = styled.div`
   width: var(--main-width);
-  margin: 60px auto 70px;
+  margin: 80px auto 70px;
   position: relative;
   background-color: #000;
 `;
@@ -230,6 +230,8 @@ interface Props {
   isSpining: boolean;
   isClaiming: boolean;
   reward: number;
+  onRefresh: VoidFunction;
+  loading: boolean;
 }
 
 function playSound(url: string): void {
@@ -240,24 +242,22 @@ function playSound(url: string): void {
 function SlotMachine({
   totalSpins,
   availableSpins,
-  unclaimedReward,
   chainList,
   handleSpin,
-  handleClaim,
   isClaiming,
   reward,
+  onRefresh,
+  loading,
 }: Props) {
   const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
   const [isPressing, setIsPressing] = useState(false);
-  const [newUnclaimedReward, setNewunclaimedReward] = useState(unclaimedReward);
   const [ruleShow, setRuleShow] = useState(false);
   const [prizeShow, setPrizeShow] = useState(false);
   const [prizePoolShow, setPrizePoolShow] = useState(false);
   const [rewardShow, setRewardShow] = useState(false);
 
   const rewardRef = useRef(reward);
-  const unclaimedRewardRef = useRef(unclaimedReward);
 
   const [rulePressed, setRulePressed] = useState(false);
   const [claimPressed, setClaimPressed] = useState(false);
@@ -265,13 +265,6 @@ function SlotMachine({
   useEffect(() => {
     rewardRef.current = reward;
   }, [reward]);
-
-  useEffect(() => {
-    if (!isPressing) {
-      setNewunclaimedReward(unclaimedReward);
-    }
-    unclaimedRewardRef.current = unclaimedReward;
-  }, [unclaimedReward]);
 
   const handleBtnPress = useCallback(() => {
     playSound('/images/compass/audio/rolling.mp4');
@@ -284,7 +277,6 @@ function SlotMachine({
       }
 
       setPrizeShow(true);
-      setNewunclaimedReward(unclaimedRewardRef.current);
     }, 12000);
 
     handleSpin();
@@ -305,7 +297,7 @@ function SlotMachine({
     <Wapper>
       <HeaderBg />
       <Bg />
-      <div style={{ position: 'relative', zIndex: 2 }}>
+      <div style={{ position: 'relative', zIndex: 2, paddingTop: 80 }}>
         <Pilcrow
           title="Earn Spins by completing the missions below"
           desc="Each mission you complete grants you spins, which can earn you rewards like gold, points, and tokens."
@@ -313,7 +305,13 @@ function SlotMachine({
         <Screen>
           {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}
           <Title />
-          <SubTitle setPrizePoolShow={setPrizePoolShow} availableSpins={availableSpins} totalSpins={totalSpins} />
+          <SubTitle
+            onRefresh={onRefresh}
+            refreshing={loading}
+            setPrizePoolShow={setPrizePoolShow}
+            availableSpins={availableSpins}
+            totalSpins={totalSpins}
+          />
           <ControllerWapper>
             <Controller $active={isStart} />
             <ControllerBg></ControllerBg>
@@ -334,31 +332,9 @@ function SlotMachine({
             <Cover />
           </ScrollWapper>
           <ScoreWapper>
-            <Score>
-              <Spin
-                renderChildren={() => (
-                  <ScoreBg>
-                    <ScoreText>Spins:</ScoreText>
-                    <ScoreText>
-                      {availableSpins} / {totalSpins}
-                    </ScoreText>
-                  </ScoreBg>
-                )}
-              />
-            </Score>
-            <Score>
-              <Spin
-                renderChildren={() => (
-                  <ScoreBg>
-                    <ScoreText>you win:</ScoreText>
-                    {isStart ? <ScoreText>{newUnclaimedReward} pts</ScoreText> : <ScoreText>Not start yet!</ScoreText>}
-                  </ScoreBg>
-                )}
-              />
-            </Score>
+            <Rewards />
           </ScoreWapper>
         </Screen>
-
         <ActionBar>
           <Rules
             pressed={!isStart || rulePressed}
@@ -415,10 +391,6 @@ function SlotMachine({
           onClose={() => {
             setRewardShow(false);
           }}
-          onClaim={() => {
-            handleClaim();
-          }}
-          unclaimedReward={unclaimedReward}
           isClaiming={isClaiming}
         />
       )}

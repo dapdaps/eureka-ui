@@ -15,10 +15,11 @@ import Summary from './components/Summary';
 import Trade from './components/Trade';
 import Treasure from './components/Treasure';
 import SlotMachine from './components/SlotMachine';
+import Tabs from './components/Tabs';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import useSpin from './hooks/useSpin';
-import { StyledBg, StyledContainer, StyledContent } from './styles';
+import { StyledContainer, StyledContent } from './styles';
 
 export default function OdysseyV8() {
   const router = useRouter();
@@ -79,12 +80,8 @@ export default function OdysseyV8() {
     <StyledContainer>
       <StyledContent>
         {showNoti ? <Noti onClose={() => setShowNoti(false)} /> : null}
-        <StyledBg>
-          <Banner />
-          <Summary data={detail} loading={loading} />
-          <Treasure />
-        </StyledBg>
-
+        <Banner />
+        <Summary data={detail} loading={loading} />
         <SlotMachine
           chainList={chainList}
           handleSpin={handleSpin}
@@ -95,7 +92,12 @@ export default function OdysseyV8() {
           reward={reward}
           isSpining={isSpining}
           isClaiming={isClaiming}
+          onRefresh={queryDetail}
+          loading={loading}
         />
+        <Tabs />
+        <Treasure />
+
         <Spins list={quests.golds} data={detail} onRefreshDetail={queryDetail} loading={questingLoading} />
         <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
         <Bridge list={quests.bridge} onRefreshDetail={queryDetail} />

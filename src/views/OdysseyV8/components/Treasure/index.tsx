@@ -13,7 +13,7 @@ import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
 import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
-import Pilcrow from '../Pilcrow';
+
 import {
   Badge,
   IconGroup,
@@ -613,10 +613,7 @@ export default function Treasure() {
           </ModalBody>
         </Modal>
       ) : null}
-      <Pilcrow
-        title="Blast Treasure Strategies"
-        desc="Explore Blast treasure strategies, maximize your Blast Gold earnings!"
-      />
+
       <StyledContent className="row-top">
         <Treasure1 onClick={() => setShowModal1(true)}>
           <Line />

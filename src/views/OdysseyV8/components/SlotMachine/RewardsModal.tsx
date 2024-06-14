@@ -7,26 +7,14 @@ import { useMemo } from 'react';
 
 export default function RewardsModal({
   isClaiming,
-  unclaimedReward,
+
   onClose,
-  onClaim,
 }: {
   isClaiming: boolean;
-  unclaimedReward: number;
-  onClaim: VoidFunction;
+
   onClose: VoidFunction;
 }) {
-  const list = useMemo(
-    () => [
-      ...PoolConfig,
-      {
-        icon: '/images/quest/coin.png',
-        name: 'PTS',
-        value: unclaimedReward,
-      },
-    ],
-    [unclaimedReward],
-  );
+  const list = useMemo(() => PoolConfig, []);
 
   return (
     <Modal onClose={onClose} style={{ color: '#fff', fontFamily: 'Montserrat', width: 450, padding: 32 }}>
@@ -84,7 +72,7 @@ export default function RewardsModal({
           </>
         ))}
       </div>
-      <Btn
+      {/* <Btn
         onClick={() => {
           onClaim();
         }}
@@ -97,7 +85,7 @@ export default function RewardsModal({
         disabled={unclaimedReward < 0 || isClaiming}
       >
         {isClaiming ? <Loading size={18} /> : 'Claim PTS'}
-      </Btn>
+      </Btn> */}
     </Modal>
   );
 }
