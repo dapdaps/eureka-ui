@@ -27,7 +27,7 @@ export default function useSpin(id: string) {
       return;
     }
 
-    const { rand, reward, unclaimed_reward, available_spins } = res.data;
+    const { rand, rewards, unclaimed_reward, available_spins } = res.data;
 
     const _chainList = rand.split('').map(Number);
 
@@ -36,7 +36,7 @@ export default function useSpin(id: string) {
     // setUnclaimedReward(unclaimed_reward)
     setIsSpining(false);
 
-    return reward;
+    return rewards;
   }
 
   async function startCliam() {

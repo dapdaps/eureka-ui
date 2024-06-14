@@ -22,6 +22,13 @@ const networks = {
       blast['orbit'],
       blast['axlusdc'],
       blast['usde'],
+      blast['baja'],
+      blast['andy'],
+      blast['yield'],
+      blast['kap'],
+      blast['early'],
+      blast['sss'],
+      blast['juice'],
     ],
   },
 };

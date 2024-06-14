@@ -6,7 +6,7 @@ export default [
   },
   {
     icon: '/images/odyssey/v8/credit.svg',
-    name: 'Thurster Credits',
+    name: 'Thruster Credits',
     value: '10M',
   },
   {
@@ -22,7 +22,7 @@ export default [
   {
     icon: '/images/odyssey/v8/fenix.png',
     name: 'Fenix Rings',
-    value: '2.5M',
+    value: '1M',
   },
   {
     icon: '/images/odyssey/v4/coin-andy.svg',

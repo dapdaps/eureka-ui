@@ -1,15 +1,27 @@
 import { useDebounceFn } from 'ahooks';
 import { useCallback, useEffect, useState } from 'react';
-
+import { useRouter } from 'next/router';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
-import { get } from '@/utils/http';
+import { get, post } from '@/utils/http';
 
-export default function useDetail(id: any) {
+export default function useDetail(id: any, cb: any) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(true);
   const { account } = useAccount();
+  const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
+
+  const init = useCallback(async () => {
+    if (router.query.from === 'parter' && id) {
+      await post('/api/compass/invite', {
+        id,
+        source: 'parter',
+      });
+    }
+    queryDetail();
+    cb?.();
+  }, [id, cb]);
 
   const queryDetail = useCallback(async () => {
     try {
@@ -33,7 +45,7 @@ export default function useDetail(id: any) {
         queryDetail();
         return;
       }
-      check(queryDetail);
+      check(init);
     },
     { wait: detail ? 600 : 3000 },
   );

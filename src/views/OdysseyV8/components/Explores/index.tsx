@@ -94,17 +94,15 @@ export default function Explores({ list, userInfo, authConfig, onRefreshDetail }
         <CompTitle title="" subtitle="Complete tasks easily to earn Spin to win" />
         <StyledItemWrap>
           {list?.length ? (
-            list
-              .filter((item: any) => item.name !== 'Particle')
-              .map((item: any) => (
-                <ExporeItem
-                  key={item.id}
-                  {...item}
-                  authConfig={authConfig}
-                  userInfo={userInfo}
-                  onRefreshDetail={onRefreshDetail}
-                />
-              ))
+            list.map((item: any) => (
+              <ExporeItem
+                key={item.id}
+                {...item}
+                authConfig={authConfig}
+                userInfo={userInfo}
+                onRefreshDetail={onRefreshDetail}
+              />
+            ))
           ) : (
             <StyledLoadingWrapper $h="100px">
               <Loading size={30} />
