@@ -89,6 +89,6 @@ const tokens: { [key: number]: any } = {
 export default {
   contracts,
   fees: [500, 3000, 10000],
-  defaultFee: 3000,
+  defaultFee: 500,
   tokens,
 };

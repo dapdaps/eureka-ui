@@ -6,8 +6,6 @@ import ScrollLine from './ScrollLine';
 import RuleModal from './RuleModal';
 import PrizeModal from './PrizeModal';
 
-import titleImg from './img/title.svg';
-import compassImg from './img/gold-rush.svg';
 import controllerImg from './img/ctr.svg';
 import controllerActiveImg from './img/ctr-active.svg';
 import actionBg from './img/action-bg.svg';
@@ -19,7 +17,6 @@ import clamPressImg from './img/clam-press.svg';
 import btnBgImg from './img/btn-bg.svg';
 import btnImg from './img/btn.svg';
 import btnActiveImg from './img/btn-active.svg';
-import chainIconsImg from './img/chianIcons.svg';
 import coverTopImg from './img/cover-top.png';
 
 import yellowLeftImg from './img/yellow-left.svg';
@@ -32,6 +29,8 @@ import Pilcrow from '../Pilcrow';
 import PrizePoolModal from './PrizePoolModal';
 import RewardsModal from './RewardsModal';
 import { BgFoot } from '../Spins/styles';
+import Title from './Title';
+import SubTitle, { Score, ScoreBg, ScoreText } from './SubTitle';
 import useSwitcher from '../../hooks/useSwitcher';
 
 const Wapper = styled.div`
@@ -65,42 +64,6 @@ const Screen = styled.div`
   border: 1px;
   background: linear-gradient(180deg, #2f3445 0%, #1c1f29 100%);
   position: relative;
-  overflow: hidden;
-`;
-
-const ChainIcons = styled.img`
-  position: absolute;
-  left: 35px;
-  top: 22px;
-  width: 60px;
-  height: 60px;
-`;
-
-const Title = styled.div`
-  background: url(${titleImg.src}) center center no-repeat;
-  background-position: 0px 60px;
-  width: 896px;
-  height: 135px;
-  margin: 0 auto;
-  overflow: hidden;
-  text-indent: -9999px;
-`;
-
-const CompassWapper = styled.div`
-  position: absolute;
-  background: url(${compassImg.src}) center center no-repeat;
-  width: 207px;
-  height: 68px;
-  top: 46px;
-  right: 30px;
-  cursor: pointer;
-  transition: 0.3s;
-  &:hover {
-    opacity: 0.9;
-  }
-  &:active {
-    opacity: 0.8;
-  }
 `;
 
 const ControllerWapper = styled.div`
@@ -180,35 +143,6 @@ const ScoreWapper = styled.div`
   display: flex;
   gap: 24px;
   margin: 55px 55px 0;
-`;
-
-const Score = styled.div`
-  height: 72px;
-  border-radius: 20px;
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #000;
-  overflow: hidden;
-`;
-
-const ScoreBg = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  height: 72px;
-`;
-
-const ScoreText = styled.div`
-  color: #00ffd1;
-  text-align: center;
-  font-family: '5squared pixel';
-  font-size: 26px;
-  font-weight: 400;
-  text-transform: capitalize;
-  text-shadow: 2px 2px 10px #00ffd1;
 `;
 
 const ActionBar = styled.div`
@@ -378,13 +312,8 @@ function SlotMachine({
         />
         <Screen>
           {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}
-          <Title>DAPDAP JACKPOT</Title>
-          <ChainIcons src={chainIconsImg.src} />
-          <CompassWapper
-            onClick={() => {
-              setPrizePoolShow(true);
-            }}
-          />
+          <Title />
+          <SubTitle setPrizePoolShow={setPrizePoolShow} availableSpins={availableSpins} totalSpins={totalSpins} />
           <ControllerWapper>
             <Controller $active={isStart} />
             <ControllerBg></ControllerBg>

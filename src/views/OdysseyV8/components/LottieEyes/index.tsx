@@ -19,6 +19,7 @@ export default function LottieControl({}: any) {
       width={38}
       style={{
         margin: 0,
+        transform: 'rotate(180deg)',
       }}
       // isStopped={isStopped}
       // isPaused={isPaused}
