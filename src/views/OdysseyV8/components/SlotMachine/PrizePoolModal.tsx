@@ -58,11 +58,10 @@ export default function PrizeModal({ onClose }: { onClose: () => void }) {
                 key={i}
               >
                 {[
-                  'Juice 5,000',
-                  'Particle 3,000',
-                  'Ring 1,000',
-                  'BladeSwap 1,000',
-                  'Ambient 1,000',
+                  'Juice 2,500',
+                  'Particle 1,500',
+                  'Ring 500',
+                  'BladeSwap 500',
                   'Cap&Co 1,000',
                   'Early 1,000',
                   'Super Sushi Samurai 500',
