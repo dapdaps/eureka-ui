@@ -81,10 +81,11 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
               Unexplored
             </RefreshButton>
           )} */}
-            {data.extraGold.value}
+            <img className="icon" src={data.extraGold.icon} />
+            <span>{data.extraGold.value}</span>
             <div className="tip">
               Top trader based of Volume on {name} will share {data.extraGold.value} Extra Gold
-            </div>
+            </div>{' '}
           </HeadRight>
         )}
       </Head>
