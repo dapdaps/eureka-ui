@@ -88,7 +88,7 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
           </HeadRight>
         )}
       </Head>
-      <Desc>Prize Contributed</Desc>
+      {!!data.rewards.length && <Desc>Prize Contributed</Desc>}
 
       <GoldWapper>
         {data.rewards &&

@@ -22,7 +22,7 @@ export default {
       {
         spin: 1,
         label: 'Swap min $25 in JUICE on Thruster.',
-        link: '/dapp/juice',
+        link: '/dapp/thruster-finance',
       },
       {
         spin: 1,
@@ -191,16 +191,7 @@ export default {
     },
     bgColor: '#8569F3',
     name: 'Ambient',
-    extraGold: {
-      icon: '/images/odyssey/v8/gold.svg',
-      value: 500,
-    },
-    rewards: [
-      {
-        icon: '/images/odyssey/v8/gold.svg',
-        label: '500 Gold',
-      },
-    ],
+    rewards: [],
     quests: [
       {
         spin: 1,
@@ -363,7 +354,7 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'LP min $15 in ANDY/WETH on Thruster',
+        label: 'Swap min $15 in ANDY on Thruster',
         link: '/dapp/thruster-finance',
       },
       { spin: 1, label: 'Stake ANDY/WETH to Hyperlock', link: '/dapp/hyperlock' },
