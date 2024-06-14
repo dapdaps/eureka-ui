@@ -158,7 +158,7 @@ export const QuestTitle = styled.div`
   padding: 25px 24px 10px;
 `;
 
-export const SpinLine = styled.div`
+export const SpinLine = styled.div<{ $disabled: boolean }>`
   margin: 0 24px;
   background: rgba(217, 217, 217, 0.1);
   display: flex;
@@ -168,13 +168,17 @@ export const SpinLine = styled.div`
   gap: 10px;
   border-radius: 4px;
   border: 1px solid rgba(217, 217, 217, 0);
-  cursor: pointer;
+
   &:not(:first-child) {
     margin-top: 10px;
   }
-  &:hover {
+  ${({ $disabled }) =>
+    $disabled
+      ? `cursor: not-allowed;opacity: 0.5;`
+      : `cursor: pointer;&:hover {
     border: 1px solid rgba(0, 255, 209, 1);
-  }
+  }`}
+
   .spin-count {
     color: rgba(0, 255, 209, 1);
     font-family: '5squared pixel';

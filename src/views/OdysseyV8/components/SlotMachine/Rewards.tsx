@@ -27,7 +27,7 @@ const Box = styled.div`
     gap: 20px;
   }
   &.left {
-    animation: 6s linear 0s infinite running home-bg-slidout;
+    animation: 10s linear 0s infinite running home-bg-slidout;
   }
 
   @keyframes home-bg-slidout {

@@ -59,6 +59,7 @@ export default function OdysseyV8() {
     startSpin().then((res) => {
       setReward(res);
       queryDetail();
+      queryRewards();
     });
   }, [isSpining]);
 

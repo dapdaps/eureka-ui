@@ -39,10 +39,11 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
   }, [total_spins, spins]);
 
   const onItemClick = (item: any) => {
-    if (item.link) {
+    if (item.link && !item.link?.startsWith('http')) {
       openLink(item.link, true);
       return;
     }
+    return;
     if (!userInfo.twitter?.is_bind) {
       const path = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${authConfig.twitter_client_id}&redirect_uri=${window.location.href}&scope=tweet.read%20users.read%20follows.read%20like.read&state=state&code_challenge=challenge&code_challenge_method=plain`;
       sessionStorage.setItem('_auth_type', 'twitter');
@@ -110,6 +111,7 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
               onItemClick(item);
             }}
             key={item.label}
+            $disabled={item.twitter || item.link?.startsWith('http')}
           >
             <span className="spin-count">{item.spin} SPIN</span>
             <span className="spin-title">{item.label}</span>

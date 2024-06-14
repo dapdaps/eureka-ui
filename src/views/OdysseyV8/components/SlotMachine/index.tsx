@@ -322,7 +322,7 @@ function SlotMachine({
             </ControllerBtnBgWapper>
             <ControllerBtnBgWapper className="bg">
               {chainList.map((item: any, index: number) => {
-                return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item - 1} list={list} />;
+                return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item} list={list} />;
               })}
             </ControllerBtnBgWapper>
             <Cover />
