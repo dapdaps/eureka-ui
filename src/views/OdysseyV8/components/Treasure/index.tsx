@@ -13,7 +13,7 @@ import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
 import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
-
+import ThrusterCoinListStep1 from './1-1';
 import {
   Badge,
   IconGroup,
@@ -37,73 +37,6 @@ import Modal1 from './Modal1';
 import Modal5 from './Modal5';
 import Modal3 from './Modal3';
 
-const ThrusterCoinListStep1 = [
-  {
-    key: 1,
-    icon: ['/images/odyssey/v4/coin-juice.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['JUICE', 'WETH'],
-  },
-  {
-    key: 2,
-    icon: ['/images/odyssey/v4/coin-pac.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['PAC', 'WETH'],
-  },
-  {
-    key: 3,
-    icon: ['/images/odyssey/v4/coin-kap.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['KAP', 'WETH'],
-  },
-  {
-    key: 4,
-    icon: ['/images/odyssey/v4/coin-yield.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['YIELD', 'WETH'],
-  },
-  {
-    key: 5,
-    icon: ['/images/odyssey/v4/coin-glory.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['GLORY', 'WETH'],
-  },
-  {
-    key: 6,
-    icon: ['/images/odyssey/v4/coin-ole.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['OLE', 'WETH'],
-  },
-  {
-    key: 7,
-    icon: ['/images/odyssey/v4/coin-sss.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['SSS', 'WETH'],
-  },
-  {
-    key: 8,
-    icon: ['/images/odyssey/v4/coin-andy.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['ANDY', 'WETH'],
-  },
-  {
-    key: 9,
-    icon: ['/images/odyssey/v4/coin-early.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['EARLY', 'WETH'],
-  },
-  {
-    key: 10,
-    icon: ['/images/odyssey/v4/coin-mia.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['MIA', 'WETH'],
-  },
-  {
-    key: 12,
-    icon: ['/images/odyssey/v4/coin-orbit.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['ORBIT', 'WETH'],
-  },
-  {
-    key: 14,
-    icon: ['/images/odyssey/v4/coin-bag.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['BAG', 'WETH'],
-  },
-  {
-    key: 15,
-    icon: ['/images/odyssey/v4/coin-pump.svg', '/images/odyssey/v4/coin-weth2.svg'],
-    name: ['PUMP', 'WETH'],
-  },
-];
 const ThrusterCoinListStep2 = [
   {
     key: 1,
@@ -514,7 +447,7 @@ export default function Treasure() {
             transform: 'translateX(-50%)',
             top: 150,
             marginBottom: 100,
-            width: 924,
+            width: 900,
           }}
         >
           <ModalTitle>How to participate in a 2x Gold boosted strategy on Thruster and Hyperlock?</ModalTitle>
@@ -547,8 +480,9 @@ export default function Treasure() {
                     key={coin.key}
                     icon={coin.icon}
                     name={coin.name}
+                    fee={coin.fee}
                     onClick={() => {
-                      setSelectedPool(coin.name.join(','));
+                      openLink(coin.link);
                     }}
                   />
                 ))}
@@ -559,7 +493,7 @@ export default function Treasure() {
                   justifyContent: 'flex-start',
                 }}
               >
-                <ToDappButton onClick={(e: any) => openLink(`${location.origin}/dapp/thruster-liquidity`)}>
+                <ToDappButton onClick={(e: any) => openLink('https://app.thruster.finance/add')}>
                   <span>Thruster dApp</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="22" height="16" viewBox="0 0 22 16" fill="none">
                     <path

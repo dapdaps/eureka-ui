@@ -89,6 +89,15 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#000',
     },
   },
+  'agent-fi': {
+    type: 'staking',
+    theme: {
+      '--button-color': '#fcfc03',
+      '--switch-color': '#fcfc03',
+      '--button-text-color': '#000000',
+      '--container-width': '1000px',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
