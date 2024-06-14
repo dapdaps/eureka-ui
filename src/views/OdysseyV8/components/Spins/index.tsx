@@ -84,13 +84,18 @@ export default function Spins({ loading, list, data, onRefreshDetail }: any) {
               <Loading size={30} />
             </LoadingWrap>
           ) : (
-            _list.map((item: any) => (
-              <Quest
-                key={item.name}
-                data={item}
-                onRefreshDetail={onRefreshDetail}
-              />
-            ))
+            <>
+            {
+              _list.map((item: any) => (
+                <Quest
+                  key={item.name}
+                  data={item}
+                  onRefreshDetail={onRefreshDetail}
+                />
+              ))
+            }
+            <div className='more-is-coming'>MORE IS COMING...</div>
+            </>
           )}
         </StyledContent>
       </StyledContainer>
