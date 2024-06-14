@@ -10,7 +10,7 @@ import useAccount from '@/hooks/useAccount';
 import { useSetChain } from '@web3-onboard/react';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated, errorFormated } from '@/utils/balance';
+import { balanceFormated, percentFormated, errorFormated, getFullNum } from '@/utils/balance';
 
 import ChainSelector from './components/ChainSelector'
 import FeeMsg from './components/FeeMsg';
@@ -209,13 +209,6 @@ export default function BridgeX({
     }, [])
 
     useEffect(() => {
-        // getAllToken().then((res: any) => {
-        //     setLoadedAllTokens(true)
-        //     setAllTokens(res)
-        // })
-    }, [])
-
-    useEffect(() => {
         if (loadedAllTokens && chainFrom) {
             setInputTokens(allTokens[chainFrom?.chainId])
             setSelectInputToken(null)
@@ -361,7 +354,8 @@ export default function BridgeX({
                     if (maxRoute) {
                         setDuration(maxRoute.duration)
                         setGasCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas)
-                        setReceiveAmount(new Big(maxRoute.receiveAmount).div(Math.pow(10, selectOutputToken.decimals)).toString())
+
+                        setReceiveAmount(getFullNum(new Big(maxRoute.receiveAmount).div(Math.pow(10, selectOutputToken.decimals)).toNumber().toString()))
                         setRoute(maxRoute)
                         setLoading(false)
                     }
