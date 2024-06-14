@@ -1,3 +1,4 @@
+import { arbitrum } from '@/config/tokens/arbitrum';
 import { linea } from '@/config/tokens/linea';
 
 const basic = {
@@ -19,6 +20,7 @@ const networks = {
     pairs: [
       {
         id: 'USDC-USDT-Oku',
+        type: 'LP',
         strategy: 'Oku',
         token0: 'USDC',
         token1: 'USDT',
@@ -29,6 +31,7 @@ const networks = {
       },
       {
         id: 'USDC-USDT-PancakeSwap',
+        type: 'LP',
         strategy: 'PancakeSwap',
         token0: 'USDC',
         token1: 'USDT',
@@ -39,6 +42,7 @@ const networks = {
       },
       {
         id: '',
+        type: 'LP',
         strategy: 'Oku',
         token0: 'WBTC',
         token1: 'WETH',
@@ -49,6 +53,7 @@ const networks = {
       },
       {
         id: '',
+        type: 'LP',
         strategy: 'PancakeSwap',
         token0: 'WBTC',
         token1: 'WETH',
@@ -59,6 +64,7 @@ const networks = {
       },
       {
         id: 'USDC-WETH-PancakeSwap',
+        type: 'LP',
         strategy: 'PancakeSwap',
         token0: 'USDC',
         token1: 'WETH',
@@ -69,6 +75,7 @@ const networks = {
       },
       {
         id: 'USDC-WETH-Oku',
+        type: 'LP',
         strategy: 'Oku',
         token0: 'USDC',
         token1: 'WETH',
@@ -79,6 +86,7 @@ const networks = {
       },
       {
         id: '',
+        type: 'LP',
         strategy: 'Nile',
         token0: 'wrsETH',
         token1: 'WETH',
@@ -89,6 +97,7 @@ const networks = {
       },
       {
         id: '',
+        type: 'LP',
         strategy: 'PancakeSwap',
         token0: 'wstETH',
         token1: 'WETH',
@@ -107,6 +116,28 @@ const networks = {
       wstETH: linea['wsteth'].address,
     },
   },
+  // arbitrum
+  // 42161: {
+  //   managed: [
+  //     {
+  //       id: '',
+  //       type: 'MANAGED',
+  //       strategy: 'Managed',
+  //       name: 'Beta+ Momentum Strategy',
+  //       token0: 'USDC',
+  //       // token1: 'USDT',
+  //       decimals0: 6,
+  //       // decimals1: 6,
+  //       fee: '0.01',
+  //       vaultAddress: '0x9f4fff022ebff0cbfa3faf702911d0f658a4ba9b',
+  //     },
+  //   ],
+  //   addresses: {
+  //     USDC: arbitrum['usdc'].address,
+  //     USDT: arbitrum['usdt'].address,
+  //     WBTC: arbitrum['wbtc'].address,
+  //   },
+  // },
 };
 
 export default { basic, networks };
