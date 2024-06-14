@@ -93,7 +93,7 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
         {data.rewards &&
           data.rewards.map((reward: any) => {
             return (
-              <Gold>
+              <Gold key={reward.label}>
                 <img src={reward.icon} />
                 <span>{reward.label}</span>
               </Gold>
@@ -109,6 +109,7 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
             onClick={() => {
               onItemClick(item);
             }}
+            key={item.label}
           >
             <span className="spin-count">{item.spin} SPIN</span>
             <span className="spin-title">{item.label}</span>
