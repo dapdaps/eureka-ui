@@ -25,6 +25,7 @@ import {
   StyledTags,
   StyledText,
   StyledTimerBox,
+  StyledTips,
   StyledTitle,
   StyledWrapper,
 } from './styles';

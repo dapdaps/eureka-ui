@@ -152,7 +152,7 @@ const BridgeWapper = styled.div`
   .bridge-icon {
     cursor: pointer;
   }
-`
+`;
 
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
@@ -242,27 +242,31 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
         </MenuContainer>
         {/* Page don't need account section */}
 
-        <BridgeWapper>   
-        <img src="/images/dashboard/bridge.svg" onClick={() => {
-          router.push('/super-bridge')
-        }} className="bridge-icon"/>      
-        {isHideAccount ? (
-          <div />
-        ) : account ? (
-          <LoginContainer>
-            <Chain showName={false} bp="3001-003" />
-            <AccountWrapper
-              onClick={() => {
-                setLayoutStore({ showAccountSider: true });
-              }}
-            >
-              <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
-            </AccountWrapper>
-          </LoginContainer>
-        ) : (
-          <ConnectWallet />
-        )}
-        </BridgeWapper> 
+        <BridgeWapper>
+          <img
+            src="/images/dashboard/bridge.svg"
+            onClick={() => {
+              router.push('/super-bridge');
+            }}
+            className="bridge-icon"
+          />
+          {isHideAccount ? (
+            <div />
+          ) : account ? (
+            <LoginContainer>
+              <Chain showName={false} bp="3001-003" />
+              <AccountWrapper
+                onClick={() => {
+                  setLayoutStore({ showAccountSider: true });
+                }}
+              >
+                <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
+              </AccountWrapper>
+            </LoginContainer>
+          ) : (
+            <ConnectWallet />
+          )}
+        </BridgeWapper>
       </div>
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
       <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />

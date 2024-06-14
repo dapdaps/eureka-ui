@@ -11,7 +11,8 @@ import { ArrowDown, ArrowUp } from './Arrows'
 
 import { 
     getTransaction,
-    saveTransaction
+    saveTransaction,
+    updateTransaction,
  } from '../Utils'
 
 const TransactionWapper = styled.div`
@@ -151,7 +152,7 @@ export default function Transaction(
             }, (item.bridgeType || item.tool), provider?.getSigner()).then((isComplate: boolean) => {
                 if (isComplate) {
                     item.status = 2
-                    saveTransaction(item)
+                    updateTransaction(item)
                 } else {
                     item.status = 3
                 }

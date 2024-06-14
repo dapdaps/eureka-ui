@@ -3,7 +3,7 @@ import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainSc
 import { useRouter } from 'next/router';
 
 import useAccount from '@/hooks/useAccount';
-import { getTransaction, saveTransaction } from '@/components/BridgeX/Utils'
+import { getTransaction, saveTransaction, updateTransaction } from '@/components/BridgeX/Utils'
 import PublicTitle from '../PublicTitle';
 import { ArrowRight } from '../Arrow'
 import TransactionPanel from './TransactionPanel';
@@ -97,7 +97,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
             }, item.tool, provider?.getSigner()).then((isComplate: boolean) => {
                 if (isComplate) {
                     item.status = 2
-                    saveTransaction(item)
+                    updateTransaction(item)
                 } else {
                     item.status = 3
                 }
@@ -138,8 +138,8 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
         if (!account) {
             return
         }
-        refreshTransactionList()
 
+        refreshTransactionList()
     }, [account, updater])
  
     return <Container>
