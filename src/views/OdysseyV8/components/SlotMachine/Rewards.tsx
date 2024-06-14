@@ -62,7 +62,7 @@ export default function Rewards({ rewards = {} }: any) {
             {[1, 2].map((item) => (
               <Texts key={item}>
                 {Object.entries(rewards).map(([key, value]) => (
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+                  <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
                     <img src={RewardIcons[key]?.icon} style={{ width: 26, height: 26, marginTop: '3px' }} />
                     <div>
                       {value} {RewardIcons[key]?.label}

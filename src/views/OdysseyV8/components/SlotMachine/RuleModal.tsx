@@ -36,14 +36,14 @@ function RuleModal({ onClose, onShowModal }: any) {
     <Modal onClose={onClose} width={760}>
       <Title>Game Rules for ‘SPIN-TO-WIN’ !</Title>
       <Context>
-        Welcome to Odyssey Vol.4+! Participate in our exciting "Spin to Win" game and stand a chance to win amazing
-        rewards.
+        Welcome to Odyssey Vol.4+! Participate in our exciting &quot;Spin to Win&quot; game and stand a chance to win
+        amazing rewards.
       </Context>
       <SubTitle>Here’s how you can join and play:</SubTitle>
       <Context>
         Complete Tasks: Engage in Odyssey Vol.4+ Strategy、Tasks to earn spins. Spin the Wheel: Use your spins to
-        participate in the "Spin to Win" game. Win Rewards: Match symbols to win prizes. The more symbols you match, the
-        bigger the rewards!
+        participate in the &quot;Spin to Win&quot; game. Win Rewards: Match symbols to win prizes. The more symbols you
+        match, the bigger the rewards!
       </Context>
       <SubTitle>Prizes Include:</SubTitle>
       <Context>Blast Gold，Ring Points, Thruster Credits, Particle Points, veBlade, $Yield, Baja, Rings, Andy.</Context>
