@@ -224,7 +224,7 @@ const WETH_USDB_POOLS = {
   LENDING_POOL_ADDRESS: "0x4A1d9220e11a47d8Ab22Ccd82DA616740CF0920a",
   SYMBOL_ADDRESS: ["0x4300000000000000000000000000000000000004", "0x4300000000000000000000000000000000000003"],
   vaults: [{
-    icon: "https://app.juice.finance/images/logos/protocols/ethena.svg",
+    icon: "https://app.juice.finance/images/logos/tokens/usde.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "Ethena USDE V3 LP",
@@ -270,8 +270,8 @@ const WETH_USDB_POOLS = {
     }]
   }, {
     icon: "https://app.juice.finance/images/logos/protocols/thruster.svg",
-    iconBgColor: "transparent",
-    borderColor: "transparent",
+    iconBgColor: "#000000",
+    borderColor: "#000000",
     name: "WETH Spot Long",
     type: "Spot",
     protocol: "Thruster V3",
@@ -293,7 +293,7 @@ const USDB_USDB_POOLS = {
   LENDING_POOL_ADDRESS: "0x4A1d9220e11a47d8Ab22Ccd82DA616740CF0920a",
   SYMBOL_ADDRESS: "0x4300000000000000000000000000000000000003",
   vaults: [{
-    icon: "https://app.juice.finance/images/logos/protocols/ethena.svg",
+    icon: "https://app.juice.finance/images/logos/tokens/usde.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "Ethena USDE V3 LP",

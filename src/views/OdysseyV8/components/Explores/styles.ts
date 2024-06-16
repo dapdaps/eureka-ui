@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   font-family: Montserrat;
-  margin: 0 auto 100px;
+  margin: 0px auto 100px;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -9,5 +9,3 @@ export const StyledContent = styled.div`
   /* width: 1400px; */
   margin: 0 auto;
 `;
-
-export const StyledBg = styled.div``;

@@ -15490,7 +15490,7 @@ packages:
     name: eth-object
     version: 1.0.3
     dependencies:
-      eth-util-lite: github.com/near/eth-util-lite/ae0210cbe127b4d43ba01fd7cd4898d1a3f6c96a
+      eth-util-lite: github.com/near/eth-util-lite/427b7634a123d171432f3b38c6542913a3897ac7
       ethereumjs-util: 7.1.5
       web3: 1.10.4
     transitivePeerDependencies:
@@ -15500,8 +15500,8 @@ packages:
       - utf-8-validate
     dev: false
 
-  github.com/near/eth-util-lite/ae0210cbe127b4d43ba01fd7cd4898d1a3f6c96a:
-    resolution: {tarball: https://codeload.github.com/near/eth-util-lite/tar.gz/ae0210cbe127b4d43ba01fd7cd4898d1a3f6c96a}
+  github.com/near/eth-util-lite/427b7634a123d171432f3b38c6542913a3897ac7:
+    resolution: {tarball: https://codeload.github.com/near/eth-util-lite/tar.gz/427b7634a123d171432f3b38c6542913a3897ac7}
     name: eth-util-lite
     version: 1.0.1
     dependencies:
