@@ -93,15 +93,16 @@ export const LoadingWrap = styled.div`
 
 export const HeadRight = styled.div`
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 6px;
   width: 119px;
-  height: 54px;
+  height: 56px;
   background: url(${goldImg.src}) no-repeat 0 0;
   font-size: 16px;
   font-style: italic;
   font-weight: 700;
   color: rgba(0, 0, 0, 1);
-  padding: 17px 0 0 68px;
+  padding-left: 40px;
   cursor: pointer;
   position: relative;
   .tip {
@@ -115,6 +116,10 @@ export const HeadRight = styled.div`
     padding: 10px;
     color: #fff;
     display: none;
+  }
+  .icon {
+    width: 22px;
+    height: 22px;
   }
   &:hover {
     .tip {

@@ -51,7 +51,8 @@ export default function Quest({ data, bgClass, userInfo, authConfig }: any) {
         </HeadLeft>
         {data.extraGold && (
           <HeadRight>
-            {data.extraGold.value}
+            <img className="icon" src={data.extraGold.icon} />
+            <span>{data.extraGold.value}</span>
             <div className="tip">
               Top traders based of Volume on {name} will share {data.extraGold.value} Extra Gold
             </div>

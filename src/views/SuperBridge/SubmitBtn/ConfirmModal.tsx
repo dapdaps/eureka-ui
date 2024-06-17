@@ -82,6 +82,9 @@ const FeeBox = styled.div`
         justify-content: space-between;
         align-items: center;
     }
+    &:not(:first-child) {
+        margin-top: 5px;
+    }
 `
 
 const Container = styled.div<{ disabled?: boolean }>`
@@ -165,8 +168,14 @@ export default function ConfirmModal({
         <Box>
             <FeeBox>
                 <div className="fee-line">
-                    <div>Total Fee</div>
-                    <div>${route && fromChain &&  balanceFormated(route?.feeType === 1 ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.gas) : route?.gas) }</div>
+                    <div>Bridge Fee</div>
+                    <div>${route && fromChain &&  balanceFormated(route?.feeType === 1 ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.fee) : route?.fee) }</div>
+                </div>
+            </FeeBox>
+            <FeeBox>
+                <div className="fee-line">
+                    <div>Gas Fee</div>
+                    <div>${route && fromChain &&  balanceFormated(route?.gasType === 1 ? (prices as any)[fromChain?.nativeCurrency.symbol] * Number(route.gas) : route?.gas) }</div>
                 </div>
             </FeeBox>
         </Box>

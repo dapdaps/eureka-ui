@@ -189,6 +189,10 @@ export default {
       width: 46,
       height: 46,
     },
+    extraGold: {
+      icon: '/images/odyssey/v8/gold.svg',
+      value: '1000',
+    },
     bgColor: '#8569F3',
     name: 'Ambient',
     rewards: [],
@@ -320,7 +324,7 @@ export default {
     rewards: [
       {
         icon: '/images/odyssey/v8/fenix.png',
-        label: '1M Fenix Rings',
+        label: '1.5M Fenix Rings',
       },
     ],
     quests: [
