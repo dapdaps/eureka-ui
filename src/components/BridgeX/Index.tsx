@@ -155,6 +155,7 @@ export default function BridgeX({
     const [receiveAmount, setReceiveAmount] = useState('')
     const [duration, setDuration] = useState('')
     const [gasCostUSD, setGasCostUSD] = useState('')
+    const [feeCostUSD, setFeeCostUSD] = useState('')
     const [fromUSD, setFromUSD] = useState('')
     const [toUSD, setToUSD] = useState('')
     const [toAddress, setToAddress] = useState('')
@@ -313,6 +314,7 @@ export default function BridgeX({
             setLoading(true)
             setDuration('')
             setGasCostUSD('')
+            setFeeCostUSD('')
             setReceiveAmount('')
             setToUSD('')
             setRoute(null)
@@ -353,7 +355,8 @@ export default function BridgeX({
 
                     if (maxRoute) {
                         setDuration(maxRoute.duration)
-                        setGasCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas)
+                        setGasCostUSD(maxRoute.gasType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas)
+                        setFeeCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.fee : maxRoute.fee)
 
                         setReceiveAmount(getFullNum(new Big(maxRoute.receiveAmount).div(Math.pow(10, selectOutputToken.decimals)).toNumber().toString()))
                         setRoute(maxRoute)
@@ -485,7 +488,8 @@ export default function BridgeX({
 
             <FeeMsg
                 duration={duration}
-                gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : ''}
+                feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
+                gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
             />
             {
                 showWarning ? <Alert /> : null
@@ -527,7 +531,8 @@ export default function BridgeX({
                 toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
                 duration={duration}
                 tool={tool}
-                gasCostUSD={balanceFormated(gasCostUSD)}
+                gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
+                feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
                 sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
                 receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
                 onClose={() => {

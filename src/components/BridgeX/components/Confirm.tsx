@@ -110,6 +110,7 @@ export default function Comfirm({
     toAddress,
     duration,
     gasCostUSD,
+    feeCostUSD,
     sendAmount,
     receiveAmount,
     onClose,
@@ -159,7 +160,11 @@ export default function Comfirm({
                     <ListItemContent>~{duration}min</ListItemContent>
                 </ListItem>
                 <ListItem>
-                    <ListItemTitle>Fee</ListItemTitle>
+                    <ListItemTitle>Bridge Fee</ListItemTitle>
+                    <ListItemContent>${feeCostUSD}</ListItemContent>
+                </ListItem>
+                <ListItem>
+                    <ListItemTitle>Gas Fee</ListItemTitle>
                     <ListItemContent>${gasCostUSD}</ListItemContent>
                 </ListItem>
                 <ListItem>
