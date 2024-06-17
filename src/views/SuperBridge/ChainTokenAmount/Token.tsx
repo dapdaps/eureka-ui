@@ -93,7 +93,7 @@ export default function TokenRow({ token, chain, isSelected, loading, balances, 
         </div>
         <div className="right">
             {
-                loading ? <Loading /> : <div>
+                loading ? <Loading size={12}/> : <div>
                     <div>{ balanceFormated(balances[balanceKey]) }</div>
                     <div className="r-price">${ balanceFormated(Number(prices[token.symbol]) * balances[balanceKey], 2) }</div>
                 </div>
