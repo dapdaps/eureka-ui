@@ -9,6 +9,7 @@ export const StyledContainer = styled(motion.div)`
   .quest-item {
     width: 400px;
     position: relative;
+    padding-bottom: 20px;
   }
   .quest-desc {
     color: #979abe;
