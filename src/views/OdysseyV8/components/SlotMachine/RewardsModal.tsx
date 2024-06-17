@@ -12,7 +12,7 @@ export default function RewardsModal({ loading, rewards = {}, onClose }: any) {
           fontWeight: 'bold',
         }}
       >
-        You have won
+        My Rewards
       </div>
       <div
         style={{
@@ -21,8 +21,17 @@ export default function RewardsModal({ loading, rewards = {}, onClose }: any) {
           marginTop: 10,
         }}
       >
-        You&apos;ve won rewards through the &quot;Spin to Win&quot; in Odyssey Vol.4+ will be settled after the
-        conclusion of the event. Wishing you the best of luck in winning big prizes!
+        All rewards won via Odyssey Vol.4+ &quot;Spin to Win&quot; slot machine will be settled after the conclusion of
+        the event.
+      </div>
+      <div
+        style={{
+          fontSize: 16,
+          lineHeight: '150%',
+          marginTop: 10,
+        }}
+      >
+        Wishing you the best of luck in winning the biggest prizes!
       </div>
       {loading ? (
         <div style={{ display: 'flex', height: 200, justifyContent: 'center', alignItems: 'center' }}>
@@ -75,7 +84,9 @@ export default function RewardsModal({ loading, rewards = {}, onClose }: any) {
               </>
             ))
           ) : (
-            <div style={{ fontSize: 14, textAlign: 'center' }}>Not rewards...Participate now to win big prizes!</div>
+            <div style={{ fontSize: 14, textAlign: 'center' }}>
+              You haven't won any rewards yet.. .Participate in missions now to win big prizes!
+            </div>
           )}
         </div>
       )}
