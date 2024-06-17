@@ -99,7 +99,7 @@ const chainCofig = {
     chainName: 'Polygon',
     icon: 'https://assets.dapdap.net/images/bafkreic6p22qh3ytwkpmv5hq6a3ppdq7xoyvnmeog3wbtugnao434q6d7a.svg',
     nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
-    rpcUrls: ['https://polygon.llamarpc.com', 'https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf', 'https://polygon-mainnet.public.blastapi.io'],
+    rpcUrls: ['https://polygon-mainnet.public.blastapi.io', 'https://polygon.llamarpc.com', 'https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf'],
     blockExplorers: 'https://polygonscan.com',
   },
   1101: {
