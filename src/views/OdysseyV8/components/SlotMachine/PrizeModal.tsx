@@ -83,7 +83,7 @@ export default function PrizeModal({ onClose, prize }: { onClose: () => void; pr
         <>
           <Iocn src={lbImg.src} />
           <Title>Congrats!</Title>
-          <Content>You’ve got</Content>
+          <Content>You’ve won</Content>
 
           <div style={{ marginTop: 30 }}>
             {Object.entries(prize).map(([key, value]) => (

@@ -67,7 +67,7 @@ const ThrusterCoinListStep2 = [
   },
 ];
 
-export default function Treasure() {
+export default function Treasure({ strategies }: any) {
   const [showModal1, setShowModal1] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [showModal3, setShowModal3] = useState(false);
@@ -590,7 +590,7 @@ export default function Treasure() {
 
         <StyledContent className="row-top">
           <Treasure1 onClick={() => setShowModal1(true)}>
-            <Spins />
+            <Spins active={strategies['strategy_particle_duo_ring_juice']} />
             <Line />
             <Image
               src="/images/odyssey/v8/star1.svg"
@@ -617,6 +617,7 @@ export default function Treasure() {
               style={{
                 left: 172,
               }}
+              active={strategies['strategy_thruster_hyperlock']}
             />
             <Line />
             <Image src="/images/odyssey/v8/star2.svg" alt="" width={363} height={170} className="scale pac" />
@@ -641,6 +642,7 @@ export default function Treasure() {
               style={{
                 left: -12,
               }}
+              active={strategies['strategy_juice']}
             />
             <Line />
             <Image src="/images/odyssey/v4/juice.svg" alt="" width={170} height={170} className="scale" />
@@ -664,6 +666,7 @@ export default function Treasure() {
               style={{
                 left: 172,
               }}
+              active={strategies['strategy_renzo_thruster_hyperlock_particle']}
             />
             <Line />
             <Image
@@ -684,6 +687,7 @@ export default function Treasure() {
               style={{
                 left: 170,
               }}
+              active={strategies['strategy_thruster_orbit_juice']}
             />
             <Line />
             <Image
@@ -718,6 +722,7 @@ export default function Treasure() {
               style={{
                 left: 30,
               }}
+              active={strategies['strategy_thruster_thruster_hyperlock_particle']}
             />
             <Line />
             <Image
