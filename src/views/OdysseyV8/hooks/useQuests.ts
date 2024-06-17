@@ -16,6 +16,7 @@ const defaultQuests: any = {
   spins: [],
   staking: [],
   yield: [],
+  strategies: {},
 };
 
 export default function useQuests(id: any) {
@@ -60,9 +61,27 @@ export default function useQuests(id: any) {
             'Baja',
             'Fenix',
             'Andy',
-          ].includes(item.name)
+            'strategy_particle_duo_ring_juice',
+            'strategy_thruster_hyperlock',
+            'strategy_juice',
+            'strategy_renzo_thruster_hyperlock_particle',
+            'strategy_thruster_orbit_juice',
+            'strategy_thruster_thruster_hyperlock_particle',
+          ].includes(item.source)
         ) {
-          _result.social.push(item.source);
+          _result.social.push(item);
+        }
+        if (
+          [
+            'strategy_particle_duo_ring_juice',
+            'strategy_thruster_hyperlock',
+            'strategy_juice',
+            'strategy_renzo_thruster_hyperlock_particle',
+            'strategy_thruster_orbit_juice',
+            'strategy_thruster_thruster_hyperlock_particle',
+          ].includes(item.source)
+        ) {
+          _result.strategies[item.source] = item.total_spins > 0;
         }
         if (item.category_id === 1) {
           _result.bridge.push(item);

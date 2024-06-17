@@ -107,6 +107,7 @@ export default function OdysseyV8() {
         />
 
         <Tabs
+          strategies={quests.strategies}
           spins={quests.spins}
           detail={detail}
           queryDetail={queryDetail}
