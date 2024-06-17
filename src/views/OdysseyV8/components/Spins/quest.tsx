@@ -53,7 +53,7 @@ export default function Quest({ data, bgClass, userInfo, authConfig }: any) {
           <HeadRight>
             {data.extraGold.value}
             <div className="tip">
-              Top trader based of Volume on {name} will share {data.extraGold.value} Extra Gold
+              Top traders based of Volume on {name} will share {data.extraGold.value} Extra Gold
             </div>
           </HeadRight>
         )}
