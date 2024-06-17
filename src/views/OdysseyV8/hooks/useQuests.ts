@@ -41,7 +41,7 @@ export default function useQuests(id: any) {
 
       result.data.forEach((item: any) => {
         if (DappsConfig[item.source]) {
-          _result.spins.push(DappsConfig[item.source]);
+          _result.spins.push({ ...DappsConfig[item.source], id: item.id, step: item.step });
         }
         if (
           item.category_id === 0 &&
@@ -116,5 +116,5 @@ export default function useQuests(id: any) {
     run();
   }, [account]);
 
-  return { loading, quests: quests || defaultQuests };
+  return { loading, quests: quests || defaultQuests, queryQuests };
 }

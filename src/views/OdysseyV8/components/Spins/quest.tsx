@@ -1,11 +1,6 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import useCheck from '../../hooks/useCheck';
-import useParticleReport from '../../hooks/useParticleReport';
-import RefreshButton from '../RefreshButton';
 import Trapeziform from '../Trapeziform';
-import TrapeziformBtn from '../TrapeziformBtn';
-import CheckIcon from '../CheckIcon';
 import { openLink, openXShareLink } from '@/utils/links';
 import useReport from '../../hooks/useReport';
 import {
@@ -25,25 +20,21 @@ import {
 } from './styles';
 
 export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authConfig }: any) {
-  const { id, name, logo, link, desc, total_spins, spins } = data;
-  const { handleReport } = useReport();
+  const { id, name, step, total_spins, spins } = data;
+  const { handleReport } = useReport(true);
   const [execution, setExecution] = useState(0);
-  const { checking, handleRefresh } = useCheck({ id }, (_times: number) => {
-    onRefreshDetail();
-    setExecution(_times);
-  });
 
-  const { loading: reportLoading, onStartReport } = useParticleReport(openLink);
   useEffect(() => {
     setExecution(total_spins / spins);
   }, [total_spins, spins]);
 
-  const onItemClick = (item: any) => {
-    if (item.link && !item.link?.startsWith('http')) {
+  const onItemClick = (item: any, i: number) => {
+    if (item.link && item.link?.startsWith('http')) {
       openLink(item.link, true);
+
+      handleReport(id, i + 1);
       return;
     }
-    return;
     if (!userInfo.twitter?.is_bind) {
       const path = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${authConfig.twitter_client_id}&redirect_uri=${window.location.href}&scope=tweet.read%20users.read%20follows.read%20like.read&state=state&code_challenge=challenge&code_challenge_method=plain`;
       sessionStorage.setItem('_auth_type', 'twitter');
@@ -53,6 +44,7 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
     openXShareLink(`Join Odyssey Vol.4+ and conquer the quest to earn spins for a chance at big prizes! 🎉 
     Don't miss out on your shot at exciting rewards! @DapDapMeUp @${item.twitter}
     #DapDap #Blast`);
+    handleReport(id, i + 1);
   };
 
   return (
@@ -65,22 +57,6 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
         </HeadLeft>
         {data.extraGold && (
           <HeadRight>
-            {/* {total_spins > 0 ? (
-            <Spins>
-              <span>{total_spins} SPIN</span>
-              <CheckIcon />
-            </Spins>
-          ) : (
-            <RefreshButton
-              onClick={(ev: any) => {
-                ev.stopPropagation();
-                if (!checking) handleRefresh();
-              }}
-              loading={checking}
-            >
-              Unexplored
-            </RefreshButton>
-          )} */}
             {data.extraGold.value}
             <div className="tip">
               Top trader based of Volume on {name} will share {data.extraGold.value} Extra Gold
@@ -104,32 +80,33 @@ export default function Quest({ data, bgClass, onRefreshDetail, userInfo, authCo
 
       <QuestTitle>Quest</QuestTitle>
 
-      {data.quests.map((item: any) => {
+      {data.quests.map((item: any, i: number) => {
         return (
           <SpinLine
             onClick={() => {
-              onItemClick(item);
+              onItemClick(item, i);
             }}
             key={item.label}
-            $disabled={item.twitter || item.link?.startsWith('http')}
           >
             <span className="spin-count">{item.spin} SPIN</span>
             <span className="spin-title">{item.label}</span>
             <span className="spin-status">
-              {/* <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M16 8.5C16 12.6421 12.6421 16 8.5 16C4.35786 16 1 12.6421 1 8.5C1 4.35786 4.35786 1 8.5 1"
-                  stroke="#00FFD1"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-                <path
-                  d="M4.99609 7.5L7.99609 10.5L15.4961 3"
-                  stroke="#00FFD1"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                />
-              </svg> */}
+              {step.includes(i + 1) && (
+                <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M16 8.5C16 12.6421 12.6421 16 8.5 16C4.35786 16 1 12.6421 1 8.5C1 4.35786 4.35786 1 8.5 1"
+                    stroke="#00FFD1"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M4.99609 7.5L7.99609 10.5L15.4961 3"
+                    stroke="#00FFD1"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              )}
             </span>
           </SpinLine>
         );

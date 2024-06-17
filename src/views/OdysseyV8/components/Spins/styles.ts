@@ -158,12 +158,12 @@ export const QuestTitle = styled.div`
   padding: 25px 24px 10px;
 `;
 
-export const SpinLine = styled.div<{ $disabled: boolean }>`
+export const SpinLine = styled.div<{ $disabled?: boolean }>`
   margin: 0 24px;
   background: rgba(217, 217, 217, 0.1);
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
   padding: 10px;
   gap: 10px;
   border-radius: 4px;

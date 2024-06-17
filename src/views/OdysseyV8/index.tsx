@@ -30,7 +30,7 @@ export default function OdysseyV8() {
   const { detail, loading, queryDetail } = useDetail(id, () => {
     queryRewards();
   });
-  const { loading: questingLoading, quests } = useQuests(id);
+  const { loading: questingLoading, quests, queryQuests } = useQuests(id);
   const { userInfo, queryUserInfo } = useUserInfo();
 
   const [showNoti, setShowNoti] = useState(true);
@@ -96,7 +96,10 @@ export default function OdysseyV8() {
           reward={reward}
           isSpining={isSpining}
           isClaiming={isClaiming}
-          onRefresh={queryDetail}
+          onRefresh={() => {
+            queryDetail();
+            queryQuests();
+          }}
           loading={loading}
           rewards={rewards}
           queryRewards={queryRewards}
