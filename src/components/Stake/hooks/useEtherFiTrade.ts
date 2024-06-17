@@ -166,11 +166,10 @@ async function getTransactionData(value: string, chain: Chain, signer: Signer) {
         signer,
     );
 
-
     const transactionData = await DepositContract.populateTransaction.deposit(
         '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE',
         value,
-        new Big(value).mul(new Big(0.9)).toString(),
+        new Big(value).mul(new Big(0.9)).toNumber().toFixed(),
         {
             value,
         }
@@ -197,7 +196,7 @@ export default function useTrade({
 
     async function deposit(value: string, signer: Signer) {
         try {
-            const _value = new Big(value).mul(10 ** 18).toString()
+            const _value = new Big(Number(value).toFixed(18)).mul(10 ** 18).toString()
             setIsLoading(true)
             const tx = await ethereumDeposit(_value, signer)
             success({
@@ -227,7 +226,7 @@ export default function useTrade({
 
     useEffect(() => {
         if (amount && !isNaN(Number(amount))) {
-            const _amount = new Big(amount.toString()).mul(10 ** 18).toString()
+            const _amount = new Big(Number(amount).toFixed(18)).mul(10 ** 18).toString()
             getConversionAmount(_amount, chain).then(setRecived)
         } else {
             setRecived('')
@@ -236,7 +235,7 @@ export default function useTrade({
 
     useEffect(() => {
         if (amount && !isNaN(Number(amount)) && !isError && provider) {
-            const _amount = new Big(amount.toString()).mul(10 ** 18).toString()
+            const _amount = new Big(Number(amount).toFixed(18)).mul(10 ** 18).toString()
             getEstimateGas(_amount, chain, provider?.getSigner()).then(res => {
                 if (res) {
                     setGasEstimate(res.gasEstimate)
