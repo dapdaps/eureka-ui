@@ -40,8 +40,8 @@ const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, onCollect
   );
   const { int, float } = useMemo(() => {
     if (!prices || !token0 || !token1) return { int: '-', float: '-' };
-    const _price0 = prices[token0.symbol];
-    const _price1 = prices[token1.symbol];
+    const _price0 = prices[token0.priceKey || token0.symbol];
+    const _price1 = prices[token1.priceKey || token1.symbol];
     if ((amount0 || amount0 === 0) && !_price0) return { int: '-', float: '-' };
     if ((amount1 || amount1 === 0) && !_price1) return { int: '-', float: '-' };
     const value0 = new Big(amount0).mul(_price0);

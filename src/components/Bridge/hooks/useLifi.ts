@@ -13,7 +13,6 @@ import type { Chain, Token, LifiChainToken } from '../types';
 
 export const ISSERVER = typeof window === "undefined";
 
-// 初始化lifi
 export const lifi = new LiFi({
   integrator: 'DapDap'
 })
@@ -74,7 +73,6 @@ export async function getLifiTokens(): Promise<LifiChainToken> {
           symbol: item.symbol,
           icon: item.logoURI ? item.logoURI : '',
           decimals: item.decimals,
-          // lifi和stragate不一致
           isNative: currentChain && currentChain.nativeCurrency.symbol === item.symbol,
           // isNative: false,
         }

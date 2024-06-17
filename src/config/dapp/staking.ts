@@ -60,6 +60,44 @@ const ROUTE_CONFIG = {
       '--button-text-color': '#000',
     },
   },
+  kelp: {
+    type: 'staking',
+    theme: {
+      '--button-color': '#075a5a',
+      '--button-text-color': '#fff',
+    },
+  },
+  ledgity: {
+    type: 'staking',
+    theme: {
+      '--button-color': '#3396FF',
+      '--button-text-color': '#fff',
+    },
+  },
+  duo: {
+    type: 'staking',
+    theme: {
+      '--button-color': 'linear-gradient(120deg, #e67819, #dead1f 10%, #ead966 15%, #dbbf22 20%, #dd761e 85%, #be6417)',
+      '--switch-color': 'linear-gradient(120deg, #e67819, #dead1f 10%, #ead966 15%, #dbbf22 20%, #dd761e 85%, #be6417)',
+      '--button-text-color': '#ffffff',
+    },
+  },
+  'teahouse-finance': {
+    type: 'staking',
+    theme: {
+      '--button-color': '#d5fa69',
+      '--button-text-color': '#000',
+    },
+  },
+  'agent-fi': {
+    type: 'staking',
+    theme: {
+      '--button-color': '#fcfc03',
+      '--switch-color': '#fcfc03',
+      '--button-text-color': '#000000',
+      '--container-width': '1000px',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;

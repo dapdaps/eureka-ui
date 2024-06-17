@@ -436,6 +436,9 @@ const AllDappsColumn: NextPageWithLayout = () => {
   const [selectedMenu, setSelectedMenu] = useState('');
   const [loading, setLoading] = useState(true);
 
+  const networkRef = useRef<any>(null);
+  const isFirstLoad = useRef<boolean>(false);
+
   function getCategoryNames(dappCategories: any, categoryArray: any[]) {
     const categories = Array.isArray(dappCategories) ? dappCategories : Object.values(dappCategories);
     return categories.map((categoryItem: any) => {
@@ -469,6 +472,7 @@ const AllDappsColumn: NextPageWithLayout = () => {
     }
     router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
   };
+
   const handleFunctionClick = (functionType: any) => {
     const id = functionType.id;
     let _selectedFunction: string[] = [];
@@ -612,6 +616,36 @@ const AllDappsColumn: NextPageWithLayout = () => {
       wait: 500,
     },
   );
+
+  const showHiddenDapp = () => {
+    if (router.query.network && networkRef.current) {
+      const networkElement = networkRef.current;
+      const elementParent = networkElement.parentNode as HTMLElement;
+      if (elementParent) {
+        const top = networkElement.offsetTop - elementParent.offsetTop;
+        if (!isNaN(top)) {
+          const expanded = top <= 45;
+          setIsExpanded(expanded);
+          setListHeight(expanded ? '45px' : 'auto');
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    if (isFirstLoad.current) {
+      showHiddenDapp();
+      isFirstLoad.current = false;
+    }
+  }, [networkRef.current])
+
+  useEffect(() => {
+    isFirstLoad.current = true;
+    return () => {
+      isFirstLoad.current = false;
+    }
+  }, []);
+
   useEffect(() => {
     const categoryFromQuery = router.query.category ? (router.query.category as string).split(',') : [];
     setSelectedFunction(categoryFromQuery);
@@ -679,6 +713,7 @@ const AllDappsColumn: NextPageWithLayout = () => {
       setIsExpanded(true);
     }
   };
+
   useEffect(() => {
     const checkHeight = () => {
       if (listRef.current && listRef.current.offsetHeight > 45) {
@@ -795,6 +830,7 @@ const AllDappsColumn: NextPageWithLayout = () => {
                 <div
                   className={`netWork-list-item ${selectedMenu === String(child.id) ? 'active' : ''}`}
                   key={index}
+                  ref={selectedMenu === String(child.id) ? networkRef : null}
                   onClick={() => child.id && handleMenuClick(String(child.id))}
                   data-bp="10011-004"
                 >

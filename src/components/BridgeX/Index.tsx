@@ -3,13 +3,14 @@ import styled from 'styled-components';
 import Big from 'big.js'
 import { useDebounce } from 'ahooks';
 
+import allTokens from '@/config/bridge/allTokens';
 import useToast from '@/hooks/useToast';
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { useSetChain } from '@web3-onboard/react';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated } from '@/utils/balance';
+import { balanceFormated, percentFormated, errorFormated } from '@/utils/balance';
 
 import ChainSelector from './components/ChainSelector'
 import FeeMsg from './components/FeeMsg';
@@ -143,11 +144,11 @@ export default function BridgeX({
     const [updater, setUpdater] = useState(1)
     const [chainFrom, setChainFrom] = useState<any>(null)
     const [chainTo, setChainTo] = useState<any>(null)
-    const [allTokens, setAllTokens] = useState<any>({})
-    const [loadedAllTokens, setLoadedAllTokens] = useState(false)
+    // const [allTokens, setAllTokens] = useState<any>({})
+    const [loadedAllTokens, setLoadedAllTokens] = useState(true)
     const [otherAddressChecked, setOtherAddressChecked] = useState(false)
-    const [inputTokens, setInputTokens] = useState([])
-    const [outputTokens, setOutputTokens] = useState([])
+    const [inputTokens, setInputTokens] = useState<any[]>([])
+    const [outputTokens, setOutputTokens] = useState<any[]>([])
     const [selectInputToken, setSelectInputToken] = useState<any>(null)
     const [selectOutputToken, setSelectOutputToken] = useState<any>(null)
     const [sendAmount, setSendAmount] = useState('')
@@ -161,7 +162,7 @@ export default function BridgeX({
     const [showWarning, setShowWarning] = useState(false)
     const [loading, setLoading] = useState(false)
     const [showConfirm, setShowConfirm] = useState(false)
-    const [route, setRoute] = useState(null)
+    const [route, setRoute] = useState<any>(null)
     const [canRoute, setCanRoute] = useState(false)
     const [isSending, setIsSending] = useState(false)
     const [sendingDisabeld, setSendingDisabeld] = useState(false)
@@ -208,10 +209,10 @@ export default function BridgeX({
     }, [])
 
     useEffect(() => {
-        getAllToken().then((res: any) => {
-            setLoadedAllTokens(true)
-            setAllTokens(res)
-        })
+        // getAllToken().then((res: any) => {
+        //     setLoadedAllTokens(true)
+        //     setAllTokens(res)
+        // })
     }, [])
 
     useEffect(() => {
@@ -296,12 +297,6 @@ export default function BridgeX({
     }, [account, currentChainId, inputValue, inputBalance, route, loading, chainFrom])
 
 
-    function refreshTransactionList() {
-        const transactionObj = getTransaction(`bridge-${account}-${tool}`)
-
-        setTransactionList(transactionObj.transactionList)
-    }
-
     function validateInput() {
         if (!account || !chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
             return false
@@ -365,7 +360,7 @@ export default function BridgeX({
 
                     if (maxRoute) {
                         setDuration(maxRoute.duration)
-                        setGasCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas,)
+                        setGasCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas)
                         setReceiveAmount(new Big(maxRoute.receiveAmount).div(Math.pow(10, selectOutputToken.decimals)).toString())
                         setRoute(maxRoute)
                         setLoading(false)
@@ -503,7 +498,11 @@ export default function BridgeX({
             }
             <TokenSpace height={'12px'} />
             
-            <SubmitBtn style={{ opacity: ((!route || !canRoute) && account ) ? 0.2 : 1, background: color }} onClick={async () => {
+            <SubmitBtn style={{ 
+                opacity: ((!route || !canRoute) && account ) ? 0.2 : 1, 
+                background: color,
+                color: tool === 'stargate' ? '#000' : '#fff'
+            }} onClick={async () => {
                 if (!account) {
                     onConnect()
                     return
@@ -533,7 +532,8 @@ export default function BridgeX({
                 disabled={isSendingDisabled}
                 toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
                 duration={duration}
-                gasCostUSD={gasCostUSD}
+                tool={tool}
+                gasCostUSD={balanceFormated(gasCostUSD)}
                 sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
                 receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
                 onClose={() => {
@@ -547,7 +547,6 @@ export default function BridgeX({
 
                     try {
                         const txHash: any = await execute(route, provider.getSigner())
-                        console.log('txHash: ', txHash)
                         if (!txHash) {
                             return
                         }
@@ -556,22 +555,32 @@ export default function BridgeX({
                         setIsSending(false)
                         setIsSendingDisabled(false)
 
-                        saveTransaction(`bridge-${account}-${tool}`, {
+
+                        const actionParams = {
                             hash: txHash,
                             link: getChainScan(chainFrom.chainId),
                             duration: duration,
                             fromChainId: chainFrom.chainId,
+                            fromChainName: chainFrom.chainName,
                             fromChainLogo: chainFrom.icon,
-                            fromTokenLogo: selectInputToken.logoURI,
+                            fromTokenLogo: selectInputToken.icon,
                             fromAmount: sendAmount,
                             fromTokenSymbol: selectInputToken.symbol,
                             toChainId: chainTo.chainId,
+                            toChainName: chainTo.chainName,
                             toChainLogo: chainTo.icon,
-                            toTokenLogo: selectOutputToken.logoURI,
+                            toTokenLogo: selectOutputToken.icon,
                             toAmout: receiveAmount,
-                            toToenSymbol: selectOutputToken.symbol,
+                            toTokenSymbol: selectOutputToken.symbol,
                             time: Date.now(),
-                        })
+                            tool: tool,
+                            bridgeType: route.bridgeType,
+                            fromAddress: account,
+                            toAddress: account,
+                            status: 3,
+                        }
+
+                        saveTransaction(actionParams)
 
                         addAction({
                             type: "Bridge",
@@ -583,6 +592,7 @@ export default function BridgeX({
                             add: false,
                             status: 1,
                             transactionHash: txHash,
+                            extra_data: actionParams
                         })
 
                         success({
@@ -591,13 +601,12 @@ export default function BridgeX({
                         })
 
                         setUpdater(updater + 1)
-                        refreshTransactionList()
 
                     } catch(err: any) {
                         console.log(err)
                         fail({
                             title: 'Transaction failed',
-                            text: err.message || err.toString(),
+                            text: errorFormated(err),
                         })
 
                         setIsSending(false)
@@ -609,15 +618,11 @@ export default function BridgeX({
         }
 
         <Transaction
-            transactionList={transactionList}
             updater={transitionUpdate}
             storageKey={`bridge-${account}-${tool}`}
             getStatus={getStatus}
             tool={tool}
             account={account}
-            onRefresh={() => {
-                refreshTransactionList()
-            }}
         />
 
     </BridgePanel>

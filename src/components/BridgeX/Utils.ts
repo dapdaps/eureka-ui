@@ -1,49 +1,27 @@
 import Big from 'big.js'
+import { SuperBridgeStore } from 'super-bridge-sdk'
 
-export function getBalance(address: any, account: any, rpcUrl: any, decimals: any) {
-//     const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+import { post, get } from '@/utils/http';
 
-//     if (address === "native") {
-//         return provider.getBalance(account).then((rawBalance) => {
-//             return ethers.utils.formatUnits(rawBalance._hex, decimals).toString()
-//         });
-//     }
-
-//     const TokenContract = new ethers.Contract(
-//         address,
-//         [
-//             {
-//                 constant: true,
-//                 inputs: [
-//                     {
-//                         name: "_owner",
-//                         type: "address",
-//                     },
-//                 ],
-//                 name: "balanceOf",
-//                 outputs: [
-//                     {
-//                         name: "balance",
-//                         type: "uint256",
-//                     },
-//                 ],
-//                 payable: false,
-//                 stateMutability: "view",
-//                 type: "function",
-//             },
-//         ],
-//         provider
-//     );
-
-//     return TokenContract.balanceOf(account)
-//         .then((rawBalance: any) => {
-//             return ethers.utils.formatUnits(rawBalance._hex, decimals).toString()
-//         })
-//         .catch((err) => {
-//             console.log(err)
-//             return '0.0'
-//         });
+let gloabalSbs: SuperBridgeStore
+async function initDb() {
+    const sbs = new SuperBridgeStore('dapdap', 'transaction')
+    await sbs.init()
+    gloabalSbs = sbs
+    return sbs
 }
+
+async function getDb(): Promise<SuperBridgeStore> {
+    if (!gloabalSbs) {
+        return initDb()
+    }
+    return gloabalSbs
+}
+
+if (typeof window !== 'undefined') {
+    initDb()
+}
+
 
 export function balanceFormated(balance: any, digits?: any) {
     digits = digits || 4
@@ -65,27 +43,57 @@ export function addressFormated(address: string) {
     })
 }
 
-export function saveTransaction(transaction_key: any, config: any) {
-    const transactionObj = getTransaction(transaction_key)
-    transactionObj[config.hash] = config
-    saveAllTransaction(transaction_key, transactionObj)
+export async function saveTransaction(item: any) {
+    const sbs = await getDb()
+    await sbs.update(item)
+}
+
+export async function updateTransaction(item: any) {
+    await post('/api/action/bridge/status', {
+        tx_id: item.hash,
+        status: item.status.toString()
+    })
 }
 
 export function saveAllTransaction(transaction_key: any, transactionObj: any) {
-    localStorage.setItem(transaction_key, JSON.stringify(transactionObj))
+    // localStorage.setItem(transaction_key, JSON.stringify(transactionObj))
 }
 
-export function getTransaction(transaction_key: any): any {
-    console.log('transaction_key: ', transaction_key)
-    let transactionObj: any = localStorage.getItem(transaction_key)
-
-    if (!transactionObj) {
-        transactionObj = {}
-    } else {
-        transactionObj = JSON.parse(transactionObj)
+export async function getTransaction(tool?: string) {
+    // const sbs = await getDb()
+    // const list: any = await sbs.readAll()
+    
+    const storeData = await get(`/api/action/get-actions-by-type?action_type=Bridge&page=1&page_size=99999`)
+    if (storeData.code !== 0) {
+        return []
     }
 
-    return transactionObj
+    const storeList = storeData.data.data
+    const _list = storeList.filter((item: any) => item.extra_data.length > 100)
+
+    let __list = []
+    if (_list) {
+        __list = _list.map((item: any) => {
+            const jsonItem = JSON.parse(item.extra_data)
+            if (item.bridge_status) {
+                jsonItem.status = Number(item.bridge_status)
+            }
+
+            return jsonItem
+        })
+    }
+
+    if (!__list) {
+        return []
+    }
+    
+    if (!tool) {
+        return __list
+    }
+
+    
+
+    return __list.filter((item: any) => item.tool.toLowerCase() === tool.toLowerCase()) || []
 }
 
 export function isNumeric(value: any): boolean {
@@ -93,7 +101,6 @@ export function isNumeric(value: any): boolean {
 }
 
 export default {
-    getBalance,
     balanceFormated,
     addressFormated,
     saveTransaction,

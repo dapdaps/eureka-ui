@@ -42,8 +42,9 @@ export function formatTitle(record: any) {
     }
     return (
       <>
-        Supply <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
-        {record.template}
+        {record.action_title}
+        {/* Supply <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {record.template} */}
       </>
     );
   }
@@ -69,18 +70,21 @@ export function formatTitle(record: any) {
   if (['Liquidity', 'Deposit'].includes(record.action_type)) {
     try {
       const parsedExtraData = JSON.parse(record.extra_data || {});
-      return (
-        <>
-          {parsedExtraData.action}{' '}
-          <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span> {tokens[0]} and{' '}
-          <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span> {tokens[1]} on{' '}
-          {record.template}
-        </>
-      )
-    } catch (err) { }
+      if (parsedExtraData.type === 'univ3') {
+        return (
+          <>
+            {parsedExtraData.action}{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span> {tokens[0]} and{' '}
+            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span> {tokens[1]} on{' '}
+            {record.template}
+          </>
+        );
+      }
+    } catch (err) {}
+    const _actionType = record.action_title?.includes('Withdraw') ? 'Withdraw' : 'Deposit';
     return (
       <>
-        Withdraw <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
+        {_actionType} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
         {tokens[1]}
       </>
     );

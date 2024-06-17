@@ -168,7 +168,7 @@ const Odyssey = function ({ setShow }: any) {
                         });
                       }}
                     >
-                      <StyledImage style={{ backgroundImage: `url(${compass.banner})` }} />
+                      <StyledImage style={{ backgroundImage: `url("${compass.banner}")` }} />
                       {compass.status === 'un_start' && (
                         <StyledMakser>
                           <StyledFont color="#FFF" fontSize="16px" fontWeight="500">

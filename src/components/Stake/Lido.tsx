@@ -125,7 +125,7 @@ export const Stake = () => {
 
         if (!inputValue || isNaN(Number(inputValue))) {
             setIsError(true)
-            setBtnMsg('Illegal value')
+            setBtnMsg('Enter an amount')
             return
         }
 
@@ -188,19 +188,22 @@ export const Stake = () => {
 
             if (!isError && !isLoading) {
                 const transactionHash = await deposit(inputValue, provider.getSigner())
-                addAction({
-                    type: "Staking",
-                    fromChainId: currentChain.chainId,
-                    toChainId: currentChain.chainId,
-                    token: currentToken,
-                    amount: amount,
-                    template: "Lido Stake",
-                    add: false,
-                    status: 1,
-                    action: 'Staking',
-                    transactionHash,
-                    action_network_id: currentChain.chainName,
-                });
+                if (transactionHash) {
+                    addAction({
+                        type: "Staking",
+                        fromChainId: currentChain.chainId,
+                        toChainId: currentChain.chainId,
+                        token: currentToken,
+                        amount: amount,
+                        template: "Lido Stake",
+                        add: false,
+                        status: 1,
+                        action: 'Staking',
+                        transactionHash,
+                        action_network_id: currentChain.chainName,
+                    });
+                }
+                
                 setUpdater(updater + 1)
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>

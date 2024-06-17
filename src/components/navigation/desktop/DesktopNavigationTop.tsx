@@ -145,6 +145,15 @@ const InputCloseIcon = styled.div`
   }
 `;
 
+const BridgeWapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .bridge-icon {
+    cursor: pointer;
+  }
+`;
+
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
 const ExpandIcon = 'https://assets.dapdap.net/images/bafkreiam7p4ewrfedupruquxtsgrj7x2m425tky6htqdalbxa6l74hstpi.svg';
@@ -232,22 +241,32 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}
-        {isHideAccount ? (
-          <div />
-        ) : account ? (
-          <LoginContainer>
-            <Chain showName={false} bp="3001-003" />
-            <AccountWrapper
-              onClick={() => {
-                setLayoutStore({ showAccountSider: true });
-              }}
-            >
-              <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
-            </AccountWrapper>
-          </LoginContainer>
-        ) : (
-          <ConnectWallet />
-        )}
+
+        <BridgeWapper>
+          <img
+            src="/images/dashboard/bridge.svg"
+            onClick={() => {
+              router.push('/super-bridge');
+            }}
+            className="bridge-icon"
+          />
+          {isHideAccount ? (
+            <div />
+          ) : account ? (
+            <LoginContainer>
+              <Chain showName={false} bp="3001-003" />
+              <AccountWrapper
+                onClick={() => {
+                  setLayoutStore({ showAccountSider: true });
+                }}
+              >
+                <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
+              </AccountWrapper>
+            </LoginContainer>
+          ) : (
+            <ConnectWallet />
+          )}
+        </BridgeWapper>
       </div>
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
       <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />

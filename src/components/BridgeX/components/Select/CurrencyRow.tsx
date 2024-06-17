@@ -86,7 +86,7 @@ export default function CurrencyRow({ currency, selectedTokenAddress, onClick, c
     >
     
       <CurrencyLabel>
-        <CurrencyIcon src={currency.logoURI} />
+        <CurrencyIcon src={currency.icon} />
         <div>
           <CurrencySymbol>{currency.symbol}</CurrencySymbol>
           <CurrencyName>{currency.name}</CurrencyName>

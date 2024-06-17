@@ -61,10 +61,7 @@ export default function useAddAction(source: string) {
             tx_id: data.transactionHash,
             chain_id: data.fromChainId,
             to_chain_id: data.toChainId,
-            extra_data: JSON.stringify({
-              from: fromChain?.name,
-              to: toChain?.name,
-            }),
+            extra_data: JSON.stringify(data.extra_data),
           };
           console.info('params:', params);
         } catch (error) {
@@ -87,7 +84,9 @@ export default function useAddAction(source: string) {
         if (data.extra_data?.lending_actions) {
           params.extra_data = JSON.stringify(data.extra_data);
         } else {
-          params.action_title = `${data.action} ${data.token.symbol} on ${data.template}`;
+          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${
+            data.template
+          }`;
           params.action_tokens = JSON.stringify([`${data.token.symbol}`]);
           params.action_amount = data.amount;
         }
@@ -156,5 +155,6 @@ export default function useAddAction(source: string) {
     },
     [chainId, account],
   );
+
   return { addAction };
 }

@@ -2,11 +2,10 @@ import { blast } from '@/config/tokens/blast';
 const basic = {
   name: 'Thruster Finance',
   logo: '/images/apps/thruster-finance.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.ThrusterFinance',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   81457: {
-    routerAddress: '0x337827814155ECBf24D20231fCA4444F530C0555',
     defaultCurrencies: {
       input: blast['eth'],
       output: blast['usdb'],
@@ -22,11 +21,14 @@ const networks = {
       blast['wrseth'],
       blast['orbit'],
       blast['axlusdc'],
-      blast['juice'],
-      blast['yield'],
-      blast['$wai'],
-      blast['ole'],
+      blast['usde'],
+      blast['baja'],
       blast['andy'],
+      blast['yield'],
+      blast['kap'],
+      blast['early'],
+      blast['sss'],
+      blast['juice'],
     ],
   },
 };

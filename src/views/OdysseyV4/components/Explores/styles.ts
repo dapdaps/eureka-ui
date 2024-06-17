@@ -102,6 +102,7 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
 `;
 
 export const StyledItemTitle = styled.div`
+  width: 100%;
   flex-shrink: 0;
   color: #fff;
   font-family: Gantari;

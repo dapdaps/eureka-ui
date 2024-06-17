@@ -15,6 +15,7 @@ import useTrade from './hooks/useEtherFiTrade'
 import useValue from './hooks/useValue';
 import { usePriceStore } from '@/stores/price';
 
+import ChainTokens from './componments/ChainTokens';
 import Header from './componments/Header';
 import TokenAction from './componments/TokenAction';
 import { chains, tokens } from './chain';
@@ -25,6 +26,7 @@ const Container = styled.div`
    border-radius: 16px;
    margin: 20px auto;
    padding: 20px 0;
+   position: relative;
 `
 
 const InputActionWapper = styled.div`
@@ -61,29 +63,66 @@ const SubmitBtn = styled.button`
     background: linear-gradient(90deg, #3E9BF1 0%, #9C5DF3 100%);
 `
 
-const ezToken = {
-    chainId: 81457,
-    name: 'weETH',
-    symbol: 'weETH',
-    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
-    decimals: 18,
-    isNative: false,
-    address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+const ezTokens: any = {
+    81457: {
+        chainId: 81457,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+    },
+    59144: {
+        chainId: 59144,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6',
+    },
+    34443: {
+        chainId: 34443,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+    },
+    8453: {
+        chainId: 34443,
+        name: 'weETH',
+        symbol: 'weETH',
+        icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+        decimals: 18,
+        isNative: false,
+        address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
+    }
 }
 
-export const Stake = () => {
+interface Props {
+    chainIndex: number;
+}
+
+export const Stake = ({
+    chainIndex
+}: Props) => {
     const { chainId, account, provider } = useAccount();
     const [{ settingChain }, setChain] = useSetChain();
     const [amount, setAmount] = useState<string>('')
+    const [chainTokenShow, setChainTokenShow] = useState<boolean>(false);
     const { onConnect } = useConnectWallet();
 
     const { addAction } = useAddAction('dapp');
-    const [currentChain, setCurrentChain] = useState<any>(chains[4]);
-    const [currentToken, setCurrentToken] = useState<any>(tokens[chains[4].chainId][0]);
+    const [currentChain, setCurrentChain] = useState<any>(chains[chainIndex]);
+    const [currentToken, setCurrentToken] = useState<any>(tokens[chains[chainIndex].chainId][0]);
     const [needChainSwitch, setNeedChainSwitch] = useState(false)
     const [isError, setIsError] = useState(false)
     const [btnMsg, setBtnMsg] = useState('Confirm')
     const [updater, setUpdater] = useState(1)
+    const [ezToken, setEzToken] = useState<any>(ezTokens[currentChain.chainId])
 
     const prices = usePriceStore((store) => store.price);
 
@@ -109,7 +148,7 @@ export const Stake = () => {
         provider: provider,
         account: account as string,
         isError: isError,
-        chainId: Number(currentChain?.chainId),
+        chain: currentChain,
     })
 
     const { value: inputMoney } = useValue({
@@ -147,7 +186,7 @@ export const Stake = () => {
 
         if (!inputValue || isNaN(Number(inputValue))) {
             setIsError(true)
-            setBtnMsg('Illegal value')
+            setBtnMsg('Enter an amount')
             return
         }
 
@@ -184,9 +223,9 @@ export const Stake = () => {
                 // title="Restake"
                 balanceLoading={ethLoading}
                 tokenAmountChange={setAmount}
-                // tokenChange={() => {
-                //     setChainTokenShow(true)
-                // }}
+                tokenChange={() => {
+                    setChainTokenShow(true)
+                }}
             />
 
             <InputActionTitle>
@@ -217,24 +256,41 @@ export const Stake = () => {
 
             if (!isError && !isLoading) {
                 const transactionHash = await deposit(inputValue, provider.getSigner())
-                addAction({
-                    type: "Staking",
-                    fromChainId: currentChain.chainId,
-                    toChainId: currentChain.chainId,
-                    token: currentToken,
-                    amount: amount,
-                    template: "ether.fi",
-                    add: false,
-                    status: 1,
-                    action: 'Staking',
-                    transactionHash,
-                    action_network_id: currentChain.chainName,
-                });
+                if (transactionHash) {
+                    addAction({
+                        type: "Staking",
+                        fromChainId: currentChain.chainId,
+                        toChainId: currentChain.chainId,
+                        token: currentToken,
+                        amount: amount,
+                        template: "ether.fi",
+                        add: false,
+                        status: 1,
+                        action: 'Staking',
+                        transactionHash,
+                        action_network_id: currentChain.chainName,
+                    });
+                }
+                
                 setUpdater(updater + 1)
             }
         }}>{isLoading ? <Loading size={18} /> : null} {btnMsg}</SubmitBtn>
 
-
+        {
+            chainTokenShow ? <ChainTokens
+                chains={chains.filter((item: any) => [81457, 59144, 8453, 34443].indexOf(item.chainId) > -1)}
+                tokens={tokens}
+                chain={currentChain}
+                token={currentToken}
+                onClose={() => {
+                    setChainTokenShow(false)
+                }}
+                onChainTokenChange={(chain, token) => {
+                    setCurrentChain(chain)
+                    setCurrentToken(token)
+                    setEzToken(ezTokens[chain.chainId])
+                }} /> : null
+        }
     </Container>
 
 };

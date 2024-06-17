@@ -478,4 +478,19 @@ export default {
       '--button-text-color': '#fff',
     },
   },
+  'fenix-finance': {
+    type: 'swap',
+    theme: {
+      '--button-color':
+        'linear-gradient(90deg, rgba(254, 94, 53, .8) 10.49%, rgba(246, 119, 2, .8) 92.04%, rgba(255, 239, 118, .8) 158.76%)',
+      '--button-text-color': '#fff',
+    },
+  },
+  'blade-swap': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(180deg, #22a079 0%, #9ba885 100%)',
+      '--button-text-color': '#fff',
+    },
+  },
 };

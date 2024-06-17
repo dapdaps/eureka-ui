@@ -19,7 +19,7 @@ const wcV2InitOptions: any = {
 const walletConnect = walletConnectModule(wcV2InitOptions);
 const injected = injectedModule({
   // display specific unavailable wallets
-  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Coin98Wallet],
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Coin98Wallet, ProviderLabel.OKXWallet],
   sort: (wallets) => {
     const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask);
     const coin98 = wallets.find(({ label }) => label === ProviderLabel.Coin98Wallet);
@@ -54,6 +54,18 @@ export const onboard = init({
       token: 'ETH',
       label: 'Goerli - Ethereum Testnet',
       rpcUrl: 'https://rpc.ankr.com/eth_goerli',
+    },
+    {
+      id: 11155111,
+      token: 'ETH',
+      label: 'Sepolia - Ethereum Testnet',
+      rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
+    },
+    {
+      id: 421614,
+      token: 'ETH',
+      label: 'Arbitrum Sepolia',
+      rpcUrl: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public',
     },
     {
       id: 10,
@@ -295,6 +307,12 @@ export const onboard = init({
       token: 'Blast',
       label: 'Blast',
       rpcUrl: 'https://rpc.blast.io',
+    },
+    {
+      id: 34443,
+      token: 'Mode',
+      label: 'Mode',
+      rpcUrl: 'https://mainnet.mode.network',
     },
   ],
   appMetadata: {

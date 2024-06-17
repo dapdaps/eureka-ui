@@ -17,20 +17,12 @@ export const chains = [
     },
     {
         chainId: 56,
-        chainName: 'BNB Chain',
+        chainName: 'BNB',
         icon: 'https://assets.dapdap.net/images/bafkreibtexscwwgqupgb7anrseqdpogvt4cckyv4kavr7o3jgtcqzjkx5m.svg',
         nativeCurrency: { name: 'BNB', symbol: 'BNB', decimals: 18 },
         rpcUrls: ['https://binance.llamarpc.com'],
         blockExplorers: 'https://bscscan.com',
     },
-    // {
-    //     chainId: 59144,
-    //     chainName: 'Linea',
-    //     icon: 'https://assets.dapdap.net/images/bafkreib5v3jonanuknj5db5ysuhb6ubowv2pqnopyg3yraknfr3jn7el4u.svg',
-    //     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-    //     rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
-    //     blockExplorers: 'https://lineascan.build',
-    // },
     {
         chainId: 8453,
         chainName: 'Base',
@@ -46,6 +38,22 @@ export const chains = [
         nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
         rpcUrls: ['https://rpc.blast.io'],
         blockExplorers: 'https://blastscan.io',
+    },
+    {
+        chainId: 34443,
+        chainName: 'Mode',
+        icon: '/images/chains/mode.png',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: ['https://mainnet.mode.network'],
+        blockExplorers: 'https://modescan.io',
+    },
+    {
+        chainId: 59144,
+        chainName: 'Linea',
+        icon: 'https://assets.dapdap.net/images/bafkreib5v3jonanuknj5db5ysuhb6ubowv2pqnopyg3yraknfr3jn7el4u.svg',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
+        blockExplorers: 'https://lineascan.build',
     },
 ]
 
@@ -116,4 +124,15 @@ export const tokens: any =  {
             address: 'native',
         },
     ],
+    34443: [
+        {
+            chainId: 34443,
+            name: 'ETH',
+            symbol: 'ETH',
+            icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+            decimals: 18,
+            isNative: true,
+            address: 'native',
+        },
+    ]
 }
