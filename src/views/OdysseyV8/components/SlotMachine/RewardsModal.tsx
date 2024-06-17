@@ -85,7 +85,7 @@ export default function RewardsModal({ loading, rewards = {}, onClose }: any) {
             ))
           ) : (
             <div style={{ fontSize: 14, textAlign: 'center' }}>
-              You haven't won any rewards yet.. .Participate in missions now to win big prizes!
+              You haven&apos;t won any rewards yet.. .Participate in missions now to win big prizes!
             </div>
           )}
         </div>
