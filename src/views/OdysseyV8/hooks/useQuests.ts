@@ -62,7 +62,7 @@ export default function useQuests(id: any) {
             'Andy',
           ].includes(item.name)
         ) {
-          _result.social.push(item);
+          _result.social.push(item.source);
         }
         if (item.category_id === 1) {
           _result.bridge.push(item);
