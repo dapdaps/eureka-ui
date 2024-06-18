@@ -112,14 +112,14 @@ export const bsc: { [key: string]: Token } = {
     name: 'Binance-Peg BTCB Token',
     icon: 'https://ipfs.near.social/ipfs/bafkreig2h2vpf7u7ukbgomgurcvvfyujl66qdrbsp6u2bcga3wdyxladii',
   },
-  // bscusd: {
-  //   chainId: CHAIN_ID,
-  //   address: '0x55d398326f99059fF775485246999027B3197955',
-  //   decimals: 18,
-  //   symbol: 'BSC-USD',
-  //   name: 'Binance-Peg BSC-USD',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreigefu6rjc52vz5nfa4zd7p43ry5x4gam4dhkjxihnoszhdg46csvq',
-  // },
+  bscusd: {
+    chainId: CHAIN_ID,
+    address: '0x55d398326f99059fF775485246999027B3197955',
+    decimals: 18,
+    symbol: 'BSC-USD',
+    name: 'Binance-Peg BSC-USD',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigefu6rjc52vz5nfa4zd7p43ry5x4gam4dhkjxihnoszhdg46csvq',
+  },
   usdc: {
     chainId: CHAIN_ID,
     address: '0x8AC76a51cc950d9822D68b83fE1Ad97B32Cd580d',
