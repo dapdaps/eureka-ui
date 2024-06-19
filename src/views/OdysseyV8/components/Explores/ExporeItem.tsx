@@ -58,7 +58,7 @@ const ExporeItem = ({
       <StyledItemRight>
         {finished ? (
           <>
-            <LockStatus status={true} />
+            <LockStatus status={true} spins={spins} />
           </>
         ) : category === 'password' ? (
           <CardInput
@@ -68,7 +68,7 @@ const ExporeItem = ({
           />
         ) : (
           <>
-            <Unexplored>Unexplored</Unexplored>
+            <LockStatus status={false} spins={spins} />
             <RefreshIcon
               onClick={(ev: any) => {
                 ev.stopPropagation();

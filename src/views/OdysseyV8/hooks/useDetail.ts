@@ -9,15 +9,21 @@ export default function useDetail(id: any, cb: any) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(true);
   const { account } = useAccount();
+  const [parter, setParter] = useState('');
+  const [isGotSpins, setIsGotSpins] = useState(false);
+  const [showSpinsResultModal, setShowSpinsResultModal] = useState(false);
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const init = useCallback(async () => {
-    if (router.query.from === 'parter' && id) {
-      await post('/api/compass/invite', {
+    if (router.query.from && id) {
+      const result = await post('/api/compass/invite', {
         id,
-        source: 'parter',
+        source: router.query.from,
       });
+      setIsGotSpins(result.data?.status === 'success');
+      setParter(result.data?.source);
+      setShowSpinsResultModal(true);
     }
     queryDetail();
     cb?.();
@@ -54,5 +60,13 @@ export default function useDetail(id: any, cb: any) {
     run();
   }, [account]);
 
-  return { detail: detail || {}, loading, queryDetail };
+  return {
+    detail: detail || {},
+    loading,
+    parter,
+    isGotSpins,
+    showSpinsResultModal,
+    setShowSpinsResultModal,
+    queryDetail,
+  };
 }

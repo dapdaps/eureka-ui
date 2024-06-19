@@ -27,10 +27,10 @@ const Wrapper = styled.div<{ $active: boolean }>`
   `}
 `;
 
-export default function Spins({ active, style }: any) {
+export default function Spins({ spin = 10, active, style }: any) {
   return (
     <Wrapper $active={active} style={style}>
-      <span>10 SPIN</span>
+      <span>{spin} SPIN</span>
       {active && (
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
           <path

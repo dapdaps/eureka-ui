@@ -15,6 +15,7 @@ import Summary from './components/Summary';
 import Trade from './components/Trade';
 import SlotMachine from './components/SlotMachine';
 import Tabs from './components/Tabs';
+import ParterModal from './components/ParterModal';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
 import useSpin from './hooks/useSpin';
@@ -27,9 +28,12 @@ export default function OdysseyV8() {
 
   const authConfig = useAuthConfig();
   const { rewards, loading: rewardLoading, query: queryRewards } = useRewards(id as string);
-  const { detail, loading, queryDetail } = useDetail(id, () => {
-    queryRewards();
-  });
+  const { detail, loading, parter, isGotSpins, showSpinsResultModal, setShowSpinsResultModal, queryDetail } = useDetail(
+    id,
+    () => {
+      queryRewards();
+    },
+  );
   const { loading: questingLoading, quests, queryQuests } = useQuests(id);
   const { userInfo, queryUserInfo } = useUserInfo();
 
@@ -128,6 +132,15 @@ export default function OdysseyV8() {
           onRefreshDetail={queryDetail}
           id={id}
         />
+        {showSpinsResultModal && (
+          <ParterModal
+            onClose={() => {
+              setShowSpinsResultModal(false);
+            }}
+            success={isGotSpins}
+            parter={parter}
+          />
+        )}
       </StyledContent>
     </StyledContainer>
   );
