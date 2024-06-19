@@ -12,6 +12,10 @@ import refresh from '@/utils/refresh';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useLayoutStore } from '@/stores/layout';
 import theme from '@/config/theme';
+import styled from 'styled-components';
+const ComponentWrapperPageContainer: any = styled.div`
+  
+`
 export default function BosDapp({
   dapp,
   chainId,
@@ -40,7 +44,7 @@ export default function BosDapp({
   );
   const themeType = "light"
   return (
-    <div style={theme[themeType]}>
+    <ComponentWrapperPageContainer style={theme[themeType]}>
       <ComponentWrapperPage
         componentProps={{
           chainId,
@@ -82,6 +86,6 @@ export default function BosDapp({
         }}
         src={network.dapp_src}
       />
-    </div>
+    </ComponentWrapperPageContainer>
   );
 }
