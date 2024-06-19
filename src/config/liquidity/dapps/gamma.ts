@@ -31,7 +31,6 @@ const basic = {
     MINU: 'https://app.gamma.xyz/_next/static/media/icon.89124599.svg',
     ASTR: 'https://app.gamma.xyz/_next/static/media/icon.c81c9103.svg',
     wstETH: 'https://app.gamma.xyz/_next/static/media/icon.bc5ee36b.svg',
-    USDT: 'https://app.gamma.xyz/_next/static/media/icon.16fadc1b.svg'
   },
 };
 const networks = {
