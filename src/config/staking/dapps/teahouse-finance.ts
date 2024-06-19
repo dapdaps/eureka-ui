@@ -1,16 +1,20 @@
 import { arbitrum } from '@/config/tokens/arbitrum';
+import { bsc } from '@/config/tokens/bsc';
 import { linea } from '@/config/tokens/linea';
+import { optimism } from '@/config/tokens/optimism';
 
 const basic = {
   name: 'Teahouse',
   //   data: 'bluebiu.near/widget/Staking.Teahouse.Data',
   ICON_VAULT_MAP: {
     USDC: linea['usdc'].icon,
+    'USDC.e': linea['usdc'].icon,
     USDT: linea['usdt'].icon,
     WBTC: linea['wbtc'].icon,
     WETH: linea['weth'].icon,
     wrsETH: linea['wrseth'].icon,
     wstETH: linea['wsteth'].icon,
+    BTCB: bsc['btcb'].icon,
   },
 };
 
@@ -117,27 +121,61 @@ const networks = {
     },
   },
   // arbitrum
-  // 42161: {
-  //   managed: [
-  //     {
-  //       id: '',
-  //       type: 'MANAGED',
-  //       strategy: 'Managed',
-  //       name: 'Beta+ Momentum Strategy',
-  //       token0: 'USDC',
-  //       // token1: 'USDT',
-  //       decimals0: 6,
-  //       // decimals1: 6,
-  //       fee: '0.01',
-  //       vaultAddress: '0x9f4fff022ebff0cbfa3faf702911d0f658a4ba9b',
-  //     },
-  //   ],
-  //   addresses: {
-  //     USDC: arbitrum['usdc'].address,
-  //     USDT: arbitrum['usdt'].address,
-  //     WBTC: arbitrum['wbtc'].address,
-  //   },
-  // },
+  42161: {
+    managed: [
+      {
+        id: '',
+        type: 'MANAGED',
+        strategy: 'Managed',
+        name: 'Beta+ Momentum Strategy',
+        token0: 'USDC.e',
+        decimals0: 6,
+        fee: '0.01',
+        vaultAddress: '0x9f4fff022ebff0cbfa3faf702911d0f658a4ba9b',
+      },
+    ],
+    addresses: {
+      'USDC.e': arbitrum['usdc.e'].address,
+      USDT: arbitrum['usdt'].address,
+      WBTC: arbitrum['wbtc'].address,
+    },
+  },
+  // bsc
+  56: {
+    managed: [
+      {
+        id: '',
+        type: 'MANAGED',
+        strategy: 'Managed',
+        name: 'BTCB Long Strategy',
+        token0: 'BTCB',
+        decimals0: 18,
+        fee: '0.01',
+        vaultAddress: '0x1546B2aE60a2aDe3F8F1a9276c198e8f52212c05',
+      },
+    ],
+    addresses: {
+      BTCB: bsc['btcb'].address,
+    },
+  },
+  // OP
+  10: {
+    managed: [
+      {
+        id: '',
+        type: 'MANAGED',
+        strategy: 'Managed',
+        name: 'ETH Options Trading',
+        token0: 'USDC.e',
+        decimals0: 6,
+        fee: '0.01',
+        vaultAddress: '0x9ae039F9de94542f6f1b3FBA60223E6aA4f411Af',
+      },
+    ],
+    addresses: {
+      'USDC.e': optimism['usdc.e'].address,
+    },
+  },
 };
 
 export default { basic, networks };
