@@ -28,7 +28,10 @@ const basic = {
     ankrBNB: 'https://app.gamma.xyz/_next/static/media/icon.e48c2ef6.svg',
     WMATIC: 'https://app.gamma.xyz/_next/static/media/icon.fe758f26.svg',
     stMATIC: 'https://app.gamma.xyz/_next/static/media/icon.11f91d3b.svg',
-    MINU: 'https://app.gamma.xyz/_next/static/media/icon.89124599.svg'
+    MINU: 'https://app.gamma.xyz/_next/static/media/icon.89124599.svg',
+    ASTR: 'https://app.gamma.xyz/_next/static/media/icon.c81c9103.svg',
+    wstETH: 'https://app.gamma.xyz/_next/static/media/icon.bc5ee36b.svg',
+    USDT: 'https://app.gamma.xyz/_next/static/media/icon.16fadc1b.svg'
   },
 };
 const networks = {
@@ -131,14 +134,14 @@ const networks = {
       ankrBNB: '0x52f24a5e03aee338da5fd9df68d2b6fae1178827',
       BNBx: '0x1bdd3cf7f79cfb8edbb955f20ad99211551ba275',
       USDT: '0x55d398326f99059ff775485246999027b3197955',
-      
+
       'N WETH-WBNB-0': '0x10bf6e7b28b1cffb1c047d7f815953931e5ee947',
       'N BTCB-WBNB-0': '0xd3c480ec7a47596ff8d63396227d1f7dc728a7f0',
       'P ankrBNB-WBNB-0': '0x754fd74e22255780a58f125300008781d8318e3a',
       'P BNBx-WBNB-0': '0x2ecbd508c00bbc8aa0cdc9100bf3956fcabe7677',
       'N USDT-WBNB-0': '0x3ec1ffd5dc29190588608ae9fd4f93750e84cda2',
     },
-    proxyAddress: '0x1cc4eE0cB063e9db36E51F5d67218ff1f8dbfA0f'
+    proxyAddress: '0xF75c017E3b023a593505e281b565ED35Cc120efa'
   },
   // op
   10: {
@@ -190,11 +193,11 @@ const networks = {
         "poolAddress": "0x68f5c0a2de713a54991e01858fd27a3832401849",
       },
       {
-        id: 'OP-USDC-3000',
+        id: 'N OP-USDC.e-3000',
         strategy: 'Dynamic',
         strategy2: 'Narrow',
         token0: 'OP',
-        token1: 'USDC',
+        token1: 'USDC.e',
         "decimals0": 18,
         "decimals1": 6,
         "poolAddress": "0x1c3140ab59d6caf9fa7459c6f83d4b52ba881d36",
@@ -205,14 +208,14 @@ const networks = {
       OP: '0x4200000000000000000000000000000000000042',
       WBTC: '0x68f180fcce6836688e9084f035309e29bf0a2095',
       SNX: '0x8700daec35af8ff88c16bdf0418774cb3d7599b4',
-      USDC: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+      "USDC.e": '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
       ERN: '0xc5b001dc33727f8f26880b184090d3e252470d45',
 
       'N WETH-OP-3000': '0xbcfa4cfa97f74a6abf80b9901569bbc8654f4315',
       'N WETH-WBTC-500': '0x34d4112d180e9faf06f77c8c550ba20c9f61ae31',
       'N WETH-SNX-3000': '0x1392698b2f2ca87e6329c1ca502c5d4ba938d1b8',
       'W WETH-OP-3000': '0x8480199e5d711399abb4d51bda329e064c89ad77',
-      'OP-USDC-3000': '0x2102bef0d9727ea50ba844e7658e38480961835c',
+      'N OP-USDC.e-3000': '0x2102bef0d9727ea50ba844e7658e38480961835c',
     },
     proxyAddress: '0x1E97925c365cd96D74Ec55A04569915c4D65e5e0'
   },
@@ -518,6 +521,80 @@ const networks = {
       'S USDT-USDC-0': '0x145d55ae4848f9782efcac785a655e3e5dce1bcd',
       'N WETH-USDC-0': '0x04c6b11e1ffe1f1032bd62adb343c9d07767489c',
       'P stMATIC-MATIC-0': '0x9616052273a598bc04bd1ad7f7a753157c24f77e',
+    },
+    proxyAddress: '0x8480199e5d711399abb4d51bda329e064c89ad77'
+  },
+  // Astar zkEVM
+  3776: {
+    ALL_DATA_URL: 'https://wire2.gamma.xyz/quickswap/astar-zkevm/hypervisors/allData',
+    USER_DATA_BASE: 'https://wire2.gamma.xyz/quickswap/astar-zkevm/user/',
+    LAST_SNAP_SHOT_DATA_URL: 'https://wire2.gamma.xyz/database/quickswap/astar-zkevm/hypervisors/lastSnapshot',
+    ammName: 'QuickSwap',
+    ammImage: 'https://app.gamma.xyz/_next/static/media/icon.ea1fec4d.svg',
+    defaultPair: 'N USDC-WETH-500',
+    pairs: [
+      {
+        id: 'N USDC-WETH-500',
+        strategy: 'Dynamic',
+        strategy2: 'Narrow',
+        token0: 'USDC',
+        token1: 'WETH',
+        "decimals0": 6,
+        "decimals1": 18,
+        "poolAddress": "0x47d7b9510ae2835c7c293825641a5427226d34cb",
+      },
+      {
+        id: 'N ASTR-WETH-500',
+        strategy: 'Dynamic',
+        strategy2: 'Narrow',
+        token0: 'ASTR',
+        token1: 'WETH',
+        "decimals0": 18,
+        "decimals1": 18,
+        "poolAddress": "0xa092ca12ff1770f0fe3f3e30132daf82a8e13d7a",
+      },
+      {
+        id: 'N USDC-ASTR-500',
+        strategy: 'Dynamic',
+        strategy2: 'Narrow',
+        token0: 'USDC',
+        token1: 'ASTR',
+        "decimals0": 6,
+        "decimals1": 18,
+        "poolAddress": "0x8bcbd2b0240c3e54d803e33ba944fa98267312ff",
+      },
+      {
+        id: 'P wstETH-WETH-100',
+        strategy: 'Dynamic',
+        strategy2: 'Pegged Price',
+        token0: 'wstETH',
+        token1: 'WETH',
+        "decimals0": 18,
+        "decimals1": 18,
+        "poolAddress": "0xca573c6a2d08fb5181f5992a626fa907fa97cc3d",
+      },
+      {
+        id: 'S USDT-USDC-100',
+        strategy: 'Dynamic',
+        strategy2: 'Stable',
+        token0: 'USDT',
+        token1: 'USDC',
+        "decimals0": 6,
+        "decimals1": 6,
+        "poolAddress": "0x9331b844a67accddcc103b6a84237a589f8c1d96",
+      },
+    ],
+    addresses: {
+      WETH: '0xe9cc37904875b459fa5d0fe37680d36f1ed55e38',
+      USDC: '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035',
+      ASTR: '0xdf41220c7e322bfef933d85d01821ad277f90172',
+      wstETH: '0x5d8cff95d7a57c0bf50b30b43c7cc0d52825d4a9',
+      USDT: '0x1e4a5963abfd975d8c9021ce480b42188849d41d',
+      'N USDC-WETH-500': '0x7eccd6d077e4ad7120150578e936a22f058fbcce',
+      'N ASTR-WETH-500': '0xf66da0f517c6f5431c77f4d0525ebc4b3bb40578',
+      'N USDC-ASTR-500': '0x8f249cda053070fdb135d87e25a89dfbc8785f1d',
+      'P wstETH-WETH-100': '0xbc7d3b581cd4c4f34fc2942491fa803761c574e2',
+      'S USDT-USDC-100': '0x4476433bc06210ba265d95736ebc630544d397d9'
     },
     proxyAddress: '0x8480199e5d711399abb4d51bda329e064c89ad77'
   },
