@@ -158,7 +158,7 @@ const chainCofig = {
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io',
-  },
+  }
 } as { [key: number]: Chain };
 
 export default chainCofig;

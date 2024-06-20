@@ -90,6 +90,10 @@ const nextConfig = {
       destination: api_url + '/pac/:path*',
     },
     {
+      source: '/pool/fee-apr',
+      destination: 'https://ro81h8hq6b.execute-api.us-east-1.amazonaws.com/pool/fee-apr',
+    },
+    {
       source: '/kelpdao/:path*',
       destination: 'https://universe.kelpdao.xyz/:path*',
     },

@@ -1,14 +1,20 @@
+import multicall from '@/config/contract/multicall';
+import weth from '@/config/contract/weth';
+
 const CHAIN_ID = 43114;
+const CHAIN_NAME = 'Avalanche';
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Avalanche',
-  displayChainName: 'Avalanche',
-  wethAddress: '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+  chainName: CHAIN_NAME,
+  multicallAddress: multicall[CHAIN_ID],
+  wethAddress: weth[CHAIN_ID],
   connectProps: {
-    noAccountTips: 'Avalanche Liquidity Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Avalanche Chain.',
+    noAccountTips: `${CHAIN_NAME} Liquidity Collection`,
+    wrongNetworkTips: `To proceed, kindly switch to ${CHAIN_NAME} Chain.`,
+    chainId: CHAIN_ID,
+    chainName: CHAIN_NAME,
   },
   defalutDex: 'Trader Joe',
-  dexs: {},
+  dapps: {},
 };
