@@ -2,7 +2,7 @@ export default [
   {
     icon: '/images/odyssey/v8/gold.svg',
     name: 'Gold',
-    value: '13,500',
+    value: '7,500',
   },
   {
     icon: '/images/odyssey/v8/credit.svg',

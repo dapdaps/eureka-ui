@@ -99,7 +99,7 @@ const chainCofig = {
     chainName: 'Polygon',
     icon: 'https://assets.dapdap.net/images/bafkreic6p22qh3ytwkpmv5hq6a3ppdq7xoyvnmeog3wbtugnao434q6d7a.svg',
     nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
-    rpcUrls: ['https://polygon.llamarpc.com', 'https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf', 'https://polygon-mainnet.public.blastapi.io'],
+    rpcUrls: ['https://polygon-mainnet.public.blastapi.io', 'https://polygon.llamarpc.com', 'https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf'],
     blockExplorers: 'https://polygonscan.com',
   },
   1101: {
@@ -158,6 +158,14 @@ const chainCofig = {
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io',
+  },
+  3776: {
+    chainId: 3776,
+    chainName: 'Astar zkEVM',
+    icon: '/images/chains/astar_zkevm.png',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://rpc.startale.com/astar-zkevm'],
+    blockExplorers: 'https://astar-zkevm.explorer.startale.com',
   },
 } as { [key: number]: Chain };
 

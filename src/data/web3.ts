@@ -314,6 +314,12 @@ export const onboard = init({
       label: 'Mode',
       rpcUrl: 'https://mainnet.mode.network',
     },
+    {
+      id: 3776,
+      token: 'Astar zkEVM',
+      label: 'Astar zkEVM',
+      rpcUrl: 'https://rpc.startale.com/astar-zkevm',
+    },
   ],
   appMetadata: {
     name: 'NEAR',

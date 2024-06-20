@@ -21,7 +21,7 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'Swap min $25 in JUICE on Thruster.',
+        label: 'Swap min $25 USD worth of $Juice on Thruster',
         link: '/dapp/thruster-finance',
       },
       {
@@ -95,17 +95,17 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'Deposit min $50 in ETH on Duo',
+        label: 'Deposit min $50 USD worth of $ETH on Duo',
         link: '/dapp/duo',
       },
       {
         spin: 1,
-        label: 'Deposit min $50 in WETH on Duo',
+        label: 'Deposit min $50 USD worth of $WETH on Duo',
         link: '/dapp/duo',
       },
       {
         spin: 1,
-        label: 'Deposit min $50 in USDB on Duo',
+        label: 'Deposit min $50 USD worth of $USDB on Duo',
         link: '/dapp/duo',
       },
     ],
@@ -227,7 +227,7 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'Swap min $15 in KAP on Thruster',
+        label: 'Swap min $15 USD worth of $KAP on Thruster',
         link: '/dapp/thruster-finance',
       },
       {
@@ -260,7 +260,7 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'Swap min $15 in EARLY on Thruster',
+        label: 'Swap min $15 USD worth of $Early on Thruster',
         link: '/dapp/thruster-finance',
       },
       {
@@ -298,7 +298,7 @@ export default {
       },
       {
         spin: 1,
-        label: 'Swap min $15 in SSS on Thruster',
+        label: 'Swap min $15 USD worth of $SSS on Thruster',
         link: '/dapp/thruster-finance',
       },
       {
@@ -358,7 +358,7 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'Swap min $15 in ANDY on Thruster',
+        label: 'Swap min $15 USD worth of $ANDY on Thruster',
         link: '/dapp/thruster-finance',
       },
       { spin: 1, label: 'Stake ANDY/WETH to Hyperlock', link: '/dapp/hyperlock' },
@@ -387,7 +387,7 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'Swap min $15 in BAJA on Thruster',
+        label: 'Swap min $15 USD worth of $BAJA on Thruster',
         link: '/dapp/thruster-finance',
       },
       { spin: 1, label: 'Stake min BAJA/WETH to Hyperlock', link: '/dapp/hyperlock' },
@@ -416,7 +416,7 @@ export default {
     quests: [
       {
         spin: 1,
-        label: 'Swap min $15 in YIELD on Thruster',
+        label: 'Swap min $15 USD worth of $YIELD on Thruster',
         link: '/dapp/thruster-finance',
       },
       { spin: 1, label: 'Stake min $15 YIELD/WETH to Hyperlock', link: '/dapp/hyperlock' },

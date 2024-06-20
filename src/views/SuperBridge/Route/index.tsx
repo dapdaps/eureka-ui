@@ -139,7 +139,7 @@ export default function Route(
                 <div className="token-amount">~3380.49</div> */}
             </div>
             <div className="cost-wapper">
-                <div>~{route.duration} min｜Fee ${ balanceFormated(route.feeType === 1 ? (prices as any)[fromChain.nativeCurrency.symbol] * Number(route.gas) : route.gas) }</div>
+                <div>~{route.duration} min｜Fee ${ balanceFormated(route.feeType === 1 ? (prices as any)[fromChain.nativeCurrency.symbol] * Number(route.fee) : route.fee) }</div>
             </div>
         </BridgeAmount>
     </Contanier>

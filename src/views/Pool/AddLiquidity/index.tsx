@@ -102,7 +102,7 @@ const Add = ({ from, onClose }: any) => {
                 }}
               />
             )}
-            {currentPrice && token0 && token1 && fee ? (
+            {currentPrice && token0 && token1 && fee && !noPair ? (
               <Chart
                 currentPrice={currentPrice}
                 fee={fee}
