@@ -20,7 +20,7 @@ export default [
     value: '100K',
   },
   {
-    icon: '/images/odyssey/v8/fenix.png',
+    icon: '/images/odyssey/v8/fenix-credit.png',
     name: 'Fenix Rings',
     value: '1M',
   },
