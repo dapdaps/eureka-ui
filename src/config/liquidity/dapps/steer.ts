@@ -189,51 +189,6 @@ const networks = {
       "N WETH-MANTA": "0x9ea10ed3d30b034a5eebdf1f1e5c34a72124abfc",
       "W MANTA-STONE": "0xa1cd0f7f8876fdd6e4db51ead0ef1fd5de971183"
     }
-  },
-  // Astar zkEVM
-  3776: {
-    ALL_DATA_URL: "https://subgraph.steer.finance/manta/subgraphs/name/steerprotocol/steer-manta",
-    STAKING_POOLS_URL: "https://9i52h964s3.execute-api.us-east-1.amazonaws.com/dev/staking-pools",
-    FEE_APR_URL: "/pool/fee-apr",
-    ammName: "QuickSwap",
-    ammImage: "https://app.gamma.xyz/_next/static/media/icon.ea1fec4d.svg",
-    pairs: [{
-      id: "W USDC-WETH",
-      strategy: "Dynamic",
-      strategy2: "Wide",
-      token0: "USDC",
-      token1: "WETH",
-      decimals0: 18,
-      decimals1: 18,
-      poolAddress: '0x3F7af71DE1F628C71e3602083DE98A0deb955FCE'
-    }, {
-      id: "W USDC-ASTR",
-      strategy: "Dynamic",
-      strategy2: "Wide",
-      token0: "USDC",
-      token1: "ASTR",
-      decimals0: 18,
-      decimals1: 18,
-      poolAddress: '0x3F7af71DE1F628C71e3602083DE98A0deb955FCE'
-    }, {
-      id: "W vASTR-ASTR",
-      strategy: "Dynamic",
-      strategy2: "Wide",
-      token0: "vASTR",
-      token1: "ASTR",
-      decimals0: 18,
-      decimals1: 18,
-      poolAddress: '0x5A20cBCcfD256100546cA70e368d102aD7Bdcdd1'
-    }],
-    addresses: {
-      "USDC": "0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035",
-      "WETH": "0xe9cc37904875b459fa5d0fe37680d36f1ed55e38",
-      "vASTR": "0x7746ef546d562b443ae4b4145541a3b1a3d75717",
-      "ASTR": "0xdf41220c7e322bfef933d85d01821ad277f90172",
-
-      "W USDC-WETH": "0x373fdaf47a4087f5d118ae5777e271b34fd7c4d3",
-      "W vASTR-ASTR": "0x2626fc27a6c7d64aa1fcfdd4bced48cd8c8fb929",
-    }
   }
 };
 
