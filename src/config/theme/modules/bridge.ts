@@ -1,7 +1,7 @@
 
 
 export default {
-  drak: {
+  dark: {
   },
   light: {
   }
