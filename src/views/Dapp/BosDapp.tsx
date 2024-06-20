@@ -42,7 +42,7 @@ export default function BosDapp({
       }),
     [],
   );
-  const themeType = "light"
+  const themeType = "dark"
   return (
     <ComponentWrapperPageContainer style={theme[themeType]}>
       <ComponentWrapperPage
