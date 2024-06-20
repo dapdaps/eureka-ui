@@ -35,9 +35,9 @@ export default function Quest({ data, bgClass, userInfo, authConfig }: any) {
       window.open(path, '_blank');
       return;
     }
-    openXShareLink(`Join Odyssey Vol.4+ and conquer the quest to earn spins for a chance at big prizes! 🎉 
-    Don't miss out on your shot at exciting rewards! @DapDapMeUp @${item.twitter}
-    #DapDap #Blast`);
+    openXShareLink(
+      `Join @DapDapMeUp Odyssey Vol.4 @Blast_L2 Reloaded!%0AComplete on-chain missions via @${item.twitter} and earn spins for a chance at major prizes! 🎉 %0ADon't miss out on future rewards!🤜🤛%0Ahttps://x.com/DapDapMeUp/status/1801622711787262304`,
+    );
     handleReport(id, i + 1);
   };
 
