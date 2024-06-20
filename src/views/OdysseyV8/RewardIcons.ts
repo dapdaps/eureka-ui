@@ -20,7 +20,7 @@ export default {
     label: 'Ring Points',
   },
   rings: {
-    icon: '/images/odyssey/v8/fenix.png',
+    icon: '/images/odyssey/v8/fenix-credit.png',
     label: 'Fenix Rings',
   },
   thruster_credits: {

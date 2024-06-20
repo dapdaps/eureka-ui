@@ -318,12 +318,12 @@ export default {
     bgColor: '#EB5E17',
     name: 'Fenix',
     extraGold: {
-      icon: '/images/odyssey/v8/fenix.png',
+      icon: '/images/odyssey/v8/fenix-credit.png',
       value: '1.5M',
     },
     rewards: [
       {
-        icon: '/images/odyssey/v8/fenix.png',
+        icon: '/images/odyssey/v8/fenix-credit.png',
         label: '1.5M Fenix Rings',
       },
     ],
