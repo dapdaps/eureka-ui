@@ -38,7 +38,7 @@ export function formatTitle(record: any) {
             </div>
           ));
         }
-      } catch (err) {}
+      } catch (err) { }
     }
     return (
       <>
@@ -121,7 +121,7 @@ export function formatTitle(record: any) {
           </>
         );
       }
-    } catch (err) {}
+    } catch (err) { }
     const action = record.action_title.split(' ')[0];
     return (
       <>

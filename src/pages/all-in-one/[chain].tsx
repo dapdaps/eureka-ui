@@ -5,6 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import swapConfig from '@/config/swap/networks';
 import lendingConfig from '@/config/lending/networks';
+import liquidityConfig from '@/config/liquidity/networks';
 import useReport from '@/views/Landing/hooks/useReport';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useAccount from '@/hooks/useAccount';
@@ -261,8 +262,10 @@ const AllInOne: NextPageWithLayout = () => {
 
   const tabConfig = useMemo(() => {
     if (!currentChain || !tab) return {};
+    console.log('===liquidityConfig', liquidityConfig[currentChain?.chainId])
     if (tab === 'Swap') return swapConfig[currentChain?.chainId] || {};
     if (tab === 'Lending') return lendingConfig[currentChain?.chainId] || {};
+    if (tab === 'Liquidity') return liquidityConfig[currentChain?.chainId] || {}
     return {};
   }, [currentChain, tab]);
 
@@ -344,7 +347,7 @@ const AllInOne: NextPageWithLayout = () => {
                   prices,
                   tab,
                   account,
-                  onReset: () => {},
+                  onReset: () => { },
                   onChangeTab: (tab: string) => {
                     cachedTabsStore.setCachedTab(tab, currentChain.chainId);
                     setTab(tab);

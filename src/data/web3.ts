@@ -313,7 +313,7 @@ export const onboard = init({
       token: 'Mode',
       label: 'Mode',
       rpcUrl: 'https://mainnet.mode.network',
-    },
+    }
   ],
   appMetadata: {
     name: 'NEAR',
