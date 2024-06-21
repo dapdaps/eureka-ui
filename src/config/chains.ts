@@ -158,7 +158,15 @@ const chainCofig = {
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io',
-  }
+  },
+  3776: {
+    chainId: 3776,
+    chainName: 'Astar zkEVM',
+    icon: '/images/chains/astar_zkevm.png',
+    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+    rpcUrls: ['https://rpc.startale.com/astar-zkevm'],
+    blockExplorers: 'https://astar-zkevm.explorer.startale.com',
+  },
 } as { [key: number]: Chain };
 
 export default chainCofig;

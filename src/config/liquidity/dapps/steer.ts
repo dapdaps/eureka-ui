@@ -13,7 +13,9 @@ const basic = {
     "m.USDT": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_48%2Fd_unknown.png%2Ftokens%2F1088%2F0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC.jpg&w=128&q=100",
     "m.USDC": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fraw.githubusercontent.com%2FMaiaDAO%2Ftoken-list%2Fmain%2F0xEA32A96608495e54156Ae48931A7c20f0dcc1a21.png&w=128&q=100",
     "WMETIS": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_48%2Fd_unknown.png%2Ftokens%2F1088%2F0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481.jpg&w=128&q=100",
-    "artMETIS": "https://token-list.hercules.exchange/assets/artMETIS.svg"
+    "artMETIS": "https://token-list.hercules.exchange/assets/artMETIS.svg",
+    "ASTR": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fassets.coingecko.com%2Fcoins%2Fimages%2F22617%2Flarge%2Fastr.png&w=128&q=100",
+    "vASTR": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fv2.arthswap.org%2Fimages%2Fcoins%2F0xfffFffff00000000000000010000000000000010.png&w=128&q=100",
   }
 };
 const networks = {
@@ -188,6 +190,72 @@ const networks = {
       "N WETH-WBTC": "0x9a3a74b7ecc0f2c838a1de6c8253a458b56c7ffb",
       "N WETH-MANTA": "0x9ea10ed3d30b034a5eebdf1f1e5c34a72124abfc",
       "W MANTA-STONE": "0xa1cd0f7f8876fdd6e4db51ead0ef1fd5de971183"
+    }
+  },
+  // Astar zkEVM
+  3776: {
+    ALL_DATA_URL: "https://api.goldsky.com/api/public/project_clohj3ta78ok12nzs5m8yag0b/subgraphs/steer-protocol-astar-zkevm/1.1.1/gn",
+    STAKING_POOLS_URL: "https://9i52h964s3.execute-api.us-east-1.amazonaws.com/dev/staking-pools",
+    FEE_APR_URL: "/pool/fee-apr",
+    ammName: "QuickSwap",
+    ammImage: "https://app.gamma.xyz/_next/static/media/icon.ea1fec4d.svg",
+    pairs: [{
+      id: "W USDC-WETH",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "USDC",
+      token1: "WETH",
+      decimals0: 6,
+      decimals1: 18,
+      poolAddress: '0x47d7b9510ae2835c7c293825641a5427226d34cb'
+    }, {
+      id: "W USDC-ASTR",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "USDC",
+      token1: "ASTR",
+      decimals0: 6,
+      decimals1: 18,
+      poolAddress: '0x8bcbd2b0240c3e54d803e33ba944fa98267312ff'
+    }, {
+      id: "W ASTR-WETH",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "ASTR",
+      token1: "WETH",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0xa092ca12ff1770f0fe3f3e30132daf82a8e13d7a'
+    }, {
+      id: "N USDT-USDC",
+      strategy: "Dynamic",
+      strategy2: "Narrow",
+      token0: "USDT",
+      token1: "USDC",
+      decimals0: 6,
+      decimals1: 6,
+      poolAddress: '0x9331b844a67accddcc103b6a84237a589f8c1d96'
+    }, {
+      id: "W vASTR-ASTR",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "vASTR",
+      token1: "ASTR",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0x5a20cbccfd256100546ca70e368d102ad7bdcdd1'
+    }],
+    addresses: {
+      "USDC": "0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035",
+      "WETH": "0xe9cc37904875b459fa5d0fe37680d36f1ed55e38",
+      "vASTR": "0x7746ef546d562b443ae4b4145541a3b1a3d75717",
+      "ASTR": "0xdf41220c7e322bfef933d85d01821ad277f90172",
+
+      "W USDC-WETH": "0x373fdaf47a4087f5d118ae5777e271b34fd7c4d3",
+      "W USDC-ASTR": "0x635cfb92727519241efc07f268bf0f59efa57400",
+      "W ASTR-WETH": "0x7877ce74e082f818723bc0fe1a722105ec4a68d4",
+      "N USDT-USDC": "0x19794489d8b1f811d1d38fe456c8bc8da5719187",
+      "W vASTR-ASTR": "0x2626fc27a6c7d64aa1fcfdd4bced48cd8c8fb929",
     }
   }
 };
