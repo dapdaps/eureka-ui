@@ -28,7 +28,6 @@ export const StyledContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
-  justify-content: center;
   .more-is-coming {
     font-size: 20px;
     font-weight: 500;
@@ -90,6 +89,7 @@ export const LoadingWrap = styled.div`
   justify-content: center;
   align-items: center;
   padding: 30px 0;
+  width: 100%;
 `;
 
 export const HeadRight = styled.div<{ $clickable: boolean }>`
