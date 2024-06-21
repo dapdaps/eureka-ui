@@ -329,6 +329,7 @@ export default {
     extraGold: {
       icon: '/images/odyssey/v8/fenix-credit.png',
       value: '1.5M',
+      hasRank: true,
     },
     rewards: [
       {
