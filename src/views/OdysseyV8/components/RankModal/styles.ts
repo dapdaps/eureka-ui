@@ -60,7 +60,7 @@ export const StyledContent = styled.div<{ ref: any }>`
   }
 `;
 
-export const ModalHead = styled.div`
+export const ModalHead = styled.div<{ $color: string }>`
   color: #fff;
   text-align: center;
   font-family: Gantari;
@@ -77,15 +77,7 @@ export const ModalHead = styled.div`
   overflow: hidden;
   background-repeat: no-repeat;
   background-size: contain;
-  &.bg-particle {
-    background-image: url('/images/odyssey/v4/bg-particle.png');
-  }
-  &.bg-ring {
-    background-image: url('/images/odyssey/v4/bg-ring.png');
-  }
-  &.bg-ambient {
-    background-image: url('/images/odyssey/v4/bg-ambient.png');
-  }
+
   .smoke {
     position: absolute;
     height: 100px;
@@ -94,7 +86,7 @@ export const ModalHead = styled.div`
     bottom: -55px;
     border-radius: 1100px;
     opacity: 0.3;
-    background: radial-gradient(50% 50% at 50% 50%, #fff 0%, rgba(255, 255, 255, 0) 100%);
+    background: radial-gradient(50% 50% at 50% 50%, ${({ $color }) => $color} 0%, rgba(0, 0, 0, 0) 100%);
   }
   .left {
     display: flex;

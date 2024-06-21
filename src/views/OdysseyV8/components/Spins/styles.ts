@@ -28,6 +28,7 @@ export const StyledContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  justify-content: center;
   .more-is-coming {
     font-size: 20px;
     font-weight: 500;
@@ -91,7 +92,7 @@ export const LoadingWrap = styled.div`
   padding: 30px 0;
 `;
 
-export const HeadRight = styled.div`
+export const HeadRight = styled.div<{ $clickable: boolean }>`
   display: flex;
   align-items: center;
   gap: 6px;
@@ -105,6 +106,8 @@ export const HeadRight = styled.div`
   padding-left: 40px;
   cursor: pointer;
   position: relative;
+  transition: 0.3s;
+
   .tip {
     position: absolute;
     width: 200px;
@@ -126,6 +129,16 @@ export const HeadRight = styled.div`
       display: block;
     }
   }
+
+  ${({ $clickable }) =>
+    $clickable &&
+    `&:hover{
+    opacity: 0.9;
+  };
+    &:active{
+      opacity: 0.8;
+    }
+  `}
 `;
 
 export const Desc = styled.div`

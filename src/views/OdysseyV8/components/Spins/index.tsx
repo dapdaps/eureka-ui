@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Loading from '@/components/Icons/Loading';
 import { AnimatePresence } from 'framer-motion';
 import { container } from '@/components/animation';
@@ -5,9 +6,12 @@ import Quest from './quest';
 import useSwitcher from '../../hooks/useSwitcher';
 import { LoadingWrap, StyledContainer, StyledContent } from './styles';
 import UnStart from './unStart';
+import RankModal from '../RankModal';
 
 export default function Spins({ loading, list, onRefreshDetail, authConfig, userInfo }: any) {
   const { isStart, secondsRemaining } = useSwitcher();
+  const [showRankModal, setShowRankModal] = useState(false);
+  const [rankModalParams, setRankModalParams] = useState<any>({});
 
   list.sort((a: any, b: any) => {
     return a.index - b.index;
@@ -35,12 +39,29 @@ export default function Spins({ loading, list, onRefreshDetail, authConfig, user
                   onRefreshDetail={onRefreshDetail}
                   authConfig={authConfig}
                   userInfo={userInfo}
+                  onGoldClick={(data: any) => {
+                    setRankModalParams({
+                      name: data.name,
+                      id: data.id,
+                      logo: data.icon,
+                      bgColor: data.bgColor,
+                    });
+                    setShowRankModal(true);
+                  }}
                 />
               ))}
               <div className="more-is-coming">MORE IS COMING...</div>
             </>
           )}
         </StyledContent>
+        {showRankModal && (
+          <RankModal
+            {...rankModalParams}
+            onClose={() => {
+              setShowRankModal(false);
+            }}
+          />
+        )}
       </StyledContainer>
     </AnimatePresence>
   );
