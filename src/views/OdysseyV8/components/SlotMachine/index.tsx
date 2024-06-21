@@ -348,15 +348,17 @@ function SlotMachine({
             <BtnBg />
             <Btn
               className={isPressed ? 'press' : ''}
-              $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
+              // $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
+              $active={false}
               onClick={() => {
+                return;
                 if (!isStart) return;
                 if (isPressing || isPressed || availableSpins <= 0) {
                   return;
                 }
                 handleBtnPress();
               }}
-              style={{ cursor: isStart ? 'pointer' : 'not-allowed' }}
+              style={{ cursor: false ? 'pointer' : 'not-allowed' }}
             />
           </BtnWapper>
           <Clam

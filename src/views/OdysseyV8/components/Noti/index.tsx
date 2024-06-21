@@ -8,8 +8,7 @@ export default function Noti({ onClose }: any) {
     <StyledContainer>
       <StyledContent>
         <LottieEyes />
-        When completing a transaction, please stay on the component page briefly to prevent any failure in reporting
-        information.
+        ‘SPIN-TO-WIN’ Prize Pool has been distributed and the function is temporarily closed.
       </StyledContent>
       <Image
         className="close"
