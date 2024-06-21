@@ -28,6 +28,7 @@ export const StyledContent = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 30px;
+  justify-content: center;
   .more-is-coming {
     font-size: 20px;
     font-weight: 500;
