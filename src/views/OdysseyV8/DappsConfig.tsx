@@ -11,11 +11,13 @@ export default {
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
       value: 2500,
+      hasRank: true,
     },
     rewards: [
       {
         icon: '/images/odyssey/v8/gold.svg',
         label: '2500 Gold',
+        hasRank: true,
       },
     ],
     quests: [
@@ -81,6 +83,7 @@ export default {
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
       value: 1500,
+      hasRank: true,
     },
     rewards: [
       {
@@ -122,6 +125,7 @@ export default {
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
       value: 500,
+      hasRank: true,
     },
     rewards: [
       {
@@ -158,6 +162,7 @@ export default {
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
       value: 500,
+      hasRank: true,
     },
     rewards: [
       {
@@ -192,6 +197,7 @@ export default {
     extraGold: {
       icon: '/images/odyssey/v8/gold.svg',
       value: '1000',
+      hasRank: true,
     },
     bgColor: '#8569F3',
     name: 'Ambient',
@@ -222,6 +228,7 @@ export default {
       {
         icon: '/images/odyssey/v8/gold.svg',
         label: '1000 Gold',
+        hasRank: true,
       },
     ],
     quests: [
@@ -255,6 +262,7 @@ export default {
       {
         icon: '/images/odyssey/v8/gold.svg',
         label: '1000 Gold',
+        hasRank: true,
       },
     ],
     quests: [
@@ -288,6 +296,7 @@ export default {
       {
         icon: '/images/odyssey/v8/gold.svg',
         label: '500 Gold',
+        hasRank: true,
       },
     ],
     quests: [

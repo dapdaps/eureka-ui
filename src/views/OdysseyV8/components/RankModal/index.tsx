@@ -8,19 +8,11 @@ import { ellipsAccount } from '@/utils/account';
 import { simplifyNum } from '@/utils/format-number';
 
 import useLeaderBoard from '../../hooks/useLeaderBoard';
-import Trapeziform from '../Trapeziform';
 import { Avatar, ModalBody, ModalHead, StyledContainer, StyledContent } from './styles';
 
-export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
-  const { ranks, loading: rankLoading, fetchData } = useLeaderBoard(id);
+export default function RankModal({ name, id, logo, bgColor, onClose }: any) {
+  const { ranks, loading: rankLoading } = useLeaderBoard(id);
   const userInfo = useUserStore((store: any) => store.user);
-
-  console.log('userInfo--', userInfo);
-
-  const TrapLayout = {
-    borderColor: '#FFDD4D',
-    corner: 34,
-  };
 
   const RankMap = new Map([
     [1, '/images/odyssey/v4/rank1.svg'],
@@ -45,7 +37,7 @@ export default function RankModal({ name, id, logo, bgClass, onClose }: any) {
   return (
     <StyledContainer onClick={clickMask}>
       <StyledContent ref={bodyRef}>
-        <ModalHead className={bgClass}>
+        <ModalHead $color={bgColor}>
           <span className="left">
             <Image src={logo} alt="" width={43} height={43} />
             {name} Top Rank

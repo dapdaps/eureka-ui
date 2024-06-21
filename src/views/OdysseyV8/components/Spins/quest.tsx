@@ -19,7 +19,7 @@ import {
   SpinLine,
 } from './styles';
 
-export default function Quest({ data, bgClass, userInfo, authConfig }: any) {
+export default function Quest({ data, bgClass, userInfo, authConfig, onGoldClick }: any) {
   const { id, name, step } = data;
   const { handleReport } = useReport(true);
 
@@ -50,12 +50,14 @@ export default function Quest({ data, bgClass, userInfo, authConfig }: any) {
           <span className="name">{name}</span>
         </HeadLeft>
         {data.extraGold && (
-          <HeadRight>
+          <HeadRight
+            $clickable={data.extraGold.hasRank}
+            onClick={() => {
+              data.extraGold.hasRank && onGoldClick(data);
+            }}
+          >
             <img className="icon" src={data.extraGold.icon} />
             <span>{data.extraGold.value}</span>
-            <div className="tip">
-              Top traders based of Volume on {name} will share {data.extraGold.value} Extra Gold
-            </div>
           </HeadRight>
         )}
       </Head>
