@@ -299,7 +299,7 @@ const Index = function () {
                               ')',
                           }}
                         >
-                          Vol. {compass.id}
+                          Vol. {compass.name.indexOf('Vol.4+:') > -1 ? '4+' : compass.id}
                         </StyledVol>
                         {odyssey[compass.id]?.chainsImg && (
                           <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: 33 }} />
@@ -478,7 +478,7 @@ const Index = function () {
                   });
                 }}
               >
-                Join Odyssey Vol.{currentCompass?.id}
+                Join Odyssey Vol.{currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id}
               </StyledJoinButton>
             )}
 
