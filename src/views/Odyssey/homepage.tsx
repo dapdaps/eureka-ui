@@ -467,8 +467,8 @@ const Index = function () {
                 }}
               >
                 {currentCompass.status === 'ended'
-                  ? `Join Odyssey Vol.${currentCompass?.id}`
-                  : `Odyssey Vol.${currentCompass?.id} is coming soon!`}
+                  ? `Join Odyssey Vol.${currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id}`
+                  : `Odyssey Vol.${currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id} is coming soon!`}
               </StyledComingSoonButton>
             ) : (
               <StyledJoinButton
