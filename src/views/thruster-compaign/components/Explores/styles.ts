@@ -54,11 +54,11 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  margin: 0 auto 100px;
-  width: 1188px;
+  margin: 0 auto 37px;
+  /* width: 1113px; */
 `;
 export const StyledItemWrap = styled.div`
-  padding-top: 20px;
+  padding: 0 37px;
 `;
 export const Title = styled.div`
   color: #fff;
@@ -85,10 +85,10 @@ export const Btns = styled.div`
 `;
 
 export const StyledItem = styled.div<{ $disabled: boolean }>`
-  height: 70px;
-  border-radius: 12px;
-  border: 1px solid #373a53;
-  background: #1e2028;
+  height: 75px;
+  border-radius: 6px;
+  border: 1px solid #373535;
+  background: #1c1b1b;
   box-sizing: border-box;
   padding: 14px 28px 14px 16px;
   display: flex;

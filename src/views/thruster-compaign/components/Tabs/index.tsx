@@ -1,102 +1,106 @@
-import { motion } from 'framer-motion';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import Explores from '../../components/Explores';
+import useQuests from '../../hooks/useQuests';
+import FrensTask from '../FrensTask';
+import Summary from './summary';
+
 const Wrapper = styled.div`
+  width: 1186px;
+  margin: 0 auto;
+  border-radius: 6px;
+  border: 1px solid #373535;
+  background: #131212;
+  overflow: hidden;
+`;
+const TabHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 100px;
-  border-bottom: 1px solid rgba(0, 254, 255, 0.2);
 `;
 
-const Tab = styled(motion.div)`
+const Tab = styled.div`
+  flex: 1;
+  height: 78px;
   display: flex;
   align-items: center;
-  gap: 14px;
-  padding: 28px 30px 28px 10px;
-  color: #fff;
-  text-align: center;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%; /* 48px */
-  position: relative;
+  justify-content: center;
+  border-bottom: 1px solid #373535;
   cursor: pointer;
-  transition: 0.3s;
-  &:hover {
-    opacity: 0.8;
+  .txt {
+    font-family: Burial;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    background: linear-gradient(180deg, #fff 0%, #999 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    opacity: 0.6;
+  }
+  &.active {
+    .txt {
+      opacity: 1;
+    }
+    border-left: 1px solid #373535;
+    border-right: 1px solid #373535;
+    border-bottom: none;
+    background-color: #000;
   }
 `;
 
-const Tag = styled.div`
-  padding: 6px 9px 8px;
-  color: #000;
-  text-align: right;
-  font-family: '5squared pixel';
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 150%; /* 24px */
-  text-transform: capitalize;
-  border-radius: 8px;
-  background: #00ffd1;
-`;
-
-const Slider = styled(motion.div)`
-  width: 100%;
-  height: 7px;
-  bottom: 0px;
-  left: 0px;
-  position: absolute;
-  background: #d9d9d9;
-`;
-
 export default function Tabs({ spins, strategies, detail, queryDetail, questingLoading, userInfo, authConfig }: any) {
-  const [active, setActive] = useState('Optimized Strategies');
+  const [active, setActive] = useState('FRENS TASK');
+  const { loading, quests, queryQuests } = useQuests(8);
   return (
     <>
       <Wrapper>
-        {[
-          {
-            label: 'Optimized Strategies',
-            tag: '+10/Strategy',
-          },
-          {
-            label: 'Single Mission',
-            tag: '+1/mission',
-          },
-        ].map((item, i) => (
-          <Tab
-            key={item.label}
-            onClick={() => {
-              setActive(item.label);
-            }}
-          >
-            <span>{item.label}</span>
-            <Tag>{item.tag}</Tag>
-            {active === item.label && (
-              <Slider
-                initial="hidden"
-                animate="show"
-                variants={{
-                  hidden: {
-                    x: i === 0 ? '50%' : '-50%',
-                  },
-                  show: {
-                    x: '0%',
-                    transition: {
-                      staggerChildren: 0.5,
-                    },
-                  },
-                }}
-              />
-            )}
-          </Tab>
-        ))}
+        <TabHead>
+          {[
+            {
+              label: 'FRENS TASK',
+            },
+            {
+              label: 'DEGEN TASK',
+            },
+            {
+              label: 'CHAD TASK',
+            },
+          ].map((item, i) => (
+            <Tab
+              key={item.label}
+              onClick={() => {
+                setActive(item.label);
+              }}
+              className={active === item.label ? 'active' : ''}
+            >
+              <span className="txt">{item.label}</span>
+            </Tab>
+          ))}
+        </TabHead>
+        {active === 'FRENS TASK' && (
+          <div>
+            <Summary title="Visit dApp below to get 1 spin each" />
+            <FrensTask list={quests.bridge} onRefreshDetail={queryDetail} />
+          </div>
+        )}
+        {active === 'DEGEN TASK' && (
+          <div>
+            <Summary title="Participate in the trade below to get 2 spins for each" />
+
+            <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
+          </div>
+        )}
+        {active === 'CHAD TASK' && (
+          <div>
+            <Summary title="Stake in the dapps below to get 3 spins for each" />
+
+            <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
+          </div>
+        )}
       </Wrapper>
-      {active === 'Optimized Strategies' && <div>ss</div>}
-      {active === 'Single Mission' && <div>aa</div>}
     </>
   );
 }

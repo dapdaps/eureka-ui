@@ -3,8 +3,7 @@ import { memo, useEffect, useState } from 'react';
 import useCheck from '../../hooks/useCheck';
 import useReport from '../../hooks/useReport';
 import ArrowIcon from '../ArrowIcon';
-import LockStatus from '../LockStatus';
-import RefreshIcon from '../RefreshButton';
+import Spins from '../Spins';
 import CardInput from './CardInput';
 import { StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored } from './styles';
 
@@ -58,7 +57,7 @@ const ExporeItem = ({
       <StyledItemRight>
         {finished ? (
           <>
-            <LockStatus status={true} spins={spins} />
+            <Spins spin={spins} active={true} />
           </>
         ) : category === 'password' ? (
           <CardInput
@@ -68,9 +67,10 @@ const ExporeItem = ({
           />
         ) : (
           <>
-            <LockStatus status={false} spins={spins} />
-            <RefreshIcon
-              onClick={(ev: any) => {
+            <Spins
+              spins={spins}
+              checking={checking}
+              onRefresh={(ev: any) => {
                 ev.stopPropagation();
                 if (checking) return;
 
@@ -81,8 +81,9 @@ const ExporeItem = ({
                   handleRefresh();
                 }
               }}
-              loading={checking}
+              active={false}
             />
+
             <ArrowIcon />
           </>
         )}

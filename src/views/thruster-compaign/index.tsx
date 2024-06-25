@@ -25,7 +25,7 @@ export default function OdysseyV8() {
       queryRewards();
     },
   );
-  const { loading: questingLoading, quests, queryQuests } = useQuests(id);
+  const { loading: questingLoading, quests, queryQuests } = useQuests(8);
   const { userInfo, queryUserInfo } = useUserInfo();
 
   const [showNoti, setShowNoti] = useState(true);
@@ -107,8 +107,6 @@ export default function OdysseyV8() {
           userInfo={userInfo}
           authConfig={authConfig}
         />
-
-        <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
       </StyledContent>
     </StyledContainer>
   );
