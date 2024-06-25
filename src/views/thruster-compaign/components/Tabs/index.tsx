@@ -129,6 +129,7 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           <div>
             <Summary
               title="Visit dApp below to get 1 spin each"
+              resetHours={24}
               executions={frensTotal.executions}
               collectedSpins={frensTotal.collectedSpins}
             />
@@ -139,6 +140,7 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           <div>
             <Summary
               title="Participate in the trade below to get 2 spins for each"
+              resetHours={1}
               executions={degenTotal.executions}
               collectedSpins={degenTotal.collectedSpins}
             />
@@ -155,6 +157,7 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           <div>
             <Summary
               title="Stake in the dapps below to get 3 spins for each"
+              resetHours={1}
               executions={chadTotal.executions}
               collectedSpins={chadTotal.collectedSpins}
             />

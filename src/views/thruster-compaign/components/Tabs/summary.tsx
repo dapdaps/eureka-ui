@@ -35,14 +35,14 @@ const Value = styled.div`
   line-height: normal;
 `;
 
-export default function Summary({ title, executions, collectedSpins }: any) {
+export default function Summary({ title, resetHours, executions, collectedSpins }: any) {
   return (
     <Wrapper>
       <div className="left">
         <div>
           <Title style={{ marginBottom: 20 }}>{title}</Title>
           {/* <Timer color="white" endTime={1719305213404} /> */}
-          <Title>Reset by every 1 hours</Title>
+          <Title>Reset by every {resetHours} hours</Title>
         </div>
       </div>
       <div className="right">
