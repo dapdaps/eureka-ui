@@ -4,6 +4,8 @@ import { useCallback, useEffect, useState } from 'react';
 import useUserInfo from '@/hooks/useUserInfo';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
+import Timer from '@/components/Timer'
+import SlotMachine from './components/SlotMachine'
 
 import Explores from './components/Explores';
 import Tabs from './components/Tabs';
@@ -13,9 +15,11 @@ import useRewards from './hooks/useRewards';
 import useSpin from './hooks/useSpin';
 import { StyledContainer, StyledContent } from './styles';
 
+const id: string = '9'
+
 export default function OdysseyV8() {
   const router = useRouter();
-  const { id } = router.query;
+  // const { id } = router.query;
 
   const authConfig = useAuthConfig();
   const { rewards, loading: rewardLoading, query: queryRewards } = useRewards(id as string);
@@ -78,7 +82,7 @@ export default function OdysseyV8() {
   return (
     <StyledContainer>
       <StyledContent>
-        {/* <SlotMachine
+        <SlotMachine
           chainList={chainList}
           handleSpin={handleSpin}
           handleClaim={handleClaim}
@@ -96,7 +100,11 @@ export default function OdysseyV8() {
           rewards={rewards}
           queryRewards={queryRewards}
           rewardLoading={rewardLoading}
-        /> */}
+        />
+
+        <div style={{ display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10, paddingBottom: 80 }}>
+          <Timer endTime={detail.end_time}/>
+        </div>  
 
         <Tabs
           strategies={quests.strategies}

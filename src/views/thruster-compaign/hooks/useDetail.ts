@@ -32,7 +32,7 @@ export default function useDetail(id: any, cb: any) {
   const queryDetail = useCallback(async () => {
     try {
       setLoading(true);
-      const result = await get('/api/compass/v5/detail', { id });
+      const result = await get('/api/compass/v6/detail', { id });
 
       if (result.code === 0 && result.data) {
         setDetail({ ...result.data });
