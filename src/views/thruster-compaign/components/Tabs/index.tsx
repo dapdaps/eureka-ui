@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Explores from '../../components/Explores';
-import useQuests from '../../hooks/useQuests';
 import FrensTask from '../FrensTask';
 import Summary from './summary';
 
@@ -51,9 +50,55 @@ const Tab = styled.div`
   }
 `;
 
-export default function Tabs({ spins, strategies, detail, queryDetail, questingLoading, userInfo, authConfig }: any) {
+export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any) {
   const [active, setActive] = useState('FRENS TASK');
-  const { loading, quests, queryQuests } = useQuests(8);
+  const [frensTotal, setFrensTotal] = useState({
+    executions: 0,
+    collectedSpins: 0,
+  });
+  const [degenTotal, setDegenTotal] = useState({
+    executions: 0,
+    collectedSpins: 0,
+  });
+  const [chadTotal, setChadTotal] = useState({
+    executions: 0,
+    collectedSpins: 0,
+  });
+  console.log('quests--', quests);
+
+  useEffect(() => {
+    if (quests.frensTasks.length) {
+      const _execs = quests.frensTasks.reduce((total: number, item: any) => total + Number(item.times), 0);
+      const _collectedSpins = quests.frensTasks.reduce(
+        (total: number, item: any) => total + item.times * item.spins,
+        0,
+      );
+      setFrensTotal({
+        executions: _execs,
+        collectedSpins: _collectedSpins,
+      });
+    }
+    if (quests.degenTasks.length) {
+      const _execs = quests.degenTasks.reduce((total: number, item: any) => total + Number(item.times), 0);
+      const _collectedSpins = quests.degenTasks.reduce(
+        (total: number, item: any) => total + item.times * item.spins,
+        0,
+      );
+      setDegenTotal({
+        executions: _execs,
+        collectedSpins: _collectedSpins,
+      });
+    }
+    if (quests.chadTasks.length) {
+      const _execs = quests.chadTasks.reduce((total: number, item: any) => total + Number(item.times), 0);
+      const _collectedSpins = quests.chadTasks.reduce((total: number, item: any) => total + item.times * item.spins, 0);
+      setChadTotal({
+        executions: _execs,
+        collectedSpins: _collectedSpins,
+      });
+    }
+  }, [quests]);
+
   return (
     <>
       <Wrapper>
@@ -82,22 +127,44 @@ export default function Tabs({ spins, strategies, detail, queryDetail, questingL
         </TabHead>
         {active === 'FRENS TASK' && (
           <div>
-            <Summary title="Visit dApp below to get 1 spin each" />
-            <FrensTask list={quests.bridge} onRefreshDetail={queryDetail} />
+            <Summary
+              title="Visit dApp below to get 1 spin each"
+              executions={frensTotal.executions}
+              collectedSpins={frensTotal.collectedSpins}
+            />
+            <FrensTask list={quests.frensTasks} onRefreshDetail={queryDetail} />
           </div>
         )}
         {active === 'DEGEN TASK' && (
           <div>
-            <Summary title="Participate in the trade below to get 2 spins for each" />
+            <Summary
+              title="Participate in the trade below to get 2 spins for each"
+              executions={degenTotal.executions}
+              collectedSpins={degenTotal.collectedSpins}
+            />
 
-            <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
+            <Explores
+              list={quests.degenTasks}
+              userInfo={userInfo}
+              authConfig={authConfig}
+              onRefreshDetail={queryDetail}
+            />
           </div>
         )}
         {active === 'CHAD TASK' && (
           <div>
-            <Summary title="Stake in the dapps below to get 3 spins for each" />
+            <Summary
+              title="Stake in the dapps below to get 3 spins for each"
+              executions={chadTotal.executions}
+              collectedSpins={chadTotal.collectedSpins}
+            />
 
-            <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
+            <Explores
+              list={quests.chadTasks}
+              userInfo={userInfo}
+              authConfig={authConfig}
+              onRefreshDetail={queryDetail}
+            />
           </div>
         )}
       </Wrapper>

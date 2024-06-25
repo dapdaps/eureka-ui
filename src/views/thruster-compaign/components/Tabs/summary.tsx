@@ -35,7 +35,7 @@ const Value = styled.div`
   line-height: normal;
 `;
 
-export default function Summary({ title }: any) {
+export default function Summary({ title, executions, collectedSpins }: any) {
   return (
     <Wrapper>
       <div className="left">
@@ -48,11 +48,11 @@ export default function Summary({ title }: any) {
       <div className="right">
         <div>
           <Title>Executions</Title>
-          <Value>3</Value>
+          <Value>{executions}</Value>
         </div>
         <div>
           <Title>Collected Spins</Title>
-          <Value>3</Value>
+          <Value>{collectedSpins}</Value>
         </div>
       </div>
     </Wrapper>
