@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 
+import RefreshButton from './RefreshButton';
+
 const Wrapper = styled.div<{ $active: boolean }>`
-  border: 1px solid #979abe;
-  border-radius: 7.5px;
-  padding: 13px 15px;
+  border: 1px solid #3d405a;
+  border-radius: 4px;
+  padding: 8px 15px;
   color: #979abe;
   text-align: right;
   font-family: '5squared pixel';
@@ -12,9 +14,6 @@ const Wrapper = styled.div<{ $active: boolean }>`
   font-weight: 400;
   line-height: 100%; /* 16px */
   text-transform: capitalize;
-  position: absolute;
-  top: -90px;
-  left: 156px;
   display: flex;
   align-items: center;
   gap: 16px;
@@ -27,11 +26,11 @@ const Wrapper = styled.div<{ $active: boolean }>`
   `}
 `;
 
-export default function Spins({ spin = 10, active, style }: any) {
+export default function Spins({ spin = 10, active, checking, onRefresh, style }: any) {
   return (
     <Wrapper $active={active} style={style}>
       <span>{spin} SPIN</span>
-      {active && (
+      {active ? (
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
           <path
             d="M16 8.5C16 12.6421 12.6421 16 8.5 16C4.35786 16 1 12.6421 1 8.5C1 4.35786 4.35786 1 8.5 1"
@@ -41,6 +40,8 @@ export default function Spins({ spin = 10, active, style }: any) {
           />
           <path d="M4.99609 7.5L7.99609 10.5L15.4961 3" stroke="#00FFD1" strokeWidth="2" strokeLinecap="round" />
         </svg>
+      ) : (
+        <RefreshButton onClick={onRefresh} loading={checking} />
       )}
     </Wrapper>
   );

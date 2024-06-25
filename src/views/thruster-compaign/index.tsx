@@ -29,7 +29,7 @@ export default function OdysseyV8() {
       queryRewards();
     },
   );
-  const { loading: questingLoading, quests, queryQuests } = useQuests(id);
+  const { loading: questingLoading, quests, queryQuests } = useQuests(9);
   const { userInfo, queryUserInfo } = useUserInfo();
 
   const [showNoti, setShowNoti] = useState(true);
@@ -46,9 +46,9 @@ export default function OdysseyV8() {
 
   // console.log('quests--', quests);
 
-  quests.swap.sort((a: any, b: any) => {
-    return a.order - b.order;
-  });
+  // quests.swap.sort((a: any, b: any) => {
+  //   return a.order - b.order;
+  // });
   const [lendingList, setLendingList] = useState<any>();
 
   const handleSpin = useCallback(() => {
@@ -71,13 +71,13 @@ export default function OdysseyV8() {
     });
   }, [isClaiming]);
 
-  useEffect(() => {
-    if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
-    const orbit = quests.lending.find((item: any) => item.name === 'Orbit');
-    const pac = quests.lending.find((item: any) => item.name === 'Pac Finance');
-    const _list = [...quests.yield, orbit, ...quests.liquidity, pac, ...quests.staking];
-    setLendingList(_list);
-  }, [quests]);
+  // useEffect(() => {
+  //   if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
+  //   const orbit = quests.lending.find((item: any) => item.name === 'Orbit');
+  //   const pac = quests.lending.find((item: any) => item.name === 'Pac Finance');
+  //   const _list = [...quests.yield, orbit, ...quests.liquidity, pac, ...quests.staking];
+  //   setLendingList(_list);
+  // }, [quests]);
 
   return (
     <StyledContainer>
@@ -106,17 +106,7 @@ export default function OdysseyV8() {
           <Timer endTime={detail.end_time}/>
         </div>  
 
-        <Tabs
-          strategies={quests.strategies}
-          spins={quests.spins}
-          detail={detail}
-          queryDetail={queryDetail}
-          questingLoading={questingLoading}
-          userInfo={userInfo}
-          authConfig={authConfig}
-        />
-
-        <Explores list={quests.social} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
+        <Tabs quests={quests} queryDetail={queryDetail} userInfo={userInfo} authConfig={authConfig} />
       </StyledContent>
     </StyledContainer>
   );

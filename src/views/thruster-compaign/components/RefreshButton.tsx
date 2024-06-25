@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const StyledContainer = styled.div`
-  padding: 12px 10px;
+  /* padding: 12px 10px; */
   border-radius: 6px;
   box-sizing: border-box;
   display: flex;
@@ -10,11 +10,11 @@ const StyledContainer = styled.div`
   gap: 12px;
   color: #979abe;
   cursor: pointer;
-  border-radius: 4px;
-  border: 1px solid #3d405a;
+  /* border-radius: 4px;
+  border: 1px solid #3d405a; */
 
   &:hover {
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
     background: #1e2028;
     color: #fff;
   }
