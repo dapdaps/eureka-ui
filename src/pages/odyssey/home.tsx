@@ -2,12 +2,12 @@ import { useRouter } from 'next/router';
 
 import { useDefaultLayout } from '@/hooks/useLayout';
 import CompassApp from '@/views/Compass/home';
+import OdysseyThruster from '@/views/OdysseyThruster';
 import OdysseyV2 from '@/views/OdysseyV2';
 import OdysseyV3 from '@/views/OdysseyV3';
 import OdysseyV4 from '@/views/OdysseyV4';
 import OdysseyV5 from '@/views/OdysseyV5';
 import OdysseyV8 from '@/views/OdysseyV8';
-import OdysseyThruster from '@/views/thruster-compaign';
 
 function Compass() {
   const router = useRouter();

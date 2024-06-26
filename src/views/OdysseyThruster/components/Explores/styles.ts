@@ -58,7 +58,7 @@ export const StyledContent = styled.div`
   /* width: 1113px; */
   &.cols-1,
   &.cols-2 {
-    margin: 16px auto 0;
+    margin: 0 auto;
   }
 `;
 export const StyledItemWrap = styled.div`
