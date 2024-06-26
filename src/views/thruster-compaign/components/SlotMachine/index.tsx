@@ -5,6 +5,7 @@ import ScrollLine from './ScrollLine';
 import RuleModal from './RuleModal';
 import PrizeModal from './PrizeModal';
 import Spin from './Spin';
+import Summary from './Summary';
 
 import controllerImg from './img/ctr.svg';
 import controllerActiveImg from './img/ctr-active.svg';
@@ -55,7 +56,6 @@ const LightBg = styled.div`
   z-index: 1;
   width: 100%;
   top: 0px;
-  /* background: radial-gradient(rgba(255, 54, 41, .2) 0%, rgba(250, 127, 120, 0) 30%); */
   background: radial-gradient(rgba(255, 54, 41, .4) 0%,  rgba(250, 127, 120, 0) 70%);
   height: 1000px;
 `;
@@ -66,7 +66,8 @@ const Bg = styled.div`
   background-image: url(${bgImg.src});
   background-size: 100% 100%;
   position: absolute;
-  bottom: -223px;
+  bottom: -273px;
+  z-index: 1;
 `;
 
 const Screen = styled.div`
@@ -253,6 +254,7 @@ function SlotMachine({
   loading,
   rewards,
   rewardLoading,
+  detail,
 }: any) {
   const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
@@ -316,8 +318,9 @@ function SlotMachine({
       <div style={{ position: 'relative', zIndex: 2 }}>
         <Pilcrow
           title="THRUSTER"
-          desc="SPIN-TO-WIN"
+          desc="TURBO SPIN"
         />
+        <Summary data={detail} loading={loading} />
         <Screen>
           {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}
           <SubTitle
@@ -360,6 +363,8 @@ function SlotMachine({
             pressed={!isStart || rulePressed}
             style={{ cursor: isStart ? 'pointer' : 'not-allowed' }}
             onClick={() => {
+              console.log('isStart:', isStart)
+
               if (!isStart) return;
               setRuleShow(true);
               setRulePressed(true);
@@ -372,17 +377,16 @@ function SlotMachine({
             <BtnBg />
             <Btn
               className={isPressed ? 'press' : ''}
-              // $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
-              $active={false}
+              $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
+              // $active={false}
               onClick={() => {
-                return;
                 if (!isStart) return;
                 if (isPressing || isPressed || availableSpins <= 0) {
                   return;
                 }
                 handleBtnPress();
               }}
-              style={{ cursor: false ? 'pointer' : 'not-allowed' }}
+              style={{ cursor: isStart && availableSpins > 0 && !isPressed && !isPressing ? 'pointer' : 'not-allowed' }}
             />
           </BtnWapper>
           <Clam

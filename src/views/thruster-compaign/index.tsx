@@ -96,17 +96,20 @@ export default function OdysseyV8() {
             queryDetail();
             queryQuests();
           }}
+          detail={detail}
           loading={loading}
           rewards={rewards}
           queryRewards={queryRewards}
           rewardLoading={rewardLoading}
         />
 
-        <div style={{ display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10, paddingBottom: 80 }}>
+        {/* <div style={{ display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10, paddingBottom: 80 }}>
           <Timer endTime={detail.end_time}/>
-        </div>  
+        </div>   */}
 
-        <Tabs quests={quests} queryDetail={queryDetail} userInfo={userInfo} authConfig={authConfig} />
+        <div style={{ position: 'relative', zIndex: 10 }}>
+          <Tabs quests={quests} queryDetail={queryDetail} userInfo={userInfo} authConfig={authConfig} />
+        </div>
       </StyledContent>
     </StyledContainer>
   );

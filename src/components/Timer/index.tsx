@@ -10,8 +10,6 @@ const Timer = ({ endTime }: { endTime: number }) => {
   const { secondsRemaining } = useCountdown(endTime / 1000);
   const timeLeft = getTimePeriods(secondsRemaining);
 
-    console.log('timeLeft:', timeLeft)
-
   useEffect(() => {
     setReady(true);
   }, []);
