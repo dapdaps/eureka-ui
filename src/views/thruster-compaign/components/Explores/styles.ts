@@ -118,11 +118,11 @@ export const StyledItemTitle = styled.div`
   width: 100%;
   flex-shrink: 0;
   color: #fff;
-  font-family: Gantari;
-  font-size: 20px;
+  font-family: Montserrat;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 700;
-  line-height: 120%; /* 24px */
+  font-weight: 600;
+  line-height: normal;
 `;
 
 export const StyledItemLeft = styled.div`

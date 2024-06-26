@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { getNextHourTime, getPM12Time, getUTCTime } from '@/utils/utc';
+
 import Explores from '../../components/Explores';
 import FrensTask from '../FrensTask';
 import Summary from './summary';
-
 const Wrapper = styled.div`
   width: 1186px;
   margin: 0 auto;
@@ -19,7 +20,6 @@ const Head = styled.div`
   gap: 3px;
 
   border-bottom: 1px solid #373535;
-  cursor: pointer;
 `;
 const Sections = styled.div`
   margin-bottom: 50px;
@@ -96,6 +96,8 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
       });
     }
   }, [quests]);
+  const pm12 = getPM12Time();
+  const nextHour = getNextHourTime();
 
   return (
     <Wrapper>
@@ -105,7 +107,13 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           <Desc>Visit dApp below to get 1 spin each</Desc>
         </Head>
 
-        <Summary resetHours={24} executions={frensTotal.executions} collectedSpins={frensTotal.collectedSpins} />
+        <Summary
+          endTime={pm12}
+          resetHours={24}
+          executions={frensTotal.executions}
+          collectedSpins={frensTotal.collectedSpins}
+          hideDays
+        />
         <FrensTask list={quests.frensTasks} onRefreshDetail={queryDetail} />
       </Sections>
 
@@ -114,7 +122,14 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           <Title>DEGEN</Title>
           <Desc>Participate in the trade below to get 2 spins for each</Desc>
         </Head>
-        <Summary resetHours={1} executions={degenTotal.executions} collectedSpins={degenTotal.collectedSpins} />
+        <Summary
+          endTime={nextHour}
+          resetHours={1}
+          executions={degenTotal.executions}
+          collectedSpins={degenTotal.collectedSpins}
+          hideDays
+          hideHours
+        />
 
         <Explores list={quests.degenTasks} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
       </Sections>
@@ -124,7 +139,14 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           <Title>CHAD</Title>
           <Desc>Stake in the dapps below to get 3 spins for each</Desc>
         </Head>
-        <Summary resetHours={1} executions={chadTotal.executions} collectedSpins={chadTotal.collectedSpins} />
+        <Summary
+          endTime={nextHour}
+          resetHours={1}
+          executions={chadTotal.executions}
+          collectedSpins={chadTotal.collectedSpins}
+          hideDays
+          hideHours
+        />
 
         <Explores list={quests.chadTasks} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
       </Sections>

@@ -51,6 +51,7 @@ export default function CardInput({ onConfirm }: any) {
   return (
     <StyledContainer>
       <StyledInput
+        placeholder="secret word"
         onChange={(ev: any) => {
           setVal(ev.target.value);
         }}
