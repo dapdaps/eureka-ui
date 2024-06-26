@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import Timer from '@/components/Timer';
+
 // import Timer from '../Timer';
 
 const Wrapper = styled.div`
@@ -41,7 +43,7 @@ export default function Summary({ title, resetHours, executions, collectedSpins 
       <div className="left">
         <div>
           <Title style={{ marginBottom: 20 }}>{title}</Title>
-          {/* <Timer color="white" endTime={1719305213404} /> */}
+          <Timer endTime={1719569275992} />
           <Title>Reset by every {resetHours} hours</Title>
         </div>
       </div>

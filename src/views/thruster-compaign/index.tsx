@@ -1,13 +1,13 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
+import Timer from '@/components/Timer';
 import useUserInfo from '@/hooks/useUserInfo';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
-import Timer from '@/components/Timer'
-import SlotMachine from './components/SlotMachine'
 
 import Explores from './components/Explores';
+import SlotMachine from './components/SlotMachine';
 import Tabs from './components/Tabs';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
@@ -15,12 +15,7 @@ import useRewards from './hooks/useRewards';
 import useSpin from './hooks/useSpin';
 import { StyledContainer, StyledContent } from './styles';
 
-const id: string = '9'
-
-export default function OdysseyV8() {
-  const router = useRouter();
-  // const { id } = router.query;
-
+export default function ThrusterCampaign({ id }: any) {
   const authConfig = useAuthConfig();
   const { rewards, loading: rewardLoading, query: queryRewards } = useRewards(id as string);
   const { detail, loading, parter, isGotSpins, showSpinsResultModal, setShowSpinsResultModal, queryDetail } = useDetail(
@@ -103,8 +98,8 @@ export default function OdysseyV8() {
         />
 
         <div style={{ display: 'flex', justifyContent: 'center', position: 'relative', zIndex: 10, paddingBottom: 80 }}>
-          <Timer endTime={detail.end_time}/>
-        </div>  
+          <Timer endTime={detail.end_time} />
+        </div>
 
         <Tabs quests={quests} queryDetail={queryDetail} userInfo={userInfo} authConfig={authConfig} />
       </StyledContent>
