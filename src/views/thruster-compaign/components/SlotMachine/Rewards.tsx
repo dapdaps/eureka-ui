@@ -57,24 +57,26 @@ export default function Rewards({ rewards = {} }: any) {
         >
           you win:
         </div>
-        {rewards && !!Object.entries(rewards).length ? (
-          <Box className="animation left">
-            {[1, 2].map((item) => (
-              <Texts key={item}>
-                {Object.entries(rewards).map(([key, value]) => (
-                  <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
-                    <img src={RewardIcons[key]?.icon} style={{ width: 26, height: 26, marginTop: '3px' }} />
-                    <div>
-                      {value} {RewardIcons[key]?.label}
+        <div style={{ overflow: 'hidden' }}>
+          {rewards && !!Object.entries(rewards).length ? (
+            <Box className="animation left">
+              {[1, 2].map((item) => (
+                <Texts key={item}>
+                  {Object.entries(rewards).map(([key, value]) => (
+                    <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
+                      <img src={RewardIcons[key]?.icon} style={{ width: 26, height: 26, marginTop: '3px' }} />
+                      <div>
+                        {value} {RewardIcons[key]?.label}
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </Texts>
-            ))}
-          </Box>
-        ) : (
-          <div style={{ paddingLeft: 20 }}>Participate now to win big prizes!</div>
+                  ))}
+                </Texts>
+              ))}
+            </Box>
+          ) : (
+            <div style={{ paddingLeft: 20 }}>Participate now to win big prizes!</div>
         )}
+        </div>
       </Wrapper>
     </Score>
   );

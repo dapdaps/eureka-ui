@@ -62,15 +62,15 @@ export const StyledContent = styled.div<{ $bgColor: string; ref: any }>`
     bottom: -6px;
     width: 37px;
     height: 37px;
-    border-left: 1px solid #ebf479;
-    border-bottom: 1px solid #ebf479;
+    border-left: 1px solid rgba(227, 85, 75, 1);
+    border-bottom: 1px solid rgba(227, 85, 75, 1);
   }
   .corner-right {
     position: absolute;
     width: 37px;
     height: 37px;
-    border-top: 1px solid #ebf479;
-    border-right: 1px solid #ebf479;
+    border-top: 1px solid rgba(227, 85, 75, 1);
+    border-right: 1px solid rgba(227, 85, 75, 1);
     right: -6px;
     top: -6px;
   }
