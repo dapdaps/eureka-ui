@@ -55,6 +55,7 @@ export const Item = styled.div`
   flex-direction: column;
   align-items: center;
   border-right: 1px solid #fff;
+  font-family: 'Chakra Petch';
   &:last-child {
     border-right: none;
   }

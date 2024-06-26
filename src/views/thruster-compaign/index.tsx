@@ -75,6 +75,8 @@ export default function ThrusterCampaign({ id }: any) {
   //   setLendingList(_list);
   // }, [quests]);
 
+  console.log('Chakra Petch:', rewards)
+
   return (
     <StyledContainer>
       <StyledContent>

@@ -11,6 +11,8 @@ const Wrapper = styled.div`
   text-transform: capitalize;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
 `;
 
 const Texts = styled.div`
@@ -57,10 +59,11 @@ export default function Rewards({ rewards = {} }: any) {
         >
           you win:
         </div>
-        <div style={{ overflow: 'hidden' }}>
+        <div style={{ overflow: 'hidden', paddingRight: 10 }}>
           {rewards && !!Object.entries(rewards).length ? (
-            <Box className="animation left">
-              {[1, 2].map((item) => (
+            <Box>
+              {/* <Box className="animation left"> */}
+              {[1].map((item) => (
                 <Texts key={item}>
                   {Object.entries(rewards).map(([key, value]) => (
                     <div key={key} style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
