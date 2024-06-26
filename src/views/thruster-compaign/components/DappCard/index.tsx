@@ -24,6 +24,13 @@ const ICON_MAP: any = {
   Stargate: 'https://s3.amazonaws.com/dapdap.prod/images/stargate.png',
   Orbiter: '/images/apps/orbiter.png',
 };
+const LogoMap = new Map([
+  ['Thruster', '/images/odyssey/thruster/Thruster.svg'],
+  ['Hyperlock', '/images/odyssey/thruster/Hyperlock.svg'],
+  ['DUO', '/images/odyssey/thruster/DUO.svg'],
+  ['Gamma', '/images/odyssey/thruster/Gamma.svg'],
+  ['Juice', '/images/odyssey/thruster/Juice.svg'],
+]);
 
 export default function DappCard({
   id,
@@ -53,7 +60,8 @@ export default function DappCard({
 
   const onItemClick = () => {
     console.log('onItemClick--', source, operators);
-
+    window.open(source, '_blank');
+    return;
     if (operators?.length) {
       handleDappRedirect(operators[0]);
       return;
@@ -69,7 +77,6 @@ export default function DappCard({
       setCachedTab(category_name, 534352);
     }
     if (!source) return;
-    // window.open(source, '_blank');
   };
 
   useEffect(() => {
@@ -83,7 +90,7 @@ export default function DappCard({
     >
       <StyledTop>
         <StyledDappWrapper>
-          <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+          <StyledDappIcon src={LogoMap.get(name) || operators?.[0]?.dapp_logo} />
           <StyledDappTitleWrapper>
             <StyledDappTitle>{name}</StyledDappTitle>
             <StyledDappDesc>{description}</StyledDappDesc>

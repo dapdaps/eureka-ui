@@ -10,6 +10,8 @@ const defaultQuests: any = {
   degenTasks: [],
   chadTasks: [],
   frensTasks: [],
+  social: [],
+  password: [],
 };
 
 export default function useQuests(id: any) {
@@ -39,12 +41,42 @@ export default function useQuests(id: any) {
         // }
         if (item.source === 'Chad') {
           _result.chadTasks.push(item);
-        }
-        if (item.source === 'Degen') {
+        } else if (item.source === 'Degen') {
           _result.degenTasks.push(item);
+        } else if (item.category.startsWith('twitter')) {
+          _result.social.push(item);
+        } else if (item.category === 'password') {
+          _result.password.push(item);
+        } else {
+          _result.frensTasks.push(item);
         }
-
-        _result.frensTasks.push(item);
+        // if (
+        //   item.category_id === 0 &&
+        //   item.category !== 'twitter_retweet' &&
+        //   ![
+        //     'Particle',
+        //     'Thruster',
+        //     'Ring',
+        //     'BladeSwap',
+        //     'Juice',
+        //     'Ambient',
+        //     'Super Sushi Samurai',
+        //     'Cap&Co',
+        //     'Early',
+        //     'Crypto Valleys',
+        //     'Baja',
+        //     'Fenix',
+        //     'Andy',
+        //     'strategy_particle_duo_ring_juice',
+        //     'strategy_thruster_hyperlock',
+        //     'strategy_juice',
+        //     'strategy_renzo_thruster_hyperlock_particle',
+        //     'strategy_thruster_orbit_juice',
+        //     'strategy_thruster_thruster_hyperlock_particle',
+        //   ].includes(item.source)
+        // ) {
+        //   _result.social.push(item);
+        // }
       });
       setQuests(_result);
     } catch (err) {
