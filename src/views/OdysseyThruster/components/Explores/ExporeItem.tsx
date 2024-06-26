@@ -43,14 +43,16 @@ const ExporeItem = ({
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
   };
   const onItemClick = () => {
-    console.log('ExporeItem', category, source);
+    console.log('ExporeItem-click', category, source, operators);
 
     if (!account) {
       check();
       return;
     }
-
-    console.log('onItemClick--', source, operators);
+    if (name.includes('Particle')) {
+      onStartReport();
+      return;
+    }
 
     if (operators?.length) {
       handleDappRedirect(operators[0]);
@@ -67,14 +69,8 @@ const ExporeItem = ({
     //   setCachedTab(category_name, 534352);
     // }
     if (!source) return;
-
     if (finished) return;
-    if (name === 'Particle') {
-      onStartReport();
 
-      // window.open('https://app.particle.trade/earn', '_blank');
-      return;
-    }
     if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
     }
