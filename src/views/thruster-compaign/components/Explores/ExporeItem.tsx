@@ -60,6 +60,7 @@ const ExporeItem = ({
     }
 
     if (!source) return;
+
     if (category === 'page') handleReport(id);
     window.open(source, '_blank');
   };

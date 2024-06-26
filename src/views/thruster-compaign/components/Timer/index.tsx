@@ -9,7 +9,6 @@ const Timer = ({ endTime, hideDays, hideHours, onTimerEnd }: any) => {
   const [ready, setReady] = useState(false);
   const { secondsRemaining } = useCountdown(endTime / 1000);
   const timeLeft = getTimePeriods(secondsRemaining);
-  console.log(111, timeLeft);
 
   useEffect(() => {
     const values = Object.values(timeLeft);

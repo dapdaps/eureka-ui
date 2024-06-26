@@ -5,6 +5,7 @@ import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useLayoutStore } from '@/stores/layout';
 
 import useCheck from '../../hooks/useCheck';
+import useReport from '../../hooks/useReport';
 import ArrowIcon from '../ArrowIcon';
 import Card from '../Card';
 import Spins from '../Spins';
@@ -41,6 +42,7 @@ export default function DappCard({
   description,
   times,
   spins,
+  category,
   total_spins,
   onRefreshDetail,
 }: any) {
@@ -57,9 +59,10 @@ export default function DappCard({
   const handleDappRedirect = (dapp: any) => {
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
   };
-
+  const { handleReport } = useReport();
   const onItemClick = () => {
-    console.log('onItemClick--', source, operators);
+    console.log('onItemClick--', category, source);
+    if (category === 'page') handleReport(id);
     window.open(source, '_blank');
     return;
     if (operators?.length) {
