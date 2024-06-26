@@ -275,6 +275,7 @@ function SlotMachine({
   rewards,
   rewardLoading,
   detail,
+  hasRewrd,
 }: any) {
   const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
@@ -409,11 +410,11 @@ function SlotMachine({
             <BtnBg />
             <Btn
               className={isPressed ? 'press' : ''}
-              $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
+              $active={isStart && availableSpins > 0 && !isPressed && !isPressing && hasRewrd}
               // $active={false}
               onClick={() => {
                 if (!isStart) return;
-                if (isPressing || isPressed || availableSpins <= 0) {
+                if (isPressing || isPressed || availableSpins <= 0 || !hasRewrd) {
                   return;
                 }
                 handleBtnPress();
