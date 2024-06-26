@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useLayoutStore } from '@/stores/layout';
@@ -59,9 +61,15 @@ export default function DappCard({
   const handleDappRedirect = (dapp: any) => {
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
   };
+  const { check } = useAuthCheck({ isNeedAk: true });
+  const { account } = useAccount();
   const { handleReport } = useReport();
   const onItemClick = () => {
     console.log('onItemClick--', category, source);
+    if (!account) {
+      check();
+      return;
+    }
     if (category === 'page') handleReport(id);
     window.open(source, '_blank');
     return;
