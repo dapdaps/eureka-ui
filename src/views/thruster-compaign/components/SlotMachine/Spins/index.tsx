@@ -3,7 +3,7 @@ import Loading from '@/components/Icons/Loading';
 import { AnimatePresence } from 'framer-motion';
 import { container } from '@/components/animation';
 import Quest from './quest';
-import useSwitcher from '../../hooks/useSwitcher';
+import useSwitcher from '../../../hooks/useSwitcher';
 import { LoadingWrap, StyledContainer, StyledContent } from './styles';
 import UnStart from './unStart';
 import RankModal from '../RankModal';
