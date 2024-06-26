@@ -40,12 +40,12 @@ function RuleModal({ onClose, onShowModal }: any) {
       </Context>
       <SubTitle>Here’s how you can join and play:</SubTitle>
       <Context>
-        Complete Tasks: Engage in Tasks to earn spins.
-        Spin the Wheel: Use your spins to participate in the &quot;Spin to Win&quot; game.
+        Complete Tasks: Engage in Tasks to earn spins.<br/>
+        Spin the Wheel: Use your spins to participate in the &quot;Spin to Win&quot; game.<br/>
         Win Rewards: Match symbols to win prizes. The more symbols you match, the bigger the rewards!
       </Context>
       <SubTitle>Prizes Include:</SubTitle>
-      <Context>Blast Gold，Ring Points, Thruster Credits, Particle Points, veBlade, $Yield, Baja, Rings, Andy.</Context>
+      <Context>Thruster Credits.</Context>
       <Context />
       {/* <Context
         style={{ textDecoration: 'underline', cursor: 'pointer' }}

@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
+import useConnectWallet from '@/hooks/useConnectWallet';
+import useAccount from '@/hooks/useAccount';
 
 import Timer from '@/components/Timer';
 
@@ -273,6 +275,7 @@ function SlotMachine({
   rewards,
   rewardLoading,
   detail,
+  hasRewrd,
 }: any) {
   const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
@@ -282,6 +285,8 @@ function SlotMachine({
   const [prizePoolShow, setPrizePoolShow] = useState(false);
   const [rewardShow, setRewardShow] = useState(false);
   const [list, setList] = useState<any>([]);
+  const { onConnect } = useConnectWallet();
+  const { account, chainId, provider } = useAccount();
 
   const rewardRef = useRef(reward);
 
@@ -295,10 +300,17 @@ function SlotMachine({
   useEffect(() => {
     // const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
     // const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);
-
-
     // setList([...tempList, tempList[0], tempList[1]]);
-    setList(DAPPS);
+
+    const minimum: number = 0, maximum: number = 5
+    const index = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum
+    const _DAPPS = [...DAPPS]
+    _DAPPS.splice(index, 1)
+
+    setList([
+      _DAPPS[_DAPPS.length - 1],
+      ..._DAPPS,
+    ]);
   }, []);
 
   const handleBtnPress = useCallback(() => {
@@ -398,11 +410,11 @@ function SlotMachine({
             <BtnBg />
             <Btn
               className={isPressed ? 'press' : ''}
-              $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
+              $active={isStart && availableSpins > 0 && !isPressed && !isPressing && hasRewrd}
               // $active={false}
               onClick={() => {
                 if (!isStart) return;
-                if (isPressing || isPressed || availableSpins <= 0) {
+                if (isPressing || isPressed || availableSpins <= 0 || !hasRewrd) {
                   return;
                 }
                 handleBtnPress();
@@ -413,6 +425,10 @@ function SlotMachine({
           <Clam
             pressed={!isStart || claimPressed}
             onClick={() => {
+              if (!account) {
+                return onConnect()
+              }
+
               if (!isStart) return;
               queryRewards();
               setRewardShow(true);

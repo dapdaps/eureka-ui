@@ -18,7 +18,7 @@ import { StyledContainer, StyledContent } from './styles';
 export default function ThrusterCampaign({ id }: any) {
   const authConfig = useAuthConfig();
   const { rewards, loading: rewardLoading, query: queryRewards } = useRewards(id as string);
-  const { detail, loading, parter, isGotSpins, showSpinsResultModal, setShowSpinsResultModal, queryDetail } = useDetail(
+  const { detail, loading, parter, isGotSpins, showSpinsResultModal, setShowSpinsResultModal, queryDetail, hasRewrd, queryRewordCheck } = useDetail(
     id,
     () => {
       queryRewards();
@@ -54,6 +54,7 @@ export default function ThrusterCampaign({ id }: any) {
       setReward(res);
       queryDetail();
       queryRewards();
+      queryRewordCheck();
     });
   }, [isSpining]);
 
@@ -91,6 +92,7 @@ export default function ThrusterCampaign({ id }: any) {
             queryDetail();
             queryQuests();
           }}
+          hasRewrd={hasRewrd}
           detail={detail}
           loading={loading}
           rewards={rewards}

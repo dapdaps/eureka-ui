@@ -8,6 +8,7 @@ import { get, post } from '@/utils/http';
 export default function useDetail(id: any, cb: any) {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(true);
+  const [hasRewrd, setHasRewrd] = useState(false);
   const { account } = useAccount();
   const [parter, setParter] = useState('');
   const [isGotSpins, setIsGotSpins] = useState(false);
@@ -26,6 +27,7 @@ export default function useDetail(id: any, cb: any) {
       setShowSpinsResultModal(true);
     }
     queryDetail();
+    queryRewordCheck()
     cb?.();
   }, [id, cb]);
 
@@ -42,6 +44,24 @@ export default function useDetail(id: any, cb: any) {
       setLoading(false);
     } catch (err) {
       setLoading(false);
+    }
+  }, []);
+
+  const queryRewordCheck = useCallback(async () => {
+    try {
+      setLoading(true);
+      const result = await get('/api/compass/reward/check', { id });
+
+      if (result.code === 0 && result.data) {
+        setHasRewrd(result.data.status)
+        // setDetail({ ...result.data });
+      } else {
+        setHasRewrd(false)
+        // setDetail({});
+      }
+      // setLoading(false);
+    } catch (err) {
+      // setLoading(false);
     }
   }, []);
 
@@ -62,11 +82,13 @@ export default function useDetail(id: any, cb: any) {
 
   return {
     detail: detail || {},
+    hasRewrd,
     loading,
     parter,
     isGotSpins,
     showSpinsResultModal,
     setShowSpinsResultModal,
     queryDetail,
+    queryRewordCheck,
   };
 }

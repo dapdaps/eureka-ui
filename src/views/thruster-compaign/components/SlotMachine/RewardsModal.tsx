@@ -21,8 +21,7 @@ export default function RewardsModal({ loading, rewards = {}, onClose }: any) {
           marginTop: 10,
         }}
       >
-        All rewards won via Odyssey Vol.4+ &quot;Spin to Win&quot; slot machine will be settled after the conclusion of
-        the event.
+        All rewards won via Thruster Campaign &quot;Spin to Win&quot; slot machine will be settled after the conclusion of the event.
       </div>
       <div
         style={{
