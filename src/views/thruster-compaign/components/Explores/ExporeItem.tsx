@@ -1,6 +1,10 @@
 import { memo, useEffect, useState } from 'react';
 
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
+
 import useCheck from '../../hooks/useCheck';
+import useParticleReport from '../../hooks/useParticleReport';
 import useReport from '../../hooks/useReport';
 import ArrowIcon from '../ArrowIcon';
 import Spins from '../Spins';
@@ -25,11 +29,26 @@ const ExporeItem = ({
     setFinished(true);
     onRefreshDetail();
   });
+  const { check } = useAuthCheck({ isNeedAk: true });
+  const { account } = useAccount();
   const { handleReport } = useReport();
+  const reportCallback = () => {
+    window.open('https://app.particle.trade/earn', '_blank');
+  };
+  const { loading: reportLoading, onStartReport } = useParticleReport(reportCallback);
 
   const onItemClick = () => {
+    if (!account) {
+      check();
+      return;
+    }
     if (finished) return;
+    if (name === 'Particle') {
+      onStartReport();
 
+      // window.open('https://app.particle.trade/earn', '_blank');
+      return;
+    }
     if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
     }
@@ -41,6 +60,7 @@ const ExporeItem = ({
     }
 
     if (!source) return;
+
     if (category === 'page') handleReport(id);
     window.open(source, '_blank');
   };
@@ -70,7 +90,7 @@ const ExporeItem = ({
         ) : (
           <>
             <Spins
-              spins={spins}
+              spin={spins}
               checking={checking}
               onRefresh={(ev: any) => {
                 ev.stopPropagation();

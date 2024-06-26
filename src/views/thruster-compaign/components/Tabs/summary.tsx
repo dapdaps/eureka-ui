@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import Timer from '@/components/Timer';
+import Timer from '../Timer';
 
 const Wrapper = styled.div`
   padding: 30px 37px;
@@ -38,11 +38,19 @@ const Value = styled.div`
   line-height: normal;
 `;
 
-export default function Summary({ resetHours, executions, collectedSpins }: any) {
+export default function Summary({
+  endTime,
+  resetHours,
+  executions,
+  collectedSpins,
+  hideDays,
+  hideHours,
+  onTimerEnd,
+}: any) {
   return (
     <Wrapper>
       <div className="left">
-        <Timer endTime={1719569275992} />
+        <Timer endTime={endTime} hideDays={hideDays} hideHours={hideHours} onTimerEnd={onTimerEnd} />
         <Title>Reset by every {resetHours} hours</Title>
       </div>
       <div className="right">

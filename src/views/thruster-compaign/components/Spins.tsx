@@ -3,16 +3,18 @@ import styled from 'styled-components';
 import RefreshButton from './RefreshButton';
 
 const Wrapper = styled.div<{ $active: boolean }>`
+  color: #979abe;
+  font-family: '5squared pixel';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 100%;
+  text-transform: capitalize;
   border: 1px solid #3d405a;
   border-radius: 4px;
   padding: 8px 15px;
   color: #979abe;
-  text-align: right;
-  font-family: '5squared pixel';
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%; /* 16px */
+
   text-transform: capitalize;
   display: flex;
   align-items: center;
@@ -26,7 +28,7 @@ const Wrapper = styled.div<{ $active: boolean }>`
   `}
 `;
 
-export default function Spins({ spin = 10, active, checking, onRefresh, style }: any) {
+export default function Spins({ spin = 0, active, checking, onRefresh, style }: any) {
   return (
     <Wrapper $active={active} style={style}>
       <span>{spin} SPIN</span>

@@ -101,7 +101,6 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
   height: 75px;
   border-radius: 6px;
   border: 1px solid #373535;
-  background: #1c1b1b;
   box-sizing: border-box;
   padding: 14px 28px 14px 16px;
   display: flex;
@@ -109,6 +108,11 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
   justify-content: space-between;
   cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
   margin-bottom: 16px;
+  background:
+    url(/images/odyssey/thruster/bg-task-left.svg) left bottom no-repeat,
+    url(/images/odyssey/thruster/bg-task-right.svg) right top no-repeat,
+    #1c1b1b;
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -118,11 +122,11 @@ export const StyledItemTitle = styled.div`
   width: 100%;
   flex-shrink: 0;
   color: #fff;
-  font-family: Gantari;
-  font-size: 20px;
+  font-family: Montserrat;
+  font-size: 18px;
   font-style: normal;
-  font-weight: 700;
-  line-height: 120%; /* 24px */
+  font-weight: 600;
+  line-height: normal;
 `;
 
 export const StyledItemLeft = styled.div`

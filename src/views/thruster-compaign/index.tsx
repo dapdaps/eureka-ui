@@ -18,13 +18,20 @@ import { StyledContainer, StyledContent } from './styles';
 export default function ThrusterCampaign({ id }: any) {
   const authConfig = useAuthConfig();
   const { rewards, loading: rewardLoading, query: queryRewards } = useRewards(id as string);
-  const { detail, loading, parter, isGotSpins, showSpinsResultModal, setShowSpinsResultModal, queryDetail, hasRewrd, queryRewordCheck } = useDetail(
-    id,
-    () => {
-      queryRewards();
-    },
-  );
-  const { loading: questingLoading, quests, queryQuests } = useQuests(9);
+  const {
+    detail,
+    loading,
+    parter,
+    isGotSpins,
+    showSpinsResultModal,
+    setShowSpinsResultModal,
+    queryDetail,
+    hasRewrd,
+    queryRewordCheck,
+  } = useDetail(id, () => {
+    queryRewards();
+  });
+  const { loading: questingLoading, quests, queryQuests } = useQuests(id);
   const { userInfo, queryUserInfo } = useUserInfo();
 
   const [showNoti, setShowNoti] = useState(true);
@@ -107,7 +114,15 @@ export default function ThrusterCampaign({ id }: any) {
         </div>   */}
 
         <div style={{ position: 'relative', zIndex: 10 }}>
-          <Tabs quests={quests} queryDetail={queryDetail} userInfo={userInfo} authConfig={authConfig} />
+          <Tabs
+            quests={quests}
+            queryDetail={queryDetail}
+            userInfo={userInfo}
+            authConfig={authConfig}
+            onRefresh={() => {
+              queryQuests();
+            }}
+          />
         </div>
       </StyledContent>
     </StyledContainer>
