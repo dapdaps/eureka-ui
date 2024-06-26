@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import useToast from '@/hooks/useToast';
 import { get } from '@/utils/http';
 
@@ -25,8 +26,14 @@ export default function useCheck(quest: any, cb: any) {
           });
         }
 
+        // social&password
         if (result.data && result.data.total_completed_times) {
-          cb(result.data.total_completed_times);
+          if (quest.category.startsWith('twitter') || quest.category.startsWith('password')) {
+            cb(result.data.total_completed_times);
+          } else {
+            // others
+            cb(result.data.period_complete);
+          }
           if (data) {
             toast.success({
               title: 'Action confirmed successfully',

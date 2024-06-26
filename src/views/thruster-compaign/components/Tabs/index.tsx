@@ -6,6 +6,7 @@ import { getNextHourTime, getPM12Time, getUTCTime } from '@/utils/utc';
 import Explores from '../../components/Explores';
 import FrensTask from '../FrensTask';
 import Summary from './summary';
+
 const Wrapper = styled.div`
   width: 1186px;
   margin: 0 auto;
@@ -66,30 +67,25 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig, onRefr
 
   useEffect(() => {
     if (quests.frensTasks.length) {
-      const _execs = quests.frensTasks.reduce((total: number, item: any) => total + Number(item.times), 0);
-      const _collectedSpins = quests.frensTasks.reduce(
-        (total: number, item: any) => total + item.times * item.spins,
-        0,
-      );
+      const _collectedSpins = quests.frensTasks.reduce((total: number, item: any) => total + item.total_spins, 0);
+      const _execs = _collectedSpins / quests.frensTasks[0]?.spins;
+
       setFrensTotal({
         executions: _execs,
         collectedSpins: _collectedSpins,
       });
     }
     if (quests.degenTasks.length) {
-      const _execs = quests.degenTasks.reduce((total: number, item: any) => total + Number(item.times), 0);
-      const _collectedSpins = quests.degenTasks.reduce(
-        (total: number, item: any) => total + item.times * item.spins,
-        0,
-      );
+      const _collectedSpins = quests.degenTasks.reduce((total: number, item: any) => total + item.total_spins, 0);
+      const _execs = _collectedSpins / quests.degenTasks[0]?.spins;
       setDegenTotal({
         executions: _execs,
         collectedSpins: _collectedSpins,
       });
     }
     if (quests.chadTasks.length) {
-      const _execs = quests.chadTasks.reduce((total: number, item: any) => total + Number(item.times), 0);
-      const _collectedSpins = quests.chadTasks.reduce((total: number, item: any) => total + item.times * item.spins, 0);
+      const _collectedSpins = quests.chadTasks.reduce((total: number, item: any) => total + item.total_spins, 0);
+      const _execs = _collectedSpins / quests.chadTasks[0]?.spins;
       setChadTotal({
         executions: _execs,
         collectedSpins: _collectedSpins,

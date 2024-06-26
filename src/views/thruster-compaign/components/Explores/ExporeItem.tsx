@@ -2,6 +2,7 @@ import { memo, useEffect, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useDappOpen from '@/hooks/useDappOpen';
 
 import useCheck from '../../hooks/useCheck';
 import useParticleReport from '../../hooks/useParticleReport';
@@ -22,26 +23,51 @@ const ExporeItem = ({
   total_spins = 0,
   times = 0,
   onRefreshDetail,
+  operators,
   period_complete,
 }: any) => {
   const [finished, setFinished] = useState(false);
-  const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins }, (_times: number) => {
+  const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins, category }, (_times: number) => {
     setFinished(true);
     onRefreshDetail();
   });
   const { check } = useAuthCheck({ isNeedAk: true });
   const { account } = useAccount();
   const { handleReport } = useReport();
+  const { open: dappOpen } = useDappOpen();
   const reportCallback = () => {
     window.open('https://app.particle.trade/earn', '_blank');
   };
   const { loading: reportLoading, onStartReport } = useParticleReport(reportCallback);
-
+  const handleDappRedirect = (dapp: any) => {
+    dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
+  };
   const onItemClick = () => {
+    console.log('ExporeItem', category, source);
+
     if (!account) {
       check();
       return;
     }
+
+    console.log('onItemClick--', source, operators);
+
+    if (operators?.length) {
+      handleDappRedirect(operators[0]);
+      return;
+    }
+    // if (source === 'wallet/bridge') {
+    //   setLayout({
+    //     showAccountSider: true,
+    //     defaultTab: 'bridge',
+    //   });
+    //   return;
+    // }
+    // if (category_name === 'Bridge') {
+    //   setCachedTab(category_name, 534352);
+    // }
+    if (!source) return;
+
     if (finished) return;
     if (name === 'Particle') {
       onStartReport();
@@ -66,9 +92,14 @@ const ExporeItem = ({
   };
 
   useEffect(() => {
-    // const offers = spins * times;
-    // setFinished(offers <= total_spins);
-    setFinished(period_complete);
+    // social&password
+    if (category.startsWith('twitter') || category.startsWith('password')) {
+      const offers = spins * times;
+      setFinished(offers <= total_spins);
+    } else {
+      // others
+      setFinished(period_complete);
+    }
   }, [total_spins, period_complete, times, spins]);
 
   return (

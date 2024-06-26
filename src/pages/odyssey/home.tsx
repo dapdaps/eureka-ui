@@ -7,9 +7,16 @@ import OdysseyV3 from '@/views/OdysseyV3';
 import OdysseyV4 from '@/views/OdysseyV4';
 import OdysseyV5 from '@/views/OdysseyV5';
 import OdysseyV8 from '@/views/OdysseyV8';
+import OdysseyThruster from '@/views/thruster-compaign';
 
 function Compass() {
   const router = useRouter();
+  console.log('NEXT_PUBLIC_API--', process.env.NEXT_PUBLIC_API);
+
+  if (process.env.NEXT_PUBLIC_API === 'https://test-api.dapdap.net') {
+    if (router.query.id === '9') return <OdysseyThruster id="9" />;
+  }
+  if (router.query.id === '6') return <OdysseyThruster id="6" />;
   if (process.env.NEXT_PUBLIC_API === 'https://api.dapdap.net') {
     if (router.query.id === '5') return <OdysseyV8 />;
   }
