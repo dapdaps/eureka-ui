@@ -3,10 +3,11 @@ import Modal from '@/components/Modal';
 import Tokens from '../Detail/components/Tokens';
 import AmountPanel from '../Detail/components/AmountPanel';
 import Range from '../Detail/components/Range';
-import DepositAmounts from '../components/DepositAmounts';
+import DepositAmounts from '../components/DepositAmounts/V3';
 import IncreaseButton from './components/Button';
 import { StyledContent } from './styles';
 import { tickToPrice, checkIsFullRange } from '../utils/tickMath';
+import useDappConfig from '../hooks/useDappConfig';
 import useIncrease from './hooks/useIncrease';
 
 const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) => {
@@ -22,6 +23,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) =
     tokenId: detail.tokenId,
     onSuccess,
   });
+  const { contracts, chainId } = useDappConfig();
 
   const rangeType = useMemo(() => {
     if (checkIsFullRange({ tickLower, tickUpper })) return 3;
@@ -77,6 +79,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) =
             value1={value1}
             token0={token0}
             token1={token1}
+            spender={contracts[chainId].PositionManager}
           />
         </StyledContent>
       }

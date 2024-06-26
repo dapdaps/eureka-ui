@@ -77,7 +77,7 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
 
 const AddButton = ({ errorTips, loading, ...rest }: any) => {
   const { account, chainId } = useAccount();
-  const { contracts, currentChain } = useDappConfig();
+  const { currentChain } = useDappConfig();
   if (!account || !chainId) {
     return <ConnectWalletButton style={style} />;
   }
@@ -110,7 +110,7 @@ const AddButton = ({ errorTips, loading, ...rest }: any) => {
     );
   }
 
-  return <ActionButton {...rest} spender={contracts[chainId].PositionManager} />;
+  return <ActionButton {...rest} />;
 };
 
 export default AddButton;
