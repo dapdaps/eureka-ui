@@ -12,7 +12,7 @@ export default function useData() {
   const [fee, setFee] = useState<any>(0.3);
   const [noPair, setNoPair] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { info, loading: infoLoading } = usePoolInfo({ token0, token1, fee });
+  const { info, loading: infoLoading, queryPool } = usePoolInfo({ token0, token1, fee });
 
   const onCleanAll = () => {
     setToken0(null);
@@ -89,5 +89,6 @@ export default function useData() {
     setToken0,
     setToken1,
     setNoPair,
+    queryPool,
   };
 }

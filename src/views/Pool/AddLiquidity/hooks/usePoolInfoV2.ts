@@ -7,6 +7,7 @@ import useDappConfig from '../../hooks/useDappConfig';
 import { wrapNativeToken } from '../../utils/token';
 import factoryAbi from '../../abi/factoryV2';
 import poolAbi from '../../abi/poolV2';
+import Big from 'big.js';
 
 export default function usePoolInfoV2({ token0, token1, fee }: any) {
   const [info, setInfo] = useState<any>();
@@ -51,8 +52,8 @@ export default function usePoolInfoV2({ token0, token1, fee }: any) {
       });
 
       setInfo({
-        reserve0: reserves[0],
-        reserve1: reserves[1],
+        reserve0: reserves[0] ? (Big(reserves[0] || 0).eq(0) ? 0 : reserves[0]) : 0,
+        reserve1: reserves[1] ? (Big(reserves[1] || 0).eq(0) ? 0 : reserves[1]) : 0,
         routerAddress: fee === 0.3 ? _contracts.Router3 : _contracts.Router10,
       });
 
@@ -69,5 +70,5 @@ export default function usePoolInfoV2({ token0, token1, fee }: any) {
     queryPool();
   }, [token0, token1, fee, chainId]);
 
-  return { info, loading };
+  return { info, loading, queryPool };
 }

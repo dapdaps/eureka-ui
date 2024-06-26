@@ -113,4 +113,29 @@ const AddButton = ({ errorTips, loading, ...rest }: any) => {
   return <ActionButton {...rest} />;
 };
 
+export const CreateButton = ({ loading, onClick }: any) => {
+  const { account, chainId } = useAccount();
+  const { currentChain } = useDappConfig();
+  if (!account || !chainId) {
+    return <ConnectWalletButton style={style} />;
+  }
+
+  if (chainId !== currentChain.chain_id) {
+    return <SwitchNetworkButton style={style} chain={currentChain} />;
+  }
+  if (loading) {
+    return (
+      <Button style={style} disabled>
+        <Loading size={20} />
+      </Button>
+    );
+  }
+
+  return (
+    <Button style={style} onClick={onClick}>
+      Create Pair
+    </Button>
+  );
+};
+
 export default AddButton;

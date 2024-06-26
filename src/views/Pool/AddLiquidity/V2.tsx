@@ -6,12 +6,13 @@ import SelectPair from './components/SelectPair';
 import SelectFee from './components/SelectFeeV2';
 import PoolNoExsitHints from './components/PoolNoExsitHints';
 import DepositAmounts from '../components/DepositAmounts/V2';
-import AddButton from '@/views/Pool/IncreaseLiquidity/components/Button';
+import AddButton, { CreateButton } from '@/views/Pool/IncreaseLiquidity/components/Button';
 import Setting from '../components/Setting';
 import SelectTokens from './components/SelectTokens';
 import useData from './hooks/useDataV2';
 import useDappConfig from '../hooks/useDappConfig';
 import useIncrease from '../IncreaseLiquidity/hooks/useIncreaseV2';
+import useCreatePair from './hooks/useCreatePair';
 import { StyledContainer, StyledContent, LoadingWrapper } from './styles';
 
 const Add = ({ from, onClose, setVersion }: any) => {
@@ -37,6 +38,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
     onSelectFee,
     setValue0,
     setValue1,
+    queryPool,
   } = useData();
 
   const { loading: increasing, onIncrease } = useIncrease({
@@ -52,6 +54,15 @@ const Add = ({ from, onClose, setVersion }: any) => {
       } else {
         router.push(`/dapp/${router.query.dappRoute}`);
       }
+    },
+  });
+
+  const { loading: creating, onCreate } = useCreatePair({
+    token0,
+    token1,
+    fee,
+    onSuccess: () => {
+      queryPool();
     },
   });
 
@@ -96,17 +107,21 @@ const Add = ({ from, onClose, setVersion }: any) => {
             setErrorTips(tips);
           }}
         />
-        <AddButton
-          text="Add Liquidity"
-          errorTips={errorTips}
-          loading={increasing}
-          onClick={onIncrease}
-          value0={value0}
-          value1={value1}
-          token0={token0}
-          token1={token1}
-          spender={info?.routerAddress}
-        />
+        {noPair && token0 && token1 ? (
+          <CreateButton loading={creating} onClick={onCreate} />
+        ) : (
+          <AddButton
+            text="Add Liquidity"
+            errorTips={errorTips}
+            loading={increasing}
+            onClick={onIncrease}
+            value0={value0}
+            value1={value1}
+            token0={token0}
+            token1={token1}
+            spender={info?.routerAddress}
+          />
+        )}
         <Setting show={showSettings} setShow={setShowSettings} />
         <SelectTokens
           open={showSelectTokens}

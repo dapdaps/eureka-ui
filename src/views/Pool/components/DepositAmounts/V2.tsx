@@ -24,10 +24,16 @@ const DepositAmounts = ({
   const handleValue = (value: any, type: 0 | 1) => {
     if (type === 0) {
       setValue0(value);
+    } else {
+      setValue1(value);
+    }
+
+    if (!reserve0 || !reserve1) return;
+
+    if (type === 0) {
       setValue1('');
     } else {
       setValue0('');
-      setValue1(value);
     }
 
     const isReversed = token0.address.toLowerCase() > token1.address.toLowerCase();
