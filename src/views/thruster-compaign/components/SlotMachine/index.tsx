@@ -293,8 +293,8 @@ function SlotMachine({
   }, [reward]);
 
   useEffect(() => {
-    const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
-    const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);
+    // const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
+    // const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);
 
 
     // setList([...tempList, tempList[0], tempList[1]]);
