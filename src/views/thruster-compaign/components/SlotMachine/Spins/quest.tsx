@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import Trapeziform from '../Trapeziform';
 import { openLink, openXShareLink } from '@/utils/links';
-import useReport from '../../hooks/useReport';
+import useReport from '../../../hooks/useReport';
 import {
   Body,
   QuestGoldHints,
