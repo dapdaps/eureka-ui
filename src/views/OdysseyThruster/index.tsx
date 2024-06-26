@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
 
-import Timer from '@/components/Timer';
 import useUserInfo from '@/hooks/useUserInfo';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
-import Explores from './components/Explores';
 import SlotMachine from './components/SlotMachine';
 import Tabs from './components/Tabs';
 import useDetail from './hooks/useDetail';
@@ -51,7 +49,6 @@ export default function ThrusterCampaign({ id }: any) {
   // quests.swap.sort((a: any, b: any) => {
   //   return a.order - b.order;
   // });
-  const [lendingList, setLendingList] = useState<any>();
 
   const handleSpin = useCallback(() => {
     if (isSpining) {
@@ -74,15 +71,7 @@ export default function ThrusterCampaign({ id }: any) {
     });
   }, [isClaiming]);
 
-  // useEffect(() => {
-  //   if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
-  //   const orbit = quests.lending.find((item: any) => item.name === 'Orbit');
-  //   const pac = quests.lending.find((item: any) => item.name === 'Pac Finance');
-  //   const _list = [...quests.yield, orbit, ...quests.liquidity, pac, ...quests.staking];
-  //   setLendingList(_list);
-  // }, [quests]);
-
-  console.log('Chakra Petch:', rewards)
+  console.log('Chakra Petch:', rewards);
 
   return (
     <StyledContainer>
