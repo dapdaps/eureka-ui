@@ -49,7 +49,7 @@ const Desc = styled.div`
   line-height: normal;
 `;
 
-export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any) {
+export default function Tabs({ quests, queryDetail, userInfo, authConfig, onRefresh }: any) {
   const [frensTotal, setFrensTotal] = useState({
     executions: 0,
     collectedSpins: 0,
@@ -113,6 +113,7 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           executions={frensTotal.executions}
           collectedSpins={frensTotal.collectedSpins}
           hideDays
+          onTimerEnd={onRefresh}
         />
         <FrensTask list={quests.frensTasks} onRefreshDetail={queryDetail} />
       </Sections>
@@ -129,6 +130,7 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           collectedSpins={degenTotal.collectedSpins}
           hideDays
           hideHours
+          onTimerEnd={onRefresh}
         />
 
         <Explores list={quests.degenTasks} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
@@ -146,6 +148,7 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
           collectedSpins={chadTotal.collectedSpins}
           hideDays
           hideHours
+          onTimerEnd={onRefresh}
         />
 
         <Explores list={quests.chadTasks} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />

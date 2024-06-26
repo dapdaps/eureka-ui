@@ -38,11 +38,19 @@ const Value = styled.div`
   line-height: normal;
 `;
 
-export default function Summary({ endTime, resetHours, executions, collectedSpins, hideDays, hideHours }: any) {
+export default function Summary({
+  endTime,
+  resetHours,
+  executions,
+  collectedSpins,
+  hideDays,
+  hideHours,
+  onTimerEnd,
+}: any) {
   return (
     <Wrapper>
       <div className="left">
-        <Timer endTime={endTime} hideDays={hideDays} hideHours={hideHours} />
+        <Timer endTime={endTime} hideDays={hideDays} hideHours={hideHours} onTimerEnd={onTimerEnd} />
         <Title>Reset by every {resetHours} hours</Title>
       </div>
       <div className="right">
