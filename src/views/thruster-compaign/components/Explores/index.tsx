@@ -7,10 +7,10 @@ import { StyledLoadingWrapper } from '@/styled/styles';
 import ExporeItem from './ExporeItem';
 import { StyledContent, StyledItemWrap } from './styles';
 
-export default function Explores({ list, userInfo, authConfig, onRefreshDetail }: any) {
+export default function Explores({ list, userInfo, authConfig, onRefreshDetail, cols }: any) {
   return (
-    <StyledContent>
-      <StyledItemWrap>
+    <StyledContent className={cols ? `cols-${cols}` : ''}>
+      <StyledItemWrap className={cols ? `cols-${cols}` : ''}>
         {list?.length ? (
           list.map((item: any) => (
             <ExporeItem

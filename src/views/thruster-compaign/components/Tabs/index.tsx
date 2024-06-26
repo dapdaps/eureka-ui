@@ -8,50 +8,48 @@ import Summary from './summary';
 const Wrapper = styled.div`
   width: 1186px;
   margin: 0 auto;
+`;
+
+const Head = styled.div`
+  padding: 0 37px;
+  height: 102px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+
+  border-bottom: 1px solid #373535;
+  cursor: pointer;
+`;
+const Sections = styled.div`
+  margin-bottom: 50px;
   border-radius: 6px;
   border: 1px solid #373535;
   background: #131212;
   overflow: hidden;
 `;
-const TabHead = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const Title = styled.div`
+  font-family: Burial;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  background: linear-gradient(180deg, #fff 0%, #999 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.6;
 `;
-
-const Tab = styled.div`
-  flex: 1;
-  height: 78px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-bottom: 1px solid #373535;
-  cursor: pointer;
-  .txt {
-    font-family: Burial;
-    font-size: 26px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    background: linear-gradient(180deg, #fff 0%, #999 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    opacity: 0.6;
-  }
-  &.active {
-    .txt {
-      opacity: 1;
-    }
-    border-left: 1px solid #373535;
-    border-right: 1px solid #373535;
-    border-bottom: none;
-    background-color: #000;
-  }
+const Desc = styled.div`
+  color: #979abe;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 `;
 
 export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any) {
-  const [active, setActive] = useState('FRENS TASK');
   const [frensTotal, setFrensTotal] = useState({
     executions: 0,
     collectedSpins: 0,
@@ -100,77 +98,55 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig }: any)
   }, [quests]);
 
   return (
-    <>
-      <Wrapper>
-        <TabHead>
-          {[
-            {
-              label: 'FRENS TASK',
-            },
-            {
-              label: 'DEGEN TASK',
-            },
-            {
-              label: 'CHAD TASK',
-            },
-          ].map((item, i) => (
-            <Tab
-              key={item.label}
-              onClick={() => {
-                setActive(item.label);
-              }}
-              className={active === item.label ? 'active' : ''}
-            >
-              <span className="txt">{item.label}</span>
-            </Tab>
-          ))}
-        </TabHead>
-        {active === 'FRENS TASK' && (
-          <div>
-            <Summary
-              title="Visit dApp below to get 1 spin each"
-              resetHours={24}
-              executions={frensTotal.executions}
-              collectedSpins={frensTotal.collectedSpins}
-            />
-            <FrensTask list={quests.frensTasks} onRefreshDetail={queryDetail} />
-          </div>
-        )}
-        {active === 'DEGEN TASK' && (
-          <div>
-            <Summary
-              title="Participate in the trade below to get 2 spins for each"
-              resetHours={1}
-              executions={degenTotal.executions}
-              collectedSpins={degenTotal.collectedSpins}
-            />
+    <Wrapper>
+      <Sections>
+        <Head>
+          <Title>PARTNER</Title>
+          <Desc>Visit dApp below to get 1 spin each</Desc>
+        </Head>
 
-            <Explores
-              list={quests.degenTasks}
-              userInfo={userInfo}
-              authConfig={authConfig}
-              onRefreshDetail={queryDetail}
-            />
-          </div>
-        )}
-        {active === 'CHAD TASK' && (
-          <div>
-            <Summary
-              title="Stake in the dapps below to get 3 spins for each"
-              resetHours={1}
-              executions={chadTotal.executions}
-              collectedSpins={chadTotal.collectedSpins}
-            />
+        <Summary resetHours={24} executions={frensTotal.executions} collectedSpins={frensTotal.collectedSpins} />
+        <FrensTask list={quests.frensTasks} onRefreshDetail={queryDetail} />
+      </Sections>
 
-            <Explores
-              list={quests.chadTasks}
-              userInfo={userInfo}
-              authConfig={authConfig}
-              onRefreshDetail={queryDetail}
-            />
-          </div>
-        )}
-      </Wrapper>
-    </>
+      <Sections>
+        <Head>
+          <Title>DEGEN</Title>
+          <Desc>Participate in the trade below to get 2 spins for each</Desc>
+        </Head>
+        <Summary resetHours={1} executions={degenTotal.executions} collectedSpins={degenTotal.collectedSpins} />
+
+        <Explores list={quests.degenTasks} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
+      </Sections>
+
+      <Sections>
+        <Head>
+          <Title>CHAD</Title>
+          <Desc>Stake in the dapps below to get 3 spins for each</Desc>
+        </Head>
+        <Summary resetHours={1} executions={chadTotal.executions} collectedSpins={chadTotal.collectedSpins} />
+
+        <Explores list={quests.chadTasks} userInfo={userInfo} authConfig={authConfig} onRefreshDetail={queryDetail} />
+      </Sections>
+
+      <div>
+        <Title>SOCIAL MISSIONS</Title>
+
+        <Explores
+          list={quests.social}
+          userInfo={userInfo}
+          authConfig={authConfig}
+          onRefreshDetail={queryDetail}
+          cols={2}
+        />
+        <Explores
+          list={quests.password}
+          userInfo={userInfo}
+          authConfig={authConfig}
+          onRefreshDetail={queryDetail}
+          cols={1}
+        />
+      </div>
+    </Wrapper>
   );
 }

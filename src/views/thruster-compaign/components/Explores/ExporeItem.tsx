@@ -18,6 +18,7 @@ const ExporeItem = ({
   total_spins = 0,
   times = 0,
   onRefreshDetail,
+  period_complete,
 }: any) => {
   const [finished, setFinished] = useState(false);
   const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins }, (_times: number) => {
@@ -45,9 +46,10 @@ const ExporeItem = ({
   };
 
   useEffect(() => {
-    const offers = spins * times;
-    setFinished(offers <= total_spins);
-  }, [total_spins, times, spins]);
+    // const offers = spins * times;
+    // setFinished(offers <= total_spins);
+    setFinished(period_complete);
+  }, [total_spins, period_complete, times, spins]);
 
   return (
     <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished}>

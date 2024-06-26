@@ -56,9 +56,22 @@ export const StyledContainer = styled.div`
 export const StyledContent = styled.div`
   margin: 0 auto 37px;
   /* width: 1113px; */
+  &.cols-1,
+  &.cols-2 {
+    margin: 16px auto 0;
+  }
 `;
 export const StyledItemWrap = styled.div`
   padding: 0 37px;
+  &.cols-1 {
+    padding: 0;
+  }
+  &.cols-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 12px;
+    padding: 0;
+  }
 `;
 export const Title = styled.div`
   color: #fff;

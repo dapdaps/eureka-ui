@@ -3,14 +3,15 @@ import styled from 'styled-components';
 
 import Timer from '@/components/Timer';
 
-// import Timer from '../Timer';
-
 const Wrapper = styled.div`
   padding: 30px 37px;
   background: #131212;
   display: flex;
   justify-content: space-between;
   .left {
+    display: flex;
+    align-items: center;
+    gap: 25px;
   }
   .right {
     display: flex;
@@ -37,15 +38,12 @@ const Value = styled.div`
   line-height: normal;
 `;
 
-export default function Summary({ title, resetHours, executions, collectedSpins }: any) {
+export default function Summary({ resetHours, executions, collectedSpins }: any) {
   return (
     <Wrapper>
       <div className="left">
-        <div>
-          <Title style={{ marginBottom: 20 }}>{title}</Title>
-          <Timer endTime={1719569275992} />
-          <Title>Reset by every {resetHours} hours</Title>
-        </div>
+        <Timer endTime={1719569275992} />
+        <Title>Reset by every {resetHours} hours</Title>
       </div>
       <div className="right">
         <div>
