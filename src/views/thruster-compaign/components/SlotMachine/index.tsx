@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 
+import Timer from '@/components/Timer';
+
 import ScrollLine from './ScrollLine';
 import RuleModal from './RuleModal';
 import PrizeModal from './PrizeModal';
@@ -78,7 +80,7 @@ const Screen = styled.div`
   border: 1px;
   background: linear-gradient(180deg, #2f3445 0%, #1c1f29 100%);
   position: relative;
-  padding-top: 50px;
+  padding-top: 72px;
 `;
 
 const ControllerWapper = styled.div`
@@ -238,6 +240,22 @@ const Cover = styled.div`
   background-size: 100% 100%;
 `;
 
+const TimeWrapper = styled.div`
+  width: 542px;
+  height: 100px;
+  margin: 0 auto;
+  background: linear-gradient(180deg, #272525 0%, #131212 100%);
+  border: 1px solid rgba(55, 53, 53, 1);
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: -50px;
+  left: 50%;
+  transform: translateX(-50%);
+`
+
 function playSound(url: string): void {
   const sound = new window.Audio(url);
   sound.play();
@@ -275,8 +293,8 @@ function SlotMachine({
   }, [reward]);
 
   useEffect(() => {
-    const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
-    const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);
+    // const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
+    // const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);
 
 
     // setList([...tempList, tempList[0], tempList[1]]);
@@ -322,6 +340,9 @@ function SlotMachine({
         />
         <Summary data={detail} loading={loading} />
         <Screen>
+          <TimeWrapper>
+            <Timer endTime={detail.end_time}/>
+          </TimeWrapper>
           {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}
           <SubTitle
             onRefresh={onRefresh}

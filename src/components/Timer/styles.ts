@@ -10,8 +10,8 @@ export const StyledItem = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 96px;
-  height: 96px;
+  width: 77px;
+  height: 77px;
   border: 1px solid rgba(55, 53, 53, 1);
   border-radius: 6px;
   background-color: rgba(19, 18, 18, 1);
