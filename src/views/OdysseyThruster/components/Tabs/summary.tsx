@@ -51,7 +51,7 @@ export default function Summary({
     <Wrapper>
       <div className="left">
         <Timer endTime={endTime} hideDays={hideDays} hideHours={hideHours} onTimerEnd={onTimerEnd} />
-        <Title>Reset by every {resetHours} hours</Title>
+        <Title>Reset every {resetHours} hours</Title>
       </div>
       <div className="right">
         <div>

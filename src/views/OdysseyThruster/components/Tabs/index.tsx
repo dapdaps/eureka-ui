@@ -151,7 +151,7 @@ export default function Tabs({ quests, queryDetail, userInfo, authConfig, onRefr
       </Sections>
 
       <div>
-        <Title>SOCIAL MISSIONS</Title>
+        <Title style={{ marginBottom: 30 }}>SOCIAL MISSIONS</Title>
 
         <Explores
           list={quests.social}

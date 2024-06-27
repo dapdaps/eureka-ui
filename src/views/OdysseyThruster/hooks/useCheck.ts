@@ -27,9 +27,9 @@ export default function useCheck(quest: any, cb: any) {
         }
 
         // social&password
-        if (result.data && result.data.total_completed_times) {
+        if (result.data) {
           if (quest.category.startsWith('twitter') || quest.category.startsWith('password')) {
-            cb(result.data.total_completed_times);
+            cb(result.data.total_completed_times > 0);
           } else {
             // others
             cb(result.data.period_complete);

@@ -1,3 +1,5 @@
+'use client';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
@@ -47,6 +49,7 @@ export default function DappCard({
   category,
   total_spins,
   onRefreshDetail,
+  period_complete,
 }: any) {
   const [execution, setExecution] = useState(0);
 
@@ -71,7 +74,7 @@ export default function DappCard({
       return;
     }
     if (category === 'page') handleReport(id);
-    window.open(source, '_blank');
+    window.open(`${window.location.origin}/${source}`, '_blank');
     return;
     if (operators?.length) {
       handleDappRedirect(operators[0]);
@@ -117,7 +120,8 @@ export default function DappCard({
             ev.stopPropagation();
             if (!checking) handleRefresh();
           }}
-          active={total_spins > 0 || execution > 0}
+          active={period_complete}
+          // active={total_spins > 0 || execution > 0}
         />
         {/* <StyledFooterActions>
           <RefreshButton
