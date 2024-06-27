@@ -8,12 +8,14 @@ import Actions from './components/Actions';
 import RemoveLiquidity from '../RemoveLiquidity/V2';
 import LiquidityPanel from './components/LiquidityPanel/V2';
 import IncreaseLiquidity from '../IncreaseLiquidity/V2';
+import { useRouter } from 'next/router';
 import { StyledLoadingWrapper, StyledPanels } from './styles';
 
 const Detail = ({ id, fee, chainId }: any) => {
   const { loading, detail, queryDetail } = usePoolV2Detail(chainId, id);
   const _token0 = useToken(detail?.token0, chainId);
   const _token1 = useToken(detail?.token1, chainId);
+  const router = useRouter();
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showIncreaseModal, setShowIncreaseModal] = useState(false);
 
@@ -65,7 +67,11 @@ const Detail = ({ id, fee, chainId }: any) => {
             onClose={() => {
               setShowRemoveModal(false);
             }}
-            onSuccess={() => {
+            onSuccess={(percent: number) => {
+              if (percent === 100) {
+                router.push(`/dapp/${router.query.dappRoute}`);
+                return;
+              }
               setShowRemoveModal(false);
               queryDetail();
             }}

@@ -13,7 +13,11 @@ const basic = {
     "m.USDT": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_48%2Fd_unknown.png%2Ftokens%2F1088%2F0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC.jpg&w=128&q=100",
     "m.USDC": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fraw.githubusercontent.com%2FMaiaDAO%2Ftoken-list%2Fmain%2F0xEA32A96608495e54156Ae48931A7c20f0dcc1a21.png&w=128&q=100",
     "WMETIS": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_48%2Fd_unknown.png%2Ftokens%2F1088%2F0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481.jpg&w=128&q=100",
-    "artMETIS": "https://token-list.hercules.exchange/assets/artMETIS.svg"
+    "artMETIS": "https://token-list.hercules.exchange/assets/artMETIS.svg",
+    "USDB": "https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_64%2Cq_auto%2Ftokens%2F81457%2F0x4300000000000000000000000000000000000003.jpg&w=128&q=100",
+    "PAC": "",
+    "pxETH": "https://app.steer.finance/_next/image?url=https%3A%2F%2Ffenix-dex-api.vercel.app%2Ftokens%2FpxETH.png&w=128&q=100",
+
   }
 };
 const networks = {
@@ -188,6 +192,110 @@ const networks = {
       "N WETH-WBTC": "0x9a3a74b7ecc0f2c838a1de6c8253a458b56c7ffb",
       "N WETH-MANTA": "0x9ea10ed3d30b034a5eebdf1f1e5c34a72124abfc",
       "W MANTA-STONE": "0xa1cd0f7f8876fdd6e4db51ead0ef1fd5de971183"
+    }
+  },
+  81457: {
+    ALL_DATA_URL: "https://api.goldsky.com/api/public/project_clohj3ta78ok12nzs5m8yag0b/subgraphs/steer-protocol-blast/1.1.1/gn",
+    STAKING_POOLS_URL: "https://9i52h964s3.execute-api.us-east-1.amazonaws.com/dev/staking-pools",
+    FEE_APR_URL: "/pool/fee-apr",
+    ammName: "Thruster",
+    ammImage: "	https://app.steer.finance/icons/thruster.svg",
+    pairs: [{
+      id: "W USDB-WETH",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "USDB",
+      token1: "WETH",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0xcd03572e7cfb94996beebaa539234ce5c23ae1d6',
+      ammName: "Sushi",
+      ammImage: "https://app.steer.finance/_next/image?url=https%3A%2F%2Fsteer.finance%2Fwp-content%2Fuploads%2F2023%2F05%2Fsushiswap-sushi-logo.png&w=256&q=75",
+    },
+    {
+      id: "W USDB-axlUSDC",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "USDB",
+      token1: "axlUSDC",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0xbbeb0f9a75705f44e7026ec79727cc39581feeb7',
+      ammName: "Sushi",
+      ammImage: "https://app.steer.finance/_next/image?url=https%3A%2F%2Fsteer.finance%2Fwp-content%2Fuploads%2F2023%2F05%2Fsushiswap-sushi-logo.png&w=256&q=75",
+    },
+    {
+      id: "W2 USDB-WETH",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "USDB",
+      token1: "WETH",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0xf00da13d2960cf113edcef6e3f30d92e52906537'
+    }, {
+      id: "W WETH-PAC",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "WETH",
+      token1: "PAC",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0x6e3d09ffd8d35604652e74f7128f08c8474365d6'
+    }, {
+      id: "W USDB-WBTC",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "USDB",
+      token1: "WBTC",
+      decimals0: 18,
+      decimals1: 8,
+      poolAddress: '0xe6d7c6b51ea6d613ec14513f9cefa13fb852d12b'
+    }, {
+      id: "N WETH-pxETH",
+      strategy: "Dynamic",
+      strategy2: "Narrow",
+      token0: "WETH",
+      token1: "pxETH",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0x1df83f225455dbecfe1e05e3a23affe94565bd32'
+    }, {
+      id: "W WETH-WBTC",
+      strategy: "Dynamic",
+      strategy2: "Wide",
+      token0: "WETH",
+      token1: "WBTC",
+      decimals0: 18,
+      decimals1: 8,
+      poolAddress: '0xecb1c17a51d782ac2757e2ab568d159854b9b4bd'
+    }, {
+      id: "N sfrxETH-WETH",
+      strategy: "Dynamic",
+      strategy2: "Narrow",
+      token0: "sfrxETH",
+      token1: "WETH",
+      decimals0: 18,
+      decimals1: 18,
+      poolAddress: '0x559e44572145aabf6fdbc7e49db92bb6e6079c66'
+    }],
+    addresses: {
+      "USDB": "0x4300000000000000000000000000000000000003",
+      "WETH": "0x4300000000000000000000000000000000000004",
+      "PAC": "0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06",
+      "WBTC": "0xf7bc58b8d8f97adc129cfc4c9f45ce3c0e1d2692",
+      "pxETH": "0x9e0d7d79735e1c63333128149c7b616a0dc0bbdb",
+      "sfrxETH": "0x1f55a02a049033e3419a8e2975cf3f572f4e6e9a",
+      "axlUSDC": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+
+      "W USDB-WETH": "0x9753ac312f15f27591407c73136bc7a3b161d6dd",
+      "W USDB-axlUSDC": "0xcd5c2edcaca6c699b641db03cfd0dc004b733a06",
+      "W2 USDB-WETH": "0x6f67080223add653e1584fc73596cad1269169ec",
+      "W WETH-PAC": "0x9ef1225833033a12bc2266755cf50067e47130bd",
+      "W USDB-WBTC": "0x5b353677edb1ccf3ba39aed840b3f86bc1b6c6af",
+      "N WETH-pxETH": "0x875f0c2a2959ce6179058002525d7151c2098161",
+      "W WETH-WBTC": "0x7b2eb4046c9bb13a73c1d736c9a0e87d096e0a75",
+      "N sfrxETH-WETH": "0x33cfa854933c20a95b573c021bc1c4634c57ed20"
     }
   }
 };

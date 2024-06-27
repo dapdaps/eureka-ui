@@ -19,7 +19,16 @@ const Remove = ({ amount0, amount1, open, onClose, onSuccess, detail }: any) => 
     return fee === '0.003' ? _contracts.Router3 : _contracts.Router10;
   }, [fee]);
 
-  const { loading, onRemove } = useRemove({ detail, percent, amount0, amount1, routerAddress, onSuccess });
+  const { loading, onRemove } = useRemove({
+    detail,
+    percent,
+    amount0,
+    amount1,
+    routerAddress,
+    onSuccess: () => {
+      onSuccess(percent);
+    },
+  });
 
   const value = useMemo(() => {
     if (Big(liquidity || 0).eq(0)) return '';

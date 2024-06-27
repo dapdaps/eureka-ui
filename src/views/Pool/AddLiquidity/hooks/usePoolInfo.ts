@@ -19,7 +19,7 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
     setLoading(true);
 
     try {
-      const { Factory } = contracts[chainId];
+      const { Factory, PositionManager } = contracts[chainId];
       const FactoryContract = new Contract(Factory, factoryAbi, provider);
       const poolAddress = await FactoryContract.getPool(
         wrapNativeToken(token0).address,
@@ -71,6 +71,7 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
         sqrtPriceX96: slot0.sqrtPriceX96.toString(),
         poolAddress,
         liquidity: liquidity ? liquidity.toString() : '0',
+        positionManager: PositionManager,
       });
 
       setLoading(false);

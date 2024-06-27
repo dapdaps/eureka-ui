@@ -57,7 +57,7 @@ const Detail = ({ tokenId }: any) => {
       ) : (
         <>
           <StyledPanels>
-            <Tokens {...detail} token0={_token0} token1={_token1} />
+            <Tokens {...detail} token0={_token0} token1={_token1} type="V3" />
             <Actions
               id={tokenId}
               liquidity={detail.liquidity}

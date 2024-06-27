@@ -41,7 +41,7 @@ const LandingMobile: FC<IProps> = ({ kolName, platform }) => {
   const [claimLoading, setClaimLoading] = useState(false);
 
   const logout = () => {
-    window.localStorage.setItem(AUTH_TOKENS, '{}');
+    window.sessionStorage.setItem(AUTH_TOKENS, '{}');
     insertedAccessKey('');
     deleteCookie('AUTHED_ACCOUNT');
     deleteCookie('BNS_NAME');
