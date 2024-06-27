@@ -83,7 +83,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
     redirect_uri: redirectUri,
   });
   const logout = () => {
-    window.localStorage.setItem(AUTH_TOKENS, '{}');
+    window.sessionStorage.setItem(AUTH_TOKENS, '{}');
     insertedAccessKey('');
     deleteCookie('AUTHED_ACCOUNT');
     deleteCookie('BNS_NAME');
