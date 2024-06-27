@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Modal from '@/components/Modal';
 import dappConfig from '@/config/dapp';
-import AddLiquidity from '../AddLiquidity';
+import AddLiquidity from '../AddLiquidity/V3';
 import { LiquidityContext } from '@/views/Pool/context';
 
 const StyledContainer = styled.div`
@@ -11,7 +11,7 @@ const StyledContainer = styled.div`
   overflow-x: hidden;
 `;
 
-const AddLiquidityModal = ({ open, dapp, chain, defaultTokens, onClose }: any) => {
+const AddLiquidityModal = ({ open, dapp, chain, defaultTokens, type, onClose }: any) => {
   const [localConfig, setLocalConfig] = useState<any>(null);
   const [tokens, setTokens] = useState<any>([]);
 
@@ -66,7 +66,7 @@ const AddLiquidityModal = ({ open, dapp, chain, defaultTokens, onClose }: any) =
               defaultTokens: tokens,
             }}
           >
-            <AddLiquidity from="modal" onClose={onClose} />
+            <AddLiquidity from="modal" onClose={onClose} type={type} />
           </LiquidityContext.Provider>
         </StyledContainer>
       }

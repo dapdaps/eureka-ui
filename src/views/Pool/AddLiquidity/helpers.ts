@@ -46,3 +46,9 @@ export function getAnotherAmountOut({ currentPrice, lowerPrice, upperPrice, amou
 
   return isToken0 ? calcAmount1(liquidity, sqrtpLower, sqrtpCurrent) : calcAmount0(liquidity, sqrtpUpper, sqrtpCurrent);
 }
+
+export function getAnotherAmountOutV2({ amount, isToken0, reserve0, reserve1 }: any) {
+  const price = isToken0 ? Big(reserve1).div(reserve0) : Big(reserve0).div(reserve1);
+
+  return price.mul(amount).toString();
+}
