@@ -52,8 +52,8 @@ export default function usePoolInfoV2({ token0, token1, fee }: any) {
       });
 
       setInfo({
-        reserve0: reserves[0] ? (Big(reserves[0] || 0).eq(0) ? 0 : reserves[0]) : 0,
-        reserve1: reserves[1] ? (Big(reserves[1] || 0).eq(0) ? 0 : reserves[1]) : 0,
+        reserve0: reserves ? (Big(reserves[0] || 0).eq(0) ? 0 : reserves[0]) : 0,
+        reserve1: reserves ? (Big(reserves[1] || 0).eq(0) ? 0 : reserves[1]) : 0,
         routerAddress: fee === 0.3 ? _contracts.Router3 : _contracts.Router10,
       });
 

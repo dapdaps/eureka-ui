@@ -31,6 +31,10 @@ const basic = {
     MINU: 'https://app.gamma.xyz/_next/static/media/icon.89124599.svg',
     ASTR: 'https://app.gamma.xyz/_next/static/media/icon.c81c9103.svg',
     wstETH: 'https://app.gamma.xyz/_next/static/media/icon.bc5ee36b.svg',
+    USDB: 'https://app.gamma.xyz/_next/static/media/icon.cfaa50e0.svg',
+    PAC: 'https://app.gamma.xyz/_next/static/media/icon.e887599d.svg',
+    ANDY: 'https://app.gamma.xyz/_next/static/media/icon.4092b0ba.svg',
+    wrsETH: 'https://app.gamma.xyz/_next/static/media/icon.033f3c7d.svg'
   },
 };
 const networks = {
@@ -522,6 +526,84 @@ const networks = {
       'P stMATIC-MATIC-0': '0x9616052273a598bc04bd1ad7f7a753157c24f77e',
     },
     proxyAddress: '0x8480199e5d711399abb4d51bda329e064c89ad77'
+  },
+  // Blast
+  81457: {
+    ALL_DATA_URL: 'https://wire2.gamma.xyz/thruster/blast/hypervisors/allData',
+    USER_DATA_BASE: 'https://wire2.gamma.xyz/thruster/blast/user/',
+    LAST_SNAP_SHOT_DATA_URL: 'https://wire2.gamma.xyz/database/thruster/blast/hypervisors/lastSnapshot',
+    ammName: 'Thruster',
+    ammImage: 'https://app.gamma.xyz/_next/static/media/icon.31124d7b.svg',
+    defaultPair: 'N USDB-WETH-500',
+    pairs: [
+      {
+        id: 'N USDB-WETH-500',
+        strategy: 'Dynamic',
+        strategy2: 'Narrow',
+        token0: 'USDB',
+        token1: 'WETH',
+        "decimals0": 18,
+        "decimals1": 18,
+        "poolAddress": "0x7f0db0d77d0694f29c3f940b5b1f589fff6ef2e0",
+      },
+      {
+        id: 'W WETH-PAC-3000',
+        strategy: 'Dynamic',
+        strategy2: 'Wide',
+        token0: 'WETH',
+        token1: 'PAC',
+        "decimals0": 18,
+        "decimals1": 18,
+        "poolAddress": "0x14c5766f8556683af2d8023e389837044794795a",
+      },
+      {
+        id: 'W WETH-ANDY-3000',
+        strategy: 'Dynamic',
+        strategy2: 'Wide',
+        token0: 'WETH',
+        token1: 'ANDY',
+        "decimals0": 18,
+        "decimals1": 9,
+        "poolAddress": "0x7573ab0e80f8b264f6bc2ac37401f0adbe491759",
+      },
+      {
+        id: 'N WETH-WBTC-3000',
+        strategy: 'Dynamic',
+        strategy2: 'Narrow',
+        token0: 'WETH',
+        token1: 'WBTC',
+        "decimals0": 18,
+        "decimals1": 8,
+        "poolAddress": "0xecb1c17a51d782ac2757e2ab568d159854b9b4bd",
+      },
+      {
+        id: 'P WETH-wrsETH-500',
+        strategy: 'Dynamic',
+        strategy2: 'Pegged Price',
+        token0: 'WETH',
+        token1: 'wrsETH',
+        "decimals0": 18,
+        "decimals1": 18,
+        "poolAddress": "0x4cc9959ae7a4d380c1100b271bc63d9961ca162f",
+      },
+
+    ],
+    addresses: {
+      "USDB": "0x4300000000000000000000000000000000000003",
+      "WETH": "0x4300000000000000000000000000000000000004",
+      "PAC": "0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06",
+      "ANDY": "0xd43d8adac6a4c7d9aeece7c3151fca8f23752cf8",
+      "WBTC": "0xf7bc58b8d8f97adc129cfc4c9f45ce3c0e1d2692",
+      "wrsETH": "0xe7903b1f75c534dd8159b313d92cdcfbc62cb3cd",
+
+      "N USDB-WETH-500": "0xd6cc4a33da7557a629e819c68fb805ddb225f517",
+      "W WETH-PAC-3000": "0xe7b2260660f094b10f3902dc3f12061721176a49",
+      "W WETH-ANDY-3000": "0xf8a02496bd84bd7f7ab9f1a000044fc482d729ca",
+      "N WETH-WBTC-3000": "0x1ee3ae551188661553882fdc75f8f62eaa6726ad",
+      "P WETH-wrsETH-500": "0x75332530af3871aa3224e8ea5d33e79b52388b1a",
+
+    },
+    proxyAddress: '0xca8759814695516C34168BBedd86290964D37adA'
   }
 };
 

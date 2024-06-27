@@ -113,7 +113,7 @@ const AddButton = ({ errorTips, loading, ...rest }: any) => {
   return <ActionButton {...rest} />;
 };
 
-export const CreateButton = ({ loading, onClick }: any) => {
+export const CreateButton = ({ text, loading, onClick }: any) => {
   const { account, chainId } = useAccount();
   const { currentChain } = useDappConfig();
   if (!account || !chainId) {
@@ -133,7 +133,7 @@ export const CreateButton = ({ loading, onClick }: any) => {
 
   return (
     <Button style={style} onClick={onClick}>
-      Create Pair
+      {text || 'Create Pair'}
     </Button>
   );
 };

@@ -95,7 +95,7 @@ const LiquidityPanel = ({ amount0, amount1, share, token0, token1 }: any) => {
           }}
         >
           <StyledLabelValue>Share of Pool</StyledLabelValue>
-          <StyledTokenValue>{balanceFormated(share, 3)}</StyledTokenValue>
+          <StyledTokenValue>{balanceFormated(share, 3)}%</StyledTokenValue>
         </StyledPanelRow>
       </StyledContent>
     </StyledContainer>
