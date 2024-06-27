@@ -13,12 +13,12 @@ export default function useRewards(id: string) {
       if (result.code === 0 && result.data?.rewards) {
         setRewards(result.data.rewards);
       } else {
-        setRewards(null);
+        setRewards({});
       }
       setLoading(false);
     } catch (err) {
       setLoading(false);
-      setRewards(null);
+      setRewards({});
     }
   }, [id]);
 
