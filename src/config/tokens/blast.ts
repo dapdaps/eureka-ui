@@ -246,14 +246,14 @@ export const blast: { [key: string]: Token } = {
     name: 'Orbit USDB',
     icon: 'https://ipfs.near.social/ipfs/bafkreiem26ziwuaffnuv3vxmsoww7zuclznfhfwp32ovuhbrz7v62qgtmi',
   },
-  // oeth: {
-  //   address: '0x0872b71EFC37CB8DdE22B2118De3d800427fdba0',
-  //   chainId: CHAIN_ID,
-  //   symbol: 'oETH',
-  //   decimals: 18,
-  //   name: 'oEther V2',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreid2nz4ivnj4sucoedgze3f23l3pjjwjn5mokvm6y4schduc4xnacq',
-  // },
+  oeth: {
+    address: '0x0872b71EFC37CB8DdE22B2118De3d800427fdba0',
+    chainId: CHAIN_ID,
+    symbol: 'oETH',
+    decimals: 18,
+    name: 'oEther V2',
+    icon: 'https://ipfs.near.social/ipfs/bafkreid2nz4ivnj4sucoedgze3f23l3pjjwjn5mokvm6y4schduc4xnacq',
+  },
   rseth: {
     address: '0x4186bfc76e2e237523cbc30fd220fe055156b41f',
     chainId: CHAIN_ID,
