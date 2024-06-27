@@ -80,7 +80,7 @@ const Screen = styled.div`
   margin: 0 auto;
   border-radius: 30px;
   border: 1px;
-  background: linear-gradient(180deg, #2f3445 0%, #1c1f29 100%);
+  background: linear-gradient(180deg, rgba(39, 37, 37, 1) 0%, rgba(19, 18, 18, 1) 100%);
   position: relative;
   padding-top: 72px;
 `;

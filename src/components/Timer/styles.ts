@@ -34,7 +34,7 @@ export const StyledValue = styled.div`
 `;
 
 export const StyledDesc = styled.div`
-  color: #979ABE;
+  color: rgba(103, 110, 135, 1);
   font-family: Montserrat;
   font-size: 14px;
   font-style: normal;
