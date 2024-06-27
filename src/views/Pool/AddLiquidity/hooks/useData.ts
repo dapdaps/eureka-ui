@@ -145,8 +145,8 @@ export default function useData() {
     const { currentTick, tickSpacing } = info;
     const _currentPrice = tickToPrice({ token0, token1, tick: currentTick });
     setCurrentPrice(_currentPrice === Infinity ? 0 : _currentPrice);
-    const nearestLowTick = Math.floor(currentTick / tickSpacing) * tickSpacing;
-    const nearestHighTick = Math.floor(currentTick / tickSpacing) * tickSpacing + tickSpacing;
+    const nearestLowTick = Math.floor((currentTick * 0.998) / tickSpacing) * tickSpacing;
+    const nearestHighTick = Math.floor((currentTick * 1.002) / tickSpacing) * tickSpacing + tickSpacing;
     const _lowerPrice = tickToPrice({ token0, token1, tick: reverse ? nearestHighTick : nearestLowTick });
     const _upperPrice = tickToPrice({ token0, token1, tick: reverse ? nearestLowTick : nearestHighTick });
     setLowerPrice(_lowerPrice === Infinity ? 0 : _lowerPrice);
