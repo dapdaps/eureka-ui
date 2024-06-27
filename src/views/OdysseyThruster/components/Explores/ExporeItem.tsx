@@ -3,6 +3,7 @@ import { memo, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useDappOpen from '@/hooks/useDappOpen';
+import { openLink, openXShareLink } from '@/utils/links';
 
 import useCheck from '../../hooks/useCheck';
 import useParticleReport from '../../hooks/useParticleReport';
@@ -45,7 +46,7 @@ const ExporeItem = ({
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
   };
   const onItemClick = () => {
-    console.log('ExporeItem-click', category, source, operators);
+    console.log('ExporeItem-click', category, account, source, operators);
 
     if (!account) {
       check();
@@ -70,6 +71,15 @@ const ExporeItem = ({
     // if (category_name === 'Bridge') {
     //   setCachedTab(category_name, 534352);
     // }
+    if (category === 'twitter_retweet') {
+      sessionStorage.setItem('_clicked_twitter_' + id, '1');
+      openXShareLink(
+        `🚀 Join the THRUSTER TURBO SPIN on DapDap! @DapDapMeUp @ThrusterFi @Blast_L2 %0A
+🎉 Use blast hot dapps, Spin the wheel, and win from a massive 25M Thruster Credits prize pool! 
+ 💰 %23DapDap %23Blast %0A
+👉🏻 Check it out and spin to win: https://www.dapdap.net/odyssey/home?id=6`,
+      );
+    }
     if (!source) return;
     if (finished) return;
 
