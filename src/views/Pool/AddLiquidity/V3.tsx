@@ -43,6 +43,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
     upperPrice,
     reverse,
     rangeType,
+    info,
     onSelectToken,
     onCleanAll,
     onSelectFee,
@@ -151,6 +152,7 @@ const Add = ({ from, onClose, setVersion }: any) => {
           value1={value1}
           token0={token0}
           token1={token1}
+          spender={info?.positionManager}
         />
         <Setting show={showSettings} setShow={setShowSettings} />
         <SelectTokens
