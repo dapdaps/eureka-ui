@@ -719,4 +719,12 @@ export const blast: { [key: string]: Token } = {
     name: 'Any Inu',
     icon: 'https://ipfs.near.social/ipfs/bafkreig4gdlobne4u22ynpo3bvfcwtw5fjd2l7nkv3pu636mseatpxjjhm',
   },
+  blast: {
+    chainId: CHAIN_ID,
+    address: '0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad',
+    decimals: 18,
+    symbol: 'BLAST',
+    name: 'Blast',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicyqt7wbkd3oviqiphyfnwae65jsmlnyt3yd2e7ippaeytogpfwte',
+  },
 };
