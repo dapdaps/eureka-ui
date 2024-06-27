@@ -45,9 +45,13 @@ const ExporeItem = ({
   const handleDappRedirect = (dapp: any) => {
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
   };
+  const isComing = [
+    'Stake BLAST/WETH or BLAST/USDB in Gamma',
+    ' Leverage farm USDB/WETH/ETH for the BLAST pool on Juice',
+  ].includes(name);
   const onItemClick = () => {
     console.log('ExporeItem-click', category, account, source, operators);
-
+    if (isComing) return;
     if (!account) {
       check();
       return;
@@ -111,7 +115,7 @@ const ExporeItem = ({
   }, [total_spins, period_complete, times, spins]);
 
   return (
-    <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished}>
+    <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished} $isComing={isComing}>
       <StyledItemLeft>
         <StyledItemTitle>{name}</StyledItemTitle>
       </StyledItemLeft>

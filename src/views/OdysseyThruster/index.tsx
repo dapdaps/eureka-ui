@@ -13,7 +13,10 @@ import useRewards from './hooks/useRewards';
 import useSpin from './hooks/useSpin';
 import { StyledContainer, StyledContent } from './styles';
 
-export default function ThrusterCampaign({ id }: any) {
+export default function ThrusterCampaign() {
+  const router = useRouter();
+  const { id } = router.query;
+
   const authConfig = useAuthConfig();
   const { rewards, loading: rewardLoading, query: queryRewards } = useRewards(id as string);
   const {

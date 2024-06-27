@@ -97,7 +97,7 @@ export const Btns = styled.div`
   margin-bottom: 16px;
 `;
 
-export const StyledItem = styled.div<{ $disabled: boolean }>`
+export const StyledItem = styled.div<{ $disabled: boolean; $isComing: boolean }>`
   height: 75px;
   border-radius: 6px;
   border: 1px solid #373535;
@@ -106,7 +106,8 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
+  cursor: ${({ $disabled, $isComing }) => ($disabled || $isComing ? 'not-allowed' : 'pointer')};
+  filter: ${({ $isComing }) => ($isComing ? 'blur(5px)' : 'none')};
   margin-bottom: 16px;
   background:
     url(/images/odyssey/thruster/bg-task-left.svg) left bottom no-repeat,
