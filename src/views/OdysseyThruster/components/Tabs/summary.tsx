@@ -30,7 +30,7 @@ const Title = styled.div`
 const Value = styled.div`
   margin-top: 10px;
   color: #fff;
-  text-align: center;
+  text-align: right;
   font-family: Montserrat;
   font-size: 26px;
   font-style: normal;
@@ -47,11 +47,14 @@ export default function Summary({
   hideHours,
   onTimerEnd,
 }: any) {
+  const hourTxt = resetHours > 1 ? 'hours' : 'hour';
   return (
     <Wrapper>
       <div className="left">
         <Timer endTime={endTime} hideDays={hideDays} hideHours={hideHours} onTimerEnd={onTimerEnd} />
-        <Title>Reset every {resetHours} hours</Title>
+        <Title>
+          Reset every {resetHours} {hourTxt}
+        </Title>
       </div>
       <div className="right">
         <div>
