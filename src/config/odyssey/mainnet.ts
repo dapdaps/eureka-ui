@@ -47,4 +47,14 @@ export default {
     rewardEnableIcon: '/images/odyssey/v4/rewardEnable.svg',
     tips: '',
   },
+  6: {
+    path: '/odyssey/home?id=6',
+    video: '',
+    chainsImg: '/images/odyssey/v4/chains.png',
+    chainsHeight: '56px',
+    reward: '2.5M',
+    rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
+    rewardEnableIcon: '/images/odyssey/thruster/rewardEnable.svg',
+    tips: '',
+  },
 } as any;
