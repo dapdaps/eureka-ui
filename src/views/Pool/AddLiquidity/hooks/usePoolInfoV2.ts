@@ -5,10 +5,11 @@ import { multicall } from '@/utils/multicall';
 import useAccount from '@/hooks/useAccount';
 import useDappConfig from '../../hooks/useDappConfig';
 import { wrapNativeToken } from '../../utils/token';
-import factoryAbi from '../../abi/factory';
-import poolAbi from '../../abi/pool';
+import factoryAbi from '../../abi/factoryV2';
+import poolAbi from '../../abi/poolV2';
+import Big from 'big.js';
 
-export default function usePoolInfo({ token0, token1, fee }: any) {
+export default function usePoolInfoV2({ token0, token1, fee }: any) {
   const [info, setInfo] = useState<any>();
   const [loading, setLoading] = useState(false);
   const { chainId, provider } = useAccount();
@@ -19,12 +20,12 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
     setLoading(true);
 
     try {
-      const { Factory, PositionManager } = contracts[chainId];
-      const FactoryContract = new Contract(Factory, factoryAbi, provider);
-      const poolAddress = await FactoryContract.getPool(
+      const _contracts = contracts[chainId];
+      const factoryAddress = fee === 0.3 ? _contracts.Factory3 : _contracts.Factory10;
+      const FactoryContract = new Contract(factoryAddress, factoryAbi, provider);
+      const poolAddress = await FactoryContract.getPair(
         wrapNativeToken(token0).address,
         wrapNativeToken(token1).address,
-        fee,
       );
 
       if (!poolAddress || poolAddress === '0x0000000000000000000000000000000000000000') {
@@ -36,26 +37,13 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
       const calls = [
         {
           address: poolAddress,
-          name: 'slot0',
-        },
-        { address: poolAddress, name: 'tickSpacing' },
-        {
-          address: poolAddress,
-          name: 'token0',
-        },
-        {
-          address: poolAddress,
-          name: 'token1',
-        },
-        {
-          address: poolAddress,
-          name: 'liquidity',
+          name: 'getReserves',
         },
       ];
 
       const multicallAddress = multicallAddresses[chainId];
 
-      const [slot0, tickSpacing, _token0, _token1, liquidity] = await multicall({
+      const [reserves] = await multicall({
         abi: poolAbi,
         calls: calls,
         options: {},
@@ -64,14 +52,9 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
       });
 
       setInfo({
-        currentTick: slot0.tick,
-        tickSpacing: tickSpacing[0],
-        token0: _token0[0],
-        token1: _token1[0],
-        sqrtPriceX96: slot0.sqrtPriceX96.toString(),
-        poolAddress,
-        liquidity: liquidity ? liquidity.toString() : '0',
-        positionManager: PositionManager,
+        reserve0: reserves ? (Big(reserves[0] || 0).eq(0) ? 0 : reserves[0]) : 0,
+        reserve1: reserves ? (Big(reserves[1] || 0).eq(0) ? 0 : reserves[1]) : 0,
+        routerAddress: fee === 0.3 ? _contracts.Router3 : _contracts.Router10,
       });
 
       setLoading(false);
@@ -87,5 +70,5 @@ export default function usePoolInfo({ token0, token1, fee }: any) {
     queryPool();
   }, [token0, token1, fee, chainId]);
 
-  return { info, loading };
+  return { info, loading, queryPool };
 }

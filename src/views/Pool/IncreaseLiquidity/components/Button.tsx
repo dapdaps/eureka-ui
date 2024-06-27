@@ -77,7 +77,7 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
 
 const AddButton = ({ errorTips, loading, ...rest }: any) => {
   const { account, chainId } = useAccount();
-  const { contracts, currentChain } = useDappConfig();
+  const { currentChain } = useDappConfig();
   if (!account || !chainId) {
     return <ConnectWalletButton style={style} />;
   }
@@ -110,7 +110,32 @@ const AddButton = ({ errorTips, loading, ...rest }: any) => {
     );
   }
 
-  return <ActionButton {...rest} spender={contracts[chainId].PositionManager} />;
+  return <ActionButton {...rest} />;
+};
+
+export const CreateButton = ({ text, loading, onClick }: any) => {
+  const { account, chainId } = useAccount();
+  const { currentChain } = useDappConfig();
+  if (!account || !chainId) {
+    return <ConnectWalletButton style={style} />;
+  }
+
+  if (chainId !== currentChain.chain_id) {
+    return <SwitchNetworkButton style={style} chain={currentChain} />;
+  }
+  if (loading) {
+    return (
+      <Button style={style} disabled>
+        <Loading size={20} />
+      </Button>
+    );
+  }
+
+  return (
+    <Button style={style} onClick={onClick}>
+      {text || 'Create Pair'}
+    </Button>
+  );
 };
 
 export default AddButton;
