@@ -96,6 +96,9 @@ export const StyledInputInner = styled.input`
   line-height: normal;
   height: 26px;
   margin-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 10px;
 `;
 
 export const StyledInputDesc = styled.div`
