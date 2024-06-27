@@ -52,10 +52,12 @@ export default function DappCard({
   period_complete,
 }: any) {
   const [execution, setExecution] = useState(0);
+  const [finished, setFinished] = useState(false);
 
-  const { checking, handleRefresh } = useCheck({ id, total_spins, spins, category }, (_times: number) => {
+  const { checking, handleRefresh } = useCheck({ id, total_spins, spins, category }, (_flag: boolean) => {
+    // setExecution(_times);
+    setFinished(_flag);
     onRefreshDetail();
-    setExecution(_times);
   });
   const { open: dappOpen } = useDappOpen();
   const setLayout = useLayoutStore((store?: any) => store.set);
@@ -68,7 +70,7 @@ export default function DappCard({
   const { account } = useAccount();
   const { handleReport } = useReport();
   const onItemClick = () => {
-    console.log('onItemClick--', category, source);
+    console.log('onItemClick--', account, category, source);
     if (!account) {
       check();
       return;
@@ -94,8 +96,9 @@ export default function DappCard({
   };
 
   useEffect(() => {
-    setExecution(total_spins / spins);
-  }, [total_spins, spins]);
+    // setExecution(total_spins / spins);
+    setFinished(period_complete);
+  }, [total_spins, spins, period_complete]);
 
   return (
     <Card
@@ -120,7 +123,7 @@ export default function DappCard({
             ev.stopPropagation();
             if (!checking) handleRefresh();
           }}
-          active={period_complete}
+          active={finished}
           // active={total_spins > 0 || execution > 0}
         />
         {/* <StyledFooterActions>
