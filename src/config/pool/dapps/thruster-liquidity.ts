@@ -17,6 +17,7 @@ const tokens: { [key: number]: any } = {
     blast['eth'],
     blast['weth'],
     blast['usdb'],
+    blast['blast'],
     blast['yes'],
     blast['usde'],
     blast['ezeth'],
