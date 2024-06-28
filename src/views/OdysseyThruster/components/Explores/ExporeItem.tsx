@@ -144,7 +144,7 @@ https://x.com/DapDapMeUp/status/1806327708919660758
               icon={['/images/tokens/blast.svg', '/images/odyssey/v4/coin-weth.svg']}
               name={['BLAST', 'WETH']}
               bgColor="#1c1b1b"
-              onClick={() => {
+              onClick={(e: MouseEvent) => {
                 setSelectedPool('BLAST,WETH');
                 e.stopPropagation();
               }}
