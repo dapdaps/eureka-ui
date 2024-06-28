@@ -53,7 +53,7 @@ export const StyledContent = styled.div<{ $bgColor: string; ref: any }>`
     position: absolute;
     right: 15px;
     top: 15px;
-    z-index: 1;
+    z-index: 20;
     cursor: pointer;
   }
   .corner-left {
