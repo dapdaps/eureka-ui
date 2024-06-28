@@ -60,7 +60,7 @@ const Pool = ({ token0, token1, chainId = 81457, fee, poolVersion, liquidity, da
         </svg>
         <span className="gray">Max:</span>
         <span className="range-item">
-          {isFullRange ? '∞' : formateValue(1 / tickToPrice({ tick: tickUpper, token0: _token0, token1: _token1 }), 3)}
+          {isFullRange ? '∞' : formateValue(1 / tickToPrice({ tick: tickUpper, token0: _token0, token1: _token1 }), 3)}{' '}
           {_token0.symbol} per {_token1.symbol}
         </span>
       </StyledRange>
