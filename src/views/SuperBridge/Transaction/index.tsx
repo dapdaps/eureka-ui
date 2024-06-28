@@ -94,7 +94,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
                 address: item.fromAddress,
                 fromChainId: item.fromChainId,
                 toChainId: item.toChainId,
-            }, item.tool, provider?.getSigner()).then((isComplate: boolean) => {
+            }, item.tool, provider?.getSigner()).then((isComplate: any) => {
                 if (isComplate) {
                     item.status = 2
                     updateTransaction(item)
