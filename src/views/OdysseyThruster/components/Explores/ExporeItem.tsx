@@ -78,10 +78,13 @@ const ExporeItem = ({
     if (category === 'twitter_retweet') {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
       openXShareLink(
-        `🚀 Join the THRUSTER TURBO SPIN on DapDap! @DapDapMeUp @ThrusterFi @Blast_L2 %0A
-🎉 Use blast hot dapps, Spin the wheel, and win from a massive 25M Thruster Credits prize pool! 
- 💰 %23DapDap %23Blast %0A
-👉🏻 Check it out and spin to win: https://www.dapdap.net/odyssey/home?id=6`,
+        `Did you know? %0A
+For a limited time, the @ThrusterFi %26 @DapDapMe Thruster Turbo Spin is now live on @Blast_L2! 🤜🎆🤛 %0A
+> Featuring top $BLAST dApps%0A
+> A massive 25M Thruster Credits prize pool!%0A
+ Check it out below 👇  %0A
+https://x.com/DapDapMeUp/status/1806327708919660758
+`,
       );
     }
     if (!source) return;
