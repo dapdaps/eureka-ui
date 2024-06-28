@@ -5,37 +5,26 @@ import TokenIcon from '@/views/Pool/components/TokenIcon';
 import Status from '@/views/Pool/components/Status';
 import Fee from '@/views/Pool/components/Fee';
 import VersionTag from '../VersionTag';
-import { tickToPrice } from '../../../utils/tickMath';
+import { tickToPrice, nearestUsableTick } from '../../../utils/tickMath';
 import { formateValue } from '@/utils/formate';
 import { StyledContainer, StyledDetails, StyledPool, StyledRange } from './style';
 
-const Pool = ({
-  token0,
-  token1,
-  chainId = 81457,
-  fee,
-  poolVersion,
-  tokenAmount0,
-  tokenAmount1,
-  liquidity,
-  data = {},
-  onClick,
-}: any) => {
+const Pool = ({ token0, token1, chainId = 81457, fee, poolVersion, liquidity, data = {}, onClick }: any) => {
   const _token0 = useToken(token0, chainId);
   const _token1 = useToken(token1, chainId);
   const { info, loading } = usePoolInfo({ token0: _token0, token1: _token1, fee: fee * 1e6 });
   const { tickLower, tickUpper } = data;
 
   const isFullRange = useMemo(() => {
-    if (
-      (Number(tokenAmount0) === 0 && Number(tokenAmount1) !== 0) ||
-      (Number(tokenAmount0) !== 0 && Number(tokenAmount1) === 0)
-    )
+    if (tickLower === -887272 && tickUpper === 887272) return true;
+    if (tickLower === nearestUsableTick(-887272, fee * 1e6) && tickUpper === nearestUsableTick(887272, fee * 1e6)) {
       return true;
+    }
     return false;
-  }, [tokenAmount0, tokenAmount1]);
+  }, [tickLower, tickUpper, fee]);
 
   if (!_token0 || !_token1) return <div />;
+
   return (
     <StyledContainer onClick={onClick}>
       <StyledDetails>
