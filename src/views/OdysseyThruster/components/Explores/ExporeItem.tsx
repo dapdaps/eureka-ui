@@ -79,9 +79,9 @@ const ExporeItem = ({
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
       openXShareLink(
         `Did you know? %0A
-For a limited time, the @ThrusterFi %26 @DapDapMe Thruster Turbo Spin is now live on @Blast_L2! 🤜🎆🤛 %0A
-> Featuring top $BLAST dApps%0A
-> A massive 25M Thruster Credits prize pool!%0A
+For a limited time, the @ThrusterFi %26 @DapDapMeUp Thruster Turbo Spin is now live on @Blast_L2! 🤜🎆🤛 %0A
+> Featuring top $BLAST dApps %0A
+> A massive 25M Thruster Credits prize pool! %0A
  Check it out below 👇  %0A
 https://x.com/DapDapMeUp/status/1806327708919660758
 `,
