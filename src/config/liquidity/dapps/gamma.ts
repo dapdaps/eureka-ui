@@ -34,7 +34,8 @@ const basic = {
     USDB: 'https://app.gamma.xyz/_next/static/media/icon.cfaa50e0.svg',
     PAC: 'https://app.gamma.xyz/_next/static/media/icon.e887599d.svg',
     ANDY: 'https://app.gamma.xyz/_next/static/media/icon.4092b0ba.svg',
-    wrsETH: 'https://app.gamma.xyz/_next/static/media/icon.033f3c7d.svg'
+    wrsETH: 'https://app.gamma.xyz/_next/static/media/icon.033f3c7d.svg',
+    BLAST: 'https://app.gamma.xyz/_next/static/media/icon.5bbd66a9.svg'
   },
 };
 const networks = {
@@ -557,6 +558,16 @@ const networks = {
         "poolAddress": "0x14c5766f8556683af2d8023e389837044794795a",
       },
       {
+        id: 'N WETH-BLAST-3000',
+        strategy: 'Dynamic',
+        strategy2: 'Narrow',
+        token0: 'WETH',
+        token1: 'BLAST',
+        "decimals0": 18,
+        "decimals1": 18,
+        "poolAddress": "0x9a0aa28d999a21d3cf6f2703cdbba9feaf4a32f7",
+      },
+      {
         id: 'W WETH-ANDY-3000',
         strategy: 'Dynamic',
         strategy2: 'Wide',
@@ -577,6 +588,16 @@ const networks = {
         "poolAddress": "0xecb1c17a51d782ac2757e2ab568d159854b9b4bd",
       },
       {
+        id: 'N USDB-BLAST-3000',
+        strategy: 'Dynamic',
+        strategy2: 'Narrow',
+        token0: 'USDB',
+        token1: 'BLAST',
+        "decimals0": 18,
+        "decimals1": 18,
+        "poolAddress": "0xe3a5f46667461e35eece4e39e2177b438af6b7f7",
+      },
+      {
         id: 'P WETH-wrsETH-500',
         strategy: 'Dynamic',
         strategy2: 'Pegged Price',
@@ -595,13 +616,15 @@ const networks = {
       "ANDY": "0xd43d8adac6a4c7d9aeece7c3151fca8f23752cf8",
       "WBTC": "0xf7bc58b8d8f97adc129cfc4c9f45ce3c0e1d2692",
       "wrsETH": "0xe7903b1f75c534dd8159b313d92cdcfbc62cb3cd",
+      "BLAST": "0xb1a5700fa2358173fe465e6ea4ff52e36e88e2ad",
 
       "N USDB-WETH-500": "0xd6cc4a33da7557a629e819c68fb805ddb225f517",
       "W WETH-PAC-3000": "0xe7b2260660f094b10f3902dc3f12061721176a49",
+      "N WETH-BLAST-3000": "0x4c8e3238bdafa58e0e92a64790450ddbea733dff",
       "W WETH-ANDY-3000": "0xf8a02496bd84bd7f7ab9f1a000044fc482d729ca",
       "N WETH-WBTC-3000": "0x1ee3ae551188661553882fdc75f8f62eaa6726ad",
+      "N USDB-BLAST-3000": "0x20be921c6d8bd92a4f52b5aeea56c369c1e5f92f",
       "P WETH-wrsETH-500": "0x75332530af3871aa3224e8ea5d33e79b52388b1a",
-
     },
     proxyAddress: '0xca8759814695516C34168BBedd86290964D37adA'
   }
