@@ -385,7 +385,7 @@ export default function BirdgeAction(
                 toAmout: reciveAmount,
                 toTokenSymbol: toToken?.symbol,
                 time: Date.now(),
-                tool: selectedRoute.bridgeType,
+                tool: selectedRoute.bridgeName,
                 bridgeType: selectedRoute.bridgeType,
                 fromAddress: account,
                 toAddress: account,
