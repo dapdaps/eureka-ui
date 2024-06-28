@@ -40,9 +40,9 @@ export default function Modal({ type, children, onClose, bgColor, style, classNa
     <StyledContainer onClick={clickMask} className={className}>
       <StyledContent $bgColor={bgColor} ref={bodyRef} style={style}>
         {renderShape()}
-        <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={20} height={20} />
         <div className="corner-left"></div>
         <div className="corner-right"></div>
+        <Image className="close" onClick={onClose} src="/images/odyssey/v4/close.svg" alt="" width={20} height={20} />
         {/* <Image className="corner-left" src="/images/odyssey/v4/modal-corner-left.svg" alt="" width={37} height={37} />
         <Image
           className="corner-right"
