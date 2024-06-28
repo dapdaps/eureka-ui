@@ -13,11 +13,10 @@ const StyledContainer = styled.div`
   /* border-radius: 4px;
   border: 1px solid #3d405a; */
 
-  &:hover {
-    /* border: 1px solid #000; */
+  /* &:hover {
     background: #1e2028;
     color: #fff;
-  }
+  } */
 
   & .loading {
     animation: loading 1s linear infinite;
