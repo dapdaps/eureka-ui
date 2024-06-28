@@ -1,7 +1,5 @@
-import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
-
+import { chains } from '@/config/bridge';
 export default function useSortChains() {
-  const { chains } = useTokensAndChains();
 
   const _rawChains = Object.values(chains);
 

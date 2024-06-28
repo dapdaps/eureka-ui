@@ -4,10 +4,24 @@ const SpinWapper = styled.div`
     height: 100%;
     width: 100%;
     position: relative;
-    border: 1px solid #373A53;
-    border-radius: 12px;
-    overflow: hidden;
-    font-family: '5squared pixel';
+    border: 2px solid transparent;
+    border-radius: 16px;
+    /* background-color: #910505; */
+    background-clip: padding-box; 
+    color: #fff;
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 0;
+        margin: -2px;
+        border-radius: inherit; /*important*/
+        background: linear-gradient(to bottom, rgba(11, 13, 19, 1), rgba(55, 57, 64, 1));
+    }
+
 `
 
 const BgTable = styled.div`
@@ -18,7 +32,9 @@ const BgTable = styled.div`
     bottom: 0;
     overflow: hidden;
     background: #000;
+    z-index: 1;
     opacity: .6;
+    border-radius: 16px;
 `
 
 const BgHor = styled.div`
@@ -56,6 +72,7 @@ const verList = Array.from({ length: 100 }, (x, index) => size * (index + 1))
 
 export default function Spin({ renderChildren }: { renderChildren: any }) {
     return <SpinWapper>
+        2222
         <BgTable>
             {
                 horList.map((item, index) => {

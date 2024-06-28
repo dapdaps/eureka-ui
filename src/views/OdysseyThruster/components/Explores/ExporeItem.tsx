@@ -4,6 +4,8 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useDappOpen from '@/hooks/useDappOpen';
 import { openLink, openXShareLink } from '@/utils/links';
+import CoinGroup from '@/views/OdysseyV4/components/Treasure/CoinGroup';
+import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
 
 import useCheck from '../../hooks/useCheck';
 import useParticleReport from '../../hooks/useParticleReport';
@@ -11,7 +13,7 @@ import useReport from '../../hooks/useReport';
 import ArrowIcon from '../ArrowIcon';
 import Spins from '../Spins';
 import CardInput from './CardInput';
-import { StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored } from './styles';
+import { StyledBg, StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle } from './styles';
 
 const ExporeItem = ({
   userInfo,
@@ -27,9 +29,13 @@ const ExporeItem = ({
   operators,
   period_complete,
 }: any) => {
+  const group1 = 'Add LP on Thruster Pool: BLAST/WETH';
+  const group2 = 'Add LP on Thruster Pool: BLAST/USDB';
+
+  const [selectedPool, setSelectedPool] = useState('');
   const [finished, setFinished] = useState(false);
   const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins, category }, (_flag: boolean) => {
-    console.log('check-cb--', _flag);
+    // console.log('check-cb--', _flag);
 
     setFinished(_flag);
     onRefreshDetail();
@@ -52,6 +58,7 @@ const ExporeItem = ({
   const onItemClick = () => {
     console.log('ExporeItem-click', category, account, source, operators);
     if (isComing) return;
+    if (name === group1 || name === group2) return;
     if (!account) {
       check();
       return;
@@ -119,8 +126,31 @@ https://x.com/DapDapMeUp/status/1806327708919660758
 
   return (
     <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished} $isComing={isComing}>
+      <StyledBg className="card_active_bg" />
       <StyledItemLeft>
-        <StyledItemTitle>{name}</StyledItemTitle>
+        <StyledItemTitle>
+          {name}
+          {name === group1 && (
+            <CoinGroup
+              icon={['/images/tokens/blast.svg', '/images/odyssey/v4/coin-weth.svg']}
+              name={['BLAST', 'WETH']}
+              bgColor="#1c1b1b"
+              onClick={() => {
+                setSelectedPool('BLAST,WETH');
+              }}
+            />
+          )}
+          {name === group2 && (
+            <CoinGroup
+              icon={['/images/tokens/blast.svg', '/images/tokens/usdb.svg']}
+              name={['BLAST', 'USDB']}
+              bgColor="#1c1b1b"
+              onClick={() => {
+                setSelectedPool('BLAST,USDB');
+              }}
+            />
+          )}
+        </StyledItemTitle>
       </StyledItemLeft>
       <StyledItemRight>
         {finished ? (
@@ -156,6 +186,21 @@ https://x.com/DapDapMeUp/status/1806327708919660758
           </>
         )}
       </StyledItemRight>
+      <AddLiquidityModal
+        open={!!selectedPool}
+        dapp={{
+          path: 'thruster-liquidity',
+          name: 'Thruster Pool',
+        }}
+        chain={{
+          chain_id: 81457,
+          name: 'Blast',
+        }}
+        defaultTokens={selectedPool}
+        onClose={() => {
+          setSelectedPool('');
+        }}
+      />
     </StyledItem>
   );
 };

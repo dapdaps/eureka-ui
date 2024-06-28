@@ -30,7 +30,7 @@ const Wrapper = styled.div<{ $active: boolean }>`
 
 export default function Spins({ spin = 0, active, checking, onRefresh, style }: any) {
   return (
-    <Wrapper $active={active} style={style}>
+    <Wrapper $active={active} style={style} onClick={onRefresh}>
       <span>{spin} SPIN</span>
       {active ? (
         <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
@@ -43,7 +43,7 @@ export default function Spins({ spin = 0, active, checking, onRefresh, style }: 
           <path d="M4.99609 7.5L7.99609 10.5L15.4961 3" stroke="#00FFD1" strokeWidth="2" strokeLinecap="round" />
         </svg>
       ) : (
-        <RefreshButton onClick={onRefresh} loading={checking} />
+        <RefreshButton loading={checking} />
       )}
     </Wrapper>
   );
