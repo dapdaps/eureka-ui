@@ -4,10 +4,10 @@ import { styled } from 'styled-components';
 import { StyledFlex } from '@/styled/styles';
 
 const CoinGroup = (props: any) => {
-  const { icon, name, fee, style, onClick } = props;
+  const { icon, name, fee, style, onClick, bgColor } = props;
 
   return (
-    <StyledContainer style={style} $clickable={!!onClick} onClick={onClick}>
+    <StyledContainer style={style} $clickable={!!onClick} $bgColor={bgColor} onClick={onClick}>
       <StyledFlex justifyContent="flex-start" alignItems="center" className="coin-icon-wrap">
         <Image className="coin-icon" src={icon[0]} width={26} height={26} alt="" />
         <Image className="coin-icon" src={icon[1]} width={26} height={26} alt="" />
@@ -22,7 +22,7 @@ const CoinGroup = (props: any) => {
 
 export default CoinGroup;
 
-const StyledContainer = styled.div<{ $clickable: boolean }>`
+const StyledContainer = styled.div<{ $clickable: boolean; $bgColor: string }>`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -53,7 +53,7 @@ const StyledContainer = styled.div<{ $clickable: boolean }>`
     white-space: nowrap;
   }
 
-  ${({ $clickable }) =>
+  ${({ $clickable, $bgColor }) =>
     $clickable &&
     `
     cursor: pointer; 
@@ -66,7 +66,7 @@ const StyledContainer = styled.div<{ $clickable: boolean }>`
       width: 14px;
       height: 14px;
       border-right: 1px solid #EBF479;
-      background-color: #000000;
+      background-color: ${$bgColor ? $bgColor : '#000'};
       top: -7px;
       left: -7px;
       transform: rotate(45deg);
@@ -77,7 +77,7 @@ const StyledContainer = styled.div<{ $clickable: boolean }>`
       width: 14px;
       height: 14px;
       border-left: 1px solid #EBF479;
-      background-color: #000000;
+      background-color: ${$bgColor ? $bgColor : '#000'};
       bottom: -7px;
       right: -7px;
       transform: rotate(45deg);

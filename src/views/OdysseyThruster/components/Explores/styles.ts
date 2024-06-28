@@ -119,12 +119,18 @@ export const StyledItem = styled.div<{ $disabled: boolean; $isComing: boolean }>
   &:last-child {
     margin-bottom: 0;
   }
+  &:hover {
+    border-color: #876f50;
+  }
   &:hover .card_active_bg {
     opacity: 0.5;
   }
 `;
 
 export const StyledItemTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
   width: 100%;
   flex-shrink: 0;
   color: #fff;
@@ -163,7 +169,6 @@ export const StyledBg = styled.div`
   position: absolute;
   z-index: 1;
   top: -100px;
-  left: 50%;
   transform: translateX(-50%);
   background: radial-gradient(50% 50% at 50% 50%, #fcfb68 0%, rgba(253, 248, 69, 0) 100%);
   filter: blur(50px);
