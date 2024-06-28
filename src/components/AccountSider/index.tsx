@@ -111,7 +111,9 @@ const AccountSider = () => {
             {showInviteLink && <InviteLink showCodes={showCodes} setShowCodes={setShowCodes} />}
             <Footer />
             <Main>
-              <Transactions />
+              {
+                layoutStore.showAccountSider && <Transactions />
+              }
             </Main>
           </Content>
         </StyledPanel>

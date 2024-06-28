@@ -113,7 +113,6 @@ const chainCofig = {
   324: {
     chainId: 324,
     chainName: 'zkSync',
-    engine: 'lifi',
     icon: 'https://assets.dapdap.net/images/bafkreibcq6agazqmv5euwf355v7x7hlinz3jkuins2bkfffdbp3jgbjj6u.svg',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.era.zksync.io', 'https://endpoints.omniatech.io/v1/zksync-era/mainnet/public', 'https://zksync.drpc.org'],

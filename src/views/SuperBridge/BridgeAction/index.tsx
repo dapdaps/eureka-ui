@@ -167,6 +167,7 @@ export default function BirdgeAction(
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
       identification,
+      exclude: ['official']
     })
 
   }, [fromChain, toChain, fromToken, toToken, account, inputValue])

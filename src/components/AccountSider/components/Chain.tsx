@@ -4,10 +4,12 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { overlay } from '@/components/animation';
-import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
+import { chains } from '@/config/bridge';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import useSortChains from '@/hooks/useSortChains';
+
+import type { Chain } from '@/types';
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '70px')};
@@ -111,7 +113,7 @@ const Chain = ({
   setShowChains?: (show: boolean) => void;
   bp?: string;
 }) => {
-  const { chains } = useTokensAndChains();
+
   const { sortedChains } = useSortChains();
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
   const currentChain: any = useMemo(
@@ -187,7 +189,7 @@ const Chain = ({
         <ArrowIcon size={12} />
       </ArrowIconWrapper>
       <ChainList display={showName ? Number(showChains || 0) : Number(showList || 0)}>
-        {sortedChains.map((chain) => (
+        {sortedChains.map((chain: Chain) => (
           <ChainItem
             key={chain.chainId}
             onClick={() => {
