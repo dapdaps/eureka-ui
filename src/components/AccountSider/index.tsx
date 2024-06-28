@@ -94,6 +94,7 @@ const AccountSider = () => {
     if (showInviteLink && userInfo.address) queryInviteList();
   }, [showInviteLink, userInfo]);
 
+  
   return (
     <>
       <StyledLayer

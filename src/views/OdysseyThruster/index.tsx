@@ -60,7 +60,7 @@ export default function ThrusterCampaign() {
     startSpin().then((res) => {
       setReward(res);
       queryDetail();
-      queryRewards();
+      queryRewards(9000);
       queryRewordCheck();
     });
   }, [isSpining]);
@@ -73,8 +73,6 @@ export default function ThrusterCampaign() {
       queryDetail();
     });
   }, [isClaiming]);
-
-  console.log('Chakra Petch:', rewards);
 
   return (
     <StyledContainer>
