@@ -35,7 +35,7 @@ const ExporeItem = ({
   const [selectedPool, setSelectedPool] = useState('');
   const [finished, setFinished] = useState(false);
   const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins, category }, (_flag: boolean) => {
-    console.log('check-cb--', _flag);
+    // console.log('check-cb--', _flag);
 
     setFinished(_flag);
     onRefreshDetail();
