@@ -29,9 +29,6 @@ const ExporeItem = ({
   operators,
   period_complete,
 }: any) => {
-  const group1 = 'Add LP on Thruster Pool: BLAST/WETH';
-  const group2 = 'Add LP on Thruster Pool: BLAST/USDB';
-
   const [selectedPool, setSelectedPool] = useState('');
   const [finished, setFinished] = useState(false);
   const { checking, handleRefresh } = useCheck({ id, total_spins, times, spins, category }, (_flag: boolean) => {
@@ -55,10 +52,11 @@ const ExporeItem = ({
     // 'Stake BLAST/WETH or BLAST/USDB in Gamma',
     ' Leverage farm USDB/WETH/ETH for the BLAST pool on Juice',
   ].includes(name);
+
   const onItemClick = () => {
     console.log('ExporeItem-click', category, account, source, operators);
     if (isComing) return;
-    if (name === group1 || name === group2) return;
+
     if (!account) {
       check();
       return;
@@ -130,23 +128,25 @@ https://x.com/DapDapMeUp/status/1806327708919660758
       <StyledItemLeft>
         <StyledItemTitle>
           {name}
-          {name === group1 && (
+          {id === 159 && (
+            <CoinGroup
+              icon={['/images/tokens/blast.svg', '/images/tokens/usdb.svg']}
+              name={['BLAST', 'USDB']}
+              bgColor="#1c1b1b"
+              onClick={(e: MouseEvent) => {
+                setSelectedPool('BLAST,USDB');
+                e.stopPropagation();
+              }}
+            />
+          )}
+          {id === 160 && (
             <CoinGroup
               icon={['/images/tokens/blast.svg', '/images/odyssey/v4/coin-weth.svg']}
               name={['BLAST', 'WETH']}
               bgColor="#1c1b1b"
               onClick={() => {
                 setSelectedPool('BLAST,WETH');
-              }}
-            />
-          )}
-          {name === group2 && (
-            <CoinGroup
-              icon={['/images/tokens/blast.svg', '/images/tokens/usdb.svg']}
-              name={['BLAST', 'USDB']}
-              bgColor="#1c1b1b"
-              onClick={() => {
-                setSelectedPool('BLAST,USDB');
+                e.stopPropagation();
               }}
             />
           )}
