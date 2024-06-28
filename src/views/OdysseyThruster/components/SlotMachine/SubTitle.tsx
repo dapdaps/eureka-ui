@@ -22,8 +22,8 @@ export const Score = styled.div`
   flex-grow: 1;
   justify-content: space-between;
   align-items: center;
-  background: #000;
-  overflow: hidden;
+  /* background: #000; */
+  /* overflow: hidden; */
 `;
 
 export const ScoreBg = styled.div`
