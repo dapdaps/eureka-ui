@@ -46,7 +46,7 @@ const ExporeItem = ({
     dapp.route && dappOpen({ dapp: { ...dapp, route: `/${dapp.route}` }, from: 'quest', isCurrentTab: false });
   };
   const isComing = [
-    'Stake BLAST/WETH or BLAST/USDB in Gamma',
+    // 'Stake BLAST/WETH or BLAST/USDB in Gamma',
     ' Leverage farm USDB/WETH/ETH for the BLAST pool on Juice',
   ].includes(name);
   const onItemClick = () => {
