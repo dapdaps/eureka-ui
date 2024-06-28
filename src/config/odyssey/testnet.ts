@@ -71,7 +71,7 @@ export default {
   9: {
     path: '/odyssey/home?id=9',
     video: '',
-    chainsImg: '/images/odyssey/v4/chains.png',
+    chainsImg: '/images/odyssey/thruster/thruster-rounded.svg',
     chainsHeight: '56px',
     reward: '2.5M',
     rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
