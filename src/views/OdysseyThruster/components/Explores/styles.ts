@@ -120,10 +120,10 @@ export const StyledItem = styled.div<{ $disabled: boolean; $isComing: boolean }>
     margin-bottom: 0;
   }
   &:hover {
-    border-color: #876f50;
+    border-color: ${({ $isComing }) => ($isComing ? '#373535' : '#876f50')};
   }
   &:hover .card_active_bg {
-    opacity: 0.5;
+    opacity: ${({ $isComing }) => ($isComing ? 0 : 0.5)};
   }
 `;
 
