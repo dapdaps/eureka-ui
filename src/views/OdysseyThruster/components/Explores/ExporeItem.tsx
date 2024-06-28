@@ -11,7 +11,7 @@ import useReport from '../../hooks/useReport';
 import ArrowIcon from '../ArrowIcon';
 import Spins from '../Spins';
 import CardInput from './CardInput';
-import { StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle, Unexplored } from './styles';
+import { StyledBg, StyledItem, StyledItemLeft, StyledItemRight, StyledItemTitle } from './styles';
 
 const ExporeItem = ({
   userInfo,
@@ -116,6 +116,7 @@ const ExporeItem = ({
 
   return (
     <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished} $isComing={isComing}>
+      <StyledBg className="card_active_bg" />
       <StyledItemLeft>
         <StyledItemTitle>{name}</StyledItemTitle>
       </StyledItemLeft>

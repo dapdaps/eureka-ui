@@ -98,6 +98,8 @@ export const Btns = styled.div`
 `;
 
 export const StyledItem = styled.div<{ $disabled: boolean; $isComing: boolean }>`
+  position: relative;
+  overflow: hidden;
   height: 75px;
   border-radius: 6px;
   border: 1px solid #373535;
@@ -116,6 +118,9 @@ export const StyledItem = styled.div<{ $disabled: boolean; $isComing: boolean }>
 
   &:last-child {
     margin-bottom: 0;
+  }
+  &:hover .card_active_bg {
+    opacity: 0.5;
   }
 `;
 
@@ -150,4 +155,18 @@ export const Unexplored = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+`;
+
+export const StyledBg = styled.div`
+  width: 328px;
+  height: 158px;
+  position: absolute;
+  z-index: 1;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: radial-gradient(50% 50% at 50% 50%, #fcfb68 0%, rgba(253, 248, 69, 0) 100%);
+  filter: blur(50px);
+  opacity: 0;
+  transition: 0.3s;
 `;
