@@ -30,7 +30,7 @@ export default function OdysseyIcon() {
         });
       }}
     >
-      <Image src="/images/odyssey/v8/gold-rush.svg" alt="" width={149} height={51} />
+      <Image src="/images/odyssey/v5/ody-logo.svg" alt="" width={149} height={51} />
       {/* <StyledIcon /> */}
     </StyledContainer>
   );
