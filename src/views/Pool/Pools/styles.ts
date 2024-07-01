@@ -71,3 +71,9 @@ export const StyledTogglePositions = styled.button`
     opacity: 0.8;
   }
 `;
+
+export const StyledTopActions = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+`;

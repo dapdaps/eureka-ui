@@ -31,7 +31,7 @@ export default function useQuests() {
         if (item.category_id === 1) {
           _result.bridge.push(item);
         }
-        if (item.category_id === 2) {
+        if (item.category_id === 2 && item.name !== 'Skydrome') {
           _result.swap.push(item);
         }
         if (item.category_id === 3) {

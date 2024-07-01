@@ -1,14 +1,12 @@
 import styled from 'styled-components';
 import { useCallback, useState, useRef, useEffect } from 'react';
 
-import Spin from './Spin';
 import ScrollLine from './ScrollLine';
 import RuleModal from './RuleModal';
 import PrizeModal from './PrizeModal';
 
-import titleImg from './img/title.svg';
-import compassImg from './img/gold-rush.svg';
 import controllerImg from './img/ctr.svg';
+import controllerActiveImg from './img/ctr-active.svg';
 import actionBg from './img/action-bg.svg';
 
 import ruleImg from './img/rule.svg';
@@ -17,7 +15,7 @@ import rulePressImg from './img/rule-press.svg';
 import clamPressImg from './img/clam-press.svg';
 import btnBgImg from './img/btn-bg.svg';
 import btnImg from './img/btn.svg';
-import chainIconsImg from './img/chianIcons.svg';
+import btnActiveImg from './img/btn-active.svg';
 import coverTopImg from './img/cover-top.png';
 
 import yellowLeftImg from './img/yellow-left.svg';
@@ -27,11 +25,18 @@ import bgImg from './img/bg.svg';
 
 import DisabledMark from './DisabledMark';
 import Pilcrow from '../Pilcrow';
+import PrizePoolModal from './PrizePoolModal';
+import RewardsModal from './RewardsModal';
 import { BgFoot } from '../Spins/styles';
+import Title from './Title';
+import SubTitle from './SubTitle';
+import Rewards from './Rewards';
+import useSwitcher from '../../hooks/useSwitcher';
+import { DAPPS } from './config';
 
 const Wapper = styled.div`
   width: var(--main-width);
-  margin: 60px auto 70px;
+  margin: 80px auto 70px;
   position: relative;
   background-color: #000;
 `;
@@ -60,34 +65,6 @@ const Screen = styled.div`
   border: 1px;
   background: linear-gradient(180deg, #2f3445 0%, #1c1f29 100%);
   position: relative;
-  overflow: hidden;
-`;
-
-const ChainIcons = styled.img`
-  position: absolute;
-  left: 35px;
-  top: 22px;
-  width: 60px;
-  height: 60px;
-`;
-
-const Title = styled.div`
-  background: url(${titleImg.src}) center center no-repeat;
-  background-position: 0px 60px;
-  width: 896px;
-  height: 135px;
-  margin: 0 auto;
-  overflow: hidden;
-  text-indent: -9999px;
-`;
-
-const CompassWapper = styled.div`
-  position: absolute;
-  background: url(${compassImg.src}) center center no-repeat;
-  width: 207px;
-  height: 68px;
-  top: 46px;
-  right: 30px;
 `;
 
 const ControllerWapper = styled.div`
@@ -97,16 +74,15 @@ const ControllerWapper = styled.div`
   right: 50px;
 `;
 
-const Controller = styled.div`
+const Controller = styled.div<{ $active: boolean }>`
   width: 100px;
   height: 104px;
-  background: url(${controllerImg.src}) center 0 no-repeat;
+  background: url(${({ $active }) => ($active ? controllerActiveImg.src : controllerImg.src)}) center 0 no-repeat;
   background-size: auto 100%;
   position: absolute;
   z-index: 3;
   left: 0;
   top: 0;
-  filter: grayscale(0.6);
 `;
 
 const ControllerBg = styled.div`
@@ -155,18 +131,12 @@ const ControllerBtnBg = styled.div`
   background-size: 100% 100%;
   &.left {
     background-image: url(${yellowLeftImg.src});
-    filter: grayscale(1);
-    opacity: 0.5;
   }
   &.mid {
     background-image: url(${yellowMidImg.src});
-    filter: grayscale(1);
-    opacity: 0.5;
   }
   &.right {
     background-image: url(${yellowRightImg.src});
-    filter: grayscale(1);
-    opacity: 0.5;
   }
 `;
 
@@ -174,35 +144,6 @@ const ScoreWapper = styled.div`
   display: flex;
   gap: 24px;
   margin: 55px 55px 0;
-`;
-
-const Score = styled.div`
-  height: 72px;
-  border-radius: 20px;
-  flex: 1;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #000;
-  overflow: hidden;
-`;
-
-const ScoreBg = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 30px;
-  height: 72px;
-`;
-
-const ScoreText = styled.div`
-  color: #00ffd1;
-  text-align: center;
-  font-family: '5squared pixel';
-  font-size: 26px;
-  font-weight: 400;
-  text-transform: capitalize;
-  text-shadow: 2px 2px 10px #00ffd1;
 `;
 
 const ActionBar = styled.div`
@@ -253,18 +194,19 @@ const BtnBg = styled.div`
   bottom: 0;
 `;
 
-const Btn = styled.div`
+const Btn = styled.div<{ $active: boolean }>`
   width: 564px;
   height: 82px;
-  background-image: url(${btnImg.src});
+  background-image: url(${({ $active }) => ($active ? btnActiveImg.src : btnImg.src)});
   background-size: 100% 100%;
   position: absolute;
   top: 0px;
   left: 22px;
   cursor: pointer;
-  transition: all 0.3s;
+  transition: 0.1s;
+  transform: translateY(0px);
   &.press {
-    top: 11px;
+    transform: translateY(11px);
   }
 `;
 
@@ -279,52 +221,48 @@ const Cover = styled.div`
   background-size: 100% 100%;
 `;
 
-interface Props {
-  totalSpins: number;
-  availableSpins: number;
-  unclaimedReward: number;
-  chainList: number[];
-  handleSpin: () => void;
-  handleClaim: () => void;
-  isSpining: boolean;
-  isClaiming: boolean;
-  reward: number;
-}
-
 function playSound(url: string): void {
   const sound = new window.Audio(url);
   sound.play();
 }
 
-function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, handleSpin, reward }: Props) {
-  const disabled = true;
+function SlotMachine({
+  totalSpins,
+  availableSpins,
+  chainList,
+  handleSpin,
+  queryRewards,
+  reward,
+  onRefresh,
+  loading,
+  rewards,
+  rewardLoading,
+}: any) {
+  const { isStart, secondsRemaining } = useSwitcher();
   const [isPressed, setIsPressed] = useState(false);
   const [isPressing, setIsPressing] = useState(false);
-  const [newUnclaimedReward, setNewunclaimedReward] = useState(unclaimedReward);
   const [ruleShow, setRuleShow] = useState(false);
   const [prizeShow, setPrizeShow] = useState(false);
+  const [prizePoolShow, setPrizePoolShow] = useState(false);
+  const [rewardShow, setRewardShow] = useState(false);
+  const [list, setList] = useState<any>([]);
 
   const rewardRef = useRef(reward);
-  const unclaimedRewardRef = useRef(unclaimedReward);
 
   const [rulePressed, setRulePressed] = useState(false);
+  const [claimPressed, setClaimPressed] = useState(false);
 
   useEffect(() => {
     rewardRef.current = reward;
   }, [reward]);
 
   useEffect(() => {
-    if (!isPressing) {
-      setNewunclaimedReward(unclaimedReward);
-    }
-    unclaimedRewardRef.current = unclaimedReward;
-  }, [unclaimedReward]);
+    const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
+    const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);
+    setList([...tempList, tempList[0], tempList[1]]);
+  }, []);
 
   const handleBtnPress = useCallback(() => {
-    if (isPressing || isPressed || availableSpins <= 0) {
-      return;
-    }
-
     playSound('/images/compass/audio/rolling.mp4');
 
     setTimeout(() => {
@@ -335,7 +273,6 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
       }
 
       setPrizeShow(true);
-      setNewunclaimedReward(unclaimedRewardRef.current);
     }, 12000);
 
     handleSpin();
@@ -356,18 +293,23 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
     <Wapper>
       <HeaderBg />
       <Bg />
-      <div style={{ position: 'relative', zIndex: 2 }}>
+      <div style={{ position: 'relative', zIndex: 2, paddingTop: 80 }}>
         <Pilcrow
-          title="Spin to Win for Crazy Prizes"
-          desc="Spin to Win Coming Soon! Use Spins for a Chance at Big Prizes!"
+          title="Earn Spins by completing the missions below"
+          desc="Each mission you complete grants you spins, which can earn you rewards like gold, points, and tokens."
         />
         <Screen>
-          <DisabledMark />
-          <Title>DAPDAP JACKPOT</Title>
-          <ChainIcons src={chainIconsImg.src} />
-          <CompassWapper />
+          {!isStart && <DisabledMark secondsRemaining={secondsRemaining} />}
+          <Title />
+          <SubTitle
+            onRefresh={onRefresh}
+            refreshing={loading}
+            setPrizePoolShow={setPrizePoolShow}
+            availableSpins={availableSpins}
+            totalSpins={totalSpins}
+          />
           <ControllerWapper>
-            <Controller />
+            <Controller $active={isStart} />
             <ControllerBg></ControllerBg>
           </ControllerWapper>
           <ScrollWapper>
@@ -379,66 +321,86 @@ function SlotMachine({ totalSpins, availableSpins, unclaimedReward, chainList, h
               <ControllerBtnBg className="right" />
             </ControllerBtnBgWapper>
             <ControllerBtnBgWapper className="bg">
-              {chainList.map((item, index) => {
-                return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item} />;
+              {chainList.map((item: any, index: number) => {
+                return <ScrollLine noIndex={index} key={index} startAni={isPressing} no={item} list={list} />;
               })}
             </ControllerBtnBgWapper>
             <Cover />
           </ScrollWapper>
           <ScoreWapper>
-            <Score>
-              <Spin
-                renderChildren={() => (
-                  <ScoreBg>
-                    <ScoreText>Spins:</ScoreText>
-                    <ScoreText>
-                      {availableSpins} / {totalSpins}
-                    </ScoreText>
-                  </ScoreBg>
-                )}
-              />
-            </Score>
-            <Score>
-              <Spin
-                renderChildren={() => (
-                  <ScoreBg>
-                    <ScoreText>you win:</ScoreText>
-                    {/* <ScoreText>{newUnclaimedReward} pts</ScoreText> */}
-                    <ScoreText>Not start yet!</ScoreText>
-                  </ScoreBg>
-                )}
-              />
-            </Score>
+            <Rewards rewards={rewards} />
           </ScoreWapper>
         </Screen>
-
         <ActionBar>
           <Rules
-            pressed={disabled}
-            style={{ cursor: 'not-allowed' }}
+            pressed={!isStart || rulePressed}
+            style={{ cursor: isStart ? 'pointer' : 'not-allowed' }}
             onClick={() => {
-              // setRuleShow(true);
-              // setRulePressed(true);
-              // setTimeout(() => {
-              //   setRulePressed(false);
-              // }, 100);
+              if (!isStart) return;
+              setRuleShow(true);
+              setRulePressed(true);
+              setTimeout(() => {
+                setRulePressed(false);
+              }, 100);
             }}
           />
           <BtnWapper>
             <BtnBg />
             <Btn
               className={isPressed ? 'press' : ''}
+              // $active={isStart && availableSpins > 0 && !isPressed && !isPressing}
+              $active={false}
               onClick={() => {
-                // handleBtnPress()
+                return;
+                if (!isStart) return;
+                if (isPressing || isPressed || availableSpins <= 0) {
+                  return;
+                }
+                handleBtnPress();
               }}
-              style={{ cursor: 'not-allowed' }}
+              style={{ cursor: false ? 'pointer' : 'not-allowed' }}
             />
           </BtnWapper>
-          <Clam pressed={disabled} onClick={() => {}} style={{ cursor: 'not-allowed' }} />
+          <Clam
+            pressed={!isStart || claimPressed}
+            onClick={() => {
+              if (!isStart) return;
+              queryRewards();
+              setRewardShow(true);
+              setClaimPressed(true);
+              setTimeout(() => {
+                setClaimPressed(false);
+              }, 100);
+            }}
+            style={{ cursor: isStart ? 'pointer' : 'not-allowed' }}
+          />
         </ActionBar>
       </div>
-      {ruleShow && <RuleModal onClose={() => setRuleShow(false)} />}
+      {ruleShow && (
+        <RuleModal
+          onClose={() => setRuleShow(false)}
+          onShowModal={() => {
+            setPrizePoolShow(true);
+          }}
+        />
+      )}
       {prizeShow && <PrizeModal prize={reward} onClose={() => setPrizeShow(false)} />}
+      {prizePoolShow && (
+        <PrizePoolModal
+          onClose={() => {
+            setPrizePoolShow(false);
+          }}
+        />
+      )}
+      {rewardShow && (
+        <RewardsModal
+          onClose={() => {
+            setRewardShow(false);
+          }}
+          loading={rewardLoading}
+          rewards={rewards}
+        />
+      )}
     </Wapper>
   );
 }

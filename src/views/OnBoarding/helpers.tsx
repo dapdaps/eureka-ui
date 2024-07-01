@@ -38,7 +38,7 @@ export function formatTitle(record: any) {
             </div>
           ));
         }
-      } catch (err) {}
+      } catch (err) { }
     }
     return (
       <>
@@ -97,14 +97,31 @@ export function formatTitle(record: any) {
         return (
           <>
             {parsedExtraData.action}{' '}
-            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span>{' '}
-            {parsedExtraData.token0Symbol} and{' '}
-            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span>{' '}
-            {parsedExtraData.token1Symbol} on {record.template}
+            {parsedExtraData.amount && (
+              <>
+                {' '}
+                <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount, 3)}</span>{' '}
+                {parsedExtraData.token}{' '}
+              </>
+            )}
+            {parsedExtraData.amount0 && (
+              <>
+                {' '}
+                <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span>{' '}
+                {parsedExtraData.token0Symbol}{' '}
+              </>
+            )}
+            {parsedExtraData.amount1 && (
+              <>
+                add <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span>{' '}
+                {parsedExtraData.token1Symbol}
+              </>
+            )}
+            on {record.template}
           </>
         );
       }
-    } catch (err) {}
+    } catch (err) { }
     const action = record.action_title.split(' ')[0];
     return (
       <>

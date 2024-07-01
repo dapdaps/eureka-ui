@@ -20,7 +20,6 @@ export const DappPage: NextPageWithLayout = () => {
 
   const { chainId, account } = useAccount();
   const { dapp, loading } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
-
   const [currentChain, setCurrentChain] = useState<any>();
   const [ready, setReady] = useState(false);
   const [localConfig, setLocalConfig] = useState<any>();

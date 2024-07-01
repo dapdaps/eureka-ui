@@ -1,18 +1,19 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
 import Chain from '@/components/AccountSider/components/Chain';
+import ConnectWallet from '@/components/ConnectWallet';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
-import ConnectWallet from '@/components/ConnectWallet';
-import OdysseyIcon from './OdysseyIcon';
 import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
-import { useRouter } from 'next/router';
+
+import OdysseyIcon from './OdysseyIcon';
 
 const LoginContainer = styled.div`
   width: auto;

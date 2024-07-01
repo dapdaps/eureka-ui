@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-export const StyledContainer = styled.div`
+export const StyledContainer = styled(motion.div)`
   max-width: 1400px;
-  margin: 0 auto;
+  margin: 30px auto 0px;
   background: url('/images/odyssey/v8/treasure-bg.png');
   .modal-6 {
     display: block;
@@ -603,3 +604,8 @@ export const ToDappButton = styled.div`
     opacity: 0.9;
   }
 `;
+
+export const TrapLayout = {
+  borderColor: '#FFDD4D',
+  corner: 34,
+};

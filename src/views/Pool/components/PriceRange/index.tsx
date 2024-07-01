@@ -34,7 +34,7 @@ const PriceRange = ({ from = 'detail', token0, token1, lowerPrice, upperPrice, c
   const _currentPrice = useMemo(() => (reverse ? 1 / currentPrice : currentPrice), [reverse]);
 
   const _tokenSymbols = useMemo(
-    () => `${!reverse ? _token0.symbol : _token1.symbol} per ${!reverse ? _token1.symbol : _token0.symbol}`,
+    () => `${reverse ? _token0.symbol : _token1.symbol} per ${reverse ? _token1.symbol : _token0.symbol}`,
     [reverse],
   );
 
@@ -43,8 +43,8 @@ const PriceRange = ({ from = 'detail', token0, token1, lowerPrice, upperPrice, c
       <StyledHeader>
         <StyledSubtitle>Price Range</StyledSubtitle>
         <TokenSwitcher
-          token0={token0}
-          token1={token1}
+          token0={_token0}
+          token1={_token1}
           reverse={reverse}
           onExchangeTokens={() => {
             setReverse(!reverse);

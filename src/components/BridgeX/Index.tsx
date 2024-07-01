@@ -10,7 +10,7 @@ import useAccount from '@/hooks/useAccount';
 import { useSetChain } from '@web3-onboard/react';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated } from '@/utils/balance';
+import { balanceFormated, percentFormated, errorFormated, getFullNum } from '@/utils/balance';
 
 import ChainSelector from './components/ChainSelector'
 import FeeMsg from './components/FeeMsg';
@@ -155,6 +155,7 @@ export default function BridgeX({
     const [receiveAmount, setReceiveAmount] = useState('')
     const [duration, setDuration] = useState('')
     const [gasCostUSD, setGasCostUSD] = useState('')
+    const [feeCostUSD, setFeeCostUSD] = useState('')
     const [fromUSD, setFromUSD] = useState('')
     const [toUSD, setToUSD] = useState('')
     const [toAddress, setToAddress] = useState('')
@@ -206,13 +207,6 @@ export default function BridgeX({
         }
         setChainFrom(_chainFrom)
         setChainTo(_chainTo)
-    }, [])
-
-    useEffect(() => {
-        // getAllToken().then((res: any) => {
-        //     setLoadedAllTokens(true)
-        //     setAllTokens(res)
-        // })
     }, [])
 
     useEffect(() => {
@@ -320,6 +314,7 @@ export default function BridgeX({
             setLoading(true)
             setDuration('')
             setGasCostUSD('')
+            setFeeCostUSD('')
             setReceiveAmount('')
             setToUSD('')
             setRoute(null)
@@ -360,8 +355,10 @@ export default function BridgeX({
 
                     if (maxRoute) {
                         setDuration(maxRoute.duration)
-                        setGasCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas)
-                        setReceiveAmount(new Big(maxRoute.receiveAmount).div(Math.pow(10, selectOutputToken.decimals)).toString())
+                        setGasCostUSD(maxRoute.gasType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas)
+                        setFeeCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.fee : maxRoute.fee)
+
+                        setReceiveAmount(getFullNum(new Big(maxRoute.receiveAmount).div(Math.pow(10, selectOutputToken.decimals)).toNumber().toString()))
                         setRoute(maxRoute)
                         setLoading(false)
                     }
@@ -491,7 +488,8 @@ export default function BridgeX({
 
             <FeeMsg
                 duration={duration}
-                gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : ''}
+                feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
+                gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
             />
             {
                 showWarning ? <Alert /> : null
@@ -533,7 +531,8 @@ export default function BridgeX({
                 toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
                 duration={duration}
                 tool={tool}
-                gasCostUSD={balanceFormated(gasCostUSD)}
+                gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
+                feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
                 sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
                 receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
                 onClose={() => {
@@ -555,7 +554,8 @@ export default function BridgeX({
                         setIsSending(false)
                         setIsSendingDisabled(false)
 
-                        saveTransaction({
+
+                        const actionParams = {
                             hash: txHash,
                             link: getChainScan(chainFrom.chainId),
                             duration: duration,
@@ -577,7 +577,9 @@ export default function BridgeX({
                             fromAddress: account,
                             toAddress: account,
                             status: 3,
-                        })
+                        }
+
+                        saveTransaction(actionParams)
 
                         addAction({
                             type: "Bridge",
@@ -589,6 +591,7 @@ export default function BridgeX({
                             add: false,
                             status: 1,
                             transactionHash: txHash,
+                            extra_data: actionParams
                         })
 
                         success({
@@ -602,7 +605,7 @@ export default function BridgeX({
                         console.log(err)
                         fail({
                             title: 'Transaction failed',
-                            text: err.message || err.toString(),
+                            text: errorFormated(err),
                         })
 
                         setIsSending(false)

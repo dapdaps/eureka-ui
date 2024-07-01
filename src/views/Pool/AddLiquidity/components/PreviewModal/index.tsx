@@ -3,7 +3,7 @@ import Modal from '@/components/Modal';
 import Tokens from '@/views/Pool/Detail/components/Tokens';
 import AmountPanel from '@/views/Pool/Detail/components/AmountPanel';
 import PriceRange from '@/views/Pool/components/PriceRange';
-import IncreaseButton from '@/views/Pool/IncreaseLiquidity/components/Button';
+import { CreateButton } from '@/views/Pool/IncreaseLiquidity/components/Button';
 import { StyledContent } from './styles';
 
 const PreviewModal = ({
@@ -29,7 +29,15 @@ const PreviewModal = ({
       onClose={onClose}
       content={
         <StyledContent>
-          <Tokens token0={token0} token1={token1} fee={fee} liquidity={100} from="add" rangeType={rangeType} />
+          <Tokens
+            type="V3"
+            token0={token0}
+            token1={token1}
+            fee={fee}
+            liquidity={100}
+            from="add"
+            rangeType={rangeType}
+          />
           <AmountPanel token0={token0} token1={token1} amount0={value0} amount1={value1} />
           <PriceRange
             from="add"
@@ -39,15 +47,7 @@ const PreviewModal = ({
             upperPrice={upperPrice}
             currentPrice={currentPrice}
           />
-          <IncreaseButton
-            text="Add Liquidity"
-            loading={loading}
-            onClick={onClick}
-            value0={value0}
-            value1={value1}
-            token0={token0}
-            token1={token1}
-          />
+          <CreateButton text="Add Liquidity" loading={loading} onClick={onIncrease} />
         </StyledContent>
       }
     />

@@ -114,7 +114,7 @@ export default function useTrade({
 
     async function deposit(value: string, signer: Signer) {
         try {
-            const _value = new Big(value).mul(10 ** 18).toString()
+            const _value = new Big(value).mul(10 ** 18).toNumber().toFixed()
             setIsLoading(true)
             const tx = await ethereumDeposit(_value, signer)
             success({

@@ -31,38 +31,32 @@ const SubTitle = styled.div`
   margin-top: 27px;
 `;
 
-function RuleModal({ onClose }: { onClose: () => void }) {
+function RuleModal({ onClose, onShowModal }: any) {
   return (
     <Modal onClose={onClose} width={760}>
-      <Title>Welcome to DapDap Odyssey ‘Spin to Win’ !</Title>
-      <SubTitle>How to Play?</SubTitle>
-      <Context>Earn Spins: Complete tasks on the Odyssey event page to earn spins.</Context>
-      <Context>Use Spins: Consume your spins to play the slot machine by pressing the &quot;Spin&quot; button.</Context>
+      <Title>Game Rules for ‘SPIN-TO-WIN’ !</Title>
       <Context>
-        Winning Conditions: The slot machine has 5 symbols. Match 3 or more identical symbols on a spin to win a prize.
+        Welcome to Odyssey Vol.4+! Participate in our exciting &quot;Spin to Win&quot; game and stand a chance to win
+        amazing rewards.
       </Context>
-      <SubTitle>Rewards:</SubTitle>
+      <SubTitle>Here’s how you can join and play:</SubTitle>
       <Context>
-        Rewards: 3 Identical Symbols: <span className="color">Win 500 PTS</span>
+        Complete Tasks: Engage in Odyssey Vol.4+ Strategy、Tasks to earn spins. Spin the Wheel: Use your spins to
+        participate in the &quot;Spin to Win&quot; game. Win Rewards: Match symbols to win prizes. The more symbols you
+        match, the bigger the rewards!
       </Context>
-      <Context>
-        Rewards: 4 Identical Symbols: <span className="color">Win 2000 PTS</span>
-      </Context>
-      <Context>
-        Rewards: 5 Identical Symbols: <span className="color">Win 10000 PTS</span>
-      </Context>
-      <SubTitle>Prize Pool:</SubTitle>
-      <Context>Additional Rewards: For matching 4 or more identical symbols, you can also win:</Context>
+      <SubTitle>Prizes Include:</SubTitle>
+      <Context>Blast Gold，Ring Points, Thruster Credits, Particle Points, veBlade, $Yield, Baja, Rings, Andy.</Context>
       <Context />
-      <Context>
-        - Native Tokens
-        <br />
-        - Other Project Points
-        <br />- Blast Gold
+      <Context
+        style={{ textDecoration: 'underline', cursor: 'pointer' }}
+        onClick={() => {
+          onShowModal();
+        }}
+      >
+        Check the Prize pool
       </Context>
-      <Context style={{ marginTop: '24px' }}>
-        Keep spinning to maximize your chances of winning the top prizes! Good luck and have fun spinning!
-      </Context>
+      <Context style={{ marginTop: '24px' }}>Get started now and spin to win incredible prizes! Good luck!</Context>
     </Modal>
   );
 }

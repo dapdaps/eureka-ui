@@ -61,10 +61,7 @@ export default function useAddAction(source: string) {
             tx_id: data.transactionHash,
             chain_id: data.fromChainId,
             to_chain_id: data.toChainId,
-            extra_data: JSON.stringify({
-              from: fromChain?.name,
-              to: toChain?.name,
-            }),
+            extra_data: JSON.stringify(data.extra_data),
           };
           console.info('params:', params);
         } catch (error) {
@@ -96,9 +93,9 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Liquidity') {
         params = {
-          action_title: `${data.action} ${data.token0}-${data.token1} on ${data.template}`,
+          action_title: `${data.action} ${data?.token0 + (data?.token1 ? '-' + data.token1 : '')} on ${data.template}`,
           action_type: data.type,
-          action_tokens: JSON.stringify([data.token0, data.token1]),
+          action_tokens: JSON.stringify([data?.token0 ?? '', data?.token1 ?? '']),
           action_amount: data.amount,
           account_id: account,
           action_network_id: currentChain.name,
@@ -158,5 +155,6 @@ export default function useAddAction(source: string) {
     },
     [chainId, account],
   );
+
   return { addAction };
 }

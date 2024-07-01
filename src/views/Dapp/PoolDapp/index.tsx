@@ -4,8 +4,9 @@ import Pools from '@/views/Pool/Pools';
 import Detail from '@/views/Pool/Detail';
 import AddLiquidity from '@/views/Pool/AddLiquidity';
 
-export default function PoolDapp({ dapp, chainId, dappChains, currentChain, localConfig, network, chains }: any) {
+export default function PoolDapp({ dapp, chainId, currentChain, localConfig, chains }: any) {
   const router = useRouter();
+
   return (
     <LiquidityContext.Provider
       value={{
@@ -15,6 +16,8 @@ export default function PoolDapp({ dapp, chainId, dappChains, currentChain, loca
         chains,
         currentChain,
         tokenId: router.query.id,
+        id: router.query.id,
+        fee: router.query.fee,
       }}
     >
       {router.query.path === 'position' ? <Detail /> : router.query.path === 'add' ? <AddLiquidity /> : <Pools />}

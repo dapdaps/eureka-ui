@@ -4,7 +4,7 @@ import Big from 'big.js'
 
 const FeeWapper = styled.div`
     width: 446px;
-    height: 75px;
+    height: 120px;
     border-radius: 12px;
     border: 1px solid #373A53;
     font-size: 14px;
@@ -29,7 +29,11 @@ export default function FeeMsg(props: any) {
         <div>~{props.duration} min</div>
     </LineWapper>
     <LineWapper>
-        <div>Fees</div>
+        <div>Bridge Fee</div>
+        <div>${props.feeCostUSD}</div>
+    </LineWapper>
+    <LineWapper>
+        <div>Gas Fee</div>
         <div>${props.gasCostUSD}</div>
     </LineWapper>
 </FeeWapper>

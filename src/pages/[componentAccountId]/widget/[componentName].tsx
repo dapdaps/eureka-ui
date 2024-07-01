@@ -9,8 +9,6 @@ import { useDefaultLayout } from '@/hooks/useLayout';
 import { useAuthStore } from '@/stores/auth';
 import { useCurrentComponentStore } from '@/stores/current-component';
 
-import { lifi } from '@/components/Bridge/init'
-
 import type { NextPageWithLayout } from '@/utils/types';
 
 const ViewComponentPage: NextPageWithLayout = () => {
@@ -30,9 +28,7 @@ const ViewComponentPage: NextPageWithLayout = () => {
   }, [router.query]);
 
   return <ComponentWrapperPage src={componentSrc} componentProps={{
-    ...componentProps, addAction, getLifi: () => {
-      return lifi
-    }
+    ...componentProps, addAction
   }} />;
 
 };
