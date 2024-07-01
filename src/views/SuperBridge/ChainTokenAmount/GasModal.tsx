@@ -40,7 +40,7 @@ const RefuelAmount = styled.div`
 
 const Range = styled.input<{ max: any, value: any }>`
     width: 100%;
-    -webkit-appearance: none; /* 去掉底部的 track 默认样式，就是整个灰条 */
+    -webkit-appearance: none;
     background: transparent; 
     &::-webkit-slider-thumb {
         /* -webkit-appearance: none; */
@@ -112,7 +112,7 @@ interface Props {
     onClose: () => void;
 }
 
-const max$ = 500 * 3497
+const max$ = 200
 
 export default function GasModal({
     onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance

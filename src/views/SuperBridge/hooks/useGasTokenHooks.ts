@@ -47,6 +47,7 @@ export async function getTransaction() {
 }
 
 const contracts: any = {
+    // testnet
     11155111: '0xa8faD25d4352470dD03681aE697800069326f27b',
     421614: '0xa8faD25d4352470dD03681aE697800069326f27b',
     43113: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
@@ -64,6 +65,14 @@ const contracts: any = {
     2442: '0x5f2bDd7328f5C198ae6aD4210E731B2D0254AB04',
     534351: '0x2D04a0885df6cdcAE24453eCCd07122a52534763',
     300: '0xF0b5701e97b2D01DB22AAeB4b36064d280bC5123',
+
+    // mainnet
+    1: '0x5375cc796e47b608b7788ae319208528c023e7ce',
+    42161: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    43114: '0xdb4d106632B315d75920F0f79f6e61a824F0ce25',
+    8453: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    81457: '0x3037F9744Af923Bd662Bb06A77688A23f96Bf608',
+
 }
 
 // const contractAddress = '0xa8faD25d4352470dD03681aE697800069326f27b'
@@ -74,7 +83,7 @@ interface GasTokenParams {
     fromToken: Token | undefined;
 }
 
-const BASE_URL = 'https://refueler.bobdev.link/api/v1/refuel'
+const BASE_URL = 'https://refueler.dapdap.net/api/v1/refuel'
 
 let supportedChains: any = null
 
@@ -291,7 +300,7 @@ export function useGasAmount({
     }
 
     useEffect(() => {
-        if (!fromChain || !toChain || !fromToken) {
+        if (!fromChain || !toChain || !fromToken || isNaN(Number(value)) || Number(value) <= 0) {
             setReceive('0')
             return
         }
