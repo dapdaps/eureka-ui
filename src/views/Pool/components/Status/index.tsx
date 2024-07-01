@@ -3,8 +3,9 @@ import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import { StyledStatus } from './styles';
 
-const Status = ({ from, rangeType, tickLower, tickUpper, liquidity, currentTick, loading }: any) => {
+const Status = ({ from, rangeType, tickLower, tickUpper, liquidity, currentTick, loading, type }: any) => {
   const status = useMemo(() => {
+    if (type === 'V2') return 'in';
     if (from === 'add') {
       return [1, 2].includes(rangeType) ? 'out' : 'in';
     }
@@ -17,7 +18,7 @@ const Status = ({ from, rangeType, tickLower, tickUpper, liquidity, currentTick,
   ) : (
     <StyledStatus status={status}>
       {status === 'removed' && 'Removed'}
-      {status === 'in' && 'In range'}
+      {status === 'in' && (type === 'V2' ? 'Active' : 'In range')}
       {status === 'out' && 'Out range'}
     </StyledStatus>
   );

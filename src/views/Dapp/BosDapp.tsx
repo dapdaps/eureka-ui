@@ -11,7 +11,6 @@ import { multicall } from '@/utils/multicall';
 import refresh from '@/utils/refresh';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useLayoutStore } from '@/stores/layout';
-
 export default function BosDapp({
   dapp,
   chainId,
@@ -38,7 +37,6 @@ export default function BosDapp({
       }),
     [],
   );
-
   return (
     <ComponentWrapperPage
       componentProps={{

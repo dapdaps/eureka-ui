@@ -157,14 +157,14 @@ export const blast: { [key: string]: Token } = {
     name: 'Monoswap USD',
     icon: 'https://ipfs.near.social/ipfs/bafkreighxgisict5ibrpau64zsqx5gmmc5jaxx5i4ngxi6vdhzjihofoia',
   },
-  // wif: {
-  //   address: '0x2Ef6EE4884892b15DfCF53B33ed139FEF6141A49',
-  //   chainId: CHAIN_ID,
-  //   symbol: 'WIF',
-  //   decimals: 18,
-  //   name: 'Dog Wif Blast',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreih2khaqlvmad2pyedcfxydll4rhtbtd7r7ol2z3mt3fussxo4jiey',
-  // },
+  wif: {
+    address: '0x2Ef6EE4884892b15DfCF53B33ed139FEF6141A49',
+    chainId: CHAIN_ID,
+    symbol: 'WIF',
+    decimals: 18,
+    name: 'Dog Wif Blast',
+    icon: 'https://ipfs.near.social/ipfs/bafkreih2khaqlvmad2pyedcfxydll4rhtbtd7r7ol2z3mt3fussxo4jiey',
+  },
   xmomo: {
     address: '0x28A922aD2d2A02250473b30F3444E20b138354d1',
     chainId: CHAIN_ID,
@@ -718,5 +718,13 @@ export const blast: { [key: string]: Token } = {
     symbol: 'AI',
     name: 'Any Inu',
     icon: 'https://ipfs.near.social/ipfs/bafkreig4gdlobne4u22ynpo3bvfcwtw5fjd2l7nkv3pu636mseatpxjjhm',
+  },
+  blast: {
+    chainId: CHAIN_ID,
+    address: '0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad',
+    decimals: 18,
+    symbol: 'BLAST',
+    name: 'Blast',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicyqt7wbkd3oviqiphyfnwae65jsmlnyt3yd2e7ippaeytogpfwte',
   },
 };

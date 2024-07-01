@@ -24,7 +24,7 @@ export const objectToQueryString = (obj: Record<string, any>): string => {
   return keyValuePairs.join('&');
 };
 
-const AUTH_TOKENS = 'AUTH_TOKENS';
+const AUTH_TOKENS = `AUTH_TOKENS_${Date.now()}`;
 
 const BASE_URL = process.env.NEXT_PUBLIC_API || 'https://api.dapdap.net';
 
@@ -33,7 +33,7 @@ const getUrl = (url: string) => {
 };
 
 const get = async (url: string, query?: Record<string, any>) => {
-  const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
+  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const options = {
     method: 'GET',
     headers: {
@@ -57,7 +57,7 @@ const getWithoutActive = async (
   activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx',
   query?: Record<string, any>,
 ) => {
-  const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
+  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const options = {
     method: 'GET',
     headers: {
@@ -78,7 +78,7 @@ const getWithoutActive = async (
 };
 
 const post = async (url: string, data: object) => {
-  const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
+  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const res = await fetch(getUrl(url), {
     method: 'POST',
     headers: {
@@ -91,7 +91,7 @@ const post = async (url: string, data: object) => {
 };
 
 const deleteRequest = async (url: string, data: object) => {
-  const tokens = JSON.parse(window.localStorage.getItem(AUTH_TOKENS) || '{}');
+  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const res = await fetch(getUrl(url), {
     method: 'DELETE',
     headers: {

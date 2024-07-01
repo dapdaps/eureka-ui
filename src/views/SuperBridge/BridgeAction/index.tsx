@@ -167,6 +167,7 @@ export default function BirdgeAction(
       destAddress: account as string,
       amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
       identification,
+      exclude: ['official']
     })
 
   }, [fromChain, toChain, fromToken, toToken, account, inputValue])
@@ -384,7 +385,7 @@ export default function BirdgeAction(
                 toAmout: reciveAmount,
                 toTokenSymbol: toToken?.symbol,
                 time: Date.now(),
-                tool: selectedRoute.bridgeType,
+                tool: selectedRoute.bridgeName,
                 bridgeType: selectedRoute.bridgeType,
                 fromAddress: account,
                 toAddress: account,

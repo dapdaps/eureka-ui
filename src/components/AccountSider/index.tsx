@@ -94,6 +94,7 @@ const AccountSider = () => {
     if (showInviteLink && userInfo.address) queryInviteList();
   }, [showInviteLink, userInfo]);
 
+  
   return (
     <>
       <StyledLayer
@@ -111,7 +112,9 @@ const AccountSider = () => {
             {showInviteLink && <InviteLink showCodes={showCodes} setShowCodes={setShowCodes} />}
             <Footer />
             <Main>
-              <Transactions />
+              {
+                layoutStore.showAccountSider && <Transactions />
+              }
             </Main>
           </Content>
         </StyledPanel>

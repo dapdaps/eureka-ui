@@ -32,6 +32,7 @@ export const StyledTitle = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  padding-left: 120px;
 `;
 
 export const StyledActions = styled.div`

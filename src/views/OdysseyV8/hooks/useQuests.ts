@@ -5,8 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-
-import { GOLD_QUESTS } from '../const';
+import DappsConfig from '../DappsConfig';
 
 const defaultQuests: any = {
   social: [],
@@ -14,9 +13,10 @@ const defaultQuests: any = {
   swap: [],
   lending: [],
   liquidity: [],
-  golds: [],
+  spins: [],
   staking: [],
   yield: [],
+  strategies: {},
 };
 
 export default function useQuests(id: any) {
@@ -41,24 +41,47 @@ export default function useQuests(id: any) {
       _result.unlockedAmount = _unlockedAmount;
 
       result.data.forEach((item: any) => {
-        if (GOLD_QUESTS.includes(item.name)) {
-          if (item.name === 'Particle') {
-            item.gold_order = 1;
-          } else if (item.name === 'Ring Protocol') {
-            item.gold_order = 3;
-          } else if (item.name === 'BladeSwap') {
-            item.gold_order = 5;
-          } else if (item.name === 'Ambient') {
-            item.gold_order = 7;
-          } else if (item.name === 'MetaStreet') {
-            item.gold_order = 9;
-          } else {
-            item.gold_order = 10;
-          }
-          _result.golds.push(item);
+        if (DappsConfig[item.source]) {
+          _result.spins.push({ ...DappsConfig[item.source], id: item.id, step: item.step });
         }
-        if (item.category_id === 0 && item.category !== 'twitter_retweet') {
+        if (
+          item.category_id === 0 &&
+          item.category !== 'twitter_retweet' &&
+          ![
+            'Particle',
+            'Thruster',
+            'Ring',
+            'BladeSwap',
+            'Juice',
+            'Ambient',
+            'Super Sushi Samurai',
+            'Cap&Co',
+            'Early',
+            'Crypto Valleys',
+            'Baja',
+            'Fenix',
+            'Andy',
+            'strategy_particle_duo_ring_juice',
+            'strategy_thruster_hyperlock',
+            'strategy_juice',
+            'strategy_renzo_thruster_hyperlock_particle',
+            'strategy_thruster_orbit_juice',
+            'strategy_thruster_thruster_hyperlock_particle',
+          ].includes(item.source)
+        ) {
           _result.social.push(item);
+        }
+        if (
+          [
+            'strategy_particle_duo_ring_juice',
+            'strategy_thruster_hyperlock',
+            'strategy_juice',
+            'strategy_renzo_thruster_hyperlock_particle',
+            'strategy_thruster_orbit_juice',
+            'strategy_thruster_thruster_hyperlock_particle',
+          ].includes(item.source)
+        ) {
+          _result.strategies[item.source] = item.total_spins > 0;
         }
         if (item.category_id === 1) {
           _result.bridge.push(item);
@@ -112,5 +135,5 @@ export default function useQuests(id: any) {
     run();
   }, [account]);
 
-  return { loading, quests: quests || defaultQuests };
+  return { loading, quests: quests || defaultQuests, queryQuests };
 }
