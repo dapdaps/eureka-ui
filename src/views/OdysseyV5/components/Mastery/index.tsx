@@ -22,11 +22,11 @@ const MasteryData = [
     key: 1,
     title: 'Minor Leverage Long (1.25x)',
     pointsEarned: [
-      {
-        key: 1,
-        icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'IRONCLAD EMBERS',
-      },
+      // {
+      //   key: 1,
+      //   icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
+      //   name: 'IRONCLAD EMBERS',
+      // },
       {
         key: 2,
         icon: '/images/odyssey/v5/mastery/temp/kim.svg',
@@ -71,11 +71,11 @@ const MasteryData = [
     key: 2,
     title: 'The Arbitragooor',
     pointsEarned: [
-      {
-        key: 1,
-        icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'IRONCLAD EMBERS',
-      },
+      // {
+      //   key: 1,
+      //   icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
+      //   name: 'IRONCLAD EMBERS',
+      // },
       {
         key: 2,
         icon: '/images/odyssey/v5/mastery/temp/ezeth.svg',
@@ -123,11 +123,11 @@ const MasteryData = [
         icon: '/images/odyssey/v5/mastery/temp/kelp.svg',
         name: 'KELP MILES',
       },
-      {
-        key: 3,
-        icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'IRONCLAD EMBERS',
-      },
+      // {
+      //   key: 3,
+      //   icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
+      //   name: 'IRONCLAD EMBERS',
+      // },
       {
         key: 4,
         icon: '/images/odyssey/v5/mastery/temp/eigenlayer.svg',
