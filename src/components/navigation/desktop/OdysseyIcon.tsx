@@ -29,11 +29,16 @@ const OdysseyList = [
     img: '/images/odyssey/thruster/head-entry.svg',
   },
   {
-    id: 5,
+    id: 7,
     img: '/images/odyssey/v5/ody-logo.svg',
   },
 ];
 const OdysseySize = [158, 59];
+
+// for test env
+if (process.env.NEXT_PUBLIC_API !== 'https://api.dapdap.net') {
+  OdysseyList[1].id = 5;
+}
 
 export default function OdysseyIcon() {
   const { check } = useAuthCheck({ isNeedAk: true });
