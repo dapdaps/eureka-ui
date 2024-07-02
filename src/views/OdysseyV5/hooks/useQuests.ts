@@ -22,6 +22,7 @@ const defaultQuests: any = {
 };
 
 // Static DApp Data
+// ⚠️ TIPS Useless
 const defaultModeQuest = [
   {
     id: 'static_quest_1',
@@ -89,10 +90,14 @@ export default function useQuests(id: any) {
       result.data.forEach((item: any) => {
         item.exploredAmount = new Big(item.total_spins).div(item.spins).toNumber() || 0;
 
+        if (item.operators && item.operators[0]) {
+          item.dapp_id = item.operators[0]?.dapp_id;
+        }
+
         if (GOLD_QUESTS.includes(item.name)) {
           _result.golds.push(item);
         }
-        if (item.category_id === 0 && item.category !== 'twitter_retweet') {
+        if (item.category_id === 0 && item.category !== 'favorite_dapp') {
           _result.social.push(item);
         }
         if (item.category_id === 1) {
@@ -130,7 +135,7 @@ export default function useQuests(id: any) {
           _result.mode.push(item);
         }
       });
-      _result.mode.push(defaultModeQuest[0]);
+      // _result.mode.push(defaultModeQuest[0]);
       setQuests(_result);
     } catch (err) {
       setLoading(false);

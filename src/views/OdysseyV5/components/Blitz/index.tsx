@@ -40,7 +40,7 @@ const earned = [
       key: 2,
       icon: '/images/odyssey/v5/mastery/temp/mode.svg',
       text: 'MODE POINTS',
-      lightText: '4X'
+      lightText: '3-5X'
     },
     {
       key: 3,
