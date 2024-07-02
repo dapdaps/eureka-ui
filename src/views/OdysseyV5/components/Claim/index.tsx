@@ -45,9 +45,9 @@ const Claim = (props: { id: any }) => {
       </StyledPlate>
       <StyledContainer>
         <StyledTitle>Climb to <span className="hilight">Leaderboard</span></StyledTitle>
-        <StyledTitle>Win <span className="hilight">Extra orbs / photons</span></StyledTitle>
+        <StyledTitle>Win <span className="hilight">Extra Rewards</span></StyledTitle>
         <StyledSubTitle>
-          Climb to the Top 10 for Exclusive Orbs and Photons Rewards!
+          Climb to the Top 10 for Exclusive $MODE & $USDC!
         </StyledSubTitle>
         <StlyedDesc>
           <StyledDescIcon>

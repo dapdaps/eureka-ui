@@ -92,6 +92,7 @@ const ExploreItem = ({
 
                 if (category.startsWith('twitter')) {
                   const clicked = sessionStorage.getItem('_clicked_twitter_' + id);
+                  console.log(clicked);
                   clicked && handleRefresh();
                 } else {
                   handleRefresh();

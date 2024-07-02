@@ -30,7 +30,7 @@ const MasteryData = [
       {
         key: 2,
         icon: '/images/odyssey/v5/mastery/temp/kim.svg',
-        name: 'KIM & xKIM',
+        name: 'KIM POINTS',
       },
       {
         key: 3,
@@ -78,6 +78,11 @@ const MasteryData = [
       // },
       {
         key: 2,
+        icon: '/images/odyssey/v5/mastery/temp/kim.svg',
+        name: 'KIM POINTS',
+      },
+      {
+        key: 3,
         icon: '/images/odyssey/v5/mastery/temp/ezeth.svg',
         name: 'EZETH POINTS',
       },

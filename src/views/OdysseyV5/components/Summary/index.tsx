@@ -38,9 +38,10 @@ export default function Summary({ data, loading }: any) {
         </Value>
       </Item>
       <Item>
-        <Title>accumulated Gold</Title>
+        <Title>Total Rewards</Title>
         <Value>
-          <CountUp start={0} end={golds} duration={duration} />
+          {/*<CountUp start={0} end={golds} duration={duration} />*/}
+          $MODE & $5k USDC
         </Value>
       </Item>
     </StyledContainer>
