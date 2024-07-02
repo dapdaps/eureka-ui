@@ -18,8 +18,7 @@ export default function Noti() {
       <StyledContent>
         <LottieEyes />
         <div className="text">
-          When completing a transaction, please stay on the component page briefly to prevent any failure in reporting
-          information.
+          Follow Strategies and Complete Tasks to get the best returns and win rewards. Final rewards are ranked by Trading Volume during the odyssey.
         </div>
       </StyledContent>
       <Image
