@@ -85,7 +85,7 @@ const AddLiquidity = () => {
   });
 
   return (
-    <StyledContainer style={{ ...theme, width: '1078px' }}>
+    <StyledContainer style={{ ...theme, width: '1078px', position: 'relative' }}>
       <Header setShowSettings={setShowSettings} onCleanAll={onCleanAll} isAlign={false} />
       <StyledContent>
         <div style={{ width: '50%' }}>
@@ -169,6 +169,7 @@ const AddLiquidity = () => {
                     key={label}
                     $active={range === label}
                     onClick={() => {
+                      if (!isChainSupport) return;
                       setRange(label);
                     }}
                   >
@@ -183,6 +184,7 @@ const AddLiquidity = () => {
                 token1={token1}
                 noPair={noPair}
                 rangeType={rangeType}
+                isChainSupport={isChainSupport}
                 onPointChange={onPointChange}
                 onPriceChange={onPriceChange}
               />

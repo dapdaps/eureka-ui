@@ -11,7 +11,7 @@ const Input = ({ label, value, setValue, onButtonClick, desc, disabled, rangeTyp
       <StyledInputLabel>{label}</StyledInputLabel>
       <StyledInputContent>
         <StyledInputButton
-          disabled={value === '∞' || rangeType === 3}
+          disabled={value === '∞' || rangeType === 3 || disabled}
           onClick={() => {
             onButtonClick('add');
           }}
@@ -34,7 +34,7 @@ const Input = ({ label, value, setValue, onButtonClick, desc, disabled, rangeTyp
           disabled={disabled}
         />
         <StyledInputButton
-          disabled={Number(value) === 0 || rangeType === 3}
+          disabled={Number(value) === 0 || rangeType === 3 || disabled}
           onClick={() => {
             onButtonClick('minus');
           }}

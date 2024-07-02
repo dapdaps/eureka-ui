@@ -3,7 +3,16 @@ import Big from 'big.js';
 import Input from './Input';
 import { StyledContainer } from './styles';
 
-const SelectPriceRange = ({ lowerPrice, upperPrice, token0, token1, rangeType, onPointChange, onPriceChange }: any) => {
+const SelectPriceRange = ({
+  lowerPrice,
+  upperPrice,
+  token0,
+  token1,
+  rangeType,
+  isChainSupport,
+  onPointChange,
+  onPriceChange,
+}: any) => {
   return (
     <StyledContainer>
       <Input
@@ -16,7 +25,7 @@ const SelectPriceRange = ({ lowerPrice, upperPrice, token0, token1, rangeType, o
         onButtonClick={(type: 'add' | 'minus') => {
           onPointChange(type, 'lower', lowerPrice);
         }}
-        disabled={!token0 || !token1}
+        disabled={!token0 || !token1 || !isChainSupport}
         rangeType={rangeType}
       />
       <Input
@@ -29,7 +38,7 @@ const SelectPriceRange = ({ lowerPrice, upperPrice, token0, token1, rangeType, o
         onButtonClick={(type: 'add' | 'minus') => {
           onPointChange(type, 'upper', upperPrice);
         }}
-        disabled={!token0 || !token1}
+        disabled={!token0 || !token1 || !isChainSupport}
         rangeType={rangeType}
       />
     </StyledContainer>
