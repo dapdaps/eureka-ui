@@ -50,7 +50,7 @@ const StyledItem = styled.div`
   color: #979abe;
   cursor: pointer;
   &.active {
-    border: 1px solid #000;
+    border: 1px solid #979abe;
   }
   @media (max-width: 768px) {
     width: 48px;
@@ -93,7 +93,7 @@ const PoolRemoveAmount = ({ percent = 0, setPercent }: any) => {
           {PERCENTS.map((p) => {
             return (
               <StyledItem
-                className="hvc"
+                className={`hvc ${p === percent && 'active'}`}
                 key={p}
                 onClick={() => {
                   setPercent(p);

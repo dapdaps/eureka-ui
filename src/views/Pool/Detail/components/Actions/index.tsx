@@ -10,8 +10,6 @@ const Actions = ({ onIncrease, onRemove, liquidity }: any) => {
         style={{
           width: 139,
           height: 36,
-          background: '#131313',
-          border: '1px solid var(--border-color)',
         }}
         onClick={onIncrease}
       >
@@ -22,6 +20,8 @@ const Actions = ({ onIncrease, onRemove, liquidity }: any) => {
           style={{
             width: 139,
             height: 36,
+            background: '#131313',
+            border: '1px solid var(--border-color)',
           }}
           onClick={onRemove}
         >

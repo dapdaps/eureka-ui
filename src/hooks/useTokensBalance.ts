@@ -52,7 +52,7 @@ export default function useTokensBalance(tokens: any) {
       if (hasNative && nativeBalance) _balance.native = utils.formatUnits(nativeBalance, 18);
 
       for (let i = 0; i < results.length; i++) {
-        const token = calls[i];
+        const token = tokensAddress[i];
         _balance[token.address] = utils.formatUnits(results[i]?.[0] || 0, token.decimals);
       }
       setBalances(_balance);

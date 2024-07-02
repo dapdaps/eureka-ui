@@ -135,10 +135,19 @@ export default function DappCard({
 
   const getTagText = () => {
     if (['trade'].includes(type)) {
-      return '4x Points';
+      return '3-5x Points';
     }
     if (['lending'].includes(type)) {
-      return isRenzo ? 'Mode Points' : '2x Points';
+      if (isRenzo) {
+        return 'Mode Points';
+      }
+      if (['Kim Exchange'].includes(name)) {
+        return '3-5x Points';
+      }
+      if (['Kelp'].includes(name)) {
+        return '2x Points';
+      }
+      return '2-3x Points';
     }
   };
 

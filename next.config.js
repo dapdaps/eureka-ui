@@ -98,6 +98,14 @@ const nextConfig = {
       destination: 'https://universe.kelpdao.xyz/:path*',
     },
     {
+      source: '/teahouse/:path*',
+      destination: 'https://vault-api.teahouse.finance/:path*',
+    },
+    {
+      source: '/beefy/:path*',
+      destination: 'https://api.beefy.finance/:path*',
+    },
+    {
       source: '/duo/exchange/:path*',
       destination: 'https://www.duo.exchange/api/:path*',
     },

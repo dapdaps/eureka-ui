@@ -10,16 +10,20 @@ import Range from './components/Range';
 import RemoveLiquidity from '../RemoveLiquidity/V3';
 import IncreaseLiquidity from '../IncreaseLiquidity/V3';
 import { getTokenAmounts } from './helpers';
+import { useRouter } from 'next/router';
 import useToken from '@/views/Pool/hooks/useToken';
 import usePoolDetail from './hooks/usePoolDetail';
 import useCollectInfo from './hooks/useCollectInfo';
 import { StyledLoadingWrapper, StyledPanels } from './styles';
+import useDappConfig from '../hooks/useDappConfig';
 
 const Detail = ({ tokenId }: any) => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showIncreaseModal, setShowIncreaseModal] = useState(false);
+  const { contracts, chainId } = useDappConfig();
   const { detail = {}, loading, queryDetail } = usePoolDetail(tokenId);
-  const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId);
+  const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId, contracts);
+  const router = useRouter();
   const _token0 = useToken(detail?.token0, detail?.chainId);
   const _token1 = useToken(detail?.token1, detail?.chainId);
 
@@ -46,6 +50,12 @@ const Detail = ({ tokenId }: any) => {
   useEffect(() => {
     queryCollectInfo();
   }, [tokenId]);
+
+  useEffect(() => {
+    if (!contracts[chainId]) {
+      router.push(`/dapp/${router.query.dappRoute}`);
+    }
+  }, [chainId]);
 
   return (
     <>

@@ -139,6 +139,14 @@ export const mode: { [key: string]: Token } = {
     name: 'KIM',
     icon: 'https://ipfs.near.social/ipfs/bafkreidiekbdac2oxzv3wue537e22wi7hvb62wqwp3tkmy3oquolbsedf4',
   },
+  rseth: {
+    chainId: CHAIN_ID,
+    address: '0x4186BFC76E2E237523CBC30FD220FE055156b41F',
+    decimals: 18,
+    symbol: 'rsETH',
+    name: 'KelpDao Restaked ETH',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
+  },
   wrseth: {
     address: '0xe7903B1F75C534Dd8159b313d92cDCfbC62cB3Cd',
     chainId: CHAIN_ID,
@@ -154,13 +162,5 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     name: 'MODE',
     icon: 'https://ipfs.near.social/ipfs/bafkreihyh7mw7dieuobllbdpzs2irqadepophuc764rtdxbwdn36csz5ei',
-  },
-  rseth: {
-    chainId: CHAIN_ID,
-    address: '0x4186BFC76E2E237523CBC30FD220FE055156b41F',
-    decimals: 18,
-    symbol: 'rsETH',
-    name: 'KelpDao Restaked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibhmbhdfll7apn5mjmlmt6eh2fgn4wcvrkl3yhqfujgw5dgkqvg2e',
   },
 };

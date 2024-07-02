@@ -195,4 +195,20 @@ export const linea: { [key: string]: Token } = {
     name: 'Ledgity USDC',
     icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
   },
+  ezeth: {
+    address: '0x2416092f143378750bb29b79ed961ab195cceea5',
+    chainId: CHAIN_ID,
+    symbol: 'ezETH',
+    decimals: 18,
+    name: 'Renzo Restaked ETH',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii',
+  },
+  weeth: {
+    address: '0x1bf74c010e6320bab11e2e5a532b5ac15e0b8aa6',
+    chainId: CHAIN_ID,
+    symbol: 'weETH',
+    decimals: 18,
+    name: 'Wrapped eETH',
+    icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
+  },
 };

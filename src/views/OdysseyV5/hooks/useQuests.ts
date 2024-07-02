@@ -125,6 +125,7 @@ export default function useQuests(id: any) {
             _result.yield.push(item);
           }
         }
+        // ⚠️ be careful, mode will not participate in calculating the number of total times
         if (item.extra_data === 'mode') {
           _result.mode.push(item);
         }
