@@ -27,7 +27,7 @@ const Remove = ({ amount0, amount1, feeAmount0, feeAmount1, open, onClose, onSuc
       onClose={onClose}
       content={
         <StyledContent>
-          <Tokens {...detail} />
+          <Tokens {...detail} type="V3" />
           <Amount percent={percent} setPercent={setPercent} />
           <Token
             amount0={amount0}

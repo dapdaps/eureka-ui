@@ -9,6 +9,7 @@ import DepositAmounts from '../AddLiquidity/DepositAmounts';
 import IncreaseButton from '@/views/Pool/IncreaseLiquidity/components/Button';
 import PreviewModal from '@/views/Pool/AddLiquidity/components/PreviewModal';
 import { getTokenAmounts } from '@/views/Pool/Detail/helpers';
+import Setting from '@/views/Pool/components/Setting';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 import usePoolDetail from '../hooks/usePoolDetail';
 import useAdd from '../hooks/useAdd';
@@ -16,12 +17,13 @@ import { tickToPrice, checkIsFullRange } from '@/views/Pool/utils/tickMath';
 import { StyledContainer, StyledLoadingWrapper, StyledContent } from './styles';
 
 const IncreaseLiquidity = () => {
-  const { theme = {}, tokenId } = useDappConfig();
+  const { theme = {}, tokenId, contracts, currentChain } = useDappConfig();
   const { detail, loading } = usePoolDetail(tokenId);
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
   const [errorTips, setErrorTips] = useState('');
   const [showPreviewModal, setShowPreviewModal] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const router = useRouter();
 
   const [amount0, amount1] = useMemo(() => {
@@ -83,8 +85,8 @@ const IncreaseLiquidity = () => {
   });
 
   return (
-    <StyledContainer style={{ ...theme, width: '1078px' }}>
-      <Header isAlign={false} title="Increase Liquidity" tab="positions" />
+    <StyledContainer style={{ ...theme, width: '1078px', position: 'relative' }}>
+      <Header isAlign={true} title="Increase Liquidity" tab="positions" setShowSettings={setShowSettings} />
       {loading || !detail ? (
         <StyledLoadingWrapper>
           <Loading size={36} />
@@ -92,7 +94,7 @@ const IncreaseLiquidity = () => {
       ) : (
         <StyledContent>
           <div style={{ width: '50%' }}>
-            <Tokens {...detail} from="add" rangeType={rangeType} />
+            <Tokens {...detail} from="add" rangeType={rangeType} type="V3" />
             <CurrentAmount token0={detail.token0} token1={detail.token1} amount0={amount0} amount1={amount1} />
             <Range
               token0={detail.token0}
@@ -131,6 +133,7 @@ const IncreaseLiquidity = () => {
               value1={value1}
               token0={detail.token0}
               token1={detail.token1}
+              spender={contracts[currentChain.chain_id]?.PositionManager}
             />
           </div>
           <PreviewModal
@@ -150,6 +153,7 @@ const IncreaseLiquidity = () => {
             loading={adding}
             onClick={onIncrease}
           />
+          <Setting show={showSettings} setShow={setShowSettings} />
         </StyledContent>
       )}
     </StyledContainer>

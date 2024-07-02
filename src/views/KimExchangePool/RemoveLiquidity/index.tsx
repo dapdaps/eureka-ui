@@ -74,7 +74,7 @@ const RemoveLiquidity = () => {
             Remove Liquidity
           </StyledHeader>
           <StyledContent>
-            <Tokens {...detail} />
+            <Tokens {...detail} type="V3" />
             <Amount percent={percent} setPercent={setPercent} />
             <Token
               amount0={amount0}
@@ -92,6 +92,7 @@ const RemoveLiquidity = () => {
             ) : (
               <Button
                 style={{ width: '100%', height: 62, marginTop: 20 }}
+                disabled={!percent}
                 onClick={() => {
                   onRemove();
                 }}

@@ -97,7 +97,12 @@ export default function useRemove({ tokenId, detail, percent, amount0, amount1, 
         template: dapp.name,
         status,
         transactionHash,
-        extra_data: JSON.stringify({ amount0, amount1, action: 'Remove Liquidity', type: 'univ3' }),
+        extra_data: JSON.stringify({
+          amount0: amount0 * (percent / 100),
+          amount1: amount1 * (percent / 100),
+          action: 'Remove Liquidity',
+          type: 'univ3',
+        }),
       });
       toast.dismiss(toastId);
       if (status === 1) {
