@@ -12,7 +12,8 @@ const basic = {
     USDB: "https://app.juice.finance/images/logos/tokens/usdb.svg",
     wUSDB: "https://app.juice.finance/images/logos/protocols/wasabi.svg",
     DUSD: "https://app.juice.finance/images/logos/tokens/dusd.svg",
-    DETH: "https://app.juice.finance/images/logos/tokens/deth.svg"
+    DETH: "https://app.juice.finance/images/logos/tokens/deth.svg",
+    BLAST: "https://app.juice.finance/_next/image?url=%2Fimages%2Flogos%2Ftokens%2Fblast.webp&w=64&q=75"
   }
 };
 const WETH_WETH_POOLS = {
@@ -20,6 +21,45 @@ const WETH_WETH_POOLS = {
   LENDING_POOL_ADDRESS: "0x44f33bC796f7d3df55040cd3C631628B560715C2",
   SYMBOL_ADDRESS: "0x4300000000000000000000000000000000000004",
   vaults: [{
+    icon: "https://app.juice.finance/_next/image?url=%2Fimages%2Flogos%2Ftokens%2Fblast.webp&w=2048&q=75",
+    iconBgColor: "transparent",
+    borderColor: "transparent",
+    name: "Blast WETH V3 LP",
+    type: "Liquidity Pools",
+    protocol: "Hyperlock <> Thruster V3",
+    token0: "WETH",
+    token1: "HYPLP",
+    strategyAddress: "0x78E6265a11a41E5Dcd1431448d00f3524943fD11",
+    vaultAddress: "0x9A0AA28d999a21d3cf6F2703CDBba9FeAF4a32F7",
+    pointList: [{
+      type: "deposited",
+      label: "Total Deposited",
+    }, {
+      type: "points",
+      label: "Thruster Points",
+    }, {
+      type: "points",
+      label: "Hyperlock Points",
+    }]
+  }, {
+    icon: "https://app.juice.finance/_next/image?url=%2Fimages%2Flogos%2Ftokens%2Fblast.webp&w=2048&q=75",
+    iconBgColor: "transparent",
+    borderColor: "transparent",
+    name: "Blast Spot",
+    type: "Spot",
+    protocol: "Thruster V3",
+    token0: "WETH",
+    token1: "BLAST",
+    strategyAddress: "0x3FeC7f626923445F587C4881a80D00a7104782d1",
+    vaultAddress: "0x9A0AA28d999a21d3cf6F2703CDBba9FeAF4a32F7",
+    pointList: [{
+      type: "deposited",
+      label: "Total Deposited",
+    }, {
+      type: "points",
+      label: "Thruster Points",
+    }]
+  }, {
     icon: "https://app.juice.finance/images/logos/protocols/particle.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
