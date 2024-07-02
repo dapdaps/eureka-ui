@@ -4,8 +4,8 @@ import { StyledContainer, StyledItem } from './styles';
 const TokenSwitcher = ({ token0, token1, reverse, onExchangeTokens }: any) => {
   return (
     <StyledContainer onClick={onExchangeTokens}>
-      <StyledItem $active={!reverse}>{token0?.symbol}</StyledItem>
-      <StyledItem $active={reverse}>{token1?.symbol}</StyledItem>
+      <StyledItem $active={!reverse}>{reverse ? token0?.symbol : token1?.symbol}</StyledItem>
+      <StyledItem $active={reverse}>{!reverse ? token0?.symbol : token1?.symbol}</StyledItem>
     </StyledContainer>
   );
 };

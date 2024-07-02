@@ -7,6 +7,7 @@ import { tickToPrice, priceToUsablePrice, priceToUsableTick } from '@/views/Pool
 import { sortTokens } from '@/views/Pool/utils/token';
 import { getPairByTokens, revertTokenAddress } from '../token';
 import Big from 'big.js';
+import type { Token } from '@/types';
 
 export default function useAddLiquidityData() {
   const { token0: _token0, token1: _token1, tokens: _tokens, pairs, currentChain } = useDappConfig();
@@ -30,19 +31,22 @@ export default function useAddLiquidityData() {
 
   const pair = useMemo(
     () =>
-      getPairByTokens({
-        token0: token0.address,
-        token1: token1.address,
-        pairs: Object.values(pairs),
-        chainId: currentChain.chain_id,
-      }),
+      token0 && token1
+        ? getPairByTokens({
+            token0: token0.address,
+            token1: token1.address,
+            pairs: Object.values(pairs),
+            chainId: currentChain.chain_id,
+          })
+        : null,
     [token0, token1],
   );
 
-  const { info, loading: infoLoading } = usePoolInfo(pair.address);
+  const { info, loading: infoLoading } = usePoolInfo(pair?.address);
 
   const changeToken = ({ t0, t1 }: any) => {
     const params = new URLSearchParams(searchParams);
+
     if (t0) {
       params.set('token0', revertTokenAddress(t0, currentChain.chain_id));
     } else {
@@ -65,33 +69,41 @@ export default function useAddLiquidityData() {
     setValue1('');
     setCurrentPrice('');
     setNoPair(false);
+    changeToken({
+      t0: null,
+      t1: null,
+    });
   };
 
-  const onSelectToken = (token: string, type: number) => {
-    let t0 = token0.address;
-    let t1 = token1.address;
+  const onSelectToken = (token: Token, type: number) => {
+    let t0 = token0?.address;
+    let t1 = token1?.address;
+
     if (type === 0) {
-      t0 = token0;
+      t0 = token.address;
       if (token === token1?.address) {
         t1 = null;
       }
     } else {
-      t1 = token;
+      t1 = token.address;
       if (token === token0?.address) {
         t0 = null;
       }
     }
+
     changeToken({ t0, t1 });
   };
 
   const onExchangeTokens = () => {
     const [_token1, _token0] = [token0, token1];
-    changeToken({ t0: _token0.address, t1: _token1.address });
+    changeToken({ t0: _token0?.address, t1: _token1?.address });
+    setValue0('');
+    setValue1('');
   };
 
   const reverse = useMemo(() => {
     if (!token0 || !token1) return false;
-    const [_token0] = sortTokens(token0, token1);
+    const [_token0, _token1] = sortTokens(token0, token1);
 
     return _token0.address === token1.address;
   }, [token0, token1]);
@@ -128,6 +140,8 @@ export default function useAddLiquidityData() {
 
   const onPointChange = useCallback(
     (stepType: 'add' | 'minus', type: 'upper' | 'lower') => {
+      if (!token0 || !token1) return;
+
       const tickLower = priceToUsableTick({ price: lowerPrice, token0, token1, fee: 3000 });
 
       const tickUpper = priceToUsableTick({ price: upperPrice, token0, token1, fee: 3000 });
@@ -150,6 +164,9 @@ export default function useAddLiquidityData() {
   );
 
   useEffect(() => {
+    if (!range) {
+      return;
+    }
     if (range === 'Full') {
       setLowerPrice('0');
       setUpperPrice('∞');
@@ -170,6 +187,7 @@ export default function useAddLiquidityData() {
       _lowerPrice = Big(currentPrice).mul(1 - 0.07);
       _upperPrice = Big(currentPrice).mul(1 + 0.11);
     }
+
     setLowerPrice(priceToUsablePrice({ price: _lowerPrice, token0, token1, fee: 3000 }));
     setUpperPrice(priceToUsablePrice({ price: _upperPrice, token0, token1, fee: 3000 }));
   }, [range]);
@@ -179,11 +197,14 @@ export default function useAddLiquidityData() {
       setLoading(true);
       return;
     }
+    if (!token0 || !token1) return;
     setNoPair(!info);
+
     if (!info) {
       setLoading(false);
       return;
     }
+
     const { currentTick } = info;
     const _currentPrice = tickToPrice({ token0, token1, tick: currentTick });
     setCurrentPrice(_currentPrice);
@@ -194,7 +215,7 @@ export default function useAddLiquidityData() {
     setLowerPrice(_lowerPrice);
     setUpperPrice(_upperPrice);
     setLoading(false);
-  }, [info, infoLoading]);
+  }, [info, infoLoading, reverse]);
 
   return {
     token0,

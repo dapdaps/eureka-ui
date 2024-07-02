@@ -47,7 +47,7 @@ const PreviewModal = ({
             upperPrice={upperPrice}
             currentPrice={currentPrice}
           />
-          <CreateButton text="Add Liquidity" loading={loading} onClick={onIncrease} />
+          <CreateButton text="Add Liquidity" loading={loading} onClick={onClick} />
         </StyledContent>
       }
     />

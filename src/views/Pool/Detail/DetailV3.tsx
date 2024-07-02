@@ -14,12 +14,14 @@ import useToken from '@/views/Pool/hooks/useToken';
 import usePoolDetail from './hooks/usePoolDetail';
 import useCollectInfo from './hooks/useCollectInfo';
 import { StyledLoadingWrapper, StyledPanels } from './styles';
+import useDappConfig from '../hooks/useDappConfig';
 
 const Detail = ({ tokenId }: any) => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showIncreaseModal, setShowIncreaseModal] = useState(false);
+  const { contracts } = useDappConfig();
   const { detail = {}, loading, queryDetail } = usePoolDetail(tokenId);
-  const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId);
+  const { loading: collectLoading, info = {}, queryCollectInfo } = useCollectInfo(tokenId, contracts);
   const _token0 = useToken(detail?.token0, detail?.chainId);
   const _token1 = useToken(detail?.token1, detail?.chainId);
 

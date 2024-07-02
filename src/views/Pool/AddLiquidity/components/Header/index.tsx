@@ -1,9 +1,19 @@
+import { memo } from 'react';
 import { useRouter } from 'next/navigation';
 import VersionSelector from '@/views/Pool/components/VersionSelector';
 
 import { StyledActions, StyledClearAll, StyledContainer, StyledIconButton, StyledTitle } from './styles';
 
-const Header = ({ setShowSettings, onCleanAll, from, onClose, version, setVersion }: any) => {
+const Header = ({
+  setShowSettings,
+  onCleanAll,
+  from,
+  onClose,
+  version,
+  setVersion,
+  isAlign,
+  title = 'Add Liquidity',
+}: any) => {
   const router = useRouter();
   return (
     <StyledContainer>
@@ -27,7 +37,7 @@ const Header = ({ setShowSettings, onCleanAll, from, onClose, version, setVersio
       {isAlign && <StyledTitle>{title}</StyledTitle>}
       <StyledActions>
         <StyledClearAll onClick={onCleanAll}>Clean all</StyledClearAll>
-        <VersionSelector version={version} setVersion={setVersion} />
+        {version && <VersionSelector version={version} setVersion={setVersion} />}
         <StyledIconButton onClick={setShowSettings}>
           <svg xmlns="http://www.w3.org/2000/svg" width="18" height="17" viewBox="0 0 18 17" fill="none">
             <path

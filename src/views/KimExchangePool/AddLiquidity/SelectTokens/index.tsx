@@ -9,10 +9,10 @@ const SelectTokens = ({ open, token, selectedToken, onClose, onSelectToken }: an
   const [searchVal, setSearchVal] = useState('');
 
   const { tokens, currentChain, pairs } = useDappConfig();
-
   const chainTokens = useMemo(() => {
     const _chainId = currentChain.chain_id;
     const _tokens = tokens[_chainId];
+    if (!token) return Object.values(_tokens);
     const selectable: any = [];
     Object.values(pairs).forEach((pair: any) => {
       if (pair.tokens[0] === token.address) {

@@ -4,7 +4,7 @@ import Loading from '@/components/Icons/Loading';
 import Header from '@/views/Pool/Detail/components/Header';
 import Tokens from '@/views/Pool/Detail/components/Tokens';
 import Actions from '@/views/Pool/Detail/components/Actions';
-import LiquidityPanel from '@/views/Pool/Detail/components/LiquidityPanel';
+import LiquidityPanel from '@/views/Pool/Detail/components/LiquidityPanel/V3';
 import FeesPanel from '@/views/Pool/Detail/components/FeesPanel';
 import Range from '@/views/Pool/Detail/components/Range';
 import { getTokenAmounts } from '@/views/Pool/Detail/helpers';

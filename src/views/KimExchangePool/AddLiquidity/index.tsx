@@ -99,9 +99,13 @@ const AddLiquidity = () => {
           />
           <StyledCurrentPrice>
             <div>Current Price</div>
-            <div>
-              {balanceFormated(currentPrice, 5)} {token1.symbol} per {token0.symbol}
-            </div>
+            {token1 && token0 ? (
+              <div>
+                {balanceFormated(currentPrice, 5)} {token1.symbol} per {token0.symbol}
+              </div>
+            ) : (
+              '-'
+            )}
           </StyledCurrentPrice>
           <DepositAmounts
             label="Deposit amounts"
