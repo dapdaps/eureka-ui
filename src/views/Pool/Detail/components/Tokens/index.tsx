@@ -27,7 +27,7 @@ const Tokens = ({
         <StyledSymbol>
           {token0?.symbol}/{token1?.symbol}
         </StyledSymbol>
-        <Fee fee={fee} />
+        {fee && <Fee fee={fee} />}
         <VersionTag type={type} />
       </StyledLeft>
       <Status

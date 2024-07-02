@@ -30,7 +30,7 @@ import {
 } from './styles';
 
 const AddLiquidity = () => {
-  const { theme = {}, currentChain } = useDappConfig();
+  const { theme = {}, currentChain, contracts } = useDappConfig();
   const [showSettings, setShowSettings] = useState(false);
   const [showSelectTokens, setShowSelectTokens] = useState(false);
   const [showPreviewModal, setShowPreviewModal] = useState(false);
@@ -199,9 +199,10 @@ const AddLiquidity = () => {
                 value1={value1}
                 token0={token0}
                 token1={token1}
+                spender={contracts[currentChain.chain_id]?.PositionManager}
               />
             </>
-          )}{' '}
+          )}
         </div>
 
         <Setting show={showSettings} setShow={setShowSettings} />
