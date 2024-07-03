@@ -58,6 +58,7 @@ const ExploreItem = ({
 
     if (!source) return;
     if (source === '/network/mode') handleReport(id);
+    if (source === '/super-bridge') handleReport(id);
     window.open(source, '_blank');
   };
 
