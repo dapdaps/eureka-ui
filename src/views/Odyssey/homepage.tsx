@@ -227,6 +227,19 @@ const Index = function () {
   useEffect(() => {
     wallet && currentCompass?.id && queryDetail(currentCompass?.id);
   }, [currentCompass, wallet]);
+
+  const renderVolNo = (compass: any) => {
+    if (!compass) return null;
+    if (compass.name.indexOf('Vol.4+:') > -1) {
+      return '4+';
+    }
+    // ⚠️ Special: mode-odyssey id is 7, but show number is 5
+    if (compass.id === 7) {
+      return 5;
+    }
+    return compass.id;
+  };
+
   return (
     <StyledContainer
       style={{
@@ -299,7 +312,7 @@ const Index = function () {
                               ')',
                           }}
                         >
-                          Vol. {compass.name.indexOf('Vol.4+:') > -1 ? '4+' : compass.id}
+                          Vol. {renderVolNo(compass)}
                         </StyledVol>
                         {odyssey[compass.id]?.chainsImg && (
                           <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: 33 }} />
@@ -467,8 +480,8 @@ const Index = function () {
                 }}
               >
                 {currentCompass.status === 'ended'
-                  ? `Join Odyssey Vol.${currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id}`
-                  : `Odyssey Vol.${currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id} is coming soon!`}
+                  ? `Join Odyssey Vol.${renderVolNo(currentCompass)}`
+                  : `Odyssey Vol.${renderVolNo(currentCompass)} is coming soon!`}
               </StyledComingSoonButton>
             ) : (
               <StyledJoinButton
@@ -478,7 +491,7 @@ const Index = function () {
                   });
                 }}
               >
-                Join Odyssey Vol.{currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id}
+                Join Odyssey Vol.{renderVolNo(currentCompass)}
               </StyledJoinButton>
             )}
 
