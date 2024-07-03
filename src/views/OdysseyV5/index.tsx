@@ -93,7 +93,7 @@ export default function OdysseyV5() {
   }, []);
 
   const authConfig = useAuthConfig();
-  const { quests, loading: questsLoading, setQuests } = useQuests(id);
+  const { quests, loading: questsLoading, setQuests, strategies } = useQuests(id);
   const { detail, loading, queryDetail } = useDetail(id, {
     quests,
     setExploredAmount,
@@ -109,10 +109,6 @@ export default function OdysseyV5() {
   });
 
   const [lendingList, setLendingList] = useState<any>([]);
-
-  quests.swap.sort((a: any, b: any) => {
-    return a.order - b.order;
-  });
 
   useEffect(() => {
     // if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
@@ -140,7 +136,7 @@ export default function OdysseyV5() {
           detail={detail}
           loading={loading}
        />
-        <Mastery />
+        <Mastery strategies={strategies} />
         <Blitz
           onRefreshDetail={queryDetailThrottle}
           detailLoading={exploredAmountLoading}

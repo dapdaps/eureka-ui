@@ -21,6 +21,7 @@ import { StyledBtn, StyledBtnGroup } from '@/views/OdysseyV5/components/EarnedCa
 const MasteryData = [
   {
     key: 1,
+    source: 'strategy_minor_leverage_long',
     title: 'Minor Leverage Long (1.25x)',
     pointsEarned: [
       // {
@@ -70,6 +71,7 @@ const MasteryData = [
   },
   {
     key: 2,
+    source: 'strategy_the_arbitragooor',
     title: 'The Arbitragooor',
     pointsEarned: [
       // {
@@ -117,6 +119,7 @@ const MasteryData = [
   },
   {
     key: 3,
+    source: 'strategy_use_wrseth',
     title: 'Use wrsETH And Explore Rewards',
     pointsEarned: [
       {
@@ -184,6 +187,7 @@ const MasteryData = [
   },
   {
     key: 4,
+    source: 'strategy_unlock_kim',
     title: 'Unlock Kim\'s Hidden Wealth',
     pointsEarned: [
       {
@@ -320,9 +324,16 @@ const IconArrow = (
   </svg>
 );
 
-const Mastery = () => {
+const Mastery = (props: { strategies: any; }) => {
+  const { strategies = [] } = props;
 
   const swiperRef = useRef<any>();
+
+  const checkFinished = (item: any) => {
+    if (!strategies) return false;
+    const curr = strategies.find((it: any) => it.source === item.source);
+    return curr?.finished ?? false;
+  };
 
   return (
     <StyledContainer id="odysseySectionAirdropMastery">
@@ -355,7 +366,7 @@ const Mastery = () => {
                   pointsEarned={item.pointsEarned}
                   result={item.result}
                   styles={{ flex: 1 }}
-                  finished={false}
+                  finished={checkFinished(item)}
                 >
                   <StyledEarnedList>
                     {
