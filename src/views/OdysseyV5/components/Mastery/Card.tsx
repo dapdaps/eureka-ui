@@ -1,13 +1,19 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from 'react';
 
+import LockStatus from '@/views/OdysseyV5/components/LockStatus';
 import {
   StyledCardContainer,
   StyledCardContent,
   StyledCardFoot,
   StyledCardHead,
-  StyledStatus,
+  StyledCardHeadTitle,
+  StyledStatus, StyledStatusExplored,
+  StyledStatusItem,
+  StyledStatusUnexplored,
 } from '@/views/OdysseyV5/components/Mastery/styles';
+import RefreshIcon from '@/views/OdysseyV5/components/RefreshButton';
+import useCheck from '@/views/OdysseyV5/hooks/useCheck';
 
 const MasteryCard = (props: Props) => {
   const {
@@ -15,44 +21,44 @@ const MasteryCard = (props: Props) => {
     pointsEarned,
     result,
     children,
-    finished,
+    currentStrategy,
+    updateStrategies,
   } = props;
+
+  const { checking, handleRefresh } = useCheck(currentStrategy, (_times: number) => {
+    updateStrategies(currentStrategy.id, _times);
+  }, false, () => {});
 
   return (
     <StyledCardContainer style={props.styles}>
-      <StyledStatus $finished={finished}>
-        {
-          finished ? (
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="8" cy="8" r="8" fill="#DFFE00"/>
-              <path d="M4 8.33333L7 11L12 5" stroke="black" strokeWidth="2" strokeLinecap="round"/>
-            </svg>
-          ) : (
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 16 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <circle cx="8" cy="8" r="7" fill="#1A1A1A" stroke="#DFFE00" strokeWidth="2" />
-            </svg>
-          )
-        }
-        <div className="status-tips">
-          You completed this strategy already
-        </div>
-      </StyledStatus>
       <StyledCardHead>
-        {title}
+        <StyledCardHeadTitle>{title}</StyledCardHeadTitle>
+        <StyledStatus>
+          {
+            currentStrategy.finished ? (
+              <StyledStatusExplored>
+                <LockStatus status={true} style={{ lineHeight: 1, height: '100%' }} />
+              </StyledStatusExplored>
+            ) : (
+              <StyledStatusUnexplored>
+                <RefreshIcon
+                  onClick={(ev: any) => {
+                    ev.stopPropagation();
+                    if (checking || !currentStrategy || !currentStrategy.id) return;
+                    handleRefresh();
+                  }}
+                  loading={checking}
+                  style={{
+                    cursor: (currentStrategy && currentStrategy.id) ? 'pointer' : 'not-allowed',
+                  }}
+                />
+                <StyledStatusItem>Unexplored</StyledStatusItem>
+              </StyledStatusUnexplored>
+            )
+          }
+        </StyledStatus>
       </StyledCardHead>
-      <StyledCardContent>
+      <StyledCardContent style={{ marginTop: currentStrategy.finished ? 30 : 0 }}>
         <div className="section points-earned">
           <div className="title">Points Earned:</div>
           <ul className="list">
@@ -94,5 +100,6 @@ interface Props {
   result: any[];
   children: React.ReactElement;
   styles?: React.CSSProperties;
-  finished?: boolean;
+  currentStrategy: any;
+  updateStrategies(id: any, times: any): void;
 }

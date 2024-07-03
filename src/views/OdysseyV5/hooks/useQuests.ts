@@ -173,5 +173,11 @@ export default function useQuests(id: any) {
     run();
   }, [account]);
 
-  return { loading, quests: quests || defaultQuests, setQuests, strategies };
+  return {
+    loading,
+    quests: quests || defaultQuests,
+    setQuests,
+    strategies,
+    setStrategies,
+  };
 }

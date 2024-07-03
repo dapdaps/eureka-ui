@@ -176,7 +176,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
                           </div>
                           <section className="section earned">
                             <div className="title">Tokens & Points earned:</div>
-                            <ul className="list">
+                            <ul className="list mt">
                               {
                                 getEarnedList(earn).map((item: any) => (
                                     item.text ? (

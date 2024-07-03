@@ -93,7 +93,13 @@ export default function OdysseyV5() {
   }, []);
 
   const authConfig = useAuthConfig();
-  const { quests, loading: questsLoading, setQuests, strategies } = useQuests(id);
+  const {
+    quests,
+    loading: questsLoading,
+    setQuests,
+    strategies,
+    setStrategies,
+  } = useQuests(id);
   const { detail, loading, queryDetail } = useDetail(id, {
     quests,
     setExploredAmount,
@@ -136,7 +142,10 @@ export default function OdysseyV5() {
           detail={detail}
           loading={loading}
        />
-        <Mastery strategies={strategies} />
+        <Mastery
+          strategies={strategies}
+          setStrategies={setStrategies}
+        />
         <Blitz
           onRefreshDetail={queryDetailThrottle}
           detailLoading={exploredAmountLoading}

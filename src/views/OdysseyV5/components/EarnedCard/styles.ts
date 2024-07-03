@@ -27,7 +27,6 @@ export const StyledFoot = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding-top: 14px;
 `;
 export const StyledTitle = styled.div`
   font-size: 26px;

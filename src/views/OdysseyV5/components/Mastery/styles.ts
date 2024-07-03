@@ -171,7 +171,7 @@ export const StyledCardContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 30px;
+  gap: 0px;
   height: 100%;
   position: relative;
 `;
@@ -181,6 +181,12 @@ export const StyledCardHead = styled.div`
   line-height: 43px;
   text-align: left;
   color: ${() => `var(--odyssey-primary-color)`};
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+export const StyledCardHeadTitle = styled.div`
+  flex: 1;
 `;
 export const StyledCardContent = styled.div`
   min-height: 242px;
@@ -253,7 +259,7 @@ export const StyledCardContent = styled.div`
 export const StyledCardFoot = styled.div`
   margin-top: auto;
   height: 100%;
-  padding-top: 30px;
+  padding-top: 60px;
 `;
 
 export const StyledLeftBtn = styled.div`
@@ -291,35 +297,24 @@ export const StyledPageBtn = styled.div`
 export const StyledArrow = styled.div`
 transform: rotate(-180deg);`;
 
-export const StyledStatus = styled.div<{ $finished?: boolean }>`
-  position: absolute;
-  right: 15px;
-  top: 45px;
-  cursor: ${({ $finished }) => $finished ? 'pointer' : 'default'};
-  
-  .status-tips {
-    display: none;
-    position: absolute;
-    right: -30px;
-    top: -80px;
-    color: #FFF;
-    text-align: center;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 300;
-    width: 370px;
-    padding: 20px;
-    flex-shrink: 0;
-    border-radius: 10px;
-    background: #2A2A2A;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-  
-  &:hover {
-    .status-tips {
-      display: ${({ $finished }) => $finished ? 'flex' : 'none'};
-    }
-  }
+export const StyledStatus = styled.div`
+  flex-shrink: 0;
+  padding-top: 6px;
+`;
+
+export const StyledStatusItem = styled.div`
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #979abe;
+`;
+
+export const StyledStatusUnexplored = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const StyledStatusExplored = styled.div`
+  height: 36px;
 `;

@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import EarnedCard from "@/views/OdysseyV5/components/EarnedCard";
+import { StyledBtn, StyledBtnGroup } from '@/views/OdysseyV5/components/EarnedCard/styles';
 import MasteryCard from "@/views/OdysseyV5/components/Mastery/Card";
 import {
   StyledArrow,
@@ -16,7 +17,6 @@ import {
   StyledRightBtn,
   StyledTitle,
 } from "@/views/OdysseyV5/components/Mastery/styles";
-import { StyledBtn, StyledBtnGroup } from '@/views/OdysseyV5/components/EarnedCard/styles';
 
 const MasteryData = [
   {
@@ -324,15 +324,23 @@ const IconArrow = (
   </svg>
 );
 
-const Mastery = (props: { strategies: any; }) => {
-  const { strategies = [] } = props;
+const Mastery = (props: { strategies: any; setStrategies: any }) => {
+  const { strategies = [], setStrategies } = props;
 
   const swiperRef = useRef<any>();
 
-  const checkFinished = (item: any) => {
-    if (!strategies) return false;
-    const curr = strategies.find((it: any) => it.source === item.source);
-    return curr?.finished ?? false;
+  const getCurrentStrategy = (item: any) => {
+    if (!strategies) return {};
+    return strategies.find((it: any) => it.source === item.source) || {};
+  };
+
+  const updateStrategies = (id: any, times: any) => {
+    const _strategies = strategies.slice();
+    const curr = _strategies.find((it: any) => it.id === id);
+    if (!curr) return;
+    curr.total_spins = times;
+    curr.finished = curr.total_spins >= curr.spins * curr.times;
+    setStrategies(_strategies);
   };
 
   return (
@@ -358,105 +366,109 @@ const Mastery = (props: { strategies: any; }) => {
             }}
           >
           {
-            MasteryData.map((item, idx) => (
-              <SwiperSlide key={item.key}>
-                <MasteryCard
-                  key={item.key}
-                  title={item.title}
-                  pointsEarned={item.pointsEarned}
-                  result={item.result}
-                  styles={{ flex: 1 }}
-                  finished={checkFinished(item)}
-                >
-                  <StyledEarnedList>
-                    {
-                      item.earned.map((earn: any) => (
-                        <EarnedCard
-                          key={earn.key}
-                          title={earn.name}
-                          icon={earn.icon}
-                          submit={typeof earn.submit === 'string' ? earn.submit : ''}
-                          styles={{
-                            background: '#2A2A2A',
-                            paddingLeft: idx === MasteryData.length - 1 ? 15 : 20,
-                            paddingRight: idx === MasteryData.length - 1 ? 15 : 20,
-                            flex: 1,
-                          }}
-                          handleSubmit={() => {
-                            if (earn.link) {
-                              window.open(`${window.origin}${earn.link}`, '_blank');
-                            }
-                          }}
-                          renderFoot={typeof earn.submit === 'string' ? void 0 : () => {
-                            return (
-                              <StyledBtnGroup>
-                                {
-                                  (earn.submit as string[]).map((sub: string, idx: number) => (
-                                    <StyledBtn
-                                      key={idx}
-                                      onClick={() => {
-                                        if (earn.link[idx]) {
-                                          window.open(`${window.origin}${earn.link[idx]}`, '_blank');
-                                        }
-                                      }}
-                                      style={{
-                                        minWidth: sub.length > 4 ? 150 : 60,
-                                      }}
-                                    >
-                                      {sub}
-                                      <Image
-                                        src="/images/odyssey/v5/arrow.svg"
-                                        alt=""
-                                        width={19}
-                                        height={12}
-                                      />
-                                    </StyledBtn>
-                                  ))
-                                }
-                              </StyledBtnGroup>
-                            );
-                          }}
-                        >
-                          <StyledEarnedContent>
-                            {
-                              earn.conditions.map((condition: any, idx: number) => (
-                                <li className="condition-item" key={idx}>
-                                  <div className="condition-item-inner">
-                                    <div className="point" />
-                                    {condition}
-                                  </div>
+            MasteryData.map((item, idx) => {
+              const currentStrategy = getCurrentStrategy(item);
+              return (
+                <SwiperSlide key={item.key}>
+                  <MasteryCard
+                    key={item.key}
+                    title={item.title}
+                    pointsEarned={item.pointsEarned}
+                    result={item.result}
+                    styles={{ flex: 1 }}
+                    currentStrategy={currentStrategy}
+                    updateStrategies={updateStrategies}
+                  >
+                    <StyledEarnedList>
+                      {
+                        item.earned.map((earn: any) => (
+                          <EarnedCard
+                            key={earn.key}
+                            title={earn.name}
+                            icon={earn.icon}
+                            submit={typeof earn.submit === 'string' ? earn.submit : ''}
+                            styles={{
+                              background: '#2A2A2A',
+                              paddingLeft: idx === MasteryData.length - 1 ? 15 : 20,
+                              paddingRight: idx === MasteryData.length - 1 ? 15 : 20,
+                              flex: 1,
+                            }}
+                            handleSubmit={() => {
+                              if (earn.link) {
+                                window.open(`${window.origin}${earn.link}`, '_blank');
+                              }
+                            }}
+                            renderFoot={typeof earn.submit === 'string' ? void 0 : () => {
+                              return (
+                                <StyledBtnGroup>
                                   {
-                                    // special content: will display the kim liquidity pools
-                                    earn.poolList && (
-                                      <ul className="kim-liquidity-coins">
-                                        {
-                                          earn.poolList.map((pool: any) => (
-                                            <li className="coin-item" key={pool.key}>
-                                              <div className="item-icon">
-                                                <Image className="coin-icon" src={pool.coin1} alt={pool.coin1Name} width={20} height={20} />
-                                                <Image className="coin-icon" src={pool.coin2} alt={pool.coin2Name} width={20} height={20} />
-                                              </div>
-                                              <div className="item-name">
-                                                <i>{pool.coin1Name} / </i>
-                                                <i>{pool.coin2Name}</i>
-                                              </div>
-                                            </li>
-                                          ))
-                                        }
-                                      </ul>
-                                    )
+                                    (earn.submit as string[]).map((sub: string, idx: number) => (
+                                      <StyledBtn
+                                        key={idx}
+                                        onClick={() => {
+                                          if (earn.link[idx]) {
+                                            window.open(`${window.origin}${earn.link[idx]}`, '_blank');
+                                          }
+                                        }}
+                                        style={{
+                                          minWidth: sub.length > 4 ? 150 : 90,
+                                        }}
+                                      >
+                                        {sub}
+                                        <Image
+                                          src="/images/odyssey/v5/arrow.svg"
+                                          alt=""
+                                          width={19}
+                                          height={12}
+                                        />
+                                      </StyledBtn>
+                                    ))
                                   }
-                                </li>
-                              ))
-                            }
-                          </StyledEarnedContent>
-                        </EarnedCard>
-                      ))
-                    }
-                  </StyledEarnedList>
-                </MasteryCard>
-              </SwiperSlide>
-            ))
+                                </StyledBtnGroup>
+                              );
+                            }}
+                          >
+                            <StyledEarnedContent>
+                              {
+                                earn.conditions.map((condition: any, idx: number) => (
+                                  <li className="condition-item" key={idx}>
+                                    <div className="condition-item-inner">
+                                      <div className="point" />
+                                      {condition}
+                                    </div>
+                                    {
+                                      // special content: will display the kim liquidity pools
+                                      earn.poolList && (
+                                        <ul className="kim-liquidity-coins">
+                                          {
+                                            earn.poolList.map((pool: any) => (
+                                              <li className="coin-item" key={pool.key}>
+                                                <div className="item-icon">
+                                                  <Image className="coin-icon" src={pool.coin1} alt={pool.coin1Name} width={20} height={20} />
+                                                  <Image className="coin-icon" src={pool.coin2} alt={pool.coin2Name} width={20} height={20} />
+                                                </div>
+                                                <div className="item-name">
+                                                  <i>{pool.coin1Name} / </i>
+                                                  <i>{pool.coin2Name}</i>
+                                                </div>
+                                              </li>
+                                            ))
+                                          }
+                                        </ul>
+                                      )
+                                    }
+                                  </li>
+                                ))
+                              }
+                            </StyledEarnedContent>
+                          </EarnedCard>
+                        ))
+                      }
+                    </StyledEarnedList>
+                  </MasteryCard>
+                </SwiperSlide>
+              );
+            })
           }
           </Swiper>
         </StyledContent>
