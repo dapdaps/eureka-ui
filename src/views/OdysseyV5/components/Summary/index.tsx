@@ -7,7 +7,7 @@ export default function Summary({ data, loading }: any) {
 
   let golds = 0;
   if (!loading) {
-    golds = 30000;
+    golds = 15000;
   }
 
   const duration = 2;
@@ -40,8 +40,7 @@ export default function Summary({ data, loading }: any) {
       <Item>
         <Title>Total Rewards</Title>
         <Value>
-          {/*<CountUp start={0} end={golds} duration={duration} />*/}
-          $MODE & $5k USDC
+          $<CountUp start={0} end={golds} duration={duration} />
         </Value>
       </Item>
     </StyledContainer>

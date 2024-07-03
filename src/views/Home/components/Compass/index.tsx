@@ -170,7 +170,7 @@ const Compass = () => {
                           position: 'absolute',
                           left: 0,
                           right: -8,
-                          top: 45,
+                          top: odyssey[compass.id]?.rewardTop ? odyssey[compass.id]?.rewardTop : 45,
                           textAlign: 'center',
                           fontWeight: 900,
                           transform: 'rotate(-15deg)',
