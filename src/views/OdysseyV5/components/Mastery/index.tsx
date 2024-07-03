@@ -16,6 +16,7 @@ import {
   StyledRightBtn,
   StyledTitle,
 } from "@/views/OdysseyV5/components/Mastery/styles";
+import { StyledBtn, StyledBtnGroup } from '@/views/OdysseyV5/components/EarnedCard/styles';
 
 const MasteryData = [
   {
@@ -62,8 +63,8 @@ const MasteryData = [
           'Swap half USDC to ETH',
           'Add ETH-USDC liquidity',
         ],
-        submit: 'Trade',
-        link: '/dapp/kim-exchange',
+        submit: ['Swap', 'Add Liquidity'],
+        link: ['/dapp/kim-exchange', '/dapp/kim-exchange-liquidity'],
       },
     ],
   },
@@ -205,9 +206,9 @@ const MasteryData = [
         name: 'KIM',
         icon: '/images/odyssey/v5/mastery/temp/kim-rect.svg',
         conditions: [
-          'Swap KIM and stake to obtain xKIM'
+          'Swap KIM in Kim Exchange'
         ],
-        submit: 'Trade',
+        submit: 'Swap',
         link: '/dapp/kim-exchange',
       },
       {
@@ -219,7 +220,7 @@ const MasteryData = [
         ],
         submit: 'Add Liquidity',
         link: '/dapp/kim-exchange-liquidity',
-        coinList: [
+        poolList: [
           {
             key: 1,
             coin1Name: 'KIM',
@@ -354,15 +355,16 @@ const Mastery = () => {
                   pointsEarned={item.pointsEarned}
                   result={item.result}
                   styles={{ flex: 1 }}
+                  finished={false}
                 >
                   <StyledEarnedList>
                     {
-                      item.earned.map((earn) => (
+                      item.earned.map((earn: any) => (
                         <EarnedCard
                           key={earn.key}
                           title={earn.name}
                           icon={earn.icon}
-                          submit={earn.submit}
+                          submit={typeof earn.submit === 'string' ? earn.submit : ''}
                           styles={{
                             background: '#2A2A2A',
                             paddingLeft: idx === MasteryData.length - 1 ? 15 : 20,
@@ -374,10 +376,39 @@ const Mastery = () => {
                               window.open(`${window.origin}${earn.link}`, '_blank');
                             }
                           }}
+                          renderFoot={typeof earn.submit === 'string' ? void 0 : () => {
+                            return (
+                              <StyledBtnGroup>
+                                {
+                                  (earn.submit as string[]).map((sub: string, idx: number) => (
+                                    <StyledBtn
+                                      key={idx}
+                                      onClick={() => {
+                                        if (earn.link[idx]) {
+                                          window.open(`${window.origin}${earn.link[idx]}`, '_blank');
+                                        }
+                                      }}
+                                      style={{
+                                        minWidth: sub.length > 4 ? 150 : 60,
+                                      }}
+                                    >
+                                      {sub}
+                                      <Image
+                                        src="/images/odyssey/v5/arrow.svg"
+                                        alt=""
+                                        width={19}
+                                        height={12}
+                                      />
+                                    </StyledBtn>
+                                  ))
+                                }
+                              </StyledBtnGroup>
+                            );
+                          }}
                         >
                           <StyledEarnedContent>
                             {
-                              earn.conditions.map((condition, idx) => (
+                              earn.conditions.map((condition: any, idx: number) => (
                                 <li className="condition-item" key={idx}>
                                   <div className="condition-item-inner">
                                     <div className="point" />
@@ -385,18 +416,18 @@ const Mastery = () => {
                                   </div>
                                   {
                                     // special content: will display the kim liquidity pools
-                                    earn.coinList && (
+                                    earn.poolList && (
                                       <ul className="kim-liquidity-coins">
                                         {
-                                          earn.coinList.map((coin) => (
-                                            <li className="coin-item" key={coin.key}>
+                                          earn.poolList.map((pool: any) => (
+                                            <li className="coin-item" key={pool.key}>
                                               <div className="item-icon">
-                                                <Image className="coin-icon" src={coin.coin1} alt={coin.coin1Name} width={20} height={20} />
-                                                <Image className="coin-icon" src={coin.coin2} alt={coin.coin2Name} width={20} height={20} />
+                                                <Image className="coin-icon" src={pool.coin1} alt={pool.coin1Name} width={20} height={20} />
+                                                <Image className="coin-icon" src={pool.coin2} alt={pool.coin2Name} width={20} height={20} />
                                               </div>
                                               <div className="item-name">
-                                                <i>{coin.coin1Name} / </i>
-                                                <i>{coin.coin2Name}</i>
+                                                <i>{pool.coin1Name} / </i>
+                                                <i>{pool.coin2Name}</i>
                                               </div>
                                             </li>
                                           ))

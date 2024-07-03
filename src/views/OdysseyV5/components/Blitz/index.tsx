@@ -42,12 +42,12 @@ const earned = [
       text: 'MODE POINTS',
       lightText: '3-5X'
     },
-    {
-      key: 3,
-      icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
-      text: 'DapDap PTS',
-      lightText: '200'
-    },
+    // {
+    //   key: 3,
+    //   icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
+    //   text: 'DapDap PTS',
+    //   lightText: '200'
+    // },
   ]
 const submit = 'Swap'
 

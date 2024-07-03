@@ -173,6 +173,7 @@ export const StyledCardContainer = styled.div`
   align-items: stretch;
   gap: 30px;
   height: 100%;
+  position: relative;
 `;
 export const StyledCardHead = styled.div`
   font-size: 36px;
@@ -287,7 +288,38 @@ export const StyledPageBtn = styled.div`
   justify-content: flex-end;
 `;
 
-
 export const StyledArrow = styled.div`
 transform: rotate(-180deg);`;
 
+export const StyledStatus = styled.div<{ $finished?: boolean }>`
+  position: absolute;
+  right: 15px;
+  top: 45px;
+  cursor: ${({ $finished }) => $finished ? 'pointer' : 'default'};
+  
+  .status-tips {
+    display: none;
+    position: absolute;
+    right: -30px;
+    top: -80px;
+    color: #FFF;
+    text-align: center;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 300;
+    width: 370px;
+    padding: 20px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #2A2A2A;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  
+  &:hover {
+    .status-tips {
+      display: ${({ $finished }) => $finished ? 'flex' : 'none'};
+    }
+  }
+`;

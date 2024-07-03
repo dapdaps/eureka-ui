@@ -59,6 +59,14 @@ export const StyledIcon = styled.div<{ borderColor?: string, left?: number, zInd
   position: relative;
   z-index: ${({ zIndex }) => zIndex || 1};
 `;
+export const StyledBtnGroup = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+`;
 export const StyledBtn = styled.button`
   flex: 1;
   width: 0;

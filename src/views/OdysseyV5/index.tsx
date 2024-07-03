@@ -42,7 +42,7 @@ export default function OdysseyV5() {
     },
     {
       key: 4,
-      title: 'Dive into DApp Diversity',
+      title: 'Dive Into DapDap Social',
       target: 'odysseySectionDiveIntoDAppDiversity',
     },
     {
