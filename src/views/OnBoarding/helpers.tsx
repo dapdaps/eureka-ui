@@ -38,7 +38,7 @@ export function formatTitle(record: any) {
             </div>
           ));
         }
-      } catch (err) { }
+      } catch (err) {}
     }
     return (
       <>
@@ -121,11 +121,11 @@ export function formatTitle(record: any) {
           </>
         );
       }
-    } catch (err) { }
+    } catch (err) {}
     const action = record.action_title.split(' ')[0];
     return (
       <>
-        {action} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {action} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens?.[0]} on{' '}
         {record.template}
       </>
     );

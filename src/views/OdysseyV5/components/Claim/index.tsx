@@ -17,17 +17,19 @@ import {
   StyledListContainer,
   StyledListItem,
   StyledListItemIcon,
+  StyledListItemIconEmpty,
   StyledListItemText,
   StyledPlate,
   StyledSubTitle,
   StyledText,
-  StyledTitle} from './styles';
+  StyledTitle,
+} from './styles';
 
-const iconList =  new Map([
-    [1, 'champion.svg'],
-    [2, 'runner-up.svg'],
-    [3, 'third-runner-up.svg']
-  ]);
+const iconList = new Map([
+  [1, 'champion.svg'],
+  [2, 'runner-up.svg'],
+  [3, 'third-runner-up.svg'],
+]);
 
 const Claim = (props: { id: any }) => {
   const { ranks, loading } = useLeaderBoard(props.id);
@@ -39,15 +41,15 @@ const Claim = (props: { id: any }) => {
   };
 
   return (
-    <StyledAllContainer id='odysseySectionClimbToLeaderboard'>
+    <StyledAllContainer id="odysseySectionClimbToLeaderboard">
       <StyledPlate>
         <Image src="/images/odyssey/v5/climb-plate.svg" alt="" width={368} height={511} className="img-plate" />
       </StyledPlate>
       <StyledContainer>
         <StyledTitle>Climb to <span className="hilight">Leaderboard</span></StyledTitle>
-        <StyledTitle>Win <span className="hilight">Extra orbs / photons</span></StyledTitle>
+        <StyledTitle>Win <span className="hilight">Extra Rewards</span></StyledTitle>
         <StyledSubTitle>
-          Climb to the Top 10 for Exclusive Orbs and Photons Rewards!
+          Climb to the Top 10 for Exclusive $MODE & $USDC!
         </StyledSubTitle>
         <StlyedDesc>
           <StyledDescIcon>
@@ -65,18 +67,26 @@ const Claim = (props: { id: any }) => {
           {
             !loading && ranks?.data?.length ?
               ranks.data.map((item: any, idx: number) => (
-              <StyledList key={idx}>
-                <StyledListItem>
-                  <StyledListItemIcon src={iconList.get(item.rank) ? `/images/odyssey/v5/${iconList.get(item.rank)}` : ''} />
-                  <StyledListItemText>{item.rank}</StyledListItemText>
-                </StyledListItem>
-                <StyledListItem>
-                  <StyledListItemIcon src={item?.account?.avatar}/>
-                  <StyledListItemText>{ellipsAccount(item.account.address)}</StyledListItemText>
-                </StyledListItem>
-                <StyledListItem>${simplifyNum(item.trading_volume)}</StyledListItem>
-              </StyledList>
-            )) : <StyledLoadingWrapper $h="100px">
+                <StyledList key={idx}>
+                  <StyledListItem>
+                    {
+                      iconList.get(item.rank) ? (
+                        <StyledListItemIcon
+                          src={`/images/odyssey/v5/${iconList.get(item.rank)}`}
+                        />
+                      ) : (
+                        <StyledListItemIconEmpty />
+                      )
+                    }
+                    <StyledListItemText>{item.rank}</StyledListItemText>
+                  </StyledListItem>
+                  <StyledListItem>
+                    <StyledListItemIcon src={item?.account?.avatar} />
+                    <StyledListItemText>{ellipsAccount(item.account.address)}</StyledListItemText>
+                  </StyledListItem>
+                  <StyledListItem>${simplifyNum(item.trading_volume)}</StyledListItem>
+                </StyledList>
+              )) : <StyledLoadingWrapper $h="100px">
                 <Loading size={30} />
               </StyledLoadingWrapper>
           }
@@ -88,7 +98,7 @@ const Claim = (props: { id: any }) => {
               <StyledList one={true}>
                 <StyledListItem># {formatRank(ranks?.user?.rank)}</StyledListItem>
                 <StyledListItem>
-                  <StyledListItemIcon src={userInfo?.avatar}/>
+                  <StyledListItemIcon src={userInfo?.avatar} />
                   <StyledListItemText>{ellipsAccount(userInfo?.address)}</StyledListItemText>
                 </StyledListItem>
                 <StyledListItem>${simplifyNum(ranks?.user?.trading_volume)}</StyledListItem>

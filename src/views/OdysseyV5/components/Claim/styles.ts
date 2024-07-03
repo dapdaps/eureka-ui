@@ -97,6 +97,12 @@ export const StyledListItemIcon = styled.img`
   object-fit: contain;
 `;
 
+export const StyledListItemIconEmpty = styled.div`
+  width: 26px;
+  height: 26px;
+  opacity: 0;
+`;
+
 export const StyledListItemText = styled.div``;
 
 export const StyledPlate = styled.div`

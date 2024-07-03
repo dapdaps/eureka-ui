@@ -57,4 +57,15 @@ export default {
     rewardEnableIcon: '/images/odyssey/thruster/rewardEnable.svg',
     tips: '',
   },
+  7: {
+    path: '/odyssey/home?id=7',
+    video: '',
+    chainsImg: '/images/odyssey/v5/chains.svg',
+    chainsHeight: '56px',
+    reward: '$15000',
+    rewardTop: [],
+    rewardDisableIcon: '/images/odyssey/v5/rewardDisable.svg',
+    rewardEnableIcon: '/images/odyssey/v5/rewardEnable.svg',
+    tips: 'Forge Your Future Wealth in the Mode Ecosystem',
+  },
 } as any;

@@ -27,7 +27,6 @@ export const StyledFoot = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 16px;
-  padding-top: 14px;
 `;
 export const StyledTitle = styled.div`
   font-size: 26px;
@@ -58,6 +57,14 @@ export const StyledIcon = styled.div<{ borderColor?: string, left?: number, zInd
   overflow: hidden;
   position: relative;
   z-index: ${({ zIndex }) => zIndex || 1};
+`;
+export const StyledBtnGroup = styled.div`
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
 `;
 export const StyledBtn = styled.button`
   flex: 1;

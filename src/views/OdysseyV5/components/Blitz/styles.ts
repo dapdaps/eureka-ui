@@ -20,7 +20,7 @@ export const StyledFoot = styled.div`
   align-items: center;
   flex-wrap: nowrap;
   gap: 461px;
-  margin-top: 212px;
+  margin-top: 203px;
   white-space: nowrap;
 
   .title {
@@ -89,12 +89,16 @@ export const StyledEarnedCardContent = styled.div`
       align-items: center;
       gap: 8px;
       flex-wrap: wrap;
-      margin: 14px 0 0;
+      margin: 8px 0 0;
       padding: 0;
       list-style: none;
 
       &.styled {
         list-style: decimal;
+      }
+
+      &.mt {
+        margin-top: 14px;
       }
     }
     .item {

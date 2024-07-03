@@ -22,11 +22,11 @@ const Icon = styled.img`
   margin-right: 8px;
 `;
 
-export default function LockStatus({ status }: any) {
+export default function LockStatus({ status, style }: any) {
   return !status ? (
-    <StyledContainer $status={status}>Unexplored</StyledContainer>
+    <StyledContainer $status={status} style={style}>Unexplored</StyledContainer>
   ) : (
-    <StyledContainer $status={status} className="explored">
+    <StyledContainer $status={status} className="explored" style={style}>
       <Icon src="/images/odyssey/v5/explore-finished.svg" />
       Explored
     </StyledContainer>

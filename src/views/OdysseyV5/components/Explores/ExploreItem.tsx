@@ -9,6 +9,7 @@ import LockStatus from '../LockStatus';
 import RefreshIcon from '../RefreshButton';
 import CardInput from './CardInput';
 import { ArrowContainer, StyledItem, StyledItemLeft, StyledItemRight, StyledItemShadow,StyledItemTitle, Unexplored } from './styles';
+import { openXShareLink } from '@/utils/links';
 
 const ExploreItem = ({
   userInfo,
@@ -34,6 +35,17 @@ const ExploreItem = ({
   const onItemClick = () => {
     if (finished && !['page', 'favorite_dapp'].includes(category)) return;
 
+    if (category === 'twitter_retweet') {
+      sessionStorage.setItem('_clicked_twitter_' + id, '1');
+      openXShareLink(
+        `🌟 Excited for the DapDap X Mode: The Airdrop Ascendancy! @DapDapMeUp @modenetwork %0A
+🚀 Join now to explore DeFi, earn rewards, and win $MODE %26 $USDC prizes! 💰 %0A
+🔥 Don't miss out on the chance to be a top trader! 🏆🎉 %0A
+👉 dapdap.net/odyssey/home?id=7
+`,
+      );
+    }
+
     if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
     }
@@ -54,13 +66,8 @@ const ExploreItem = ({
     setFinished(offers <= total_spins);
   }, [total_spins, times, spins]);
 
-  const itemDisabled = useMemo(() => {
-    if (['page', 'favorite_dapp'].includes(category)) return false;
-    return times !== 0;
-  }, [category, times]);
-
   return (
-    <StyledItem onClick={onItemClick} $disabled={itemDisabled}>
+    <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished}>
       <StyledItemLeft>
         <StyledItemTitle>{name}</StyledItemTitle>
       </StyledItemLeft>
@@ -92,6 +99,7 @@ const ExploreItem = ({
 
                 if (category.startsWith('twitter')) {
                   const clicked = sessionStorage.getItem('_clicked_twitter_' + id);
+                  console.log(clicked);
                   clicked && handleRefresh();
                 } else {
                   handleRefresh();
