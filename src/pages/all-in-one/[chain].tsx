@@ -115,6 +115,8 @@ const Container = styled.div`
       border-radius: 12px;
       padding: 12px;
       width: 249px;
+      height: 60vh;
+      overflow-y: auto;
       .select-popups-item {
         width: 100%;
         display: flex;
@@ -262,10 +264,10 @@ const AllInOne: NextPageWithLayout = () => {
 
   const tabConfig = useMemo(() => {
     if (!currentChain || !tab) return {};
-    console.log('===liquidityConfig', liquidityConfig[currentChain?.chainId])
+    console.log('===liquidityConfig', liquidityConfig[currentChain?.chainId]);
     if (tab === 'Swap') return swapConfig[currentChain?.chainId] || {};
     if (tab === 'Lending') return lendingConfig[currentChain?.chainId] || {};
-    if (tab === 'Liquidity') return liquidityConfig[currentChain?.chainId] || {}
+    if (tab === 'Liquidity') return liquidityConfig[currentChain?.chainId] || {};
     return {};
   }, [currentChain, tab]);
 
@@ -347,7 +349,7 @@ const AllInOne: NextPageWithLayout = () => {
                   prices,
                   tab,
                   account,
-                  onReset: () => { },
+                  onReset: () => {},
                   onChangeTab: (tab: string) => {
                     cachedTabsStore.setCachedTab(tab, currentChain.chainId);
                     setTab(tab);
