@@ -118,3 +118,8 @@ export const StyledAllContainer = styled.div`
   padding-top: 100px;
   padding-bottom: 144px;
 `;
+
+export const StyledNoData = styled.div`
+  text-align: center;
+  color: #979ABE;
+`;

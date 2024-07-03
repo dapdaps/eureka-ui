@@ -19,6 +19,7 @@ import {
   StyledListItemIcon,
   StyledListItemIconEmpty,
   StyledListItemText,
+  StyledNoData,
   StyledPlate,
   StyledSubTitle,
   StyledText,
@@ -65,8 +66,12 @@ const Claim = (props: { id: any }) => {
             <StyledListItem>Trading Volume</StyledListItem>
           </StyledList>
           {
-            !loading && ranks?.data?.length ?
-              ranks.data.map((item: any, idx: number) => (
+            loading ? (
+              <StyledLoadingWrapper $h="100px">
+                <Loading size={30} />
+              </StyledLoadingWrapper>
+            ) : (
+              ranks?.data?.length ? ranks.data.map((item: any, idx: number) => (
                 <StyledList key={idx}>
                   <StyledListItem>
                     {
@@ -86,25 +91,28 @@ const Claim = (props: { id: any }) => {
                   </StyledListItem>
                   <StyledListItem>${simplifyNum(item.trading_volume)}</StyledListItem>
                 </StyledList>
-              )) : <StyledLoadingWrapper $h="100px">
-                <Loading size={30} />
-              </StyledLoadingWrapper>
+              )) : (
+                <StyledNoData>No Data</StyledNoData>
+              )
+            )
           }
         </StyledListContainer>
         {
-          ranks?.user && (<>
-            <StyledText>Your current rank</StyledText>
-            <StyledListContainer>
-              <StyledList one={true}>
-                <StyledListItem># {formatRank(ranks?.user?.rank)}</StyledListItem>
-                <StyledListItem>
-                  <StyledListItemIcon src={userInfo?.avatar} />
-                  <StyledListItemText>{ellipsAccount(userInfo?.address)}</StyledListItemText>
-                </StyledListItem>
-                <StyledListItem>${simplifyNum(ranks?.user?.trading_volume)}</StyledListItem>
-              </StyledList>
-            </StyledListContainer>
-          </>)
+          ranks?.user && (
+            <>
+              <StyledText>Your current rank</StyledText>
+              <StyledListContainer>
+                <StyledList one={true}>
+                  <StyledListItem># {formatRank(ranks?.user?.rank)}</StyledListItem>
+                  <StyledListItem>
+                    <StyledListItemIcon src={userInfo?.avatar} />
+                    <StyledListItemText>{ellipsAccount(userInfo?.address)}</StyledListItemText>
+                  </StyledListItem>
+                  <StyledListItem>${simplifyNum(ranks?.user?.trading_volume)}</StyledListItem>
+                </StyledList>
+              </StyledListContainer>
+            </>
+          )
         }
       </StyledContainer>
     </StyledAllContainer>
