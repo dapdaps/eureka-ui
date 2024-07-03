@@ -34,7 +34,7 @@ const StyledContainer = styled.div<{ width?: number, top?: number }>`
 const RelativeContainerHeight = 48;
 const OdysseyList = [
   {
-    id: 9,
+    id: 6,
     img: '/images/odyssey/thruster/head-entry.svg',
     width: 158,
     height: 59,

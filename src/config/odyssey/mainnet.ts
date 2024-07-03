@@ -63,7 +63,7 @@ export default {
     chainsImg: '/images/odyssey/v5/chains.svg',
     chainsHeight: '56px',
     reward: '$15000',
-    rewardTop: [],
+    rewardTop: 55,
     rewardDisableIcon: '/images/odyssey/v5/rewardDisable.svg',
     rewardEnableIcon: '/images/odyssey/v5/rewardEnable.svg',
     tips: 'Forge Your Future Wealth in the Mode Ecosystem',
