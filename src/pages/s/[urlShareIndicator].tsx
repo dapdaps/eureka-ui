@@ -152,4 +152,6 @@ const ShareUrlPage: NextPageWithLayout = ({ meta }: InferGetServerSidePropsType<
 
 ShareUrlPage.getLayout = useDefaultLayout;
 
+export const runtime = 'experimental-edge'
+
 export default ShareUrlPage;

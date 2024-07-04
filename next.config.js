@@ -151,6 +151,30 @@ const nextConfig = {
     esmExternals: 'loose',
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+
+    config.resolve.fallback = {
+        ...config.resolve.fallback,
+        path: false,
+        url: false,
+        fs: false,
+        constants: false,
+        querystring: false,
+        os: false,
+        http: require.resolve('http-browserify'),
+        https: require.resolve('https-browserify'),
+        stream: require.resolve('stream-browserify'),
+        // "stream": false,
+        crypto: require.resolve('crypto-browserify'),
+        // "zlib": require.resolve('browserify-zlib'),
+        "vm": require.resolve("vm-browserify"),
+    };
+
+    // config.optimization.minimize = false
+
+
+    config.plugins.push(new webpack.ProvidePlugin( {process:'process'}));
+
+
     return config;
   },
 };

@@ -49,4 +49,6 @@ export function getServerSideProps({ res }: { res: any }): SiteMap {
   };
 }
 
+export const runtime = 'experimental-edge'
+
 export default SiteMap;

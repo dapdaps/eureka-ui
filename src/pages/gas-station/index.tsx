@@ -81,4 +81,6 @@ Bridge.getInitialProps = async () => ({});
 
 Bridge.getLayout = useDefaultLayout;
 
+export const runtime = 'experimental-edge'
+
 export default Bridge;
