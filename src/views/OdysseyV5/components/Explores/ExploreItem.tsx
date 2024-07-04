@@ -35,17 +35,6 @@ const ExploreItem = ({
   const onItemClick = () => {
     if (finished && !['page', 'favorite_dapp'].includes(category)) return;
 
-    if (category === 'twitter_retweet') {
-      sessionStorage.setItem('_clicked_twitter_' + id, '1');
-      openXShareLink(
-        `🌟 Excited for the DapDap X Mode: The Airdrop Ascendancy! @DapDapMeUp @modenetwork %0A
-🚀 Join now to explore DeFi, earn rewards, and win $MODE %26 $USDC prizes! 💰 %0A
-🔥 Don't miss out on the chance to be a top trader! 🏆🎉 %0A
-👉 dapdap.net/odyssey/home?id=7
-`,
-      );
-    }
-
     if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
     }
@@ -54,6 +43,18 @@ const ExploreItem = ({
       sessionStorage.setItem('_auth_type', 'twitter');
       window.open(path, '_blank');
       return;
+    }
+
+    if (category === 'twitter_retweet') {
+      openXShareLink(
+        `Hi fren, did you know? %0A
+For a limited time, the @DapDapMeUp x @modenetwork Airdrop Ascendancy campaign is live! %0A
+> Featuring top $MODE dApps %0A
+> A massive 15,000+ USD ecosystem prize pool! %0A
+Check it out below 🤜⚡️🤛 %0A
+https://x.com/DapDapMeUp/status/1808489813617832193
+`,
+      );
     }
 
     if (!source) return;
@@ -100,7 +101,6 @@ const ExploreItem = ({
 
                 if (category.startsWith('twitter')) {
                   const clicked = sessionStorage.getItem('_clicked_twitter_' + id);
-                  console.log(clicked);
                   clicked && handleRefresh();
                 } else {
                   handleRefresh();

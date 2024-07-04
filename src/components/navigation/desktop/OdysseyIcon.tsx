@@ -55,6 +55,7 @@ const EntryTop = (RelativeContainerHeight - MaxHeight) / 2;
 
 // for test env
 if (process.env.NEXT_PUBLIC_API !== 'https://api.dapdap.net') {
+  OdysseyList[0].id = 9;
   OdysseyList[1].id = 5;
 }
 
