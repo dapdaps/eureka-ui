@@ -50,7 +50,7 @@ export default {
   },
   5: {
     path: '/odyssey/home?id=5',
-    video: '',
+    video: '/videos/Mode.mp4',
     chainsImg: '/images/odyssey/v5/chains.svg',
     chainsHeight: '56px',
     reward: '$15000',
@@ -61,7 +61,7 @@ export default {
   },
   8: {
     path: '/odyssey/home?id=8',
-    video: '',
+    video: '/videos/OdysseyVol.4+Blast.mp4',
     chainsImg: '/images/odyssey/v4/chains.png',
     chainsHeight: '56px',
     reward: '13,500',
