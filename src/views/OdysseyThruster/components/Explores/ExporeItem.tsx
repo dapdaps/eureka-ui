@@ -80,7 +80,7 @@ const ExporeItem = ({
     // if (category_name === 'Bridge') {
     //   setCachedTab(category_name, 534352);
     // }
-    if (!source) return;
+    // if (!source) return;
     if (finished) return;
 
     if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
