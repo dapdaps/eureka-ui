@@ -80,18 +80,6 @@ const ExporeItem = ({
     // if (category_name === 'Bridge') {
     //   setCachedTab(category_name, 534352);
     // }
-    if (category === 'twitter_retweet') {
-      sessionStorage.setItem('_clicked_twitter_' + id, '1');
-      openXShareLink(
-        `Did you know? %0A
-For a limited time, the @ThrusterFi %26 @DapDapMeUp Thruster Turbo Spin is now live on @Blast_L2! 🤜🎆🤛 %0A
-> Featuring top $BLAST dApps %0A
-> A massive 25M Thruster Credits prize pool! %0A
- Check it out below 👇  %0A
-https://x.com/DapDapMeUp/status/1806327708919660758
-`,
-      );
-    }
     if (!source) return;
     if (finished) return;
 
@@ -103,6 +91,19 @@ https://x.com/DapDapMeUp/status/1806327708919660758
       sessionStorage.setItem('_auth_type', 'twitter');
       window.open(path, '_blank');
       return;
+    }
+
+    // if the user has not authorized it, pull up the oauth2 first
+    if (category === 'twitter_retweet') {
+      openXShareLink(
+        `Did you know? %0A
+For a limited time, the @ThrusterFi %26 @DapDapMeUp Thruster Turbo Spin is now live on @Blast_L2! 🤜🎆🤛 %0A
+> Featuring top $BLAST dApps %0A
+> A massive 25M Thruster Credits prize pool! %0A
+ Check it out below 👇  %0A
+https://x.com/DapDapMeUp/status/1806327708919660758
+`,
+      );
     }
 
     if (!source) return;

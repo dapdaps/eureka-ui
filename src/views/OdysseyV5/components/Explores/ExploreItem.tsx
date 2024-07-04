@@ -35,8 +35,17 @@ const ExploreItem = ({
   const onItemClick = () => {
     if (finished && !['page', 'favorite_dapp'].includes(category)) return;
 
-    if (category === 'twitter_retweet') {
+    if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
       sessionStorage.setItem('_clicked_twitter_' + id, '1');
+    }
+    if (category.startsWith('twitter') && !userInfo.twitter?.is_bind) {
+      const path = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${authConfig.twitter_client_id}&redirect_uri=${window.location.href}&scope=tweet.read%20users.read%20follows.read%20like.read&state=state&code_challenge=challenge&code_challenge_method=plain`;
+      sessionStorage.setItem('_auth_type', 'twitter');
+      window.open(path, '_blank');
+      return;
+    }
+
+    if (category === 'twitter_retweet') {
       openXShareLink(
         `Hi fren, did you know? %0A
 For a limited time, the @DapDapMeUp x @modenetwork Airdrop Ascendancy campaign is live! %0A
@@ -46,16 +55,6 @@ Check it out below 🤜⚡️🤛 %0A
 https://x.com/DapDapMeUp/status/1808489813617832193
 `,
       );
-    }
-
-    if (category.startsWith('twitter') && userInfo.twitter?.is_bind) {
-      sessionStorage.setItem('_clicked_twitter_' + id, '1');
-    }
-    if (category.startsWith('twitter') && !userInfo.twitter?.is_bind) {
-      const path = `https://twitter.com/i/oauth2/authorize?response_type=code&client_id=${authConfig.twitter_client_id}&redirect_uri=${window.location.href}&scope=tweet.read%20users.read%20follows.read%20like.read&state=state&code_challenge=challenge&code_challenge_method=plain`;
-      sessionStorage.setItem('_auth_type', 'twitter');
-      window.open(path, '_blank');
-      return;
     }
 
     if (!source) return;
