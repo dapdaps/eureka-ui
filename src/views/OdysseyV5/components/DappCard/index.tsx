@@ -137,12 +137,12 @@ export default function DappCard({
       return points35;
     }
     if (['lending'].includes(type)) {
-      // Kim Exchange
-      if ([199].includes(dapp_id)) {
+      // Kim Exchange Pool
+      if ([175].includes(dapp_id)) {
         return points35;
       }
       // Kelp Renzo ether.fi
-      if ([196, 197, 172].includes(dapp_id)) {
+      if ([182, 172, 140].includes(dapp_id)) {
         return pointsMode;
       }
       return points23;
@@ -162,7 +162,7 @@ export default function DappCard({
       return null;
     }
     // Renzo
-    if (dapp_id === 197) {
+    if (dapp_id === 172) {
       tags.push({
         type: 'text',
         id: 'odysseyV7DappCardRenzoText',
