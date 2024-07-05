@@ -1,6 +1,6 @@
 import PriceRange from '../PriceRange';
 import { memo, useMemo } from 'react';
-import { tickToPrice } from '@/views/Pool/utils/tickMath';
+import { checkIsFullRange, tickToPrice } from '@/views/Pool/utils/tickMath';
 
 const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any) => {
   const lowerPrice = useMemo(
@@ -30,6 +30,7 @@ const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any)
       }),
     [tickLower],
   );
+  const isFullRange = checkIsFullRange({ tickLower, tickUpper });
   return (
     <PriceRange
       from={from}
@@ -38,6 +39,7 @@ const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any)
       lowerPrice={lowerPrice}
       upperPrice={upperPrice}
       currentPrice={currentPrice}
+      isFullRange={isFullRange}
     />
   );
 };

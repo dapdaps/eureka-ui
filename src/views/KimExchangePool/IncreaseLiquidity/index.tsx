@@ -47,16 +47,14 @@ const IncreaseLiquidity = () => {
       };
     const { tickLower, tickUpper, currentTick, token0, token1 } = detail;
     let rangeType = 0;
+
     if (checkIsFullRange({ tickLower, tickUpper })) {
       rangeType = 3;
-    }
-    if (currentTick < tickUpper && currentTick > tickLower) {
+    } else if (currentTick < tickUpper && currentTick > tickLower) {
       rangeType = 0;
-    }
-    if (currentTick < tickLower) {
+    } else if (currentTick < tickLower) {
       rangeType = 1;
-    }
-    if (currentTick > tickUpper) {
+    } else if (currentTick > tickUpper) {
       rangeType = 2;
     }
 
