@@ -10,7 +10,7 @@
     "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint2": "next lint"
   },
   "dependencies": {
     "@braintree/sanitize-url": "6.0.4",

@@ -1,9 +1,8 @@
 import { useDefaultLayout } from '@/hooks/useLayout';
-import HomeView from '@/views/Home';
 import type { NextPageWithLayout } from '@/utils/types';
 
 const HomePage: NextPageWithLayout = () => {
-  return <HomeView />;
+  return <div>111</div>;
 };
 
 HomePage.getLayout = useDefaultLayout;

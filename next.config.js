@@ -169,7 +169,7 @@ const nextConfig = {
         "vm": require.resolve("vm-browserify"),
     };
 
-    config.optimization.minimize = false
+    // config.optimization.minimize = false
 
 
     config.plugins.push(new webpack.ProvidePlugin( {process:'process'}));

@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import AccountItem from '@/components/AccountSider/components/AccountItem';
 import Chain from '@/components/AccountSider/components/Chain';
 import ConnectWallet from '@/components/ConnectWallet';
-import DropdownMenuPanel from '@/components/DropdownMenuPanel';
-import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
 import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
@@ -269,8 +267,6 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
           )}
         </BridgeWapper>
       </div>
-      <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
-      <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
     </Container>
   );
 };

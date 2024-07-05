@@ -1,3 +1,0 @@
-export {
-  StyledLoadingWrapper
-} from '../../styles'

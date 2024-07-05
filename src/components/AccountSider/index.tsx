@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 import { useLayoutStore } from '@/stores/layout';
 import { useUserStore } from '@/stores/user';
-import InviteFirendsModal from '@/views/QuestProfile/components/InviteFirendsModal';
+// import InviteFirendsModal from '@/views/QuestProfile/components/InviteFirendsModal';
 import useInviteList from '@/hooks/useInviteList';
 
 import Footer from './components/Footer';
 import Header from './components/Header';
 import InviteLink from './components/InviteLink';
-import Transactions from './components/Transactions';
+// import Transactions from './components/Transactions';
 
 const StyledContainer = styled.div<{ display: number }>`
   width: 352px;
@@ -112,9 +112,9 @@ const AccountSider = () => {
             {showInviteLink && <InviteLink showCodes={showCodes} setShowCodes={setShowCodes} />}
             <Footer />
             <Main>
-              {
+            {/*  {
                 layoutStore.showAccountSider && <Transactions />
-              }
+              }*/}
             </Main>
           </Content>
         </StyledPanel>
@@ -133,7 +133,7 @@ const AccountSider = () => {
           </CloseIcon>
         )}
       </StyledContainer>
-      <InviteFirendsModal
+      {/*<InviteFirendsModal
         open={showCodes}
         list={inviteInfo?.data || []}
         totalRewards={inviteInfo?.reward}
@@ -141,7 +141,7 @@ const AccountSider = () => {
         onClose={() => {
           setShowCodes(false);
         }}
-      />
+      />*/}
     </>
   );
 };

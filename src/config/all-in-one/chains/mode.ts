@@ -9,6 +9,10 @@ export default {
   rpcUrls: ['https://mainnet.mode.network'],
   defaultTab: 'Swap',
   menuConfig: {
+    Bridge: {
+      tab: 'Bridge',
+      path: 'bluebiu.near/widget/Mode.BridgeAuthority.Index',
+    },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Mode.Swap',
