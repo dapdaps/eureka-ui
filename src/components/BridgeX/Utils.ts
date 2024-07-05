@@ -1,7 +1,7 @@
 import Big from 'big.js'
 import { SuperBridgeStore } from 'super-bridge-sdk'
 
-import { post, get } from '@/utils/http';
+import { post, get, AUTH_TOKENS } from '@/utils/http';
 
 let gloabalSbs: SuperBridgeStore
 async function initDb() {
@@ -55,6 +55,12 @@ export async function updateTransaction(item: any) {
     })
 }
 
+export async function sleep(time: number){
+    return new Promise(function(resolve){
+        setTimeout(resolve, time);
+    });
+}
+
 export function saveAllTransaction(transaction_key: any, transactionObj: any) {
     // localStorage.setItem(transaction_key, JSON.stringify(transactionObj))
 }
@@ -62,6 +68,14 @@ export function saveAllTransaction(transaction_key: any, transactionObj: any) {
 export async function getTransaction(tool?: string) {
     // const sbs = await getDb()
     // const list: any = await sbs.readAll()
+
+    if (typeof window !== 'undefined') {
+        let tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+        while (!tokens.access_token) {
+            await sleep(3000)
+            tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+        }
+    }
     
     const storeData = await get(`/api/action/get-actions-by-type?action_type=Bridge&page=1&page_size=99999`)
     if (storeData.code !== 0) {
