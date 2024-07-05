@@ -1,6 +1,5 @@
 import { useSetChain } from '@web3-onboard/react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
@@ -36,30 +35,29 @@ const chainList = Object.values(chainCofig)
 
 chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId))
 
-const TestChains: Chain[] = [
-  {
-    chainId: 11155111,
-    chainName: 'Sepolia',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-    rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
-    blockExplorers: 'https://sepolia.etherscan.io',
-    icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
-  },
-  {
-    chainId: 421614,
-    chainName: 'Arbitrum Sepolia',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-    rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
-    blockExplorers: 'https://basescan.org',
-    icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
-  },
-]
+// const TestChains: Chain[] = [
+//   {
+//     chainId: 11155111,
+//     chainName: 'Sepolia',
+//     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+//     rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
+//     blockExplorers: 'https://sepolia.etherscan.io',
+//     icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+//   },
+//   {
+//     chainId: 421614,
+//     chainName: 'Arbitrum Sepolia',
+//     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+//     rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
+//     blockExplorers: 'https://basescan.org',
+//     icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+//   },
+// ]
 
 // chainList.unshift(TestChains[1])
 // chainList.unshift(TestChains[0])
 
 const Bridge: NextPageWithLayout = () => {
-  const router = useRouter();
   const [updater, setUpdater] = useState(1)
 
   return (
@@ -79,10 +77,8 @@ const Bridge: NextPageWithLayout = () => {
   )
 };
 
-Bridge.getInitialProps = async () => ({});
 
 Bridge.getLayout = useDefaultLayout;
 
-export const runtime = 'experimental-edge'
 
 export default Bridge;

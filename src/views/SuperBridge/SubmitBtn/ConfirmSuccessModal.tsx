@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
-import { useRouter } from 'next/router';
 import { usePriceStore } from '@/stores/price';
 import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
@@ -80,7 +79,6 @@ export default function ConfirmModal({
     onClick, onClose, fromChain, toChain, fromToken, toToken, amount, toAddress, route, reciveAmount, isLoading, onTransactionClick
 } : Props) {
     const prices = usePriceStore((store) => store.price);
-    const router = useRouter();
 
     return <Modal onClose={() => {
         onClose()
@@ -97,7 +95,7 @@ export default function ConfirmModal({
         <Desc>
             Transaction completed. You can view it on <span className="transactions" onClick={() => {
                 // onTransactionClick && onTransactionClick()
-                router.push('/super-bridge/transaction')
+                // window.location.href = ('/super-bridge/transaction')
             }}>My Transactions </span>page.
         </Desc>
        

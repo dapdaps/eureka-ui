@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
-import { useRouter } from 'next/router';
 
 import useAccount from '@/hooks/useAccount';
 import { getTransaction, saveTransaction, updateTransaction } from '@/components/BridgeX/Utils'
@@ -77,7 +76,6 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
     const [value, setValue] = useState('')
     const [searchValue, setSearchValueValue] = useState('')
     const { account, chainId, provider } = useAccount();
-    const router = useRouter();
 
     async function refreshTransactionList() {
         if (!account) {
@@ -191,7 +189,6 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
         {
             transactionModalShow && <TransactionPanel addressOrHash={searchValue} transactionList={transactionList} onClose={() => {
                 if (initModalShow) {
-                    router.back()
                 } else {
                     setTransactionModalShow(false)
                 }
