@@ -302,18 +302,21 @@ const Index = function () {
                   >
                     <StyledFlex justifyContent="space-between" style={{ marginBottom: 20 }}>
                       <StyledFlex gap="13px">
-                        <StyledVol
-                          style={{
-                            backgroundImage:
-                              'url(' +
-                              (['ended', 'un_start'].includes(compass.status)
-                                ? '/images/odyssey/welcome/ended_vol_bg.png'
-                                : '/images/odyssey/welcome/vol_bg.png') +
-                              ')',
-                          }}
-                        >
-                          Vol. {renderVolNo(compass)}
-                        </StyledVol>
+                        {compass.name === 'THRUSTER TURBO SPIN' ? null : (
+                          <StyledVol
+                            style={{
+                              backgroundImage:
+                                'url(' +
+                                (['ended', 'un_start'].includes(compass.status)
+                                  ? '/images/odyssey/welcome/ended_vol_bg.png'
+                                  : '/images/odyssey/welcome/vol_bg.png') +
+                                ')',
+                            }}
+                          >
+                            Vol. {renderVolNo(compass)}
+                          </StyledVol>
+                        )}
+
                         {odyssey[compass.id]?.chainsImg && (
                           <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: 33 }} />
                         )}
@@ -479,9 +482,11 @@ const Index = function () {
                   width: currentCompass.status === 'ended' ? 216 : 380,
                 }}
               >
-                {currentCompass.status === 'ended'
-                  ? `Join Odyssey Vol.${renderVolNo(currentCompass)}`
-                  : `Odyssey Vol.${renderVolNo(currentCompass)} is coming soon!`}
+                {currentCompass.name === 'THRUSTER TURBO SPIN'
+                  ? 'Join Thruster Turbo'
+                  : currentCompass.status === 'ended'
+                    ? `Join Odyssey Vol.${renderVolNo(currentCompass)}`
+                    : `Odyssey Vol.${renderVolNo(currentCompass)} is coming soon!`}
               </StyledComingSoonButton>
             ) : (
               <StyledJoinButton
@@ -491,7 +496,9 @@ const Index = function () {
                   });
                 }}
               >
-                Join Odyssey Vol.{renderVolNo(currentCompass)}
+                {currentCompass.name === 'THRUSTER TURBO SPIN'
+                  ? 'Join Thruster Turbo'
+                  : `Join Odyssey Vol.${renderVolNo(currentCompass)}`}
               </StyledJoinButton>
             )}
 
