@@ -53,7 +53,16 @@ const networks = {
       input: mode['eth'],
       output: mode['usdt'],
     },
-    tokens: [mode['eth'], mode['weth'], mode['usdc'], mode['usdt'], mode['ezeth'], mode['m-btc'], mode['we-eth.mode']],
+    tokens: [
+      mode['eth'],
+      mode['weth'],
+      mode['mode'],
+      mode['usdc'],
+      mode['usdt'],
+      mode['ezeth'],
+      mode['m-btc'],
+      mode['we-eth.mode'],
+    ],
   },
 };
 
