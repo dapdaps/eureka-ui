@@ -10,7 +10,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 const StyledContainer = styled.div<{ width?: number; top?: number }>`
   width: ${({ width }) => `${width}px`};
   position: absolute;
-  right: -216px;
+  right: -170px;
   top: ${({ top }) => `${top || 5}px`};
   z-index: -1;
   cursor: pointer;
