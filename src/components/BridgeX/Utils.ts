@@ -3,15 +3,16 @@ import { SuperBridgeStore } from 'super-bridge-sdk'
 
 import { post, get, AUTH_TOKENS } from '@/utils/http';
 
-let gloabalSbs: SuperBridgeStore
+let gloabalSbs: any
 async function initDb() {
-    const sbs = new SuperBridgeStore('dapdap', 'transaction')
+    const _SuperBridgeStore: any = SuperBridgeStore
+    const sbs = new _SuperBridgeStore('dapdap', 'transaction')
     await sbs.init()
     gloabalSbs = sbs
     return sbs
 }
 
-async function getDb(): Promise<SuperBridgeStore> {
+async function getDb(): Promise<any> {
     if (!gloabalSbs) {
         return initDb()
     }
