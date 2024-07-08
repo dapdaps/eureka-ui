@@ -10,15 +10,15 @@ import { abi } from '../ChainTokenAmount/abi'
 
 import type { Chain, Token } from "@/types";
 
-let gloabalSbs: SuperBridgeStore
+let gloabalSbs: any
 async function initDb() {
-    const sbs = new SuperBridgeStore('dapdap-v2', 'gas')
+    const sbs = new (SuperBridgeStore as any)('dapdap-v2', 'gas')
     await sbs.init()
     gloabalSbs = sbs
     return sbs
 }
 
-async function getDb(): Promise<SuperBridgeStore> {
+async function getDb(): Promise<any> {
     if (!gloabalSbs) {
         return initDb()
     }
