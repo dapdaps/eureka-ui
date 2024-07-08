@@ -59,7 +59,7 @@ export const DappPage: NextPageWithLayout = () => {
       result = (await import(`@/config/pool/dapps/${dappPathname}`))?.default;
     }
 
-    setLocalConfig({ ...result, theme: config.theme });
+    setLocalConfig({ ...result, theme: config.theme, type: config.type });
   }, [dappPathname]);
 
   const { run } = useDebounceFn(
