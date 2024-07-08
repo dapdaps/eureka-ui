@@ -1,23 +1,24 @@
 import { useSetChain } from '@web3-onboard/react';
+import { useDebounceFn } from 'ahooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import swapConfig from '@/config/swap/networks';
-import lendingConfig from '@/config/lending/networks';
-import liquidityConfig from '@/config/liquidity/networks';
-import useReport from '@/views/Landing/hooks/useReport';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import useAccount from '@/hooks/useAccount';
+
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import popupsData from '@/config/all-in-one/chains';
+import lendingConfig from '@/config/lending/networks';
+import liquidityConfig from '@/config/liquidity/networks';
+import swapConfig from '@/config/swap/networks';
+import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import { useAllInOneTabCachedStore, useAllInOneTabStore } from '@/stores/all-in-one';
 import { usePriceStore } from '@/stores/price';
-import { useDebounceFn } from 'ahooks';
-import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
 import type { NextPageWithLayout } from '@/utils/types';
+import useReport from '@/views/Landing/hooks/useReport';
 
 const arrow = (
   <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
