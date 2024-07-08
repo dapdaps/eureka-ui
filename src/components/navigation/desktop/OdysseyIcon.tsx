@@ -32,13 +32,13 @@ const StyledContainer = styled.div<{ width?: number; top?: number }>`
   }
 `;
 
-const RelativeContainerHeight = 48;
+const RelativeContainerHeight = 40;
 const OdysseyList = [
   {
     id: 6,
     img: '/images/odyssey/welcome/logo.png',
-    width: 158,
-    height: 30,
+    width: 117,
+    height: 16.5,
     offsetY: 0,
   },
   // {
