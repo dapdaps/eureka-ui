@@ -4,9 +4,9 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { overlay } from '@/components/animation';
-import { chains } from '@/config/bridge';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
+import { chains } from '@/config/bridge';
 import useSortChains from '@/hooks/useSortChains';
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
@@ -111,7 +111,6 @@ const Chain = ({
   setShowChains?: (show: boolean) => void;
   bp?: string;
 }) => {
-
   const { sortedChains } = useSortChains();
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
   const currentChain: any = useMemo(
@@ -130,6 +129,7 @@ const Chain = ({
       document.removeEventListener('click', hideList);
     };
   }, []);
+  console.log(1111, currentChain);
 
   return (
     <StyledContainer
