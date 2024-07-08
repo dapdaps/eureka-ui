@@ -151,7 +151,6 @@ const nextConfig = {
     esmExternals: 'loose',
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-
     config.resolve.fallback = {
         ...config.resolve.fallback,
         path: false,
