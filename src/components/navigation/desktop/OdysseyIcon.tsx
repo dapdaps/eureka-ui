@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import useAuthCheck from '@/hooks/useAuthCheck';
 
-const StyledContainer = styled.div<{ width?: number, top?: number }>`
+const StyledContainer = styled.div<{ width?: number; top?: number }>`
   width: ${({ width }) => `${width}px`};
   position: absolute;
   right: -216px;
@@ -22,11 +22,12 @@ const StyledContainer = styled.div<{ width?: number, top?: number }>`
   &:active {
     opacity: 0.8;
   }
-  
+
   .odyssey-entry-swiper {
     > .swiper-wrapper {
       align-items: stretch;
-      > .swiper-slide {}
+      > .swiper-slide {
+      }
     }
   }
 `;
@@ -35,18 +36,25 @@ const RelativeContainerHeight = 48;
 const OdysseyList = [
   {
     id: 6,
-    img: '/images/odyssey/thruster/head-entry.svg',
+    img: '/images/odyssey/welcome/logo.png',
     width: 158,
-    height: 59,
-    offsetY: -2.5,
-  },
-  {
-    id: 7,
-    img: '/images/odyssey/v5/ody-logo.svg',
-    width: 112,
-    height: 40,
+    height: 30,
     offsetY: 0,
   },
+  // {
+  //   id: 6,
+  //   img: '/images/odyssey/thruster/head-entry.svg',
+  //   width: 158,
+  //   height: 59,
+  //   offsetY: -2.5,
+  // },
+  // {
+  //   id: 7,
+  //   img: '/images/odyssey/v5/ody-logo.svg',
+  //   width: 112,
+  //   height: 40,
+  //   offsetY: 0,
+  // },
 ];
 
 const MaxHeight = maxBy(OdysseyList, 'height')?.height as number;
@@ -56,7 +64,7 @@ const EntryTop = (RelativeContainerHeight - MaxHeight) / 2;
 // for test env
 if (process.env.NEXT_PUBLIC_API !== 'https://api.dapdap.net') {
   OdysseyList[0].id = 9;
-  OdysseyList[1].id = 5;
+  // OdysseyList[1].id = 5;
 }
 
 export default function OdysseyIcon() {
@@ -66,57 +74,54 @@ export default function OdysseyIcon() {
 
   return (
     <StyledContainer className="swiper-no-swiping" width={MaxWidth} top={EntryTop}>
-      {
-        OdysseyList.length > 1 ? (
-          <Swiper
-            spaceBetween={5}
-            loop={true}
-            centeredSlides={true}
-            autoplay={{
-              delay: 5000,
-              pauseOnMouseEnter: true,
-            }}
-            modules={[Autoplay]}
-            slidesPerView={1}
-            className="odyssey-entry-swiper"
-            style={{ height: MaxHeight }}
-          >
-            {
-              OdysseyList.map((item) => (
-                <SwiperSlide
-                  key={item.id}
-                  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-                  onClick={() => {
-                    check(() => {
-                      router.push(`/odyssey/home?id=${item.id}`);
-                    });
-                  }}
-                >
-                  <Image
-                    src={item.img}
-                    alt=""
-                    width={item.width}
-                    height={item.height}
-                    style={{ transform: `translateY(${item.offsetY || 0}px)` }}
-                  />
-                </SwiperSlide>
-              ))
-            }
-          </Swiper>
-        ) : (
-          <Image
-            src={OdysseyList[0].img}
-            alt=""
-            width={OdysseyList[0].width}
-            height={OdysseyList[0].height}
-            onClick={() => {
-              check(() => {
-                router.push(`/odyssey/home?id=${odysseyId}`);
-              });
-            }}
-          />
-        )
-      }
+      {OdysseyList.length > 1 ? (
+        <Swiper
+          spaceBetween={5}
+          loop={true}
+          centeredSlides={true}
+          autoplay={{
+            delay: 5000,
+            pauseOnMouseEnter: true,
+          }}
+          modules={[Autoplay]}
+          slidesPerView={1}
+          className="odyssey-entry-swiper"
+          style={{ height: MaxHeight }}
+        >
+          {OdysseyList.map((item) => (
+            <SwiperSlide
+              key={item.id}
+              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              onClick={() => {
+                check(() => {
+                  router.push(`/odyssey/home?id=${item.id}`);
+                });
+              }}
+            >
+              <Image
+                src={item.img}
+                alt=""
+                width={item.width}
+                height={item.height}
+                style={{ transform: `translateY(${item.offsetY || 0}px)` }}
+              />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      ) : (
+        <Image
+          src={OdysseyList[0].img}
+          alt=""
+          width={OdysseyList[0].width}
+          height={OdysseyList[0].height}
+          onClick={() => {
+            check(() => {
+              // router.push(`/odyssey/home?id=${odysseyId}`);
+              router.push(`/odyssey/homepage`);
+            });
+          }}
+        />
+      )}
       {/* <Image src="/images/odyssey/v8/gold-rush.svg" alt="" width={149} height={51} /> */}
       {/* <StyledIcon /> */}
     </StyledContainer>

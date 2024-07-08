@@ -140,9 +140,12 @@ const Compass = () => {
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
                   <Card compass={compass} />
-                  <StyledCompassIcon>
-                    <CompassIcon />
-                  </StyledCompassIcon>
+                  {compass.name === 'THRUSTER TURBO SPIN' ? null : (
+                    <StyledCompassIcon>
+                      <CompassIcon />
+                    </StyledCompassIcon>
+                  )}
+
                   {/* {odyssey[compass.id]?.reward && (
                     <StyledWinPtsIcon>
                       <WinPtsIcon num={odyssey[compass.id].reward} />
@@ -150,12 +153,21 @@ const Compass = () => {
                   )} */}
                   {odyssey[compass.id]?.reward && (
                     <div
-                      style={{
-                        position: 'absolute',
-                        right: -34,
-                        top: 0,
-                        zIndex: 20,
-                      }}
+                      style={
+                        compass.name === 'THRUSTER TURBO SPIN'
+                          ? {
+                              position: 'absolute',
+                              right: -27,
+                              top: -33,
+                              zIndex: 20,
+                            }
+                          : {
+                              position: 'absolute',
+                              right: -34,
+                              top: 0,
+                              zIndex: 20,
+                            }
+                      }
                     >
                       {['ended', 'un_start'].includes(compass.status) ? (
                         <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
