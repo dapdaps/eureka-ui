@@ -1,1 +1,0 @@
-"use strict";exports.id=5519,exports.ids=[5519],exports.modules={5519:(t,e,a)=>{a.r(e),a.d(e,{basic:()=>s,networks:()=>u});var r=a(50319);let s={name:"Frax Swap",logo:"/images/apps/frax.png",amountOutFn:"bluebiu.near/widget/Swap.Data.AmountOut"},u={10:{defaultCurrencies:{input:r.v.weth,output:r.v.frax},tokens:[r.v.weth,r.v.frax,r.v.fxs]}}}};

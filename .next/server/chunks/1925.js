@@ -1,1 +1,0 @@
-"use strict";exports.id=1925,exports.ids=[1925],exports.modules={61925:(e,s,d)=>{d.r(s),d.d(s,{default:()=>t});let t={basic:{name:"Penpad"},networks:{534352:{PROXY_ADDRESS:"0x8F53fA7928305Fd4f78c12BA9d9DE6B2420A2188"}}}}};

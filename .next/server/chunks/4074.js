@@ -1,1 +1,0 @@
-"use strict";exports.id=4074,exports.ids=[4074],exports.modules={44074:(e,a,r)=>{r.r(a),r.d(a,{default:()=>o});let o={basic:{name:"Aura Finance"},networks:{100:{RewardPoolDepositWrapper:"0x0Fec3d212BcC29eF3E505B555D7a7343DF0B7F76",PoolContractWrapper:"0xBA12222222228d8Ba445958a75a0704d566BF2C8"}}}}};

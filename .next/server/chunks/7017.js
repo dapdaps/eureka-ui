@@ -1,1 +1,0 @@
-"use strict";exports.id=7017,exports.ids=[7017],exports.modules={17017:(s,e,t)=>{t.r(e),t.d(e,{default:()=>r});let r={basic:{name:"BlastOff"},networks:{81457:{}}}}};

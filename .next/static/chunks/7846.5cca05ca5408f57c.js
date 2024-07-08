@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7846],{97846:function(e,n,a){a.r(n),n.default={basic:{name:"Athena Finance"},networks:{1088:{}}}}}]);

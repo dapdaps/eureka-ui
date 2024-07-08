@@ -1,1 +1,0 @@
-"use strict";exports.id=473,exports.ids=[473],exports.modules={90473:(t,e,a)=>{a.r(e),a.d(e,{basic:()=>u,networks:()=>i});var s=a(56469);let u={name:"Maia V3",logo:"/images/apps/maia.png",amountOutFn:"bluebiu.near/widget/Swap.Data.AmountOut"},i={1088:{defaultCurrencies:{input:s.t.eth,output:s.t["m.usdc"]},tokens:[s.t.eth,s.t["m.usdc"],s.t.metis,s.t["m.usdt"],s.t.maia]}}}};

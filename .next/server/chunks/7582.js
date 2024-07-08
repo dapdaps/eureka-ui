@@ -1,1 +1,0 @@
-"use strict";exports.id=7582,exports.ids=[7582],exports.modules={27582:(t,e,s)=>{s.r(e),s.d(e,{basic:()=>u,networks:()=>a});var o=s(81427);let u={name:"MonoSwap V2",logo:"/images/apps/monoswap.png",amountOutFn:"bluebiu.near/widget/Swap.Data.AmountOut"},a={81457:{defaultCurrencies:{input:o.A.eth,output:o.A.usdb},tokens:[o.A.eth,o.A.weth,o.A.usdb,o.A.blste,o.A.musd,o.A.xmomo]}}}};

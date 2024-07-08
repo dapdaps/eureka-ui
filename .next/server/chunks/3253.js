@@ -1,1 +1,0 @@
-"use strict";exports.id=3253,exports.ids=[3253],exports.modules={93253:(e,t,a)=>{a.r(t),a.d(t,{basic:()=>u,networks:()=>d});var s=a(81427);let u={name:"BladeSwap",logo:"/images/apps/blade-swap.png",amountOutFn:"bluebiu.near/widget/Swap.Data.AmountOut"},d={81457:{defaultCurrencies:{input:s.A.eth,output:s.A.usdb},tokens:[s.A.eth,s.A.weth,s.A.usdb,s.A.blade,s.A.ezeth]}}}};

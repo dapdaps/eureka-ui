@@ -1,1 +1,0 @@
-"use strict";exports.id=7846,exports.ids=[7846],exports.modules={97846:(e,s,t)=>{t.r(s),t.d(s,{default:()=>r});let r={basic:{name:"Athena Finance"},networks:{1088:{}}}}};

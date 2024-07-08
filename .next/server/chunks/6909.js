@@ -1,1 +1,0 @@
-"use strict";exports.id=6909,exports.ids=[6909],exports.modules={86909:(t,u,e)=>{e.r(u),e.d(u,{basic:()=>a,networks:()=>n});var s=e(28037);let a={name:"Synthswap",logo:"/images/apps/synth-swap.png",amountOutFn:"bluebiu.near/widget/Swap.Data.AmountOut"},n={8453:{defaultCurrencies:{input:s.u.eth,output:s.u.dai},tokens:[s.u.eth,s.u.synth,s.u.usdc,s.u.weth,s.u.dai]}}}};

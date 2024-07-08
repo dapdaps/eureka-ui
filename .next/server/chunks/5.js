@@ -1,1 +1,0 @@
-"use strict";exports.id=5,exports.ids=[5],exports.modules={80005:(t,e,u)=>{u.r(e),u.d(e,{basic:()=>a,networks:()=>o});var s=u(95865);let a={name:"Mute",logo:"/images/apps/mute.png",amountOutFn:"bluebiu.near/widget/Swap.Data.AmountOut"},o={324:{defaultCurrencies:{input:s.j.eth,output:s.j.usdc},tokens:[s.j.eth,s.j.usdc,s.j.wbtc,s.j.space,s.j.usdt,s.j.cebusd]}}}};
