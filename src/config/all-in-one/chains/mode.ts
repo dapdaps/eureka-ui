@@ -17,5 +17,9 @@ export default {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Mode.Swap',
     },
+    Lending: {
+      tab: 'Lending',
+      path: 'bluebiu.near/widget/Linea.Lending',
+    },
   },
 };
