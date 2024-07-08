@@ -13,18 +13,18 @@ function Compass() {
   const router = useRouter();
   // console.log('NEXT_PUBLIC_API--', process.env.NEXT_PUBLIC_API);
 
-  if (process.env.NEXT_PUBLIC_API === 'https://api.dapdap.net') {
-    if (router.query.id === '7') return <OdysseyV5 />;
-    if (router.query.id === '6') return <OdysseyThruster />;
-    if (router.query.id === '5') return <OdysseyV8 />;
-  }
-  if (router.query.id === '9') return <OdysseyThruster />;
-  if (router.query.id === '8') return <OdysseyV8 />;
-  if (router.query.id === '5') return <OdysseyV5 />;
-  if (router.query.id === '4' || router.query.id === '7') return <OdysseyV4 />;
-  if (router.query.id === '3') return <OdysseyV3 />;
-  if (router.query.id === '2') return <OdysseyV2 />;
-  if (router.query.id === '1') return <CompassApp />;
+  // if (process.env.NEXT_PUBLIC_API === 'https://api.dapdap.net') {
+  //   if (router.query.id === '7') return <OdysseyV5 />;
+  //   if (router.query.id === '6') return <OdysseyThruster />;
+  //   if (router.query.id === '5') return <OdysseyV8 />;
+  // }
+  // if (router.query.id === '9') return <OdysseyThruster />;
+  // if (router.query.id === '8') return <OdysseyV8 />;
+  // if (router.query.id === '5') return <OdysseyV5 />;
+  // if (router.query.id === '4' || router.query.id === '7') return <OdysseyV4 />;
+  // if (router.query.id === '3') return <OdysseyV3 />;
+  // if (router.query.id === '2') return <OdysseyV2 />;
+  // if (router.query.id === '1') return <CompassApp />;
   return <div />;
 }
 

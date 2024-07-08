@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[4074],{44074:function(a,e,r){r.r(e),e.default={basic:{name:"Aura Finance"},networks:{100:{RewardPoolDepositWrapper:"0x0Fec3d212BcC29eF3E505B555D7a7343DF0B7F76",PoolContractWrapper:"0xBA12222222228d8Ba445958a75a0704d566BF2C8"}}}}}]);

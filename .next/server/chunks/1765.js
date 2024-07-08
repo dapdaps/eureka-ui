@@ -1,0 +1,1 @@
+"use strict";exports.id=1765,exports.ids=[1765],exports.modules={41765:(e,s,t)=>{t.r(s),t.d(s,{default:()=>i});var a=t(56469);let r=Object.values(a.t),d=r.reduce((e,s)=>(e[s.address]=s,e),{}),i={basic:{name:"Athena Finance",type:"staking"},networks:{1088:{TOKENS:d,markets:{}}}}}};

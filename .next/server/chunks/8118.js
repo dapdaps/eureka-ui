@@ -1,0 +1,1 @@
+"use strict";exports.id=8118,exports.ids=[8118],exports.modules={88118:(e,t,s)=>{s.r(t),s.d(t,{basic:()=>n,networks:()=>o});var u=s(13418);let n={name:"Orion",logo:"/images/apps/orion.png",amountOutFn:"bluebiu.near/widget/Swap.Data.AmountOut"},o={56:{defaultCurrencies:{input:u.e.eth,output:u.e.usdc},tokens:[u.e.eth,u.e.bnb,u.e.inj,u.e.orn,u.e.usdt,u.e.busd,u.e.usdc]}}}};

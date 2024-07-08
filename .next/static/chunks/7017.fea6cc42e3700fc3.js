@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[7017],{17017:function(e,s,a){a.r(s),s.default={basic:{name:"BlastOff"},networks:{81457:{}}}}}]);

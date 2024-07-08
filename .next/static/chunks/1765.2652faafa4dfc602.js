@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_N_E=self.webpackChunk_N_E||[]).push([[1765],{41765:function(e,a,s){s.r(a);var t=s(56469);let n=Object.values(t.t),c=n.reduce((e,a)=>(e[a.address]=a,e),{});a.default={basic:{name:"Athena Finance",type:"staking"},networks:{1088:{TOKENS:c,markets:{}}}}}}]);
