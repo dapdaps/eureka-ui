@@ -18,6 +18,8 @@ async function initDb() {
     return sbs
 }
 
+console.log(111)
+
 async function getDb(): Promise<any> {
     if (!gloabalSbs) {
         return initDb()
