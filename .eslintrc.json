@@ -7,7 +7,7 @@
   "plugins": ["simple-import-sort", "@typescript-eslint"],
   "root": true,
   "rules": {
-    "simple-import-sort/imports": "warn",
+    "simple-import-sort/imports": "off",
     "@typescript-eslint/no-explicit-any": "off", // TODO: remove once refactor from JS is complete
     "@typescript-eslint/consistent-type-imports": "error",
     "@typescript-eslint/no-unused-vars": "off",
