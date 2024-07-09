@@ -15,7 +15,8 @@ interface Props {
 const StyledWrap = styled.div`
   margin: 0 auto;
   min-height: 100vh;
-  background: url(/images/odyssey/v4/bg-page.png) center repeat-y #000;
+  background: url('/images/lrts/bg-home.png') center no-repeat #000;
+  background-size: cover;
 `;
 
 const StyledHead = styled.header`
