@@ -15,6 +15,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) =
   const [value0, setValue0] = useState('');
   const [value1, setValue1] = useState('');
   const [errorTips, setErrorTips] = useState('');
+
   const { loading, onIncrease } = useIncrease({
     token0,
     token1,
@@ -44,7 +45,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) =
       onClose={onClose}
       content={
         <StyledContent>
-          <Tokens {...detail} />
+          <Tokens {...detail} type="V3" />
           <AmountPanel token0={token0} token1={token1} amount0={amount0} amount1={amount1} />
           <Range
             token0={token0}
@@ -79,7 +80,7 @@ const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) =
             value1={value1}
             token0={token0}
             token1={token1}
-            spender={contracts[chainId].PositionManager}
+            spender={contracts[chainId]?.PositionManager}
           />
         </StyledContent>
       }

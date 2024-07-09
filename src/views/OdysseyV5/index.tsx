@@ -42,7 +42,7 @@ export default function OdysseyV5() {
     },
     {
       key: 4,
-      title: 'Dive into DApp Diversity',
+      title: 'Dive Into DapDap Social',
       target: 'odysseySectionDiveIntoDAppDiversity',
     },
     {
@@ -93,7 +93,13 @@ export default function OdysseyV5() {
   }, []);
 
   const authConfig = useAuthConfig();
-  const { quests, loading: questsLoading, setQuests } = useQuests(id);
+  const {
+    quests,
+    loading: questsLoading,
+    setQuests,
+    strategies,
+    setStrategies,
+  } = useQuests(id);
   const { detail, loading, queryDetail } = useDetail(id, {
     quests,
     setExploredAmount,
@@ -110,10 +116,6 @@ export default function OdysseyV5() {
 
   const [lendingList, setLendingList] = useState<any>([]);
 
-  quests.swap.sort((a: any, b: any) => {
-    return a.order - b.order;
-  });
-
   useEffect(() => {
     // if (!quests.yield.length || !quests.liquidity.length || !quests.staking.length) return;
     // const orbit = quests.lending.find((item: any) => item.name === 'Orbit');
@@ -123,11 +125,12 @@ export default function OdysseyV5() {
   }, [quests]);
   useEffect(() => {
     let _exploredAmount = 0;
-    Object.values(quests).forEach((arr: any) => {
-      arr.forEach((it: any) => {
-        _exploredAmount += it.exploredAmount;
+    for (const questKey in quests) {
+      if (questKey === 'mode') continue;
+      quests[questKey].forEach((it: any) => {
+        _exploredAmount += it.exploredAmount || 0;
       });
-    });
+    }
     setExploredAmount(_exploredAmount);
   }, [quests]);
 
@@ -139,7 +142,10 @@ export default function OdysseyV5() {
           detail={detail}
           loading={loading}
        />
-        <Mastery />
+        <Mastery
+          strategies={strategies}
+          setStrategies={setStrategies}
+        />
         <Blitz
           onRefreshDetail={queryDetailThrottle}
           detailLoading={exploredAmountLoading}

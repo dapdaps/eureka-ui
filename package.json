@@ -76,6 +76,7 @@
     "firebase": "^10.6.0",
     "framer-motion": "^10.16.5",
     "iframe-resizer-react": "^1.1.0",
+    "jsbi": "^4.3.0",
     "keccak": "^3.0.4",
     "lite-merkle-patricia-tree": "^1.0.1",
     "local-storage": "^2.0.0",
@@ -99,11 +100,12 @@
     "recharts": "^2.10.1",
     "rudder-sdk-js": "^2.45.0",
     "styled-components": "^6.1.1",
-    "super-bridge-sdk": "0.0.11-5",
+    "super-bridge-sdk": "0.0.11-7",
     "swiper": "^11.0.5",
     "uuid": "^9.0.1",
     "viem": "^2.2.0",
-    "zustand": "^4.4.6"
+    "zustand": "^4.4.6",
+    "@lifi/sdk": "^2.5.0"
   },
   "devDependencies": {
     "typescript": "5.3.2",

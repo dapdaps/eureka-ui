@@ -1,11 +1,9 @@
 import { Contract } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
-import useDappConfig from '../../hooks/useDappConfig';
 import positionAbi from '../../abi/position';
 
-export default function useCollectInfo(tokenId: string) {
-  const { contracts } = useDappConfig();
+export default function useCollectInfo(tokenId: string, contracts: any) {
   const [info, setInfo] = useState<any>();
   const [loading, setLoading] = useState(false);
   const { account, chainId, provider } = useAccount();

@@ -103,7 +103,7 @@ export default function useData() {
     (stepType: 'add' | 'minus', type: 'upper' | 'lower') => {
       const tickLower = priceToUsableTick({ price: lowerPrice, token0, token1, fee });
 
-      const tickUpper = upperPrice === priceToUsableTick({ price: upperPrice, token0, token1, fee });
+      const tickUpper = priceToUsableTick({ price: upperPrice, token0, token1, fee });
 
       let tick = type === 'lower' ? tickLower : tickUpper;
 
@@ -142,15 +142,20 @@ export default function useData() {
       setUpperPrice('');
       return;
     }
+
     const { currentTick, tickSpacing } = info;
     const _currentPrice = tickToPrice({ token0, token1, tick: currentTick });
     setCurrentPrice(_currentPrice === Infinity ? 0 : _currentPrice);
     const nearestLowTick = Math.floor((currentTick * 0.998) / tickSpacing) * tickSpacing;
     const nearestHighTick = Math.floor((currentTick * 1.002) / tickSpacing) * tickSpacing + tickSpacing;
-    const _lowerPrice = tickToPrice({ token0, token1, tick: reverse ? nearestHighTick : nearestLowTick });
-    const _upperPrice = tickToPrice({ token0, token1, tick: reverse ? nearestLowTick : nearestHighTick });
-    setLowerPrice(_lowerPrice === Infinity ? 0 : _lowerPrice);
-    setUpperPrice(_upperPrice === Infinity ? '∞' : _upperPrice);
+
+    const _lowerPrice = tickToPrice({ token0, token1, tick: nearestLowTick });
+    const _upperPrice = tickToPrice({ token0, token1, tick: nearestHighTick });
+
+    const [_lp, _up] = _lowerPrice < _upperPrice ? [_lowerPrice, _upperPrice] : [_upperPrice, _lowerPrice];
+
+    setLowerPrice(_lp === Infinity ? 0 : _lp);
+    setUpperPrice(_up === Infinity ? '∞' : _up);
     setLoading(false);
   }, [info, infoLoading]);
 

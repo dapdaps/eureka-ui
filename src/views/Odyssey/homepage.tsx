@@ -227,6 +227,19 @@ const Index = function () {
   useEffect(() => {
     wallet && currentCompass?.id && queryDetail(currentCompass?.id);
   }, [currentCompass, wallet]);
+
+  const renderVolNo = (compass: any) => {
+    if (!compass) return null;
+    if (compass.name.indexOf('Vol.4+:') > -1) {
+      return '4+';
+    }
+    // ⚠️ Special: mode-odyssey id is 7, but show number is 5
+    if (compass.id === 7) {
+      return 5;
+    }
+    return compass.id;
+  };
+
   return (
     <StyledContainer
       style={{
@@ -289,18 +302,21 @@ const Index = function () {
                   >
                     <StyledFlex justifyContent="space-between" style={{ marginBottom: 20 }}>
                       <StyledFlex gap="13px">
-                        <StyledVol
-                          style={{
-                            backgroundImage:
-                              'url(' +
-                              (['ended', 'un_start'].includes(compass.status)
-                                ? '/images/odyssey/welcome/ended_vol_bg.png'
-                                : '/images/odyssey/welcome/vol_bg.png') +
-                              ')',
-                          }}
-                        >
-                          Vol. {compass.name.indexOf('Vol.4+:') > -1 ? '4+' : compass.id}
-                        </StyledVol>
+                        {compass.name === 'THRUSTER TURBO SPIN' ? null : (
+                          <StyledVol
+                            style={{
+                              backgroundImage:
+                                'url(' +
+                                (['ended', 'un_start'].includes(compass.status)
+                                  ? '/images/odyssey/welcome/ended_vol_bg.png'
+                                  : '/images/odyssey/welcome/vol_bg.png') +
+                                ')',
+                            }}
+                          >
+                            Vol. {renderVolNo(compass)}
+                          </StyledVol>
+                        )}
+
                         {odyssey[compass.id]?.chainsImg && (
                           <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: 33 }} />
                         )}
@@ -466,9 +482,11 @@ const Index = function () {
                   width: currentCompass.status === 'ended' ? 216 : 380,
                 }}
               >
-                {currentCompass.status === 'ended'
-                  ? `Join Odyssey Vol.${currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id}`
-                  : `Odyssey Vol.${currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id} is coming soon!`}
+                {currentCompass.name === 'THRUSTER TURBO SPIN'
+                  ? 'Join Thruster Turbo'
+                  : currentCompass.status === 'ended'
+                    ? `Join Odyssey Vol.${renderVolNo(currentCompass)}`
+                    : `Odyssey Vol.${renderVolNo(currentCompass)} is coming soon!`}
               </StyledComingSoonButton>
             ) : (
               <StyledJoinButton
@@ -478,7 +496,9 @@ const Index = function () {
                   });
                 }}
               >
-                Join Odyssey Vol.{currentCompass?.name?.indexOf('Vol.4+:') > -1 ? '4+' : currentCompass.id}
+                {currentCompass.name === 'THRUSTER TURBO SPIN'
+                  ? 'Join Thruster Turbo'
+                  : `Join Odyssey Vol.${renderVolNo(currentCompass)}`}
               </StyledJoinButton>
             )}
 

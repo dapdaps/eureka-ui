@@ -22,6 +22,7 @@ const defaultQuests: any = {
 };
 
 // Static DApp Data
+// ⚠️ TIPS Useless
 const defaultModeQuest = [
   {
     id: 'static_quest_1',
@@ -71,6 +72,7 @@ const defaultModeQuest = [
 
 export default function useQuests(id: any) {
   const [quests, setQuests] = useState(null);
+  const [strategies, setStrategies] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
@@ -85,15 +87,32 @@ export default function useQuests(id: any) {
         return;
       }
       const _result = cloneDeep(defaultQuests);
+      const _strategies: any = [];
 
       result.data.forEach((item: any) => {
         item.exploredAmount = new Big(item.total_spins).div(item.spins).toNumber() || 0;
 
+        if (item.operators && item.operators[0]) {
+          item.dapp_id = item.operators[0]?.dapp_id;
+        }
+
         if (GOLD_QUESTS.includes(item.name)) {
           _result.golds.push(item);
         }
-        if (item.category_id === 0 && item.category !== 'twitter_retweet') {
-          _result.social.push(item);
+        if (item.category_id === 0 && item.category !== 'favorite_dapp') {
+          if ([
+            'strategy_minor_leverage_long',
+            'strategy_the_arbitragooor',
+            'strategy_use_wrseth',
+            'strategy_unlock_kim',
+          ].includes(item.source)) {
+            _strategies.push({
+              ...item,
+              finished: item.total_spins >= item.spins * item.times,
+            });
+          } else {
+            _result.social.push(item);
+          }
         }
         if (item.category_id === 1) {
           _result.bridge.push(item);
@@ -125,12 +144,15 @@ export default function useQuests(id: any) {
             _result.yield.push(item);
           }
         }
+        // ⚠️ be careful, mode will not participate in calculating the number of total times
         if (item.extra_data === 'mode') {
           _result.mode.push(item);
         }
       });
-      _result.mode.push(defaultModeQuest[0]);
+      // _result.mode.push(defaultModeQuest[0]);
+      _result.swap = _result.swap.sort((a: any, b: any) => a.sort - b.sort);
       setQuests(_result);
+      setStrategies(_strategies);
     } catch (err) {
       setLoading(false);
     }
@@ -151,5 +173,11 @@ export default function useQuests(id: any) {
     run();
   }, [account]);
 
-  return { loading, quests: quests || defaultQuests, setQuests };
+  return {
+    loading,
+    quests: quests || defaultQuests,
+    setQuests,
+    strategies,
+    setStrategies,
+  };
 }

@@ -5,36 +5,22 @@ import AmountPanel from '@/views/Pool/Detail/components/AmountPanel';
 import PriceRange from '@/views/Pool/components/PriceRange';
 import { CreateButton } from '@/views/Pool/IncreaseLiquidity/components/Button';
 import { StyledContent } from './styles';
-import useIncrease from '@/views/Pool/IncreaseLiquidity/hooks/useIncrease';
 
 const PreviewModal = ({
   open,
   onClose,
-  onSuccess,
   rangeType,
   fee,
   value0,
   value1,
   token0,
   token1,
-  noPair,
   currentPrice,
   lowerPrice,
   upperPrice,
+  loading,
+  onClick,
 }: any) => {
-  const { loading, onIncrease } = useIncrease({
-    token0,
-    token1,
-    value0,
-    value1,
-    fee,
-    noPair,
-    currentPrice,
-    lowerPrice,
-    upperPrice,
-    onSuccess,
-  });
-
   return (
     <Modal
       display={open}
@@ -60,8 +46,9 @@ const PreviewModal = ({
             lowerPrice={lowerPrice}
             upperPrice={upperPrice}
             currentPrice={currentPrice}
+            isFullRange={rangeType === 3}
           />
-          <CreateButton text="Add Liquidity" loading={loading} onClick={onIncrease} />
+          <CreateButton text="Add Liquidity" loading={loading} onClick={onClick} />
         </StyledContent>
       }
     />

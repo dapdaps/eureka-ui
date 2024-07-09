@@ -3,6 +3,7 @@ import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import EarnedCard from "@/views/OdysseyV5/components/EarnedCard";
+import { StyledBtn, StyledBtnGroup } from '@/views/OdysseyV5/components/EarnedCard/styles';
 import MasteryCard from "@/views/OdysseyV5/components/Mastery/Card";
 import {
   StyledArrow,
@@ -20,17 +21,18 @@ import {
 const MasteryData = [
   {
     key: 1,
+    source: 'strategy_minor_leverage_long',
     title: 'Minor Leverage Long (1.25x)',
     pointsEarned: [
-      {
-        key: 1,
-        icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'IRONCLAD EMBERS',
-      },
+      // {
+      //   key: 1,
+      //   icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
+      //   name: 'IRONCLAD EMBERS',
+      // },
       {
         key: 2,
         icon: '/images/odyssey/v5/mastery/temp/kim.svg',
-        name: 'KIM & xKIM',
+        name: 'KIM POINTS',
       },
       {
         key: 3,
@@ -62,22 +64,28 @@ const MasteryData = [
           'Swap half USDC to ETH',
           'Add ETH-USDC liquidity',
         ],
-        submit: 'Trade',
-        link: '/dapp/kim-exchange',
+        submit: ['Swap', 'Add Liquidity'],
+        link: ['/dapp/kim-exchange', '/dapp/kim-exchange-liquidity'],
       },
     ],
   },
   {
     key: 2,
+    source: 'strategy_the_arbitragooor',
     title: 'The Arbitragooor',
     pointsEarned: [
-      {
-        key: 1,
-        icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'IRONCLAD EMBERS',
-      },
+      // {
+      //   key: 1,
+      //   icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
+      //   name: 'IRONCLAD EMBERS',
+      // },
       {
         key: 2,
+        icon: '/images/odyssey/v5/mastery/temp/kim.svg',
+        name: 'KIM POINTS',
+      },
+      {
+        key: 3,
         icon: '/images/odyssey/v5/mastery/temp/ezeth.svg',
         name: 'EZETH POINTS',
       },
@@ -111,6 +119,7 @@ const MasteryData = [
   },
   {
     key: 3,
+    source: 'strategy_use_wrseth',
     title: 'Use wrsETH And Explore Rewards',
     pointsEarned: [
       {
@@ -123,11 +132,11 @@ const MasteryData = [
         icon: '/images/odyssey/v5/mastery/temp/kelp.svg',
         name: 'KELP MILES',
       },
-      {
-        key: 3,
-        icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
-        name: 'IRONCLAD EMBERS',
-      },
+      // {
+      //   key: 3,
+      //   icon: '/images/odyssey/v5/mastery/temp/ironclad.svg',
+      //   name: 'IRONCLAD EMBERS',
+      // },
       {
         key: 4,
         icon: '/images/odyssey/v5/mastery/temp/eigenlayer.svg',
@@ -178,6 +187,7 @@ const MasteryData = [
   },
   {
     key: 4,
+    source: 'strategy_unlock_kim',
     title: 'Unlock Kim\'s Hidden Wealth',
     pointsEarned: [
       {
@@ -200,9 +210,9 @@ const MasteryData = [
         name: 'KIM',
         icon: '/images/odyssey/v5/mastery/temp/kim-rect.svg',
         conditions: [
-          'Swap KIM and stake to obtain xKIM'
+          'Swap KIM in Kim Exchange'
         ],
-        submit: 'Trade',
+        submit: 'Swap',
         link: '/dapp/kim-exchange',
       },
       {
@@ -214,7 +224,7 @@ const MasteryData = [
         ],
         submit: 'Add Liquidity',
         link: '/dapp/kim-exchange-liquidity',
-        coinList: [
+        poolList: [
           {
             key: 1,
             coin1Name: 'KIM',
@@ -314,9 +324,24 @@ const IconArrow = (
   </svg>
 );
 
-const Mastery = () => {
+const Mastery = (props: { strategies: any; setStrategies: any }) => {
+  const { strategies = [], setStrategies } = props;
 
   const swiperRef = useRef<any>();
+
+  const getCurrentStrategy = (item: any) => {
+    if (!strategies) return {};
+    return strategies.find((it: any) => it.source === item.source) || {};
+  };
+
+  const updateStrategies = (id: any, times: any) => {
+    const _strategies = strategies.slice();
+    const curr = _strategies.find((it: any) => it.id === id);
+    if (!curr) return;
+    curr.total_spins = times;
+    curr.finished = curr.total_spins >= curr.spins * curr.times;
+    setStrategies(_strategies);
+  };
 
   return (
     <StyledContainer id="odysseySectionAirdropMastery">
@@ -341,75 +366,109 @@ const Mastery = () => {
             }}
           >
           {
-            MasteryData.map((item, idx) => (
-              <SwiperSlide key={item.key}>
-                <MasteryCard
-                  key={item.key}
-                  title={item.title}
-                  pointsEarned={item.pointsEarned}
-                  result={item.result}
-                  styles={{ flex: 1 }}
-                >
-                  <StyledEarnedList>
-                    {
-                      item.earned.map((earn) => (
-                        <EarnedCard
-                          key={earn.key}
-                          title={earn.name}
-                          icon={earn.icon}
-                          submit={earn.submit}
-                          styles={{
-                            background: '#2A2A2A',
-                            paddingLeft: idx === MasteryData.length - 1 ? 15 : 20,
-                            paddingRight: idx === MasteryData.length - 1 ? 15 : 20,
-                            flex: 1,
-                          }}
-                          handleSubmit={() => {
-                            if (earn.link) {
-                              window.open(`${window.origin}${earn.link}`, '_blank');
-                            }
-                          }}
-                        >
-                          <StyledEarnedContent>
-                            {
-                              earn.conditions.map((condition, idx) => (
-                                <li className="condition-item" key={idx}>
-                                  <div className="condition-item-inner">
-                                    <div className="point" />
-                                    {condition}
-                                  </div>
+            MasteryData.map((item, idx) => {
+              const currentStrategy = getCurrentStrategy(item);
+              return (
+                <SwiperSlide key={item.key}>
+                  <MasteryCard
+                    key={item.key}
+                    title={item.title}
+                    pointsEarned={item.pointsEarned}
+                    result={item.result}
+                    styles={{ flex: 1 }}
+                    currentStrategy={currentStrategy}
+                    updateStrategies={updateStrategies}
+                  >
+                    <StyledEarnedList>
+                      {
+                        item.earned.map((earn: any) => (
+                          <EarnedCard
+                            key={earn.key}
+                            title={earn.name}
+                            icon={earn.icon}
+                            submit={typeof earn.submit === 'string' ? earn.submit : ''}
+                            styles={{
+                              background: '#2A2A2A',
+                              paddingLeft: idx === MasteryData.length - 1 ? 15 : 20,
+                              paddingRight: idx === MasteryData.length - 1 ? 15 : 20,
+                              flex: 1,
+                            }}
+                            handleSubmit={() => {
+                              if (earn.link) {
+                                window.open(`${window.origin}${earn.link}`, '_blank');
+                              }
+                            }}
+                            renderFoot={typeof earn.submit === 'string' ? void 0 : () => {
+                              return (
+                                <StyledBtnGroup>
                                   {
-                                    // special content: will display the kim liquidity pools
-                                    earn.coinList && (
-                                      <ul className="kim-liquidity-coins">
-                                        {
-                                          earn.coinList.map((coin) => (
-                                            <li className="coin-item" key={coin.key}>
-                                              <div className="item-icon">
-                                                <Image className="coin-icon" src={coin.coin1} alt={coin.coin1Name} width={20} height={20} />
-                                                <Image className="coin-icon" src={coin.coin2} alt={coin.coin2Name} width={20} height={20} />
-                                              </div>
-                                              <div className="item-name">
-                                                <i>{coin.coin1Name} / </i>
-                                                <i>{coin.coin2Name}</i>
-                                              </div>
-                                            </li>
-                                          ))
-                                        }
-                                      </ul>
-                                    )
+                                    (earn.submit as string[]).map((sub: string, idx: number) => (
+                                      <StyledBtn
+                                        key={idx}
+                                        onClick={() => {
+                                          if (earn.link[idx]) {
+                                            window.open(`${window.origin}${earn.link[idx]}`, '_blank');
+                                          }
+                                        }}
+                                        style={{
+                                          minWidth: sub.length > 4 ? 150 : 90,
+                                        }}
+                                      >
+                                        {sub}
+                                        <Image
+                                          src="/images/odyssey/v5/arrow.svg"
+                                          alt=""
+                                          width={19}
+                                          height={12}
+                                        />
+                                      </StyledBtn>
+                                    ))
                                   }
-                                </li>
-                              ))
-                            }
-                          </StyledEarnedContent>
-                        </EarnedCard>
-                      ))
-                    }
-                  </StyledEarnedList>
-                </MasteryCard>
-              </SwiperSlide>
-            ))
+                                </StyledBtnGroup>
+                              );
+                            }}
+                          >
+                            <StyledEarnedContent>
+                              {
+                                earn.conditions.map((condition: any, idx: number) => (
+                                  <li className="condition-item" key={idx}>
+                                    <div className="condition-item-inner">
+                                      <div className="point" />
+                                      {condition}
+                                    </div>
+                                    {
+                                      // special content: will display the kim liquidity pools
+                                      earn.poolList && (
+                                        <ul className="kim-liquidity-coins">
+                                          {
+                                            earn.poolList.map((pool: any) => (
+                                              <li className="coin-item" key={pool.key}>
+                                                <div className="item-icon">
+                                                  <Image className="coin-icon" src={pool.coin1} alt={pool.coin1Name} width={20} height={20} />
+                                                  <Image className="coin-icon" src={pool.coin2} alt={pool.coin2Name} width={20} height={20} />
+                                                </div>
+                                                <div className="item-name">
+                                                  <i>{pool.coin1Name} / </i>
+                                                  <i>{pool.coin2Name}</i>
+                                                </div>
+                                              </li>
+                                            ))
+                                          }
+                                        </ul>
+                                      )
+                                    }
+                                  </li>
+                                ))
+                              }
+                            </StyledEarnedContent>
+                          </EarnedCard>
+                        ))
+                      }
+                    </StyledEarnedList>
+                  </MasteryCard>
+                </SwiperSlide>
+              );
+            })
           }
           </Swiper>
         </StyledContent>

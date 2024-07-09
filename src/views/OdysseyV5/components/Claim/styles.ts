@@ -97,6 +97,12 @@ export const StyledListItemIcon = styled.img`
   object-fit: contain;
 `;
 
+export const StyledListItemIconEmpty = styled.div`
+  width: 26px;
+  height: 26px;
+  opacity: 0;
+`;
+
 export const StyledListItemText = styled.div``;
 
 export const StyledPlate = styled.div`
@@ -111,4 +117,9 @@ export const StyledAllContainer = styled.div`
   position: relative;
   padding-top: 100px;
   padding-bottom: 144px;
+`;
+
+export const StyledNoData = styled.div`
+  text-align: center;
+  color: #979ABE;
 `;

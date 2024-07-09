@@ -6,4 +6,11 @@ export default {
       '--border-color': '#FE6360',
     },
   },
+  'kim-exchange-liquidity': {
+    type: 'pool',
+    theme: {
+      '--button-color': '#FF4500',
+      '--border-color': '#FF4500',
+    },
+  },
 };

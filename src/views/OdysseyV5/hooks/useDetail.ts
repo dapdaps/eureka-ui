@@ -30,7 +30,9 @@ export default function useDetail(id: any, option: { quests: any[], setExploredA
         try {
           let _exploredAmount = 0;
           const _quests = quests;
-          for (const arr of Object.values(_quests)) {
+          for (const questKey in _quests) {
+            if (questKey === 'mode') continue;
+            const arr = _quests[questKey];
             for (const it of arr) {
               if (it.id === currentDappId) {
                 it.exploredAmount = currnetDappTimes;

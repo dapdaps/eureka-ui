@@ -31,6 +31,7 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
     token: token1,
     spender,
   });
+
   if (value0Checking || value1Checking) {
     return (
       <Button style={style} disabled>
@@ -39,7 +40,7 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
     );
   }
 
-  if (!value0Approved && !value1Approved) {
+  if (!value0Approved && value0 && !value1Approved && value1) {
     return (
       <StyledButtons>
         <Button style={style} onClick={handleToken0Approve} disabled={value0Approving}>
@@ -52,7 +53,7 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
     );
   }
 
-  if (!value0Approved) {
+  if (!value0Approved && value0) {
     return (
       <Button style={style} onClick={handleToken0Approve} disabled={value0Approving}>
         {value0Approving ? <Loading size={20} /> : `Approve ${token0.symbol}`}
@@ -60,7 +61,7 @@ const ActionButton = ({ onClick, text, value0, value1, token0, token1, spender }
     );
   }
 
-  if (!value1Approved) {
+  if (!value1Approved && value1) {
     return (
       <Button style={style} onClick={handleToken1Approve} disabled={value1Approving}>
         {value1Approving ? <Loading size={20} /> : `Approve ${token1.symbol}`}
