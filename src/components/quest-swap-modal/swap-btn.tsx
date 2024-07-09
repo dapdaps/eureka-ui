@@ -260,7 +260,7 @@ const SwapBtn: FC<any> = ({
           setIsApproving(false);
           toast?.success({
             title: 'Approve Successfully!',
-            text: `Approved ${inputValue} ${inputCurrency.symbol}`,
+            // text: `Approved ${inputValue} ${inputCurrency.symbol}`, 
             tx: transactionHash,
             chainId,
           });
@@ -275,7 +275,7 @@ const SwapBtn: FC<any> = ({
           title: 'Approve Failed!',
           text: err?.message?.includes('user rejected transaction')
             ? 'User rejected transaction'
-            : `Approved ${inputValue} ${inputCurrency.symbol}`,
+            : null
         });
       });
   };

@@ -317,7 +317,7 @@ const Btn: FC<IProps> = ({ pairId, token0Bal, token1Bal, token0, token1, decimal
         toast?.dismiss(toastId);
         toast?.success({
           title: 'Approve Successfully!',
-          text: `Approve ${amount} ${_token}`,
+          // text: `Approve ${amount} ${_token}`,
           tx: receipt.transactionHash,
           // chainId: state.chainId,
         });
@@ -334,7 +334,7 @@ const Btn: FC<IProps> = ({ pairId, token0Bal, token1Bal, token0, token1, decimal
           title: 'Approve Failed!',
           text: error?.message?.includes('user rejected transaction')
             ? 'User rejected transaction'
-            : `Approve ${amount} ${_token}`,
+            : null,
         });
       });
   };
