@@ -4,6 +4,8 @@ import DappCom from './DappCom';
 import ExtraWard from './components/ExtraReward';
 import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper } from './styles';
 
+export { default as Empty } from './Empty';
+
 const Dapp = (props: any) => {
   const { dapp } = props;
   return (

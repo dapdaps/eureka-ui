@@ -23,6 +23,7 @@ export default function BosDapp({
   setCurrentChain,
   setIsChainSupported,
   chains,
+  props = {},
 }: any) {
   const prices = usePriceStore((store) => store.price);
   const { addAction } = useAddAction('dapp');
@@ -73,8 +74,9 @@ export default function BosDapp({
         GAS_LIMIT_RECOMMENDATIONS,
         refresh,
         windowOpen: (url: any, target: any) => {
-          window.open(url, target)
-        }
+          window.open(url, target);
+        },
+        ...props,
       }}
       src={network.dapp_src}
     />
