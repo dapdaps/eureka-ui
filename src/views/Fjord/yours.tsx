@@ -1,3 +1,4 @@
+"use client"
 import Breadcrumb from '@/components/Breadcrumb';
 import Loading from '@/components/Icons/Loading';
 import FjordModal from '@/components/fjord-modal';
@@ -119,7 +120,7 @@ const StyledParticipatedButton = styled.div`
   height: 50px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #EBF479;
+  background: #543DC9;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -288,17 +289,18 @@ export default function LaunchpadYoursPage() {
       return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
     }
   }
+
+
+  useEffect(() => {
+    console.log('=userPools', userPools)
+    if (categoryIndex === 0 && userPools) {
+      setInProgressNumber(userPools?.length ?? 0)
+    }
+  }, [userPools])
+
   useEffect(() => {
     userStore.address && queryUser()
   }, [userStore.address])
-
-  useEffect(() => {
-    if (categoryIndex === 0 && userPools) {
-      setInProgressNumber(userPools?.length ?? 0)
-    } else {
-      setInProgressNumber(0)
-    }
-  }, [userPools, categoryIndex])
 
   useEffect(() => {
     userStore.address && handleQueryUserPools()
@@ -452,8 +454,8 @@ export default function LaunchpadYoursPage() {
                         style={{ width: '100%', paddingRight: 15 }}
                       >
                         <StyledFont color='#FFF' fontSize='16px'>{userPool?.launchpad_lbp?.status}</StyledFont>
-                        <StyledParticipatedButton style={{ backgroundColor: ['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#EBF479' : '#50FFE9' }} onClick={() => handleBuyOrSellOrRedeem(userPool.launchpad_lbp)}>
-                          <StyledFont fontSize='18px' fontWeight='500'>{['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? 'Buy / Sell' : 'Redeem'}</StyledFont>
+                        <StyledParticipatedButton style={{ backgroundColor: ['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? '#543DC9' : '#1E2027', border: ['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? 'none' : '1px solid #543DC9' }} onClick={() => handleBuyOrSellOrRedeem(userPool.launchpad_lbp)}>
+                          <StyledFont color='#FFF' fontSize='18px' fontWeight='500'>{['upcoming', 'ongoing'].includes(userPool?.launchpad_lbp?.status) ? 'Buy / Sell' : 'Redeem'}</StyledFont>
                         </StyledParticipatedButton>
                       </StyledFlex>
 

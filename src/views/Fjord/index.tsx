@@ -1,5 +1,5 @@
 
-
+"use client"
 import Breadcrumb from '@/components/Breadcrumb';
 import Loading from '@/components/Icons/Loading';
 import FjordModal from '@/components/fjord-modal';
@@ -622,12 +622,8 @@ export default function LaunchpadHomePage() {
     queryPools()
   }, [])
   useEffect(() => {
-    if (userStore.address) {
-      queryUser()
-    }
+    userStore.address && queryUser()
   }, [userStore.address])
-
-
   return (
     <StyledContainer style={{ width: 1124, margin: '0 auto', paddingTop: 138, position: 'relative' }}>
       <StyledContainer style={{ position: 'absolute', left: -60, top: 30 }}>
@@ -745,7 +741,7 @@ export default function LaunchpadHomePage() {
                           cursor: pool.status === "upcoming" ? "not-allowed" : "pointer"
                         }}
                         onClick={() => handleBuyOrSell(pool)}
-                      >Buy Now</StyledProjectButton>
+                      >{pool.status === "upcoming" ? "Coming Soon" : "Buy Now"}</StyledProjectButton>
                     </StyledProjectButtonContainer>
                   </StyledFlex>
                 </StyledContainer>

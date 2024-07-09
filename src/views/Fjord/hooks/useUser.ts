@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { get } from '@/utils/http';
+import { get, AUTH_TOKENS } from '@/utils/http';
 
 export default function useUser() {
   const [user, setUser] = useState<any>(null);
@@ -10,9 +10,16 @@ export default function useUser() {
     if (loading) return;
     setLoading(true);
     try {
-      const result = await get(`/api/launchpad/user`, query);
-      setUser(result.data || []);
-      setLoading(false);
+      const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}')
+      if (tokens && tokens.access_token) {
+        const result = await get(`/api/launchpad/user`, query);
+        setUser(result.data || []);
+        setLoading(false);
+      } else {
+        setTimeout(() => {
+          queryUser()
+        }, 500)
+      }
     } catch (err) {
       setLoading(false);
     }
