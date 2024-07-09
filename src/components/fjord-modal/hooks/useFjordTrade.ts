@@ -360,7 +360,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
         )
 
         try {
-            if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.symbol === midToken.symbol) {
+            if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.address === midToken.address) {
                 setReceiveAmount(quote.amount.toString())
                 await getAssetRuote(quote, midToken, PoolContract, provider)
                 setTradeType(1)
