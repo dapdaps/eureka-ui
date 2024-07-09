@@ -1,5 +1,5 @@
 
-
+"use client"
 import Breadcrumb from '@/components/Breadcrumb';
 import Loading from '@/components/Icons/Loading';
 import FjordModal from '@/components/fjord-modal';
@@ -510,10 +510,6 @@ export default function LaunchpadHomePage() {
   const [upcomingAndOngoingChainId, setUpcomingAndOngoingChainId] = useState("0")
   const [poolStatusIndex, setPoolStatusIndex] = useState(0)
   const [completedPoolsChainId, setCompletedPoolsChainId] = useState("0")
-  // const upcomingAndOngoingPools = useMemo(() => {
-  //   return pools
-  //     .filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
-  // }, [pools])
 
   const upcomingAndOngoingPoolsMapping = useMemo(() => {
     const filterPools = pools.filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
@@ -530,8 +526,15 @@ export default function LaunchpadHomePage() {
 
   const upcomingAndOngoingPools = useMemo(() => {
     const pools = upcomingAndOngoingPoolsMapping[upcomingAndOngoingChainId] ?? []
-    console.log('=pools', pools)
-    return pools?.filter((pool: any) => poolStatusIndex === 0 ? pool.status === 'ongoing' : pool.status === 'upcoming')
+    return pools?.filter((pool: any) => {
+      if (poolStatusIndex === 0) {
+        return pool.status === 'ongoing'
+      } else if (poolStatusIndex === 1) {
+        return pool.status === 'upcoming'
+      } else {
+        return pool.status === 'ongoing' || pool.status === 'upcoming'
+      }
+    })
   }, [upcomingAndOngoingPoolsMapping, upcomingAndOngoingChainId, poolStatusIndex])
 
 
@@ -619,12 +622,8 @@ export default function LaunchpadHomePage() {
     queryPools()
   }, [])
   useEffect(() => {
-    if (userStore.address) {
-      queryUser()
-    }
+    userStore.address && queryUser()
   }, [userStore.address])
-
-
   return (
     <StyledContainer style={{ width: 1124, margin: '0 auto', paddingTop: 138, position: 'relative' }}>
       <StyledContainer style={{ position: 'absolute', left: -60, top: 30 }}>
@@ -686,6 +685,7 @@ export default function LaunchpadHomePage() {
             <StyledPoolStatusContainer>
               <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => setPoolStatusIndex(0)}>Live</StyledPoolStatus>
               <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => setPoolStatusIndex(1)}>Upcoming</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 2 ? 'active' : ''} onClick={() => setPoolStatusIndex(2)}>All</StyledPoolStatus>
             </StyledPoolStatusContainer>
           </StyledFlex>
         </StyledFlex>
@@ -741,7 +741,7 @@ export default function LaunchpadHomePage() {
                           cursor: pool.status === "upcoming" ? "not-allowed" : "pointer"
                         }}
                         onClick={() => handleBuyOrSell(pool)}
-                      >Buy / Sell</StyledProjectButton>
+                      >{pool.status === "upcoming" ? "Coming Soon" : "Buy Now"}</StyledProjectButton>
                     </StyledProjectButtonContainer>
                   </StyledFlex>
                 </StyledContainer>

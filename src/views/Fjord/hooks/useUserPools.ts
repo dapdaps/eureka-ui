@@ -1,6 +1,6 @@
 import chains from '@/config/chains';
 import { usePriceStore } from '@/stores/price';
-import { get } from '@/utils/http';
+import { get, AUTH_TOKENS } from '@/utils/http';
 import { Contract, providers, utils } from 'ethers';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
@@ -16,9 +16,16 @@ export default function useUserPools(sender: any) {
     if (loading) return;
     setLoading(true);
     try {
-      const result = await get(`/api/launchpad/user/pools`, query);
-      setUserPools(result.data || []);
-      setLoading(false);
+      const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}')
+      if (tokens && tokens.access_token) {
+        const result = await get(`/api/launchpad/user/pools`, query);
+        setUserPools(result.data || []);
+        setLoading(false);
+      } else {
+        setTimeout(() => {
+          queryUserPools(query)
+        }, 500)
+      }
     } catch (err) {
       setLoading(false);
     }
