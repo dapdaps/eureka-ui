@@ -29,7 +29,7 @@ import {
   StyledCardContainer,
   StyledTagIconDefault,
 } from './styles';
-import { PTS_MAP, RENZO_CONFIG } from '@/views/OdysseyV5/const';
+import { ACTIVITY_PTS, PTS_MAP } from '@/views/OdysseyV5/const';
 
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
@@ -39,6 +39,7 @@ const ICON_MAP: any = {
 
 export default function DappCard({
    id,
+   dapp_id,
    operators,
    name,
    category_name,
@@ -51,7 +52,7 @@ export default function DappCard({
    type,
    detailLoading,
    setDetailLoading,
-  }: any) {
+ }: any) {
   const [execution, setExecution] = useState(0);
 
   const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
@@ -105,9 +106,6 @@ export default function DappCard({
   }, [total_spins, spins]);
 
   const showCardTip = (event: MouseEvent<HTMLDivElement>, text: string, tagId: string) => {
-    if (!isRenzo) {
-      return;
-    }
     event.preventDefault();
     event.stopPropagation();
     const cardEl = document.getElementById(`card${id}`)?.getBoundingClientRect();
@@ -131,42 +129,115 @@ export default function DappCard({
     setTip(_defaultTip);
   };
 
-  const isRenzo = name === 'Renzo';
-
-  const getTagText = () => {
+  const getModeTagText = () => {
+    const points35 = '3-5x Points';
+    const points23 = '2-3x Points';
+    const pointsMode = 'Mode PTS';
     if (['trade'].includes(type)) {
-      return '3-5x Points';
+      return points35;
     }
     if (['lending'].includes(type)) {
-      if (isRenzo) {
-        return 'Mode Points';
+      // Kim Exchange Pool
+      if ([175].includes(dapp_id)) {
+        return points35;
       }
-      if (['Kim Exchange'].includes(name)) {
-        return '3-5x Points';
+      // Kelp Renzo ether.fi
+      if ([182, 172, 140].includes(dapp_id)) {
+        return pointsMode;
       }
-      if (['Kelp'].includes(name)) {
-        return '2x Points';
-      }
-      return '2-3x Points';
+      return points23;
     }
   };
 
   const defaultTag = () => {
-    return type !== 'bridge' ? <StyledCardTag className="main">
-      <StyledTagIconDefault url={'/images/odyssey/v5/mode-icon.svg'} />
-      <StyledTagText>
-        {getTagText()}
-      </StyledTagText>
-    </StyledCardTag> : null
-  }
+    const tags: any[] = [
+      {
+        type: 'main',
+        img: '/images/odyssey/v5/mode-icon.svg',
+        text: getModeTagText(),
+      },
+    ];
+
+    if (type === 'bridge') {
+      return null;
+    }
+    // Renzo
+    if (dapp_id === 172) {
+      tags.push({
+        type: 'text',
+        id: 'odysseyV7DappCardRenzoText',
+        text: 'ETH/Eigenlayer staking APR',
+      });
+    }
+    // PTS
+    if (PTS_MAP.has(dapp_id)) {
+      if (PTS_MAP.get(dapp_id)?.withEigenlayer) {
+        tags.push({
+          type: '',
+          id: `odysseyV7DappCard${PTS_MAP.get(dapp_id)?.name}`,
+          text: PTS_MAP.get(dapp_id)?.text,
+          img: '/images/odyssey/v5/renzo-other.svg',
+          isLogo: true,
+        });
+      } else {
+        tags.push({
+          type: '',
+          text: PTS_MAP.get(dapp_id)?.text,
+          isLogo: true,
+        });
+      }
+    }
+    // ACTIVITY PTS
+    if (ACTIVITY_PTS.has(dapp_id)) {
+      tags.push({
+        type: 'text',
+        text: ACTIVITY_PTS.get(dapp_id)?.text,
+      });
+    }
+    return (
+      <>
+        {
+          tags.map((_tag, idx) => (
+            <StyledCardTag
+              className={_tag.type}
+              key={idx}
+              id={_tag.id}
+              onMouseEnter={(e) => {
+                if (!_tag.id) return;
+                showCardTip(e, _tag.text, _tag.id);
+              }}
+              onMouseLeave={() => {
+                if (!_tag.id) return;
+                closeCardTip();
+              }}
+            >
+              {
+                _tag.isLogo && (
+                  <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+                )
+              }
+              {
+                _tag.img && (
+                  <StyledTagIconDefault className={_tag.isLogo ? 'other' : ''} url={_tag.img} />
+                )
+              }
+              <StyledTagText>
+                {_tag.text}
+              </StyledTagText>
+            </StyledCardTag>
+          ))
+        }
+      </>
+    );
+  };
 
   const names = () => (
     <StyledDappName>{name}</StyledDappName>
-  )
+  );
 
   const desc = () => (
     <StyledDappDesc>{description}</StyledDappDesc>
-  )
+  );
 
   return (
     <StyledCardContainer id={`card${id}`}>
@@ -176,52 +247,35 @@ export default function DappCard({
       >
         <StyledTop>
           {
-            PTS_MAP.has(name)
-              ? <StyledDappWrapper>
-                <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
-                <StyledDappTitleWrapper>
-                  <StyledDappTitle>
-                    {names()}
-                  </StyledDappTitle>
+            PTS_MAP.has(dapp_id) || ACTIVITY_PTS.has(dapp_id)
+              ? (
+                <StyledDappWrapper>
+                  <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+                  <StyledDappTitleWrapper>
+                    <StyledDappTitle>
+                      {names()}
+                    </StyledDappTitle>
                     {desc()}
-                </StyledDappTitleWrapper>
-                <StyledCardTagContainer>
-                  {defaultTag()}
-                  {
-                    isRenzo ?
-                      <StyledCardTag className="text" id="renzo-text"
-                                     onMouseEnter={(e) => showCardTip(e, RENZO_CONFIG.otherText, 'renzo-text')}
-                                     onMouseLeave={closeCardTip}>
-                        <StyledTagText>{RENZO_CONFIG.otherText}</StyledTagText>
-                      </StyledCardTag>
-                      : null
-                  }
-                  {
-                    PTS_MAP.has(name) ?
-                      <StyledCardTag id={isRenzo ? 'renzo-pts' : ''}
-                                     onMouseEnter={(e) => showCardTip(e, PTS_MAP.get(name) ?? '', 'renzo-pts')}
-                                     onMouseLeave={closeCardTip}>
-                        <StyledTagIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
-                        {isRenzo && <StyledTagIconDefault className="other" url={RENZO_CONFIG.otherIcon} />}
-                        <StyledTagText
-                          className={isRenzo ? 'renzo-text' : ''}>{PTS_MAP.get(name) ?? ''}</StyledTagText>
-                      </StyledCardTag>
-                      : null
-                  }
-                </StyledCardTagContainer>
-              </StyledDappWrapper>
-              : <StyledDappWrapper>
-                <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
-                <StyledDappTitleWrapper>
-                  <StyledDappTitle>
-                    <StyledDappName>{name}</StyledDappName>
-                    <StyledCardTagContainer>
-                      {defaultTag()}
-                    </StyledCardTagContainer>
-                  </StyledDappTitle>
+                  </StyledDappTitleWrapper>
+                  <StyledCardTagContainer>
+                    {defaultTag()}
+                  </StyledCardTagContainer>
+                </StyledDappWrapper>
+              )
+              : (
+                <StyledDappWrapper>
+                  <StyledDappIcon src={ICON_MAP[name] || operators?.[0]?.dapp_logo} />
+                  <StyledDappTitleWrapper>
+                    <StyledDappTitle>
+                      <StyledDappName>{name}</StyledDappName>
+                      <StyledCardTagContainer>
+                        {defaultTag()}
+                      </StyledCardTagContainer>
+                    </StyledDappTitle>
                     {desc()}
-                </StyledDappTitleWrapper>
-              </StyledDappWrapper>
+                  </StyledDappTitleWrapper>
+                </StyledDappWrapper>
+              )
           }
         </StyledTop>
         <StyledFooter>

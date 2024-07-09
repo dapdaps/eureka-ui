@@ -46,6 +46,7 @@ const PreviewModal = ({
             lowerPrice={lowerPrice}
             upperPrice={upperPrice}
             currentPrice={currentPrice}
+            isFullRange={rangeType === 3}
           />
           <CreateButton text="Add Liquidity" loading={loading} onClick={onClick} />
         </StyledContent>

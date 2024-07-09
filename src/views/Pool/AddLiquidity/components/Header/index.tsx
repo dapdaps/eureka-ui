@@ -34,7 +34,15 @@ const Header = ({
         </StyledIconButton>
         {!isAlign && <StyledTitle>{title}</StyledTitle>}
       </div>
-      {isAlign && <StyledTitle>{title}</StyledTitle>}
+      {isAlign && (
+        <StyledTitle
+          style={{
+            paddingLeft: 0,
+          }}
+        >
+          {title}
+        </StyledTitle>
+      )}
       <StyledActions>
         {onCleanAll && <StyledClearAll onClick={onCleanAll}>Clean all</StyledClearAll>}
         {version && <VersionSelector version={version} setVersion={setVersion} />}

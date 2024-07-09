@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import PriceRange from '@/views/Pool/components/PriceRange';
 import { memo, useMemo } from 'react';
-import { tickToPrice } from '@/views/Pool/utils/tickMath';
+import { checkIsFullRange, tickToPrice } from '@/views/Pool/utils/tickMath';
 
 const StyledContainer = styled.div``;
 
@@ -33,6 +33,7 @@ const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any)
       }),
     [tickLower],
   );
+  const isFullRange = checkIsFullRange({ tickLower, tickUpper });
   return (
     <StyledContainer>
       <PriceRange
@@ -42,6 +43,7 @@ const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any)
         lowerPrice={lowerPrice}
         upperPrice={upperPrice}
         currentPrice={currentPrice}
+        isFullRange={isFullRange}
       />
     </StyledContainer>
   );

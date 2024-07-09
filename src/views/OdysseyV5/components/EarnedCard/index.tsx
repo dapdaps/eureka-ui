@@ -64,10 +64,14 @@ const EarnedCard = (props: Props) => {
         {props.children}
       </StyledContent>
       <StyledFoot>
-        <StyledBtn onClick={handleSubmit}>
-          {props.submit}
-          <Image src="/images/odyssey/v5/arrow.svg" alt="" width={19} height={12} />
-        </StyledBtn>
+        {
+          props.renderFoot ? props.renderFoot() : (
+            <StyledBtn onClick={handleSubmit}>
+              {props.submit}
+              <Image src="/images/odyssey/v5/arrow.svg" alt="" width={19} height={12} />
+            </StyledBtn>
+          )
+        }
         {
           reload && (
             <RefreshButton
@@ -91,7 +95,7 @@ interface Props {
   icon: string|string[];
   iconBorder?: string;
   title: string;
-  submit: string;
+  submit?: string;
   reload?: boolean;
   styles?: React.CSSProperties;
   detailLoading?: boolean;
@@ -102,4 +106,5 @@ interface Props {
   handleSubmit?(): void;
   refreshDetail?(id: string, times: number): void;
   setDetailLoading?(): void;
+  renderFoot?(): any;
 }

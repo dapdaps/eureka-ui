@@ -39,7 +39,7 @@ export default {
   },
   5: {
     path: '/odyssey/home?id=5',
-    video: '',
+    video: '/videos/OdysseyVol.4+Blast.mp4',
     chainsImg: '/images/odyssey/v4/chains.png',
     chainsHeight: '56px',
     reward: '13,500',
@@ -56,5 +56,16 @@ export default {
     rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
     rewardEnableIcon: '/images/odyssey/thruster/rewardEnable.svg',
     tips: '',
+  },
+  7: {
+    path: '/odyssey/home?id=7',
+    video: '/videos/Mode.mp4',
+    chainsImg: '/images/odyssey/v5/chains.svg',
+    chainsHeight: '56px',
+    reward: '$15000',
+    rewardTop: 55,
+    rewardDisableIcon: '/images/odyssey/v5/rewardDisable.svg',
+    rewardEnableIcon: '/images/odyssey/v5/rewardEnable.svg',
+    tips: 'Forge Your Future Wealth in the Mode Ecosystem',
   },
 } as any;

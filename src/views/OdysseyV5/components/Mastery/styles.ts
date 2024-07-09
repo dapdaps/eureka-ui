@@ -171,8 +171,9 @@ export const StyledCardContainer = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  gap: 30px;
+  gap: 0px;
   height: 100%;
+  position: relative;
 `;
 export const StyledCardHead = styled.div`
   font-size: 36px;
@@ -180,6 +181,12 @@ export const StyledCardHead = styled.div`
   line-height: 43px;
   text-align: left;
   color: ${() => `var(--odyssey-primary-color)`};
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+`;
+export const StyledCardHeadTitle = styled.div`
+  flex: 1;
 `;
 export const StyledCardContent = styled.div`
   min-height: 242px;
@@ -252,7 +259,7 @@ export const StyledCardContent = styled.div`
 export const StyledCardFoot = styled.div`
   margin-top: auto;
   height: 100%;
-  padding-top: 30px;
+  padding-top: 60px;
 `;
 
 export const StyledLeftBtn = styled.div`
@@ -287,7 +294,27 @@ export const StyledPageBtn = styled.div`
   justify-content: flex-end;
 `;
 
-
 export const StyledArrow = styled.div`
 transform: rotate(-180deg);`;
 
+export const StyledStatus = styled.div`
+  flex-shrink: 0;
+  padding-top: 6px;
+`;
+
+export const StyledStatusItem = styled.div`
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  color: #979abe;
+`;
+
+export const StyledStatusUnexplored = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+`;
+
+export const StyledStatusExplored = styled.div`
+  height: 36px;
+`;
