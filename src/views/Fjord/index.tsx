@@ -246,6 +246,88 @@ const StyledTokenImageContainer = styled.div`
 const StyledTokenImage = styled.img`
   width: 100%;
 `
+
+const StyledCurrentChain = styled.div`
+  cursor: pointer;
+  padding-left: 9px;
+  padding-right: 33px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 6px;
+  border: 1px solid #3D405A;
+  span {
+    color: #FFF;
+    font-family: Montserrat;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+`
+const StyledChainList = styled.div`
+  position: absolute;
+  display: none;
+  bottom: 0;
+  left: 0;
+  transform: translateY(100%);
+  width: 204px;
+  border: 1px solid #373a53;
+  border-radius: 12px;
+  background-color: #303142;
+  padding: 12px 0;
+  z-index: 10;
+`
+const StyledChainListContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  &:hover {
+    ${StyledChainList} {
+      display: block;
+    }
+  }
+`
+const StyledChain = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #FFF;
+  cursor: pointer;
+  line-height: 38px;
+  padding: 0 10px;
+  span {
+    font-size: 14px;
+  }
+  &:hover {
+    background-color: rgba(24, 26, 39, 0.3);
+  }
+`
+const StyledPoolStatusContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 15px;
+`
+const StyledPoolStatus = styled.div`
+  cursor: pointer;
+  padding: 6px 22px;
+  border-radius: 6px;
+  color: #FFF;
+  text-align: right;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+
+  border: 1px solid #3D405A;
+  &.active {
+    background: #543DC9;
+  }
+`
 const STATUS_TXT_MAPPING: any = {
   'ongoing': 'Live Now',
   'upcoming': 'Coming Soon'
@@ -354,6 +436,64 @@ const FjordSvg = (
     </defs>
   </svg>
 )
+
+const ChainList = function (props: any) {
+  const {
+    chainId,
+    setChainId,
+    poolsMapping
+  } = props
+  return (
+    <StyledChainListContainer>
+
+      <StyledCurrentChain>
+        {
+          chainId === "0" ? (
+            <span>All Chain</span>
+          ) : (
+            <>
+              <StyledChainImage src={chainCofig[chainId]?.icon} />
+              <span>{chainCofig[chainId]?.chainName}</span>
+            </>
+          )
+        }
+        <StyledSvg style={{ position: 'absolute', right: 9, top: 13 }}>
+          <svg xmlns="http://www.w3.org/2000/svg" width="12" height="7" viewBox="0 0 12 7" fill="none">
+            <path d="M1 1L6 5L11 1" stroke="#979ABE" stroke-width="1.6" stroke-linecap="round" />
+          </svg>
+        </StyledSvg>
+      </StyledCurrentChain>
+      <StyledChainList>
+        {
+          Object.keys(poolsMapping).map((_chainId: any) => {
+            return (
+              <StyledChain key={_chainId} onClick={() => setChainId(_chainId)}>
+                {
+                  _chainId === "0" ? (
+                    <span>All Chain</span>
+                  ) : (
+                    <>
+                      <StyledChainImage src={chainCofig[_chainId]?.icon} />
+                      <span>{chainCofig[_chainId]?.chainName}</span>
+                    </>
+                  )
+                }
+
+                {
+                  _chainId === chainId && (
+                    <StyledSvg style={{ position: 'absolute', right: 10, top: 16 }}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="10" viewBox="0 0 14 10" fill="none"><path d="M1 4.11111L5.28571 8L13 1" stroke="#EBF479" stroke-width="2" stroke-linecap="round"></path></svg>
+                    </StyledSvg>
+                  )
+                }
+              </StyledChain>
+            )
+          })
+        }
+      </StyledChainList>
+    </StyledChainListContainer>
+  )
+}
 export default function LaunchpadHomePage() {
 
   const router = useRouter();
@@ -367,16 +507,53 @@ export default function LaunchpadHomePage() {
   const [price, setPrice] = useState('0')
   const [sortKey, setSortKey] = useState('')
   const [fjordModalShow, setFjordModalShow] = useState(false)
+  const [upcomingAndOngoingChainId, setUpcomingAndOngoingChainId] = useState("0")
+  const [poolStatusIndex, setPoolStatusIndex] = useState(0)
+  const [completedPoolsChainId, setCompletedPoolsChainId] = useState("0")
+  // const upcomingAndOngoingPools = useMemo(() => {
+  //   return pools
+  //     .filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
+  // }, [pools])
+
+  const upcomingAndOngoingPoolsMapping = useMemo(() => {
+    const filterPools = pools.filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
+    const poolsMpping: any = {
+      0: filterPools, // all
+    }
+    filterPools.forEach((pool) => {
+      const pools = poolsMpping[pool?.chain_id] ?? []
+      pools.push(pool)
+      poolsMpping[pool?.chain_id] = pools
+    })
+    return poolsMpping
+  }, [pools])
 
   const upcomingAndOngoingPools = useMemo(() => {
-    return pools
-      .filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
+    const pools = upcomingAndOngoingPoolsMapping[upcomingAndOngoingChainId] ?? []
+    console.log('=pools', pools)
+    return pools?.filter((pool: any) => poolStatusIndex === 0 ? pool.status === 'ongoing' : pool.status === 'upcoming')
+  }, [upcomingAndOngoingPoolsMapping, upcomingAndOngoingChainId, poolStatusIndex])
+
+
+  const completedPoolsMapping = useMemo(() => {
+    const filterPools = pools.filter(pool => pool.status === 'completed')
+    const poolsMpping: any = {
+      0: filterPools, // all
+    }
+    filterPools.forEach((pool) => {
+      const pools = poolsMpping[pool?.chain_id] ?? []
+      pools.push(pool)
+      poolsMpping[pool?.chain_id] = pools
+    })
+    return poolsMpping
   }, [pools])
+
   const completedPools = useMemo(() => {
-    return pools.filter(pool => pool.status === 'completed').sort((prev, next) => prev[sortKey] - next[sortKey])
-  }, [pools, sortKey])
+    const pools = completedPoolsMapping[completedPoolsChainId]
+    return pools?.sort((prev: any, next: any) => prev[sortKey] - next[sortKey])
+  }, [completedPoolsMapping, completedPoolsChainId, sortKey])
+
   const handleBuyOrSell = function (data: any) {
-    console.log('data:', data)
     if (data.status === 'upcoming') {
       return
     }
@@ -437,6 +614,7 @@ export default function LaunchpadHomePage() {
       return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
     }
   }
+
   useEffect(() => {
     queryPools()
   }, [])
@@ -497,19 +675,32 @@ export default function LaunchpadHomePage() {
         </StyledYours>
       </StyledYoursContainer>
       <StyledProjectContainer>
-        <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Upcoming & Ongoing</StyledFont>
+        <StyledFlex justifyContent='space-between'>
+          <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Upcoming & Ongoing</StyledFont>
+          <StyledFlex gap='15px'>
+            <ChainList
+              chainId={upcomingAndOngoingChainId}
+              setChainId={setUpcomingAndOngoingChainId}
+              poolsMapping={upcomingAndOngoingPoolsMapping}
+            />
+            <StyledPoolStatusContainer>
+              <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => setPoolStatusIndex(0)}>Live</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => setPoolStatusIndex(1)}>Upcoming</StyledPoolStatus>
+            </StyledPoolStatusContainer>
+          </StyledFlex>
+        </StyledFlex>
         <StyledFlex flexDirection='column' gap='30px'>
           {loading ? (
             <StyledLoadingWrapper $h="100px">
               <Loading size={60} />
             </StyledLoadingWrapper>
           ) : (
-            upcomingAndOngoingPools && upcomingAndOngoingPools.length > 0 ? upcomingAndOngoingPools.map((pool, index) => (
+            upcomingAndOngoingPools && upcomingAndOngoingPools.length > 0 ? upcomingAndOngoingPools.map((pool: any, index: number) => (
               <StyledProject key={index}>
                 <StyledProjectImageContainer>
                   <StyledProjectSupportChain>
-                    <StyledChainImage src={chainCofig[pool?.chain_id].icon} />
-                    <span>{chainCofig[pool?.chain_id].chainName}</span>
+                    <StyledChainImage src={chainCofig[pool?.chain_id]?.icon} />
+                    <span>{chainCofig[pool?.chain_id]?.chainName}</span>
                   </StyledProjectSupportChain>
                   <StyledProjectImage src={pool?.banner} />
                 </StyledProjectImageContainer>
@@ -578,7 +769,15 @@ export default function LaunchpadHomePage() {
         </StyledFlex>
       </StyledProjectContainer>
       <StyledCompletedSalesContainer>
-        <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Completed Token Sales</StyledFont>
+
+        <StyledFlex justifyContent='space-between'>
+          <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Completed Token Sales</StyledFont>
+          <ChainList
+            chainId={completedPoolsChainId}
+            setChainId={setCompletedPoolsChainId}
+            poolsMapping={completedPoolsMapping}
+          />
+        </StyledFlex>
         <StyledCompletedSalesTable>
           <StyledCompletedSalesTHeader>
             {
@@ -618,7 +817,7 @@ export default function LaunchpadHomePage() {
                 <Loading size={60} />
               </StyledLoadingWrapper>
             ) : (
-              completedPools && completedPools.length > 0 ? completedPools.map((pool, index) => (
+              completedPools && completedPools.length > 0 ? completedPools.map((pool: any, index: number) => (
                 <StyledCompletedSalesTr key={index}>
                   <StyledCompletedSalesTd>
                     <StyledFlex gap='10px' style={{ paddingLeft: 20 }}>
@@ -641,7 +840,7 @@ export default function LaunchpadHomePage() {
                     <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.participants ?? 0)}</StyledFont>
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd style={{ flex: 0.5 }}>
-                    <StyledChainImage src={chainCofig[pool?.chain_id].icon} />
+                    <StyledChainImage src={chainCofig[pool?.chain_id]?.icon} />
                   </StyledCompletedSalesTd>
                   <StyledCompletedSalesTd>
                     <StyledFlex style={{ width: '100%', paddingRight: 23 }}>
