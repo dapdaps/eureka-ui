@@ -30,8 +30,7 @@ const Layout = styled.div`
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();
   const pathName = router.pathname;
-  // const { account } = useAccount();
-  const account = "0x91543e6369bc96868a4a5c2a0e76ddfa4336c823"
+  const { account } = useAccount();
   const { getInitialDataWithAuth } = useInititalDataWithAuth();
 
   const { run: updateAccount } = useDebounceFn(
