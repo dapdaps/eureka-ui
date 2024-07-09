@@ -108,6 +108,15 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
         <title>DapDap</title>
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/logo.png" />
+        <script src="https://unpkg.com/react@18.2.0/umd/react.production.min.js" />
+        <script src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js" />
+        <script src="https://unpkg.com/react-bootstrap@2.9.1/dist/react-bootstrap.min.js" />
+        <script src="https://unpkg.com/axios@1.6.2/dist/axios.min.js" />
+        <script src="https://unpkg.com/big.js@6.2.1/big.js" />
+        <script src="https://unpkg.com/ahooks@3.7.8/dist/ahooks.js" />
+        <script src="https://unpkg.com/ethers@5.5.0/dist/ethers.umd.min.js" />
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js" />
+        <script src="https://unpkg.com/bootstrap@5.3.2/dist/js/bootstrap.min.js" />
       </Head>
       <Script id="telegram-widget" src="https://telegram.org/js/telegram-widget.js?22" />
       <Script id="phosphor-icons" src="https://unpkg.com/@phosphor-icons/web@2.0.3" async />

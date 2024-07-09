@@ -46,7 +46,6 @@
     "@radix-ui/react-icons": "^1.3.0",
     "@radix-ui/react-navigation-menu": "^1.1.4",
     "@radix-ui/react-toast": "^1.1.5",
-    "@solana/fast-stable-stringify": "2.0.0-preview.2",
     "@stitches/react": "^1.2.8",
     "@web3-onboard/bitget": "^2.0.1",
     "@web3-onboard/core": "^2.21.2",
@@ -103,7 +102,6 @@
     "super-bridge-sdk": "0.0.11-11",
     "swiper": "^11.0.5",
     "uuid": "^9.0.1",
-    "viem": "^2.2.0",
     "zustand": "^4.4.6",
     "@lifi/sdk": "^2.5.0"
   },

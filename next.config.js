@@ -152,7 +152,18 @@ const nextConfig = {
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
 
-    
+    if (!isServer) {
+      config.externals.push({
+        'react': 'var window.React',
+        'react-dom': 'var window.ReactDOM',
+        'react-bootstrap': 'var window.ReactBootstrap',
+        'axios': 'var window.axios',
+        'big.js': 'var window.Big',
+        'ahooks': 'var window.ahooks',
+        'ethers': 'var window.ethers',
+        'lodash': 'var window._',
+      })
+    }
     return config;
   },
 };
