@@ -25,6 +25,14 @@ export default {
         icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
         decimals: 6,
     },
+    'DAI': {
+        chainId: 1,
+        address: '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063',
+        name: 'DAI',
+        symbol: 'DAI',
+        icon: 'https://assets.coingecko.com/coins/images/9956/small/Badge_Dai.png?1687143508',
+        decimals: 18,
+    },
 } as {
     [key: string]: Token
 }
