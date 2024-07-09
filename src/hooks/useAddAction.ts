@@ -18,7 +18,7 @@ export default function useAddAction(source: string) {
       const currentChain = chains.find((chain: any) => chain.chain_id === chainId);
       console.info('addAction data: ', data);
 
-      if (data.type === 'Swap') {
+      if (data.type === 'Swap' && data.template !== 'launchpad') {
         params = {
           // action_title: `Swap ${Number(data.inputCurrencyAmount)} ${data.inputCurrency.symbol} on ${data.template}`,
           action_title: `Swap ${data.inputCurrency.symbol} on ${data.template}`,
@@ -142,6 +142,34 @@ export default function useAddAction(source: string) {
           extra_data: data.extra_data,
         };
       }
+
+
+      if (data.template === 'launchpad' || data.template === 'Launchpad') {
+        params = {
+          action_title: `Launchpad ${data?.token0.symbol + (data?.token1.symbol ? '-' + data.token1.symbol : '')} on ${data.template}`,
+          action_type: 'Swap',
+          action_tokens: JSON.stringify([data?.token0.symbol ?? '', data?.token1.symbol ?? '']),
+          action_amount: data.amount,
+          account_id: account,
+          account_info: uuid,
+          template: data.template,
+          action_switch: data.add ? 1 : 0,
+          action_status: data.status === 1 ? 'Success' : 'Failed',
+          tx_id: data.transactionHash,
+          action_network_id: currentChain?.name || data.action_network_id,
+          chain_id: chainId,
+          pool: data.pool,
+          extra_data: JSON.stringify({
+            token0: data?.token0,
+            token1: data?.token1,
+            type: 'Swap',
+            trade_type: data.trade_type,
+            shareTokenPrice: data.shareTokenPrice,
+            pool: data.pool,
+          }),
+        }
+      }
+
 
       params.ss = getSignature(
         `template=${data.template}&action_type=${data.type}&tx_hash=${data.transactionHash
