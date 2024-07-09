@@ -484,8 +484,6 @@ export function useBuyTrade({
                 }
             }
 
-            
-
             if (Number(quote?.fromChain.chainId) !== Number(quote.chainId)) {
                 await setChain({ chainId: `0x${(quote.chainId).toString(16)}` })
             }
@@ -508,7 +506,7 @@ export function useBuyTrade({
             const _slippage = Number(slippage) / 100
 
             const assetsIn = new Big(_receiveAmount)
-            const minSharesOut = new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - _slippage).toNumber().toFixed(0)
+            const minSharesOut = getFullNum(new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - _slippage).toNumber())
 
             await approve(midToken.address, assetsIn, pool, signer)
 
