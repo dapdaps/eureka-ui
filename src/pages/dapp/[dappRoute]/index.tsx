@@ -91,7 +91,8 @@ export const DappPage: NextPageWithLayout = () => {
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp]);
 
-  if (!dapp || !currentChain || (!dapp.default_chain_id && !dapp.default_network_id) || !localConfig) return <Empty />;
+  if (!currentChain || !localConfig) return <div />;
+  if (!dapp) return <Empty />;
 
   return ready && !loading ? (
     <DappView
