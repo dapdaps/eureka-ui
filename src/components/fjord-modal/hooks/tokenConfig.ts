@@ -17,6 +17,14 @@ export default {
         icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
         decimals: 6,
     },
+    'USDT': {
+        chainId: 1,
+        address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+        name: 'USDT',
+        symbol: 'USDT',
+        icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
+        decimals: 6,
+    },
 } as {
     [key: string]: Token
 }

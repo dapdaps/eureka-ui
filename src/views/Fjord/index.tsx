@@ -54,7 +54,7 @@ const StyledFjordSvgContainer = styled.div`
 
 const StyledYoursContainer = styled.div`
   position: relative;
-  z-index: 50;
+  z-index: 10;
   margin-bottom: 80px;
   display: flex;
   flex-direction: column;
