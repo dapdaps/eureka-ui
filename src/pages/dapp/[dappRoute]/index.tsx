@@ -3,12 +3,10 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import dappConfig from '@/config/dapp';
 import useAccount from '@/hooks/useAccount';
-
 import { useDefaultLayout } from '@/hooks/useLayout';
-
 import useDappInfo from '@/hooks/useDappInfo';
 import { useChainsStore } from '@/stores/chains';
-import DappView from '@/views/Dapp';
+import DappView, { Empty } from '@/views/Dapp';
 import type { NextPageWithLayout } from '@/utils/types';
 
 // set dynamic routes for dapps in config file
@@ -93,9 +91,7 @@ export const DappPage: NextPageWithLayout = () => {
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp]);
 
-  if (!dapp || !currentChain || (!dapp.default_chain_id && !dapp.default_network_id)) return <div />;
-
-  if (!localConfig) return <div />;
+  if (!dapp || !currentChain || (!dapp.default_chain_id && !dapp.default_network_id) || !localConfig) return <Empty />;
 
   return ready && !loading ? (
     <DappView
