@@ -170,15 +170,16 @@ export default function GasModal({
     return <Modal title="Refuel Gas Token" onClose={() => {
         !isLoading && onClose()
     }}>
-        <Tip>Transfer {fromToken?.symbol} for {toChain?.nativeCurrency.symbol} to cover gas fee on Base.</Tip>
+        <Tip>Transfer {fromToken?.symbol} for {toChain?.nativeCurrency.symbol} to cover gas fee on { toChain?.chainName }.</Tip>
         <RefuelAmount>
             <div>Refuel Amount:</div>
             <div className="transter-detail">
                 <Input value={rangeVal} onChange={(e) => {
-                    if (Number(e.target.value)> Number(max)) {
+                    const { value } = e.target
+                    if (Number(value)> Number(max)) {
                         setRangeVal(max.toString())
-                    } else {
-                        setRangeVal(e.target.value)
+                    } else if (!isNaN(parseFloat(value)))  {
+                        setRangeVal(value)
                     }
                     
                 }} />{fromToken?.symbol}
@@ -200,7 +201,7 @@ export default function GasModal({
             min={min}
             max={max}
             step={step}
-            value={rangeVal}
+            value={parseFloat(rangeVal)}
             className='custom-slider'
         />
 
