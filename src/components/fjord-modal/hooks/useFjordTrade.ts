@@ -510,7 +510,7 @@ export function useBuyTrade({
 
             await approve(midToken.address, assetsIn, pool, signer)
 
-            const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut, recipient)
+            const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
             await tx.wait()
             setLoading(false)
 
