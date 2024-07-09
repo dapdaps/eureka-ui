@@ -295,6 +295,8 @@ export default function LaunchpadYoursPage() {
   useEffect(() => {
     if (categoryIndex === 0 && userPools) {
       setInProgressNumber(userPools?.length ?? 0)
+    } else {
+      setInProgressNumber(0)
     }
   }, [userPools, categoryIndex])
 
