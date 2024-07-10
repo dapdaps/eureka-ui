@@ -37,7 +37,7 @@ export const DappPage: NextPageWithLayout = () => {
     const config = dappConfig[dappPathname];
 
     if (!config) {
-      setLocalConfig(null);
+      setLocalConfig({ name: '' });
       return;
     }
     let result: any = null;
@@ -91,8 +91,8 @@ export const DappPage: NextPageWithLayout = () => {
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp]);
 
-  if (!currentChain || !localConfig) return <div />;
-  if (!dapp) return <Empty />;
+  if (localConfig?.name === '') return <Empty />;
+  if (!currentChain || !localConfig || !dapp) return <div />;
 
   return ready && !loading ? (
     <DappView

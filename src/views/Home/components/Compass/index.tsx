@@ -4,14 +4,13 @@ import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-
+import Tag from '@/views/Odyssey/components/Tag';
 import useCompassList from './hooks/useCompassList';
 import {
   StyledCard,
@@ -56,11 +55,25 @@ const Card = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledCardBackgroundImage width={646} height={323} src={compass.banner} alt={compass.name} />
+      <StyledCardBackgroundImage
+        width={646}
+        height={323}
+        src={compass.banner}
+        alt={compass.name}
+        style={{
+          filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
+        }}
+      />
       <StyledCardMainContent>
-        {odyssey[compass.id]?.chainsImg && (
-          <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: odyssey[compass.id]?.chainsHeight }} />
-        )}
+        <StyledFlex alignItems="center" gap="12px">
+          {odyssey[compass.id]?.chainsImg && (
+            <StyledChainsImg
+              src={odyssey[compass.id]?.chainsImg}
+              style={{ height: odyssey[compass.id]?.chainsHeight }}
+            />
+          )}
+          <Tag status={compass.status} />
+        </StyledFlex>
         <StyledCardTitle>{compass.name}</StyledCardTitle>
         <StyledCardDesc>{compass.description}</StyledCardDesc>
       </StyledCardMainContent>
@@ -136,6 +149,7 @@ const Compass = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
