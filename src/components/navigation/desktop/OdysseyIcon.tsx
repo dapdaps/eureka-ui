@@ -36,7 +36,7 @@ const RelativeContainerHeight = 40;
 const OdysseyList = [
   {
     id: 6,
-    img: '/images/odyssey/welcome/logo.png',
+    img: '/images/odyssey/welcome/logo.gif',
     width: 117,
     height: 16.5,
     offsetY: 0,
