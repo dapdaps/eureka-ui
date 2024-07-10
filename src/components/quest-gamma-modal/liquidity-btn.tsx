@@ -281,7 +281,7 @@ const Btn: FC<IProps> = ({ pairId, token0Bal, token1Bal, token0, token1, decimal
     const amount = isToken0 ? Big(amount0).toFixed(decimals0) : Big(amount1).toFixed(decimals1);
 
     const toastId = toast?.loading({
-      title: `Approve ${amount} ${_token}`,
+      title: `Approve ${_token}`,
     });
     if (isToken0) {
       setIsToken0Approving(true);

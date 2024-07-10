@@ -237,7 +237,7 @@ const SwapBtn: FC<any> = ({
 
   const handleApprove = () => {
     const toastId = toast?.loading({
-      title: `Approve ${inputValue} ${inputCurrency.symbol}`,
+      title: `Approve ${inputCurrency.symbol}`,
     });
     if (isApproving) return;
 
