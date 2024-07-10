@@ -129,7 +129,6 @@ const Chain = ({
       document.removeEventListener('click', hideList);
     };
   }, []);
-  console.log(1111, currentChain);
 
   return (
     <StyledContainer

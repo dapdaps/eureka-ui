@@ -1,11 +1,50 @@
+import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useChainsStore } from '@/stores/chains';
 
+import { TabCard } from './components';
 import { Desc, StyledContainer, Title } from './styles';
 
 const Home = () => {
   const chains = useChainsStore((store: any) => store.chains);
+  const [isShowTab, setIsShowTab] = useState(false);
+
+  const lsts = [
+    {
+      key: 0,
+      lstName: 'mETH',
+      lstIcon: '/images/lrts/box_1.svg',
+      dappName: '',
+      dappLogo: '',
+    },
+    {
+      key: 1,
+      lstName: 'stETH',
+      lstIcon: '/images/lrts/box_2.svg',
+      dappName: 'LIDO',
+      dappLogo: '',
+    },
+    {
+      key: 2,
+      lstName: 'rETH',
+      lstIcon: '/images/lrts/box_3.svg',
+      dappName: 'Rocket Pool',
+      dappLogo: '',
+    },
+    {
+      key: 3,
+      lstName: 'sfrxETH',
+      lstIcon: '/images/lrts/box_4.svg',
+      dappName: 'Frax Finance',
+      dappLogo: '',
+    },
+  ];
+  const handleSlideChange = ({ activeIndex }: any) => {
+    setIsShowTab(true);
+    console.log('click lst', activeIndex, lsts[activeIndex]);
+  };
+
   return (
     <StyledContainer>
       <Title>LRTS</Title>
@@ -20,10 +59,14 @@ const Home = () => {
         initialSlide={1}
         pagination={{ clickable: true, el: '.swiper-pagination' }}
         // navigation={navigation}
+        navigation={{
+          nextEl: '.next',
+        }}
         // modules={modules}
         slidesPerView={4}
         className="mySwiper"
         slideToClickedSlide={true}
+        onSlideChange={handleSlideChange}
         // on={{setTranslate:function(){
         //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
         //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
@@ -31,11 +74,12 @@ const Home = () => {
         //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
         // }}}
       >
-        <SwiperSlide key={1}>{({ isActive }) => <img src="/images/lrts/box_1.svg" alt="" />}</SwiperSlide>
-        <SwiperSlide key={2}>{({ isActive }) => <img src="/images/lrts/box_2.svg" alt="" />}</SwiperSlide>
-        <SwiperSlide key={3}>{({ isActive }) => <img src="/images/lrts/box_3.svg" alt="" />}</SwiperSlide>
-        <SwiperSlide key={4}>{({ isActive }) => <img src="/images/lrts/box_4.svg" alt="" />}</SwiperSlide>
+        {lsts.map((item) => (
+          <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
+        ))}
       </Swiper>
+
+      {isShowTab ? <TabCard onClose={() => setIsShowTab(false)} /> : null}
     </StyledContainer>
   );
 };
