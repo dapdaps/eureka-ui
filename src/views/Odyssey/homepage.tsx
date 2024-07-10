@@ -132,14 +132,14 @@ const Index = function () {
   const { detail, queryDetail } = useDetail();
   const { loading: claimLoading, onClaim } = useClaim();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [sortCompassList, setSortCompassList] = useState([]);
+  const [sortCompassList, setSortCompassList] = useState<any>([]);
 
   const swiperRef = useRef<any>(null);
   const videoListRef = useRef<any>([]);
 
   const currentCompass = useMemo(() => {
-    return compassList[activeIndex];
-  }, [compassList, activeIndex]);
+    return sortCompassList[activeIndex];
+  }, [sortCompassList, activeIndex]);
 
   const handleClickClaim = function () {
     if (claimLoading) return;
@@ -166,14 +166,18 @@ const Index = function () {
 
   useEffect(() => {
     if (compassList.length > 0) {
-      const middleIndex = Math.floor(compassList.length / 2);
-      const sortList = cloneDeep(compassList).sort((prev: any, next: any) => next.end_time - prev.end_time);
-      const temp = sortList[middleIndex];
-      sortList[middleIndex] = sortList[0];
-      sortList[0] = temp;
+      const sortList = cloneDeep(compassList).reverse();
+      let i = sortList.length - 1;
+      let currentIndex = i;
+      while (i) {
+        if (sortList[i].status === 'ongoing') {
+          currentIndex = i;
+        }
+        i--;
+      }
       setSortCompassList(sortList);
-      setActiveIndex(middleIndex);
-      swiperRef.current && swiperRef.current.slideTo(middleIndex, 0);
+      setActiveIndex(currentIndex);
+      swiperRef.current && swiperRef.current.slideTo(currentIndex, 0);
     }
   }, [compassList]);
 
@@ -220,7 +224,7 @@ const Index = function () {
             scale: 0.9,
             slideShadows: true,
           }}
-          // loop={true}
+          loop={true}
           modules={[EffectCoverflow]}
           initialSlide={activeIndex}
           onActiveIndexChange={(event) => {
