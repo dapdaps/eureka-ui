@@ -9,6 +9,7 @@ import odyssey from '@/config/odyssey';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { LeftButton, RightButton } from './ArrowBtn';
 import { StyledSvg } from '@/styled/styles';
+import Tag from '@/views/Odyssey/components/Tag';
 
 interface FlexProps {
   flexDirection?: 'row' | 'column';
@@ -160,7 +161,11 @@ const Odyssey = function ({ setShow }: any) {
                   <StyledFlex
                     flexDirection="column"
                     gap="14px"
-                    style={{ width: '330px', filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)' }}
+                    style={{
+                      width: '330px',
+                      filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
+                      position: 'relative',
+                    }}
                     key={compass.id}
                   >
                     <StyledContainer
@@ -186,6 +191,15 @@ const Odyssey = function ({ setShow }: any) {
                     <StyledFont color="#FFF" fontSize="16px" fontWeight="700">
                       {compass.name}
                     </StyledFont>
+                    <div
+                      style={{
+                        position: 'absolute',
+                        left: 10,
+                        top: 10,
+                      }}
+                    >
+                      <Tag status={compass.status} />
+                    </div>
                   </StyledFlex>
                 </SwiperSlide>
               ))}

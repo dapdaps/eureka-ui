@@ -9,6 +9,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
+import Tag from '@/views/Odyssey/components/Tag';
 
 import useClaim from './hooks/useClaim';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
@@ -43,12 +44,6 @@ const StyledButton = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-`;
-const StyledComingSoonButton = styled(StyledButton)`
-  width: 380px;
-  background: #5e617e;
-  color: #fff;
-  cursor: not-allowed;
 `;
 const StyledJoinButton = styled(StyledButton)`
   background-color: #ebf479;
@@ -106,50 +101,6 @@ const StyledCompassImage = styled.img`
 `;
 const StyledCompassVideo = styled.video`
   width: 100%;
-`;
-const StyledLiveContainer = styled.div`
-  position: relative;
-  &:before {
-    content: '';
-    position: absolute;
-    border-radius: 16px;
-    background: rgba(87, 219, 100, 0.2);
-    animation: firstAnimation 1.5s linear infinite;
-  }
-  @keyframes firstAnimation {
-    0% {
-      left: 0;
-      top: 0;
-      bottom: 0;
-      right: 0;
-    }
-    100% {
-      left: -5px;
-      top: -5px;
-      bottom: -5px;
-      right: -5px;
-    }
-  }
-`;
-const StyledLive = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 4px;
-  width: 53px;
-  height: 26px;
-  border-radius: 16px;
-  border: 1px solid #57db64;
-  background: rgba(32, 34, 47, 0.8);
-`;
-const StyledExpired = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  padding: 6px 12px 6px 8px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(32, 34, 47, 0.8);
 `;
 const StyledSwiperButton = styled.div`
   position: absolute;
@@ -323,27 +274,7 @@ const Index = function () {
                           <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: 33 }} />
                         )}
                       </StyledFlex>
-                      {['ended', 'un_start'].includes(compass.status) ? (
-                        <StyledExpired>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                            <ellipse cx="3.99988" cy="4" rx="4" ry="4" fill="#979ABE" />
-                          </svg>
-                          <StyledFont color="#FFF" fontSize="12px" fontWeight="500" fontFamily="Gantari">
-                            {compass.status === 'ended' ? 'Expired' : 'Upcoming'}
-                          </StyledFont>
-                        </StyledExpired>
-                      ) : (
-                        <StyledLiveContainer>
-                          <StyledLive>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
-                              <circle cx="4" cy="4" r="4" fill="#57DB64" />
-                            </svg>
-                            <StyledFont color="#FFF" fontSize="12px" fontWeight="500" fontFamily="Gantari">
-                              Live
-                            </StyledFont>
-                          </StyledLive>
-                        </StyledLiveContainer>
-                      )}
+                      <Tag status={compass.status} />
                     </StyledFlex>
                     <StyledFont
                       color={['ended', 'un_start'].includes(compass.status) ? '#979ABE' : '#FFF'}
