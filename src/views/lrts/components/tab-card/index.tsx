@@ -1,10 +1,11 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 import type { FC } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import Item from '@/views/ShuSh/components/QA/Item';
+import { PolygonBtn } from '../';
 
 const TabWrap = styled(motion.div)`
   position: fixed;
@@ -19,17 +20,18 @@ const TabWrap = styled(motion.div)`
 `;
 const TabHead = styled.div`
   position: absolute;
-  top: -70px;
+  top: -73px;
   z-index: -1;
   left: 30px;
-  width: 100%;
+  /* width: 100%; */
   display: flex;
   gap: 12px;
   .item {
     width: 88px;
-    height: 88px;
+    height: 75px;
     padding: 5px 9px 0;
     background: url(/images/lrts/bg-th-dark.svg) center no-repeat;
+
     .text-right {
       text-align: right;
       color: #fff;
@@ -50,33 +52,88 @@ const TabHead = styled.div`
   }
 `;
 const TabBody = styled.div`
+  display: flex;
+  justify-content: space-between;
   height: 204px;
+  padding: 50px 219px 0 45px;
   background: url(/images/lrts/bg-tab.svg) top center no-repeat;
-  .item {
+  .left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    .prd-name {
+      color: #979abe;
+      font-family: Montserrat;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: normal;
+    }
+  }
+  .content {
+    flex-grow: 1;
+    padding-left: 60px;
+    .detail {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 27px;
+    }
+  }
+  .right {
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    padding-left: 100px;
   }
 `;
-// const TabItem=styled.div`
 
-// `
+const ItemName = styled.div`
+  color: #fff;
+  font-family: Orbitron;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+`;
+const ItemValue = styled.div`
+  color: #fff;
+  font-family: Orbitron;
+  font-size: 26px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+`;
+const ItemLink = styled(Link)`
+  color: #fff;
+  font-family: Orbitron;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-decoration-line: underline;
+`;
 interface IProps {
-  onClose: () => void;
+  // onClose: () => void;
 }
 
-const TabCard: FC<IProps> = ({ onClose }) => {
+const TabCard: FC<IProps> = ({}) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const tabRef = useRef(null);
-  useEffect(() => {
-    document.addEventListener('click', handleClickOutside);
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, []);
-  const handleClickOutside = (event: any) => {
-    if (tabRef.current && !(tabRef.current as any).contains(event.target)) {
-      onClose();
-    }
-  };
+  // useEffect(() => {
+  //   document.addEventListener('click', handleClickOutside);
+  //   return () => {
+  //     document.removeEventListener('click', handleClickOutside);
+  //   };
+  // }, []);
+  // const handleClickOutside = (event: any) => {
+  //   if (tabRef.current && !(tabRef.current as any).contains(event.target)) {
+  //     onClose();
+  //   }
+  // };
 
   const list = [
     {
@@ -120,7 +177,38 @@ const TabCard: FC<IProps> = ({ onClose }) => {
         ))}
       </TabHead>
       <TabBody>
-        <div className="item">11</div>
+        <div className="left">
+          <Image src="/images/lrts/box_1.svg" width={130} height={100} alt="" />
+          <span className="prd-name">LIDO</span>
+        </div>
+        <div className="content">
+          <div className="detail">
+            <div>
+              <ItemName>LST</ItemName>
+              <ItemValue>stETH</ItemValue>
+            </div>
+            <div>
+              <ItemName>APR</ItemName>
+              <ItemValue>2.27%</ItemValue>
+            </div>
+            <div>
+              <ItemName>TVL</ItemName>
+              <ItemValue>$ 3.7B</ItemValue>
+            </div>
+          </div>
+          <div className="btns">
+            <PolygonBtn block href="">
+              Stake
+            </PolygonBtn>
+          </div>
+        </div>
+        <div className="right">
+          <div>
+            <ItemName>Balance</ItemName>
+            <ItemValue>0</ItemValue>
+          </div>
+          <ItemLink href={''}>Earn more on L2...</ItemLink>
+        </div>
       </TabBody>
     </TabWrap>
   );

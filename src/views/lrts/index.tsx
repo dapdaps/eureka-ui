@@ -3,12 +3,13 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { useChainsStore } from '@/stores/chains';
 
-import { TabCard } from './components';
+import { NpcDialog, TabCard } from './components';
 import { Desc, StyledContainer, Title } from './styles';
 
 const Home = () => {
   const chains = useChainsStore((store: any) => store.chains);
-  const [isShowTab, setIsShowTab] = useState(false);
+
+  const [isShowNpc, setIsShowNpc] = useState(false);
 
   const lsts = [
     {
@@ -41,7 +42,7 @@ const Home = () => {
     },
   ];
   const handleSlideChange = ({ activeIndex }: any) => {
-    setIsShowTab(true);
+    setIsShowNpc(true);
     console.log('click lst', activeIndex, lsts[activeIndex]);
   };
 
@@ -79,7 +80,9 @@ const Home = () => {
         ))}
       </Swiper>
 
-      {isShowTab ? <TabCard onClose={() => setIsShowTab(false)} /> : null}
+      <TabCard />
+
+      {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
     </StyledContainer>
   );
 };
