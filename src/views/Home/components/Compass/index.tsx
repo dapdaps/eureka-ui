@@ -32,6 +32,7 @@ import {
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
+  StyledExpired,
 } from './styles';
 
 const iconRight = (
@@ -56,11 +57,34 @@ const Card = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledCardBackgroundImage width={646} height={323} src={compass.banner} alt={compass.name} />
+      <StyledCardBackgroundImage
+        width={646}
+        height={323}
+        src={compass.banner}
+        alt={compass.name}
+        style={{
+          filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
+        }}
+      />
       <StyledCardMainContent>
-        {odyssey[compass.id]?.chainsImg && (
-          <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: odyssey[compass.id]?.chainsHeight }} />
-        )}
+        <StyledFlex alignItems="center" gap="12px">
+          {odyssey[compass.id]?.chainsImg && (
+            <StyledChainsImg
+              src={odyssey[compass.id]?.chainsImg}
+              style={{ height: odyssey[compass.id]?.chainsHeight }}
+            />
+          )}
+          {['ended', 'un_start'].includes(compass.status) && (
+            <StyledExpired>
+              <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
+                <ellipse cx="3.99988" cy="4" rx="4" ry="4" fill="#979ABE" />
+              </svg>
+              <StyledFont color="#FFF" fontSize="12px" fontWeight="500" fontFamily="Gantari">
+                {compass.status === 'ended' ? 'Expired' : 'Upcoming'}
+              </StyledFont>
+            </StyledExpired>
+          )}
+        </StyledFlex>
         <StyledCardTitle>{compass.name}</StyledCardTitle>
         <StyledCardDesc>{compass.description}</StyledCardDesc>
       </StyledCardMainContent>
@@ -136,6 +160,7 @@ const Compass = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>

@@ -188,3 +188,13 @@ export const StyledCominsoon = styled.div`
   width: 213px;
   height: 50px;
 `;
+
+export const StyledExpired = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px 6px 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(32, 34, 47, 0.8);
+`;

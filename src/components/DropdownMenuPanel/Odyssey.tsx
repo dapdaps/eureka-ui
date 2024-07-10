@@ -153,10 +153,16 @@ const Odyssey = function ({ setShow }: any) {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
-                  <StyledFlex flexDirection="column" gap="14px" style={{ width: '330px' }} key={compass.id}>
+                  <StyledFlex
+                    flexDirection="column"
+                    gap="14px"
+                    style={{ width: '330px', filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)' }}
+                    key={compass.id}
+                  >
                     <StyledContainer
                       style={{
                         cursor: compass.status === 'un_start' ? 'not-allowed' : 'pointer',

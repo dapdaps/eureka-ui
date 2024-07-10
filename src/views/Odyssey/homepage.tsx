@@ -11,8 +11,10 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
 
 import useClaim from './hooks/useClaim';
-import useCompassList from './hooks/useCompassList';
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import useDetail from './hooks/useDetail';
+import { cloneDeep } from 'lodash';
+
 const StyledLogo = styled.img`
   width: 340px;
 `;
@@ -197,7 +199,7 @@ const Index = function () {
     }
   };
   const handleJump = function (compass: any) {
-    if (['ended', 'un_start'].includes(compass.status)) {
+    if (['un_start'].includes(compass.status)) {
       return;
     }
     router.push(odyssey[compass.id]?.path);
@@ -214,7 +216,7 @@ const Index = function () {
   useEffect(() => {
     if (compassList.length > 0) {
       const middleIndex = Math.floor(compassList.length / 2);
-      const sortList = compassList.sort((prev: any, next: any) => next.id - prev.id);
+      const sortList = cloneDeep(compassList).sort((prev: any, next: any) => next.end_time - prev.end_time);
       const temp = sortList[middleIndex];
       sortList[middleIndex] = sortList[0];
       sortList[0] = temp;
@@ -472,7 +474,7 @@ const Index = function () {
           </StyledFont>
           <StyledFlex gap="18px">
             {['ended', 'un_start'].includes(currentCompass.status) ? (
-              <StyledComingSoonButton
+              <StyledJoinButton
                 onClick={() => {
                   check(() => {
                     handleJump(currentCompass);
@@ -487,7 +489,7 @@ const Index = function () {
                   : currentCompass.status === 'ended'
                     ? `Join Odyssey Vol.${renderVolNo(currentCompass)}`
                     : `Odyssey Vol.${renderVolNo(currentCompass)} is coming soon!`}
-              </StyledComingSoonButton>
+              </StyledJoinButton>
             ) : (
               <StyledJoinButton
                 onClick={() => {
