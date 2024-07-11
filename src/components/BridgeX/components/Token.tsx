@@ -266,7 +266,7 @@ export default function Token({
             </BalanceText>
             <BalanceText
                 onClick={() => {
-                    onInputChange && onInputChange(balance)
+                    onInputChange && selectToken && onInputChange(balance)
                 }}
                 className={disabled ? '' : 'balance-in'}>balance: {loadingBalance ? <LoadingWrapper>
                     <Loading size={12} />

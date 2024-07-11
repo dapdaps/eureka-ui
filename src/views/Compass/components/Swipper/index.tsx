@@ -61,7 +61,7 @@ export default function Swipper({
   return (
     <SwiperWapper>
       <Swiper
-        spaceBetween={10}
+        spaceBetween={30}
         centeredSlides={true}
         pagination={paginationConfig}
         navigation={navigation}

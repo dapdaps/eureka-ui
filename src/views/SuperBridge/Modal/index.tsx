@@ -59,7 +59,7 @@ interface Props {
 }
 
 function Modal({
-    width = 468, height, onClose, title, children, paddingSize = 20, top = '30%'
+    width = 468, height, onClose, title, children, paddingSize = 20, top = '50%'
 }: Props, ref: any) {
     return <div>
         <Layer onClick={() => {

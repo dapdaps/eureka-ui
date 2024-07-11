@@ -10,7 +10,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 const StyledContainer = styled.div<{ width?: number; top?: number }>`
   width: ${({ width }) => `${width}px`};
   position: absolute;
-  right: -216px;
+  right: -170px;
   top: ${({ top }) => `${top || 5}px`};
   z-index: -1;
   cursor: pointer;
@@ -32,13 +32,13 @@ const StyledContainer = styled.div<{ width?: number; top?: number }>`
   }
 `;
 
-const RelativeContainerHeight = 48;
+const RelativeContainerHeight = 40;
 const OdysseyList = [
   {
     id: 6,
-    img: '/images/odyssey/welcome/logo.png',
-    width: 158,
-    height: 30,
+    img: '/images/odyssey/welcome/logo.gif',
+    width: 117,
+    height: 16.5,
     offsetY: 0,
   },
   // {
