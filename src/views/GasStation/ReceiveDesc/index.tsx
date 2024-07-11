@@ -39,12 +39,14 @@ const Apart = styled.div`
 interface Props {
     receive: number | string;
     loading: boolean;
+    gas: number | string;
     toChain: Chain | undefined;
     receivePrice: string | number;
+    gasPrice: string | number;
 }
 
 export default function ReceiveDesc({
-    receive, loading, toChain, receivePrice,
+    receive, gas, loading, toChain, receivePrice, gasPrice,
 }: Props) {
     return <Container>
         <Apart>
@@ -57,8 +59,8 @@ export default function ReceiveDesc({
         <Apart>
             <div className="title">Total Fee</div>
             <div className="amount-wapper ">
-                <div className="amount">0.0045 ETH</div>
-                <div className="price">(~$18.16)</div>
+                <div className="amount">{balanceFormated(gas)} {toChain?.nativeCurrency.symbol}</div>
+                <div className="price">(~${balanceFormated(gasPrice, 2)})</div>
             </div>
         </Apart>
     </Container>

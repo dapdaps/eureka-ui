@@ -4,11 +4,33 @@ import { ethers, Contract, providers, utils } from "ethers";
 import { approve, SuperBridgeStore } from 'super-bridge-sdk'
 
 import type { Signer } from 'ethers'
+import chainCofig from '@/config/chains'
+import allTokens from '@/config/bridge/allTokens'
 import { balanceFormated, percentFormated, addressFormated, errorFormated } from '@/utils/balance'
 import useToast from '@/hooks/useToast';
 import { abi } from '../ChainTokenAmount/abi'
 
 import type { Chain, Token } from "@/types";
+
+const _chainConfig: any = {
+    ...chainCofig,
+    11155111: {
+        chainId: 11155111,
+        chainName: 'Sepolia',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
+        blockExplorers: 'https://sepolia.etherscan.io',
+        icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+    },
+    421614: {
+        chainId: 421614,
+        chainName: 'Arbitrum Sepolia',
+        nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+        rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
+        blockExplorers: 'https://basescan.org',
+        icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+    },
+}
 
 let gloabalSbs: SuperBridgeStore
 async function initDb() {
@@ -35,15 +57,23 @@ export async function saveTransaction(item: any) {
     await sbs.update(item)
 }
 
-export async function getTransaction() {
-    const sbs = await getDb()
-    const list: any = await sbs.readAll()
+export async function getTransaction(address: string) {
+    // const sbs = await getDb()
+    // const list: any = await sbs.readAll()
 
-    if (!list) {
-        return []
+    // if (!list) {
+    //     return []
+    // }
+
+    const res: any = await fetch(`${BASE_URL}/getOrderHistory/${address}`).then(res => res.json())
+
+    console.log('res1:', res)
+
+    if (res && res.returnCode === 20000) {
+        return res.data.orders
     }
 
-    return list
+    return []
 }
 
 const contracts: any = {
@@ -83,7 +113,13 @@ interface GasTokenParams {
     fromToken: Token | undefined;
 }
 
+interface SupportedTokenParams {
+    fromChain: Chain | undefined;
+    toChain: Chain | undefined;
+}
+
 const BASE_URL = 'https://refueler.dapdap.net/api/v1/refuel'
+// const BASE_URL = 'https://refueler.bobdev.link/api/v1/refuel'
 
 let supportedChains: any = null
 
@@ -112,12 +148,16 @@ async function getAllSupportedChains(fromChain: Chain, toChain: Chain | null) {
     }
 }
 
+async function getSupportedTokens(fromChain: any) {
+    const res = await fetch(`${BASE_URL}/${fromChain.chain_name}/${fromChain.chain_id}/supportedSourceTokens`).then(res => res.json())
+    return res.data.tokens
+}
+
 async function getSupportedToken(fromChain: any, fromToken: Token) {
     if (fromToken.isNative) {
         return Promise.resolve(true)
     }
-    const res = await fetch(`${BASE_URL}/${fromChain.chain_name}/${fromChain.chain_id}/supportedSourceTokens`).then(res => res.json())
-    const tokens = res.data.tokens
+    const tokens = await getSupportedTokens(fromChain)
     return tokens.some((item: any) => item.token_address === fromToken.address)
 }
 
@@ -184,6 +224,33 @@ export function useGasTokenHooks({
     }
 }
 
+export function useSupportedSourceTokens({
+    fromChain,
+    toChain,
+}: SupportedTokenParams) {
+    const [supportedTokens, setSupportedTokens] = useState<any[]>([])
+
+    useEffect(() => {
+        if (fromChain && toChain) {
+            getAllSupportedChains(fromChain, toChain).then(async ({ hasFrom, hasTo }: any) => {
+                if (hasFrom?.length && hasTo?.length) {
+                    const tokens = await getSupportedTokens(hasFrom[0])
+                    setSupportedTokens(tokens)
+                } else {
+                    setSupportedTokens([])
+                }
+            })
+        } else {
+            setSupportedTokens([])
+        }
+        
+    }, [fromChain, toChain])
+
+    return {
+        supportedTokens
+    }
+}
+
 interface GasAmountParams {
     fromChain: Chain | undefined;
     fromToken: Token | undefined;
@@ -203,19 +270,30 @@ export function useGasAmount({
 
     const contractAddress = fromChain ? contracts[Number(fromChain?.chainId)] : ''
 
+    async function estimateGas(tokenAddress: string, account: string, value: string, signer: Signer) {
+        const _value = Number(value).toFixed(0)
+        if (fromToken?.isNative) {
+            return depositEth(account, _value, signer, true)
+        } else {
+            return depositToken(tokenAddress, account, _value, signer, true)
+        }
+    }
+
     async function deposit(tokenAddress: string, account: string, value: string, signer: Signer) {
         if (isLoading) {
             return
         }
         setIsLoading(true)
 
+        const _value = Number(value).toFixed(0)
+
         try {
             let hash
             if (fromToken?.isNative) {
-                const transaction = await depositEth(account, value, signer)
+                const transaction = await depositEth(account, _value, signer)
                 hash = transaction.transactionHash
             } else {
-                const transaction = await depositToken(tokenAddress, account, value, signer)
+                const transaction = await depositToken(tokenAddress, account, _value, signer)
                 hash = transaction.transactionHash
             }
 
@@ -227,22 +305,22 @@ export function useGasAmount({
                 return
             }
 
-            await saveTransaction({
-                hash,
-                status: 3,
-                fromChainName: fromChain?.chainName,
-                fromChainId: fromChain?.chainId,
-                fromChainIcon: fromChain?.icon,
-                fromAddress: account,
-                toChainName: toChain?.chainName,
-                toChainId: toChain?.chainId,
-                toChainIcon: toChain?.icon,
-                toAddress: account,
-                fromTokenSymbol: fromToken?.symbol,
-                fromTokenIcon: fromToken?.icon,
-                amount: new Big(value).div(10 ** fromToken!.decimals).toString(),
-                time: Date.now()
-            })
+            // await saveTransaction({
+            //     hash,
+            //     status: 3,
+            //     fromChainName: fromChain?.chainName,
+            //     fromChainId: fromChain?.chainId,
+            //     fromChainIcon: fromChain?.icon,
+            //     fromAddress: account,
+            //     toChainName: toChain?.chainName,
+            //     toChainId: toChain?.chainId,
+            //     toChainIcon: toChain?.icon,
+            //     toAddress: account,
+            //     fromTokenSymbol: fromToken?.symbol,
+            //     fromTokenIcon: fromToken?.icon,
+            //     amount: new Big(value).div(10 ** fromToken!.decimals).toString(),
+            //     time: Date.now()
+            // })
 
             success({
                 title: 'Transaction success',
@@ -264,12 +342,18 @@ export function useGasAmount({
 
 
 
-    async function depositEth(account: string, value: string, signer: Signer) {
+    async function depositEth(account: string, value: string, signer: Signer, isEstimateGas: boolean = false) {
         const tokenContract = new Contract(
             contractAddress,
             abi,
             signer,
         )
+        
+        if (isEstimateGas) {
+            return tokenContract.estimateGas.depositEth(toChain?.chainId, account, {
+                value
+            })
+        }
 
         const v = await tokenContract.depositEth(toChain?.chainId, account, {
             value
@@ -278,7 +362,7 @@ export function useGasAmount({
         return v.wait()
     }
 
-    async function depositToken(tokenAddress: string, account: string, value: string, signer: Signer) {
+    async function depositToken(tokenAddress: string, account: string, value: string, signer: Signer, isEstimateGas: boolean = false) {
 
         const _value = parseInt(value).toString()
         await approve(tokenAddress, new Big(_value), contractAddress, signer)
@@ -288,6 +372,16 @@ export function useGasAmount({
             abi,
             signer,
         )
+
+        if (isEstimateGas) {
+            return tokenContract.estimateGas.depositToken(
+                tokenAddress,
+                _value,
+                account,
+                toChain?.chainId,
+            )
+        }
+
 
         const v = await tokenContract.depositToken(
             tokenAddress,
@@ -313,16 +407,20 @@ export function useGasAmount({
                 setReceive(new Big(res).div(10 ** toChain.nativeCurrency.decimals).toString())
             })
         })
+
+        // estimateGas(fromToken.address, account: string, value, signer: Signer)
+
     }, [fromChain, toChain, fromToken, value])
 
     return {
         receive,
         isLoading,
         deposit,
+        estimateGas,
     }
 }
 
-export function useTransction() {
+export function useTransction(address: string) {
     const [transactionList, setTransactionList] = useState<any[]>([])
 
     useEffect(() => {
@@ -337,19 +435,45 @@ export function useTransction() {
     }, [])
 
     async function refreshTransaction() {
-        getTransaction().then(res => {
-            if (res && Array.isArray(res)) {
-                res.forEach(async item => {
-                    if (item.status === 3) {
-                        const isComplete = await getStatus({ chainId: item.fromChainId }, item.hash)
-                        if (isComplete) {
-                            item.status = 2
-                            saveTransaction(item)
+        if (!address) {
+            return setTransactionList([])
+        }
+        getTransaction(address).then(res => {
+            console.log('res:', res)
+            if (Array.isArray(res)) {
+                res.forEach((item: any) => {
+                    const fromChain = _chainConfig[item.src_chain_id]
+                    const toChain = _chainConfig[item.dst_chain_id]
+                    if (fromChain) {
+                        item.fromChainLogo = fromChain.icon
+                        const tokens = allTokens[item.src_chain_id]
+                        if (tokens) {
+                            const fromToken = tokens.find(token => token.address.toLocaleLowerCase() === item.src_token.toLocaleLowerCase())
+                            if (fromToken) {
+                                item.fromTokenLogo = fromToken.icon
+                                item.src_amount = item.dst_amount / (10 ** fromToken.decimals)
+                                item.fromTokenSymbol = fromToken.symbol
+                            }
+                        }
+                    }
+
+                    if (toChain) {
+                        item.toChainLogo = toChain.icon
+                        const tokens = allTokens[item.dst_chain_id]
+                        if (tokens) {
+                            const toToken = tokens.find(token => token.address.toLocaleLowerCase() === item.dst_token.toLocaleLowerCase())
+                            if (toToken) {
+                                item.toTokenLogo = toToken.icon
+                                item.dst_amount = item.dst_amount / (10 ** toToken.decimals)
+                            }
                         }
                     }
                 })
+                setTransactionList(res)
+            } else {
+                setTransactionList([])
             }
-            setTransactionList(res || [])
+            
         })
     }
 
