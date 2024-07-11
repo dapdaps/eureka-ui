@@ -159,6 +159,9 @@ const AllDappsPage = styled.div`
       .Yield {
         border: 1px solid rgba(249, 181, 230, 1);
       }
+      .Launchpad {
+        border: 1px solid #9972ee;
+      }
       .BridgeActive {
         background: rgba(227, 233, 157, 1);
         color: rgba(0, 0, 0, 1);
@@ -186,6 +189,10 @@ const AllDappsPage = styled.div`
       .YieldActive {
         background: rgba(249, 181, 230, 1);
         color: rgba(0, 0, 0, 1);
+      }
+      .LaunchpadActive {
+        background: #9972ee;
+        color: #000;
       }
     }
     .page-medal-list {
@@ -630,20 +637,20 @@ const AllDappsColumn: NextPageWithLayout = () => {
         }
       }
     }
-  }
+  };
 
   useEffect(() => {
     if (isFirstLoad.current) {
       showHiddenDapp();
       isFirstLoad.current = false;
     }
-  }, [networkRef.current])
+  }, [networkRef.current]);
 
   useEffect(() => {
     isFirstLoad.current = true;
     return () => {
       isFirstLoad.current = false;
-    }
+    };
   }, []);
 
   useEffect(() => {
