@@ -7048,7 +7048,7 @@ analytics-node@^6.2.0:
 
 animate.css@^4.1.1:
   version "4.1.1"
-  resolved "https://registry.npmmirror.com/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
+  resolved "https://registry.npmjs.org/animate.css/-/animate.css-4.1.1.tgz#614ec5a81131d7e4dc362a58143f7406abd68075"
   integrity sha512-+mRmCTv6SbCmtYJCN4faJMNFVNN5EuCTTprDTAo7YzIGji2KADmakjVA3+8mVDkZ2Bf09vayB35lSQIex2+QaQ==
 
 ansi-escapes@^4.2.1:
@@ -7741,15 +7741,20 @@ body-parser@^1.16.0:
     type-is "~1.6.18"
     unpipe "1.0.0"
 
-bootstrap-icons@^1.11.2, bootstrap-icons@^1.9.0:
+bootstrap-icons@^1.9.0:
   version "1.11.2"
   resolved "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.11.2.tgz#e1c75daec154e25958db04c4eb3cbda6041e7118"
   integrity sha512-TgdiPv+IM9tgDb+dsxrnGIyocsk85d2M7T0qIgkvPedZeoZfyeG/j+yiAE4uHCEayKef2RP05ahQ0/e9Sv75Wg==
 
-bootstrap@^5.2.1, bootstrap@^5.3.2:
+bootstrap@^5.2.1:
   version "5.3.2"
   resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.2.tgz#97226583f27aae93b2b28ab23f4c114757ff16ae"
   integrity sha512-D32nmNWiQHo94BKHLmOrdjlL05q1c8oxbtBphQFb9Z5to6eGRDCm0QgeaZ4zFBHzfg2++rqa2JkqCcxDy0sH0g==
+
+bootstrap@^5.3.2:
+  version "5.3.3"
+  resolved "https://registry.npmjs.org/bootstrap/-/bootstrap-5.3.3.tgz#de35e1a765c897ac940021900fcbb831602bac38"
+  integrity sha512-8HLCdWgyoMguSO9o+aH+iuZ+aht+mzW0u3HIMzVu7Srrpv7EBBxTnrFlSCskwdY1+EOFQSm7uMJhNQHkdPcmjg==
 
 borsh@0.7.0, borsh@^0.7.0:
   version "0.7.0"
@@ -13523,11 +13528,6 @@ prettier@^2.7.1:
   resolved "https://registry.npmjs.org/prettier/-/prettier-2.8.8.tgz#e8c5d7e98a4305ffe3de2e1fc4aca1a71c28b1da"
   integrity sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==
 
-prettier@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-3.1.0.tgz#c6d16474a5f764ea1a4a373c593b779697744d5e"
-  integrity sha512-TQLvXjq5IAibjh8EpBIkNKxO749UEWABoiIZehEPiY4GNpVdhaFKqSTu+QrlU6D2dPAfubRmtJTi4K4YkQ5eXw==
-
 prismjs@^1.27.0:
   version "1.29.0"
   resolved "https://registry.npmjs.org/prismjs/-/prismjs-1.29.0.tgz#f113555a8fa9b57c35e637bba27509dcf802dd12"
@@ -13853,7 +13853,7 @@ react-bootstrap-typeahead@^6.0.0, react-bootstrap-typeahead@^6.3.2:
     scroll-into-view-if-needed "^3.1.0"
     warning "^4.0.1"
 
-react-bootstrap@^2.5.0, react-bootstrap@^2.9.1:
+react-bootstrap@^2.5.0:
   version "2.9.1"
   resolved "https://registry.npmjs.org/react-bootstrap/-/react-bootstrap-2.9.1.tgz#c1ab48ae2b2cfe6d5ac957c2042eb36fcafdb1d2"
   integrity sha512-ezgmh/ARCYp18LbZEqPp0ppvy+ytCmycDORqc8vXSKYV3cer4VH7OReV8uMOoKXmYzivJTxgzGHalGrHamryHA==
@@ -15080,10 +15080,10 @@ stylis@^4.3.0:
   resolved "https://registry.npmjs.org/stylis/-/stylis-4.3.0.tgz#abe305a669fc3d8777e10eefcfc73ad861c5588c"
   integrity sha512-E87pIogpwUsUwXw7dNyU4QDjdgVMy52m+XEOPEKUn161cCzWjjhPSQhByfd1CcNvrOLnXQ6OnnZDwnJrz/Z4YQ==
 
-super-bridge-sdk@0.0.11-5:
-  version "0.0.11-5"
-  resolved "https://registry.npmmirror.com/super-bridge-sdk/-/super-bridge-sdk-0.0.11-5.tgz#2a339e469a3a5ead10bcbb84b25588d4c5a78a9b"
-  integrity sha512-kkL2G2YLx5FaBk3HRwxCYZSpTU0Ic/1CoG+Qs3KthhxapFI1ZxriduLHrkX01stRcglEXIv/tP1ayK/6VRchKg==
+super-bridge-sdk@0.0.11-7:
+  version "0.0.11-7"
+  resolved "https://registry.npmjs.org/super-bridge-sdk/-/super-bridge-sdk-0.0.11-7.tgz#a1dbb09608f7b829370522d6f3a0be42e62b0a0d"
+  integrity sha512-TVbMEcZ0A3WrflFFWyC1IPEBECp+n9bblK1RUMcCkt3Ggw/KgSuDw0//87TRERfD4L9mQhOR87qib9q7xI+/Ww==
   dependencies:
     "@0xsquid/sdk" "^2.8.10"
     "@lifi/sdk" "^2.5.0"

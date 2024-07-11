@@ -1,6 +1,5 @@
 import '@/styles/theme.css';
 import '@/styles/globals.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@near-wallet-selector/modal-ui/styles.css';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import 'react-bootstrap-typeahead/css/Typeahead.bs5.css';
@@ -151,8 +150,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           };
         `}
       </Script>
-
-      <Script id="bootstrap" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" />
 
       <VmInitializer />
 

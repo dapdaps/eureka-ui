@@ -27,7 +27,6 @@ import {
 } from '@/components/rainbow-bridge/rainbow-styled-components';
 import * as storage from '@/components/rainbow-bridge/storage';
 import { transfer } from '@/components/rainbow-bridge/transfer';
-import MainWrapper from '@/components/sandbox/css/MainWrapper';
 import chains from '@/config/chains';
 import { onboard, useEthersProviderContext } from '@/data/web3';
 import { useDefaultLayout } from '@/hooks/useLayout';
@@ -418,7 +417,7 @@ const RainbowBridge: NextPageWithLayout = () => {
 
   return (
     <>
-      <MainWrapper>
+      <div>
         <RainbowBridgeContainer>
           <LeftMenuContainer>
             <RainbowLeftMenu />
@@ -568,7 +567,7 @@ const RainbowBridge: NextPageWithLayout = () => {
             </RainbowWrapper>
           </LeftMenuContainer>
         </RainbowBridgeContainer>
-      </MainWrapper>
+      </div>
     </>
   );
 };
