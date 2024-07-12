@@ -149,7 +149,7 @@ const mETH_ABI = [{
 }]
 
 const Mantle = function (props: any) {
-  const actionType = 'unstake'
+  const actionType = 'stake'
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -170,7 +170,8 @@ const Mantle = function (props: any) {
   const secondToken = {
     icon: '',
     symbol: 'mETH',
-    decimals: 18
+    decimals: 18,
+
   }
 
   const inToken = ['stake', 'restake'].includes(actionType) ? firstToken : secondToken
@@ -212,13 +213,10 @@ const Mantle = function (props: any) {
       18
     );
     const allowance = await contract.allowance(account, LSP_STAKING)
-    console.log('====allowance.toString()', allowance.toString())
     setApproved(!new Big(allowance.toString()).lt(wei.toString()))
   }
   const handleApprove = async function () {
     const contract = new ethers.Contract(mETH, mETH_ABI, provider?.getSigner())
-
-    console.log('=inAmount', inAmount)
     const wei = ethers.utils.parseUnits(
       Big(inAmount).toFixed(18),
       18
@@ -270,6 +268,7 @@ const Mantle = function (props: any) {
     }
   }
   const handleStake = async function () {
+    setIsLoading(true)
     const contract = new ethers.Contract(LSP_STAKING, LSP_STAKING_ABI, provider?.getSigner())
     const amount = Big(inAmount)
       .mul(Big(10).pow(18))
@@ -284,9 +283,8 @@ const Mantle = function (props: any) {
       }] :
       [amount, otherAmount]
     const toastId = toast?.loading({
-      title: `Staking...`,
+      title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
-    setIsLoading(true)
     contractMethord(...contractArguments)
       .then((tx: any) => tx.wait())
       .then((result: any) => {
@@ -295,14 +293,14 @@ const Mantle = function (props: any) {
         handleQueryData()
         toast?.dismiss(toastId);
         toast?.success({
-          title: "Stake Successfully!",
+          title: ['stake', 'restake'].includes(actionType) ? "Stake Successfully!" : "UnStake Successfully",
         });
       })
       .catch((error: any) => {
         setIsLoading(false)
         toast?.dismiss(toastId);
         toast?.fail({
-          title: "Stake Failed!",
+          title: ['stake', 'restake'].includes(actionType) ? "Stake Failed!" : "UnStake Failed!",
         });
       })
   }
