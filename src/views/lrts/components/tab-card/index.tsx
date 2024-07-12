@@ -115,11 +115,20 @@ const ItemLink = styled(Link)`
   line-height: normal;
   text-decoration-line: underline;
 `;
+
+export type CardData = {
+  tokenName: string;
+  apr: number;
+  tvl: number;
+  balance: number;
+};
 interface IProps {
+  type: 'LST' | 'LRT';
+  data: CardData;
   // onClose: () => void;
 }
 
-const TabCard: FC<IProps> = ({}) => {
+const TabCard: FC<IProps> = ({ type, data }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const tabRef = useRef(null);
@@ -184,28 +193,28 @@ const TabCard: FC<IProps> = ({}) => {
         <div className="content">
           <div className="detail">
             <div>
-              <ItemName>LST</ItemName>
-              <ItemValue>stETH</ItemValue>
+              <ItemName>{type}</ItemName>
+              <ItemValue>{data.tokenName}</ItemValue>
             </div>
             <div>
               <ItemName>APR</ItemName>
-              <ItemValue>2.27%</ItemValue>
+              <ItemValue>{data.apr}%</ItemValue>
             </div>
             <div>
               <ItemName>TVL</ItemName>
-              <ItemValue>$ 3.7B</ItemValue>
+              <ItemValue>$ {data.tvl}</ItemValue>
             </div>
           </div>
           <div className="btns">
             <PolygonBtn block href="">
-              Stake
+              {type === 'LST' ? 'STAKE' : 'RESTAKE'}
             </PolygonBtn>
           </div>
         </div>
         <div className="right">
           <div>
             <ItemName>Balance</ItemName>
-            <ItemValue>0</ItemValue>
+            <ItemValue>{data.balance}</ItemValue>
           </div>
           <ItemLink href={''}>Earn more on L2...</ItemLink>
         </div>

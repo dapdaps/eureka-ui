@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 const Menu = styled.div`
   position: fixed;
+  z-index: 5;
   top: 20px;
   left: 50%;
   margin-left: -340px;

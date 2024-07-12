@@ -1,8 +1,13 @@
 import styled from 'styled-components';
 
-export const StyledContainer = styled.div`
-  padding-top: 28px;
+export const Container = styled.div`
+  background-color: #151515;
+`;
 
+export const Banner = styled.div`
+  padding-top: 28px;
+  background: url(/images/lrts/bg-home.png) center no-repeat #000;
+  background-size: cover;
   .mySwiper {
     margin-top: 120px;
     padding: 55px 150px;

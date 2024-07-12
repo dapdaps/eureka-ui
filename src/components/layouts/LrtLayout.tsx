@@ -14,9 +14,7 @@ interface Props {
 
 const StyledWrap = styled.div`
   margin: 0 auto;
-  min-height: 100vh;
-  background: url('/images/lrts/bg-home.png') center no-repeat #000;
-  background-size: cover;
+  background-color: #000;
 `;
 
 const StyledHead = styled.header`
