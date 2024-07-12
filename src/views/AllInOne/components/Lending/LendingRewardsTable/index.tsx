@@ -104,7 +104,7 @@ const LendingRewardsTable = (props: IProps) => {
             columns={columns}
             emptyTips={(
                 <NoReward>
-                    <div>You don't have unclaimed rewards</div>
+                    <div>{`You don't have unclaimed rewards`}</div>
                     <div style={{ fontSize: '18px' }}>$0.00</div>
                 </NoReward>
             )}
