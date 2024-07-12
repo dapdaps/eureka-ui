@@ -119,9 +119,9 @@ const LendingDialogButton = (props: IProps) => {
     provider
       .getSigner()
       .sendTransaction(unsignedTx)
-      .then((tx) => {
+      .then((tx: any) => {
         tx.wait()
-          .then((res) => {
+          .then((res: any) => {
             const { status, transactionHash } = res;
             toast?.dismiss(toastId);
             setState((prevState) => ({
@@ -136,14 +136,14 @@ const LendingDialogButton = (props: IProps) => {
             });
             onSuccess?.(data.dapp);
           })
-          .catch((err) => {
+          .catch(() => {
             setState((prevState) => ({
               ...prevState,
               loading: false,
             }));
           });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         setState((prevState) => ({
           ...prevState,
           loading: false,
@@ -172,7 +172,7 @@ const LendingDialogButton = (props: IProps) => {
 
   const getAllowance = () => {
     const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
-    TokenContract.allowance(account, spender).then((allowanceRaw) => {
+    TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
       setState((prevState) => ({
         ...prevState,
         isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(amount || '0'),
@@ -230,9 +230,9 @@ const LendingDialogButton = (props: IProps) => {
       }));
       const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
       TokenContract.approve(spender, ethers.utils.parseUnits(amount, data.underlyingToken.decimals))
-        .then((tx) => {
+        .then((tx: any) => {
           tx.wait()
-            .then((res) => {
+            .then((res: any) => {
               const { status, transactionHash } = res;
               toast?.dismiss(toastId);
               if (status !== 1) throw new Error('');
@@ -247,9 +247,9 @@ const LendingDialogButton = (props: IProps) => {
                 tx: transactionHash,
                 chainId,
               });
-              onApprovedSuccess();
+              onApprovedSuccess?.();
             })
-            .catch((err) => {
+            .catch(() => {
               setState((prevState) => ({
                 ...prevState,
                 isApproved: false,
@@ -257,7 +257,7 @@ const LendingDialogButton = (props: IProps) => {
               }));
             });
         })
-        .catch((err) => {
+        .catch((err: any) => {
           setState((prevState) => ({
             ...prevState,
             isApproved: false,
@@ -289,9 +289,9 @@ const LendingDialogButton = (props: IProps) => {
     provider
       .getSigner()
       .sendTransaction(unsignedTx)
-      .then((tx) => {
+      .then((tx: any) => {
         tx.wait()
-          .then((res) => {
+          .then((res: any) => {
             const { status, transactionHash } = res;
             toast?.dismiss(toastId);
             setState((prevState) => ({
@@ -323,14 +323,14 @@ const LendingDialogButton = (props: IProps) => {
               });
             }
           })
-          .catch((err) => {
+          .catch(() => {
             setState((prevState) => ({
               ...prevState,
               pending: false,
             }));
           });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         setState((prevState) => ({
           ...prevState,
           pending: false,

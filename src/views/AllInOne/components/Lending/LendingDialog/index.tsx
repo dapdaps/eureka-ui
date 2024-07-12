@@ -103,7 +103,7 @@ const LendingDialog = (props: IProps) => {
   const isForCollateral = useMemo(() => !isSupply && !isBorrow, [isSupply, isBorrow]);
   const tokenSymbol = useMemo(() => data?.underlyingToken?.symbol, [data]);
 
-  const getAvailable = useCallback((_balance) => {
+  const getAvailable = useCallback((_balance: any) => {
     if (!_balance) return '-';
     if (actionText !== 'Repay') return _balance;
     if (Big(_balance).lt(data.userBorrow || 0)) return _balance;
@@ -183,7 +183,7 @@ const LendingDialog = (props: IProps) => {
 
   useEffect(() => {
     if (data && localStorage.getItem('prevAddress') !== data.address && display) {
-      let borrowLimit = '';
+      let borrowLimit = '' as any;
       const _borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd);
       let buttonClickable = false;
       if (actionText === 'Enable as Collateral') {
@@ -226,7 +226,7 @@ const LendingDialog = (props: IProps) => {
 
 
 
-  const formatBorrowLimit = (digits, round) => {
+  const formatBorrowLimit = (digits: any, round: any) => {
     if (data.config.name === 'Ionic') {
       const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(Big(data.COLLATERAL_FACTOR));
 
@@ -254,7 +254,7 @@ const LendingDialog = (props: IProps) => {
     if (Big(state.balance).lt(0.0001)) return '<0.0001';
     return Big(state.balance).toFixed(4, 0);
   };
-  const handleAmountChange = (_amount) => {
+  const handleAmountChange = (_amount: any) => {
     const amount = _amount.replace(/\s+/g, '');
     if (isNaN(Number(amount))) return;
     const isZero = Big(amount || 0).eq(0);
@@ -371,8 +371,8 @@ const LendingDialog = (props: IProps) => {
                     </Apy>
                     {data.distributionApy &&
                       data.distributionApy
-                        .filter((reward) => reward.supply !== '0.00%')
-                        .map((reward) => (
+                        .filter((reward: any) => reward.supply !== '0.00%')
+                        .map((reward: any) => (
                           <RewardApyItem key={reward.symbol}>
                             <RewardIcon src={reward.icon} />
                             <RewardApy>{reward.supply}</RewardApy>
@@ -473,7 +473,7 @@ const LendingDialog = (props: IProps) => {
             <Row className={isForCollateral ? 'justfiy-start':''}>
               <Label>Borrow Limit</Label>
               <ValuesWrapper>
-                <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2)}</Value>
+                <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2, '')}</Value>
                 {!!state.borrowLimit && (
                   <>
                     <div className="mx_5">
@@ -513,7 +513,7 @@ const LendingDialog = (props: IProps) => {
               gas={trade.gas}
               account={account}
               onApprovedSuccess={() => {
-                if (!trade.gas) state.getTrade();
+                if (!trade.gas) state.getTrade?.();
               }}
               onSuccess={() => {
                 handleClose();
@@ -531,7 +531,7 @@ const LendingDialog = (props: IProps) => {
             data: data,
             amount: state.amount,
             account,
-            onLoad: (_data) => {
+            onLoad: (_data: any) => {
               // console.log("Dialog-handler-onLoad--", _data);
               setTrade(_data)
               setState((prevState) => ({

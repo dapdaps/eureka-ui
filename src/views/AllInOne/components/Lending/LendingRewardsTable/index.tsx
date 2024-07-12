@@ -40,7 +40,7 @@ interface IProps {
 const LendingRewardsTable = (props: IProps) => {
   const { dapps, toast, account, onSuccess, supplies } = props;
 
-  const [state, setState] = useState({
+  const [state, setState] = useState<any>({
     loading: false,
     dapp: null,
     market: null,
@@ -83,11 +83,11 @@ const LendingRewardsTable = (props: IProps) => {
           },
           { type: 'button', width: '20%' },
         ];
-  const handleButtonClick = (record) => {
+  const handleButtonClick = (record: any) => {
     const toastId = toast?.loading({
       title: `Claiming rewards...`,
     });
-    setState((prevState) => ({
+    setState((prevState: any) => ({
       ...prevState,
       dapp: dapps[record.dappName],
       market: record,
@@ -125,16 +125,16 @@ const LendingRewardsTable = (props: IProps) => {
             account,
             onSuccess: () => {
               toast?.dismiss(state.toastId);
-              setState((prevState) => ({
+              setState((prevState: any) => ({
                 ...prevState,
                 loading: false,
               }));
               toast?.success({ title: 'Claimed successfully!' });
               onSuccess?.(state.dapp.name);
             },
-            onError: (err) => {
+            onError: (err: any) => {
               toast?.dismiss(state.toastId);
-              setState((prevState) => ({
+              setState((prevState: any) => ({
                 ...prevState,
                 loading: false,
               }));

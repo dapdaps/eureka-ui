@@ -57,7 +57,7 @@ interface IProps {
 const LendingDepositTable = (props: Partial<IProps>) => {
   const { columns, data, buttons, totalReverse, emptyTips, type, onButtonClick } = props;
 
-  const renderTotal = (record, key, isSpecialKey) => {
+  const renderTotal = (record: any, key: any, isSpecialKey?: any) => {
     return (
       <div className={`${isSpecialKey && 'special-total'}`}>
         <Total>
@@ -77,7 +77,7 @@ const LendingDepositTable = (props: Partial<IProps>) => {
       </div>
     );
   };
-  const renderAssetName = (market) => {
+  const renderAssetName = (market: any) => {
     return (
       <RowHeader>
         <LendingAsset 
@@ -90,7 +90,7 @@ const LendingDepositTable = (props: Partial<IProps>) => {
     );
   };
 
-  const renderCollateral = (record) => {
+  const renderCollateral = (record: any) => {
     return (
         <LendingSwitch  
             active={record.isCollateral === undefined ? true : record.isCollateral}
@@ -103,17 +103,17 @@ const LendingDepositTable = (props: Partial<IProps>) => {
         />
     );
   };
-  const renderApy = (record) => {
+  const renderApy = (record: any) => {
     return (
       <>
         <div className="apy">{record.apy}</div>
         {record.distributionApy &&
           record.distributionApy
-            .filter((reward) => {
+            .filter((reward: any) => {
               const apy = (type === 'deposit' ? reward.supply : reward.borrow).slice(0, -1);
               return !!Number(apy);
             })
-            .map((reward, index) => {
+            .map((reward: any, index:number) => {
               return (
                 <RewardApyItem key={index}>
                   {reward.icon ? <RewardIcon src={reward.icon} /> : null}
@@ -135,9 +135,9 @@ const LendingDepositTable = (props: Partial<IProps>) => {
         ))}
       </Header>
       <Body>
-        {data?.map((record) => (
+        {data?.map((record: any) => (
           <Row key={record.address || Date.now() + Math.random()}>
-            {columns?.map((column) => (
+            {columns?.map((column: any) => (
               <Cell
                 key={column.key || column.type}
                 style={{
@@ -148,7 +148,7 @@ const LendingDepositTable = (props: Partial<IProps>) => {
                 {column.type === 'name' && renderAssetName(record)}
                 {column.type === 'button' && (
                   <Buttons>
-                    {buttons?.map((button, j) => (
+                    {buttons?.map((button: any, j:number) => (
                       <LendingTableButton 
                           key={j}
                           text={button.text}
