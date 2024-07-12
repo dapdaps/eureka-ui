@@ -14,18 +14,23 @@ const Index = function (props: {
     name: string;
     logo: string;
   };
+  show: boolean;
+  setShow: (value: boolean) => void;
   actionType: 'stake' | 'unstake';
   token0: string; // symbol
   token1: string; // symbol
   chainId: number;
 }) {
-  const { dapp, actionType } = props;
+  const { dapp, actionType, show, setShow } = props;
   const VmComponent = ComponentMapping[dapp.name as any];
-  return (
+  return show && (
     <StyledModal>
       <StyledOverlay />
       <StyledModalBody>
-        <VmComponent actionType={actionType} />
+        <VmComponent
+          actionType={actionType}
+          setShow={setShow}
+        />
       </StyledModalBody>
     </StyledModal>
   );

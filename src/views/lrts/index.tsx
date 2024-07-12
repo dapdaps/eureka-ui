@@ -35,6 +35,7 @@ const Home = () => {
     tvl: 0,
     balance: 0,
   });
+  const [showModal, setShowModal] = useState(true);
 
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
@@ -129,6 +130,8 @@ const Home = () => {
           token0={actionType === ActionType.STAKE ? 'ETH' : LSTS_DATA[currentIndex].token?.symbol}
           token1={actionType === ActionType.STAKE ? LSTS_DATA[currentIndex].token?.symbol : curLrtSymbol}
           chainId={chainId as number}
+          show={showModal}
+          setShow={setShowModal}
         />
       ) : null}
     </Container>
