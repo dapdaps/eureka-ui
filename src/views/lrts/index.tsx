@@ -4,6 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { useChainsStore } from '@/stores/chains';
 
 import { Gems, NpcDialog, TabCard } from './components';
+import StakeModal from './components/modal/stake';
 import type { CardData } from './components/tab-card';
 import { Banner, Container, Desc, Title } from './styles';
 
@@ -32,8 +33,28 @@ const Home = () => {
       key: 0,
       lstName: 'mETH',
       lstIcon: '/images/lrts/box_1.svg',
-      dappName: '',
+      dappName: 'Mantle',
       dappLogo: '',
+      lst: {
+        name: '',
+        icon: '',
+        symbol: '',
+        address: '',
+      },
+      lrts: [
+        {
+          name: '',
+          icon: '',
+          symbol: '',
+          address: '',
+        },
+        {
+          name: '',
+          icon: '',
+          symbol: '',
+          address: '',
+        },
+      ],
       gems: {
         3: '/images/lrts/gem-inmeth.svg',
         15: '/images/lrts/gem-mmeth.svg',
@@ -46,7 +67,7 @@ const Home = () => {
       key: 1,
       lstName: 'stETH',
       lstIcon: '/images/lrts/box_2.svg',
-      dappName: 'LIDO',
+      dappName: 'Lido',
       dappLogo: '',
       gems: {
         3: '/images/lrts/gem-rseth.svg',
@@ -101,6 +122,8 @@ const Home = () => {
     console.log('click lst', activeIndex, lsts[activeIndex]);
   };
 
+  console.log(111, lsts[currentIndex]);
+
   return (
     <Container>
       <Banner>
@@ -140,6 +163,16 @@ const Home = () => {
       <TabCard type={cardType} data={cardData} />
 
       {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
+      <StakeModal
+        dapp={{
+          name: lsts[currentIndex].dappName,
+          logo: lsts[currentIndex].dappLogo,
+        }}
+        actionType={'stake'}
+        token0={'ETH'}
+        token1={'stETH'}
+        chainId={1}
+      />
     </Container>
   );
 };
