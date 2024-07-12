@@ -117,6 +117,10 @@ const nextConfig = {
       source: '/api/app/agentfi/:path*',
       destination: 'https://app.agentfi.io/api/:path*',
     },
+    {
+      source: '/mantle/api/:path*',
+      destination: 'https://meth.mantle.xyz/api/:path*',
+    }
   ],
   images: {
     remotePatterns: [
