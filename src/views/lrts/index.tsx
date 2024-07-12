@@ -27,6 +27,7 @@ const Home = () => {
     tvl: 0,
     balance: 0,
   });
+  const [showModal, setShowModal] = useState(true)
 
   const lsts = [
     {
@@ -147,12 +148,12 @@ const Home = () => {
           className="mySwiper"
           slideToClickedSlide={true}
           onSlideChange={handleSlideChange}
-          // on={{setTranslate:function(){
-          //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
-          //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
-          // slide.css('opacity',(1-Math.abs(progress)/6));
-          //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
-          // }}}
+        // on={{setTranslate:function(){
+        //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
+        //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
+        // slide.css('opacity',(1-Math.abs(progress)/6));
+        //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
+        // }}}
         >
           {lsts.map((item) => (
             <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
@@ -163,16 +164,21 @@ const Home = () => {
       <TabCard type={cardType} data={cardData} />
 
       {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
+
       <StakeModal
         dapp={{
           name: lsts[currentIndex].dappName,
           logo: lsts[currentIndex].dappLogo,
         }}
+        show={showModal}
+        setShow={setShowModal}
         actionType={'stake'}
         token0={'ETH'}
         token1={'stETH'}
         chainId={1}
       />
+
+
     </Container>
   );
 };

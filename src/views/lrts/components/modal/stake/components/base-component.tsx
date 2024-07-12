@@ -40,6 +40,7 @@ import {
 const BaseComponent = function (props: any) {
   const {
     data,
+    setShow,
     inAmount,
     outAmount,
     isLoading,
@@ -60,7 +61,9 @@ const BaseComponent = function (props: any) {
     <StyledStakeContainer>
       <StyledStakeTopContainer style={actionType === 'unstake' ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}>
         <StyledTitle>{actionType}</StyledTitle>
-        <StyledClose>
+        <StyledClose onClick={() => {
+          setShow(false)
+        }}>
           <svg xmlns="http://www.w3.org/2000/svg" width="97" height="49" viewBox="0 0 97 49" fill="none">
             <path d="M2 1H92C94.2091 1 96 2.79086 96 5V48H41.9098C40.7019 48 39.5587 47.4542 38.7993 46.5149L2 1Z" fill="#272727" stroke="#3F3F3F" />
           </svg>

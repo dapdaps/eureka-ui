@@ -130,11 +130,10 @@ const WITHDRAWAL_QUEUE_ABI = [
 ];
 
 const Lido = function (props: any) {
-  const { actionType } = props;
-  // const actionType = 'unstake'
+  const { actionType, setShow } = props;
   const toast = useToast();
   const { account, provider, chainId } = useAccount();
-  const [{}, setChain] = useSetChain();
+  const [{ }, setChain] = useSetChain();
   const [data, setData] = useState<any>(null);
   const [inAmount, setInAmount] = useState<number | string>('');
   const [outAmount, setOutAmount] = useState<number | string>('');
@@ -313,7 +312,7 @@ const Lido = function (props: any) {
         });
       });
   };
-  const handleAddMetaMask = function () {};
+  const handleAddMetaMask = function () { };
 
   useEffect(() => {
     provider && handleQueryData();
@@ -322,6 +321,7 @@ const Lido = function (props: any) {
     <BaseComponent
       componentProps={{
         data,
+        setShow,
         inAmount,
         outAmount,
         isLoading,

@@ -4,7 +4,6 @@ import { VmComponent } from '@/components/vm/VmComponent';
 import { multicall } from '@/utils/multicall';
 import multicallAddress from '@/config/contract/multicall';
 import { base } from '@/config/tokens/base';
-import StakeModal from '@/views/lrts/components/modal/stake'
 
 const Test = () => {
   return (
@@ -84,8 +83,7 @@ const Test = () => {
     //     ],
     //   }}
     // />
-
-    <StakeModal />
+    <></>
   );
 };
 
