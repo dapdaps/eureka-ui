@@ -61,6 +61,7 @@ const StyledQuestionList = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 10px;
+  padding-bottom: 30px;
 `;
 const StyledQuestion = styled.div`
   width: 898px;

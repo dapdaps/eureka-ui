@@ -19,7 +19,7 @@ const Layout = styled.div`
   flex-direction: column;
   position: relative;
   .content {
-    padding: 0px 0px 100px;
+    padding: 0px 0px 80px;
     flex-grow: 1;
     position: relative;
     overflow-x: hidden;
