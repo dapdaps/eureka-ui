@@ -75,4 +75,4 @@ const LendingEntry = () => {
   );
 };
 
-export default memo(LendingEntry);
+export default LendingEntry;
