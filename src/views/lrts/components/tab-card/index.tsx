@@ -5,6 +5,7 @@ import type { FC } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import { ActionType } from '../../index';
 import { PolygonBtn } from '../';
 
 const TabWrap = styled(motion.div)`
@@ -118,6 +119,8 @@ const ItemLink = styled(Link)`
 
 export type CardData = {
   tokenName: string;
+  dappName: string;
+  dappLogo: string;
   apr: number;
   tvl: number;
   balance: number;
@@ -125,10 +128,10 @@ export type CardData = {
 interface IProps {
   type: 'LST' | 'LRT';
   data: CardData;
-  // onClose: () => void;
+  handleStake: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ type, data }) => {
+const TabCard: FC<IProps> = ({ type, data, handleStake }) => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const tabRef = useRef(null);
@@ -171,6 +174,11 @@ const TabCard: FC<IProps> = ({ type, data }) => {
     },
   };
 
+  const handleClick = () => {
+    const _type = type === 'LST' ? ActionType.STAKE : ActionType.UNSTAKE;
+    handleStake(_type);
+  };
+
   return (
     <TabWrap {...anim} ref={tabRef}>
       <TabHead>
@@ -188,7 +196,7 @@ const TabCard: FC<IProps> = ({ type, data }) => {
       <TabBody>
         <div className="left">
           <Image src="/images/lrts/box_1.svg" width={130} height={100} alt="" />
-          <span className="prd-name">LIDO</span>
+          <span className="prd-name">{data.dappName}</span>
         </div>
         <div className="content">
           <div className="detail">
@@ -206,7 +214,7 @@ const TabCard: FC<IProps> = ({ type, data }) => {
             </div>
           </div>
           <div className="btns">
-            <PolygonBtn block href="">
+            <PolygonBtn block onClick={handleClick}>
               {type === 'LST' ? 'STAKE' : 'RESTAKE'}
             </PolygonBtn>
           </div>

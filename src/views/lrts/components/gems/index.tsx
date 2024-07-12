@@ -7,11 +7,10 @@ import styled from 'styled-components';
 import { Particle } from '../index';
 interface IProps {
   data: any;
-  userGems: number[];
+  onClick: (symbol: string) => void;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
-  onClick?: () => void;
 }
 
 const Wrap = styled.section`
@@ -102,11 +101,12 @@ const GemLight = styled.div`
   }
 `;
 const GemImage = styled.img``;
-const Stones: FC<IProps> = ({ data, userGems }) => {
+const Stones: FC<IProps> = ({ data, onClick }) => {
   useEffect(() => {}, []);
   const items = Array.from({ length: 81 }, (x, i) => i + 1);
 
-  const allGems = Object.keys(data.gems);
+  const allGems = data.map((item: any) => item.order);
+  const userGems = data.filter((item: any) => item.isActive).map((item: any) => item.order);
 
   const rocks = [12, 16, 18, 33, 38, 42, 47, 48, 50, 51, 54, 58];
   const empty = [11, 17, 34, 39, 49, 53, 59];
@@ -123,9 +123,9 @@ const Stones: FC<IProps> = ({ data, userGems }) => {
     [33, [5, 14, 23, 24]],
     [40, [5, 14, 23, 32]],
   ]);
-  const _tunnel = userGems.map((item) => tunnelMap.get(item)).flat();
+
+  const _tunnel = userGems.map((item: any) => tunnelMap.get(item)).flat();
   const userTunnel = _.uniq(_tunnel);
-  console.log('----', data, userGems, userTunnel);
 
   const renderItem = (order: number) => {
     // for tunnel
@@ -135,13 +135,23 @@ const Stones: FC<IProps> = ({ data, userGems }) => {
           <Particle amount={5} key={order} />
         </div>
       );
-    } else if (allGems.includes(String(order))) {
+    } else if (allGems.includes(order)) {
       // for gem
+      const _currentGem = data.find((item: any) => item.order == order);
+
       return (
-        <div className={`item item-gem ${userGems.includes(order) ? 'active' : ''}`} key={order}>
+        <div
+          className={`item item-gem ${userGems.includes(order) ? 'active' : ''}`}
+          key={order}
+          onClick={(e: any) => {
+            console.log('click-gem--', _currentGem);
+
+            onClick(_currentGem.token?.symbol);
+          }}
+        >
           <div className="item-gem-content">
             <GemLight>
-              <GemImage src={data.gems[order]} />
+              <GemImage src={_currentGem.logo} />
             </GemLight>
           </div>
         </div>

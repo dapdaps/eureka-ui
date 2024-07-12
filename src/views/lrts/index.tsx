@@ -1,128 +1,81 @@
 import { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import { useChainsStore } from '@/stores/chains';
+import useAccount from '@/hooks/useAccount';
 
 import { Gems, NpcDialog, TabCard } from './components';
 import StakeModal from './components/modal/stake';
 import type { CardData } from './components/tab-card';
+import LSTS_DATA from './config/data';
 import { Banner, Container, Desc, Title } from './styles';
 
 enum CardType {
   LST = 'LST',
   LRT = 'LRT',
 }
+export enum ActionType {
+  STAKE = 'stake',
+  UNSTAKE = 'unstake',
+}
 
 const Home = () => {
-  const chains = useChainsStore((store: any) => store.chains);
-
+  const { chainId, account } = useAccount();
   const initialSlide = 1;
   const [isShowNpc, setIsShowNpc] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialSlide);
 
+  const [curLrtSymbol, setCurLrtSymbol] = useState('');
+  const [actionType, setActionType] = useState<ActionType>();
   const [cardType, setCardType] = useState(CardType.LST);
   const [cardData, setCardData] = useState<CardData>({
     tokenName: '',
+    dappName: '',
+    dappLogo: '',
     apr: 0,
     tvl: 0,
     balance: 0,
   });
 
-  const lsts = [
-    {
-      key: 0,
-      lstName: 'mETH',
-      lstIcon: '/images/lrts/box_1.svg',
-      dappName: 'Mantle',
-      dappLogo: '',
-      lst: {
-        name: '',
-        icon: '',
-        symbol: '',
-        address: '',
-      },
-      lrts: [
-        {
-          name: '',
-          icon: '',
-          symbol: '',
-          address: '',
-        },
-        {
-          name: '',
-          icon: '',
-          symbol: '',
-          address: '',
-        },
-      ],
-      gems: {
-        3: '/images/lrts/gem-inmeth.svg',
-        15: '/images/lrts/gem-mmeth.svg',
-        21: '/images/lrts/gem-kmeth.svg',
-        40: '/images/lrts/gem-rmeth.svg',
-      },
-      userGems: [3, 15, 21, 40],
-    },
-    {
-      key: 1,
-      lstName: 'stETH',
-      lstIcon: '/images/lrts/box_2.svg',
-      dappName: 'Lido',
-      dappLogo: '',
-      gems: {
-        3: '/images/lrts/gem-rseth.svg',
-        7: '/images/lrts/gem-insteth.svg',
-        13: '/images/lrts/gem-msteth.svg',
-        15: '/images/lrts/gem-pufeth.svg',
-        25: '/images/lrts/gem-weeth.svg',
-        31: '/images/lrts/gem-ezeth.svg',
-        40: '/images/lrts/gem-rsteth.svg',
-      },
-      userGems: [3, 7, 13, 15, 25, 31, 40],
-    },
-    {
-      key: 2,
-      lstName: 'rETH',
-      lstIcon: '/images/lrts/box_3.svg',
-      dappName: 'Rocket Pool',
-      dappLogo: '',
-      gems: {
-        7: '/images/lrts/gem-inreth.svg',
-        13: '/images/lrts/gem-kreth.svg',
-        40: '/images/lrts/gem-mreth.svg',
-      },
-      userGems: [13, 40],
-    },
-    {
-      key: 3,
-      lstName: 'sfrxETH',
-      lstIcon: '/images/lrts/box_4.svg',
-      dappName: 'Frax Finance',
-      dappLogo: '',
-      gems: {
-        7: '/images/lrts/gem-insfrseth.svg',
-        13: '/images/lrts/gem-ksfrxeth.svg',
-        25: '/images/lrts/gem-msfrxeth.svg',
-        40: '/images/lrts/gem-rsfrxeth.svg',
-      },
-      userGems: [7],
-    },
-  ];
+  const [isShowStakeModal, setIsShowStakeModal] = useState(false);
+
   const handleSlideChange = ({ activeIndex }: any) => {
     setIsShowNpc(true);
     setCurrentIndex(activeIndex);
     setCardType(CardType.LST);
-    const { lstName, dappName } = lsts[activeIndex];
+    const { token, dapp } = LSTS_DATA[activeIndex];
+    //TODO
     setCardData({
-      tokenName: lstName,
+      tokenName: token.symbol as string,
+      dappName: dapp.name,
+      dappLogo: dapp.logo,
       apr: 0,
       tvl: 0,
       balance: 0,
     });
-    console.log('click lst', activeIndex, lsts[activeIndex]);
+    console.log('click lst', activeIndex, LSTS_DATA[activeIndex]);
   };
 
-  console.log(111, lsts[currentIndex]);
+  const handleClickGem = (lrtSymbol: string) => {
+    setCurLrtSymbol(lrtSymbol);
+    setCardType(CardType.LRT);
+    const { token, dapp } = LSTS_DATA[currentIndex];
+    //TODO
+    setCardData({
+      tokenName: token.symbol as string,
+      dappName: dapp.name,
+      dappLogo: dapp.logo,
+      apr: 0,
+      tvl: 0,
+      balance: 0,
+    });
+  };
+
+  const handleShowModal = (_actionType: ActionType) => {
+    console.log(_actionType, chainId, curLrtSymbol, LSTS_DATA[currentIndex]);
+
+    setActionType(_actionType);
+    setIsShowStakeModal(true);
+  };
 
   return (
     <Container>
@@ -154,25 +107,30 @@ const Home = () => {
           //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
           // }}}
         >
-          {lsts.map((item) => (
+          {LSTS_DATA.map((item) => (
             <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
           ))}
         </Swiper>
       </Banner>
-      <Gems data={lsts[currentIndex]} userGems={lsts[currentIndex].userGems} />
-      <TabCard type={cardType} data={cardData} />
+
+      <Gems data={LSTS_DATA[currentIndex].lrtTokens} onClick={handleClickGem} />
+
+      <TabCard type={cardType} data={cardData} handleStake={handleShowModal} />
 
       {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
-      <StakeModal
-        dapp={{
-          name: lsts[currentIndex].dappName,
-          logo: lsts[currentIndex].dappLogo,
-        }}
-        actionType={'stake'}
-        token0={'ETH'}
-        token1={'stETH'}
-        chainId={1}
-      />
+
+      {isShowStakeModal ? (
+        <StakeModal
+          dapp={{
+            name: LSTS_DATA[currentIndex].dapp.name,
+            logo: LSTS_DATA[currentIndex].dapp.logo,
+          }}
+          actionType={actionType as ActionType}
+          token0={actionType === ActionType.STAKE ? 'ETH' : LSTS_DATA[currentIndex].token?.symbol}
+          token1={actionType === ActionType.STAKE ? LSTS_DATA[currentIndex].token?.symbol : curLrtSymbol}
+          chainId={chainId as number}
+        />
+      ) : null}
     </Container>
   );
 };
