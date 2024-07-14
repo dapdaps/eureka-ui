@@ -5,6 +5,7 @@ export const Container = styled.div`
 `;
 
 export const Banner = styled.div`
+  height: 657px;
   padding-top: 28px;
   background: url(/images/lrts/bg-home.png) center no-repeat #000;
   background-size: cover;

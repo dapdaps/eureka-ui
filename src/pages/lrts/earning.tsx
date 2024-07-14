@@ -1,11 +1,11 @@
 import { useLrtLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import LrtView from '@/views/lrts';
+import Earning from '@/views/lrts/earning';
 
-const LrtPage: NextPageWithLayout = () => {
-  return <LrtView />;
+const EarningPage: NextPageWithLayout = () => {
+  return <Earning />;
 };
 
-LrtPage.getLayout = useLrtLayout;
+EarningPage.getLayout = useLrtLayout;
 
-export default LrtPage;
+export default EarningPage;

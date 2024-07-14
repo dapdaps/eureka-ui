@@ -1,11 +1,11 @@
 import { useLrtLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import LrtView from '@/views/lrts';
+import PortfolioView from '@/views/lrts/portfolio';
 
-const LrtPage: NextPageWithLayout = () => {
-  return <LrtView />;
+const PortFolioPage: NextPageWithLayout = () => {
+  return <PortfolioView />;
 };
 
-LrtPage.getLayout = useLrtLayout;
+PortFolioPage.getLayout = useLrtLayout;
 
-export default LrtPage;
+export default PortFolioPage;
