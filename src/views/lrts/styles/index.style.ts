@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background-color: #151515;
+  font-family: Orbitron;
 `;
 
 export const Banner = styled.div`
@@ -34,7 +35,6 @@ export const Banner = styled.div`
 
 export const Title = styled.div`
   text-align: center;
-  font-family: Orbitron;
   font-size: 100px;
   font-style: normal;
   font-weight: 700;
@@ -48,14 +48,12 @@ export const Title = styled.div`
 export const Desc = styled.div`
   color: #828282;
   text-align: center;
-  font-family: Orbitron;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 150%; /* 21px */
+  line-height: 150%;
   .bold {
     color: #fff;
-    font-family: Orbitron;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;

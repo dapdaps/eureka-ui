@@ -7,7 +7,7 @@ import { Gems, NpcDialog, TabCard } from './components';
 import StakeModal from './components/modal/stake';
 import type { CardData } from './components/tab-card';
 import LSTS_DATA from './config/data';
-import { Banner, Container, Desc, Title } from './styles';
+import { Banner, Container, Desc, Title } from './styles/index.style';
 
 enum CardType {
   LST = 'LST',
