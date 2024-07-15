@@ -128,7 +128,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     decimals: 18,
     name: 'Inception Restaked mETH',
-    symbol: 'inmEth',
+    symbol: 'inmETH',
     icon: '',
   },
   mmETH: {
@@ -136,7 +136,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     decimals: 18,
     name: 'mmETH',
-    symbol: 'mmEth',
+    symbol: 'mmETH',
     icon: '',
   },
   kmETH: {
@@ -144,7 +144,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'kmEth',
+    symbol: 'kmETH',
     icon: '',
   },
   rmETH: {
@@ -152,7 +152,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'rmEth',
+    symbol: 'rmETH',
     icon: '',
   },
   instETH: {
