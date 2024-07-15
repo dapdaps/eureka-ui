@@ -4,14 +4,18 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 
+import useTokenBalance from '@/components/Bridge/hooks/useTokenBalance';
 import CopyButton from '@/components/CopyButton';
 import { chains } from '@/config/bridge';
 import useAccount from '@/hooks/useAccount';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import { useUserStore } from '@/stores/user';
+import type { Token } from '@/types';
 import { ellipsAccount } from '@/utils/account';
 import { copyText } from '@/utils/copy';
 import { LrtMenu } from '@/views/lrts/components';
+import useTokens from '@/views/lrts/hooks/useTokens';
+
 interface Props {
   children: ReactNode;
 }
@@ -46,6 +50,7 @@ const StyledHead = styled.header`
   }
   .sub-menu {
     position: absolute;
+    z-index: 2;
     top: 36px;
     padding-top: 10px;
     right: 0;
@@ -59,6 +64,21 @@ const StyledHead = styled.header`
       border: 1px solid #3f3f3f;
       background: #2f2f2f;
       padding: 22px;
+    }
+    .menu-balance {
+      display: flex;
+      align-items: center;
+      height: 43px;
+      padding: 0 13px;
+      border-radius: 4px;
+      border: 1px solid #3f3f3f;
+      background: #2f2f2f;
+      color: #fff;
+      font-family: Orbitron;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
     }
     .menu-item {
       display: flex;
@@ -137,6 +157,11 @@ export function LrtLayout({ children }: Props) {
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
   const currentChain: any = connectedChain?.id ? chains[Number(connectedChain?.id)] : null;
 
+  const tokens = useTokens();
+  const currentToken = tokens?.filter((token: any) => token.isNative)[0] as Token;
+
+  const { balance, loading } = useTokenBalance({ tokensByChain: currentToken });
+
   const dropdownAnimations = {
     active: {
       opacity: [0, 1],
@@ -187,6 +212,8 @@ export function LrtLayout({ children }: Props) {
                     tooltipFontSize={12}
                   />
                 </div>
+                <div className="menu-balance">{Number(balance).toFixed(3)} ETH</div>
+
                 <div className="menu-item" onClick={onDisconnect}>
                   <span className="disconnnect">Disconnect</span>
                   <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
