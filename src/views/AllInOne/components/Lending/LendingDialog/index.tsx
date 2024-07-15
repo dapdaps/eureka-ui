@@ -438,8 +438,7 @@ const LendingDialog = (props: IProps) => {
                       }));
                     }}
                   >
-                    Available  
-                    <Balance>{formatBalance()}</Balance>
+                    &nbsp;Available&nbsp;<Balance>{formatBalance()}</Balance>
                   </BalanceWrapper>
                 </InputBalance>
                 {isSupply && (
