@@ -8,6 +8,7 @@ import StakeModal from './components/modal/stake';
 import type { CardData } from './components/tab-card';
 import LSTS_DATA from './config/data';
 import { Banner, Container, Desc, Title } from './styles/index.style';
+import { ethereum } from '@/config/tokens/ethereum';
 
 enum CardType {
   LST = 'LST',
@@ -24,7 +25,7 @@ const Home = () => {
   const [isShowNpc, setIsShowNpc] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialSlide);
 
-  const [curLrtSymbol, setCurLrtSymbol] = useState('');
+  const [curLrt, setCurLrt] = useState<any>(null);
   const [actionType, setActionType] = useState<ActionType>();
   const [cardType, setCardType] = useState(CardType.LST);
   const [cardData, setCardData] = useState<CardData>({
@@ -56,8 +57,8 @@ const Home = () => {
     console.log('click lst', activeIndex, LSTS_DATA[activeIndex]);
   };
 
-  const handleClickGem = (lrtSymbol: string) => {
-    setCurLrtSymbol(lrtSymbol);
+  const handleClickGem = (lrt: any) => {
+    setCurLrt(lrt);
     setCardType(CardType.LRT);
     const { token, dapp } = LSTS_DATA[currentIndex];
     //TODO
@@ -72,9 +73,8 @@ const Home = () => {
   };
 
   const handleShowModal = (_actionType: ActionType) => {
-    console.log(_actionType, chainId, curLrtSymbol, LSTS_DATA[currentIndex]);
-
     setActionType(_actionType);
+    console.log('=_actionType', _actionType)
     setIsShowStakeModal(true);
   };
 
@@ -101,12 +101,12 @@ const Home = () => {
           className="mySwiper"
           slideToClickedSlide={true}
           onSlideChange={handleSlideChange}
-          // on={{setTranslate:function(){
-          //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
-          //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
-          // slide.css('opacity',(1-Math.abs(progress)/6));
-          //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
-          // }}}
+        // on={{setTranslate:function(){
+        //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
+        //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
+        // slide.css('opacity',(1-Math.abs(progress)/6));
+        //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
+        // }}}
         >
           {LSTS_DATA.map((item) => (
             <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
@@ -127,11 +127,10 @@ const Home = () => {
             logo: LSTS_DATA[currentIndex].dapp.logo,
           }}
           actionType={actionType as ActionType}
-          token0={actionType === ActionType.STAKE ? 'ETH' : LSTS_DATA[currentIndex].token?.symbol}
-          token1={actionType === ActionType.STAKE ? LSTS_DATA[currentIndex].token?.symbol : curLrtSymbol}
+          token0={actionType === ActionType.STAKE ? ethereum['eth'] : LSTS_DATA[currentIndex].token}
+          token1={actionType === ActionType.STAKE ? LSTS_DATA[currentIndex].token : curLrt}
           chainId={chainId as number}
-          show={showModal}
-          setShow={setShowModal}
+          setShow={setIsShowStakeModal}
         />
       ) : null}
     </Container>

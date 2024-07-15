@@ -92,7 +92,7 @@ export const ethereum: { [key: string]: Token } = {
     icon: 'https://etherscan.io/token/images/kelprseth_32.png',
   },
   stETH: {
-    address: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
+    address: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
     chainId: CHAIN_ID,
     decimals: 18,
     name: 'Liquid staked Ether 2.0',
@@ -123,36 +123,36 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'sfrxETH',
     icon: '',
   },
-  inmEth: {
+  inmETH: {
     address: '0xecf3672a6d2147e2a77f07069fb48d8cf6f6fbf9',
     chainId: CHAIN_ID,
     decimals: 18,
     name: 'Inception Restaked mETH',
-    symbol: 'inmEth',
+    symbol: 'inmETH',
     icon: '',
   },
-  mmEth: {
+  mmETH: {
     address: '0x8a053350ca5f9352a16ded26ab333e2d251dad7c',
     chainId: CHAIN_ID,
     decimals: 18,
     name: 'mmETH',
-    symbol: 'mmEth',
+    symbol: 'mmETH',
     icon: '',
   },
-  kmEth: {
+  kmETH: {
     address: '0x46c64C1630f320b890d765E7C6F901574924b0C7',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'kmEth',
+    symbol: 'kmETH',
     icon: '',
   },
-  rmEth: {
+  rmETH: {
     address: '0xcC9F8c2A6366556e1899e40782B7076Db87dcE27',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'rmEth',
+    symbol: 'rmETH',
     icon: '',
   },
   instETH: {
@@ -195,28 +195,28 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'rstETH',
     icon: '',
   },
-  inrEth: {
+  inrETH: {
     address: '0x80d69e79258fe9d056c822461c4eb0b4ca8802e2',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'inrEth',
+    symbol: 'inrETH',
     icon: '',
   },
-  krEth: {
+  krETH: {
     address: '0xf02c96dbbb92dc0325ad52b3f9f2b951f972bf00',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'krEth',
+    symbol: 'krETH',
     icon: '',
   },
-  mrEth: {
+  mrETH: {
     address: '0xd05728038681bcc79b2d5aeb4d9b002e66c93a40',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'mrEth',
+    symbol: 'mrETH',
     icon: '',
   },
 };

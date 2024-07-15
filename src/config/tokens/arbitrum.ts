@@ -307,4 +307,12 @@ export const arbitrum: { [key: string]: Token } = {
     name: 'Staked Frax Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreiaq5taf3cuvvqar5qbqpqzbj5ys2xx2skgstbaorxgxchtswispmi',
   },
+  stETH: {
+    address: '0x4186BFC76E2E237523CBC30FD220FE055156b41F',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: 'Liquid staked Ether 2.0',
+    symbol: 'stETH',
+    icon: '',
+  },
 };

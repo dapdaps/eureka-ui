@@ -1,14 +1,13 @@
+import useAccount from '@/hooks/useAccount';
+import useToast from '@/hooks/useToast';
+// import { ethereum } from '@/config/tokens/ethereum';
 import { useSetChain } from '@web3-onboard/react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 
-import useAccount from '@/hooks/useAccount';
-import useToast from '@/hooks/useToast';
-
 import BaseComponent from '../components/base-component';
 
-const stETH = '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84';
 const stETH_ABI = [
   {
     constant: true,
@@ -130,7 +129,7 @@ const WITHDRAWAL_QUEUE_ABI = [
 ];
 
 const Lido = function (props: any) {
-  const { actionType, setShow } = props;
+  const { actionType, setShow, token0, token1 } = props;
   const toast = useToast();
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -141,21 +140,9 @@ const Lido = function (props: any) {
   const [approved, setApproved] = useState(true);
   const [approving, setApproving] = useState(false);
 
-  const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0.01;
-
-  const firstToken = {
-    icon: '',
-    symbol: 'ETH',
-    decimals: 18,
-  };
-  const secondToken = {
-    icon: '',
-    symbol: 'stETH',
-    decimals: 18,
-  };
-
-  const inToken = ['stake', 'restake'].includes(actionType) ? firstToken : secondToken;
-  const outToken = ['stake', 'restake'].includes(actionType) ? secondToken : firstToken;
+  const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0;
+  const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1;
+  const outToken = ['stake', 'restake'].includes(actionType) ? token1 : token0;
 
   const isInSufficient = useMemo(() => {
     if (['stake', 'restake'].includes(actionType)) {
@@ -173,18 +160,23 @@ const Lido = function (props: any) {
     return await provider.getBalance(account);
   };
   const handleQueryStakedAmount = async function () {
-    const contract = new ethers.Contract(stETH, stETH_ABI, provider?.getSigner());
+    const contract = new ethers.Contract(token1?.address, stETH_ABI, provider?.getSigner());
     return await contract.balanceOf(account);
   };
   const handleQueryData = async function () {
-    const apyResult = await handleQueryApy();
-    const availableAmountResult = await handleQueryAvailableAmount();
-    const stakedAmountResult = await handleQueryStakedAmount();
-    setData({
-      availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
-      stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
-      apy: apyResult?.data?.smaApr,
-    });
+    try {
+      const apyResult = await handleQueryApy();
+      const availableAmountResult = await handleQueryAvailableAmount();
+      const stakedAmountResult = await handleQueryStakedAmount();
+      setData({
+        availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
+        stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
+        apy: apyResult?.data?.smaApr,
+        exchangeRate: 1
+      });
+    } catch (error) {
+      console.log('error:', error)
+    }
   };
   const handleApprove = async function () {
     // const contract = new ethers.Contract(mETH, mETH_ABI, provider?.getSigner())
@@ -224,8 +216,8 @@ const Lido = function (props: any) {
     setOutAmount(amount);
   };
   const handleGetNonce = async function () {
-    const contract = new ethers.Contract(stETH, stETH_ABI, provider?.getSigner());
-    return await contract.nonces(account);
+    const contract = new ethers.Contract(token1.address, stETH_ABI, provider?.getSigner());
+    return await contract.nonces(account)
   };
   const handleGetSignPermit = async function () {
     const signer = provider?.getSigner();
@@ -233,13 +225,13 @@ const Lido = function (props: any) {
     const spender = WITHDRAWAL_QUEUE;
     const value = ethers.utils.parseUnits(inAmount as string, inToken.decimals);
     const nonce = await handleGetNonce();
-    console.log('=nonce', nonce);
+    console.log('=nonce', nonce)
     const deadline = Math.floor(new Date().getTime() / 1000) + 3600;
     const domain = {
       name: 'Liquid staked Ether 2.0',
       version: '2',
       chainId: 1,
-      verifyingContract: stETH,
+      verifyingContract: token1.address,
     };
     const types = {
       Permit: [
@@ -274,7 +266,7 @@ const Lido = function (props: any) {
   const handleStake = async function () {
     setIsLoading(true);
     const contract = ['stake', 'restake'].includes(actionType)
-      ? new ethers.Contract(stETH, stETH_ABI, provider?.getSigner())
+      ? new ethers.Contract(token1.address, stETH_ABI, provider?.getSigner())
       : new ethers.Contract(WITHDRAWAL_QUEUE, WITHDRAWAL_QUEUE_ABI, provider?.getSigner());
 
     const amount = Big(inAmount).mul(Big(10).pow(18)).toFixed(0);
@@ -285,13 +277,18 @@ const Lido = function (props: any) {
     if (['stake', 'restake'].includes(actionType)) {
       contractArguments = ['0x0000000000000000000000000000000000000000', { value: amount }];
     } else {
-      const { value, deadline, v, r, s } = await handleGetSignPermit();
-      contractArguments = [amount, account, [value, deadline, v, r, s]];
+      try {
+        const { value, deadline, v, r, s } = await handleGetSignPermit();
+        contractArguments = [[amount], account, [value, deadline, v, r, s]];
+      } catch (error) {
+        console.log('=error', error)
+        setIsLoading(false)
+        return
+      }
     }
     const toastId = toast?.loading({
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
-    console.log('===contractArguments', contractArguments);
     contractMethord(...contractArguments)
       .then((tx: any) => tx.wait())
       .then((result: any) => {
@@ -304,7 +301,6 @@ const Lido = function (props: any) {
         });
       })
       .catch((error: any) => {
-        console.log('=error', error);
         setIsLoading(false);
         toast?.dismiss(toastId);
         toast?.fail({
@@ -313,7 +309,6 @@ const Lido = function (props: any) {
       });
   };
   const handleAddMetaMask = function () { };
-
   useEffect(() => {
     provider && handleQueryData();
   }, [provider]);

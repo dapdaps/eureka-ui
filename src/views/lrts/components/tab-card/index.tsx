@@ -176,6 +176,7 @@ const TabCard: FC<IProps> = ({ type, data, handleStake }) => {
 
   const handleClick = () => {
     const _type = type === 'LST' ? ActionType.STAKE : ActionType.UNSTAKE;
+    console.log('=_type', _type)
     handleStake(_type);
   };
 
