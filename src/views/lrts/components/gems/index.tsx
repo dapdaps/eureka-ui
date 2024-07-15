@@ -63,9 +63,27 @@ const Wrap = styled.section`
     left: 0;
     right: 0;
     top: 12px;
+    padding: 0 10px;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    color: #fff;
+    font-family: Orbitron;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    img {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+    }
+  }
+  .item-gem-apr {
+    position: absolute;
+    left: 12px;
+    bottom: 12px;
     color: #fff;
     font-family: Orbitron;
     font-size: 18px;
@@ -166,10 +184,14 @@ const Stones: FC<IProps> = ({ data, onClick }) => {
           }}
         >
           <div className="item-gem-content">
-            <div className="item-gem-head">{_currentGem?.token?.symbol}</div>
+            <div className="item-gem-head">
+              <img src={_currentGem?.token?.icon} alt="" />
+              {_currentGem?.token?.symbol}
+            </div>
             <GemLight>
               <GemImage src={_currentGem.logo} />
             </GemLight>
+            <div className="item-gem-apr">3.23%</div>
           </div>
         </div>
       );

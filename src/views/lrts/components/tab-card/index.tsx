@@ -223,7 +223,7 @@ const TabCard: FC<IProps> = ({ type, data, handleStake }) => {
         <div className="right">
           <div>
             <ItemName>Balance</ItemName>
-            <ItemValue>{data.balance}</ItemValue>
+            <ItemValue>{Number(data.balance).toFixed(3)}</ItemValue>
           </div>
           <ItemLink href={'/lrts/earning'}>Earn more on L2...</ItemLink>
         </div>

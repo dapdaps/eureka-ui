@@ -6,7 +6,7 @@ const LSTS_DATA = [
     lstIcon: '/images/lrts/box_1.svg',
     dapp: {
       name: 'Mantle',
-      logo: '', //TODO
+      logo: '/images/lrts/dapp-mantle.svg',
     },
 
     token: {
@@ -44,7 +44,7 @@ const LSTS_DATA = [
     lstIcon: '/images/lrts/box_2.svg',
     dapp: {
       name: 'Lido',
-      logo: '',
+      logo: '/images/lrts/dapp-lido.svg',
     },
     token: {
       ...ethereum['stETH'],
@@ -99,7 +99,7 @@ const LSTS_DATA = [
     lstIcon: '/images/lrts/box_3.svg',
     dapp: {
       name: 'Rocket Pool',
-      logo: '',
+      logo: '/images/lrts/dapp-rocket.svg',
     },
     token: {
       ...ethereum['rETH'],
@@ -130,7 +130,7 @@ const LSTS_DATA = [
     lstIcon: '/images/lrts/box_4.svg',
     dapp: {
       name: 'Frax Finance',
-      logo: '',
+      logo: '/images/lrts/dapp-frax.svg',
     },
     token: {
       ...ethereum['sfrxETH'],

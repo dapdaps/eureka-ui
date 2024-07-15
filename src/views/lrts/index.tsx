@@ -61,7 +61,7 @@ const Home = () => {
       dappLogo: dapp.logo,
       apr: 0,
       tvl: 0,
-      balance: 0,
+      balance: token?.balance || 0,
     });
     console.log('click lst', activeIndex, lrtsData[activeIndex]);
   };
@@ -77,7 +77,7 @@ const Home = () => {
       dappLogo: dapp.logo,
       apr: 0,
       tvl: 0,
-      balance: 0,
+      balance: token?.balance || 0,
     });
   };
 
@@ -102,9 +102,9 @@ const Home = () => {
           initialSlide={initialSlide}
           pagination={{ clickable: true, el: '.swiper-pagination' }}
           // navigation={navigation}
-          navigation={{
-            nextEl: '.next',
-          }}
+          // navigation={{
+          //   nextEl: '.next',
+          // }}
           // modules={modules}
           slidesPerView={4}
           className="mySwiper"
@@ -117,8 +117,24 @@ const Home = () => {
           //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
           // }}}
         >
-          {lrtsData.map((item) => (
-            <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
+          {lrtsData.map((item: any) => (
+            <SwiperSlide key={item.key}>
+              {() => {
+                return (
+                  <div className="lst-content">
+                    <span className="lst-title">{item.token.symbol}</span>
+                    <span className="dapp-info">
+                      <img src={item.dapp.logo} alt="dapp" />
+                      {item.dapp.name}
+                    </span>
+                    <span className="lst-range">APR RANGE</span>
+                    <span className="min-apr">2.3% -</span>
+                    <span className="max-apr">5.3%</span>
+                    <img className="lst-img" src={item.lstIcon} alt="lst" />
+                  </div>
+                );
+              }}
+            </SwiperSlide>
           ))}
         </Swiper>
       </Banner>
