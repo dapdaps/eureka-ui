@@ -84,8 +84,9 @@ export default function TokenSelector({ currency, tokens, onSelect }: any) {
       {showMenu && (
         <StyledMenuWrapper {...container}>
           <StyledMenu>
-            {tokens.map((token: any) => (
+            {tokens.map((token: any, index: number) => (
               <StyledMenuItem
+                key={index}
                 onClick={() => {
                   onSelect(token);
                 }}

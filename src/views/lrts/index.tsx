@@ -74,6 +74,7 @@ const Home = () => {
 
   const handleShowModal = (_actionType: ActionType) => {
     setActionType(_actionType);
+    console.log('=_actionType', _actionType)
     setIsShowStakeModal(true);
   };
 

@@ -83,7 +83,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'ezETH',
     icon: 'https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png',
   },
-  rsEth: {
+  rsETH: {
     address: '0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7',
     chainId: CHAIN_ID,
     symbol: 'rsETH',
@@ -91,7 +91,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'rsETH',
     icon: 'https://etherscan.io/token/images/kelprseth_32.png',
   },
-  stEth: {
+  stETH: {
     address: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -99,7 +99,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'stETH',
     icon: '',
   },
-  mEth: {
+  mETH: {
     address: '0xd5f7838f5c461feff7fe49ea5ebaf7728bb0adfa',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -107,7 +107,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'mETH',
     icon: '',
   },
-  rEth: {
+  rETH: {
     address: '0xae78736cd615f374d3085123a210448e74fc6393',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -115,7 +115,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'rETH',
     icon: '',
   },
-  sfrxEth: {
+  sfrxETH: {
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -123,7 +123,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'sfrxETH',
     icon: '',
   },
-  inmEth: {
+  inmETH: {
     address: '0xecf3672a6d2147e2a77f07069fb48d8cf6f6fbf9',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -131,7 +131,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'inmEth',
     icon: '',
   },
-  mmEth: {
+  mmETH: {
     address: '0x8a053350ca5f9352a16ded26ab333e2d251dad7c',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -139,7 +139,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'mmEth',
     icon: '',
   },
-  kmEth: {
+  kmETH: {
     address: '0x46c64C1630f320b890d765E7C6F901574924b0C7',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -147,7 +147,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'kmEth',
     icon: '',
   },
-  rmEth: {
+  rmETH: {
     address: '0xcC9F8c2A6366556e1899e40782B7076Db87dcE27',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -155,7 +155,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'rmEth',
     icon: '',
   },
-  instEth: {
+  instETH: {
     address: '0x7fa768e035f956c41d6aeaa3bd857e7e5141cad5',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -163,7 +163,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'instETH',
     icon: '',
   },
-  mstEth: {
+  mstETH: {
     address: '0x49446a0874197839d15395b908328a74ccc96bc0',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -171,7 +171,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'mstETH',
     icon: '',
   },
-  pufEth: {
+  pufETH: {
     address: '0xd9a442856c234a39a81a089c06451ebaa4306a72',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -179,7 +179,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'pufETH',
     icon: '',
   },
-  weEth: {
+  weETH: {
     address: '0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -187,36 +187,36 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'weETH',
     icon: '',
   },
-  rstEth: {
+  rstETH: {
     address: '',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'rstEth',
+    symbol: 'rstETH',
     icon: '',
   },
-  inrEth: {
+  inrETH: {
     address: '0x80d69e79258fe9d056c822461c4eb0b4ca8802e2',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'inrEth',
+    symbol: 'inrETH',
     icon: '',
   },
-  krEth: {
+  krETH: {
     address: '0xf02c96dbbb92dc0325ad52b3f9f2b951f972bf00',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'krEth',
+    symbol: 'krETH',
     icon: '',
   },
-  mrEth: {
+  mrETH: {
     address: '0xd05728038681bcc79b2d5aeb4d9b002e66c93a40',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'mrEth',
+    symbol: 'mrETH',
     icon: '',
   },
 };
