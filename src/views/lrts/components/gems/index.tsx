@@ -49,6 +49,7 @@ const Wrap = styled.section`
     }
   }
   .item-gem-content {
+    position: relative;
     width: 90%;
     height: 90%;
     display: flex;
@@ -56,6 +57,21 @@ const Wrap = styled.section`
     justify-content: center;
     background: url(/images/lrts/pad-empty.svg) no-repeat;
     background-size: contain;
+  }
+  .item-gem-head {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+    font-family: Orbitron;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
   .item-rock {
     background: url(/images/lrts/pad-rock.svg) no-repeat #151515;
@@ -150,6 +166,7 @@ const Stones: FC<IProps> = ({ data, onClick }) => {
           }}
         >
           <div className="item-gem-content">
+            <div className="item-gem-head">{_currentGem?.token?.symbol}</div>
             <GemLight>
               <GemImage src={_currentGem.logo} />
             </GemLight>
