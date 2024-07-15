@@ -9,6 +9,7 @@ import { usePriceStore } from '@/stores/price';
 
 import { Gems, NpcDialog, TabCard } from './components';
 import StakeModal from './components/modal/stake';
+import SwapModal from './components/modal/swap';
 import type { CardData } from './components/tab-card';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
 import { Banner, Container, Desc, Title } from './styles/index.style';
@@ -40,7 +41,6 @@ const Home = () => {
     tvl: 0,
     balance: 0,
   });
-  const [showModal, setShowModal] = useState(true);
 
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
@@ -48,6 +48,7 @@ const Home = () => {
   console.log('lrtsData----', lrtsData);
 
   const { loading, balances } = useAllTokensBalance();
+  const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
     setIsShowNpc(true);
@@ -81,10 +82,13 @@ const Home = () => {
     });
   };
 
-  const handleShowModal = (_actionType: ActionType) => {
+  const handleShowModal = (_actionType: any) => {
     setActionType(_actionType);
-    console.log('=_actionType', _actionType);
-    setIsShowStakeModal(true);
+    if (_actionType === 'swap') {
+      setShowSwapModal(true);
+    } else {
+      setIsShowStakeModal(true);
+    }
   };
 
   return (
@@ -158,6 +162,7 @@ const Home = () => {
           setShow={setIsShowStakeModal}
         />
       ) : null}
+      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={lrtsData[currentIndex].token} />
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import chains from '@/config/chains';
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import ConnectButton from '../../connect-wallet';
@@ -13,18 +13,18 @@ const BaseButton = ({ children, onClick }: any) => {
   );
 };
 
-export default function Button({ errorTips, loading, onClick }: any) {
-  const { account, chainId } = useAccount();
+export default function Button({ errorTips, loading, chainId, onClick }: any) {
+  const { account, chainId: currentChainId } = useAccount();
 
   if (!account || !chainId) {
     return <ConnectButton block />;
   }
-  if (chainId !== 1) {
+  if (chainId !== currentChainId) {
     return (
       <SwitchNetwork
         chain={{
-          chain_id: 1,
-          name: 'Ethereum',
+          chain_id: chainId,
+          name: chains[chainId].chainName,
         }}
         block
       />

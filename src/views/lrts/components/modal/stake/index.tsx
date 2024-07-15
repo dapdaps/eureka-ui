@@ -2,7 +2,8 @@ import { lazy } from 'react';
 import Lido from './modules/lido';
 import Mantle from './modules/mantle';
 import RocketPool from './modules/rocket-pool';
-import KelpDao from './modules/kelp-dao'
+import KelpDao from './modules/kelp-dao';
+import Karak from './modules/karak';
 // const Lido = lazy(() => import('./modules/lido'));
 // const Mantle = lazy(() => import('./modules/mantle'));
 // const RocketPool = lazy(() => import('./modules/rocket-pool'));
@@ -14,7 +15,8 @@ const ComponentMapping: any = {
   Lido,
   Mantle,
   RocketPool,
-  KelpDao
+  KelpDao,
+  Karak,
 };
 const Index = function (props: {
   dapp: {
@@ -29,18 +31,12 @@ const Index = function (props: {
 }) {
   const { dapp, setShow, actionType, token0, token1, chainId } = props;
   const VmComponent = ComponentMapping[dapp?.name];
-  console.log('==props', props)
+  console.log('==props', props);
   return (
     <StyledModal>
       <StyledOverlay />
       <StyledModalBody>
-        <VmComponent
-          actionType={actionType}
-          setShow={setShow}
-          token0={token0}
-          token1={token1}
-          chainId={chainId}
-        />
+        <VmComponent actionType={actionType} setShow={setShow} token0={token0} token1={token1} chainId={chainId} />
       </StyledModalBody>
     </StyledModal>
   );

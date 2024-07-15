@@ -14,10 +14,16 @@ import { StyledContainer, StyledHeader, StyledHeaderTitle } from './styles';
 
 const SwapModal = ({ show, setShow, token0, chainId }: any) => {
   const [errorTips, setErrorTips] = useState('');
-  const { inputCurrency, outputCurrency, setOutputCurrency } = useTokens('stEth');
+  const { inputCurrency, outputCurrency, setOutputCurrency } = useTokens(token0);
   const selectableTokens = useSelectTokens(inputCurrency);
-  const { tokenBalance, isLoading: tokenLoading } = useTokenBalance(inputCurrency?.address, inputCurrency?.decimals);
-  const { trade, loading, inputAmount, setInputAmount, swap } = useTrade(inputCurrency, outputCurrency);
+  const {
+    tokenBalance,
+    isLoading: tokenLoading,
+    update,
+  } = useTokenBalance(inputCurrency?.address, inputCurrency?.decimals);
+  const { trade, loading, inputAmount, setInputAmount, swap } = useTrade(inputCurrency, outputCurrency, () => {
+    update();
+  });
 
   useEffect(() => {
     if (Number(inputAmount || 0) === 0) {
@@ -80,7 +86,7 @@ const SwapModal = ({ show, setShow, token0, chainId }: any) => {
               }}
             />
             <Result outputCurrency={outputCurrency} trade={trade} />
-            <Button errorTips={errorTips} loading={loading} onClick={swap} />
+            <Button errorTips={errorTips} loading={loading} onClick={swap} chainId={inputCurrency.chainId} />
             <CloseBtn
               onClick={() => {
                 setShow(false);
