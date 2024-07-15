@@ -1,114 +1,114 @@
 export const tokens: Record<string, any> = {
-  stEth: {
+  stETH: {
     icon: '/images/lrts/box_2.svg',
     color: 'rgba(102, 200, 255, 0.60)',
     width: 104,
     isLST: true,
-    key: 'stEth',
+    key: 'stETH',
   },
-  rEth: {
+  rETH: {
     icon: '/images/lrts/box_3.svg',
     color: 'rgba(254, 185, 3, 0.60)',
     width: 104,
     isLST: true,
-    key: 'rEth',
+    key: 'rETH',
   },
-  mEth: {
+  mETH: {
     icon: '/images/lrts/box_1.svg',
     color: 'rgba(116, 20, 33, 0.60)',
     width: 104,
     isLST: true,
-    key: 'mEth',
+    key: 'mETH',
   },
-  sfrxEth: {
+  sfrxETH: {
     icon: '/images/lrts/box_4.svg',
     color: 'rgba(255, 255, 255, 0.60)',
     width: 104,
     isLST: true,
-    key: 'sfrxEth',
+    key: 'sfrxETH',
   },
-  inmEth: {
+  inmETH: {
     icon: '/images/lrts/gem-inmeth.svg',
     color: 'rgba(255, 233, 235, 0.60)',
     width: 52,
-    key: 'inmEth',
+    key: 'inmETH',
   },
-  mmEth: {
+  mmETH: {
     icon: '/images/lrts/gem-mmeth.svg',
     color: 'rgba(123, 131, 178, 0.60)',
     width: 54,
-    key: 'mmEth',
+    key: 'mmETH',
   },
-  kmEth: {
+  kmETH: {
     icon: '/images/lrts/gem-kmeth.svg',
     color: 'rgba(246, 83, 103, 0.60)',
     width: 70,
-    key: 'kmEth',
+    key: 'kmETH',
   },
-  rmEth: {
+  rmETH: {
     icon: '/images/lrts/gem-rmeth.svg',
     color: 'rgba(0,157,250,0.60)',
     width: 76,
-    key: 'rmEth',
+    key: 'rmETH',
   },
-  rsEth: {
+  rsETH: {
     icon: '/images/lrts/gem-rseth.svg',
     color: 'rgba(18, 99, 42, 0.60)',
     width: 76,
-    key: 'rsEth',
+    key: 'rsETH',
   },
-  instEth: {
+  instETH: {
     icon: '/images/lrts/gem-insteth.svg',
     color: 'rgba(255, 255, 255, 0.60)',
     width: 80,
-    key: 'instEth',
+    key: 'instETH',
   },
-  mstEth: {
+  mstETH: {
     icon: '/images/lrts/gem-msteth.svg',
     color: 'rgba(255, 255, 255, 0.60)',
     width: 87,
-    key: 'mstEth',
+    key: 'mstETH',
   },
-  pufEth: {
+  pufETH: {
     icon: '/images/lrts/gem-pufeth.svg',
     color: 'rgba(67, 241, 95, 0.60)',
     width: 93,
-    key: 'pufEth',
+    key: 'pufETH',
   },
-  weEth: {
+  weETH: {
     icon: '/images/lrts/gem-weeth.svg',
     color: 'rgba(103, 191, 255, 0.60)',
     width: 83,
-    key: 'weEth',
+    key: 'weETH',
   },
-  ezEth: {
+  ezETH: {
     icon: '/images/lrts/gem-ezeth.svg',
     color: 'rgba(164, 228, 23, 0.60)',
     width: 103,
     key: 'ezETH',
   },
-  rstEth: {
+  rstETH: {
     icon: '/images/lrts/gem-rsteth.svg',
     color: 'rgba(255, 188, 0, 0.60)',
     width: 93,
-    key: 'rstEth',
+    key: 'rstETH',
   },
-  inrEth: {
+  inrETH: {
     icon: '/images/lrts/gem-inreth.svg',
     color: 'rgba(255, 255, 255, 0.60)',
     width: 80,
-    key: 'inrEth',
+    key: 'inrETH',
   },
-  krEth: {
+  krETH: {
     icon: '/images/lrts/gem-kreth.svg',
     color: 'rgba(253, 196, 135, 0.60)',
     width: 80,
-    key: 'krEth',
+    key: 'krETH',
   },
-  mrEth: {
+  mrETH: {
     icon: '/images/lrts/gem-mreth.svg',
     color: 'rgba(255, 182, 130, 0.60)',
     width: 80,
-    key: 'mrEth',
+    key: 'mrETH',
   },
 };
