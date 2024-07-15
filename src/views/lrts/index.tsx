@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
-import useTokensBalance from '@/hooks/useTokensBalance';
 import { useLrtDataStore } from '@/stores/lrts';
 import { usePriceStore } from '@/stores/price';
 
