@@ -4,7 +4,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import useAccount from '@/hooks/useAccount';
 
 import { Gems, NpcDialog, TabCard } from './components';
-import StakeModal from './components/modal/stake';
+import Modal from './components/modal';
 import type { CardData } from './components/tab-card';
 import LSTS_DATA from './config/data';
 import { Banner, Container, Desc, Title } from './styles/index.style';
@@ -35,9 +35,7 @@ const Home = () => {
     tvl: 0,
     balance: 0,
   });
-  const [showModal, setShowModal] = useState(true);
-
-  const [isShowStakeModal, setIsShowStakeModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
     setIsShowNpc(true);
@@ -72,10 +70,8 @@ const Home = () => {
   };
 
   const handleShowModal = (_actionType: ActionType) => {
-    console.log(_actionType, chainId, curLrtSymbol, LSTS_DATA[currentIndex]);
-
     setActionType(_actionType);
-    setIsShowStakeModal(true);
+    setShowModal(true);
   };
 
   return (
@@ -120,20 +116,18 @@ const Home = () => {
 
       {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
 
-      {isShowStakeModal ? (
-        <StakeModal
-          dapp={{
-            name: LSTS_DATA[currentIndex].dapp.name,
-            logo: LSTS_DATA[currentIndex].dapp.logo,
-          }}
-          actionType={actionType as ActionType}
-          token0={actionType === ActionType.STAKE ? 'ETH' : LSTS_DATA[currentIndex].token?.symbol}
-          token1={actionType === ActionType.STAKE ? LSTS_DATA[currentIndex].token?.symbol : curLrtSymbol}
-          chainId={chainId as number}
-          show={showModal}
-          setShow={setShowModal}
-        />
-      ) : null}
+      <Modal
+        dapp={{
+          name: LSTS_DATA[currentIndex].dapp.name,
+          logo: LSTS_DATA[currentIndex].dapp.logo,
+        }}
+        actionType={actionType as ActionType}
+        token0={actionType === ActionType.STAKE ? 'ETH' : LSTS_DATA[currentIndex].token?.symbol}
+        token1={actionType === ActionType.STAKE ? LSTS_DATA[currentIndex].token?.symbol : curLrtSymbol}
+        chainId={chainId as number}
+        show={showModal}
+        setShow={setShowModal}
+      />
     </Container>
   );
 };

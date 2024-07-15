@@ -83,7 +83,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'ezETH',
     icon: 'https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png',
   },
-  rsETH: {
+  rsEth: {
     address: '0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7',
     chainId: CHAIN_ID,
     symbol: 'rsETH',
@@ -91,15 +91,15 @@ export const ethereum: { [key: string]: Token } = {
     name: 'rsETH',
     icon: 'https://etherscan.io/token/images/kelprseth_32.png',
   },
-  stETH: {
-    address: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
+  stEth: {
+    address: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
     chainId: CHAIN_ID,
     decimals: 18,
     name: 'Liquid staked Ether 2.0',
     symbol: 'stETH',
     icon: '',
   },
-  mETH: {
+  mEth: {
     address: '0xd5f7838f5c461feff7fe49ea5ebaf7728bb0adfa',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -107,7 +107,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'mETH',
     icon: '',
   },
-  rETH: {
+  rEth: {
     address: '0xae78736cd615f374d3085123a210448e74fc6393',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -115,7 +115,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'rETH',
     icon: '',
   },
-  sfrxETH: {
+  sfrxEth: {
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -155,7 +155,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'rmEth',
     icon: '',
   },
-  instETH: {
+  instEth: {
     address: '0x7fa768e035f956c41d6aeaa3bd857e7e5141cad5',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -163,7 +163,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'instETH',
     icon: '',
   },
-  mstETH: {
+  mstEth: {
     address: '0x49446a0874197839d15395b908328a74ccc96bc0',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -171,7 +171,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'mstETH',
     icon: '',
   },
-  pufETH: {
+  pufEth: {
     address: '0xd9a442856c234a39a81a089c06451ebaa4306a72',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -179,7 +179,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'pufETH',
     icon: '',
   },
-  weETH: {
+  weEth: {
     address: '0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
     chainId: CHAIN_ID,
     decimals: 18,
@@ -187,12 +187,12 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'weETH',
     icon: '',
   },
-  rstETH: {
+  rstEth: {
     address: '',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
-    symbol: 'rstETH',
+    symbol: 'rstEth',
     icon: '',
   },
   inrEth: {
