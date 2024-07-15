@@ -5,6 +5,7 @@ import useAccount from '@/hooks/useAccount';
 
 import { Gems, NpcDialog, TabCard } from './components';
 import StakeModal from './components/modal/stake';
+import SwapModal from './components/modal/swap';
 import type { CardData } from './components/tab-card';
 import LSTS_DATA from './config/data';
 import { Banner, Container, Desc, Title } from './styles/index.style';
@@ -36,9 +37,9 @@ const Home = () => {
     tvl: 0,
     balance: 0,
   });
-  const [showModal, setShowModal] = useState(true);
 
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
+  const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
     setIsShowNpc(true);
@@ -72,10 +73,13 @@ const Home = () => {
     });
   };
 
-  const handleShowModal = (_actionType: ActionType) => {
+  const handleShowModal = (_actionType: any) => {
     setActionType(_actionType);
-    console.log('=_actionType', _actionType)
-    setIsShowStakeModal(true);
+    if (_actionType === 'swap') {
+      setShowSwapModal(true);
+    } else {
+      setIsShowStakeModal(true);
+    }
   };
 
   return (
@@ -101,12 +105,12 @@ const Home = () => {
           className="mySwiper"
           slideToClickedSlide={true}
           onSlideChange={handleSlideChange}
-        // on={{setTranslate:function(){
-        //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
-        //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
-        // slide.css('opacity',(1-Math.abs(progress)/6));
-        //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
-        // }}}
+          // on={{setTranslate:function(){
+          //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
+          //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
+          // slide.css('opacity',(1-Math.abs(progress)/6));
+          //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
+          // }}}
         >
           {LSTS_DATA.map((item) => (
             <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
@@ -133,6 +137,7 @@ const Home = () => {
           setShow={setIsShowStakeModal}
         />
       ) : null}
+      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={LSTS_DATA[currentIndex].token} />
     </Container>
   );
 };

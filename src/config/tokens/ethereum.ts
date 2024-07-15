@@ -140,7 +140,7 @@ export const ethereum: { [key: string]: Token } = {
     icon: '',
   },
   kmETH: {
-    address: '0x46c64C1630f320b890d765E7C6F901574924b0C7',
+    address: '0x7c22725d1e0871f0043397c9761ad99a86ffd498',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
