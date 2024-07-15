@@ -89,6 +89,7 @@ export default function TokenSelector({ currency, tokens, onSelect }: any) {
                 onClick={() => {
                   onSelect(token);
                 }}
+                key={token.address}
               >
                 <StyledMenuToken key={token.address}>
                   <StyledMenuTokenIcon src={token.tokenIcon || '/images/tokens/default_icon.png'} />
