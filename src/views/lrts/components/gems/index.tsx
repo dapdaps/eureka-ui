@@ -146,7 +146,7 @@ const Stones: FC<IProps> = ({ data, onClick }) => {
           onClick={(e: any) => {
             console.log('click-gem--', _currentGem);
 
-            onClick(_currentGem.token?.symbol);
+            onClick(_currentGem.token);
           }}
         >
           <div className="item-gem-content">

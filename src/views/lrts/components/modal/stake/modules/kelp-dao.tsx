@@ -81,8 +81,80 @@ const LSP_STAKING_ABI = [{
 const UNSTAKE_REQUESTS_MANAGER = "0x38fDF7b489316e03eD8754ad339cb5c4483FDcf9"
 
 const UNSTAKE_REQUESTS_MANAGER_ABI = []
-// const mETH = "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
-const mETH_ABI = [{
+
+const LRT_DEPOSIT_POOL = "0x036676389e48133B63a802f8635AD39E752D375D"
+
+const LRT_DEPOSIT_POOL_ABI = [{
+  "inputs": [
+    {
+      "internalType": "address",
+      "name": "asset",
+      "type": "address"
+    },
+    {
+      "internalType": "uint256",
+      "name": "depositAmount",
+      "type": "uint256"
+    },
+    {
+      "internalType": "uint256",
+      "name": "minRSETHAmountExpected",
+      "type": "uint256"
+    },
+    {
+      "internalType": "string",
+      "name": "referralId",
+      "type": "string"
+    }
+  ],
+  "name": "depositAsset",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}]
+
+const FIRST_TOKEN_ABI = [{
+  constant: true,
+  inputs: [
+    {
+      name: '_account',
+      type: 'address',
+    },
+  ],
+  name: 'balanceOf',
+  outputs: [
+    {
+      name: '',
+      type: 'uint256',
+    },
+  ],
+  payable: false,
+  stateMutability: 'view',
+  type: 'function',
+}, {
+  "constant": true,
+  "inputs": [
+    {
+      "name": "_owner",
+      "type": "address"
+    },
+    {
+      "name": "_spender",
+      "type": "address"
+    }
+  ],
+  "name": "allowance",
+  "outputs": [
+    {
+      "name": "",
+      "type": "uint256"
+    }
+  ],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function"
+}]
+const SECOND_TOKEN_ABI = [{
   "inputs": [
     {
       "internalType": "address",
@@ -100,56 +172,10 @@ const mETH_ABI = [{
   ],
   "stateMutability": "view",
   "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    }
-  ],
-  "name": "allowance",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
-  "name": "approve",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ],
-  "stateMutability": "nonpayable",
-  "type": "function"
 }]
 
-const Mantle = function (props: any) {
-  const { actionType, setShow, token0, token1 } = props;
+const KelpDao = function (props: any) {
+  const { actionType, setShow } = props
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -160,21 +186,23 @@ const Mantle = function (props: any) {
   const [approved, setApproved] = useState(true)
   const [approving, setApproving] = useState(false)
 
-  const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0.01
+  const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.0001 : 0.01
 
-  // const firstToken = {
-  //   icon: '',
-  //   symbol: 'ETH',
-  //   decimals: 18,
-  // }
-  // const secondToken = {
-  //   icon: '',
-  //   symbol: 'mETH',
-  //   decimals: 18,
-  // }
+  const firstToken = {
+    icon: '',
+    symbol: 'stETH',
+    decimals: 18,
+    address: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84'
+  }
+  const secondToken = {
+    icon: '',
+    symbol: 'rsETH',
+    decimals: 18,
+    address: '0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7'
+  }
 
-  const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1
-  const outToken = ['stake', 'restake'].includes(actionType) ? token1 : token0
+  const inToken = ['stake', 'restake'].includes(actionType) ? firstToken : secondToken
+  const outToken = ['stake', 'restake'].includes(actionType) ? secondToken : firstToken
 
   const isInSufficient = useMemo(() => {
     if (['stake', 'restake'].includes(actionType)) {
@@ -185,38 +213,46 @@ const Mantle = function (props: any) {
   }, [data?.availableAmount, data?.stakedAmount, inAmount])
 
   const handleQueryApy = async function () {
-    const res = await fetch("/mantle/api/stats/apy")
+    const res = await fetch("https://universe.kelpdao.xyz/rseth/apy")
+    return res.json() as any
+  }
+  const handleQueryExchangeRate = async function () {
+    const res = await fetch("https://universe.kelpdao.xyz/rseth/exchangeRate/?lrtToken=stETH")
     return res.json() as any
   }
   const handleQueryAvailableAmount = async function () {
-    return await provider.getBalance(account)
+    const contract = new ethers.Contract(firstToken.address, FIRST_TOKEN_ABI, provider?.getSigner())
+    return await contract.balanceOf(account)
   }
   const handleQueryStakedAmount = async function () {
-    const contract = new ethers.Contract(token1.address, mETH_ABI, provider?.getSigner())
+    const contract = new ethers.Contract(secondToken.address, SECOND_TOKEN_ABI, provider?.getSigner())
     return await contract.balanceOf(account)
   }
   const handleQueryData = async function () {
+    console.log('=====11111=====')
     const apyResult = await handleQueryApy()
+    const exchangRateResult = await handleQueryExchangeRate()
     const availableAmountResult = await handleQueryAvailableAmount()
     const stakedAmountResult = await handleQueryStakedAmount()
+    console.log('=Big(1).div(exchangRateResult?.value).toFixed()', Big(1).div(exchangRateResult?.value).toFixed())
     setData({
       availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
       stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
-      apy: Big(apyResult?.data[0]?.FiveDayAPY).times(100).toFixed(),
-      exchangeRate: apyResult?.data[0]?.METHtoETH
+      apy: apyResult?.value,
+      exchangeRate: Big(1).div(exchangRateResult?.value).toFixed(4)
     })
   }
   const handleCheckApproval = async function (amount: number | string) {
-    const contract = new ethers.Contract(token1.address, mETH_ABI, provider?.getSigner())
+    const contract = new ethers.Contract(firstToken.address, FIRST_TOKEN_ABI, provider?.getSigner())
     const wei = ethers.utils.parseUnits(
       Big(amount).toFixed(18),
       18
     );
-    const allowance = await contract.allowance(account, LSP_STAKING)
+    const allowance = await contract.allowance(account, LRT_DEPOSIT_POOL)
     setApproved(!new Big(allowance.toString()).lt(wei.toString()))
   }
   const handleApprove = async function () {
-    const contract = new ethers.Contract(token1.address, mETH_ABI, provider?.getSigner())
+    const contract = new ethers.Contract(LRT_DEPOSIT_POOL, LRT_DEPOSIT_POOL_ABI, provider?.getSigner())
     const wei = ethers.utils.parseUnits(
       Big(inAmount).toFixed(18),
       18
@@ -226,8 +262,10 @@ const Mantle = function (props: any) {
     });
     setApproving(true)
     setIsLoading(true)
+    console.log('==firstToken.address', firstToken.address)
+    console.log('==wei', firstToken.address)
     contract
-      .approve(LSP_STAKING, wei)
+      .depositAsset(firstToken.address, wei, 0, "0x00")
       .then((tx: any) => tx.wait())
       .then((receipt: any) => {
         setApproved(true)
@@ -241,6 +279,7 @@ const Mantle = function (props: any) {
         });
       })
       .catch((error: any) => {
+        console.log('=error', error)
         setIsLoading(false)
         toast?.dismiss(toastId);
         toast?.fail({
@@ -251,21 +290,21 @@ const Mantle = function (props: any) {
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount)
     try {
-      const wei = Big(amount)
-        .mul(Big(10).pow(18))
-        .toFixed(0)
-      const contract = new ethers.Contract(LSP_STAKING, LSP_STAKING_ABI, provider?.getSigner())
       if (['stake', 'restake'].includes(actionType)) {
-        const result = await contract.ethToMETH(wei)
-        setOutAmount(ethers.utils.formatUnits(result, 18))
+        const _outAmount = Big(amount).times(data?.exchangeRate).toFixed()
+        setOutAmount(_outAmount)
+        handleCheckApproval(_outAmount)
       } else {
-        const result = await contract.mETHToETH(wei)
-        setOutAmount(ethers.utils.formatUnits(result, 18))
-        handleCheckApproval(ethers.utils.formatUnits(result, 18))
+        // const result = await contract.mETHToETH(wei)
+        // setOutAmount(ethers.utils.formatUnits(result, 18))
+        // handleCheckApproval(ethers.utils.formatUnits(result, 18))
       }
     } catch (error) {
       console.error('error: ', error)
     }
+  }
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
   }
   const handleStake = async function () {
     setIsLoading(true)
@@ -285,7 +324,6 @@ const Mantle = function (props: any) {
     const toastId = toast?.loading({
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
-    console.log('=contractArguments', contractArguments)
     contractMethord(...contractArguments)
       .then((tx: any) => tx.wait())
       .then((result: any) => {
@@ -315,6 +353,7 @@ const Mantle = function (props: any) {
     <BaseComponent
       componentProps={{
         data,
+        setShow,
         inAmount,
         outAmount,
         isLoading,
@@ -324,6 +363,7 @@ const Mantle = function (props: any) {
         actionType,
         inToken,
         outToken,
+        handleMax,
         isInSufficient,
         handleApprove,
         handleAmountChange,
@@ -333,4 +373,4 @@ const Mantle = function (props: any) {
     />
   )
 }
-export default Mantle
+export default KelpDao

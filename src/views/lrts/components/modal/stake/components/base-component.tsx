@@ -50,6 +50,7 @@ const BaseComponent = function (props: any) {
     actionType,
     inToken,
     outToken,
+    handleMax,
     isInSufficient,
     handleApprove,
     handleAmountChange,
@@ -109,12 +110,12 @@ const BaseComponent = function (props: any) {
         <StyledBottomContainer>
           <StyledTipsContainer>
             <StyledFirstTips>Stake</StyledFirstTips>
-            <StyledSecondTips>1 {inToken.symbol} = {data?.METHtoETH} {outToken.symbol}</StyledSecondTips>
+            <StyledSecondTips>1 {inToken.symbol} = {data?.exchangeRate} {outToken.symbol}</StyledSecondTips>
           </StyledTipsContainer>
           <StyledInputContainer>
             <StyledInput value={inAmount} type='number' placeholder='0.0' onChange={(event) => handleAmountChange(event.target.value)} />
             <StyledMaxAndSymbol>
-              <StyledMax>Max</StyledMax>
+              <StyledMax onClick={handleMax}>Max</StyledMax>
               <StyledSymbol>
                 <StyledSymbolImage />
                 <StyledSymbolTxt>{inToken.symbol}</StyledSymbolTxt>
