@@ -1,15 +1,18 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
+import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
+import useTokensBalance from '@/hooks/useTokensBalance';
+import { useLrtDataStore } from '@/stores/lrts';
+import { usePriceStore } from '@/stores/price';
 
 import { Gems, NpcDialog, TabCard } from './components';
 import StakeModal from './components/modal/stake';
 import SwapModal from './components/modal/swap';
 import type { CardData } from './components/tab-card';
-import LSTS_DATA from './config/data';
+import useAllTokensBalance from './hooks/useAllTokensBalance';
 import { Banner, Container, Desc, Title } from './styles/index.style';
-import { ethereum } from '@/config/tokens/ethereum';
 
 enum CardType {
   LST = 'LST',
@@ -25,6 +28,7 @@ const Home = () => {
   const initialSlide = 1;
   const [isShowNpc, setIsShowNpc] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialSlide);
+  // const prices = usePriceStore((store) => store.price);
 
   const [curLrt, setCurLrt] = useState<any>(null);
   const [actionType, setActionType] = useState<ActionType>();
@@ -39,13 +43,18 @@ const Home = () => {
   });
 
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
+
+  const lrtsData = useLrtDataStore((store: any) => store.data);
+  console.log('lrtsData----', lrtsData);
+
+  const { loading, balances } = useAllTokensBalance();
   const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
     setIsShowNpc(true);
     setCurrentIndex(activeIndex);
     setCardType(CardType.LST);
-    const { token, dapp } = LSTS_DATA[activeIndex];
+    const { token, dapp } = lrtsData[activeIndex];
     //TODO
     setCardData({
       tokenName: token.symbol as string,
@@ -55,13 +64,13 @@ const Home = () => {
       tvl: 0,
       balance: 0,
     });
-    console.log('click lst', activeIndex, LSTS_DATA[activeIndex]);
+    console.log('click lst', activeIndex, lrtsData[activeIndex]);
   };
 
   const handleClickGem = (lrt: any) => {
     setCurLrt(lrt);
     setCardType(CardType.LRT);
-    const { token, dapp } = LSTS_DATA[currentIndex];
+    const { token, dapp } = lrtsData[currentIndex];
     //TODO
     setCardData({
       tokenName: token.symbol as string,
@@ -112,13 +121,13 @@ const Home = () => {
           //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
           // }}}
         >
-          {LSTS_DATA.map((item) => (
+          {lrtsData.map((item: any) => (
             <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
           ))}
         </Swiper>
       </Banner>
 
-      <Gems data={LSTS_DATA[currentIndex].lrtTokens} onClick={handleClickGem} />
+      <Gems data={lrtsData[currentIndex].lrtTokens} onClick={handleClickGem} />
 
       <TabCard type={cardType} data={cardData} handleStake={handleShowModal} />
 
@@ -127,17 +136,17 @@ const Home = () => {
       {isShowStakeModal ? (
         <StakeModal
           dapp={{
-            name: LSTS_DATA[currentIndex].dapp.name,
-            logo: LSTS_DATA[currentIndex].dapp.logo,
+            name: lrtsData[currentIndex].dapp.name,
+            logo: lrtsData[currentIndex].dapp.logo,
           }}
           actionType={actionType as ActionType}
-          token0={actionType === ActionType.STAKE ? ethereum['eth'] : LSTS_DATA[currentIndex].token}
-          token1={actionType === ActionType.STAKE ? LSTS_DATA[currentIndex].token : curLrt}
+          token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[currentIndex].token}
+          token1={actionType === ActionType.STAKE ? lrtsData[currentIndex].token : curLrt}
           chainId={chainId as number}
           setShow={setIsShowStakeModal}
         />
       ) : null}
-      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={LSTS_DATA[currentIndex].token} />
+      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={lrtsData[currentIndex].token} />
     </Container>
   );
 };

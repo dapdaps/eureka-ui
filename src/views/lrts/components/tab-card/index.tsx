@@ -176,7 +176,7 @@ const TabCard: FC<IProps> = ({ type, data, handleStake }) => {
 
   const handleClick = () => {
     const _type = type === 'LST' ? ActionType.STAKE : ActionType.UNSTAKE;
-    console.log('=_type', _type)
+    console.log('=_type', _type);
     handleStake(_type);
   };
 
@@ -225,7 +225,7 @@ const TabCard: FC<IProps> = ({ type, data, handleStake }) => {
             <ItemName>Balance</ItemName>
             <ItemValue>{data.balance}</ItemValue>
           </div>
-          <ItemLink href={''}>Earn more on L2...</ItemLink>
+          <ItemLink href={'/lrts/earning'}>Earn more on L2...</ItemLink>
         </div>
       </TabBody>
     </TabWrap>
