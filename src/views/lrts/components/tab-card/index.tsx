@@ -93,6 +93,10 @@ const TabBody = styled.div`
     gap: 40px;
     padding-left: 100px;
   }
+  .btns {
+    display: flex;
+    gap: 20px;
+  }
 `;
 
 const ItemName = styled.div`
@@ -172,7 +176,7 @@ const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
   useEffect(() => {
     const lsts = lrtsData.map((item: any) => item.token.symbol);
 
-    if (lsts.includes(list?.[activeIndex].symbol)) {
+    if (lsts.includes(list?.[activeIndex]?.symbol)) {
       setTokenType(ActionType.STAKE);
     } else {
       setTokenType(ActionType.UNSTAKE);
@@ -216,9 +220,10 @@ const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
             </div>
           </div>
           <div className="btns">
-            <PolygonBtn block onClick={handleClick}>
-              {tokenType === ActionType.STAKE ? 'STAKE' : 'RESTAKE'}
+            <PolygonBtn onClick={handleClick} style={{ width: 315 }}>
+              {tokenType === ActionType.STAKE ? 'STAKE / UNSTAKE' : 'RESTAKE / UNSTAKE'}
             </PolygonBtn>
+            <PolygonBtn style={{ width: 175 }}>SWAP</PolygonBtn>
           </div>
         </div>
         <div className="right">

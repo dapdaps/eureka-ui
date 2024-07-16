@@ -78,8 +78,8 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (_: any) => {
                   return (
                     <>
-                      <PolygonBtn>Stake</PolygonBtn>
-                      <PolygonBtn>Swap</PolygonBtn>
+                      <PolygonBtn>STAKE / UNSTAKE </PolygonBtn>
+                      {/* <PolygonBtn>Swap</PolygonBtn> */}
                       {/* <PolygonBtn>Bridge</PolygonBtn>
                     <PolygonBtn>Unstake</PolygonBtn> */}
                     </>
@@ -110,8 +110,8 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (_: any) => {
                   return (
                     <>
-                      <PolygonBtn>Stake</PolygonBtn>
-                      <PolygonBtn>Swap</PolygonBtn>
+                      <PolygonBtn>RESTAKE / UNSTAKE </PolygonBtn>
+                      {/* <PolygonBtn>Swap</PolygonBtn> */}
                     </>
                   );
                 },
