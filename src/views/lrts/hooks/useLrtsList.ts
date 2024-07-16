@@ -7,6 +7,7 @@ export default function useLrtsList() {
   const [lstList, setLstList] = useState<any>();
   const [lrtList, setLrtList] = useState<any>();
   const [loading, setLoading] = useState(true);
+  const [completed, setCompleted] = useState(false);
 
   const lrtsData = useLrtDataStore((store: any) => store.data);
   const setLrtDataStore = useLrtDataStore((store: any) => store.set);
@@ -93,19 +94,28 @@ export default function useLrtsList() {
 
     _data.forEach((lst: any) => {
       const _lrtAprs = lst.lrtTokens.map((item: any) => item.apr);
-      const _aprs = [lst.apr, ..._lrtAprs];
+      const _lrtTvls = lst.lrtTokens.map((item: any) => item.tvl);
+      // const _aprs = [lst.apr, ..._lrtAprs];
+      // const _tvls = [lst.tvl, ..._lrtTvls];
+      const _aprs = [..._lrtAprs];
+      const _tvls = [..._lrtTvls];
       const _maxApr = Math.max.apply(null, _aprs);
       const _minApr = Math.min.apply(null, _aprs);
-
+      const _maxTvl = Math.max.apply(null, _tvls);
       lst.minApr = _minApr;
       lst.maxApr = _maxApr;
+
+      lst.maxAprSymbol = lst.lrtTokens.find((item: any) => item.apr === _maxApr)?.token?.symbol;
+      lst.maxTvl = _maxTvl;
+      lst.maxTvlSymbol = lst.lrtTokens.find((item: any) => item.tvl === _maxTvl)?.token?.symbol;
       lst.lrtTokens = lst.lrtTokens.sort((a: any, b: any) => a.apr - b.apr);
-      console.log(3333, lst.lrtTokens);
+
       lst.lrtTokens.forEach((lrt: any, index: number) => {
         lrt.order = lst.orders[index];
       });
+      setCompleted(true);
     });
   }, [lrtsData]);
 
-  return { lstList, loading };
+  return { completed };
 }

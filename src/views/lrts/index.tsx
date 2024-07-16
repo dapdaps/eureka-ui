@@ -25,7 +25,7 @@ const Home = () => {
   const [isShowNpc, setIsShowNpc] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialSlide);
   // const prices = usePriceStore((store) => store.price);
-  const { lstList } = useLrtsList();
+  const { completed } = useLrtsList();
   const { loading, balances } = useAllTokensBalance();
 
   const [curLrt, setCurLrt] = useState<any>(null);
@@ -35,16 +35,33 @@ const Home = () => {
 
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
+  const [npcData, setNpcData] = useState({
+    amount: 0,
+    maxApr: 0,
+    maxAprSymbol: '',
+    maxTvl: 0,
+    maxTvlSymbol: '',
+    lrtTokens: [],
+    token: '',
+  });
+
   const lrtsData = useLrtDataStore((store: any) => store.data);
   console.log(lrtsData);
 
   const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
-    // setIsShowNpc(true);
+    setIsShowNpc(false);
     setCurrentIndex(activeIndex);
     setCurLst(lrtsData[activeIndex]);
   };
+
+  useEffect(() => {
+    // wait for tvl & apr
+    if (!completed) return;
+    setIsShowNpc(true);
+    setNpcData(lrtsData[currentIndex]);
+  }, [currentIndex, completed]);
 
   const handleClickGem = (lrt: any) => {
     setCurLrt(lrt);
@@ -104,7 +121,7 @@ const Home = () => {
 
       <TabCard curLst={curLst} curLrt={curLrt} handleStake={handleShowModal} />
 
-      {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
+      {isShowNpc ? <NpcDialog dataSource={npcData} onClose={() => setIsShowNpc(false)} /> : null}
 
       {isShowStakeModal ? (
         <StakeModal
