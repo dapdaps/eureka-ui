@@ -5,16 +5,83 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import BaseComponent from '../components/base-component';
-const LSP_STAKING = "0xe3cBd06D7dadB3F4e6557bAb7EdD924CD1489E8f"
-const LSP_STAKING_ABI = [{
+
+// const STAKE_ADDRESS = ""
+
+const CONTRACT_ADDRESS_ABI = [{
   "inputs": [
     {
       "internalType": "uint256",
-      "name": "ethAmount",
+      "name": "amount",
       "type": "uint256"
     }
   ],
-  "name": "ethToMETH",
+  "name": "deposit",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "inputs": [
+    {
+      "internalType": "uint256",
+      "name": "amount",
+      "type": "uint256"
+    }
+  ],
+  "name": "requestWithdraw",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "inputs": [
+    {
+      "internalType": "address",
+      "name": "addr",
+      "type": "address"
+    }
+  ],
+  "name": "getAllQueuePositionsForAddress",
+  "outputs": [
+    {
+      "components": [
+        {
+          "internalType": "uint256",
+          "name": "id",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "currentValue",
+          "type": "uint256"
+        },
+        {
+          "internalType": "bool",
+          "name": "isRedeemable",
+          "type": "bool"
+        }
+      ],
+      "internalType": "struct StorageController.QueuePosition[]",
+      "name": "",
+      "type": "tuple[]"
+    }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [
+    {
+      "internalType": "uint256",
+      "name": "withdrawalRequestId",
+      "type": "uint256"
+    }
+  ],
+  "name": "redeemUnderlying",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "getLastRedeemableId",
   "outputs": [
     {
       "internalType": "uint256",
@@ -24,111 +91,27 @@ const LSP_STAKING_ABI = [{
   ],
   "stateMutability": "view",
   "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "mETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "mETHToETH",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "minMETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "stake",
-  "outputs": [],
-  "stateMutability": "payable",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint128",
-      "name": "methAmount",
-      "type": "uint128"
-    },
-    {
-      "internalType": "uint128",
-      "name": "minETHAmount",
-      "type": "uint128"
-    }
-  ],
-  "name": "unstakeRequest",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "nonpayable",
-  "type": "function"
 }]
-const UNSTAKE_ADDRESS = "0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16"
+// const UNSTAKE_ADDRESS = "0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16"
 
-const UNSTAKE_ADDRESS_ABI = [{
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "asset",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "rsETHUnstaked",
-      "type": "uint256"
-    }
-  ],
-  "name": "initiateWithdrawal",
-  "outputs": [],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
-
-const LRT_DEPOSIT_POOL = "0x036676389e48133B63a802f8635AD39E752D375D"
-
-const LRT_DEPOSIT_POOL_ABI = [{
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "asset",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "depositAmount",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "minRSETHAmountExpected",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "referralId",
-      "type": "string"
-    }
-  ],
-  "name": "depositAsset",
-  "outputs": [],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
+// const UNSTAKE_ADDRESS_ABI = [{
+//   "inputs": [
+//     {
+//       "internalType": "address",
+//       "name": "asset",
+//       "type": "address"
+//     },
+//     {
+//       "internalType": "uint256",
+//       "name": "rsETHUnstaked",
+//       "type": "uint256"
+//     }
+//   ],
+//   "name": "initiateWithdrawal",
+//   "outputs": [],
+//   "stateMutability": "nonpayable",
+//   "type": "function"
+// }]
 
 
 const FIRST_TOKEN_ABI = [{
@@ -260,7 +243,7 @@ const SECOND_TOKEN_ABI = [{
   "type": "function"
 }]
 
-const KelpDao = function (props: any) {
+const RestakeFinance = function (props: any) {
   const { actionType, setShow, token0, token1 } = props
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
@@ -276,6 +259,13 @@ const KelpDao = function (props: any) {
 
   const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1
   const outToken = ['stake', 'restake'].includes(actionType) ? token1 : token0
+
+  const CONTRACT_ADDRESS = {
+    stETH: "0xe384251B5f445A006519A2197bc6bD8E5fA228E5",
+    mETH: "0x0448FddC3f4D666eC81DAc8172E60b8e5852386c",
+    osETH: "0x357DEeD02020b73F8A124c4ea2bE3B6A725aaeC2",
+    sfrxETH: "0xD7BC2FE1d0167BD2532587e991abE556E3a66f3b"
+  }[token0?.symbol]
 
   const isInSufficient = useMemo(() => {
     if (['stake', 'restake'].includes(actionType)) {
@@ -314,6 +304,7 @@ const KelpDao = function (props: any) {
     })
   }
   const handleCheckApproval = async function (amount: number | string) {
+    console.log('=token0.address', token0.address)
     const contract = new ethers.Contract(['stake', 'restake'].includes(actionType) ?
       token0.address : token1.address,
       ['stake', 'restake'].includes(actionType) ? FIRST_TOKEN_ABI : SECOND_TOKEN_ABI, provider?.getSigner())
@@ -321,7 +312,10 @@ const KelpDao = function (props: any) {
       Big(amount).toFixed(18),
       18
     );
-    const allowance = await contract.allowance(account, ['stake', 'restake'].includes(actionType) ? LRT_DEPOSIT_POOL : UNSTAKE_ADDRESS)
+    console.log('=CONTRACT_ADDRESS', CONTRACT_ADDRESS)
+    const allowance = await contract.allowance(account, CONTRACT_ADDRESS)
+    console.log('=allowance', allowance)
+    console.log('=!new Big(allowance.toString()).lt(wei.toString())', !new Big(allowance.toString()).lt(wei.toString()))
     setApproved(!new Big(allowance.toString()).lt(wei.toString()))
   }
   const handleApprove = async function () {
@@ -338,7 +332,7 @@ const KelpDao = function (props: any) {
     setApproving(true)
     setIsLoading(true)
     contract
-      .approve(['stake', 'restake'].includes(actionType) ? LRT_DEPOSIT_POOL : UNSTAKE_ADDRESS, wei)
+      .approve(CONTRACT_ADDRESS, wei)
       .then((tx: any) => tx.wait())
       .then((receipt: any) => {
         setApproved(true)
@@ -363,39 +357,33 @@ const KelpDao = function (props: any) {
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount)
     try {
-      if (['stake', 'restake'].includes(actionType)) {
-        const _outAmount = Big(amount).times(data?.exchangeRate).toFixed()
-        setOutAmount(_outAmount)
-        handleCheckApproval(_outAmount)
-      } else {
-        const _outAmount = Big(amount).div(data?.exchangeRate).toFixed()
-        setOutAmount(_outAmount)
-        handleCheckApproval(_outAmount)
-      }
+      const _amount = Big(amount)
+        .mul(Big(10).pow(18))
+        .toFixed(0)
+      setOutAmount(amount)
+      handleCheckApproval(_amount)
     } catch (error) {
-      console.error('error: ', error)
+      console.log('error:', error)
     }
+
+
   }
   const handleMax = function () {
     setInAmount(data?.availableAmount ?? 0)
   }
   const handleStake = async function () {
     setIsLoading(true)
-    const contract = ['stake', 'restake'].includes(actionType) ?
-      new ethers.Contract(LRT_DEPOSIT_POOL, LRT_DEPOSIT_POOL_ABI, provider?.getSigner()) :
-      new ethers.Contract(UNSTAKE_ADDRESS, UNSTAKE_ADDRESS_ABI, provider?.getSigner())
+    const contract = new ethers.Contract(CONTRACT_ADDRESS, CONTRACT_ADDRESS_ABI, provider?.getSigner())
     const amount = Big(inAmount)
       .mul(Big(10).pow(18))
       .toFixed(0)
-    const contractMethord = ['stake', 'restake'].includes(actionType) ?
-      contract.depositAsset :
-      contract.initiateWithdrawal
-    const contractArguments = ['stake', 'restake'].includes(actionType) ?
-      [token0.address, amount, 0, "0x00"] :
-      [outToken.address, amount]
     const toastId = toast?.loading({
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
+    const contractMethord = ['stake', 'restake'].includes(actionType) ?
+      contract.deposit :
+      contract.requestWithdraw
+    const contractArguments = [amount]
     contractMethord(...contractArguments)
       .then((tx: any) => tx.wait())
       .then((result: any) => {
@@ -414,6 +402,60 @@ const KelpDao = function (props: any) {
           title: ['stake', 'restake'].includes(actionType) ? "Stake Failed!" : "UnStake Failed!",
         });
       })
+
+    // if (['stake', 'restake'].includes(actionType)) {
+    //   contract
+    //     .deposit(amount)
+    //     .then((tx: any) => tx.wait())
+    //     .then((result: any) => {
+    //       const { status, transactionHash } = result;
+    //       setIsLoading(false)
+    //       handleQueryData()
+    //       toast?.dismiss(toastId);
+    //       toast?.success({
+    //         title: "Stake Successfully!",
+    //       });
+    //     })
+    //     .catch((error: any) => {
+    //       setIsLoading(false)
+    //       toast?.dismiss(toastId);
+    //       toast?.fail({
+    //         title: "Stake Failed!",
+    //       });
+    //     })
+    // } else {
+    //   contract
+    //     .requestWithdraw(amount)
+    //     .then((tx: any) => tx.wait())
+    //     .then(async result => {
+    //       const requestWithdrawIdResult = await contract.getAllQueuePositionsForAddress(account)
+    //       const id = await contract.getLastRedeemableId()
+    //       const requestWithdrawId = requestWithdrawIdResult[0][0]
+    //       console.log('=requestWithdrawId', requestWithdrawId)
+    //       console.log('=id', id)
+    //       if (Big(requestWithdrawId).lt(id) || Big(requestWithdrawId).eq(id)) {
+    //         contract
+    //           .redeemUnderlying(requestWithdrawId)
+    //           .then((tx: any) => tx.wait())
+    //           .then((result: any) => {
+    //             const { status, transactionHash } = result;
+    //             setIsLoading(false)
+    //             handleQueryData()
+    //             toast?.dismiss(toastId);
+    //             toast?.success({
+    //               title: "UnStake Successfully",
+    //             });
+    //           })
+    //           .catch((error: any) => {
+    //             setIsLoading(false)
+    //             toast?.dismiss(toastId);
+    //             toast?.fail({
+    //               title: "UnStake Failed!",
+    //             });
+    //           })
+    //       }
+    //     })
+    // }
   }
   const handleAddMetaMask = function () {
 
@@ -445,4 +487,4 @@ const KelpDao = function (props: any) {
     />
   )
 }
-export default KelpDao
+export default RestakeFinance

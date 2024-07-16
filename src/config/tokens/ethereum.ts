@@ -188,7 +188,7 @@ export const ethereum: { [key: string]: Token } = {
     icon: '',
   },
   rstETH: {
-    address: '',
+    address: '0xc3Ac43635d7Aa9Bf361094656C85de3311bE9a2c',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
@@ -219,4 +219,28 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'mrETH',
     icon: '',
   },
+  rosETH: {
+    address: '0x3A2725556Dde7B21fBe3dD64A4913ff29faba6A1',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: '',
+    symbol: 'rosETH',
+    icon: '',
+  },
+  rsfrxETH: {
+    address: '0xdcF8905091a1c7b773DdB894d805178701b32b55',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: '',
+    symbol: 'rsfrxETH',
+    icon: '',
+  },
+  eETH: {
+    address: '0x35fA164735182de50811E8e2E824cFb9B6118ac2',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: '',
+    symbol: 'eETH',
+    icon: '',
+  }
 };

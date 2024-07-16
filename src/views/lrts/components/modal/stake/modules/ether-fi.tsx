@@ -3,6 +3,7 @@ import useToast from '@/hooks/useToast';
 import { useSetChain } from '@web3-onboard/react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import chains from '@/config/chains';
 import { useEffect, useMemo, useState } from 'react';
 import BaseComponent from '../components/base-component';
 const LSP_STAKING = "0xe3cBd06D7dadB3F4e6557bAb7EdD924CD1489E8f"
@@ -130,6 +131,31 @@ const LRT_DEPOSIT_POOL_ABI = [{
   "type": "function"
 }]
 
+const EtherfiL2ExchangeRateProvider = "0x241a91F095B2020890Bc8518bea168C195518344"
+const EtherfiL2ExchangeRateProvider_ABI = [{
+  "inputs": [
+    {
+      "internalType": "address",
+      "name": "token",
+      "type": "address"
+    },
+    {
+      "internalType": "uint256",
+      "name": "amountIn",
+      "type": "uint256"
+    }
+  ],
+  "name": "getConversionAmount",
+  "outputs": [
+    {
+      "internalType": "uint256",
+      "name": "amountOut",
+      "type": "uint256"
+    }
+  ],
+  "stateMutability": "view",
+  "type": "function"
+}]
 
 const FIRST_TOKEN_ABI = [{
   constant: true,
@@ -260,7 +286,7 @@ const SECOND_TOKEN_ABI = [{
   "type": "function"
 }]
 
-const KelpDao = function (props: any) {
+const EtherFi = function (props: any) {
   const { actionType, setShow, token0, token1 } = props
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
@@ -290,8 +316,13 @@ const KelpDao = function (props: any) {
     return res.json() as any
   }
   const handleQueryExchangeRate = async function () {
-    const res = await fetch("https://universe.kelpdao.xyz/rseth/exchangeRate/?lrtToken=stETH")
-    return res.json() as any
+    const rpcUrl = chains["59144"]?.rpcUrls[0]
+    console.log('=rpcUrl', rpcUrl)
+    const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
+    const contract = new ethers.Contract(EtherfiL2ExchangeRateProvider, EtherfiL2ExchangeRateProvider_ABI, provider)
+    return await contract.getConversionAmount(token0.address, Big("1")
+      .mul(Big(10).pow(18))
+      .toFixed(0))
   }
   const handleQueryAvailableAmount = async function () {
     const contract = new ethers.Contract(token0.address, FIRST_TOKEN_ABI, provider?.getSigner())
@@ -301,11 +332,13 @@ const KelpDao = function (props: any) {
     const contract = new ethers.Contract(token1.address, SECOND_TOKEN_ABI, provider?.getSigner())
     return await contract.balanceOf(account)
   }
+
   const handleQueryData = async function () {
     const apyResult = await handleQueryApy()
     const exchangRateResult = await handleQueryExchangeRate()
     const availableAmountResult = await handleQueryAvailableAmount()
     const stakedAmountResult = await handleQueryStakedAmount()
+    console.log('===exchangRateResult', exchangRateResult)
     setData({
       availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
       stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
@@ -445,4 +478,4 @@ const KelpDao = function (props: any) {
     />
   )
 }
-export default KelpDao
+export default EtherFi

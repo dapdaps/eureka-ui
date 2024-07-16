@@ -92,7 +92,7 @@ const BaseComponent = function (props: any) {
 
             <StyledBaseInfoValueContainer>
               <StyledBaseInfoValue>
-                {Big(data?.stakedAmount ?? 0).toFixed(2)} {outToken?.symbol}
+                {Big(data?.stakedAmount ?? 0).toFixed(4)} {outToken?.symbol}
               </StyledBaseInfoValue>
               <StyledPlusSvg onClick={handleAddMetaMask}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
