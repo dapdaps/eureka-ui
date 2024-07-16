@@ -149,7 +149,7 @@ const mETH_ABI = [{
 }]
 
 const Mantle = function (props: any) {
-  const { dapp, actionType, setShow, token0, token1, addAction, chainId } = props;
+  const { dapp, setShow, token0, token1, addAction, chainId } = props;
   const toast = useToast()
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -159,6 +159,8 @@ const Mantle = function (props: any) {
   const [isLoading, setIsLoading] = useState(false)
   const [approved, setApproved] = useState(true)
   const [approving, setApproving] = useState(false)
+
+  const [actionType, setActionType] = useState("stake")
 
   const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0.01
 
@@ -316,6 +318,9 @@ const Mantle = function (props: any) {
   const handleAddMetaMask = function () {
 
   }
+  const handleChangeActionType = function (_actionType) {
+    setActionType(_actionType)
+  }
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])
@@ -337,7 +342,8 @@ const Mantle = function (props: any) {
         handleApprove,
         handleAmountChange,
         handleStake,
-        handleAddMetaMask
+        handleAddMetaMask,
+        handleChangeActionType
       }}
     />
   )

@@ -33,18 +33,13 @@ const Index = function (props: {
     logo: string;
   };
   setShow: (value: boolean) => void;
-  actionType: 'stake' | 'unstake';
   token0: object; // symbol
   token1: object; // symbol
   chainId: number;
 }) {
   const { addAction } = useAddAction('lrts');
-  const { dapp, setShow, actionType, token0, token1, chainId } = props;
+  const { dapp, setShow, token0, token1, chainId } = props;
   const VmComponent = ComponentMapping[dapp?.name];
-  // const actionType = "unstake"
-  // const token0 = ethereum['stETH']
-  // const token1 = ethereum['eETH']
-
   return (
     <StyledModal>
       <StyledOverlay />
@@ -52,7 +47,6 @@ const Index = function (props: {
         <VmComponent
           dapp={dapp}
           addAction={addAction}
-          actionType={actionType}
           setShow={setShow}
           token0={token0}
           token1={token1}

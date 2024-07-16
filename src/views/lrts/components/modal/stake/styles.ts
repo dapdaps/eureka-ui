@@ -344,3 +344,36 @@ export const StyledRecordText = styled.div`
   font-weight: 500;
   line-height: normal;
 `
+export const StyledActionTypeTabContainer = styled.div`
+  padding-top: 34px;
+  display: flex;
+  gap: 124px;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #3F3F3F;
+`
+export const StyledActionTypeTab = styled.div`
+  cursor: pointer;
+  position: relative;
+  padding: 11px 10px;
+  color: #FFF;
+  font-family: Orbitron;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  text-transform: uppercase;
+  opacity: 0.6;
+  &.active {
+    opacity: 1;
+    &:after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      height: 3px;
+      left: 0;
+      right: 0;
+      background-color: #FFF;
+    }
+  }
+`
