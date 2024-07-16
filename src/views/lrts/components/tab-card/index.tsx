@@ -1,30 +1,26 @@
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import type { FC } from 'react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { ActionType } from '../../index';
-import { PolygonBtn } from '../';
+import { useLrtDataStore } from '@/stores/lrts';
 
-const TabWrap = styled(motion.div)`
-  position: fixed;
-  z-index: 10;
-  left: 50%;
-  right: 0;
-  margin-left: -673px;
-  bottom: -55px;
-  width: 1346px;
-  height: 259px;
-  /* background: url(/images/lrts/bg-tab.svg) center no-repeat; */
-`;
+import { PolygonBtn } from '../';
+export enum ActionType {
+  STAKE = 'stake',
+  UNSTAKE = 'unstake',
+}
+const TabWrap = styled(motion.div)``;
 const TabHead = styled.div`
-  position: absolute;
-  top: -73px;
-  z-index: -1;
-  left: 30px;
-  /* width: 100%; */
+  position: fixed;
+  bottom: 202px;
+  padding-left: 37px;
+  z-index: 11;
+  left: 50%;
+  width: 1346px;
+  margin-left: -673px;
   display: flex;
   gap: 12px;
   .item {
@@ -53,6 +49,14 @@ const TabHead = styled.div`
   }
 `;
 const TabBody = styled.div`
+  position: fixed;
+  z-index: 10;
+  left: 50%;
+  right: 0;
+  margin-left: -673px;
+  bottom: 0;
+  width: 1346px;
+
   display: flex;
   justify-content: space-between;
   height: 204px;
@@ -117,48 +121,34 @@ const ItemLink = styled(Link)`
   text-decoration-line: underline;
 `;
 
-export type CardData = {
-  tokenName: string;
-  dappName: string;
-  dappLogo: string;
-  apr: number;
-  tvl: number;
-  balance: number;
-};
 interface IProps {
-  type: 'LST' | 'LRT';
-  data: CardData;
+  data: any;
+  curLrt: any;
   handleStake: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ type, data, handleStake }) => {
+const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-
+  const [list, setList] = useState<any>();
+  const [tokenType, setTokenType] = useState(ActionType.STAKE);
   const tabRef = useRef(null);
-  // useEffect(() => {
-  //   document.addEventListener('click', handleClickOutside);
-  //   return () => {
-  //     document.removeEventListener('click', handleClickOutside);
-  //   };
-  // }, []);
-  // const handleClickOutside = (event: any) => {
-  //   if (tabRef.current && !(tabRef.current as any).contains(event.target)) {
-  //     onClose();
-  //   }
-  // };
 
-  const list = [
-    {
-      key: 0,
-      headTitle: '1.23',
-      headIcon: '/images/lrts/lrt-demo-1.svg',
-    },
-    {
-      key: 1,
-      headTitle: '0.23',
-      headIcon: '/images/lrts/lrt-demo-2.svg',
-    },
-  ];
+  useEffect(() => {
+    if (!data) return;
+
+    const _lrtTokens = data?.lrtTokens?.map((item: any) => ({ ...item.token, logo: item.logo }));
+    const _list = [{ ...data.token, logo: data.lstIcon }, ..._lrtTokens];
+    setList(_list);
+  }, [data]);
+
+  useEffect(() => {
+    if (!Array.isArray(list) || !curLrt) return;
+
+    const _index = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
+
+    setActiveIndex(_index);
+  }, [list, curLrt]);
+
   const onChangeTab = (index: number) => {
     setActiveIndex(index);
   };
@@ -175,61 +165,72 @@ const TabCard: FC<IProps> = ({ type, data, handleStake }) => {
   };
 
   const handleClick = () => {
-    const _type = type === 'LST' ? ActionType.STAKE : ActionType.UNSTAKE;
-    console.log('=_type', _type);
-    handleStake(_type);
+    handleStake(tokenType);
   };
 
-  return (
+  const lrtsData = useLrtDataStore((store: any) => store.data);
+  useEffect(() => {
+    const lsts = lrtsData.map((item: any) => item.token.symbol);
+
+    if (lsts.includes(list?.[activeIndex].symbol)) {
+      setTokenType(ActionType.STAKE);
+    } else {
+      setTokenType(ActionType.UNSTAKE);
+    }
+  }, [lrtsData, activeIndex]);
+
+  return Array.isArray(list) ? (
     <TabWrap {...anim} ref={tabRef}>
       <TabHead>
-        {list.map((item) => (
-          <div
-            key={item.key}
-            className={`item ${activeIndex === item.key ? 'active' : ''}`}
-            onClick={(e: any) => onChangeTab(item.key)}
-          >
-            <span className="text-right">{item.headTitle}</span>
-            <Image src={item.headIcon} width={40} height={52} alt="lrt" />
-          </div>
-        ))}
+        {Array.isArray(list)
+          ? list?.map((item: any, index: number) => (
+              <div
+                key={index}
+                className={`item ${activeIndex === index ? 'active' : ''}`}
+                onClick={(e: any) => onChangeTab(index)}
+              >
+                <div className="text-right">{parseFloat(Number(item.balance || 0).toFixed(2))}</div>
+                <Image src={item.logo} width={40} height={40} alt={item.symbol} />
+              </div>
+            ))
+          : null}
       </TabHead>
       <TabBody>
         <div className="left">
-          <Image src="/images/lrts/box_1.svg" width={130} height={100} alt="" />
-          <span className="prd-name">{data.dappName}</span>
+          <Image src={list?.[activeIndex]?.logo} width={130} height={100} alt="" />
+          <span className="prd-name">{}</span>
         </div>
         <div className="content">
           <div className="detail">
             <div>
-              <ItemName>{type}</ItemName>
-              <ItemValue>{data.tokenName}</ItemValue>
+              <ItemName>{tokenType === ActionType.STAKE ? 'LST' : 'LRT'}</ItemName>
+              <ItemValue>{list?.[activeIndex]?.symbol}</ItemValue>
             </div>
             <div>
               <ItemName>APR</ItemName>
-              <ItemValue>{data.apr}%</ItemValue>
+              <ItemValue>{}%</ItemValue>
             </div>
             <div>
               <ItemName>TVL</ItemName>
-              <ItemValue>$ {data.tvl}</ItemValue>
+              <ItemValue>$ {}</ItemValue>
             </div>
           </div>
           <div className="btns">
             <PolygonBtn block onClick={handleClick}>
-              {type === 'LST' ? 'STAKE' : 'RESTAKE'}
+              {tokenType === ActionType.STAKE ? 'STAKE' : 'RESTAKE'}
             </PolygonBtn>
           </div>
         </div>
         <div className="right">
           <div>
             <ItemName>Balance</ItemName>
-            <ItemValue>{data.balance}</ItemValue>
+            <ItemValue>{Number(list?.[activeIndex]?.balance || 0).toFixed(3)}</ItemValue>
           </div>
           <ItemLink href={'/lrts/earning'}>Earn more on L2...</ItemLink>
         </div>
       </TabBody>
     </TabWrap>
-  );
+  ) : null;
 };
 
 export default TabCard;

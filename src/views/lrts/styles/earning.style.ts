@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: url(/images/lrts/bg-home.png) center no-repeat #000;
-  background-size: cover;
+  background-size: contain;
   font-family: Orbitron;
   padding-top: 91px;
 `;

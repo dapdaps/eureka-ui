@@ -3,25 +3,20 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
-import useTokensBalance from '@/hooks/useTokensBalance';
 import { useLrtDataStore } from '@/stores/lrts';
 import { usePriceStore } from '@/stores/price';
 
 import { Gems, NpcDialog, TabCard } from './components';
 import StakeModal from './components/modal/stake';
 import SwapModal from './components/modal/swap';
-import type { CardData } from './components/tab-card';
+import { ActionType } from './components/tab-card';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
 import { Banner, Container, Desc, Title } from './styles/index.style';
 
-enum CardType {
-  LST = 'LST',
-  LRT = 'LRT',
-}
-export enum ActionType {
-  STAKE = 'stake',
-  UNSTAKE = 'unstake',
-}
+// enum CardType {
+//   LST = 'LST',
+//   LRT = 'LRT',
+// }
 
 const Home = () => {
   const { chainId, account } = useAccount();
@@ -32,20 +27,13 @@ const Home = () => {
 
   const [curLrt, setCurLrt] = useState<any>(null);
   const [actionType, setActionType] = useState<ActionType>();
-  const [cardType, setCardType] = useState(CardType.LST);
-  const [cardData, setCardData] = useState<CardData>({
-    tokenName: '',
-    dappName: '',
-    dappLogo: '',
-    apr: 0,
-    tvl: 0,
-    balance: 0,
-  });
+
+  const [cardData, setCardData] = useState();
 
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
   const lrtsData = useLrtDataStore((store: any) => store.data);
-  console.log('lrtsData----', lrtsData);
+  // console.log('lrtsData----', lrtsData);
 
   const { loading, balances } = useAllTokensBalance();
   const [showSwapModal, setShowSwapModal] = useState(false);
@@ -53,33 +41,14 @@ const Home = () => {
   const handleSlideChange = ({ activeIndex }: any) => {
     setIsShowNpc(true);
     setCurrentIndex(activeIndex);
-    setCardType(CardType.LST);
-    const { token, dapp } = lrtsData[activeIndex];
+
     //TODO
-    setCardData({
-      tokenName: token.symbol as string,
-      dappName: dapp.name,
-      dappLogo: dapp.logo,
-      apr: 0,
-      tvl: 0,
-      balance: 0,
-    });
+    setCardData(lrtsData[activeIndex]);
     console.log('click lst', activeIndex, lrtsData[activeIndex]);
   };
 
   const handleClickGem = (lrt: any) => {
     setCurLrt(lrt);
-    setCardType(CardType.LRT);
-    const { token, dapp } = lrtsData[currentIndex];
-    //TODO
-    setCardData({
-      tokenName: token.symbol as string,
-      dappName: dapp.name,
-      dappLogo: dapp.logo,
-      apr: 0,
-      tvl: 0,
-      balance: 0,
-    });
   };
 
   const handleShowModal = (_actionType: any) => {
@@ -105,31 +74,36 @@ const Home = () => {
           centeredSlides={true}
           initialSlide={initialSlide}
           pagination={{ clickable: true, el: '.swiper-pagination' }}
-          // navigation={navigation}
-          navigation={{
-            nextEl: '.next',
-          }}
-          // modules={modules}
           slidesPerView={4}
           className="mySwiper"
           slideToClickedSlide={true}
           onSlideChange={handleSlideChange}
-          // on={{setTranslate:function(){
-          //   slide.css({'opacity': '','background': ''});slide.transform('');//清除样式
-          //   slide.transform('scale('+(1 - Math.abs(progress)/8)+')');
-          // slide.css('opacity',(1-Math.abs(progress)/6));
-          //   slide.transform('translate3d(0,'+ Math.abs(progress)*20+'px, 0)');
-          // }}}
         >
           {lrtsData.map((item: any) => (
-            <SwiperSlide key={item.key}>{({ isActive }) => <img src={item.lstIcon} alt="lst" />}</SwiperSlide>
+            <SwiperSlide key={item.key}>
+              {() => {
+                return (
+                  <div className="lst-content">
+                    <span className="lst-title">{item.token.symbol}</span>
+                    <span className="dapp-info">
+                      <img src={item.dapp.logo} alt="dapp" />
+                      {item.dapp.name}
+                    </span>
+                    <span className="lst-range">APR RANGE</span>
+                    <span className="min-apr">2.3% -</span>
+                    <span className="max-apr">5.3%</span>
+                    <img className="lst-img" src={item.lstIcon} alt="lst" />
+                  </div>
+                );
+              }}
+            </SwiperSlide>
           ))}
         </Swiper>
       </Banner>
 
       <Gems data={lrtsData[currentIndex].lrtTokens} onClick={handleClickGem} />
 
-      <TabCard type={cardType} data={cardData} handleStake={handleShowModal} />
+      <TabCard data={cardData} curLrt={curLrt} handleStake={handleShowModal} />
 
       {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
 

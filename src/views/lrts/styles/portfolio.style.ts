@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background: url(/images/lrts/bg-home.png) center no-repeat #000;
-  background-size: cover;
+  background-size: contain;
   font-family: Orbitron;
   padding-top: 91px;
 `;
@@ -95,4 +95,18 @@ export const Assets = styled.div`
 export const Ad = styled(Image)`
   display: block;
   margin: 0 auto 30px;
+`;
+
+export const AssetTab = styled.div`
+  .title {
+    font-family: Orbitron;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    background: linear-gradient(180deg, #fff 38.5%, #677079 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 `;

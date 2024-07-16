@@ -1,9 +1,12 @@
+import { log } from 'console';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 
-import { CustomTable, Tabs } from './components';
-import { Ad, Assets, Container } from './styles/portfolio.style';
+import { useLrtDataStore } from '@/stores/lrts';
 
+import { CustomTable, PolygonBtn, Tabs } from './components';
+import useAllTokensBalance from './hooks/useAllTokensBalance';
+import { Ad, Assets, AssetTab, Container } from './styles/portfolio.style';
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -17,11 +20,106 @@ enum TabType {
 }
 
 const Portfolio: FC<IProps> = (props) => {
+  const { loading, balances } = useAllTokensBalance();
+  const lrtsData = useLrtDataStore((store: any) => store.data);
+  console.log('lrtsData----', lrtsData);
+  const lsts = lrtsData.map((item: any) => item.token);
+  const lrtAssets = lrtsData
+    .map((item: any) => item.lrtTokens)
+    .flat()
+    .map((item: any, index: number) => ({
+      ...item.token,
+      assets: item.token?.symbol,
+      chian: item.token?.chianId,
+      price: 0,
+      arp: 0,
+      key: index,
+    }));
+
+  const lstAssets = lsts.map((item: any, index: number) => ({
+    ...item,
+    assets: item.symbol,
+    chian: item.chianId,
+    price: 0,
+    arp: 0,
+    key: index,
+  }));
+
   const items = [
     {
       label: TabType.Portfolio,
       key: 'item-1',
-      children: 1,
+      children: (
+        <AssetTab>
+          <div className="title">LST Assets</div>
+          <CustomTable
+            dataSource={lstAssets}
+            columns={[
+              { title: 'Assets', dataIndex: 'assets', key: 1 },
+              {
+                title: 'Chain',
+                dataIndex: 'chain',
+                key: 2,
+              },
+              {
+                title: 'Balance',
+                dataIndex: 'balance',
+                key: 3,
+                render: (_: any) => {
+                  return Number(_?.balance).toFixed(2);
+                },
+              },
+              { title: 'Price', dataIndex: 'price', key: 4 },
+              { title: '7d APR', dataIndex: 'apr', key: 5 },
+              {
+                title: 'Action',
+                dataIndex: 'Action',
+                key: 6,
+                render: (_: any) => {
+                  return (
+                    <>
+                      <PolygonBtn>Stake</PolygonBtn>
+                      <PolygonBtn>Swap</PolygonBtn>
+                      {/* <PolygonBtn>Bridge</PolygonBtn>
+                    <PolygonBtn>Unstake</PolygonBtn> */}
+                    </>
+                  );
+                },
+              },
+            ]}
+          />
+          <div className="title" style={{ marginTop: 50 }}>
+            LRT Assets
+          </div>
+          <CustomTable
+            dataSource={lrtAssets}
+            columns={[
+              { title: 'Assets', dataIndex: 'assets', key: 1 },
+              {
+                title: 'Chain',
+                dataIndex: 'chain',
+                key: 2,
+              },
+              { title: 'Balance', dataIndex: 'balance', key: 3 },
+              { title: 'Price', dataIndex: 'price', key: 4 },
+              { title: '7d APR', dataIndex: 'apr', key: 5 },
+              {
+                title: 'Action',
+                dataIndex: 'Action',
+                key: 6,
+                render: (_: any) => {
+                  return (
+                    <>
+                      <PolygonBtn>Stake</PolygonBtn>
+                      <PolygonBtn>Swap</PolygonBtn>
+                    </>
+                  );
+                },
+              },
+            ]}
+          />
+        </AssetTab>
+      ),
     },
     { label: TabType.Unstake, key: 'item-2', children: 2 },
     {
