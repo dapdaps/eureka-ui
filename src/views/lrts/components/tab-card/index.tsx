@@ -68,7 +68,52 @@ const TabBody = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 14px;
+    .prd-wrap {
+      position: relative;
+      width: 130px;
+      height: 100px;
+    }
+    .prd-token {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 6px;
+      font-size: 12px;
+      text-align: center;
+      color: white;
+      font-family: Orbitron;
+    }
+    .prd-range {
+      position: absolute;
+      top: 72px;
+      left: 6px;
+      color: rgba(255, 255, 255, 0.5);
+      font-family: Orbitron;
+      font-size: 8px;
+      font-weight: 700;
+    }
+    .prd-apr-min {
+      position: absolute;
+      top: 62px;
+      right: 6px;
+      color: rgba(255, 255, 255, 0.5);
+      font-family: Orbitron;
+      font-size: 8px;
+      font-weight: 700;
+    }
+    .prd-apr-max {
+      position: absolute;
+      top: 72px;
+      right: 6px;
+      color: #fff;
+      font-family: Orbitron;
+      font-size: 10px;
+      font-weight: 700;
+    }
     .prd-name {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       color: #979abe;
       font-family: Montserrat;
       font-size: 12px;
@@ -127,36 +172,36 @@ const ItemLink = styled(Link)`
 `;
 
 interface IProps {
-  data: any;
+  curLst: any;
   curLrt: any;
   handleStake: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
+const TabCard: FC<IProps> = ({ curLst, curLrt, handleStake }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [list, setList] = useState<any>();
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
   const tabRef = useRef(null);
 
   useEffect(() => {
-    if (!data) return;
+    if (!curLst) return;
 
-    const _lrtTokens = data?.lrtTokens?.map((item: any) => ({
+    const _lrtTokens = curLst?.lrtTokens?.map((item: any) => ({
       ...item.token,
       logo: item.logo,
       tvl: item.tvl,
       apr: item.apr,
     }));
-    const _list = [{ ...data.token, logo: data.lstIcon, tvl: data.tvl, apr: data.apr }, ..._lrtTokens];
+    const _list = [{ ...curLst.token, logo: curLst.lstIcon, tvl: curLst.tvl, apr: curLst.apr }, ..._lrtTokens];
     setList(_list);
-  }, [data]);
+  }, [curLst]);
 
   useEffect(() => {
     if (!Array.isArray(list) || !curLrt) return;
 
     const _index = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
 
-    setActiveIndex(_index);
+    setActiveIndex(_index < 0 ? 0 : _index);
   }, [list, curLrt]);
 
   const onChangeTab = (index: number) => {
@@ -206,10 +251,32 @@ const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
           : null}
       </TabHead>
       <TabBody>
-        <div className="left">
-          <Image src={list?.[activeIndex]?.logo} width={130} height={100} alt="" />
-          <span className="prd-name">{}</span>
-        </div>
+        {tokenType === ActionType.STAKE ? (
+          <div className="left">
+            <div className="prd-wrap">
+              <Image src={list?.[activeIndex]?.logo} width={130} height={100} alt="" />
+              <div className="prd-token">{curLst?.token?.symbol}</div>
+              <div className="prd-range">APR RANGE</div>
+              <div className="prd-apr-min">{Number(curLst?.minApr).toFixed(2)}%</div>
+              <div className="prd-apr-max">{Number(curLst?.maxApr).toFixed(2)}%</div>
+            </div>
+            <span className="prd-name">
+              <Image src={curLst?.dapp?.logo} width={16} height={16} alt="" />
+              {curLst?.dapp?.name}
+            </span>
+          </div>
+        ) : (
+          <div className="left">
+            <div className="prd-wrap">
+              <Image src={list?.[activeIndex]?.logo} width={130} height={100} alt="" />
+            </div>
+            <span className="prd-name">
+              <Image src={list?.[activeIndex]?.icon} width={16} height={16} alt="" />
+
+              {list?.[activeIndex]?.symbol}
+            </span>
+          </div>
+        )}
         <div className="content">
           <div className="detail">
             <div>

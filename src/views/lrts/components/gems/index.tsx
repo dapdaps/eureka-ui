@@ -63,7 +63,7 @@ const Wrap = styled.section`
     left: 0;
     right: 0;
     top: 12px;
-    padding: 0 10px;
+    padding: 0 5px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -191,7 +191,7 @@ const Stones: FC<IProps> = ({ data, onClick }) => {
             <GemLight>
               <GemImage src={_currentGem.logo} />
             </GemLight>
-            <div className="item-gem-apr">3.23%</div>
+            <div className="item-gem-apr">{Number(_currentGem.apr).toFixed(2)}%</div>
           </div>
         </div>
       );

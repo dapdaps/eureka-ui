@@ -31,22 +31,19 @@ const Home = () => {
   const [curLrt, setCurLrt] = useState<any>(null);
   const [actionType, setActionType] = useState<ActionType>();
 
-  const [cardData, setCardData] = useState();
+  const [curLst, setCurLst] = useState();
 
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
   const lrtsData = useLrtDataStore((store: any) => store.data);
-  console.log('lrtsData----', lrtsData);
+  console.log(lrtsData);
 
   const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
     // setIsShowNpc(true);
     setCurrentIndex(activeIndex);
-
-    //TODO
-    setCardData(lrtsData[activeIndex]);
-    console.log('click lst', activeIndex, lrtsData[activeIndex]);
+    setCurLst(lrtsData[activeIndex]);
   };
 
   const handleClickGem = (lrt: any) => {
@@ -92,8 +89,8 @@ const Home = () => {
                       {item.dapp.name}
                     </span>
                     <span className="lst-range">APR RANGE</span>
-                    <span className="min-apr">2.3% -</span>
-                    <span className="max-apr">5.3%</span>
+                    <span className="min-apr">{Number(item?.minApr).toFixed(2)}% -</span>
+                    <span className="max-apr">{Number(item?.maxApr).toFixed(2)}%</span>
                     <img className="lst-img" src={item.lstIcon} alt="lst" />
                   </div>
                 );
@@ -105,7 +102,7 @@ const Home = () => {
 
       <Gems data={lrtsData[currentIndex].lrtTokens} onClick={handleClickGem} />
 
-      <TabCard data={cardData} curLrt={curLrt} handleStake={handleShowModal} />
+      <TabCard curLst={curLst} curLrt={curLrt} handleStake={handleShowModal} />
 
       {isShowNpc ? <NpcDialog onClose={() => setIsShowNpc(false)} /> : null}
 

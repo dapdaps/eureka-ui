@@ -71,7 +71,6 @@ export default function useLrtsList() {
 
   useEffect(() => {
     if (!lrtList) return;
-    // const _lrtTokens = lrtsData.map((item: any) => item.lrtTokens).flat();
 
     const _data = [...lrtsData];
     _data.forEach((lst: any) => {
@@ -88,6 +87,20 @@ export default function useLrtsList() {
       data: _data,
     });
   }, [lrtList]);
+
+  useEffect(() => {
+    const _data = [...lrtsData];
+
+    _data.forEach((item: any) => {
+      const _lrtAprs = item.lrtTokens.map((item: any) => item.apr);
+      const _aprs = [item.apr, ..._lrtAprs];
+      const _maxApr = Math.max.apply(null, _aprs);
+      const _minApr = Math.min.apply(null, _aprs);
+
+      item.minApr = _minApr;
+      item.maxApr = _maxApr;
+    });
+  }, [lrtsData]);
 
   return { lstList, loading };
 }

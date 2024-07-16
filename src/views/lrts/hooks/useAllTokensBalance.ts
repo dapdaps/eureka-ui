@@ -12,12 +12,6 @@ const useAllTokensBalance = () => {
 
   const { loading, balances } = useTokensBalance(lstTokens);
 
-  //TODO
-  //   const lrtTokens = LSTS_DATA.map((item) => item.lrtTokens)
-  //     .flat()
-  //     .map((item) => item.token);
-  //   const allTokens = [...lstTokens, ...lrtTokens];
-
   useEffect(() => {
     const _data = [...lrtsData];
     _data.forEach((lst: any) => {
