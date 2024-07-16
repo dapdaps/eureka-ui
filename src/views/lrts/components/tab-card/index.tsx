@@ -172,29 +172,36 @@ const ItemLink = styled(Link)`
 `;
 
 interface IProps {
-  curLst: any;
+  lstIndex: number;
   curLrt: any;
   handleStake: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ curLst, curLrt, handleStake }) => {
+const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleStake }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [list, setList] = useState<any>();
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
   const tabRef = useRef(null);
+  const lrtsData = useLrtDataStore((store: any) => store.data);
 
   useEffect(() => {
-    if (!curLst) return;
-
-    const _lrtTokens = curLst?.lrtTokens?.map((item: any) => ({
+    const _lrtTokens = lrtsData[lstIndex]?.lrtTokens?.map((item: any) => ({
       ...item.token,
       logo: item.logo,
       tvl: item.tvl,
       apr: item.apr,
     }));
-    const _list = [{ ...curLst.token, logo: curLst.lstIcon, tvl: curLst.tvl, apr: curLst.apr }, ..._lrtTokens];
+    const _list = [
+      {
+        ...lrtsData[lstIndex].token,
+        logo: lrtsData[lstIndex].lstIcon,
+        tvl: lrtsData[lstIndex].tvl,
+        apr: lrtsData[lstIndex].apr,
+      },
+      ..._lrtTokens,
+    ];
     setList(_list);
-  }, [curLst]);
+  }, [lstIndex, lrtsData]);
 
   useEffect(() => {
     if (!Array.isArray(list) || !curLrt) return;
@@ -223,7 +230,6 @@ const TabCard: FC<IProps> = ({ curLst, curLrt, handleStake }) => {
     handleStake(tokenType);
   };
 
-  const lrtsData = useLrtDataStore((store: any) => store.data);
   useEffect(() => {
     const lsts = lrtsData.map((item: any) => item.token.symbol);
 
@@ -255,14 +261,14 @@ const TabCard: FC<IProps> = ({ curLst, curLrt, handleStake }) => {
           <div className="left">
             <div className="prd-wrap">
               <Image src={list?.[activeIndex]?.logo} width={130} height={100} alt="" />
-              <div className="prd-token">{curLst?.token?.symbol}</div>
+              <div className="prd-token">{lrtsData[lstIndex]?.token?.symbol}</div>
               <div className="prd-range">APR RANGE</div>
-              <div className="prd-apr-min">{Number(curLst?.minApr).toFixed(2)}%</div>
-              <div className="prd-apr-max">{Number(curLst?.maxApr).toFixed(2)}%</div>
+              <div className="prd-apr-min">{Number(lrtsData[lstIndex]?.minApr).toFixed(2)}%</div>
+              <div className="prd-apr-max">{Number(lrtsData[lstIndex]?.maxApr).toFixed(2)}%</div>
             </div>
             <span className="prd-name">
-              <Image src={curLst?.dapp?.logo} width={16} height={16} alt="" />
-              {curLst?.dapp?.name}
+              <Image src={lrtsData[lstIndex]?.dapp?.logo} width={16} height={16} alt="" />
+              {lrtsData[lstIndex]?.dapp?.name}
             </span>
           </div>
         ) : (

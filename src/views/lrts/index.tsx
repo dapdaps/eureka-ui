@@ -14,16 +14,12 @@ import useAllTokensBalance from './hooks/useAllTokensBalance';
 import useLrtsList from './hooks/useLrtsList';
 import { Banner, Container, Desc, Title } from './styles/index.style';
 
-// enum CardType {
-//   LST = 'LST',
-//   LRT = 'LRT',
-// }
-
 const Home = () => {
   const { chainId, account } = useAccount();
-  const initialSlide = 1;
+
   const [isShowNpc, setIsShowNpc] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(initialSlide);
+  const initialSlide = 1;
+  const [lstIndex, setLstIndex] = useState(initialSlide);
   // const prices = usePriceStore((store) => store.price);
   const { completed } = useLrtsList();
   const { loading, balances } = useAllTokensBalance();
@@ -31,37 +27,22 @@ const Home = () => {
   const [curLrt, setCurLrt] = useState<any>(null);
   const [actionType, setActionType] = useState<ActionType>();
 
-  const [curLst, setCurLst] = useState();
-
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
-  const [npcData, setNpcData] = useState({
-    amount: 0,
-    maxApr: 0,
-    maxAprSymbol: '',
-    maxTvl: 0,
-    maxTvlSymbol: '',
-    lrtTokens: [],
-    token: '',
-  });
-
   const lrtsData = useLrtDataStore((store: any) => store.data);
-  console.log(lrtsData);
 
   const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
+    setLstIndex(activeIndex);
     setIsShowNpc(false);
-    setCurrentIndex(activeIndex);
-    setCurLst(lrtsData[activeIndex]);
   };
 
   useEffect(() => {
     // wait for tvl & apr
     if (!completed) return;
     setIsShowNpc(true);
-    setNpcData(lrtsData[currentIndex]);
-  }, [currentIndex, completed]);
+  }, [lstIndex, completed]);
 
   const handleClickGem = (lrt: any) => {
     setCurLrt(lrt);
@@ -117,26 +98,26 @@ const Home = () => {
         </Swiper>
       </Banner>
 
-      <Gems data={lrtsData[currentIndex].lrtTokens} onClick={handleClickGem} />
+      <Gems data={lrtsData[lstIndex].lrtTokens} onClick={handleClickGem} />
 
-      <TabCard curLst={curLst} curLrt={curLrt} handleStake={handleShowModal} />
+      <TabCard lstIndex={lstIndex} curLrt={curLrt} handleStake={handleShowModal} />
 
-      {isShowNpc ? <NpcDialog dataSource={npcData} onClose={() => setIsShowNpc(false)} /> : null}
+      {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
 
       {isShowStakeModal ? (
         <StakeModal
           dapp={{
-            name: lrtsData[currentIndex].dapp.name,
-            logo: lrtsData[currentIndex].dapp.logo,
+            name: lrtsData[lstIndex].dapp.name,
+            logo: lrtsData[lstIndex].dapp.logo,
           }}
           actionType={actionType}
-          token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[currentIndex].token}
-          token1={actionType === ActionType.STAKE ? lrtsData[currentIndex].token : curLrt}
+          token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
+          token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt}
           chainId={chainId as number}
           setShow={setIsShowStakeModal}
         />
       ) : null}
-      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={lrtsData[currentIndex].token} />
+      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={lrtsData[lstIndex].token} />
     </Container>
   );
 };

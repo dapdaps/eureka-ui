@@ -8,6 +8,8 @@ export default function useLrtsList() {
   const [lrtList, setLrtList] = useState<any>();
   const [loading, setLoading] = useState(true);
   const [completed, setCompleted] = useState(false);
+  const [lstDone, setLstDone] = useState(false);
+  const [lrtDone, setLrtDone] = useState(false);
 
   const lrtsData = useLrtDataStore((store: any) => store.data);
   const setLrtDataStore = useLrtDataStore((store: any) => store.set);
@@ -22,6 +24,7 @@ export default function useLrtsList() {
       } else {
         setLstList([]);
       }
+      setLstDone(true);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -37,6 +40,7 @@ export default function useLrtsList() {
       } else {
         setLrtList([]);
       }
+      setLrtDone(true);
       setLoading(false);
     } catch (err) {
       setLoading(false);
@@ -90,6 +94,7 @@ export default function useLrtsList() {
   }, [lrtList]);
 
   useEffect(() => {
+    if (!lstDone || !lrtDone) return;
     const _data = [...lrtsData];
 
     _data.forEach((lst: any) => {
@@ -113,8 +118,8 @@ export default function useLrtsList() {
       lst.lrtTokens.forEach((lrt: any, index: number) => {
         lrt.order = lst.orders[index];
       });
-      setCompleted(true);
     });
+    setCompleted(true);
   }, [lrtsData]);
 
   return { completed };
