@@ -1,23 +1,21 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import useTokenBalance from '@/hooks/useTokenBalance';
+import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { multicall } from '@/utils/multicall';
-import multicallAddresses from '@/config/contract/multicall';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
-import abi from '../../../../config/abi/karak';
+import abi from '../../../../config/abi/eigenpie';
 
 const contracts: Record<number, any> = {
   1: {
-    Vault: '0x46c64C1630f320b890d765E7C6F901574924b0C7',
-    VaultSupervisor: '0x54e44DbB92dBA848ACe27F44c0CB4268981eF1CC',
-    DelegationSupervisor: '0xAfa904152E04aBFf56701223118Be2832A4449E0',
+    eigenStaking: '0x24db6717db1c75b9db6ea47164d8730b63875db7',
+    withdrawManager: '0x98083e22d12497c1516d3c49e7cc6cd2cd9dcba4',
   },
 };
 
-export default function useKarak({ token0, token1, actionType }: any) {
+export default function useEigenpie({ token0, token1, actionType }: any) {
   const { provider, account } = useAccount();
   const [inAmount, setInAmount] = useState('');
   const [outAmount, setOutAmount] = useState('');
@@ -27,11 +25,12 @@ export default function useKarak({ token0, token1, actionType }: any) {
   const [stakedAmount, setStakedAmount] = useState('');
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
+
   const {
     tokenBalance,
     isLoading: balanceLoading,
     update: updateBalance,
-  } = useTokenBalance(token0.address, token1.decimals);
+  } = useTokenBalance(token0.address, token0.decimals);
   const [inToken, outToken] = useMemo(() => {
     return ['stake', 'restake'].includes(actionType) ? [token0, token1] : [token1, token0];
   }, [token0, token1, actionType]);
@@ -41,55 +40,78 @@ export default function useKarak({ token0, token1, actionType }: any) {
     return Big(inAmount || 0).gt(balance || 0);
   }, [inAmount]);
 
-  const handleAmountChange = (amount: any) => {
-    setInAmount(amount);
+  const getOutAmount = async (amount: any) => {
+    const _amount = Big(amount || 0)
+      .mul(1e18)
+      .toFixed(0);
+    const Contract = new ethers.Contract(contracts[token0.chainId].eigenStaking, abi, provider?.getSigner());
+    const result = await Contract.getMLRTAmountToMint(token0.address, _amount);
+    const mLRTAmountToMint = Big(result.mLRTAmountToMint?.toString() || 0)
+      .div(1e18)
+      .toString();
+
     setOutAmount(
-      Big(amount || 0)
-        .mul(0.99)
-        .toFixed(4),
+      ['stake', 'restake'].includes(actionType)
+        ? mLRTAmountToMint
+        : Big(amount).mul(amount).div(mLRTAmountToMint).toString(),
     );
   };
 
-  const getStakedAmount = useCallback(async () => {
-    const Contract = new ethers.Contract(contracts[token0.chainId].VaultSupervisor, abi, provider?.getSigner());
-    const result = await Contract.getDeposits(account);
+  const { run: runGetOutAmount } = useDebounceFn(
+    (amount) => {
+      getOutAmount(amount);
+    },
+    {
+      wait: 500,
+    },
+  );
 
-    setStakedAmount(
-      Big(result.assets[0] || 0)
-        .div(1e18)
-        .toFixed(4),
+  const handleAmountChange = (amount: any) => {
+    setInAmount(amount);
+    if (Big(amount || 0).eq(0)) {
+      setOutAmount('');
+      return;
+    }
+    runGetOutAmount(amount);
+  };
+
+  const getStakedAmount = useCallback(async () => {
+    const Contract = new ethers.Contract(
+      token1.address,
+      [
+        {
+          inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+          name: 'balanceOf',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function',
+        },
+      ],
+      provider?.getSigner(),
     );
-  }, [account]);
+    const result = await Contract.balanceOf(account);
+
+    setStakedAmount(Big(result).div(1e18).toFixed(4));
+  }, [account, actionType]);
 
   const handleStake = async () => {
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });
-    const method = ['stake', 'restake'].includes(actionType) ? 'deposit' : 'startWithdraw';
+    const method = ['stake', 'restake'].includes(actionType) ? 'depositAsset' : 'userQueuingForWithdraw';
     try {
       const amount = Big(inAmount).mul(1e18).toFixed(0);
-      const otherAmount = Big(outAmount).mul(0.99).mul(1e18).toFixed(0);
+      const otherAmount = Big(outAmount).mul(0.98).mul(1e18).toFixed(0);
       const Contract = new ethers.Contract(
-        contracts[token0.chainId][method === 'deposit' ? 'VaultSupervisor' : 'DelegationSupervisor'],
+        contracts[token0.chainId][method === 'depositAsset' ? 'eigenStaking' : 'withdrawManager'],
         abi,
         provider?.getSigner(),
       );
 
       let params: any = [];
-      if (method === 'deposit') {
-        params = [token1.address, amount, otherAmount];
+      if (method === 'depositAsset') {
+        params = [token0.address, amount, otherAmount, '0x0000000000000000000000000000000000000000'];
       } else {
-        const ValutContract = new ethers.Contract(contracts[token0.chainId].Vault, abi, provider?.getSigner());
-        const shares = await ValutContract.convertToShares(amount);
-
-        params = [
-          [
-            {
-              vaults: [inToken.address],
-              shares: [shares],
-              withdrawer: account,
-            },
-          ],
-        ];
+        params = [token0.address, amount];
       }
 
       const tx = await Contract[method](...params);
@@ -132,30 +154,15 @@ export default function useKarak({ token0, token1, actionType }: any) {
     setRequestsLoading(true);
 
     try {
-      const Contract = new ethers.Contract(contracts[token0.chainId].DelegationSupervisor, abi, provider?.getSigner());
-      const result = await Contract.fetchQueuedWithdrawals(account);
-      const calls = result.map((quest: any) => ({
-        address: contracts[token0.chainId].Vault,
-        name: 'convertToAssets',
-        params: [quest.request.shares[0]],
-      }));
-      const multicallAddress = multicallAddresses[token0.chainId];
-      const assetsResult = await multicall({
-        abi,
-        options: {},
-        calls,
-        multicallAddress,
-        provider,
-      });
+      const Contract = new ethers.Contract(contracts[token0.chainId].withdrawManager, abi, provider?.getSigner());
+      const result = await Contract.getUserWithdrawalSchedules(account, [token0.address]);
 
       setRequests(
-        assetsResult.map((asset: any, i: number) => {
-          const request = result[i];
+        result.queuedLstAmounts[0]?.map((amount: any, i: number) => {
           return {
-            request,
-            amount: Big(asset).div(1e18).toFixed(3),
+            amount: Big(amount).div(1e18).toFixed(3),
+            endTime: result.endTimes[0][i],
             symbol: token0.symbol,
-            endTime: request + 7 * 24 * 60 * 60,
           };
         }),
       );
@@ -167,18 +174,14 @@ export default function useKarak({ token0, token1, actionType }: any) {
   }, [account, token0]);
 
   const handleWithdraw = useCallback(
-    async (request: any) => {
+    async (asset: any) => {
       setLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
-      const method = 'finishWithdraw';
+      const method = 'userWithdrawAsset';
       try {
-        const Contract = new ethers.Contract(
-          contracts[token0.chainId].DelegationSupervisor,
-          abi,
-          provider?.getSigner(),
-        );
+        const Contract = new ethers.Contract(contracts[token0.chainId].withdrawManager, abi, provider?.getSigner());
 
-        const tx = await Contract[method]([request]);
+        const tx = await Contract[method]([asset]);
 
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId: token0.chainId });
@@ -239,7 +242,7 @@ export default function useKarak({ token0, token1, actionType }: any) {
     inToken,
     outToken,
     isInSufficient,
-    spender: token1.address,
+    spender: contracts[token0.chainId][['stake', 'restake'].includes(actionType) ? 'eigenStaking' : 'withdrawManager'],
     requestLoading,
     requests,
     getWithdrawlRequests,

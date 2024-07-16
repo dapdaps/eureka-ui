@@ -164,7 +164,7 @@ export const ethereum: { [key: string]: Token } = {
     icon: '',
   },
   mstETH: {
-    address: '0x49446a0874197839d15395b908328a74ccc96bc0',
+    address: '0x49446A0874197839D15395B908328a74ccc96Bc0',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',

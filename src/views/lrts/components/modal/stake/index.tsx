@@ -4,6 +4,7 @@ import Mantle from './modules/mantle';
 import RocketPool from './modules/rocket-pool';
 import KelpDao from './modules/kelp-dao';
 import Karak from './modules/karak';
+import Eigenpie from './modules/eigenpie';
 // const Lido = lazy(() => import('./modules/lido'));
 // const Mantle = lazy(() => import('./modules/mantle'));
 // const RocketPool = lazy(() => import('./modules/rocket-pool'));
@@ -17,6 +18,7 @@ const ComponentMapping: any = {
   RocketPool,
   KelpDao,
   Karak,
+  Eigenpie,
 };
 const Index = function (props: {
   dapp: {
