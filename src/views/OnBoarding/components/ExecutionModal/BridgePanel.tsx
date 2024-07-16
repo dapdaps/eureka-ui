@@ -157,6 +157,7 @@ const BridgePanel = ({ chainId, onLoad }: any) => {
   }, [connectedChain, amount, balance, toAmount]);
 
   const handleBridge = async () => {
+    return
     // Determine current chain
     if (btnStatus.current === 1) {
       setChain({ chainId: `0x${fromChain.chainId.toString(16)}` });
