@@ -171,17 +171,19 @@ interface Porps {
     onClose: () => void;
     transactionList: any[];
     addressOrHash?: string;
+    initTabIndex?: number;
 }
 
 export default function TransactionPanel(
-    { onClose, transactionList, addressOrHash }: Porps
+    { initTabIndex, onClose, transactionList, addressOrHash }: Porps
 ) {
     const { success, fail } = useToast()
     const [filterTransactionList, setFilterTransactionList] = useState(transactionList)
     const [value, setValue] = useState('')
-    const [tabIndex, setTabIndex] = useState(1)
+    const [tabIndex, setTabIndex] = useState(initTabIndex)
     const { account, chainId, provider } = useAccount();
     const { transactionList: gasTransactionList } = useTransction(account as string)
+    const [filterGasTransactionList, setFilterGasTransactionList] = useState(gasTransactionList)
     const inputValue = useDebounce(value, { wait: 500 });
 
     useEffect(() => {
@@ -207,7 +209,25 @@ export default function TransactionPanel(
             setFilterTransactionList(transactionList)
         }
 
-    }, [inputValue, transactionList])
+        if (inputValue && gasTransactionList) {
+            const filterTransactionList = gasTransactionList.filter(item => {
+                if (item.order_hash.indexOf(inputValue) > -1) {
+                    return true
+                }
+
+                if (item.src_address.indexOf(inputValue) > -1) {
+                    return true
+                }
+
+                return false
+            })
+
+            setFilterGasTransactionList(filterTransactionList)
+        } else {
+            setFilterGasTransactionList(gasTransactionList)
+        }
+
+    }, [inputValue, transactionList, gasTransactionList])
 
     useEffect(() => {
         if (addressOrHash) {
@@ -360,12 +380,12 @@ export default function TransactionPanel(
                     </thead>
                     <tbody>
                         {
-                            gasTransactionList.length === 0 ? <tr>
+                            filterGasTransactionList.length === 0 ? <tr>
                                 <td colSpan={6} style={{ textAlign: 'center', padding: 40, color: '#fff' }}>No found.</td>
                             </tr> : null
                         }
                         {
-                            gasTransactionList?.map(tx => {
+                            filterGasTransactionList?.map(tx => {
                                 return <tr key={tx.order_hash}>
                                     <td>
                                         <div className="flex-line">
@@ -390,7 +410,7 @@ export default function TransactionPanel(
                                                 </svg>
                                             </div>
                                             <div className="hash-copy" onClick={() => {
-                                                window.open(`${tx.link}/tx/${tx.hash}`)
+                                                window.open(`${tx.link}/tx/${tx.order_hash}`)
                                             }}>
                                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                     <path fill-rule="evenodd" clip-rule="evenodd" d="M0.5 12C0.5 12.8284 1.17157 13.5 2 13.5L8.8 13.5C9.62843 13.5 10.3 12.8284 10.3 12L10.3 9.15L9.3 9.15L9.3 12C9.3 12.2761 9.07614 12.5 8.8 12.5L2 12.5C1.72386 12.5 1.5 12.2761 1.5 12L1.5 5.2C1.5 4.92386 1.72386 4.7 2 4.7L4.85 4.7L4.85 3.7L2 3.7C1.17157 3.7 0.499999 4.37157 0.499999 5.2L0.5 12Z" fill="#979ABE" />
@@ -399,7 +419,7 @@ export default function TransactionPanel(
                                             </div>
                                         </div>
                                         <div className="flex-line second">
-                                            {formateTxDate(tx.time)}
+                                            {formateTxDate(tx.timestamp)}
                                         </div>
                                     </td>
                                     <td>

@@ -176,7 +176,9 @@ export default function GasModal({
             <div className="transter-detail">
                 <Input value={rangeVal} onChange={(e) => {
                     const { value } = e.target
-                    if (Number(value)> Number(max)) {
+                    if (maxBalance && Number(maxBalance) < Number(value)) {
+                        setRangeVal(maxBalance)
+                    } else if (Number(value)> Number(max)) {
                         setRangeVal(max.toString())
                     } else if (!isNaN(parseFloat(value)))  {
                         setRangeVal(value)
@@ -196,7 +198,12 @@ export default function GasModal({
         <Range
             type='range'
             onChange={(e: any) => {
-                setRangeVal(e.target.value)
+                if (maxBalance && Number(maxBalance) < Number(e.target.value)) {
+                    setRangeVal(maxBalance)
+                } else {
+                    setRangeVal(e.target.value)
+                }
+                
             }}
             min={min}
             max={max}

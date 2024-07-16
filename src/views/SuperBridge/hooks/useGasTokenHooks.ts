@@ -102,7 +102,18 @@ const contracts: any = {
     43114: '0xdb4d106632B315d75920F0f79f6e61a824F0ce25',
     8453: '0x5375cC796E47B608b7788ae319208528c023E7CE',
     81457: '0x3037F9744Af923Bd662Bb06A77688A23f96Bf608',
-
+    56: '0xAE77A8a47bBfe1830BE1e41C6b53F5D671301005',
+    100: '0x5375cc796e47b608b7788ae319208528c023e7ce',
+    59144: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    169: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    5000: '0xB22AaB0B08B71B86c1E22C1254aC01db0718860e',
+    1088: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    34443: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    10: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    137: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    1101: '0x5375cC796E47B608b7788ae319208528c023E7CE',
+    534352: '0x071d5dD96293c859e46D4A2f78a8eD5EAa4f5fa4',
+    324: '0xE8029586FeC4FA2161Be33511A890Be17F156c85'
 }
 
 // const contractAddress = '0xa8faD25d4352470dD03681aE697800069326f27b'
@@ -124,6 +135,14 @@ const BASE_URL = 'https://refueler.dapdap.net/api/v1/refuel'
 let supportedChains: any = null
 
 async function getAllSupportedChains(fromChain: Chain, toChain: Chain | null) {
+    const contractAddress = contracts[fromChain.chainId]
+    if (!contractAddress) {
+        return {
+            hasFrom: null,
+            hasTo: null,
+        }
+    }
+
     if (!supportedChains) {
         const res = await fetch(`${BASE_URL}/supportedChains`).then(res => res.json())
         if (res && res.data) {
@@ -154,9 +173,9 @@ async function getSupportedTokens(fromChain: any) {
 }
 
 async function getSupportedToken(fromChain: any, fromToken: Token) {
-    if (fromToken.isNative) {
-        return Promise.resolve(true)
-    }
+    // if (fromToken.isNative) {
+    //     return Promise.resolve(true)
+    // }
     const tokens = await getSupportedTokens(fromChain)
     return tokens.some((item: any) => item.token_address === fromToken.address)
 }
@@ -446,6 +465,7 @@ export function useTransction(address: string) {
                     const toChain = _chainConfig[item.dst_chain_id]
                     if (fromChain) {
                         item.fromChainLogo = fromChain.icon
+                        item.link = fromChain.blockExplorers
                         const tokens = allTokens[item.src_chain_id]
                         if (tokens) {
                             const fromToken = tokens.find(token => token.address.toLocaleLowerCase() === item.src_token.toLocaleLowerCase())
