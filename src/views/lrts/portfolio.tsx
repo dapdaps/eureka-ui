@@ -85,7 +85,7 @@ const Portfolio: FC<IProps> = (props) => {
                     <>
                       <PolygonBtn>STAKE / UNSTAKE </PolygonBtn>
                       {/* <PolygonBtn>Swap</PolygonBtn> */}
-                      <PolygonBtn onClick={(e: any) => handleBridge(_.symbol)}>Bridge</PolygonBtn>
+                      <PolygonBtn onClick={() => handleBridge(_.symbol)}>Bridge</PolygonBtn>
                     </>
                   );
                 },
