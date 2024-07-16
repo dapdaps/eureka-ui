@@ -10,17 +10,13 @@ interface IProps {
   style?: CSSProperties;
   onClick?: () => void;
 }
-const TableWrap = styled.div`
+const TableWrap = styled.table`
   font-family: Orbitron;
+  width: 100%;
 `;
-const TableHead = styled.div<{ $amount: number }>`
-  display: grid;
-  width: 1140px;
-  grid-template-columns: ${({ $amount }) => `repeat(${$amount},1fr)`};
-  gap: 10px;
-  padding: 16px 0;
-  .th {
-    padding: 0 10px;
+const TableHead = styled.thead<{ $amount: number }>`
+  th {
+    padding: 16px 10px;
     color: #828282;
     font-size: 14px;
     font-style: normal;
@@ -28,13 +24,8 @@ const TableHead = styled.div<{ $amount: number }>`
     line-height: normal;
   }
 `;
-const TableBody = styled.div<{ $amount: number }>`
-  .tr {
-    display: grid;
-
-    /* width: 1140px; */
-    grid-template-columns: ${({ $amount }) => `repeat(${$amount},1fr)`};
-    gap: 10px;
+const TableBody = styled.tbody<{ $amount: number }>`
+  tr {
     border-radius: 4px;
     border: 1px solid #3f3f3f;
     background: rgba(50, 50, 50, 0.6);
@@ -44,13 +35,10 @@ const TableBody = styled.div<{ $amount: number }>`
       background-color: #272727;
     }
   }
-  .td {
-    display: flex;
-    align-items: center;
+  td {
     padding: 0 10px;
     height: 72px;
     color: #fff;
-
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -59,38 +47,28 @@ const TableBody = styled.div<{ $amount: number }>`
 `;
 
 const CustomTable: FC<IProps> = ({ dataSource, columns }) => {
-  const renderTr = (data: any, key: any) => {
+  const renderTd = (data: any, key: any) => {
     return columns.map((item: any) => {
       if (item.render && typeof item.render === 'function') {
-        return (
-          <div key={data.key} className="td">
-            {item.render(dataSource[key])}
-          </div>
-        );
+        return <td key={data.key}>{item.render(dataSource[key])}</td>;
       }
-      return (
-        <div key={data.key} className="td">
-          {data[item.dataIndex]}
-        </div>
-      );
+      return <td key={data.key}>{data[item.dataIndex]}</td>;
     });
   };
   return (
     <TableWrap>
       <TableHead $amount={columns.length}>
-        {columns.map((item: any) => (
-          <div key={item.key} className="th">
-            {item.title}
-          </div>
-        ))}
+        <tr>
+          {columns.map((item: any) => (
+            <th key={item.key} style={{ width: item.width }}>
+              {item.title}
+            </th>
+          ))}
+        </tr>
       </TableHead>
       <TableBody $amount={columns.length}>
         {dataSource.map((item: any, index: number) => {
-          return (
-            <div key={item.key} className="tr">
-              {renderTr(item, item.key)}
-            </div>
-          );
+          return <tr key={item.key}>{renderTd(item, item.key)}</tr>;
         })}
       </TableBody>
     </TableWrap>

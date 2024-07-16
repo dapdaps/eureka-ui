@@ -60,33 +60,49 @@ const Portfolio: FC<IProps> = (props) => {
           <CustomTable
             dataSource={lstAssets}
             columns={[
-              { title: 'Assets', dataIndex: 'assets', key: 1 },
+              {
+                title: 'Assets',
+                dataIndex: 'assets',
+                key: 1,
+                width: '10%',
+                render: (_: any) => {
+                  return (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+                      <img src={_.icon} alt="" />
+                      {_.symbol}
+                    </div>
+                  );
+                },
+              },
               {
                 title: 'Chain',
                 dataIndex: 'chain',
                 key: 2,
+                width: '10%',
               },
               {
                 title: 'Balance',
                 dataIndex: 'balance',
                 key: 3,
+                width: '10%',
                 render: (_: any) => {
                   return Number(_?.balance).toFixed(2);
                 },
               },
-              { title: 'Price', dataIndex: 'price', key: 4 },
-              { title: '7d APR', dataIndex: 'apr', key: 5 },
+              { title: 'Price', dataIndex: 'price', key: 4, width: '10%' },
+              { title: '7d APR', dataIndex: 'apr', key: 5, width: '10%' },
               {
                 title: 'Action',
                 dataIndex: 'Action',
                 key: 6,
+                width: '50%',
                 render: (_: any) => {
                   return (
-                    <>
+                    <div style={{ display: 'flex', gap: 10 }}>
                       <PolygonBtn>STAKE / UNSTAKE </PolygonBtn>
-                      {/* <PolygonBtn>Swap</PolygonBtn> */}
+                      <PolygonBtn>Swap</PolygonBtn>
                       <PolygonBtn onClick={() => handleBridge(_.symbol)}>Bridge</PolygonBtn>
-                    </>
+                    </div>
                   );
                 },
               },
@@ -98,25 +114,28 @@ const Portfolio: FC<IProps> = (props) => {
           <CustomTable
             dataSource={lrtAssets}
             columns={[
-              { title: 'Assets', dataIndex: 'assets', key: 1 },
+              { title: 'Assets', dataIndex: 'assets', key: 1, width: '10%' },
               {
                 title: 'Chain',
                 dataIndex: 'chain',
                 key: 2,
+                width: '10%',
               },
-              { title: 'Balance', dataIndex: 'balance', key: 3 },
-              { title: 'Price', dataIndex: 'price', key: 4 },
-              { title: '7d APR', dataIndex: 'apr', key: 5 },
+              { title: 'Balance', dataIndex: 'balance', key: 3, width: '10%' },
+              { title: 'Price', dataIndex: 'price', key: 4, width: '10%' },
+              { title: '7d APR', dataIndex: 'apr', key: 5, width: '10%' },
               {
                 title: 'Action',
                 dataIndex: 'Action',
                 key: 6,
+                width: '50%',
                 render: (_: any) => {
                   return (
-                    <>
+                    <div style={{ display: 'flex', gap: 10 }}>
                       <PolygonBtn>RESTAKE / UNSTAKE </PolygonBtn>
-                      {/* <PolygonBtn>Swap</PolygonBtn> */}
-                    </>
+                      <PolygonBtn>Swap</PolygonBtn>
+                      <PolygonBtn onClick={() => handleBridge(_.symbol)}>Bridge</PolygonBtn>
+                    </div>
                   );
                 },
               },
