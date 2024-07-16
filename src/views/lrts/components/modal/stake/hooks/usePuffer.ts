@@ -117,7 +117,7 @@ export default function usePuffer({ token0, token1, actionType }: any) {
           value: amount,
         };
       }
-      console.log('method', method);
+
       if (method === 'depositStETH') {
         const signer = provider?.getSigner(account);
         const TokenContract = new ethers.Contract(token0.address, abi, signer);
@@ -157,7 +157,7 @@ export default function usePuffer({ token0, token1, actionType }: any) {
         params = [[deadline, amount, v, r, s], account];
       }
 
-      const tx = await Contract[method](...params);
+      const tx = await Contract[method](...params, options);
 
       toast.dismiss(toastId);
       toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId: token0.chainId });
