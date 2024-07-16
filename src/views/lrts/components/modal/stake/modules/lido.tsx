@@ -129,9 +129,9 @@ const WITHDRAWAL_QUEUE_ABI = [
 ];
 
 const Lido = function (props: any) {
-  const { actionType, setShow, token0, token1 } = props;
+  const { dapp, actionType, setShow, token0, token1, addAction, chainId } = props;
   const toast = useToast();
-  const { account, provider, chainId } = useAccount();
+  const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
   const [data, setData] = useState<any>(null);
   const [inAmount, setInAmount] = useState<number | string>('');
@@ -179,37 +179,6 @@ const Lido = function (props: any) {
     }
   };
   const handleApprove = async function () {
-    // const contract = new ethers.Contract(mETH, mETH_ABI, provider?.getSigner())
-    // const wei = ethers.utils.parseUnits(
-    //   Big(inAmount).toFixed(18),
-    //   18
-    // );
-    // const toastId = toast?.loading({
-    //   title: `Approve ${inAmount} ${inToken.symbol}`,
-    // });
-    // setApproving(true)
-    // setIsLoading(true)
-    // contract
-    //   .approve(LSP_STAKING, wei)
-    //   .then(tx => tx.wait())
-    //   .then(receipt => {
-    //     setApproved(true)
-    //     setApproving(false)
-    //     setIsLoading(false)
-    //     toast.dismiss(toastId)
-    //     toast?.success({
-    //       title: "Approve Successfully!",
-    //       text: `Approve ${inAmount} ${inToken.symbol}`,
-    //       tx: receipt.transactionHash,
-    //     });
-    //   })
-    //   .catch(error => {
-    //     setIsLoading(false)
-    //     toast?.dismiss(toastId);
-    //     toast?.fail({
-    //       title: "Approve Failed!",
-    //     });
-    //   })
   };
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount);
@@ -299,6 +268,22 @@ const Lido = function (props: any) {
         toast?.success({
           title: ['stake', 'restake'].includes(actionType) ? 'Stake Successfully!' : 'UnStake Successfully',
         });
+        addAction({
+          type: "Staking",
+          action: actionType,
+          token0: inToken.symbol,
+          token1: outToken.symbol,
+          template: dapp.name,
+          status,
+          transactionHash,
+          chain_id: chainId,
+          extra_data: JSON.stringify({
+            action: actionType,
+            amount0: inAmount,
+            amount1: outAmount,
+            // requestID: 
+          })
+        })
       })
       .catch((error: any) => {
         setIsLoading(false);

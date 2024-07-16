@@ -149,9 +149,9 @@ const mETH_ABI = [{
 }]
 
 const Mantle = function (props: any) {
-  const { actionType, setShow, token0, token1 } = props;
+  const { dapp, actionType, setShow, token0, token1, addAction, chainId } = props;
   const toast = useToast()
-  const { account, provider, chainId } = useAccount();
+  const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
   const [data, setData] = useState<any>(null)
   const [inAmount, setInAmount] = useState<number | string>("")
@@ -161,17 +161,6 @@ const Mantle = function (props: any) {
   const [approving, setApproving] = useState(false)
 
   const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0.01
-
-  // const firstToken = {
-  //   icon: '',
-  //   symbol: 'ETH',
-  //   decimals: 18,
-  // }
-  // const secondToken = {
-  //   icon: '',
-  //   symbol: 'mETH',
-  //   decimals: 18,
-  // }
 
   const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1
   const outToken = ['stake', 'restake'].includes(actionType) ? token1 : token0
@@ -287,7 +276,9 @@ const Mantle = function (props: any) {
     });
     console.log('=contractArguments', contractArguments)
     contractMethord(...contractArguments)
-      .then((tx: any) => tx.wait())
+      .then((tx: any) => {
+        return tx.wait()
+      })
       .then((result: any) => {
         const { status, transactionHash } = result;
         setIsLoading(false)
@@ -296,6 +287,23 @@ const Mantle = function (props: any) {
         toast?.success({
           title: ['stake', 'restake'].includes(actionType) ? "Stake Successfully!" : "UnStake Successfully",
         });
+
+        addAction({
+          type: "Staking",
+          action: actionType,
+          token0: inToken.symbol,
+          token1: outToken.symbol,
+          template: dapp.name,
+          status,
+          transactionHash,
+          chain_id: chainId,
+          extra_data: JSON.stringify({
+            action: actionType,
+            amount0: inAmount,
+            amount1: outAmount,
+            // requestID: 
+          })
+        })
       })
       .catch((error: any) => {
         setIsLoading(false)
@@ -315,6 +323,7 @@ const Mantle = function (props: any) {
     <BaseComponent
       componentProps={{
         data,
+        setShow,
         inAmount,
         outAmount,
         isLoading,

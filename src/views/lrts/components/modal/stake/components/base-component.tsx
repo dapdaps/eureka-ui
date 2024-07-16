@@ -117,7 +117,7 @@ const BaseComponent = function (props: any) {
             <StyledMaxAndSymbol>
               <StyledMax onClick={handleMax}>Max</StyledMax>
               <StyledSymbol>
-                <StyledSymbolImage />
+                <StyledSymbolImage src={inToken.icon} />
                 <StyledSymbolTxt>{inToken.symbol}</StyledSymbolTxt>
               </StyledSymbol>
             </StyledMaxAndSymbol>
