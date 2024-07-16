@@ -91,14 +91,19 @@ export default function useLrtsList() {
   useEffect(() => {
     const _data = [...lrtsData];
 
-    _data.forEach((item: any) => {
-      const _lrtAprs = item.lrtTokens.map((item: any) => item.apr);
-      const _aprs = [item.apr, ..._lrtAprs];
+    _data.forEach((lst: any) => {
+      const _lrtAprs = lst.lrtTokens.map((item: any) => item.apr);
+      const _aprs = [lst.apr, ..._lrtAprs];
       const _maxApr = Math.max.apply(null, _aprs);
       const _minApr = Math.min.apply(null, _aprs);
 
-      item.minApr = _minApr;
-      item.maxApr = _maxApr;
+      lst.minApr = _minApr;
+      lst.maxApr = _maxApr;
+      lst.lrtTokens = lst.lrtTokens.sort((a: any, b: any) => a.apr - b.apr);
+      console.log(3333, lst.lrtTokens);
+      lst.lrtTokens.forEach((lrt: any, index: number) => {
+        lrt.order = lst.orders[index];
+      });
     });
   }, [lrtsData]);
 

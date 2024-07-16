@@ -8,32 +8,29 @@ const LSTS_DATA = [
       name: 'Mantle',
       logo: '/images/lrts/dapp-mantle.svg',
     },
-
     token: {
       ...ethereum['mETH'],
     },
+    orders: [3, 15, 21, 40],
     lrtTokens: [
       {
-        order: 3,
+        // order: 3,
         logo: '/images/lrts/gem-inmeth.svg', // gem logo
         token: ethereum['inmETH'],
       },
       {
-        order: 15,
+        // order: 15,
         logo: '/images/lrts/gem-mmeth.svg',
-
         token: ethereum['mmETH'],
       },
       {
-        order: 21,
+        // order: 21,
         logo: '/images/lrts/gem-kmeth.svg',
-
         token: ethereum['kmETH'],
       },
       {
-        order: 40,
+        // order: 40,
         logo: '/images/lrts/gem-rmeth.svg',
-
         token: ethereum['rmETH'],
       },
     ],
@@ -48,47 +45,41 @@ const LSTS_DATA = [
     token: {
       ...ethereum['stETH'],
     },
+    orders: [3, 7, 13, 15, 25, 31, 40],
     lrtTokens: [
       {
-        order: 3,
+        // order: 3,
         logo: '/images/lrts/gem-rseth.svg',
-
         token: ethereum['rsETH'],
       },
       {
-        order: 7,
+        // order: 7,
         logo: '/images/lrts/gem-insteth.svg',
-
         token: ethereum['instETH'],
       },
       {
-        order: 13,
+        // order: 13,
         logo: '/images/lrts/gem-msteth.svg',
-
         token: ethereum['mstETH'],
       },
       {
-        order: 15,
+        // order: 15,
         logo: '/images/lrts/gem-pufeth.svg',
-
         token: ethereum['pufETH'],
       },
       {
-        order: 25,
-        logo: '/images/lrts/gem-weeth.svg',
-
+        // order: 25,
+        logo: '/images/lrts/gem-rsteth.svg',
         token: ethereum['rstETH'],
       },
       {
-        order: 31,
-        logo: '/images/lrts/gem-ezeth.svg',
-
+        // order: 31,
+        logo: '/images/lrts/gem-weeth.svg',
         token: ethereum['eETH'],
       },
       {
-        order: 40,
-        logo: '/images/lrts/gem-rsteth.svg',
-
+        // order: 40,
+        logo: '/images/lrts/gem-ezeth.svg',
         token: ethereum['ezETH'],
       },
     ],
@@ -103,23 +94,21 @@ const LSTS_DATA = [
     token: {
       ...ethereum['rETH'],
     },
+    orders: [7, 13, 40],
     lrtTokens: [
       {
-        order: 7,
+        // order: 7,
         logo: '/images/lrts/gem-inreth.svg',
-
         token: ethereum['inrETH'],
       },
       {
-        order: 13,
+        // order: 13,
         logo: '/images/lrts/gem-kreth.svg',
-
         token: ethereum['krETH'],
       },
       {
-        order: 40,
+        // order: 40,
         logo: '/images/lrts/gem-mreth.svg',
-
         token: ethereum['mrETH'],
       },
     ],
@@ -134,34 +123,33 @@ const LSTS_DATA = [
     token: {
       ...ethereum['sfrxETH'],
     },
+    orders: [7, 13, 25, 40],
     lrtTokens: [
       {
-        order: 7,
+        // order: 7,
         logo: '/images/lrts/gem-insfrseth.svg',
 
         token: ethereum['insfrxETH'],
       },
       {
-        order: 13,
+        // order: 13,
         logo: '/images/lrts/gem-ksfrxeth.svg',
 
         token: ethereum['ksfrxETH'],
       },
       {
-        order: 25,
+        // order: 25,
         logo: '/images/lrts/gem-msfrxeth.svg',
 
         token: ethereum['msfrxETH'],
       },
       {
-        order: 40,
+        // order: 40,
         logo: '/images/lrts/gem-rsfrxeth.svg',
 
         token: ethereum['rsfrxETH'],
       },
     ],
-
-    userGems: [7],
   },
 ];
 

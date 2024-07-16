@@ -63,7 +63,7 @@ const Wrap = styled.section`
     left: 0;
     right: 0;
     top: 12px;
-    padding: 0 5px;
+    padding: 0 8px;
     width: 100%;
     display: flex;
     align-items: center;
@@ -134,13 +134,16 @@ const GemLight = styled.div`
     }
   }
 `;
-const GemImage = styled.img``;
+const GemImage = styled.img`
+  max-width: 100%;
+`;
 const Stones: FC<IProps> = ({ data, onClick }) => {
   useEffect(() => {}, []);
   const items = Array.from({ length: 81 }, (x, i) => i + 1);
 
   const allGems = data.map((item: any) => item.order);
-  const userGems = data.filter((item: any) => item.isActive).map((item: any) => item.order);
+
+  const userGems = data.filter((item: any) => item?.token?.balance > 0).map((item: any) => item.order);
 
   const rocks = [12, 16, 18, 33, 38, 42, 47, 48, 50, 51, 54, 58];
   const empty = [11, 17, 34, 39, 49, 53, 59];
