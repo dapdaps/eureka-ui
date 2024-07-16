@@ -8,6 +8,7 @@ import RestakeFinance from './modules/restake-finance';
 import RocketPool from './modules/rocket-pool';
 import Puffer from './modules/puffer';
 import Inception from './modules/inception';
+import Renzo from './modules/renzo';
 // const Lido = lazy(() => import('./modules/lido'));
 // const Mantle = lazy(() => import('./modules/mantle'));
 // const RocketPool = lazy(() => import('./modules/rocket-pool'));
@@ -27,6 +28,7 @@ const ComponentMapping: any = {
   EtherFi,
   'Puffer Finance': Puffer,
   Inception,
+  Renzo,
 };
 const Index = function (props: {
   dapp: {
