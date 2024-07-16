@@ -35,7 +35,9 @@ import {
   StyledSymbolTxt,
   StyledTipsContainer,
   StyledTitle,
-  StyledWithdrawTips
+  StyledWithdrawTips,
+  StyledActionTypeTabContainer,
+  StyledActionTypeTab
 } from '../styles';
 const BaseComponent = function (props: any) {
   const {
@@ -55,13 +57,24 @@ const BaseComponent = function (props: any) {
     handleApprove,
     handleAmountChange,
     handleStake,
-    handleAddMetaMask
+    handleAddMetaMask,
+    handleChangeActionType
   } = props?.componentProps
 
+  const actionTypeList = ["stake", "unstake"]
   return data ? (
     <StyledStakeContainer>
       <StyledStakeTopContainer style={actionType === 'unstake' ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}>
-        <StyledTitle>{actionType}</StyledTitle>
+        {/* <StyledTitle>{actionType}</StyledTitle> */}
+        <StyledActionTypeTabContainer>
+          {
+            actionTypeList.map(_actionType => (
+              <StyledActionTypeTab key={_actionType} className={_actionType === actionType ? 'active' : ''} onClick={() => {
+                handleChangeActionType(_actionType)
+              }}>{_actionType}</StyledActionTypeTab>
+            ))
+          }
+        </StyledActionTypeTabContainer>
         <StyledClose onClick={() => {
           setShow(false)
         }}>
@@ -117,7 +130,7 @@ const BaseComponent = function (props: any) {
             <StyledMaxAndSymbol>
               <StyledMax onClick={handleMax}>Max</StyledMax>
               <StyledSymbol>
-                <StyledSymbolImage />
+                <StyledSymbolImage src={inToken.icon} />
                 <StyledSymbolTxt>{inToken.symbol}</StyledSymbolTxt>
               </StyledSymbol>
             </StyledMaxAndSymbol>

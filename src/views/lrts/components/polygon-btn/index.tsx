@@ -87,6 +87,7 @@ const Wrap = styled.button<{ $block: boolean }>`
   &:hover {
     color: #fff;
     background: #fff;
+    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.6);
     &:before {
       background: #000;
       color: #fff;

@@ -1,4 +1,4 @@
-import { log } from 'console';
+import { useRouter } from 'next/router';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 
@@ -45,6 +45,11 @@ const Portfolio: FC<IProps> = (props) => {
     key: index,
   }));
 
+  const router = useRouter();
+  const handleBridge = (toToken: string) => {
+    router.push(`/super-bridge?fromChainId=1&toChainId=1&fromToken=ETH&toToken=${toToken}`);
+  };
+
   const items = [
     {
       label: TabType.Portfolio,
@@ -78,10 +83,9 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (_: any) => {
                   return (
                     <>
-                      <PolygonBtn>Stake</PolygonBtn>
-                      <PolygonBtn>Swap</PolygonBtn>
-                      {/* <PolygonBtn>Bridge</PolygonBtn>
-                    <PolygonBtn>Unstake</PolygonBtn> */}
+                      <PolygonBtn>STAKE / UNSTAKE </PolygonBtn>
+                      {/* <PolygonBtn>Swap</PolygonBtn> */}
+                      <PolygonBtn onClick={(e: any) => handleBridge(_.symbol)}>Bridge</PolygonBtn>
                     </>
                   );
                 },
@@ -110,8 +114,8 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (_: any) => {
                   return (
                     <>
-                      <PolygonBtn>Stake</PolygonBtn>
-                      <PolygonBtn>Swap</PolygonBtn>
+                      <PolygonBtn>RESTAKE / UNSTAKE </PolygonBtn>
+                      {/* <PolygonBtn>Swap</PolygonBtn> */}
                     </>
                   );
                 },

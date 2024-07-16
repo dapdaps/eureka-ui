@@ -6,6 +6,7 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useLrtDataStore } from '@/stores/lrts';
+import { setNumKMB } from '@/utils/format-number';
 
 import { PolygonBtn } from '../';
 export enum ActionType {
@@ -93,6 +94,10 @@ const TabBody = styled.div`
     gap: 40px;
     padding-left: 100px;
   }
+  .btns {
+    display: flex;
+    gap: 20px;
+  }
 `;
 
 const ItemName = styled.div`
@@ -136,8 +141,13 @@ const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
   useEffect(() => {
     if (!data) return;
 
-    const _lrtTokens = data?.lrtTokens?.map((item: any) => ({ ...item.token, logo: item.logo }));
-    const _list = [{ ...data.token, logo: data.lstIcon }, ..._lrtTokens];
+    const _lrtTokens = data?.lrtTokens?.map((item: any) => ({
+      ...item.token,
+      logo: item.logo,
+      tvl: item.tvl,
+      apr: item.apr,
+    }));
+    const _list = [{ ...data.token, logo: data.lstIcon, tvl: data.tvl, apr: data.apr }, ..._lrtTokens];
     setList(_list);
   }, [data]);
 
@@ -172,7 +182,7 @@ const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
   useEffect(() => {
     const lsts = lrtsData.map((item: any) => item.token.symbol);
 
-    if (lsts.includes(list?.[activeIndex].symbol)) {
+    if (lsts.includes(list?.[activeIndex]?.symbol)) {
       setTokenType(ActionType.STAKE);
     } else {
       setTokenType(ActionType.UNSTAKE);
@@ -208,17 +218,18 @@ const TabCard: FC<IProps> = ({ data, curLrt, handleStake }) => {
             </div>
             <div>
               <ItemName>APR</ItemName>
-              <ItemValue>{}%</ItemValue>
+              <ItemValue>{Number(list?.[activeIndex]?.apr).toFixed(2)}%</ItemValue>
             </div>
             <div>
               <ItemName>TVL</ItemName>
-              <ItemValue>$ {}</ItemValue>
+              <ItemValue>$ {setNumKMB(list?.[activeIndex]?.tvl, 2)}</ItemValue>
             </div>
           </div>
           <div className="btns">
-            <PolygonBtn block onClick={handleClick}>
-              {tokenType === ActionType.STAKE ? 'STAKE' : 'RESTAKE'}
+            <PolygonBtn onClick={handleClick} style={{ width: 315 }}>
+              {tokenType === ActionType.STAKE ? 'STAKE / UNSTAKE' : 'RESTAKE / UNSTAKE'}
             </PolygonBtn>
+            <PolygonBtn style={{ width: 175 }}>SWAP</PolygonBtn>
           </div>
         </div>
         <div className="right">

@@ -6,81 +6,9 @@ import { ethers } from 'ethers';
 import chains from '@/config/chains';
 import { useEffect, useMemo, useState } from 'react';
 import BaseComponent from '../components/base-component';
-const LSP_STAKING = "0xe3cBd06D7dadB3F4e6557bAb7EdD924CD1489E8f"
-const LSP_STAKING_ABI = [{
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "ethAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "ethToMETH",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "mETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "mETHToETH",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "minMETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "stake",
-  "outputs": [],
-  "stateMutability": "payable",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint128",
-      "name": "methAmount",
-      "type": "uint128"
-    },
-    {
-      "internalType": "uint128",
-      "name": "minETHAmount",
-      "type": "uint128"
-    }
-  ],
-  "name": "unstakeRequest",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
-const UNSTAKE_ADDRESS = "0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16"
 
+
+const UNSTAKE_ADDRESS = "0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16"
 const UNSTAKE_ADDRESS_ABI = [{
   "inputs": [
     {
@@ -100,60 +28,73 @@ const UNSTAKE_ADDRESS_ABI = [{
   "type": "function"
 }]
 
-const LRT_DEPOSIT_POOL = "0x036676389e48133B63a802f8635AD39E752D375D"
-
-const LRT_DEPOSIT_POOL_ABI = [{
+const STAKE_ADDRESS = "0x9FFDF407cDe9a93c47611799DA23924Af3EF764F"
+const STAKE_ADDRESS_ABI = [{
   "inputs": [
     {
       "internalType": "address",
-      "name": "asset",
+      "name": "_token",
       "type": "address"
     },
     {
       "internalType": "uint256",
-      "name": "depositAmount",
+      "name": "_amount",
       "type": "uint256"
     },
     {
-      "internalType": "uint256",
-      "name": "minRSETHAmountExpected",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "referralId",
-      "type": "string"
+      "internalType": "address",
+      "name": "_referral",
+      "type": "address"
     }
   ],
-  "name": "depositAsset",
-  "outputs": [],
+  "name": "depositWithERC20",
+  "outputs": [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ],
   "stateMutability": "nonpayable",
   "type": "function"
 }]
 
-const EtherfiL2ExchangeRateProvider = "0x241a91F095B2020890Bc8518bea168C195518344"
-const EtherfiL2ExchangeRateProvider_ABI = [{
+
+const LIQUIDITY_POOL = "0x308861A430be4cce5502d0A12724771Fc6DaF216"
+const LIQUIDITY_POOL_ABI = [{
+  "inputs": [],
+  "name": "deposit",
+  "outputs": [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ],
+  "stateMutability": "payable",
+  "type": "function"
+}, {
   "inputs": [
     {
       "internalType": "address",
-      "name": "token",
+      "name": "recipient",
       "type": "address"
     },
     {
       "internalType": "uint256",
-      "name": "amountIn",
+      "name": "amount",
       "type": "uint256"
     }
   ],
-  "name": "getConversionAmount",
+  "name": "requestWithdraw",
   "outputs": [
     {
       "internalType": "uint256",
-      "name": "amountOut",
+      "name": "",
       "type": "uint256"
     }
   ],
-  "stateMutability": "view",
+  "stateMutability": "nonpayable",
   "type": "function"
 }]
 
@@ -224,7 +165,7 @@ const SECOND_TOKEN_ABI = [{
   "inputs": [
     {
       "internalType": "address",
-      "name": "account",
+      "name": "_user",
       "type": "address"
     }
   ],
@@ -242,12 +183,12 @@ const SECOND_TOKEN_ABI = [{
   "inputs": [
     {
       "internalType": "address",
-      "name": "owner",
+      "name": "_owner",
       "type": "address"
     },
     {
       "internalType": "address",
-      "name": "spender",
+      "name": "_spender",
       "type": "address"
     }
   ],
@@ -265,12 +206,12 @@ const SECOND_TOKEN_ABI = [{
   "inputs": [
     {
       "internalType": "address",
-      "name": "spender",
+      "name": "_spender",
       "type": "address"
     },
     {
       "internalType": "uint256",
-      "name": "amount",
+      "name": "_amount",
       "type": "uint256"
     }
   ],
@@ -315,15 +256,7 @@ const EtherFi = function (props: any) {
     const res = await fetch("https://universe.kelpdao.xyz/rseth/apy")
     return res.json() as any
   }
-  const handleQueryExchangeRate = async function () {
-    const rpcUrl = chains["59144"]?.rpcUrls[0]
-    console.log('=rpcUrl', rpcUrl)
-    const provider = new ethers.providers.JsonRpcProvider(rpcUrl)
-    const contract = new ethers.Contract(EtherfiL2ExchangeRateProvider, EtherfiL2ExchangeRateProvider_ABI, provider)
-    return await contract.getConversionAmount(token0.address, Big("1")
-      .mul(Big(10).pow(18))
-      .toFixed(0))
-  }
+
   const handleQueryAvailableAmount = async function () {
     const contract = new ethers.Contract(token0.address, FIRST_TOKEN_ABI, provider?.getSigner())
     return await contract.balanceOf(account)
@@ -334,33 +267,40 @@ const EtherFi = function (props: any) {
   }
 
   const handleQueryData = async function () {
-    const apyResult = await handleQueryApy()
-    const exchangRateResult = await handleQueryExchangeRate()
-    const availableAmountResult = await handleQueryAvailableAmount()
-    const stakedAmountResult = await handleQueryStakedAmount()
-    console.log('===exchangRateResult', exchangRateResult)
-    setData({
-      availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
-      stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
-      apy: apyResult?.value,
-      exchangeRate: Big(1).div(exchangRateResult?.value).toFixed(4)
-    })
+    try {
+      console.log('333333')
+      const apyResult = await handleQueryApy()
+      const availableAmountResult = await handleQueryAvailableAmount()
+      const stakedAmountResult = await handleQueryStakedAmount()
+      setData({
+        availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
+        stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
+        apy: apyResult?.value,
+        exchangeRate: 1
+      })
+    } catch (error) {
+      console.log('error:', error)
+    }
   }
   const handleCheckApproval = async function (amount: number | string) {
-    const contract = new ethers.Contract(['stake', 'restake'].includes(actionType) ?
-      token0.address : token1.address,
-      ['stake', 'restake'].includes(actionType) ? FIRST_TOKEN_ABI : SECOND_TOKEN_ABI, provider?.getSigner())
+    const contract = new ethers.Contract(
+      ['stake', 'restake'].includes(actionType) ? token0.address : token1.address,
+      ['stake', 'restake'].includes(actionType) ? FIRST_TOKEN_ABI : SECOND_TOKEN_ABI,
+      provider?.getSigner()
+    )
     const wei = ethers.utils.parseUnits(
       Big(amount).toFixed(18),
       18
     );
-    const allowance = await contract.allowance(account, ['stake', 'restake'].includes(actionType) ? LRT_DEPOSIT_POOL : UNSTAKE_ADDRESS)
+    const allowance = await contract.allowance(account, ['stake', 'restake'].includes(actionType) ? STAKE_ADDRESS : LIQUIDITY_POOL)
     setApproved(!new Big(allowance.toString()).lt(wei.toString()))
   }
   const handleApprove = async function () {
-    const contract = new ethers.Contract(['stake', 'restake'].includes(actionType) ?
-      token0.address : token1.address,
-      ['stake', 'restake'].includes(actionType) ? FIRST_TOKEN_ABI : SECOND_TOKEN_ABI, provider?.getSigner())
+    const contract = new ethers.Contract(
+      ['stake', 'restake'].includes(actionType) ? token0.address : token1.address,
+      ['stake', 'restake'].includes(actionType) ? FIRST_TOKEN_ABI : SECOND_TOKEN_ABI,
+      provider?.getSigner()
+    )
     const wei = ethers.utils.parseUnits(
       Big(inAmount).toFixed(18),
       18
@@ -371,7 +311,7 @@ const EtherFi = function (props: any) {
     setApproving(true)
     setIsLoading(true)
     contract
-      .approve(['stake', 'restake'].includes(actionType) ? LRT_DEPOSIT_POOL : UNSTAKE_ADDRESS, wei)
+      .approve(['stake', 'restake'].includes(actionType) ? STAKE_ADDRESS : LIQUIDITY_POOL, wei)
       .then((tx: any) => tx.wait())
       .then((receipt: any) => {
         setApproved(true)
@@ -396,15 +336,9 @@ const EtherFi = function (props: any) {
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount)
     try {
-      if (['stake', 'restake'].includes(actionType)) {
-        const _outAmount = Big(amount).times(data?.exchangeRate).toFixed()
-        setOutAmount(_outAmount)
-        handleCheckApproval(_outAmount)
-      } else {
-        const _outAmount = Big(amount).div(data?.exchangeRate).toFixed()
-        setOutAmount(_outAmount)
-        handleCheckApproval(_outAmount)
-      }
+      const _outAmount = amount
+      setOutAmount(_outAmount)
+      handleCheckApproval(_outAmount)
     } catch (error) {
       console.error('error: ', error)
     }
@@ -415,20 +349,21 @@ const EtherFi = function (props: any) {
   const handleStake = async function () {
     setIsLoading(true)
     const contract = ['stake', 'restake'].includes(actionType) ?
-      new ethers.Contract(LRT_DEPOSIT_POOL, LRT_DEPOSIT_POOL_ABI, provider?.getSigner()) :
-      new ethers.Contract(UNSTAKE_ADDRESS, UNSTAKE_ADDRESS_ABI, provider?.getSigner())
+      new ethers.Contract(STAKE_ADDRESS, STAKE_ADDRESS_ABI, provider?.getSigner()) :
+      new ethers.Contract(LIQUIDITY_POOL, LIQUIDITY_POOL_ABI, provider?.getSigner())
     const amount = Big(inAmount)
       .mul(Big(10).pow(18))
       .toFixed(0)
     const contractMethord = ['stake', 'restake'].includes(actionType) ?
-      contract.depositAsset :
-      contract.initiateWithdrawal
+      contract.depositWithERC20 :
+      contract.requestWithdraw
     const contractArguments = ['stake', 'restake'].includes(actionType) ?
-      [token0.address, amount, 0, "0x00"] :
-      [outToken.address, amount]
+      ["0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84", amount, "0x0000000000000000000000000000000000000000"] :
+      [account, amount]
     const toastId = toast?.loading({
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
+    console.log('=contractArguments', contractArguments)
     contractMethord(...contractArguments)
       .then((tx: any) => tx.wait())
       .then((result: any) => {
@@ -441,6 +376,7 @@ const EtherFi = function (props: any) {
         });
       })
       .catch((error: any) => {
+        console.log('=error', error)
         setIsLoading(false)
         toast?.dismiss(toastId);
         toast?.fail({
