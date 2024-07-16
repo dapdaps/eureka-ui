@@ -5,6 +5,7 @@ import RocketPool from './modules/rocket-pool';
 import KelpDao from './modules/kelp-dao';
 import Karak from './modules/karak';
 import Eigenpie from './modules/eigenpie';
+import Puffer from './modules/puffer';
 // const Lido = lazy(() => import('./modules/lido'));
 // const Mantle = lazy(() => import('./modules/mantle'));
 // const RocketPool = lazy(() => import('./modules/rocket-pool'));
@@ -19,6 +20,7 @@ const ComponentMapping: any = {
   KelpDao,
   Karak,
   Eigenpie,
+  'Puffer Finance': Puffer,
 };
 const Index = function (props: {
   dapp: {
