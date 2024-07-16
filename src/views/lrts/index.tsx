@@ -11,6 +11,7 @@ import StakeModal from './components/modal/stake';
 import SwapModal from './components/modal/swap';
 import { ActionType } from './components/tab-card';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
+import useLrtsList from './hooks/useLrtsList';
 import { Banner, Container, Desc, Title } from './styles/index.style';
 
 // enum CardType {
@@ -24,6 +25,8 @@ const Home = () => {
   const [isShowNpc, setIsShowNpc] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(initialSlide);
   // const prices = usePriceStore((store) => store.price);
+  const { lstList } = useLrtsList();
+  const { loading, balances } = useAllTokensBalance();
 
   const [curLrt, setCurLrt] = useState<any>(null);
   const [actionType, setActionType] = useState<ActionType>();
@@ -33,13 +36,12 @@ const Home = () => {
   const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
   const lrtsData = useLrtDataStore((store: any) => store.data);
-  // console.log('lrtsData----', lrtsData);
+  console.log('lrtsData----', lrtsData);
 
-  const { loading, balances } = useAllTokensBalance();
   const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
-    setIsShowNpc(true);
+    // setIsShowNpc(true);
     setCurrentIndex(activeIndex);
 
     //TODO

@@ -34,3 +34,33 @@ export const simplifyNum = (number: number) => {
     return Number(number).toFixed(2);
   }
 };
+
+export const setNumKMB = (num: any, digital: any) => {
+  if (!num && num !== 0 && num !== '') return num;
+  if (typeof num !== 'number' && typeof num !== 'string') return num;
+  const _num = Number(num);
+  let result: any = '',
+    unit = '';
+  // K M B
+  if (_num <= 999) {
+    result = _num;
+  } else if (_num <= 999999) {
+    result = _num / 1000;
+    unit = 'K';
+  } else if (_num <= 999999999) {
+    result = _num / 1000000;
+    unit = 'M';
+  } else if (_num <= 999999999999) {
+    result = _num / 1000000000;
+    unit = 'B';
+  } else {
+    result = _num / 1000000000000;
+    unit = 'T';
+    return result.toExponential(2) + unit;
+  }
+  let _result;
+
+  if (digital !== null) _result = result.toFixed(digital) + unit;
+  else _result = result + unit;
+  return _result;
+};
