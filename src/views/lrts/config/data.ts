@@ -16,26 +16,25 @@ const LSTS_DATA = [
       {
         order: 3,
         logo: '/images/lrts/gem-inmeth.svg', // gem logo
-        isActive: true, //TODO has balance?
-        token: ethereum['inmeth'],
+        token: ethereum['inmETH'],
       },
       {
         order: 15,
-        logo: '/images/lrts/gem-mmeth.svg', // gem logo
-        isActive: true,
-        token: ethereum['mmeth'],
+        logo: '/images/lrts/gem-mmeth.svg',
+
+        token: ethereum['mmETH'],
       },
       {
         order: 21,
-        logo: '/images/lrts/gem-kmeth.svg', // gem logo
-        isActive: true,
-        token: ethereum['kmeth'],
+        logo: '/images/lrts/gem-kmeth.svg',
+
+        token: ethereum['kmETH'],
       },
       {
         order: 40,
-        logo: '/images/lrts/gem-rmeth.svg', // gem logo
-        isActive: true,
-        token: ethereum['rmeth'],
+        logo: '/images/lrts/gem-rmeth.svg',
+
+        token: ethereum['rmETH'],
       },
     ],
   },
@@ -53,44 +52,44 @@ const LSTS_DATA = [
       {
         order: 3,
         logo: '/images/lrts/gem-rseth.svg',
-        isActive: true,
+
         token: ethereum['rsETH'],
       },
       {
         order: 7,
         logo: '/images/lrts/gem-insteth.svg',
-        isActive: true,
-        token: ethereum['insETH'],
+
+        token: ethereum['instETH'],
       },
       {
         order: 13,
         logo: '/images/lrts/gem-msteth.svg',
-        isActive: true,
-        token: ethereum['msETH'],
+
+        token: ethereum['mstETH'],
       },
       {
         order: 15,
         logo: '/images/lrts/gem-pufeth.svg',
-        isActive: true,
+
         token: ethereum['pufETH'],
       },
       {
         order: 25,
         logo: '/images/lrts/gem-weeth.svg',
-        isActive: true,
-        token: ethereum['rmETH'],
+
+        token: ethereum['rstETH'],
       },
       {
         order: 31,
         logo: '/images/lrts/gem-ezeth.svg',
-        isActive: true,
-        token: ethereum['rmETH'],
+
+        token: ethereum['eETH'],
       },
       {
         order: 40,
         logo: '/images/lrts/gem-rsteth.svg',
-        isActive: true,
-        token: ethereum['rmETH'],
+
+        token: ethereum['ezETH'],
       },
     ],
   },
@@ -108,19 +107,19 @@ const LSTS_DATA = [
       {
         order: 7,
         logo: '/images/lrts/gem-inreth.svg',
-        isActive: true,
+
         token: ethereum['inrETH'],
       },
       {
         order: 13,
         logo: '/images/lrts/gem-kreth.svg',
-        isActive: true,
+
         token: ethereum['krETH'],
       },
       {
         order: 40,
         logo: '/images/lrts/gem-mreth.svg',
-        isActive: true,
+
         token: ethereum['mrETH'],
       },
     ],
@@ -139,25 +138,25 @@ const LSTS_DATA = [
       {
         order: 7,
         logo: '/images/lrts/gem-insfrseth.svg',
-        isActive: true,
-        token: ethereum['insfrsETH'],
+
+        token: ethereum['insfrxETH'],
       },
       {
         order: 13,
         logo: '/images/lrts/gem-ksfrxeth.svg',
-        isActive: true,
+
         token: ethereum['ksfrxETH'],
       },
       {
         order: 25,
         logo: '/images/lrts/gem-msfrxeth.svg',
-        isActive: true,
+
         token: ethereum['msfrxETH'],
       },
       {
         order: 40,
         logo: '/images/lrts/gem-rsfrxeth.svg',
-        isActive: true,
+
         token: ethereum['rsfrxETH'],
       },
     ],

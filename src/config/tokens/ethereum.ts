@@ -81,7 +81,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'ezETH',
     decimals: 18,
     name: 'ezETH',
-    icon: 'https://static.debank.com/image/eth_token/logo_url/0xbf5495efe5db9ce00f80364c8b423567e58d2110/446998664e866e2fadceb5a96fe9f688.png',
+    icon: '/images/lrts/tokens/ezETH.svg',
   },
   rsETH: {
     address: '0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7',
@@ -89,7 +89,7 @@ export const ethereum: { [key: string]: Token } = {
     symbol: 'rsETH',
     decimals: 18,
     name: 'rsETH',
-    icon: 'https://etherscan.io/token/images/kelprseth_32.png',
+    icon: '/images/lrts/tokens/rsETH.svg',
   },
   stETH: {
     address: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
@@ -97,7 +97,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'Liquid staked Ether 2.0',
     symbol: 'stETH',
-    icon: '',
+    icon: '/images/lrts/tokens/stETH.svg',
   },
   mETH: {
     address: '0xd5f7838f5c461feff7fe49ea5ebaf7728bb0adfa',
@@ -105,7 +105,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'mETH',
     symbol: 'mETH',
-    icon: '',
+    icon: '/images/lrts/tokens/mETH.svg',
   },
   rETH: {
     address: '0xae78736cd615f374d3085123a210448e74fc6393',
@@ -113,7 +113,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'Rocket Pool ETH',
     symbol: 'rETH',
-    icon: '',
+    icon: '/images/lrts/tokens/krETH.svg',
   },
   sfrxETH: {
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
@@ -121,7 +121,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'Staked Frax Ether',
     symbol: 'sfrxETH',
-    icon: 'https://assets.coingecko.com/coins/images/35383/standard/sfrax.png?1708445569',
+    icon: '/images/lrts/tokens/sfrxETH.svg',
   },
   inmETH: {
     address: '0xecf3672a6d2147e2a77f07069fb48d8cf6f6fbf9',
@@ -129,7 +129,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'Inception Restaked mETH',
     symbol: 'inmETH',
-    icon: '',
+    icon: '/images/lrts/tokens/inmETH.svg',
   },
   mmETH: {
     address: '0x8a053350ca5f9352a16ded26ab333e2d251dad7c',
@@ -137,7 +137,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'mmETH',
     symbol: 'mmETH',
-    icon: '',
+    icon: '/images/lrts/tokens/mmETH.svg',
   },
   kmETH: {
     address: '0x7c22725d1e0871f0043397c9761ad99a86ffd498',
@@ -145,7 +145,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'kmETH',
-    icon: '',
+    icon: '/images/lrts/tokens/kmETH.svg',
   },
   rmETH: {
     address: '0xcC9F8c2A6366556e1899e40782B7076Db87dcE27',
@@ -153,7 +153,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'rmETH',
-    icon: '',
+    icon: '/images/lrts/tokens/rmETH.svg',
   },
   instETH: {
     address: '0x7fa768e035f956c41d6aeaa3bd857e7e5141cad5',
@@ -161,7 +161,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'instETH',
-    icon: '',
+    icon: '/images/lrts/tokens/instETH.svg',
   },
   mstETH: {
     address: '0x49446A0874197839D15395B908328a74ccc96Bc0',
@@ -169,7 +169,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'mstETH',
-    icon: '',
+    icon: '/images/lrts/tokens/mstETH.svg',
   },
   pufETH: {
     address: '0xd9a442856c234a39a81a089c06451ebaa4306a72',
@@ -177,7 +177,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'pufETH',
-    icon: '',
+    icon: '/images/lrts/tokens/pufETH.svg',
   },
   weETH: {
     address: '0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
@@ -185,7 +185,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'weETH',
-    icon: '',
+    icon: '/images/lrts/tokens/weETH.svg',
   },
   rstETH: {
     address: '0xc3Ac43635d7Aa9Bf361094656C85de3311bE9a2c',
@@ -193,7 +193,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'rstETH',
-    icon: '',
+    icon: '/images/lrts/tokens/rstETH.svg',
   },
   inrETH: {
     address: '0x80d69e79258fe9d056c822461c4eb0b4ca8802e2',
@@ -201,7 +201,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'inrETH',
-    icon: '',
+    icon: '/images/lrts/tokens/inrETH.svg',
   },
   krETH: {
     address: '0xf02c96dbbb92dc0325ad52b3f9f2b951f972bf00',
@@ -209,7 +209,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'krETH',
-    icon: '',
+    icon: '/images/lrts/tokens/krETH.svg',
   },
   mrETH: {
     address: '0xd05728038681bcc79b2d5aeb4d9b002e66c93a40',
@@ -217,7 +217,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'mrETH',
-    icon: '',
+    icon: '/images/lrts/tokens/krETH.svg',
   },
   rosETH: {
     address: '0x3A2725556Dde7B21fBe3dD64A4913ff29faba6A1',
@@ -233,7 +233,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'insfrxETH',
-    icon: 'https://assets.coingecko.com/coins/images/34949/standard/sfrxETH.png?1706770412',
+    icon: '/images/lrts/tokens/insfrxETH.svg',
   },
   rsfrxETH: {
     address: '0xdcF8905091a1c7b773DdB894d805178701b32b55',
@@ -241,7 +241,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'rsfrxETH',
-    icon: '',
+    icon: '/images/lrts/tokens/rsfrxETH.svg',
   },
   eETH: {
     address: '0x35fA164735182de50811E8e2E824cFb9B6118ac2',
@@ -249,6 +249,22 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: '',
     symbol: 'eETH',
-    icon: '',
-  }
+    icon: '/images/lrts/tokens/weETH.svg',
+  },
+  msfrxETH: {
+    address: '0x879054273cb2dad631980fa4efe6d25eefe08aa4',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: '',
+    symbol: 'msfrxETH',
+    icon: '/images/lrts/tokens/msfrxETH.svg',
+  },
+  ksfrxETH: {
+    address: '0x1751e1e4d2c9Fa99479C0c5574136F0dbD8f3EB8',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: '',
+    symbol: 'ksfrxETH',
+    icon: '/images/lrts/tokens/ksfrxETH.svg',
+  },
 };
