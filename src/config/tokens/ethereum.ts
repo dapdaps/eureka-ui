@@ -92,7 +92,7 @@ export const ethereum: { [key: string]: Token } = {
     icon: 'https://etherscan.io/token/images/kelprseth_32.png',
   },
   stETH: {
-    address: '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84',
+    address: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
     chainId: CHAIN_ID,
     decimals: 18,
     name: 'Liquid staked Ether 2.0',
@@ -121,7 +121,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'Staked Frax Ether',
     symbol: 'sfrxETH',
-    icon: '',
+    icon: 'https://assets.coingecko.com/coins/images/35383/standard/sfrax.png?1708445569',
   },
   inmETH: {
     address: '0xecf3672a6d2147e2a77f07069fb48d8cf6f6fbf9',
@@ -226,6 +226,14 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'rosETH',
     icon: '',
+  },
+  insfrxETH: {
+    address: '0x668308d77be3533c909a692302cb4d135bf8041c',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: '',
+    symbol: 'insfrxETH',
+    icon: 'https://assets.coingecko.com/coins/images/34949/standard/sfrxETH.png?1706770412',
   },
   rsfrxETH: {
     address: '0xdcF8905091a1c7b773DdB894d805178701b32b55',
