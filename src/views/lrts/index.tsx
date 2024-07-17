@@ -54,6 +54,7 @@ const Home = () => {
   };
 
   const handleShowModal = (_actionType: any) => {
+    console.log('_actionType', _actionType);
     setActionType(_actionType);
     if (_actionType === 'swap') {
       setShowSwapModal(true);
@@ -105,7 +106,7 @@ const Home = () => {
 
       <Gems dataSource={lrtsData[lstIndex].lrtTokens} onGemClick={handleClickGem} />
 
-      <TabCard lstIndex={lstIndex} curLrt={curLrt?.token} onStake={handleShowModal} onTabChange={onTabChange} />
+      <TabCard lstIndex={lstIndex} curLrt={curLrt?.token} handleShowModal={handleShowModal} onTabChange={onTabChange} />
 
       {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
 
@@ -117,7 +118,6 @@ const Home = () => {
             name: lrtsData[lstIndex].dapp.name,
             logo: lrtsData[lstIndex].dapp.logo,
           }}
-          actionType={actionType}
           token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
           token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt?.token}
           chainId={chainId as number}

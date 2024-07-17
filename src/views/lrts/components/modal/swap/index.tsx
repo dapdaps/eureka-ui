@@ -9,6 +9,7 @@ import Button from './Button';
 import useTokens from './hooks/useTokens';
 import useSelectTokens from './hooks/useSelectTokens';
 import useTokenBalance from '@/hooks/useTokenBalance';
+import useApprove from '@/hooks/useApprove';
 import useTrade from './hooks/useTrade';
 import { StyledContainer, StyledHeader, StyledHeaderTitle } from './styles';
 
@@ -24,6 +25,11 @@ const SwapModal = ({ show, setShow, token0, chainId }: any) => {
   const { trade, loading, inputAmount, setInputAmount, swap } = useTrade(inputCurrency, outputCurrency, () => {
     update();
   });
+  const { approve, approved, approving } = useApprove({
+    amount: inputAmount,
+    token: inputCurrency.isNative ? null : inputCurrency,
+    spender: trade?.spender,
+  });
 
   useEffect(() => {
     if (Number(inputAmount || 0) === 0) {
@@ -34,6 +40,7 @@ const SwapModal = ({ show, setShow, token0, chainId }: any) => {
       setErrorTips(`Insufficient ${inputCurrency?.symbol} Balance`);
       return;
     }
+    setErrorTips('');
   }, [inputAmount, tokenBalance]);
 
   return (
@@ -86,7 +93,14 @@ const SwapModal = ({ show, setShow, token0, chainId }: any) => {
               }}
             />
             <Result outputCurrency={outputCurrency} trade={trade} />
-            <Button errorTips={errorTips} loading={loading} onClick={swap} chainId={inputCurrency.chainId} />
+            <Button
+              errorTips={errorTips}
+              loading={approving || loading}
+              onClick={swap}
+              chainId={inputCurrency.chainId}
+              approved={approved}
+              onApprove={approve}
+            />
             <CloseBtn
               onClick={() => {
                 setShow(false);

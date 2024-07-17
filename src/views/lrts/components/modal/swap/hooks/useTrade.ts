@@ -38,6 +38,7 @@ export default function useTrade(inputCurrency: any, outputCurrency: any, onSucc
       setTrade({
         outputAmount,
         cost: result.priceRoute.gasCostUSD,
+        spender: result.txParams.to,
       });
       optionsRef.current = result.txParams;
       setLoading(false);
@@ -52,7 +53,11 @@ export default function useTrade(inputCurrency: any, outputCurrency: any, onSucc
     let toastId = toast.loading({ title: 'Confirming...' });
     try {
       const signer = provider.getSigner(account);
-      const tx = await signer.sendTransaction(optionsRef.current);
+      const tx = await signer.sendTransaction({
+        data: optionsRef.current.data,
+        value: optionsRef.current.value,
+        to: optionsRef.current.to,
+      });
       toast.dismiss(toastId);
       toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
       const { status, transactionHash } = await tx.wait();
@@ -81,6 +86,7 @@ export default function useTrade(inputCurrency: any, outputCurrency: any, onSucc
       });
       setLoading(false);
     } catch (err: any) {
+      console.log('err', err);
       toast.dismiss(toastId);
       toast.fail({
         title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap faily!`,
