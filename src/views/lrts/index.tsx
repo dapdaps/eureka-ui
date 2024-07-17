@@ -49,7 +49,6 @@ const Home = () => {
   };
 
   const handleShowModal = (_actionType: any) => {
-    console.log('_actionType', _actionType);
     setActionType(_actionType);
     if (_actionType === 'swap') {
       setShowSwapModal(true);

@@ -137,7 +137,7 @@ const BaseComponent = function (props: any) {
                     />
                   </g>
                 </svg>
-                <StyledPlusTips>Add tokens to MetaMask</StyledPlusTips>
+                <StyledPlusTips>Add token to MetaMask</StyledPlusTips>
               </StyledPlusSvg>
             </StyledBaseInfoValueContainer>
           </StyledBaseInfo>
@@ -145,9 +145,9 @@ const BaseComponent = function (props: any) {
         <StyledBottomContainer>
           <StyledTipsContainer>
             <StyledFirstTips>Stake</StyledFirstTips>
-            <StyledSecondTips>
+            {/* <StyledSecondTips>
               1 {inToken.symbol} = {data?.exchangeRate} {outToken?.symbol}
-            </StyledSecondTips>
+            </StyledSecondTips> */}
           </StyledTipsContainer>
           <StyledInputContainer>
             <StyledInput
@@ -164,7 +164,7 @@ const BaseComponent = function (props: any) {
               </StyledSymbol>
             </StyledMaxAndSymbol>
           </StyledInputContainer>
-          <StyledSecondTips>swap fee 0.23% (0,0023 ETH)</StyledSecondTips>
+          {/* <StyledSecondTips>swap fee 0.23% (0,0023 ETH)</StyledSecondTips> */}
           <StyledReceiveContainer>
             <StyledFirstTips>Min. Receive</StyledFirstTips>
             <StyledReceive>
@@ -184,7 +184,7 @@ const BaseComponent = function (props: any) {
               <StyledStakeButton>Loading~~</StyledStakeButton>
             ) : approved && !approving ? (
               Big(inAmount ? inAmount : 0).lt(leastAmount) ? (
-                <StyledStakeButton disabled>{actionType}</StyledStakeButton>
+                <StyledStakeButton disabled>The minimum amount is {leastAmount}</StyledStakeButton>
               ) : (
                 <StyledStakeButton onClick={handleStake}>{actionType}</StyledStakeButton>
               )
