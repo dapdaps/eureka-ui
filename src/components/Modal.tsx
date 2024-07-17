@@ -81,6 +81,8 @@ const Modal = ({
   modalStyle?: any;
   onClose?: () => void;
 }) => {
+  console.log('=hidden', hidden)
+  console.log('==typeof', typeof hidden)
   return (
     <AnimatePresence mode="wait">
       {display && (
