@@ -8,6 +8,7 @@ import { unifyNumber } from '@/utils/format-number';
 
 import { CustomTable, PolygonBtn, Tabs } from './components';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
+import useLrtsList from './hooks/useLrtsList';
 import { Ad, Assets, AssetTab, Container } from './styles/portfolio.style';
 interface IProps {
   children?: ReactNode;
@@ -25,8 +26,16 @@ const Portfolio: FC<IProps> = (props) => {
   const { loading, balances } = useAllTokensBalance();
   const prices = usePriceStore((store) => store.price);
   const lrtsData = useLrtDataStore((store: any) => store.data);
+  const { completed } = useLrtsList();
   console.log('prices:', prices);
-  const lsts = lrtsData.map((item: any) => item.token);
+  const lstAssets = lrtsData.map((item: any, index: number) => ({
+    ...item.token,
+    assets: item.token.symbol,
+    chian: item.token.chianId,
+    price: prices[item.symbol] || 0,
+    key: index,
+    apr: item.apr,
+  }));
   const lrtAssets = lrtsData
     .map((item: any) => item.lrtTokens)
     .flat()
@@ -34,17 +43,20 @@ const Portfolio: FC<IProps> = (props) => {
       ...item.token,
       assets: item.token?.symbol,
       chian: item.token?.chianId,
-      price: 0,
-      arp: 0,
+      price: prices[item.symbol] || 0,
+      apr: item.apr,
       key: index,
     }));
 
-  const lstAssets = lsts.map((item: any, index: number) => ({
-    ...item,
-    assets: item.symbol,
-    chian: item.chianId,
-    key: index,
-  }));
+  // const lstAssets = lsts.map((item: any, index: number) => ({
+  //   ...item,
+  //   assets: item.symbol,
+  //   chian: item.chianId,
+  //   price: prices[item.symbol] || 0,
+  //   key: index,
+  // }));
+  console.log(2222, lrtsData);
+  console.log(3333, lstAssets);
 
   const router = useRouter();
   const handleBridge = (toToken: string) => {
@@ -77,7 +89,7 @@ const Portfolio: FC<IProps> = (props) => {
               },
               {
                 title: 'Chain',
-                dataIndex: 'chain',
+                dataIndex: 'chainId',
                 key: 2,
                 width: '10%',
               },
@@ -105,7 +117,7 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 5,
                 width: '10%',
                 render: (_: any) => {
-                  // console.log(1111, _);
+                  return `${Number(_.apr).toFixed(2)}%`;
                 },
               },
               {
@@ -131,10 +143,23 @@ const Portfolio: FC<IProps> = (props) => {
           <CustomTable
             dataSource={lrtAssets}
             columns={[
-              { title: 'Assets', dataIndex: 'assets', key: 1, width: '10%' },
+              {
+                title: 'Assets',
+                dataIndex: 'assets',
+                key: 1,
+                width: '10%',
+                render: (_: any) => {
+                  return (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
+                      <img src={_.icon} alt="" />
+                      {_.symbol}
+                    </div>
+                  );
+                },
+              },
               {
                 title: 'Chain',
-                dataIndex: 'chain',
+                dataIndex: 'chainId',
                 key: 2,
                 width: '10%',
               },
@@ -156,7 +181,15 @@ const Portfolio: FC<IProps> = (props) => {
                   return Number(prices[_.symbol] || 0).toFixed(2);
                 },
               },
-              { title: '7d APR', dataIndex: 'apr', key: 5, width: '10%' },
+              {
+                title: '7d APR',
+                dataIndex: 'apr',
+                key: 5,
+                width: '10%',
+                render: (_: any) => {
+                  return `${Number(_.apr).toFixed(2)}%`;
+                },
+              },
               {
                 title: 'Action',
                 dataIndex: 'Action',
