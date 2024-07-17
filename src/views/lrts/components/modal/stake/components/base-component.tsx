@@ -51,11 +51,12 @@ const BaseComponent = function (props: any) {
     approved,
     approving,
     leastAmount,
-    actionType,
+    actionType = 'stake',
     inToken,
     outToken,
     handleMax,
     isInSufficient,
+    hasNoUnstake,
     handleApprove,
     handleAmountChange,
     handleStake,
@@ -69,19 +70,21 @@ const BaseComponent = function (props: any) {
       <StyledStakeTopContainer
         style={actionType === 'unstake' ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
       >
-        <StyledActionTypeTabContainer>
-          {actionTypeList.map((_actionType) => (
-            <StyledActionTypeTab
-              key={_actionType}
-              className={_actionType === actionType ? 'active' : ''}
-              onClick={() => {
-                handleChangeActionType(_actionType);
-              }}
-            >
-              {_actionType}
-            </StyledActionTypeTab>
-          ))}
-        </StyledActionTypeTabContainer>
+        {!hasNoUnstake && (
+          <StyledActionTypeTabContainer>
+            {actionTypeList.map((_actionType) => (
+              <StyledActionTypeTab
+                key={_actionType}
+                className={_actionType === actionType ? 'active' : ''}
+                onClick={() => {
+                  handleChangeActionType(_actionType);
+                }}
+              >
+                {_actionType}
+              </StyledActionTypeTab>
+            ))}
+          </StyledActionTypeTabContainer>
+        )}
         <StyledClose
           onClick={() => {
             setShow(false);

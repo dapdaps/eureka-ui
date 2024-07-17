@@ -3,7 +3,7 @@ import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Karak({ token0, token1, actionType, handleChangeActionType, setShow }: any) {
+function Karak({ token0, token1, actionType, gem, handleChangeActionType, setShow }: any) {
   const {
     data,
     inAmount,
@@ -19,7 +19,7 @@ function Karak({ token0, token1, actionType, handleChangeActionType, setShow }: 
     token0,
     token1,
     actionType,
-    dapp,
+    gem,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -41,7 +41,7 @@ function Karak({ token0, token1, actionType, handleChangeActionType, setShow }: 
         inToken,
         outToken,
         isInSufficient,
-        dapp,
+        dapp: gem,
         handleApprove: approve,
         handleAmountChange,
         handleStake,
