@@ -37,10 +37,13 @@ import {
   StyledTitle,
   StyledWithdrawTips,
   StyledActionTypeTabContainer,
-  StyledActionTypeTab
+  StyledActionTypeTab,
+  StyledDapLogo,
+  StyledLoading
 } from '../styles';
 const BaseComponent = function (props: any) {
   const {
+    dapp,
     data,
     setShow,
     inAmount,
@@ -64,8 +67,8 @@ const BaseComponent = function (props: any) {
   const actionTypeList = ["stake", "unstake"]
   return data ? (
     <StyledStakeContainer>
+      <StyledDapLogo src={dapp?.logo} />
       <StyledStakeTopContainer style={actionType === 'unstake' ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}>
-        {/* <StyledTitle>{actionType}</StyledTitle> */}
         <StyledActionTypeTabContainer>
           {
             actionTypeList.map(_actionType => (
@@ -119,11 +122,10 @@ const BaseComponent = function (props: any) {
             </StyledBaseInfoValueContainer>
           </StyledBaseInfo>
         </StyledBaseInfoContainer>
-        <StyledLine />
         <StyledBottomContainer>
           <StyledTipsContainer>
             <StyledFirstTips>Stake</StyledFirstTips>
-            <StyledSecondTips>1 {inToken.symbol} = {data?.exchangeRate} {outToken.symbol}</StyledSecondTips>
+            <StyledSecondTips>1 {inToken.symbol} = {data?.exchangeRate} {outToken?.symbol}</StyledSecondTips>
           </StyledTipsContainer>
           <StyledInputContainer>
             <StyledInput value={inAmount} type='number' placeholder='0.0' onChange={(event) => handleAmountChange(event.target.value)} />
@@ -138,7 +140,7 @@ const BaseComponent = function (props: any) {
           <StyledSecondTips>swap fee 0.23% (0,0023 ETH)</StyledSecondTips>
           <StyledReceiveContainer>
             <StyledFirstTips>Min. Receive</StyledFirstTips>
-            <StyledReceive>~{Big(outAmount ? outAmount : 0).toFixed(6)} {outToken.symbol}</StyledReceive>
+            <StyledReceive>~{Big(outAmount ? outAmount : 0).toFixed(6)} {outToken?.symbol}</StyledReceive>
           </StyledReceiveContainer>
           <StyledStakeButtonContainer disabled={isInSufficient || Big(inAmount ? inAmount : 0).lt(leastAmount)}>
             <svg xmlns="http://www.w3.org/2000/svg" width="534" height="49" viewBox="0 0 534 49" fill="none">
@@ -188,7 +190,7 @@ const BaseComponent = function (props: any) {
       }
     </StyledStakeContainer>
   ) : (
-    <>Loading~~</>
+    <StyledLoading>Loading~~</StyledLoading>
   )
 }
 export default BaseComponent
