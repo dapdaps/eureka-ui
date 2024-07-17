@@ -61,16 +61,15 @@ export const Assets = styled.div`
 
     border-radius: 2px;
     border: 1px solid #323232;
-
-    backdrop-filter: blur(10px);
-  }
-  .process-bar-stake {
-    width: 30%;
     background: rgba(189, 189, 189, 0.5);
+    backdrop-filter: blur(10px);
+    transition: width 0.4s ease-in-out;
   }
+
   .process-bar-nostake {
-    width: 15%;
+    height: 10px;
     background: rgba(255, 255, 255, 0.5);
+    transition: width 0.4s ease-in-out;
   }
   .key {
     color: #828282;
@@ -110,3 +109,5 @@ export const AssetTab = styled.div`
     -webkit-text-fill-color: transparent;
   }
 `;
+
+export const TokenImg = styled(Image)``;

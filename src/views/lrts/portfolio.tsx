@@ -1,15 +1,21 @@
+import Big from 'big.js';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 
+import useTokenBalance from '@/components/Bridge/hooks/useTokenBalance';
+import { chains } from '@/config/bridge';
 import { useLrtDataStore } from '@/stores/lrts';
 import { usePriceStore } from '@/stores/price';
+import { formatThousandsSeparator } from '@/utils/format-number';
 import { unifyNumber } from '@/utils/format-number';
+import useTokens from '@/views/lrts/hooks/useTokens';
 
 import { CustomTable, PolygonBtn, Tabs } from './components';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
 import useLrtsList from './hooks/useLrtsList';
-import { Ad, Assets, AssetTab, Container } from './styles/portfolio.style';
+import { Ad, Assets, AssetTab, Container, TokenImg } from './styles/portfolio.style';
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -24,10 +30,23 @@ enum TabType {
 
 const Portfolio: FC<IProps> = (props) => {
   const { loading, balances } = useAllTokensBalance();
+  const { completed } = useLrtsList();
+
   const prices = usePriceStore((store) => store.price);
   const lrtsData = useLrtDataStore((store: any) => store.data);
-  const { completed } = useLrtsList();
-  // console.log('prices:', prices);
+
+  const [lstValue, setLstValue] = useState('0');
+  const [lrtValue, setLrtValue] = useState('0');
+  const [userBalance, setUserBalance] = useState('0');
+
+  const [stakedEthPercent, setStakedEthPercent] = useState('0');
+  const [restakedEthPercent, setRestakedEthPercent] = useState('0');
+
+  const tokens = useTokens();
+  const currentToken = tokens?.filter((token: any) => token.isNative)[0];
+
+  const { balance: ethBalance, loading: ethBalLoading } = useTokenBalance({ tokensByChain: currentToken });
+
   const lstAssets = lrtsData.map((item: any, index: number) => ({
     ...item.token,
     assets: item.token.symbol,
@@ -53,6 +72,32 @@ const Portfolio: FC<IProps> = (props) => {
     router.push(`/super-bridge?fromChainId=1&toChainId=1&fromToken=ETH&toToken=${toToken}`);
   };
 
+  useEffect(() => {
+    if (
+      loading ||
+      ethBalLoading ||
+      !Array.isArray(lstAssets) ||
+      !Array.isArray(lrtAssets) ||
+      Object.keys(balances).length === 0
+    )
+      return;
+    const _totalLst = lstAssets.reduce((_total, _cur) => {
+      return Big(_total)
+        .plus(Big(balances[_cur.address] || 0).times(Big(prices[_cur.symbol] || 0)))
+        .toFixed();
+    }, 0);
+    const _totalLrt = lrtAssets.reduce((_total, _cur) => {
+      return Big(_total)
+        .plus(Big(balances[_cur.address] || 0).times(Big(prices[_cur.symbol] || 0)))
+        .toFixed();
+    }, 0);
+    const _userBalance = Big(_totalLst).plus(_totalLrt).plus(ethBalance).toFixed(2);
+
+    setLstValue(_totalLst);
+    setLrtValue(_totalLrt);
+    setUserBalance(_userBalance);
+  }, [lstAssets, lrtAssets, balances, ethBalLoading]);
+
   const items = [
     {
       label: TabType.Portfolio,
@@ -71,7 +116,7 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (_: any) => {
                   return (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                      <img src={_.icon} alt="" />
+                      <TokenImg src={_.icon} width={30} height={30} alt="token" />
                       {_.symbol}
                     </div>
                   );
@@ -82,6 +127,9 @@ const Portfolio: FC<IProps> = (props) => {
                 dataIndex: 'chainId',
                 key: 2,
                 width: '10%',
+                render: (_: any) => {
+                  return <TokenImg src={chains[_.chainId].icon} width={30} height={30} alt="chainId" />;
+                },
               },
               {
                 title: 'Balance',
@@ -141,7 +189,7 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (_: any) => {
                   return (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                      <img src={_.icon} alt="" />
+                      <TokenImg src={_.icon} alt="token" width={30} height={30} />
                       {_.symbol}
                     </div>
                   );
@@ -152,6 +200,9 @@ const Portfolio: FC<IProps> = (props) => {
                 dataIndex: 'chainId',
                 key: 2,
                 width: '10%',
+                render: (_: any) => {
+                  return <TokenImg src={chains[_.chainId].icon} width={30} height={30} alt="chainId" />;
+                },
               },
               {
                 title: 'Balance',
@@ -236,46 +287,61 @@ const Portfolio: FC<IProps> = (props) => {
     },
   ];
 
+  useEffect(() => {
+    if (Number(userBalance) === 0) return;
+
+    const _staked = Big(lstValue).plus(lrtValue);
+    const _stakedETH = Big(lstValue).plus(lrtValue).div(userBalance).toFixed(2);
+    const _restakedETH = _staked.eq(0) ? '0' : Big(lrtValue).div(_staked).toFixed(2);
+
+    setStakedEthPercent(_stakedETH);
+    setRestakedEthPercent(_restakedETH);
+  }, [lstValue, lrtValue, userBalance]);
+
   return (
     <Container>
       <Assets>
         <div className="head">
           <div className="item">
             <span className="key">LST Value</span>
-            <span className="value">$ 1,035.23</span>
+            <span className="value">$ {formatThousandsSeparator(Number(lstValue).toFixed(2))}</span>
           </div>
           <div className="item">
             <span className="key">LRT Value</span>
-            <span className="value">$ 2,535.23</span>
+            <span className="value">$ {formatThousandsSeparator(Number(lrtValue).toFixed(2))}</span>
           </div>
           <div className="item">
             <span className="key">Wallet Balance</span>
-            <span className="value">$ 5,295.67</span>
+            <span className="value">$ {formatThousandsSeparator(Number(userBalance).toFixed(2))}</span>
           </div>
         </div>
         <div className="body">
           <div className="top">
             <div className="item">
               <span className="key">Staked ETH</span>
-              <span className="value">45%</span>
+              <span className="value">{Number(Number(stakedEthPercent) * 100).toFixed()}%</span>
             </div>
             <div className="item">
               <span className="key">Non-staked ETH</span>
-              <span className="value">55%</span>
+              <span className="value">{Number((1 - Number(stakedEthPercent)) * 100).toFixed()}%</span>
             </div>
           </div>
           <div className="process">
-            <div className="process-bar process-bar-stake"></div>
-            <div className="process-bar process-bar-nostake"></div>
+            <div className="process-bar" style={{ width: `${Number(Number(stakedEthPercent) * 100).toFixed()}%` }}>
+              <div
+                className="process-bar-nostake"
+                style={{ width: `${Number(Number(restakedEthPercent) * 100).toFixed()}%` }}
+              ></div>
+            </div>
           </div>
           <div className="bottom">
             <div className="item">
               <span className="key">Restaked ETH</span>
-              <span className="value">74%</span>
+              <span className="value">{Number(Number(restakedEthPercent) * 100).toFixed()}%</span>
             </div>
             <div className="item">
               <span className="key">Non-restaked ETH</span>
-              <span className="value">26%</span>
+              <span className="value">{Number((1 - Number(restakedEthPercent)) * 100).toFixed()}%</span>
             </div>
           </div>
         </div>
