@@ -49,6 +49,7 @@ const Home = () => {
   };
 
   const handleShowModal = (_actionType: any) => {
+    console.log('_actionType', _actionType);
     setActionType(_actionType);
     if (_actionType === 'swap') {
       setShowSwapModal(true);
@@ -100,7 +101,7 @@ const Home = () => {
 
       <Gems data={lrtsData[lstIndex].lrtTokens} onClick={handleClickGem} />
 
-      <TabCard lstIndex={lstIndex} curLrt={curLrt} handleStake={handleShowModal} />
+      <TabCard lstIndex={lstIndex} curLrt={curLrt} handleShowModal={handleShowModal} />
 
       {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
 
