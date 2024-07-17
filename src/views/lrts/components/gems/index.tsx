@@ -6,8 +6,8 @@ import styled from 'styled-components';
 
 import { Particle } from '../index';
 interface IProps {
-  data: any;
-  onClick: (symbol: string) => void;
+  dataSource: any;
+  onGemClick: (symbol: string) => void;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -137,13 +137,13 @@ const GemLight = styled.div`
 const GemImage = styled.img`
   max-width: 100%;
 `;
-const Stones: FC<IProps> = ({ data, onClick }) => {
+const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
   useEffect(() => {}, []);
   const items = Array.from({ length: 81 }, (x, i) => i + 1);
 
-  const allGems = data.map((item: any) => item.order);
+  const allGems = dataSource.map((item: any) => item.order);
 
-  const userGems = data.filter((item: any) => item?.token?.balance > 0).map((item: any) => item.order);
+  const userGems = dataSource.filter((item: any) => item?.token?.balance > 0).map((item: any) => item.order);
 
   const rocks = [12, 16, 18, 33, 38, 42, 47, 48, 50, 51, 54, 58];
   const empty = [11, 17, 34, 39, 49, 53, 59];
@@ -174,7 +174,7 @@ const Stones: FC<IProps> = ({ data, onClick }) => {
       );
     } else if (allGems.includes(order)) {
       // for gem
-      const _currentGem = data.find((item: any) => item.order == order);
+      const _currentGem = dataSource.find((item: any) => item.order == order);
 
       return (
         <div
@@ -183,7 +183,7 @@ const Stones: FC<IProps> = ({ data, onClick }) => {
           onClick={(e: any) => {
             console.log('click-gem--', _currentGem);
 
-            onClick(_currentGem.token);
+            onGemClick(_currentGem);
           }}
         >
           <div className="item-gem-content">
