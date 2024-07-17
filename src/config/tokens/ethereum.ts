@@ -82,6 +82,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'ezETH',
     icon: '/images/lrts/tokens/ezETH.svg',
+    desc: "ezETH is the liquid restaking token representing a user's restaked position at Renzo. Users can deposit native ETH or LSTs and receive $ezETH.",
   },
   rsETH: {
     address: '0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7',
@@ -90,6 +91,7 @@ export const ethereum: { [key: string]: Token } = {
     decimals: 18,
     name: 'rsETH',
     icon: '/images/lrts/tokens/rsETH.svg',
+    desc: 'rsETH is a Liquid Restaked Token (LRT) issued by Kelp DAO designed to offer liquidity to illiquid assets deposited into restaking platforms, such as EigenLayer. It aims to address the risks and challenges posed by the current offering of restaking.',
   },
   stETH: {
     address: '0xae7ab96520de3a18e5e111b5eaab095312d7fe84',
@@ -98,6 +100,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'Liquid staked Ether 2.0',
     symbol: 'stETH',
     icon: '/images/lrts/tokens/stETH.svg',
+    desc: 'stETH is a transferable rebasing utility token representing a share of the total ETH staked through the protocol, which consists of user deposits and staking rewards. ',
   },
   mETH: {
     address: '0xd5f7838f5c461feff7fe49ea5ebaf7728bb0adfa',
@@ -106,6 +109,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'mETH',
     symbol: 'mETH',
     icon: '/images/lrts/tokens/mETH.svg',
+    desc: 'Mantle Liquid Staking Protocol (LSP) is a permissionless, non-custodial ETH liquid staking protocol deployed on Ethereum L1 and governed by Mantle. Mantle Staked Ether (mETH) serves as the value-accumulating receipt token.',
   },
   rETH: {
     address: '0xae78736cd615f374d3085123a210448e74fc6393',
@@ -114,6 +118,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'Rocket Pool ETH',
     symbol: 'rETH',
     icon: '/images/lrts/tokens/krETH.svg',
+    desc: "A token that represents a regular user's deposit into the staking pool. Users receive an equivalent value of rETH token for each ETH coin they deposit. As interest is earned by staking on the Ethereum network the value of the rETH token increases with respect to ETH.",
   },
   sfrxETH: {
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
@@ -122,6 +127,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'Staked Frax Ether',
     symbol: 'sfrxETH',
     icon: '/images/lrts/tokens/sfrxETH.svg',
+    desc: 'Staked FRAX (sFRAX) is an ERC4626 staking vault that distributes part of the Frax Protocol yield weekly to stakers denominated in FRAX stablecoins. The sFRAX token represents pro rata deposits within the vault and is always withdrawable for FRAX stablecoins at the pro rata rate at all times. ',
   },
   inmETH: {
     address: '0xecf3672a6d2147e2a77f07069fb48d8cf6f6fbf9',
@@ -130,6 +136,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'Inception Restaked mETH',
     symbol: 'inmETH',
     icon: '/images/lrts/tokens/inmETH.svg',
+    desc: 'inmETH represents the Isolated Liquid Restaking Token (iLRT) for mETH. Users deposit mETH into specialized vaults to receive inmETH, increasing liquidity, earning staking rewards, and engaging in DeFi activities with tailored risk management.',
   },
   mmETH: {
     address: '0x8a053350ca5f9352a16ded26ab333e2d251dad7c',
@@ -138,6 +145,7 @@ export const ethereum: { [key: string]: Token } = {
     name: 'mmETH',
     symbol: 'mmETH',
     icon: '/images/lrts/tokens/mmETH.svg',
+    desc: 'mmETH — An Isolated Liquid Restaked version of the mETH LST created by Eigenpie. mmETH can only be minted by restaking mETH from Mantle via Eigenpie and is not related to any other asset.',
   },
   kmETH: {
     address: '0x7c22725d1e0871f0043397c9761ad99a86ffd498',
@@ -146,6 +154,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'kmETH',
     icon: '/images/lrts/tokens/kmETH.svg',
+    desc: "kmETH is a Liquid Staking Token (LRT) on the Karak platform. Users can restake their mETH from Mantle into Karak smart contracts. This allows them to continue earning rewards while leveraging Karak's features for additional returns.",
   },
   rmETH: {
     address: '0xcC9F8c2A6366556e1899e40782B7076Db87dcE27',
@@ -154,6 +163,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'rmETH',
     icon: '/images/lrts/tokens/rmETH.svg',
+    desc: 'rmETH are decentralized, 1:1 LST-hard-pegged rebasing tokens. As yield-bearing tokens, they allow the liquid rehypothecation of yield for holders through EigenLayer. ',
   },
   instETH: {
     address: '0x7fa768e035f956c41d6aeaa3bd857e7e5141cad5',
@@ -162,6 +172,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'instETH',
     icon: '/images/lrts/tokens/instETH.svg',
+    desc: 'instETH is an Isolated Liquid Restaking Token (iLRT) for stETH. By depositing stETH into dedicated vaults, users receive instETH, enhancing liquidity, earning rewards, and participating in DeFi activities with a targeted risk management approach.',
   },
   mstETH: {
     address: '0x49446A0874197839D15395B908328a74ccc96Bc0',
@@ -170,6 +181,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'mstETH',
     icon: '/images/lrts/tokens/mstETH.svg',
+    desc: 'mstETH — An Isolated Liquid Restaked version of the stETH LST created by Eigenpie. mstETH can only be minted by restaking stETH from Lido via Eigenpie and is not related to any other asset.',
   },
   pufETH: {
     address: '0xd9a442856c234a39a81a089c06451ebaa4306a72',
@@ -178,6 +190,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'pufETH',
     icon: '/images/lrts/tokens/pufETH.svg',
+    desc: "Stakers deposit ETH to the PufferVault contract to mint the pufETH nLRT. At the protocol's inception, pufETH's conversion rate is one-to-one, but is expected to increase over time. Assuming the protocol performs well, i.e., accrues more rewards than penalties, the amount of ETH reedamable for pufETH will increase.",
   },
   weETH: {
     address: '0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee',
@@ -194,6 +207,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'rstETH',
     icon: '/images/lrts/tokens/rstETH.svg',
+    desc: 'The rstETH token is a tokenised version of restaked Ethereum –becoming the first liquid restaking token (LRT). It is a rebasing, yield bearing token that allows holders to earn EigenLayer native rewards. By depositing LSTs into Restake Finance, users will receive an equivalent amount of rstETH.',
   },
   inrETH: {
     address: '0x80d69e79258fe9d056c822461c4eb0b4ca8802e2',
@@ -202,6 +216,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'inrETH',
     icon: '/images/lrts/tokens/inrETH.svg',
+    desc: 'inrETH is the Isolated Liquid Restaking Token (iLRT) for rETH. By using rETH as collateral in dedicated vaults, users get inrETH, which boosts liquidity, provides staking rewards, and allows participation in DeFi activities with specific risk management.',
   },
   krETH: {
     address: '0xf02c96dbbb92dc0325ad52b3f9f2b951f972bf00',
@@ -210,6 +225,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'krETH',
     icon: '/images/lrts/tokens/krETH.svg',
+    desc: "krETH is a Liquid Staking Token (LRT) on the Karak platform. Users can restake their rETH from Rocket Pool into Karak smart contracts. This allows them to continue earning rewards while leveraging Karak's features for additional returns.",
   },
   mrETH: {
     address: '0xd05728038681bcc79b2d5aeb4d9b002e66c93a40',
@@ -218,6 +234,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'mrETH',
     icon: '/images/lrts/tokens/krETH.svg',
+    desc: 'mrETH — An Isolated Liquid Restaked version of the rETH LST created by Eigenpie. mrETH can only be minted by restaking rETH from Rocket Pool via Eigenpie and is not related to any other asset.',
   },
   rosETH: {
     address: '0x3A2725556Dde7B21fBe3dD64A4913ff29faba6A1',
@@ -234,6 +251,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'insfrxETH',
     icon: '/images/lrts/tokens/insfrxETH.svg',
+    desc: 'insfrxETH is the Isolated Liquid Restaking Token (iLRT) for sfrxETH. By using sfrxETH as collateral in dedicated vaults, users get insfrxETH, which boosts liquidity, provides staking rewards, and allows participation in DeFi activities with specific risk management.',
   },
   rsfrxETH: {
     address: '0xdcF8905091a1c7b773DdB894d805178701b32b55',
@@ -242,6 +260,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'rsfrxETH',
     icon: '/images/lrts/tokens/rsfrxETH.svg',
+    desc: 'rsfrxETH allow for liquid exposure to additive yield to be accrued through restaking in EigenLayer, on top of the tradititional Ethereum staking yield. Restaking enables LSTs to be used as cryptoeconomic security for protocols that require actively validated services.',
   },
   eETH: {
     address: '0x35fA164735182de50811E8e2E824cFb9B6118ac2',
@@ -250,6 +269,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'eETH',
     icon: '/images/lrts/tokens/weETH.svg',
+    desc: 'eETH, brought to you by ether.fi, is a Liquid Restaking Token that allows users to stake their ETH to accrue staking rewards and automatically restake their ETH in EigenLayer. ',
   },
   msfrxETH: {
     address: '0x879054273cb2dad631980fa4efe6d25eefe08aa4',
@@ -258,6 +278,7 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'msfrxETH',
     icon: '/images/lrts/tokens/msfrxETH.svg',
+    desc: 'msfrxETH — An Isolated Liquid Restaked version of the sfrxETH LST created by Eigenpie. msfrxETH can only be minted by restaking sfrxETH from Frax Finance via Eigenpie and is not related to any other asset.',
   },
   ksfrxETH: {
     address: '0x1751e1e4d2c9Fa99479C0c5574136F0dbD8f3EB8',
@@ -266,5 +287,6 @@ export const ethereum: { [key: string]: Token } = {
     name: '',
     symbol: 'ksfrxETH',
     icon: '/images/lrts/tokens/ksfrxETH.svg',
+    desc: "ksfrxETH is a Liquid Staking Token (LRT) on the Karak platform. Users can restake their sfrxETH from frax into Karak smart contracts. This allows them to continue earning rewards while leveraging Karak's features for additional returns.",
   },
 };

@@ -6,6 +6,7 @@ import React, { memo, useEffect, useState } from 'react';
 
 import useTokenBalance from '@/components/Bridge/hooks/useTokenBalance';
 import { chains } from '@/config/bridge';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { useLrtDataStore } from '@/stores/lrts';
 import { usePriceStore } from '@/stores/price';
 import { formatThousandsSeparator } from '@/utils/format-number';
@@ -13,10 +14,12 @@ import { unifyNumber } from '@/utils/format-number';
 import useTokens from '@/views/lrts/hooks/useTokens';
 
 import { CustomTable, History, PolygonBtn, Tabs } from './components';
+import AddTokenModal from './components/modal/add-token';
 import SwapModal from './components/modal/swap';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
 import useLrtsList from './hooks/useLrtsList';
 import { Ad, Assets, AssetTab, Container, TokenImg } from './styles/portfolio.style';
+
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -34,6 +37,7 @@ const Portfolio: FC<IProps> = (props) => {
   const { completed } = useLrtsList();
 
   const [swapToken, setSwapToken] = useState({});
+  const [addToken, setAddToken] = useState({});
 
   const prices = usePriceStore((store) => store.price);
   const lrtsData = useLrtDataStore((store: any) => store.data);
@@ -45,9 +49,12 @@ const Portfolio: FC<IProps> = (props) => {
   const [stakedEthPercent, setStakedEthPercent] = useState('0');
   const [restakedEthPercent, setRestakedEthPercent] = useState('0');
 
+  const { check } = useAuthCheck({ isNeedAk: false });
+
   const tokens = useTokens();
   const currentToken = tokens?.filter((token: any) => token.isNative)[0];
   const [showSwapModal, setShowSwapModal] = useState(false);
+  const [showAddTokenModal, setShowAddTokenModal] = useState(false);
   const { balance: ethBalance, loading: ethBalLoading } = useTokenBalance({ tokensByChain: currentToken });
 
   const lstAssets = lrtsData.map((item: any, index: number) => ({
@@ -116,11 +123,14 @@ const Portfolio: FC<IProps> = (props) => {
                 dataIndex: 'assets',
                 key: 1,
                 width: '10%',
-                render: (_: any) => {
+                render: (token: any) => {
                   return (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                      <TokenImg src={_.icon} width={30} height={30} alt="token" />
-                      {_.symbol}
+                    <div
+                      style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
+                      onClick={() => handleShowAddToken(token)}
+                    >
+                      <TokenImg src={token.icon} width={30} height={30} alt="token" />
+                      {token.symbol}
                     </div>
                   );
                 },
@@ -189,11 +199,14 @@ const Portfolio: FC<IProps> = (props) => {
                 dataIndex: 'assets',
                 key: 1,
                 width: '10%',
-                render: (_: any) => {
+                render: (token: any) => {
                   return (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-                      <TokenImg src={_.icon} alt="token" width={30} height={30} />
-                      {_.symbol}
+                    <div
+                      style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
+                      onClick={() => handleShowAddToken(token)}
+                    >
+                      <TokenImg src={token.icon} alt="token" width={30} height={30} />
+                      {token.symbol}
                     </div>
                   );
                 },
@@ -239,12 +252,12 @@ const Portfolio: FC<IProps> = (props) => {
                 dataIndex: 'Action',
                 key: 6,
                 width: '50%',
-                render: (_: any) => {
+                render: (token: any) => {
                   return (
                     <div style={{ display: 'flex', gap: 10 }}>
                       <PolygonBtn>RESTAKE / UNSTAKE </PolygonBtn>
-                      <PolygonBtn>Swap</PolygonBtn>
-                      <PolygonBtn onClick={() => handleBridge(_.symbol)}>Bridge</PolygonBtn>
+                      <PolygonBtn onClick={() => handleShowModal(token)}>Swap</PolygonBtn>
+                      <PolygonBtn onClick={() => handleBridge(token.symbol)}>Bridge</PolygonBtn>
                     </div>
                   );
                 },
@@ -276,6 +289,10 @@ const Portfolio: FC<IProps> = (props) => {
   const handleShowModal = (token: any) => {
     setSwapToken(token);
     setShowSwapModal(true);
+  };
+  const handleShowAddToken = (token: any) => {
+    setAddToken(token);
+    setShowAddTokenModal(true);
   };
 
   return (
@@ -329,6 +346,7 @@ const Portfolio: FC<IProps> = (props) => {
       <Ad src="/images/lrts/ad.png" width={1200} height={103} alt="ad" />
       <Tabs items={items} />
       <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} />
+      <AddTokenModal show={showAddTokenModal} setShow={setShowAddTokenModal} token={addToken} />
     </Container>
   );
 };

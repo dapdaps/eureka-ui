@@ -43,7 +43,6 @@ const Home = () => {
   }, [lstIndex, completed]);
 
   const handleClickGem = (lrt: any) => {
-    console.log('=lrt', lrt);
     setCurLrt(lrt);
   };
   const onTabChange = (symbol: string) => {
