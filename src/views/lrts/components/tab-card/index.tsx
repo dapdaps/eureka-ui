@@ -6,9 +6,12 @@ import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useLrtDataStore } from '@/stores/lrts';
+import { unifyNumber } from '@/utils/format-number';
 import { setNumKMB } from '@/utils/format-number';
 
+import useAllTokensBalance from '../../hooks/useAllTokensBalance';
 import { PolygonBtn } from '../';
+
 export enum ActionType {
   STAKE = 'stake',
   UNSTAKE = 'unstake',
@@ -184,7 +187,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
   const tabRef = useRef(null);
   const lrtsData = useLrtDataStore((store: any) => store.data);
-
+  const { loading, balances } = useAllTokensBalance();
   useEffect(() => {
     const _lrtTokens = lrtsData[lstIndex]?.lrtTokens?.map((item: any) => ({
       ...item.token,
@@ -248,7 +251,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
                 className={`item ${activeIndex === index ? 'active' : ''}`}
                 onClick={(e: any) => onChange(index, item.symbol)}
               >
-                <div className="text-right">{parseFloat(Number(item.balance || 0).toFixed(2))}</div>
+                <div className="text-right">{unifyNumber(balances[item.address] || 0)}</div>
                 <Image src={item.logo} width={40} height={40} alt={item.symbol} />
               </div>
             ))
@@ -318,7 +321,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
         <div className="right">
           <div>
             <ItemName>Balance</ItemName>
-            <ItemValue>{Number(list?.[activeIndex]?.balance || 0).toFixed(3)}</ItemValue>
+            <ItemValue>{unifyNumber(balances[list?.[activeIndex]?.address] || 0)}</ItemValue>
           </div>
           <ItemLink href={'/lrts/earning'}>Earn more on L2...</ItemLink>
         </div>

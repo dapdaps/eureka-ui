@@ -4,13 +4,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import { useLrtDataStore } from '@/stores/lrts';
-import { usePriceStore } from '@/stores/price';
 
 import { Gems, NpcDialog, TabCard } from './components';
 import StakeModal from './components/modal/stake';
 import SwapModal from './components/modal/swap';
 import { ActionType } from './components/tab-card';
-import useAllTokensBalance from './hooks/useAllTokensBalance';
 import useLrtsList from './hooks/useLrtsList';
 import { Banner, Container, Desc, Title } from './styles/index.style';
 
@@ -22,7 +20,6 @@ const Home = () => {
   const [lstIndex, setLstIndex] = useState(initialSlide);
   // const prices = usePriceStore((store) => store.price);
   const { completed } = useLrtsList();
-  const { loading, balances } = useAllTokensBalance();
 
   const [curLrt, setCurLrt] = useState<any>(null);
   const [actionType, setActionType] = useState<ActionType>();

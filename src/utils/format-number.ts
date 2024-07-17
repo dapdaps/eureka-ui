@@ -64,3 +64,11 @@ export const setNumKMB = (num: any, digital: any) => {
   else _result = result + unit;
   return _result;
 };
+
+export const unifyNumber = (num: string | number, digital: number = 2) => {
+  if (isNaN(Number(num))) return '-';
+  if (Number(num) === 0) return '0';
+  if (Number(num) < 0.01) return '<0.01';
+
+  return parseFloat(Number(num).toFixed(digital));
+};

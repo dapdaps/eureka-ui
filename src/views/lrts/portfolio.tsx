@@ -4,6 +4,7 @@ import React, { memo, useEffect, useState } from 'react';
 
 import { useLrtDataStore } from '@/stores/lrts';
 import { usePriceStore } from '@/stores/price';
+import { unifyNumber } from '@/utils/format-number';
 
 import { CustomTable, PolygonBtn, Tabs } from './components';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
@@ -86,7 +87,7 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 3,
                 width: '10%',
                 render: (_: any) => {
-                  return Number(_?.balance).toFixed(2);
+                  return unifyNumber(balances[_?.address] || 0);
                 },
               },
               {
@@ -104,7 +105,7 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 5,
                 width: '10%',
                 render: (_: any) => {
-                  console.log(1111, _);
+                  // console.log(1111, _);
                 },
               },
               {
@@ -137,7 +138,15 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 2,
                 width: '10%',
               },
-              { title: 'Balance', dataIndex: 'balance', key: 3, width: '10%' },
+              {
+                title: 'Balance',
+                dataIndex: 'balance',
+                key: 3,
+                width: '10%',
+                render: (_: any) => {
+                  return unifyNumber(balances[_?.address] || 0);
+                },
+              },
               {
                 title: 'Price',
                 dataIndex: 'price',
