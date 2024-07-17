@@ -19,7 +19,7 @@ function Karak({ token0, token1, actionType, gem, handleChangeActionType, setSho
     token0,
     token1,
     actionType,
-    gem,
+    dapp: gem,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
