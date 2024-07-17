@@ -16,6 +16,7 @@ import Renzo from './modules/renzo';
 import useAddAction from '@/hooks/useAddAction';
 import { StyledModal, StyledModalBody, StyledOverlay } from './styles';
 import { useState } from 'react';
+import Modal from '@/components/Modal';
 
 const ComponentMapping: any = {
   Lido,
@@ -32,21 +33,31 @@ const ComponentMapping: any = {
 };
 const Index = function (props: any) {
   const { addAction } = useAddAction('lrts');
-  const { dapp, gem, setShow, token0, token1, chainId } = props;
-  const VmComponent = ComponentMapping[dapp?.name];
-
-  const [actionType, setActionType] = useState('stake');
+  const { dapp, gem, box, show, setShow, token0, token1, chainId } = props;
+  const VmComponent = ComponentMapping[gem?.dapp?.name || dapp?.name];
+  const [actionType, setActionType] = useState(gem ? 'restake' : 'stake');
   const handleChangeActionType = function (_actionType: any) {
     setActionType(_actionType);
   };
 
+  console.log('===gem', gem)
+  console.log('===dapp', dapp)
   return (
-    <StyledModal>
-      <StyledOverlay />
-      <StyledModalBody>
+    <Modal
+      display={show}
+      showHeader={false}
+      width={620}
+      modalStyle={{
+        border: '1px solid #3f3f3f',
+        background: '#2f2f2f',
+        borderRadius: '4px',
+        overflow: 'unset'
+      }}
+      content={
         <VmComponent
-          dapp={dapp}
           gem={gem}
+          box={box}
+          dapp={dapp}
           addAction={addAction}
           setShow={setShow}
           token0={token0}
@@ -55,8 +66,8 @@ const Index = function (props: any) {
           actionType={actionType}
           handleChangeActionType={handleChangeActionType}
         />
-      </StyledModalBody>
-    </StyledModal>
-  );
+      }
+    />
+  )
 };
 export default Index;

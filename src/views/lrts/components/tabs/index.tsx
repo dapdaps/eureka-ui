@@ -10,7 +10,7 @@ interface IProps {
 
 export const StyledTabs = styled.div`
   width: 1200px;
-  margin: 0 auto 20px;
+  margin: 0 auto;
 `;
 export const TabHead = styled.div`
   display: flex;

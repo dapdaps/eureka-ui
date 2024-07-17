@@ -37,11 +37,15 @@ import {
   StyledActionTypeTab,
   StyledDapLogo,
   StyledLoading,
+  StyledLrtDapp,
+  StyledLrtBgImage,
 } from '../styles';
 import Button from './button';
 
 const BaseComponent = function (props: any) {
   const {
+    box,
+    gem,
     dapp,
     data,
     setShow,
@@ -63,10 +67,71 @@ const BaseComponent = function (props: any) {
     handleAddMetaMask,
     handleChangeActionType,
   } = props?.componentProps;
-  const actionTypeList = ['stake', 'unstake'];
-  return data ? (
+  const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
+  return (
     <StyledStakeContainer>
-      <StyledDapLogo src={dapp?.logo} />
+      {
+        gem?.dapp?.logo ? (
+          <StyledDapLogo src={gem?.dapp?.logo} />
+        ) : (
+          <StyledLrtDapp>
+            <StyledLrtBgImage src={box} />
+            <div style={{
+              position: 'absolute',
+              left: 0,
+              top: 0,
+              right: 0,
+              bottom: 0
+            }}>
+              <div style={{
+                paddingTop: 10,
+                fontSize: 14,
+                fontWeight: 600,
+                color: '#FFF',
+                fontFamily: 'Orbitron',
+                textAlign: 'center'
+              }}>{inToken?.symbol}</div>
+              <div style={{ paddingTop: 4, paddingRight: 8, display: 'flex', gap: 4, alignItems: 'center', justifyContent: 'flex-end' }}>
+                <img width={8} src={dapp?.logo} />
+                <div style={{
+                  fontSize: 8,
+                  color: '#FFF',
+                  fontFamily: 'Orbitron',
+                }}>{dapp.name}</div>
+              </div>
+              <div style={{
+                paddingTop: 20,
+                paddingRight: 8,
+                textAlign: 'right',
+                fontSize: 10,
+                color: 'rgba(255,255,255,0.5)',
+                fontFamily: 'Orbitron',
+                fontWeight: 700
+              }}>{dapp?.minApr} -</div>
+              <div style={{
+                display: 'flex',
+                alignItems: 'flex-end',
+                justifyContent: 'space-between',
+                paddingLeft: 8,
+                paddingRight: 8
+              }}>
+                <div style={{
+                  fontSize: 8,
+                  color: 'rgba(255,255,255,0.5)',
+                  fontFamily: 'Orbitron',
+                  fontWeight: 700
+                }}>APR RANGE</div>
+                <div style={{
+                  fontSize: 12,
+                  color: '#FFF',
+                  fontFamily: 'Orbitron',
+                  fontWeight: 700
+                }}>{dapp?.maxApr}</div>
+              </div>
+            </div>
+          </StyledLrtDapp>
+        )
+      }
       <StyledStakeTopContainer
         style={actionType === 'unstake' ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
       >
@@ -180,6 +245,7 @@ const BaseComponent = function (props: any) {
               />
             </svg>
             <Button
+              data={data}
               isInSufficient={isInSufficient}
               isLoading={approving || isLoading}
               chainId={inToken.chainId}
@@ -219,8 +285,6 @@ const BaseComponent = function (props: any) {
         </>
       )}
     </StyledStakeContainer>
-  ) : (
-    <StyledLoading>Loading~~</StyledLoading>
   );
 };
 export default BaseComponent;

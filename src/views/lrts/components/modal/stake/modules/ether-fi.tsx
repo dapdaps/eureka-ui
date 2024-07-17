@@ -227,7 +227,7 @@ const SECOND_TOKEN_ABI = [{
   "type": "function"
 }]
 
-const EtherFi = function ({ actionType, handleChangeActionType, setShow, token0, token1 }: any) {
+const EtherFi = function ({ box, gem, dapp, actionType, handleChangeActionType, setShow, token0, token1 }: any) {
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -392,6 +392,9 @@ const EtherFi = function ({ actionType, handleChangeActionType, setShow, token0,
   return (
     <BaseComponent
       componentProps={{
+        box,
+        gem,
+        dapp,
         data,
         setShow,
         inAmount,

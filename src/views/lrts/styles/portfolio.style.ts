@@ -2,10 +2,10 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: url(/images/lrts/bg-home.png) center no-repeat #000;
+  background: url(/images/lrts/bg-home.png) top center no-repeat #000;
   background-size: contain;
   font-family: Orbitron;
-  padding-top: 91px;
+  padding: 91px 0 30px;
 `;
 export const Assets = styled.div`
   width: 1200px;
@@ -61,16 +61,15 @@ export const Assets = styled.div`
 
     border-radius: 2px;
     border: 1px solid #323232;
-
-    backdrop-filter: blur(10px);
-  }
-  .process-bar-stake {
-    width: 30%;
     background: rgba(189, 189, 189, 0.5);
+    backdrop-filter: blur(10px);
+    transition: width 0.4s ease-in-out;
   }
+
   .process-bar-nostake {
-    width: 15%;
+    height: 10px;
     background: rgba(255, 255, 255, 0.5);
+    transition: width 0.4s ease-in-out;
   }
   .key {
     color: #828282;
@@ -110,3 +109,5 @@ export const AssetTab = styled.div`
     -webkit-text-fill-color: transparent;
   }
 `;
+
+export const TokenImg = styled(Image)``;

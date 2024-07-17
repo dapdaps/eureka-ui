@@ -123,7 +123,7 @@ const WITHDRAWAL_QUEUE_ABI = [
   },
 ];
 
-const Lido = function ({ dapp, setShow, token0, token1, addAction, actionType, handleChangeActionType, chainId }: any) {
+const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, actionType, handleChangeActionType, chainId }: any) {
   const {
     data,
     inAmount,
@@ -149,6 +149,9 @@ const Lido = function ({ dapp, setShow, token0, token1, addAction, actionType, h
   return (
     <BaseComponent
       componentProps={{
+        box,
+        gem,
+        dapp,
         data,
         setShow,
         inAmount,
