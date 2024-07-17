@@ -205,6 +205,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
       ..._lrtTokens,
     ];
     setList(_list);
+    setActiveIndex(0);
   }, [lstIndex, lrtsData]);
 
   useEffect(() => {
