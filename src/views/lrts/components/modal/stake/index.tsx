@@ -15,6 +15,7 @@ import Renzo from './modules/renzo';
 // const KelpDao = lazy(() => import('./modules/kelp-dao'))
 import useAddAction from '@/hooks/useAddAction';
 import { StyledModal, StyledModalBody, StyledOverlay } from './styles';
+import { useState } from 'react';
 
 const ComponentMapping: any = {
   Lido,
@@ -33,6 +34,10 @@ const Index = function (props: any) {
   const { addAction } = useAddAction('lrts');
   const { dapp, setShow, token0, token1, chainId } = props;
   const VmComponent = ComponentMapping[dapp?.name];
+  const [actionType, setActionType] = useState('stake');
+  const handleChangeActionType = function (_actionType) {
+    setActionType(_actionType)
+  }
   return (
     <StyledModal>
       <StyledOverlay />
@@ -44,6 +49,8 @@ const Index = function (props: any) {
           token0={token0}
           token1={token1}
           chainId={chainId}
+          actionType={actionType}
+          handleChangeActionType={handleChangeActionType}
         />
       </StyledModalBody>
     </StyledModal>

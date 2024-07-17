@@ -146,7 +146,7 @@ const mETH_ABI = [{
   "type": "function"
 }]
 export default function useMantle(props: any) {
-  const { dapp, token0, token1, addAction, chainId } = props;
+  const { dapp, token0, token1, addAction, actionType, chainId } = props;
   const toast = useToast()
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -156,9 +156,6 @@ export default function useMantle(props: any) {
   const [isLoading, setIsLoading] = useState(false)
   const [approved, setApproved] = useState(true)
   const [approving, setApproving] = useState(false)
-
-  const [actionType, setActionType] = useState("stake")
-
   const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0.01
 
   const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1
@@ -315,9 +312,6 @@ export default function useMantle(props: any) {
   const handleAddMetaMask = function () {
 
   }
-  const handleChangeActionType = function (_actionType) {
-    setActionType(_actionType)
-  }
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])
@@ -330,7 +324,6 @@ export default function useMantle(props: any) {
     approved,
     approving,
     leastAmount,
-    actionType,
     inToken,
     outToken,
     isInSufficient,
@@ -338,6 +331,5 @@ export default function useMantle(props: any) {
     handleAmountChange,
     handleStake,
     handleAddMetaMask,
-    handleChangeActionType
   }
 }

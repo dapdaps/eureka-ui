@@ -126,7 +126,7 @@ const WITHDRAWAL_QUEUE_ABI = [
   },
 ];
 export default function useLido(props: any) {
-  const { dapp, token0, token1, addAction, chainId } = props;
+  const { dapp, token0, token1, addAction, actionType, chainId } = props;
   const toast = useToast();
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -137,7 +137,6 @@ export default function useLido(props: any) {
   const [approved, setApproved] = useState(true);
   const [approving, setApproving] = useState(false);
 
-  const [actionType, setActionType] = useState("stake")
   const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0;
   const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1;
   const outToken = ['stake', 'restake'].includes(actionType) ? token1 : token0;
@@ -292,9 +291,6 @@ export default function useLido(props: any) {
       });
   };
   const handleAddMetaMask = function () { };
-  const handleChangeActionType = function (_actionType) {
-    setActionType(_actionType)
-  }
   useEffect(() => {
     provider && handleQueryData();
   }, [provider]);
@@ -306,7 +302,6 @@ export default function useLido(props: any) {
     approved,
     approving,
     leastAmount,
-    actionType,
     inToken,
     outToken,
     isInSufficient,
@@ -314,6 +309,5 @@ export default function useLido(props: any) {
     handleAmountChange,
     handleStake,
     handleAddMetaMask,
-    handleChangeActionType
   }
 }
