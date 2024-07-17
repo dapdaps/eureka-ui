@@ -228,6 +228,11 @@ export default function useEigenpie({ token0, token1, actionType }: any) {
     [tokenBalance, stakedAmount],
   );
 
+  const spender = useMemo(
+    () => contracts[token0.chainId][['stake', 'restake'].includes(actionType) ? 'eigenStaking' : 'withdrawManager'],
+    [actionType],
+  );
+
   useEffect(() => {
     if (!account) return;
     getStakedAmount();
@@ -242,7 +247,7 @@ export default function useEigenpie({ token0, token1, actionType }: any) {
     inToken,
     outToken,
     isInSufficient,
-    spender: contracts[token0.chainId][['stake', 'restake'].includes(actionType) ? 'eigenStaking' : 'withdrawManager'],
+    spender,
     requestLoading,
     requests,
     getWithdrawlRequests,

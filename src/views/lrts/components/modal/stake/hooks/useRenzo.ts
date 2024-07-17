@@ -189,6 +189,11 @@ export default function useRenzo({ token0, token1, actionType }: any) {
     getStakedAmount();
   }, [account]);
 
+  const spender = useMemo(
+    () => contracts[token0.chainId][['stake', 'restake'].includes(actionType) ? 'stake' : 'unstake'],
+    [actionType],
+  );
+
   return {
     data,
     inAmount,
@@ -197,7 +202,7 @@ export default function useRenzo({ token0, token1, actionType }: any) {
     inToken,
     outToken,
     isInSufficient,
-    spender: contracts[token0.chainId][['stake', 'restake'].includes(actionType) ? 'stake' : 'unstake'],
+    spender,
     handleAmountChange,
     handleStake,
   };

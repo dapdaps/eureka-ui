@@ -111,7 +111,6 @@ const Home = () => {
             name: lrtsData[lstIndex].dapp.name,
             logo: lrtsData[lstIndex].dapp.logo,
           }}
-          actionType={actionType}
           token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
           token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt}
           chainId={chainId as number}
