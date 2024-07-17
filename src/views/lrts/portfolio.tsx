@@ -3,6 +3,7 @@ import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 
 import { useLrtDataStore } from '@/stores/lrts';
+import { usePriceStore } from '@/stores/price';
 
 import { CustomTable, PolygonBtn, Tabs } from './components';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
@@ -21,8 +22,9 @@ enum TabType {
 
 const Portfolio: FC<IProps> = (props) => {
   const { loading, balances } = useAllTokensBalance();
+  const prices = usePriceStore((store) => store.price);
   const lrtsData = useLrtDataStore((store: any) => store.data);
-  console.log('lrtsData----', lrtsData);
+  console.log('prices:', prices);
   const lsts = lrtsData.map((item: any) => item.token);
   const lrtAssets = lrtsData
     .map((item: any) => item.lrtTokens)
@@ -40,8 +42,6 @@ const Portfolio: FC<IProps> = (props) => {
     ...item,
     assets: item.symbol,
     chian: item.chianId,
-    price: 0,
-    arp: 0,
     key: index,
   }));
 
@@ -89,8 +89,24 @@ const Portfolio: FC<IProps> = (props) => {
                   return Number(_?.balance).toFixed(2);
                 },
               },
-              { title: 'Price', dataIndex: 'price', key: 4, width: '10%' },
-              { title: '7d APR', dataIndex: 'apr', key: 5, width: '10%' },
+              {
+                title: 'Price',
+                dataIndex: 'price',
+                key: 4,
+                width: '10%',
+                render: (_: any) => {
+                  return Number(prices[_.symbol] || 0).toFixed(2);
+                },
+              },
+              {
+                title: '7d APR',
+                dataIndex: 'apr',
+                key: 5,
+                width: '10%',
+                render: (_: any) => {
+                  console.log(1111, _);
+                },
+              },
               {
                 title: 'Action',
                 dataIndex: 'Action',
@@ -122,7 +138,15 @@ const Portfolio: FC<IProps> = (props) => {
                 width: '10%',
               },
               { title: 'Balance', dataIndex: 'balance', key: 3, width: '10%' },
-              { title: 'Price', dataIndex: 'price', key: 4, width: '10%' },
+              {
+                title: 'Price',
+                dataIndex: 'price',
+                key: 4,
+                width: '10%',
+                render: (_: any) => {
+                  return Number(prices[_.symbol] || 0).toFixed(2);
+                },
+              },
               { title: '7d APR', dataIndex: 'apr', key: 5, width: '10%' },
               {
                 title: 'Action',
