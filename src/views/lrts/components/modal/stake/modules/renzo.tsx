@@ -19,7 +19,7 @@ function Renzo({ token0, token1, setShow, actionType, gem, handleChangeActionTyp
     token0,
     token1,
     actionType,
-    gem,
+    dapp: gem,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,

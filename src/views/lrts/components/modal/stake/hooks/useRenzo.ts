@@ -16,7 +16,7 @@ const contracts: Record<number, any> = {
   },
 };
 
-export default function useRenzo({ token0, token1, actionType }: any) {
+export default function useRenzo({ token0, token1, actionType, dapp }: any) {
   const { provider, account } = useAccount();
   const [inAmount, setInAmount] = useState('');
   const [outAmount, setOutAmount] = useState('');
@@ -143,13 +143,10 @@ export default function useRenzo({ token0, token1, actionType }: any) {
       setLoading(false);
       toast.dismiss(toastId);
 
-      let txn: any = '';
       if (status === 1) {
         toast.success({ title: `${method} successfully!`, tx: transactionHash, chainId: token0.chainId });
         updateBalance();
         getStakedAmount();
-        const index = await Contract.getOutstandingWithdrawRequests(account);
-        txn = await Contract.populateTransaction.claim(Number(index) - 1, account);
       } else {
         toast.fail({ title: `${method} faily!` });
       }
@@ -157,11 +154,17 @@ export default function useRenzo({ token0, token1, actionType }: any) {
         type: 'Staking',
         action: actionType,
         amount: inAmount,
-        token: token0,
-        template: 'LRTS',
+        template: dapp.name,
         status,
         transactionHash,
         add: 0,
+        extra_data: JSON.stringify({
+          action: actionType,
+          amount0: inAmount,
+          amount1: outAmount,
+          token0: inToken.symbol,
+          token1: outToken.symbol,
+        }),
       });
       setLoading(false);
     } catch (err: any) {
