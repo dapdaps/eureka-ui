@@ -2,8 +2,7 @@ import usePuffer from '../hooks/usePuffer';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Karak({ token0, token1, setShow }: any) {
-  const [actionType, setActionType] = useState('stake');
+function Karak({ token0, token1, setShow, actionType, handleChangeActionType }: any) {
   const { data, inAmount, outAmount, inToken, outToken, isInSufficient, isLoading, handleAmountChange, handleStake } =
     usePuffer({
       token0,
@@ -27,9 +26,7 @@ function Karak({ token0, token1, setShow }: any) {
         isInSufficient,
         handleAmountChange,
         handleStake,
-        handleChangeActionType: (actionType: any) => {
-          setActionType(actionType);
-        },
+        handleChangeActionType,
       }}
     />
   );

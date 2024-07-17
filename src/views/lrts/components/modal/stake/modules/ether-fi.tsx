@@ -227,8 +227,7 @@ const SECOND_TOKEN_ABI = [{
   "type": "function"
 }]
 
-const EtherFi = function (props: any) {
-  const { actionType, setShow, token0, token1 } = props
+const EtherFi = function ({ actionType, handleChangeActionType, setShow, token0, token1 }: any) {
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -409,7 +408,8 @@ const EtherFi = function (props: any) {
         handleApprove,
         handleAmountChange,
         handleStake,
-        handleAddMetaMask
+        handleAddMetaMask,
+        handleChangeActionType
       }}
     />
   )

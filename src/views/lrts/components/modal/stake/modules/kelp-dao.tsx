@@ -261,7 +261,7 @@ const SECOND_TOKEN_ABI = [{
 }]
 
 const KelpDao = function (props: any) {
-  const { actionType, setShow, token0, token1 } = props
+  const { actionType, handleChangeActionType, setShow, token0, token1 } = props
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -440,7 +440,8 @@ const KelpDao = function (props: any) {
         handleApprove,
         handleAmountChange,
         handleStake,
-        handleAddMetaMask
+        handleAddMetaMask,
+        handleChangeActionType,
       }}
     />
   )

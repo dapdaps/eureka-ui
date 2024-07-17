@@ -123,7 +123,7 @@ const WITHDRAWAL_QUEUE_ABI = [
   },
 ];
 
-const Lido = function ({ dapp, setShow, token0, token1, addAction, handleChangeActionType, chainId }: any) {
+const Lido = function ({ dapp, setShow, token0, token1, addAction, actionType, handleChangeActionType, chainId }: any) {
   const {
     data,
     inAmount,
@@ -165,6 +165,7 @@ const Lido = function ({ dapp, setShow, token0, token1, addAction, handleChangeA
         handleAmountChange,
         handleStake,
         handleAddMetaMask,
+        handleChangeActionType,
       }}
     />
   );

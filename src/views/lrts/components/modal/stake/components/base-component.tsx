@@ -63,7 +63,6 @@ const BaseComponent = function (props: any) {
     handleAddMetaMask,
     handleChangeActionType,
   } = props?.componentProps;
-
   const actionTypeList = ['stake', 'unstake'];
   return data ? (
     <StyledStakeContainer>

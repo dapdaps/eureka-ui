@@ -3,8 +3,7 @@ import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Renzo({ token0, token1, setShow }: any) {
-  const [actionType, setActionType] = useState('stake');
+function Renzo({ token0, token1, setShow, actionType, handleChangeActionType }: any) {
   const {
     data,
     inAmount,
@@ -44,9 +43,7 @@ function Renzo({ token0, token1, setShow }: any) {
         handleApprove: approve,
         handleAmountChange,
         handleStake,
-        handleChangeActionType: (actionType: any) => {
-          setActionType(actionType);
-        },
+        handleChangeActionType
       }}
     />
   );
