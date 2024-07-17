@@ -59,6 +59,9 @@ export default function useKarak({ token0, token1, actionType, dapp }: any) {
     );
   }, [account]);
 
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
+  }
   const handleStake = async () => {
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });
@@ -159,6 +162,7 @@ export default function useKarak({ token0, token1, actionType, dapp }: any) {
     isInSufficient,
     spender: token1.address,
     handleAmountChange,
+    handleMax,
     handleStake,
   };
 }

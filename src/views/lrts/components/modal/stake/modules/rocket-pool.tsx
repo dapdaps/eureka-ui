@@ -20,6 +20,7 @@ const RocketPool = function (props: any) {
     isInSufficient,
     handleApprove,
     handleAmountChange,
+    handleMax,
     handleStake
   } = useRocketPool({ actionType, token0, token1, provider, account });
 
@@ -43,6 +44,7 @@ const RocketPool = function (props: any) {
         setShow,
         handleApprove,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleChangeActionType
       }}

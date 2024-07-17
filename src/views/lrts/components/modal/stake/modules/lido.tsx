@@ -137,6 +137,7 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
     isInSufficient,
     handleApprove,
     handleAmountChange,
+    handleMax,
     handleStake,
     handleAddMetaMask,
   } = useLido({
@@ -144,7 +145,8 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
     token0,
     token1,
     addAction,
-    chainId
+    chainId,
+    actionType,
   })
   return (
     <BaseComponent
@@ -166,6 +168,7 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
         isInSufficient,
         handleApprove,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleAddMetaMask,
         handleChangeActionType,

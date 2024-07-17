@@ -252,6 +252,9 @@ export default function useMantle(props: any) {
       console.error('error: ', error)
     }
   }
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
+  }
   const handleStake = async function () {
     setIsLoading(true)
     const contract = new ethers.Contract(LSP_STAKING, LSP_STAKING_ABI, provider?.getSigner())
@@ -329,6 +332,7 @@ export default function useMantle(props: any) {
     isInSufficient,
     handleApprove,
     handleAmountChange,
+    handleMax,
     handleStake,
     handleAddMetaMask,
   }

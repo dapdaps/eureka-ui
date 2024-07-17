@@ -408,60 +408,6 @@ const RestakeFinance = function (props: any) {
           title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',
         });
       });
-
-    // if (['stake', 'restake'].includes(actionType)) {
-    //   contract
-    //     .deposit(amount)
-    //     .then((tx: any) => tx.wait())
-    //     .then((result: any) => {
-    //       const { status, transactionHash } = result;
-    //       setIsLoading(false)
-    //       handleQueryData()
-    //       toast?.dismiss(toastId);
-    //       toast?.success({
-    //         title: "Stake Successfully!",
-    //       });
-    //     })
-    //     .catch((error: any) => {
-    //       setIsLoading(false)
-    //       toast?.dismiss(toastId);
-    //       toast?.fail({
-    //         title: "Stake Failed!",
-    //       });
-    //     })
-    // } else {
-    //   contract
-    //     .requestWithdraw(amount)
-    //     .then((tx: any) => tx.wait())
-    //     .then(async result => {
-    //       const requestWithdrawIdResult = await contract.getAllQueuePositionsForAddress(account)
-    //       const id = await contract.getLastRedeemableId()
-    //       const requestWithdrawId = requestWithdrawIdResult[0][0]
-    //       console.log('=requestWithdrawId', requestWithdrawId)
-    //       console.log('=id', id)
-    //       if (Big(requestWithdrawId).lt(id) || Big(requestWithdrawId).eq(id)) {
-    //         contract
-    //           .redeemUnderlying(requestWithdrawId)
-    //           .then((tx: any) => tx.wait())
-    //           .then((result: any) => {
-    //             const { status, transactionHash } = result;
-    //             setIsLoading(false)
-    //             handleQueryData()
-    //             toast?.dismiss(toastId);
-    //             toast?.success({
-    //               title: "UnStake Successfully",
-    //             });
-    //           })
-    //           .catch((error: any) => {
-    //             setIsLoading(false)
-    //             toast?.dismiss(toastId);
-    //             toast?.fail({
-    //               title: "UnStake Failed!",
-    //             });
-    //           })
-    //       }
-    //     })
-    // }
   };
   const handleAddMetaMask = function () { };
   useEffect(() => {
@@ -484,10 +430,10 @@ const RestakeFinance = function (props: any) {
         actionType,
         inToken,
         outToken,
-        handleMax,
         isInSufficient,
         handleApprove,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleAddMetaMask,
         handleChangeActionType

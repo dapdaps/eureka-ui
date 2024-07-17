@@ -98,6 +98,9 @@ export default function useRenzo({ token0, token1, actionType, dapp }: any) {
     setStakedAmount(Big(result).div(1e18).toFixed(4));
   }, [account, actionType]);
 
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
+  }
   const handleStake = async () => {
     let method = '';
     const isStake = ['stake', 'restake'].includes(actionType);
@@ -208,6 +211,7 @@ export default function useRenzo({ token0, token1, actionType, dapp }: any) {
     isInSufficient,
     spender,
     handleAmountChange,
+    handleMax,
     handleStake,
   };
 }
