@@ -1,22 +1,34 @@
+// const Lido = lazy(() => import('./modules/lido'));
+// const Mantle = lazy(() => import('./modules/mantle'));
+// const RocketPool = lazy(() => import('./modules/rocket-pool'));
+// const KelpDao = lazy(() => import('./modules/kelp-dao'))
+import { useEffect, useState } from 'react';
+
+import Modal from '@/components/Modal';
+// const Lido = lazy(() => import('./modules/lido'));
+// const Mantle = lazy(() => import('./modules/mantle'));
+// const RocketPool = lazy(() => import('./modules/rocket-pool'));
+// const KelpDao = lazy(() => import('./modules/kelp-dao'))
+import useAddAction from '@/hooks/useAddAction';
+
 import Eigenpie from './modules/eigenpie';
 import EtherFi from './modules/ether-fi';
+import Frax from './modules/Frax';
 import Inception from './modules/inception';
 import Karak from './modules/karak';
 import KelpDao from './modules/kelp-dao';
 import Lido from './modules/lido';
 import Mantle from './modules/mantle';
 import Puffer from './modules/puffer';
+import Renzo from './modules/renzo';
 import RestakeFinance from './modules/restake-finance';
 import RocketPool from './modules/rocket-pool';
-import Renzo from './modules/renzo';
-import useAddAction from '@/hooks/useAddAction';
-import { useEffect, useState } from 'react';
-import Modal from '@/components/Modal';
 
 const ComponentMapping: any = {
   Lido,
   Mantle,
-  RocketPool,
+  'Rocket Pool': RocketPool,
+  'Frax Finance': Frax,
   KelpDao,
   KaraK: Karak,
   Eigenpie,

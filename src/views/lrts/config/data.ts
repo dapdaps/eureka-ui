@@ -177,7 +177,7 @@ const LSTS_DATA = [
       logo: '/images/lrts/dapp-frax.svg',
     },
     token: {
-      ...ethereum['sfrxETH'],
+      ...ethereum['frxETH'],
     },
     orders: [7, 13, 25, 40],
     lrtTokens: [
