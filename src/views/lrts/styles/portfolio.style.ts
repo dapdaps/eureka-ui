@@ -2,10 +2,10 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background: url(/images/lrts/bg-home.png) center no-repeat #000;
+  background: url(/images/lrts/bg-home.png) top center no-repeat #000;
   background-size: contain;
   font-family: Orbitron;
-  padding-top: 91px;
+  padding: 91px 0 30px;
 `;
 export const Assets = styled.div`
   width: 1200px;

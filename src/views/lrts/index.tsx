@@ -115,6 +115,7 @@ const Home = () => {
             logo: lrtsData[lstIndex].dapp.logo,
             minApr: lrtsData[lstIndex]?.minApr,
             maxApr: lrtsData[lstIndex]?.maxApr,
+            apr: lrtsData[lstIndex]?.apr,
           }}
           token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
           token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt?.token}
