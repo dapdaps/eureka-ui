@@ -257,10 +257,10 @@ const SECOND_TOKEN_ABI = [
 ];
 
 const RestakeFinance = function (props: any) {
-  const { actionType, handleChangeActionType, setShow, token0, token1 } = props;
+  const { box, gem, dapp, actionType, handleChangeActionType, setShow, token0, token1 } = props;
   const toast = useToast();
   const { account, provider, chainId } = useAccount();
-  const [{}, setChain] = useSetChain();
+  const [{ }, setChain] = useSetChain();
   const [data, setData] = useState<any>(null);
   const [inAmount, setInAmount] = useState<number | string>('');
   const [outAmount, setOutAmount] = useState<number | string>('');
@@ -463,13 +463,16 @@ const RestakeFinance = function (props: any) {
     //     })
     // }
   };
-  const handleAddMetaMask = function () {};
+  const handleAddMetaMask = function () { };
   useEffect(() => {
     provider && handleQueryData();
   }, [provider]);
   return (
     <BaseComponent
       componentProps={{
+        box,
+        gem,
+        dapp,
         data,
         setShow,
         inAmount,

@@ -1,12 +1,13 @@
-import axios from 'axios';
 import { ethereum } from '@/config/tokens/ethereum';
 import { useCallback, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
+import { multicall } from '@/utils/multicall';
+import multicallAddresses from '@/config/contract/multicall';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import abi from '../../../../config/abi/renzo';
+import abi from '../../../../config/abi/karak';
 
 type Record = {
   amount: number;
@@ -18,12 +19,30 @@ type Record = {
   data: any;
 };
 
-const contracts: { [key: number]: string } = {
-  1: '0x5efc9D10E42FB517456f4ac41EB5e2eBe42C8918',
+const contracts: { [key: number]: any } = {
+  1: {
+    Vault: '0x46c64C1630f320b890d765E7C6F901574924b0C7',
+    DelegationSupervisor: '0xAfa904152E04aBFf56701223118Be2832A4449E0',
+  },
 };
 
-export default function useRenzoRequests() {
-  const { provider, account, chainId } = useAccount();
+const tokens: { [key: string]: any } = {
+  [ethereum.kmETH.address]: {
+    to: ethereum.mETH,
+    t: ethereum.kmETH,
+  },
+  [ethereum.sfrxETH.address]: {
+    to: ethereum.ksfrxETH,
+    t: ethereum.sfrxETH,
+  },
+  [ethereum.rETH.address]: {
+    to: ethereum.krETH,
+    t: ethereum.rETH,
+  },
+};
+
+export default function useKarakRequests() {
+  const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const [claiming, setClaiming] = useState(false);
@@ -33,32 +52,37 @@ export default function useRenzoRequests() {
   const queryRequests = useCallback(async () => {
     if (!chainId || !contracts[chainId]) return;
     setLoading(true);
+
     try {
-      const result = await axios.post(
-        'https://api.goldsky.com/api/public/project_clsxzkxi8dh7o01zx5kyxdga4/subgraphs/renzo-mainnet/1.0.3/gn',
-        {
-          operationName: 'withdrawRequestsQuery',
-          query:
-            'query withdrawRequestsQuery($withdrawer: String!) {\n  withdrawRequests(\n    first: 1000\n    orderBy: createdAt\n    orderDirection: desc\n    where: { withdrawer: $withdrawer }\n  ) {\n    id\n    withdrawIndex\n    claimed\n    createdAt\n    amountToRedeem\n    amountEzETHToBurn\n    withdrawalAssetOut\n    queued\n    claimableAt\n  }\n}\n',
-          variables: { withdrawer: account },
-        },
-      );
-      const list = result.data?.data?.withdrawRequests;
+      const Contract = new ethers.Contract(contracts[chainId].DelegationSupervisor, abi, provider?.getSigner());
+      const result = await Contract.fetchQueuedWithdrawals(account);
+      const calls = result.map((quest: any) => ({
+        address: contracts[chainId].Vault,
+        name: 'convertToAssets',
+        params: [quest.request.shares[0]],
+      }));
+      const multicallAddress = multicallAddresses[chainId];
+      const assetsResult = await multicall({
+        abi,
+        options: {},
+        calls,
+        multicallAddress,
+        provider,
+      });
 
-      if (!list) throw Error('');
+      if (!assetsResult) throw Error('');
 
-      const _list = list.map((item: any) => {
-        const token1Address = item.withdrawalAssetOut;
-
+      const _list = assetsResult.map((asset: any, i: number) => {
+        const request = result[i];
+        const token0Address = request.request[0][0].toLowerCase();
+        const startTime = Number(request.start) * 1000;
         return {
-          amount: Big(item.amountToRedeem).div(1e18).toString(),
-          startTime: item.createdAt * 1000,
-          status: item.queued ? 'In Progress' : 'Claimable',
-          token0: ethereum.ezETH,
-          token1: token1Address === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' ? ethereum.eth : ethereum.stETH,
-          data: {
-            withdrawIndex: item.withdrawIndex,
-          },
+          amount: Big(asset).div(1e18).toFixed(3),
+          startTime,
+          token0: tokens[token0Address].t,
+          token1: tokens[token0Address].to,
+          status: startTime + 604800000 > Date.now() ? 'In Progress' : 'Claimable',
+          data: request,
         };
       });
 
@@ -66,6 +90,7 @@ export default function useRenzoRequests() {
 
       setLoading(false);
     } catch (err) {
+      console.log('err', err);
       setLoading(false);
       setRequests([]);
     }
@@ -78,8 +103,8 @@ export default function useRenzoRequests() {
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
         const signer = provider?.getSigner(account);
-        const Contract = new ethers.Contract(contracts[1], abi, signer);
-        const tx = await Contract.claim(record.data.withdrawIndex, account);
+        const Contract = new ethers.Contract(contracts[chainId].DelegationSupervisor, abi, signer);
+        const tx = await Contract.finishWithdraw([record.data]);
 
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
@@ -97,7 +122,7 @@ export default function useRenzoRequests() {
           type: 'Staking',
           action: 'Claim',
           amount: record.amount,
-          template: 'Renzo',
+          template: 'Karak',
           status,
           transactionHash,
           add: 0,
@@ -117,7 +142,7 @@ export default function useRenzoRequests() {
         setClaiming(false);
       }
     },
-    [account, chainId],
+    [account],
   );
 
   return {

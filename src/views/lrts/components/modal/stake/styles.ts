@@ -375,9 +375,19 @@ export const StyledActionTypeTab = styled.div`
 export const StyledDapLogo = styled.img`
   position: absolute;
   left: 50%;
-  top: -86px;
-  transform: translateX(-50%);
+  top: 0;
+  transform: translate(-50%, -60%);
 `;
+export const StyledLrtDapp = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translate(-50%, -75%);
+  width: 148px;
+`
+export const StyledLrtBgImage = styled.img`
+  width: 100%;
+`
 export const StyledLoading = styled.div`
   position: absolute;
   left: 50%;

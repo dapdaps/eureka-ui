@@ -43,7 +43,7 @@ const LSTS_DATA = [
       {
         // order: 40,
         dapp: {
-          name: 'Restake Finance',
+          name: 'RestakeFinance',
           logo: '/images/lrts/gem-rmeth.svg',
         },
         logo: '/images/lrts/gem-rmeth.svg',
@@ -66,7 +66,7 @@ const LSTS_DATA = [
       {
         // order: 3,
         dapp: {
-          name: 'KelpDAO',
+          name: 'KelpDao',
           logo: '/images/lrts/gem-rseth.svg',
         },
         logo: '/images/lrts/gem-rseth.svg',
@@ -102,7 +102,7 @@ const LSTS_DATA = [
       {
         // order: 25,
         dapp: {
-          name: 'Restake Finance',
+          name: 'RestakeFinance',
           logo: '/images/lrts/gem-rsteth.svg',
         },
         logo: '/images/lrts/gem-rsteth.svg',
@@ -111,7 +111,7 @@ const LSTS_DATA = [
       {
         // order: 31,
         dapp: {
-          name: 'Ether Fi',
+          name: 'EtherFi',
           logo: '/images/lrts/gem-weeth.svg',
         },
         logo: '/images/lrts/gem-weeth.svg',
@@ -211,7 +211,7 @@ const LSTS_DATA = [
       {
         // order: 40,
         dapp: {
-          name: 'Restake Finance',
+          name: 'RestakeFinance',
           logo: '/images/lrts/gem-rsfrxeth.svg',
         },
         logo: '/images/lrts/gem-rsfrxeth.svg',

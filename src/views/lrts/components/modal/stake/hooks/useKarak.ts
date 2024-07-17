@@ -17,13 +17,11 @@ const contracts: Record<number, any> = {
   },
 };
 
-export default function useKarak({ token0, token1, actionType }: any) {
+export default function useKarak({ token0, token1, actionType, dapp }: any) {
   const { provider, account } = useAccount();
   const [inAmount, setInAmount] = useState('');
   const [outAmount, setOutAmount] = useState('');
   const [loading, setLoading] = useState(false);
-  const [requestLoading, setRequestsLoading] = useState(false);
-  const [requests, setRequests] = useState<any>();
   const [stakedAmount, setStakedAmount] = useState('');
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
@@ -110,13 +108,19 @@ export default function useKarak({ token0, token1, actionType }: any) {
       }
       addAction({
         type: 'Staking',
-        action: method,
+        action: actionType,
         amount: inAmount,
-        token: token0,
-        template: 'LRTS',
+        template: dapp.name,
         status,
         transactionHash,
         add: 0,
+        extra_data: JSON.stringify({
+          action: actionType,
+          amount0: inAmount,
+          amount1: outAmount,
+          token0: inToken.symbol,
+          token1: outToken.symbol,
+        }),
       });
       setLoading(false);
     } catch (err: any) {
@@ -128,92 +132,6 @@ export default function useKarak({ token0, token1, actionType }: any) {
       setLoading(false);
     }
   };
-  const getWithdrawlRequests = useCallback(async () => {
-    setRequestsLoading(true);
-
-    try {
-      const Contract = new ethers.Contract(contracts[token0.chainId].DelegationSupervisor, abi, provider?.getSigner());
-      const result = await Contract.fetchQueuedWithdrawals(account);
-      const calls = result.map((quest: any) => ({
-        address: contracts[token0.chainId].Vault,
-        name: 'convertToAssets',
-        params: [quest.request.shares[0]],
-      }));
-      const multicallAddress = multicallAddresses[token0.chainId];
-      const assetsResult = await multicall({
-        abi,
-        options: {},
-        calls,
-        multicallAddress,
-        provider,
-      });
-
-      setRequests(
-        assetsResult.map((asset: any, i: number) => {
-          const request = result[i];
-          return {
-            request,
-            amount: Big(asset).div(1e18).toFixed(3),
-            symbol: token0.symbol,
-            endTime: request + 7 * 24 * 60 * 60,
-          };
-        }),
-      );
-      setRequestsLoading(false);
-    } catch (err) {
-      console.log('err', err);
-      setRequestsLoading(false);
-    }
-  }, [account, token0]);
-
-  const handleWithdraw = useCallback(
-    async (request: any) => {
-      setLoading(true);
-      let toastId = toast.loading({ title: 'Confirming...' });
-      const method = 'finishWithdraw';
-      try {
-        const Contract = new ethers.Contract(
-          contracts[token0.chainId].DelegationSupervisor,
-          abi,
-          provider?.getSigner(),
-        );
-
-        const tx = await Contract[method]([request]);
-
-        toast.dismiss(toastId);
-        toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId: token0.chainId });
-
-        const { status, transactionHash } = await tx.wait();
-        setLoading(false);
-        toast.dismiss(toastId);
-
-        if (status === 1) {
-          toast.success({ title: `${method} successfully!`, tx: transactionHash, chainId: token0.chainId });
-          updateBalance();
-        } else {
-          toast.fail({ title: `${method} faily!` });
-        }
-        addAction({
-          type: 'Staking',
-          action: method,
-          amount: inAmount,
-          token: token0,
-          template: 'LRTS',
-          status,
-          transactionHash,
-          add: 0,
-        });
-        setLoading(false);
-      } catch (err: any) {
-        toast.dismiss(toastId);
-        toast.fail({
-          title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `${method} faily!`,
-        });
-        setLoading(false);
-      }
-    },
-    [token0],
-  );
 
   const data = useMemo(
     () => ({
@@ -228,7 +146,6 @@ export default function useKarak({ token0, token1, actionType }: any) {
   useEffect(() => {
     if (!account) return;
     getStakedAmount();
-    getWithdrawlRequests();
   }, [account]);
 
   return {
@@ -240,11 +157,7 @@ export default function useKarak({ token0, token1, actionType }: any) {
     outToken,
     isInSufficient,
     spender: token1.address,
-    requestLoading,
-    requests,
-    getWithdrawlRequests,
     handleAmountChange,
     handleStake,
-    handleWithdraw,
   };
 }
