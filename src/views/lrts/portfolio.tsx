@@ -12,7 +12,7 @@ import { formatThousandsSeparator } from '@/utils/format-number';
 import { unifyNumber } from '@/utils/format-number';
 import useTokens from '@/views/lrts/hooks/useTokens';
 
-import { CustomTable, PolygonBtn, Tabs } from './components';
+import { CustomTable, History, PolygonBtn, Tabs } from './components';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
 import useLrtsList from './hooks/useLrtsList';
 import { Ad, Assets, AssetTab, Container, TokenImg } from './styles/portfolio.style';
@@ -251,39 +251,11 @@ const Portfolio: FC<IProps> = (props) => {
         </AssetTab>
       ),
     },
-    { label: TabType.Unstake, key: 'item-2', children: 2 },
+    { label: TabType.Unstake, key: 'item-2', children: <History /> },
     {
       label: TabType.History,
       key: 'item-3',
-      children: (
-        <CustomTable
-          dataSource={[
-            {
-              action: 'Stake',
-              sent: '0.1 stETH',
-              receive: '0.1 ETH',
-              hash: 'SDLGSLDBGLB',
-              date: 'Jul 4, 2024 5:39 PM',
-              key: 1,
-            },
-            {
-              action: 'UnStake',
-              sent: '0.1 stETH',
-              receive: '0.1 ETH',
-              hash: 'SDLGSLDBGLB',
-              date: 'Jul 4, 2024 5:39 PM',
-              key: 2,
-            },
-          ]}
-          columns={[
-            { title: 'Action', dataIndex: 'action', key: 1 },
-            { title: 'Sent', dataIndex: 'sent', key: 2 },
-            { title: 'Receive', dataIndex: 'receive', key: 3 },
-            { title: 'Hash', dataIndex: 'hash', key: 4 },
-            { title: 'Date', dataIndex: 'date', key: 5 },
-          ]}
-        />
-      ),
+      children: <History />,
     },
   ];
 
