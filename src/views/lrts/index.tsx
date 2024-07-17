@@ -31,6 +31,7 @@ const Home = () => {
   const [showSwapModal, setShowSwapModal] = useState(false);
 
   const handleSlideChange = ({ activeIndex }: any) => {
+    setCurLrt(null)
     setLstIndex(activeIndex);
     setIsShowNpc(false);
   };
@@ -42,11 +43,11 @@ const Home = () => {
   }, [lstIndex, completed]);
 
   const handleClickGem = (lrt: any) => {
+    console.log('=lrt', lrt)
     setCurLrt(lrt);
   };
   const onTabChange = (symbol: string) => {
     const _curLrt = lrtsData[lstIndex].lrtTokens.find((item: any) => item.token.symbol === symbol);
-
     setCurLrt(_curLrt);
   };
 
@@ -58,6 +59,12 @@ const Home = () => {
       setIsShowStakeModal(true);
     }
   };
+
+  // useEffect(() => {
+  //   if (!isShowStakeModal) {
+  //     setCurLrt(null)
+  //   }
+  // }, [isShowStakeModal])
 
   return (
     <Container>
@@ -106,22 +113,21 @@ const Home = () => {
 
       {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
 
-      {isShowStakeModal ? (
-        <StakeModal
-          box={lrtsData[lstIndex].lstIcon}
-          gem={curLrt}
-          dapp={{
-            name: lrtsData[lstIndex].dapp.name,
-            logo: lrtsData[lstIndex].dapp.logo,
-            minApr: lrtsData[lstIndex]?.minApr,
-            maxApr: lrtsData[lstIndex]?.maxApr,
-          }}
-          token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
-          token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt?.token}
-          chainId={chainId as number}
-          setShow={setIsShowStakeModal}
-        />
-      ) : null}
+      <StakeModal
+        box={lrtsData[lstIndex].lstIcon}
+        gem={curLrt}
+        dapp={{
+          name: lrtsData[lstIndex].dapp.name,
+          logo: lrtsData[lstIndex].dapp.logo,
+          minApr: lrtsData[lstIndex]?.minApr,
+          maxApr: lrtsData[lstIndex]?.maxApr,
+        }}
+        token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
+        token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt?.token}
+        chainId={chainId as number}
+        show={isShowStakeModal}
+        setShow={setIsShowStakeModal}
+      />
       <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={lrtsData[lstIndex].token} />
     </Container>
   );

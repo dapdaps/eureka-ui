@@ -68,9 +68,7 @@ const BaseComponent = function (props: any) {
     handleChangeActionType,
   } = props?.componentProps;
   const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
-  console.log('=dapp', box)
-  console.log('=gem?.dapp?.logo || dapp?.logo', gem?.dapp?.logo || dapp?.logo)
-  return data ? (
+  return (
     <StyledStakeContainer>
       {
         gem?.dapp?.logo ? (
@@ -92,7 +90,7 @@ const BaseComponent = function (props: any) {
                 color: '#FFF',
                 fontFamily: 'Orbitron',
                 textAlign: 'center'
-              }}>{inToken.symbol}</div>
+              }}>{inToken?.symbol}</div>
               <div style={{ paddingTop: 4, paddingRight: 8, display: 'flex', gap: 4, alignItems: 'center', justifyContent: 'flex-end' }}>
                 <img width={8} src={dapp?.logo} />
                 <div style={{
@@ -286,8 +284,6 @@ const BaseComponent = function (props: any) {
         </>
       )}
     </StyledStakeContainer>
-  ) : (
-    <StyledLoading>Loading~~</StyledLoading>
   );
 };
 export default BaseComponent;
