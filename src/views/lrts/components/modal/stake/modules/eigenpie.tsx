@@ -3,8 +3,7 @@ import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Eigenpie({ token0, token1, setShow }: any) {
-  const [actionType, setActionType] = useState('stake');
+function Eigenpie({ token0, token1, actionType, handleChangeActionType, setShow }: any) {
   const {
     data,
     inAmount,
@@ -20,6 +19,7 @@ function Eigenpie({ token0, token1, setShow }: any) {
     token0,
     token1,
     actionType,
+    dapp,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -41,12 +41,11 @@ function Eigenpie({ token0, token1, setShow }: any) {
         inToken,
         outToken,
         isInSufficient,
+        dapp,
         handleApprove: approve,
         handleAmountChange,
         handleStake,
-        handleChangeActionType: (actionType: any) => {
-          setActionType(actionType);
-        },
+        handleChangeActionType,
       }}
     />
   );

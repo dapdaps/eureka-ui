@@ -257,7 +257,7 @@ const SECOND_TOKEN_ABI = [
 ];
 
 const RestakeFinance = function (props: any) {
-  const { actionType, setShow, token0, token1 } = props;
+  const { actionType, handleChangeActionType, setShow, token0, token1 } = props;
   const toast = useToast();
   const { account, provider, chainId } = useAccount();
   const [{}, setChain] = useSetChain();
@@ -487,6 +487,7 @@ const RestakeFinance = function (props: any) {
         handleAmountChange,
         handleStake,
         handleAddMetaMask,
+        handleChangeActionType
       }}
     />
   );

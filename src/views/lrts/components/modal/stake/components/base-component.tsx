@@ -13,7 +13,6 @@ import {
   StyledFirstTips,
   StyledInput,
   StyledInputContainer,
-  StyledLine,
   StyledMax,
   StyledMaxAndSymbol,
   StyledPlusSvg,
@@ -26,7 +25,6 @@ import {
   StyledSecondLine,
   StyledSecondTips,
   StyledStakeBottomContainer,
-  StyledStakeButton,
   StyledStakeButtonContainer,
   StyledStakeContainer,
   StyledStakeTopContainer,
@@ -34,13 +32,14 @@ import {
   StyledSymbolImage,
   StyledSymbolTxt,
   StyledTipsContainer,
-  StyledTitle,
   StyledWithdrawTips,
   StyledActionTypeTabContainer,
   StyledActionTypeTab,
   StyledDapLogo,
   StyledLoading,
 } from '../styles';
+import Button from './button';
+
 const BaseComponent = function (props: any) {
   const {
     dapp,
@@ -63,7 +62,6 @@ const BaseComponent = function (props: any) {
     handleAddMetaMask,
     handleChangeActionType,
   } = props?.componentProps;
-
   const actionTypeList = ['stake', 'unstake'];
   return data ? (
     <StyledStakeContainer>
@@ -178,19 +176,17 @@ const BaseComponent = function (props: any) {
                 stroke="white"
               />
             </svg>
-            {isInSufficient ? (
-              <StyledStakeButton>InSufficient Balance</StyledStakeButton>
-            ) : isLoading ? (
-              <StyledStakeButton>Loading~~</StyledStakeButton>
-            ) : approved && !approving ? (
-              Big(inAmount ? inAmount : 0).lt(leastAmount) ? (
-                <StyledStakeButton disabled>The minimum amount is {leastAmount}</StyledStakeButton>
-              ) : (
-                <StyledStakeButton onClick={handleStake}>{actionType}</StyledStakeButton>
-              )
-            ) : (
-              <StyledStakeButton onClick={handleApprove}>Approve</StyledStakeButton>
-            )}
+            <Button
+              isInSufficient={isInSufficient}
+              isLoading={approving || isLoading}
+              chainId={inToken.chainId}
+              approved={approved}
+              onApprove={handleApprove}
+              handleStake={handleStake}
+              actionType={actionType}
+              inAmount={inAmount}
+              leastAmount={leastAmount}
+            />
           </StyledStakeButtonContainer>
         </StyledBottomContainer>
       </StyledStakeTopContainer>

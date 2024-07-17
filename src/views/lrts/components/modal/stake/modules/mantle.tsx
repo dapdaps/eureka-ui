@@ -1,6 +1,6 @@
 import BaseComponent from "../components/base-component"
 import useMantle from "../hooks/useMantle"
-const Mantle = function ({ dapp, setShow, token0, token1, addAction, chainId }: any) {
+const Mantle = function ({ dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId }: any) {
   const {
     data,
     inAmount,
@@ -9,7 +9,6 @@ const Mantle = function ({ dapp, setShow, token0, token1, addAction, chainId }: 
     approved,
     approving,
     leastAmount,
-    actionType,
     inToken,
     outToken,
     isInSufficient,
@@ -17,13 +16,13 @@ const Mantle = function ({ dapp, setShow, token0, token1, addAction, chainId }: 
     handleAmountChange,
     handleStake,
     handleAddMetaMask,
-    handleChangeActionType
   } = useMantle({
     dapp,
     token0,
     token1,
     addAction,
-    chainId
+    chainId,
+    actionType
   })
   return (
     <BaseComponent
