@@ -14,12 +14,14 @@ function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleChangeActi
     isLoading,
     spender,
     handleAmountChange,
+    handleMax,
     handleStake,
   } = useEigenpie({
     token0,
     token1,
     actionType,
     gem,
+    actionType
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -47,6 +49,7 @@ function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleChangeActi
         dapp: gem,
         handleApprove: approve,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleChangeActionType,
       }}

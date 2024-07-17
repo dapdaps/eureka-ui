@@ -3,19 +3,19 @@ import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
 function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType }: any) {
-  const { data, inAmount, outAmount, inToken, outToken, isInSufficient, isLoading, handleAmountChange, handleStake } =
+  const { data, inAmount, outAmount, inToken, outToken, isInSufficient, isLoading, handleAmountChange, handleMax, handleStake } =
     usePuffer({
       token0,
       token1,
-      actionType,
       gem,
+      actionType,
     });
 
   return (
     <BaseComponent
       componentProps={{
-        box, 
-        gem, 
+        box,
+        gem,
         dapp,
         data,
         inAmount,
@@ -31,6 +31,7 @@ function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
         dapp: gem,
         hasNoUnstake: true,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleChangeActionType,
       }}

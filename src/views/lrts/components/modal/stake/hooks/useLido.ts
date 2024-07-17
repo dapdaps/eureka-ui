@@ -229,6 +229,9 @@ export default function useLido(props: any) {
       ...values,
     };
   };
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
+  }
   const handleStake = async function () {
     setIsLoading(true);
     const contract = ['stake', 'restake'].includes(actionType)
@@ -307,6 +310,7 @@ export default function useLido(props: any) {
     isInSufficient,
     handleApprove,
     handleAmountChange,
+    handleMax,
     handleStake,
     handleAddMetaMask,
   }

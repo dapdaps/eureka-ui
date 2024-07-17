@@ -94,6 +94,9 @@ export default function useEigenpie({ token0, token1, actionType, dapp }: any) {
     setStakedAmount(Big(result).div(1e18).toFixed(4));
   }, [account, actionType]);
 
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
+  }
   const handleStake = async () => {
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });
@@ -213,6 +216,7 @@ export default function useEigenpie({ token0, token1, actionType, dapp }: any) {
     requests,
     getWithdrawlRequests,
     handleAmountChange,
+    handleMax,
     handleStake,
   };
 }

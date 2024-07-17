@@ -13,6 +13,7 @@ import { unifyNumber } from '@/utils/format-number';
 import useTokens from '@/views/lrts/hooks/useTokens';
 
 import { CustomTable, History, PolygonBtn, Tabs } from './components';
+import SwapModal from './components/modal/swap';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
 import useLrtsList from './hooks/useLrtsList';
 import { Ad, Assets, AssetTab, Container, TokenImg } from './styles/portfolio.style';
@@ -32,6 +33,8 @@ const Portfolio: FC<IProps> = (props) => {
   const { loading, balances } = useAllTokensBalance();
   const { completed } = useLrtsList();
 
+  const [swapToken, setSwapToken] = useState({});
+
   const prices = usePriceStore((store) => store.price);
   const lrtsData = useLrtDataStore((store: any) => store.data);
 
@@ -44,7 +47,7 @@ const Portfolio: FC<IProps> = (props) => {
 
   const tokens = useTokens();
   const currentToken = tokens?.filter((token: any) => token.isNative)[0];
-
+  const [showSwapModal, setShowSwapModal] = useState(false);
   const { balance: ethBalance, loading: ethBalLoading } = useTokenBalance({ tokensByChain: currentToken });
 
   const lstAssets = lrtsData.map((item: any, index: number) => ({
@@ -163,12 +166,12 @@ const Portfolio: FC<IProps> = (props) => {
                 dataIndex: 'Action',
                 key: 6,
                 width: '50%',
-                render: (_: any) => {
+                render: (token: any) => {
                   return (
                     <div style={{ display: 'flex', gap: 10 }}>
                       <PolygonBtn>STAKE / UNSTAKE </PolygonBtn>
-                      <PolygonBtn>Swap</PolygonBtn>
-                      <PolygonBtn onClick={() => handleBridge(_.symbol)}>Bridge</PolygonBtn>
+                      <PolygonBtn onClick={() => handleShowModal(token)}>Swap</PolygonBtn>
+                      <PolygonBtn onClick={() => handleBridge(token.symbol)}>Bridge</PolygonBtn>
                     </div>
                   );
                 },
@@ -270,6 +273,11 @@ const Portfolio: FC<IProps> = (props) => {
     setRestakedEthPercent(_restakedETH);
   }, [lstValue, lrtValue, userBalance]);
 
+  const handleShowModal = (token: any) => {
+    setSwapToken(token);
+    setShowSwapModal(true);
+  };
+
   return (
     <Container>
       <Assets>
@@ -320,6 +328,7 @@ const Portfolio: FC<IProps> = (props) => {
       </Assets>
       <Ad src="/images/lrts/ad.png" width={1200} height={103} alt="ad" />
       <Tabs items={items} />
+      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} />
     </Container>
   );
 };

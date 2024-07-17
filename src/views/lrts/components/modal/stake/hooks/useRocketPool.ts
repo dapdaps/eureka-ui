@@ -162,6 +162,9 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
     }
   };
 
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
+  }
   const handleStake = async function () {
     const balancerValue = await handleBalancerQuery();
     if (!balancerValue) return;
@@ -224,6 +227,7 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
     isInSufficient,
     handleApprove,
     handleAmountChange,
+    handleMax,
     handleStake,
   };
 };
