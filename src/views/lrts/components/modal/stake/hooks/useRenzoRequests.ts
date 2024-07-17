@@ -10,6 +10,7 @@ type Record = {
   txId?: string;
   startTime: string;
   status: 'In Progress' | 'Claimable';
+  data: any;
 };
 
 export default function useRenzoRequests() {
@@ -20,21 +21,31 @@ export default function useRenzoRequests() {
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
-  const queryRequests = useCallback(async () => {}, [account]);
-
-  const claim = useCallback(async () => {
-    setClaiming(true);
-    let toastId = toast.loading({ title: 'Confirming...' });
+  const queryRequests = useCallback(async () => {
+    setLoading(true);
     try {
       setLoading(false);
-    } catch (err: any) {
-      toast.dismiss(toastId);
-      toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
-      });
+    } catch (err) {
       setLoading(false);
     }
   }, [account]);
+
+  const claim = useCallback(
+    async (record: any) => {
+      setClaiming(true);
+      let toastId = toast.loading({ title: 'Confirming...' });
+      try {
+        setClaiming(false);
+      } catch (err: any) {
+        toast.dismiss(toastId);
+        toast.fail({
+          title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
+        });
+        setClaiming(false);
+      }
+    },
+    [account],
+  );
 
   return {
     requests,
