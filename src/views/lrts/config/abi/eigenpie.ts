@@ -23,19 +23,6 @@ export default [
   },
   {
     inputs: [
-      { internalType: 'address', name: 'user', type: 'address' },
-      { internalType: 'address[]', name: 'assets', type: 'address[]' },
-    ],
-    name: 'getUserWithdrawalSchedules',
-    outputs: [
-      { internalType: 'uint256[][]', name: 'queuedLstAmounts', type: 'uint256[][]' },
-      { internalType: 'uint256[][]', name: 'endTimes', type: 'uint256[][]' },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
       { internalType: 'address', name: '_user', type: 'address' },
       { internalType: 'address[]', name: '_assets', type: 'address[]' },
     ],
@@ -53,20 +40,6 @@ export default [
     name: 'userWithdrawAsset',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      { internalType: 'address', name: '_user', type: 'address' },
-      { internalType: 'address[]', name: '_assets', type: 'address[]' },
-    ],
-    name: 'getUserQueuedWithdraw',
-    outputs: [
-      { internalType: 'uint256[]', name: 'queuedAmounts', type: 'uint256[]' },
-      { internalType: 'uint256[]', name: 'claimableAmounts', type: 'uint256[]' },
-      { internalType: 'uint256[]', name: 'claimedAmounts', type: 'uint256[]' },
-    ],
-    stateMutability: 'view',
     type: 'function',
   },
   {

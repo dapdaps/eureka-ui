@@ -155,6 +155,7 @@ export default function useRenzo({ token0, token1, actionType, dapp }: any) {
         action: actionType,
         amount: inAmount,
         template: dapp.name,
+        token: inToken,
         status,
         transactionHash,
         add: 0,

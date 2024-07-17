@@ -19,7 +19,7 @@ function Inception({ token0, token1, actionType, gem, handleChangeActionType, se
     token0,
     token1,
     actionType,
-    gem,
+    dapp: gem,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,

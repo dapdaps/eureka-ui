@@ -15,7 +15,7 @@ const contracts: Record<number, any> = {
   },
 };
 
-export default function useEigenpie({ token0, token1, actionType }: any) {
+export default function useEigenpie({ token0, token1, actionType, dapp }: any) {
   const { provider, account } = useAccount();
   const [inAmount, setInAmount] = useState('');
   const [outAmount, setOutAmount] = useState('');
@@ -132,13 +132,20 @@ export default function useEigenpie({ token0, token1, actionType }: any) {
       }
       addAction({
         type: 'Staking',
-        action: method,
+        action: actionType,
         amount: inAmount,
-        token: token0,
-        template: 'LRTS',
+        template: dapp.name,
+        token: inToken,
         status,
         transactionHash,
         add: 0,
+        extra_data: JSON.stringify({
+          action: actionType,
+          amount0: inAmount,
+          amount1: outAmount,
+          token0: inToken.symbol,
+          token1: outToken.symbol,
+        }),
       });
       setLoading(false);
     } catch (err: any) {
@@ -173,51 +180,6 @@ export default function useEigenpie({ token0, token1, actionType }: any) {
     }
   }, [account, token0]);
 
-  const handleWithdraw = useCallback(
-    async (asset: any) => {
-      setLoading(true);
-      let toastId = toast.loading({ title: 'Confirming...' });
-      const method = 'userWithdrawAsset';
-      try {
-        const Contract = new ethers.Contract(contracts[token0.chainId].withdrawManager, abi, provider?.getSigner());
-
-        const tx = await Contract[method]([asset]);
-
-        toast.dismiss(toastId);
-        toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId: token0.chainId });
-
-        const { status, transactionHash } = await tx.wait();
-        setLoading(false);
-        toast.dismiss(toastId);
-
-        if (status === 1) {
-          toast.success({ title: `${method} successfully!`, tx: transactionHash, chainId: token0.chainId });
-          updateBalance();
-        } else {
-          toast.fail({ title: `${method} faily!` });
-        }
-        addAction({
-          type: 'Staking',
-          action: method,
-          amount: inAmount,
-          token: token0,
-          template: 'LRTS',
-          status,
-          transactionHash,
-          add: 0,
-        });
-        setLoading(false);
-      } catch (err: any) {
-        toast.dismiss(toastId);
-        toast.fail({
-          title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `${method} faily!`,
-        });
-        setLoading(false);
-      }
-    },
-    [token0],
-  );
-
   const data = useMemo(
     () => ({
       availableAmount: tokenBalance || 0,
@@ -236,7 +198,6 @@ export default function useEigenpie({ token0, token1, actionType }: any) {
   useEffect(() => {
     if (!account) return;
     getStakedAmount();
-    getWithdrawlRequests();
   }, [account]);
 
   return {
@@ -253,6 +214,5 @@ export default function useEigenpie({ token0, token1, actionType }: any) {
     getWithdrawlRequests,
     handleAmountChange,
     handleStake,
-    handleWithdraw,
   };
 }

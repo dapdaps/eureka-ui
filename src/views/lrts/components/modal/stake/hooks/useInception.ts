@@ -20,7 +20,7 @@ const contracts: Record<number, any> = {
   },
 };
 
-export default function useInception({ token0, token1, actionType }: any) {
+export default function useInception({ token0, token1, actionType, dapp }: any) {
   const { provider, account } = useAccount();
   const [inAmount, setInAmount] = useState('');
   const [outAmount, setOutAmount] = useState('');
@@ -147,13 +147,20 @@ export default function useInception({ token0, token1, actionType }: any) {
       }
       addAction({
         type: 'Staking',
-        action: method,
+        action: actionType,
         amount: inAmount,
-        token: token0,
-        template: 'LRTS',
+        template: dapp.name,
+        token: inToken,
         status,
         transactionHash,
         add: 0,
+        extra_data: JSON.stringify({
+          action: actionType,
+          amount0: inAmount,
+          amount1: outAmount,
+          token0: inToken.symbol,
+          token1: outToken.symbol,
+        }),
       });
       setLoading(false);
     } catch (err: any) {

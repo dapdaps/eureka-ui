@@ -1,13 +1,11 @@
 import { ethereum } from '@/config/tokens/ethereum';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
-import { multicall } from '@/utils/multicall';
-import multicallAddresses from '@/config/contract/multicall';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import abi from '../../../../config/abi/karak';
+import abi from '../../../../config/abi/eigenpie';
 
 type Record = {
   amount: number;
@@ -21,27 +19,31 @@ type Record = {
 
 const contracts: { [key: number]: any } = {
   1: {
-    Vault: '0x46c64C1630f320b890d765E7C6F901574924b0C7',
-    DelegationSupervisor: '0xAfa904152E04aBFf56701223118Be2832A4449E0',
+    eigenStaking: '0x24db6717db1c75b9db6ea47164d8730b63875db7',
+    withdrawManager: '0x98083e22d12497c1516d3c49e7cc6cd2cd9dcba4',
   },
 };
 
 const tokens: { [key: string]: any } = {
-  [ethereum.kmETH.address]: {
+  [ethereum.stETH.address]: {
+    from: ethereum.mstETH,
+    to: ethereum.stETH,
+  },
+  [ethereum.mETH.address]: {
+    from: ethereum.mmETH,
     to: ethereum.mETH,
-    from: ethereum.kmETH,
   },
-  [ethereum.ksfrxETH.address]: {
+  [ethereum.sfrxETH.address]: {
+    from: ethereum.msfrxETH,
     to: ethereum.sfrxETH,
-    from: ethereum.ksfrxETH,
   },
-  [ethereum.krETH.address]: {
+  [ethereum.rETH.address]: {
+    from: ethereum.mrETH,
     to: ethereum.rETH,
-    from: ethereum.krETH,
   },
 };
 
-export default function useKarakRequests() {
+export default function useEigenpieRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -54,38 +56,38 @@ export default function useKarakRequests() {
     setLoading(true);
 
     try {
-      const Contract = new ethers.Contract(contracts[chainId].DelegationSupervisor, abi, provider?.getSigner());
-      const result = await Contract.fetchQueuedWithdrawals(account);
-      const calls = result.map((quest: any) => ({
-        address: contracts[chainId].Vault,
-        name: 'convertToAssets',
-        params: [quest.request.shares[0]],
-      }));
-      const multicallAddress = multicallAddresses[chainId];
-      const assetsResult = await multicall({
-        abi,
-        options: {},
-        calls,
-        multicallAddress,
-        provider,
+      const Contract = new ethers.Contract(contracts[chainId].withdrawManager, abi, provider?.getSigner());
+      const result = await Contract.getUserQueuedWithdraw(account, Object.keys(tokens));
+      if (!result) throw Error('');
+
+      const _list: any = [];
+
+      Object.values(tokens).forEach((token: any, i: number) => {
+        const claimableAmount = result.claimableAmounts[i];
+        const queuedAmount = result.queuedAmounts[i];
+        if (claimableAmount.gt(0)) {
+          _list.push({
+            amount: Big(claimableAmount).div(1e18).toFixed(3),
+            token0: tokens[token].from,
+            token1: tokens[token].to,
+            status: 'Claimable',
+            data: {
+              asset: token,
+            },
+          });
+        }
+        if (queuedAmount.gt(0)) {
+          _list.push({
+            amount: Big(queuedAmount).div(1e18).toFixed(3),
+            token0: tokens[token].from,
+            token1: tokens[token].to,
+            status: 'In Progress',
+            data: {
+              asset: token,
+            },
+          });
+        }
       });
-
-      if (!assetsResult) throw Error('');
-
-      const _list = assetsResult.map((asset: any, i: number) => {
-        const request = result[i];
-        const token0Address = request.request[0][0].toLowerCase();
-        const startTime = Number(request.start) * 1000;
-        return {
-          amount: Big(asset).div(1e18).toFixed(3),
-          startTime,
-          token0: tokens[token0Address].from,
-          token1: tokens[token0Address].to,
-          status: startTime + 604800000 > Date.now() ? 'In Progress' : 'Claimable',
-          data: request,
-        };
-      });
-
       setRequests(_list);
 
       setLoading(false);
@@ -102,10 +104,9 @@ export default function useKarakRequests() {
       setClaiming(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
-        const signer = provider?.getSigner(account);
-        const Contract = new ethers.Contract(contracts[chainId].DelegationSupervisor, abi, signer);
-        const tx = await Contract.finishWithdraw([record.data]);
+        const Contract = new ethers.Contract(contracts[chainId].withdrawManager, abi, provider?.getSigner());
 
+        const tx = await Contract.userWithdrawAsset([record.data.asset]);
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
 
@@ -144,6 +145,10 @@ export default function useKarakRequests() {
     },
     [account],
   );
+
+  useEffect(() => {
+    queryRequests();
+  }, []);
 
   return {
     requests,
