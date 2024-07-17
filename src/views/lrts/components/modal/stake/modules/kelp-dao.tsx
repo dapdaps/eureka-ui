@@ -261,7 +261,8 @@ const SECOND_TOKEN_ABI = [{
 }]
 
 const KelpDao = function (props: any) {
-  const { actionType, handleChangeActionType, setShow, token0, token1 } = props
+  const { box, gem, dapp, actionType, handleChangeActionType, setShow, token0, token1 } = props
+  console.log('=actionType111111111=======', actionType)
   const toast = useToast()
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -424,6 +425,9 @@ const KelpDao = function (props: any) {
   return (
     <BaseComponent
       componentProps={{
+        box,
+        gem,
+        dapp,
         data,
         setShow,
         inAmount,
