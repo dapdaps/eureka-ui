@@ -155,7 +155,7 @@ export default function useRenzo({ token0, token1, actionType }: any) {
       }
       addAction({
         type: 'Staking',
-        action: method,
+        action: actionType,
         amount: inAmount,
         token: token0,
         template: 'LRTS',

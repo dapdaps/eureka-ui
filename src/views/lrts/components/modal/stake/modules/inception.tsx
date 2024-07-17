@@ -3,7 +3,7 @@ import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Inception({ token0, token1, setShow }: any) {
+function Inception({ token0, token1, setShow, dapp }: any) {
   const [actionType, setActionType] = useState('stake');
   const {
     data,
@@ -20,6 +20,7 @@ function Inception({ token0, token1, setShow }: any) {
     token0,
     token1,
     actionType,
+    dapp,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -41,6 +42,7 @@ function Inception({ token0, token1, setShow }: any) {
         inToken,
         outToken,
         isInSufficient,
+        dapp,
         handleApprove: approve,
         handleAmountChange,
         handleStake,

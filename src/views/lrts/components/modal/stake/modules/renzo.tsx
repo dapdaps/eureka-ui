@@ -3,8 +3,9 @@ import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Renzo({ token0, token1, setShow }: any) {
+function Renzo({ token0, token1, dapp, setShow }: any) {
   const [actionType, setActionType] = useState('stake');
+
   const {
     data,
     inAmount,
@@ -20,6 +21,7 @@ function Renzo({ token0, token1, setShow }: any) {
     token0,
     token1,
     actionType,
+    dapp,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -41,6 +43,7 @@ function Renzo({ token0, token1, setShow }: any) {
         inToken,
         outToken,
         isInSufficient,
+        dapp,
         handleApprove: approve,
         handleAmountChange,
         handleStake,
