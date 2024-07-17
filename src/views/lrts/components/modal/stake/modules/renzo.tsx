@@ -1,9 +1,9 @@
 import useRenzo from '../hooks/useRenzo';
 import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
-function Renzo({ token0, token1, setShow, actionType, handleChangeActionType }: any) {
+function Renzo({ token0, token1, setShow, actionType, gem, handleChangeActionType }: any) {
   const {
     data,
     inAmount,
@@ -19,7 +19,7 @@ function Renzo({ token0, token1, setShow, actionType, handleChangeActionType }: 
     token0,
     token1,
     actionType,
-    dapp,
+    gem,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -41,11 +41,11 @@ function Renzo({ token0, token1, setShow, actionType, handleChangeActionType }: 
         inToken,
         outToken,
         isInSufficient,
-        dapp,
+        dapp: gem,
         handleApprove: approve,
         handleAmountChange,
         handleStake,
-        handleChangeActionType
+        handleChangeActionType,
       }}
     />
   );

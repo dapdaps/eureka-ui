@@ -32,20 +32,21 @@ const ComponentMapping: any = {
 };
 const Index = function (props: any) {
   const { addAction } = useAddAction('lrts');
-  const { dapp, setShow, token0, token1, chainId } = props;
+  const { dapp, gem, setShow, token0, token1, chainId } = props;
   const VmComponent = ComponentMapping[dapp?.name];
 
-  
   const [actionType, setActionType] = useState('stake');
-  const handleChangeActionType = function (_actionType) {
-    setActionType(_actionType)
-  }
+  const handleChangeActionType = function (_actionType: any) {
+    setActionType(_actionType);
+  };
+
   return (
     <StyledModal>
       <StyledOverlay />
       <StyledModalBody>
         <VmComponent
           dapp={dapp}
+          gem={gem}
           addAction={addAction}
           setShow={setShow}
           token0={token0}
