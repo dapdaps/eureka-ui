@@ -14,6 +14,7 @@ const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActi
     isInSufficient,
     handleApprove,
     handleAmountChange,
+    handleMax,
     handleStake,
     handleAddMetaMask,
   } = useMantle({
@@ -44,6 +45,7 @@ const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActi
         isInSufficient,
         handleApprove,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleAddMetaMask,
         handleChangeActionType,

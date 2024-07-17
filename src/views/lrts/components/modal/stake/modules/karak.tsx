@@ -14,12 +14,14 @@ function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionT
     isLoading,
     spender,
     handleAmountChange,
+    handleMax,
     handleStake,
   } = useKarak({
     token0,
     token1,
     actionType,
     dapp: gem,
+    actionType
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -47,6 +49,7 @@ function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionT
         dapp: gem,
         handleApprove: approve,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleChangeActionType,
       }}

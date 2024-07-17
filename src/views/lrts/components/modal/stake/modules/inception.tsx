@@ -14,12 +14,14 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeAct
     isLoading,
     spender,
     handleAmountChange,
+    handleMax,
     handleStake,
   } = useInception({
     token0,
     token1,
     actionType,
     dapp: gem,
+    actionType
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -47,6 +49,7 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeAct
         dapp: gem,
         handleApprove: approve,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleChangeActionType,
       }}

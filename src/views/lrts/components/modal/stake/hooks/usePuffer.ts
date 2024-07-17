@@ -87,6 +87,9 @@ export default function usePuffer({ token0, token1, actionType, dapp }: any) {
     setStakedAmount(Big(result).div(1e18).toFixed(4));
   }, [account]);
 
+  const handleMax = function () {
+    setInAmount(data?.availableAmount ?? 0)
+  }
   const handleStake = async () => {
     let method = '';
     if (token0.isNative) {
@@ -225,6 +228,7 @@ export default function usePuffer({ token0, token1, actionType, dapp }: any) {
     outToken,
     isInSufficient,
     handleAmountChange,
+    handleMax,
     handleStake,
   };
 }

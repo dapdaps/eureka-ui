@@ -14,6 +14,7 @@ function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
     isLoading,
     spender,
     handleAmountChange,
+    handleMax,
     handleStake,
   } = useRenzo({
     token0,
@@ -47,6 +48,7 @@ function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
         dapp: gem,
         handleApprove: approve,
         handleAmountChange,
+        handleMax,
         handleStake,
         handleChangeActionType,
       }}
