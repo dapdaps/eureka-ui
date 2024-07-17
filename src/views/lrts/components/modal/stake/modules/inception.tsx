@@ -1,9 +1,12 @@
 import useInception from '../hooks/useInception';
 import useApprove from '@/hooks/useApprove';
+import useAccount from '@/hooks/useAccount';
 import BaseComponent from '../components/base-component';
-import { memo, useState } from 'react';
+import { memo, useEffect } from 'react';
+import useInceptionRequests from '../hooks/useInceptionRequests';
 
 function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow }: any) {
+  const { chainId } = useAccount();
   const {
     data,
     inAmount,
@@ -21,18 +24,22 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeAct
     token1,
     actionType,
     dapp: gem,
-    actionType
   });
+  const { requests, loading: requestsLoading, queryRequests, claim } = useInceptionRequests();
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
     token: inToken.isNative ? null : inToken,
     spender: spender,
   });
+  useEffect(() => {
+    queryRequests(token0.address);
+  }, [chainId, token0]);
+
   return (
     <BaseComponent
       componentProps={{
-        box, 
-        gem, 
+        box,
+        gem,
         dapp,
         data,
         inAmount,
@@ -46,7 +53,10 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeAct
         inToken,
         outToken,
         isInSufficient,
-        dapp: gem,
+        requests,
+        requestsLoading,
+        queryRequests,
+        claim,
         handleApprove: approve,
         handleAmountChange,
         handleMax,

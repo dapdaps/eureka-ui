@@ -338,6 +338,18 @@ export const StyledRecordText = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+
+  &.click {
+    cursor: pointer;
+    text-decoration: underline;
+    transition: 0.5s;
+    &:hover {
+      opacity: 0.8;
+    }
+    &:active {
+      opacity: 0.6;
+    }
+  }
 `;
 export const StyledActionTypeTabContainer = styled.div`
   padding-top: 34px;
@@ -384,10 +396,10 @@ export const StyledLrtDapp = styled.div`
   top: 0;
   transform: translate(-50%, -75%);
   width: 148px;
-`
+`;
 export const StyledLrtBgImage = styled.img`
   width: 100%;
-`
+`;
 export const StyledLoading = styled.div`
   position: absolute;
   left: 50%;
@@ -395,4 +407,10 @@ export const StyledLoading = styled.div`
   transform: translate(-50%, -50%);
   font-size: 18px;
   color: #fff;
+`;
+
+export const StyledLoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;

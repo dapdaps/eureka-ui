@@ -1,9 +1,12 @@
 import useEigenpie from '../hooks/useEigenpie';
 import useApprove from '@/hooks/useApprove';
+import useAccount from '@/hooks/useAccount';
 import BaseComponent from '../components/base-component';
-import { memo, useState } from 'react';
+import { memo, useEffect } from 'react';
+import useEigenpieRequests from '../hooks/useEigenpieRequests';
 
 function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow }: any) {
+  const { chainId } = useAccount();
   const {
     data,
     inAmount,
@@ -20,19 +23,24 @@ function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleChangeActi
     token0,
     token1,
     actionType,
-    gem,
-    actionType
+    dapp: gem,
   });
+  const { requests, loading: requestsLoading, queryRequests, claim } = useEigenpieRequests();
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
     token: inToken,
     spender: spender,
   });
+
+  useEffect(() => {
+    queryRequests(token0.address);
+  }, [chainId, token0]);
+
   return (
     <BaseComponent
       componentProps={{
-        box, 
-        gem, 
+        box,
+        gem,
         dapp,
         data,
         inAmount,
@@ -46,7 +54,10 @@ function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleChangeActi
         inToken,
         outToken,
         isInSufficient,
-        dapp: gem,
+        requests,
+        requestsLoading,
+        queryRequests,
+        claim,
         handleApprove: approve,
         handleAmountChange,
         handleMax,

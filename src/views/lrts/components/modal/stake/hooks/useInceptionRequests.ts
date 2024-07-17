@@ -43,7 +43,6 @@ export default function useInceptionRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
-  const [claiming, setClaiming] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
@@ -125,7 +124,7 @@ export default function useInceptionRequests() {
   );
 
   const claim = useCallback(
-    async (record: any) => {
+    async (record: any, onLoading: Function) => {
       if (!chainId || !contracts[chainId]) return;
       let method = '';
       let Contract = null;
@@ -136,7 +135,7 @@ export default function useInceptionRequests() {
         method = 'redeem';
         Contract = new ethers.Contract(contracts[chainId].vault[record.token1.symbol], abi, provider?.getSigner());
       }
-      setClaiming(true);
+      onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
         const tx = await Contract[method]([account]);
@@ -145,7 +144,7 @@ export default function useInceptionRequests() {
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
 
         const { status, transactionHash } = await tx.wait();
-        setLoading(false);
+
         toast.dismiss(toastId);
 
         if (status === 1) {
@@ -167,14 +166,14 @@ export default function useInceptionRequests() {
             token1: record.token1.symbol,
           }),
         });
-        setClaiming(false);
+        onLoading(false);
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);
         toast.fail({
           title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
         });
-        setClaiming(false);
+        onLoading(false);
       }
     },
     [account],
@@ -183,7 +182,6 @@ export default function useInceptionRequests() {
   return {
     requests,
     loading,
-    claiming,
     queryRequests,
     claim,
   };

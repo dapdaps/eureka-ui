@@ -47,7 +47,6 @@ export default function useEigenpieRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
-  const [claiming, setClaiming] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
@@ -58,17 +57,18 @@ export default function useEigenpieRequests() {
 
       try {
         const Contract = new ethers.Contract(contracts[chainId].withdrawManager, abi, provider?.getSigner());
-        const result = await Contract.getUserQueuedWithdraw(account, asset ? [asset] : Object.keys(tokens));
+        const _tokens = asset ? [asset] : Object.keys(tokens);
+        const result = await Contract.getUserQueuedWithdraw(account, _tokens);
         if (!result) throw Error('');
 
         const _list: any = [];
 
-        Object.values(tokens).forEach((token: any, i: number) => {
+        _tokens.forEach((token: any, i: number) => {
           const claimableAmount = result.claimableAmounts[i];
           const queuedAmount = result.queuedAmounts[i];
           if (claimableAmount && claimableAmount.gt(0)) {
             _list.push({
-              amount: Big(claimableAmount).div(1e18).toFixed(3),
+              amount: Big(claimableAmount).div(1e18).toString(),
               token0: tokens[token].from,
               token1: tokens[token].to,
               status: 'Claimable',
@@ -79,7 +79,7 @@ export default function useEigenpieRequests() {
           }
           if (queuedAmount && queuedAmount.gt(0)) {
             _list.push({
-              amount: Big(queuedAmount).div(1e18).toFixed(3),
+              amount: Big(queuedAmount).div(1e18).toString(),
               token0: tokens[token].from,
               token1: tokens[token].to,
               status: 'In Progress',
@@ -102,9 +102,9 @@ export default function useEigenpieRequests() {
   );
 
   const claim = useCallback(
-    async (record: any) => {
+    async (record: any, onLoading: Function) => {
       if (!chainId || !contracts[chainId]) return;
-      setClaiming(true);
+      onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
         const Contract = new ethers.Contract(contracts[chainId].withdrawManager, abi, provider?.getSigner());
@@ -114,7 +114,6 @@ export default function useEigenpieRequests() {
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
 
         const { status, transactionHash } = await tx.wait();
-        setLoading(false);
         toast.dismiss(toastId);
 
         if (status === 1) {
@@ -136,14 +135,14 @@ export default function useEigenpieRequests() {
             token1: record.token1.symbol,
           }),
         });
-        setClaiming(false);
+        onLoading(false);
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);
         toast.fail({
           title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
         });
-        setClaiming(false);
+        onLoading(false);
       }
     },
     [account],
@@ -152,7 +151,6 @@ export default function useEigenpieRequests() {
   return {
     requests,
     loading,
-    claiming,
     queryRequests,
     claim,
   };

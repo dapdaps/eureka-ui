@@ -9,13 +9,8 @@ import Puffer from './modules/puffer';
 import RestakeFinance from './modules/restake-finance';
 import RocketPool from './modules/rocket-pool';
 import Renzo from './modules/renzo';
-// const Lido = lazy(() => import('./modules/lido'));
-// const Mantle = lazy(() => import('./modules/mantle'));
-// const RocketPool = lazy(() => import('./modules/rocket-pool'));
-// const KelpDao = lazy(() => import('./modules/kelp-dao'))
 import useAddAction from '@/hooks/useAddAction';
-import { StyledModal, StyledModalBody, StyledOverlay } from './styles';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 
 const ComponentMapping: any = {
@@ -23,7 +18,7 @@ const ComponentMapping: any = {
   Mantle,
   RocketPool,
   KelpDao,
-  Karak,
+  KaraK: Karak,
   Eigenpie,
   RestakeFinance,
   EtherFi,
@@ -40,8 +35,9 @@ const Index = function (props: any) {
     setActionType(_actionType);
   };
 
-  console.log('===gem', gem)
-  console.log('===dapp', dapp)
+  useEffect(() => {
+    setActionType(gem ? 'restake' : 'stake');
+  }, [gem]);
   return (
     <Modal
       display={show}
@@ -51,7 +47,7 @@ const Index = function (props: any) {
         border: '1px solid #3f3f3f',
         background: '#2f2f2f',
         borderRadius: '4px',
-        overflow: 'unset'
+        overflow: 'unset',
       }}
       content={
         <VmComponent
@@ -68,6 +64,6 @@ const Index = function (props: any) {
         />
       }
     />
-  )
+  );
 };
 export default Index;
