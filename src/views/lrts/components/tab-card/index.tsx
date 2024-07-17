@@ -174,10 +174,10 @@ const ItemLink = styled(Link)`
 interface IProps {
   lstIndex: number;
   curLrt: any;
-  handleStake: (actionType: any) => void;
+  handleShowModal: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleStake }) => {
+const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [list, setList] = useState<any>();
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
@@ -224,10 +224,6 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleStake }) => {
     transition: {
       duration: 0.2,
     },
-  };
-
-  const handleClick = () => {
-    handleStake(tokenType);
   };
 
   useEffect(() => {
@@ -299,10 +295,22 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleStake }) => {
             </div>
           </div>
           <div className="btns">
-            <PolygonBtn onClick={handleClick} style={{ width: 315 }}>
+            <PolygonBtn
+              onClick={() => {
+                handleShowModal(tokenType);
+              }}
+              style={{ width: 315 }}
+            >
               {tokenType === ActionType.STAKE ? 'STAKE / UNSTAKE' : 'RESTAKE / UNSTAKE'}
             </PolygonBtn>
-            <PolygonBtn style={{ width: 175 }}>SWAP</PolygonBtn>
+            <PolygonBtn
+              style={{ width: 175 }}
+              onClick={() => {
+                handleShowModal('swap');
+              }}
+            >
+              SWAP
+            </PolygonBtn>
           </div>
         </div>
         <div className="right">

@@ -1,11 +1,10 @@
 import { useCallback } from 'react';
-
 import { useChainsStore } from '@/stores/chains';
 import { useUUIdStore } from '@/stores/uuid';
 import { post } from '@/utils/http';
 import { getSignature } from '@/utils/signature';
-
 import useAccount from './useAccount';
+import configChains from '@/config/chains';
 
 export default function useAddAction(source: string) {
   const { account, chainId } = useAccount();
@@ -15,8 +14,7 @@ export default function useAddAction(source: string) {
     (data: any) => {
       let params: any = {};
       if (!chainId || !account) return;
-      const currentChain = chains.find((chain: any) => chain.chain_id === chainId);
-      console.info('addAction data: ', data);
+      const currentChain = chains.find((chain: any) => chain.chain_id === chainId) || configChains[chainId];
 
       if (data.type === 'Swap' && data.template !== 'launchpad') {
         params = {
@@ -84,8 +82,9 @@ export default function useAddAction(source: string) {
         if (data.extra_data?.lending_actions) {
           params.extra_data = JSON.stringify(data.extra_data);
         } else {
-          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${data.template
-            }`;
+          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${
+            data.template
+          }`;
           params.action_tokens = JSON.stringify([`${data.token.symbol}`]);
           params.action_amount = data.amount;
         }
@@ -143,7 +142,6 @@ export default function useAddAction(source: string) {
         };
       }
 
-
       if (data.template === 'launchpad' || data.template === 'Launchpad') {
         params = {
           action_title: `Launchpad ${data?.token0.symbol + (data?.token1.symbol ? '-' + data.token1.symbol : '')} on ${data.template}`,
@@ -167,12 +165,12 @@ export default function useAddAction(source: string) {
             shareTokenPrice: data.shareTokenPrice,
             pool: data.pool,
           }),
-        }
+        };
       }
 
-
       params.ss = getSignature(
-        `template=${data.template}&action_type=${data.type}&tx_hash=${data.transactionHash
+        `template=${data.template}&action_type=${data.type}&tx_hash=${
+          data.transactionHash
         }&chain_id=${chainId}&time=${Math.ceil(Date.now() / 1000)}`,
       );
       params.source = source;

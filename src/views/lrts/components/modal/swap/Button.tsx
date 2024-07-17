@@ -13,7 +13,7 @@ const BaseButton = ({ children, onClick }: any) => {
   );
 };
 
-export default function Button({ errorTips, loading, chainId, onClick }: any) {
+export default function Button({ errorTips, loading, chainId, approved, onClick, onApprove }: any) {
   const { account, chainId: currentChainId } = useAccount();
 
   if (!account || !chainId) {
@@ -37,8 +37,14 @@ export default function Button({ errorTips, loading, chainId, onClick }: any) {
       </BaseButton>
     );
   }
+
   if (errorTips) {
     return <BaseButton>{errorTips}</BaseButton>;
   }
+
+  if (!approved) {
+    return <BaseButton onClick={onApprove}>Approve</BaseButton>;
+  }
+
   return <BaseButton onClick={onClick}>Swap</BaseButton>;
 }

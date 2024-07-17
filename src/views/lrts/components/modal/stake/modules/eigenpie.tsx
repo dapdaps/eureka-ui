@@ -1,9 +1,10 @@
 import useEigenpie from '../hooks/useEigenpie';
 import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 
-function Eigenpie({ token0, token1, actionType, setShow }: any) {
+function Eigenpie({ token0, token1, setShow }: any) {
+  const [actionType, setActionType] = useState('stake');
   const {
     data,
     inAmount,
@@ -43,6 +44,9 @@ function Eigenpie({ token0, token1, actionType, setShow }: any) {
         handleApprove: approve,
         handleAmountChange,
         handleStake,
+        handleChangeActionType: (actionType: any) => {
+          setActionType(actionType);
+        },
       }}
     />
   );
