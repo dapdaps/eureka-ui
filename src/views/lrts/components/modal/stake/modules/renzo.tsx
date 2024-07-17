@@ -19,6 +19,7 @@ function Renzo({ token0, token1, setShow, actionType, handleChangeActionType }: 
     token0,
     token1,
     actionType,
+    dapp,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -40,6 +41,7 @@ function Renzo({ token0, token1, setShow, actionType, handleChangeActionType }: 
         inToken,
         outToken,
         isInSufficient,
+        dapp,
         handleApprove: approve,
         handleAmountChange,
         handleStake,

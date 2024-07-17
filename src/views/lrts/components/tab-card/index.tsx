@@ -174,10 +174,11 @@ const ItemLink = styled(Link)`
 interface IProps {
   lstIndex: number;
   curLrt: any;
+  onTabChange: (symbol: any) => void;
   handleShowModal: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal }) => {
+const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [list, setList] = useState<any>();
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
@@ -211,8 +212,9 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal }) => {
     setActiveIndex(_index < 0 ? 0 : _index);
   }, [list, curLrt]);
 
-  const onChangeTab = (index: number) => {
+  const onChange = (index: number, symbol: string) => {
     setActiveIndex(index);
+    onTabChange(symbol);
   };
   const anim = {
     initial: { y: 50, opacity: 0 },
@@ -244,7 +246,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal }) => {
               <div
                 key={index}
                 className={`item ${activeIndex === index ? 'active' : ''}`}
-                onClick={(e: any) => onChangeTab(index)}
+                onClick={(e: any) => onChange(index, item.symbol)}
               >
                 <div className="text-right">{parseFloat(Number(item.balance || 0).toFixed(2))}</div>
                 <Image src={item.logo} width={40} height={40} alt={item.symbol} />

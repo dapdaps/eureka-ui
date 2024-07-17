@@ -19,6 +19,7 @@ function Karak({ token0, token1, actionType, handleChangeActionType, setShow }: 
     token0,
     token1,
     actionType,
+    dapp,
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
@@ -40,6 +41,7 @@ function Karak({ token0, token1, actionType, handleChangeActionType, setShow }: 
         inToken,
         outToken,
         isInSufficient,
+        dapp,
         handleApprove: approve,
         handleAmountChange,
         handleStake,
