@@ -27,7 +27,7 @@ const Portfolio: FC<IProps> = (props) => {
   const prices = usePriceStore((store) => store.price);
   const lrtsData = useLrtDataStore((store: any) => store.data);
   const { completed } = useLrtsList();
-  console.log('prices:', prices);
+  // console.log('prices:', prices);
   const lstAssets = lrtsData.map((item: any, index: number) => ({
     ...item.token,
     assets: item.token.symbol,
@@ -47,16 +47,6 @@ const Portfolio: FC<IProps> = (props) => {
       apr: item.apr,
       key: index,
     }));
-
-  // const lstAssets = lsts.map((item: any, index: number) => ({
-  //   ...item,
-  //   assets: item.symbol,
-  //   chian: item.chianId,
-  //   price: prices[item.symbol] || 0,
-  //   key: index,
-  // }));
-  console.log(2222, lrtsData);
-  console.log(3333, lstAssets);
 
   const router = useRouter();
   const handleBridge = (toToken: string) => {
