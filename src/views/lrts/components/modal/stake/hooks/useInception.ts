@@ -8,12 +8,12 @@ import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
 import abi from '../../../../config/abi/inception';
 
-const contracts: Record<number, any> = {
+export const contracts: Record<number, any> = {
   1: {
     RestakingPool: '0x46199cAa0e453971cedf97f926368d9E5415831a',
     vault: {
       stETH: '0x814CC6B8fd2555845541FB843f37418b05977d8d',
-      mETH: '0xeCf3672A6d2147E2A77f07069Fb48d8Cf6F6Fbf9',
+      mETH: '0xd0ee89d82183D7Ddaef14C6b4fC0AA742F426355',
       sfrxETH: '0x295234B7E370a5Db2D2447aCA83bc7448f151161',
       rETH: '0x1Aa53BC4Beb82aDf7f5EDEE9e3bBF3434aD59F12',
     },
@@ -199,56 +199,6 @@ export default function useInception({ token0, token1, actionType, dapp }: any) 
     }
   }, [account, token0]);
 
-  const handleWithdraw = useCallback(async () => {
-    let method = '';
-    let Contract = null;
-    if (token0.isNative) {
-      method = 'claimUnstake';
-      Contract = new ethers.Contract(contracts[token0.chainId].RestakingPool, abi, provider?.getSigner());
-    } else {
-      method = 'redeem';
-      Contract = new ethers.Contract(contracts[token0.chainId].vault[token0.symbol], abi, provider?.getSigner());
-    }
-    if (!Contract) return;
-    setLoading(true);
-    let toastId = toast.loading({ title: 'Confirming...' });
-
-    try {
-      const tx = await Contract[method]([account]);
-
-      toast.dismiss(toastId);
-      toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId: token0.chainId });
-
-      const { status, transactionHash } = await tx.wait();
-      setLoading(false);
-      toast.dismiss(toastId);
-
-      if (status === 1) {
-        toast.success({ title: `${method} successfully!`, tx: transactionHash, chainId: token0.chainId });
-        updateBalance();
-      } else {
-        toast.fail({ title: `${method} faily!` });
-      }
-      addAction({
-        type: 'Staking',
-        action: method,
-        amount: inAmount,
-        token: token0,
-        template: 'LRTS',
-        status,
-        transactionHash,
-        add: 0,
-      });
-      setLoading(false);
-    } catch (err: any) {
-      toast.dismiss(toastId);
-      toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `${method} faily!`,
-      });
-      setLoading(false);
-    }
-  }, [token0]);
-
   const data = useMemo(
     () => ({
       availableAmount: tokenBalance || 0,
@@ -279,6 +229,5 @@ export default function useInception({ token0, token1, actionType, dapp }: any) 
     getWithdrawlRequests,
     handleAmountChange,
     handleStake,
-    handleWithdraw,
   };
 }

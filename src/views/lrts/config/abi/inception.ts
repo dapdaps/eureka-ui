@@ -25,23 +25,6 @@ export default [
     type: 'function',
   },
   {
-    inputs: [{ internalType: 'address', name: 'recipient', type: 'address' }],
-    name: 'getUnstakesOf',
-    outputs: [
-      {
-        components: [
-          { internalType: 'address', name: 'recipient', type: 'address' },
-          { internalType: 'uint256', name: 'amount', type: 'uint256' },
-        ],
-        internalType: 'struct IRestakingPool.Unstake[]',
-        name: 'unstakes',
-        type: 'tuple[]',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       { internalType: 'uint256', name: 'amount', type: 'uint256' },
       { internalType: 'address', name: 'receiver', type: 'address' },
@@ -70,8 +53,18 @@ export default [
   },
   {
     inputs: [{ internalType: 'address', name: 'claimer', type: 'address' }],
-    name: 'claimableOf',
+    name: 'getPendingWithdrawalOf',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [{ internalType: 'address', name: 'claimer', type: 'address' }],
+    name: 'isAbleToRedeem',
+    outputs: [
+      { internalType: 'bool', name: 'able', type: 'bool' },
+      { internalType: 'uint256[]', name: '', type: 'uint256[]' },
+    ],
     stateMutability: 'view',
     type: 'function',
   },

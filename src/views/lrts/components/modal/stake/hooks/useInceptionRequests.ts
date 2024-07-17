@@ -3,9 +3,12 @@ import { useCallback, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
+import { multicall } from '@/utils/multicall';
+import multicallAddresses from '@/config/contract/multicall';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import abi from '../../../../config/abi/eigenpie';
+import abi from '../../../../config/abi/inception';
+import { contracts } from './useInception';
 
 type Record = {
   amount: number;
@@ -15,13 +18,6 @@ type Record = {
   startTime: string;
   status: 'In Progress' | 'Claimable';
   data: any;
-};
-
-const contracts: { [key: number]: any } = {
-  1: {
-    eigenStaking: '0x24db6717db1c75b9db6ea47164d8730b63875db7',
-    withdrawManager: '0x98083e22d12497c1516d3c49e7cc6cd2cd9dcba4',
-  },
 };
 
 const tokens: { [key: string]: any } = {
@@ -43,7 +39,7 @@ const tokens: { [key: string]: any } = {
   },
 };
 
-export default function useEigenpieRequests() {
+export default function useInceptionRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -57,20 +53,49 @@ export default function useEigenpieRequests() {
       setLoading(true);
 
       try {
-        const Contract = new ethers.Contract(contracts[chainId].withdrawManager, abi, provider?.getSigner());
-        const result = await Contract.getUserQueuedWithdraw(account, asset ? [asset] : Object.keys(tokens));
-        if (!result) throw Error('');
+        const multicallAddress = multicallAddresses[chainId];
+        const _tokens = asset ? [tokens[asset]] : Object.values(tokens);
+        const pendingCalls = _tokens.map((token: any) => {
+          return {
+            address: contracts[chainId].vault[token.to.symbol],
+            name: 'getPendingWithdrawalOf',
+            params: [account],
+          };
+        });
+
+        const pendingResult = await multicall({
+          abi,
+          options: {},
+          calls: pendingCalls,
+          multicallAddress,
+          provider,
+        });
+
+        const claimableCalls = _tokens.map((token: any) => ({
+          address: contracts[chainId].vault[token.to.symbol],
+          name: 'isAbleToRedeem',
+          params: [account],
+        }));
+        const claimableResult = await multicall({
+          abi,
+          options: {},
+          calls: claimableCalls,
+          multicallAddress,
+          provider,
+        });
+
+        if (!pendingResult && !claimableResult) throw Error('');
 
         const _list: any = [];
 
-        Object.values(tokens).forEach((token: any, i: number) => {
-          const claimableAmount = result.claimableAmounts[i];
-          const queuedAmount = result.queuedAmounts[i];
+        _tokens.forEach((token: any, i: number) => {
+          const claimableAmount = claimableResult[i]?.[1][0];
+          const queuedAmount = pendingResult[i]?.[0];
           if (claimableAmount && claimableAmount.gt(0)) {
             _list.push({
-              amount: Big(claimableAmount).div(1e18).toFixed(3),
-              token0: tokens[token].from,
-              token1: tokens[token].to,
+              amount: Big(claimableAmount).div(1e18).toString(),
+              token0: token.from,
+              token1: token.to,
               status: 'Claimable',
               data: {
                 asset: token,
@@ -79,16 +104,14 @@ export default function useEigenpieRequests() {
           }
           if (queuedAmount && queuedAmount.gt(0)) {
             _list.push({
-              amount: Big(queuedAmount).div(1e18).toFixed(3),
-              token0: tokens[token].from,
-              token1: tokens[token].to,
+              amount: Big(queuedAmount).div(1e18).toString(),
+              token0: token.from,
+              token1: token.to,
               status: 'In Progress',
-              data: {
-                asset: token,
-              },
             });
           }
         });
+
         setRequests(_list);
 
         setLoading(false);
@@ -104,12 +127,20 @@ export default function useEigenpieRequests() {
   const claim = useCallback(
     async (record: any) => {
       if (!chainId || !contracts[chainId]) return;
+      let method = '';
+      let Contract = null;
+      if (record.token0.isNative) {
+        method = 'claimUnstake';
+        Contract = new ethers.Contract(contracts[chainId].RestakingPool, abi, provider?.getSigner());
+      } else {
+        method = 'redeem';
+        Contract = new ethers.Contract(contracts[chainId].vault[record.token1.symbol], abi, provider?.getSigner());
+      }
       setClaiming(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
-        const Contract = new ethers.Contract(contracts[chainId].withdrawManager, abi, provider?.getSigner());
+        const tx = await Contract[method]([account]);
 
-        const tx = await Contract.userWithdrawAsset([record.data.asset]);
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
 
@@ -126,7 +157,7 @@ export default function useEigenpieRequests() {
           type: 'Staking',
           action: 'Claim',
           amount: record.amount,
-          template: 'Eigenpie',
+          template: 'Inception',
           status,
           transactionHash,
           add: 0,
