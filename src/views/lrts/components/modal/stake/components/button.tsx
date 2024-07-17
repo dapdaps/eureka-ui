@@ -7,6 +7,7 @@ import ConnectButton from '../../../connect-wallet';
 import SwitchNetwork from '../../../switch-network-button';
 
 export default function Button({
+  data,
   isInSufficient,
   isLoading,
   chainId,
@@ -33,7 +34,7 @@ export default function Button({
       />
     );
   }
-  if (isLoading) {
+  if (!data || isLoading) {
     return (
       <StyledStakeButton>
         <Loading />

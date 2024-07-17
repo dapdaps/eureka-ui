@@ -245,6 +245,7 @@ const BaseComponent = function (props: any) {
               />
             </svg>
             <Button
+              data={data}
               isInSufficient={isInSufficient}
               isLoading={approving || isLoading}
               chainId={inToken.chainId}
