@@ -47,6 +47,11 @@ const Home = () => {
   const handleClickGem = (lrt: any) => {
     setCurLrt(lrt);
   };
+  const onTabChange = (symbol: string) => {
+    const _curLrt = lrtsData[lstIndex].lrtTokens.find((item: any) => item.token.symbol === symbol);
+
+    setCurLrt(_curLrt);
+  };
 
   const handleShowModal = (_actionType: any) => {
     setActionType(_actionType);
@@ -98,20 +103,22 @@ const Home = () => {
         </Swiper>
       </Banner>
 
-      <Gems data={lrtsData[lstIndex].lrtTokens} onClick={handleClickGem} />
+      <Gems dataSource={lrtsData[lstIndex].lrtTokens} onGemClick={handleClickGem} />
 
-      <TabCard lstIndex={lstIndex} curLrt={curLrt} handleShowModal={handleShowModal} />
+      <TabCard lstIndex={lstIndex} curLrt={curLrt?.token} handleShowModal={handleShowModal} onTabChange={onTabChange} />
 
       {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
 
       {isShowStakeModal ? (
         <StakeModal
+          box={lrtsData[lstIndex].lstIcon}
+          gem={curLrt}
           dapp={{
             name: lrtsData[lstIndex].dapp.name,
             logo: lrtsData[lstIndex].dapp.logo,
           }}
           token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
-          token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt}
+          token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt?.token}
           chainId={chainId as number}
           setShow={setIsShowStakeModal}
         />
