@@ -55,7 +55,7 @@ export const StyledCloseIcon = styled.div`
   cursor: pointer;
 `
 export const StyledStakeContainer = styled.div`
-
+  position: relative;
 `
 export const StyledStakeTopContainer = styled.div`
   border-radius: 4px;
@@ -74,7 +74,7 @@ export const StyledStakeBottomContainer = styled.div`
 export const StyledBaseInfoContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 42px 40px 23px;
+  padding: 40px 40px 0;
 `
 export const StyledBaseInfo = styled.div`
   flex: 1;
@@ -145,7 +145,7 @@ export const StyledLine = styled.div`
   background: #3F3F3F;
 `
 export const StyledBottomContainer = styled.div`
-  padding: 30px 40px 0;
+  padding: 40px 40px 0;
 `
 export const StyledTipsContainer = styled.div`
   display: flex;
@@ -376,4 +376,18 @@ export const StyledActionTypeTab = styled.div`
       background-color: #FFF;
     }
   }
+`
+export const StyledDapLogo = styled.div`
+  position: absolute;
+  left: 50%;
+  top: -86px;
+  transform: translateX(-50%);
+`
+export const StyledLoading = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #FFF;
 `
