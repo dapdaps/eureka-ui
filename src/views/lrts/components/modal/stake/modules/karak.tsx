@@ -3,7 +3,7 @@ import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Karak({ token0, token1, actionType, gem, handleChangeActionType, setShow }: any) {
+function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow }: any) {
   const {
     data,
     inAmount,
@@ -29,6 +29,9 @@ function Karak({ token0, token1, actionType, gem, handleChangeActionType, setSho
   return (
     <BaseComponent
       componentProps={{
+        box, 
+        gem, 
+        dapp,
         data,
         inAmount,
         outAmount,

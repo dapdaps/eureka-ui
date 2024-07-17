@@ -33,14 +33,7 @@ const ComponentMapping: any = {
 const Index = function (props: any) {
   const { addAction } = useAddAction('lrts');
   const { dapp, gem, box, setShow, token0, token1, chainId } = props;
-  console.log('=gem?.dapp?.name', gem?.dapp?.name || dapp?.name)
   const VmComponent = ComponentMapping[gem?.dapp?.name || dapp?.name];
-
-  console.log('=dapp', dapp)
-  console.log('=token0', token0)
-  console.log('=token1', token1)
-  console.log('=gem', gem)
-  console.log('=box', box)
   const [actionType, setActionType] = useState(gem ? 'restake' : 'stake');
   const handleChangeActionType = function (_actionType: any) {
     setActionType(_actionType);

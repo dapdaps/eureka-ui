@@ -3,7 +3,7 @@ import useApprove from '@/hooks/useApprove';
 import BaseComponent from '../components/base-component';
 import { memo } from 'react';
 
-function Renzo({ token0, token1, setShow, actionType, gem, handleChangeActionType }: any) {
+function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType }: any) {
   const {
     data,
     inAmount,
@@ -29,6 +29,9 @@ function Renzo({ token0, token1, setShow, actionType, gem, handleChangeActionTyp
   return (
     <BaseComponent
       componentProps={{
+        box,
+        gem,
+        dapp,
         data,
         inAmount,
         outAmount,

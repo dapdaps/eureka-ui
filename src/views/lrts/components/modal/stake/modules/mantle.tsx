@@ -1,6 +1,6 @@
 import BaseComponent from "../components/base-component"
 import useMantle from "../hooks/useMantle"
-const Mantle = function ({ gem, dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId }: any) {
+const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId }: any) {
   const {
     data,
     inAmount,
@@ -27,6 +27,7 @@ const Mantle = function ({ gem, dapp, setShow, actionType, handleChangeActionTyp
   return (
     <BaseComponent
       componentProps={{
+        box,
         gem,
         dapp,
         data,
