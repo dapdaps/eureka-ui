@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import StakeList from '../components/stake-list';
 import {
   StyledActiveAndCompleted,
   StyledActiveAndCompletedButton,
@@ -19,9 +20,6 @@ import {
   StyledPlusTips,
   StyledReceive,
   StyledReceiveContainer,
-  StyledRecord,
-  StyledRecordList,
-  StyledRecordText,
   StyledSecondLine,
   StyledSecondTips,
   StyledStakeBottomContainer,
@@ -36,7 +34,6 @@ import {
   StyledActionTypeTabContainer,
   StyledActionTypeTab,
   StyledDapLogo,
-  StyledLoading,
   StyledLrtDapp,
   StyledLrtBgImage,
 } from '../styles';
@@ -55,7 +52,7 @@ const BaseComponent = function (props: any) {
     approved,
     approving,
     leastAmount,
-    actionType = 'stake',
+    actionType = gem ? 'restake' : 'stake',
     inToken,
     outToken,
     handleMax,
@@ -66,72 +63,109 @@ const BaseComponent = function (props: any) {
     handleStake,
     handleAddMetaMask,
     handleChangeActionType,
+    requests,
+    requestsLoading,
+    claiming,
+    queryRequests,
+    claim,
   } = props?.componentProps;
+
   const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
   return (
     <StyledStakeContainer>
-      {
-        gem?.dapp?.logo ? (
-          <StyledDapLogo src={gem?.dapp?.logo} />
-        ) : (
-          <StyledLrtDapp>
-            <StyledLrtBgImage src={box} />
-            <div style={{
+      {gem?.dapp?.logo ? (
+        <StyledDapLogo src={gem?.dapp?.logo} />
+      ) : (
+        <StyledLrtDapp>
+          <StyledLrtBgImage src={box} />
+          <div
+            style={{
               position: 'absolute',
               left: 0,
               top: 0,
               right: 0,
-              bottom: 0
-            }}>
-              <div style={{
+              bottom: 0,
+            }}
+          >
+            <div
+              style={{
                 paddingTop: 10,
                 fontSize: 14,
                 fontWeight: 600,
                 color: '#FFF',
                 fontFamily: 'Orbitron',
-                textAlign: 'center'
-              }}>{inToken?.symbol}</div>
-              <div style={{ paddingTop: 4, paddingRight: 8, display: 'flex', gap: 4, alignItems: 'center', justifyContent: 'flex-end' }}>
-                <img width={8} src={dapp?.logo} />
-                <div style={{
+                textAlign: 'center',
+              }}
+            >
+              {inToken?.symbol}
+            </div>
+            <div
+              style={{
+                paddingTop: 4,
+                paddingRight: 8,
+                display: 'flex',
+                gap: 4,
+                alignItems: 'center',
+                justifyContent: 'flex-end',
+              }}
+            >
+              <img width={8} src={dapp?.logo} />
+              <div
+                style={{
                   fontSize: 8,
                   color: '#FFF',
                   fontFamily: 'Orbitron',
-                }}>{dapp.name}</div>
+                }}
+              >
+                {dapp.name}
               </div>
-              <div style={{
+            </div>
+            <div
+              style={{
                 paddingTop: 20,
                 paddingRight: 8,
                 textAlign: 'right',
                 fontSize: 10,
                 color: 'rgba(255,255,255,0.5)',
                 fontFamily: 'Orbitron',
-                fontWeight: 700
-              }}>{dapp?.minApr} -</div>
-              <div style={{
+                fontWeight: 700,
+              }}
+            >
+              {dapp?.minApr} -
+            </div>
+            <div
+              style={{
                 display: 'flex',
                 alignItems: 'flex-end',
                 justifyContent: 'space-between',
                 paddingLeft: 8,
-                paddingRight: 8
-              }}>
-                <div style={{
+                paddingRight: 8,
+              }}
+            >
+              <div
+                style={{
                   fontSize: 8,
                   color: 'rgba(255,255,255,0.5)',
                   fontFamily: 'Orbitron',
-                  fontWeight: 700
-                }}>APR RANGE</div>
-                <div style={{
+                  fontWeight: 700,
+                }}
+              >
+                APR RANGE
+              </div>
+              <div
+                style={{
                   fontSize: 12,
                   color: '#FFF',
                   fontFamily: 'Orbitron',
-                  fontWeight: 700
-                }}>{dapp?.maxApr}</div>
+                  fontWeight: 700,
+                }}
+              >
+                {dapp?.maxApr}
               </div>
             </div>
-          </StyledLrtDapp>
-        )
-      }
+          </div>
+        </StyledLrtDapp>
+      )}
       <StyledStakeTopContainer
         style={actionType === 'unstake' ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
       >
@@ -274,13 +308,13 @@ const BaseComponent = function (props: any) {
               Unstake requests are processed in 7-10 days, subject to exit queue on Ethereum network and delays imposed
               by EigenLayer
             </StyledSecondTips>
-
-            <StyledRecordList>
-              <StyledRecord>
-                <StyledRecordText>0.023 rstETH</StyledRecordText>
-                <StyledRecordText>~ in 7 days</StyledRecordText>
-              </StyledRecord>
-            </StyledRecordList>
+            <StakeList
+              requests={requests}
+              requestsLoading={requestsLoading}
+              claiming={claiming}
+              queryRequests={queryRequests}
+              claim={claim}
+            />
           </StyledStakeBottomContainer>
         </>
       )}

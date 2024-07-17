@@ -1,9 +1,12 @@
 import useKarak from '../hooks/useKarak';
 import useApprove from '@/hooks/useApprove';
+import useAccount from '@/hooks/useAccount';
 import BaseComponent from '../components/base-component';
-import { memo, useState } from 'react';
+import { memo, useEffect } from 'react';
+import useKarakRequests from '../hooks/useKarakRequests';
 
 function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow }: any) {
+  const { chainId } = useAccount();
   const {
     data,
     inAmount,
@@ -21,18 +24,21 @@ function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionT
     token1,
     actionType,
     dapp: gem,
-    actionType
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,
     token: inToken,
     spender: spender,
   });
+  const { requests, loading: requestsLoading, queryRequests, claim } = useKarakRequests();
+  useEffect(() => {
+    queryRequests(token0.address);
+  }, [chainId, token0]);
   return (
     <BaseComponent
       componentProps={{
-        box, 
-        gem, 
+        box,
+        gem,
         dapp,
         data,
         inAmount,
@@ -46,7 +52,10 @@ function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionT
         inToken,
         outToken,
         isInSufficient,
-        dapp: gem,
+        requests,
+        requestsLoading,
+        queryRequests,
+        claim,
         handleApprove: approve,
         handleAmountChange,
         handleMax,

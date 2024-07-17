@@ -1,9 +1,12 @@
 import useRenzo from '../hooks/useRenzo';
 import useApprove from '@/hooks/useApprove';
+import useAccount from '@/hooks/useAccount';
 import BaseComponent from '../components/base-component';
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
+import useRenzoRequests from '../hooks/useRenzoRequests';
 
 function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType }: any) {
+  const { chainId } = useAccount();
   const {
     data,
     inAmount,
@@ -27,6 +30,10 @@ function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
     token: inToken,
     spender: spender,
   });
+  const { requests, loading: requestsLoading, queryRequests, claim } = useRenzoRequests();
+  useEffect(() => {
+    queryRequests();
+  }, [chainId]);
   return (
     <BaseComponent
       componentProps={{
@@ -45,7 +52,10 @@ function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
         inToken,
         outToken,
         isInSufficient,
-        dapp: gem,
+        requests,
+        requestsLoading,
+        queryRequests,
+        claim,
         handleApprove: approve,
         handleAmountChange,
         handleMax,

@@ -45,61 +45,63 @@ export default function useKarakRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
-  const [claiming, setClaiming] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
-  const queryRequests = useCallback(async () => {
-    if (!chainId || !contracts[chainId]) return;
-    setLoading(true);
+  const queryRequests = useCallback(
+    async (asset?: any) => {
+      if (!chainId || !contracts[chainId]) return;
+      setLoading(true);
 
-    try {
-      const Contract = new ethers.Contract(contracts[chainId].DelegationSupervisor, abi, provider?.getSigner());
-      const result = await Contract.fetchQueuedWithdrawals(account);
-      const calls = result.map((quest: any) => ({
-        address: contracts[chainId].Vault,
-        name: 'convertToAssets',
-        params: [quest.request.shares[0]],
-      }));
-      const multicallAddress = multicallAddresses[chainId];
-      const assetsResult = await multicall({
-        abi,
-        options: {},
-        calls,
-        multicallAddress,
-        provider,
-      });
+      try {
+        const Contract = new ethers.Contract(contracts[chainId].DelegationSupervisor, abi, provider?.getSigner());
+        const result = await Contract.fetchQueuedWithdrawals(account);
+        const calls = result.map((quest: any) => ({
+          address: contracts[chainId].Vault,
+          name: 'convertToAssets',
+          params: [quest.request.shares[0]],
+        }));
+        const multicallAddress = multicallAddresses[chainId];
+        const assetsResult = await multicall({
+          abi,
+          options: {},
+          calls,
+          multicallAddress,
+          provider,
+        });
 
-      if (!assetsResult) throw Error('');
+        if (!assetsResult) throw Error('');
 
-      const _list = assetsResult.map((asset: any, i: number) => {
-        const request = result[i];
-        const token0Address = request.request[0][0].toLowerCase();
-        const startTime = Number(request.start) * 1000;
-        return {
-          amount: Big(asset).div(1e18).toFixed(3),
-          startTime,
-          token0: tokens[token0Address].from,
-          token1: tokens[token0Address].to,
-          status: startTime + 604800000 > Date.now() ? 'In Progress' : 'Claimable',
-          data: request,
-        };
-      });
+        const _list = assetsResult.map((asset: any, i: number) => {
+          const request = result[i];
+          const token0Address = request.request[0][0].toLowerCase();
+          const startTime = Number(request.start) * 1000;
+          return {
+            amount: Big(asset).div(1e18).toString(),
+            startTime,
+            token0: tokens[token0Address].from,
+            token1: tokens[token0Address].to,
+            status: startTime + 604800000 > Date.now() ? 'In Progress' : 'Claimable',
+            data: request,
+          };
+        });
 
-      setRequests(_list);
+        setRequests(asset ? _list.filter((item: any) => item.token1.address === asset) : _list);
 
-      setLoading(false);
-    } catch (err) {
-      console.log('err', err);
-      setLoading(false);
-      setRequests([]);
-    }
-  }, [account, chainId]);
+        setLoading(false);
+      } catch (err) {
+        console.log('err', err);
+        setLoading(false);
+        setRequests([]);
+      }
+    },
+    [account, chainId],
+  );
 
   const claim = useCallback(
-    async (record: any) => {
+    async (record: any, onLoading: Function) => {
       if (!chainId || !contracts[chainId]) return;
-      setClaiming(true);
+      onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
         const signer = provider?.getSigner(account);
@@ -110,7 +112,7 @@ export default function useKarakRequests() {
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
 
         const { status, transactionHash } = await tx.wait();
-        setLoading(false);
+
         toast.dismiss(toastId);
 
         if (status === 1) {
@@ -132,14 +134,14 @@ export default function useKarakRequests() {
             token1: record.token1.symbol,
           }),
         });
-        setClaiming(false);
+        onLoading(false);
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);
         toast.fail({
           title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
         });
-        setClaiming(false);
+        onLoading(false);
       }
     },
     [account],
@@ -148,7 +150,6 @@ export default function useKarakRequests() {
   return {
     requests,
     loading,
-    claiming,
     queryRequests,
     claim,
   };

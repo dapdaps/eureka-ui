@@ -26,7 +26,6 @@ export default function useRenzoRequests() {
   const { provider, account, chainId } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
-  const [claiming, setClaiming] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
@@ -72,9 +71,9 @@ export default function useRenzoRequests() {
   }, [account, chainId]);
 
   const claim = useCallback(
-    async (record: any) => {
+    async (record: any, onLoading: Function) => {
       if (!chainId || !contracts[chainId]) return;
-      setClaiming(true);
+      onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
         const signer = provider?.getSigner(account);
@@ -85,7 +84,7 @@ export default function useRenzoRequests() {
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
 
         const { status, transactionHash } = await tx.wait();
-        setLoading(false);
+
         toast.dismiss(toastId);
 
         if (status === 1) {
@@ -107,14 +106,14 @@ export default function useRenzoRequests() {
             token1: record.token1.symbol,
           }),
         });
-        setClaiming(false);
+        onLoading(false);
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);
         toast.fail({
           title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
         });
-        setClaiming(false);
+        onLoading(false);
       }
     },
     [account, chainId],
@@ -123,7 +122,6 @@ export default function useRenzoRequests() {
   return {
     requests,
     loading,
-    claiming,
     queryRequests,
     claim,
   };
