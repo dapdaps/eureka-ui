@@ -30,19 +30,14 @@ export default function useInceptionRequests({ token0, token1 }: any) {
 
   const queryRequests = useCallback(
     async () => {
-      console.log('====1111====')
       if (!chainId) return;
       setLoading(true);
       try {
-
         const contract = new ethers.Contract(WITHDRAWAL_QUEUE, WITHDRAWAL_QUEUE_ABI, provider);
         const requests = await contract.getWithdrawalRequests(account)
         const statusList = await contract.getWithdrawalStatus(requests)
-
-        console.log('===requests', requests, '===status', status)
-        setRequests(requests.map((requestId, index) => {
+        setRequests(requests.map((requestId: any, index: number) => {
           const status = statusList[index]
-          console.log('=status', status)
           return {
             amount: ethers.utils.formatUnits(status?.amountOfStETH, 18),
             // startTime,
@@ -65,7 +60,7 @@ export default function useInceptionRequests({ token0, token1 }: any) {
   );
 
   const claim = useCallback(
-    async (record: any, onLoading: Function) => {
+    async (record: any, onLoading: any) => {
       if (!chainId) return;
       const contract = new ethers.Contract(WITHDRAWAL_QUEUE, WITHDRAWAL_QUEUE_ABI, provider?.getSigner())
       onLoading(true);
