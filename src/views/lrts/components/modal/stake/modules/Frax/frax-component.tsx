@@ -238,7 +238,7 @@ const FraxComponent = function (props: any) {
           )
         }
       </StyledStakeTopContainer>
-      {[ITab.UNSTAKE, ITab.REDEEM].includes(actionType) && (
+      {[ITab.REDEEM].includes(actionType) && (
         <>
           <StyledSecondLine src="/images/lrts/trapezium.png" />
           <StyledStakeBottomContainer>
