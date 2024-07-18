@@ -218,6 +218,22 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
     } finally {
       setIsLoading(false);
       toast?.dismiss(toastId);
+      addAction({
+        type: "Staking",
+        action: actionType,
+        token: [inToken.symbol, outToken.symbol],
+        amount: inAmount,
+        template: dapp.name,
+        status,
+        transactionHash,
+        chain_id: chainId,
+        extra_data: JSON.stringify({
+          fromTokenSymbol: inToken.symbol,
+          fromTokenAmount: inAmount,
+          toTokenSymol: outToken.symbol,
+          toTokenAmount: outAmount,
+        })
+      })
     }
   };
 

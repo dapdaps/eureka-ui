@@ -5,6 +5,7 @@ import abi from '@/views/lrts/config/abi/lido';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
 import { contracts } from './useInception';
+import { ethereum } from '@/config/tokens/ethereum';
 
 type Record = {
   amount: number;
@@ -21,12 +22,16 @@ const {
 } = abi
 const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
 
-export default function useInceptionRequests({ token0, token1 }: any) {
+export default function useInceptionRequests() {
+
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
+
+  const token0 = ethereum['eth']
+  const token1 = ethereum['stETH']
 
   const queryRequests = useCallback(
     async () => {

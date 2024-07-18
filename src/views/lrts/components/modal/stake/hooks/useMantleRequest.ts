@@ -5,6 +5,7 @@ import abi from '@/views/lrts/config/abi/lido';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
 import { contracts } from './useInception';
+import { ethereum } from '@/config/tokens/ethereum';
 
 type Record = {
   amount: number;
@@ -21,34 +22,37 @@ const {
 } = abi
 const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
 
-export default function useInceptionRequests({ token0, token1 }: any) {
+export default function useInceptionRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
+  const token0 = ethereum['eth']
+  const token1 = ethereum['mETH']
+
+
   const queryRequests = useCallback(
     async () => {
       if (!chainId) return;
       setLoading(true);
       try {
-        const contract = new ethers.Contract(WITHDRAWAL_QUEUE, WITHDRAWAL_QUEUE_ABI, provider);
-        const requests = await contract.getWithdrawalRequests(account)
-        const statusList = await contract.getWithdrawalStatus(requests)
-        setRequests(requests.map((requestId: any, index: number) => {
-          const status = statusList[index]
-          return {
-            amount: ethers.utils.formatUnits(status?.amountOfStETH, 18),
-            // startTime,
-            token0,
-            token1,
-            status: status.isFinalized && !status.isClaimed ? 'Claimable' : 'In Progress',
-            data: {
-              requestId
-            },
-          }
-        }));
+        const response = await fetch('https://lsd-indexer.mantle.xyz', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            query: "\n  query unclaimedRequests($address: String!) {\n    unstakeRequests(where: { requester: $address, isClaimed: false }) {\n      id\n      requestedAt\n      ethAmountWei\n      mEthLockedWei\n    }\n  }\n",
+            variables: {
+              address: account?.toLocaleLowerCase()
+            }
+          })
+        })
+        const result = await response.json()
+        console.log('===response', response, '===result', result)
+        setRequests([]);
         setLoading(false);
       } catch (err) {
         console.log('err', err);

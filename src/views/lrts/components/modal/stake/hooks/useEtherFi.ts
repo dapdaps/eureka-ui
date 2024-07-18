@@ -375,16 +375,17 @@ export default function useEtherFi({ dapp, token0, token1, addAction, actionType
         addAction({
           type: "Staking",
           action: actionType,
-          token0: inToken.symbol,
-          token1: outToken.symbol,
+          token: [inToken.symbol, outToken.symbol],
+          amount: inAmount,
           template: dapp.name,
           status,
           transactionHash,
           chain_id: chainId,
           extra_data: JSON.stringify({
-            action: actionType,
-            amount0: inAmount,
-            amount1: outAmount,
+            fromTokenSymbol: inToken.symbol,
+            fromTokenAmount: inAmount,
+            toTokenSymol: outToken.symbol,
+            toTokenAmount: outAmount,
           })
         })
       })
