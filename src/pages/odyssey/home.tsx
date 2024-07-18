@@ -1,13 +1,15 @@
 import { useRouter } from 'next/router';
-
 import { useDefaultLayout } from '@/hooks/useLayout';
-import CompassApp from '@/views/Compass/home';
-import OdysseyThruster from '@/views/OdysseyThruster';
-import OdysseyV2 from '@/views/OdysseyV2';
-import OdysseyV3 from '@/views/OdysseyV3';
-import OdysseyV4 from '@/views/OdysseyV4';
-import OdysseyV5 from '@/views/OdysseyV5';
-import OdysseyV8 from '@/views/OdysseyV8';
+import dynamic from 'next/dynamic';
+import Spinner from '@/components/Spinner';
+
+const CompassApp = dynamic(() => import('@/views/Compass/home'), { loading: () => <Spinner /> });
+const OdysseyThruster = dynamic(() => import('@/views/OdysseyThruster'), { loading: () => <Spinner /> });
+const OdysseyV2 = dynamic(() => import('@/views/OdysseyV2'), { loading: () => <Spinner /> });
+const OdysseyV3 = dynamic(() => import('@/views/OdysseyV3'), { loading: () => <Spinner /> });
+const OdysseyV4 = dynamic(() => import('@/views/OdysseyV4'), { loading: () => <Spinner /> });
+const OdysseyV5 = dynamic(() => import('@/views/OdysseyV5'), { loading: () => <Spinner /> });
+const OdysseyV8 = dynamic(() => import('@/views/OdysseyV8'), { loading: () => <Spinner /> });
 
 function Compass() {
   const router = useRouter();
