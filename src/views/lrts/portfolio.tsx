@@ -13,7 +13,7 @@ import { formatThousandsSeparator } from '@/utils/format-number';
 import { unifyNumber } from '@/utils/format-number';
 import useTokens from '@/views/lrts/hooks/useTokens';
 
-import { CustomTable, History, PolygonBtn, Tabs } from './components';
+import { CustomTable, History, PolygonBtn, Tabs, UnstakeTable } from './components';
 import AddTokenModal from './components/modal/add-token';
 import SwapModal from './components/modal/swap';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
@@ -65,6 +65,8 @@ const Portfolio: FC<IProps> = (props) => {
     key: index,
     apr: item.apr,
   }));
+  // .filter((item: any) => balances[item.address] > 0);
+
   const lrtAssets = lrtsData
     .map((item: any) => item.lrtTokens)
     .flat()
@@ -117,6 +119,7 @@ const Portfolio: FC<IProps> = (props) => {
           <div className="title">LST Assets</div>
           <CustomTable
             dataSource={lstAssets}
+            emptyTips="No LST assets found in your wallet..."
             columns={[
               {
                 title: 'Assets',
@@ -193,6 +196,7 @@ const Portfolio: FC<IProps> = (props) => {
           </div>
           <CustomTable
             dataSource={lrtAssets}
+            emptyTips="No LRT assets found in your wallet..."
             columns={[
               {
                 title: 'Assets',
@@ -267,7 +271,7 @@ const Portfolio: FC<IProps> = (props) => {
         </AssetTab>
       ),
     },
-    { label: TabType.Unstake, key: 'item-2', children: <History /> },
+    { label: TabType.Unstake, key: 'item-2', children: <UnstakeTable /> },
     {
       label: TabType.History,
       key: 'item-3',
@@ -345,7 +349,7 @@ const Portfolio: FC<IProps> = (props) => {
       </Assets>
       <Ad src="/images/lrts/ad.png" width={1200} height={103} alt="ad" />
       <Tabs items={items} />
-      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} />
+      {/* <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} /> */}
       <AddTokenModal show={showAddTokenModal} setShow={setShowAddTokenModal} token={addToken} />
     </Container>
   );

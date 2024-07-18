@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -242,6 +243,8 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
     }
   }, [lrtsData, activeIndex]);
 
+  console.log(1111, lrtsData[lstIndex], curLrt);
+
   return Array.isArray(list) ? (
     <TabWrap {...anim} ref={tabRef}>
       <TabHead>
@@ -305,18 +308,20 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
               onClick={() => {
                 handleShowModal(tokenType);
               }}
-              style={{ width: 315 }}
+              style={{ flexGrow: 1 }}
             >
               {tokenType === ActionType.STAKE ? 'STAKE / UNSTAKE' : 'RESTAKE / UNSTAKE'}
             </PolygonBtn>
-            <PolygonBtn
-              style={{ width: 175 }}
-              onClick={() => {
-                handleShowModal('swap');
-              }}
-            >
-              SWAP
-            </PolygonBtn>
+            {Big(balances[list?.[activeIndex]?.address] || 0).gt(0) ? (
+              <PolygonBtn
+                style={{ width: 175 }}
+                onClick={() => {
+                  handleShowModal('swap');
+                }}
+              >
+                SWAP
+              </PolygonBtn>
+            ) : null}
           </div>
         </div>
         <div className="right">

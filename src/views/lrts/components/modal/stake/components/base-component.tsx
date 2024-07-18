@@ -217,7 +217,7 @@ const BaseComponent = function (props: any) {
           <StyledBaseInfo style={{ alignItems: ['stake', 'restake'].includes(actionType) ? 'center' : 'flex-start' }}>
             <StyledFirstTips>APR</StyledFirstTips>
             <StyledBaseInfoValue style={{ color: '#A4E417' }}>
-              {Big(gem?.dapp?.apr ?? (0 || dapp?.apr) ?? 0).toFixed(2)}%
+              {Big(gem?.dapp?.apr || dapp?.apr).toFixed(2)}%
             </StyledBaseInfoValue>
           </StyledBaseInfo>
           <StyledBaseInfo>

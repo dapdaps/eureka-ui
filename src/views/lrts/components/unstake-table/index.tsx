@@ -12,7 +12,7 @@ interface IProps {
   onClick?: () => void;
 }
 
-const History: FC<IProps> = (props) => {
+const UnstakeTable: FC<IProps> = (props) => {
   const [dataSource, setDataSource] = useState([
     // {
     //   action: 'Stake',
@@ -31,16 +31,14 @@ const History: FC<IProps> = (props) => {
   return (
     <CustomTable
       dataSource={dataSource}
-      emptyTips="No transaction records found..."
+      emptyTips="No Unstake records found..."
       columns={[
-        { title: 'Action', dataIndex: 'action', key: 1 },
-        { title: 'Sent', dataIndex: 'sent', key: 2 },
-        { title: 'Receive', dataIndex: 'receive', key: 3 },
-        { title: 'Hash', dataIndex: 'hash', key: 4 },
-        { title: 'Date', dataIndex: 'date', key: 5 },
+        { title: 'Amount', dataIndex: 'amount', key: 1 },
+        { title: 'Date', dataIndex: 'date', key: 2 },
+        { title: 'Status', dataIndex: 'status', key: 3 },
       ]}
     />
   );
 };
 
-export default memo(History);
+export default memo(UnstakeTable);
