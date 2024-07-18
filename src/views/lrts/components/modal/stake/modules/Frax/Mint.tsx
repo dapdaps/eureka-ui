@@ -27,7 +27,7 @@ const Mint = (props: any) => {
   const [isLoading, setIsLoading] = useState(false)
   const [inputAmount, setInputAmount] = useState('');
 
-  const { availableAmount, provider, inToken, toast, leastAmount } = useFrax({ actionType, token0, token1 });
+  const { availableAmount, provider, inToken, toast, leastAmount, data } = useFrax({ actionType, token0, token1 });
 
   
   const isInSufficient = useMemo(() => Big(inputAmount || 0).gt(availableAmount || 0), [availableAmount, inputAmount]);
@@ -62,9 +62,6 @@ const Mint = (props: any) => {
     return Big(inputAmount).lte(leastAmount) ? leastAmount : inputAmount;
   }, [inputAmount]);
   
-
-  console.log(token0, token1, 'token0, token1');
-  
   return (
     <TabsBody>
       <InputCurrency
@@ -88,6 +85,7 @@ const Mint = (props: any) => {
           />
         </svg>
         <Button
+          data={data}
           isInSufficient={isInSufficient}
           isLoading={isLoading}
           chainId={inToken?.chainId}

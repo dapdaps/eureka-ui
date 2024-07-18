@@ -232,6 +232,7 @@ const Redeem = (props: any) => {
           />
         </svg>
         <Button
+          data={data}
           isInSufficient={isInSufficient}
           isLoading={isLoading}
           approved={true}

@@ -67,9 +67,6 @@ const StyledMenuTokenSymbol = styled.div`
 export default function TokenSelector({ currency, tokens, onSelect }: any) {
   const [showMenu, setShowMenu] = useState(false);
 
-
-  console.log(tokens, 'tokens');
-  
   return (
     <StyledTokenSelector
       onClick={() => {

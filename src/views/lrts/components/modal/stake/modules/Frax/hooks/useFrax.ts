@@ -70,7 +70,7 @@ const useFrax = ({ token0, token1 }: any) => {
     }
   };  
 
-  const handleQueryData = useCallback(async () => {
+  const handleQueryData = async () => {
     const handleQueryApy = async () => {
       const res = await fetch("https://api.frax.finance/v2/frxeth/summary/latest");
       return res.json();
@@ -89,7 +89,6 @@ const useFrax = ({ token0, token1 }: any) => {
     const apyResult = await handleQueryApy();
     const availableAmountResult = await handleQueryAvailableAmount();
     const stakedAmountResult = await handleQueryStakedAmount();
-    console.log(ethers.utils.formatUnits(stakedAmountResult, 18), 'ethers.utils.formatUnits(stakedAmountResult, 18)');
     
     setData({
       availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
@@ -97,7 +96,7 @@ const useFrax = ({ token0, token1 }: any) => {
       apy: Big(apyResult.sfrxethApr).toFixed(2),
       exchangeRate: 1
     });
-  }, [provider, account, token1, actionType]);
+  }
 
   const handleApprove = async () => {
     if (!provider) return;
@@ -187,7 +186,7 @@ const useFrax = ({ token0, token1 }: any) => {
   useEffect(() => {
     queryAvailableAmount()
     handleQueryData()
-  }, [provider, actionType])
+  }, [account, provider, actionType])
 
   return {
     data,

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { ethereum } from '@/config/tokens/ethereum';
 
 import Button from '../../components/button';
+import StakeList from '../../components/stake-list';
 import {
   StyledActiveAndCompleted,
   StyledActiveAndCompletedButton,
@@ -49,7 +50,14 @@ import Tabs from './Tabs';
 
 const FraxComponent = function (props: any) {
 
-  const { setShow, token0, token1 } = props.componentProps;
+  const { setShow, 
+    token0, 
+    token1,     
+    requests,
+    requestsLoading,
+    claiming,
+    queryRequests,
+    claim, } = props.componentProps;
   const setTabStore = useTabStore(store => store.set)
 
   const {
@@ -208,6 +216,7 @@ const FraxComponent = function (props: any) {
                     />
                   </svg>
                   <Button
+                    data={data}
                     isInSufficient={isInSufficient}
                     isLoading={isLoading}
                     chainId={inToken.chainId}
@@ -235,13 +244,14 @@ const FraxComponent = function (props: any) {
                 <StyledActiveAndCompletedButton>completed</StyledActiveAndCompletedButton>
               </StyledActiveAndCompleted>
             </StyledActiveAndCompletedContainer>
-
-            <StyledRecordList>
-              <StyledRecord>
-                <StyledRecordText>0.023 rstETH</StyledRecordText>
-                <StyledRecordText>~ in 7 days</StyledRecordText>
-              </StyledRecord>
-            </StyledRecordList>
+            <StakeList
+              sx={{ marginTop: 20 }}
+              requests={requests}
+              requestsLoading={requestsLoading}
+              claiming={claiming}
+              queryRequests={queryRequests}
+              claim={claim}
+            />
           </StyledStakeBottomContainer>
         </>
       )}
