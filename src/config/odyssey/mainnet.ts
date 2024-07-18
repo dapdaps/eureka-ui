@@ -53,7 +53,7 @@ export default {
     chainsImg: '/images/odyssey/thruster/thruster-rounded.svg',
     chainsHeight: '56px',
     reward: '2.5M',
-    rewardDisableIcon: '/images/odyssey/v4/rewardDisable.svg',
+    rewardDisableIcon: '/images/odyssey/thruster/rewardDisable.svg',
     rewardEnableIcon: '/images/odyssey/thruster/rewardEnable.svg',
     tips: '',
   },

@@ -101,7 +101,7 @@
     "recharts": "^2.10.1",
     "rudder-sdk-js": "^2.45.0",
     "styled-components": "^6.1.1",
-    "super-bridge-sdk": "0.0.11-7",
+    "super-bridge-sdk": "0.0.11-12",
     "swiper": "^11.0.5",
     "typewriter-effect": "^2.21.0",
     "uuid": "^9.0.1",
