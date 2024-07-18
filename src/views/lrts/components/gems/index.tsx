@@ -41,11 +41,10 @@ const Wrap = styled.section`
     &.active {
       border-radius: 10px;
       background-color: #000;
-
-      &:hover {
-        background: url(/images/lrts/pad-active.svg) no-repeat #000;
-        background-size: cover;
-      }
+    }
+    &:hover {
+      background: url(/images/lrts/pad-active.svg) no-repeat #000;
+      background-size: cover;
     }
   }
   .item-gem-content {
