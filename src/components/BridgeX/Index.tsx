@@ -130,6 +130,7 @@ export default function BridgeX({
     toggleDocClickHandler,
     getQuote,
     getAllToken,
+    getBridgeToken,
     getStatus,
     prices,
     currentChainId,
@@ -148,6 +149,7 @@ export default function BridgeX({
     const [loadedAllTokens, setLoadedAllTokens] = useState(true)
     const [otherAddressChecked, setOtherAddressChecked] = useState(false)
     const [inputTokens, setInputTokens] = useState<any[]>([])
+    const [bridgeTokens, setBridgeTokens] = useState<any[] | null>(null)
     const [outputTokens, setOutputTokens] = useState<any[]>([])
     const [selectInputToken, setSelectInputToken] = useState<any>(null)
     const [selectOutputToken, setSelectOutputToken] = useState<any>(null)
@@ -210,18 +212,52 @@ export default function BridgeX({
     }, [])
 
     useEffect(() => {
+        getBridgeToken(tool).then((res: any) => {
+            setBridgeTokens(res)
+        })
+    }, [tool])
+
+    useEffect(() => {
         if (loadedAllTokens && chainFrom) {
-            setInputTokens(allTokens[chainFrom?.chainId])
+            const allChainTokens = allTokens[chainFrom?.chainId]
+            if (bridgeTokens) {
+                const allBridgeChainTokens = bridgeTokens[chainFrom?.chainId]
+                const _newTokens: any[] = []
+                allChainTokens.forEach((element: any) => {
+                    const has = allBridgeChainTokens.some((item: any) => item.address === element.address)
+                    if (has) {
+                        _newTokens.push(element)
+                    }
+                });
+                setInputTokens(_newTokens)
+            } else {
+                setInputTokens(allChainTokens)
+            }
+            
             setSelectInputToken(null)
         }
-    }, [chainFrom, loadedAllTokens, allTokens])
+    }, [chainFrom, loadedAllTokens, allTokens, bridgeTokens])
 
     useEffect(() => {
         if (loadedAllTokens && chainTo) {
-            setOutputTokens(allTokens[chainTo.chainId])
+            const allChainTokens = allTokens[chainTo?.chainId]
+            if (bridgeTokens) {
+                const allBridgeChainTokens = bridgeTokens[chainTo?.chainId]
+                const _newTokens: any[] = []
+                allChainTokens.forEach((element: any) => {
+                    const has = allBridgeChainTokens.some((item: any) => item.address === element.address)
+                    if (has) {
+                        _newTokens.push(element)
+                    }
+                });
+                setOutputTokens(_newTokens)
+            } else {
+                setOutputTokens(allChainTokens)
+            }
+
             setSelectOutputToken(null)
         }
-    }, [chainTo, loadedAllTokens, allTokens])
+    }, [chainTo, loadedAllTokens, allTokens, bridgeTokens])
 
 
     useEffect(() => {
