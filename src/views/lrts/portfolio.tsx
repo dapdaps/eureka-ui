@@ -349,7 +349,7 @@ const Portfolio: FC<IProps> = (props) => {
       </Assets>
       <Ad src="/images/lrts/ad.png" width={1200} height={103} alt="ad" />
       <Tabs items={items} />
-      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} />
+      {/* <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} /> */}
       <AddTokenModal show={showAddTokenModal} setShow={setShowAddTokenModal} token={addToken} />
     </Container>
   );
