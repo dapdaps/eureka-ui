@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import TokenSelector from './TokenSelector';
 
+
 const StyledContainer = styled.div`
   font-family: Orbitron;
   font-weight: 500;
@@ -41,8 +42,7 @@ const StyledInput = styled.input`
   flex-grow: 1;
 `;
 const StyledMax = styled.button`
-  width: 42px;
-  line-height: 26px;
+  padding: 6px;
   border-radius: 4px;
   border: 1px solid #3f3f3f;
   color: rgba(255, 255, 255, 0.6);
@@ -72,22 +72,37 @@ export const StyledTokenSymbol = styled.div`
   font-weight: 700;
 `;
 
-export default function InputCurrency({ mt, label, currency, value, loading, onChange, onMax, tokens, onSelect }: any) {
+export default function InputCurrency({ mt, label, currency, value, loading, onChange, onMax, tokens, onSelect, readOnly = false, addr = false, handleWalletAddress, sx, maxLength }: any) {
   return (
     <StyledContainer style={{ marginTop: mt }}>
-      <StyledHeader>
-        <StyledLabel>{label}</StyledLabel>
-        {label === 'To' && <StyledHeaderPrice>1 rstETH = 1 ezETH</StyledHeaderPrice>}
-      </StyledHeader>
+      {
+        label && (
+          <StyledHeader>
+            <StyledLabel>{label}</StyledLabel>
+            {label === 'To' && <StyledHeaderPrice>1 ETH = 1 frxETH</StyledHeaderPrice>}
+          </StyledHeader>
+        )
+      }
       <StyledInputWrapper>
         <StyledInput
           value={value || ''}
+          readOnly={readOnly}
+          style={sx}
+          maxLength={maxLength}
           onChange={(ev) => {
             if (isNaN(Number(ev.target.value))) return;
             onChange?.(ev.target.value);
           }}
         />
-        {label === 'Swap from' && (
+        {
+          label === 'From' && (
+            <>
+              <StyleTokenIcon src={currency?.icon || '/images/tokens/default_icon.png'} />
+              <StyledTokenSymbol>{currency?.symbol}</StyledTokenSymbol>
+            </>
+          )
+        }
+        {label === 'Enter Redemption Queue' && (
           <>
             <StyledMax
               onClick={() => {
@@ -97,11 +112,24 @@ export default function InputCurrency({ mt, label, currency, value, loading, onC
             >
               Max
             </StyledMax>
-            <StyleTokenIcon src={currency.tokenIcon || '/images/tokens/default_icon.png'} />
-            <StyledTokenSymbol>{currency.symbol}</StyledTokenSymbol>
+            <TokenSelector currency={currency} onSelect={onSelect} tokens={tokens} />
           </>
         )}
-        {label === 'To' && <TokenSelector currency={currency} onSelect={onSelect} tokens={tokens} />}
+        {
+          addr && (
+            <StyledMax
+            onClick={() => handleWalletAddress()}
+          >
+            My address
+          </StyledMax>
+          )
+        }
+        {label === 'To' && (
+          <>
+          <StyleTokenIcon src={currency?.icon || '/images/tokens/default_icon.png'} />
+          <StyledTokenSymbol>{currency?.symbol}</StyledTokenSymbol>
+        </>
+        )}
       </StyledInputWrapper>
     </StyledContainer>
   );

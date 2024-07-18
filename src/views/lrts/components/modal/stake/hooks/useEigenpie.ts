@@ -95,8 +95,8 @@ export default function useEigenpie({ token0, token1, actionType, dapp }: any) {
   }, [account, actionType]);
 
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
-  }
+    setInAmount(tokenBalance ?? 0);
+  };
   const handleStake = async () => {
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });

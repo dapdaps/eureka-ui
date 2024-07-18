@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+
 import Loading from '@/components/Icons/Loading';
 import { balanceFormated } from '@/utils/balance';
-import { StyledLoadingWrapper, StyledRecordList, StyledRecord, StyledRecordText } from '../styles';
+
+import { StyledLoadingWrapper, StyledRecord, StyledRecordList, StyledRecordText } from '../styles';
 
 const ClaimButton = ({ claiming, claim, request }: any) => {
   const [loading, setLoading] = useState(false);
@@ -24,9 +26,9 @@ const ClaimButton = ({ claiming, claim, request }: any) => {
   );
 };
 
-export default function StakeList({ requests, requestsLoading, claiming, claim }: any) {
+export default function StakeList({ requests, requestsLoading, claiming, claim, sx }: any) {
   return (
-    <StyledRecordList>
+    <StyledRecordList style={sx}>
       {requestsLoading ? (
         <StyledLoadingWrapper>
           <Loading size={20} />

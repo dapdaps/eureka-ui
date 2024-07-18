@@ -60,8 +60,8 @@ export default function useKarak({ token0, token1, actionType, dapp }: any) {
   }, [account]);
 
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
-  }
+    setInAmount(tokenBalance ?? 0);
+  };
   const handleStake = async () => {
     setLoading(true);
     let toastId = toast.loading({ title: 'Confirming...' });

@@ -120,6 +120,14 @@ export const ethereum: { [key: string]: Token } = {
     icon: '/images/lrts/tokens/krETH.svg',
     desc: "A token that represents a regular user's deposit into the staking pool. Users receive an equivalent value of rETH token for each ETH coin they deposit. As interest is earned by staking on the Ethereum network the value of the rETH token increases with respect to ETH.",
   },
+  frxETH: {
+    address: '0x5E8422345238F34275888049021821E8E08CAa1f',
+    chainId: CHAIN_ID,
+    decimals: 18,
+    name: 'Staked Frax Ether',
+    symbol: 'frxETH',
+    icon: '/images/lrts/tokens/frxETH.svg',
+  },
   sfrxETH: {
     address: '0xac3e018457b222d93114458476f3e3416abbe38f',
     chainId: CHAIN_ID,

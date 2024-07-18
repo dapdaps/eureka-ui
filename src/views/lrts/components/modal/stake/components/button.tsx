@@ -1,10 +1,12 @@
-import chains from '@/config/chains';
-import Loading from '@/components/Icons/Loading';
 import Big from 'big.js';
-import { StyledStakeButton } from '../styles';
+
+import Loading from '@/components/Icons/Loading';
+import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
+
 import ConnectButton from '../../../connect-wallet';
 import SwitchNetwork from '../../../switch-network-button';
+import { StyledStakeButton } from '../styles';
 
 export default function Button({
   data,

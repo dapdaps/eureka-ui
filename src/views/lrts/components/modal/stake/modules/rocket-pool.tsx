@@ -23,7 +23,7 @@ const RocketPool = function (props: any) {
     handleMax,
     handleStake
   } = useRocketPool({ actionType, token0, token1, provider, account });
-
+  
   return (
     <BaseComponent
       componentProps={{

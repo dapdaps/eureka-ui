@@ -75,8 +75,8 @@ export const StyledBaseInfoContainer = styled.div`
   align-items: center;
   padding: 40px 40px 0;
 `;
-export const StyledBaseInfo = styled.div`
-  flex: 1;
+export const StyledBaseInfo = styled.div<{flex?: number | string}>`
+  flex: ${(props) => props.flex || 1};
   display: flex;
   flex-direction: column;
   gap: 5px;

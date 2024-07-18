@@ -1,6 +1,9 @@
 import Big from 'big.js';
+
 import StakeList from '../components/stake-list';
 import {
+  StyledActionTypeTab,
+  StyledActionTypeTabContainer,
   StyledActiveAndCompleted,
   StyledActiveAndCompletedButton,
   StyledActiveAndCompletedContainer,
@@ -11,9 +14,12 @@ import {
   StyledBottomContainer,
   StyledClose,
   StyledCloseIcon,
+  StyledDapLogo,
   StyledFirstTips,
   StyledInput,
   StyledInputContainer,
+  StyledLrtBgImage,
+  StyledLrtDapp,
   StyledMax,
   StyledMaxAndSymbol,
   StyledPlusSvg,
@@ -31,11 +37,6 @@ import {
   StyledSymbolTxt,
   StyledTipsContainer,
   StyledWithdrawTips,
-  StyledActionTypeTabContainer,
-  StyledActionTypeTab,
-  StyledDapLogo,
-  StyledLrtDapp,
-  StyledLrtBgImage,
 } from '../styles';
 import Button from './button';
 
