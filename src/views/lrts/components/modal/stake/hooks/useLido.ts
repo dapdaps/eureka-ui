@@ -111,7 +111,8 @@ export default function useLido({ dapp, token0, token1, addAction, actionType, c
     };
   };
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
+    const _amount = ['stake', 'restake'].includes(actionType) ? data?.availableAmount ?? 0 : data?.stakedAmount
+    handleAmountChange(_amount)
   }
   const handleStake = async function () {
     setIsLoading(true);
@@ -140,8 +141,12 @@ export default function useLido({ dapp, token0, token1, addAction, actionType, c
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
     contractMethord(...contractArguments)
-      .then((tx: any) => tx.wait())
+      .then((tx: any) => {
+        console.log('====tx', tx)
+        return tx.wait()
+      })
       .then((result: any) => {
+        console.log('====result', result)
         const { status, transactionHash } = result;
         setIsLoading(false);
         handleQueryData();
@@ -166,6 +171,7 @@ export default function useLido({ dapp, token0, token1, addAction, actionType, c
         })
       })
       .catch((error: any) => {
+        console.log('===error', error)
         setIsLoading(false);
         toast?.dismiss(toastId);
         toast?.fail({

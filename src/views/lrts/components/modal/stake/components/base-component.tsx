@@ -71,6 +71,8 @@ const BaseComponent = function (props: any) {
     claim,
   } = props?.componentProps;
 
+  console.log('===gem', gem)
+  console.log('===dapp', dapp)
   const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
   return (
     <StyledStakeContainer>
@@ -217,7 +219,7 @@ const BaseComponent = function (props: any) {
           )}
           <StyledBaseInfo style={{ alignItems: ['stake', 'restake'].includes(actionType) ? 'center' : 'flex-start' }}>
             <StyledFirstTips>APR</StyledFirstTips>
-            <StyledBaseInfoValue style={{ color: '#A4E417' }}>{Big(data?.apy ?? 0).toFixed(2)}%</StyledBaseInfoValue>
+            <StyledBaseInfoValue style={{ color: '#A4E417' }}>{Big(gem?.dapp?.apr ?? 0 || dapp?.apr ?? 0).toFixed(2)}%</StyledBaseInfoValue>
           </StyledBaseInfo>
           <StyledBaseInfo>
             <StyledFirstTips>Staked amount</StyledFirstTips>

@@ -252,7 +252,8 @@ export default function useMantle({ dapp, token0, token1, addAction, actionType,
     }
   }
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
+    const _amount = ['stake', 'restake'].includes(actionType) ? data?.availableAmount ?? 0 : data?.stakedAmount
+    handleAmountChange(_amount)
   }
   const handleStake = async function () {
     setIsLoading(true)

@@ -60,7 +60,8 @@ export default function useKarak({ token0, token1, actionType, dapp }: any) {
   }, [account]);
 
   const handleMax = function () {
-    setInAmount(tokenBalance ?? 0);
+    const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount
+    handleAmountChange(_amount)
   };
   const handleStake = async () => {
     setLoading(true);

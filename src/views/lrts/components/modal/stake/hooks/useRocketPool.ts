@@ -163,7 +163,8 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
   };
 
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
+    const _amount = ['stake', 'restake'].includes(actionType) ? data?.availableAmount ?? 0 : data?.stakedAmount
+    handleAmountChange(_amount)
   }
   const handleStake = async function () {
     const balancerValue = await handleBalancerQuery();
