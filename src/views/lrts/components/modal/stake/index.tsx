@@ -30,7 +30,7 @@ const ComponentMapping: any = {
   'Rocket Pool': RocketPool,
   'Frax Finance': Frax,
   KelpDao,
-  KaraK: Karak,
+  Karak,
   Eigenpie,
   RestakeFinance,
   EtherFi,
@@ -46,7 +46,10 @@ const Index = function (props: any) {
   const handleChangeActionType = function (_actionType: any) {
     setActionType(_actionType);
   };
-
+  console.log({
+    dapp,
+    gem,
+  });
   useEffect(() => {
     setActionType(gem ? 'restake' : 'stake');
   }, [gem]);
