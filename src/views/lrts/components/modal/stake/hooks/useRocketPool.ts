@@ -2,7 +2,7 @@ import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-
+import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 
 import { BALANCER_ABI, rETH_ABI, STAKE_ABI } from '../../../../config/abi/rooket-pool';
@@ -11,8 +11,9 @@ const RocketSwapRouter_ADDR = '0x16d5a408e807db8ef7c578279beeee6b228f1c1c';
 const BalancerQueries_ADDR = '0xE39B5e3B6D74016b2F6A9673D7d7493B6DF549d5';
 const RocketDepositPool_ADDR = '0xdd3f50f8a6cafbe9b31a427582963f465e745af8';
 
-const useRocketPool = ({ actionType, token0, token1, provider, account }: any) => {
+const useRocketPool = ({ actionType, token0, token1, provider, account, dapp }: any) => {
   const toast = useToast();
+  const { addAction } = useAddAction('lrts');
   const [data, setData] = useState<any>(null);
   const [inAmount, setInAmount] = useState<number | string>('');
   const [outAmount, setOutAmount] = useState<number | string>('');
@@ -206,18 +207,12 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
         gasLimit: ethers.utils.hexlify(300000),
         value: amount
       })
-      await tx.wait()
+      const { status, transactionHash, ...rest } = await tx.wait();
       await handleQueryData();
       toast?.success({
         title: ['stake', 'restake'].includes(actionType) ? 'Stake Successfully!' : 'UnStake Successfully',
       });
-    } catch (error) {
-      toast?.fail({
-        title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',
-      });
-    } finally {
-      setIsLoading(false);
-      toast?.dismiss(toastId);
+
       addAction({
         type: "Staking",
         action: actionType,
@@ -226,7 +221,7 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
         template: dapp.name,
         status,
         transactionHash,
-        chain_id: chainId,
+        chain_id: token0.chainId,
         extra_data: JSON.stringify({
           fromTokenSymbol: inToken.symbol,
           fromTokenAmount: inAmount,
@@ -234,6 +229,13 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
           toTokenAmount: outAmount,
         })
       })
+    } catch (error) {
+      toast?.fail({
+        title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',
+      });
+    } finally {
+      setIsLoading(false);
+      toast?.dismiss(toastId);
     }
   };
 

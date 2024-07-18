@@ -185,7 +185,7 @@ export default function usePuffer({ token0, token1, actionType, dapp }: any) {
         template: dapp.name,
         status,
         transactionHash,
-        chain_id: chainId,
+        chain_id: token0.chainId,
         extra_data: JSON.stringify({
           fromTokenSymbol: inToken.symbol,
           fromTokenAmount: inAmount,
