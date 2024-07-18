@@ -1,128 +1,8 @@
-// import { ethereum } from '@/config/tokens/ethereum';
 
+import { useEffect } from 'react';
 import BaseComponent from '../components/base-component';
 import useLido from '../hooks/useLido';
-
-const stETH_ABI = [
-  {
-    constant: true,
-    inputs: [
-      {
-        name: '_account',
-        type: 'address',
-      },
-    ],
-    name: 'balanceOf',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: '_referral',
-        type: 'address',
-      },
-    ],
-    name: 'submit',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    payable: true,
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [
-      {
-        name: 'owner',
-        type: 'address',
-      },
-    ],
-    name: 'nonces',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-];
-
-const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
-const WITHDRAWAL_QUEUE_ABI = [
-  {
-    inputs: [
-      {
-        internalType: 'uint256[]',
-        name: '_amounts',
-        type: 'uint256[]',
-      },
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-      {
-        components: [
-          {
-            internalType: 'uint256',
-            name: 'value',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: 'deadline',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint8',
-            name: 'v',
-            type: 'uint8',
-          },
-          {
-            internalType: 'bytes32',
-            name: 'r',
-            type: 'bytes32',
-          },
-          {
-            internalType: 'bytes32',
-            name: 's',
-            type: 'bytes32',
-          },
-        ],
-        internalType: 'struct WithdrawalQueue.PermitInput',
-        name: '_permit',
-        type: 'tuple',
-      },
-    ],
-    name: 'requestWithdrawalsWithPermit',
-    outputs: [
-      {
-        internalType: 'uint256[]',
-        name: 'requestIds',
-        type: 'uint256[]',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-];
-
+import useLidoRequest from '../hooks/useLidoRequest';
 const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, actionType, handleChangeActionType, chainId }: any) {
   const {
     data,
@@ -148,6 +28,14 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
     chainId,
     actionType,
   })
+  const { requests, loading: requestsLoading, queryRequests, claim } = useLidoRequest({
+    token0,
+    token1
+  });
+
+  useEffect(() => {
+    actionType === 'unstake' && queryRequests();
+  }, [actionType]);
   return (
     <BaseComponent
       componentProps={{
@@ -166,6 +54,10 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
         inToken,
         outToken,
         isInSufficient,
+        requests,
+        requestsLoading,
+        queryRequests,
+        claim,
         handleApprove,
         handleAmountChange,
         handleMax,

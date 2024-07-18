@@ -5,128 +5,13 @@ import { useSetChain } from '@web3-onboard/react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-
-const stETH_ABI = [
-  {
-    constant: true,
-    inputs: [
-      {
-        name: '_account',
-        type: 'address',
-      },
-    ],
-    name: 'balanceOf',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    constant: false,
-    inputs: [
-      {
-        name: '_referral',
-        type: 'address',
-      },
-    ],
-    name: 'submit',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    payable: true,
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    constant: true,
-    inputs: [
-      {
-        name: 'owner',
-        type: 'address',
-      },
-    ],
-    name: 'nonces',
-    outputs: [
-      {
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function',
-  },
-];
-
+import abi from '@/views/lrts/config/abi/lido'
+const {
+  stETH_ABI,
+  WITHDRAWAL_QUEUE_ABI
+} = abi
 const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
-const WITHDRAWAL_QUEUE_ABI = [
-  {
-    inputs: [
-      {
-        internalType: 'uint256[]',
-        name: '_amounts',
-        type: 'uint256[]',
-      },
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-      {
-        components: [
-          {
-            internalType: 'uint256',
-            name: 'value',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint256',
-            name: 'deadline',
-            type: 'uint256',
-          },
-          {
-            internalType: 'uint8',
-            name: 'v',
-            type: 'uint8',
-          },
-          {
-            internalType: 'bytes32',
-            name: 'r',
-            type: 'bytes32',
-          },
-          {
-            internalType: 'bytes32',
-            name: 's',
-            type: 'bytes32',
-          },
-        ],
-        internalType: 'struct WithdrawalQueue.PermitInput',
-        name: '_permit',
-        type: 'tuple',
-      },
-    ],
-    name: 'requestWithdrawalsWithPermit',
-    outputs: [
-      {
-        internalType: 'uint256[]',
-        name: 'requestIds',
-        type: 'uint256[]',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-];
-export default function useLido(props: any) {
-  const { dapp, token0, token1, addAction, actionType, chainId } = props;
+export default function useLido({ dapp, token0, token1, addAction, actionType, chainId }: any) {
   const toast = useToast();
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -136,6 +21,9 @@ export default function useLido(props: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [approved, setApproved] = useState(true);
   const [approving, setApproving] = useState(false);
+
+  const [requestLoading, setRequestsLoading] = useState(false);
+  const [requests, setRequests] = useState<any>();
 
   const leastAmount = ['stake', 'restake'].includes(actionType) ? 0.02 : 0;
   const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1;
@@ -148,11 +36,6 @@ export default function useLido(props: any) {
       return Number(inAmount) > Number(data?.stakedAmount);
     }
   }, [data?.availableAmount, data?.stakedAmount, inAmount]);
-
-  const handleQueryApy = async function () {
-    const res = await fetch('https://eth-api.lido.fi/v1/protocol/steth/apr/sma');
-    return res.json() as any;
-  };
   const handleQueryAvailableAmount = async function () {
     return await provider.getBalance(account);
   };
@@ -162,13 +45,11 @@ export default function useLido(props: any) {
   };
   const handleQueryData = async function () {
     try {
-      const apyResult = await handleQueryApy();
       const availableAmountResult = await handleQueryAvailableAmount();
       const stakedAmountResult = await handleQueryStakedAmount();
       setData({
         availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
         stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
-        apy: apyResult?.data?.smaApr,
         exchangeRate: 1
       });
     } catch (error) {
@@ -281,7 +162,6 @@ export default function useLido(props: any) {
             action: actionType,
             amount0: inAmount,
             amount1: outAmount,
-            // requestID: 
           })
         })
       })
