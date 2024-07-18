@@ -301,8 +301,7 @@ const BaseComponent = function (props: any) {
               </StyledActiveAndCompleted>
             </StyledActiveAndCompletedContainer>
             <StyledSecondTips style={{ marginTop: 16, marginBottom: 20 }}>
-              Unstake requests are processed in 7-10 days, subject to exit queue on Ethereum network and delays imposed
-              by EigenLayer
+              Unstake requests may take from a few minutes to several days, depending on the project.
             </StyledSecondTips>
             <StakeList
               requests={requests}

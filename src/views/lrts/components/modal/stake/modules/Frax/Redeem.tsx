@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import { Contract,utils } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
@@ -132,14 +132,14 @@ const Redeem = (props: any) => {
     try {
       const frxETHContract = new Contract(selectToken.address, FRAX_REDEEM_ABI, provider.getSigner());
       const tx = await frxETHContract.approve(FraxEtherRedemptionQueue_ADDR, utils.parseEther(inputAmount));
-      await tx.wait(); 
+      await tx.wait();
       toast.success({ title: "Approve Successfully!", text: `Approve ${selectToken.symbol}`, tx: tx.hash });
-      return true; 
+      return true;
     } catch (error: any) {
       toast.fail({
         title: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Approve faily!`,
       });
-      return false; 
+      return false;
     } finally {
       setIsLoading(false)
       toast.dismiss(toastId);
@@ -147,7 +147,7 @@ const Redeem = (props: any) => {
   }
 
 
-  const enterRedemptionQueue = async () => { 
+  const enterRedemptionQueue = async () => {
     const toastId = toast.loading({ title: `Enter Queue ${selectToken.symbol}` });
     setIsLoading(true)
     try {
@@ -170,7 +170,7 @@ const Redeem = (props: any) => {
     if (checkApprovalStatus) return enterRedemptionQueue()
 
     const approveSuccess = await handleApprove(); // 等待 handleApprove 完成
-    if (approveSuccess) await enterRedemptionQueue(); 
+    if (approveSuccess) await enterRedemptionQueue();
   }
 
 
@@ -221,8 +221,7 @@ const Redeem = (props: any) => {
         />
       )}
       <StyleInfo>
-        Unstake requests are processed in 7-10 days, subject to exit queue on Ethereum network and delays imposed by
-        EigenLayer
+        Unstake requests may take from a few minutes to several days, depending on the project.
       </StyleInfo>
       <StyledStakeButtonContainer disabled={isInSufficient || Big(inputAmount ? inputAmount : 0).lt(leastAmount)}>
         <svg xmlns="http://www.w3.org/2000/svg" width="534" height="49" viewBox="0 0 534 49" fill="none">
