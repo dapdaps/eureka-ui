@@ -2,6 +2,7 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useState } from 'react';
 
+import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
@@ -62,29 +63,29 @@ const FraxEtherRedemptionQueue_ADDR = '0x82bA8da44Cd5261762e629dd5c605b17715727b
 export default function useFraxRequests() {
   const { provider, account, chainId } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
-  const [loading, setLoading] = useState(false);
+  const [requestsLoading, setRequestsLoading] = useState(false);
   const [claiming, setClaiming] = useState(false);
   const toast = useToast();
-  const { addAction } = useAddAction('lrts');
 
 
   // get redeem tickets
-  const getList = async (): Promise<IUserRedeemTicketsResponse | []> => {
+  const queryRequests = async (): Promise<IUserRedeemTicketsResponse | []> => {
     const url = `https://api.frax.finance/v2/frxeth/user/${account}/frxeth-redemptions?chain=ethereum`;
     try {
-      setLoading(true);
+      setRequestsLoading(true);
       const response = await fetch(url);
       const data = await response.json();
       const currentTime = new Date(); // 获取当前时间
 
       if (data?.tickets.length > 0) {
-        const _list: any = data?.tickets.map((item: any) => {
+        const _list = data?.tickets.map((item: ITicket) => {
           const isMatured = new Date(item.maturesAt) <= currentTime;
 
           return {
             amount: Big(item.amountIn).div(1e18).toString(),
             startTime: item.createdAt,
             status: isMatured ? 'Claimable' : 'In Progress',
+            token1: ethereum.frxETH,
           };
         });
         setRequests(_list);
@@ -94,14 +95,16 @@ export default function useFraxRequests() {
       console.error('Error fetching redeem tickets:', error);
       return [];
     } finally {
-        setLoading(false);
+        setRequestsLoading(false);
     }
   };
 
   // claims
-  const claims = async (nftId: string, recipient: string) => {
+  const claim = async (request: ITicket, recipient: string) => {
     setClaiming(true);
     const toastId = toast.loading({ title: 'Confirming...' });
+    const nftId = request?.transactions[0]?.nftTokenId || ''
+    if (!nftId) return toast.fail({ title: `Claim data is Empty!` });
     try {
       const redemptionQueueContract = new ethers.Contract(FraxEtherRedemptionQueue_ADDR, ENTER_QUEUE_ABI, provider.getSigner());
       const tx = await redemptionQueueContract.burnRedemptionTicketNft(nftId, recipient);
@@ -115,13 +118,11 @@ export default function useFraxRequests() {
     }
   }
 
-
-
   return {
     requests,
-    loading,
+    requestsLoading,
     claiming,
-    getList,
-    claims,
+    queryRequests,
+    claim,
   };
 }

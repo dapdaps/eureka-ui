@@ -5,6 +5,7 @@ import { ethereum } from '@/config/tokens/ethereum';
 
 import Button from '../../components/button';
 import StakeList from '../../components/stake-list';
+import useFraxRequests from '../../hooks/useFraxRequests';
 import {
   StyledActiveAndCompleted,
   StyledActiveAndCompletedButton,
@@ -25,9 +26,6 @@ import {
   StyledPlusTips,
   StyledReceive,
   StyledReceiveContainer,
-  StyledRecord,
-  StyledRecordList,
-  StyledRecordText,
   StyledSecondLine,
   StyledSecondTips,
   StyledStakeBottomContainer,
@@ -52,12 +50,7 @@ const FraxComponent = function (props: any) {
 
   const { setShow, 
     token0, 
-    token1,     
-    requests,
-    requestsLoading,
-    claiming,
-    queryRequests,
-    claim, } = props.componentProps;
+    token1 } = props.componentProps;
   const setTabStore = useTabStore(store => store.set)
 
   const {
@@ -66,12 +59,13 @@ const FraxComponent = function (props: any) {
     outAmount,
     isLoading,
     approved,
-    approving,
     leastAmount,
     inToken,
     outToken,
     isInSufficient,
     sfrxBalance,
+    account,
+    provider,
     handleApprove,
     handleAmountChange,
     handleStake,
@@ -81,6 +75,13 @@ const FraxComponent = function (props: any) {
 
   const [actionType, setActionType] = useState(ITab.MINT)
   
+  const {
+    requests,
+    requestsLoading,
+    claiming,
+    queryRequests,
+    claim,
+  } = useFraxRequests()
 
   const changeTab = (tab: any) => {
     setActionType(tab)
@@ -88,6 +89,10 @@ const FraxComponent = function (props: any) {
       tab
     })
   }
+
+  useEffect(() => {
+    queryRequests();
+  }, [data, account, provider, actionType]);
 
   return (
     <StyledStakeContainer>
@@ -179,7 +184,7 @@ const FraxComponent = function (props: any) {
                 <StyledTipsContainer>
                   <StyledFirstTips>{actionType}</StyledFirstTips>
                   <StyledSecondTips>
-                    1 {outToken.symbol} = {data?.exchangeRate} {inToken.symbol}
+                    1 frxETH = 1 sfrxETH
                   </StyledSecondTips>
                 </StyledTipsContainer>
                 <StyledInputContainer>

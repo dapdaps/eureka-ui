@@ -99,7 +99,10 @@ const useFrax = ({ token0, token1 }: any) => {
   }
 
   const handleApprove = async () => {
-    if (!provider) return;
+    if (!provider) return false;
+
+    if (actionType === ITab.UNSTAKE) return true;
+
     const contract = new ethers.Contract(token1.address, FRAX_REDEEM_ABI, provider.getSigner());
     const wei = ethers.utils.parseUnits(Big(inAmount).toFixed(18), 18);
     const toastId = toast.loading({ title: `Approve ${inToken.symbol}` });
