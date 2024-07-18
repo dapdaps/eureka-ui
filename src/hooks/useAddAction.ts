@@ -82,9 +82,8 @@ export default function useAddAction(source: string) {
         if (data.extra_data?.lending_actions) {
           params.extra_data = JSON.stringify(data.extra_data);
         } else {
-          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${
-            data.template
-          }`;
+          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${data.template
+            }`;
           params.action_tokens = JSON.stringify([`${data.token.symbol}`]);
           params.action_amount = data.amount;
         }
@@ -108,9 +107,9 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Staking') {
         params = {
-          action_title: data.token ? `${data.action} ${data.amount} ${data.token?.symbol} on ${data.template}` : '',
+          action_title: data.token ? `${data.action} ${data.amount} ${Object.prototype.toString.call(data.token) === '[object Array]' ? data.token[0] : data.token?.symbol} on ${data.template}` : '',
           action_type: 'Staking',
-          action_tokens: data.token ? JSON.stringify([`${data.token.symbol}`]) : '',
+          action_tokens: data.token ? JSON.stringify(Object.prototype.toString.call(data.token) === '[object Array]' ? data.token : [`${data.token.symbol}`]) : '',
           action_amount: data.amount,
           account_id: account,
           account_info: uuid,
@@ -169,8 +168,7 @@ export default function useAddAction(source: string) {
       }
 
       params.ss = getSignature(
-        `template=${data.template}&action_type=${data.type}&tx_hash=${
-          data.transactionHash
+        `template=${data.template}&action_type=${data.type}&tx_hash=${data.transactionHash
         }&chain_id=${chainId}&time=${Math.ceil(Date.now() / 1000)}`,
       );
       params.source = source;

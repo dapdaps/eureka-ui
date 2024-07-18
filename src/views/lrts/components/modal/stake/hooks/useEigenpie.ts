@@ -135,22 +135,21 @@ export default function useEigenpie({ token0, token1, actionType, dapp }: any) {
         toast.fail({ title: `${method} faily!` });
       }
       addAction({
-        type: 'Staking',
+        type: "Staking",
         action: actionType,
+        token: [inToken.symbol, outToken.symbol],
         amount: inAmount,
         template: dapp.name,
-        token: inToken,
         status,
         transactionHash,
-        add: 0,
+        chain_id: token0.chainId,
         extra_data: JSON.stringify({
-          action: actionType,
-          amount0: inAmount,
-          amount1: outAmount,
-          token0: inToken.symbol,
-          token1: outToken.symbol,
-        }),
-      });
+          fromTokenSymbol: inToken.symbol,
+          fromTokenAmount: inAmount,
+          toTokenSymol: outToken.symbol,
+          toTokenAmount: outAmount,
+        })
+      })
       setLoading(false);
     } catch (err: any) {
       console.log('err', err);
