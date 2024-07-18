@@ -4,6 +4,7 @@ export const StyledContainer = styled.div`
   padding-top: 30px;
   height: 225px;
   overflow-y: auto;
+  padding-left: 10px;
 `;
 export const StyledItem = styled.div`
   display: flex;
