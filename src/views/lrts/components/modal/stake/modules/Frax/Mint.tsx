@@ -68,7 +68,9 @@ const Mint = (props: any) => {
         mt={30}
         label="From"
         currency={token0}
+        showMax={true}
         value={inputAmount}
+        onMax={() => setInputAmount(availableAmount)}
         onChange={(val: string) => {
           setInputAmount(val);
         }}
