@@ -71,7 +71,7 @@ export default function useRenzoRequests() {
   }, [account, chainId]);
 
   const claim = useCallback(
-    async (record: any, onLoading: Function) => {
+    async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
       onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });

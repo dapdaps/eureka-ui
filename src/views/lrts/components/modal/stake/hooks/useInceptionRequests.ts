@@ -124,7 +124,7 @@ export default function useInceptionRequests() {
   );
 
   const claim = useCallback(
-    async (record: any, onLoading: Function) => {
+    async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
       let method = '';
       let Contract = null;

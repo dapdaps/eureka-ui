@@ -88,8 +88,8 @@ export default function usePuffer({ token0, token1, actionType, dapp }: any) {
   }, [account]);
 
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
-  }
+    setInAmount(tokenBalance ?? 0);
+  };
   const handleStake = async () => {
     let method = '';
     if (token0.isNative) {

@@ -94,8 +94,8 @@ export default function useInception({ token0, token1, actionType, dapp }: any) 
   }, [account, actionType]);
 
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
-  }
+    setInAmount(tokenBalance ?? 0);
+  };
   const handleStake = async () => {
     let method = '';
     let Contract = null;

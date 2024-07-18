@@ -99,7 +99,7 @@ export default function useKarakRequests() {
   );
 
   const claim = useCallback(
-    async (record: any, onLoading: Function) => {
+    async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
       onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });

@@ -99,8 +99,8 @@ export default function useRenzo({ token0, token1, actionType, dapp }: any) {
   }, [account, actionType]);
 
   const handleMax = function () {
-    setInAmount(data?.availableAmount ?? 0)
-  }
+    setInAmount(tokenBalance ?? 0);
+  };
   const handleStake = async () => {
     let method = '';
     const isStake = ['stake', 'restake'].includes(actionType);
