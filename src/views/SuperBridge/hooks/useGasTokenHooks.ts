@@ -67,8 +67,6 @@ export async function getTransaction(address: string) {
 
     const res: any = await fetch(`${BASE_URL}/getOrderHistory/${address}`).then(res => res.json())
 
-    console.log('res1:', res)
-
     if (res && res.returnCode === 20000) {
         return res.data.orders
     }
@@ -407,6 +405,9 @@ export function useGasAmount({
             _value,
             account,
             toChain?.chainId,
+            {
+                // gasLimit: 9999999
+            }
         )
 
         return v.wait()
@@ -451,16 +452,17 @@ export function useTransction(address: string) {
         return () => {
             clearInterval(inter)
         }
-    }, [])
+    }, [address])
 
     async function refreshTransaction() {
         if (!address) {
             return setTransactionList([])
         }
         getTransaction(address).then(res => {
-            console.log('res:', res)
+            res.sort((a: any, b: any) => b.timestamp - a.timestamp)
             if (Array.isArray(res)) {
                 res.forEach((item: any) => {
+                    item.timestamp = item.timestamp * 1000
                     const fromChain = _chainConfig[item.src_chain_id]
                     const toChain = _chainConfig[item.dst_chain_id]
                     if (fromChain) {

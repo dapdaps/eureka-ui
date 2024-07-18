@@ -71,23 +71,6 @@ const Range = styled.input<{ max: any, value: any }>`
     
 `
 
-const Container = styled.div<{ disabled?: boolean }>`
-    height: 60px;
-    line-height: 60px;
-    background-color: rgba(235, 244, 121, 1);
-    border-radius: 10px;
-    text-align: center;
-    color: rgba(55, 58, 83, 1);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 18px;
-    margin-top: 10px;
-    &.disbaled {
-        opacity: .3;
-        cursor: default;
-    }
-`
-
 const Sep = styled.div`
     height: 20px;
 `
@@ -134,7 +117,7 @@ export default function GasModal({
         value: inputValue
     })
 
-    const senGas = useCallback(async () => {
+    const sendGas = useCallback(async () => {
         if (fromToken) {
             const _value = new Big(inputValue).mul(10 ** fromToken?.decimals).toString()
             await deposit(fromToken.address, account as string, _value, provider?.getSigner())
@@ -159,7 +142,7 @@ export default function GasModal({
             return
         }
 
-        if (!maxBalance || Number(inputValue) >= Number(maxBalance)) {
+        if (!maxBalance || Number(inputValue) > Number(maxBalance)) {
             setDisabled(true)
             return
         }
@@ -176,7 +159,7 @@ export default function GasModal({
             <div className="transter-detail">
                 <Input value={rangeVal} onChange={(e) => {
                     const { value } = e.target
-                    if (maxBalance && Number(maxBalance) < Number(value)) {
+                    if (maxBalance && Number(maxBalance) <= Number(value)) {
                         setRangeVal(maxBalance)
                     } else if (Number(value)> Number(max)) {
                         setRangeVal(max.toString())
@@ -198,7 +181,7 @@ export default function GasModal({
         <Range
             type='range'
             onChange={(e: any) => {
-                if (maxBalance && Number(maxBalance) < Number(e.target.value)) {
+                if (maxBalance && Number(maxBalance) <= Number(e.target.value)) {
                     setRangeVal(maxBalance)
                 } else {
                     setRangeVal(e.target.value)
@@ -219,7 +202,10 @@ export default function GasModal({
             disabled={disabled}
             text="Confirm"
             fromChain={fromChain as Chain}
-            onClick={senGas}
+            onClick={async () => {
+                await sendGas()
+                onClick && onClick()
+            }}
             defaultText="Confirm"
         />
         

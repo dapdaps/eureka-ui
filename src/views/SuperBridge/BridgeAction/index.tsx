@@ -461,7 +461,7 @@ export default function BirdgeAction(
         toAddress={account as string}
         maxBalance={balance}
         onClick={() => {
-          console.log(11)
+          setUpdateBanlance(updateBanlance + 1)
         }}
         onClose={() => { setGasModalShow(false) }}
       />
