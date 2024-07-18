@@ -1,6 +1,9 @@
 import Big from 'big.js';
 import { useEffect, useState } from 'react';
 
+import { ethereum } from '@/config/tokens/ethereum';
+
+import Button from '../../components/button';
 import {
   StyledActiveAndCompleted,
   StyledActiveAndCompletedButton,
@@ -15,7 +18,6 @@ import {
   StyledFirstTips,
   StyledInput,
   StyledInputContainer,
-  StyledLine,
   StyledMax,
   StyledMaxAndSymbol,
   StyledPlusSvg,
@@ -28,7 +30,6 @@ import {
   StyledSecondLine,
   StyledSecondTips,
   StyledStakeBottomContainer,
-  StyledStakeButton,
   StyledStakeButtonContainer,
   StyledStakeContainer,
   StyledStakeTopContainer,
@@ -36,27 +37,23 @@ import {
   StyledSymbolImage,
   StyledSymbolTxt,
   StyledTipsContainer,
-  StyledTitle,
   StyledWithdrawTips
 } from '../../styles';
-import { useTabStore } from './hooks/useTab';
+import useFrax from './hooks/useFrax';
+import { ITab, useTabStore } from './hooks/useTab';
 import Mint from './Mint';
 import Redeem from './Redeem';
 import Tabs from './Tabs';
 
 
-export enum ITab {
-  MINT = 'mint',
-  REDEEM = 'redeem',
-  STAKE = 'stake',
-  UNSTAKE = 'unstake',
-}
-
 
 const FraxComponent = function (props: any) {
+
+  const { setShow, token0, token1 } = props.componentProps;
+  const setTabStore = useTabStore(store => store.set)
+
   const {
     data,
-    setShow,
     inAmount,
     outAmount,
     isLoading,
@@ -65,24 +62,24 @@ const FraxComponent = function (props: any) {
     leastAmount,
     inToken,
     outToken,
-    token0, 
-    token1,
-    handleMax,
     isInSufficient,
+    sfrxBalance,
     handleApprove,
     handleAmountChange,
     handleStake,
-    handleAddMetaMask
-  } = props?.componentProps
+    handleAddMetaMask,
+    handleMax
+  } = useFrax({ token0, token1 });
 
   const [actionType, setActionType] = useState(ITab.MINT)
-  const setTabStore = useTabStore(store => store.set)
+  
 
-  useEffect(() => {
+  const changeTab = (tab: any) => {
+    setActionType(tab)
     setTabStore({
-      tab: actionType
+      tab
     })
-  }, [actionType])
+  }
 
   return (
     <StyledStakeContainer>
@@ -111,7 +108,7 @@ const FraxComponent = function (props: any) {
           </StyledCloseIcon>
         </StyledClose>
 
-        <Tabs defaultTab={actionType} items={Object.values(ITab)} onClick={(e: any) => setActionType(e)} />
+        <Tabs defaultTab={actionType} items={Object.values(ITab)} onClick={changeTab} />
         { actionType === ITab.MINT && 
           (<Mint 
             token0={token0}
@@ -133,25 +130,25 @@ const FraxComponent = function (props: any) {
         {
           ![ITab.MINT, ITab.REDEEM].includes(actionType) && (
             <>
-              <StyledBaseInfoContainer>
-                {[ITab.STAKE, ITab.UNSTAKE].includes(actionType) && (
+              <StyledBaseInfoContainer style={{ justifyContent: 'space-between'}}>
+                {[ITab.STAKE].includes(actionType) && (
                   <StyledBaseInfo>
                     <StyledFirstTips>Available to stake</StyledFirstTips>
                     <StyledBaseInfoValue>
-                      {Big(data?.availableAmount ?? 0).toFixed(4)} {inToken?.symbol}
+                    {Big(data?.stakedAmount ?? 0).toFixed(4)} {outToken?.symbol}
                     </StyledBaseInfoValue>
                   </StyledBaseInfo>
                 )}
-                <StyledBaseInfo style={{ alignItems: [ITab.STAKE, ITab.UNSTAKE].includes(actionType) ? 'center' : 'flex-start' }}>
+                <StyledBaseInfo flex={ITab.UNSTAKE === actionType ? 'none':'' } style={{ alignItems: [ITab.STAKE, ITab.UNSTAKE].includes(actionType) ? 'center' : 'flex-start' }}>
                   <StyledFirstTips>APR</StyledFirstTips>
                   <StyledBaseInfoValue style={{ color: '#A4E417' }}>{Big(data?.apy ?? 0).toFixed(2)}%</StyledBaseInfoValue>
                 </StyledBaseInfo>
-                <StyledBaseInfo>
+                <StyledBaseInfo flex={ITab.UNSTAKE === actionType ? 'none':'' } >
                   <StyledFirstTips>Staked amount</StyledFirstTips>
 
                   <StyledBaseInfoValueContainer>
                     <StyledBaseInfoValue>
-                      {Big(data?.stakedAmount ?? 0).toFixed(4)} {outToken?.symbol}
+                      {Big(sfrxBalance ?? 0).toFixed(4)} sfrxETH
                     </StyledBaseInfoValue>
                     <StyledPlusSvg onClick={handleAddMetaMask}>
                       <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -170,12 +167,11 @@ const FraxComponent = function (props: any) {
                   </StyledBaseInfoValueContainer>
                 </StyledBaseInfo>
               </StyledBaseInfoContainer>
-              <StyledLine />
-              <StyledBottomContainer>
+              <StyledBottomContainer style={{ paddingBottom: ITab.STAKE === actionType ? 34: 0 }}>
                 <StyledTipsContainer>
-                  <StyledFirstTips>Stake</StyledFirstTips>
+                  <StyledFirstTips>{actionType}</StyledFirstTips>
                   <StyledSecondTips>
-                    1 {inToken.symbol} = {data?.exchangeRate} {outToken.symbol}
+                    1 {outToken.symbol} = {data?.exchangeRate} {inToken.symbol}
                   </StyledSecondTips>
                 </StyledTipsContainer>
                 <StyledInputContainer>
@@ -188,16 +184,16 @@ const FraxComponent = function (props: any) {
                   <StyledMaxAndSymbol>
                     <StyledMax onClick={handleMax}>Max</StyledMax>
                     <StyledSymbol>
-                      <StyledSymbolImage />
-                      <StyledSymbolTxt>{inToken.symbol}</StyledSymbolTxt>
+                      <StyledSymbolImage src={actionType === ITab.STAKE ? ethereum['sfrxETH'].icon : ethereum['frxETH'].icon } />
+                      <StyledSymbolTxt>{actionType === ITab.STAKE ? ethereum['sfrxETH'].symbol : ethereum['frxETH'].symbol}</StyledSymbolTxt>
                     </StyledSymbol>
                   </StyledMaxAndSymbol>
                 </StyledInputContainer>
-                <StyledSecondTips>swap fee 0.23% (0,0023 ETH)</StyledSecondTips>
+                <StyledSecondTips>swap fee 0.00% </StyledSecondTips>
                 <StyledReceiveContainer>
                   <StyledFirstTips>Min. Receive</StyledFirstTips>
                   <StyledReceive>
-                    ~{Big(outAmount ? outAmount : 0).toFixed(6)} {outToken.symbol}
+                    ~{Big(inAmount ? inAmount : 0).toFixed(4)} {actionType === ITab.STAKE ? ethereum['sfrxETH'].symbol : ethereum['frxETH'].symbol}
                   </StyledReceive>
                 </StyledReceiveContainer>
                 <StyledSecondTips style={{ marginBottom: 20 }}>
@@ -211,19 +207,17 @@ const FraxComponent = function (props: any) {
                       stroke="white"
                     />
                   </svg>
-                  {isInSufficient ? (
-                    <StyledStakeButton>InSufficient Balance</StyledStakeButton>
-                  ) : isLoading ? (
-                    <StyledStakeButton>Loading~~</StyledStakeButton>
-                  ) : approved && !approving ? (
-                    Big(inAmount ? inAmount : 0).lt(leastAmount) ? (
-                      <StyledStakeButton disabled>{actionType}</StyledStakeButton>
-                    ) : (
-                      <StyledStakeButton onClick={handleStake}>{actionType}</StyledStakeButton>
-                    )
-                  ) : (
-                    <StyledStakeButton onClick={handleApprove}>Approve</StyledStakeButton>
-                  )}
+                  <Button
+                    isInSufficient={isInSufficient}
+                    isLoading={isLoading}
+                    chainId={inToken.chainId}
+                    approved={approved}
+                    onApprove={handleApprove}
+                    handleStake={handleStake}
+                    actionType={actionType}
+                    inAmount={inAmount}
+                    leastAmount={leastAmount}
+                  />
                 </StyledStakeButtonContainer>
               </StyledBottomContainer>
             </>

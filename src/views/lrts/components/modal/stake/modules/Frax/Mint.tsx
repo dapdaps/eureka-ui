@@ -5,7 +5,8 @@ import styled from 'styled-components';
 
 import { FRAX_MINT } from '@/views/lrts/config/abi/frax';
 
-import { StyledStakeButton, StyledStakeButtonContainer } from '../../styles';
+import Button from '../../components/button';
+import { StyledStakeButtonContainer } from '../../styles';
 import useFrax from './hooks/useFrax';
 import InputCurrency from './InputCurrency';
 
@@ -28,12 +29,13 @@ const Mint = (props: any) => {
 
   const { availableAmount, provider, inToken, toast, leastAmount } = useFrax({ actionType, token0, token1 });
 
-  const isInSufficient = useMemo(() => Number(inputAmount) > Number(availableAmount), [availableAmount, inputAmount]);
+  
+  const isInSufficient = useMemo(() => Big(inputAmount || 0).gt(availableAmount || 0), [availableAmount, inputAmount]);
+
 
   const handleMint = useCallback(async () => {
     const contract = new ethers.Contract(frxETHMinter_ADDR, FRAX_MINT, provider.getSigner());
     const toastId = toast.loading({ title: `Mint ${inToken.symbol}` });
-
     try {
       setIsLoading(true)
       const tx = await contract.submit({
@@ -41,8 +43,8 @@ const Mint = (props: any) => {
       });
       await tx.wait();
       toast.success({ title: "Mint Successfully!", text: `Mint ${inToken.symbol}`, tx: tx.hash });
-      setIsLoading(false)
       toast.dismiss(toastId);
+      setInputAmount('')
     } catch (error: any) {
       toast.fail({
         title: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Mint faily!`,
@@ -53,6 +55,16 @@ const Mint = (props: any) => {
     }
   }, [provider, inToken, inputAmount, toast])
 
+  const adjustedInputAmount = useMemo(() => {
+    if (inputAmount === '' || Big(inputAmount).eq(0)) {
+      return '';
+    }
+    return Big(inputAmount).lte(leastAmount) ? leastAmount : inputAmount;
+  }, [inputAmount]);
+  
+
+  console.log(token0, token1, 'token0, token1');
+  
   return (
     <TabsBody>
       <InputCurrency
@@ -64,7 +76,7 @@ const Mint = (props: any) => {
           setInputAmount(val);
         }}
       />
-      <InputCurrency mt={20} label="To" readOnly currency={token1} value={inputAmount} />
+      <InputCurrency mt={20} label="To" readOnly currency={token1} value={adjustedInputAmount} />
 
       <Tips>swap fee 0.23% (0,0023 ETH)</Tips>
 
@@ -75,15 +87,16 @@ const Mint = (props: any) => {
             stroke="white"
           />
         </svg>
-        {isInSufficient ? (
-          <StyledStakeButton>InSufficient Balance</StyledStakeButton>
-        ) : isLoading ? (
-          <StyledStakeButton>Loading~~</StyledStakeButton>
-        ) : Big(inputAmount ? inputAmount : 0).lt(leastAmount) ? (
-          <StyledStakeButton disabled>Mint</StyledStakeButton>
-        ) : (
-          <StyledStakeButton onClick={handleMint}>Mint</StyledStakeButton>
-        )}
+        <Button
+          isInSufficient={isInSufficient}
+          isLoading={isLoading}
+          chainId={inToken?.chainId}
+          actionType={actionType}
+          inAmount={inputAmount}
+          leastAmount={leastAmount}
+          handleStake={handleMint}
+          approved={true}
+        />
       </StyledStakeButtonContainer>
     </TabsBody>
   );

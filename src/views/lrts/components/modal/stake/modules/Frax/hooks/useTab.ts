@@ -1,7 +1,14 @@
 import { create } from 'zustand';
 
+export enum ITab {
+  MINT = 'mint',
+  REDEEM = 'redeem',
+  STAKE = 'stake',
+  UNSTAKE = 'unstake',
+}
+
 type IState = {
-    tab: string
+    tab: ITab
 };
 
 type IConfig = IState & {
@@ -9,6 +16,6 @@ type IConfig = IState & {
   };
 
 export const useTabStore = create<IConfig>((set) => ({
-  tab: '',
+  tab: ITab.MINT,
   set: (params: any) => set(() => ({ ...params })),
 }));
