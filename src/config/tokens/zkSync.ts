@@ -44,7 +44,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq',
   },
 
   zch: {
@@ -158,7 +158,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
   },
   cebusd: {
     chainId: CHAIN_ID,
@@ -184,5 +184,14 @@ export const zkSync: { [key: string]: Token } = {
     name: 'Velocore',
     icon: 'https://ipfs.near.social/ipfs/bafkreihvtu2nfnzgzc6jbcdvd22fmtufkxoawttgbt3nmagc5rcvfjjcki',
     priceKey: 'velocore',
+  },
+
+  dai: {
+    chainId: CHAIN_ID,
+    address: '0x4b9eb6c0b6ea15176bbf62841c6b2a8a398cb656',
+    decimals: 18,
+    symbol: 'DAI',
+    name: 'Dai Stablecoin',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene',
   },
 };

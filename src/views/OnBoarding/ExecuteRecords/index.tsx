@@ -901,7 +901,7 @@ const ExecuteRecords = ({ chain }: any) => {
                   <span></span>
                 </div>
                 <div className="recordList-text">
-                  <p>{record.action_title}</p>
+                  <p>{formatTitle(record)}</p>
                   <div className="recordList-text-btn">
                     <span className="text-btn-icon">{record.action_type}</span>
                     <span>{getTime(record.create_time)}</span>

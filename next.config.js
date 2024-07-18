@@ -73,6 +73,50 @@ const nextConfig = {
       source: '/shush/:path*',
       destination: 'https://www.shush.fi/:path*',
     },
+    {
+      source: '/blast/bridge/:path*',
+      destination: 'https://waitlist-api.prod.blast.io/:path*',
+    },
+    {
+      source: '/renzo/:path*',
+      destination: 'https://app.renzoprotocol.com/:path*',
+    },
+    {
+      source: '/lido/:path*',
+      destination: 'https://stake.lido.fi/:path*',
+    },
+    {
+      source: '/pac/:path*',
+      destination: api_url + '/pac/:path*',
+    },
+    {
+      source: '/pool/fee-apr',
+      destination: 'https://ro81h8hq6b.execute-api.us-east-1.amazonaws.com/pool/fee-apr',
+    },
+    {
+      source: '/kelpdao/:path*',
+      destination: 'https://universe.kelpdao.xyz/:path*',
+    },
+    {
+      source: '/teahouse/:path*',
+      destination: 'https://vault-api.teahouse.finance/:path*',
+    },
+    {
+      source: '/beefy/:path*',
+      destination: 'https://api.beefy.finance/:path*',
+    },
+    {
+      source: '/duo/exchange/:path*',
+      destination: 'https://www.duo.exchange/api/:path*',
+    },
+    {
+      source: '/teahouse/:path*',
+      destination: 'https://vault-api.teahouse.finance/:path*',
+    },
+    {
+      source: '/api/app/agentfi/:path*',
+      destination: 'https://app.agentfi.io/api/:path*',
+    },
   ],
   images: {
     remotePatterns: [
@@ -103,6 +147,12 @@ const nextConfig = {
     ],
   },
   transpilePackages: ['ahooks'],
+  experimental: {
+    esmExternals: 'loose',
+  },
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    return config;
+  },
 };
 
 module.exports = nextConfig;

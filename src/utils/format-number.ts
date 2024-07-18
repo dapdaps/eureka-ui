@@ -1,4 +1,5 @@
-export function formatThousandsSeparator(n: number): string {
+export function formatThousandsSeparator(n: number | string): string {
+  if (isNaN(Number(n))) return '';
   const strSplit = n.toString().split('.');
   const integer = strSplit[0].split('');
   integer.reverse();
@@ -17,3 +18,19 @@ export function formatThousandsSeparator(n: number): string {
   }
   return s;
 }
+
+export const simplifyNum = (number: number) => {
+  if (typeof Number(number) !== 'number') return 0;
+  if (isNaN(Number(number))) return 0;
+
+  let str_num;
+  if (number >= 1e3 && number < 1e6) {
+    str_num = number / 1e3;
+    return Math.floor(str_num) + 'K';
+  } else if (number >= 1e6) {
+    str_num = number / 1e6;
+    return Math.floor(str_num) + 'M';
+  } else {
+    return Number(number).toFixed(2);
+  }
+};

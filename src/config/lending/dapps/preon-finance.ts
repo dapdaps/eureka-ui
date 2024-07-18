@@ -6,6 +6,8 @@ const BORROW_URL = 'https://ipfs.near.social/ipfs/bafkreifn26whjukvke3m35hwcl74u
 
 const MIN_DEBT = 180;
 const MAX_LTV = 0.889;
+const _upperHint = '0x544f96434f77437425d5aC40fd4755C0cf39399A';
+const _lowerHint = '0xA1B7bbade134DB3B14B56056480e81c60Ab77377';
 
 const basic = {
   name: 'Preon Finance',
@@ -32,10 +34,12 @@ const networks = {
         BORROW_TOKEN,
         BORROW_URL,
         MAX_LTV,
-        ONE_TIME_FEE: 0.5,
+        ONE_TIME_FEE: 8,
         MIN_DEBT,
         MINTED: 0,
         MINTED_CAP: 500000,
+        _upperHint,
+        _lowerHint,
       },
       [arbitrum['weth'].address]: {
         decimals: 18,
@@ -43,10 +47,12 @@ const networks = {
         BORROW_TOKEN,
         BORROW_URL,
         MAX_LTV,
-        ONE_TIME_FEE: 0.5,
+        ONE_TIME_FEE: 8,
         MIN_DEBT,
         MINTED: 0,
         MINTED_CAP: 500000,
+        _upperHint,
+        _lowerHint,
       },
     },
   },
@@ -64,10 +70,12 @@ const networks = {
         BORROW_TOKEN,
         BORROW_URL,
         MAX_LTV,
-        ONE_TIME_FEE: 0.5,
+        ONE_TIME_FEE: 8,
         MIN_DEBT,
         MINTED: 0,
         MINTED_CAP: 500000,
+        _upperHint,
+        _lowerHint,
       },
       [polygon['stmatic'].address]: {
         decimals: 18,
@@ -75,10 +83,12 @@ const networks = {
         BORROW_TOKEN,
         BORROW_URL,
         MAX_LTV,
-        ONE_TIME_FEE: 0.5,
+        ONE_TIME_FEE: 8,
         MIN_DEBT,
         MINTED: 0,
         MINTED_CAP: 500000,
+        _upperHint,
+        _lowerHint,
       },
     },
   },

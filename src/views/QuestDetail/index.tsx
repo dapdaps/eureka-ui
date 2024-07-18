@@ -1,16 +1,18 @@
-import { useSearchParams } from 'next/navigation';
-import { memo, useEffect, useState, useMemo } from 'react';
 import { useConnectWallet } from '@web3-onboard/react';
+import { useSearchParams } from 'next/navigation';
+import { memo, useEffect, useMemo, useState } from 'react';
+
 import Breadcrumb from '@/components/Breadcrumb';
 import Spinner from '@/components/Spinner';
 import useUserInfo from '@/hooks/useUserInfo';
 import useUserReward from '@/hooks/useUserReward';
-import useCategoryList from '@/views/Quest/hooks/useCategoryList';
 import useReport from '@/views/Landing/hooks/useReport';
-import ClaimedSuccessModal from './components/ClaimedSuccessModal';
+import useCategoryList from '@/views/Quest/hooks/useCategoryList';
+
 import Yours from '../Quest/components/Yours';
 import useCampaignList from '../Quest/hooks/useCampaignList';
 import Actions from './components/Actions';
+import ClaimedSuccessModal from './components/ClaimedSuccessModal';
 import Details from './components/Details';
 import Recommends from './components/Recommends';
 import useQuestInfo from './hooks/useQuestInfo';
@@ -40,11 +42,19 @@ const QuestDetailView = () => {
       const campaign = campaigns.find((campaign) => campaign.id === quest.quest_campaign_id);
       const array = [];
       array[0] = { name: 'Quests Campaign', path: '/quest/leaderboard' };
+
       if (campaign) {
-        array[1] = {
-          name: campaign.name,
-          path: '/quest/leaderboard/' + campaign.name.replace(/\s/g, ''),
-        };
+        if (campaign.category === 'Shush') {
+          array[1] = {
+            name: campaign.name,
+            path: `/shush`,
+          };
+        } else {
+          array[1] = {
+            name: campaign.name,
+            path: '/quest/leaderboard/' + campaign.name.replace(/\s/g, ''),
+          };
+        }
         array[2] = { name: 'Detail', path: '/quest/detail' };
       } else {
         array[1] = { name: 'Detail', path: '' };
@@ -54,6 +64,8 @@ const QuestDetailView = () => {
   }, [quest, campaigns]);
 
   const isBitGetUser = useMemo(() => userInfo.source === 'bitget' || userInfo.source === 'bitget_wallet', [userInfo]);
+  const isCoin98User = useMemo(() => userInfo.source === 'coin98_wallet', [userInfo]);
+  const isOkxUser = useMemo(() => userInfo.source === 'okx_wallet', [userInfo]);
   useEffect(() => {
     if (wallet?.label.toLowerCase().includes('bitget')) {
       handleReport('bitget_wallet');
@@ -80,6 +92,8 @@ const QuestDetailView = () => {
                 userInfo={userInfo}
                 isLive={info.quest.status === 'ongoing'}
                 isBitGetUser={isBitGetUser}
+                isCoin98User={isCoin98User}
+                isOkxUser={isOkxUser}
                 claimed={info.quest.is_claimed}
                 onSuccess={() => {
                   queryUserReward();
@@ -98,6 +112,8 @@ const QuestDetailView = () => {
               open={showSuccessModal}
               reward={info.quest.reward}
               isBitGetUser={isBitGetUser}
+              isCoin98User={isCoin98User}
+              isOkxUser={isOkxUser}
               onClose={() => {
                 setShowSuccessModal(false);
               }}

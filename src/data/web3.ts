@@ -12,15 +12,24 @@ import chains from '@/config/chains';
 const web3onboardKey = 'web3-onboard:connectedWallets';
 
 const wcV2InitOptions: any = {
-  version: 2,
   projectId: '72b7b3359ab477e339a070f615806aa6',
-  requiredChains: Object.keys(chains).map((chain) => Number(chain)),
+  optionalChains: Object.keys(chains).map((chain) => Number(chain)),
+  dappUrl: 'https://www.dapdap.net/',
 };
-
 const walletConnect = walletConnectModule(wcV2InitOptions);
 const injected = injectedModule({
   // display specific unavailable wallets
-  displayUnavailable: [ProviderLabel.MetaMask],
+  displayUnavailable: [ProviderLabel.MetaMask, ProviderLabel.Coin98Wallet, ProviderLabel.OKXWallet],
+  sort: (wallets) => {
+    const metaMask = wallets.find(({ label }) => label === ProviderLabel.MetaMask);
+    const coin98 = wallets.find(({ label }) => label === ProviderLabel.Coin98Wallet);
+
+    return [
+      metaMask,
+      coin98,
+      ...wallets.filter(({ label }) => label !== ProviderLabel.MetaMask && label !== ProviderLabel.Coin98Wallet),
+    ] as any[];
+  },
 });
 const bitgetWallet = bitgetWalletModule();
 
@@ -45,6 +54,18 @@ export const onboard = init({
       token: 'ETH',
       label: 'Goerli - Ethereum Testnet',
       rpcUrl: 'https://rpc.ankr.com/eth_goerli',
+    },
+    {
+      id: 11155111,
+      token: 'ETH',
+      label: 'Sepolia - Ethereum Testnet',
+      rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
+    },
+    {
+      id: 421614,
+      token: 'ETH',
+      label: 'Arbitrum Sepolia',
+      rpcUrl: 'https://endpoints.omniatech.io/v1/arbitrum/sepolia/public',
     },
     {
       id: 10,
@@ -281,6 +302,18 @@ export const onboard = init({
       label: 'Scroll',
       rpcUrl: 'https://rpc.scroll.io',
     },
+    {
+      id: 81457,
+      token: 'Blast',
+      label: 'Blast',
+      rpcUrl: 'https://rpc.blast.io',
+    },
+    {
+      id: 34443,
+      token: 'Mode',
+      label: 'Mode',
+      rpcUrl: 'https://mainnet.mode.network',
+    }
   ],
   appMetadata: {
     name: 'NEAR',
@@ -299,7 +332,6 @@ export const onboard = init({
       position: 'bottomRight',
     },
   },
-
   containerElements: {},
 });
 

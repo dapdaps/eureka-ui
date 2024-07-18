@@ -6,7 +6,7 @@ import { useRef } from 'react';
 export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean; isQuiet?: boolean }) {
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const check = async (cb?: any, quiet?: boolean) => {
     if (!account) {
       if (quiet !== undefined ? quiet : isQuiet) return;
@@ -19,14 +19,14 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
       return;
     }
     const checkAk = async () => {
-      const result = window.localStorage.getItem(http.AUTH_TOKENS);
+      const result = window.sessionStorage.getItem(http.AUTH_TOKENS);
       const parsedResult = result ? JSON.parse(result) : {};
       if (parsedResult.access_token) {
         cb?.();
         return;
       }
-      if (timer.current) clearTimeout(timer.current);
-      timer.current = setTimeout(() => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      timerRef.current = setTimeout(() => {
         checkAk();
       }, 500);
     };

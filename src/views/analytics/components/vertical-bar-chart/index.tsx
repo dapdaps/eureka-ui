@@ -44,7 +44,7 @@ const App: FC<IProps> = ({ data }) => {
   const CustomTooltip = (props: any) => {
     const { payload } = props;
 
-    const map: any = { total_trading_value: 'Transactions' };
+    const map: any = { total_trading_value: 'Trading Volume' };
 
     return (
       <Styles.CustomTooltip>
@@ -56,7 +56,7 @@ const App: FC<IProps> = ({ data }) => {
           <Styles.Item key={index}>
             <Styles.Key>{map[item.name]}</Styles.Key>
 
-            <Styles.Value>{formatThousandsSeparator(item.value)}</Styles.Value>
+            <Styles.Value>${formatThousandsSeparator(item.value)}</Styles.Value>
           </Styles.Item>
         ))}
       </Styles.CustomTooltip>

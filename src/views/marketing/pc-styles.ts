@@ -25,6 +25,9 @@ export const Banner = styled.div`
   &.namlongdao {
     background-image: url('/images/marketing/coin68-pc.png');
   }
+  &.okx {
+    background-image: url('/images/marketing/bg-pc.png');
+  }
 `;
 export const CoinBanner = styled.div`
   height: 300px;
@@ -45,6 +48,12 @@ export const XImg = styled.img`
   width: 36px;
   margin: 0 30px;
 `;
+
+export const OkxImg = styled.img`
+  width: 70px;
+  height: 70px;
+`;
+
 export const BgImg = styled.img`
   width: 360px;
 `;
@@ -54,6 +63,18 @@ export const Logo = styled.div`
   gap: 10px;
   justify-content: center;
   margin-bottom: 10px;
+  .dapdap {
+    color: #ebf479;
+  }
+  .partner {
+    color: white;
+  }
+  .dapdap,
+  .partner {
+    font-size: 42px;
+    font-weight: 900;
+    font-family: 'Montserrat';
+  }
 `;
 export const Img = styled.img``;
 

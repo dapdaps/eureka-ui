@@ -1,22 +1,30 @@
+import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
-import SwapPanel from './components/SwapPanel';
-import PreviousOrders from './components/PreviousOrders';
-import SelectTokens from './components/SelectTokens';
+
 import Spinner from '@/components/Spinner';
+import useCampaignList from '@/views/Quest/hooks/useCampaignList';
+
+import useQuestList from '../bns/hooks/useQuestList';
 import Common from './common';
-import useTrade from './hooks/useTrade';
+import PreviousOrders from './components/PreviousOrders';
+import Quests from './components/Quests';
+import SelectTokens from './components/SelectTokens';
+import SwapPanel from './components/SwapPanel';
+import useExchange from './hooks/useExchange';
+import useNetworksAndTokens from './hooks/useNetworksAndTokens';
 import usePrices from './hooks/usePrices';
 import useQuote from './hooks/useQuote';
-import useNetworksAndTokens from './hooks/useNetworksAndTokens';
-import useExchange from './hooks/useExchange';
-import { useDebounceFn } from 'ahooks';
+import useTrade from './hooks/useTrade';
 
 let openType: 'from' | 'to' = 'from';
-
 export default function ShuShView() {
   const [anonymous, setAnonymous] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const { loading: campaignLoading, campaigns } = useCampaignList();
   const { loading, networks, tokens } = useNetworksAndTokens();
+  const [questId, setQuestId] = useState('');
+  const { loading: questingLoading, questList } = useQuestList(questId);
+
   const {
     from,
     to,
@@ -64,6 +72,14 @@ export default function ShuShView() {
     if (quoteAmount && Number(quoteAmount) && direction) quote();
   }, [quoteAmount, direction, from, to, anonymous]);
 
+  useEffect(() => {
+    if (!Array.isArray(campaigns) || campaigns.length < 1) return;
+
+    const _questId = campaigns.find((item: any) => item.category === 'Shush')?.id;
+
+    setQuestId(_questId);
+  }, [campaigns]);
+
   return loading ? (
     <Spinner />
   ) : (
@@ -95,6 +111,9 @@ export default function ShuShView() {
           handleExchange={handleTokenExchange}
         />
         <PreviousOrders tokens={tokens} />
+
+        {/* <Quests questList={questList} loading={questingLoading} /> */}
+
         <SelectTokens
           display={showModal}
           networks={networks}

@@ -1,12 +1,12 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 export const MenuContainer = styled(motion.div)`
   z-index: 100;
   position: absolute;
   left: 0;
   top: 78px;
-  background: #16181d;
+  background: #262836;
   width: 100%;
   padding: 40px 0px;
   color: #ffffff;
@@ -94,7 +94,7 @@ export const StyledExploreArrow = styled.div`
 export const StyledMenu = styled.div`
   display: flex;
   margin-top: 30px;
-  border-top: 1px solid #21232a;
+  border-top: 1px solid #393c47;
   padding-top: 30px;
 `;
 
@@ -117,7 +117,7 @@ export const StyledMenuTitle = styled.div`
 
 export const StyledMenuLock = styled.div`
   border-radius: 10px;
-  border: 1px solid #16181d;
+  border: 1px solid #262836;
   background: #373a53;
   width: 51px;
   height: 20px;

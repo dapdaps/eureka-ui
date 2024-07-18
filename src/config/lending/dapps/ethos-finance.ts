@@ -6,6 +6,8 @@ const BORROW_URL = 'https://assets.coingecko.com/coins/images/29744/standard/ERN
 const MIN_DEBT = 90;
 const ONE_TIME_FEE = 1.42; //TODO
 const MAX_LTV = 0.8333; // 100/108
+const _upperHint = '0xc655B790FF812109c8F6c3f24fd20b3495164A51';
+const _lowerHint = '0x0000000000000000000000000000000000000000';
 
 const basic = {
   name: 'Ethos Finance',
@@ -35,6 +37,8 @@ const networks = {
         ONE_TIME_FEE,
         MIN_DEBT,
         MCR: 1.1, //110%
+        _upperHint,
+        _lowerHint,
         // MINTED: 0,
         // MINTED_CAP: 500000,
       },
@@ -47,6 +51,8 @@ const networks = {
         ONE_TIME_FEE,
         MIN_DEBT,
         MCR: 1.08, //108%
+        _upperHint,
+        _lowerHint,
         // MINTED: 0,
         // MINTED_CAP: 500000,
       },
@@ -59,6 +65,8 @@ const networks = {
         ONE_TIME_FEE,
         MIN_DEBT,
         MCR: 1.1, //110%
+        _upperHint,
+        _lowerHint,
         // MINTED: 0,
         // MINTED_CAP: 500000,
       },

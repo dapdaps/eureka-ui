@@ -18,7 +18,9 @@ export default function useSwitchChain() {
         return;
       }
     }
-    await setChain(params);
+    await setChain({
+      chainId: params.chainId,
+    } as any);
     setSwitching(false);
     cb?.();
   };

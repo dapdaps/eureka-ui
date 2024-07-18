@@ -4,8 +4,10 @@ import { useUserStore } from '@/stores/user';
 import useUserReward from '@/hooks/useUserReward';
 import { checkAddressIsInvited, getAccessToken, inviteCodeActivate } from '@/apis';
 import { get, AUTH_TOKENS } from '@/utils/http';
+import { useConnectWallet } from '@web3-onboard/react';
 
 export default function useInititalDataWithAuth() {
+  const [{ wallet }] = useConnectWallet();
   const setUserInfo = useUserStore((store: any) => store.set);
   const { queryUserReward } = useUserReward();
 
@@ -26,11 +28,19 @@ export default function useInititalDataWithAuth() {
   }, []);
 
   const getInitialDataWithAuth = async (address?: string) => {
-    window.localStorage.setItem(AUTH_TOKENS, '{}');
+    window.sessionStorage.setItem(AUTH_TOKENS, '{}');
     if (address) {
       const checked = await checkAddressIsInvited(address);
+      console.log('=wallet?.label.toLowerCase()', wallet?.label.toLowerCase());
       if (!checked) {
-        await inviteCodeActivate(address, '');
+        const isBitget = wallet?.label.toLowerCase().includes('bitget');
+        const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
+        const isOkx = wallet?.label.toLowerCase().includes('okx');
+        await inviteCodeActivate(
+          address,
+          '',
+          isBitget ? 'bitget_wallet' : isCoin98 ? 'coin98_wallet' : isOkx ? 'okx_wallet' : '',
+        );
       }
       await getAccessToken(address);
       queryUserInfo();

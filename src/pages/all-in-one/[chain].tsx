@@ -1,22 +1,24 @@
 import { useSetChain } from '@web3-onboard/react';
+import { useDebounceFn } from 'ahooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import swapConfig from '@/config/swap/networks';
-import lendingConfig from '@/config/lending/networks';
-import useReport from '@/views/Landing/hooks/useReport';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import useAccount from '@/hooks/useAccount';
+
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import popupsData from '@/config/all-in-one/chains';
+import lendingConfig from '@/config/lending/networks';
+import liquidityConfig from '@/config/liquidity/networks';
+import swapConfig from '@/config/swap/networks';
+import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import { useAllInOneTabCachedStore, useAllInOneTabStore } from '@/stores/all-in-one';
 import { usePriceStore } from '@/stores/price';
-import { useDebounceFn } from 'ahooks';
-import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
 import type { NextPageWithLayout } from '@/utils/types';
+import useReport from '@/views/Landing/hooks/useReport';
 
 const arrow = (
   <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -82,6 +84,10 @@ const Container = styled.div`
       text-align: center;
       border-radius: 8px;
       margin-right: 8px;
+      .select-chain-img {
+        /* width: 80%;
+        height: 80%; */
+      }
     }
     .selsect-item-text {
       padding-top: 16px;
@@ -110,6 +116,8 @@ const Container = styled.div`
       border-radius: 12px;
       padding: 12px;
       width: 249px;
+      height: 60vh;
+      overflow-y: auto;
       .select-popups-item {
         width: 100%;
         display: flex;
@@ -257,8 +265,10 @@ const AllInOne: NextPageWithLayout = () => {
 
   const tabConfig = useMemo(() => {
     if (!currentChain || !tab) return {};
+    console.log('===liquidityConfig', liquidityConfig[currentChain?.chainId]);
     if (tab === 'Swap') return swapConfig[currentChain?.chainId] || {};
     if (tab === 'Lending') return lendingConfig[currentChain?.chainId] || {};
+    if (tab === 'Liquidity') return liquidityConfig[currentChain?.chainId] || {};
     return {};
   }, [currentChain, tab]);
 
@@ -279,7 +289,7 @@ const AllInOne: NextPageWithLayout = () => {
                 backgroundColor: currentChain.bgColor,
               }}
             >
-              <img src={currentChain.icon} alt="" />
+              <img className="select-chain-img" src={currentChain.icon} alt="" />
             </div>
             <div className="selsect-item-text">
               <p> {currentChain.title}</p>

@@ -22,4 +22,12 @@ export const bridge = {
     background: 'rgba(235, 194, 142, 0.15)',
     color: 'rgba(235, 194, 142, 1)',
   },
+  81457: {
+    background: 'rgb(253, 254, 3)',
+    color: '#000',
+  },
+  34443: {
+    background: 'rgba(223, 254, 0, 1)',
+    color: '#000',
+  },
 } as { [key: number]: any };

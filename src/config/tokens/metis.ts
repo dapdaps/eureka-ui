@@ -27,7 +27,6 @@ export const metis: { [key: string]: Token } = {
     icon: 'https://assets.coingecko.com/coins/images/15595/small/metis.jpeg?1660285312',
     isNative: true,
   },
-
   weth: {
     chainId: CHAIN_ID,
     address: '0x420000000000000000000000000000000000000A',

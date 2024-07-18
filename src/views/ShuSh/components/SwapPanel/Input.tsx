@@ -88,7 +88,7 @@ const Input = ({ amount, token, prices, onAmountChange, onSelectToken }: any) =>
   const value = useMemo(() => {
     if (!amount) return '-';
     if (!prices) return '-';
-    const price = prices[token.symbol];
+    const price = prices[token.priceKey || token.symbol];
     if (!price) return '-';
     return formateValueWithThousandSeparator(new Big(amount).mul(price).toString(), 2);
   }, [amount, token, prices]);

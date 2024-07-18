@@ -1,17 +1,19 @@
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
 import Chain from '@/components/AccountSider/components/Chain';
+import ConnectWallet from '@/components/ConnectWallet';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
-import ConnectWallet from '@/components/ConnectWallet';
 import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
-import { useRouter } from 'next/router';
+
+import OdysseyIcon from './OdysseyIcon';
 
 const LoginContainer = styled.div`
   width: auto;
@@ -31,7 +33,7 @@ const Container = styled.div<{ $expand: boolean }>`
   top: 0;
   width: 100%;
   z-index: 50;
-  background: ${({ $expand }) => ($expand ? 'rgba(22, 24, 29, 1)' : 'rgba(22, 24, 29, 0.9)')};
+  background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(22, 24, 29, 0.9)')};
   backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
   border-bottom: 1px solid #21232a;
 
@@ -57,7 +59,7 @@ const MenuContainer = styled.div`
   width: 40%;
   position: absolute;
   top: 50%;
-  left: 50%;
+  left: 44%;
   transform: translate(-50%, -50%);
   z-index: 30;
   flex: 1;
@@ -100,21 +102,23 @@ const Search = styled.div`
   }
   .switch-icon-img {
     position: absolute;
-    left: 20px;
-    top: 16px;
+    left: 14px;
+    top: 14px;
     margin-left: 0;
     cursor: pointer;
-  }
-  .switch-icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-    cursor: pointer;
-  }
-  .switch-icon-img {
     transition: 0.3s;
     opacity: 0;
   }
+  .switch-icon {
+    position: absolute;
+    right: -40px;
+    top: 6px;
+    cursor: pointer;
+    padding: 20px;
+    width: 12px;
+    height: 12px;
+  }
+
   .switch-icon-img.show {
     opacity: 1;
   }
@@ -139,6 +143,15 @@ const InputCloseIcon = styled.div`
   }
   &:active {
     opacity: 0.8;
+  }
+`;
+
+const BridgeWapper = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  .bridge-icon {
+    cursor: pointer;
   }
 `;
 
@@ -225,33 +238,39 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
               <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
             </div>
-            <DropdownSearchResultPanel
-              searchText={searchContent}
-              setSearchContent={setSearchContent}
-              show={searchContent}
-            />
+            <OdysseyIcon />
           </Search>
         </MenuContainer>
         {/* Page don't need account section */}
-        {isHideAccount ? (
-          <div />
-        ) : account ? (
-          <LoginContainer>
-            <Chain showName={false} bp="3001-003" />
-            <AccountWrapper
-              onClick={() => {
-                setLayoutStore({ showAccountSider: true });
-              }}
-            >
-              <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
-            </AccountWrapper>
-          </LoginContainer>
-        ) : (
-          <ConnectWallet />
-        )}
-      </div>
 
+        <BridgeWapper>
+          <img
+            src="/images/dashboard/bridge.svg"
+            onClick={() => {
+              router.push('/super-bridge');
+            }}
+            className="bridge-icon"
+          />
+          {isHideAccount ? (
+            <div />
+          ) : account ? (
+            <LoginContainer>
+              <Chain showName={false} bp="3001-003" />
+              <AccountWrapper
+                onClick={() => {
+                  setLayoutStore({ showAccountSider: true });
+                }}
+              >
+                <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
+              </AccountWrapper>
+            </LoginContainer>
+          ) : (
+            <ConnectWallet />
+          )}
+        </BridgeWapper>
+      </div>
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
+      <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
     </Container>
   );
 };

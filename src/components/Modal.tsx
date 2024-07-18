@@ -13,14 +13,14 @@ const Dialog = styled.div`
   right: 0;
   top: 0;
   bottom: 0;
-  z-index: 9000;
+  z-index: 900;
 `;
 const Overlay = styled(motion.div)`
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.6);
   position: absolute;
-  z-index: 9999;
+  z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -28,9 +28,10 @@ const Overlay = styled(motion.div)`
     align-items: flex-end;
   }
 `;
-const Main = styled(motion.div)<{ $width: number }>`
+const Main = styled(motion.div) <{ $width: number, $hidden: boolean }>`
   position: relative;
   width: ${({ $width }) => $width + 'px'};
+  overflow: ${($hidden) => $hidden ? 'hidden' : 'normal'};
   border-radius: 20px;
   border: 1px solid #373a53;
   background: #262836;
@@ -65,13 +66,15 @@ const Modal = ({
   display,
   title = '',
   width = 460,
+  hidden = false,
   content,
   showHeader = true,
-  onClose = () => {},
+  onClose = () => { },
 }: {
   display: boolean;
   title?: string | ReactNode;
   width?: number;
+  hidden?: boolean;
   showHeader?: boolean;
   content: ReactNode;
   onClose?: () => void;
@@ -84,6 +87,7 @@ const Modal = ({
             <Main
               {...modal}
               $width={width}
+              $hidden={hidden}
               onClick={(ev) => {
                 ev.stopPropagation();
               }}

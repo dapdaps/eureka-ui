@@ -1,17 +1,19 @@
-import manta from './chains/manta';
-import optimism from './chains/optimism';
-import bsc from './chains/bsc';
-import gnosis from './chains/gnosis';
-import polygon from './chains/polygon';
-import zksync from './chains/zksync';
-import metis from './chains/metis';
-import polygonZkevm from './chains/polygon-zkevm';
-import mantle from './chains/mantle';
-import base from './chains/base';
 import arbitrum from './chains/arbitrum';
 import avalanche from './chains/avalanche';
+import base from './chains/base';
+import blast from './chains/blast';
+import bnb from './chains/bsc';
+import gnosis from './chains/gnosis';
 import linea from './chains/linea';
+import manta from './chains/manta';
+import mantle from './chains/mantle';
+import metis from './chains/metis';
+import mode from './chains/mode';
+import optimism from './chains/optimism';
+import polygon from './chains/polygon';
+import polygonZkevm from './chains/polygon-zkevm';
 import scroll from './chains/scroll';
+import zksync from './chains/zksync';
 
 const popupsData: {
   [key: string]: {
@@ -27,25 +29,27 @@ const popupsData: {
     bgIcon?: string;
   };
 } = {
-  optimism,
-  bsc,
-  gnosis,
-  polygon,
-  zksync,
-  metis,
-  'polygon-zkevm': polygonZkevm,
-  mantle,
-  base,
   arbitrum,
   avalanche,
+  base,
+  blast,
+  bnb,
+  gnosis,
   linea,
   manta,
+  mantle,
+  metis,
+  mode,
+  optimism,
+  polygon,
+  'polygon-zkevm': polygonZkevm,
   scroll,
+  zksync,
 };
 
 export const PathToId: { [key: string]: number } = {
   optimism: 13,
-  bsc: 12,
+  bnb: 12,
   gnosis: 11,
   polygon: 10,
   zksync: 9,
@@ -58,11 +62,13 @@ export const PathToId: { [key: string]: number } = {
   linea: 4,
   manta: 15,
   scroll: 17,
+  blast: 18,
+  mode: 19,
 };
 
 export const IdToPath: { [key: string]: string } = {
   13: 'optimism',
-  12: 'bsc',
+  12: 'bnb',
   11: 'gnosis',
   10: 'polygon',
   9: 'zksync',
@@ -75,6 +81,8 @@ export const IdToPath: { [key: string]: string } = {
   4: 'linea',
   15: 'manta',
   17: 'scroll',
+  18: 'blast',
+  19: 'mode',
 };
 
 export default popupsData;

@@ -3,20 +3,21 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import Dapps from '@/components/Dapps';
+import Empty from '@/components/Empty';
 import { QUEST_PATH } from '@/config/quest';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import { useChainsStore } from '@/stores/chains';
 import { get } from '@/utils/http';
 import type { NextPageWithLayout } from '@/utils/types';
+import { formatTitle } from '@/views/OnBoarding/helpers';
 import ProcessBar from '@/views/Quest/components/ProcessBar';
 import Steps from '@/views/Quest/components/QuestItem/step-icon';
-import Dapps from '@/components/Dapps';
 import { StyledCoin, StyledProcessBars, StyledTag } from '@/views/Quest/components/QuestItem/styles';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 import useLike from '@/views/Quest/hooks/useLike';
 import { StyledHeartBox } from '@/views/QuestDetail/components/Details/styles';
-import { useChainsStore } from '@/stores/chains';
-import Empty from '@/components/Empty';
 
 const arrow = (
   <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -559,7 +560,11 @@ const DappsDetailsColumn: NextPageWithLayout = () => {
                 {data &&
                   data.dapp_network.map((item: any, index: number) => {
                     const networkItem = chains.find((network: any) => network.id === item.network_id);
-                    const logo = networkItem ? networkItem.logo : '';
+                    let logo = networkItem ? networkItem.logo : '';
+                    if (item.chain_id === 1) {
+                      logo =
+                        'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg';
+                    }
                     return (
                       <div key={index} style={{ display: 'inline-block' }}>
                         <img src={logo} alt="" />
@@ -622,7 +627,7 @@ const DappsDetailsColumn: NextPageWithLayout = () => {
                           <div className="td-avatar"></div>
                           {formatId(item.account_id)}
                         </td>
-                        <td>{item.action_title}</td>
+                        <td>{formatTitle(item)}</td>
                         <td style={{ color: ' #979ABE' }}>{formatDate(item.timestamp)}</td>
                       </tr>
                     );

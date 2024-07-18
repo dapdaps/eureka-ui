@@ -7,7 +7,7 @@ export const base: { [key: string]: Token } = {
     address: 'native',
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
     decimals: 18,
     isNative: true,
   },
@@ -16,7 +16,7 @@ export const base: { [key: string]: Token } = {
     address: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
     name: 'USDC',
     symbol: 'USDC',
-    icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
     decimals: 6,
   },
   cbeth: {
@@ -25,7 +25,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'cbETH',
     name: 'Coinbase Wrapped Staked ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreif6fax6u2xtetbjv5c27ubxedwqjzrqsreytqbppflryagvm5ix7u',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicnk5s6pfutfj33lcmntimk47sxg2zfxennkmlafrk455zpncbd34',
   },
   weth: {
     chainId: CHAIN_ID,
@@ -34,6 +34,14 @@ export const base: { [key: string]: Token } = {
     symbol: 'WETH',
     name: 'Wrapped Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+  },
+  wsteth: {
+    chainId: CHAIN_ID,
+    address: '0xc1cba3fcea344f92d9239c08c0568f6f2f0ee452',
+    decimals: 18,
+    symbol: 'wstETH',
+    name: 'Wrapped liquid staked Ether 2.0',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie5mwrdg7fgm3hhkx5kj5esozzklvaofwjkx6uf3rii54c3j5jrci',
   },
   axlusdc: {
     chainId: CHAIN_ID,
@@ -57,7 +65,7 @@ export const base: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene',
   },
   usdbc: {
     chainId: CHAIN_ID,
@@ -65,7 +73,7 @@ export const base: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDbC',
     name: 'USD Base Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidvlzvrojji7ezvfrcxnjkmdfhxnau6qp7wngfctmxcvurqpeddb4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreia54g5rmlff6cs2rbwj3lqeiprrnszbc2u2gcszdbpubhq7hxekam',
   },
   rckt: {
     chainId: CHAIN_ID,
@@ -130,5 +138,21 @@ export const base: { [key: string]: Token } = {
     symbol: 'BMX',
     name: 'BMX',
     icon: 'https://ipfs.near.social/ipfs/bafkreiacekb2ntq2vrwgluxzxnsmqdx3ppjoou7fooyelgwhdc5pkr76gy',
+  },
+  seam: {
+    chainId: CHAIN_ID,
+    address: '0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85',
+    decimals: 18,
+    symbol: 'SEAM',
+    name: 'Seamless',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigipeyo37ay3rik7bohviyrdoqzdffqrz75uocl6ripeveq5zji3u',
+  },
+  esseam: {
+    chainId: CHAIN_ID,
+    address: '0x998e44232bef4f8b033e5a5175bdc97f2b10d5e5',
+    decimals: 18,
+    symbol: 'esSEAM',
+    name: 'Escrow SEAM',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigipeyo37ay3rik7bohviyrdoqzdffqrz75uocl6ripeveq5zji3u',
   },
 };

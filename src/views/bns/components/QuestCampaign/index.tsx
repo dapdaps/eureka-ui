@@ -1,13 +1,13 @@
+import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
-
-import QuestItem from '@/views/Quest/components/QuestItem';
-import { formatPeriodDate } from '@/views/Quest/helpers';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import useQuestList from '../../hooks/useQuestList';
-import Timer from '../Timer';
 
 import Loading from '@/components/Icons/Loading';
-import { useRouter } from 'next/router';
+import QuestItem from '@/views/Quest/components/QuestItem';
+import { formatPeriodDate } from '@/views/Quest/helpers';
+
+import useQuestList from '../../hooks/useQuestList';
+import Timer from '../Timer';
 import {
   StyledButton,
   StyledCampaipnContainer,
@@ -25,6 +25,7 @@ import {
   StyledTags,
   StyledText,
   StyledTimerBox,
+  StyledTips,
   StyledTitle,
   StyledWrapper,
 } from './styles';
@@ -165,9 +166,15 @@ const Index = ({ onLoad, campaigns, categories, bp }: any) => {
     <StyledCampaipnsContainer>
       <StyledHeader style={{ marginTop: 40, marginBottom: 20 }}>Quests Campaign</StyledHeader>
       <StyledFlex $direction="column" $gap="30px">
-        {campaigns.map((campaign: any) => (
-          <QuestCampaign key={campaign.id} campaign={campaign} categories={categories} bp={bp} />
-        ))}
+        {campaigns.length ? (
+          campaigns.map((campaign: any) => (
+            <QuestCampaign key={campaign.id} campaign={campaign} categories={categories} bp={bp} />
+          ))
+        ) : (
+          <div style={{ padding: 20, fontSize: 18, color: 'rgb(151, 154, 190)' }}>
+            More Quests are coming soon,stay tuned...
+          </div>
+        )}
       </StyledFlex>
     </StyledCampaipnsContainer>
   );

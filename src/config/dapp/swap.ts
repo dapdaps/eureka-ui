@@ -48,7 +48,7 @@ export default {
       '--button-text-color': '#000',
     },
   },
-  'chronos-v1': {
+  'chronos-v2': {
     type: 'swap',
     theme: {
       '--button-color': 'linear-gradient(to right, rgb(63, 74, 179), rgb(122, 100, 208))',
@@ -433,6 +433,84 @@ export default {
     type: 'swap',
     theme: {
       '--button-color': '#277eec',
+      '--button-text-color': '#fff',
+    },
+  },
+  'thruster-finance': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(170deg, #ff6d63, #ff6157)',
+      '--button-text-color': '#fff',
+    },
+  },
+  mimswap: {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(90deg, #2d4a96 0%, #745cd2 100%)',
+      '--button-text-color': '#fff',
+    },
+  },
+  'monoswap-v3': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(90deg, rgb(104, 255, 255) 0%, rgb(104, 255, 155) 100%)',
+      '--button-text-color': '#000',
+    },
+  },
+  'monoswap-v2': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(90deg, rgb(104, 255, 255) 0%, rgb(104, 255, 155) 100%)',
+      '--button-text-color': '#000',
+    },
+  },
+  'ring-protocol': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'rgb(70, 115, 250)',
+      '--button-text-color': '#fff',
+    },
+  },
+  uniswapv3: {
+    type: 'swap',
+    theme: {
+      '--button-color': '#277eec',
+      '--button-text-color': '#fff',
+    },
+  },
+  'fenix-finance': {
+    type: 'swap',
+    theme: {
+      '--button-color':
+        'linear-gradient(90deg, rgba(254, 94, 53, .8) 10.49%, rgba(246, 119, 2, .8) 92.04%, rgba(255, 239, 118, .8) 158.76%)',
+      '--button-text-color': '#fff',
+    },
+  },
+  'blade-swap': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(180deg, #22a079 0%, #9ba885 100%)',
+      '--button-text-color': '#fff',
+    },
+  },
+  'sup-swap': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#2432f4',
+      '--button-text-color': '#fff',
+    },
+  },
+  'swap-mode': {
+    type: 'swap',
+    theme: {
+      '--button-color': 'linear-gradient(to right, #DFFE00, #60FE00)',
+      '--button-text-color': '#000',
+    },
+  },
+  'kim-exchange': {
+    type: 'swap',
+    theme: {
+      '--button-color': '#FF4500',
       '--button-text-color': '#fff',
     },
   },

@@ -10,7 +10,15 @@ import { QUEST_PATH } from '@/config/quest';
 import { formatThousandsSeparator } from '@/utils/format-number';
 import { AUTH_TOKENS, get, post } from '@/utils/http';
 
-import { AreaChart, BarChart, PieChartAnnular, PieChartSector, SimpleSelect, VerticalBarChart } from './components';
+import {
+  AreaChart,
+  BarChartChains,
+  BarChartUsers,
+  PieChartAnnular,
+  PieChartSector,
+  SimpleSelect,
+  VerticalBarChart,
+} from './components';
 import * as Styles from './styles';
 
 interface IProps {}
@@ -60,6 +68,7 @@ const Dashboard: FC<IProps> = ({}) => {
   const [userDataRange, setUserDataRange] = useState('');
   const [areaData, setAreaData] = useState<any>([]);
   const [chainsData, setChainsData] = useState([]);
+  const [usersData, setUsersData] = useState<any>([]);
   const [tradingData, setTradingData] = useState([]);
   const [ptsData, setPtsData] = useState({
     total_quest_execution: 0,
@@ -106,6 +115,7 @@ const Dashboard: FC<IProps> = ({}) => {
     setLoading(true);
     fetchSummaryData();
     fetchQuestData();
+    fetchDailyUser();
     if (currentChainId) {
       fetchChainsData();
     }
@@ -156,6 +166,21 @@ const Dashboard: FC<IProps> = ({}) => {
       setDappData(_dappData.sort((a: any, b: any) => b.total_trading_value - a.total_trading_value));
     } catch (error) {
       setLoading(false);
+      console.log(error);
+    }
+  }
+
+  async function fetchDailyUser() {
+    try {
+      const res = await get(`${QUEST_PATH}/api/dashboard/daily/user`);
+
+      if ((res.code as number) !== 0) return;
+      const reversed = res.data.reverse();
+      setUsersData(res.data);
+      // setLoading(false);
+      // makeQuestData(res.data);
+    } catch (error) {
+      // setLoading(false);
       console.log(error);
     }
   }
@@ -381,19 +406,29 @@ const Dashboard: FC<IProps> = ({}) => {
             <PieChartAnnular data={areaData} />
           </Styles.UsersArea>
         </Styles.UsersDataWrap>
+        <Styles.UsersWrap>
+          <Styles.UsersTotalTitle>
+            <Styles.Title>Daily Active Addresses & IP</Styles.Title>
+            <Styles.Intro>
+              {format(usersData[0]?.date * 1000 || 0, 'yyyy/MM/dd')}-
+              {format(usersData[usersData?.length - 1]?.date * 1000 || 0, 'yyyy/MM/dd')}
+            </Styles.Intro>
+          </Styles.UsersTotalTitle>
+          <BarChartUsers data={usersData} />
+        </Styles.UsersWrap>
         <Styles.SubTitle>Chains & dApps Data</Styles.SubTitle>
         <Styles.ChainsWrap>
           <Styles.UsersTotalTitle>
-            <Styles.Title>Transaction & Tading Volume</Styles.Title>
+            <Styles.Title>Users & Trading Volume</Styles.Title>
             <Styles.Intro>{format(new Date(), 'yyyy/MM/dd')}</Styles.Intro>
           </Styles.UsersTotalTitle>
-          <BarChart data={chainsData} />
+          <BarChartChains data={chainsData} />
         </Styles.ChainsWrap>
 
         <Styles.DappsWrap>
           <Styles.DappsLeft>
             <Styles.DappTitle>
-              <Styles.Title>Transaction of popular Dapps</Styles.Title>
+              <Styles.Title>Top dApps Trading Volume</Styles.Title>
               <SimpleSelect
                 data={chainsList}
                 onChange={(chainId) => {

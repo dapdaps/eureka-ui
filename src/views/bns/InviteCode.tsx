@@ -66,7 +66,13 @@ const LoginView = () => {
     setLoading(true);
     try {
       const isBitget = wallet?.label.toLowerCase().includes('bitget');
-      const { isSuccess, errorMsg } = await inviteCodeActivate(account, code, isBitget ? 'bitget_wallet' : '');
+      const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
+      const isOkx = wallet?.label.toLowerCase().includes('okx');
+      const { isSuccess, errorMsg } = await inviteCodeActivate(
+        account,
+        code,
+        isBitget ? 'bitget_wallet' : (isCoin98 ? 'coin98_wallet' : (isOkx ? 'okx_wallet' : ''))
+      );
       if (!isSuccess) {
         setLoading(false);
         setErrorTips(errorMsg);

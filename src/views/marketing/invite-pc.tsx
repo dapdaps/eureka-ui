@@ -83,7 +83,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
     redirect_uri: redirectUri,
   });
   const logout = () => {
-    window.localStorage.setItem(AUTH_TOKENS, '{}');
+    window.sessionStorage.setItem(AUTH_TOKENS, '{}');
     insertedAccessKey('');
     deleteCookie('AUTHED_ACCOUNT');
     deleteCookie('BNS_NAME');
@@ -300,7 +300,7 @@ const LandingPC: FC<IProps> = ({ kolName, platform }) => {
       return basicQuests.map((item: any) => {
         if (userStatus === 'old')
           return (
-            <Styles.Button className="blur" id={item.id}>
+            <Styles.Button className="blur" id={item.id} key={item.id}>
               Reward Already Claimed
             </Styles.Button>
           );

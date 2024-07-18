@@ -12,7 +12,7 @@ const useAuth = () => {
   const router = useRouter();
   const logout = async () => {
     wallet && (await disconnect(wallet));
-    window.localStorage.setItem(http.AUTH_TOKENS, '{}');
+    window.sessionStorage.setItem(http.AUTH_TOKENS, '{}');
     insertedAccessKey('');
     deleteCookie('AUTHED_ACCOUNT');
     deleteCookie('BNS_NAME');

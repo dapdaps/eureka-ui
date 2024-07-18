@@ -4,14 +4,15 @@ import base from './base';
 import bsc from './bsc';
 import gnosis from './gnosis';
 import linea from './linea';
+// import polygonZkevm from './polygon-zkevm';
+import manta from './manta';
 import mantle from './mantle';
+import mode from './mode';
 // import metis from './metis';
 import optimism from './optimism';
 import polygon from './polygon';
-import zkSync from './zkSync';
-// import polygonZkevm from './polygon-zkevm';
-import manta from './manta';
 import scroll from './scroll';
+import zkSync from './zkSync';
 
 export default {
   42161: arbitrum,
@@ -28,4 +29,5 @@ export default {
   // 1101: polygonZkevm,
   169: manta,
   534352: scroll,
+  34443: mode,
 } as { [key: number]: any };

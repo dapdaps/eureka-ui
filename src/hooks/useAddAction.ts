@@ -18,7 +18,7 @@ export default function useAddAction(source: string) {
       const currentChain = chains.find((chain: any) => chain.chain_id === chainId);
       console.info('addAction data: ', data);
 
-      if (data.type === 'Swap') {
+      if (data.type === 'Swap' && data.template !== 'launchpad') {
         params = {
           // action_title: `Swap ${Number(data.inputCurrencyAmount)} ${data.inputCurrency.symbol} on ${data.template}`,
           action_title: `Swap ${data.inputCurrency.symbol} on ${data.template}`,
@@ -61,10 +61,7 @@ export default function useAddAction(source: string) {
             tx_id: data.transactionHash,
             chain_id: data.fromChainId,
             to_chain_id: data.toChainId,
-            extra_data: JSON.stringify({
-              from: fromChain?.name,
-              to: toChain?.name,
-            }),
+            extra_data: JSON.stringify(data.extra_data),
           };
           console.info('params:', params);
         } catch (error) {
@@ -73,10 +70,7 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Lending') {
         params = {
-          action_title: `${data.action} ${data.token.symbol} on ${data.template}`,
           action_type: 'Lending',
-          action_tokens: JSON.stringify([`${data.token.symbol}`]),
-          action_amount: data.amount,
           account_id: account,
           account_info: uuid,
           template: data.template,
@@ -86,12 +80,21 @@ export default function useAddAction(source: string) {
           action_network_id: currentChain.name,
           chain_id: chainId,
         };
+
+        if (data.extra_data?.lending_actions) {
+          params.extra_data = JSON.stringify(data.extra_data);
+        } else {
+          params.action_title = `${data.action} ${Number(data.amount).toFixed(3)} ${data.token.symbol} on ${data.template
+            }`;
+          params.action_tokens = JSON.stringify([`${data.token.symbol}`]);
+          params.action_amount = data.amount;
+        }
       }
       if (data.type === 'Liquidity') {
         params = {
-          action_title: `${data.action} ${data.token0}-${data.token1} on ${data.template}`,
+          action_title: `${data.action} ${data?.token0 + (data?.token1 ? '-' + data.token1 : '')} on ${data.template}`,
           action_type: data.type,
-          action_tokens: JSON.stringify([data.token0, data.token1]),
+          action_tokens: JSON.stringify([data?.token0 ?? '', data?.token1 ?? '']),
           action_amount: data.amount,
           account_id: account,
           action_network_id: currentChain.name,
@@ -106,9 +109,9 @@ export default function useAddAction(source: string) {
       }
       if (data.type === 'Staking') {
         params = {
-          action_title: `${data.action} ${data.token.symbol} on ${data.template}`,
+          action_title: data.token ? `${data.action} ${data.amount} ${data.token?.symbol} on ${data.template}` : '',
           action_type: 'Staking',
-          action_tokens: JSON.stringify([`${data.token.symbol}`]),
+          action_tokens: data.token ? JSON.stringify([`${data.token.symbol}`]) : '',
           action_amount: data.amount,
           account_id: account,
           account_info: uuid,
@@ -116,14 +119,60 @@ export default function useAddAction(source: string) {
           action_switch: data.add ? 1 : 0,
           action_status: data.status === 1 ? 'Success' : 'Failed',
           tx_id: data.transactionHash,
-          action_network_id: currentChain.name,
+          action_network_id: currentChain?.name || data.action_network_id,
           chain_id: chainId,
+          extra_data: data.extra_data,
         };
       }
 
+      if (data.type === 'Yield') {
+        params = {
+          action_title: `${data.action} ${data?.token0 + (data?.token1 ? '-' + data.token1 : '')} on ${data.template}`,
+          action_type: data.type,
+          action_tokens: JSON.stringify([data?.token0 ?? '', data?.token1 ?? '']),
+          action_amount: data.amount,
+          account_id: account,
+          account_info: uuid,
+          template: data.template,
+          action_switch: data.add ? 1 : 0,
+          action_status: data.status === 1 ? 'Success' : 'Failed',
+          tx_id: data.transactionHash,
+          action_network_id: currentChain?.name || data.action_network_id,
+          chain_id: chainId,
+          extra_data: data.extra_data,
+        };
+      }
+
+
+      if (data.template === 'launchpad' || data.template === 'Launchpad') {
+        params = {
+          action_title: `Launchpad ${data?.token0.symbol + (data?.token1.symbol ? '-' + data.token1.symbol : '')} on ${data.template}`,
+          action_type: 'Swap',
+          action_tokens: JSON.stringify([data?.token0.symbol ?? '', data?.token1.symbol ?? '']),
+          action_amount: data.amount,
+          account_id: account,
+          account_info: uuid,
+          template: data.template,
+          action_switch: data.add ? 1 : 0,
+          action_status: data.status === 1 ? 'Success' : 'Failed',
+          tx_id: data.transactionHash,
+          action_network_id: currentChain?.name || data.action_network_id,
+          chain_id: chainId,
+          pool: data.pool,
+          extra_data: JSON.stringify({
+            token0: data?.token0,
+            token1: data?.token1,
+            type: 'Swap',
+            trade_type: data.trade_type,
+            shareTokenPrice: data.shareTokenPrice,
+            pool: data.pool,
+          }),
+        }
+      }
+
+
       params.ss = getSignature(
-        `template=${data.template}&action_type=${data.type}&tx_hash=${
-          data.transactionHash
+        `template=${data.template}&action_type=${data.type}&tx_hash=${data.transactionHash
         }&chain_id=${chainId}&time=${Math.ceil(Date.now() / 1000)}`,
       );
       params.source = source;
@@ -133,5 +182,6 @@ export default function useAddAction(source: string) {
     },
     [chainId, account],
   );
+
   return { addAction };
 }

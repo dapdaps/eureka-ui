@@ -118,7 +118,7 @@ const Footer = () => {
               </svg>
             }
             alt="Discord"
-            url="https://discord.gg/x5USArxKVH"
+            url="https://discord.gg/dapdapmeup"
           />
           <SocialButton
             icon={
@@ -145,11 +145,57 @@ const Footer = () => {
             alt="Tg"
             url="https://t.me/DapDapDiscussion"
           />
-          {/* <SocialButton
-            src="https://assets.dapdap.net/images/bafkreifyzh5mqbh6z6utj7z4dp2eelhaa654mnt6mut4oxml3mw56fqoxm.svg"
-            alt="Medium"
-            url=""
-          /> */}
+          <SocialButton
+            icon={
+              <svg fill="currentColor" width="16px" height="15px" viewBox="0 0 24 24" role="img">
+                <path d="M10.802 17.77a.703.703 0 1 1-.002 1.406.703.703 0 0 1 .002-1.406m11.024-4.347a.703.703 0 1 1 .001-1.406.703.703 0 0 1-.001 1.406m0-2.876a2.176 2.176 0 0 0-2.174 2.174c0 .233.039.465.115.691l-7.181 3.823a2.165 2.165 0 0 0-1.784-.937c-.829 0-1.584.475-1.95 1.216l-6.451-3.402c-.682-.358-1.192-1.48-1.138-2.502.028-.533.212-.947.493-1.107.178-.1.392-.092.62.027l.042.023c1.71.9 7.304 3.847 7.54 3.956.363.169.565.237 1.185-.057l11.564-6.014c.17-.064.368-.227.368-.474 0-.342-.354-.477-.355-.477-.658-.315-1.669-.788-2.655-1.25-2.108-.987-4.497-2.105-5.546-2.655-.906-.474-1.635-.074-1.765.006l-.252.125C7.78 6.048 1.46 9.178 1.1 9.397.457 9.789.058 10.57.006 11.539c-.08 1.537.703 3.14 1.824 3.727l6.822 3.518a2.175 2.175 0 0 0 2.15 1.862 2.177 2.177 0 0 0 2.173-2.14l7.514-4.073c.38.298.853.461 1.337.461A2.176 2.176 0 0 0 24 12.72a2.176 2.176 0 0 0-2.174-2.174" />
+              </svg>
+            }
+            alt="Gitbook"
+            url="https://docs.dapdap.net/"
+          />
+          <SocialButton
+            icon={
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="15" viewBox="0 0 12 15" fill="none">
+                <path
+                  d="M1.19995 5.70334C1.19995 3.21632 3.21467 1.2002 5.69995 1.2002C8.18523 1.2002 10.2 3.21632 10.2 5.70334V12.7474C10.2 12.9975 9.99735 13.2002 9.74744 13.2002H1.65247C1.40255 13.2002 1.19995 12.9975 1.19995 12.7474V5.70334Z"
+                  fill="url(#paint0_linear_15008_7)"
+                />
+                <path
+                  fillRule="evenodd"
+                  clipRule="evenodd"
+                  d="M11.4 5.70314V12.7472C11.4 13.6592 10.6609 14.4 9.74749 14.4H1.65251C0.739065 14.4 0 13.6592 0 12.7472V5.70315C0 2.55418 2.55119 0 5.7 0C8.84881 0 11.4 2.55417 11.4 5.70314ZM5.7 1.2C3.21472 1.2 1.2 3.21613 1.2 5.70315V12.7472C1.2 12.9973 1.4026 13.2 1.65251 13.2H9.74749C9.9974 13.2 10.2 12.9973 10.2 12.7472V5.70314C10.2 3.21613 8.18528 1.2 5.7 1.2Z"
+                  fill="url(#paint1_linear_15008_7)"
+                />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_15008_7"
+                    x1="3.69995"
+                    y1="1.2002"
+                    x2="9.19995"
+                    y2="13.2002"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#979ABE" stopOpacity="0" />
+                    <stop offset="1" stopColor="#979ABE" stopOpacity="0.5" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_15008_7"
+                    x1="5.69995"
+                    y1="1.2002"
+                    x2="5.69995"
+                    y2="13.2002"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#9598BB" />
+                    <stop offset="1" stopColor="#5D5F76" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            }
+            alt="Mirror"
+            url="https://dapdap.mirror.xyz/"
+          />
         </StyledSocials>
         <div className="footer-right">Copyright 2024 DapDap</div>
       </StyledFooterRight>

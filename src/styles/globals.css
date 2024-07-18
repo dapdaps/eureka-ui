@@ -20,6 +20,13 @@
 }
 
 @font-face {
+  font-family: 'Burial';
+  src: url('/fonts/Burial.ttf') format('truetype');
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
+}
+
+@font-face {
   font-family: '5squared pixel';
   src: url('/fonts/5squared-pixel.ttf') format('truetype');
   font-weight: 200 900;
@@ -130,11 +137,19 @@
   font-stretch: 75% 125%;
 }
 
+/*Chakra Petch Used for odyssey vol.5*/
+@font-face {
+  font-family: 'Chakra Petch';
+  src: url('/fonts/ChakraPetch-Regular.woff2') format('woff2');
+  /*font-weight: 200 900;*/
+  font-stretch: 75% 125%;
+}
+
 body,
 html {
   --body-top-padding: 24px;
   -webkit-font-smoothing: antialiased;
-  --onboard-modal-z-index: 500;
+  --onboard-modal-z-index: 2000;
   --wcm-z-index: 510;
   color: var(--sand12);
   font: var(--text-base);
