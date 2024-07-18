@@ -5,6 +5,7 @@ import styled from 'styled-components';
 interface IProps {
   dataSource: any[];
   columns: any[];
+  hideHeader?: boolean;
   emptyTips?: string;
   children?: ReactNode;
   className?: string;
@@ -55,7 +56,7 @@ const Empty = styled.div`
   color: #fff;
 `;
 
-const CustomTable: FC<IProps> = ({ dataSource, columns, emptyTips }) => {
+const CustomTable: FC<IProps> = ({ dataSource, columns, emptyTips, hideHeader = false }) => {
   const renderTd = (data: any, key: any) => {
     return columns.map((item: any) => {
       if (item.render && typeof item.render === 'function') {
@@ -68,15 +69,18 @@ const CustomTable: FC<IProps> = ({ dataSource, columns, emptyTips }) => {
   return (
     <>
       <TableWrap>
-        <TableHead>
-          <tr>
-            {columns.map((item: any) => (
-              <th key={item.key} style={{ width: item.width }}>
-                {item.title}
-              </th>
-            ))}
-          </tr>
-        </TableHead>
+        {!hideHeader ? (
+          <TableHead>
+            <tr>
+              {columns.map((item: any) => (
+                <th key={item.key} style={{ width: item.width }}>
+                  {item.title}
+                </th>
+              ))}
+            </tr>
+          </TableHead>
+        ) : null}
+
         {Array.isArray(dataSource) && dataSource.length ? (
           <TableBody>
             {dataSource.map((item: any, index: number) => {
