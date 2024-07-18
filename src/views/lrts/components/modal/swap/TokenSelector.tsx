@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 import { container } from '@/components/animation';
@@ -36,6 +36,8 @@ const StyledMenu = styled.div`
   border: 1px solid #3f3f3f;
   background: #414141;
   width: 140px;
+  height: 230px;
+  overflow-y: auto;
 `;
 const StyledMenuItem = styled.div`
   height: 44px;
@@ -64,6 +66,17 @@ const StyledMenuTokenSymbol = styled.div`
 
 export default function TokenSelector({ currency, tokens, onSelect }: any) {
   const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    const close = () => {
+      setShowMenu(false);
+    };
+    document.addEventListener('click', close);
+
+    return () => {
+      document.removeEventListener('click', close);
+    };
+  }, []);
 
   return (
     <StyledTokenSelector
