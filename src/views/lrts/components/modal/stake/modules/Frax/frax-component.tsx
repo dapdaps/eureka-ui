@@ -97,7 +97,7 @@ const FraxComponent = function (props: any) {
   return (
     <StyledStakeContainer>
       <StyledStakeTopContainer
-        style={[ITab.UNSTAKE, ITab.REDEEM].includes(actionType) ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
+        style={[ITab.UNSTAKE].includes(actionType)  ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
       >
         <StyledClose
           onClick={() => {
@@ -180,7 +180,7 @@ const FraxComponent = function (props: any) {
                   </StyledBaseInfoValueContainer>
                 </StyledBaseInfo>
               </StyledBaseInfoContainer>
-              <StyledBottomContainer style={{ paddingBottom: ITab.STAKE === actionType ? 34 : 0 }}>
+              <StyledBottomContainer style={{ paddingBottom: ITab.STAKE === actionType  ? 34 : 0 }}>
                 <StyledTipsContainer>
                   <StyledFirstTips>{actionType}</StyledFirstTips>
                   <StyledSecondTips>
@@ -213,12 +213,6 @@ const FraxComponent = function (props: any) {
                   Unstake requests may take from a few minutes to several days, depending on the project.
                 </StyledSecondTips>
                 <StyledStakeButtonContainer disabled={isInSufficient || Big(inAmount ? inAmount : 0).lt(leastAmount)}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="534" height="49" viewBox="0 0 534 49" fill="none">
-                    <path
-                      d="M509.05 1H24.9497C23.3567 1 21.8291 1.63349 20.7036 2.76084L3.23223 20.2608C0.893712 22.6032 0.893714 26.3968 3.23223 28.7392L20.7036 46.2392C21.8291 47.3665 23.3567 48 24.9497 48H509.05C510.643 48 512.171 47.3665 513.296 46.2392L530.768 28.7392C533.106 26.3968 533.106 22.6032 530.768 20.2608L513.296 2.76083C512.171 1.63349 510.643 1 509.05 1Z"
-                      stroke="white"
-                    />
-                  </svg>
                   <Button
                     data={data}
                     isInSufficient={isInSufficient}
@@ -237,7 +231,7 @@ const FraxComponent = function (props: any) {
           )
         }
       </StyledStakeTopContainer>
-      {[ITab.REDEEM].includes(actionType) && (
+      {[ITab.REDEEM].includes(actionType) && requests.length > 0 && (
         <>
           <StyledSecondLine src="/images/lrts/trapezium.png" />
           <StyledStakeBottomContainer>

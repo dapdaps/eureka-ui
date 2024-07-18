@@ -182,11 +182,13 @@ const useFrax = ({ token0, token1 }: any) => {
   const handleAddMetaMask = function () {}
 
   useEffect(() => {
+    if (!provider) return;
     getBalance(sfrxETH_ADDR).then((token) => setSfrxBalance(token) )
   }, [provider, actionType])
 
 
   useEffect(() => {
+    if (!account || !provider) return;
     queryAvailableAmount()
     handleQueryData()
   }, [account, provider, actionType])
