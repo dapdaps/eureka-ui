@@ -351,6 +351,7 @@ const Portfolio: FC<IProps> = (props) => {
       <Tabs items={items} />
       {/* <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} /> */}
       <AddTokenModal show={showAddTokenModal} setShow={setShowAddTokenModal} token={addToken} />
+      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token={swapToken} />
     </Container>
   );
 };

@@ -128,12 +128,7 @@ const Home = () => {
         show={isShowStakeModal}
         setShow={setIsShowStakeModal}
       />
-      <SwapModal
-        show={showSwapModal}
-        setShow={setShowSwapModal}
-        lstToken={lrtsData[lstIndex].token}
-        lrtToken={curLrt?.token}
-      />
+      <SwapModal show={showSwapModal} setShow={setShowSwapModal} token={curLrt?.token || lrtsData[lstIndex].token} />
     </Container>
   );
 };
