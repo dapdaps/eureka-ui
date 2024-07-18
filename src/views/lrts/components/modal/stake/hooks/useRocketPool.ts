@@ -20,7 +20,7 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
   const [approved, setApproved] = useState(true);
   const [approving, setApproving] = useState(false);
 
-  const leastAmount = useMemo(() => (['stake', 'restake'].includes(actionType) ? 0.02 : 0.01), [actionType]);
+  const leastAmount = 0.01
   const inToken = useMemo(
     () => (['stake', 'restake'].includes(actionType) ? token0 : token1),
     [actionType, token0, token1],
@@ -141,7 +141,7 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
       kind: 0,
       assetIn: ethers.constants.AddressZero,
       assetOut: '0xae78736Cd615f374D3085123A210448E74Fc6393',
-      amount: outAmount,
+      amount: ethers.utils.parseEther(inAmount.toString()),
       userData: '0x',
     };
     const fundManagement = {
@@ -150,41 +150,50 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
       recipient: RocketDepositPool_ADDR,
       toInternalBalance: false,
     };
-
+    setIsLoading(true);
+    const toastId = toast?.loading({
+      title: 'Balancer Query...',
+    });
     try {
-      const result = await contract.querySwap(singleSwap, fundManagement);
+      const result = await contract.callStatic.querySwap(singleSwap, fundManagement);
       return result;
     } catch (error) {
       toast?.fail({
-        title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',
+        title: 'Balancer Query Failed!',
       });
       return null;
+    } finally {
+      toastId && toast?.dismiss(toastId);
+      setIsLoading(false);
     }
   };
 
   const handleMax = function () {
-    const _amount = ['stake', 'restake'].includes(actionType) ? data?.availableAmount ?? 0 : data?.stakedAmount
-    handleAmountChange(_amount)
+    setInAmount(data?.availableAmount ?? 0)
+    setOutAmount(data?.availableAmount ?? 0);
   }
   const handleStake = async function () {
     const balancerValue = await handleBalancerQuery();
     if (!balancerValue) return;
     setIsLoading(true);
+    const amount = Big(inAmount).mul(1e18).toFixed(0);
     const stake_contract = new ethers.Contract(RocketSwapRouter_ADDR, STAKE_ABI, provider?.getSigner());
-    const rethAmount = Big(inAmount).mul(1e18).div(data.exchangeRate).times(0.995);
+
+
+    const contract = new ethers.Contract(token1.address, rETH_ABI, provider.getSigner());
+    const rethAmount = await contract.getRethValue(amount);
+
 
     const stake_contract_args = [
       0,
       10,
-      Big(balancerValue).times(0.995).toFixed(0), // ABI. define to balancer query mount*0.999
-      rethAmount,
+      Big(balancerValue).times(0.999).toFixed(0),
+      Big(rethAmount).times(0.999).toFixed(0),
     ];
 
     const unstake_contract = new ethers.Contract(token1?.address, rETH_ABI, provider?.getSigner());
 
-    const contractMethord = ['stake', 'restake'].includes(actionType) ? stake_contract.swapTo : unstake_contract.burn;
-
-    const amount = Big(inAmount).mul(1e18).toFixed(0);
+    const contractMethod = ['stake', 'restake'].includes(actionType) ? stake_contract.swapTo : unstake_contract.burn;
 
     const contractArguments = ['stake', 'restake'].includes(actionType) ? stake_contract_args : [amount];
 
@@ -192,7 +201,7 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
 
-    contractMethord(...contractArguments)
+    contractMethod(...contractArguments, { gasLimit: ethers.utils.hexlify(300000)})
       .then((tx: any) => tx.wait())
       .then(() => {
         setIsLoading(false);
@@ -202,13 +211,14 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
           title: ['stake', 'restake'].includes(actionType) ? 'Stake Successfully!' : 'UnStake Successfully',
         });
       })
-      .catch(() => {
-        setIsLoading(false);
-        toast?.dismiss(toastId);
+      .catch((e) => {
         toast?.fail({
           title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',
         });
-      });
+      }).finally(() => {
+        setIsLoading(false);
+        toast?.dismiss(toastId);
+      })
   };
 
   useEffect(() => {

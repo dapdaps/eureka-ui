@@ -13,9 +13,9 @@ import useApprove from '@/hooks/useApprove';
 import useTrade from './hooks/useTrade';
 import { StyledContainer, StyledHeader, StyledHeaderTitle } from './styles';
 
-const SwapModal = ({ show, setShow, token0, chainId }: any) => {
+const SwapModal = ({ show, setShow, lrtToken, lstToken }: any) => {
   const [errorTips, setErrorTips] = useState('');
-  const { inputCurrency, outputCurrency, setOutputCurrency } = useTokens(token0);
+  const { inputCurrency, outputCurrency, setOutputCurrency } = useTokens(lrtToken || lstToken);
   const selectableTokens = useSelectTokens(inputCurrency);
   const {
     tokenBalance,

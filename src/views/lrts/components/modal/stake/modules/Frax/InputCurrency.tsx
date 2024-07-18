@@ -72,7 +72,7 @@ export const StyledTokenSymbol = styled.div`
   font-weight: 700;
 `;
 
-export default function InputCurrency({ mt, label, currency, value, loading, onChange, onMax, tokens, onSelect, readOnly = false, addr = false, handleWalletAddress, sx, maxLength }: any) {
+export default function InputCurrency({ mt, label, currency, value, loading, onChange, onMax, tokens, onSelect, readOnly = false, addr = false, handleWalletAddress, sx, maxLength, showMax = false }: any) {
   return (
     <StyledContainer style={{ marginTop: mt }}>
       {
@@ -94,6 +94,17 @@ export default function InputCurrency({ mt, label, currency, value, loading, onC
             onChange?.(ev.target.value);
           }}
         />
+        {
+          showMax && (
+            <StyledMax
+              onClick={() => {
+                if (loading) return;
+                onMax();
+              }}
+            >
+              Max
+            </StyledMax>)
+        }
         {
           label === 'From' && (
             <>
