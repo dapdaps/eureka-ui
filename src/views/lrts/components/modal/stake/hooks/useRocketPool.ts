@@ -201,24 +201,24 @@ const useRocketPool = ({ actionType, token0, token1, provider, account }: any) =
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
 
-    contractMethod(...contractArguments, { gasLimit: ethers.utils.hexlify(300000)})
-      .then((tx: any) => tx.wait())
-      .then(() => {
-        setIsLoading(false);
-        handleQueryData();
-        toast?.dismiss(toastId);
-        toast?.success({
-          title: ['stake', 'restake'].includes(actionType) ? 'Stake Successfully!' : 'UnStake Successfully',
-        });
+    try {
+      const tx = await contractMethod(...contractArguments, {
+        gasLimit: ethers.utils.hexlify(300000),
+        value: amount
       })
-      .catch((e) => {
-        toast?.fail({
-          title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',
-        });
-      }).finally(() => {
-        setIsLoading(false);
-        toast?.dismiss(toastId);
-      })
+      await tx.wait()
+      await handleQueryData();
+      toast?.success({
+        title: ['stake', 'restake'].includes(actionType) ? 'Stake Successfully!' : 'UnStake Successfully',
+      });
+    } catch (error) {
+      toast?.fail({
+        title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',
+      });
+    } finally {
+      setIsLoading(false);
+      toast?.dismiss(toastId);
+    }
   };
 
   useEffect(() => {

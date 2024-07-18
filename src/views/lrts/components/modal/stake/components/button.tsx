@@ -3,10 +3,17 @@ import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
-
 import ConnectButton from '../../../connect-wallet';
 import SwitchNetwork from '../../../switch-network-button';
-import { StyledStakeButton } from '../styles';
+import UIButton from '../../../polygon-btn';
+
+const BaseButton = ({ children, onClick }: any) => {
+  return (
+    <UIButton onClick={onClick} block>
+      {children}
+    </UIButton>
+  );
+};
 
 export default function Button({
   data,
@@ -36,27 +43,27 @@ export default function Button({
       />
     );
   }
-  console.log('=isInSufficient', isInSufficient)
+
   if (!data || isLoading) {
     return (
-      <StyledStakeButton>
+      <BaseButton>
         <Loading />
-      </StyledStakeButton>
+      </BaseButton>
     );
   }
   if (!approved) {
-    return <StyledStakeButton onClick={onApprove}>Approve</StyledStakeButton>;
+    return <BaseButton onClick={onApprove}>Approve</BaseButton>;
   }
 
   if (Big(inAmount || 0).eq(0)) {
-    return <StyledStakeButton disabled>Enter An Amount</StyledStakeButton>;
+    return <BaseButton disabled>Enter An Amount</BaseButton>;
   }
 
-  if (isInSufficient) return <StyledStakeButton disabled>InSufficient Balance</StyledStakeButton>;
+  if (isInSufficient) return <BaseButton disabled>InSufficient Balance</BaseButton>;
 
   if (Big(inAmount ? inAmount : 0).lt(leastAmount)) {
-    return <StyledStakeButton disabled>The minimum amount is {leastAmount}</StyledStakeButton>;
+    return <BaseButton disabled>The minimum amount is {leastAmount}</BaseButton>;
   }
 
-  return <StyledStakeButton onClick={handleStake}>{actionType}</StyledStakeButton>;
+  return <BaseButton onClick={handleStake}>{actionType}</BaseButton>;
 }
