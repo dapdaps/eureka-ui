@@ -22,7 +22,7 @@ const RocketPool = function (props: any) {
     handleAmountChange,
     handleMax,
     handleStake
-  } = useRocketPool({ actionType, token0, token1, provider, account });
+  } = useRocketPool({ actionType, token0, token1, provider, account, dapp });
   
   return (
     <BaseComponent

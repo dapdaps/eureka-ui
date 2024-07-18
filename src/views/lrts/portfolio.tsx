@@ -182,9 +182,13 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (token: any) => {
                   return (
                     <div style={{ display: 'flex', gap: 10 }}>
-                      <PolygonBtn>STAKE / UNSTAKE </PolygonBtn>
-                      <PolygonBtn onClick={() => handleShowModal(token)}>Swap</PolygonBtn>
-                      <PolygonBtn onClick={() => handleBridge(token.symbol)}>Bridge</PolygonBtn>
+                      <PolygonBtn size="small">STAKE / UNSTAKE </PolygonBtn>
+                      <PolygonBtn size="small" onClick={() => handleShowModal(token)}>
+                        Swap
+                      </PolygonBtn>
+                      <PolygonBtn size="small" onClick={() => handleBridge(token.symbol)}>
+                        Bridge
+                      </PolygonBtn>
                     </div>
                   );
                 },
@@ -259,9 +263,13 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (token: any) => {
                   return (
                     <div style={{ display: 'flex', gap: 10 }}>
-                      <PolygonBtn>RESTAKE / UNSTAKE </PolygonBtn>
-                      <PolygonBtn onClick={() => handleShowModal(token)}>Swap</PolygonBtn>
-                      <PolygonBtn onClick={() => handleBridge(token.symbol)}>Bridge</PolygonBtn>
+                      <PolygonBtn size="small">RESTAKE / UNSTAKE </PolygonBtn>
+                      <PolygonBtn size="small" onClick={() => handleShowModal(token)}>
+                        Swap
+                      </PolygonBtn>
+                      <PolygonBtn size="small" onClick={() => handleBridge(token.symbol)}>
+                        Bridge
+                      </PolygonBtn>
                     </div>
                   );
                 },

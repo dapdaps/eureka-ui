@@ -70,7 +70,12 @@ export default function useFraxRequests() {
 
   // get redeem tickets
   const queryRequests = async (): Promise<IUserRedeemTicketsResponse | []> => {
-    const url = `https://api.frax.finance/v2/frxeth/user/${account}/frxeth-redemptions?chain=ethereum`;
+
+    if (!account) return [];
+
+    const address = ethers.utils.getAddress(account);
+
+    const url = `https://api.frax.finance/v2/frxeth/user/${address}/frxeth-redemptions?chain=ethereum`;
     try {
       setRequestsLoading(true);
       const response = await fetch(url);

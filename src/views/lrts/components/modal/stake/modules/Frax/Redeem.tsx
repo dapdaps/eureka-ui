@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import { Contract,utils } from 'ethers';
+import { Contract, utils } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
@@ -89,11 +89,6 @@ const StyleInfo = styled.div`
 // spender 地址
 const FraxEtherRedemptionQueue_ADDR = '0x82bA8da44Cd5261762e629dd5c605b17715727bd'
 
-// frxETH 合约地址
-const Frx_ETHAddress = '0x5E8422345238F34275888049021821E8E08CAa1f';
-
-
-
 const Redeem = (props: any) => {
   const {
     token0,
@@ -114,11 +109,6 @@ const Redeem = (props: any) => {
 
   const isInSufficient = useMemo(() => Number(inputAmount) > Number(data?.stakedAmount), [data, inputAmount]);
 
-
-
-
-
-
   const checkApproval = async () => {
     const contract = new Contract(selectToken?.address, FRAX_REDEEM_ABI, provider.getSigner());
     const allowance = await contract.allowance(account, selectToken?.address);
@@ -132,14 +122,14 @@ const Redeem = (props: any) => {
     try {
       const frxETHContract = new Contract(selectToken.address, FRAX_REDEEM_ABI, provider.getSigner());
       const tx = await frxETHContract.approve(FraxEtherRedemptionQueue_ADDR, utils.parseEther(inputAmount));
-      await tx.wait(); 
+      await tx.wait();
       toast.success({ title: "Approve Successfully!", text: `Approve ${selectToken.symbol}`, tx: tx.hash });
-      return true; 
+      return true;
     } catch (error: any) {
       toast.fail({
         title: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Approve faily!`,
       });
-      return false; 
+      return false;
     } finally {
       setIsLoading(false)
       toast.dismiss(toastId);
@@ -147,7 +137,7 @@ const Redeem = (props: any) => {
   }
 
 
-  const enterRedemptionQueue = async () => { 
+  const enterRedemptionQueue = async () => {
     const toastId = toast.loading({ title: `Enter Queue ${selectToken.symbol}` });
     setIsLoading(true)
     try {
@@ -170,7 +160,7 @@ const Redeem = (props: any) => {
     if (checkApprovalStatus) return enterRedemptionQueue()
 
     const approveSuccess = await handleApprove(); // 等待 handleApprove 完成
-    if (approveSuccess) await enterRedemptionQueue(); 
+    if (approveSuccess) await enterRedemptionQueue();
   }
 
 
@@ -196,7 +186,7 @@ const Redeem = (props: any) => {
         }}
         onMax={() => setInputAmount(data?.stakedAmount)}
       />
-      <StyleFee>Fee 0.23% (0,0023 ETH)</StyleFee>
+      <StyleFee>Fee 0.00% (0,00 ETH)</StyleFee>
       <Flex>
         <Label>You Receive</Label>
         <Value>
@@ -221,16 +211,9 @@ const Redeem = (props: any) => {
         />
       )}
       <StyleInfo>
-        Unstake requests are processed in 7-10 days, subject to exit queue on Ethereum network and delays imposed by
-        EigenLayer
+        Unstake requests may take from a few minutes to several days, depending on the project.
       </StyleInfo>
       <StyledStakeButtonContainer disabled={isInSufficient || Big(inputAmount ? inputAmount : 0).lt(leastAmount)}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="534" height="49" viewBox="0 0 534 49" fill="none">
-          <path
-            d="M509.05 1H24.9497C23.3567 1 21.8291 1.63349 20.7036 2.76084L3.23223 20.2608C0.893712 22.6032 0.893714 26.3968 3.23223 28.7392L20.7036 46.2392C21.8291 47.3665 23.3567 48 24.9497 48H509.05C510.643 48 512.171 47.3665 513.296 46.2392L530.768 28.7392C533.106 26.3968 533.106 22.6032 530.768 20.2608L513.296 2.76083C512.171 1.63349 510.643 1 509.05 1Z"
-            stroke="white"
-          />
-        </svg>
         <Button
           data={data}
           isInSufficient={isInSufficient}

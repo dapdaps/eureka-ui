@@ -30,11 +30,7 @@ const Home = () => {
 
   const [showSwapModal, setShowSwapModal] = useState(false);
 
-  const handleSlideChange = ({ activeIndex }: any) => {
-    setCurLrt(null);
-    setLstIndex(activeIndex);
-    setIsShowNpc(false);
-  };
+  const [resetTabIndex, setResetTabIndex] = useState(0);
 
   useEffect(() => {
     // wait for tvl & apr
@@ -64,7 +60,15 @@ const Home = () => {
   //     setCurLrt(null)
   //   }
   // }, [isShowStakeModal])
-
+  const handleSlideChange = () => {
+    setIsShowNpc(false);
+  };
+  const handleSwiperClick = ({ activeIndex }: any) => {
+    setCurLrt(null);
+    setLstIndex(activeIndex);
+    // reset tab index for tabCard
+    setResetTabIndex((n) => n + 1);
+  };
   return (
     <Container>
       <Banner>
@@ -83,6 +87,7 @@ const Home = () => {
           className="mySwiper"
           slideToClickedSlide={true}
           onSlideChange={handleSlideChange}
+          onClick={handleSwiperClick}
         >
           {lrtsData.map((item: any) => (
             <SwiperSlide key={item.key}>
@@ -108,7 +113,13 @@ const Home = () => {
 
       <Gems dataSource={lrtsData[lstIndex].lrtTokens} onGemClick={handleClickGem} />
 
-      <TabCard lstIndex={lstIndex} curLrt={curLrt?.token} handleShowModal={handleShowModal} onTabChange={onTabChange} />
+      <TabCard
+        lstIndex={lstIndex}
+        curLrt={curLrt?.token}
+        resetTabIndex={resetTabIndex}
+        handleShowModal={handleShowModal}
+        onTabChange={onTabChange}
+      />
 
       {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
 

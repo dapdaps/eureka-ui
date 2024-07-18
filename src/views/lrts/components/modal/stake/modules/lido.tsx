@@ -28,10 +28,7 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
     chainId,
     actionType,
   })
-  const { requests, loading: requestsLoading, queryRequests, claim } = useLidoRequest({
-    token0,
-    token1
-  });
+  const { requests, loading: requestsLoading, queryRequests, claim } = useLidoRequest();
 
   useEffect(() => {
     actionType === 'unstake' && queryRequests();

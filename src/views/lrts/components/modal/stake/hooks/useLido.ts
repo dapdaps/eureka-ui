@@ -72,7 +72,6 @@ export default function useLido({ dapp, token0, token1, addAction, actionType, c
     const spender = WITHDRAWAL_QUEUE;
     const value = ethers.utils.parseUnits(inAmount as string, inToken.decimals);
     const nonce = await handleGetNonce();
-    console.log('=nonce', nonce)
     const deadline = Math.floor(new Date().getTime() / 1000) + 3600;
     const domain = {
       name: 'Liquid staked Ether 2.0',
@@ -157,16 +156,17 @@ export default function useLido({ dapp, token0, token1, addAction, actionType, c
         addAction({
           type: "Staking",
           action: actionType,
-          token0: inToken.symbol,
-          token1: outToken.symbol,
+          token: [inToken.symbol, outToken.symbol],
+          amount: inAmount,
           template: dapp.name,
           status,
           transactionHash,
           chain_id: chainId,
           extra_data: JSON.stringify({
-            action: actionType,
-            amount0: inAmount,
-            amount1: outAmount,
+            fromTokenSymbol: inToken.symbol,
+            fromTokenAmount: inAmount,
+            toTokenSymol: outToken.symbol,
+            toTokenAmount: outAmount,
           })
         })
       })
