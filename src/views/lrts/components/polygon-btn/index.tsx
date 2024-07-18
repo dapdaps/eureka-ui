@@ -2,8 +2,10 @@ import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+type SizeType = 'small' | 'middle' | 'large';
 interface IProps {
   children: ReactNode;
+  size?: SizeType;
   block?: boolean;
   className?: string;
   href?: string;
@@ -13,7 +15,7 @@ interface IProps {
   //   loading?:boolean;
 }
 
-const Wrap = styled.button<{ $block: boolean }>`
+const Wrap = styled.button<{ $block: boolean; $size: SizeType }>`
   --button-spike-width: 1em;
   --button-border-width: 0.1em;
 
@@ -21,13 +23,34 @@ const Wrap = styled.button<{ $block: boolean }>`
   display: inline-block;
   text-align: center;
   border: 0;
-  padding: 10px 24px;
+  padding: ${(props) => {
+    switch (props.$size) {
+      case 'small':
+        return '7px 18px';
+      case 'middle':
+        return '10px 24px';
+      case 'large':
+        return '10px 24px';
+      default:
+        return '10px 24px';
+    }
+  }};
   width: ${(props) => (props.$block ? '100%' : 'auto')};
-
   color: #fff;
   background: #3e3e3e;
   font-family: Orbitron;
-  font-size: 18px;
+  font-size: ${(props) => {
+    switch (props.$size) {
+      case 'small':
+        return '12px';
+      case 'middle':
+        return '18px';
+      case 'large':
+        return '18px';
+      default:
+        return '18px';
+    }
+  }};
   font-style: normal;
   font-weight: 700;
 
@@ -95,16 +118,16 @@ const Wrap = styled.button<{ $block: boolean }>`
   }
 `;
 
-const PolygonBtn: FC<IProps> = ({ children, className, style, href, block, onClick }) => {
+const PolygonBtn: FC<IProps> = ({ size = 'middle', children, className, style, href, block, onClick }) => {
   if (href) {
     return (
-      <Wrap as="a" onClick={onClick} $block={block ?? false} className={className} style={style}>
+      <Wrap as="a" onClick={onClick} $size={size} $block={block ?? false} className={className} style={style}>
         {children}
       </Wrap>
     );
   }
   return (
-    <Wrap onClick={onClick} $block={block ?? false} className={className} style={style}>
+    <Wrap onClick={onClick} $size={size} $block={block ?? false} className={className} style={style}>
       {children}
     </Wrap>
   );
