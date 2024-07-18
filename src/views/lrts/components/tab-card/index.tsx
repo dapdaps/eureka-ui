@@ -178,13 +178,18 @@ const ItemLink = styled(Link)`
 interface IProps {
   lstIndex: number;
   curLrt: any;
+  resetTabIndex: number;
   onTabChange: (symbol: any) => void;
   handleShowModal: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange }) => {
+const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, resetTabIndex }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [list, setList] = useState<any>();
+
+  const [tabList, setTabList] = useState<any>([]);
+  const [isShowHeader, setIsShowHeader] = useState(true);
+
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
   const tabRef = useRef(null);
   const lrtsData = useLrtDataStore((store: any) => store.data);
@@ -205,17 +210,38 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
       },
       ..._lrtTokens,
     ];
+
+    const _tabList = _list.filter((item: any) => balances[item.address] > 0);
+    setTabList(_tabList);
+    setIsShowHeader(true);
     setList(_list);
     setActiveIndex(0);
   }, [lstIndex, lrtsData]);
 
   useEffect(() => {
-    if (!Array.isArray(list) || !curLrt) return;
+    if (activeIndex !== 0) {
+      setActiveIndex(0);
+    }
+    if (tabList.length) {
+      setIsShowHeader(true);
+    }
+  }, [resetTabIndex]);
 
-    const _index = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
+  useEffect(() => {
+    if (!Array.isArray(tabList) || !curLrt) return;
 
-    setActiveIndex(_index < 0 ? 0 : _index);
-  }, [list, curLrt]);
+    const _index = tabList.findIndex((item: any) => item.symbol === curLrt?.symbol);
+
+    if (_index < 0) {
+      // hide tab header
+      setIsShowHeader(false);
+      const _lstIndex = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
+      setActiveIndex(_lstIndex);
+    } else {
+      setIsShowHeader(true);
+      setActiveIndex(_index);
+    }
+  }, [tabList, curLrt]);
 
   const onChange = (index: number, symbol: string) => {
     setActiveIndex(index);
@@ -243,13 +269,11 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange })
     }
   }, [lrtsData, activeIndex]);
 
-  console.log(1111, lrtsData[lstIndex], curLrt);
-
   return Array.isArray(list) ? (
     <TabWrap {...anim} ref={tabRef}>
       <TabHead>
-        {Array.isArray(list)
-          ? list?.map((item: any, index: number) => (
+        {Array.isArray(tabList) && isShowHeader
+          ? tabList?.map((item: any, index: number) => (
               <div
                 key={index}
                 className={`item ${activeIndex === index ? 'active' : ''}`}
