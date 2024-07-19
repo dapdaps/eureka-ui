@@ -2,7 +2,7 @@ import FraxComponent from './frax-component';
 
 
 const Frax = function (props: any) {
-  const { setShow, token0, token1, dapp } = props;
+  const { setShow, token0, token1, dapp, onSuccess } = props;
   console.log(token0);
   
   return (
@@ -11,7 +11,8 @@ const Frax = function (props: any) {
         dapp,
         setShow,
         token0, 
-        token1
+        token1,
+        onSuccess
       }}
     />
   )

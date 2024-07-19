@@ -225,7 +225,7 @@ const SECOND_TOKEN_ABI = [{
   "type": "function"
 }]
 
-export default function useEtherFi({ dapp, token0, token1, addAction, actionType, chainId }: any) {
+export default function useEtherFi({ gem, dapp, token0, token1, addAction, actionType, chainId, onSuccess }: any) {
   const toast = useToast()
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -377,7 +377,7 @@ export default function useEtherFi({ dapp, token0, token1, addAction, actionType
           action: actionType,
           token: [inToken.symbol, outToken.symbol],
           amount: inAmount,
-          template: dapp.name,
+          template: gem ? gem?.dapp?.name : dapp.name,
           status,
           transactionHash,
           chain_id: chainId,
@@ -388,6 +388,8 @@ export default function useEtherFi({ dapp, token0, token1, addAction, actionType
             toTokenAmount: outAmount,
           })
         })
+        setInAmount("")
+        onSuccess && onSuccess(actionType)
       })
       .catch((error: any) => {
         console.log('=error', error)

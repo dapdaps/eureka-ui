@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import BaseComponent from "../components/base-component";
 import useMantle from "../hooks/useMantle";
-import useMantleRequest from "../hooks/useMantleRequest";
-const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId }: any) {
+import useMantleRequests from "../hooks/useMantleRequests";
+const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId, onSuccess }: any) {
   const {
     data,
     inAmount,
@@ -20,14 +20,16 @@ const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActi
     handleStake,
     handleAddMetaMask,
   } = useMantle({
+    gem,
     dapp,
     token0,
     token1,
     addAction,
     chainId,
-    actionType
+    actionType,
+    onSuccess
   })
-  const { requests, loading: requestsLoading, queryRequests, claim } = useMantleRequest();
+  const { requests, loading: requestsLoading, queryRequests, claim } = useMantleRequests();
   useEffect(() => {
     actionType === 'unstake' && queryRequests();
   }, [actionType]);

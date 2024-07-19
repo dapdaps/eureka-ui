@@ -11,8 +11,8 @@ import useEigenpieRequests from '@/views/lrts/components/modal/stake/hooks/useEi
 import useFraxRequests from '@/views/lrts/components/modal/stake/hooks/useFraxRequests';
 import useInceptionRequests from '@/views/lrts/components/modal/stake/hooks/useInceptionRequests';
 import useKarakRequests from '@/views/lrts/components/modal/stake/hooks/useKarakRequests';
-import useLidoRequest from '@/views/lrts/components/modal/stake/hooks/useLidoRequest';
-import useMantleRequest from '@/views/lrts/components/modal/stake/hooks/useMantleRequest';
+import useLidoRequests from '@/views/lrts/components/modal/stake/hooks/useLidoRequests';
+import useMantleRequests from '@/views/lrts/components/modal/stake/hooks/useMantleRequests';
 import useRenzoRequests from '@/views/lrts/components/modal/stake/hooks/useRenzoRequests';
 // const requireContext = require?.context('@/views/lrts/components/modal/stake/hooks', false, /useRenzoRequests\.ts$/);
 // requireContext.keys().forEach((key: any) => {
@@ -83,8 +83,8 @@ const UnstakeTable: FC<IProps> = (props) => {
   const fraxRequests = useFraxRequests();
   const inceptionRequests = useInceptionRequests();
   const karakRequests = useKarakRequests();
-  const lidoRequest = useLidoRequest();
-  const mantleRequest = useMantleRequest();
+  const lidoRequests = useLidoRequests();
+  const mantleRequests = useMantleRequests();
 
   useEffect(() => {
     renzoRequests.queryRequests();
@@ -92,8 +92,8 @@ const UnstakeTable: FC<IProps> = (props) => {
     fraxRequests.queryRequests();
     inceptionRequests.queryRequests();
     karakRequests.queryRequests();
-    lidoRequest.queryRequests();
-    mantleRequest.queryRequests();
+    lidoRequests.queryRequests();
+    mantleRequests.queryRequests();
   }, []);
 
   return (

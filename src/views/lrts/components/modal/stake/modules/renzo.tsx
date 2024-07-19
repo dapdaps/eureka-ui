@@ -5,7 +5,7 @@ import BaseComponent from '../components/base-component';
 import { memo, useEffect } from 'react';
 import useRenzoRequests from '../hooks/useRenzoRequests';
 
-function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType }: any) {
+function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType, onSuccess }: any) {
   const { chainId } = useAccount();
   const {
     data,
@@ -20,10 +20,12 @@ function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
     handleMax,
     handleStake,
   } = useRenzo({
+    gem,
     token0,
     token1,
     actionType,
-    dapp: gem,
+    dapp,
+    onSuccess
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,

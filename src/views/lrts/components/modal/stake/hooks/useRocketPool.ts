@@ -11,7 +11,7 @@ const RocketSwapRouter_ADDR = '0x16d5a408e807db8ef7c578279beeee6b228f1c1c';
 const BalancerQueries_ADDR = '0xE39B5e3B6D74016b2F6A9673D7d7493B6DF549d5';
 const RocketDepositPool_ADDR = '0xdd3f50f8a6cafbe9b31a427582963f465e745af8';
 
-const useRocketPool = ({ actionType, token0, token1, provider, account, dapp }: any) => {
+const useRocketPool = ({ actionType, token0, token1, provider, account, gem, dapp, onSuccess }: any) => {
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
   const [data, setData] = useState<any>(null);
@@ -218,7 +218,7 @@ const useRocketPool = ({ actionType, token0, token1, provider, account, dapp }: 
         action: actionType,
         token: [inToken.symbol, outToken.symbol],
         amount: inAmount,
-        template: dapp.name,
+        template: gem ? gem?.dapp?.name : dapp.name,
         status,
         transactionHash,
         chain_id: token0.chainId,
@@ -229,6 +229,8 @@ const useRocketPool = ({ actionType, token0, token1, provider, account, dapp }: 
           toTokenAmount: outAmount,
         })
       })
+      setInAmount("")
+      onSuccess && onSuccess(actionType)
     } catch (error) {
       toast?.fail({
         title: ['stake', 'restake'].includes(actionType) ? 'Stake Failed!' : 'UnStake Failed!',

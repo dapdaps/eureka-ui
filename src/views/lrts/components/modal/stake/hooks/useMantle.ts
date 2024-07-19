@@ -15,7 +15,7 @@ const {
   mETH_ABI
 } = abi
 
-export default function useMantle({ dapp, token0, token1, addAction, actionType, chainId }: any) {
+export default function useMantle({ gem, dapp, token0, token1, addAction, actionType, chainId, onSuccess }: any) {
   const toast = useToast()
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -162,7 +162,7 @@ export default function useMantle({ dapp, token0, token1, addAction, actionType,
           action: actionType,
           token: [inToken.symbol, outToken.symbol],
           amount: inAmount,
-          template: dapp.name,
+          template: gem ? gem?.dapp?.name : dapp.name,
           status,
           transactionHash,
           chain_id: chainId,
@@ -173,6 +173,8 @@ export default function useMantle({ dapp, token0, token1, addAction, actionType,
             toTokenAmount: outAmount,
           })
         })
+        setInAmount("")
+        onSuccess && onSuccess(actionType)
       })
       .catch((error: any) => {
         setIsLoading(false)

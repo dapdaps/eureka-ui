@@ -257,7 +257,7 @@ const SECOND_TOKEN_ABI = [
 ];
 
 const RestakeFinance = function (props: any) {
-  const { box, gem, dapp, actionType, handleChangeActionType, setShow, token0, token1 } = props;
+  const { box, gem, dapp, actionType, addAction, handleChangeActionType, setShow, token0, token1, onSuccess } = props;
   const toast = useToast();
   const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -400,6 +400,24 @@ const RestakeFinance = function (props: any) {
         toast?.success({
           title: ['stake', 'restake'].includes(actionType) ? 'Stake Successfully!' : 'UnStake Successfully',
         });
+        addAction({
+          type: "Staking",
+          action: actionType,
+          token: [inToken.symbol, outToken.symbol],
+          amount: inAmount,
+          template: dapp.name,
+          status,
+          transactionHash,
+          chain_id: chainId,
+          extra_data: JSON.stringify({
+            fromTokenSymbol: inToken.symbol,
+            fromTokenAmount: inAmount,
+            toTokenSymol: outToken.symbol,
+            toTokenAmount: outAmount,
+          })
+        })
+        setInAmount("")
+        onSuccess && onSuccess(actionType)
       })
       .catch((error: any) => {
         setIsLoading(false);

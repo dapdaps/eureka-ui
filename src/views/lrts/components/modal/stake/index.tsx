@@ -23,6 +23,7 @@ import Puffer from './modules/puffer';
 import Renzo from './modules/renzo';
 import RestakeFinance from './modules/restake-finance';
 import RocketPool from './modules/rocket-pool';
+import { ethereum } from '@/config/tokens/ethereum';
 
 const ComponentMapping: any = {
   Lido,
@@ -40,8 +41,12 @@ const ComponentMapping: any = {
 };
 const Index = function (props: any) {
   const { addAction } = useAddAction('lrts');
-  const { dapp, gem, box, show, setShow, token0, token1, chainId } = props;
-  const VmComponent = ComponentMapping[gem?.dapp?.name || dapp?.name];
+  // const { dapp, gem, box, show, setShow, token0, token1, chainId } = props;
+  // const VmComponent = ComponentMapping[gem?.dapp?.name || dapp?.name];
+  const { dapp, gem, box, show, setShow, chainId, onSuccess } = props;
+  const VmComponent = ComponentMapping["KelpDao"];
+  const token0 = ethereum['stETH']
+  const token1 = ethereum['rsETH']
   const [actionType, setActionType] = useState(gem ? 'restake' : 'stake');
   const handleChangeActionType = function (_actionType: any) {
     setActionType(_actionType);
@@ -76,6 +81,7 @@ const Index = function (props: any) {
           chainId={chainId}
           actionType={actionType}
           handleChangeActionType={handleChangeActionType}
+          onSuccess={onSuccess}
         />
       }
     />

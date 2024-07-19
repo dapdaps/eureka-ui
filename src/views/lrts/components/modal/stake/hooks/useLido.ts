@@ -11,7 +11,7 @@ const {
   WITHDRAWAL_QUEUE_ABI
 } = abi
 const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
-export default function useLido({ dapp, token0, token1, addAction, actionType, chainId }: any) {
+export default function useLido({ gem, dapp, token0, token1, addAction, actionType, chainId, onSuccess }: any) {
   const toast = useToast();
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -158,7 +158,7 @@ export default function useLido({ dapp, token0, token1, addAction, actionType, c
           action: actionType,
           token: [inToken.symbol, outToken.symbol],
           amount: inAmount,
-          template: dapp.name,
+          template: gem ? gem?.dapp?.name : dapp.name,
           status,
           transactionHash,
           chain_id: chainId,
@@ -169,6 +169,8 @@ export default function useLido({ dapp, token0, token1, addAction, actionType, c
             toTokenAmount: outAmount,
           })
         })
+        setInAmount("")
+        onSuccess && onSuccess(actionType)
       })
       .catch((error: any) => {
         console.log('===error', error)

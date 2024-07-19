@@ -2,7 +2,7 @@ import usePuffer from '../hooks/usePuffer';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType }: any) {
+function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType, onSuccess }: any) {
   const {
     data,
     inAmount,
@@ -17,8 +17,10 @@ function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
   } = usePuffer({
     token0,
     token1,
-    dapp: gem,
+    gem,
+    dapp,
     actionType,
+    onSuccess
   });
 
   return (

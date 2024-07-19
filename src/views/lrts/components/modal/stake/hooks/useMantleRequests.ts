@@ -23,8 +23,7 @@ const {
   LSP_STAKING_ABI
 } = abi
 
-console.log('===LSP_STAKING_ABI', LSP_STAKING_ABI)
-export default function useInceptionRequests() {
+export default function useMantleRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);

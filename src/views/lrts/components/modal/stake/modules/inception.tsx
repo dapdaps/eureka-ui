@@ -5,7 +5,7 @@ import BaseComponent from '../components/base-component';
 import { memo, useEffect } from 'react';
 import useInceptionRequests from '../hooks/useInceptionRequests';
 
-function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow }: any) {
+function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow, onSuccess }: any) {
   const { chainId } = useAccount();
   const {
     data,
@@ -23,7 +23,9 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeAct
     token0,
     token1,
     actionType,
-    dapp: gem,
+    gem,
+    dapp,
+    onSuccess
   });
   const { requests, loading: requestsLoading, queryRequests, claim } = useInceptionRequests();
   const { approve, approved, approving } = useApprove({

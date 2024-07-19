@@ -5,7 +5,7 @@ import BaseComponent from '../components/base-component';
 import { memo, useEffect } from 'react';
 import useKarakRequests from '../hooks/useKarakRequests';
 
-function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow }: any) {
+function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow, onSuccess }: any) {
   const { chainId } = useAccount();
   const {
     data,
@@ -23,7 +23,9 @@ function Karak({ box, gem, dapp, token0, token1, actionType, handleChangeActionT
     token0,
     token1,
     actionType,
-    dapp: gem,
+    gem,
+    dapp,
+    onSuccess
   });
   const { approve, approved, approving } = useApprove({
     amount: inAmount,

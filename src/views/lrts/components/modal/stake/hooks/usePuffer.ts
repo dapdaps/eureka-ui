@@ -15,7 +15,7 @@ const contracts: Record<number, any> = {
   },
 };
 
-export default function usePuffer({ token0, token1, actionType, dapp }: any) {
+export default function usePuffer({ token0, token1, actionType, gem, dapp, onSuccess }: any) {
   const { provider, account } = useAccount();
   const [inAmount, setInAmount] = useState('');
   const [outAmount, setOutAmount] = useState('');
@@ -182,7 +182,7 @@ export default function usePuffer({ token0, token1, actionType, dapp }: any) {
         action: actionType,
         token: [inToken.symbol, outToken.symbol],
         amount: inAmount,
-        template: dapp.name,
+        template: gem ? gem?.dapp?.name : dapp.name,
         status,
         transactionHash,
         chain_id: token0.chainId,
@@ -194,6 +194,8 @@ export default function usePuffer({ token0, token1, actionType, dapp }: any) {
         })
       })
       setLoading(false);
+      setInAmount("")
+      onSuccess && onSuccess(actionType)
     } catch (err: any) {
       console.log('err', err);
       toast.dismiss(toastId);

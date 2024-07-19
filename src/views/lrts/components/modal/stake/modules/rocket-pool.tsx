@@ -5,7 +5,7 @@ import useRocketPool from '../hooks/useRocketPool';
 
 
 const RocketPool = function (props: any) {
-  const { box, gem, dapp, actionType, handleChangeActionType, setShow, token0, token1 } = props;
+  const { box, gem, dapp, actionType, handleChangeActionType, setShow, token0, token1, onSuccess } = props;
   const { account, provider } = useAccount();
   const {
     data,
@@ -22,8 +22,8 @@ const RocketPool = function (props: any) {
     handleAmountChange,
     handleMax,
     handleStake
-  } = useRocketPool({ actionType, token0, token1, provider, account, dapp });
-  
+  } = useRocketPool({ actionType, token0, token1, provider, account, gem, dapp, onSuccess });
+
   return (
     <BaseComponent
       componentProps={{

@@ -4,261 +4,16 @@ import { useSetChain } from '@web3-onboard/react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
-const LSP_STAKING = "0xe3cBd06D7dadB3F4e6557bAb7EdD924CD1489E8f"
-const LSP_STAKING_ABI = [{
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "ethAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "ethToMETH",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "mETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "mETHToETH",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "minMETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "stake",
-  "outputs": [],
-  "stateMutability": "payable",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint128",
-      "name": "methAmount",
-      "type": "uint128"
-    },
-    {
-      "internalType": "uint128",
-      "name": "minETHAmount",
-      "type": "uint128"
-    }
-  ],
-  "name": "unstakeRequest",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
+import abi from '@/views/lrts/config/abi/kelp-dao';
 const UNSTAKE_ADDRESS = "0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16"
-
-const UNSTAKE_ADDRESS_ABI = [{
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "asset",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "rsETHUnstaked",
-      "type": "uint256"
-    }
-  ],
-  "name": "initiateWithdrawal",
-  "outputs": [],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
-
 const LRT_DEPOSIT_POOL = "0x036676389e48133B63a802f8635AD39E752D375D"
-
-const LRT_DEPOSIT_POOL_ABI = [{
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "asset",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "depositAmount",
-      "type": "uint256"
-    },
-    {
-      "internalType": "uint256",
-      "name": "minRSETHAmountExpected",
-      "type": "uint256"
-    },
-    {
-      "internalType": "string",
-      "name": "referralId",
-      "type": "string"
-    }
-  ],
-  "name": "depositAsset",
-  "outputs": [],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
-
-
-const FIRST_TOKEN_ABI = [{
-  constant: true,
-  inputs: [
-    {
-      name: '_account',
-      type: 'address',
-    },
-  ],
-  name: 'balanceOf',
-  outputs: [
-    {
-      name: '',
-      type: 'uint256',
-    },
-  ],
-  payable: false,
-  stateMutability: 'view',
-  type: 'function',
-}, {
-  "constant": true,
-  "inputs": [
-    {
-      "name": "_owner",
-      "type": "address"
-    },
-    {
-      "name": "_spender",
-      "type": "address"
-    }
-  ],
-  "name": "allowance",
-  "outputs": [
-    {
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "payable": false,
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "constant": false,
-  "inputs": [
-    {
-      "name": "_spender",
-      "type": "address"
-    },
-    {
-      "name": "_amount",
-      "type": "uint256"
-    }
-  ],
-  "name": "approve",
-  "outputs": [
-    {
-      "name": "",
-      "type": "bool"
-    }
-  ],
-  "payable": false,
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
-const SECOND_TOKEN_ABI = [{
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
-  "name": "balanceOf",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    }
-  ],
-  "name": "allowance",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
-  "name": "approve",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
-export default function useKelpDao({ dapp, token0, token1, addAction, actionType, chainId }: any) {
+const {
+  UNSTAKE_ADDRESS_ABI,
+  LRT_DEPOSIT_POOL_ABI,
+  FIRST_TOKEN_ABI,
+  SECOND_TOKEN_ABI,
+} = abi
+export default function useKelpDao({ gem, dapp, token0, token1, addAction, actionType, chainId, onSuccess }: any) {
   const toast = useToast()
   const { account, provider } = useAccount();
   const [{ }, setChain] = useSetChain();
@@ -279,11 +34,6 @@ export default function useKelpDao({ dapp, token0, token1, addAction, actionType
       return Number(inAmount) > Number(data?.stakedAmount)
     }
   }, [data?.availableAmount, data?.stakedAmount, inAmount])
-
-  const handleQueryApy = async function () {
-    const res = await fetch("https://universe.kelpdao.xyz/rseth/apy")
-    return res.json() as any
-  }
   const handleQueryExchangeRate = async function () {
     const res = await fetch("https://universe.kelpdao.xyz/rseth/exchangeRate/?lrtToken=stETH")
     return res.json() as any
@@ -297,14 +47,12 @@ export default function useKelpDao({ dapp, token0, token1, addAction, actionType
     return await contract.balanceOf(account)
   }
   const handleQueryData = async function () {
-    const apyResult = await handleQueryApy()
     const exchangRateResult = await handleQueryExchangeRate()
     const availableAmountResult = await handleQueryAvailableAmount()
     const stakedAmountResult = await handleQueryStakedAmount()
     setData({
       availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
       stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
-      apy: apyResult?.value,
       exchangeRate: Big(1).div(exchangRateResult?.value).toFixed(4)
     })
   }
@@ -395,6 +143,7 @@ export default function useKelpDao({ dapp, token0, token1, addAction, actionType
     contractMethord(...contractArguments)
       .then((tx: any) => tx.wait())
       .then((result: any) => {
+        console.log('====result', result)
         const { status, transactionHash } = result;
         setIsLoading(false)
         handleQueryData()
@@ -407,7 +156,7 @@ export default function useKelpDao({ dapp, token0, token1, addAction, actionType
           action: actionType,
           token: [inToken.symbol, outToken.symbol],
           amount: inAmount,
-          template: dapp.name,
+          template: gem ? gem?.dapp?.name : dapp.name,
           status,
           transactionHash,
           chain_id: chainId,
@@ -416,8 +165,11 @@ export default function useKelpDao({ dapp, token0, token1, addAction, actionType
             fromTokenAmount: inAmount,
             toTokenSymol: outToken.symbol,
             toTokenAmount: outAmount,
+            // startTime: 
           })
         })
+        setInAmount("")
+        onSuccess && onSuccess(actionType)
       })
       .catch((error: any) => {
         setIsLoading(false)

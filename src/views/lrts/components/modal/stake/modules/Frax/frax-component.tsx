@@ -52,7 +52,8 @@ const FraxComponent = function (props: any) {
     dapp,
     setShow,
     token0,
-    token1
+    token1,
+    onSuccess
   } = props.componentProps;
   const setTabStore = useTabStore(store => store.set)
 
@@ -74,7 +75,7 @@ const FraxComponent = function (props: any) {
     handleStake,
     handleAddMetaMask,
     handleMax
-  } = useFrax({ dapp, token0, token1 });
+  } = useFrax({ dapp, token0, token1, onSuccess });
 
   const [actionType, setActionType] = useState(ITab.MINT)
 
