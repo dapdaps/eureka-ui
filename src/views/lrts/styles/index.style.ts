@@ -87,9 +87,6 @@ export const Banner = styled.div`
       position: relative;
       width: 100%;
     }
-    .lst-img {
-      width: 300px;
-    }
     .lst-title {
       font-size: 26px;
       top: 22px;
