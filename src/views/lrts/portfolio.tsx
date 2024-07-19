@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 
-import useTokenBalance from '@/components/Bridge/hooks/useTokenBalance';
 import { chains } from '@/config/bridge';
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
@@ -13,7 +12,6 @@ import { useLrtDataStore } from '@/stores/lrts';
 import { usePriceStore } from '@/stores/price';
 import { formatThousandsSeparator } from '@/utils/format-number';
 import { unifyNumber } from '@/utils/format-number';
-import useTokens from '@/views/lrts/hooks/useTokens';
 
 import { CustomTable, History, PolygonBtn, Tabs, UnstakeTable } from './components';
 import AddTokenModal from './components/modal/add-token';
@@ -37,7 +35,6 @@ enum TabType {
 }
 
 const Portfolio: FC<IProps> = (props) => {
-  const { loading, balances } = useAllTokensBalance();
   const { completed } = useLrtsList();
   const { chainId, account } = useAccount();
 
@@ -56,11 +53,9 @@ const Portfolio: FC<IProps> = (props) => {
 
   const { check } = useAuthCheck({ isNeedAk: false });
 
-  const tokens = useTokens();
-  const currentToken = tokens?.filter((token: any) => token.isNative)[0];
   const [showSwapModal, setShowSwapModal] = useState(false);
   const [showAddTokenModal, setShowAddTokenModal] = useState(false);
-  const { balance: ethBalance, loading: ethBalLoading } = useTokenBalance({ tokensByChain: currentToken });
+  const { loading: balanceLoading, balances } = useAllTokensBalance();
 
   const [lstIndex, setLstIndex] = useState(0);
   const [curLrt, setCurLrt] = useState<any>(null);
@@ -103,13 +98,7 @@ const Portfolio: FC<IProps> = (props) => {
   };
 
   useEffect(() => {
-    if (
-      loading ||
-      ethBalLoading ||
-      !Array.isArray(lstAssets) ||
-      !Array.isArray(lrtAssets) ||
-      Object.keys(balances).length === 0
-    )
+    if (balanceLoading || !Array.isArray(lstAssets) || !Array.isArray(lrtAssets) || Object.keys(balances).length === 0)
       return;
     const _totalLst = lstAssets.reduce((_total, _cur) => {
       return Big(_total)
@@ -121,12 +110,14 @@ const Portfolio: FC<IProps> = (props) => {
         .plus(Big(balances[_cur.address] || 0).times(Big(prices[_cur.symbol] || 0)))
         .toFixed();
     }, 0);
-    const _userBalance = Big(_totalLst).plus(_totalLrt).plus(ethBalance).toFixed(2);
+    const _userEthBalance = Big(balances['native'] || 0)
+      .times(prices['ETH'] || 0)
+      .toFixed();
 
     setLstValue(_totalLst);
     setLrtValue(_totalLrt);
-    setUserBalance(_userBalance);
-  }, [lstAssets, lrtAssets, balances, ethBalLoading]);
+    setUserBalance(_userEthBalance);
+  }, [lstAssets, lrtAssets, balances, balanceLoading]);
 
   const handleClickLst = (activeIndex: number) => {
     setCurLrt(null);
@@ -370,7 +361,7 @@ const Portfolio: FC<IProps> = (props) => {
             <span className="value">$ {formatThousandsSeparator(Number(lrtValue).toFixed(2))}</span>
           </div>
           <div className="item">
-            <span className="key">Wallet Balance</span>
+            <span className="key">Wallet Balance (ETH)</span>
             <span className="value">$ {formatThousandsSeparator(Number(userBalance).toFixed(2))}</span>
           </div>
         </div>
