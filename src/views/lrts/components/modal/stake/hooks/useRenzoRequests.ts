@@ -48,11 +48,12 @@ export default function useRenzoRequests() {
 
       const _list = list.map((item: any) => {
         const token1Address = item.withdrawalAssetOut;
+        const startTime = Number(item.createdAt) * 1000;
 
         return {
           amount: Big(item.amountToRedeem).div(1e18).toString(),
           startTime: item.createdAt * 1000,
-          status: item.queued ? 'In Progress' : 'Claimable',
+          status: startTime + 259200000 > Date.now() ? 'In Progress' : 'Claimable',
           token0: ethereum.ezETH,
           token1: token1Address === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' ? ethereum.eth : ethereum.stETH,
           data: {
