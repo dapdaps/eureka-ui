@@ -1,8 +1,7 @@
 import { upperFirst } from 'lodash';
+import { styled } from 'styled-components';
 
 import { formateValue, formateValueWithThousandSeparator } from '@/utils/formate';
-import { styled } from 'styled-components';
-import Big from 'big.js';
 
 const StyledRecord = styled.div`
   display: flex;
@@ -110,14 +109,31 @@ export const formatGas = (record: any) => {
   return `${formateValue(record.gas.amount, 4)} ${record.gas.symbol}($${formateValue(record.gas.usd, 2)})`;
 };
 
-export const getChainLogo = (name: string) =>
-  name ? `https://s3.amazonaws.com/db3.app/chain/${name.toLowerCase()}.png` : '/images/tokens/default_icon.png';
+export const defaultIcon = '/images/tokens/default_icon.png';
 
-export const getDappLogo = (name: string) =>
-  name ? `https://s3.amazonaws.com/db3.app/dapp/${name.toLowerCase()}.png` : '/images/tokens/default_icon.png';
+export const getChainLogo = (name: string) => {
+  name = name.toLowerCase();
+  if (name) {
+    return `https://s3.amazonaws.com/db3.app/chain/${name}.png`;
+  }
+  return defaultIcon;
+}
 
-export const getTokenLogo = (name: string) =>
-  name ? `https://s3.amazonaws.com/db3.app/token/${name.toLowerCase()}.png` : '/images/tokens/default_icon.png';
+export const getDappLogo = (name: string) => {
+  name = name.toLowerCase();
+  if (name) {
+    return `https://s3.amazonaws.com/db3.app/dapp/${name}.png`;
+  }
+  return defaultIcon;
+}
+
+export const getTokenLogo = (name: string) => {
+  name = name.toLowerCase();
+  if (name) {
+    return `https://s3.amazonaws.com/db3.app/token/${name}.png`;
+  }
+  return defaultIcon;
+}
 
 export function getTime(timeStr: number) {
   const date = new Date(timeStr * 1000);

@@ -64,7 +64,7 @@ export const StyledTableCol = styled.div<{ align?: Align, width?: string, ellips
 
   ${({ width }) => {
     if (!width) return '';
-    return `flex-basis: ${width}`;
+    return `flex-basis: ${width}; flex-shrink: 0; flex-grow: 0;`;
   }};
   ${({ ellipsis }) => {
     if (!ellipsis) return '';

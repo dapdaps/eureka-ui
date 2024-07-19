@@ -1,9 +1,11 @@
+import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { DefaultIcon } from '@/views/Portfolio/config';
+import Big from 'big.js';
 
-export const StyledContainer = styled.div<{bgColor: string}>`
+export const StyledContainer = styled(motion.div)<{bgColor: string}>`
   width: 325px;
   height: 70px;
   flex-shrink: 0;
@@ -16,37 +18,37 @@ export const StyledContainer = styled.div<{bgColor: string}>`
   background: #20212D;
   padding: 12px;
   
-  &:hover {
-    .bg {
-      animation-name: fadeOut;
-    }
-    .bg-active {
-      animation-delay: .3s;
-      animation-name: fadeIn;
-    }
-  }
+  //&:hover {
+  //  .bg {
+  //    animation-name: fadeOut;
+  //  }
+  //  .bg-active {
+  //    animation-delay: .3s;
+  //    animation-name: fadeIn;
+  //  }
+  //}
   
-  .bg,
-  .bg-active {
-    position: absolute;
-    z-index: 0;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    animation-fill-mode: both;
-    animation-timing-function: linear;
-    animation-duration: .6s;
-  }
+   .bg,
+   .bg-active {
+     position: absolute;
+     z-index: 0;
+     left: 0;
+     top: 0;
+     width: 100%;
+     height: 100%;
+     opacity: 0;
+     //animation-fill-mode: both;
+     //animation-timing-function: linear;
+     //animation-duration: .6s;
+   }
   .bg {
     opacity: 1;
     background: ${({ bgColor }) => `radial-gradient(46.69% 100% at 12.07% 0%, ${bgColor} 0%, #20212D 100%)`};
-    animation-delay: .6s;
+    //animation-delay: .6s;
   }
   .bg-active {
-    background: ${({ bgColor }) => `radial-gradient(46.69% 100% at 50% 0%, ${bgColor} 0%, #20212D 100%)`};
-    animation-name: fadeOut;
+    background: ${({ bgColor }) => `radial-gradient(46.69% 100% at 50% 0%, ${bgColor} 0%, #1B1D25 100%)`};
+    //animation-name: fadeOut;
   }
 
   @keyframes fadeIn {
@@ -106,18 +108,73 @@ export const StyledContent = styled.div`
 `;
 
 const ChainCard = (props: any) => {
-  const { chain } = props;
+  const { chain, onClick = () => {} } = props;
+
+  const disabled = Big(chain.totalUsdValue || 0).lte(0);
 
   return (
-    <StyledContainer bgColor={chain.bgColor}>
-      <div className="bg"></div>
-      <div className="bg-active"></div>
+    <StyledContainer
+      bgColor={chain.selectBgColor}
+      whileHover="active"
+      initial="default"
+      style={{
+        opacity: disabled ? 0.3 : 1,
+        cursor: disabled ? 'default' : 'pointer',
+      }}
+      onClick={() => {
+        if (disabled) return;
+        onClick();
+      }}
+    >
+      <motion.div
+        className="bg"
+        variants={{
+          default: {
+            opacity: 1,
+          },
+          active: {
+            opacity: 0,
+            transition: {
+              duration: 1,
+            },
+          },
+        }}
+        transition={{
+          ease: 'linear',
+          duration: 0.6,
+        }}
+        style={{
+          display: disabled ? 'none' : 'block',
+        }}
+      />
+      <motion.div
+        className="bg-active"
+        variants={{
+          default: {
+            opacity: 0,
+          },
+          active: {
+            opacity: 1,
+            transition: {
+              delay: 0.1,
+              duration: 1.3,
+            },
+          },
+        }}
+        transition={{
+          ease: 'linear',
+          duration: 0.6,
+        }}
+        style={{
+          display: disabled ? 'none' : 'block',
+        }}
+      />
       <StyledContent>
-        <StyledIcon src={chain.icon || DefaultIcon} />
+        <StyledIcon src={chain.logo || DefaultIcon} />
         <div className="name">{chain.name}</div>
         <div className="usd">
-          ${formateValueWithThousandSeparatorAndFont(chain.usd, 2).integer}
-          <span className="sm">{formateValueWithThousandSeparatorAndFont(chain.usd, 2).decimal}</span>
+          ${formateValueWithThousandSeparatorAndFont(chain.totalUsdValue, 2).integer}
+          <span className="sm">{formateValueWithThousandSeparatorAndFont(chain.totalUsdValue, 2).decimal}</span>
         </div>
       </StyledContent>
     </StyledContainer>

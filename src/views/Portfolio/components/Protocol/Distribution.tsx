@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { motion } from 'framer-motion';
 import { useMemo, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
@@ -25,48 +26,6 @@ export const StyledContainer = styled.div`
       font-size: 16px;
       font-style: normal;
       font-weight: 600;
-    }
-
-    .tabs {
-      width: 137px;
-      height: 36px;
-      flex-shrink: 0;
-      border-radius: 8px;
-      border: 1px solid #373A53;
-      background: #262836;
-      padding: 4px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: relative;
-
-      .tab,
-      .tab-active {
-        width: 64px;
-        height: 28px;
-        line-height: 28px;
-        flex-shrink: 0;
-        color: #979ABE;
-        font-size: 14px;
-        font-style: normal;
-        font-weight: 400;
-        border-radius: 8px;
-        text-align: center;
-        position: relative;
-        z-index: 1;
-        cursor: pointer;
-        transition: all .3s linear;
-
-        &.active {
-          color: #FFF;
-        }
-      }
-
-      .tab-active {
-        background: #3D4159;
-        position: absolute;
-        z-index: 0;
-      }
     }
   }
 
@@ -134,6 +93,43 @@ export const StyledContainer = styled.div`
     }
   }
 `;
+export const StyledTabs = styled.div`
+  width: 137px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #373A53;
+  background: #262836;
+  padding: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+`;
+export const StyledTabItem = styled(motion.div)`
+  width: 64px;
+  height: 28px;
+  line-height: 28px;
+  flex-shrink: 0;
+  color: #979ABE;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  border-radius: 8px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+
+  &.active {
+    color: #FFF;
+  }
+`;
+export const StyledTabCursor = styled(StyledTabItem)`
+  background: #3D4159;
+  position: absolute;
+  z-index: 0;
+`;
 
 const tabs = [
   {
@@ -161,6 +157,8 @@ const Distribution = (props: any) => {
     return dAppData;
   }, [chainData, dAppData, activeTab]);
 
+  console.log('displayChartData: %o', displayChartData);
+
   const handleTab = (tabKey: any) => {
     if (tabKey === activeTab) return;
     setActiveTab(tabKey);
@@ -183,20 +181,23 @@ const Distribution = (props: any) => {
     <StyledContainer>
       <div className="head">
         <div className="title">Assets Distribution</div>
-        <div className="tabs">
-          <div className="tab-active" style={{ transform: `translateX(${activeTabIndex * 64}px)` }} />
+        <StyledTabs>
+          <StyledTabCursor
+            initial={{ x: 0 }}
+            animate={{ x: activeTabIndex * 64 }}
+          />
           {
             tabs.map(((tab) => (
-              <div
+              <StyledTabItem
                 className={`tab ${activeTab === tab.key ? 'active' : ''}`}
                 key={tab.key}
                 onClick={() => handleTab(tab.key)}
               >
                 {tab.label}
-              </div>
+              </StyledTabItem>
             )))
           }
-        </div>
+        </StyledTabs>
       </div>
       <div className="chart-wrapper">
         <ResponsiveContainer width="100%" height="100%">
@@ -235,8 +236,9 @@ const Distribution = (props: any) => {
               <div className="name">{displayChartData[activePie]?.name}</div>
               <div className="usd">
                 ${formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).integer}
-                <span
-                  className="sm">.{formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).decimal}</span>
+                <span className="sm">
+                  {formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).decimal}
+                </span>
               </div>
               <div className="rate">{calcChartRate}%</div>
             </div>

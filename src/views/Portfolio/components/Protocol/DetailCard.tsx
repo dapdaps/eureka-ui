@@ -52,6 +52,7 @@ export const StyledHead = styled.div`
     font-style: normal;
     font-weight: 700;
     line-height: 20px;
+    padding-right: 11px;
 
     .sm {
       font-size: 12px;
@@ -89,94 +90,97 @@ export const StyledIcon = styled.div<{ src: string }>`
   border-radius: 50%;
   flex-shrink: 0;
   background: ${({ src }) => `url("${src}") no-repeat center / contain`};
+  
+  &:not(:first-child) {
+    margin-left: -10px;
+  }
 `;
 
 const DetailCard = (props: any) => {
   const { dapp, style } = props;
+
+  const {
+    chainLogo,
+    dappLogo,
+    show_name,
+    type,
+  } = dapp;
 
   const columns: Column[] = [
     {
       title: 'Pool',
       dataIndex: 'pool',
       align: 'left',
-      width: '150px',
       render: (text, record) => {
+        if (!record.assets) {
+          return null;
+        }
         return (
           <StyledFlex gap="14px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
-            <StyledIcon src={getTokenLogo(record.symbol)} />
-            {record.symbol}
+            <StyledFlex alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
+              {
+                record.assets.map((token: any, idx: number) => (
+                  <StyledIcon key={idx} src={getTokenLogo(token.symbol)} />
+                ))
+              }
+            </StyledFlex>
+            {record.assets.map((token: any) => token.symbol).join(' / ')}
           </StyledFlex>
         );
-      },
-    },
-    {
-      title: 'Price',
-      dataIndex: 'price',
-      align: 'left',
-      width: '150px',
-      render: (text, record) => {
-        return `$${formateValueWithThousandSeparator(record.price, 2)}`;
       },
     },
     {
       title: 'Amount',
       dataIndex: 'amount',
       align: 'left',
-      width: '280px',
+      width: '300px',
       render: (text, record) => {
-        return `${record.amount} ${record.symbol}`;
+        if (!record.assets) {
+          return null;
+        }
+        return `${record.assets[0].amount} ${record.assets[0].symbol}`;
       },
     },
     {
       title: 'Value',
       dataIndex: 'value',
-      align: 'left',
+      align: 'right',
       width: '150px',
       render: (text, record) => {
-        return `$${formateValueWithThousandSeparator(record.usd, 2)}`;
+        return `$${formateValueWithThousandSeparator(record.totalUsd, 2)}`;
       },
     },
   ];
 
   const tableList = useMemo<any[]>(() => {
-    const list: any[] = [];
-    // sub type, such as borrow, supply
-    dapp.assets.forEach((assetType: any) => {
-      assetType.assets.forEach((assetItem: any) => {
-        assetItem.assets.forEach((asset: any) => {
-          list.push(asset);
-        });
-      });
-    });
-
-    return list;
+    return dapp.detailList;
   }, [dapp]);
 
   return (
-    <StyledContainer style={style}>
+    <StyledContainer style={style} id={`portfolioProtocolDetail-${dapp.chain_id}-${dapp.type}-${dapp.name}`}>
       <StyledHead>
         <DAppIconWithChain
           size="32px"
-          icon={dapp.icon}
-          chainIcon={dapp.chainIcon}
+          icon={dappLogo}
+          chainIcon={chainLogo}
         />
-        <div className="name">{dapp.name}</div>
-        <div className="category">{dapp.category}</div>
+        <div className="name">{show_name}</div>
+        <div className="category">{type}</div>
         <StyledManageButton href="/" target="_blank">
           Manage
           <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               d="M1 5.5H14M14 5.5L8.96774 1M14 5.5L8.96774 10"
               stroke="black"
-              stroke-width="1.6"
-              stroke-linecap="round"
-              stroke-linejoin="round"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             />
           </svg>
         </StyledManageButton>
         <div className="summary">
-          ${formateValueWithThousandSeparatorAndFont(dapp.usd, 2).integer}
-          <span className="sm">{formateValueWithThousandSeparatorAndFont(dapp.usd, 2).decimal}</span>
+          ${formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2).integer}
+          <span className="sm">{formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2).decimal}</span>
         </div>
       </StyledHead>
       <StyledContent>

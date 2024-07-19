@@ -32,7 +32,12 @@ export default function Portfolio() {
   const [network, setNetwork] = useState('all');
 
   const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens();
-  const { loading: dappsLoading, dapps } = useDapps();
+  const {
+    loading: dappsLoading,
+    dapps,
+    dappsByChain,
+    totalBalance: totalBalanceByDapps,
+  } = useDapps();
   const {
     hasMore,
     records,
@@ -75,10 +80,9 @@ export default function Portfolio() {
         {tab === TABS[1].key && (
           <Protocol
             loading={dappsLoading}
-            chainLoading={tokensLoading}
             filterFunc={filterFunc}
-            networks={networks}
             dapps={dapps}
+            dappsByChain={dappsByChain}
           />
         )}
         {tab === TABS[2].key && (

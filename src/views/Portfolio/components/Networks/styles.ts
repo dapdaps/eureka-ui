@@ -21,8 +21,13 @@ export const StyledTabItem = styled.div`
   column-gap: 14px;
   width: 158px;
   cursor: pointer;
-  
-  &.hover,
+  transition: all 0.15s ease-in-out;
+
+  &:hover {
+    background: #262836;
+    border-color: #373A53;
+  }
+
   &.active {
     border: 1px solid #EBF479;
     background: rgba(53, 55, 73, 0.50);

@@ -1,9 +1,10 @@
+import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 
 import { formateValueWithThousandSeparator } from '@/utils/formate';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
 
-export const StyledContainer = styled.div`
+export const StyledContainer = styled(motion.div)`
   width: 158px;
   height: 60px;
   flex-shrink: 0;
@@ -41,19 +42,34 @@ export const StyledContent = styled.div`
 `;
 
 const DAppCard = (props: any) => {
-  const { dapp } = props;
+  const { dapp, onClick = () => {} } = props;
 
   return (
-    <StyledContainer>
+    <StyledContainer
+      variants={{
+        visible: {
+          opacity: 1,
+          x: 0,
+        },
+        hidden: {
+          opacity: 0,
+          x: 10,
+        },
+      }}
+      initial="hidden"
+      exit="hidden"
+      animate="visible"
+      onClick={onClick}
+    >
       <DAppIconWithChain
         size="32px"
-        icon={dapp.icon}
-        chainIcon={dapp.chainIcon}
+        icon={dapp.dappLogo}
+        chainIcon={dapp.chainLogo}
       />
       <StyledContent>
-        <div className="name">{dapp.name}</div>
+        <div className="name">{dapp.show_name}</div>
         <div className="usd">
-          ${formateValueWithThousandSeparator(dapp.usd, 2)}
+          ${formateValueWithThousandSeparator(dapp.totalUsd, 2)}
         </div>
       </StyledContent>
     </StyledContainer>

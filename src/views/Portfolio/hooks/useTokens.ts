@@ -26,11 +26,11 @@ export default function useTokens() {
       let _totalBalance = new Big(0);
       _data.forEach((record: any) => {
         if (_networks[record.chain_id]) {
-          _networks[record.chain_id].usd += Number(record.usd || 0);
+          _networks[record.chain_id].usd = Big(_networks[record.chain_id].usd).plus(record.usd || 0);
         } else {
           _networks[record.chain_id] = {
             id: record.chain_id,
-            usd: Number(record.usd || 0),
+            usd: Big(record.usd || 0),
             icon: getChainLogo(chains[record.chain_id]?.chainName),
           };
         }

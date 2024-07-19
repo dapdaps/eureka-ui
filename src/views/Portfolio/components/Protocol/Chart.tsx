@@ -1,8 +1,12 @@
-import { useState } from 'react';
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, YAxis } from 'recharts';
+import { random } from 'lodash';
+import { useEffect, useState } from 'react';
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 import styled from 'styled-components';
 
+import { formatDateTime } from '@/utils/date';
+import { formateValueWithThousandSeparator } from '@/utils/formate';
 import Dropdown from '@/views/Portfolio/components/Dropdown';
+import Big from 'big.js';
 
 export const StyledContainer = styled.div`
   width: 574px;
@@ -66,6 +70,14 @@ export const StyledContainer = styled.div`
   }
 `;
 
+export const StyledTooltip = styled.div`
+  border-radius: 12px;
+  border: 1px solid #373A53;
+  background: #303142;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+  padding: 15px 20px;
+`;
+
 const dropdownList = [
   {
     key: 1,
@@ -80,37 +92,25 @@ const dropdownList = [
 ];
 
 const ChartComponent = (props: any) => {
+  const {} = props;
 
-  const data = [
-    {
-      name: 'Page A',
-      uv: 0,
-    },
-    {
-      name: 'Page B',
-      uv: 4000,
-    },
-    {
-      name: 'Page C',
-      uv: 4000,
-    },
-    {
-      name: 'Page D',
-      uv: 4000,
-    },
-    {
-      name: 'Page E',
-      uv: 4000,
-    },
-    {
-      name: 'Page F',
-      uv: 4000,
-    },
-    {
-      name: 'Page G',
-      uv: 4000,
-    },
-  ];
+  const [data, setData] = useState<{ day_time: number; worth: number; }[]>([]);
+  const [percent, setPercent] = useState<string>('');
+
+  const getData = () => {
+    const startDate = new Date('2024-01-01');
+    const _data = [...new Array(200).keys()].map((i) => ({
+      day_time: new Date(new Date(startDate).setDate(i)).getTime(),
+      worth: i + random(0.001, 100, true),
+    }));
+    const _sorted = _data.sort((a, b) => b.day_time - a.day_time);
+    setData(_sorted);
+    setPercent(Big(_sorted[0].worth).minus(_sorted[1].worth).div(_sorted[1].worth).times(100).toFixed(2));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
 
   const [dropdown, setDropdown] = useState(dropdownList[0].value);
 
@@ -125,7 +125,9 @@ const ChartComponent = (props: any) => {
           <div className="title">Total Worth</div>
           <div className="summary">
             <div className="usd">$0<span className="sm">.00</span></div>
-            <div className="rate">+0.00%</div>
+            <div className="rate">
+              {Big(percent || 0).gt(0) ? '+' : ''}{percent}%
+            </div>
           </div>
         </div>
         <Dropdown
@@ -133,6 +135,7 @@ const ChartComponent = (props: any) => {
           list={dropdownList}
           value={dropdown}
           onSelect={handleDropdownSelect}
+          dropdownWidth={100}
         />
       </div>
       <div className="chart-wrapper">
@@ -157,8 +160,8 @@ const ChartComponent = (props: any) => {
                 y2="198"
                 gradientUnits="userSpaceOnUse"
               >
-                <stop stop-color="#41C37D" />
-                <stop offset="1" stop-color="#41C37D" stop-opacity="0" />
+                <stop stopColor="#41C37D" />
+                <stop offset="1" stopColor="#41C37D" stopOpacity="0" />
               </linearGradient>
             </defs>
             <CartesianGrid stroke="transparent" />
@@ -170,12 +173,15 @@ const ChartComponent = (props: any) => {
               domain={['dataMin', 'dataMax']}
             />
             <Area
-              dataKey="uv"
+              dataKey="worth"
               type="linear"
               stroke="#63C341"
               fill="url(#paint0_linear_12309_49)"
-              min={Math.min(...data.map((item) => item.uv))}
-              max={Math.max(...data.map((item) => item.uv))}
+              min={Math.min(...data.map((item) => item.worth))}
+              max={Math.max(...data.map((item) => item.worth))}
+            />
+            <Tooltip
+              content={<CustomTooltip />}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -185,3 +191,18 @@ const ChartComponent = (props: any) => {
 };
 
 export default ChartComponent;
+
+const CustomTooltip = (props: any) => {
+  const { payload } = props;
+  const { worth, day_time } = payload[0]?.payload || {};
+  return (
+    <StyledTooltip>
+      <div className="tooltip-label">
+        {formatDateTime(day_time, 'YYYY.MM.DD')}:
+      </div>
+      <div className="tooltip-value">
+        ${worth ? formateValueWithThousandSeparator(worth, 2) : ''}
+      </div>
+    </StyledTooltip>
+  );
+};
