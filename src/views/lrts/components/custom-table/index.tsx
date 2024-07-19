@@ -98,4 +98,4 @@ const CustomTable: FC<IProps> = ({ dataSource, columns, emptyTips, hideHeader = 
   );
 };
 
-export default memo(CustomTable);
+export default CustomTable;

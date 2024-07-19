@@ -57,19 +57,25 @@ const Portfolio: FC<IProps> = (props) => {
   const [showAddTokenModal, setShowAddTokenModal] = useState(false);
   const { balance: ethBalance, loading: ethBalLoading } = useTokenBalance({ tokensByChain: currentToken });
 
-  const lstAssets = lrtsData.map((item: any, index: number) => ({
-    ...item.token,
-    assets: item.token.symbol,
-    chian: item.token.chianId,
-    price: prices[item.symbol] || 0,
-    key: index,
-    apr: item.apr,
-  }));
-  // .filter((item: any) => balances[item.address] > 0);
+  const lstAssets = lrtsData
+    .filter((item: any) => {
+      return balances[item.token.address] > 0;
+    })
+    .map((item: any, index: number) => ({
+      ...item.token,
+      assets: item.token.symbol,
+      chian: item.token.chianId,
+      price: prices[item.symbol] || 0,
+      key: index,
+      apr: item.apr,
+    }));
 
   const lrtAssets = lrtsData
     .map((item: any) => item.lrtTokens)
     .flat()
+    .filter((item: any) => {
+      return balances[item.token.address] > 0;
+    })
     .map((item: any, index: number) => ({
       ...item.token,
       assets: item.token?.symbol,
@@ -213,8 +219,8 @@ const Portfolio: FC<IProps> = (props) => {
                       style={{ display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer' }}
                       onClick={() => handleShowAddToken(token)}
                     >
-                      <TokenImg src={token.icon} alt="token" width={30} height={30} />
-                      {token.symbol}
+                      <TokenImg src={token?.icon} alt="token" width={30} height={30} />
+                      {token?.symbol}
                     </div>
                   );
                 },
@@ -225,7 +231,7 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 2,
                 width: '10%',
                 render: (_: any) => {
-                  return <TokenImg src={chains[_.chainId].icon} width={30} height={30} alt="chainId" />;
+                  return <TokenImg src={chains[_?.chainId]?.icon} width={30} height={30} alt="chainId" />;
                 },
               },
               {
@@ -243,7 +249,7 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 4,
                 width: '10%',
                 render: (_: any) => {
-                  return Number(prices[_.symbol] || 0).toFixed(2);
+                  return Number(prices[_?.symbol] || 0).toFixed(2);
                 },
               },
               {
@@ -252,7 +258,7 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 5,
                 width: '10%',
                 render: (_: any) => {
-                  return `${Number(_.apr).toFixed(2)}%`;
+                  return `${Number(_?.apr).toFixed(2)}%`;
                 },
               },
               {
@@ -267,7 +273,7 @@ const Portfolio: FC<IProps> = (props) => {
                       <PolygonBtn size="small" onClick={() => handleShowModal(token)}>
                         Swap
                       </PolygonBtn>
-                      <PolygonBtn size="small" onClick={() => handleBridge(token.symbol)}>
+                      <PolygonBtn size="small" onClick={() => handleBridge(token?.symbol)}>
                         Bridge
                       </PolygonBtn>
                     </div>
