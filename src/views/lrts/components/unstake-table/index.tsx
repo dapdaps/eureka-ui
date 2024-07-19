@@ -47,12 +47,16 @@ const StyledRecordText = styled.div`
   }
 `;
 
-const ClaimButton = ({ claiming, claim, request }: any) => {
+const ClaimButton = ({
+  // claiming,
+  claim,
+  request,
+}: any) => {
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(claiming);
-  }, [claiming]);
+  // useEffect(() => {
+  //   setLoading(claiming);
+  // }, [claiming]);
 
   return loading ? (
     <Loading />
@@ -96,6 +100,7 @@ const UnstakeTable: FC<IProps> = (props) => {
     <>
       <CustomTable
         dataSource={renzoRequests.requests}
+        hideEmptyTips
         emptyTips="No Unstake records found..."
         columns={[
           {
@@ -127,6 +132,7 @@ const UnstakeTable: FC<IProps> = (props) => {
       />
       <CustomTable
         hideHeader
+        hideEmptyTips
         dataSource={eigenpieRequests.requests}
         emptyTips="No Unstake records found..."
         columns={[

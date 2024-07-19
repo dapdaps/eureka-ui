@@ -6,6 +6,7 @@ interface IProps {
   dataSource: any[];
   columns: any[];
   hideHeader?: boolean;
+  hideEmptyTips?: boolean;
   emptyTips?: string;
   children?: ReactNode;
   className?: string;
@@ -56,7 +57,7 @@ const Empty = styled.div`
   color: #fff;
 `;
 
-const CustomTable: FC<IProps> = ({ dataSource, columns, emptyTips, hideHeader = false }) => {
+const CustomTable: FC<IProps> = ({ dataSource, columns, emptyTips, hideHeader = false, hideEmptyTips = false }) => {
   const renderTd = (data: any, key: any) => {
     return columns.map((item: any) => {
       if (item.render && typeof item.render === 'function') {
@@ -89,7 +90,10 @@ const CustomTable: FC<IProps> = ({ dataSource, columns, emptyTips, hideHeader = 
           </TableBody>
         ) : null}
       </TableWrap>
-      {!Array.isArray(dataSource) || !dataSource.length ? <Empty>{emptyTips || 'No Data'}</Empty> : null}
+
+      {!hideEmptyTips && (!Array.isArray(dataSource) || !dataSource.length) ? (
+        <Empty>{emptyTips || 'No Data'}</Empty>
+      ) : null}
     </>
   );
 };
