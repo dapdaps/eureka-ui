@@ -249,11 +249,6 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
     }
   }, [data?.availableAmount, data?.stakedAmount, inAmount])
 
-  const handleQueryApy = async function () {
-    const res = await fetch("https://universe.kelpdao.xyz/rseth/apy")
-    return res.json() as any
-  }
-
   const handleQueryAvailableAmount = async function () {
     const contract = new ethers.Contract(token0.address, FIRST_TOKEN_ABI, provider?.getSigner())
     return await contract.balanceOf(account)
@@ -265,13 +260,11 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
 
   const handleQueryData = async function () {
     try {
-      const apyResult = await handleQueryApy()
       const availableAmountResult = await handleQueryAvailableAmount()
       const stakedAmountResult = await handleQueryStakedAmount()
       setData({
         availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
         stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
-        apy: apyResult?.value,
         exchangeRate: 1
       })
     } catch (error) {
