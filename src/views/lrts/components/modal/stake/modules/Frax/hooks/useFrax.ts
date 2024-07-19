@@ -7,26 +7,27 @@ import useToast from '@/hooks/useToast';
 import { FRAX_REDEEM_ABI, FRAXETH_ABI, TOKEN_ABI } from '@/views/lrts/config/abi/frax';
 
 import { ITab, useTabStore } from './useTab';
-
+import useAddAction from '@/hooks/useAddAction';
 export const sfrxETH_ADDR = '0xac3E018457B222d93114458476f3E3416Abbe38F';
 
-const useFrax = ({ token0, token1 }: any) => {
+const useFrax = ({ dapp, token0, token1 }: any) => {
   const { account, provider } = useAccount();
+  const { addAction } = useAddAction('lrts');
   const toast = useToast();
   const [data, setData] = useState<any>(null);
   const [inAmount, setInAmount] = useState<number | string>('');
   const [outAmount, setOutAmount] = useState<number | string>('');
   const [tokenLoading, setTokenLoading] = useState(false);
-  const [sfrxBalance, setSfrxBalance ] = useState<any>()
+  const [sfrxBalance, setSfrxBalance] = useState<any>()
   const [isLoading, setIsLoading] = useState(false);
   const [approved, setApproved] = useState(true);
   const [approving, setApproving] = useState(false);
   const [availableAmount, setAvailableAmount] = useState<any>();
   const [getAddrAvailableAmount, setGetAddrAvailableAmount] = useState<any>();
   const actionType = useTabStore(store => store.tab)
-  
+
   const leastAmount = 0.0001;
-  
+
   const inToken = useMemo(
     () => (['stake', 'restake'].includes(actionType) ? token0 : token1),
     [actionType, token0, token1],
@@ -68,7 +69,7 @@ const useFrax = ({ token0, token1 }: any) => {
     } finally {
       setTokenLoading(false)
     }
-  };  
+  };
 
   const handleQueryData = async () => {
     const handleQueryApy = async () => {
@@ -85,11 +86,11 @@ const useFrax = ({ token0, token1 }: any) => {
       const contract = new ethers.Contract(address, FRAX_REDEEM_ABI, provider.getSigner());
       return await contract.balanceOf(account);
     };
-    
+
     const apyResult = await handleQueryApy();
     const availableAmountResult = await handleQueryAvailableAmount();
     const stakedAmountResult = await handleQueryStakedAmount();
-    
+
     setData({
       availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
       stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
@@ -124,7 +125,7 @@ const useFrax = ({ token0, token1 }: any) => {
     }
   };
 
-  
+
   const handleStake = async function () {
     if (!provider) return;
     if (!(await handleApprove())) return;
@@ -144,13 +145,30 @@ const useFrax = ({ token0, token1 }: any) => {
 
     try {
       const tx = await contractMethord(...contractArguments)
-      await tx.wait()
+      const { status, transactionHash } = await tx.wait()
       setIsLoading(false);
       handleQueryData();
       toast?.dismiss(toastId);
       toast?.success({
         title: ['stake', 'restake'].includes(actionType) ? 'Stake Successfully!' : 'UnStake Successfully',
       });
+
+      addAction({
+        type: "Staking",
+        action: actionType,
+        token: [inToken.symbol, outToken.symbol],
+        amount: inAmount,
+        template: dapp?.name,
+        status,
+        transactionHash,
+        chain_id: token0.chainId,
+        extra_data: JSON.stringify({
+          fromTokenSymbol: inToken.symbol,
+          fromTokenAmount: inAmount,
+          toTokenSymol: outToken.symbol,
+          toTokenAmount: outAmount,
+        })
+      })
       setInAmount('');
     } catch (error) {
       setIsLoading(false);
@@ -161,7 +179,7 @@ const useFrax = ({ token0, token1 }: any) => {
     } finally {
       setIsLoading(false);
       toast?.dismiss(toastId);
-    } 
+    }
   };
 
 
@@ -179,11 +197,11 @@ const useFrax = ({ token0, token1 }: any) => {
     setInAmount(token ?? 0);
   };
 
-  const handleAddMetaMask = function () {}
+  const handleAddMetaMask = function () { }
 
   useEffect(() => {
     if (!provider) return;
-    getBalance(sfrxETH_ADDR).then((token) => setSfrxBalance(token) )
+    getBalance(sfrxETH_ADDR).then((token) => setSfrxBalance(token))
   }, [provider, actionType])
 
 
@@ -205,7 +223,7 @@ const useFrax = ({ token0, token1 }: any) => {
     inToken,
     outToken,
     toast,
-    account, 
+    account,
     provider,
     isInSufficient,
     tokenLoading,

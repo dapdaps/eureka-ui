@@ -1,12 +1,13 @@
+import multicallAddresses from '@/config/contract/multicall';
+import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import abi from '@/views/lrts/config/abi/lido';
+import { multicall } from '@/utils/multicall';
+import abi from '@/views/lrts/config/abi/mantle';
+import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
-import { contracts } from './useInception';
-import { ethereum } from '@/config/tokens/ethereum';
-
 type Record = {
   amount: number;
   token0: any;
@@ -17,11 +18,12 @@ type Record = {
   data: any;
 };
 
+const LSP_STAKING = "0xe3cBd06D7dadB3F4e6557bAb7EdD924CD1489E8f"
 const {
-  WITHDRAWAL_QUEUE_ABI
+  LSP_STAKING_ABI
 } = abi
-const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
 
+console.log('===LSP_STAKING_ABI', LSP_STAKING_ABI)
 export default function useInceptionRequests() {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
@@ -31,7 +33,6 @@ export default function useInceptionRequests() {
 
   const token0 = ethereum['eth']
   const token1 = ethereum['mETH']
-
 
   const queryRequests = useCallback(
     async () => {
@@ -52,7 +53,42 @@ export default function useInceptionRequests() {
         })
         const result = await response.json()
         console.log('===response', response, '===result', result)
-        setRequests([]);
+
+        const _requests = result?.data?.unstakeRequests
+
+        const multicallAddress = multicallAddresses[chainId];
+        const calls = _requests.map((request: any) => {
+          return {
+            address: "0xe3cBd06D7dadB3F4e6557bAb7EdD924CD1489E8f",
+            name: 'unstakeRequestInfo',
+            params: [request.id],
+          };
+        });
+        console.log('=calls', calls)
+
+
+        const unstakeRequestInfoResult = await multicall({
+          abi: LSP_STAKING_ABI,
+          options: {},
+          calls,
+          multicallAddress,
+          provider,
+        });
+
+        console.log('==unstakeRequestInfoResult', unstakeRequestInfoResult)
+        setRequests(result?.data?.unstakeRequests.map((request: any, index: number) => {
+          const unstakeRequestInfo = unstakeRequestInfoResult[index]
+          return {
+            amount: ethers.utils.formatUnits(request?.mEthLockedWei, 18),
+            startTime: request.requestedAt,
+            token0,
+            token1,
+            status: unstakeRequestInfo[0] && Big(unstakeRequestInfo[1]).gt(0) ? 'Claimable' : 'In Progress',
+            data: {
+              requestId: request.id
+            },
+          }
+        }));
         setLoading(false);
       } catch (err) {
         console.log('err', err);
@@ -66,15 +102,11 @@ export default function useInceptionRequests() {
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId) return;
-      const contract = new ethers.Contract(WITHDRAWAL_QUEUE, WITHDRAWAL_QUEUE_ABI, provider?.getSigner())
+      const contract = new ethers.Contract(LSP_STAKING, LSP_STAKING_ABI, provider?.getSigner())
       onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
-        const _requestIds = [record?.data?.requestId]
-        const _lastIndex = await contract.getLastCheckpointIndex()
-        console.log('=_lastIndex', _lastIndex)
-        const _hints = await contract.findCheckpointHints(_requestIds, 1, _lastIndex)
-        const tx = await contract.claimWithdrawals(_requestIds, _hints);
+        const tx = await contract.claimUnstakeRequest(record?.data?.requestId);
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
         const { status, transactionHash } = await tx.wait();
