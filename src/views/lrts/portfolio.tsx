@@ -6,6 +6,8 @@ import React, { memo, useEffect, useState } from 'react';
 
 import useTokenBalance from '@/components/Bridge/hooks/useTokenBalance';
 import { chains } from '@/config/bridge';
+import { ethereum } from '@/config/tokens/ethereum';
+import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { useLrtDataStore } from '@/stores/lrts';
 import { usePriceStore } from '@/stores/price';
@@ -15,7 +17,9 @@ import useTokens from '@/views/lrts/hooks/useTokens';
 
 import { CustomTable, History, PolygonBtn, Tabs, UnstakeTable } from './components';
 import AddTokenModal from './components/modal/add-token';
+import StakeModal from './components/modal/stake';
 import SwapModal from './components/modal/swap';
+import { ActionType } from './components/tab-card';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
 import useLrtsList from './hooks/useLrtsList';
 import { Ad, Assets, AssetTab, Container, TokenImg } from './styles/portfolio.style';
@@ -35,6 +39,7 @@ enum TabType {
 const Portfolio: FC<IProps> = (props) => {
   const { loading, balances } = useAllTokensBalance();
   const { completed } = useLrtsList();
+  const { chainId, account } = useAccount();
 
   const [swapToken, setSwapToken] = useState({});
   const [addToken, setAddToken] = useState({});
@@ -56,6 +61,11 @@ const Portfolio: FC<IProps> = (props) => {
   const [showSwapModal, setShowSwapModal] = useState(false);
   const [showAddTokenModal, setShowAddTokenModal] = useState(false);
   const { balance: ethBalance, loading: ethBalLoading } = useTokenBalance({ tokensByChain: currentToken });
+
+  const [lstIndex, setLstIndex] = useState(0);
+  const [curLrt, setCurLrt] = useState<any>(null);
+  const [actionType, setActionType] = useState<ActionType>();
+  const [isShowStakeModal, setIsShowStakeModal] = useState(false);
 
   const lstAssets = lrtsData
     .filter((item: any) => {
@@ -79,6 +89,8 @@ const Portfolio: FC<IProps> = (props) => {
     .map((item: any, index: number) => ({
       ...item.token,
       assets: item.token?.symbol,
+      logo: item.dapp.logo,
+      tvl: item.tvl,
       chian: item.token?.chianId,
       price: prices[item.symbol] || 0,
       apr: item.apr,
@@ -115,6 +127,18 @@ const Portfolio: FC<IProps> = (props) => {
     setLrtValue(_totalLrt);
     setUserBalance(_userBalance);
   }, [lstAssets, lrtAssets, balances, ethBalLoading]);
+
+  const handleClickLst = (activeIndex: number) => {
+    setCurLrt(null);
+    setActionType(ActionType.STAKE);
+    setLstIndex(activeIndex);
+    setIsShowStakeModal(true);
+  };
+  const handleClickLrt = (lrt: any) => {
+    setActionType(ActionType.UNSTAKE);
+    setCurLrt(lrt);
+    setIsShowStakeModal(true);
+  };
 
   const items = [
     {
@@ -188,7 +212,9 @@ const Portfolio: FC<IProps> = (props) => {
                 render: (token: any) => {
                   return (
                     <div style={{ display: 'flex', gap: 10 }}>
-                      <PolygonBtn size="small">STAKE / UNSTAKE </PolygonBtn>
+                      <PolygonBtn size="small" onClick={() => handleClickLst(token.key)}>
+                        STAKE / UNSTAKE{' '}
+                      </PolygonBtn>
                       <PolygonBtn size="small" onClick={() => handleShowModal(token)}>
                         Swap
                       </PolygonBtn>
@@ -267,9 +293,27 @@ const Portfolio: FC<IProps> = (props) => {
                 key: 6,
                 width: '50%',
                 render: (token: any) => {
+                  const { apr, logo, tvl, address, chainId, decimals, desc, icon, name, symbol } = token;
+                  const _gem = {
+                    apr,
+                    logo,
+                    tvl,
+                    token: {
+                      address,
+                      chainId,
+                      decimals,
+                      desc,
+                      icon,
+                      name,
+                      symbol,
+                    },
+                  };
+
                   return (
                     <div style={{ display: 'flex', gap: 10 }}>
-                      <PolygonBtn size="small">RESTAKE / UNSTAKE </PolygonBtn>
+                      <PolygonBtn size="small" onClick={() => handleClickLrt(_gem)}>
+                        RESTAKE / UNSTAKE{' '}
+                      </PolygonBtn>
                       <PolygonBtn size="small" onClick={() => handleShowModal(token)}>
                         Swap
                       </PolygonBtn>
@@ -363,7 +407,22 @@ const Portfolio: FC<IProps> = (props) => {
       </Assets>
       <Ad src="/images/lrts/ad.png" width={1200} height={103} alt="ad" />
       <Tabs items={items} />
-      {/* <SwapModal show={showSwapModal} setShow={setShowSwapModal} token0={swapToken} /> */}
+      <StakeModal
+        box={lrtsData[lstIndex].lstIcon}
+        gem={curLrt}
+        dapp={{
+          name: lrtsData[lstIndex].dapp.name,
+          logo: lrtsData[lstIndex].dapp.logo,
+          minApr: lrtsData[lstIndex]?.minApr,
+          maxApr: lrtsData[lstIndex]?.maxApr,
+          apr: lrtsData[lstIndex]?.apr,
+        }}
+        token0={actionType === ActionType.STAKE ? ethereum['eth'] : lrtsData[lstIndex].token}
+        token1={actionType === ActionType.STAKE ? lrtsData[lstIndex].token : curLrt?.token}
+        chainId={chainId as number}
+        show={isShowStakeModal}
+        setShow={setIsShowStakeModal}
+      />
       <AddTokenModal show={showAddTokenModal} setShow={setShowAddTokenModal} token={addToken} />
       <SwapModal show={showSwapModal} setShow={setShowSwapModal} token={swapToken} />
     </Container>
