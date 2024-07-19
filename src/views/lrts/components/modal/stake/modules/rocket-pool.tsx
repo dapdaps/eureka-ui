@@ -5,7 +5,7 @@ import useRocketPool from '../hooks/useRocketPool';
 
 
 const RocketPool = function (props: any) {
-  const { box, gem, dapp, actionType, handleChangeActionType, setShow, token0, token1, onSuccess } = props;
+  const { box, gem, dapp, actionType, handleAddMetaMask, handleChangeActionType, setShow, token0, token1, onSuccess } = props;
   const { account, provider } = useAccount();
   const {
     data,
@@ -46,6 +46,7 @@ const RocketPool = function (props: any) {
         handleAmountChange,
         handleMax,
         handleStake,
+        handleAddMetaMask,
         handleChangeActionType
       }}
     />

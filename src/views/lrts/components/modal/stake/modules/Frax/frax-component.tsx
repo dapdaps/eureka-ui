@@ -53,6 +53,7 @@ const FraxComponent = function (props: any) {
     setShow,
     token0,
     token1,
+    handleAddMetaMask,
     onSuccess
   } = props.componentProps;
   const setTabStore = useTabStore(store => store.set)
@@ -73,7 +74,6 @@ const FraxComponent = function (props: any) {
     handleApprove,
     handleAmountChange,
     handleStake,
-    handleAddMetaMask,
     handleMax
   } = useFrax({ dapp, token0, token1, onSuccess });
 

@@ -184,9 +184,6 @@ export default function useMantle({ gem, dapp, token0, token1, addAction, action
         });
       })
   }
-  const handleAddMetaMask = function () {
-
-  }
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])
@@ -206,6 +203,5 @@ export default function useMantle({ gem, dapp, token0, token1, addAction, action
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   }
 }

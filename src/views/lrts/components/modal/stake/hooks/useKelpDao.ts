@@ -179,9 +179,6 @@ export default function useKelpDao({ gem, dapp, token0, token1, addAction, actio
         });
       })
   }
-  const handleAddMetaMask = function () {
-
-  }
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])
@@ -201,6 +198,5 @@ export default function useKelpDao({ gem, dapp, token0, token1, addAction, actio
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   }
 }

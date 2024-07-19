@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import BaseComponent from "../components/base-component";
 import useMantle from "../hooks/useMantle";
 import useMantleRequests from "../hooks/useMantleRequests";
-const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId, onSuccess }: any) {
+const Mantle = function ({ box, gem, dapp, setShow, actionType, handleAddMetaMask, handleChangeActionType, token0, token1, addAction, chainId, onSuccess }: any) {
   const {
     data,
     inAmount,
@@ -18,7 +18,6 @@ const Mantle = function ({ box, gem, dapp, setShow, actionType, handleChangeActi
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   } = useMantle({
     gem,
     dapp,

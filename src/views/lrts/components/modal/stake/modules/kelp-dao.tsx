@@ -3,7 +3,7 @@ import BaseComponent from '../components/base-component';
 import useKelpDao from '../hooks/useKelpDao';
 import useKelpDaoRequests from '../hooks/useKelpDaoRequests';
 
-const KelpDao = function ({ box, gem, dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId, onSuccess }: any) {
+const KelpDao = function ({ box, gem, dapp, setShow, actionType, handleAddMetaMask, handleChangeActionType, token0, token1, addAction, chainId, onSuccess }: any) {
   const {
     data,
     inAmount,
@@ -19,7 +19,6 @@ const KelpDao = function ({ box, gem, dapp, setShow, actionType, handleChangeAct
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   } = useKelpDao({
     gem,
     dapp,
@@ -55,6 +54,10 @@ const KelpDao = function ({ box, gem, dapp, setShow, actionType, handleChangeAct
         outToken,
         handleMax,
         isInSufficient,
+        requests,
+        requestsLoading,
+        queryRequests,
+        claim,
         handleApprove,
         handleAmountChange,
         handleStake,

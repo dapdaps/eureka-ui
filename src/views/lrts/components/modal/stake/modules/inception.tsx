@@ -5,7 +5,7 @@ import BaseComponent from '../components/base-component';
 import { memo, useEffect } from 'react';
 import useInceptionRequests from '../hooks/useInceptionRequests';
 
-function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow, onSuccess }: any) {
+function Inception({ box, gem, dapp, token0, token1, actionType, handleAddMetaMask, handleChangeActionType, setShow, onSuccess }: any) {
   const { chainId } = useAccount();
   const {
     data,
@@ -63,6 +63,7 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleChangeAct
         handleAmountChange,
         handleMax,
         handleStake,
+        handleAddMetaMask,
         handleChangeActionType,
       }}
     />

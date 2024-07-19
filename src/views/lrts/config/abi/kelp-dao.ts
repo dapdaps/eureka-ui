@@ -104,6 +104,18 @@ const UNSTAKE_ADDRESS_ABI = [{
   ],
   "stateMutability": "view",
   "type": "function"
+}, {
+  "inputs": [],
+  "name": "withdrawalDelayBlocks",
+  "outputs": [
+    {
+      "internalType": "uint256",
+      "name": "",
+      "type": "uint256"
+    }
+  ],
+  "stateMutability": "view",
+  "type": "function"
 }]
 const LRT_DEPOSIT_POOL_ABI = [{
   "inputs": [

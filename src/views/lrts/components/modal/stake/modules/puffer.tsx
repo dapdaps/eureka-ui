@@ -2,7 +2,7 @@ import usePuffer from '../hooks/usePuffer';
 import BaseComponent from '../components/base-component';
 import { memo, useState } from 'react';
 
-function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleChangeActionType, onSuccess }: any) {
+function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleAddMetaMask, handleChangeActionType, onSuccess }: any) {
   const {
     data,
     inAmount,
@@ -44,6 +44,7 @@ function Karak({ box, gem, dapp, token0, token1, setShow, actionType, handleChan
         handleAmountChange,
         handleMax,
         handleStake,
+        handleAddMetaMask,
         handleChangeActionType,
       }}
     />

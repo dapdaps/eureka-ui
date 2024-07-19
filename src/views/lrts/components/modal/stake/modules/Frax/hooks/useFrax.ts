@@ -198,8 +198,6 @@ const useFrax = ({ dapp, token0, token1, onSuccess }: any) => {
     setInAmount(token ?? 0);
   };
 
-  const handleAddMetaMask = function () { }
-
   useEffect(() => {
     if (!provider) return;
     getBalance(sfrxETH_ADDR).then((token) => setSfrxBalance(token))
@@ -235,7 +233,6 @@ const useFrax = ({ dapp, token0, token1, onSuccess }: any) => {
     handleApprove,
     handleAmountChange,
     handleStake,
-    handleAddMetaMask
   };
 };
 

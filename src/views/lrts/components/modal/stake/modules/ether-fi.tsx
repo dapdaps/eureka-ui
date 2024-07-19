@@ -1,7 +1,7 @@
 import BaseComponent from '../components/base-component';
 import useEtherFi from '../hooks/useEtherFi';
 
-const EtherFi = function ({ box, gem, dapp, setShow, actionType, handleChangeActionType, token0, token1, addAction, chainId, onSuccess }: any) {
+const EtherFi = function ({ box, gem, dapp, setShow, actionType, handleAddMetaMask, handleChangeActionType, token0, token1, addAction, chainId, onSuccess }: any) {
   const {
     data,
     inAmount,
@@ -17,7 +17,6 @@ const EtherFi = function ({ box, gem, dapp, setShow, actionType, handleChangeAct
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   } = useEtherFi({
     gem,
     dapp,

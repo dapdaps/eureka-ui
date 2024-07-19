@@ -5,7 +5,7 @@ import BaseComponent from '../components/base-component';
 import { memo, useEffect } from 'react';
 import useEigenpieRequests from '../hooks/useEigenpieRequests';
 
-function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleChangeActionType, setShow, onSuccess }: any) {
+function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleAddMetaMask, handleChangeActionType, setShow, onSuccess }: any) {
   const { chainId } = useAccount();
   const {
     data,
@@ -64,6 +64,7 @@ function Eigenpie({ box, gem, dapp, token0, token1, actionType, handleChangeActi
         handleAmountChange,
         handleMax,
         handleStake,
+        handleAddMetaMask,
         handleChangeActionType,
       }}
     />

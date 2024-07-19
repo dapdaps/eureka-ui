@@ -181,7 +181,6 @@ export default function useLido({ gem, dapp, token0, token1, addAction, actionTy
         });
       });
   };
-  const handleAddMetaMask = function () { };
   useEffect(() => {
     provider && handleQueryData();
   }, [provider]);
@@ -200,6 +199,5 @@ export default function useLido({ gem, dapp, token0, token1, addAction, actionTy
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   }
 }

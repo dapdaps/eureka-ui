@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import BaseComponent from '../components/base-component';
 import useLido from '../hooks/useLido';
 import useLidoRequest from '../hooks/useLidoRequests';
-const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, actionType, handleChangeActionType, chainId, onSuccess }: any) {
+const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, actionType, handleAddMetaMask, handleChangeActionType, chainId, onSuccess }: any) {
   const {
     data,
     inAmount,
@@ -19,7 +19,6 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   } = useLido({
     gem,
     dapp,

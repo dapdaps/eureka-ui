@@ -265,7 +265,6 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
 
   const handleQueryData = async function () {
     try {
-      console.log('333333')
       const apyResult = await handleQueryApy()
       const availableAmountResult = await handleQueryAvailableAmount()
       const stakedAmountResult = await handleQueryStakedAmount()
@@ -400,9 +399,6 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
         });
       })
   }
-  const handleAddMetaMask = function () {
-
-  }
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])
@@ -422,6 +418,5 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
     handleAmountChange,
     handleMax,
     handleStake,
-    handleAddMetaMask,
   }
 }
