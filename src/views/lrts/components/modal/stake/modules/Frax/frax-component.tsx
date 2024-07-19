@@ -49,6 +49,7 @@ import Tabs from './Tabs';
 const FraxComponent = function (props: any) {
 
   const {
+    gem,
     dapp,
     setShow,
     token0,
@@ -75,7 +76,7 @@ const FraxComponent = function (props: any) {
     handleAmountChange,
     handleStake,
     handleMax
-  } = useFrax({ dapp, token0, token1, onSuccess });
+  } = useFrax({ gem, dapp, token0, token1, onSuccess });
 
   const [actionType, setActionType] = useState(ITab.MINT)
 
@@ -131,18 +132,23 @@ const FraxComponent = function (props: any) {
             token0={token0}
             token1={token1}
             actionType={actionType}
+            gem={gem}
+            dapp={dapp}
           />)
         }
 
         {
-          actionType === ITab.REDEEM && (<Redeem
-            token0={token0}
-            token1={token1}
-            inAmount={inAmount}
-            outAmount={outAmount}
-            leastAmount={leastAmount}
-            actionType={actionType}
-          />)
+          actionType === ITab.REDEEM && (
+            <Redeem
+              gem={gem}
+              dapp={dapp}
+              token0={token0}
+              token1={token1}
+              inAmount={inAmount}
+              outAmount={outAmount}
+              leastAmount={leastAmount}
+              actionType={actionType}
+            />)
         }
         {
           ![ITab.MINT, ITab.REDEEM].includes(actionType) && (

@@ -10,7 +10,7 @@ import { ITab, useTabStore } from './useTab';
 import useAddAction from '@/hooks/useAddAction';
 export const sfrxETH_ADDR = '0xac3E018457B222d93114458476f3E3416Abbe38F';
 
-const useFrax = ({ dapp, token0, token1, onSuccess }: any) => {
+const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
   const { account, provider } = useAccount();
   const { addAction } = useAddAction('lrts');
   const toast = useToast();
@@ -145,7 +145,7 @@ const useFrax = ({ dapp, token0, token1, onSuccess }: any) => {
 
     try {
       const tx = await contractMethord(...contractArguments)
-      const { status, transactionHash } = await tx.wait()
+      const { status, transactionHash, ...rest } = await tx.wait()
       setIsLoading(false);
       handleQueryData();
       toast?.dismiss(toastId);
@@ -158,11 +158,12 @@ const useFrax = ({ dapp, token0, token1, onSuccess }: any) => {
         action: actionType,
         token: [inToken.symbol, outToken.symbol],
         amount: inAmount,
-        template: dapp?.name,
+        template: gem ? gem?.dapp?.name : dapp.name,
         status,
         transactionHash,
         chain_id: token0.chainId,
         extra_data: JSON.stringify({
+          action: actionType,
           fromTokenSymbol: inToken.symbol,
           fromTokenAmount: inAmount,
           toTokenSymol: outToken.symbol,

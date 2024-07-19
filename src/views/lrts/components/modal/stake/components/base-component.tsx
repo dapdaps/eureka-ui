@@ -270,7 +270,7 @@ const BaseComponent = function (props: any) {
           <StyledReceiveContainer>
             <StyledFirstTips>Min. Receive</StyledFirstTips>
             <StyledReceive>
-              ~{Big(outAmount ? outAmount : 0).toFixed(6)} {outToken?.symbol}
+              ~{Big(outAmount ? outAmount : 0).toFixed(6)} {gem?.dapp?.name === "EtherFi" ? "ETH" : outToken?.symbol}
             </StyledReceive>
           </StyledReceiveContainer>
           <StyledStakeButtonContainer disabled={isInSufficient || Big(inAmount ? inAmount : 0).lt(leastAmount)}>

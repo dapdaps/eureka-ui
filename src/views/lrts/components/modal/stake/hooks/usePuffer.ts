@@ -187,6 +187,7 @@ export default function usePuffer({ token0, token1, actionType, gem, dapp, onSuc
         transactionHash,
         chain_id: token0.chainId,
         extra_data: JSON.stringify({
+          action: actionType,
           fromTokenSymbol: inToken.symbol,
           fromTokenAmount: inAmount,
           toTokenSymol: outToken.symbol,

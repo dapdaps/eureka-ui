@@ -223,6 +223,7 @@ const useRocketPool = ({ actionType, token0, token1, provider, account, gem, dap
         transactionHash,
         chain_id: token0.chainId,
         extra_data: JSON.stringify({
+          action: actionType,
           fromTokenSymbol: inToken.symbol,
           fromTokenAmount: inAmount,
           toTokenSymol: outToken.symbol,
