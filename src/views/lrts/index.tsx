@@ -55,11 +55,6 @@ const Home = () => {
     }
   };
 
-  // useEffect(() => {
-  //   if (!isShowStakeModal) {
-  //     setCurLrt(null)
-  //   }
-  // }, [isShowStakeModal])
   const handleSlideChange = () => {
     setIsShowNpc(false);
   };
