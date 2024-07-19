@@ -46,7 +46,9 @@ export default function useInceptionRequests() {
         const contract = new ethers.Contract(UNSTAKE_ADDRESS, UNSTAKE_ADDRESS_ABI, provider)
         const noncesResult = await contract.userAssociatedNonces(_asset, account)
         const nextNonceResult = await contract.nextLockedNonce(_asset)
+        const delayBlocksResult = await contract.withdrawalDelayBlocks()
 
+        const blockNumber = await provider.getBlockNumber()
         const _begin: any = ethers.utils.formatUnits(noncesResult[0], 0)
         const _end: any = ethers.utils.formatUnits(noncesResult[1], 0)
         const multicallAddress = multicallAddresses[chainId]
@@ -69,21 +71,18 @@ export default function useInceptionRequests() {
           multicallAddress,
           provider,
         });
+        console.log('===blockNumber', blockNumber)
         console.log('===requestResult', requestResult)
-
-        // setRequests(requestResult.map((request: any, index: number) => {
-
-        //   return {
-        //     amount: ethers.utils.formatUnits(request?.rsETHAmount, 18),
-        //     startTime: request.requestedAt,
-        //     token0,
-        //     token1,
-        //     status: unstakeRequestInfo[0] && Big(request.userNonce).lt(nextNonceResult) ? 'Claimable' : 'In Progress',
-        //     data: {
-        //       requestId: request.id
-        //     },
-        //   }
-        // }));
+        setRequests(requestResult.map((request: any, index: number) => {
+          return {
+            amount: ethers.utils.formatUnits(request?.rsETHAmount, 18),
+            token0,
+            token1,
+            status: Big(blockNumber).gt(Big(request.withdrawalStartBlock).plus(delayBlocksResult)) && Big(request.userNonce).lt(nextNonceResult) ? 'Claimable' : 'In Progress',
+            data: {
+            },
+          }
+        }));
         setLoading(false);
       } catch (err) {
         console.log('err', err);
@@ -97,43 +96,43 @@ export default function useInceptionRequests() {
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId) return;
-      // const contract = new ethers.Contract(LSP_STAKING, LSP_STAKING_ABI, provider?.getSigner())
-      // onLoading(true);
-      // let toastId = toast.loading({ title: 'Confirming...' });
-      // try {
-      //   const tx = await contract.claimUnstakeRequest(record?.data?.requestId);
-      //   toast.dismiss(toastId);
-      //   toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
-      //   const { status, transactionHash } = await tx.wait();
-      //   toast.dismiss(toastId);
-      //   if (status === 1) {
-      //     toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
-      //   } else {
-      //     toast.fail({ title: `Claim faily!` });
-      //   }
-      //   addAction({
-      //     type: 'Staking',
-      //     action: 'Claim',
-      //     amount: record.amount,
-      //     template: 'Lido',
-      //     status,
-      //     transactionHash,
-      //     add: 0,
-      //     extra_data: JSON.stringify({
-      //       action: 'Claim',
-      //       token0: record.token0.symbol,
-      //       token1: record.token1.symbol,
-      //     }),
-      //   });
-      //   onLoading(false);
-      // } catch (err: any) {
-      //   console.log('err', err);
-      //   toast.dismiss(toastId);
-      //   toast.fail({
-      //     title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
-      //   });
-      //   onLoading(false);
-      // }
+      const contract = new ethers.Contract(UNSTAKE_ADDRESS, UNSTAKE_ADDRESS_ABI, provider?.getSigner())
+      onLoading(true);
+      let toastId = toast.loading({ title: 'Confirming...' });
+      try {
+        const tx = await contract.completeWithdrawal();
+        toast.dismiss(toastId);
+        toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
+        const { status, transactionHash } = await tx.wait();
+        toast.dismiss(toastId);
+        if (status === 1) {
+          toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
+        } else {
+          toast.fail({ title: `Claim faily!` });
+        }
+        addAction({
+          type: 'Staking',
+          action: 'Claim',
+          // amount: record.amount,
+          template: 'Lido',
+          status,
+          transactionHash,
+          add: 0,
+          extra_data: JSON.stringify({
+            action: 'Claim',
+            token0: record.token0.symbol,
+            token1: record.token1.symbol,
+          }),
+        });
+        onLoading(false);
+      } catch (err: any) {
+        console.log('err', err);
+        toast.dismiss(toastId);
+        toast.fail({
+          title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Claim faily!`,
+        });
+        onLoading(false);
+      }
     },
     [account],
   );
