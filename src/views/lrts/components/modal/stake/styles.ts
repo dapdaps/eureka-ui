@@ -324,6 +324,8 @@ export const StyledRecordList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
+  max-height: 120px;
+  overflow: auto;
 `;
 export const StyledRecord = styled.div`
   width: 100%;

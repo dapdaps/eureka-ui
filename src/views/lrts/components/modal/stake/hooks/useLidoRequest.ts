@@ -1,11 +1,10 @@
+import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import abi from '@/views/lrts/config/abi/lido';
 import { ethers } from 'ethers';
-import { useCallback, useState } from 'react';
-import { contracts } from './useInception';
-import { ethereum } from '@/config/tokens/ethereum';
+import { useCallback, useEffect, useState } from 'react';
 
 type Record = {
   amount: number;
@@ -30,12 +29,12 @@ export default function useInceptionRequests() {
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
+
   const token0 = ethereum['eth']
   const token1 = ethereum['stETH']
 
   const queryRequests = useCallback(
     async () => {
-      console.log('====1111====')
       if (!chainId) return;
       setLoading(true);
       try {
@@ -116,6 +115,8 @@ export default function useInceptionRequests() {
     },
     [account],
   );
+
+
 
   return {
     requests,

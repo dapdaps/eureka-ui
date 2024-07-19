@@ -48,9 +48,12 @@ import Tabs from './Tabs';
 
 const FraxComponent = function (props: any) {
 
-  const { setShow,
+  const {
+    dapp,
+    setShow,
     token0,
-    token1 } = props.componentProps;
+    token1
+  } = props.componentProps;
   const setTabStore = useTabStore(store => store.set)
 
   const {
@@ -71,7 +74,7 @@ const FraxComponent = function (props: any) {
     handleStake,
     handleAddMetaMask,
     handleMax
-  } = useFrax({ token0, token1 });
+  } = useFrax({ dapp, token0, token1 });
 
   const [actionType, setActionType] = useState(ITab.MINT)
 
@@ -97,7 +100,7 @@ const FraxComponent = function (props: any) {
   return (
     <StyledStakeContainer>
       <StyledStakeTopContainer
-        style={[ITab.UNSTAKE].includes(actionType)  ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
+        style={[ITab.UNSTAKE].includes(actionType) ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
       >
         <StyledClose
           onClick={() => {
@@ -180,7 +183,7 @@ const FraxComponent = function (props: any) {
                   </StyledBaseInfoValueContainer>
                 </StyledBaseInfo>
               </StyledBaseInfoContainer>
-              <StyledBottomContainer style={{ paddingBottom: ITab.STAKE === actionType  ? 34 : 0 }}>
+              <StyledBottomContainer style={{ paddingBottom: ITab.STAKE === actionType ? 34 : 0 }}>
                 <StyledTipsContainer>
                   <StyledFirstTips>{actionType}</StyledFirstTips>
                   <StyledSecondTips>

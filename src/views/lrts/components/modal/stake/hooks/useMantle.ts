@@ -4,147 +4,17 @@ import { useSetChain } from '@web3-onboard/react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
+import abi from '@/views/lrts/config/abi/mantle'
+
 const LSP_STAKING = "0xe3cBd06D7dadB3F4e6557bAb7EdD924CD1489E8f"
-const LSP_STAKING_ABI = [{
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "ethAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "ethToMETH",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "mETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "mETHToETH",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint256",
-      "name": "minMETHAmount",
-      "type": "uint256"
-    }
-  ],
-  "name": "stake",
-  "outputs": [],
-  "stateMutability": "payable",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "uint128",
-      "name": "methAmount",
-      "type": "uint128"
-    },
-    {
-      "internalType": "uint128",
-      "name": "minETHAmount",
-      "type": "uint128"
-    }
-  ],
-  "name": "unstakeRequest",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
 const UNSTAKE_REQUESTS_MANAGER = "0x38fDF7b489316e03eD8754ad339cb5c4483FDcf9"
 
-const UNSTAKE_REQUESTS_MANAGER_ABI = []
-const mETH_ABI = [{
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "account",
-      "type": "address"
-    }
-  ],
-  "name": "balanceOf",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "owner",
-      "type": "address"
-    },
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    }
-  ],
-  "name": "allowance",
-  "outputs": [
-    {
-      "internalType": "uint256",
-      "name": "",
-      "type": "uint256"
-    }
-  ],
-  "stateMutability": "view",
-  "type": "function"
-}, {
-  "inputs": [
-    {
-      "internalType": "address",
-      "name": "spender",
-      "type": "address"
-    },
-    {
-      "internalType": "uint256",
-      "name": "amount",
-      "type": "uint256"
-    }
-  ],
-  "name": "approve",
-  "outputs": [
-    {
-      "internalType": "bool",
-      "name": "",
-      "type": "bool"
-    }
-  ],
-  "stateMutability": "nonpayable",
-  "type": "function"
-}]
+const {
+  LSP_STAKING_ABI,
+  UNSTAKE_REQUESTS_MANAGER_ABI,
+  mETH_ABI
+} = abi
+
 export default function useMantle({ dapp, token0, token1, addAction, actionType, chainId }: any) {
   const toast = useToast()
   const { account, provider } = useAccount();
