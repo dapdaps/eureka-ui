@@ -41,12 +41,12 @@ const ComponentMapping: any = {
 };
 const Index = function (props: any) {
   const { addAction } = useAddAction('lrts');
-  // const { dapp, gem, box, show, setShow, token0, token1, chainId } = props;
-  // const VmComponent = ComponentMapping[gem?.dapp?.name || dapp?.name];
-  const { dapp, gem, box, show, setShow, chainId, onSuccess } = props;
-  const VmComponent = ComponentMapping["KelpDao"];
-  const token0 = ethereum['stETH']
-  const token1 = ethereum['rsETH']
+  const { dapp, gem, box, show, setShow, token0, token1, chainId } = props;
+  const VmComponent = ComponentMapping[gem?.dapp?.name || dapp?.name];
+  // const { dapp, gem, box, show, setShow, chainId, onSuccess } = props;
+  // const VmComponent = ComponentMapping["KelpDao"];
+  // const token0 = ethereum['stETH']
+  // const token1 = ethereum['rsETH']
   const [actionType, setActionType] = useState(gem ? 'restake' : 'stake');
   const handleChangeActionType = function (_actionType: any) {
     setActionType(_actionType);
