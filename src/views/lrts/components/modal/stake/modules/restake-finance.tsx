@@ -24,7 +24,6 @@ const RestakeFinance = function ({ box, gem, dapp, actionType, addAction, handle
     token0,
     token1,
     addAction,
-    chainId,
     actionType,
     onSuccess
   })

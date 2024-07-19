@@ -235,9 +235,9 @@ const SECOND_TOKEN_ABI = [
     type: 'function',
   },
 ];
-const useRestakeFinance = function ({ gem, dapp, token0, token1, addAction, actionType, chainId, onSuccess }: any) {
+const useRestakeFinance = function ({ gem, dapp, token0, token1, addAction, actionType, onSuccess }: any) {
   const toast = useToast();
-  const { account, provider } = useAccount();
+  const { account, provider, chainId } = useAccount();
   const [{ }, setChain] = useSetChain();
   const [data, setData] = useState<any>(null);
   const [inAmount, setInAmount] = useState<number | string>('');
