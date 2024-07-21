@@ -4,6 +4,7 @@ import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import useAllTokensBalance from '../../hooks/useAllTokensBalance';
 import { Particle } from '../index';
 interface IProps {
   dataSource: any;
@@ -137,12 +138,12 @@ const GemImage = styled.img`
   max-width: 100%;
 `;
 const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
-  useEffect(() => {}, []);
   const items = Array.from({ length: 81 }, (x, i) => i + 1);
 
   const allGems = dataSource.map((item: any) => item.order);
-
-  const userGems = dataSource.filter((item: any) => item?.token?.balance > 0).map((item: any) => item.order);
+  const [balanceUpdater, setBalanceUpdater] = useState(0);
+  const { loading, balances } = useAllTokensBalance(balanceUpdater);
+  const userGems = dataSource.filter((item: any) => balances[item?.token?.address] > 0).map((item: any) => item.order);
 
   const rocks = [12, 16, 18, 33, 38, 42, 47, 48, 50, 51, 54, 58];
   const empty = [11, 17, 34, 39, 49, 53, 59];

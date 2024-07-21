@@ -14,3 +14,8 @@ export function ellipsLongAccount(account?: string) {
   if (!account || !utils.isAddress(account)) return '-';
   return account.slice(0, 10) + '...' + account.slice(-6);
 }
+
+export function ellipsHash(hash?: string) {
+  if (!hash) return '-';
+  return hash.slice(0, 8) + '...' + hash.slice(-8);
+}

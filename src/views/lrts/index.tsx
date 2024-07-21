@@ -32,6 +32,8 @@ const Home = () => {
 
   const [resetTabIndex, setResetTabIndex] = useState(0);
 
+  const [balanceUpdater, setBalanceUpdater] = useState(0);
+
   useEffect(() => {
     // wait for tvl & apr
     if (!completed) return;
@@ -63,6 +65,9 @@ const Home = () => {
     setLstIndex(activeIndex);
     // reset tab index for tabCard
     setResetTabIndex((n) => n + 1);
+  };
+  const updateBalance = () => {
+    setBalanceUpdater((n) => n + 1);
   };
   return (
     <Container>
@@ -114,6 +119,7 @@ const Home = () => {
         resetTabIndex={resetTabIndex}
         handleShowModal={handleShowModal}
         onTabChange={onTabChange}
+        updater={balanceUpdater}
       />
 
       {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
@@ -133,6 +139,7 @@ const Home = () => {
         chainId={chainId as number}
         show={isShowStakeModal}
         setShow={setIsShowStakeModal}
+        onSuccess={updateBalance}
       />
       <SwapModal show={showSwapModal} setShow={setShowSwapModal} token={curLrt?.token || lrtsData[lstIndex].token} />
     </Container>

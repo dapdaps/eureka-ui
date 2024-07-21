@@ -5,7 +5,7 @@ import useTokensBalance from '@/hooks/useTokensBalance';
 
 import LSTS_DATA from '../config/data';
 
-const useAllTokensBalance = () => {
+const useAllTokensBalance = (updater: number) => {
   const [allTokens, setAllTokens] = useState<any[]>([]);
 
   useEffect(() => {
@@ -16,7 +16,7 @@ const useAllTokensBalance = () => {
 
     const allTokens = [ethereum.eth, ...lstTokens, ...lrTokens];
     setAllTokens(allTokens);
-  }, []);
+  }, [updater]);
 
   const { loading, balances } = useTokensBalance(allTokens);
 

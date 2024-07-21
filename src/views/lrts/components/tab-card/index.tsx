@@ -179,11 +179,12 @@ interface IProps {
   lstIndex: number;
   curLrt: any;
   resetTabIndex: number;
+  updater: number;
   onTabChange: (symbol: any) => void;
   handleShowModal: (actionType: any) => void;
 }
 
-const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, resetTabIndex }) => {
+const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, resetTabIndex, updater }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [list, setList] = useState<any>();
 
@@ -193,7 +194,9 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
   const tabRef = useRef(null);
   const lrtsData = useLrtDataStore((store: any) => store.data);
-  const { loading, balances } = useAllTokensBalance();
+
+  const { loading, balances } = useAllTokensBalance(updater);
+
   useEffect(() => {
     const _lrtTokens = lrtsData[lstIndex]?.lrtTokens?.map((item: any) => ({
       ...item.token,

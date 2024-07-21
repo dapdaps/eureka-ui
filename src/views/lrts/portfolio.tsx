@@ -55,7 +55,8 @@ const Portfolio: FC<IProps> = (props) => {
 
   const [showSwapModal, setShowSwapModal] = useState(false);
   const [showAddTokenModal, setShowAddTokenModal] = useState(false);
-  const { loading: balanceLoading, balances } = useAllTokensBalance();
+  const [balanceUpdater, setBalanceUpdater] = useState(0);
+  const { loading: balanceLoading, balances } = useAllTokensBalance(balanceUpdater);
 
   const [lstIndex, setLstIndex] = useState(0);
   const [curLrt, setCurLrt] = useState<any>(null);
@@ -131,6 +132,9 @@ const Portfolio: FC<IProps> = (props) => {
     setIsShowStakeModal(true);
   };
 
+  const updateBalance = () => {
+    setBalanceUpdater((n) => n + 1);
+  };
   const items = [
     {
       label: TabType.Portfolio,
@@ -413,6 +417,7 @@ const Portfolio: FC<IProps> = (props) => {
         chainId={chainId as number}
         show={isShowStakeModal}
         setShow={setIsShowStakeModal}
+        onSuccess={updateBalance}
       />
       <AddTokenModal show={showAddTokenModal} setShow={setShowAddTokenModal} token={addToken} />
       <SwapModal show={showSwapModal} setShow={setShowSwapModal} token={swapToken} />

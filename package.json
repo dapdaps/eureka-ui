@@ -49,6 +49,7 @@
     "@radix-ui/react-toast": "^1.1.5",
     "@solana/fast-stable-stringify": "2.0.0-preview.2",
     "@stitches/react": "^1.2.8",
+    "@tanstack/react-table": "^8.19.3",
     "@web3-onboard/bitget": "^2.0.1",
     "@web3-onboard/core": "^2.21.2",
     "@web3-onboard/injected-wallets": "^2.10.9",

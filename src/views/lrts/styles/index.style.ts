@@ -1,15 +1,22 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  min-width: 1350px;
+  margin: 0 auto;
   background-color: #151515;
   font-family: Orbitron;
 `;
-
+export const SwapContent = styled.div<{ $bg: string }>`
+  background: ${(props: any) => `url(${props.$bg}) no-repeat`};
+  position: relative;
+  width: 194px;
+  height: 150px;
+`;
 export const Banner = styled.div`
   height: 657px;
   padding-top: 28px;
   background: url(/images/lrts/bg-home.png) center no-repeat #000;
-  background-size: cover;
+  background-size: contain;
   .mySwiper {
     margin-top: 120px;
     padding: 55px 150px;
@@ -64,7 +71,6 @@ export const Banner = styled.div`
       position: absolute;
       top: 98px;
       right: 10px;
-
       color: rgba(255, 255, 255, 0.5);
       font-family: Orbitron;
       font-size: 9px;
@@ -74,7 +80,6 @@ export const Banner = styled.div`
       position: absolute;
       top: 110px;
       right: 10px;
-
       color: #fff;
       font-family: Orbitron;
       font-size: 12px;
@@ -83,6 +88,7 @@ export const Banner = styled.div`
   }
 
   .swiper .swiper-slide.swiper-slide-active {
+    height: 300px;
     .lst-content {
       position: relative;
       width: 100%;
@@ -111,6 +117,9 @@ export const Banner = styled.div`
       font-family: Orbitron;
       font-size: 14px;
       font-weight: 700;
+      @media (min-width: 1800px) {
+        top: 210px;
+      }
     }
     .min-apr {
       position: absolute;
@@ -121,6 +130,9 @@ export const Banner = styled.div`
       font-family: Orbitron;
       font-size: 16px;
       font-weight: 700;
+      @media (min-width: 1800px) {
+        top: 175px;
+      }
     }
     .max-apr {
       position: absolute;
@@ -131,6 +143,9 @@ export const Banner = styled.div`
       font-family: Orbitron;
       font-size: 26px;
       font-weight: 700;
+      @media (min-width: 1800px) {
+        top: 200px;
+      }
     }
     transform: translate(-50px, -50px);
   }
