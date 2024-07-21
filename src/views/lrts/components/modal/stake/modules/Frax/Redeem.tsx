@@ -6,7 +6,8 @@ import styled from 'styled-components';
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 
-import { ENTER_QUEUE_ABI, FRAX_REDEEM_ABI, TOKEN_ABI } from '../../../../../config/abi/frax';
+import useAddAction from '@/hooks/useAddAction';
+import { ENTER_QUEUE_ABI, FRAX_REDEEM_ABI } from '../../../../../config/abi/frax';
 import Button from '../../components/button';
 import { StyledStakeButtonContainer } from '../../styles';
 import Checkbox from './Checkbox';
@@ -91,11 +92,14 @@ const FraxEtherRedemptionQueue_ADDR = '0x82bA8da44Cd5261762e629dd5c605b17715727b
 
 const Redeem = (props: any) => {
   const {
+    gem,
+    dapp,
     token0,
     token1,
     leastAmount,
     actionType
   } = props;
+  const { addAction } = useAddAction('lrts');
   const { account } = useAccount();
   const tokens = [ethereum['frxETH'], ethereum['sfrxETH']];
 
@@ -143,8 +147,25 @@ const Redeem = (props: any) => {
     try {
       const frxETHContract = new Contract(FraxEtherRedemptionQueue_ADDR, ENTER_QUEUE_ABI, provider.getSigner());
       const tx = await frxETHContract.enterRedemptionQueue(address, utils.parseEther(inputAmount));
-      await tx.wait();
+      const { status, transactionHash, ...rest } = await tx.wait();
       toast.success({ title: "Enter Queue Successfully!", text: `Enter Queue ${selectToken.symbol}`, tx: tx.hash });
+      addAction({
+        type: "Staking",
+        action: actionType,
+        token: [token0.symbol, token1.symbol],
+        amount: inputAmount,
+        template: gem ? gem?.dapp?.name : dapp.name,
+        status,
+        transactionHash,
+        chain_id: token0.childId,
+        extra_data: JSON.stringify({
+          action: actionType,
+          fromTokenSymbol: token0.symbol,
+          fromTokenAmount: inputAmount,
+          toTokenSymol: token1.symbol,
+          toTokenAmount: inputAmount,
+        })
+      })
     } catch (error: any) {
       toast.fail({
         title: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Enter Queue faily!`,

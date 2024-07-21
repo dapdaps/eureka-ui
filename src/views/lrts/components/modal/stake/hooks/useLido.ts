@@ -163,6 +163,7 @@ export default function useLido({ gem, dapp, token0, token1, addAction, actionTy
           transactionHash,
           chain_id: chainId,
           extra_data: JSON.stringify({
+            action: actionType,
             fromTokenSymbol: inToken.symbol,
             fromTokenAmount: inAmount,
             toTokenSymol: outToken.symbol,
