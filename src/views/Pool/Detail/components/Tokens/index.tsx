@@ -2,6 +2,7 @@ import { memo } from 'react';
 import Status from '@/views/Pool/components/Status';
 import TokenIcon from '@/views/Pool/components/TokenIcon';
 import Fee from '@/views/Pool/components/Fee';
+import VersionTag from '@/views/Pool/Pools/components/VersionTag';
 import { StyledContainer, StyledLeft, StyledTokens, StyledSymbol } from './styles';
 
 const Tokens = ({
@@ -14,6 +15,7 @@ const Tokens = ({
   tickUpper,
   liquidity,
   currentTick,
+  type,
 }: any) => {
   return (
     <StyledContainer>
@@ -25,16 +27,18 @@ const Tokens = ({
         <StyledSymbol>
           {token0?.symbol}/{token1?.symbol}
         </StyledSymbol>
-        <Fee fee={fee} />
+        {fee && <Fee fee={fee} />}
+        <VersionTag type={type} />
       </StyledLeft>
       <Status
-        from="add"
+        from={from}
         rangeType={rangeType}
         tickLower={tickLower}
         tickUpper={tickUpper}
         liquidity={liquidity}
         currentTick={currentTick}
         loading={false}
+        type={type}
       />
     </StyledContainer>
   );

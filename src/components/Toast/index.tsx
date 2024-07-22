@@ -88,7 +88,7 @@ export default function Toast({ type, title, text, tx, chainId, closeToast }: an
       <StyledContent>
         <StyledDesc>
           <StyledTitle>{title}</StyledTitle>
-          <StyledSecondaryText>{text}</StyledSecondaryText>
+          {text && (<StyledSecondaryText>{text}</StyledSecondaryText>)}
           {tx && chainId && (
             <StyledSecondaryText
               style={{ textDecoration: 'underline' }}

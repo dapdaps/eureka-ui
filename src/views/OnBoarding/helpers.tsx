@@ -81,9 +81,10 @@ export function formatTitle(record: any) {
         );
       }
     } catch (err) {}
+    const _actionType = record.action_title?.includes('Withdraw') ? 'Withdraw' : 'Deposit';
     return (
       <>
-        Deposit <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
+        {_actionType} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]}-
         {tokens[1]}
       </>
     );
@@ -96,10 +97,27 @@ export function formatTitle(record: any) {
         return (
           <>
             {parsedExtraData.action}{' '}
-            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span>{' '}
-            {parsedExtraData.token0Symbol} and{' '}
-            <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span>{' '}
-            {parsedExtraData.token1Symbol} on {record.template}
+            {parsedExtraData.amount && (
+              <>
+                {' '}
+                <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount, 3)}</span>{' '}
+                {parsedExtraData.token}{' '}
+              </>
+            )}
+            {parsedExtraData.amount0 && (
+              <>
+                {' '}
+                <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount0, 3)}</span>{' '}
+                {parsedExtraData.token0Symbol}{' '}
+              </>
+            )}
+            {parsedExtraData.amount1 && (
+              <>
+                add <span style={{ color: '#979abe' }}>{formateValue(parsedExtraData.amount1, 3)}</span>{' '}
+                {parsedExtraData.token1Symbol}
+              </>
+            )}
+            on {record.template}
           </>
         );
       }
@@ -107,7 +125,7 @@ export function formatTitle(record: any) {
     const action = record.action_title.split(' ')[0];
     return (
       <>
-        {action} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens[0]} on{' '}
+        {action} <span style={{ color: '#979abe' }}>{formateValue(record.action_amount, 3)}</span> {tokens?.[0]} on{' '}
         {record.template}
       </>
     );

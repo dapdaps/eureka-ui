@@ -4,14 +4,13 @@ import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
 import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-
+import Tag from '@/views/Odyssey/components/Tag';
 import useCompassList from './hooks/useCompassList';
 import {
   StyledCard,
@@ -56,11 +55,25 @@ const Card = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledCardBackgroundImage width={646} height={323} src={compass.banner} alt={compass.name} />
+      <StyledCardBackgroundImage
+        width={646}
+        height={323}
+        src={compass.banner}
+        alt={compass.name}
+        style={{
+          filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
+        }}
+      />
       <StyledCardMainContent>
-        {odyssey[compass.id]?.chainsImg && (
-          <StyledChainsImg src={odyssey[compass.id]?.chainsImg} style={{ height: odyssey[compass.id]?.chainsHeight }} />
-        )}
+        <StyledFlex alignItems="center" gap="12px">
+          {odyssey[compass.id]?.chainsImg && (
+            <StyledChainsImg
+              src={odyssey[compass.id]?.chainsImg}
+              style={{ height: odyssey[compass.id]?.chainsHeight }}
+            />
+          )}
+          <Tag status={compass.status} />
+        </StyledFlex>
         <StyledCardTitle>{compass.name}</StyledCardTitle>
         <StyledCardDesc>{compass.description}</StyledCardDesc>
       </StyledCardMainContent>
@@ -136,13 +149,17 @@ const Compass = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
                   <Card compass={compass} />
-                  <StyledCompassIcon>
-                    <CompassIcon />
-                  </StyledCompassIcon>
+                  {compass.name === 'THRUSTER TURBO SPIN' ? null : (
+                    <StyledCompassIcon>
+                      <CompassIcon />
+                    </StyledCompassIcon>
+                  )}
+
                   {/* {odyssey[compass.id]?.reward && (
                     <StyledWinPtsIcon>
                       <WinPtsIcon num={odyssey[compass.id].reward} />
@@ -150,12 +167,21 @@ const Compass = () => {
                   )} */}
                   {odyssey[compass.id]?.reward && (
                     <div
-                      style={{
-                        position: 'absolute',
-                        right: -34,
-                        top: 0,
-                        zIndex: 20,
-                      }}
+                      style={
+                        compass.name === 'THRUSTER TURBO SPIN'
+                          ? {
+                              position: 'absolute',
+                              right: -27,
+                              top: -33,
+                              zIndex: 20,
+                            }
+                          : {
+                              position: 'absolute',
+                              right: -34,
+                              top: 0,
+                              zIndex: 20,
+                            }
+                      }
                     >
                       {['ended', 'un_start'].includes(compass.status) ? (
                         <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
@@ -170,7 +196,7 @@ const Compass = () => {
                           position: 'absolute',
                           left: 0,
                           right: -8,
-                          top: 45,
+                          top: odyssey[compass.id]?.rewardTop ? odyssey[compass.id]?.rewardTop : 45,
                           textAlign: 'center',
                           fontWeight: 900,
                           transform: 'rotate(-15deg)',

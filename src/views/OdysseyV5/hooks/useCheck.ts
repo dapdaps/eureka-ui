@@ -61,7 +61,7 @@ export default function useCheck(quest: any, cb: any, detailLoading: boolean, se
         fetchData(d);
         return;
       }
-      check(fetchData);
+      check(() => fetchData(d));
     },
     [quest, detailLoading],
   );

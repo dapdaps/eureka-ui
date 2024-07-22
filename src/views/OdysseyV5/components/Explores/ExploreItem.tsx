@@ -9,6 +9,7 @@ import LockStatus from '../LockStatus';
 import RefreshIcon from '../RefreshButton';
 import CardInput from './CardInput';
 import { ArrowContainer, StyledItem, StyledItemLeft, StyledItemRight, StyledItemShadow,StyledItemTitle, Unexplored } from './styles';
+import { openXShareLink } from '@/utils/links';
 
 const ExploreItem = ({
   userInfo,
@@ -44,8 +45,21 @@ const ExploreItem = ({
       return;
     }
 
+    if (category === 'twitter_retweet') {
+      openXShareLink(
+        `Hi fren, did you know? %0A
+For a limited time, the @DapDapMeUp x @modenetwork Airdrop Ascendancy campaign is live! %0A
+> Featuring top $MODE dApps %0A
+> A massive 15,000+ USD ecosystem prize pool! %0A
+Check it out below 🤜⚡️🤛 %0A
+https://x.com/DapDapMeUp/status/1808489813617832193
+`,
+      );
+    }
+
     if (!source) return;
     if (source === '/network/mode') handleReport(id);
+    if (source === '/super-bridge') handleReport(id);
     window.open(source, '_blank');
   };
 
@@ -54,13 +68,8 @@ const ExploreItem = ({
     setFinished(offers <= total_spins);
   }, [total_spins, times, spins]);
 
-  const itemDisabled = useMemo(() => {
-    if (['page', 'favorite_dapp'].includes(category)) return false;
-    return times !== 0;
-  }, [category, times]);
-
   return (
-    <StyledItem onClick={onItemClick} $disabled={itemDisabled}>
+    <StyledItem onClick={onItemClick} $disabled={times === 0 ? false : finished}>
       <StyledItemLeft>
         <StyledItemTitle>{name}</StyledItemTitle>
       </StyledItemLeft>

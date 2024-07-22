@@ -123,7 +123,6 @@ export const tokens: any =  {
             isNative: true,
             address: 'native',
         },
-        
     ],
     34443: [
         {

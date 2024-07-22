@@ -4,6 +4,9 @@ const CloseIcon = styled.div`
   cursor: pointer;
   transition: 0.3s;
   transform-origin: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   &:hover {
     opacity: 0.8;
     transform: scale(1.2);

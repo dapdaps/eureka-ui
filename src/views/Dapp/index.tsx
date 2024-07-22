@@ -1,34 +1,10 @@
 import { memo } from 'react';
-import styled from 'styled-components';
 import Breadcrumb from '@/components/Breadcrumb';
 import DappCom from './DappCom';
+import ExtraWard from './components/ExtraReward';
+import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper } from './styles';
 
-const StyledPage = styled.div`
-  padding: 50px 80px 0px;
-`;
-
-const DappName = styled.div`
-  color: #fff;
-  font-family: Gantari;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-`;
-
-const StyledPowerHints = styled.div`
-  color: #979abe;
-  font-family: Gantari;
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3px;
-  margin-top: 10px;
-`;
+export { default as Empty } from './Empty';
 
 const Dapp = (props: any) => {
   const { dapp } = props;
@@ -53,7 +29,9 @@ const Dapp = (props: any) => {
             <span>Algebra</span>
           </StyledPowerHints>
         )}
-        <DappCom {...props} />
+        <StyledDappWrapper>
+          <DappCom {...props} />
+        </StyledDappWrapper>
       </div>
     </StyledPage>
   );

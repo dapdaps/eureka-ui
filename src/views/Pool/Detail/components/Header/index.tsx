@@ -2,13 +2,13 @@ import { memo } from 'react';
 import { useRouter } from 'next/router';
 import { StyledContainer } from './styles';
 
-const Header = () => {
+const Header = ({ tab }: any) => {
   const router = useRouter();
 
   return (
     <StyledContainer
       onClick={() => {
-        router.push(`/dapp/${router.query.dappRoute}`);
+        router.push(`/dapp/${router.query.dappRoute}${tab ? `?tab=${tab}` : ''}`);
       }}
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="9" height="13" viewBox="0 0 9 13" fill="none">

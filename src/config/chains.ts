@@ -99,7 +99,7 @@ const chainCofig = {
     chainName: 'Polygon',
     icon: 'https://assets.dapdap.net/images/bafkreic6p22qh3ytwkpmv5hq6a3ppdq7xoyvnmeog3wbtugnao434q6d7a.svg',
     nativeCurrency: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
-    rpcUrls: ['https://polygon.llamarpc.com', 'https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf', 'https://polygon-mainnet.public.blastapi.io'],
+    rpcUrls: ['https://polygon-mainnet.public.blastapi.io', 'https://polygon.llamarpc.com', 'https://polygon-mainnet.rpcfast.com?api_key=xbhWBI1Wkguk8SNMu1bvvLurPGLXmgwYeC4S6g2H7WdwFigZSmPWVZRxrskEQwIf'],
     blockExplorers: 'https://polygonscan.com',
   },
   1101: {
@@ -113,7 +113,6 @@ const chainCofig = {
   324: {
     chainId: 324,
     chainName: 'zkSync',
-    engine: 'lifi',
     icon: 'https://assets.dapdap.net/images/bafkreibcq6agazqmv5euwf355v7x7hlinz3jkuins2bkfffdbp3jgbjj6u.svg',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.era.zksync.io', 'https://endpoints.omniatech.io/v1/zksync-era/mainnet/public', 'https://zksync.drpc.org'],
@@ -158,7 +157,7 @@ const chainCofig = {
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io',
-  },
+  }
 } as { [key: number]: Chain };
 
 export default chainCofig;

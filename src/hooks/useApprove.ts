@@ -13,7 +13,7 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
   const { account, provider } = useAccount();
 
   const checkApproved = async () => {
-    if (!token?.address || !amount || !spender) return;
+    if (!token?.address || !amount || !spender || amount === '0') return;
     setChecking(true);
     try {
       const TokenContract = new Contract(

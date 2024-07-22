@@ -35,9 +35,9 @@ const StyledContainer = styled.div`
   }
 `;
 
-export default function RefreshIcon({ onClick, loading }: any) {
+export default function RefreshIcon({ onClick, loading, style }: any) {
   return (
-    <StyledContainer onClick={onClick}>
+    <StyledContainer onClick={onClick} style={style}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="18"

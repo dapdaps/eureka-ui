@@ -1,4 +1,3 @@
-
 export default {
   title: 'Mode',
   path: 'mode',
@@ -13,13 +12,19 @@ export default {
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
-      path: 'bluebiu.near/widget/Linea.Bridge',
-      description: 'Intuitively across different network to Mode',
+      path: 'bluebiu.near/widget/Mode.BridgeAuthority.Index',
     },
     Swap: {
       tab: 'Trade',
       path: 'bluebiu.near/widget/Mode.Swap',
-      description: 'Efficiently from/to any assets on Mode',
+    },
+    Lending: {
+      tab: 'Lending',
+      path: 'bluebiu.near/widget/Linea.Lending',
+    },
+    Lending: {
+      tab: 'Lending',
+      path: 'bluebiu.near/widget/Linea.Lending',
     },
   },
 };

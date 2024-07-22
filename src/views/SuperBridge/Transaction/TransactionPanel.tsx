@@ -158,7 +158,7 @@ export default function TransactionPanel(
     const [filterTransactionList, setFilterTransactionList] = useState(transactionList)
     const [value, setValue] = useState('')
     const inputValue = useDebounce(value, { wait: 500 });
-    
+
     useEffect(() => {
         if (inputValue && transactionList) {
             const filterTransactionList = transactionList.filter(item => {
@@ -207,7 +207,7 @@ export default function TransactionPanel(
                 </svg>
                 <input value={value} onChange={e => {
                     setValue(e.target.value)
-                }} placeholder="Search by address or Tx Hash" />
+                }} placeholder="Search by address or tx hash" />
             </div>
         </Header>
         <Content>
@@ -224,6 +224,11 @@ export default function TransactionPanel(
                 </thead>
                 <tbody>
                     {
+                        filterTransactionList.length === 0 ? <tr>
+                            <td colSpan={6} style={{ textAlign: 'center', padding: 40 }}>No found.</td>
+                        </tr> : null
+                    }
+                    {
                         filterTransactionList?.map(tx => {
                             return <tr key={tx.hash}>
                                 <td>
@@ -237,7 +242,7 @@ export default function TransactionPanel(
                                                 success({
                                                     title: 'Copy Success'
                                                 })
-                                            } catch(e) {
+                                            } catch (e) {
                                                 fail({
                                                     title: 'Copy Fail'
                                                 })

@@ -1,6 +1,8 @@
 import Big from 'big.js'
 import { SuperBridgeStore } from 'super-bridge-sdk'
 
+import { post, get, AUTH_TOKENS } from '@/utils/http';
+
 let gloabalSbs: SuperBridgeStore
 async function initDb() {
     const sbs = new SuperBridgeStore('dapdap', 'transaction')
@@ -46,23 +48,66 @@ export async function saveTransaction(item: any) {
     await sbs.update(item)
 }
 
+export async function updateTransaction(item: any) {
+    await post('/api/action/bridge/status', {
+        tx_id: item.hash,
+        status: item.status.toString()
+    })
+}
+
+export async function sleep(time: number){
+    return new Promise(function(resolve){
+        setTimeout(resolve, time);
+    });
+}
+
 export function saveAllTransaction(transaction_key: any, transactionObj: any) {
     // localStorage.setItem(transaction_key, JSON.stringify(transactionObj))
 }
 
 export async function getTransaction(tool?: string) {
-    const sbs = await getDb()
-    const list: any = await sbs.readAll()
+    // const sbs = await getDb()
+    // const list: any = await sbs.readAll()
+
+    if (typeof window !== 'undefined') {
+        let tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+        while (!tokens.access_token) {
+            await sleep(3000)
+            tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+        }
+    }
     
-    if (!list) {
+    const storeData = await get(`/api/action/get-actions-by-type?action_type=Bridge&page=1&page_size=99999`)
+    if (storeData.code !== 0) {
+        return []
+    }
+
+    const storeList = storeData.data.data
+    const _list = storeList.filter((item: any) => item.extra_data.length > 100)
+
+    let __list = []
+    if (_list) {
+        __list = _list.map((item: any) => {
+            const jsonItem = JSON.parse(item.extra_data)
+            if (item.bridge_status) {
+                jsonItem.status = Number(item.bridge_status)
+            }
+
+            return jsonItem
+        })
+    }
+
+    if (!__list) {
         return []
     }
     
     if (!tool) {
-        return list
+        return __list
     }
 
-    return list.filter((item: any) => item.tool.toLowerCase() === tool.toLowerCase()) || []
+    
+
+    return __list.filter((item: any) => item.tool.toLowerCase() === tool.toLowerCase()) || []
 }
 
 export function isNumeric(value: any): boolean {

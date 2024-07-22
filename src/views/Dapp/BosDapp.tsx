@@ -11,7 +11,6 @@ import { multicall } from '@/utils/multicall';
 import refresh from '@/utils/refresh';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useLayoutStore } from '@/stores/layout';
-
 export default function BosDapp({
   dapp,
   chainId,
@@ -24,6 +23,7 @@ export default function BosDapp({
   setCurrentChain,
   setIsChainSupported,
   chains,
+  props = {},
 }: any) {
   const prices = usePriceStore((store) => store.price);
   const { addAction } = useAddAction('dapp');
@@ -38,7 +38,6 @@ export default function BosDapp({
       }),
     [],
   );
-
   return (
     <ComponentWrapperPage
       componentProps={{
@@ -75,8 +74,9 @@ export default function BosDapp({
         GAS_LIMIT_RECOMMENDATIONS,
         refresh,
         windowOpen: (url: any, target: any) => {
-          window.open(url, target)
-        }
+          window.open(url, target);
+        },
+        ...props,
       }}
       src={network.dapp_src}
     />

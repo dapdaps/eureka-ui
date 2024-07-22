@@ -1,22 +1,64 @@
 import Image from "next/image";
-import React from "react";
+import React, { useState } from 'react';
 
+import LockStatus from '@/views/OdysseyV5/components/LockStatus';
 import {
   StyledCardContainer,
   StyledCardContent,
   StyledCardFoot,
-  StyledCardHead
-} from "@/views/OdysseyV5/components/Mastery/styles";
+  StyledCardHead,
+  StyledCardHeadTitle,
+  StyledStatus, StyledStatusExplored,
+  StyledStatusItem,
+  StyledStatusUnexplored,
+} from '@/views/OdysseyV5/components/Mastery/styles';
+import RefreshIcon from '@/views/OdysseyV5/components/RefreshButton';
+import useCheck from '@/views/OdysseyV5/hooks/useCheck';
 
 const MasteryCard = (props: Props) => {
-  const { title, pointsEarned, result, children } = props;
+  const {
+    title,
+    pointsEarned,
+    result,
+    children,
+    currentStrategy,
+    updateStrategies,
+  } = props;
+
+  const { checking, handleRefresh } = useCheck(currentStrategy, (_times: number) => {
+    updateStrategies(currentStrategy.id, _times);
+  }, false, () => {});
 
   return (
     <StyledCardContainer style={props.styles}>
       <StyledCardHead>
-        {title}
+        <StyledCardHeadTitle>{title}</StyledCardHeadTitle>
+        <StyledStatus>
+          {
+            currentStrategy.finished ? (
+              <StyledStatusExplored>
+                <LockStatus status={true} style={{ lineHeight: 1, height: '100%' }} />
+              </StyledStatusExplored>
+            ) : (
+              <StyledStatusUnexplored>
+                <RefreshIcon
+                  onClick={(ev: any) => {
+                    ev.stopPropagation();
+                    if (checking || !currentStrategy || !currentStrategy.id) return;
+                    handleRefresh();
+                  }}
+                  loading={checking}
+                  style={{
+                    cursor: (currentStrategy && currentStrategy.id) ? 'pointer' : 'not-allowed',
+                  }}
+                />
+                <StyledStatusItem>Unexplored</StyledStatusItem>
+              </StyledStatusUnexplored>
+            )
+          }
+        </StyledStatus>
       </StyledCardHead>
-      <StyledCardContent>
+      <StyledCardContent style={{ marginTop: currentStrategy.finished ? 30 : 0 }}>
         <div className="section points-earned">
           <div className="title">Points Earned:</div>
           <ul className="list">
@@ -58,4 +100,6 @@ interface Props {
   result: any[];
   children: React.ReactElement;
   styles?: React.CSSProperties;
+  currentStrategy: any;
+  updateStrategies(id: any, times: any): void;
 }

@@ -44,6 +44,7 @@ const PoolRemoveToken = ({
   amount1 = 0,
   feeAmount0 = 0,
   feeAmount1 = 0,
+  type,
 }: any) => {
   return (
     <StyledWrap>
@@ -59,10 +60,12 @@ const PoolRemoveToken = ({
           token={token1}
         />
       </StyledPool>
-      <StyledEarnedFees>
-        <RowData name={`${token0?.symbol} Fees Earned:`} value={balanceFormated(feeAmount0, 4)} token={token0} />
-        <RowData name={`${token1?.symbol} Fees Earned:`} value={balanceFormated(feeAmount1, 4)} token={token1} />
-      </StyledEarnedFees>
+      {type !== 'V2' && (
+        <StyledEarnedFees>
+          <RowData name={`${token0?.symbol} Fees Earned:`} value={balanceFormated(feeAmount0, 4)} token={token0} />
+          <RowData name={`${token1?.symbol} Fees Earned:`} value={balanceFormated(feeAmount1, 4)} token={token1} />
+        </StyledEarnedFees>
+      )}
     </StyledWrap>
   );
 };

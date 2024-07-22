@@ -11,7 +11,6 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     name: 'Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
-    // icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
   },
   usdt: {
     chainId: CHAIN_ID,

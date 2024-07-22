@@ -198,22 +198,27 @@ async function getTransactionData(value: string, chainId: number, minOut: string
             break; 
         case 42161:
             contractAddress = '0xf25484650484de3d554fb0b7125e7696efa4ab99'
-        case 59144:
-            contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
-        case 8453:
-            contractAddress = '0xf25484650484de3d554fb0b7125e7696efa4ab99'
-        case 34443:
-            contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
-        default:
-            console.log('contractAddress:', contractAddress)
-
             DepositContract = new Contract(
                 contractAddress as string,
                 L2Abi,
                 signer,
             );
 
-            console.log('contractAddress:', contractAddress)
+            transactionData = await DepositContract.populateTransaction.depositETH(
+                minOut,
+                getTimeAfter(20),
+                {
+                    value,
+                },
+            )
+            break;
+        case 59144:
+            contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
+            DepositContract = new Contract(
+                contractAddress as string,
+                L2Abi,
+                signer,
+            );
 
             transactionData = await DepositContract.populateTransaction.depositETH(
                 minOut,
@@ -223,6 +228,53 @@ async function getTransactionData(value: string, chainId: number, minOut: string
                 },
             )
             break; 
+        case 8453:
+            contractAddress = '0xf25484650484de3d554fb0b7125e7696efa4ab99'
+            DepositContract = new Contract(
+                contractAddress as string,
+                L2Abi,
+                signer,
+            );
+
+            transactionData = await DepositContract.populateTransaction.depositETH(
+                minOut,
+                getTimeAfter(20),
+                {
+                    value,
+                },
+            )
+            break; 
+        case 34443:
+            contractAddress = '0x4D7572040B84b41a6AA2efE4A93eFFF182388F88'
+            DepositContract = new Contract(
+                contractAddress as string,
+                L2Abi,
+                signer,
+            );
+
+            transactionData = await DepositContract.populateTransaction.depositETH(
+                minOut,
+                getTimeAfter(20),
+                {
+                    value,
+                },
+            )
+            break;
+        // default:
+        //     DepositContract = new Contract(
+        //         contractAddress as string,
+        //         L2Abi,
+        //         signer,
+        //     );
+
+        //     transactionData = await DepositContract.populateTransaction.depositETH(
+        //         minOut,
+        //         getTimeAfter(20),
+        //         {
+        //             value,
+        //         },
+        //     )
+        //     break; 
     }
 
     return transactionData
@@ -247,7 +299,7 @@ export default function useTrade({
 
     async function deposit(value: string, signer: Signer) {
         try {
-            const _value = new Big(value).mul(10 ** 18).toString()
+            const _value = new Big(value).mul(10 ** 18).toNumber().toFixed()
             setIsLoading(true)
             const tx = await ethereumDeposit(_value, signer)
             success({

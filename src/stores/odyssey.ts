@@ -9,7 +9,7 @@ export const useOdysseyStore = create(
     }),
     {
       name: '_cached_odyssey',
-      version: 0.1,
+      version: 0.2,
       storage: createJSONStorage(() => sessionStorage),
     },
   ),

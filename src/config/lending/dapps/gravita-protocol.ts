@@ -7,6 +7,8 @@ const BORROW_TOKEN = 'GRAI';
 const BORROW_URL = 'https://ipfs.near.social/ipfs/bafkreihv4qckd2us54qbgljcriwtbrmmmxrpmgvyg5xf5rjp456pcr25ui';
 
 const MIN_DEBT = 200;
+const _upperHint = '0x544f96434f77437425d5aC40fd4755C0cf39399A';
+const _lowerHint = '0xA1B7bbade134DB3B14B56056480e81c60Ab77377';
 
 const basic = {
   name: 'Gravita Protocol',
@@ -38,6 +40,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 993251,
         MINTED_CAP: 2000000,
+        _upperHint,
+        _lowerHint,
       },
       [arbitrum['weth'].address]: {
         decimals: 18,
@@ -49,6 +53,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 327697,
         MINTED_CAP: 500000,
+        _upperHint,
+        _lowerHint,
       },
       [arbitrum['wst-eth'].address]: {
         decimals: 18,
@@ -60,6 +66,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 2380000,
         MINTED_CAP: 3000000,
+        _upperHint,
+        _lowerHint,
       },
       [arbitrum['sfrxETH'].address]: {
         decimals: 18,
@@ -71,6 +79,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 184280,
         MINTED_CAP: 500000,
+        _upperHint,
+        _lowerHint,
       },
     },
   },
@@ -93,6 +103,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 2980,
         MINTED_CAP: 1000000,
+        _upperHint,
+        _lowerHint,
       },
       [polygonZkevm['reth'].address]: {
         decimals: 18,
@@ -104,6 +116,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 50530,
         MINTED_CAP: 500000,
+        _upperHint,
+        _lowerHint,
       },
     },
   },
@@ -126,6 +140,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 23822,
         MINTED_CAP: 1000000,
+        _upperHint,
+        _lowerHint,
       },
       [linea['weth'].address]: {
         decimals: 18,
@@ -137,6 +153,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 22897,
         MINTED_CAP: 1000000,
+        _upperHint,
+        _lowerHint,
       },
     },
   },
@@ -158,6 +176,8 @@ const networks = {
         MIN_DEBT,
         MINTED: 255355,
         MINTED_CAP: 1000000,
+        _upperHint,
+        _lowerHint,
       },
     },
   },

@@ -425,3 +425,11 @@ export const PieWrap = styled.div`
   margin: 30px auto 0;
   width: 642px;
 `;
+
+export const UsersWrap = styled.div`
+  margin-top: 20px;
+  height: 420px;
+  border-radius: 20px;
+  background: rgba(33, 35, 42, 0.9);
+  backdrop-filter: blur(10px);
+`;

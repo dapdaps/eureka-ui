@@ -4,7 +4,7 @@ import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { overlay } from '@/components/animation';
-import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
+import { chains } from '@/config/bridge';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import useSortChains from '@/hooks/useSortChains';
@@ -111,7 +111,7 @@ const Chain = ({
   setShowChains?: (show: boolean) => void;
   bp?: string;
 }) => {
-  const { chains } = useTokensAndChains();
+
   const { sortedChains } = useSortChains();
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
   const currentChain: any = useMemo(

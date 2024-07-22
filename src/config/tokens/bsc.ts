@@ -248,14 +248,14 @@ export const bsc: { [key: string]: Token } = {
     name: 'PancakeSwap Token',
     icon: 'https://ipfs.near.social/ipfs/bafkreigj4avciznhfu3j3pwqiqjq367x3tj2rmoduccyh3otk4c2sjt3hq',
   },
-  // rdnt: {
-  //   chainId: CHAIN_ID,
-  //   address: '0x3082CC23568eA640225c2467653dB90e9250AaA0',
-  //   decimals: 18,
-  //   symbol: 'RDNT',
-  //   name: 'Radiant',
-  //   icon: 'https://ipfs.near.social/ipfs/bafkreiboaplfrmdlyxumajlxnipkk4viu6pxqow7ue2ixlimgkenre2gru',
-  // },
+  rdnt: {
+    chainId: CHAIN_ID,
+    address: '0x3082CC23568eA640225c2467653dB90e9250AaA0',
+    decimals: 18,
+    symbol: 'RDNT',
+    name: 'Radiant',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiboaplfrmdlyxumajlxnipkk4viu6pxqow7ue2ixlimgkenre2gru',
+  },
   dai: {
     chainId: CHAIN_ID,
     address: '0x1AF3F329e8BE154074D8769D1FFa4eE058B1DBc3',

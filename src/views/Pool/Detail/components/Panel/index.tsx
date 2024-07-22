@@ -20,7 +20,7 @@ import Big from 'big.js';
 import { usePriceStore } from '@/stores/price';
 
 // type 1 for Liquidity, 2 for Unclaimed fees
-const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, onCollect }: any) => {
+const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, style = {}, onCollect }: any) => {
   const prices = usePriceStore((store) => store.price);
 
   const [percent0, percent1] = useMemo(() => {
@@ -29,6 +29,7 @@ const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, onCollect
     const _amount0 = Big(amount0);
     const _amount1 = new Big(amount1).mul(1 / currentPrice);
     const total = _amount0.add(_amount1);
+
     return !total.eq(0)
       ? [_amount0.div(total).mul(100).toFixed(2, 0), _amount1.div(total).mul(100).toFixed(2, 0)]
       : [0, 0];
@@ -55,7 +56,7 @@ const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, onCollect
     };
   }, [prices, amount0, amount1, token0, token1]);
   return (
-    <StyledContainer>
+    <StyledContainer style={style}>
       <StyledHeader>
         <StyledTitle>{type === 1 ? 'Liquidity' : 'Unclaimed fees'}</StyledTitle>
         {type === 2 && collectClickable && (

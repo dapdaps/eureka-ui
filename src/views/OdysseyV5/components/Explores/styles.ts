@@ -68,9 +68,9 @@ export const StyledItem = styled.div<{ $disabled: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
   margin-bottom: 16px;
   position: relative;
+  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
 
   &:last-child {
     margin-bottom: 0;

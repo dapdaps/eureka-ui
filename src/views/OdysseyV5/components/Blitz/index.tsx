@@ -40,14 +40,14 @@ const earned = [
       key: 2,
       icon: '/images/odyssey/v5/mastery/temp/mode.svg',
       text: 'MODE POINTS',
-      lightText: '4X'
+      lightText: '3-5X'
     },
-    {
-      key: 3,
-      icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
-      text: 'DapDap PTS',
-      lightText: '200'
-    },
+    // {
+    //   key: 3,
+    //   icon: '/images/odyssey/v5/mastery/temp/renzo-points.svg',
+    //   text: 'DapDap PTS',
+    //   lightText: '200'
+    // },
   ]
 const submit = 'Swap'
 
@@ -176,7 +176,7 @@ const Blitz = ({ list, loading, onRefreshDetail, detailLoading, setDetailLoading
                           </div>
                           <section className="section earned">
                             <div className="title">Tokens & Points earned:</div>
-                            <ul className="list">
+                            <ul className="list mt">
                               {
                                 getEarnedList(earn).map((item: any) => (
                                     item.text ? (

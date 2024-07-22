@@ -12,7 +12,7 @@ const useConnectWallet = () => {
 
   const onDisconnect = async () => {
     wallet && (await disconnect(wallet));
-    window.localStorage.setItem(http.AUTH_TOKENS, '{}');
+    window.sessionStorage.setItem(http.AUTH_TOKENS, '{}');
     insertedAccessKey('');
   };
 

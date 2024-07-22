@@ -42,6 +42,19 @@ export default function useQuests(id: any) {
 
       result.data.forEach((item: any) => {
         if (GOLD_QUESTS.includes(item.name)) {
+          if (item.name === 'Particle') {
+            item.gold_order = 1;
+          } else if (item.name === 'Ring Protocol') {
+            item.gold_order = 3;
+          } else if (item.name === 'BladeSwap') {
+            item.gold_order = 5;
+          } else if (item.name === 'Ambient') {
+            item.gold_order = 7;
+          } else if (item.name === 'MetaStreet') {
+            item.gold_order = 9;
+          } else {
+            item.gold_order = 10;
+          }
           _result.golds.push(item);
         }
         if (item.category_id === 0 && item.category !== 'twitter_retweet') {

@@ -1,15 +1,20 @@
+import multicall from '@/config/contract/multicall';
+import weth from '@/config/contract/weth';
 import gamma from '../dapps/gamma';
 
 const CHAIN_ID = 59144;
+const CHAIN_NAME = 'Linea';
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Linea',
-  displayChainName: 'Linea',
-  wethAddress: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
+  chainName: CHAIN_NAME,
+  multicallAddress: multicall[CHAIN_ID],
+  wethAddress: weth[CHAIN_ID],
   connectProps: {
-    noAccountTips: 'Linea Liquidity Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Linea Chain.',
+    noAccountTips: `${CHAIN_NAME} Liquidity Collection`,
+    wrongNetworkTips: `To proceed, kindly switch to ${CHAIN_NAME} Chain.`,
+    chainId: CHAIN_ID,
+    chainName: CHAIN_NAME,
   },
   defaultDapp: 'Gamma',
   dapps: {

@@ -4,7 +4,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
+import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus, getBridgeTokens } from 'super-bridge-sdk';
 
 import { get } from '@/utils/http'
 import chainCofig from '@/config/chains'
@@ -116,6 +116,7 @@ const Bridge: NextPageWithLayout = () => {
                 chainList={chainList}
                 getQuote={getQuote}
                 getAllToken={getAllToken}
+                getBridgeToken={getBridgeTokens}
                 getChainScan={getChainScan}
                 getStatus={getStatus}
                 execute={execute}

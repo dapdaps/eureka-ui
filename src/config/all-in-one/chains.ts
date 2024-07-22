@@ -63,6 +63,7 @@ export const PathToId: { [key: string]: number } = {
   manta: 15,
   scroll: 17,
   blast: 18,
+  mode: 19,
 };
 
 export const IdToPath: { [key: string]: string } = {
@@ -81,6 +82,7 @@ export const IdToPath: { [key: string]: string } = {
   15: 'manta',
   17: 'scroll',
   18: 'blast',
+  19: 'mode',
 };
 
 export default popupsData;

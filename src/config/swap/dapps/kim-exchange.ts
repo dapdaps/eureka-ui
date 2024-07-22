@@ -14,6 +14,7 @@ const networks = {
     tokens: [
       mode['eth'],
       mode['weth'],
+      mode['mode'],
       mode['usdc'],
       mode['usdt'],
       mode['kim'],

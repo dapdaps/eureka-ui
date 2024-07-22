@@ -1,10 +1,10 @@
 import Action from './Action';
-import { StyledContainer, StyledActions, StyledActionIcon } from './styles';
+import { StyledActionIcon, StyledActions, StyledContainer } from './styles';
 
 const ACTIONS = [
   {
     title: <div>Explore Ethereum L2&apos;s</div>,
-    desc: 'Discover L2s Blockchains across the most popular web3 ecosystems.',
+    desc: 'Discover the most popular Ethereum roll-ups and EVMs across the market.',
     icon: (
       <StyledActionIcon style={{ width: '100px', height: '104px', right: '18px', top: '-36px' }}>
         <svg xmlns="http://www.w3.org/2000/svg" width="156" height="131" viewBox="0 0 156 131" fill="none">
@@ -51,7 +51,7 @@ const ACTIONS = [
   },
   {
     title: <div style={{ paddingTop: '12px' }}>Discover dApps</div>,
-    desc: 'Effortlessly sift through a curated selection of dApps and identify your favourites.',
+    desc: 'Effortlessly shift through a curated selection of dApps and identify your favourites.',
     icon: (
       <StyledActionIcon style={{ width: '125px', height: '118px', right: '-27px', top: '-25px' }}>
         <svg xmlns="http://www.w3.org/2000/svg" width="126" height="119" viewBox="0 0 126 119" fill="none">

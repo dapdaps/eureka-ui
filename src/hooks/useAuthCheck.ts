@@ -19,7 +19,7 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
       return;
     }
     const checkAk = async () => {
-      const result = window.localStorage.getItem(http.AUTH_TOKENS);
+      const result = window.sessionStorage.getItem(http.AUTH_TOKENS);
       const parsedResult = result ? JSON.parse(result) : {};
       if (parsedResult.access_token) {
         cb?.();

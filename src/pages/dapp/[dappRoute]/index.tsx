@@ -3,12 +3,10 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import dappConfig from '@/config/dapp';
 import useAccount from '@/hooks/useAccount';
-
 import { useDefaultLayout } from '@/hooks/useLayout';
-
 import useDappInfo from '@/hooks/useDappInfo';
 import { useChainsStore } from '@/stores/chains';
-import DappView from '@/views/Dapp';
+import DappView, { Empty } from '@/views/Dapp';
 import type { NextPageWithLayout } from '@/utils/types';
 
 // set dynamic routes for dapps in config file
@@ -20,7 +18,6 @@ export const DappPage: NextPageWithLayout = () => {
 
   const { chainId, account } = useAccount();
   const { dapp, loading } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
-
   const [currentChain, setCurrentChain] = useState<any>();
   const [ready, setReady] = useState(false);
   const [localConfig, setLocalConfig] = useState<any>();
@@ -40,7 +37,7 @@ export const DappPage: NextPageWithLayout = () => {
     const config = dappConfig[dappPathname];
 
     if (!config) {
-      setLocalConfig(null);
+      setLocalConfig({ name: '' });
       return;
     }
     let result: any = null;
@@ -60,7 +57,7 @@ export const DappPage: NextPageWithLayout = () => {
       result = (await import(`@/config/pool/dapps/${dappPathname}`))?.default;
     }
 
-    setLocalConfig({ ...result, theme: config.theme });
+    setLocalConfig({ ...result, theme: config.theme, type: config.type });
   }, [dappPathname]);
 
   const { run } = useDebounceFn(
@@ -94,9 +91,8 @@ export const DappPage: NextPageWithLayout = () => {
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp]);
 
-  if (!dapp || !currentChain || (!dapp.default_chain_id && !dapp.default_network_id)) return <div />;
-
-  if (!localConfig) return <div />;
+  if (localConfig?.name === '') return <Empty />;
+  if (!currentChain || !localConfig || !dapp) return <div />;
 
   return ready && !loading ? (
     <DappView
