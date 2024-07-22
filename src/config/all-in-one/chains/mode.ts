@@ -22,9 +22,5 @@ export default {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Linea.Lending',
     },
-    Lending: {
-      tab: 'Lending',
-      path: 'bluebiu.near/widget/Linea.Lending',
-    },
   },
 };

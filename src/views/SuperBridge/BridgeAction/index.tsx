@@ -1,7 +1,31 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
+import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk';
+import { useDebounce } from 'ahooks';
+import Big from 'big.js';
+import { useRouter } from 'next/router';
 
-import BridgeContent from './BridgeContent';
+import allTokens from '@/config/bridge/allTokens';
+import { saveTransaction } from '@/components/BridgeX/Utils';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import useAccount from '@/hooks/useAccount';
+import useToast from '@/hooks/useToast';
+import useAddAction from '@/hooks/useAddAction';
+import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
+
+import ChainTokenAmount from '../ChainTokenAmount';
+import PublicTitle from '../PublicTitle';
+import RouteSelected from '../RouteSelected';
+import SubmitBtn from '../SubmitBtn';
+import SettingModal from './SettingModal';
+import ConfirmModal from '../SubmitBtn/ConfirmModal';
+import ConfirmSuccessModal from '../SubmitBtn/ConfirmSuccessModal';
+import GasModal from '../ChainTokenAmount/GasModal';
+
+import useQuote from '../hooks/useQuote';
+import { useGasTokenHooks } from '../hooks/useGasTokenHooks';
+
 import type { Chain, Token } from '@/types';
 
 const Container = styled.div`
@@ -57,7 +81,7 @@ const ArrowSwap = styled.div`
 
 interface Props {
   chainList: Chain[];
-  onTransactionUpdate?: () => void;
+  onTransactionUpdate: () => void;
 }
 
 export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) {

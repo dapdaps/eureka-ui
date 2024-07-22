@@ -1,12 +1,13 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
+import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
+import { useRouter } from 'next/router';
 
 import useAccount from '@/hooks/useAccount';
 import { getTransaction, saveTransaction, updateTransaction } from '@/components/BridgeX/Utils';
 import PublicTitle from '../PublicTitle';
+import { ArrowRight } from '../Arrow';
 import TransactionPanel from './TransactionPanel';
+import { useEffect, useState } from 'react';
 
 const Container = styled.div`
   background-color: rgba(38, 40, 54, 1);
