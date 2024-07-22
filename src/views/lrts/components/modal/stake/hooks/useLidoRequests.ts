@@ -2,10 +2,10 @@ import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
+import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import abi from '@/views/lrts/config/abi/lido';
 import { ethers } from 'ethers';
-import { useCallback, useEffect, useState } from 'react';
-
+import { useCallback, useState } from 'react';
 type Record = {
   amount: number;
   token0: any;
@@ -21,15 +21,14 @@ const {
 } = abi
 const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
 
-export default function useInceptionRequests() {
-
+const dappName: string = "Lido"
+export default function useLidoRequests() {
   const { account, chainId, provider } = useAccount();
+  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
-
-
   const token0 = ethereum['eth']
   const token1 = ethereum['stETH']
 
@@ -38,18 +37,16 @@ export default function useInceptionRequests() {
       if (!chainId) return;
       setLoading(true);
       try {
-
         const contract = new ethers.Contract(WITHDRAWAL_QUEUE, WITHDRAWAL_QUEUE_ABI, provider);
         const requests = await contract.getWithdrawalRequests(account)
         const statusList = await contract.getWithdrawalStatus(requests)
-
-        console.log('===requests', requests, '===status', status)
         setRequests(requests.map((requestId: any, index: number) => {
           const status = statusList[index]
-          console.log('=status', status)
+          const timestamp: any = ethers.utils.formatUnits(status?.timestamp, 0)
+          const startTime = timestamp * 1000
           return {
             amount: ethers.utils.formatUnits(status?.amountOfStETH, 18),
-            // startTime,
+            startTime,
             token0,
             token1,
             status: status.isFinalized && !status.isClaimed ? 'Claimable' : 'In Progress',
@@ -68,6 +65,14 @@ export default function useInceptionRequests() {
     [account, chainId],
   );
 
+  const handleCompleted = function (record: Record) {
+    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
+    const completedRequests = completedRequestMapping[dappName] || []
+    completedRequests.push(record)
+    completedRequestMapping[dappName] = completedRequests
+    completedRequestMappingStore.set({ completedRequestMapping })
+  }
+
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId) return;
@@ -77,7 +82,6 @@ export default function useInceptionRequests() {
       try {
         const _requestIds = [record?.data?.requestId]
         const _lastIndex = await contract.getLastCheckpointIndex()
-        console.log('=_lastIndex', _lastIndex)
         const _hints = await contract.findCheckpointHints(_requestIds, 1, _lastIndex)
         const tx = await contract.claimWithdrawals(_requestIds, _hints);
         toast.dismiss(toastId);
@@ -91,18 +95,22 @@ export default function useInceptionRequests() {
         }
         addAction({
           type: 'Staking',
-          action: 'Claim',
+          action: 'claim',
           amount: record.amount,
-          template: 'Lido',
+          template: dappName,
           status,
           transactionHash,
           add: 0,
           extra_data: JSON.stringify({
-            action: 'Claim',
+            action: 'claim',
             token0: record.token0.symbol,
             token1: record.token1.symbol,
           }),
         });
+        handleCompleted({
+          ...record,
+          status: 'completed'
+        })
         onLoading(false);
       } catch (err: any) {
         console.log('err', err);

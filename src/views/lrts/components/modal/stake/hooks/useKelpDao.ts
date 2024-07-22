@@ -143,7 +143,6 @@ export default function useKelpDao({ gem, dapp, token0, token1, addAction, actio
     contractMethord(...contractArguments)
       .then((tx: any) => tx.wait())
       .then((result: any) => {
-        console.log('====result', result)
         const { status, transactionHash } = result;
         setIsLoading(false)
         handleQueryData()

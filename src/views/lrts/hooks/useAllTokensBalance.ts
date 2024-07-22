@@ -5,7 +5,7 @@ import useTokensBalance from '@/hooks/useTokensBalance';
 
 import LSTS_DATA from '../config/data';
 
-const useAllTokensBalance = (updater: number) => {
+const useAllTokensBalance = (updater?: number) => {
   const [allTokens, setAllTokens] = useState<any[]>([]);
 
   useEffect(() => {

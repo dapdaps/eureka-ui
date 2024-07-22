@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import BaseComponent from '../components/base-component';
 import useLido from '../hooks/useLido';
-import useLidoRequest from '../hooks/useLidoRequests';
+import useLidoRequests from '../hooks/useLidoRequests';
 const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, actionType, handleAddMetaMask, handleChangeActionType, chainId, onSuccess }: any) {
   const {
     data,
@@ -29,7 +29,7 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
     actionType,
     onSuccess
   })
-  const { requests, loading: requestsLoading, queryRequests, claim } = useLidoRequest();
+  const { requests, loading: requestsLoading, queryRequests, claim } = useLidoRequests();
 
   useEffect(() => {
     actionType === 'unstake' && queryRequests();

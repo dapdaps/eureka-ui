@@ -6,8 +6,8 @@ import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
+import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import { ENTER_QUEUE_ABI } from '@/views/lrts/config/abi/frax';
-
 type Record = {
   amount: number;
   token0: any;
@@ -20,52 +20,56 @@ type Record = {
 
 
 interface ITransaction {
-    chain: string;
-    transactionHash: string;
-    blockNumber: number;
-    transactionTimestamp: string;
-    contractAddress: string;
-    transactionType: string;
-    logIndex: number;
-    nftTokenId: number;
-    amount: number;
-    callerAddress: string;
-    ownerAddress: string;
-    receiverAddress: string;
-  }
-  
-  interface ITicket {
-    chain: string;
-    contractAddress: string;
-    nftTokenId: number;
-    createdAt: string;
-    maturesAt: string;
-    redeemedAt: string | null;
-    amountIn: number;
-    fee: number;
-    penalty: number;
-    amountOut: number;
-    callerAddress: string;
-    ownerAddress: string;
-    receiverAddress: string | null;
-    amountE18: string;
-    transactions: ITransaction[];
-  }
-  
-  interface IUserRedeemTicketsResponse {
-    userAddress: string;
-    tickets: ITicket[] | null;
-  }
-  
+  chain: string;
+  transactionHash: string;
+  blockNumber: number;
+  transactionTimestamp: string;
+  contractAddress: string;
+  transactionType: string;
+  logIndex: number;
+  nftTokenId: number;
+  amount: number;
+  callerAddress: string;
+  ownerAddress: string;
+  receiverAddress: string;
+}
+
+interface ITicket {
+  chain: string;
+  contractAddress: string;
+  nftTokenId: number;
+  createdAt: string;
+  maturesAt: string;
+  redeemedAt: string | null;
+  amountIn: number;
+  fee: number;
+  penalty: number;
+  amountOut: number;
+  callerAddress: string;
+  ownerAddress: string;
+  receiverAddress: string | null;
+  amountE18: string;
+  transactions: ITransaction[];
+}
+
+interface IUserRedeemTicketsResponse {
+  userAddress: string;
+  tickets: ITicket[] | null;
+}
+
 // spender 地址
 const FraxEtherRedemptionQueue_ADDR = '0x82bA8da44Cd5261762e629dd5c605b17715727bd'
 
+const dappName: string = "Frax Finance"
 export default function useFraxRequests() {
   const { provider, account, chainId } = useAccount();
+
+  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [requestsLoading, setRequestsLoading] = useState(false);
   const [claiming, setClaiming] = useState(false);
   const toast = useToast();
+  const { addAction } = useAddAction('lrts');
 
 
   // get redeem tickets
@@ -90,6 +94,7 @@ export default function useFraxRequests() {
             amount: Big(item.amountIn).div(1e18).toString(),
             startTime: item.createdAt,
             status: isMatured ? 'Claimable' : 'In Progress',
+            token0: ethereum.eth,
             token1: ethereum.frxETH,
           };
         });
@@ -100,9 +105,17 @@ export default function useFraxRequests() {
       console.error('Error fetching redeem tickets:', error);
       return [];
     } finally {
-        setRequestsLoading(false);
+      setRequestsLoading(false);
     }
   };
+
+  const handleCompleted = function (record: Record) {
+    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
+    const completedRequests = completedRequestMapping[dappName] || []
+    completedRequests.push(record)
+    completedRequestMapping[dappName] = completedRequests
+    completedRequestMappingStore.set({ completedRequestMapping })
+  }
 
   // claims
   const claim = async (request: ITicket, recipient: string) => {
@@ -116,10 +129,28 @@ export default function useFraxRequests() {
       const { transactionHash } = await tx.wait();
       toast.dismiss(toastId);
       toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
+      // addAction({
+      //   type: 'Staking',
+      //   action: 'claim',
+      //   amount: record.amount,
+      //   template: dappName,
+      //   status,
+      //   transactionHash,
+      //   add: 0,
+      //   extra_data: JSON.stringify({
+      //     action: 'claim',
+      //     token0: record.token0.symbol,
+      //     token1: record.token1.symbol,
+      //   }),
+      // });
+      // handleCompleted({
+      //   ...record,
+      //   status: 'completed'
+      // })
     } catch (error) {
-        toast.fail({ title: `Claim faily!` });
+      toast.fail({ title: `Claim faily!` });
     } finally {
-        setClaiming(false);
+      setClaiming(false);
     }
   }
 

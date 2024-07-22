@@ -116,6 +116,18 @@ const UNSTAKE_ADDRESS_ABI = [{
   ],
   "stateMutability": "view",
   "type": "function"
+}, {
+  "inputs": [
+    {
+      "internalType": "address",
+      "name": "asset",
+      "type": "address"
+    }
+  ],
+  "name": "completeWithdrawal",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
 }]
 const LRT_DEPOSIT_POOL_ABI = [{
   "inputs": [

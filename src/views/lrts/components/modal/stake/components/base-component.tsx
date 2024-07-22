@@ -1,6 +1,7 @@
 import Big from 'big.js';
 
 import StakeList from '../components/stake-list';
+import CompletedStaleList from './completed-stake-list'
 import {
   StyledActionTypeTab,
   StyledActionTypeTabContainer,
@@ -39,6 +40,7 @@ import {
   StyledWithdrawTips,
 } from '../styles';
 import Button from './button';
+import { useState } from 'react';
 
 const BaseComponent = function (props: any) {
   const {
@@ -70,6 +72,9 @@ const BaseComponent = function (props: any) {
     queryRequests,
     claim,
   } = props?.componentProps;
+
+
+  const [isActive, setIsActive] = useState(true);
   const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
   return (
     <StyledStakeContainer>
@@ -296,24 +301,35 @@ const BaseComponent = function (props: any) {
             <StyledActiveAndCompletedContainer>
               <StyledWithdrawTips>Withdrawl requests</StyledWithdrawTips>
               <StyledActiveAndCompleted>
-                <StyledActiveAndCompletedButton className="active">Active</StyledActiveAndCompletedButton>
-                <StyledActiveAndCompletedButton>completed</StyledActiveAndCompletedButton>
+                <StyledActiveAndCompletedButton onClick={() => setIsActive(true)} className={isActive ? "active" : ""}>Active</StyledActiveAndCompletedButton>
+                <StyledActiveAndCompletedButton onClick={() => setIsActive(false)} className={!isActive ? "active" : ""}> completed</StyledActiveAndCompletedButton>
               </StyledActiveAndCompleted>
             </StyledActiveAndCompletedContainer>
             <StyledSecondTips style={{ marginTop: 16, marginBottom: 20 }}>
               Unstake requests may take from a few minutes to several days, depending on the project.
             </StyledSecondTips>
-            <StakeList
-              requests={requests}
-              requestsLoading={requestsLoading}
-              claiming={claiming}
-              queryRequests={queryRequests}
-              claim={claim}
-            />
+            {
+              isActive ? (
+                <StakeList
+                  requests={requests}
+                  requestsLoading={requestsLoading}
+                  claiming={claiming}
+                  queryRequests={queryRequests}
+                  claim={claim}
+                />
+              ) : (
+                <CompletedStaleList
+                  gem={gem}
+                  dapp={dapp}
+                />
+              )
+            }
+
           </StyledStakeBottomContainer>
         </>
-      )}
-    </StyledStakeContainer>
+      )
+      }
+    </StyledStakeContainer >
   );
 };
 export default BaseComponent;

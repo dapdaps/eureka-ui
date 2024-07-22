@@ -1,11 +1,9 @@
-import multicallAddresses from '@/config/contract/multicall';
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import { multicall } from '@/utils/multicall';
+import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import abi from '@/views/lrts/config/abi/ether-fi';
-import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
 type Record = {
@@ -31,8 +29,10 @@ const {
   WITHDRAW_REQUEST_NFT_ABI
 } = abi
 
+const dappName: string = "EtherFi"
 export default function useMantleRequests() {
   const { account, chainId, provider } = useAccount();
+  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -104,6 +104,13 @@ export default function useMantleRequests() {
     [account, chainId],
   );
 
+  const handleCompleted = function (record: Record) {
+    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
+    const completedRequests = completedRequestMapping[dappName] || []
+    completedRequests.push(record)
+    completedRequestMapping[dappName] = completedRequests
+    completedRequestMappingStore.set({ completedRequestMapping })
+  }
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId) return;
@@ -123,18 +130,22 @@ export default function useMantleRequests() {
         }
         addAction({
           type: 'Staking',
-          action: 'Claim',
+          action: 'claim',
           amount: record.amount,
-          template: 'Lido',
+          template: dappName,
           status,
           transactionHash,
           add: 0,
           extra_data: JSON.stringify({
-            action: 'Claim',
+            action: 'claim',
             token0: record.token0.symbol,
             token1: record.token1.symbol,
           }),
         });
+        handleCompleted({
+          ...record,
+          status: 'completed'
+        })
         onLoading(false);
       } catch (err: any) {
         console.log('err', err);

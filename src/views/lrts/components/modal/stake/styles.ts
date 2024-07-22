@@ -315,6 +315,7 @@ export const StyledActiveAndCompletedButton = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  cursor: pointer;
   &.active {
     border-color: #fff;
     background: #000;
@@ -326,6 +327,7 @@ export const StyledRecordList = styled.div`
   gap: 20px;
   max-height: 120px;
   overflow-y: auto;
+  overflow-x: hidden;
 `;
 export const StyledRecord = styled.div`
   width: 100%;

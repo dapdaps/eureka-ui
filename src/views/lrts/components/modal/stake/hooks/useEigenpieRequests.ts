@@ -1,10 +1,11 @@
 import { ethereum } from '@/config/tokens/ethereum';
-import { useCallback, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
-import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
+import useToast from '@/hooks/useToast';
+import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useCallback, useState } from 'react';
 import abi from '../../../../config/abi/eigenpie';
 
 type Record = {
@@ -42,9 +43,10 @@ const tokens: { [key: string]: any } = {
     to: ethereum.rETH,
   },
 };
-
+const dappName: string = "Eigenpie"
 export default function useEigenpieRequests() {
   const { account, chainId, provider } = useAccount();
+  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -100,7 +102,13 @@ export default function useEigenpieRequests() {
     },
     [account, chainId],
   );
-
+  const handleCompleted = function (record: Record) {
+    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
+    const completedRequests = completedRequestMapping[dappName] || []
+    completedRequests.push(record)
+    completedRequestMapping[dappName] = completedRequests
+    completedRequestMappingStore.set({ completedRequestMapping })
+  }
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
@@ -123,18 +131,22 @@ export default function useEigenpieRequests() {
         }
         addAction({
           type: 'Staking',
-          action: 'Claim',
+          action: 'claim',
           amount: record.amount,
-          template: 'Eigenpie',
+          template: dappName,
           status,
           transactionHash,
           add: 0,
           extra_data: JSON.stringify({
-            action: 'Claim',
+            action: 'claim',
             token0: record.token0.symbol,
             token1: record.token1.symbol,
           }),
         });
+        handleCompleted({
+          ...record,
+          status: 'completed'
+        })
         onLoading(false);
       } catch (err: any) {
         console.log('err', err);

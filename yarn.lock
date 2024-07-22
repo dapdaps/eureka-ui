@@ -5395,6 +5395,18 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
+"@tanstack/react-table@^8.19.3":
+  version "8.19.3"
+  resolved "https://registry.npmmirror.com/@tanstack/react-table/-/react-table-8.19.3.tgz#be1d9ee991ac06b7d4d17cc5c66469ac157bfd8a"
+  integrity sha512-MtgPZc4y+cCRtU16y1vh1myuyZ2OdkWgMEBzyjYsoMWMicKZGZvcDnub3Zwb6XF2pj9iRMvm1SO1n57lS0vXLw==
+  dependencies:
+    "@tanstack/table-core" "8.19.3"
+
+"@tanstack/table-core@8.19.3":
+  version "8.19.3"
+  resolved "https://registry.npmmirror.com/@tanstack/table-core/-/table-core-8.19.3.tgz#669e3eca2179ee3456fc068fed8683df01607c43"
+  integrity sha512-IqREj9ADoml9zCAouIG/5kCGoyIxPFdqdyoxis9FisXFi5vT+iYfEfLosq4xkU/iDbMcEuAj+X8dWRLvKYDNoQ==
+
 "@tronweb3/google-protobuf@^3.21.2":
   version "3.21.2"
   resolved "https://registry.npmmirror.com/@tronweb3/google-protobuf/-/google-protobuf-3.21.2.tgz#0964cf83ed7826d31c3cb4e4ecf07655681631c9"
@@ -14557,10 +14569,10 @@ stylis@4.3.2:
   resolved "https://registry.npmmirror.com/stylis/-/stylis-4.3.2.tgz#8f76b70777dd53eb669c6f58c997bf0a9972e444"
   integrity sha512-bhtUjWd/z6ltJiQwg0dUfxEJ+W+jdqQd8TbWLWyeIJHlnsqmGLRFFd8e5mA0AZi/zx90smXRlN66YMTcaSFifg==
 
-super-bridge-sdk@0.0.11-7:
-  version "0.0.11-7"
-  resolved "https://registry.npmmirror.com/super-bridge-sdk/-/super-bridge-sdk-0.0.11-7.tgz#a1dbb09608f7b829370522d6f3a0be42e62b0a0d"
-  integrity sha512-TVbMEcZ0A3WrflFFWyC1IPEBECp+n9bblK1RUMcCkt3Ggw/KgSuDw0//87TRERfD4L9mQhOR87qib9q7xI+/Ww==
+super-bridge-sdk@0.0.11-12:
+  version "0.0.11-12"
+  resolved "https://registry.npmmirror.com/super-bridge-sdk/-/super-bridge-sdk-0.0.11-12.tgz#70c6e130848f19b9dcace0cab4d42e61c1f4bc90"
+  integrity sha512-qLwkp1NRQSqX9OjVIJSPup1RnDPPBw4L1OxkmNN9tPg5WowCTGweCTEnxGNPYuM3hm63YzBrOGl6ECRPNd08AQ==
   dependencies:
     "@0xsquid/sdk" "^2.8.10"
     "@lifi/sdk" "^2.5.0"

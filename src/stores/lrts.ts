@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 
 import initData from '@/views/lrts/config/data';
-
+import { createJSONStorage, persist } from 'zustand/middleware';
 type StoreState = {
   data: any[];
 };
@@ -17,3 +17,17 @@ export const useLrtDataStore = create<LrtsStore>((set) => ({
       return { ...params };
     }),
 }));
+
+export const useCompletedRequestMappingStore = create(
+  persist(
+    (set, get: any) => ({
+      completedRequestMapping: {},
+      set: (params: any) => set(() => ({ ...params })),
+    }),
+    {
+      name: '_completedRequestMapping',
+      version: 0.1,
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);
