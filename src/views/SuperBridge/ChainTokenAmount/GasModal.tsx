@@ -96,6 +96,7 @@ interface Props {
 }
 
 const max$ = 200
+const maxGas = 0.001
 
 export default function GasModal({
     onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance
@@ -107,10 +108,11 @@ export default function GasModal({
     const [step, setStep] = useState(1)
     const [max, setMax] = useState(200)
     const [disabled, setDisabled] = useState(false)
+    const [gas, setGas] = useState(maxGas)
 
     const inputValue = useDebounce(rangeVal, { wait: 100 });
 
-    const { receive, deposit, isLoading } = useGasAmount({
+    const { receive, deposit, estimateGas, isLoading } = useGasAmount({
         fromChain,
         toChain,
         fromToken,
@@ -150,6 +152,24 @@ export default function GasModal({
         setDisabled(false)
     }, [receive, maxBalance, inputValue])
 
+    useEffect(() => {
+        
+        getGas()
+
+        async function getGas() {
+            if (fromToken && inputValue && account) {
+                const price = await provider?.getSigner().getGasPrice()
+                const gasLimit = await estimateGas(fromToken?.address, account, inputValue, provider?.getSigner())
+                if (gasLimit && price) {
+                    setGas((Number(gasLimit) * Number(price.toString())) / (10 ** fromToken.decimals) * 3)
+                } else {
+                    setGas(maxGas)
+                }
+            }
+        }
+        
+    }, [inputValue, fromToken, account])
+
     return <Modal title="Refuel Gas Token" onClose={() => {
         !isLoading && onClose()
     }}>
@@ -159,14 +179,26 @@ export default function GasModal({
             <div className="transter-detail">
                 <Input value={rangeVal} onChange={(e) => {
                     const { value } = e.target
-                    if (maxBalance && Number(maxBalance) <= Number(value)) {
-                        setRangeVal(maxBalance)
-                    } else if (Number(value)> Number(max)) {
-                        setRangeVal(max.toString())
-                    } else if (!isNaN(parseFloat(value)))  {
-                        setRangeVal(value)
-                    }
-                    
+                    if (maxBalance) {
+                        if (fromToken?.isNative) {
+                            const maxValue = (Number(maxBalance) - gas)
+                            if (maxValue <= Number(value)) {
+                                setRangeVal((Number(maxBalance) - gas).toString())
+                            } else if (Number(value)> Number(max)) {
+                                setRangeVal(max.toString())
+                            } else if (!isNaN(parseFloat(value)))  {
+                                setRangeVal(value)
+                            }
+                        } else {
+                            if (Number(maxBalance) <= Number(value)) {
+                                setRangeVal((Number(maxBalance)).toString())
+                            } else if (Number(value)> Number(max)) {
+                                setRangeVal(max.toString())
+                            } else if (!isNaN(parseFloat(value)))  {
+                                setRangeVal(value)
+                            }
+                        }
+                    } 
                 }} />{fromToken?.symbol}
                 {/* <div>{balanceFormated(rangeVal)} {fromToken?.symbol}</div> */}
                     <svg width="8" height="10" viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -181,12 +213,25 @@ export default function GasModal({
         <Range
             type='range'
             onChange={(e: any) => {
-                if (maxBalance && Number(maxBalance) <= Number(e.target.value)) {
-                    setRangeVal(maxBalance)
+                const { value } = e.target
+                if (maxBalance) {
+                    if (fromToken?.isNative) {
+                        const maxValue = (Number(maxBalance) - gas)
+                        if (maxValue <= Number(value)) {
+                            setRangeVal((Number(maxBalance) - gas).toString())
+                        } else {
+                            setRangeVal(value)
+                        }
+                    } else {
+                        if (Number(maxBalance) <= Number(value)) {
+                            setRangeVal((Number(maxBalance)).toString())
+                        } else {
+                            setRangeVal(value)
+                        }
+                    }
                 } else {
-                    setRangeVal(e.target.value)
+                    setRangeVal(value)
                 }
-                
             }}
             min={min}
             max={max}

@@ -210,7 +210,7 @@ export function useGasTokenHooks({
     const [supportedChainFrom, setSupportedChainFrom] = useState<any>()
 
     useEffect(() => {
-        if (fromChain && toChain && fromToken) {
+        if (fromChain && toChain && fromToken && fromChain.chainId !== toChain.chainId) {
             getAllSupportedChains(fromChain, toChain).then(({ hasFrom, hasTo }: any) => {
                 if (hasFrom?.length && hasTo?.length) {
                     getSupportedToken(hasFrom[0], fromToken)
