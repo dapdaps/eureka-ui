@@ -5,3 +5,4 @@ export default function ArrowIcon({ size = 17 }: { size?: number }) {
     </svg>
   );
 }
+

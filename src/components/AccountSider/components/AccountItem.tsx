@@ -35,7 +35,8 @@ const LogoImage = styled.img<{ size: number }>`
 `;
 const Account = styled.div`
   font-size: 16px;
-  font-weight: 700;
+  line-height: 20px;
+  font-weight: 500;
   color: #fff;
   display: flex;
   align-items: center;

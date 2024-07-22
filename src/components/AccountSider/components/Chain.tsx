@@ -10,8 +10,8 @@ import Loading from '@/components/Icons/Loading';
 import useSortChains from '@/hooks/useSortChains';
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
-  width: ${({ $showName }) => ($showName ? '204px' : '70px')};
-  height: 38px;
+  width: ${({ $showName }) => ($showName ? '204px' : '56px')};
+  height: 34px;
   margin: 0 auto;
   border: 1px solid #373a53;
   border-radius: 8px;
@@ -21,7 +21,7 @@ const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   align-items: center;
   position: relative;
   box-sizing: border-box;
-  padding: 0px 10px 0px 4px;
+  padding: 0 5px;
   margin-top: ${({ $mt }) => $mt + 'px'};
 `;
 const StyledChain = styled.div`
@@ -30,11 +30,11 @@ const StyledChain = styled.div`
   color: #fff;
   cursor: pointer;
   align-items: center;
-  line-height: 38px;
+  line-height: 34px;
 `;
 const ChainLogo = styled.img`
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 8px;
 `;
 const ChainName = styled.div`
@@ -50,7 +50,7 @@ const ChainList = styled.div<{ display?: number }>`
   border-radius: 12px;
   background-color: #303142;
   position: absolute;
-  top: 38px;
+  top: 34px;
   left: 0px;
   box-sizing: border-box;
   display: ${({ display }) => (display ? 'block' : 'none')};
@@ -184,7 +184,7 @@ const Chain = ({
         )}
       </StyledChain>
       <ArrowIconWrapper>
-        <ArrowIcon size={12} />
+        <ArrowIcon size={11} />
       </ArrowIconWrapper>
       <ChainList display={showName ? Number(showChains || 0) : Number(showList || 0)}>
         {sortedChains.map((chain) => (
