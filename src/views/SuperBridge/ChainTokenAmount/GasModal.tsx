@@ -182,12 +182,13 @@ export default function GasModal({
                     if (maxBalance) {
                         if (fromToken?.isNative) {
                             const maxValue = (Number(maxBalance) - gas)
-                            if (maxValue <= Number(value)) {
-                                setRangeVal((Number(maxBalance) - gas).toString())
-                            } else if (Number(value)> Number(max)) {
-                                setRangeVal(max.toString())
-                            } else if (!isNaN(parseFloat(value)))  {
-                                setRangeVal(value)
+                            const compareValue = Math.min(maxValue, max)
+                            if (Number(value) > compareValue) {
+                                setRangeVal(compareValue.toString())
+                            } else {
+                                if (!isNaN(parseFloat(value)))  {
+                                    setRangeVal(value)
+                                }
                             }
                         } else {
                             if (Number(maxBalance) <= Number(value)) {
