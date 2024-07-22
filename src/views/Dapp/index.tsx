@@ -30,7 +30,6 @@ const Dapp = (props: any) => {
           </StyledPowerHints>
         )}
         <StyledDappWrapper>
-          {dapp.name === 'Ring Protocol' && <ExtraWard dapp={dapp} />}
           <DappCom {...props} />
         </StyledDappWrapper>
       </div>
