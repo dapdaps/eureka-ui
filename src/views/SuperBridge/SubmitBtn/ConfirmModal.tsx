@@ -115,7 +115,7 @@ interface Props {
     amount: string;
     reciveAmount: string | null;
     toAddress: string;
-    theme: any;
+    theme?: any;
     route: QuoteResponse | null;
     onClick: () => void;
     onClose: () => void;

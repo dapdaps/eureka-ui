@@ -68,7 +68,7 @@ interface Props {
     fromToken: Token | undefined;
     toToken: Token | undefined;
     amount: string;
-    theme: any;
+    theme?: any;
     reciveAmount: string | null;
     toAddress: string;
     route: QuoteResponse | null;

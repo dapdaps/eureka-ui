@@ -107,7 +107,7 @@ interface Props {
     toChain: Chain | undefined;
     toAddress: string;
     maxBalance: string | undefined;
-    theme: any;
+    theme?: any;
     onClick: () => void;
     onClose: () => void;
 }
