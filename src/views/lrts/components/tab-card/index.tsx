@@ -185,10 +185,16 @@ interface IProps {
 }
 
 const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, resetTabIndex, updater }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [list, setList] = useState<any>();
-
+  // tab head
   const [tabList, setTabList] = useState<any>([]);
+  //tab head index
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // lst & lrts
+  const [list, setList] = useState<any>();
+  // tab body index
+  const [dataIndex, setDataIndex] = useState(0);
+
   const [isShowHeader, setIsShowHeader] = useState(true);
 
   const [tokenType, setTokenType] = useState(ActionType.STAKE);
@@ -219,11 +225,13 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
     setIsShowHeader(true);
     setList(_list);
     setActiveIndex(0);
+    setDataIndex(0);
   }, [lstIndex, lrtsData]);
 
   useEffect(() => {
     if (activeIndex !== 0) {
       setActiveIndex(0);
+      setDataIndex(0);
     }
     if (tabList.length) {
       setIsShowHeader(true);
@@ -234,17 +242,20 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
     if (!Array.isArray(tabList) || !curLrt) return;
 
     const _index = tabList.findIndex((item: any) => item.symbol === curLrt?.symbol);
+    const _dataIndex = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
 
     if (_index < 0) {
       // hide tab header
       setIsShowHeader(false);
       const _lstIndex = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
       setActiveIndex(_lstIndex);
+      setDataIndex(_lstIndex);
     } else {
       setIsShowHeader(true);
       setActiveIndex(_index);
+      setDataIndex(_dataIndex);
     }
-  }, [tabList, curLrt]);
+  }, [list, tabList, curLrt]);
 
   const onChange = (index: number, symbol: string) => {
     setActiveIndex(index);
@@ -271,6 +282,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
       setTokenType(ActionType.UNSTAKE);
     }
   }, [lrtsData, activeIndex]);
+  // console.log('index--', activeIndex, dataIndex);
 
   return Array.isArray(list) ? (
     <TabWrap {...anim} ref={tabRef}>
@@ -292,7 +304,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
         {tokenType === ActionType.STAKE ? (
           <div className="left">
             <div className="prd-wrap">
-              <Image src={list?.[activeIndex]?.logo} width={130} height={100} alt="" />
+              <Image src={list?.[dataIndex]?.logo} width={130} height={100} alt="" />
               <div className="prd-token">{lrtsData[lstIndex]?.token?.symbol}</div>
               <div className="prd-range">APR RANGE</div>
               <div className="prd-apr-min">{Number(lrtsData[lstIndex]?.minApr).toFixed(2)}%</div>
@@ -306,12 +318,12 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
         ) : (
           <div className="left">
             <div className="prd-wrap">
-              <Image src={list?.[activeIndex]?.logo} width={130} height={100} alt="" />
+              <Image src={list?.[dataIndex]?.logo} width={130} height={100} alt="" />
             </div>
             <span className="prd-name">
-              <Image src={list?.[activeIndex]?.icon} width={16} height={16} alt="" />
+              <Image src={list?.[dataIndex]?.icon} width={16} height={16} alt="" />
 
-              {list?.[activeIndex]?.symbol}
+              {list?.[dataIndex]?.symbol}
             </span>
           </div>
         )}
@@ -319,15 +331,15 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
           <div className="detail">
             <div>
               <ItemName>{tokenType === ActionType.STAKE ? 'LST' : 'LRT'}</ItemName>
-              <ItemValue>{list?.[activeIndex]?.symbol}</ItemValue>
+              <ItemValue>{list?.[dataIndex]?.symbol}</ItemValue>
             </div>
             <div>
               <ItemName>APR</ItemName>
-              <ItemValue>{Number(list?.[activeIndex]?.apr).toFixed(2)}%</ItemValue>
+              <ItemValue>{Number(list?.[dataIndex]?.apr).toFixed(2)}%</ItemValue>
             </div>
             <div>
               <ItemName>TVL</ItemName>
-              <ItemValue>$ {setNumKMB(list?.[activeIndex]?.tvl, 2)}</ItemValue>
+              <ItemValue>$ {setNumKMB(list?.[dataIndex]?.tvl, 2)}</ItemValue>
             </div>
           </div>
           <div className="btns">
@@ -339,7 +351,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
             >
               {tokenType === ActionType.STAKE ? 'STAKE / UNSTAKE' : 'RESTAKE / UNSTAKE'}
             </PolygonBtn>
-            {Big(balances[list?.[activeIndex]?.address] || 0).gt(0) ? (
+            {Big(balances[list?.[dataIndex]?.address] || 0).gt(0) ? (
               <PolygonBtn
                 style={{ width: 175 }}
                 onClick={() => {
@@ -354,7 +366,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
         <div className="right">
           <div>
             <ItemName>Balance</ItemName>
-            <ItemValue>{unifyNumber(balances[list?.[activeIndex]?.address] || 0)}</ItemValue>
+            <ItemValue>{unifyNumber(balances[list?.[dataIndex]?.address] || 0)}</ItemValue>
           </div>
           <ItemLink href={'/lrts/earning'}>Earn more on L2...</ItemLink>
         </div>
