@@ -165,6 +165,14 @@ async function getAllSupportedChains(fromChain: Chain, toChain: Chain | null) {
     }
 }
 
+async function getPrice(fromChain: any, tokenAddress: any) {
+    const res = await fetch(`${BASE_URL}/${fromChain.chain_name}/${fromChain.chain_id}/getPrice?token=${tokenAddress}`).then(res => res.json())
+    if (res.data.price) {
+        return (Number(res.data.price) / (10 ** 8)).toString()
+    }
+    return '0'
+}
+
 async function getSupportedTokens(fromChain: any) {
     const res = await fetch(`${BASE_URL}/${fromChain.chain_name}/${fromChain.chain_id}/supportedSourceTokens`).then(res => res.json())
     return res.data.tokens
@@ -175,6 +183,7 @@ async function getSupportedToken(fromChain: any, fromToken: Token) {
     //     return Promise.resolve(true)
     // }
     const tokens = await getSupportedTokens(fromChain)
+    console.log('tokens:', tokens)
     return tokens.some((item: any) => item.token_address === fromToken.address)
 }
 
@@ -207,14 +216,21 @@ export function useGasTokenHooks({
     fromToken,
 }: GasTokenParams) {
     const [isSupported, setIsSupported] = useState(false)
+    const [price, setPrice] = useState('0')
     const [supportedChainFrom, setSupportedChainFrom] = useState<any>()
 
     useEffect(() => {
         if (fromChain && toChain && fromToken && fromChain.chainId !== toChain.chainId) {
             getAllSupportedChains(fromChain, toChain).then(({ hasFrom, hasTo }: any) => {
+                console.log('hasFrom:', hasFrom, hasTo)
                 if (hasFrom?.length && hasTo?.length) {
                     getSupportedToken(hasFrom[0], fromToken)
                         .then(res => {
+                            if (res) {
+                                getPrice(hasFrom[0], fromToken.address).then((price: any) => {
+                                    setPrice(price)
+                                })
+                            }
                             setIsSupported(res)
                             setSupportedChainFrom(hasFrom[0])
                         })
@@ -237,7 +253,8 @@ export function useGasTokenHooks({
     return {
         isSupported,
         supportedChainFrom,
-        getStatus
+        getStatus,
+        price
     }
 }
 

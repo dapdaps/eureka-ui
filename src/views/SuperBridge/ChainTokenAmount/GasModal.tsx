@@ -91,6 +91,7 @@ interface Props {
     toChain: Chain | undefined;
     toAddress: string;
     maxBalance: string | undefined;
+    price: string;
     onClick: () => void;
     onClose: () => void;
 }
@@ -99,10 +100,10 @@ const max$ = 200
 const maxGas = 0.001
 
 export default function GasModal({
-    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance
+    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, price
 } : Props) {
     const { account, chainId, provider } = useAccount();
-    const prices = usePriceStore((store) => store.price);
+    // const prices = usePriceStore((store) => store.price);
     const [rangeVal, setRangeVal] = useState<string>('0')
     const [min, setMin] = useState(0)
     const [step, setStep] = useState(1)
@@ -128,15 +129,15 @@ export default function GasModal({
     }, [fromToken, fromChain, inputValue])
 
     useEffect(() => {
-        if (prices && fromToken && prices[fromToken.symbol]) {
-            const max = max$ / Number(prices[fromToken.symbol])
+        if (price && fromToken) {
+            const max = max$ / Number(price)
             const step = max / 200
             const min = step
             setMax(max)
             setMin(min)
             setStep(step)
         }
-    }, [prices, fromToken])
+    }, [price, fromToken])
 
     useEffect(() => {
         if (receive === '0') {

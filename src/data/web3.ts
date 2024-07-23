@@ -62,6 +62,12 @@ export const onboard = init({
       rpcUrl: 'https://ethereum-sepolia-rpc.publicnode.com',
     },
     {
+      id: 84532,
+      token: 'ETH',
+      label: 'Base Sepolia',
+      rpcUrl: 'https://base-sepolia.blockpi.network/v1/rpc/public',
+    },
+    {
       id: 421614,
       token: 'ETH',
       label: 'Arbitrum Sepolia',
