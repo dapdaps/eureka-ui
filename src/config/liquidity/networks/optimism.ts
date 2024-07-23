@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 import gamma from '../dapps/gamma';
+import arrakis from '../dapps/arrakis';
 const CHAIN_ID = 10;
 const CHAIN_NAME = 'Optimism';
 
@@ -21,5 +22,9 @@ export default {
       ...gamma.basic,
       ...gamma.networks[CHAIN_ID],
     },
+    Arrakis: {
+      ...arrakis.basic,
+      ...arrakis.networks[CHAIN_ID]
+    }
   },
 };

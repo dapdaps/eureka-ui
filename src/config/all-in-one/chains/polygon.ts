@@ -49,6 +49,11 @@ export default {
       path: 'bluebiu.near/widget/Polygon.Swap.Dex',
       description: 'Efficiently from/to any assets on Polygon',
     },
+    Liquidity: {
+      tab: 'Liquidity',
+      path: 'bluebiu.near/widget/Liquidity.ALL',
+      description: 'Seamlessly adding LP to any pair',
+    },
     Lending: {
       tab: 'Lending',
       path: 'bluebiu.near/widget/Polygon.Lending',

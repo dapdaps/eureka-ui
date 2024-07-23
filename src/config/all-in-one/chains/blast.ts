@@ -20,6 +20,11 @@ export default {
       path: 'bluebiu.near/widget/Blast.Swap',
       description: 'Efficiently from/to any assets on Blast',
     },
+    Liquidity: {
+      tab: 'Liquidity',
+      path: 'bluebiu.near/widget/Liquidity.ALL',
+      description: 'Seamlessly adding LP to any pair',
+    },
     // Lending: {
     //   tab: 'Lending',
     //   path: 'bluebiu.near/widget/Arbitrum.Lending',

@@ -20,5 +20,10 @@ export default {
       path: 'bluebiu.near/widget/Metis.Swap.Dex',
       description: 'Efficiently from/to any assets on Metis',
     },
+    Liquidity: {
+      tab: 'Liquidity',
+      path: 'bluebiu.near/widget/Liquidity.ALL',
+      description: 'Seamlessly adding LP to any pair',
+    },
   },
 };

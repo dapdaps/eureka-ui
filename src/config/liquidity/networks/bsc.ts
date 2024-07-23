@@ -1,6 +1,7 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
 import gamma from '../dapps/gamma';
+import rangeprotocol from '../dapps/rangeprotocol';
 const CHAIN_ID = 56;
 const CHAIN_NAME = 'BNB';
 
@@ -21,5 +22,9 @@ export default {
       ...gamma.basic,
       ...gamma.networks[CHAIN_ID],
     },
+    Rangeprotocol: {
+      ...rangeprotocol.basic,
+      ...rangeprotocol.networks[CHAIN_ID]
+    }
   },
 };

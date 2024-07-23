@@ -1,6 +1,8 @@
 
 const basic = {
   name: 'arrakis-finance',
+  icon: "https://s3.amazonaws.com/dapdap.prod/images/096-arrakis.png",
+  dappSrc: 'bluebiu.near/widget/Liquidity.ARRAKIS',
   amountOutFn: 'bluebiu.near/widget/Liquidity.ARRAKIS',
   ICON_VAULT_MAP: {
     'THALES': 'https://assets.dex.guru/icons/0x217d47011b23bb961eb6d93ca9945b7501a5bb11-optimism.png',

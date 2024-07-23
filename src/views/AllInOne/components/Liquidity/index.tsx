@@ -1,45 +1,104 @@
-import { memo, useMemo } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
-import lendingConfig from '@/config/lending/networks';
-import swapConfig from '@/config/swap/networks';
+import multicallConfig from '@/config/contract/multicall';
+import liquidityConfig from '@/config/liquidity/networks';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
+import useConnectWallet from '@/hooks/useConnectWallet';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
+import { useSetChain } from '@web3-onboard/react';
+
+import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
+import {
+  StyledAccountContainer,
+  StyledAccountTip,
+  StyledConnectButton
+} from '@/views/AllInOne/components/Lending/styles';
 
 const Liquidity = (props: Props) => {
   const { chain, menu } = props;
 
+  const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
+  const [{ connectedChain, settingChain }, setChain] = useSetChain();
+  const { chains } = useTokensAndChains();
   const { addAction } = useAddAction('all-in-one');
+
   const prices = usePriceStore((store) => store.price);
 
-  const menuConfig: any = useMemo(() => {
-    if (!chain || !menu.tab) return {};
-    if (menu.tab === 'Trade') return swapConfig[chain?.chainId] || {};
-    if (menu.tab === 'Lending') return lendingConfig[chain?.chainId] || {};
-    return {};
-  }, [chain, menu]);
+  const [tabConfig, setTabConfig] = useState<any>({ dapps: {} });
 
-  return (
-    <div>
-      <ComponentWrapperPage
-        src={menu.path}
-        componentProps={{
-          addAction,
-          multicall,
-          chainId: chain.chainId,
-          currentChainId: chainId,
-          ...menuConfig,
-          prices,
-          account,
-          onReset: () => {
-          },
-        }}
-      />
-    </div>
+  console.log('===chains', chains)
+  console.log('===chains[Number(connectedChain?.id)]', chains[Number(connectedChain?.id)])
+  const currentChain = useMemo(
+    () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
+    [connectedChain?.id],
   );
+
+
+  console.log('====currentChain', currentChain)
+  console.log('==chain', chain)
+  const isRightNetwork = currentChain?.chainId === chain.chainId;
+
+
+  useEffect(() => {
+    const _tabConfig = liquidityConfig[chain?.chainId];
+    setTabConfig(_tabConfig);
+  }, [chain]);
+  if (account && isRightNetwork) {
+    return (
+      <div>
+        <ComponentWrapperPage
+          src={menu.path}
+          componentProps={{
+            addAction,
+            multicall,
+            chainId: chain.chainId,
+            curChain: {
+              ...currentChain,
+              logo: currentChain?.icon,
+              name: currentChain?.chainName
+            },
+            multicallAddress: multicallConfig[currentChain?.chainId as any],
+            ...tabConfig,
+            prices,
+            account,
+            onReset: () => {
+            },
+          }}
+        />
+      </div>
+    );
+  } else {
+    let _textTip = '';
+    if (!account && tabConfig?.connectProps?.noAccountTips) {
+      _textTip = tabConfig?.connectProps?.noAccountTips;
+    }
+    if (account && !isRightNetwork) {
+      _textTip = tabConfig?.connectProps?.wrongNetworkTips;
+    }
+    const _buttonText = !account ? 'Connect Wallet' : `Switch to ${chain.title} Chain`;
+    const onButtonClick = () => {
+      if (!account) {
+        onConnect();
+        return;
+      }
+      setChain({ chainId: `0x${chain.chainId.toString(16)}` });
+      const _tabConfig = liquidityConfig[chain?.chainId];
+      setTabConfig(_tabConfig);
+    };
+    return (
+      <StyledAccountContainer>
+        <StyledAccountTip>{_textTip}</StyledAccountTip>
+        <StyledConnectButton onClick={onButtonClick} bg={chain.selectBgColor} color={chain?.iconColor}>
+          {_buttonText}
+        </StyledConnectButton>
+      </StyledAccountContainer>
+    );
+  }
+
 };
 
 export default memo(Liquidity);
