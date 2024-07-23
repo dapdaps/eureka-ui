@@ -5,11 +5,13 @@
 import { useEffect, useState } from 'react';
 
 import Modal from '@/components/Modal';
+import { ethereum } from '@/config/tokens/ethereum';
 // const Lido = lazy(() => import('./modules/lido'));
 // const Mantle = lazy(() => import('./modules/mantle'));
 // const RocketPool = lazy(() => import('./modules/rocket-pool'));
 // const KelpDao = lazy(() => import('./modules/kelp-dao'))
 import useAddAction from '@/hooks/useAddAction';
+import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 
 import Eigenpie from './modules/eigenpie';
 import EtherFi from './modules/ether-fi';
@@ -23,8 +25,6 @@ import Puffer from './modules/puffer';
 import Renzo from './modules/renzo';
 import RestakeFinance from './modules/restake-finance';
 import RocketPool from './modules/rocket-pool';
-import { ethereum } from '@/config/tokens/ethereum';
-import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 
 const ComponentMapping: any = {
   Lido,
@@ -41,7 +41,7 @@ const ComponentMapping: any = {
   Renzo,
 };
 const Index = function (props: any) {
-  const { add } = useAddTokenToWallet()
+  const { add } = useAddTokenToWallet();
   const { addAction } = useAddAction('lrts');
   const { dapp, gem, box, show, setShow, token0, token1, chainId, onSuccess } = props;
   const VmComponent = ComponentMapping[gem?.dapp?.name || dapp?.name];
@@ -54,13 +54,13 @@ const Index = function (props: any) {
     setActionType(_actionType);
   };
   const handleAddMetaMask = function () {
-    const _token = ['restake', 'stake'].includes(actionType) ? token1 : token0
-    add(_token)
-  }
-  console.log({
-    dapp,
-    gem,
-  });
+    const _token = ['restake', 'stake'].includes(actionType) ? token1 : token0;
+    add(_token);
+  };
+  // console.log({
+  //   dapp,
+  //   gem,
+  // });
   useEffect(() => {
     setActionType(gem ? 'restake' : 'stake');
   }, [gem]);

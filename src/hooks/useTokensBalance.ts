@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import useAccount from '@/hooks/useAccount';
 import { utils } from 'ethers';
-import { multicall } from '@/utils/multicall';
+import { useCallback, useEffect, useState } from 'react';
+
 import multicallAddresses from '@/config/contract/multicall';
+import useAccount from '@/hooks/useAccount';
+import { multicall } from '@/utils/multicall';
 
 export default function useTokensBalance(tokens: any) {
   const [loading, setLoading] = useState(false);
@@ -58,7 +59,7 @@ export default function useTokensBalance(tokens: any) {
       setBalances(_balance);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      console.log('catch-useTokensBalance-error--', err);
       setLoading(false);
     }
   }, [tokens, account, provider]);
