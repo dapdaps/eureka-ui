@@ -8,12 +8,12 @@ const basic = {
   ICON_MAP: {
     HYPLP: "https://ipfs.near.social/ipfs/bafkreicmoqlzhbbtohr7hv7kaudff3x6igg6qr2kf3soal64tadk5zlgy4",
     WETH: "https://ipfs.near.social/ipfs/bafkreif5jqf6onhhj6aqfjt6zq2lqanw6o3kzmb7exnqjw42p4hpwrojmu",
-    wJUICE: "https://app.juice.finance/images/logos/juice.svg",
-    USDB: "https://app.juice.finance/images/logos/tokens/usdb.svg",
-    wUSDB: "https://app.juice.finance/images/logos/protocols/wasabi.svg",
-    DUSD: "https://app.juice.finance/images/logos/tokens/dusd.svg",
-    DETH: "https://app.juice.finance/images/logos/tokens/deth.svg",
-    BLAST: "https://app.juice.finance/_next/image?url=%2Fimages%2Flogos%2Ftokens%2Fblast.webp&w=64&q=75"
+    wJUICE: "/images/juice/juice.svg",
+    USDB: "/images/juice/usdb.svg",
+    wUSDB: "/images/juice/wasabi.svg",
+    DUSD: "/images/juice/dusd.svg",
+    DETH: "/images/juice/deth.svg",
+    BLAST: "/images/juice/blast.webp"
   }
 };
 const WETH_WETH_POOLS = {
