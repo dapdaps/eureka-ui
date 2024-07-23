@@ -53,7 +53,11 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
       .div(1e18)
       .toString();
 
-    setOutAmount(['stake', 'restake'].includes(actionType) ? ratio : Big(amount).mul(amount).div(ratio).toString());
+    setOutAmount(
+      ['stake', 'restake'].includes(actionType)
+        ? Big(amount).mul(ratio).toString()
+        : Big(amount).mul(amount).div(ratio).toString(),
+    );
   };
 
   const { run: runGetOutAmount } = useDebounceFn(
@@ -94,8 +98,8 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
   }, [account, actionType]);
 
   const handleMax = function () {
-    const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount
-    handleAmountChange(_amount)
+    const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount;
+    handleAmountChange(_amount);
   };
   const handleStake = async () => {
     let method = '';
@@ -150,7 +154,7 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
         toast.fail({ title: `${method} faily!` });
       }
       addAction({
-        type: "Staking",
+        type: 'Staking',
         action: actionType,
         token: [inToken.symbol, outToken.symbol],
         amount: inAmount,
@@ -164,12 +168,11 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
           fromTokenAmount: inAmount,
           toTokenSymol: outToken.symbol,
           toTokenAmount: outAmount,
-        })
-      })
+        }),
+      });
       setLoading(false);
-      setInAmount("")
-      onSuccess && onSuccess(actionType)
-
+      setInAmount('');
+      onSuccess && onSuccess(actionType);
     } catch (err: any) {
       console.log('err', err);
       toast.dismiss(toastId);
