@@ -29,7 +29,14 @@ export const Banner = styled.div`
       position: relative;
       width: 194px;
       height: 150px;
+      margin: 0 auto;
     }
+    /* &.swiper-slide-next,
+    &:last-child {
+      .lst-content {
+        margin-left: 0;
+      }
+    } */
     .lst-img {
       width: 100%;
       cursor: pointer;
@@ -147,7 +154,7 @@ export const Banner = styled.div`
         top: 200px;
       }
     }
-    transform: translate(-50px, -50px);
+    transform: translate(0, -50px);
   }
 `;
 
