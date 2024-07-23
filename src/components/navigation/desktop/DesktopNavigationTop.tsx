@@ -12,7 +12,7 @@ import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
-
+import IconSearch from '@public/images/header/search.svg'
 import { NavMainV2 } from './NavMainV2';
 
 
@@ -70,6 +70,17 @@ const StyledNav = styled(NavMainV2)`
   margin-left: 60px;
 `
 
+const StyledSearch = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`
+
+
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
 export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolean }) => {
@@ -80,6 +91,8 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
+
+  const [showSearch, setShowSearch] = useState(false);
 
   const isFromActivity = router.pathname.match(activityReg);
 
@@ -99,6 +112,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               </Link>
             )}
           <StyledNav />
+          <StyledSearch onClick={() => setShowSearch(true)}><IconSearch /></StyledSearch>
         </Flex>
         <ChainAndAccountWrapper>
           {isHideAccount ? (
@@ -120,7 +134,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
         </ChainAndAccountWrapper>
       </div>
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
-      <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
+      { showSearch && (<DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} />)}
     </Container>
   );
 };

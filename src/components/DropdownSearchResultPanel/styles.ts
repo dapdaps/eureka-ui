@@ -9,17 +9,17 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const StyledSearchResults = styled.div`
-  width: 38%;
+  width: 680px;
   position: absolute;
-  top: 70px;
-  left: 25.5%;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0);
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-  background-color: rgb(48, 49, 66);
-  color: rgba(151, 154, 190, 1);
+  background: rgba(24, 25, 30, 1);
+  border: 1px solid #333648;
   border-radius: 12px;
-  max-height: 600px;
-  overflow: auto;
-  height: 0;
+  max-height: 680px;
+  overflow-y: auto;
   z-index: 120;
 
   &.show {
@@ -65,7 +65,7 @@ export const StyledResultItemContainer = styled.div`
 `;
 
 export const StyledResultTitle = styled.div`
-  font-size: 12px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -78,7 +78,7 @@ export const StyledResultItem = styled.div`
   padding: 7px 30px;
   cursor: pointer;
   transition: 0.3s;
-  &: hover {
+  &:hover {
     background-color: rgba(24, 26, 39, 0.3);
   }
 `;
@@ -89,12 +89,36 @@ export const StyledResultItemImg = styled.img`
 `;
 
 export const StyledResultItemTitle = styled.div`
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 16px;
+  font-weight: 600;
   color: #ffffff;
-  margin-top: 6px;
   margin-left: 10px;
 `;
 
 export const StyledMore = styled.div`
   cursor: pointer;
 `;
+
+
+export const StyleView = styled.div`
+  margin: 0 auto;
+  margin-top: 30px;
+  padding: 0 30px;
+  width: calc(100% - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  gap: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid rgba(51, 54, 72, 1);
+  background: rgba(31, 34, 41, 1);
+  border-radius: 12px;
+  &:hover {
+    background: rgba(24, 25, 30, 1);
+  }
+`

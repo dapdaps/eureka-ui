@@ -9,7 +9,10 @@ import {
   StyledResultItemTitle,
   StyledResultItemImg,
   StyledMore,
+  StyleView
 } from './styles';
+
+
 
 const ResultItem = ({ title, loading, items, onClick }: any) => {
   const [showAll, setShowAll] = useState(false);
@@ -17,7 +20,7 @@ const ResultItem = ({ title, loading, items, onClick }: any) => {
     <StyledResultItemContainer>
       <StyledResultTitle>
         <div>{title}</div>
-        <StyledMore onClick={() => setShowAll(!showAll)}>{showAll ? 'Close' : 'View More'}</StyledMore>
+        {/* <StyledMore onClick={() => setShowAll(!showAll)}>{showAll ? 'Close' : 'View More'}</StyledMore> */}
       </StyledResultTitle>
 
       {items &&
@@ -33,6 +36,8 @@ const ResultItem = ({ title, loading, items, onClick }: any) => {
             <StyledResultItemTitle>{item.name}</StyledResultItemTitle>
           </StyledResultItem>
         ))}
+
+        <StyleView><div>{showAll ? 'Show' : 'Hide'} all</div></StyleView>
       {loading && (
         <LoadingWrapper className="flex-align">
           <Skeleton width="30px" height="30px" containerClassName="skeleton" />

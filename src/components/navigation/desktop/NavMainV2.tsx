@@ -40,15 +40,12 @@ const StyleImage = styled.div`
   }
 `
 
-const StyleNew = styled.div`
+const StyleNew = styled(IconOdyssey)`
   position: absolute;
-  top: -2px;
-  left: -8px;
-  background-color: #EBF479;
+  top: -4px;
+  right: -9px;
   color: #000;
   font-size: 12px;
-  padding: 1px 2px;
-  border-radius: 4px;
 `  
 
 const StyleText = styled.div`
@@ -115,7 +112,7 @@ interface ListItemProps {
 const ListItem: React.FC<ListItemProps> = ({ imgSrc, isNew, title, status, description }) => (
   <Flex>
     <StyleImage>
-      {isNew && <StyleNew>New</StyleNew>}
+      {isNew && <StyleNew />}
       <img src={imgSrc} alt="" />
     </StyleImage>
     <StyleText>
