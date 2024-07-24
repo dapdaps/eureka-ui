@@ -5,7 +5,8 @@ import { useState } from 'react';
 import { memo } from 'react';
 import styled from 'styled-components';
 
-import Pagination from './pagination';
+import Pagination from '@/components/pagination';
+// import Pagination from './pagination';
 
 interface IProps {
   data: any;
@@ -114,6 +115,13 @@ const Comp: FC<IProps> = ({ data, columns, emptyTips = 'No Data' }) => {
         pageSize={data.length}
         setPageSize={table.setPageSize}
       /> */}
+      {/* <Pagination
+            className=""
+            pageIndex={1}
+            pageTotal={4}
+            hasMore={true}
+            // onPage={handlePage}
+          /> */}
     </TableWrap>
   );
 };

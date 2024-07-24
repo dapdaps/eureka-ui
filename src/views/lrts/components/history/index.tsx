@@ -41,23 +41,29 @@ const History: FC<IProps> = (props) => {
   useEffect(() => {
     if (!actionList || !actionList?.data?.length) return;
 
-    const _data = actionList.data.map((item: any) => {
-      const extraData = JSON.parse(item.extra_data);
-      const { action, fromTokenSymbol, fromTokenAmount, toTokenSymol, toTokenAmount } = extraData;
-      return {
-        action,
-        date: item.timestamp,
-        hash: item.tx_id,
-        sent: {
-          fromTokenSymbol,
-          fromTokenAmount,
-        },
-        recive: {
-          toTokenSymol,
-          toTokenAmount,
-        },
-      };
-    });
+    const _data = actionList.data
+      .map((item: any) => {
+        try {
+          const extraData = JSON.parse(item.extra_data);
+          const { action, fromTokenSymbol, fromTokenAmount, toTokenSymol, toTokenAmount } = extraData;
+          return {
+            action,
+            date: item.timestamp,
+            hash: item.tx_id,
+            sent: {
+              fromTokenSymbol,
+              fromTokenAmount,
+            },
+            recive: {
+              toTokenSymol,
+              toTokenAmount,
+            },
+          };
+        } catch (error) {
+          console.log('catch-extra-data-error--', error);
+        }
+      })
+      .filter((item: any) => item);
 
     setData(_data);
   }, [actionList]);
@@ -97,7 +103,6 @@ const History: FC<IProps> = (props) => {
       },
     }),
   ];
-  console.log('data--', data);
 
   return <MyTable data={data} columns={columns} emptyTips="No transaction records found..." />;
 };
