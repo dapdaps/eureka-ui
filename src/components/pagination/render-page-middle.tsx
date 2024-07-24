@@ -1,5 +1,11 @@
 import { PageButton } from './page-button';
 
+export interface RenderPageMiddleOptions {
+  current: number;
+  pageTotal: number;
+  onChange(page: number): void;
+}
+
 export function renderPageMiddle(options: RenderPageMiddleOptions) {
   const { pageTotal, ...restOptions } = options;
 
@@ -8,34 +14,26 @@ export function renderPageMiddle(options: RenderPageMiddleOptions) {
     for (let i = 2; i < pageTotal; i++) {
       pages.push(i);
     }
-    return pages.map((page) => (
-      <PageButton key={page} page={page} {...restOptions} />
-    ));
+    return pages.map((page) => <PageButton key={page} page={page} {...restOptions} />);
   }
 
   let currentPage = null;
 
-  const morePage = (
-    <PageButton page="..." {...restOptions} style={{ cursor: "default" }} />
-  );
+  const morePage = <PageButton page="..." {...restOptions} style={{ cursor: 'default' }} />;
 
-  if (![1, pageTotal].includes(options.pageIndex)) {
-    currentPage = (
-      <PageButton page={options.pageIndex} {...restOptions} />
-    );
+  if (![1, pageTotal].includes(options.current)) {
+    currentPage = <PageButton page={options.current} {...restOptions} />;
   }
 
   const renderPageLeft = () => {
-    if (options.pageIndex === 3) {
-      return (
-        <PageButton page={2} {...restOptions} />
-      );
+    if (options.current === 3) {
+      return <PageButton page={2} {...restOptions} />;
     }
-    if (options.pageIndex > 3) {
+    if (options.current > 3) {
       return (
         <>
           {morePage}
-          <PageButton page={options.pageIndex - 1} {...restOptions} />
+          <PageButton page={options.current - 1} {...restOptions} />
         </>
       );
     }
@@ -43,7 +41,7 @@ export function renderPageMiddle(options: RenderPageMiddleOptions) {
   };
 
   const renderPageRight = () => {
-    if (options.pageIndex === 1) {
+    if (options.current === 1) {
       return (
         <>
           <PageButton page={2} {...restOptions} />
@@ -52,7 +50,7 @@ export function renderPageMiddle(options: RenderPageMiddleOptions) {
         </>
       );
     }
-    if (options.pageIndex === 2) {
+    if (options.current === 2) {
       return (
         <>
           <PageButton page={3} {...restOptions} />
@@ -60,17 +58,15 @@ export function renderPageMiddle(options: RenderPageMiddleOptions) {
         </>
       );
     }
-    if (options.pageIndex === pageTotal - 2) {
-      return (
-        <PageButton page={pageTotal - 1} {...restOptions} />
-      );
+    if (options.current === pageTotal - 2) {
+      return <PageButton page={pageTotal - 1} {...restOptions} />;
     }
-    if (options.pageIndex >= pageTotal - 1) {
+    if (options.current >= pageTotal - 1) {
       return null;
     }
     return (
       <>
-        <PageButton page={options.pageIndex + 1} {...restOptions} />
+        <PageButton page={options.current + 1} {...restOptions} />
         {morePage}
       </>
     );
@@ -83,11 +79,4 @@ export function renderPageMiddle(options: RenderPageMiddleOptions) {
       {renderPageRight()}
     </>
   );
-}
-
-export interface RenderPageMiddleOptions {
-  pageIndex: number;
-  pageTotal: number;
-
-  onPage(page: number): void;
 }

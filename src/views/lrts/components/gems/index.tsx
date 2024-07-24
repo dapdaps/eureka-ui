@@ -9,6 +9,7 @@ import { Particle } from '../index';
 interface IProps {
   dataSource: any;
   onGemClick: (symbol: string) => void;
+  updater: number;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -35,7 +36,7 @@ const Wrap = styled.section`
       grid-row-end: 7;
     }
   }
-  
+
   .item-gem {
     align-items: center;
     justify-content: center;
@@ -109,7 +110,7 @@ const Wrap = styled.section`
     background-color: #000;
     overflow: hidden;
   }
-  .item-5{
+  .item-5 {
     position: relative;
     overflow: visible;
   }
@@ -142,23 +143,23 @@ const Wrap = styled.section`
 const GemImage = styled.img`
   max-width: 100%;
 `;
-const TunnelStart=styled.div`
+const TunnelStart = styled.div`
   position: absolute;
-    width: 150px;
-    height: 150px;
-    background: black;
-    overflow: hidden;
-    top: -88px;
-`
+  width: 150px;
+  height: 150px;
+  background: black;
+  overflow: hidden;
+  top: -88px;
+`;
 
-const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
+const Stones: FC<IProps> = ({ dataSource, onGemClick, updater }) => {
   const items = Array.from({ length: 81 }, (x, i) => i + 1);
 
   const allGems = dataSource.map((item: any) => item.order);
-  const [balanceUpdater, setBalanceUpdater] = useState(0);
-  const { loading, balances } = useAllTokensBalance(balanceUpdater);
-  console.log('balances--',balances);
-  
+
+  const { loading, balances } = useAllTokensBalance(updater);
+  console.log('balances--', balances);
+
   const userGems = dataSource.filter((item: any) => balances[item?.token?.address] > 0).map((item: any) => item.order);
 
   const rocks = [12, 16, 18, 33, 38, 42, 47, 48, 50, 51, 54, 58];
@@ -180,17 +181,18 @@ const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
   const _tunnel = userGems.map((item: any) => tunnelMap.get(item)).flat();
   const userTunnel = _.uniq(_tunnel);
 
-
   const renderItem = (order: number) => {
     // for tunnel
     if (defaultTunnel.includes(order) && userTunnel.includes(order)) {
       return (
         <div className={`item item-tunnel item-${order}`} key={order}>
           <Particle amount={5} key={order} />
-          
-          {order===5&&userTunnel.length>0?<TunnelStart>
-  <Particle amount={5} />
-  </TunnelStart>:null}
+
+          {order === 5 && userTunnel.length > 0 ? (
+            <TunnelStart>
+              <Particle amount={5} />
+            </TunnelStart>
+          ) : null}
         </div>
       );
     } else if (allGems.includes(order)) {
@@ -235,9 +237,7 @@ const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
     }
   };
 
-  return <Wrap>{items.map((order) => renderItem(order))}</Wrap>
-  
-  
+  return <Wrap>{items.map((order) => renderItem(order))}</Wrap>;
 };
 
 export default memo(Stones);

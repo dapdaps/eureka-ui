@@ -2,20 +2,23 @@ import { useEffect, useState } from 'react';
 
 import { get } from '@/utils/http';
 
-export default function useActionList({ account, source }: any) {
+export default function useActionList({ account, source, page }: any) {
   const [actionList, setActionList] = useState<any>();
+  const [count, setCount] = useState<number>(0);
   const [loading, setLoading] = useState(false);
 
   const fetchList = async () => {
     try {
       setLoading(true);
       const result = await get('/api/action/list', {
-        account,
+        page,
         source,
+        account,
       });
 
       if (result.code === 0 && result.data) {
         setActionList(result.data);
+        setCount(result.data?.total?.count);
       } else {
         setActionList([]);
       }
@@ -27,7 +30,7 @@ export default function useActionList({ account, source }: any) {
 
   useEffect(() => {
     fetchList();
-  }, [account, source]);
+  }, [account, source, page]);
 
-  return { actionList, loading };
+  return { actionList, count, loading };
 }

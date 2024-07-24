@@ -1,91 +1,84 @@
+import styled from 'styled-components';
+
 import { PageButton } from './page-button';
 import { renderPageMiddle } from './render-page-middle';
 
-const Pagination = (props: PaginationProps) => {
-  const {
-    pageIndex,
-    pageTotal,
-    hasMore,
-    onPage,
-    className,
-  } = props;
+const PageWrap = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 10px;
+  .prev-btn,
+  .next-btn {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+  }
+`;
 
+const Pagination = (props: PaginationProps) => {
+  const { current, total, pageSize, onChange } = props;
+  const pageTotal = Math.ceil(total / pageSize);
+
+  const hasMore = current < pageTotal;
   const handlePreviousPage = () => {
-    if (pageIndex < 2) return;
-    onPage(pageIndex - 1);
+    if (current < 2) return;
+    onChange(current - 1);
   };
 
   const handleNextPage = () => {
-    if (pageIndex >= pageTotal) return;
-    onPage(pageIndex + 1);
+    if (current >= pageTotal) return;
+    onChange(current + 1);
   };
 
   return (
-    <div className={`flex gap-x-[10px] justify-center items-center ${className}`}>
-      <div
-        title="previous"
-        className="w-[16px] h-[16px] mr-[18px] click flex justify-center items-center hover:bg-[#f6f6f6] transition-all duration-200"
-        style={{ cursor: pageIndex > 1 ? 'pointer' : 'not-allowed' }}
+    <PageWrap>
+      <span
+        title="prev"
+        className="prev-btn"
+        style={{ cursor: current > 1 ? 'pointer' : 'not-allowed' }}
         onClick={handlePreviousPage}
       >
-        <svg
-          width="7"
-          height="12"
-          viewBox="0 0 7 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none">
           <path
-            opacity={pageIndex > 1 ? 1 : 0.2}
+            opacity={current > 1 ? 1 : 0.2}
             d="M6 1L2 6L6 11"
-            stroke="black"
-            strokeWidth="2"
-            strokeLinecap="round"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
           />
         </svg>
-      </div>
-      <PageButton className="first-page" page={1} pageIndex={pageIndex} onPage={onPage} />
-      {
-        pageTotal > 1 && (
-          <>
-            {renderPageMiddle({ pageIndex, pageTotal, onPage })}
-            <PageButton className="last-page" page={pageTotal} pageIndex={pageIndex} onPage={onPage} />
-          </>
-        )
-      }
-      <div
+      </span>
+      <PageButton className="first-page" page={1} current={current} onChange={onChange} />
+      {pageTotal > 1 && (
+        <>
+          {renderPageMiddle({ current, pageTotal, onChange })}
+          <PageButton className="last-page" page={pageTotal} current={current} onChange={onChange} />
+        </>
+      )}
+      <span
         title="next"
-        className="w-[16px] h-[16px] ml-[18px] click flex justify-center items-center hover:bg-[#f6f6f6] transition-all duration-200"
+        className="next-btn"
         style={{ cursor: hasMore ? 'pointer' : 'not-allowed' }}
         onClick={handleNextPage}
       >
-        <svg
-          width="7"
-          height="12"
-          viewBox="0 0 7 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            opacity={hasMore ? 1 : 0.2}
-            d="M1 1L5 6L1 11"
-            stroke="black"
-            strokeWidth="2"
-            strokeLinecap="round"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none">
+          <path opacity={hasMore ? 1 : 0.2} d="M1 1L5 6L1 11" stroke="white" stroke-width="2" stroke-linecap="round" />
         </svg>
-      </div>
-    </div>
+      </span>
+    </PageWrap>
   );
 };
 
 interface PaginationProps {
-  pageIndex: number;
-  pageTotal: number;
-  hasMore: boolean;
-  className: string;
-
-  onPage(page: number): void;
+  current: number;
+  total: number;
+  pageSize: number;
+  onChange(page: number): void;
 }
 
 export default Pagination;

@@ -1,7 +1,6 @@
 import type { PaginationState } from '@tanstack/react-table';
 import { flexRender, getCoreRowModel, getPaginationRowModel, useReactTable } from '@tanstack/react-table';
 import type { FC } from 'react';
-import { useState } from 'react';
 import { memo } from 'react';
 import styled from 'styled-components';
 
@@ -11,6 +10,12 @@ import Pagination from '@/components/pagination';
 interface IProps {
   data: any;
   columns: any;
+  pagination: {
+    current: number;
+    total: number;
+    pageSize: number;
+    onChange: any;
+  };
   emptyTips?: string;
 }
 
@@ -62,26 +67,28 @@ const Empty = styled.div`
   color: #fff;
 `;
 
-const Comp: FC<IProps> = ({ data, columns, emptyTips = 'No Data' }) => {
-  const [pagination, setPagination] = useState<PaginationState>({
-    pageIndex: 0,
-    pageSize: 10,
-  });
+const Comp: FC<IProps> = ({ data, columns, pagination, emptyTips = 'No Data' }) => {
+  const { onChange, current, total, pageSize = 10 } = pagination;
+
+  // const [pagination, setPagination] = useState<PaginationState>({
+  //   pageIndex: 0,
+  //   pageSize: 10,
+  // });
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
-    onPaginationChange: setPagination,
-    state: {
-      pagination,
-    },
+    // onPaginationChange: setPagination,
+    // state: {
+    //   pagination,
+    // },
   });
 
-  const gotoPage = (pageIndex: number): void => {
-    table.setPageIndex(pageIndex);
-  };
+  // const gotoPage = (pageIndex: number): void => {
+  //   table.setPageIndex(pageIndex);
+  // };
 
   return (
     <TableWrap>
@@ -115,13 +122,7 @@ const Comp: FC<IProps> = ({ data, columns, emptyTips = 'No Data' }) => {
         pageSize={data.length}
         setPageSize={table.setPageSize}
       /> */}
-      {/* <Pagination
-            className=""
-            pageIndex={1}
-            pageTotal={4}
-            hasMore={true}
-            // onPage={handlePage}
-          /> */}
+      <Pagination current={current} total={total} pageSize={pageSize} onChange={onChange} />
     </TableWrap>
   );
 };

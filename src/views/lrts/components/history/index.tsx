@@ -1,10 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { format } from 'date-fns';
 import type { CSSProperties, FC, ReactNode } from 'react';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import { ellipsHash } from '@/utils/account';
+import { unifyNumber } from '@/utils/format-number';
 import MyTable from '@/views/lrts/components/react-table';
 import useActionList from '@/views/lrts/hooks/useActionList';
 
@@ -34,10 +35,11 @@ const History: FC<IProps> = (props) => {
   };
   const { chainId, account } = useAccount();
 
-  const { loading, actionList } = useActionList({ account, source: 'lrts' });
+  const [pageIndex, setPageIndex] = useState(1);
+  const { loading, actionList, count } = useActionList({ account, source: 'lrts', page: pageIndex });
 
   const defaultData: DataType[] = [];
-  const [data, setData] = React.useState(() => [...defaultData]);
+  const [data, setData] = useState(() => [...defaultData]);
   useEffect(() => {
     if (!actionList || !actionList?.data?.length) return;
 
@@ -68,6 +70,7 @@ const History: FC<IProps> = (props) => {
     setData(_data);
   }, [actionList]);
 
+  const pageSize = 10;
   const columnHelper = createColumnHelper<DataType>();
   const columns = [
     columnHelper.accessor('action', {
@@ -78,7 +81,7 @@ const History: FC<IProps> = (props) => {
       cell: (info: any) => {
         const { fromTokenSymbol, fromTokenAmount } = info.getValue();
 
-        return `${fromTokenSymbol} ${fromTokenAmount}`;
+        return `${fromTokenSymbol} ${unifyNumber(fromTokenAmount)}`;
       },
       header: () => <span>Sent</span>,
     }),
@@ -88,7 +91,7 @@ const History: FC<IProps> = (props) => {
       cell: (info: any) => {
         const { toTokenSymol, toTokenAmount } = info.getValue();
 
-        return `${toTokenSymol} ${toTokenAmount}`;
+        return `${toTokenSymol} ${unifyNumber(toTokenAmount)}`;
       },
     }),
     columnHelper.accessor('hash', {
@@ -104,7 +107,20 @@ const History: FC<IProps> = (props) => {
     }),
   ];
 
-  return <MyTable data={data} columns={columns} emptyTips="No transaction records found..." />;
+  return (
+    <MyTable
+      data={data}
+      pagination={{
+        current: pageIndex,
+        total: count,
+        pageSize,
+        // total: Math.ceil(count / pageSize),
+        onChange: setPageIndex,
+      }}
+      columns={columns}
+      emptyTips="No transaction records found..."
+    />
+  );
 };
 
 export default History;

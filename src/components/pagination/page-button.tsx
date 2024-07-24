@@ -1,39 +1,51 @@
 import React from 'react';
+import styled from 'styled-components';
 
+const StyledButton = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  border: 1px solid #3f3f3f;
+  background: rgba(50, 50, 50, 0.6);
+  backdrop-filter: blur(10px);
+  transition: all 0.2s;
+  color: #fff;
+  text-align: center;
+  font-family: Orbitron;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  cursor: pointer;
+  &.active {
+    background: #414141;
+  }
+`;
 export const PageButton = (props: PageButtonProps) => {
-  const {
-    page,
-    pageIndex,
-    className,
-    style,
-    onPage,
-  } = props;
+  const { page, current, className, style, onChange } = props;
 
   const handleClick = () => {
-    if (typeof page !== 'number' || page === pageIndex) return;
-    onPage(page);
+    if (typeof page !== 'number' || page === current) return;
+    onChange?.(page);
   };
 
-  const pageItemStyles = 'w-[40px] h-[40px] leading-[38px] rounded-[4px] cursor-pointer text-[16px] font-light text-center border backdrop-blur-[10px] transition-all duration-300';
-  const pageItemActiveStyles = 'text-white bg-black border-black';
-  const pageItemInActiveStyles = 'text-black bg-white border-[#38344B]';
-
   return (
-    <div
-      className={`page-${page} ${pageItemStyles} ${pageIndex === page ? pageItemActiveStyles : pageItemInActiveStyles} ${className}`}
+    <StyledButton
+      className={`page-${page} ${current === page ? 'active' : ''} ${className}`}
       style={style}
       onClick={handleClick}
     >
       {page}
-    </div>
+    </StyledButton>
   );
 };
 
 interface PageButtonProps {
   page: number | string;
-  pageIndex: number;
+  current?: number;
   className?: string;
   style?: React.CSSProperties;
-
-  onPage(page: number): void;
+  onChange?(page: number): void;
 }

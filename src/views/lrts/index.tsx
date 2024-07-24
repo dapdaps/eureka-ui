@@ -111,7 +111,7 @@ const Home = () => {
         </Swiper>
       </Banner>
 
-      <Gems dataSource={lrtsData[lstIndex].lrtTokens} onGemClick={handleClickGem} />
+      <Gems dataSource={lrtsData[lstIndex].lrtTokens} onGemClick={handleClickGem} updater={balanceUpdater} />
 
       <TabCard
         lstIndex={lstIndex}
