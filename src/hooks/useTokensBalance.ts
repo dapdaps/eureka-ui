@@ -11,7 +11,10 @@ export default function useTokensBalance(tokens: any) {
   const { account, provider } = useAccount();
 
   const queryBalance = useCallback(async () => {
-    if (!account || !tokens.length) return;
+    if (!account || !tokens.length) {
+      setBalances({});
+      return;
+    }
 
     try {
       setLoading(true);
