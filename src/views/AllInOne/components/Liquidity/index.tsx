@@ -26,9 +26,6 @@ const Liquidity = (props: Props) => {
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
   const { chains } = useTokensAndChains();
   const { addAction } = useAddAction('all-in-one');
-  // const [isBosComponent, setIsBosComponent] = useState(false)
-  const [dapp, setDapp] = useState<any>(null);
-
   const prices = usePriceStore((store) => store.price);
   const [tabConfig, setTabConfig] = useState<any>({ dapps: {} });
   const currentChain = useMemo(
@@ -36,8 +33,6 @@ const Liquidity = (props: Props) => {
     [connectedChain?.id],
   );
   const isRightNetwork = currentChain?.chainId === chain.chainId;
-
-
   useEffect(() => {
     const _tabConfig = liquidityConfig[chain?.chainId];
     setTabConfig(_tabConfig);
@@ -45,8 +40,6 @@ const Liquidity = (props: Props) => {
   if (account && isRightNetwork) {
     return (
       <div>
-
-        
         <ComponentWrapperPage
           src={menu.path}
           componentProps={{
@@ -67,9 +60,6 @@ const Liquidity = (props: Props) => {
             dapps: tabConfig?.dapps,
             prices,
             account,
-            onChangeDapp: (dapp) => {
-              setDapp(dapp)
-            },
             onReset: () => {
             },
           }}

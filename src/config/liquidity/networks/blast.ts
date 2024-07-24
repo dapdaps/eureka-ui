@@ -23,11 +23,6 @@ export default {
     steer: {
       ...steer.basic,
       ...steer.networks[CHAIN_ID]
-    },
-    "thruster-liquidity": {
-      name: 'thruster',
-      icon: 'https://s3.amazonaws.com/dapdap.prod/images/thtusterpool.png',
-      dappSrc: 'dapp/thruster-liquidity'
     }
   },
 };
