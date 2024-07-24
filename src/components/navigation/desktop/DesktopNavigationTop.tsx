@@ -33,7 +33,7 @@ const AccountWrapper = styled.div<{ disabled?: boolean }>`
 const Container = styled.div<{ $expand: boolean }>`
   position: relative;
   color: #979abe;
-  padding: 20px 36px;
+  padding: 14px 36px;
   position: sticky;
   top: 0;
   width: 100%;

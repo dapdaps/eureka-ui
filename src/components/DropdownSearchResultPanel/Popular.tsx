@@ -19,7 +19,7 @@ const StylePopular = styled.div`
     align-items: center;
     justify-content: space-between;
     height: 50px;
-    padding: 0 30px;
+    padding: 0 20px;
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.2);

@@ -1,5 +1,10 @@
 import styled from 'styled-components';
 
+export const StyleTop = styled.div`
+padding: 20px 20px 20px;
+` 
+
+
 export const LoadingWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -9,7 +14,7 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const StyledSearchResults = styled.div`
-  width: 680px;
+  width:540px;
   position: absolute;
   top: 10px;
   left: 50%;
@@ -19,6 +24,7 @@ export const StyledSearchResults = styled.div`
   border: 1px solid #333648;
   border-radius: 12px;
   max-height: 680px;
+  padding-bottom: 20px;
   overflow-y: auto;
   z-index: 120;
 

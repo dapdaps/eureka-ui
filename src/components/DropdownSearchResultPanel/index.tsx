@@ -8,25 +8,17 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import { IdToPath } from '@/config/all-in-one/chains';
 import ResultItem from './ResultItem';
-import { StyledSearchResults } from './styles';
+import { StyledSearchResults, StyleTop } from './styles';
 
 import Search from './Search';
 import RecentSearch from './RecentSearch';
 import Popular from './Popular';
+import Chain from './Chain';
+import Campaign from './Campaign';
+import Medal from './Medal';
 
-const StyleTop = styled.div`
-  padding: 20px 30px 0;
-` 
 
-const StyleChain = styled.div`
-  .title {
-    font-size: 14px;
-    line-height: 14px;
-    font-weight: 500;
-    margin-bottom: 16px;
-    color: #979ABE;
-  }
-`
+
 
 const DropdownSearchResultPanel = ({ searchText, show }: any) => {
   const router = useRouter();
@@ -86,17 +78,9 @@ const DropdownSearchResultPanel = ({ searchText, show }: any) => {
             }}
           />
 
-          <StyleChain>
-            <div className='title'>Chain</div>
-            <div className='list'>
-              <div className='item'>
-                <img src="" alt="" />
-                <span>name</span>
-              </div>
-            </div>
-          </StyleChain>
-
-
+          <Chain />
+          <Campaign />
+          <Medal />
           {/* <ResultItem
             title="Blockchain"
             loading={loading}

@@ -51,7 +51,7 @@ const Card = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems='flex-start'>
+      <StyledFlex gap="12px">
         <StyledCardBackgroundImage
           src={compass.banner}
           alt={compass.name}
@@ -60,13 +60,21 @@ const Card = function ({ compass }: any) {
           }}
         />
         <StyledCardMainContent>
-          <div className='title'>Featured</div>
-          <div className="card_section">
-            <img className='logo' src="/images/home/super-bridge.png" alt="" />
-            {/* <div className="head">DapDap X Mode: <br />The Airdrop Ascendancy</div> */}
-            <div className='card-tips'>One UI to rule them all, getting the best price from 30+ Dex pools.</div>
-          </div>
-          <StyledCardButton
+          <StyledFlex alignItems="center" gap="12px">
+            {odyssey[compass.id]?.chainsImg && (
+              <StyledChainsImg
+                src={odyssey[compass.id]?.chainsImg}
+                style={{ height: odyssey[compass.id]?.chainsHeight }}
+              />
+            )}
+            <Tag status={compass.status} />
+          </StyledFlex>
+          <StyledCardTitle>{compass.name}</StyledCardTitle>
+          <StyledCardDesc>{compass.description}</StyledCardDesc>
+          {compass.status === 'un_start' ? (
+          <StyledCominsoon>Coming soon...</StyledCominsoon>
+            ) : (
+              <StyledCardButton
                 onClick={() => {
                   check(handleExplore);
                 }}
@@ -80,8 +88,7 @@ const Card = function ({ compass }: any) {
                   />
                 </svg>
               </StyledCardButton>
-          {/* <StyledCardTitle>{compass.name}</StyledCardTitle>
-          <StyledCardDesc>{compass.description}</StyledCardDesc> */}
+            )}
         </StyledCardMainContent>
       </StyledFlex>
     </StyledCard>

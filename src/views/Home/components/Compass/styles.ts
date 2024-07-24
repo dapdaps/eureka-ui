@@ -7,7 +7,7 @@ export const StyledContainer = styled.div`
 
 export const StyledContent = styled.div`
   width: 1244px;
-  margin: 40px auto 0px;
+  margin: 80px auto 0px;
   position: relative;
 `;
 
@@ -16,31 +16,6 @@ export const StyledInner = styled.div`
   z-index: 10;
 `;
 
-export const StyledRadialBg = styled.div`
-  border-radius: 428px;
-  opacity: 0.5;
-  background: radial-gradient(50% 50% at 50% 50%, #6889ff 0%, rgba(104, 137, 255, 0) 100%);
-  filter: blur(50px);
-  width: 428px;
-  height: 428px;
-  position: absolute;
-  z-index: 1;
-  left: -214px;
-  top: -20px;
-`;
-
-export const StyledRadialBg2 = styled.div`
-  border-radius: 306px;
-  opacity: 0.5;
-  background: radial-gradient(50% 50% at 50% 50%, #ebf479 0%, rgba(235, 244, 121, 0) 100%);
-  filter: blur(50px);
-  width: 306px;
-  height: 306px;
-  position: absolute;
-  z-index: 1;
-  right: -100px;
-  bottom: -60px;
-`;
 
 export const StyledTitle = styled.div`
   color: #fff;
@@ -61,21 +36,48 @@ export const StyledLoadingWrapper = styled.div`
 export const StyledCard = styled.div`
   position: relative;
   width: 1244px;
-  height: 380px;
-  border-radius: 32px;
-  border: 1px solid #464b56;
-  background: #21232a;
+  height: 500px;
+  border-radius: 20px;
+  border: 1px solid; 
+  border-image-source: linear-gradient(180deg, #202329 0%, #101115 100%);
+  background: #18191E;
 `;
 
 export const StyledCardBackgroundImage = styled.img`
-  margin-top: 28px;
-  margin-left: 30px;
+      width: 720px;
+      height: 500px;
 `;
 
 export const StyledCardMainContent = styled.div`
-  position: absolute;
-  left: 706px;
-  top: 30px;
+  padding: 30px 30px 30px 0;
+  flex: 1;
+  .title {
+    color: #979ABE;
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+    margin-bottom: 106px;
+  }
+  .card_section {
+    .logo {
+      width: 263px;
+      height: 45px;
+    }
+    .head {
+      width: 412px;
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 39px;
+      color: #fff;
+    }
+    .card-tips {
+      margin-top: 20px;
+      font-size: 16px;
+      line-height: 24px;
+      font-weight: 400;
+      color: #979ABE;
+    }
+  }
 `;
 
 export const StyledCardChains = styled.img`
@@ -114,10 +116,8 @@ export const StyledCardDesc = styled.div`
 `;
 
 export const StyledCardButton = styled.div`
-  position: absolute;
-  left: 706px;
-  bottom: 29px;
-  width: 213px;
+  margin-top: 108px;
+  width: 100%;
   height: 50px;
   flex-shrink: 0;
   border-radius: 12px;
@@ -162,16 +162,30 @@ export const StyledSwiperWrapper = styled.div`
 `;
 export const StyledSwiperNextButton = styled.div`
   position: absolute;
-  right: -25px;
-  bottom: 172px;
+  right: -64px;
+  bottom: 226px;
   cursor: pointer;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid #333648;
 `;
 export const StyledSwiperPrevButton = styled.div`
   position: absolute;
-  left: -25px;
-  bottom: 172px;
+  left: -64px;
+  bottom: 226px;
   transform: rotate(180deg);
   cursor: pointer;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid #333648;
 `;
 export const StyledChainsImg = styled.img``;
 

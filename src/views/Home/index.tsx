@@ -1,7 +1,6 @@
 import { useChainsStore } from '@/stores/chains';
 
 import Banner from './components/Banner';
-import Actions from './components/Actions';
 import Compass from './components/Compass';
 import Decentralised from './components/Decentralised';
 import DiscoveryDapps from './components/DiscoveryDapps';
@@ -16,7 +15,6 @@ const Home = () => {
   return (
     <StyledContainer>
       <Banner />
-      <Actions />
       <Compass />
       <DiscoveryDapps />
       <TrendingEthereum chains={chains} />
