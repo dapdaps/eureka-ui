@@ -127,6 +127,9 @@ export const Banner = styled.div`
       @media (min-width: 1800px) {
         top: 210px;
       }
+      @media (min-width: 2000px) {
+        top: 250px;
+      }
     }
     .min-apr {
       position: absolute;
@@ -140,6 +143,9 @@ export const Banner = styled.div`
       @media (min-width: 1800px) {
         top: 175px;
       }
+      @media (min-width: 2000px) {
+        top: 210px;
+      }
     }
     .max-apr {
       position: absolute;
@@ -152,6 +158,9 @@ export const Banner = styled.div`
       font-weight: 700;
       @media (min-width: 1800px) {
         top: 200px;
+      }
+      @media (min-width: 2000px) {
+        top: 240px;
       }
     }
     transform: translate(0, -50px);
