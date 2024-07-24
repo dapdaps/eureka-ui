@@ -6,6 +6,7 @@ import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
 import abi from '../../../../config/abi/karak';
+import useKarakBalance from './useKarakBalance';
 
 const contracts: Record<number, any> = {
   1: {
@@ -20,9 +21,9 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
   const [inAmount, setInAmount] = useState('');
   const [outAmount, setOutAmount] = useState('');
   const [loading, setLoading] = useState(false);
-  const [stakedAmount, setStakedAmount] = useState('');
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
+  const { balances, queryBalances } = useKarakBalance(token0?.chainId);
   const {
     tokenBalance,
     isLoading: balanceLoading,
@@ -45,17 +46,6 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
         .toFixed(4),
     );
   };
-
-  const getStakedAmount = useCallback(async () => {
-    const Contract = new ethers.Contract(contracts[token0.chainId].VaultSupervisor, abi, provider?.getSigner());
-    const result = await Contract.getDeposits(account);
-
-    setStakedAmount(
-      Big(result.assets[0] || 0)
-        .div(1e18)
-        .toString(),
-    );
-  }, [account]);
 
   const handleMax = function () {
     const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount;
@@ -104,7 +94,7 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
       if (status === 1) {
         toast.success({ title: `${method} successfully!`, tx: transactionHash, chainId: token0.chainId });
         updateBalance();
-        getStakedAmount();
+        queryBalances();
       } else {
         toast.fail({ title: `${method} faily!` });
       }
@@ -138,6 +128,10 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
     }
   };
 
+  const stakedAmount = useMemo(() => {
+    return balances ? balances[token1.address.toLowerCase()] : '';
+  }, [balances]);
+
   const data = useMemo(
     () => ({
       availableAmount: tokenBalance || 0,
@@ -147,11 +141,6 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
     }),
     [tokenBalance, stakedAmount],
   );
-
-  useEffect(() => {
-    if (!account) return;
-    getStakedAmount();
-  }, [account]);
 
   return {
     data,

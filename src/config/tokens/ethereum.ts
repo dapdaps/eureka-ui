@@ -227,7 +227,7 @@ export const ethereum: { [key: string]: Token } = {
     desc: 'inrETH is the Isolated Liquid Restaking Token (iLRT) for rETH. By using rETH as collateral in dedicated vaults, users get inrETH, which boosts liquidity, provides staking rewards, and allows participation in DeFi activities with specific risk management.',
   },
   krETH: {
-    address: '0x8E475A4F7820A4b6c0FF229f74fB4762f0813C47',
+    address: '0x8e475a4f7820a4b6c0ff229f74fb4762f0813c47',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
@@ -289,7 +289,7 @@ export const ethereum: { [key: string]: Token } = {
     desc: 'msfrxETH — An Isolated Liquid Restaked version of the sfrxETH LST created by Eigenpie. msfrxETH can only be minted by restaking sfrxETH from Frax Finance via Eigenpie and is not related to any other asset.',
   },
   ksfrxETH: {
-    address: '0x1751e1e4d2c9Fa99479C0c5574136F0dbD8f3EB8',
+    address: '0x1751e1e4d2c9fa99479c0c5574136f0dbd8f3eb8',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',
