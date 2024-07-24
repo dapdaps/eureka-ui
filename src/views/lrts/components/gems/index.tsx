@@ -1,11 +1,11 @@
 import _ from 'lodash';
-import Image from 'next/image';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import useAllTokensBalance from '../../hooks/useAllTokensBalance';
 import { Particle } from '../index';
+
 interface IProps {
   dataSource: any;
   onGemClick: (symbol: string) => void;
@@ -43,10 +43,6 @@ const Wrap = styled.section`
       border-radius: 10px;
       background-color: #000;
     }
-    &:hover {
-      background: url(/images/lrts/pad-active.svg) no-repeat #000;
-      background-size: cover;
-    }
   }
   .item-gem-content {
     position: relative;
@@ -57,6 +53,10 @@ const Wrap = styled.section`
     justify-content: center;
     background: url(/images/lrts/pad-empty.svg) no-repeat;
     background-size: contain;
+    &:hover {
+      background: url(/images/lrts/pad-active.svg) no-repeat transparent;
+      background-size: cover;
+    }
   }
   .item-gem-head {
     position: absolute;
@@ -91,6 +91,13 @@ const Wrap = styled.section`
     font-weight: 700;
     line-height: normal;
   }
+
+  .item-gem-40 {
+    .gem-light {
+      width: 90%;
+      height: 90%;
+    }
+  }
   .item-rock {
     background: url(/images/lrts/pad-rock.svg) no-repeat #151515;
   }
@@ -101,42 +108,36 @@ const Wrap = styled.section`
     background-color: #000;
     overflow: hidden;
   }
-`;
-const GemLight = styled.div`
-  position: relative;
-  /* &::after {
-    content: '';
-    position: absolute;
-    left: 10%;
-    top: 10%;
-    width: 80%;
-    height: 80%;
-    background-image: radial-gradient(transparent, #fff);
-    filter: blur(20px);
-    border-radius: 50%;
+  .gem-light {
+    width: 60%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    position: relative;
     animation: shine 6s infinite ease-in-out;
-  } */
-  animation: shine 6s infinite ease-in-out;
-  @keyframes shine {
-    0% {
-      opacity: 0.8;
-      transform: scale(0.95);
-    }
+    @keyframes shine {
+      0% {
+        opacity: 0.8;
+        transform: scale(0.95);
+      }
 
-    50% {
-      opacity: 1;
-      transform: scale(1);
-    }
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
 
-    100% {
-      opacity: 0.8;
-      transform: scale(0.95);
+      100% {
+        opacity: 0.8;
+        transform: scale(0.95);
+      }
     }
   }
 `;
+
 const GemImage = styled.img`
   max-width: 100%;
 `;
+
 const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
   const items = Array.from({ length: 81 }, (x, i) => i + 1);
 
@@ -178,7 +179,7 @@ const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
 
       return (
         <div
-          className={`item item-gem ${userGems.includes(order) ? 'active' : ''}`}
+          className={`item item-gem item-gem-${order} ${userGems.includes(order) ? 'active' : ''}`}
           key={order}
           onClick={(e: any) => {
             console.log('click-gem--', _currentGem);
@@ -191,9 +192,9 @@ const Stones: FC<IProps> = ({ dataSource, onGemClick }) => {
               <img src={_currentGem?.token?.icon} alt="" />
               {_currentGem?.token?.symbol}
             </div>
-            <GemLight>
+            <div className="gem-light">
               <GemImage src={_currentGem.logo} />
-            </GemLight>
+            </div>
             <div className="item-gem-apr">{Number(_currentGem.apr).toFixed(2)}%</div>
           </div>
         </div>

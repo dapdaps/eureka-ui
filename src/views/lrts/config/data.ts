@@ -14,7 +14,6 @@ const LSTS_DATA = [
     orders: [3, 15, 21, 40],
     lrtTokens: [
       {
-        // order: 3,
         dapp: {
           name: 'Inception',
           logo: '/images/lrts/gem-inmeth.svg',
@@ -23,7 +22,6 @@ const LSTS_DATA = [
         token: ethereum['inmETH'],
       },
       {
-        // order: 15,
         dapp: {
           name: 'Eigenpie',
           logo: '/images/lrts/gem-mmeth.svg',
@@ -32,7 +30,6 @@ const LSTS_DATA = [
         token: ethereum['mmETH'],
       },
       {
-        // order: 21,
         dapp: {
           name: 'KaraK',
           logo: '/images/lrts/gem-kmeth.svg',
@@ -41,7 +38,6 @@ const LSTS_DATA = [
         token: ethereum['kmETH'],
       },
       {
-        // order: 40,
         dapp: {
           name: 'RestakeFinance',
           logo: '/images/lrts/gem-rmeth.svg',
@@ -61,10 +57,9 @@ const LSTS_DATA = [
     token: {
       ...ethereum['stETH'],
     },
-    orders: [3, 7, 13, 15, 25, 31, 40],
+    orders: [3, 7, 13, 15, 33, 40],
     lrtTokens: [
       {
-        // order: 3,
         dapp: {
           name: 'KelpDao',
           logo: '/images/lrts/gem-rseth.svg',
@@ -73,7 +68,6 @@ const LSTS_DATA = [
         token: ethereum['rsETH'],
       },
       {
-        // order: 7,
         dapp: {
           name: 'Inception',
           logo: '/images/lrts/gem-insteth.svg',
@@ -82,7 +76,6 @@ const LSTS_DATA = [
         token: ethereum['instETH'],
       },
       {
-        // order: 13,
         dapp: {
           name: 'Eigenpie',
           logo: '/images/lrts/gem-msteth.svg',
@@ -91,7 +84,6 @@ const LSTS_DATA = [
         token: ethereum['mstETH'],
       },
       {
-        // order: 15,
         dapp: {
           name: 'Puffer Finance',
           logo: '/images/lrts/gem-pufeth.svg',
@@ -100,7 +92,6 @@ const LSTS_DATA = [
         token: ethereum['pufETH'],
       },
       {
-        // order: 25,
         dapp: {
           name: 'RestakeFinance',
           logo: '/images/lrts/gem-rsteth.svg',
@@ -109,7 +100,6 @@ const LSTS_DATA = [
         token: ethereum['rstETH'],
       },
       {
-        // order: 31,
         dapp: {
           name: 'EtherFi',
           logo: '/images/lrts/gem-weeth.svg',
@@ -117,15 +107,14 @@ const LSTS_DATA = [
         logo: '/images/lrts/gem-weeth.svg',
         token: ethereum['eETH'],
       },
-      {
-        // order: 40,
-        dapp: {
-          name: 'Renzo',
-          logo: '/images/lrts/gem-ezeth.svg',
-        },
-        logo: '/images/lrts/gem-ezeth.svg',
-        token: ethereum['ezETH'],
-      },
+      // {
+      //   dapp: {
+      //     name: 'Renzo',
+      //     logo: '/images/lrts/gem-ezeth.svg',
+      //   },
+      //   logo: '/images/lrts/gem-ezeth.svg',
+      //   token: ethereum['ezETH'],
+      // },
     ],
   },
   {
@@ -141,7 +130,6 @@ const LSTS_DATA = [
     orders: [7, 13, 40],
     lrtTokens: [
       {
-        // order: 7,
         dapp: {
           name: 'Inception',
           logo: '/images/lrts/gem-inreth.svg',
@@ -150,7 +138,6 @@ const LSTS_DATA = [
         token: ethereum['inrETH'],
       },
       {
-        // order: 13,
         dapp: {
           name: 'Karak',
           logo: '/images/lrts/gem-kreth.svg',
@@ -159,7 +146,6 @@ const LSTS_DATA = [
         token: ethereum['krETH'],
       },
       {
-        // order: 40,
         dapp: {
           name: 'Eigenpie',
           logo: '/images/lrts/gem-mreth.svg',
@@ -182,7 +168,6 @@ const LSTS_DATA = [
     orders: [7, 13, 25, 40],
     lrtTokens: [
       {
-        // order: 7,
         dapp: {
           name: 'Inception',
           logo: '/images/lrts/gem-insfrseth.svg',
@@ -191,7 +176,6 @@ const LSTS_DATA = [
         token: ethereum['insfrxETH'],
       },
       {
-        // order: 13,
         dapp: {
           name: 'Karak',
           logo: '/images/lrts/gem-ksfrxeth.svg',
@@ -200,7 +184,6 @@ const LSTS_DATA = [
         token: ethereum['ksfrxETH'],
       },
       {
-        // order: 25,
         dapp: {
           name: 'Eigenpie',
           logo: '/images/lrts/gem-msfrxeth.svg',
@@ -209,7 +192,6 @@ const LSTS_DATA = [
         token: ethereum['msfrxETH'],
       },
       {
-        // order: 40,
         dapp: {
           name: 'RestakeFinance',
           logo: '/images/lrts/gem-rsfrxeth.svg',

@@ -24,20 +24,20 @@ export const Banner = styled.div`
     overflow: hidden;
   }
   .swiper .swiper-slide {
-    /* transform: scale(0.8, 0.8); */
+    display: flex;
     transition: transform 0.3s ease-in;
+    justify-content: center;
+    &.swiper-slide-next + div {
+      justify-content: left;
+    }
+    &:not(.swiper-slide-next, .swiper-slide-prev, .swiper-slide-active) {
+      justify-content: right;
+    }
     .lst-content {
       position: relative;
       width: 194px;
       height: 150px;
-      margin: 0 auto;
     }
-    /* &.swiper-slide-next,
-    &:last-child {
-      .lst-content {
-        margin-left: 0;
-      }
-    } */
     .lst-img {
       width: 100%;
       cursor: pointer;
@@ -109,7 +109,6 @@ export const Banner = styled.div`
       position: absolute;
       top: 75px;
       right: 15px;
-
       color: #fff;
       font-family: Montserrat;
       font-size: 12px;
