@@ -27,7 +27,7 @@ const useAllTokensBalance = (updater?: number) => {
   const { loading, balances: tokenBalances } = useTokensBalance(allTokens);
 
   useEffect(() => {
-    if (!Object.keys(karakBalances).length || !Object.keys(tokenBalances).length) return;
+    if (!Object.keys(karakBalances || {}).length || !Object.keys(tokenBalances || {}).length) return;
     setBalances({ ...karakBalances, ...tokenBalances });
   }, [karakBalances, tokenBalances]);
 

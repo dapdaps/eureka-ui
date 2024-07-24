@@ -14,7 +14,10 @@ export default function useKarakBalance(chainId?: number) {
   const { account, provider } = useAccount();
 
   const queryBalances = useCallback(async () => {
-    if (!chainId || !account || !contracts[chainId]) return;
+    if (!chainId || !account || !contracts[chainId]) {
+      setBalances({});
+      return;
+    }
     const Contract = new ethers.Contract(
       contracts[chainId].VaultSupervisor,
       [
