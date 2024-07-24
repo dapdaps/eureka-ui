@@ -15,9 +15,9 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: 'Steakhut',
+  defaultDapp: 'steakhut',
   dapps: {
-    Steakhut: {
+    steakhut: {
       ...steakhut.basic,
       ...steakhut.networks[CHAIN_ID]
     }

@@ -16,9 +16,9 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: 'Steer',
+  defaultDapp: 'steer',
   dapps: {
-    Steer: {
+    steer: {
       ...steer.basic,
       ...steer.networks[CHAIN_ID],
     },

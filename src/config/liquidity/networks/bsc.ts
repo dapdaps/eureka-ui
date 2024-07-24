@@ -16,13 +16,13 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defalutDex: 'Gamma',
+  defalutDex: 'gamma',
   dapps: {
-    Gamma: {
+    gamma: {
       ...gamma.basic,
       ...gamma.networks[CHAIN_ID],
     },
-    Rangeprotocol: {
+    rangeprotocol: {
       ...rangeprotocol.basic,
       ...rangeprotocol.networks[CHAIN_ID]
     }

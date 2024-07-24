@@ -9,6 +9,8 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
 import { useSetChain } from '@web3-onboard/react';
+import liquidityDapp from '@/config/dapp/liquidity'
+import stakingDapp from '@/config/dapp/staking'
 
 import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import {
@@ -19,27 +21,20 @@ import {
 
 const Liquidity = (props: Props) => {
   const { chain, menu } = props;
-
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
   const { chains } = useTokensAndChains();
   const { addAction } = useAddAction('all-in-one');
+  // const [isBosComponent, setIsBosComponent] = useState(false)
+  const [dapp, setDapp] = useState<any>(null);
 
   const prices = usePriceStore((store) => store.price);
-
   const [tabConfig, setTabConfig] = useState<any>({ dapps: {} });
-
-  console.log('===chains', chains)
-  console.log('===chains[Number(connectedChain?.id)]', chains[Number(connectedChain?.id)])
   const currentChain = useMemo(
     () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
     [connectedChain?.id],
   );
-
-
-  console.log('====currentChain', currentChain)
-  console.log('==chain', chain)
   const isRightNetwork = currentChain?.chainId === chain.chainId;
 
 
@@ -50,6 +45,8 @@ const Liquidity = (props: Props) => {
   if (account && isRightNetwork) {
     return (
       <div>
+
+        
         <ComponentWrapperPage
           src={menu.path}
           componentProps={{
@@ -61,10 +58,18 @@ const Liquidity = (props: Props) => {
               logo: currentChain?.icon,
               name: currentChain?.chainName
             },
+
             multicallAddress: multicallConfig[currentChain?.chainId as any],
-            ...tabConfig,
+            themeMapping: {
+              ...stakingDapp,
+              ...liquidityDapp,
+            },
+            dapps: tabConfig?.dapps,
             prices,
             account,
+            onChangeDapp: (dapp) => {
+              setDapp(dapp)
+            },
             onReset: () => {
             },
           }}

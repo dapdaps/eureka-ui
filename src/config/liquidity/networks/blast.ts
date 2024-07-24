@@ -14,15 +14,20 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: 'Gamma',
+  defaultDapp: 'gamma',
   dapps: {
-    Gamma: {
+    gamma: {
       ...gamma.basic,
       ...gamma.networks[CHAIN_ID],
     },
-    Steer: {
+    steer: {
       ...steer.basic,
       ...steer.networks[CHAIN_ID]
+    },
+    "thruster-liquidity": {
+      name: 'thruster',
+      icon: 'https://s3.amazonaws.com/dapdap.prod/images/thtusterpool.png',
+      dappSrc: 'dapp/thruster-liquidity'
     }
   },
 };

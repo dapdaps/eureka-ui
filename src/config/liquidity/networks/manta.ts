@@ -16,13 +16,13 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: 'Rangeprotocol',
+  defaultDapp: 'rangeprotocol',
   dapps: {
-    Rangeprotocol: {
+    rangeprotocol: {
       ...rangeprotocol.basic,
       ...rangeprotocol.networks[CHAIN_ID]
     },
-    Steer: {
+    steer: {
       ...steer.basic,
       ...steer.networks[CHAIN_ID]
     }
