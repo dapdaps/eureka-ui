@@ -53,7 +53,7 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
     setStakedAmount(
       Big(result.assets[0] || 0)
         .div(1e18)
-        .toFixed(4),
+        .toString(),
     );
   }, [account]);
 

@@ -94,11 +94,12 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
     );
     const result = await Contract.balanceOf(account);
 
-    setStakedAmount(Big(result).div(1e18).toFixed(4));
+    setStakedAmount(Big(result).div(1e18).toString());
   }, [account, actionType]);
 
   const handleMax = function () {
     const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount;
+
     handleAmountChange(_amount);
   };
   const handleStake = async () => {

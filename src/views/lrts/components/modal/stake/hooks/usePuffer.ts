@@ -84,12 +84,12 @@ export default function usePuffer({ token0, token1, actionType, gem, dapp, onSuc
     );
     const result = await Contract.balanceOf(account);
 
-    setStakedAmount(Big(result).div(1e18).toFixed(4));
+    setStakedAmount(Big(result).div(1e18).toString());
   }, [account]);
 
   const handleMax = function () {
-    const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount
-    handleAmountChange(_amount)
+    const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount;
+    handleAmountChange(_amount);
   };
   const handleStake = async () => {
     let method = '';
@@ -178,7 +178,7 @@ export default function usePuffer({ token0, token1, actionType, gem, dapp, onSuc
         toast.fail({ title: `${method} faily!` });
       }
       addAction({
-        type: "Staking",
+        type: 'Staking',
         action: actionType,
         token: [inToken.symbol, outToken.symbol],
         amount: inAmount,
@@ -192,11 +192,11 @@ export default function usePuffer({ token0, token1, actionType, gem, dapp, onSuc
           fromTokenAmount: inAmount,
           toTokenSymol: outToken.symbol,
           toTokenAmount: outAmount,
-        })
-      })
+        }),
+      });
       setLoading(false);
-      setInAmount("")
-      onSuccess && onSuccess(actionType)
+      setInAmount('');
+      onSuccess && onSuccess(actionType);
     } catch (err: any) {
       console.log('err', err);
       toast.dismiss(toastId);
