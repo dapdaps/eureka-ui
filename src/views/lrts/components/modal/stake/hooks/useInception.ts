@@ -56,7 +56,7 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
     setOutAmount(
       ['stake', 'restake'].includes(actionType)
         ? Big(amount).mul(ratio).toString()
-        : Big(amount).mul(amount).div(ratio).toString(),
+        : Big(amount).div(Big(1).div(ratio)).toString(),
     );
   };
 
