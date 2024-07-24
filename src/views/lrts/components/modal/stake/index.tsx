@@ -32,7 +32,7 @@ const ComponentMapping: any = {
   'Rocket Pool': RocketPool,
   'Frax Finance': Frax,
   KelpDao,
-  Karak,
+  KaraK: Karak,
   Eigenpie,
   RestakeFinance,
   EtherFi,

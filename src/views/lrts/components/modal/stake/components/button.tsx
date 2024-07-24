@@ -51,12 +51,13 @@ export default function Button({
       </BaseButton>
     );
   }
-  if (!approved) {
-    return <BaseButton onClick={onApprove}>Approve</BaseButton>;
-  }
 
   if (Big(inAmount || 0).eq(0)) {
     return <BaseButton disabled>Enter An Amount</BaseButton>;
+  }
+
+  if (!approved) {
+    return <BaseButton onClick={onApprove}>Approve</BaseButton>;
   }
 
   if (isInSufficient) return <BaseButton disabled>InSufficient Balance</BaseButton>;

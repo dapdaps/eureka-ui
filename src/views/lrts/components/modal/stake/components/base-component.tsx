@@ -1,7 +1,7 @@
 import Big from 'big.js';
 
 import StakeList from '../components/stake-list';
-import CompletedStaleList from './completed-stake-list'
+import CompletedStaleList from './completed-stake-list';
 import {
   StyledActionTypeTab,
   StyledActionTypeTabContainer,
@@ -72,7 +72,6 @@ const BaseComponent = function (props: any) {
     queryRequests,
     claim,
   } = props?.componentProps;
-
 
   const [isActive, setIsActive] = useState(true);
   const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
@@ -222,7 +221,7 @@ const BaseComponent = function (props: any) {
           <StyledBaseInfo style={{ alignItems: ['stake', 'restake'].includes(actionType) ? 'center' : 'flex-start' }}>
             <StyledFirstTips>APR</StyledFirstTips>
             <StyledBaseInfoValue style={{ color: '#A4E417' }}>
-              {Big(gem?.dapp?.apr || dapp?.apr).toFixed(2)}%
+              {Big(gem?.dapp?.apr || gem?.apr || dapp?.apr).toFixed(2)}%
             </StyledBaseInfoValue>
           </StyledBaseInfo>
           <StyledBaseInfo>
@@ -275,7 +274,7 @@ const BaseComponent = function (props: any) {
           <StyledReceiveContainer>
             <StyledFirstTips>Min. Receive</StyledFirstTips>
             <StyledReceive>
-              ~{Big(outAmount ? outAmount : 0).toFixed(6)} {gem?.dapp?.name === "EtherFi" ? "ETH" : outToken?.symbol}
+              ~{Big(outAmount ? outAmount : 0).toFixed(6)} {gem?.dapp?.name === 'EtherFi' ? 'ETH' : outToken?.symbol}
             </StyledReceive>
           </StyledReceiveContainer>
           <StyledStakeButtonContainer disabled={isInSufficient || Big(inAmount ? inAmount : 0).lt(leastAmount)}>
@@ -301,35 +300,36 @@ const BaseComponent = function (props: any) {
             <StyledActiveAndCompletedContainer>
               <StyledWithdrawTips>Withdrawl requests</StyledWithdrawTips>
               <StyledActiveAndCompleted>
-                <StyledActiveAndCompletedButton onClick={() => setIsActive(true)} className={isActive ? "active" : ""}>Active</StyledActiveAndCompletedButton>
-                <StyledActiveAndCompletedButton onClick={() => setIsActive(false)} className={!isActive ? "active" : ""}> completed</StyledActiveAndCompletedButton>
+                <StyledActiveAndCompletedButton onClick={() => setIsActive(true)} className={isActive ? 'active' : ''}>
+                  Active
+                </StyledActiveAndCompletedButton>
+                <StyledActiveAndCompletedButton
+                  onClick={() => setIsActive(false)}
+                  className={!isActive ? 'active' : ''}
+                >
+                  {' '}
+                  completed
+                </StyledActiveAndCompletedButton>
               </StyledActiveAndCompleted>
             </StyledActiveAndCompletedContainer>
             <StyledSecondTips style={{ marginTop: 16, marginBottom: 20 }}>
               Unstake requests may take from a few minutes to several days, depending on the project.
             </StyledSecondTips>
-            {
-              isActive ? (
-                <StakeList
-                  requests={requests}
-                  requestsLoading={requestsLoading}
-                  claiming={claiming}
-                  queryRequests={queryRequests}
-                  claim={claim}
-                />
-              ) : (
-                <CompletedStaleList
-                  gem={gem}
-                  dapp={dapp}
-                />
-              )
-            }
-
+            {isActive ? (
+              <StakeList
+                requests={requests}
+                requestsLoading={requestsLoading}
+                claiming={claiming}
+                queryRequests={queryRequests}
+                claim={claim}
+              />
+            ) : (
+              <CompletedStaleList gem={gem} dapp={dapp} />
+            )}
           </StyledStakeBottomContainer>
         </>
-      )
-      }
-    </StyledStakeContainer >
+      )}
+    </StyledStakeContainer>
   );
 };
 export default BaseComponent;
