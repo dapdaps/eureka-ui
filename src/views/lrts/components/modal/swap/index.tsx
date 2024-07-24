@@ -12,6 +12,7 @@ import useTokenBalance from '@/hooks/useTokenBalance';
 import useApprove from '@/hooks/useApprove';
 import useTrade from './hooks/useTrade';
 import { StyledContainer, StyledHeader, StyledHeaderTitle } from './styles';
+import { balanceFormated } from '@/utils/balance';
 
 const SwapModal = ({ show, setShow, token }: any) => {
   const [errorTips, setErrorTips] = useState('');
@@ -91,6 +92,11 @@ const SwapModal = ({ show, setShow, token }: any) => {
               onSelect={(token: any) => {
                 setOutputCurrency(token);
               }}
+              ratioStr={
+                trade?.outputAmount
+                  ? `1 ${inputCurrency.symbol} = ${balanceFormated(Big(trade.outputAmount).div(inputAmount).toString())} ${outputCurrency.symbol}`
+                  : ''
+              }
             />
             <Result outputCurrency={outputCurrency} trade={trade} />
             <Button

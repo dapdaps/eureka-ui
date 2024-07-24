@@ -72,12 +72,23 @@ export const StyledTokenSymbol = styled.div`
   font-weight: 700;
 `;
 
-export default function InputCurrency({ mt, label, currency, value, loading, onChange, onMax, tokens, onSelect }: any) {
+export default function InputCurrency({
+  mt,
+  label,
+  currency,
+  value,
+  ratioStr,
+  loading,
+  onChange,
+  onMax,
+  tokens,
+  onSelect,
+}: any) {
   return (
     <StyledContainer style={{ marginTop: mt }}>
       <StyledHeader>
         <StyledLabel>{label}</StyledLabel>
-        {label === 'To' && <StyledHeaderPrice>1 rstETH = 1 ezETH</StyledHeaderPrice>}
+        {label === 'To' && ratioStr && <StyledHeaderPrice>{ratioStr}</StyledHeaderPrice>}
       </StyledHeader>
       <StyledInputWrapper>
         <StyledInput

@@ -227,7 +227,7 @@ export const ethereum: { [key: string]: Token } = {
     desc: 'inrETH is the Isolated Liquid Restaking Token (iLRT) for rETH. By using rETH as collateral in dedicated vaults, users get inrETH, which boosts liquidity, provides staking rewards, and allows participation in DeFi activities with specific risk management.',
   },
   krETH: {
-    address: '0xf02c96dbbb92dc0325ad52b3f9f2b951f972bf00',
+    address: '0x8E475A4F7820A4b6c0FF229f74fB4762f0813C47',
     chainId: CHAIN_ID,
     decimals: 18,
     name: '',

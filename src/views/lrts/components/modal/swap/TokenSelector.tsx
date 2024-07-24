@@ -36,7 +36,7 @@ const StyledMenu = styled.div`
   border: 1px solid #3f3f3f;
   background: #414141;
   width: 140px;
-  height: 230px;
+  max-height: 230px;
   overflow-y: auto;
 `;
 const StyledMenuItem = styled.div`

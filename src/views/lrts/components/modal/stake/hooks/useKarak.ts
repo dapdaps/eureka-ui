@@ -2,8 +2,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { multicall } from '@/utils/multicall';
-import multicallAddresses from '@/config/contract/multicall';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
@@ -60,8 +58,8 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
   }, [account]);
 
   const handleMax = function () {
-    const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount
-    handleAmountChange(_amount)
+    const _amount = ['stake', 'restake'].includes(actionType) ? tokenBalance ?? 0 : stakedAmount;
+    handleAmountChange(_amount);
   };
   const handleStake = async () => {
     setLoading(true);
@@ -111,7 +109,7 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
         toast.fail({ title: `${method} faily!` });
       }
       addAction({
-        type: "Staking",
+        type: 'Staking',
         action: actionType,
         token: [inToken.symbol, outToken.symbol],
         amount: inAmount,
@@ -125,11 +123,11 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
           fromTokenAmount: inAmount,
           toTokenSymol: outToken.symbol,
           toTokenAmount: outAmount,
-        })
-      })
+        }),
+      });
       setLoading(false);
-      setInAmount("")
-      onSuccess && onSuccess(actionType)
+      setInAmount('');
+      onSuccess && onSuccess(actionType);
     } catch (err: any) {
       console.log('err', err);
       toast.dismiss(toastId);

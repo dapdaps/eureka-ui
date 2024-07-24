@@ -139,7 +139,7 @@ const LSTS_DATA = [
       },
       {
         dapp: {
-          name: 'Karak',
+          name: 'KaraK',
           logo: '/images/lrts/gem-kreth.svg',
         },
         logo: '/images/lrts/gem-kreth.svg',
@@ -177,7 +177,7 @@ const LSTS_DATA = [
       },
       {
         dapp: {
-          name: 'Karak',
+          name: 'KaraK',
           logo: '/images/lrts/gem-ksfrxeth.svg',
         },
         logo: '/images/lrts/gem-ksfrxeth.svg',
