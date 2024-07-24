@@ -336,7 +336,7 @@ const Portfolio: FC<IProps> = (props) => {
     if (Number(userBalance) === 0) return;
 
     const _staked = Big(lstValue).plus(lrtValue);
-    const _stakedETH = Big(lstValue).plus(lrtValue).div(userBalance).toFixed(2);
+    const _stakedETH = Big(lstValue).plus(lrtValue).div(_staked.plus(userBalance)).toFixed(2);
     const _restakedETH = _staked.eq(0) ? '0' : Big(lrtValue).div(_staked).toFixed(2);
 
     setStakedEthPercent(_stakedETH);

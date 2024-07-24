@@ -243,6 +243,7 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
 
     const _index = tabList.findIndex((item: any) => item.symbol === curLrt?.symbol);
     const _dataIndex = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
+    console.log(1111, _index, _dataIndex);
 
     if (_index < 0) {
       // hide tab header
@@ -260,6 +261,10 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
   const onChange = (index: number, symbol: string) => {
     setActiveIndex(index);
     onTabChange(symbol);
+    // click box in tab head
+    if (index === 0) {
+      setDataIndex(0);
+    }
   };
   const anim = {
     initial: { y: 50, opacity: 0 },
