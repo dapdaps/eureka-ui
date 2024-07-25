@@ -2,15 +2,14 @@ import { useSize } from 'ahooks';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
-import { Autoplay } from 'swiper/modules';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
-import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import Tag from '@/views/Odyssey/components/Tag';
+import { StyledFlex, StyledFont } from '@/styled/styles';
 import useCompassList from './hooks/useCompassList';
 
 import IconArrow from '@public/images/home/arrow-right.svg'
@@ -19,11 +18,7 @@ import {
   StyledCard,
   StyledCardBackgroundImage,
   StyledCardButton,
-  StyledCardDesc,
   StyledCardMainContent,
-  StyledCardTitle,
-  StyledChainsImg,
-  StyledCominsoon,
   StyledCompassIcon,
   StyledContainer,
   StyledContent,
@@ -80,8 +75,6 @@ const Card = function ({ compass }: any) {
                   />
                 </svg>
               </StyledCardButton>
-          {/* <StyledCardTitle>{compass.name}</StyledCardTitle>
-          <StyledCardDesc>{compass.description}</StyledCardDesc> */}
         </StyledCardMainContent>
       </StyledFlex>
     </StyledCard>
@@ -104,16 +97,23 @@ const Compass = () => {
           <StyledSwiperWrapper>
             <Swiper
               width={1244}
-              modules={[Autoplay]}
+              modules={[Autoplay, Pagination]}
               slidesPerView={1}
-              // autoplay={{ delay: 113000 }}
+              autoplay={{ delay: 113000 }}
               speed={1000}
               spaceBetween={(size?.width - 1244) / 2 + 100}
               updateOnWindowResize={true}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
-              // loop={true}
+              pagination={{
+                el: '.swiper-pagination',
+                clickable: true,
+                renderBullet: (index, className) => {
+                  return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
+                }
+              }}
+              loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
@@ -190,6 +190,7 @@ const Compass = () => {
             >
               <IconArrow />
             </StyledSwiperNextButton>
+            <div className="swiper-pagination"></div>
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>

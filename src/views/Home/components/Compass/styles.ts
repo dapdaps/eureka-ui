@@ -159,6 +159,33 @@ export const StyledWinPtsIcon = styled.div`
 `;
 export const StyledSwiperWrapper = styled.div`
   position: relative;
+  .swiper-pagination {
+    position: absolute;
+    bottom: 30px;
+    right: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  }
+
+  .swiper-pagination-bullet {
+    width: 25px;
+    height: 6px;
+    background: rgba(55, 58, 83, 0.5);
+    display: inline-block;
+    margin: 0 6px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 150px;
+    background: #575A77;
+  }
 `;
 export const StyledSwiperNextButton = styled.div`
   position: absolute;
