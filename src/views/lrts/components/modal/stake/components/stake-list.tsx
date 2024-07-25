@@ -27,6 +27,8 @@ const ClaimButton = ({ claiming, claim, request }: any) => {
 };
 
 export default function StakeList({ requests, requestsLoading, claiming, claim, sx }: any) {
+  console.log(requests, 'StakeList');
+  
   return (
     <StyledRecordList style={sx}>
       {requestsLoading ? (
