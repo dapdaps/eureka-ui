@@ -41,10 +41,10 @@ const tokens: { [key: string]: any } = {
   },
 };
 
-const dappName: string = "Karak"
+const dappName: string = 'KaraK';
 export default function useKarakRequests() {
   const { account, chainId, provider } = useAccount();
-  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
+  const completedRequestMappingStore: any = useCompletedRequestMappingStore();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -71,22 +71,35 @@ export default function useKarakRequests() {
           multicallAddress,
           provider,
         });
+        const claimabledResult = await multicall({
+          abi,
+          options: {},
+          calls: result.map((quest: any) => ({
+            address: contracts[chainId].DelegationSupervisor,
+            name: 'isWithdrawPending',
+            params: [quest],
+          })),
+          multicallAddress,
+          provider,
+        });
 
         if (!assetsResult) throw Error('');
 
-        const _list = assetsResult.map((asset: any, i: number) => {
-          const request = result[i];
-          const token0Address = request.request[0][0].toLowerCase();
-          const startTime = Number(request.start) * 1000;
-          return {
-            amount: Big(asset).div(1e18).toString(),
-            startTime,
-            token0: tokens[token0Address].from,
-            token1: tokens[token0Address].to,
-            status: startTime + 604800000 > Date.now() ? 'In Progress' : 'Claimable',
-            data: request,
-          };
-        });
+        const _list = assetsResult
+          .filter((asset: any, i: number) => claimabledResult[i] !== null)
+          .map((asset: any, i: number) => {
+            const request = result[i];
+            const token0Address = request.request[0][0].toLowerCase();
+            const startTime = Number(request.start) * 1000;
+            return {
+              amount: Big(asset).div(1e18).toString(),
+              startTime,
+              token0: tokens[token0Address].from,
+              token1: tokens[token0Address].to,
+              status: startTime + 604800000 > Date.now() ? 'In Progress' : 'Claimable',
+              data: request,
+            };
+          });
 
         setRequests(asset ? _list.filter((item: any) => item.token1.address === asset) : _list);
 
@@ -101,12 +114,12 @@ export default function useKarakRequests() {
   );
 
   const handleCompleted = function (record: Record) {
-    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
-    const completedRequests = completedRequestMapping[dappName] || []
-    completedRequests.push(record)
-    completedRequestMapping[dappName] = completedRequests
-    completedRequestMappingStore.set({ completedRequestMapping })
-  }
+    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping;
+    const completedRequests = completedRequestMapping[dappName] || [];
+    completedRequests.push(record);
+    completedRequestMapping[dappName] = completedRequests;
+    completedRequestMappingStore.set({ completedRequestMapping });
+  };
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
@@ -126,6 +139,10 @@ export default function useKarakRequests() {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
+          handleCompleted({
+            ...record,
+            status: 'completed',
+          });
         } else {
           toast.fail({ title: `Claim faily!` });
         }
@@ -143,10 +160,7 @@ export default function useKarakRequests() {
             token1: record.token1.symbol,
           }),
         });
-        handleCompleted({
-          ...record,
-          status: 'completed'
-        })
+
         onLoading(false);
       } catch (err: any) {
         console.log('err', err);

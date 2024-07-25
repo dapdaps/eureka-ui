@@ -135,4 +135,33 @@ export default [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    inputs: [
+      {
+        components: [
+          { internalType: 'address', name: 'staker', type: 'address' },
+          { internalType: 'address', name: 'delegatedTo', type: 'address' },
+          { internalType: 'uint256', name: 'nonce', type: 'uint256' },
+          { internalType: 'uint256', name: 'start', type: 'uint256' },
+          {
+            components: [
+              { internalType: 'contract IVault[]', name: 'vaults', type: 'address[]' },
+              { internalType: 'uint256[]', name: 'shares', type: 'uint256[]' },
+              { internalType: 'address', name: 'withdrawer', type: 'address' },
+            ],
+            internalType: 'struct Withdraw.WithdrawRequest',
+            name: 'request',
+            type: 'tuple',
+          },
+        ],
+        internalType: 'struct Withdraw.QueuedWithdrawal',
+        name: 'withdrawal',
+        type: 'tuple',
+      },
+    ],
+    name: 'isWithdrawPending',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function',
+  },
 ];
