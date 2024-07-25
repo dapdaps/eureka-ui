@@ -1,8 +1,10 @@
+import Image from 'next/image';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
+import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import { balanceFormated } from '@/utils/balance';
 import { CustomTable, PolygonBtn } from '@/views/lrts/components';
@@ -58,6 +60,7 @@ const List = styled.div`
 const Item = styled.div`
   display: flex;
   align-items: center;
+  gap: 8px;
   padding: 0 10px;
   height: 72px;
   color: #fff;
@@ -160,7 +163,7 @@ const UnstakeTable: FC<IProps> = (props) => {
     ...restakeFinanceRequests.requests,
   ];
   console.log('unstake-list--', dataSource);
-
+  const tokens = Object.values(ethereum);
   return (
     <>
       <THead>
@@ -168,25 +171,40 @@ const UnstakeTable: FC<IProps> = (props) => {
         {/* <div>Date</div> */}
         <div>Status</div>
       </THead>
-      {dataSource?.map((item: any, index: number) => (
-        <List key={index}>
-          <Item>
-            {balanceFormated(item?.amount, 3)} {item?.token1?.symbol}
-          </Item>
-          {/* <div></div> */}
-          <Item>
-            {item.status === 'In Progress' ? (
-              'In Progress'
-            ) : (
-              <ClaimButton
-                // claiming={claiming}
-                claim={lidoRequests.claim}
-                request={item}
-              />
-            )}
-          </Item>
-        </List>
-      ))}
+      {dataSource?.map((item: any, index: number) => {
+        const { token0, token1 } = item;
+        const fromTokenSymbol = token0?.symbol;
+        const toTokenSymbol = token1?.symbol;
+
+        const fromToken = tokens.find((token: any) => token?.symbol === fromTokenSymbol);
+        const toToken = tokens.find((token: any) => token?.symbol === toTokenSymbol);
+        return (
+          <List key={index}>
+            <Item>
+              {fromToken ? <Image src={fromToken.icon || ''} width={30} height={30} alt="" /> : null}
+              <span>{balanceFormated(item?.amount, 3)}</span>
+              {fromTokenSymbol}
+              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
+                <path d="M1 1L5 5L1 9" stroke="white" stroke-linecap="round" />
+              </svg>
+              {toToken ? <Image src={toToken.icon || ''} width={30} height={30} alt="" /> : null}
+              {toTokenSymbol}
+            </Item>
+
+            <Item>
+              {item.status === 'In Progress' ? (
+                'In Progress'
+              ) : (
+                <ClaimButton
+                  // claiming={claiming}
+                  claim={lidoRequests.claim}
+                  request={item}
+                />
+              )}
+            </Item>
+          </List>
+        );
+      })}
     </>
   );
 };
