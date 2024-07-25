@@ -33,6 +33,10 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
     return ['stake', 'restake'].includes(actionType) ? [token0, token1] : [token1, token0];
   }, [token0, token1, actionType]);
 
+  const stakedAmount = useMemo(() => {
+    return balances ? balances[token1.address.toLowerCase()] : '';
+  }, [balances]);
+
   const isInSufficient = useMemo(() => {
     const balance = ['stake', 'restake'].includes(actionType) ? tokenBalance : stakedAmount;
     return Big(inAmount || 0).gt(balance || 0);
@@ -127,10 +131,6 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
       setLoading(false);
     }
   };
-
-  const stakedAmount = useMemo(() => {
-    return balances ? balances[token1.address.toLowerCase()] : '';
-  }, [balances]);
 
   const data = useMemo(
     () => ({
