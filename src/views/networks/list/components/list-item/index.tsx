@@ -3,8 +3,10 @@ import React, { memo, useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
+import popupsData, { IdToPath } from '@/config/all-in-one/chains';
 
 interface IProps {
+  dataSource: any;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -43,12 +45,20 @@ const ChainName = styled.div`
   line-height: normal;
 `;
 const ChainDesc = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
   color: #fff;
   font-family: Gantari;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 100%; /* 14px */
+`;
+const ChainInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 `;
 const LogoGroup = styled.div`
   display: flex;
@@ -113,36 +123,37 @@ const DataList = styled.div`
   }
 `;
 
-const ListItem: FC<IProps> = (props) => {
-  const [state, setState] = useState<number>(0);
-
-  useEffect(() => {}, []);
-
+const ListItem: FC<IProps> = ({ dataSource }) => {
+  const { id, logo, name, chain_id, tbd_token, native_currency } = dataSource;
+  const popupsDataArray = Object.values(popupsData);
+  const matchedItem = popupsDataArray.find((item) => item.chainId === chain_id);
+  const path = matchedItem ? matchedItem.path : '';
   return (
     <Wrap>
       <Head>
         <LogoGroup>
-          <Image src={''} width={60} height={60} alt="network" />
-          <div>
-            <ChainName>Mode</ChainName>
-            <ChainDesc></ChainDesc>
-          </div>
+          <Image src={logo} width={60} height={60} alt="network" />
+          <ChainInfo>
+            <ChainName>{name}</ChainName>
+            <ChainDesc>
+              {tbd_token === 'Y' ? (
+                'TBD🔥'
+              ) : (
+                <>
+                  {JSON.parse(native_currency).logo && (
+                    <Image src={JSON.parse(native_currency).logo} width={16} height={16} alt="" />
+                  )}
+                  {JSON.parse(native_currency).name}
+                </>
+              )}
+            </ChainDesc>
+          </ChainInfo>
         </LogoGroup>
         <BtnGroup>
-          <Btn
-            href={''}
-            // href={`/network/${IdToPath[child.id]}`}
-            data-bp="10012-002"
-            className="paragraph-btn-item"
-          >
+          <Btn href={`/all-in-one/${path}`} data-bp="10012-003">
             Chain-Navi
           </Btn>
-          <Btn
-            href={''}
-            // href={`/network/${IdToPath[child.id]}`}
-            data-bp="10012-002"
-            className="paragraph-btn-item"
-          >
+          <Btn href={`/networks/${IdToPath[id]}`} data-bp="10012-002">
             Details
           </Btn>
         </BtnGroup>

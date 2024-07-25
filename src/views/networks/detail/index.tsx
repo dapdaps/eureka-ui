@@ -26,7 +26,7 @@ const ChainDetail = ({ path }: any) => {
   return (
     <StyledContainer>
       <Top chain={{ ...currentChain, ...detail }} />
-      <QuickOnboarding path={path} />
+      <QuickOnboarding path={path} chain={{ ...currentChain }} />
       <Dapps dapps={hotDapps} chainName={currentChain.title} />
       <Quests quests={quests} />
     </StyledContainer>

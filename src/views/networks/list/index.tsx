@@ -1,4 +1,4 @@
-import { memo, useMemo, useEffect } from 'react';
+import { memo, useMemo, useState, useEffect } from 'react';
 
 import chainsConfig, { PathToId } from '@/config/all-in-one/chains';
 import useReport from '@/views/Landing/hooks/useReport';
@@ -6,8 +6,11 @@ import useReport from '@/views/Landing/hooks/useReport';
 import { ListItem } from './components';
 
 import { StyledContainer, Banner, Title, Desc, Wrap, H1 } from './styles';
+import useNetworks from './hooks/useNetworks';
 
 const List = ({ path }: any) => {
+  const { loading, networkList } = useNetworks();
+
   return (
     <StyledContainer>
       <Banner>
@@ -21,7 +24,10 @@ const List = ({ path }: any) => {
       </Banner>
       <Wrap>
         <H1>L2 Networks</H1>
-        <ListItem />
+        {networkList.map((item: any) => (
+          <ListItem dataSource={item} />
+        ))}
+
         <H1>L1 Networks</H1>
       </Wrap>
     </StyledContainer>

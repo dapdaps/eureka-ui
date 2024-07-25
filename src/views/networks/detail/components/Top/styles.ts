@@ -70,7 +70,7 @@ export const StyledBgImg = styled.img<{ more: boolean }>`
 
 export const StyledHeaderWrapper = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   padding-top: 46px;
 `;
@@ -80,8 +80,8 @@ export const StyledTitleWrapper = styled.div`
   gap: 23px;
 `;
 export const StyledChainLogoWrapper = styled.div`
-  width: 72px;
-  height: 72px;
+  width: 100px;
+  height: 100px;
   flex-shrink: 0;
   border-radius: 16px;
   display: flex;
@@ -92,11 +92,16 @@ export const StyledChainLogoWrapper = styled.div`
 export const StyledChainLogo = styled.img`
   width: 48px;
 `;
-
+export const StyledInfo = styled.div`
+  display: flex;
+  height: 100px;
+  flex-direction: column;
+  justify-content: space-between;
+`;
 export const StyledChainName = styled.div`
   color: #fff;
-  font-family: Gantari;
-  font-size: 32px;
+  font-family: Montserrat;
+  font-size: 42px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
@@ -195,4 +200,56 @@ export const StyledChainDesc = styled.div`
   line-height: normal;
   width: 580px;
   margin-top: 30px;
+`;
+
+export const StyledNative = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 13px 0 8px;
+  gap: 13px;
+  height: 32px;
+  border-radius: 34px;
+  background: #21222b;
+  .info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+`;
+
+export const StyledStat = styled.div`
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+`;
+export const StyledStatItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  .key {
+    color: #979abe;
+    text-align: center;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .value {
+    color: #fff;
+    font-family: Montserrat;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 26px */
+  }
+  .up {
+    color: #06c17e;
+    font-family: Montserrat;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 12px */
+  }
 `;

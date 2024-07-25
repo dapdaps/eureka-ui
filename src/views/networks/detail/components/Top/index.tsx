@@ -18,21 +18,9 @@ import {
   StyledTagValue,
 } from './styles';
 
-const NativeCurrency = ({ nativeCurrency }: any) => {
-  const mergedCurrency = useMemo<any>(() => {
-    if (!nativeCurrency) return {};
-    return JSON.parse(nativeCurrency);
-  }, [nativeCurrency]);
-  return (
-    <>
-      {mergedCurrency?.logo && <img src={mergedCurrency?.logo} alt="" className="token-img" />}
-      <span>{mergedCurrency?.symbol}</span>
-    </>
-  );
-};
-
 const Top = ({ chain }: any) => {
   const [more, setMore] = useState(false);
+
   return (
     <StyledContainer style={{ color: chain?.selectBgColor }} className={more ? 'more' : ''}>
       <StyledBox>
@@ -40,13 +28,13 @@ const Top = ({ chain }: any) => {
           <StyledBg>
             <Bg />
           </StyledBg>
-          <StyledBgImg src={chain.icon} more={more} />
+          {/* <StyledBgImg src={chain.icon} more={more} /> */}
         </StyledBgWrapper>
         <StyledContent>
           <Breadcrumb
             navs={[
               { name: 'Home', path: '/' },
-              { name: 'L2 Blockchains', path: '/blockchains' },
+              { name: 'Networks', path: '/networks' },
               { name: chain?.title, path: '' },
             ]}
           />
@@ -58,8 +46,11 @@ const Top = ({ chain }: any) => {
             path={chain?.path}
             deepdive={chain?.deepdive}
             id={chain?.id}
+            tbd_token={chain?.tbd_token}
+            nativeCurrency={chain?.native_currency}
           />
-          <StyledTags>
+
+          {/* <StyledTags>
             <StyledTag>
               <StyledTagLabel>Technology</StyledTagLabel>
               <StyledTagValue>{chain?.technology || '-'}</StyledTagValue>
@@ -70,8 +61,8 @@ const Top = ({ chain }: any) => {
                 {chain?.tbd_token === 'Y' ? 'TBD🔥' : <NativeCurrency nativeCurrency={chain?.native_currency} />}
               </StyledTagValue>
             </StyledTag>
-          </StyledTags>
-          {more && (
+          </StyledTags> */}
+          {/* {more && (
             <MorePanel
               technology={chain?.technology}
               tbd_token={chain?.tbd_token}
@@ -79,10 +70,10 @@ const Top = ({ chain }: any) => {
               milestones={chain?.milestones}
               subname={chain?.sub_description}
             />
-          )}
+          )} */}
         </StyledContent>
       </StyledBox>
-      <StyledMoreButton>
+      {/* <StyledMoreButton>
         <MoreButton
           isMore={more}
           onClick={() => {
@@ -90,7 +81,7 @@ const Top = ({ chain }: any) => {
           }}
           bp="100121-005"
         />
-      </StyledMoreButton>
+      </StyledMoreButton> */}
     </StyledContainer>
   );
 };
