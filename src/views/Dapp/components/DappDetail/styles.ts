@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  max-width: 1388px;
-  padding: 50px;
+  max-width: 1260px;
+  padding: 50px 0;
   margin: 0 auto;
 `;
 
@@ -23,14 +23,13 @@ export const StyledMoreText = styled.div`
 export const StyledRelatedContainer = styled.div`
   margin-top: 50px;
   display: flex;
+  gap: 68px;
 `;
 export const StyledRecordContainer = styled.div`
-  flex-shrink: 0;
-  margin-right: 68px;
-  width: 720px;
+  flex: 1;
 `;
 export const StyledRelatedOdyssey = styled.div`
-  width: 40%;
+  width: 500px;
   flex-shrink: 0;
 `;
 

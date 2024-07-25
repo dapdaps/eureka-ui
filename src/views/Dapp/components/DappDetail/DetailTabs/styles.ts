@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-
+  font-family: Montserrat;
 `;
 
 export const StyledTabContainer = styled.div`
@@ -12,26 +12,44 @@ export const StyledTabContainer = styled.div`
 export const StyledTabs = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 66px;
   flex-grow: 1;
   flex-shrink: 0;
   flex-wrap: nowrap;
 `;
 
-export const StyledTab = styled.div<{active: boolean}>`
-  font-family: Montserrat;
+export const StyledTab = styled.div`
+  position: relative;
   font-size: 20px;
   font-weight: 600;
   background: linear-gradient(90deg, #FFF 0%, #979ABE 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  padding-bottom: 16px;
-  border-bottom: ${props => props.active ? '4px solid #EBF479' : '4px solid transparent'};
   transition: border-color 200ms ease-in-out;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 0 52px 0 34px;
+
+  &:not(:last-child) {
+    &::after {
+      content: "";
+      display: block;
+      width: 1px;
+      height: 21px;
+      background: #979ABE;
+      position: absolute;
+      right: 0;
+      transform: translateY(5px);
+    }
+  }
 `;
 
+export const StyledTabText = styled.div<{active: boolean}>`
+  padding-bottom: 17px;
+  border-bottom: ${props => props.active ? '4px solid #EBF479' : '4px solid transparent'};
+`;
 
 export const StyledTabsContent = styled.div`
   border-radius: 20px;
@@ -155,13 +173,18 @@ export const StyledTitleText = styled.div`
   }
 `;
 
+export const StyledOverviewContainer = styled.div`
+  padding: 30px 22px 44px 30px;
+  font-family: Montserrat;
+`;
+
 export const StyledOverview = styled.div`
-  padding: 50px 30px 25px 30px;
+  border-bottom: 1px solid #202329;
+  padding-bottom: 25px;
 `;
 
 export const StyledOverviewTitle = styled.div`
   color: #FFF;
-  font-family: Montserrat;
   font-size: 18px;
   font-weight: 600;
   margin-bottom: 8px;;
@@ -169,7 +192,6 @@ export const StyledOverviewTitle = styled.div`
 
 export const StyledOverviewDesc = styled.div`
   color: #FFF;
-  font-family: Montserrat;
   font-size: 16px;
   font-weight: 400;
 `;
@@ -180,7 +202,6 @@ export const StyledToken = styled.div`
 
 export const StyledTokenLabel = styled.div`
   color: #FFF;
-  font-family: Montserrat;
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 8px;
@@ -188,27 +209,36 @@ export const StyledTokenLabel = styled.div`
 
 export const StyledTokenValue = styled.div`
   color: #FFF;
-  font-family: Montserrat;
   font-size: 16px;
   font-weight: 500;
 `;
 
 export const StyledAirdrop = styled.div`
-  padding: 30px;
   color: #ffffff;
+  padding-top: 22px;
+`;
+
+export const StyledAirdropMainTitle = styled.div`
+  color: #FFF;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 150%;
 `;
 
 export const StyledAirdropHead = styled.div`
   display: flex;
   align-items: center;
-  padding: 0 14px;
   padding-bottom: 30px;
-  border-bottom: 1px solid #202329;
   column-gap: 92px;
+  margin-top: 14px;
+  
+  .airdrop-item {
+    flex: 1;
+  }
 `;
 
 export const StyledAirdropLabel = styled.div`
-  font-family: Montserrat;
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 8px;
@@ -216,7 +246,6 @@ export const StyledAirdropLabel = styled.div`
 
 export const StyledAirdropValue = styled.div`
   color: #FFF;
-  font-family: Montserrat;
   font-size: 16px;
   font-weight: 600;
 `;
@@ -226,7 +255,29 @@ export const StyledAirdropBody = styled.div`
   padding-top: 22px;
 `;
 
-export const StyledAirdropBodyItem = styled.div`
+export const StyledAirdropActions = styled.div`
+  color: #FFF;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  display: flex;
+  gap: 13px;
+  margin-bottom: 21px;
+`;
+
+export const StyledAirdropActionsText = styled.div`
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  gap: 4px;
+`;
+
+export const StyledAirdropActionsTextPrimary = styled.span`
+  color: #EBF479;
+`;
+
+export const StyledAirdropBodyItem = styled.div<{ $finished?: boolean; }>`
   margin-bottom: 16px;
   border-radius: 12px;
   background: rgba(0 ,0, 0, 0.2);
@@ -234,6 +285,7 @@ export const StyledAirdropBodyItem = styled.div`
   position: relative;
   display: flex;
   justify-content: space-between;
+  cursor: ${({ $finished }) => $finished ? 'not-allowed' : 'pointer'};
 `;
 
 export const StyledAirdropShadow = styled.div`
@@ -241,7 +293,8 @@ export const StyledAirdropShadow = styled.div`
   top: 0;
   left: 0;
   color: #979ABE;
-  &.active {
+
+  &.finished {
     color: #EBF479;
   }
 `;

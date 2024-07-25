@@ -17,11 +17,6 @@ export const airdropList = [
     label: 'Difficulty',
     value: 'Low'
   },
-  {
-    key: 'action',
-    label: 'Actions',
-    value: '1 / 4'
-  },
 ];
 
 
@@ -29,6 +24,7 @@ export const actionList = [
   {
     key: '1',
     label: 'Engage with Orbiter Finance',
+    finished: true,
   },
   {
     key: '2',
