@@ -72,10 +72,10 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
   };
 
   const handleQueryData = async () => {
-    const handleQueryApy = async () => {
-      const res = await fetch("https://api.frax.finance/v2/frxeth/summary/latest");
-      return res.json();
-    };
+    // const handleQueryApy = async () => {
+    //   const res = await fetch("https://api.frax.finance/v2/frxeth/summary/latest");
+    //   return res.json();
+    // };
     const handleQueryAvailableAmount = async () => {
       return await provider.getBalance(account);
     };
@@ -87,14 +87,14 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
       return await contract.balanceOf(account);
     };
 
-    const apyResult = await handleQueryApy();
+    // const apyResult = await handleQueryApy();
     const availableAmountResult = await handleQueryAvailableAmount();
     const stakedAmountResult = await handleQueryStakedAmount();
 
     setData({
       availableAmount: ethers.utils.formatUnits(availableAmountResult, 18),
       stakedAmount: ethers.utils.formatUnits(stakedAmountResult, 18),
-      apy: Big(apyResult.sfrxethApr).toFixed(2),
+      apy: 0,
       exchangeRate: 1
     });
   }

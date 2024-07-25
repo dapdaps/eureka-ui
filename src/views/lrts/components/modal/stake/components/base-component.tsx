@@ -231,20 +231,24 @@ const BaseComponent = function (props: any) {
               <StyledBaseInfoValue>
                 {Big(data?.stakedAmount ?? 0).toFixed(4)} {outToken?.symbol}
               </StyledBaseInfoValue>
-              <StyledPlusSvg onClick={handleAddMetaMask}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                  <g opacity="0.6">
-                    <rect x="1" y="1" width="16" height="16" rx="4" fill="#272727" stroke="#3F3F3F" />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M8.5558 9.44448V13H9.5558V9.44448H13V8.44448H9.5558V5H8.5558V8.44448H5V9.44448H8.5558Z"
-                      fill="white"
-                    />
-                  </g>
-                </svg>
-                <StyledPlusTips>Add token to MetaMask</StyledPlusTips>
-              </StyledPlusSvg>
+              {
+                !(!gem && actionType === 'unstake') && (
+                  <StyledPlusSvg onClick={handleAddMetaMask}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                      <g opacity="0.6">
+                        <rect x="1" y="1" width="16" height="16" rx="4" fill="#272727" stroke="#3F3F3F" />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8.5558 9.44448V13H9.5558V9.44448H13V8.44448H9.5558V5H8.5558V8.44448H5V9.44448H8.5558Z"
+                          fill="white"
+                        />
+                      </g>
+                    </svg>
+                    <StyledPlusTips>Add token to MetaMask</StyledPlusTips>
+                  </StyledPlusSvg>
+                )
+              }
             </StyledBaseInfoValueContainer>
           </StyledBaseInfo>
         </StyledBaseInfoContainer>

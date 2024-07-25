@@ -43,6 +43,7 @@ import { ITab, useTabStore } from './hooks/useTab';
 import Mint from './Mint';
 import Redeem from './Redeem';
 import Tabs from './Tabs';
+import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 
 
 
@@ -54,7 +55,6 @@ const FraxComponent = function (props: any) {
     setShow,
     token0,
     token1,
-    handleAddMetaMask,
     onSuccess
   } = props.componentProps;
   const setTabStore = useTabStore(store => store.set)
@@ -79,7 +79,7 @@ const FraxComponent = function (props: any) {
   } = useFrax({ gem, dapp, token0, token1, onSuccess });
 
   const [actionType, setActionType] = useState(ITab.MINT)
-
+  const { add } = useAddTokenToWallet();
   const {
     requests,
     requestsLoading,
@@ -98,6 +98,13 @@ const FraxComponent = function (props: any) {
   useEffect(() => {
     queryRequests();
   }, [data, account, provider, actionType]);
+
+
+  const handleAddMetaMask = function () {
+    const stakeToken = ethereum['sfrxETH']
+    // const _token = ['restake', 'stake'].includes(actionType) ? stakeToken : token0;
+    add(stakeToken);
+  };
 
   return (
     <StyledStakeContainer>
@@ -164,7 +171,7 @@ const FraxComponent = function (props: any) {
                 )}
                 <StyledBaseInfo flex={ITab.UNSTAKE === actionType ? 'none' : ''} style={{ alignItems: [ITab.STAKE, ITab.UNSTAKE].includes(actionType) ? 'center' : 'flex-start' }}>
                   <StyledFirstTips>APR</StyledFirstTips>
-                  <StyledBaseInfoValue style={{ color: '#A4E417' }}>{Big(data?.apy ?? 0).toFixed(2)}%</StyledBaseInfoValue>
+                  <StyledBaseInfoValue style={{ color: '#A4E417' }}>{Big(gem?.dapp?.apr ?? gem?.apr ?? dapp?.apr).toFixed(2)}%</StyledBaseInfoValue>
                 </StyledBaseInfo>
                 <StyledBaseInfo flex={ITab.UNSTAKE === actionType ? 'none' : ''} >
                   <StyledFirstTips>Staked amount</StyledFirstTips>
@@ -207,8 +214,8 @@ const FraxComponent = function (props: any) {
                   <StyledMaxAndSymbol>
                     <StyledMax onClick={handleMax}>Max</StyledMax>
                     <StyledSymbol>
-                      <StyledSymbolImage src={actionType === ITab.STAKE ? ethereum['sfrxETH'].icon : ethereum['frxETH'].icon} />
-                      <StyledSymbolTxt>{actionType === ITab.STAKE ? ethereum['sfrxETH'].symbol : ethereum['frxETH'].symbol}</StyledSymbolTxt>
+                      <StyledSymbolImage src={actionType === ITab.STAKE ? ethereum['frxETH'].icon : ethereum['sfrxETH'].icon} />
+                      <StyledSymbolTxt>{actionType === ITab.STAKE ? ethereum['frxETH'].symbol : ethereum['sfrxETH'].symbol}</StyledSymbolTxt>
                     </StyledSymbol>
                   </StyledMaxAndSymbol>
                 </StyledInputContainer>
