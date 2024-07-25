@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import type { CSSProperties, FC, ReactNode } from 'react';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
@@ -149,8 +149,8 @@ const UnstakeTable: FC<IProps> = (props) => {
     mantleRequests.queryRequests();
     kelpDaoRequests.queryRequests();
     restakeFinanceRequests.queryRequests();
-  }, []);
-  const dataSource = [
+  }, [chainId]);
+  const dataSource = useMemo(() => [
     ...renzoRequests.requests,
     ...eigenpieRequests.requests,
     ...etherFiRequests.requests,
@@ -161,7 +161,18 @@ const UnstakeTable: FC<IProps> = (props) => {
     ...mantleRequests.requests,
     ...kelpDaoRequests.requests,
     ...restakeFinanceRequests.requests,
-  ];
+  ], [
+    renzoRequests.requests,
+    eigenpieRequests.requests,
+    etherFiRequests.requests,
+    fraxRequests.requests,
+    inceptionRequests.requests,
+    karakRequests.requests,
+    lidoRequests.requests,
+    mantleRequests.requests,
+    kelpDaoRequests.requests,
+    restakeFinanceRequests.requests,
+  ]);
   console.log('unstake-list--', dataSource);
   const tokens = Object.values(ethereum);
   return (
