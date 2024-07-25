@@ -10,7 +10,7 @@ import Pagination from '@/components/pagination';
 interface IProps {
   data: any;
   columns: any;
-  pagination: {
+  pagination?: {
     current: number;
     total: number;
     pageSize: number;
@@ -68,8 +68,6 @@ const Empty = styled.div`
 `;
 
 const Comp: FC<IProps> = ({ data, columns, pagination, emptyTips = 'No Data' }) => {
-  const { onChange, current, total, pageSize = 10 } = pagination;
-
   // const [pagination, setPagination] = useState<PaginationState>({
   //   pageIndex: 0,
   //   pageSize: 10,
@@ -122,7 +120,14 @@ const Comp: FC<IProps> = ({ data, columns, pagination, emptyTips = 'No Data' }) 
         pageSize={data.length}
         setPageSize={table.setPageSize}
       /> */}
-      <Pagination current={current} total={total} pageSize={pageSize} onChange={onChange} />
+      {pagination ? (
+        <Pagination
+          current={pagination.current}
+          total={pagination.total}
+          pageSize={pagination.pageSize || 10}
+          onChange={pagination.onChange}
+        />
+      ) : null}
     </TableWrap>
   );
 };
