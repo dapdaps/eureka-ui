@@ -138,42 +138,26 @@ const UnstakeTable: FC<IProps> = (props) => {
   const mantleRequests = useMantleRequests();
   const restakeFinanceRequests = useRestakeFinanceRequests();
 
+  const allHooks = [
+    renzoRequests,
+    eigenpieRequests,
+    kelpDaoRequests,
+    etherFiRequests,
+    fraxRequests,
+    inceptionRequests,
+    karakRequests,
+    lidoRequests,
+    mantleRequests,
+    restakeFinanceRequests,
+  ];
+
   useEffect(() => {
-    renzoRequests.queryRequests();
-    eigenpieRequests.queryRequests();
-    etherFiRequests.queryRequests();
-    fraxRequests.queryRequests();
-    inceptionRequests.queryRequests();
-    karakRequests.queryRequests();
-    lidoRequests.queryRequests();
-    mantleRequests.queryRequests();
-    kelpDaoRequests.queryRequests();
-    restakeFinanceRequests.queryRequests();
+    allHooks.forEach((item: any) => {
+      item.queryRequests();
+    });
   }, [chainId]);
-  const dataSource = useMemo(() => [
-    ...renzoRequests.requests,
-    ...eigenpieRequests.requests,
-    ...etherFiRequests.requests,
-    ...fraxRequests.requests,
-    ...inceptionRequests.requests,
-    ...karakRequests.requests,
-    ...lidoRequests.requests,
-    ...mantleRequests.requests,
-    ...kelpDaoRequests.requests,
-    ...restakeFinanceRequests.requests,
-  ], [
-    renzoRequests.requests,
-    eigenpieRequests.requests,
-    etherFiRequests.requests,
-    fraxRequests.requests,
-    inceptionRequests.requests,
-    karakRequests.requests,
-    lidoRequests.requests,
-    mantleRequests.requests,
-    kelpDaoRequests.requests,
-    restakeFinanceRequests.requests,
-  ]);
-  console.log('unstake-list--', dataSource);
+
+  console.log('unstake-list--', allHooks);
   const tokens = Object.values(ethereum);
   return (
     <>
@@ -182,39 +166,42 @@ const UnstakeTable: FC<IProps> = (props) => {
         {/* <div>Date</div> */}
         <div>Status</div>
       </THead>
-      {dataSource?.map((item: any, index: number) => {
-        const { token0, token1 } = item;
-        const fromTokenSymbol = token0?.symbol;
-        const toTokenSymbol = token1?.symbol;
+      {allHooks?.map((_hooks: any) => {
+        const { requests, claim } = _hooks;
+        return requests.map((item: any, index: number) => {
+          const { token0, token1 } = item;
+          const fromTokenSymbol = token0?.symbol;
+          const toTokenSymbol = token1?.symbol;
 
-        const fromToken = tokens.find((token: any) => token?.symbol === fromTokenSymbol);
-        const toToken = tokens.find((token: any) => token?.symbol === toTokenSymbol);
-        return (
-          <List key={index}>
-            <Item>
-              {fromToken ? <Image src={fromToken.icon || ''} width={30} height={30} alt="" /> : null}
-              <span>{balanceFormated(item?.amount, 3)}</span>
-              {fromTokenSymbol}
-              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
-                <path d="M1 1L5 5L1 9" stroke="white" stroke-linecap="round" />
-              </svg>
-              {toToken ? <Image src={toToken.icon || ''} width={30} height={30} alt="" /> : null}
-              {toTokenSymbol}
-            </Item>
+          const fromToken = tokens.find((token: any) => token?.symbol === fromTokenSymbol);
+          const toToken = tokens.find((token: any) => token?.symbol === toTokenSymbol);
+          return (
+            <List key={index}>
+              <Item>
+                {fromToken ? <Image src={fromToken.icon || ''} width={30} height={30} alt="" /> : null}
+                <span>{balanceFormated(item?.amount, 3)}</span>
+                {fromTokenSymbol}
+                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
+                  <path d="M1 1L5 5L1 9" stroke="white" stroke-linecap="round" />
+                </svg>
+                {toToken ? <Image src={toToken.icon || ''} width={30} height={30} alt="" /> : null}
+                {toTokenSymbol}
+              </Item>
 
-            <Item>
-              {item.status === 'In Progress' ? (
-                'In Progress'
-              ) : (
-                <ClaimButton
-                  // claiming={claiming}
-                  claim={lidoRequests.claim}
-                  request={item}
-                />
-              )}
-            </Item>
-          </List>
-        );
+              <Item>
+                {item.status === 'In Progress' ? (
+                  'In Progress'
+                ) : (
+                  <ClaimButton
+                    // claiming={claiming}
+                    claim={claim}
+                    request={item}
+                  />
+                )}
+              </Item>
+            </List>
+          );
+        });
       })}
     </>
   );

@@ -66,8 +66,9 @@ const Home = () => {
     // reset tab index for tabCard
     setResetTabIndex((n) => n + 1);
   };
-  const updateBalance = () => {
+  const handleSuccess = () => {
     setBalanceUpdater((n) => n + 1);
+    setIsShowStakeModal(false);
   };
   return (
     <Container>
@@ -139,7 +140,7 @@ const Home = () => {
         chainId={chainId as number}
         show={isShowStakeModal}
         setShow={setIsShowStakeModal}
-        onSuccess={updateBalance}
+        onSuccess={handleSuccess}
       />
       <SwapModal show={showSwapModal} setShow={setShowSwapModal} token={curLrt?.token || lrtsData[lstIndex].token} />
     </Container>
