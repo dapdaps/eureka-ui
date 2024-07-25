@@ -1,9 +1,4 @@
-import { CaretDownIcon } from '@radix-ui/react-icons';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import classNames from 'classnames';
-import Link from 'next/link';
-import type { ReactNode } from 'react';
-import { forwardRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { recordMouseEnter } from '@/utils/analytics';
@@ -14,65 +9,10 @@ import IconSwap from '@public/images/header/swap.svg';
 import IconBridge from '@public/images/header/bridge.svg';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import IconArrowRight from '@public/images/header/arrow-right.svg'
-import Status, { StatusType } from './components/Status';
+import { StatusType } from './components/Status';
 import Chains from './components/Chains';
+import ListItem from './components/ListItem';
 
-
-const Flex = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  padding: 15px 30px;
-  &:hover {
-    background: rgba(0, 0, 0, 0.25);
-    cursor: pointer;
-  }
-`
-
-const StyleImage = styled.div`
-  position: relative;
-  img {
-    width: 100px;
-    height: 60px;
-    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-    border: 1px solid #333648;
-    border-radius: 8px;
-  }
-`
-
-const StyleNew = styled.div`
-  position: absolute;
-  top: -2px;
-  left: -8px;
-  background-color: #EBF479;
-  color: #000;
-  font-size: 12px;
-  padding: 1px 2px;
-  border-radius: 4px;
-`  
-
-const StyleText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 13px;
-`
-
-const StyleHeader = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  .title {
-    font-weight: 600;
-    font-size: 14px;
-    color: #fff;
-  }
-`
-
-const StyleDesc = styled.div`
-  font-size: 16px;
-  color: #fff;
-  line-height: 1;
-`
 
 const StyleView = styled.div`
   margin: 0 auto;
@@ -104,29 +44,6 @@ const StyleView = styled.div`
 `
 
 
-interface ListItemProps {
-  imgSrc: string;
-  isNew: boolean;
-  title: string;
-  status: StatusType;
-  description: string;
-}
-
-const ListItem: React.FC<ListItemProps> = ({ imgSrc, isNew, title, status, description }) => (
-  <Flex>
-    <StyleImage>
-      {isNew && <StyleNew>New</StyleNew>}
-      <img src={imgSrc} alt="" />
-    </StyleImage>
-    <StyleText>
-      <StyleHeader>
-        <div className="title">{title}</div>
-        <Status status={status} />
-      </StyleHeader>
-      <StyleDesc>{description}</StyleDesc>
-    </StyleText>
-  </Flex>
-);
 
 const items = [
   { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Arbitrum' },
@@ -160,15 +77,16 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
             </NavigationMenu.Trigger>
             <NavigationMenu.Content className="NavigationMenuContent bridge">
               <ul className="List">
-              <ListItem
-                imgSrc="https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png"
-                isNew={true}
-                title="Odyssey Vol.5"
-                status={StatusType.LIVE}
-                description="DapDap x Mode: The Airdrop Ascendancy"
-              />
-                <StyleView><div>View all</div><IconArrowRight /></StyleView>
+                <ListItem
+                  imgSrc="https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png"
+                  isNew={true}
+                  title="Odyssey Vol.5"
+                  status={StatusType.LIVE}
+                  description="DapDap x Mode: The Airdrop Ascendancy"
+                  className='bridge-nav'
+                />
               </ul>
+              <StyleView><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 

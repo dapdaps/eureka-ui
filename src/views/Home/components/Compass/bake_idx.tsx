@@ -2,14 +2,15 @@ import { useSize } from 'ahooks';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
-import { Autoplay, Pagination } from 'swiper/modules';
+import { Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
-import { StyledFlex, StyledFont } from '@/styled/styles';
+import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+import Tag from '@/views/Odyssey/components/Tag';
 import useCompassList from './hooks/useCompassList';
 
 import IconArrow from '@public/images/home/arrow-right.svg'
@@ -18,7 +19,11 @@ import {
   StyledCard,
   StyledCardBackgroundImage,
   StyledCardButton,
+  StyledCardDesc,
   StyledCardMainContent,
+  StyledCardTitle,
+  StyledChainsImg,
+  StyledCominsoon,
   StyledCompassIcon,
   StyledContainer,
   StyledContent,
@@ -46,7 +51,7 @@ const Card = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems='flex-start'>
+      <StyledFlex gap="12px">
         <StyledCardBackgroundImage
           src={compass.banner}
           alt={compass.name}
@@ -55,13 +60,21 @@ const Card = function ({ compass }: any) {
           }}
         />
         <StyledCardMainContent>
-          <div className='title'>Featured</div>
-          <div className="card_section">
-            <img className='logo' src="/images/home/super-bridge.png" alt="" />
-            {/* <div className="head">DapDap X Mode: <br />The Airdrop Ascendancy</div> */}
-            <div className='card-tips'>One UI to rule them all, getting the best price from 30+ Dex pools.</div>
-          </div>
-          <StyledCardButton
+          <StyledFlex alignItems="center" gap="12px">
+            {odyssey[compass.id]?.chainsImg && (
+              <StyledChainsImg
+                src={odyssey[compass.id]?.chainsImg}
+                style={{ height: odyssey[compass.id]?.chainsHeight }}
+              />
+            )}
+            <Tag status={compass.status} />
+          </StyledFlex>
+          <StyledCardTitle>{compass.name}</StyledCardTitle>
+          <StyledCardDesc>{compass.description}</StyledCardDesc>
+          {compass.status === 'un_start' ? (
+          <StyledCominsoon>Coming soon...</StyledCominsoon>
+            ) : (
+              <StyledCardButton
                 onClick={() => {
                   check(handleExplore);
                 }}
@@ -75,6 +88,7 @@ const Card = function ({ compass }: any) {
                   />
                 </svg>
               </StyledCardButton>
+            )}
         </StyledCardMainContent>
       </StyledFlex>
     </StyledCard>
@@ -97,23 +111,16 @@ const Compass = () => {
           <StyledSwiperWrapper>
             <Swiper
               width={1244}
-              modules={[Autoplay, Pagination]}
+              modules={[Autoplay]}
               slidesPerView={1}
-              autoplay={{ delay: 113000 }}
+              // autoplay={{ delay: 113000 }}
               speed={1000}
               spaceBetween={(size?.width - 1244) / 2 + 100}
               updateOnWindowResize={true}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
-              pagination={{
-                el: '.swiper-pagination',
-                clickable: true,
-                renderBullet: (index, className) => {
-                  return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
-                }
-              }}
-              loop={true}
+              // loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
@@ -190,7 +197,6 @@ const Compass = () => {
             >
               <IconArrow />
             </StyledSwiperNextButton>
-            <div className="swiper-pagination"></div>
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>

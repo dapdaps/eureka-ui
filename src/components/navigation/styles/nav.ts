@@ -38,7 +38,7 @@ export const Wrapper = styled.div`
       fill: currentColor;
     }
   }
-  .NavigationMenuTrigger:focus,
+  /* .NavigationMenuTrigger:focus,
   .NavigationMenuLink:focus {
     color: #EBF479;
     padding: 10px 14px;
@@ -46,7 +46,7 @@ export const Wrapper = styled.div`
     background-color: #1F2229;
     box-sizing: border-box;
     .arrow-icon:hover { color: #EBF479; }
-  }
+  } */
   .NavigationMenuTrigger:hover,
   .NavigationMenuLink:hover {
     color: #EBF479;
@@ -80,8 +80,9 @@ export const Wrapper = styled.div`
     background: rgba(31, 34, 41, 1);
     &.bridge { 
       top: 56px;
-      left: -170px;
-      width: 560px;
+      left: 0px;
+      width: 814px;
+      padding: 30px 0;
     }
     &.chains {
       top: 56px;
@@ -129,10 +130,11 @@ export const Wrapper = styled.div`
 
   .List {
     display: grid;
-    padding: 30px 0;
+    grid-template-columns: repeat(2, 1fr);
     margin: 0;
     list-style: none;
-    width: 560px;
+    width: 754px;
+    gap: 50px;
     &.chain {
       width: 425px;
       padding: 0
