@@ -4,6 +4,7 @@ import { AllDappsWrapper } from '@/views/AllDapps/styles';
 export const StyledHead = styled(AllDappsWrapper)`
   padding: 0;
   font-family: Montserrat;
+  color: white;
 `;
 export const StyledTitle = styled.div`
   text-align: center;
@@ -43,6 +44,7 @@ export const StyledCategoryItem = styled.div<{ $colorRgb: string; }>`
   flex-shrink: 0;
   border-radius: 32px;
   border: ${({ $colorRgb }) => `1px solid rgba(${$colorRgb},.5)`};
+  color: ${({ $colorRgb }) => `rgb(${$colorRgb})`};
   padding: 0 14px;
   cursor: pointer;
   text-align: center;

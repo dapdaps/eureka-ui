@@ -1,5 +1,5 @@
 import Skeleton from 'react-loading-skeleton';
-import { memo } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const StyledDapps = styled.div`
@@ -31,10 +31,9 @@ const StyledDappInner = styled.div`
   }
 `;
 
-
-const LoadingCard = () => {
+const LoadingCard = (props: { style?: React.CSSProperties; }) => {
   return (
-    <StyledDapp>
+    <StyledDapp style={props.style}>
       <Skeleton width="100%" height="24px" borderRadius="16px" containerClassName="skeleton-head" />
       <StyledDappInner>
         <Skeleton width="72px" height="72px" borderRadius="16px" containerClassName="skeleton" />
@@ -48,14 +47,20 @@ const LoadingCard = () => {
   );
 };
 
-const DappLoading = ({ length, style }: any) => {
+const DappLoading = ({ length = 18, style, cardStyle }: DappLoadingProps) => {
   return (
     <StyledDapps style={style}>
-      {new Array(18).fill('1').map((dapp: any, index: number) => (
-        <LoadingCard key={index} />
+      {new Array(length).fill('1').map((dapp: any, index: number) => (
+        <LoadingCard key={index} style={cardStyle} />
       ))}
     </StyledDapps>
   );
 };
 
 export default memo(DappLoading);
+
+interface DappLoadingProps {
+  length?: number;
+  style?: React.CSSProperties;
+  cardStyle?: React.CSSProperties;
+}

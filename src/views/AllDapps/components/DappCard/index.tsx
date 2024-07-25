@@ -90,7 +90,7 @@ const DappCard = (props: Props) => {
           {
             networks && networks.map((network, index) => (
               <Image
-                src={network.logo}
+                src={network.icon}
                 alt=""
                 width={20}
                 height={20}
@@ -157,7 +157,7 @@ export interface Category {
 
 export interface Network {
   chainId?: number;
-  logo: string;
+  icon: string;
 }
 
 export interface Badge {

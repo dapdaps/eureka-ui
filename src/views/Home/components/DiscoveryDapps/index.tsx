@@ -1,62 +1,104 @@
-import { memo, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
-import GoMore from '@/components/GoMore';
-import Dapps from '@/components/Dapps';
-import { container } from '@/components/animation';
-import useDapps from '../../hooks/useDapps';
-import { StyledContainer, StyledTitle, StyledTabsWrapper, StyledTabs, StyledTab, StyledDesc } from './styles';
-
-const TABS = [
-  {
-    label: 'Featured',
-    key: 'N',
-  },
-  {
-    label: 'Upcoming Airdrop🔥',
-    key: 'Y',
-  },
-];
+import { memo, useRef } from 'react';
+import { StyledContainer, StyledFooter, StyledMask, StyledSwiperWrapper, StyledViewAll, StyledWrapper } from './styles';
+import AllDappsTitle from '@/views/AllDapps/components/Title';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import DappCard from '@/views/AllDapps/components/DappCard';
+import useDapps from '@/views/Home/hooks/useDapps';
+import Empty from '@/components/Empty';
+import DappLoading from '@/views/AllDapps/Loading/Dapp';
+import { StyledFlex } from '@/styled/styles';
+import useDappOpen from '@/hooks/useDappOpen';
 
 const DiscoveryDapps = () => {
-  const [tab, setTab] = useState('N');
-  const { loading, featuredDapps, upcomingDapps } = useDapps();
+  const swiperRef = useRef<any>(null);
+
+  const { open } = useDappOpen();
+  const { loading, featuredDapps, category, onSelectCategory } = useDapps();
+
+  const onDappCardClick = (_dapp: any) => {
+    open({ dapp: _dapp, from: 'alldapps' });
+  };
+
   return (
     <StyledContainer>
-      <StyledTitle>Discover dApps</StyledTitle>
-      <StyledTabsWrapper>
-        <StyledTabs>
-          {TABS.map((_tab: any) => (
-            <StyledTab
-              onClick={() => {
-                setTab(_tab.key);
-              }}
-              key={_tab.key}
-              className={_tab.key === tab ? 'active' : ''}
-            >
-              {_tab.label}
-            </StyledTab>
-          ))}
-        </StyledTabs>
-        <GoMore label="Explore all" path="/alldapps" bp="1001-006" />
-      </StyledTabsWrapper>
-      <StyledDesc>
-        Experience a tailored selection of dApps, handpicked for their potential to improve your DeFi journey.
-      </StyledDesc>
-      {tab === 'Y' && (
-        <AnimatePresence mode="wait">
-          <motion.div {...container}>
-            <Dapps dapps={featuredDapps || []} bp={{ detail: '1001-004', dapp: '1001-005' }} />
-          </motion.div>
-        </AnimatePresence>
-      )}
-
-      {tab === 'N' && (
-        <AnimatePresence mode="wait">
-          <motion.div {...container}>
-            <Dapps dapps={upcomingDapps || []} bp={{ detail: '1001-004', dapp: '1001-005' }} />
-          </motion.div>
-        </AnimatePresence>
-      )}
+      <StyledWrapper>
+        <AllDappsTitle
+          onCategory={onSelectCategory}
+          activeCategory={category}
+          dappList={[
+            { logo: '/images/alldapps/icon-title-dapp-1.svg' },
+            { logo: '/images/alldapps/icon-title-dapp-2.svg' },
+            { logo: '/images/alldapps/icon-title-dapp-3.svg' },
+            { logo: '/images/alldapps/icon-title-dapp-4.svg' },
+            { logo: '/images/alldapps/icon-title-dapp-5.svg' },
+            { logo: '/images/alldapps/icon-title-dapp-6.svg' },
+          ]}
+        />
+      </StyledWrapper>
+      <StyledSwiperWrapper>
+        <StyledMask className="left"></StyledMask>
+        <StyledWrapper style={{ flexShrink: 0, position: 'relative', zIndex: 0 }}>
+          {
+            loading ? (
+              <StyledFlex gap="16px">
+                <DappLoading
+                  length={5}
+                  style={{
+                    flexWrap: 'nowrap',
+                    marginTop: 0,
+                  }}
+                />
+              </StyledFlex>
+            ) : (
+              <Swiper
+                modules={[]}
+                slidesPerView={3}
+                spaceBetween={16}
+                updateOnWindowResize={true}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+              >
+                {
+                  featuredDapps ? featuredDapps.map((dapp: any, idx: number) => (
+                    <SwiperSlide key={idx}>
+                      <DappCard
+                        bp={{ detail: '1001-004', dapp: '1001-005' }}
+                        name={dapp.name}
+                        logo={dapp.logo}
+                        description={dapp.description}
+                        categories={dapp.categories}
+                        networks={dapp.networks}
+                        onClick={() => onDappCardClick(dapp)}
+                        badges={[
+                          { icon: '/images/alldapps/icon-exchange.svg', iconSize: 17, value: '$23.56k' },
+                          { icon: '/images/alldapps/icon-fire.svg', iconSize: 17, value: '1,235' },
+                          { icon: '/images/alldapps/icon-mode.svg', iconSize: 24 },
+                          { icon: '/images/alldapps/icon-dapdap-point.svg', iconSize: 24 },
+                        ]}
+                      />
+                    </SwiperSlide>
+                  )) : (
+                    <Empty size={42} tips="No dApps found" />
+                  )
+                }
+              </Swiper>
+            )
+          }
+        </StyledWrapper>
+        <StyledMask></StyledMask>
+      </StyledSwiperWrapper>
+      <StyledFooter>
+        <StyledViewAll href="/alldapps">
+          View all
+          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM15.5657 6.56569C15.8781 6.25327 15.8781 5.74674 15.5657 5.43432L10.4745 0.343147C10.1621 0.0307272 9.65557 0.0307272 9.34315 0.343147C9.03073 0.655566 9.03073 1.1621 9.34315 1.47452L13.8686 6L9.34314 10.5255C9.03073 10.8379 9.03073 11.3444 9.34314 11.6569C9.65556 11.9693 10.1621 11.9693 10.4745 11.6569L15.5657 6.56569ZM1 6.8L15 6.8L15 5.2L1 5.2L1 6.8Z"
+              fill="white"
+            />
+          </svg>
+        </StyledViewAll>
+      </StyledFooter>
     </StyledContainer>
   );
 };

@@ -27,6 +27,7 @@ import Empty from '@/components/Empty';
 import DappLoading from './Loading/Dapp';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
+import chainCofig from '@/config/chains';
 
 const AllDapps = (props: Props) => {
   const {} = props;
@@ -50,7 +51,6 @@ const AllDapps = (props: Props) => {
   const [pageTotal, setPageTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
 
-
   const fetchNetworkData = async () => {
     try {
       setNetworkLoading(true);
@@ -67,7 +67,6 @@ const AllDapps = (props: Props) => {
   };
 
   const fetchDappList = async (page: number) => {
-    console.log('qingqiujiekou');
     setPageIndex(page);
     try {
       setLoading(true);
@@ -82,7 +81,7 @@ const AllDapps = (props: Props) => {
         params.network_ids = network;
       }
       if (category) {
-        params.category_ids =  category;
+        params.category_ids = category;
       }
       if (searchWord) {
         params.searchWord = searchWord;
@@ -104,8 +103,8 @@ const AllDapps = (props: Props) => {
         //#region format networks
         dapp.networks = [];
         dapp.dapp_network && dapp.dapp_network.forEach((it: any) => {
-          const curr = networkList.find((_it: any) => _it.chain_id === it.chain_id);
-          curr && dapp.networks.push({ ...curr, chainId: curr.chain_id });
+          const curr = chainCofig[it.chain_id];
+          curr && dapp.networks.push({ ...curr });
         });
         //#endregion
       });
@@ -303,7 +302,6 @@ const AllDapps = (props: Props) => {
                 : (<Empty size={42} tips="No dApps found" />)
               )
           }
-
       </StyledBody>
       <StyledFoot>
         <Pagination
