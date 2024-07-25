@@ -6,5 +6,5 @@ export { default as Gems } from './gems';
 export { default as Particle } from './particle';
 export { default as Tabs } from './tabs';
 export { default as CustomTable } from './custom-table';
-export { default as History } from './history';
+export { default as History } from './history-table';
 export { default as UnstakeTable } from './unstake-table';

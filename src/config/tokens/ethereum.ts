@@ -6,7 +6,7 @@ export const ethereum: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
+    icon: '/images/lrts/tokens/eth.svg',
     decimals: 18,
     isNative: true,
     address: 'native',

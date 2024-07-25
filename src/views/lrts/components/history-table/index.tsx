@@ -1,9 +1,13 @@
 import { createColumnHelper } from '@tanstack/react-table';
 import { format } from 'date-fns';
+import Image from 'next/image';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
+import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
+import { useLrtDataStore } from '@/stores/lrts';
 import { ellipsHash } from '@/utils/account';
 import { unifyNumber } from '@/utils/format-number';
 import MyTable from '@/views/lrts/components/react-table';
@@ -15,6 +19,11 @@ interface IProps {
   style?: CSSProperties;
   onClick?: () => void;
 }
+const StyledToken = styled.span`
+  display: flex;
+  gap: 8px;
+  align-items: center;
+`;
 
 const ActionTypeMap = new Map([
   ['stake', 'Stake'],
@@ -37,6 +46,8 @@ const History: FC<IProps> = (props) => {
 
   const [pageIndex, setPageIndex] = useState(1);
   const { loading, actionList, count } = useActionList({ account, source: 'lrts', page: pageIndex });
+
+  const tokens = Object.values(ethereum);
 
   const defaultData: DataType[] = [];
   const [data, setData] = useState(() => [...defaultData]);
@@ -81,7 +92,14 @@ const History: FC<IProps> = (props) => {
       cell: (info: any) => {
         const { fromTokenSymbol, fromTokenAmount } = info.getValue();
 
-        return `${fromTokenSymbol} ${unifyNumber(fromTokenAmount)}`;
+        const fromToken = tokens.find((token: any) => token?.symbol === fromTokenSymbol);
+
+        return (
+          <StyledToken>
+            {fromToken ? <Image src={fromToken.icon || ''} width={30} height={30} alt="" /> : null}
+            {`${fromTokenSymbol} ${unifyNumber(fromTokenAmount)}`}
+          </StyledToken>
+        );
       },
       header: () => <span>Sent</span>,
     }),
@@ -91,7 +109,13 @@ const History: FC<IProps> = (props) => {
       cell: (info: any) => {
         const { toTokenSymol, toTokenAmount } = info.getValue();
 
-        return `${toTokenSymol} ${unifyNumber(toTokenAmount)}`;
+        const toToken = tokens.find((token: any) => token?.symbol === toTokenSymol);
+        return (
+          <StyledToken>
+            {toToken ? <Image src={toToken.icon || ''} width={30} height={30} alt="" /> : null}
+            {`${toTokenSymol} ${unifyNumber(toTokenAmount)}`}
+          </StyledToken>
+        );
       },
     }),
     columnHelper.accessor('hash', {

@@ -120,7 +120,7 @@ const nextConfig = {
     {
       source: '/mantle/api/:path*',
       destination: 'https://meth.mantle.xyz/api/:path*',
-    }
+    },
   ],
   images: {
     remotePatterns: [
@@ -145,6 +145,12 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'pbs.twimg.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'assets.coingecko.com',
         port: '',
         pathname: '/**',
       },

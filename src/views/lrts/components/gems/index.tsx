@@ -93,11 +93,28 @@ const Wrap = styled.section`
     font-weight: 700;
     line-height: normal;
   }
-
+  .item-7 {
+    .gem-light {
+      width: 40%;
+      height: 40%;
+    }
+  }
+  .item-15 {
+    .gem-light {
+      width: 50%;
+      height: 50%;
+    }
+  }
+  .item-33 {
+    .gem-light {
+      width: 40%;
+      height: 40%;
+    }
+  }
   .item-40 {
     .gem-light {
-      width: 90%;
-      height: 90%;
+      width: 70%;
+      height: 70%;
     }
   }
   .item-rock {
@@ -109,6 +126,7 @@ const Wrap = styled.section`
   .item-tunnel {
     background-color: #000;
     overflow: hidden;
+   
   }
   .item-5 {
     position: relative;
