@@ -29,7 +29,7 @@ interface Market {
   }[]
   underlyingPrice: string;
   address: string;
-  userMemberShip: boolean;
+  userMerberShip: boolean;
 }
 
 interface Reward {
@@ -103,7 +103,7 @@ const useYoursData = (currentDapp: string, dapps: IDapps, markets: Market[]) => 
             dappIcon: dapp.dappIcon,
             dappName: dapp.dappName,
             apy: market.supplyApy,
-            isCollateral: market.userMemberShip,
+            isCollateral: market.userMerberShip,
             balance: market.userSupply,
             balance_value: Big(market.userSupply || 0).mul(market.underlyingPrice).toString(),
             address: market.address,
