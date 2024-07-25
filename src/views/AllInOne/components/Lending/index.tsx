@@ -81,6 +81,10 @@ const Lending = (props: Props) => {
   const onTabChange = (tab: string) => {
     setCurrTab(tab);
     setTimestamp(Date.now());
+
+    if (tab === 'Yours') {
+      setUpdateData(currMarket);
+    }
   };
 
   const loadMarketsInfo = (params: any) => {
@@ -128,6 +132,7 @@ const Lending = (props: Props) => {
                   prices,
                   account,
                   onLoad: (data: Record<string, any>) => {
+                    console.log('%c===== Loaded Data =====', 'background:blue;color:white;', data);
                     loadMarketsInfo(data);
                   },
                 }}
