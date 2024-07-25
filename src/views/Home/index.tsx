@@ -4,7 +4,7 @@ import Banner from './components/Banner';
 import Compass from './components/Compass';
 import Decentralised from './components/Decentralised';
 import DiscoveryDapps from './components/DiscoveryDapps';
-import QuickOnboarding from './components/️QuickOnboarding ';
+import QuickOnboarding from './components/QuickOnboarding';
 import SeamlessNavigation from './components/SeamlessNavigation';
 import TrendingEthereum from './components/TrendingEthereum';
 import Learn from './components/Learn';
