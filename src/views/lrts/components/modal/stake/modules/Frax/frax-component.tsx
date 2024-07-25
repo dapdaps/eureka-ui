@@ -5,6 +5,7 @@ import { ethereum } from '@/config/tokens/ethereum';
 
 import Button from '../../components/button';
 import StakeList from '../../components/stake-list';
+import CompletedStaleList from '../../components/completed-stake-list';
 import useFraxRequests from '../../hooks/useFraxRequests';
 import {
   StyledActiveAndCompleted,
@@ -77,7 +78,7 @@ const FraxComponent = function (props: any) {
     handleStake,
     handleMax
   } = useFrax({ gem, dapp, token0, token1, onSuccess });
-
+  const [isActive, setIsActive] = useState(true);
   const [actionType, setActionType] = useState(ITab.MINT)
   const { add } = useAddTokenToWallet();
   const {
@@ -97,6 +98,8 @@ const FraxComponent = function (props: any) {
 
   useEffect(() => {
     queryRequests();
+    console.log(requests, 'requests');
+    
   }, [data, account, provider, actionType]);
 
 
@@ -109,7 +112,7 @@ const FraxComponent = function (props: any) {
   return (
     <StyledStakeContainer>
       <StyledStakeTopContainer
-        style={[ITab.UNSTAKE].includes(actionType) ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
+        style={[ITab.UNSTAKE, ITab.REDEEM].includes(actionType) ? { borderRadius: '4px 4px 0 0', borderBottom: 'none', minHeight: 484 } : {}}
       >
         <StyledClose
           onClick={() => {
@@ -197,7 +200,7 @@ const FraxComponent = function (props: any) {
                   </StyledBaseInfoValueContainer>
                 </StyledBaseInfo>
               </StyledBaseInfoContainer>
-              <StyledBottomContainer style={{ paddingBottom: ITab.STAKE === actionType ? 34 : 0 }}>
+              <StyledBottomContainer style={{ paddingBottom: [ITab.STAKE, ITab.UNSTAKE].includes(actionType) ? 34 : 0 }}>
                 <StyledTipsContainer>
                   <StyledFirstTips>{actionType}</StyledFirstTips>
                   <StyledSecondTips>
@@ -251,24 +254,36 @@ const FraxComponent = function (props: any) {
       {[ITab.REDEEM].includes(actionType) && requests.length > 0 && (
         <>
           <StyledSecondLine src="/images/lrts/trapezium.png" />
-          <StyledStakeBottomContainer>
-            <StyledActiveAndCompletedContainer>
-              <StyledWithdrawTips>Withdrawl requests</StyledWithdrawTips>
-              <StyledActiveAndCompleted>
-                <StyledActiveAndCompletedButton className="active">Active</StyledActiveAndCompletedButton>
-                <StyledActiveAndCompletedButton>completed</StyledActiveAndCompletedButton>
-              </StyledActiveAndCompleted>
-            </StyledActiveAndCompletedContainer>
-            <StakeList
-              sx={{ marginTop: 20 }}
-              requests={requests}
-              requestsLoading={requestsLoading}
-              claiming={claiming}
-              queryRequests={queryRequests}
-              claim={claim}
-            />
-          </StyledStakeBottomContainer>
-        </>
+              <StyledStakeBottomContainer>
+                <StyledActiveAndCompletedContainer>
+                  <StyledWithdrawTips>Withdrawl requests</StyledWithdrawTips>
+                  <StyledActiveAndCompleted>
+                    <StyledActiveAndCompletedButton onClick={() => setIsActive(true)} className={isActive ? 'active' : ''}>
+                      Active
+                    </StyledActiveAndCompletedButton>
+                    <StyledActiveAndCompletedButton
+                      onClick={() => setIsActive(false)}
+                      className={!isActive ? 'active' : ''}
+                    >
+                      {' '}
+                      completed
+                    </StyledActiveAndCompletedButton>
+                  </StyledActiveAndCompleted>
+                </StyledActiveAndCompletedContainer>
+
+                {isActive ? (
+                  <StakeList
+                    requests={requests}
+                    requestsLoading={requestsLoading}
+                    claiming={claiming}
+                    queryRequests={queryRequests}
+                    claim={claim}
+                  />
+                ) : (
+                  <CompletedStaleList gem={gem} dapp={dapp} />
+                )}
+              </StyledStakeBottomContainer>
+            </>
       )}
     </StyledStakeContainer>
   )

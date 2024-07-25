@@ -91,7 +91,7 @@ export default function useFraxRequests() {
           const isMatured = new Date(item.maturesAt) <= currentTime;
 
           return {
-            amount: Big(item.amountIn).div(1e18).toString(),
+            amount: item.amountIn,
             startTime: item.createdAt,
             status: isMatured ? 'Claimable' : 'In Progress',
             token0: ethereum.eth,

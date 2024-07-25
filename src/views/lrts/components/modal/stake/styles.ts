@@ -328,6 +328,7 @@ export const StyledRecordList = styled.div`
   max-height: 120px;
   overflow-y: auto;
   overflow-x: hidden;
+  margin-top: 10px;
 `;
 export const StyledRecord = styled.div`
   width: 100%;
