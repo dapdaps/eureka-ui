@@ -1,6 +1,7 @@
 // components/Status.tsx
 import React from 'react';
 import styled from 'styled-components';
+import cls from 'classnames';
 
 export enum StatusType {
     LIVE = 'LIVE',
@@ -11,6 +12,7 @@ export enum StatusType {
 
 interface StatusProps {
   status: StatusType;
+  className?: string
 }
 
 const StyleStatus = styled.div`
@@ -56,8 +58,8 @@ const StyleStatus = styled.div`
 `;
 
 
-const Status: React.FC<StatusProps> = ({ status }) => (
-  <StyleStatus className={status}>
+const Status: React.FC<StatusProps> = ({ status, className }) => (
+  <StyleStatus className={cls(status, className)}>
     <div className="dot"></div>
     <div className="activity">{status?.toLocaleLowerCase() || 'Ended'}</div>
   </StyleStatus>
