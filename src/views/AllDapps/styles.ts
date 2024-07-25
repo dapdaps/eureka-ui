@@ -41,6 +41,7 @@ export const StyledRewardNow = styled.div`
   line-height: 100%;
   padding: 0 16px 0 13px;
   cursor: pointer;
+  transition: background .2s ease;
   background: #18191E url("/images/alldapps/btn-border.svg") no-repeat center center / contain;
   
   .reward-now-radio {
@@ -55,11 +56,12 @@ export const StyledRewardNow = styled.div`
     
     &::after {
       content: "";
-      width: 7px;
-      height: 7px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
-      background: #fff;
+      background: #EBF479;
       display: none;
+      border: 1px solid #18191E;
     }
   }
   .reward-now-text {
@@ -67,6 +69,7 @@ export const StyledRewardNow = styled.div`
   }
   
   &.selected {
+    background: linear-gradient(90deg, #FFAF65 3.39%, #FF84EB 50.73%, #9B82FF 100%);
     .reward-now-radio::after {
       display: block;
     }
@@ -117,4 +120,15 @@ export const StyledDappList = styled.div`
 export const StyledFoot = styled(AllDappsWrapper)`
   padding-top: 50px;
   padding-bottom: 150px;
+`;
+
+export const StyledSelectorLoading = styled.div`
+  width: 100px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid rgb(51, 54, 72);
+  background: rgb(24, 25, 30);
 `;

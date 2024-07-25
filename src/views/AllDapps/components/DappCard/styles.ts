@@ -8,6 +8,7 @@ export const StyledDappCard = styled.div`
   border: 1px solid #202329;
   background: #18191E;
   flex-shrink: 0;
+  cursor: pointer;
 `;
 export const StyledDappCardHead = styled.div<{ $logo: string; }>`
   display: flex;
@@ -61,6 +62,7 @@ export const StyledDappCardNetworks = styled.div`
   gap: 4px;
   position: relative;
   z-index: 1;
+  flex-wrap: wrap;
 `;
 export const StyledDappCardBody = styled.div`
   padding: 14px 20px 20px 20px;
@@ -76,7 +78,7 @@ export const StyledDappCardLogo = styled.div<{ $logo: string; }>`
   width: 78px;
   height: 78px;
   border: 3px solid #202329;
-  border-radius: 16px;
+  border-radius: 24px;
   background: ${({ $logo }) => `#131419 url("${$logo}") no-repeat center center / contain`};
   margin-top: -49px;
 `;

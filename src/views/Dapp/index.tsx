@@ -3,6 +3,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 import DappCom from './DappCom';
 import ExtraWard from './components/ExtraReward';
 import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper } from './styles';
+import DappDetail from './components/DappDetail';
 
 export { default as Empty } from './Empty';
 
@@ -33,6 +34,7 @@ const Dapp = (props: any) => {
           {dapp.name === 'Ring Protocol' && <ExtraWard dapp={dapp} />}
           <DappCom {...props} />
         </StyledDappWrapper>
+        <DappDetail {...dapp}/>
       </div>
     </StyledPage>
   );

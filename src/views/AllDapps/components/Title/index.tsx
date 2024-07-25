@@ -8,7 +8,7 @@ import {
   StyledTitleText,
 } from './styles';
 import Image from 'next/image';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { CategoryList, TitleDapp, TitleDappList } from '@/views/AllDapps/config';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
@@ -16,6 +16,7 @@ const AllDappsTitle = (props: Props) => {
   const {
     dappList,
     onCategory = () => {},
+    activeCategory
   } = props;
 
   const { categories } = useCategoryDappList();
@@ -44,6 +45,13 @@ const AllDappsTitle = (props: Props) => {
     });
     return result;
   }, [dappList]);
+
+  useEffect(() => {
+    console.log(activeCategory);
+    if (activeCategory) {
+      setCurrentCategory({key: activeCategory})
+    }
+  }, [activeCategory]);
 
   const [currentCategory, setCurrentCategory] = useState<any>();
   const handleCurrentCategory = (category: any) => {
@@ -123,6 +131,8 @@ export interface Props {
   dappList: Dapp[];
 
   onCategory?(categoryId?: number): void;
+
+  activeCategory?: any;
 }
 
 export interface Dapp {

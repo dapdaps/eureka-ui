@@ -22,6 +22,8 @@ const DappCard = (props: Props) => {
     categories,
     networks,
     badges,
+    bp = {},
+    onClick = () => {}
   } = props;
 
   const renderBadges = () => {
@@ -70,7 +72,7 @@ const DappCard = (props: Props) => {
   };
 
   return (
-    <StyledDappCard>
+    <StyledDappCard data-bp={bp?.dapp} onClick={onClick}>
       <StyledDappCardHead $logo={logo}>
         <StyledDappCardCategory>
           {
@@ -136,6 +138,13 @@ export interface Props {
   categories?: Category[];
   networks?: Network[];
   badges?: Badge[];
+  bp?: bp;
+  onClick?: () => void;
+}
+
+interface bp {
+  detail?: string;
+  dapp?: string;
 }
 
 export interface Category {
