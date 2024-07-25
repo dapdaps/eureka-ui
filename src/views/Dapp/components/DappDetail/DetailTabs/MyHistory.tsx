@@ -46,7 +46,7 @@ const MyHistory = ({ loading, list }: any) => {
 
   const onShareClick = () => {}
 
-  const  historyColumns: Column[] = [
+  const historyColumns: Column[] = [
     {
       dataIndex: 'actions',
       title: 'Actions',
@@ -86,7 +86,6 @@ const MyHistory = ({ loading, list }: any) => {
         <StyledHeadOther onClick={onPortfolioClick}>
           View more on Portfolio
         </StyledHeadOther>
-
       </StyledHead>
       <FlexTable
         className='activity-table'
@@ -98,6 +97,5 @@ const MyHistory = ({ loading, list }: any) => {
     </>
   );
 };
-
 
 export default MyHistory;

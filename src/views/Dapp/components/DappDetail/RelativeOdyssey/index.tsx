@@ -7,12 +7,12 @@ import {
   StyledOdysseyTag,
   StyledRewardText,
   StyledOdysseyDetail,
-  StyledRelatedTitle
+  StyledRelatedTitle,
 } from './styles';
 
 
 import {
-  relativeOdyssey
+  relativeOdyssey,
 } from '../config';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import Loading from '@/components/Icons/Loading';
@@ -34,40 +34,48 @@ const RelativeOdyssey = () => {
         if (finded) {
           filterList.push(finded);
         }
-      })
+      });
     }
     setFilterCompassList(filterList);
   }, [compassList]);
 
   return (
     <StyledContainer>
+      <Medal />
       <StyledRelatedTitle>Related Campaign</StyledRelatedTitle>
       {
-        loading ? (<Loading size={24}/>) : (
+        loading ? (
+          <Loading size={24} />
+        ) : (
           <>
-           <StyledOdysseyDetail>
-            {
-              filterCompassList.map(compass => (
-                <StyledOdysseyContainer>
-                  <StyledRewardTag url={['ended', 'un_start'].includes(compass.status) ? odyssey[compass.id]?.rewardDisableIcon : odyssey[compass.id]?.rewardEnableIcon}>
-                    <StyledRewardText style={{
-                      top: odyssey[compass.id]?.rewardTop ? (odyssey[compass.id]?.rewardTop - 10) : 36,
-                    }}>{odyssey[compass.id]?.reward}</StyledRewardText>
-                  </StyledRewardTag>
-                  <StyledOdysseyBanner url={compass.banner}/>
-                  <StyledOdysseyTitle>
-                    {compass.name}
-                    <StyledOdysseyTag>
-                      {compass.status}
-                    </StyledOdysseyTag>
-                  </StyledOdysseyTitle>
-                </StyledOdysseyContainer>
-              ))
-            }
-           </StyledOdysseyDetail>
-        </>)
+            <StyledOdysseyDetail>
+              {
+                filterCompassList.map(compass => (
+                  <StyledOdysseyContainer>
+                    <StyledRewardTag
+                      url={['ended', 'un_start'].includes(compass.status) ? odyssey[compass.id]?.rewardDisableIcon : odyssey[compass.id]?.rewardEnableIcon}>
+                      <StyledRewardText
+                        style={{
+                          top: odyssey[compass.id]?.rewardTop ? (odyssey[compass.id]?.rewardTop - 10) : 36,
+                        }}
+                      >
+                        {odyssey[compass.id]?.reward}
+                      </StyledRewardText>
+                    </StyledRewardTag>
+                    <StyledOdysseyBanner url={compass.banner} />
+                    <StyledOdysseyTitle>
+                      {compass.name}
+                      <StyledOdysseyTag>
+                        {compass.status}
+                      </StyledOdysseyTag>
+                    </StyledOdysseyTitle>
+                  </StyledOdysseyContainer>
+                ))
+              }
+            </StyledOdysseyDetail>
+          </>
+        )
       }
-      <Medal />
     </StyledContainer>
   );
 };

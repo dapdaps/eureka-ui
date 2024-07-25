@@ -4,28 +4,46 @@ import {
   StyledMedalContainer,
   StyledMedalLogo,
   StyledMedalInner,
-  StyledMedalTag
+  StyledMedalTag, StyledMedalName,
 } from './styles';
-
+import { motion } from 'framer-motion';
 
 const Medal = () => {
+
+  const percent = 0.35;
 
   return (
     <StyledContainer>
       <StyledTitle>Medal</StyledTitle>
-
       <StyledMedalContainer>
+        <StyledMedalTag>
+          Process {percent * 100}%
+        </StyledMedalTag>
         <StyledMedalInner>
           <svg xmlns="http://www.w3.org/2000/svg" width="102" height="102" viewBox="0 0 102 102" fill="none">
-            <circle cx="51" cy="51" r="50" stroke="#292C41" stroke-width="2" />
-            <path d="M51 1C78.6142 1 101 23.3858 101 51C101 64.6857 95.5015 77.0872 86.5932 86.1159" stroke="#EBF479"
-                  stroke-width="2" stroke-linecap="round" />
+            <circle cx="51" cy="51" r="50" stroke="#292C41" strokeWidth="2" />
+            <motion.circle
+              cx="51"
+              cy="51"
+              r="50"
+              stroke="#EBF479"
+              strokeWidth="2"
+              transform="matrix(0, -1, 1, 0, 0 , 102)"
+              initial={{
+                pathLength: 0,
+              }}
+              animate={{
+                pathLength: percent,
+              }}
+              transition={{
+                duration: 1,
+              }}
+            />
           </svg>
-          <StyledMedalLogo url={'/images/alldapps/icon-medal.png'}/>
+          <StyledMedalLogo url={'/images/alldapps/icon-medal.png'} />
         </StyledMedalInner>
-        <StyledMedalTag>Process 30%</StyledMedalTag>
+        <StyledMedalName>Bridger Junior</StyledMedalName>
       </StyledMedalContainer>
-
     </StyledContainer>
   );
 };

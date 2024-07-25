@@ -14,7 +14,7 @@ import {
   StyledSummaryLabel,
   StyledSummaryValue,
   StyledSummaryAdd,
-  StyledSummaryAddIcon
+  StyledSummaryAddIcon,
 } from './styles';
 import { useChainsStore } from '@/stores/chains';
 
@@ -23,17 +23,24 @@ const renderIcon = () => {
     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
       <path
         d="M4.56699 0.75C4.75944 0.416667 5.24056 0.416667 5.43301 0.75L8.89711 6.75C9.08956 7.08333 8.849 7.5 8.4641 7.5H1.5359C1.151 7.5 0.910436 7.08333 1.10289 6.75L4.56699 0.75Z"
-        fill="currentColor" stroke="url(#paint0_linear_16163_4093)" />
+        fill="currentColor" stroke="url(#paint0_linear_16163_4093)"
+      />
       <defs>
-        <linearGradient id="paint0_linear_16163_4093" x1="10.9668" y1="1.71698" x2="-1" y2="1.71698"
-                        gradientUnits="userSpaceOnUse">
-          <stop stop-color="currentColor" />
-          <stop offset="1" stop-color="currentColor" stop-opacity="0.1" />
+        <linearGradient
+          id="paint0_linear_16163_4093"
+          x1="10.9668"
+          y1="1.71698"
+          x2="-1"
+          y2="1.71698"
+          gradientUnits="userSpaceOnUse"
+        >
+          <stop stopColor="currentColor" />
+          <stop offset="1" stopColor="currentColor" stopOpacity="0.1" />
         </linearGradient>
       </defs>
     </svg>
-  )
-}
+  );
+};
 
 const DappSummary = (props: Props) => {
 
@@ -44,8 +51,6 @@ const DappSummary = (props: Props) => {
     categories,
     summaries,
   } = props;
-
-  console.log(props);
 
   const { loading, categories: allCaregories } = useCategoryDappList();
 
@@ -70,7 +75,7 @@ const DappSummary = (props: Props) => {
   return (
     <StyledContainer>
       <StyledDetailContainer>
-        <StyledDetailLogo $logo={logo}/>
+        <StyledDetailLogo $logo={logo} />
         <StyledDetailContent>
           <StyledDetailDesc>
             <StyledDetailName>{name}</StyledDetailName>
@@ -90,7 +95,7 @@ const DappSummary = (props: Props) => {
                   logo =
                     'https://raw.githubusercontent.com/lifinance/types/main/src/assets/icons/chains/ethereum.svg';
                 }
-                return <StyledNetworks $logo={logo} key={item.netword_id}/>
+                return <StyledNetworks $logo={logo} key={item.netword_id} />;
               })
             }
           </StyledNetworksContainer>
