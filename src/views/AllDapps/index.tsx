@@ -1,9 +1,7 @@
 import {
   StyledBody,
   StyledContainer,
-  StyledDappList,
   StyledFilters,
-  StyledFoot,
   StyledNetworkDropdownItem,
   StyledRewardNow,
   StyledSearch,
@@ -17,22 +15,14 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import Image from 'next/image';
-import { AllNetworks, CategoryList, PageSize, SortList } from '@/views/AllDapps/config';
-import { useDebounceFn } from 'ahooks';
+import { AllNetworks, SortList } from '@/views/AllDapps/config';
 import { usePathname, useSearchParams } from 'next/navigation';
-import DappCard from '@/views/AllDapps/components/DappCard';
-import Pagination from '@/components/pagination';
-import useDappOpen from '@/hooks/useDappOpen';
-import Empty from '@/components/Empty';
-import DappLoading from './Loading/Dapp';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
-import chainCofig from '@/config/chains';
+import DappList from './components/DappList';
 
 const AllDapps = (props: Props) => {
   const {} = props;
-
-  const { open } = useDappOpen();
 
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -46,10 +36,6 @@ const AllDapps = (props: Props) => {
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [category, setCategory] = useState<number| string>();
   const [searchWord, setSearchWord] = useState<string>();
-  const [loading, setLoading] = useState<boolean>(false);
-  const [dappList, setDappList] = useState<any>([]);
-  const [pageTotal, setPageTotal] = useState<number>(0);
-  const [pageIndex, setPageIndex] = useState<number>(1);
 
   const fetchNetworkData = async () => {
     try {
@@ -65,61 +51,6 @@ const AllDapps = (props: Props) => {
       setNetworkLoading(false);
     }
   };
-
-  const fetchDappList = async (page: number) => {
-    setPageIndex(page);
-    try {
-      setLoading(true);
-      const params: Record<string, any> = {
-        tbd_token: false,
-        is_favorite: false,
-        page_size: PageSize,
-        page,
-        sort
-      };
-      if (network > -1) {
-        params.network_ids = network;
-      }
-      if (category) {
-        params.category_ids = category;
-      }
-      if (searchWord) {
-        params.searchWord = searchWord;
-      }
-
-      const resultNativeToken = await get(
-        `${QUEST_PATH}/api/dapp/filter_list`,
-        params
-      );
-      const data = resultNativeToken.data?.data || [];
-      data.forEach((dapp: any) => {
-        //#region format categories
-        dapp.categories = [];
-        dapp.category_ids && dapp.category_ids.forEach((it: any) => {
-          const curr = CategoryList.find((_it) => _it.key === it);
-          curr && dapp.categories.push(curr);
-        });
-        //#endregion
-        //#region format networks
-        dapp.networks = [];
-        dapp.dapp_network && dapp.dapp_network.forEach((it: any) => {
-          const curr = chainCofig[it.chain_id];
-          curr && dapp.networks.push({ ...curr });
-        });
-        //#endregion
-      });
-      setDappList(data);
-      setPageTotal(resultNativeToken.data.total_page || 0);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching resultDapp data:', error);
-      setLoading(false);
-    }
-  };
-
-  const onDappCardClick = (dapp: any) => {
-    open({ dapp, from: 'alldapps' });
-  }
 
   const onSelectNetwork = (_network: number) => {
     const params = new URLSearchParams(searchParams);
@@ -155,8 +86,6 @@ const AllDapps = (props: Props) => {
     setSearchWord(e.target.value.trim());
   }
 
-  const { run: getDappList } = useDebounceFn(fetchDappList, { wait: 500 });
-
   useEffect(() => {
     fetchNetworkData();
   }, []);
@@ -187,10 +116,6 @@ const AllDapps = (props: Props) => {
       setCategory(undefined)
     }
   }, [router.query?.category]);
-
-  useEffect(() => {
-    getDappList(1);
-  }, [network, sort, rewardNow, category, searchWord]);
 
   return (
     <StyledContainer>
@@ -272,46 +197,15 @@ const AllDapps = (props: Props) => {
             />
           </StyledSearch>
         </StyledFilters>
-
-          {
-            loading ?
-              (<DappLoading />)
-              : (
-              dappList.length ? (<StyledDappList>
-                  {
-                    dappList.map((dapp: any, idx: number) => (
-                      <DappCard
-                        bp={{ detail: '10011-001', dapp: '10011-002' }}
-                        key={idx}
-                        name={dapp.name}
-                        logo={dapp.logo}
-                        description={dapp.description}
-                        categories={dapp.categories}
-                        networks={dapp.networks}
-                        onClick={() => onDappCardClick(dapp)}
-                        badges={[
-                          { icon: '/images/alldapps/icon-exchange.svg', iconSize: 17, value: '$23.56k' },
-                          { icon: '/images/alldapps/icon-fire.svg', iconSize: 17, value: '1,235' },
-                          { icon: '/images/alldapps/icon-mode.svg', iconSize: 24 },
-                          { icon: '/images/alldapps/icon-dapdap-point.svg', iconSize: 24 },
-                        ]}
-                      />
-                    ))
-                  }
-                </StyledDappList>)
-                : (<Empty size={42} tips="No dApps found" />)
-              )
-          }
-      </StyledBody>
-      <StyledFoot>
-        <Pagination
-          pageTotal={pageTotal}
-          pageIndex={pageIndex}
-          onPage={(page) => {
-            fetchDappList(page);
-          }}
+        <DappList
+          network={network}
+          sort={sort}
+          rewardNow={rewardNow}
+          category={category}
+          searchText={searchWord}
+          bp={{ detail: '10011-001', dapp: '10011-002' }}
         />
-      </StyledFoot>
+      </StyledBody>
     </StyledContainer>
   );
 };

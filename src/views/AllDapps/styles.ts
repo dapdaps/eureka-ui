@@ -12,13 +12,16 @@ export const StyledContainer = styled.div`
   color: #FFF;
   padding-top: 59px;
 `;
-export const StyledBody = styled(AllDappsWrapper)``;
+export const StyledBody = styled(AllDappsWrapper)`
+  padding-bottom: 150px;
+`;
 export const StyledFilters = styled.div`
   margin-top: 66px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 16px;
+  margin-bottom: 36px;
 `;
 export const StyledNetworkDropdownItem = styled.div`
   display: flex;
@@ -105,21 +108,6 @@ export const StyledSearchInput = styled.input`
   &::placeholder {
     color: #5E617E;
   }
-`;
-
-export const StyledDappList = styled.div`
-  display: flex;
-  justify-content: start;
-  align-items: center;
-  column-gap: 16px;
-  row-gap: 20px;
-  flex-wrap: wrap;
-  margin-top: 36px;
-`;
-
-export const StyledFoot = styled(AllDappsWrapper)`
-  padding-top: 50px;
-  padding-bottom: 150px;
 `;
 
 export const StyledSelectorLoading = styled.div`
