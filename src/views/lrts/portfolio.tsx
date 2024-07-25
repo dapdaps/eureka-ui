@@ -1,5 +1,4 @@
 import Big from 'big.js';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
@@ -34,8 +33,7 @@ enum TabType {
   'History' = 'History',
 }
 
-const Portfolio: FC<IProps> = (props) => {
-  const { completed } = useLrtsList();
+const Portfolio: FC<IProps> = ({}) => {
   const { chainId, account } = useAccount();
 
   const [swapToken, setSwapToken] = useState({});
