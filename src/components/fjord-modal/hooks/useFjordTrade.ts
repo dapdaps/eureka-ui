@@ -45,6 +45,7 @@ export interface TradeProps {
     quote: QuoteProps | undefined;
     chainId: number;
     slippage: string;
+    isFixedPriceSale?: boolean;
 }
 
 const poolAbi = [
@@ -239,6 +240,82 @@ const poolAbi = [
         "stateMutability": "nonpayable",
         "type": "function"
     },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "shares",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "recipient",
+                "type": "address"
+            }
+        ],
+        "name": "buyExactShares",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "assetsIn",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "assetsPerToken",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "platformFeeWAD",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "swapFees",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "weiPerToken",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
 ]
 
 const executorAbi = [
@@ -400,7 +477,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
         }
 
         let maxRoute = bridgeQuote[0]
-        for(let i = 0;i<bridgeQuote.length;i++) {
+        for (let i = 0; i < bridgeQuote.length; i++) {
             if (Number(bridgeQuote[i].duration) < 10 && Number(bridgeQuote[i].receiveAmount) > Number(maxRoute.receiveAmount)) {
                 maxRoute = bridgeQuote[i]
             }
@@ -452,6 +529,7 @@ export function useBuyTrade({
     recipient,
     slippage,
     quote,
+    isFixedPriceSale
 }: TradeProps) {
     const [loading, setLoading] = useState(false)
     const { fail, success } = useToast()
@@ -510,7 +588,9 @@ export function useBuyTrade({
 
             await approve(midToken.address, assetsIn, pool, signer)
 
-            const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
+            const tx = isFixedPriceSale ?
+                await PoolContract.buyExactShares(getShares(PoolContract, assetsIn.toString(), midToken), recipient) :
+                await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
             await tx.wait()
             setLoading(false)
 
@@ -531,7 +611,7 @@ export function useBuyTrade({
         }
     }
 
-    
+
 
     return {
         excuteBuyTrade,
@@ -545,7 +625,7 @@ export function useSellQuote({
     amount: string, pool: string, recipient: string | null, toToken: Token, midToken: Token, chainId: number
 }) {
     const [assetOut, setAssetOut] = useState('')
-    
+
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -561,7 +641,7 @@ export function useSellQuote({
         }
     }, [amount, recipient])
 
-   
+
 
 
     return {
@@ -682,11 +762,11 @@ export function useSellTrade({
             let gasLimit = 19200
             try {
                 gasLimit = (await PoolContract.estimateGas.swapExactSharesForAssets(_amount, minAssetsOut, recipient)).toNumber()
-            } catch(e) {
+            } catch (e) {
                 console.log(e)
             }
 
-            const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient, { 
+            const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient, {
                 gasLimit: gasLimit
             })
             const v = await tx.wait()
@@ -726,15 +806,15 @@ export function useRedeem() {
                 poolAbi,
                 signer,
             )
-    
-            const tx = await PoolContract.redeem()    
+
+            const tx = await PoolContract.redeem()
             await tx.wait()
             success({
                 title: 'Transaction success',
                 text: '',
             })
             return tx.hahh
-        } catch(err) {
+        } catch (err) {
             fail({
                 title: 'Transaction failed',
                 text: errorFormated(err),
@@ -788,7 +868,7 @@ function sleep(time: number) {
 }
 
 function getPoolContract(pool: string, chainId: number) {
-    const rpcUrl = chainCofig[chainId].rpcUrls[0]
+    const rpcUrl = chainCofig[chainId]?.rpcUrls[0]
 
     const provider = new providers.JsonRpcProvider(rpcUrl);
     const PoolContract = new Contract(
@@ -798,4 +878,17 @@ function getPoolContract(pool: string, chainId: number) {
     )
 
     return PoolContract
+}
+
+async function getShares(contract: any, assetsIn: string, midToken: Token) {
+    try {
+        const ppt = midToken.isNative ? await contract.weiPerToken() : await contract.assetsPerToken()
+        const platformFeeWADResult = await contract.platformFeeWAD()
+        const swapFeesResult = await contract.swapFees()
+        const swapFee = Big(platformFeeWADResult).plus(swapFeesResult)
+        return Big(assetsIn).div(Big(Big(1).plus(swapFee)).times(ppt)).toString()
+    } catch (err) {
+        return '0'
+    }
+
 }

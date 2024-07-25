@@ -122,3 +122,7 @@ export const Foot = styled.div`
     }
   }
 `;
+export const StyledRelativeModal = styled.div`
+  border-radius: 16px;
+  overflow: hidden;
+`

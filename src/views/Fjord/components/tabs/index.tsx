@@ -8,7 +8,7 @@ interface IProps {
     name: string;
     key: string;
   }[];
-  onTabsChange?: (key: string) => void;
+  onTabsChange?: (key: "TradeHistory" | "YourTrades") => void;
   current?: string;
   style?: any;
 }

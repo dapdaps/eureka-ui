@@ -15080,10 +15080,10 @@ stylis@^4.3.0:
   resolved "https://registry.npmjs.org/stylis/-/stylis-4.3.0.tgz#abe305a669fc3d8777e10eefcfc73ad861c5588c"
   integrity sha512-E87pIogpwUsUwXw7dNyU4QDjdgVMy52m+XEOPEKUn161cCzWjjhPSQhByfd1CcNvrOLnXQ6OnnZDwnJrz/Z4YQ==
 
-super-bridge-sdk@0.0.11-5:
-  version "0.0.11-5"
-  resolved "https://registry.npmmirror.com/super-bridge-sdk/-/super-bridge-sdk-0.0.11-5.tgz#2a339e469a3a5ead10bcbb84b25588d4c5a78a9b"
-  integrity sha512-kkL2G2YLx5FaBk3HRwxCYZSpTU0Ic/1CoG+Qs3KthhxapFI1ZxriduLHrkX01stRcglEXIv/tP1ayK/6VRchKg==
+super-bridge-sdk@0.0.11-7:
+  version "0.0.11-7"
+  resolved "https://registry.npmmirror.com/super-bridge-sdk/-/super-bridge-sdk-0.0.11-7.tgz#a1dbb09608f7b829370522d6f3a0be42e62b0a0d"
+  integrity sha512-TVbMEcZ0A3WrflFFWyC1IPEBECp+n9bblK1RUMcCkt3Ggw/KgSuDw0//87TRERfD4L9mQhOR87qib9q7xI+/Ww==
   dependencies:
     "@0xsquid/sdk" "^2.8.10"
     "@lifi/sdk" "^2.5.0"

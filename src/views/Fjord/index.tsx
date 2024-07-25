@@ -510,6 +510,7 @@ export default function LaunchpadHomePage() {
   const [upcomingAndOngoingChainId, setUpcomingAndOngoingChainId] = useState("0")
   const [poolStatusIndex, setPoolStatusIndex] = useState(0)
   const [completedPoolsChainId, setCompletedPoolsChainId] = useState("0")
+  const [isFixedPriceSale, setIsFixedPriceSale] = useState(false)
 
   const upcomingAndOngoingPoolsMapping = useMemo(() => {
     const filterPools = pools.filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
@@ -560,6 +561,7 @@ export default function LaunchpadHomePage() {
     if (data.status === 'upcoming') {
       return
     }
+    setIsFixedPriceSale(data?.mode === 'fixed_price')
     setCheckedPoolAddress(data.pool)
 
     setPoolToken({
@@ -717,7 +719,7 @@ export default function LaunchpadHomePage() {
                   <StyledFlex justifyContent='space-between' style={{ marginTop: 106, marginBottom: 30 }}>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Participants</StyledFont>
-                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.participants)}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.total_participants)}</StyledFont>
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
@@ -742,6 +744,11 @@ export default function LaunchpadHomePage() {
                         }}
                         onClick={() => handleBuyOrSell(pool)}
                       >{pool.status === "upcoming" ? "Coming Soon" : "Buy Now"}</StyledProjectButton>
+                      <StyledProjectButton
+                        onClick={() => {
+                          router.push('/stake/fjord/detail?id=' + pool?.id)
+                        }}
+                      >View More</StyledProjectButton>
                     </StyledProjectButtonContainer>
                   </StyledFlex>
                 </StyledContainer>
@@ -818,7 +825,12 @@ export default function LaunchpadHomePage() {
               </StyledLoadingWrapper>
             ) : (
               completedPools && completedPools.length > 0 ? completedPools.map((pool: any, index: number) => (
-                <StyledCompletedSalesTr key={index}>
+                <StyledCompletedSalesTr
+                  key={index}
+                  onClick={() => {
+                    router.push('/stake/fjord/detail?id=' + pool?.id)
+                  }}
+                >
                   <StyledCompletedSalesTd>
                     <StyledFlex gap='10px' style={{ paddingLeft: 20 }}>
                       <StyledTokenImageContainer style={{ width: 36, height: 36 }}>
@@ -870,6 +882,7 @@ export default function LaunchpadHomePage() {
       {
         fjordModalShow && checkedPoolAddress && (
           <FjordModal
+            isFixedPriceSale={isFixedPriceSale}
             pool={checkedPoolAddress}
             token={poolToken as Token}
             midToken={midToken as Token}

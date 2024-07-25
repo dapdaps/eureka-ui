@@ -1,49 +1,11 @@
 import chains from '@/config/chains';
-import { usePriceStore } from '@/stores/price';
-import { get, AUTH_TOKENS } from '@/utils/http';
-import { Contract, providers, utils } from 'ethers';
-import _ from 'lodash';
-import { useCallback, useEffect, useState } from 'react';
-import useShares from './useShares';
-export default function useUserPools(sender: any) {
-  const prices = usePriceStore((store) => store.price);
-  const [userPools, setUserPools] = useState<any[]>([]);
-  const { queryShares } = useShares(sender)
-  const [contractDataMapping, setContractDataMapping] = useState<any>({
+import { Contract, providers } from 'ethers';
+import { useState } from 'react';
+export default function useShares(sender: any) {
 
-  })
+  const [shares, setShares] = useState(0)
   const [loading, setLoading] = useState(false);
-
-  const queryUserPools = useCallback(async (query?: Record<string, any>) => {
-    if (loading) return;
-    setLoading(true);
-    try {
-      const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}')
-      if (tokens && tokens.access_token) {
-        const result = await get(`/api/launchpad/user/pools`, query);
-        setUserPools(result.data || []);
-        setLoading(false);
-      } else {
-        setTimeout(() => {
-          queryUserPools(query)
-        }, 500)
-      }
-    } catch (err) {
-      setLoading(false);
-    }
-  }, [loading]);
-
-  const handleQueryShares = async function (pool?: any) {
-    const res = await queryShares(pool)
-    setContractDataMapping((prev: any) => {
-      const curr = _.cloneDeep(prev)
-      const _contractData = curr[pool?.pool] || {}
-      _contractData["purchased_shares"] = utils.formatUnits(res, 18)
-      curr[pool?.pool] = _contractData
-      return curr
-    })
-  }
-  const queryContractDataMapping = function (data: any) {
+  const queryShares = async function (pool: any) {
     const abi = [{
       "inputs": [
         {
@@ -137,16 +99,23 @@ export default function useUserPools(sender: any) {
       "stateMutability": "view",
       "type": "function"
     }]
-    for (let i = 0; i < data.length; i++) {
-      handleQueryShares(data[i])
+    console.log('====pool', pool)
+    const rpcUrl = chains[pool?.chain_id ? pool?.chain_id : pool?.launchpad_lbp?.chain_id]?.rpcUrls[0] ?? ''
+    if (rpcUrl) {
+      const provider = new providers.JsonRpcProvider(rpcUrl);
+      const contract = new Contract(
+        pool?.pool,
+        abi,
+        provider,
+      )
+      if (sender) {
+        const _shares = await contract.purchasedShares(sender)
+        console.log('==_shares', _shares)
+        setShares(_shares)
+        return _shares
+      }
     }
   }
 
-
-  useEffect(() => {
-    userPools.length > 0 && queryContractDataMapping(userPools)
-  }, [userPools, sender])
-
-
-  return { loading, userPools, contractDataMapping, queryUserPools };
+  return { loading, shares, queryShares };
 }
