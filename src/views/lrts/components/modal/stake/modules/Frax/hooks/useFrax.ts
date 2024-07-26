@@ -213,6 +213,7 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,

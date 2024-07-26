@@ -229,6 +229,7 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading: loading,
     inToken,

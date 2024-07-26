@@ -10,6 +10,7 @@ function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleAddM
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     inToken,
     outToken,
@@ -44,6 +45,7 @@ function Renzo({ box, gem, dapp, token0, token1, setShow, actionType, handleAddM
         dapp,
         data,
         inAmount,
+        setInAmount,
         outAmount,
         isLoading: approving || isLoading,
         setShow,

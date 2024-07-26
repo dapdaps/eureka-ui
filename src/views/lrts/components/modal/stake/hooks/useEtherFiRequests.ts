@@ -37,7 +37,7 @@ export default function useMantleRequests() {
   const { addAction } = useAddAction('lrts');
 
   const token0 = ethereum['eth']
-  const token1 = ethereum['mETH']
+  const token1 = ethereum['eETH']
 
   const handleGetClaimableAmount = async function (tokenId: any) {
     const contract = new ethers.Contract(WITHDRAW_REQUEST_NFT, WITHDRAW_REQUEST_NFT_ABI, provider?.getSigner())

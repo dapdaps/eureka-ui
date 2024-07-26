@@ -145,6 +145,7 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading: loading,
     inToken,

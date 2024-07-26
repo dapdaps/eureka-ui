@@ -225,6 +225,7 @@ export default function usePuffer({ token0, token1, actionType, gem, dapp, onSuc
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading: loading,
     inToken,

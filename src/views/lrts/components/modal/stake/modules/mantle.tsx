@@ -6,6 +6,7 @@ const Mantle = function ({ box, gem, dapp, setShow, actionType, handleAddMetaMas
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,
@@ -41,6 +42,7 @@ const Mantle = function ({ box, gem, dapp, setShow, actionType, handleAddMetaMas
         data,
         setShow,
         inAmount,
+        setInAmount,
         outAmount,
         isLoading,
         approved,

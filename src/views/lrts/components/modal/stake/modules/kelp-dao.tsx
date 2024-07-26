@@ -7,6 +7,7 @@ const KelpDao = function ({ box, gem, dapp, setShow, actionType, handleAddMetaMa
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,
@@ -44,6 +45,7 @@ const KelpDao = function ({ box, gem, dapp, setShow, actionType, handleAddMetaMa
         data,
         setShow,
         inAmount,
+        setInAmount,
         outAmount,
         isLoading,
         approved,

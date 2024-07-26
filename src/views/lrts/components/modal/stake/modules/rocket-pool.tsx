@@ -10,6 +10,7 @@ const RocketPool = function (props: any) {
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,
@@ -32,6 +33,7 @@ const RocketPool = function (props: any) {
         dapp,
         data,
         inAmount,
+        setInAmount,
         outAmount,
         isLoading,
         approved,

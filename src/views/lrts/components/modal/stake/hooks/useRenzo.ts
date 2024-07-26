@@ -207,6 +207,7 @@ export default function useRenzo({ token0, token1, actionType, gem, dapp, onSucc
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading: loading,
     inToken,

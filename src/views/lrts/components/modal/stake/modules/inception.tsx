@@ -10,6 +10,7 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleAddMetaMa
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     inToken,
     outToken,
@@ -45,6 +46,7 @@ function Inception({ box, gem, dapp, token0, token1, actionType, handleAddMetaMa
         dapp,
         data,
         inAmount,
+        setInAmount,
         outAmount,
         isLoading: approving || isLoading,
         setShow,

@@ -209,6 +209,7 @@ export default function useEigenpie({ token0, token1, actionType, gem, dapp, onS
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading: loading,
     inToken,

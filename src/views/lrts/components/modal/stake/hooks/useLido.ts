@@ -188,6 +188,7 @@ export default function useLido({ gem, dapp, token0, token1, addAction, actionTy
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,

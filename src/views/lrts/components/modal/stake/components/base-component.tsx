@@ -40,7 +40,7 @@ import {
   StyledWithdrawTips,
 } from '../styles';
 import Button from './button';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const BaseComponent = function (props: any) {
   const {
@@ -50,6 +50,7 @@ const BaseComponent = function (props: any) {
     data,
     setShow,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,
@@ -75,6 +76,10 @@ const BaseComponent = function (props: any) {
 
   const [isActive, setIsActive] = useState(true);
   const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
+  
+  useEffect(() => {
+    setInAmount && setInAmount("")
+  }, [actionType])
   return (
     <StyledStakeContainer>
       {gem?.dapp?.logo ? (

@@ -7,6 +7,7 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,
@@ -43,6 +44,7 @@ const Lido = function ({ box, gem, dapp, setShow, token0, token1, addAction, act
         data,
         setShow,
         inAmount,
+        setInAmount,
         outAmount,
         isLoading,
         approved,

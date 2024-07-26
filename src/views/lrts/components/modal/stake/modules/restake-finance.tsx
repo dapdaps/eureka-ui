@@ -6,6 +6,7 @@ const RestakeFinance = function ({ box, gem, dapp, actionType, addAction, handle
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,
@@ -37,6 +38,7 @@ const RestakeFinance = function ({ box, gem, dapp, actionType, addAction, handle
         data,
         setShow,
         inAmount,
+        setInAmount,
         outAmount,
         isLoading,
         approved,

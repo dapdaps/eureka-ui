@@ -415,6 +415,7 @@ const useRestakeFinance = function ({ gem, dapp, token0, token1, addAction, acti
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,

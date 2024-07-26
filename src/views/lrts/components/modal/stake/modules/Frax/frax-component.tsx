@@ -63,6 +63,7 @@ const FraxComponent = function (props: any) {
   const {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,

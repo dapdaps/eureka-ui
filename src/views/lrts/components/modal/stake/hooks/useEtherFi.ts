@@ -192,6 +192,7 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,

@@ -192,6 +192,7 @@ export default function useMantle({ gem, dapp, token0, token1, addAction, action
   return {
     data,
     inAmount,
+    setInAmount,
     outAmount,
     isLoading,
     approved,
