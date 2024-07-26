@@ -17,17 +17,3 @@ export const useLrtDataStore = create<LrtsStore>((set) => ({
       return { ...params };
     }),
 }));
-
-export const useCompletedRequestMappingStore = create(
-  persist(
-    (set, get: any) => ({
-      completedRequestMapping: {},
-      set: (params: any) => set(() => ({ ...params })),
-    }),
-    {
-      name: '_completedRequestMapping',
-      version: 0.1,
-      storage: createJSONStorage(() => localStorage),
-    },
-  ),
-);

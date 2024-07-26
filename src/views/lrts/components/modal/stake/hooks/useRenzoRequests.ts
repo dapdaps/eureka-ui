@@ -2,7 +2,6 @@ import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import axios from 'axios';
 import Big from 'big.js';
 import { ethers } from 'ethers';
@@ -26,7 +25,6 @@ const contracts: { [key: number]: string } = {
 const dappName: string = "Renzo"
 export default function useRenzoRequests() {
   const { provider, account, chainId } = useAccount();
-  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -75,13 +73,6 @@ export default function useRenzoRequests() {
   }, [account, chainId]);
 
 
-  const handleCompleted = function (record: Record) {
-    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
-    const completedRequests = completedRequestMapping[dappName] || []
-    completedRequests.push(record)
-    completedRequestMapping[dappName] = completedRequests
-    completedRequestMappingStore.set({ completedRequestMapping })
-  }
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
@@ -107,6 +98,7 @@ export default function useRenzoRequests() {
         addAction({
           type: 'Staking',
           action: 'claim',
+          token: [record?.token0?.symbol, record?.token1?.symbol],
           amount: record.amount,
           template: dappName,
           status,
@@ -118,10 +110,6 @@ export default function useRenzoRequests() {
             token1: record.token1.symbol,
           }),
         });
-        handleCompleted({
-          ...record,
-          status: 'completed'
-        })
         onLoading(false);
       } catch (err: any) {
         console.log('err', err);

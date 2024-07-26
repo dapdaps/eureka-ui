@@ -3,7 +3,6 @@ import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import { multicall } from '@/utils/multicall';
 import abi from '@/views/lrts/config/abi/kelp-dao';
 import Big from 'big.js';
@@ -31,7 +30,6 @@ const {
 const dappName: string = "KelpDao"
 export default function useInceptionRequests() {
   const { account, chainId, provider } = useAccount();
-  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -96,13 +94,6 @@ export default function useInceptionRequests() {
     [account, chainId],
   );
 
-  const handleCompleted = function (record: Record) {
-    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
-    const completedRequests = completedRequestMapping[dappName] || []
-    completedRequests.push(record)
-    completedRequestMapping[dappName] = completedRequests
-    completedRequestMappingStore.set({ completedRequestMapping })
-  }
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId) return;
@@ -123,7 +114,8 @@ export default function useInceptionRequests() {
         addAction({
           type: 'Staking',
           action: 'claim',
-          // amount: record.amount,
+          token: [record?.token0?.symbol, record?.token1?.symbol],
+          amount: record.amount,
           template: dappName,
           status,
           transactionHash,
@@ -134,10 +126,6 @@ export default function useInceptionRequests() {
             token1: record.token1.symbol,
           }),
         });
-        handleCompleted({
-          ...record,
-          status: 'completed'
-        })
         onLoading(false);
       } catch (err: any) {
         console.log('err', err);

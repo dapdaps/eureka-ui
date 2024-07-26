@@ -1,35 +1,45 @@
 
+import useAccount from '@/hooks/useAccount';
+
+
 import Loading from '@/components/Icons/Loading';
 import { balanceFormated } from '@/utils/balance';
-
+import { useEffect } from 'react';
+import useQueryActionList from '../hooks/useQueryActionList';
 import { StyledLoadingWrapper, StyledRecord, StyledRecordList, StyledRecordText } from '../styles';
+export default function CompletedStakeList({ gem, dapp, inToken, outToken }: any) {
+  const { provider, account } = useAccount();
+  const { loading, actionList, queryActionList } = useQueryActionList()
 
-import { useCompletedRequestMappingStore } from '@/stores/lrts'
-import { useEffect, useState } from 'react';
-export default function CompletedStakeList({ gem, dapp }: any) {
-
-  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
-  const [requestsLoading, setRequestsLoading] = useState(false)
-  const [requests, setRequests] = useState([])
-
+  const handleQueryActionList = function () {
+    queryActionList({
+      account,
+      action_tokens: JSON.stringify([outToken.symbol, inToken.symbol])
+    })
+  }
+  const handleQuerySymbol = function (action_tokens: string) {
+    let _symobl = ""
+    try {
+      _symobl = JSON.parse(action_tokens)[1]
+    } catch (error) {
+      _symobl = ""
+    }
+    return _symobl
+  }
   useEffect(() => {
-    const dappName = gem ? gem?.dapp?.name : dapp?.name
-    setRequestsLoading(true)
-    const _completedRequest = completedRequestMappingStore.completedRequestMapping[dappName] || []
-    setRequests(_completedRequest)
-    setRequestsLoading(false)
+    handleQueryActionList()
   }, [])
   return (
     <StyledRecordList>
-      {requestsLoading ? (
+      {loading ? (
         <StyledLoadingWrapper>
           <Loading size={20} />
         </StyledLoadingWrapper>
-      ) : requests?.length ? (
-        requests.map((request: any, i: number) => (
+      ) : actionList?.length ? (
+        actionList.map((action: any, i: number) => (
           <StyledRecord key={i}>
             <StyledRecordText>
-              {balanceFormated(request.amount, 3)} {request.token1.symbol}
+              {balanceFormated(action.action_amount, 3)} {handleQuerySymbol(action.action_tokens)}
             </StyledRecordText>
             <StyledRecordText style={{ opacity: 0.3 }}>completed</StyledRecordText>
           </StyledRecord>

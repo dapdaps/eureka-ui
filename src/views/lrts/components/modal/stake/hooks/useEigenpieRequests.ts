@@ -2,7 +2,6 @@ import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
@@ -46,7 +45,6 @@ const tokens: { [key: string]: any } = {
 const dappName: string = "Eigenpie"
 export default function useEigenpieRequests() {
   const { account, chainId, provider } = useAccount();
-  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -102,13 +100,6 @@ export default function useEigenpieRequests() {
     },
     [account, chainId],
   );
-  const handleCompleted = function (record: Record) {
-    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
-    const completedRequests = completedRequestMapping[dappName] || []
-    completedRequests.push(record)
-    completedRequestMapping[dappName] = completedRequests
-    completedRequestMappingStore.set({ completedRequestMapping })
-  }
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
@@ -132,6 +123,7 @@ export default function useEigenpieRequests() {
         addAction({
           type: 'Staking',
           action: 'claim',
+          token: [record?.token0?.symbol, record?.token1?.symbol],
           amount: record.amount,
           template: dappName,
           status,
@@ -143,11 +135,8 @@ export default function useEigenpieRequests() {
             token1: record.token1.symbol,
           }),
         });
-        handleCompleted({
-          ...record,
-          status: 'completed'
-        })
         onLoading(false);
+        queryRequests(record.token0.address)
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);

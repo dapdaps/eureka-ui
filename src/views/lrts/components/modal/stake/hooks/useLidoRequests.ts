@@ -2,7 +2,6 @@ import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import abi from '@/views/lrts/config/abi/lido';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
@@ -24,7 +23,6 @@ const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
 const dappName: string = "Lido"
 export default function useLidoRequests() {
   const { account, chainId, provider } = useAccount();
-  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -65,13 +63,6 @@ export default function useLidoRequests() {
     [account, chainId],
   );
 
-  const handleCompleted = function (record: Record) {
-    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
-    const completedRequests = completedRequestMapping[dappName] || []
-    completedRequests.push(record)
-    completedRequestMapping[dappName] = completedRequests
-    completedRequestMappingStore.set({ completedRequestMapping })
-  }
 
   const claim = useCallback(
     async (record: any, onLoading: any) => {
@@ -96,6 +87,7 @@ export default function useLidoRequests() {
         addAction({
           type: 'Staking',
           action: 'claim',
+          token: [record?.token0?.symbol, record?.token1?.symbol],
           amount: record.amount,
           template: dappName,
           status,
@@ -107,10 +99,6 @@ export default function useLidoRequests() {
             token1: record.token1.symbol,
           }),
         });
-        handleCompleted({
-          ...record,
-          status: 'completed'
-        })
         onLoading(false);
       } catch (err: any) {
         console.log('err', err);

@@ -328,7 +328,12 @@ const BaseComponent = function (props: any) {
                 claim={claim}
               />
             ) : (
-              <CompletedStaleList gem={gem} dapp={dapp} />
+              <CompletedStaleList
+                gem={gem}
+                dapp={dapp}
+                inToken={inToken}
+                outToken={outToken}
+              />
             )}
           </StyledStakeBottomContainer>
         </>

@@ -2,22 +2,24 @@ import { get } from '@/utils/http';
 import { useCallback, useState } from 'react';
 
 type QueryType = {
-  account: string;
+  account: string | undefined;
   source?: string;
   template?: string;
   action_type?: string;
   page?: number;
   page_size?: number;
+  action_tokens?: string;
 };
 export default function useQueryActionList() {
   const [loading, setLoading] = useState(false);
   const [actionList, setActionList] = useState<any[]>([])
 
-  const handleQueryActionList = useCallback(async (query: QueryType) => {
+  const queryActionList = useCallback(async (query: QueryType) => {
     if (loading) return;
     setLoading(true);
     try {
-      const result = await get('/api/action/list', query);
+      const response = await get('/api/action/list', query);
+      const result = response?.data
       setActionList(result.data)
       setLoading(false);
     } catch (err) {
@@ -25,5 +27,5 @@ export default function useQueryActionList() {
     }
   }, []);
 
-  return { loading, actionList, handleQueryActionList };
+  return { loading, actionList, queryActionList };
 }

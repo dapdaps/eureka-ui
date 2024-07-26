@@ -1,4 +1,3 @@
-import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useState } from 'react';
 
@@ -6,7 +5,6 @@ import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import { useCompletedRequestMappingStore } from '@/stores/lrts';
 import { ENTER_QUEUE_ABI } from '@/views/lrts/config/abi/frax';
 type Record = {
   amount: number;
@@ -64,7 +62,6 @@ const dappName: string = "Frax Finance"
 export default function useFraxRequests() {
   const { provider, account, chainId } = useAccount();
 
-  const completedRequestMappingStore: any = useCompletedRequestMappingStore()
   const [requests, setRequests] = useState<Record[]>([]);
   const [requestsLoading, setRequestsLoading] = useState(false);
   const [claiming, setClaiming] = useState(false);
@@ -109,13 +106,6 @@ export default function useFraxRequests() {
     }
   };
 
-  const handleCompleted = function (record: Record) {
-    const completedRequestMapping = completedRequestMappingStore.completedRequestMapping
-    const completedRequests = completedRequestMapping[dappName] || []
-    completedRequests.push(record)
-    completedRequestMapping[dappName] = completedRequests
-    completedRequestMappingStore.set({ completedRequestMapping })
-  }
 
   // claims
   const claim = async (request: ITicket, recipient: string) => {
@@ -143,10 +133,7 @@ export default function useFraxRequests() {
       //     token1: record.token1.symbol,
       //   }),
       // });
-      // handleCompleted({
-      //   ...record,
-      //   status: 'completed'
-      // })
+      queryRequests()
     } catch (error) {
       toast.fail({ title: `Claim faily!` });
     } finally {
