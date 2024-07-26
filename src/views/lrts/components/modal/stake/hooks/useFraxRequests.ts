@@ -1,11 +1,12 @@
 import { ethers } from 'ethers';
-import { useState } from 'react';
+import { use, useState } from 'react';
 
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { ENTER_QUEUE_ABI } from '@/views/lrts/config/abi/frax';
+import { useSelectedToken } from '../modules/Frax/hooks/useSelectedToken';
 type Record = {
   amount: number;
   token0: any;
@@ -14,6 +15,7 @@ type Record = {
   startTime: string;
   status: 'In Progress' | 'Claimable';
   data: any;
+  item: ITicket
 };
 
 
@@ -67,11 +69,10 @@ export default function useFraxRequests() {
   const [claiming, setClaiming] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
-
+  const selectedTokenStore = useSelectedToken((state) => state.selectedToken);
 
   // get redeem tickets
   const queryRequests = async (): Promise<IUserRedeemTicketsResponse | []> => {
-
     if (!account) return [];
 
     const address = ethers.utils.getAddress(account);
@@ -91,8 +92,9 @@ export default function useFraxRequests() {
             amount: item.amountIn,
             startTime: item.createdAt,
             status: isMatured ? 'Claimable' : 'In Progress',
-            token0: ethereum.eth,
-            token1: ethereum.frxETH,
+            token0: selectedTokenStore,
+            token1: ethereum['eth'],
+            item
           };
         });
         setRequests(_list);
@@ -108,31 +110,31 @@ export default function useFraxRequests() {
 
 
   // claims
-  const claim = async (request: ITicket, recipient: string) => {
+  const claim = async (record: Record, recipient: string) => {
     setClaiming(true);
     const toastId = toast.loading({ title: 'Confirming...' });
-    const nftId = request?.transactions[0]?.nftTokenId || ''
+    const nftId = record.item.transactions[0]?.nftTokenId || ''
     if (!nftId) return toast.fail({ title: `Claim data is Empty!` });
     try {
       const redemptionQueueContract = new ethers.Contract(FraxEtherRedemptionQueue_ADDR, ENTER_QUEUE_ABI, provider.getSigner());
       const tx = await redemptionQueueContract.burnRedemptionTicketNft(nftId, recipient);
-      const { transactionHash } = await tx.wait();
+      const { status, transactionHash } = await tx.wait();
       toast.dismiss(toastId);
       toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
-      // addAction({
-      //   type: 'Staking',
-      //   action: 'claim',
-      //   amount: record.amount,
-      //   template: dappName,
-      //   status,
-      //   transactionHash,
-      //   add: 0,
-      //   extra_data: JSON.stringify({
-      //     action: 'claim',
-      //     token0: record.token0.symbol,
-      //     token1: record.token1.symbol,
-      //   }),
-      // });
+      addAction({
+        type: 'Staking',
+        action: 'claim',
+        amount: record.amount,
+        template: dappName,
+        status,
+        transactionHash,
+        add: 0,
+        extra_data: JSON.stringify({
+          action: 'claim',
+          token0: record.token0.symbol,
+          token1: record.token1.symbol,
+        }),
+      });
       queryRequests()
     } catch (error) {
       toast.fail({ title: `Claim faily!` });
