@@ -7,6 +7,7 @@ const Dialog = styled.div`
   top: 0;
   bottom: 0;
   display: none;
+  z-index: 2;
   &.display {
     display: block;
   }

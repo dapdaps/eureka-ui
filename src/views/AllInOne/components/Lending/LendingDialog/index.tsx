@@ -96,6 +96,7 @@ const LendingDialog = (props: IProps) => {
     getTrade: null,
   });
   const [trade, setTrade] = useState<any>({});
+  const [updateHandler, setUpdateHandler] = useState<any>(Date.now());
 
   const actionText = useMemo(() => data?.actionText, [data]);
   const isSupply = useMemo(() => ['Deposit', 'Withdraw'].includes(actionText), [actionText]);
@@ -224,7 +225,9 @@ const LendingDialog = (props: IProps) => {
     }));
   }, []);
 
-
+  useEffect(() => {
+    setUpdateHandler(Date.now());
+  }, [data, state.amount, account]);
 
   const formatBorrowLimit = (digits: any, round: any) => {
     if (data.config.name === 'Ionic') {
@@ -245,8 +248,6 @@ const LendingDialog = (props: IProps) => {
     }
   };
 
-  console.log(state, 'log-----state');
-  
   const formatBalance = () => {
     if (state.balanceLoading) return 'Loading';
     if (!state.balance) return '-';
@@ -432,9 +433,10 @@ const LendingDialog = (props: IProps) => {
                       if (state.balanceLoading || isNaN(Number(state.balance))) return;
                       handleAmountChange(state.balance);
                       const balanceNumber = Big(state.balance || 0);
+                      const balanceStr = Big(balanceNumber).toFixed(12);
                       setState((prevState) => ({
                         ...prevState,
-                        amount: balanceNumber.eq(0) ? '0' : balanceNumber.toFixed(12),
+                        amount: Big(balanceStr).eq(0) ? '0' : Big(balanceStr).toString(),
                         isMax: true,
                       }));
                     }}
@@ -446,6 +448,19 @@ const LendingDialog = (props: IProps) => {
                   <LendingProcess
                     value={state.processValue}
                     onChange={(value) => {
+                      // 100% use balance directly
+                      if (value === 100) {
+                        const balanceNumber = Big(state.balance || 0);
+                        const balanceStr = Big(balanceNumber).toFixed(12);
+                        const _amount = Big(balanceStr).eq(0) ? '0' : Big(balanceStr).toString();
+                        setState((prevState) => ({
+                          ...prevState,
+                          processValue: value,
+                          amount: _amount,
+                        }));
+                        handleAmountChange(_amount);
+                        return;
+                      }
                       const amount = Big(state.balance)
                         .mul(value / 100)
                         .toFixed(4, 0);
@@ -527,12 +542,12 @@ const LendingDialog = (props: IProps) => {
         <VmComponent
           src={data.config.handler}
           props={{
-            update: new Date().getTime(),
+            update: updateHandler,
             data: data,
             amount: state.amount,
             account,
             onLoad: (_data: any) => {
-              // console.log("Dialog-handler-onLoad--", _data);
+              console.log("%cDialog-handler-onLoad--", 'background:red;color:white;', _data);
               setTrade(_data)
               setState((prevState) => ({
                 ...prevState,
