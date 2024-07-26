@@ -1,6 +1,6 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
-import sonne from '../dapps/sonne';
+// import sonne from '../dapps/sonne';
 import ironBank from '../dapps/iron-bank';
 import granary from '../dapps/granary-finance';
 
@@ -18,12 +18,12 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: 'Sonne',
+  defaultDapp: 'Iron Bank',
   dapps: {
-    Sonne: {
-      ...sonne.basic,
-      ...sonne.networks[CHAIN_ID],
-    },
+    // Sonne: {
+    //   ...sonne.basic,
+    //   ...sonne.networks[CHAIN_ID],
+    // },
     'Iron Bank': {
       ...ironBank.basic,
       ...ironBank.networks[CHAIN_ID],
