@@ -7,10 +7,11 @@ import DiscoveryDapps from './components/DiscoveryDapps';
 import QuickOnboarding from './components/QuickOnboarding';
 import SeamlessNavigation from './components/SeamlessNavigation';
 import TrendingEthereum from './components/TrendingEthereum';
-import Learn from './components/Learn';
+
 import { StyledContainer } from './styles';
 import RecentRewards from './components/Rewards';
 import Networks from './components/Networks';
+import SuperFeatures from './components/SuperFeatures';
 
 const Home = () => {
   const chains = useChainsStore((store: any) => store.chains);
@@ -21,10 +22,11 @@ const Home = () => {
       <Networks />
       <DiscoveryDapps />
       <RecentRewards />
-      <TrendingEthereum chains={chains} />
+      <SuperFeatures /> 
+      {/* <TrendingEthereum chains={chains} />
       <QuickOnboarding />
       <SeamlessNavigation chains={chains} />
-      <Decentralised />
+      <Decentralised /> */}
       {/* <Learn /> */}
     </StyledContainer>
   );

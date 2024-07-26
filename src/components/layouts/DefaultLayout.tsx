@@ -27,6 +27,8 @@ const Layout = styled.div`
   }
 `;
 
+const BLACK_PATH = ['/odyssey/[version]', '/']
+
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();
   const pathName = router.pathname;
@@ -47,7 +49,7 @@ export function DefaultLayout({ children }: Props) {
   return (
     <Layout
       style={{
-        background: router.pathname === '/odyssey/[version]' ? '#000' : '#16181d',
+        background: BLACK_PATH.includes(router.pathname) ? '#000' : '#16181d',
       }}
     >
       {pathName !== '/uniswap' && <DesktopNavigationTop />}

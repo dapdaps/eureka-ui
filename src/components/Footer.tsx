@@ -12,7 +12,8 @@ const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   color: rgba(151, 154, 190, 1);
-  font-size: 14px;
+  font-size: 12px;
+  line-height: 14px;
   font-weight: 400;
   padding: 0 36px;
   height: 60px;
