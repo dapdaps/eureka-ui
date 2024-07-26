@@ -59,7 +59,6 @@ const History: FC<IProps> = (props) => {
         try {
           const extraData = JSON.parse(item.extra_data);
           const { action, fromTokenSymbol, fromTokenAmount, toTokenSymol, toTokenAmount, token0, token1 } = extraData;
-          console.log(extraData);
 
           return {
             action,
@@ -67,7 +66,7 @@ const History: FC<IProps> = (props) => {
             hash: item.tx_id,
             sent: {
               fromTokenSymbol: action === 'claim' ? token0 : fromTokenSymbol,
-              fromTokenAmount,
+              fromTokenAmount: action === 'claim' ? item.action_amount : fromTokenAmount,
             },
             recive: {
               toTokenSymol: action === 'claim' ? token1 : toTokenSymol,

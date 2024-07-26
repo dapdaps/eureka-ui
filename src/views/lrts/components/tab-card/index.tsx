@@ -15,7 +15,7 @@ import { PolygonBtn } from '../';
 
 export enum ActionType {
   STAKE = 'stake',
-  UNSTAKE = 'unstake',
+  RESTAKE = 'restake',
 }
 const TabWrap = styled(motion.div)``;
 const TabHead = styled.div`
@@ -221,12 +221,25 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
     ];
 
     const _tabList = _list.filter((item: any) => balances[item.address] > 0);
+
     setTabList(_tabList);
     setIsShowHeader(true);
     setList(_list);
     setActiveIndex(0);
-    setDataIndex(0);
-  }, [lstIndex, lrtsData]);
+    if (_tabList[0]) {
+      const _dataIndex = _list.findIndex((item: any) => item.symbol === _tabList[0].symbol);
+
+      setDataIndex(_dataIndex);
+      if (_dataIndex > 0) {
+        setTokenType(ActionType.RESTAKE);
+      } else {
+        setTokenType(ActionType.STAKE);
+      }
+    } else {
+      setDataIndex(0);
+      setTokenType(ActionType.STAKE);
+    }
+  }, [lstIndex, lrtsData, balances]);
 
   useEffect(() => {
     if (activeIndex !== 0) {
@@ -243,7 +256,6 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
 
     const _index = tabList.findIndex((item: any) => item.symbol === curLrt?.symbol);
     const _dataIndex = list.findIndex((item: any) => item.symbol === curLrt?.symbol);
-    console.log(1111, _index, _dataIndex);
 
     if (_index < 0) {
       // hide tab header
@@ -281,13 +293,12 @@ const TabCard: FC<IProps> = ({ lstIndex, curLrt, handleShowModal, onTabChange, r
   useEffect(() => {
     const lsts = lrtsData.map((item: any) => item.token.symbol);
 
-    if (lsts.includes(list?.[activeIndex]?.symbol)) {
+    if (lsts.includes(list?.[dataIndex]?.symbol)) {
       setTokenType(ActionType.STAKE);
     } else {
-      setTokenType(ActionType.UNSTAKE);
+      setTokenType(ActionType.RESTAKE);
     }
-  }, [lrtsData, activeIndex]);
-  // console.log('index--', activeIndex, dataIndex);
+  }, [lrtsData, dataIndex]);
 
   return Array.isArray(list) ? (
     <TabWrap {...anim} ref={tabRef}>

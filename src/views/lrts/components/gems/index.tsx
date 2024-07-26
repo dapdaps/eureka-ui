@@ -126,7 +126,6 @@ const Wrap = styled.section`
   .item-tunnel {
     background-color: #000;
     overflow: hidden;
-   
   }
   .item-5 {
     position: relative;
@@ -176,7 +175,7 @@ const Stones: FC<IProps> = ({ dataSource, onGemClick, updater }) => {
   const allGems = dataSource.map((item: any) => item.order);
 
   const { loading, balances } = useAllTokensBalance(updater);
-  console.log('balances--', balances);
+  // console.log('balances--', balances);
 
   const userGems = dataSource.filter((item: any) => balances[item?.token?.address] > 0).map((item: any) => item.order);
 
