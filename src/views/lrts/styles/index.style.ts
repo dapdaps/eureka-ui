@@ -18,6 +18,9 @@ export const Banner = styled.div`
   background: url(/images/lrts/bg-home.png) center no-repeat #000;
   /* background-size: contain; */
   background-size: 100% 100%;
+  @media (min-width: 2000px) {
+    height: 757px;
+      }
   .mySwiper {
     margin-top: 120px;
     padding: 55px 150px;

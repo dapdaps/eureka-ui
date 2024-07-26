@@ -58,17 +58,19 @@ const History: FC<IProps> = (props) => {
       .map((item: any) => {
         try {
           const extraData = JSON.parse(item.extra_data);
-          const { action, fromTokenSymbol, fromTokenAmount, toTokenSymol, toTokenAmount } = extraData;
+          const { action, fromTokenSymbol, fromTokenAmount, toTokenSymol, toTokenAmount, token0, token1 } = extraData;
+          console.log(extraData);
+
           return {
             action,
             date: item.timestamp,
             hash: item.tx_id,
             sent: {
-              fromTokenSymbol,
+              fromTokenSymbol: action === 'claim' ? token0 : fromTokenSymbol,
               fromTokenAmount,
             },
             recive: {
-              toTokenSymol,
+              toTokenSymol: action === 'claim' ? token1 : toTokenSymol,
               toTokenAmount,
             },
           };
