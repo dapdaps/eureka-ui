@@ -5,6 +5,7 @@ import { QUEST_PATH } from '@/config/quest';
 import chainCofig from '@/config/chains';
 import { useDebounceFn } from 'ahooks';
 
+
 export default function useList(props: Props) {
   const {
     network,
@@ -104,4 +105,5 @@ export interface Props {
   rewardNow?: boolean;
   // data anchor
   bp?: { detail: string; dapp: string; };
+  style?: React.CSSProperties;
 }

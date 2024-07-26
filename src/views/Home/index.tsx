@@ -10,6 +10,7 @@ import TrendingEthereum from './components/TrendingEthereum';
 import Learn from './components/Learn';
 import { StyledContainer } from './styles';
 import RecentRewards from './components/Rewards';
+import Networks from './components/Networks';
 
 const Home = () => {
   const chains = useChainsStore((store: any) => store.chains);
@@ -17,6 +18,7 @@ const Home = () => {
     <StyledContainer>
       <Banner />
       <Compass />
+      <Networks />
       <DiscoveryDapps />
       <RecentRewards />
       <TrendingEthereum chains={chains} />

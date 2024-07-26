@@ -30,7 +30,7 @@ const DappList = forwardRef((props: Props, ref) => {
   }));
 
   return (
-    <StyledContainer>
+    <StyledContainer style={props?.style}>
       {
         loading ? (
           <DappLoading />
