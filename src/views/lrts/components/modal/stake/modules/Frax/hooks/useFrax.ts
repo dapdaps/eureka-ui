@@ -103,7 +103,7 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
 
     if (actionType === ITab.UNSTAKE) return true;
 
-    const contract = new ethers.Contract(token1.address, FRAX_REDEEM_ABI, provider.getSigner());
+    const contract = new ethers.Contract(ethereum['frxETH'].address, FRAX_REDEEM_ABI, provider.getSigner());
     const wei = ethers.utils.parseUnits(Big(inAmount).toFixed(18), 18);
     const toastId = toast.loading({ title: `Approve ${inToken.symbol}` });
     setApproving(true);
@@ -133,7 +133,7 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
     const contractMethord = ['stake', 'restake'].includes(actionType) ? contract.deposit : contract.redeem;
 
     const amount = Big(inAmount).mul(1e18).toFixed(0);
-
+    
     const contractArguments = ['stake', 'restake'].includes(actionType)
       ? [amount, account]
       : [amount, account, account];
@@ -142,8 +142,11 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
       title: ['stake', 'restake'].includes(actionType) ? `Staking...` : 'UnStaking...',
     });
 
+    
     try {
-      const tx = await contractMethord(...contractArguments)
+      const tx = await contractMethord(...contractArguments, {
+        gasLimit: ethers.utils.hexlify(300000),
+      });
       const { status, transactionHash, ...rest } = await tx.wait()
       setIsLoading(false);
       handleQueryData();
@@ -172,6 +175,8 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
       setInAmount('');
       onSuccess && onSuccess(actionType)
     } catch (error) {
+      console.log(error, 'error');
+      
       setIsLoading(false);
       toast?.dismiss(toastId);
       toast?.fail({
