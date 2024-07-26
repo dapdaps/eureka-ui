@@ -168,7 +168,7 @@ const FraxComponent = function (props: any) {
                   <StyledBaseInfo>
                     <StyledFirstTips>Available to stake</StyledFirstTips>
                     <StyledBaseInfoValue>
-                      {Big(data?.stakedAmount ?? 0).toFixed(4)} {outToken?.symbol}
+                      {Big(data?.stakedAmount ?? 0).toFixed(4)} {ethereum['frxETH'].symbol}
                     </StyledBaseInfoValue>
                   </StyledBaseInfo>
                 )}

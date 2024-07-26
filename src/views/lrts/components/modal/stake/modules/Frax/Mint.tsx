@@ -10,6 +10,8 @@ import Button from '../../components/button';
 import { StyledStakeButtonContainer } from '../../styles';
 import useFrax from './hooks/useFrax';
 import InputCurrency from './InputCurrency';
+import { ethereum } from '@/config/tokens/ethereum';
+
 const TabsBody = styled.div`
   padding: 0 40px;
 `;
@@ -24,11 +26,14 @@ const frxETHMinter_ADDR = '0xbAFA44EFE7901E04E39Dad13167D089C559c1138';
 
 const Mint = (props: any) => {
   const { addAction } = useAddAction('lrts');
-  const { token0, token1, actionType, gem, dapp } = props;
+  const { actionType, gem, dapp } = props;
   const [isLoading, setIsLoading] = useState(false)
   const [inputAmount, setInputAmount] = useState('');
 
-  const { availableAmount, provider, inToken, toast, leastAmount, data } = useFrax({ actionType, token0, token1 });
+  const token0 = useMemo(() => ethereum['eth'], []);
+  const token1 = useMemo(() => ethereum['frxETH'], []);
+
+  const { availableAmount, provider, toast, leastAmount, data } = useFrax({ actionType, token0, token1 });
 
 
   const isInSufficient = useMemo(() => Big(inputAmount || 0).gt(availableAmount || 0), [availableAmount, inputAmount]);
@@ -36,14 +41,14 @@ const Mint = (props: any) => {
 
   const handleMint = useCallback(async () => {
     const contract = new ethers.Contract(frxETHMinter_ADDR, FRAX_MINT, provider.getSigner());
-    const toastId = toast.loading({ title: `Mint ${inToken.symbol}` });
+    const toastId = toast.loading({ title: `Mint ${token0.symbol}` });
     try {
       setIsLoading(true)
       const tx = await contract.submit({
         value: ethers.utils.parseEther(inputAmount),
       });
       const { status, transactionHash, ...rest } = await tx.wait();
-      toast.success({ title: "Mint Successfully!", text: `Mint ${inToken.symbol}`, tx: tx.hash });
+      toast.success({ title: "Mint Successfully!", text: `Mint ${token0.symbol}`, tx: tx.hash });
       toast.dismiss(toastId);
       setInputAmount('')
       addAction({
@@ -54,7 +59,7 @@ const Mint = (props: any) => {
         template: gem ? gem?.dapp?.name : dapp.name,
         status,
         transactionHash,
-        chain_id: token0.childId,
+        chain_id: token0.chainId,
         extra_data: JSON.stringify({
           action: actionType,
           fromTokenSymbol: token0.symbol,
@@ -72,7 +77,7 @@ const Mint = (props: any) => {
       setIsLoading(false)
       toast.dismiss(toastId);
     }
-  }, [provider, inToken, inputAmount, toast])
+  }, [provider, inputAmount, toast])
 
   const adjustedInputAmount = useMemo(() => {
     if (inputAmount === '' || Big(inputAmount).eq(0)) {
@@ -94,7 +99,7 @@ const Mint = (props: any) => {
           setInputAmount(val);
         }}
       />
-      <InputCurrency mt={20} label="To" readOnly currency={token1} value={adjustedInputAmount} />
+      <InputCurrency mt={20} label="To" readOnly currency={ethereum['frxETH']} value={adjustedInputAmount} />
 
       <Tips>swap fee 0.00% (0.00 ETH)</Tips>
 
@@ -103,7 +108,7 @@ const Mint = (props: any) => {
           data={data}
           isInSufficient={isInSufficient}
           isLoading={isLoading}
-          chainId={inToken?.chainId}
+          chainId={token0?.chainId}
           actionType={actionType}
           inAmount={inputAmount}
           leastAmount={leastAmount}

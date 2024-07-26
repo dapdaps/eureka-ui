@@ -1,6 +1,7 @@
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { ethereum } from '@/config/tokens/ethereum';
 
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
@@ -29,11 +30,11 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
   const leastAmount = 0.0001;
 
   const inToken = useMemo(
-    () => (['stake', 'restake'].includes(actionType) ? token0 : token1),
-    [actionType, token0, token1],
+    () => (['stake', 'restake'].includes(actionType) ? ethereum['frxETH'] : ethereum['sfrxETH']),
+    [actionType],
   );
   const outToken = useMemo(
-    () => (['stake', 'restake'].includes(actionType) ? token1 : token0),
+    () => (['stake', 'restake'].includes(actionType) ? ethereum['sfrxETH'] : ethereum['frxETH']),
     [actionType, token0, token1],
   );
 
@@ -80,9 +81,7 @@ const useFrax = ({ gem, dapp, token0, token1, onSuccess }: any) => {
       return await provider.getBalance(account);
     };
     const handleQueryStakedAmount = async () => {
-
-      const address = [ITab.REDEEM, ITab.STAKE].includes(actionType) ? token1?.address : sfrxETH_ADDR
-
+      const address = [ITab.STAKE].includes(actionType) ? ethereum['frxETH'].address : sfrxETH_ADDR
       const contract = new ethers.Contract(address, FRAX_REDEEM_ABI, provider.getSigner());
       return await contract.balanceOf(account);
     };

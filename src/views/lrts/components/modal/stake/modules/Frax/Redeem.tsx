@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import { Contract, utils } from 'ethers';
+import { Contract, ethers, utils } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
@@ -11,8 +11,9 @@ import { ENTER_QUEUE_ABI, FRAX_REDEEM_ABI } from '../../../../../config/abi/frax
 import Button from '../../components/button';
 import { StyledStakeButtonContainer } from '../../styles';
 import Checkbox from './Checkbox';
-import useFrax from './hooks/useFrax';
+import useFrax, { sfrxETH_ADDR } from './hooks/useFrax';
 import InputCurrency from './InputCurrency';
+import { useSelectedToken } from './hooks/useSelectedToken';
 
 const TabsBody = styled.div`
   padding: 0 40px;
@@ -94,8 +95,6 @@ const Redeem = (props: any) => {
   const {
     gem,
     dapp,
-    token0,
-    token1,
     leastAmount,
     actionType
   } = props;
@@ -109,9 +108,12 @@ const Redeem = (props: any) => {
   const [isLoading, setIsLoading] = useState(false)
   const [selectToken, setSelectToken] = useState(tokens[0]);
   const [_, setApproved] = useState(false);
-  const { provider, toast, inToken, tokenLoading, getBalance, data } = useFrax({ actionType, token0, token1 });
+  const [stakeAmount, setStakeAmount] = useState('');
+  const { provider, toast, tokenLoading, getBalance, data } = useFrax({ actionType });
+  const setSelectedTokenStore = useSelectedToken((state) => state.set);
 
-  const isInSufficient = useMemo(() => Number(inputAmount) > Number(data?.stakedAmount), [data, inputAmount]);
+
+  const isInSufficient = useMemo(() => Number(inputAmount) > Number(stakeAmount), [data, inputAmount, selectToken]);
 
   const checkApproval = async () => {
     const contract = new Contract(selectToken?.address, FRAX_REDEEM_ABI, provider.getSigner());
@@ -152,17 +154,17 @@ const Redeem = (props: any) => {
       addAction({
         type: "Staking",
         action: actionType,
-        token: [token0.symbol, token1.symbol],
+        token: [selectToken.symbol, ethereum['eth'].symbol],
         amount: inputAmount,
         template: gem ? gem?.dapp?.name : dapp.name,
         status,
         transactionHash,
-        chain_id: token0.childId,
+        chain_id: selectToken.chainId,
         extra_data: JSON.stringify({
           action: actionType,
-          fromTokenSymbol: token0.symbol,
+          fromTokenSymbol: selectToken.symbol,
           fromTokenAmount: inputAmount,
-          toTokenSymol: token1.symbol,
+          toTokenSymol: ethereum['eth'].symbol,
           toTokenAmount: inputAmount,
         })
       })
@@ -184,9 +186,17 @@ const Redeem = (props: any) => {
     if (approveSuccess) await enterRedemptionQueue();
   }
 
+  const handleQueryStakedAmount = async () => {
+    const address = selectToken.symbol === 'frxETH' ? ethereum['frxETH'].address : sfrxETH_ADDR
+    const contract = new ethers.Contract(address, FRAX_REDEEM_ABI, provider.getSigner());
+    const data = await contract.balanceOf(account);
+    const stakeAmount = ethers.utils.formatUnits(data, 18)
+    setStakeAmount(stakeAmount)
+  };
 
   useEffect(() => {
     getBalance(selectToken?.address);
+    handleQueryStakedAmount()
   }, [provider, selectToken]);
 
   return (
@@ -201,11 +211,13 @@ const Redeem = (props: any) => {
         onSelect={(token: any) => {
           setInputAmount('');
           setSelectToken(token)
+          handleQueryStakedAmount()
+          setSelectedTokenStore(token)
         }}
         onChange={(val: string) => {
           setInputAmount(val);
         }}
-        onMax={() => setInputAmount(data?.stakedAmount)}
+        onMax={() => setInputAmount(stakeAmount)}
       />
       <StyleFee>Fee 0.00% (0,00 ETH)</StyleFee>
       <Flex>
@@ -240,7 +252,7 @@ const Redeem = (props: any) => {
           isInSufficient={isInSufficient}
           isLoading={isLoading}
           approved={true}
-          chainId={inToken.chainId}
+          chainId={selectToken.chainId}
           actionType={'Approve and Enter Queue'}
           inAmount={inputAmount}
           leastAmount={leastAmount}
