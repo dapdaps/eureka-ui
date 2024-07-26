@@ -281,7 +281,11 @@ const FraxComponent = function (props: any) {
                     claim={claim}
                   />
                 ) : (
-                  <CompletedStaleList gem={gem} dapp={dapp} />
+                  <CompletedStaleList 
+                    inToken={inToken}
+                    outToken={outToken}
+                    gem={gem} 
+                    dapp={dapp} />
                 )}
               </StyledStakeBottomContainer>
             </>
