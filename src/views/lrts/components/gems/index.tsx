@@ -36,13 +36,25 @@ const Wrap = styled.section`
       grid-row-end: 7;
     }
   }
-
+  .item-3,
+  .item-13,
+  .item-21 {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+  }
+  .item-7,
+  .item-15,
+  .item-25,
+  .item-33 {
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+  }
   .item-gem {
     align-items: center;
     justify-content: center;
     cursor: pointer;
     &.active {
-      border-radius: 10px;
+      /* border-radius: 10px; */
       background-color: #000;
     }
   }
@@ -112,6 +124,9 @@ const Wrap = styled.section`
     }
   }
   .item-40 {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     .gem-light {
       width: 70%;
       height: 70%;
