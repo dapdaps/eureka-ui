@@ -19,28 +19,38 @@ const Wrap = styled.section`
   display: grid;
   width: 1350px;
   margin: 0 auto;
+  padding-bottom: 200px;
   grid-template-columns: repeat(9, 1fr);
-  grid-template-rows: repeat(9, 150px);
+  /* grid-template-rows: repeat(9, 150px); */
+  /* grid-template-columns: 150px 170px 170px 170px 190px 190px 210px; */
+  grid-template-rows: 150px 180px 190px 210px 150px 150px;
   /* background-color: #000; */
 
   .item {
     display: flex;
     color: white;
-
-    background-color: #151515;
-
-    &:nth-child(40) {
-      grid-column-start: 4;
-      grid-column-end: 6;
-      grid-row-start: 5;
-      grid-row-end: 7;
-    }
   }
+
+  .item-13,
+  .item-15 {
+    width: 180px;
+  }
+  .item-21,
+  .item-25 {
+    width: 190px;
+  }
+  .item-31,
+  .item-33 {
+    width: 210px;
+  }
+
   .item-3,
   .item-13,
   .item-21 {
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
+    justify-content: flex-start;
+    padding-left: 8px;
   }
   .item-7,
   .item-15,
@@ -48,30 +58,60 @@ const Wrap = styled.section`
   .item-33 {
     border-top-right-radius: 10px;
     border-bottom-right-radius: 10px;
+    justify-content: flex-end;
+    padding-right: 8px;
   }
   .item-gem {
     align-items: center;
-    justify-content: center;
+    /* justify-content: center; */
     cursor: pointer;
     &.active {
-      /* border-radius: 10px; */
       background-color: #000;
     }
   }
   .item-gem-content {
     position: relative;
-    width: 90%;
-    height: 90%;
+    /* width: 90%;
+    height: 90%; */
     display: flex;
     align-items: center;
     justify-content: center;
     background: url(/images/lrts/pad-empty.svg) no-repeat;
-    background-size: contain;
+    background-size: 100% 100%;
     &:hover {
       background: url(/images/lrts/pad-active.svg) no-repeat transparent;
-      background-size: cover;
+      background-size: 100% 100%;
     }
   }
+  .item-3,
+  .item-7 {
+    .item-gem-content {
+      width: 135px;
+      height: 135px;
+    }
+  }
+  .item-13,
+  .item-15 {
+    .item-gem-content {
+      width: 160px;
+      height: 160px;
+    }
+  }
+  .item-21,
+  .item-25 {
+    .item-gem-content {
+      width: 170px;
+      height: 170px;
+    }
+  }
+  .item-31,
+  .item-33 {
+    .item-gem-content {
+      width: 190px;
+      height: 190px;
+    }
+  }
+
   .item-gem-head {
     position: absolute;
     left: 0;
@@ -111,7 +151,8 @@ const Wrap = styled.section`
       height: 40%;
     }
   }
-  .item-15 {
+  .item-15,
+  .item-13 {
     .gem-light {
       width: 50%;
       height: 50%;
@@ -119,14 +160,32 @@ const Wrap = styled.section`
   }
   .item-33 {
     .gem-light {
-      width: 40%;
-      height: 40%;
+      width: 50%;
+      height: 50%;
     }
   }
   .item-40 {
+    justify-content: center;
+    grid-column-start: 4;
+    grid-column-end: 6;
+    grid-row-start: 5;
+    grid-row-end: 7;
     border-top-left-radius: 10px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    padding: 10px;
+    .item-gem-content {
+      width: 100%;
+      height: 100%;
+      .item-gem-head {
+        top: 22px;
+        padding: 0 22px;
+      }
+      .item-gem-apr {
+        left: 22px;
+        bottom: 22px;
+      }
+    }
     .gem-light {
       width: 70%;
       height: 70%;
@@ -134,9 +193,11 @@ const Wrap = styled.section`
   }
   .item-rock {
     background: url(/images/lrts/pad-rock.svg) no-repeat #151515;
+    background-size: contain;
   }
   .item-empty {
     background: url(/images/lrts/pad-empty.svg) no-repeat #151515;
+    background-size: contain;
   }
   .item-tunnel {
     background-color: #000;
@@ -147,8 +208,6 @@ const Wrap = styled.section`
     overflow: visible;
   }
   .gem-light {
-    width: 60%;
-    height: 60%;
     display: flex;
     justify-content: center;
     position: relative;
@@ -177,7 +236,7 @@ const GemImage = styled.img`
 `;
 const TunnelStart = styled.div`
   position: absolute;
-  width: 150px;
+  width: 100%;
   height: 150px;
   background: black;
   overflow: hidden;
@@ -188,7 +247,7 @@ const TunnelStart = styled.div`
 `;
 
 const Stones: FC<IProps> = ({ dataSource, onGemClick, updater }) => {
-  const items = Array.from({ length: 81 }, (x, i) => i + 1);
+  const items = Array.from({ length: 54 }, (x, i) => i + 1);
 
   const allGems = dataSource.map((item: any) => item.order);
 
