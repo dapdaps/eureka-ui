@@ -62,7 +62,7 @@ and the top TVL reached $${setNumKMB(_data?.maxTvl, 2)} from ${_data?.maxTvlSymb
             options={{
               //   strings: ['Hello', 'World'],
               autoStart: true,
-              delay: 70,
+              delay: 20,
             }}
             onInit={(typewriter) => {
               // playSound('/images/compass/audio/rolling.mp4');

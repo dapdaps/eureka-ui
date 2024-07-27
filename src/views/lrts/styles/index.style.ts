@@ -19,8 +19,8 @@ export const Banner = styled.div`
   /* background-size: contain; */
   background-size: 100% 100%;
   @media (min-width: 2000px) {
-    height: 757px;
-      }
+    height: 810px;
+  }
   .mySwiper {
     margin-top: 120px;
     padding: 55px 150px;
@@ -40,6 +40,9 @@ export const Banner = styled.div`
       position: relative;
       width: 194px;
       height: 150px;
+      @media (min-width: 2000px) {
+        width: 270px;
+      }
     }
     .lst-img {
       width: 100%;
@@ -68,6 +71,9 @@ export const Banner = styled.div`
       color: #fff;
       font-family: Montserrat;
       font-size: 7px;
+      @media (min-width: 2000px) {
+        top: 64px;
+      }
     }
     .lst-range {
       position: absolute;
@@ -77,6 +83,9 @@ export const Banner = styled.div`
       font-family: Orbitron;
       font-size: 9px;
       font-weight: 700;
+      @media (min-width: 2000px) {
+        top: 160px;
+      }
     }
     .min-apr {
       position: absolute;
@@ -86,6 +95,9 @@ export const Banner = styled.div`
       font-family: Orbitron;
       font-size: 9px;
       font-weight: 700;
+      @media (min-width: 2000px) {
+        top: 134px;
+      }
     }
     .max-apr {
       position: absolute;
@@ -95,11 +107,17 @@ export const Banner = styled.div`
       font-family: Orbitron;
       font-size: 12px;
       font-weight: 700;
+      @media (min-width: 2000px) {
+        top: 150px;
+      }
     }
   }
 
   .swiper .swiper-slide.swiper-slide-active {
     height: 300px;
+    @media (min-width: 2000px) {
+      transform: translate(0, -70px);
+    }
     .lst-content {
       position: relative;
       width: 100%;
@@ -128,7 +146,7 @@ export const Banner = styled.div`
       font-size: 14px;
       font-weight: 700;
       @media (min-width: 1800px) {
-        top: 210px;
+        top: 220px;
       }
       @media (min-width: 2000px) {
         top: 250px;
@@ -147,7 +165,7 @@ export const Banner = styled.div`
         top: 175px;
       }
       @media (min-width: 2000px) {
-        top: 210px;
+        top: 220px;
       }
     }
     .max-apr {

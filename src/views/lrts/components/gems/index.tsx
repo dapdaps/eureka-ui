@@ -167,6 +167,9 @@ const TunnelStart = styled.div`
   background: black;
   overflow: hidden;
   top: -88px;
+  @media (min-width: 2000px) {
+    top: -100px;
+  }
 `;
 
 const Stones: FC<IProps> = ({ dataSource, onGemClick, updater }) => {
