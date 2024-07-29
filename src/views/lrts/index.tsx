@@ -107,7 +107,7 @@ const Home = () => {
           centeredSlides={true}
           initialSlide={initialSlide}
           pagination={{ clickable: true, el: '.swiper-pagination' }}
-          slidesPerView={4}
+          slidesPerView={6}
           className="mySwiper"
           slideToClickedSlide={true}
           onSlideChange={handleSlideChange}
