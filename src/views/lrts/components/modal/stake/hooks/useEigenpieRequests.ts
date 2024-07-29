@@ -1,10 +1,12 @@
+import Big from 'big.js';
+import { ethers } from 'ethers';
+import { useCallback, useState } from 'react';
+
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
-import Big from 'big.js';
-import { ethers } from 'ethers';
-import { useCallback, useState } from 'react';
+
 import abi from '../../../../config/abi/eigenpie';
 
 type Record = {
@@ -42,8 +44,8 @@ const tokens: { [key: string]: any } = {
     to: ethereum.rETH,
   },
 };
-const dappName: string = "Eigenpie"
-export default function useEigenpieRequests() {
+const dappName: string = 'Eigenpie';
+export default function useEigenpieRequests(onClaimSucces: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -117,6 +119,7 @@ export default function useEigenpieRequests() {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
+          onClaimSucces?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }
@@ -136,7 +139,7 @@ export default function useEigenpieRequests() {
           }),
         });
         onLoading(false);
-        queryRequests(record.token0.address)
+        queryRequests(record.token0.address);
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);

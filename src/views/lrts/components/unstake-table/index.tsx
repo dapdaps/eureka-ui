@@ -127,16 +127,22 @@ const UnstakeTable: FC<IProps> = (props) => {
 
   // const { requests, loading: requestsLoading, queryRequests, claim } = useRenzoRequests();
 
-  const renzoRequests = useRenzoRequests();
-  const eigenpieRequests = useEigenpieRequests();
-  const kelpDaoRequests = useKelpDaoRequests();
-  const etherFiRequests = useEtherFiRequests();
-  const fraxRequests = useFraxRequests();
-  const inceptionRequests = useInceptionRequests();
-  const karakRequests = useKarakRequests();
-  const lidoRequests = useLidoRequests();
-  const mantleRequests = useMantleRequests();
-  const restakeFinanceRequests = useRestakeFinanceRequests();
+  const handleUpdater = () => {
+    setUpdater((n) => n + 1);
+  };
+
+  const renzoRequests = useRenzoRequests(handleUpdater);
+  const eigenpieRequests = useEigenpieRequests(handleUpdater);
+  const kelpDaoRequests = useKelpDaoRequests(handleUpdater);
+  const etherFiRequests = useEtherFiRequests(handleUpdater);
+  const fraxRequests = useFraxRequests(handleUpdater);
+  const inceptionRequests = useInceptionRequests(handleUpdater);
+  const karakRequests = useKarakRequests(handleUpdater);
+  const lidoRequests = useLidoRequests(handleUpdater);
+  const mantleRequests = useMantleRequests(handleUpdater);
+  const restakeFinanceRequests = useRestakeFinanceRequests(handleUpdater);
+
+  const [updater, setUpdater] = useState(0);
 
   const allHooks = [
     renzoRequests,
@@ -152,10 +158,12 @@ const UnstakeTable: FC<IProps> = (props) => {
   ];
 
   useEffect(() => {
+    console.log('queryRequests--');
+
     allHooks.forEach((item: any) => {
       item.queryRequests();
     });
-  }, [chainId]);
+  }, [chainId, updater]);
 
   console.log('unstake-list--', allHooks);
   const tokens = Object.values(ethereum);
@@ -167,7 +175,7 @@ const UnstakeTable: FC<IProps> = (props) => {
         <div>Status</div>
       </THead>
       {allHooks?.map((_hooks: any) => {
-        const { requests, claim } = _hooks;
+        const { requests, claim, onClaimSuccess } = _hooks;
         return requests.map((item: any, index: number) => {
           const { token0, token1 } = item;
           const fromTokenSymbol = token0?.symbol;

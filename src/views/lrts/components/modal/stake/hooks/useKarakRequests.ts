@@ -1,12 +1,14 @@
+import Big from 'big.js';
+import { ethers } from 'ethers';
+import { useCallback, useState } from 'react';
+
 import multicallAddresses from '@/config/contract/multicall';
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { multicall } from '@/utils/multicall';
-import Big from 'big.js';
-import { ethers } from 'ethers';
-import { useCallback, useState } from 'react';
+
 import abi from '../../../../config/abi/karak';
 type Record = {
   amount: number;
@@ -41,7 +43,7 @@ const tokens: { [key: string]: any } = {
 };
 
 const dappName: string = 'KaraK';
-export default function useKarakRequests() {
+export default function useKarakRequests(onClaimSucces: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -130,6 +132,7 @@ export default function useKarakRequests() {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
+          onClaimSucces?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }
@@ -150,7 +153,7 @@ export default function useKarakRequests() {
         });
 
         onLoading(false);
-        queryRequests()
+        queryRequests();
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);

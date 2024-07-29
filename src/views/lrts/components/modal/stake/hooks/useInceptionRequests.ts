@@ -1,12 +1,14 @@
+import Big from 'big.js';
+import { ethers } from 'ethers';
+import { useCallback, useState } from 'react';
+
 import multicallAddresses from '@/config/contract/multicall';
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { multicall } from '@/utils/multicall';
-import Big from 'big.js';
-import { ethers } from 'ethers';
-import { useCallback, useState } from 'react';
+
 import abi from '../../../../config/abi/inception';
 import { contracts } from './useInception';
 
@@ -38,8 +40,8 @@ const tokens: { [key: string]: any } = {
     to: ethereum.rETH,
   },
 };
-const dappName: string = "Inception"
-export default function useInceptionRequests() {
+const dappName: string = 'Inception';
+export default function useInceptionRequests(onClaimSucces: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -149,6 +151,7 @@ export default function useInceptionRequests() {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
+          onClaimSucces?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }
@@ -168,7 +171,7 @@ export default function useInceptionRequests() {
           }),
         });
         onLoading(false);
-        queryRequests(record.token0.address)
+        queryRequests(record.token0.address);
       } catch (err: any) {
         console.log('err', err);
         toast.dismiss(toastId);

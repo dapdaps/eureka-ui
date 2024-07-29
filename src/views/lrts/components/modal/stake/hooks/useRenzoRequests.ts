@@ -1,11 +1,13 @@
-import { ethereum } from '@/config/tokens/ethereum';
-import useAccount from '@/hooks/useAccount';
-import useAddAction from '@/hooks/useAddAction';
-import useToast from '@/hooks/useToast';
 import axios from 'axios';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
+
+import { ethereum } from '@/config/tokens/ethereum';
+import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
+import useToast from '@/hooks/useToast';
+
 import abi from '../../../../config/abi/renzo';
 
 type Record = {
@@ -22,8 +24,8 @@ const contracts: { [key: number]: string } = {
   1: '0x5efc9D10E42FB517456f4ac41EB5e2eBe42C8918',
 };
 
-const dappName: string = "Renzo"
-export default function useRenzoRequests() {
+const dappName: string = 'Renzo';
+export default function useRenzoRequests(onClaimSucces: VoidFunction) {
   const { provider, account, chainId } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -72,7 +74,6 @@ export default function useRenzoRequests() {
     }
   }, [account, chainId]);
 
-
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId || !contracts[chainId]) return;
@@ -92,6 +93,7 @@ export default function useRenzoRequests() {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
+          onClaimSucces?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }
