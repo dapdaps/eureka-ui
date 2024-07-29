@@ -29,6 +29,7 @@ export default function useActionList({ account, source, page }: any) {
   };
 
   useEffect(() => {
+    if (!account) return;
     fetchList();
   }, [account, source, page]);
 

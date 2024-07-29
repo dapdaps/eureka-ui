@@ -18,7 +18,6 @@ import StakeModal from './components/modal/stake';
 import SwapModal from './components/modal/swap';
 import { ActionType } from './components/tab-card';
 import useAllTokensBalance from './hooks/useAllTokensBalance';
-import useLrtsList from './hooks/useLrtsList';
 import { Ad, Assets, AssetTab, Container, TokenImg } from './styles/portfolio.style';
 
 interface IProps {
@@ -189,7 +188,7 @@ const Portfolio: FC<IProps> = ({}) => {
                 },
               },
               {
-                title: '7d APR',
+                title: 'APR',
                 dataIndex: 'apr',
                 key: 5,
                 width: '10%',
@@ -272,7 +271,7 @@ const Portfolio: FC<IProps> = ({}) => {
                 },
               },
               {
-                title: '7d APR',
+                title: 'APR',
                 dataIndex: 'apr',
                 key: 5,
                 width: '10%',
