@@ -25,6 +25,8 @@ const SwapModal = ({ show, setShow, token }: any) => {
   } = useTokenBalance(inputCurrency?.address, inputCurrency?.decimals);
   const { trade, loading, inputAmount, setInputAmount, swap } = useTrade(inputCurrency, outputCurrency, () => {
     update();
+  },() => {
+    setErrorTips('Insufficient Liquidity')
   });
   const { approve, approved, approving } = useApprove({
     amount: inputAmount,

@@ -10,7 +10,7 @@ function getTokenAddress(token: any) {
   return token.isNative ? '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE' : token.address;
 }
 
-export default function useTrade(inputCurrency: any, outputCurrency: any, onSuccess: any) {
+export default function useTrade(inputCurrency: any, outputCurrency: any, onSuccess: any, onTradeError: any) {
   const [inputAmount, setInputAmount] = useState('');
   const [trade, setTrade] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -45,6 +45,7 @@ export default function useTrade(inputCurrency: any, outputCurrency: any, onSucc
     } catch (err) {
       setLoading(false);
       setTrade(null);
+      onTradeError()
     }
   }, [inputAmount, inputCurrency, outputCurrency]);
 
