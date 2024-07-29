@@ -24,7 +24,7 @@ const LRT_DEPOSIT_POOL = '0x036676389e48133B63a802f8635AD39E752D375D';
 const { UNSTAKE_ADDRESS_ABI, LRT_DEPOSIT_POOL_ABI, FIRST_TOKEN_ABI, SECOND_TOKEN_ABI } = abi;
 
 const dappName: string = 'RestakeFinance';
-export default function useInceptionRequests(onClaimSucces: VoidFunction) {
+export default function useInceptionRequests(onClaimSucces?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);

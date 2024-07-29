@@ -20,7 +20,7 @@ const { WITHDRAWAL_QUEUE_ABI } = abi;
 const WITHDRAWAL_QUEUE = '0x889edC2eDab5f40e902b864aD4d7AdE8E412F9B1';
 
 const dappName: string = 'Lido';
-export default function useLidoRequests(onClaimSucces: VoidFunction) {
+export default function useLidoRequests(onClaimSucces?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);

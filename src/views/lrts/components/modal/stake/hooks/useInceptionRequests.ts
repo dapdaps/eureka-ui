@@ -41,7 +41,7 @@ const tokens: { [key: string]: any } = {
   },
 };
 const dappName: string = 'Inception';
-export default function useInceptionRequests(onClaimSucces: VoidFunction) {
+export default function useInceptionRequests(onClaimSucces?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);

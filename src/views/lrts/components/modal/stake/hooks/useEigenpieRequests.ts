@@ -45,7 +45,7 @@ const tokens: { [key: string]: any } = {
   },
 };
 const dappName: string = 'Eigenpie';
-export default function useEigenpieRequests(onClaimSucces: VoidFunction) {
+export default function useEigenpieRequests(onClaimSucces?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);

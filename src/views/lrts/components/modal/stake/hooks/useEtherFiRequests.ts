@@ -30,7 +30,7 @@ const {
 } = abi;
 
 const dappName: string = 'EtherFi';
-export default function useMantleRequests(onClaimSucces: VoidFunction) {
+export default function useMantleRequests(onClaimSucces?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);

@@ -43,7 +43,7 @@ const tokens: { [key: string]: any } = {
 };
 
 const dappName: string = 'KaraK';
-export default function useKarakRequests(onClaimSucces: VoidFunction) {
+export default function useKarakRequests(onClaimSucces?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);

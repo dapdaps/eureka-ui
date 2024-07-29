@@ -25,7 +25,7 @@ const contracts: { [key: number]: string } = {
 };
 
 const dappName: string = 'Renzo';
-export default function useRenzoRequests(onClaimSucces: VoidFunction) {
+export default function useRenzoRequests(onClaimSucces?: VoidFunction) {
   const { provider, account, chainId } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
