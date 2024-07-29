@@ -14,7 +14,7 @@ export default function CompletedStakeList({ gem, dapp, inToken, outToken }: any
   const handleQueryActionList = function () {
     queryActionList({
       account,
-      action_tokens: JSON.stringify([outToken.symbol, inToken.symbol])
+      action_tokens: JSON.stringify([inToken.symbol, outToken.symbol])
     })
   }
   const handleQuerySymbol = function (action_tokens: string) {

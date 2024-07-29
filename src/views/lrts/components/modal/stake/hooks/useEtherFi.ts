@@ -33,6 +33,7 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
   const inToken = ['stake', 'restake'].includes(actionType) ? token0 : token1
   const outToken = ['stake', 'restake'].includes(actionType) ? token1 : token0
 
+  console.log('=inToken', inToken, '=outToken', outToken)
   const isInSufficient = useMemo(() => {
     if (['stake', 'restake'].includes(actionType)) {
       return Number(inAmount) > Number(data?.availableAmount)

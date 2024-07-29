@@ -16,6 +16,7 @@ import { PolygonBtn } from '../';
 export enum ActionType {
   STAKE = 'stake',
   RESTAKE = 'restake',
+  UNSTAKE = 'unstake'
 }
 const TabWrap = styled(motion.div)``;
 const TabHead = styled.div`

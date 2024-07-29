@@ -73,7 +73,8 @@ export default function useMantleRequests() {
           })
         })
         const result = await response.json()
-        const _requests = result?.data?.withdrawRequestNFTs
+        const _requests = result?.data?.withdrawRequestNFTs.filter((nft: any) => !nft.isClaimed)
+        console.log('=_requests', _requests)
         const promiseArray: any[] = []
         _requests.forEach((request: any) => {
           promiseArray.push(handleGetClaimableAmount(request.id))
