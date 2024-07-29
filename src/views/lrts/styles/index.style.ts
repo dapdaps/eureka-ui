@@ -18,6 +18,12 @@ export const Banner = styled.div`
   background: url(/images/lrts/bg-home.png) center no-repeat #000;
   /* background-size: contain; */
   background-size: 100% 100%;
+  @media (min-width: 1650px) {
+    height: 700px;
+  }
+  @media (min-width: 1800px) {
+    height: 734px;
+  }
   @media (min-width: 2000px) {
     height: 810px;
   }

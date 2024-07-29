@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import type { FC } from 'react';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -11,35 +10,21 @@ import useLrtsList from '../../hooks/useLrtsList';
 import Dialog from './dialog';
 import Npc from './npc';
 
-type DataSource = {
-  amount: number;
-  maxApr: number;
-  maxAprSymbol: string;
-  maxTvl: number;
-  maxTvlSymbol: string;
-  lrtTokens: any[];
-  token: any;
-};
 interface IProps {
-  onClose: () => void;
   lstIndex: number;
+  isPlayed: boolean;
+  onClose: (index: number) => void;
+  onPlayed: (index: number) => void;
 }
 
-const Wrap = styled.div`
-  /* position: fixed;
-  z-index: 13;
-  right: 0;
-  bottom: 0;
-  width: 640px;
-  height: 490px; */
-`;
+const Wrap = styled.div``;
 
 function playSound(url: string): void {
   const sound = new window.Audio(url);
   sound.play();
 }
 
-const NpcDialog: FC<IProps> = ({ onClose, lstIndex }) => {
+const NpcDialog: FC<IProps> = ({ isPlayed, onClose, onPlayed, lstIndex }) => {
   const lrtsData = useLrtDataStore((store: any) => store.data);
   const { completed } = useLrtsList();
   const [text, setText] = useState('');
@@ -56,8 +41,41 @@ and the top TVL reached $${setNumKMB(_data?.maxTvl, 2)} from ${_data?.maxTvlSymb
 
   return (
     <Wrap>
-      <Dialog onClose={onClose}>
-        {completed && (
+      <Dialog onClose={() => onClose(lstIndex)}>
+        {isPlayed ? (
+          <span>
+            Sir!
+            <br />
+            {text}
+          </span>
+        ) : (
+          completed && (
+            <Typewriter
+              options={{
+                //   strings: ['Hello', 'World'],
+                autoStart: true,
+                delay: 20,
+              }}
+              onInit={(typewriter) => {
+                // playSound('/images/compass/audio/rolling.mp4');
+                typewriter
+                  .typeString('Sir!<br />')
+                  .typeString(text)
+                  .callFunction(() => {
+                    // console.log('String typed out!');
+                  })
+                  // .pauseFor(2500)
+                  // .deleteAll()
+                  .callFunction(() => {
+                    // console.log('All strings were deleted');
+                    onPlayed(lstIndex);
+                  })
+                  .start();
+              }}
+            />
+          )
+        )}
+        {/* {completed && (
           <Typewriter
             options={{
               //   strings: ['Hello', 'World'],
@@ -80,7 +98,7 @@ and the top TVL reached $${setNumKMB(_data?.maxTvl, 2)} from ${_data?.maxTvlSymb
                 .start();
             }}
           />
-        )}
+        )} */}
       </Dialog>
       <Npc />
     </Wrap>

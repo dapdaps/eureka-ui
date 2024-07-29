@@ -163,7 +163,7 @@ const UnstakeTable: FC<IProps> = (props) => {
     allHooks.forEach((item: any) => {
       item.queryRequests();
     });
-  }, [chainId, updater]);
+  }, [chainId, account, updater]);
 
   console.log('unstake-list--', allHooks);
   const tokens = Object.values(ethereum);

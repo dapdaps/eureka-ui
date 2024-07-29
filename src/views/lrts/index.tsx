@@ -15,7 +15,7 @@ import { Banner, Container, Desc, Title } from './styles/index.style';
 const Home = () => {
   const { chainId, account } = useAccount();
 
-  const [isShowNpc, setIsShowNpc] = useState(false);
+  // const [isShowNpc, setIsShowNpc] = useState(false);
   const initialSlide = 1;
   const [lstIndex, setLstIndex] = useState(initialSlide);
   // const prices = usePriceStore((store) => store.price);
@@ -34,10 +34,21 @@ const Home = () => {
 
   const [balanceUpdater, setBalanceUpdater] = useState(0);
 
+  const [npcStat, setNpcStat] = useState([
+    { isPlayed: false, isClosed: true, clicked: false },
+    { isPlayed: false, isClosed: true, clicked: false },
+    { isPlayed: false, isClosed: true, clicked: false },
+    { isPlayed: false, isClosed: true, clicked: false },
+  ]);
+
   useEffect(() => {
     // wait for tvl & apr
     if (!completed) return;
-    setIsShowNpc(true);
+    // setIsShowNpc(true);
+
+    const _npcStat = npcStat.map((item) => ({ ...item, isClosed: true }));
+    _npcStat[lstIndex].isClosed = false;
+    setNpcStat(_npcStat);
   }, [lstIndex, completed]);
 
   const handleClickGem = (lrt: any) => {
@@ -58,7 +69,7 @@ const Home = () => {
   };
 
   const handleSlideChange = () => {
-    setIsShowNpc(false);
+    // setIsShowNpc(false);
   };
   const handleSwiperClick = ({ activeIndex }: any) => {
     setCurLrt(null);
@@ -70,6 +81,18 @@ const Home = () => {
     setBalanceUpdater((n) => n + 1);
     setIsShowStakeModal(false);
   };
+
+  const handleNpcClose = (index: number) => {
+    const _npcStat = [...npcStat];
+    _npcStat[index].clicked = true;
+    setNpcStat(_npcStat);
+  };
+  const handleNpcPlayed = (index: number) => {
+    const _npcStat = [...npcStat];
+    _npcStat[index].isPlayed = true;
+    setNpcStat(_npcStat);
+  };
+
   return (
     <Container>
       <Banner>
@@ -122,8 +145,18 @@ const Home = () => {
         onTabChange={onTabChange}
         updater={balanceUpdater}
       />
-
-      {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null}
+      {npcStat.map((item, index) =>
+        item.isClosed || item.clicked ? null : (
+          <NpcDialog
+            key={index}
+            lstIndex={index}
+            isPlayed={item.isPlayed}
+            onClose={(index: number) => handleNpcClose(index)}
+            onPlayed={(index: number) => handleNpcPlayed(index)}
+          />
+        ),
+      )}
+      {/* {isShowNpc ? <NpcDialog lstIndex={lstIndex} onClose={() => setIsShowNpc(false)} /> : null} */}
 
       <StakeModal
         box={lrtsData[lstIndex].lstIcon}
