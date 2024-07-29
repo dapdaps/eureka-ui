@@ -94,9 +94,12 @@ const LendingDialogButton = (props: IProps) => {
 
   useEffect(() => {
     if (!account || !gas) return;
-    const provider = ethers.getDefaultProvider();
-    provider.getBalance(account).then((rawBalance) => {
+    provider.getBalance(account).then((rawBalance: any) => {
+      console.log('rawBalance: ', rawBalance);
+      
       const gasBalance = rawBalance.toString();
+      console.log(!Big(gasBalance).lt(gas.toString()), '!Big(gasBalance).lt(gas.toString())');
+      
       setState((prevState) => ({
         ...prevState,
         gasBalance,
@@ -346,7 +349,9 @@ const LendingDialogButton = (props: IProps) => {
         });
       });
   };
-
+  console.log(state.pending, 'state.pending');
+  console.log(estimating, 'estimating');
+  
   return (
     <>
       <Button

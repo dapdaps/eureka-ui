@@ -1,5 +1,5 @@
 import { useSetChain } from '@web3-onboard/react';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
@@ -25,6 +25,20 @@ import LendingDialog from './LendingDialog';
 import LendingSpinner from './LendingSpinner'
 import LendingMarket from './Market'
 import LendingYours from './Yours'
+import styled from 'styled-components';
+
+const Container = styled.div`
+  width: 100%;
+  div {
+    pre {
+      display: none;
+    }
+    .spinner-grow {
+      display: none;
+    }
+  }
+`;
+
 
 const tabsList = [
   {
@@ -104,9 +118,43 @@ const Lending = (props: Props) => {
   }, [chain]);
 
   const RestTheme = chain.menuConfig.Lending?.Theme;
+  const [forceUpdate, setForceUpdate] = useState(0);
 
+  const triggerDataRefetch = useCallback(() => {
+    setForceUpdate(prev => prev + 1);
+  }, []);
+
+  useEffect(() => {
+    if (forceUpdate > 0) {
+      setUpdateData(currMarket === 'All' ? 'All' : currMarket);
+    }
+  }, [forceUpdate, currMarket]);
+  
   const getMarketsElement = () => (
-    <>
+    <Container>
+      {updateData && (
+        <>
+          {(updateData === 'All' || !dappsInfo[currMarket]) && (
+            <LendingSpinner />
+          )}
+          <ComponentWrapperPage
+            src="bluebiu.near/widget/Avalanche.Lending.Data"
+            componentProps={{
+              update: updateData,
+              chainId,
+              dapps: dappsInfo,
+              multicall,
+              ...tabConfig,
+              prices,
+              account,
+              onLoad: (data: Record<string, any>) => {
+                console.log('%c===== Loaded Data =====', 'background:blue;color:white;', data);
+                loadMarketsInfo(data);
+              },
+            }}
+          />
+        </>
+      )}
       <StyledFlex justifyContent="space-between">
         <Tabs tabs={tabsList} onTabChange={onTabChange} currTab={currTab} />
         <MarketItems
@@ -117,28 +165,6 @@ const Lending = (props: Props) => {
       </StyledFlex>
       <StyledContent>
         <RestTheme>
-          {updateData && (
-            <>
-              {(updateData === 'All' || !dappsInfo[currMarket]) && (
-                <LendingSpinner />
-              )}
-              <ComponentWrapperPage
-                src="bluebiu.near/widget/Avalanche.Lending.Data"
-                componentProps={{
-                  update: updateData,
-                  chainId,
-                  multicall,
-                  ...tabConfig,
-                  prices,
-                  account,
-                  onLoad: (data: Record<string, any>) => {
-                    console.log('%c===== Loaded Data =====', 'background:blue;color:white;', data);
-                    loadMarketsInfo(data);
-                  },
-                }}
-              />
-            </>
-          )}
           {currTab === 'Market' ? (
             <LendingMarket 
               currentDapp={currMarket}
@@ -218,6 +244,7 @@ const Lending = (props: Props) => {
               setShowDialog(false);
             }}
             onSuccess={() => {
+              triggerDataRefetch();
               setCurrMarket(tableButtonClickData?.dappName);
             }}
           />
@@ -240,7 +267,7 @@ const Lending = (props: Props) => {
           /> */}
         </RestTheme>
       </StyledContent>
-    </>
+    </Container>
   );
   const getAccount = () => {
     let _textTip = '';

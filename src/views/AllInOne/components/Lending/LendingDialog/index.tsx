@@ -217,13 +217,13 @@ const LendingDialog = (props: IProps) => {
   }, [display, data, actionText, provider, account, getBalance]);
 
 
-  useEffect(() => {
-    setState((prevState) => ({
-      ...prevState,
-      debouncedGetTrade: { run: debouncedGetTrade },
-      getTrade,
-    }));
-  }, []);
+  // useEffect(() => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //     debouncedGetTrade: { run: debouncedGetTrade },
+  //     getTrade,
+  //   }));
+  // }, []);
 
   useEffect(() => {
     setUpdateHandler(Date.now());
