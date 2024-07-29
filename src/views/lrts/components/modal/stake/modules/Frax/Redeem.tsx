@@ -212,7 +212,9 @@ const Redeem = (props: any) => {
           setInputAmount('');
           setSelectToken(token)
           handleQueryStakedAmount()
-          setSelectedTokenStore(token)
+          setSelectedTokenStore({
+            token
+          })
         }}
         onChange={(val: string) => {
           setInputAmount(val);
@@ -239,8 +241,18 @@ const Redeem = (props: any) => {
           value={address}
           maxLength={42}
           sx={{ fontSize: '12px' }}
-          handleWalletAddress={() => setAddress(account)}
-          onChange={(addr: string) => setAddress(addr)}
+          handleWalletAddress={() => {
+            setAddress(account)
+            setSelectedTokenStore({
+              recipient: account
+            })
+          }}
+          onChange={(addr: string) => {
+            setAddress(addr)
+            setSelectedTokenStore({
+              recipient: addr
+            })
+          }}
         />
       )}
       <StyleInfo>

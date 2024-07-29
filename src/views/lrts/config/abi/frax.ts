@@ -79,7 +79,22 @@ const ENTER_QUEUE_ABI = [
     ],
     "stateMutability": "nonpayable",
     "type": "function"
-  }]
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "_nftId", "type": "uint256" },
+      {
+        "internalType": "address payable",
+        "name": "_recipient",
+        "type": "address"
+      }
+    ],
+    "name": "burnRedemptionTicketNft",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+]
 
 const FRAXETH_ABI = [
   {

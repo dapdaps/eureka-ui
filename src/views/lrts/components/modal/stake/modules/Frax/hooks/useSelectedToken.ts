@@ -4,7 +4,8 @@ import { ethereum } from '@/config/tokens/ethereum';
 
 
 type IState = {
-    selectedToken: Token
+    token?: Token
+    recipient?: string
 };
 
 type IConfig = IState & {
@@ -12,6 +13,7 @@ type IConfig = IState & {
   };
 
 export const useSelectedToken = create<IConfig>((set) => ({
-    selectedToken: ethereum['frxETH'],
+    token: ethereum['frxETH'],
+    recipient: '',
   set: (params: any) => set(() => ({ ...params })),
 }));

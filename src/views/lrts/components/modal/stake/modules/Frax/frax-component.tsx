@@ -99,8 +99,6 @@ const FraxComponent = function (props: any) {
 
   useEffect(() => {
     queryRequests();
-    console.log(requests, 'requests');
-    
   }, [data, account, provider, actionType]);
 
 
