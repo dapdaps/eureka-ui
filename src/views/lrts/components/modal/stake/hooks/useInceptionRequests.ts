@@ -135,12 +135,13 @@ export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
         Contract = new ethers.Contract(contracts[chainId].RestakingPool, abi, provider?.getSigner());
       } else {
         method = 'redeem';
+        console.log('=contracts[chainId].vault[record.token1.symbol]', contracts[chainId].vault[record.token1.symbol])
         Contract = new ethers.Contract(contracts[chainId].vault[record.token1.symbol], abi, provider?.getSigner());
       }
       onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
-        const tx = await Contract[method]([account]);
+        const tx = await Contract[method](account);
 
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
