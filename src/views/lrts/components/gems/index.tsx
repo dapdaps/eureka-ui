@@ -240,7 +240,7 @@ const TunnelStart = styled.div`
   height: 150px;
   background: black;
   overflow: hidden;
-  top: -88px;
+  top: -78px;
   @media (min-width: 2000px) {
     top: -100px;
   }

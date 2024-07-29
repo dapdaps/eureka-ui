@@ -13,8 +13,8 @@ export const SwapContent = styled.div<{ $bg: string }>`
   height: 150px;
 `;
 export const Banner = styled.div`
-  height: 657px;
-  padding-top: 28px;
+  height: 580px;
+  padding-top: 20px;
   background: url(/images/lrts/bg-home.png) center no-repeat #000;
   /* background-size: contain; */
   background-size: 100% 100%;
@@ -28,7 +28,7 @@ export const Banner = styled.div`
     height: 810px;
   }
   .mySwiper {
-    margin-top: 120px;
+    margin-top: 60px;
     padding: 55px 150px;
     overflow: hidden;
   }
