@@ -114,7 +114,7 @@ export default function Comp({ pool }: any) {
   const { loading, trades, historyTotal, yourTotal, queryTrades, queryYourTotal } = useTrades()
   const [pager, setPager] = useState<PagerType>({
     page: 1,
-    page_size: 1,
+    page_size: 10,
   })
   const [currentTab, setCurrentTab] = useState<currentTabType>('TradeHistory');
   const [tabData, setTabData] = useState([
@@ -176,7 +176,7 @@ export default function Comp({ pool }: any) {
     handleQueryTrades(_pager, currentTab)
   }
   useEffect(() => {
-    yourTotal > 0 && setTabData(prev => {
+    setTabData(prev => {
       prev[1].name = "Your Trades (" + yourTotal + ")"
       return prev
     })
@@ -191,7 +191,7 @@ export default function Comp({ pool }: any) {
 
   return (
     <div>
-      <Tabs tabData={tabData} current={currentTab} onTabsChange={onTabsChange} style={{ marginTop: 4 }}></Tabs>
+      <Tabs tabData={tabData} loading={loading} current={currentTab} onTabsChange={onTabsChange} style={{ marginTop: 4 }}></Tabs>
       <Th>
         <div>Time</div>
         <div>Address</div>
@@ -240,7 +240,7 @@ export default function Comp({ pool }: any) {
       }
 
       <Foot>
-        <PageNumber>Page 1 of 1200</PageNumber>
+        <PageNumber>Page 1 of {maxPage}</PageNumber>
         <StyledFlex gap='12px' style={{ marginLeft: 17 }}>
           <StyledSvg onClick={() => handleClickPager('prev')}>
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="28" viewBox="0 0 50 28" fill="none">

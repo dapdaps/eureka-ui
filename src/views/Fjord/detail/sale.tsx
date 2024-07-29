@@ -6,6 +6,8 @@ import { format } from 'date-fns';
 import { useEffect, useMemo } from 'react';
 import AreaChart from '../components/AreaChart';
 import usePrice from '../hooks/usePrice';
+import { StyledFlex } from '@/styled/styles';
+import Ring from '../components/Ring';
 const Summary = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
@@ -126,10 +128,14 @@ export default function Comp({ pool }: any) {
           <div className="key">Liquidity</div>
           <div className="value">{formatValueDecimal(pool?.liquidity ?? 0, '$', 2, true)}</div>
         </SummaryItem>
-        <SummaryItem className="tiled">
-          <div className="key">Token Released / Available</div>
-          <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
-        </SummaryItem>
+
+        <StyledFlex gap='10px'>
+          <Ring percent={Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)} />
+          <SummaryItem className="tiled">
+            <div className="key">Token Released / Available</div>
+            <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
+          </SummaryItem>
+        </StyledFlex>
       </Summary>
       <AreaChart
         data={priceData}

@@ -10,6 +10,7 @@ import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
+import { FIXED_PRICE_RATIO } from '@/config/fjoid';
 
 import type { Chain, Token } from '@/types';
 import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
@@ -175,12 +176,18 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
   }, [currentTab, pool, fromChain, fromToken, _sendAmount, account])
 
   useEffect(() => {
+    if (!_sendAmount) {
+      setBtnDisbaled(true)
+      setText("Buy")
+      return
+    }
     if (currentTab === 'BUY') {
       if (!shareVal && !buyQuoteLoading && _sendAmount) {
         setBtnDisbaled(true)
-        setText('No route')
+        FIXED_PRICE_RATIO[buyQuote?.toToken?.symbol as any] ? setText("Buy") : setText('No route')
         return
       }
+
 
       if (_sendAmount && Number(inputBalance) < Number(_sendAmount)) {
         setBtnDisbaled(true)
