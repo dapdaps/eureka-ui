@@ -132,6 +132,7 @@ export default function useFraxRequests(onClaimSuccess?: VoidFunction) {
       addAction({
         type: 'Staking',
         action: 'claim',
+        token: [record?.token0?.symbol, record?.token1?.symbol],
         amount: record.amount,
         template: dappName,
         status,
