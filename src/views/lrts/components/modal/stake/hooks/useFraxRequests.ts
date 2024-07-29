@@ -61,7 +61,7 @@ interface IUserRedeemTicketsResponse {
 const FraxEtherRedemptionQueue_ADDR = '0x82bA8da44Cd5261762e629dd5c605b17715727bd';
 
 const dappName: string = 'Frax Finance';
-export default function useFraxRequests(onClaimSucces?: VoidFunction) {
+export default function useFraxRequests(onClaimSuccess?: VoidFunction) {
   const { provider, account, chainId } = useAccount();
 
   const [requests, setRequests] = useState<Record[]>([]);
@@ -124,7 +124,7 @@ export default function useFraxRequests(onClaimSucces?: VoidFunction) {
       const { status, transactionHash } = await tx.wait();
       toast.dismiss(toastId);
       toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
-      onClaimSucces?.();
+      onClaimSuccess?.();
       addAction({
         type: 'Staking',
         action: 'claim',

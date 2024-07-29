@@ -41,7 +41,7 @@ const tokens: { [key: string]: any } = {
   },
 };
 const dappName: string = 'Inception';
-export default function useInceptionRequests(onClaimSucces?: VoidFunction) {
+export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -151,7 +151,7 @@ export default function useInceptionRequests(onClaimSucces?: VoidFunction) {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
-          onClaimSucces?.();
+          onClaimSuccess?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }

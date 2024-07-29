@@ -25,7 +25,7 @@ const contracts: { [key: number]: string } = {
 };
 
 const dappName: string = 'Renzo';
-export default function useRenzoRequests(onClaimSucces?: VoidFunction) {
+export default function useRenzoRequests(onClaimSuccess?: VoidFunction) {
   const { provider, account, chainId } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -93,7 +93,7 @@ export default function useRenzoRequests(onClaimSucces?: VoidFunction) {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
-          onClaimSucces?.();
+          onClaimSuccess?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }

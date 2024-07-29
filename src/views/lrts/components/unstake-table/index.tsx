@@ -175,7 +175,7 @@ const UnstakeTable: FC<IProps> = (props) => {
         <div>Status</div>
       </THead>
       {allHooks?.map((_hooks: any) => {
-        const { requests, claim, onClaimSuccess } = _hooks;
+        const { requests, claim } = _hooks;
         return requests.map((item: any, index: number) => {
           const { token0, token1 } = item;
           const fromTokenSymbol = token0?.symbol;

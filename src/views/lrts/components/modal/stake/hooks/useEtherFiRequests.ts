@@ -30,7 +30,7 @@ const {
 } = abi;
 
 const dappName: string = 'EtherFi';
-export default function useMantleRequests(onClaimSucces?: VoidFunction) {
+export default function useMantleRequests(onClaimSuccess?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -120,7 +120,7 @@ export default function useMantleRequests(onClaimSucces?: VoidFunction) {
         toast.dismiss(toastId);
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
-          onClaimSucces?.();
+          onClaimSuccess?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }

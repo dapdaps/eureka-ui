@@ -45,7 +45,7 @@ const tokens: { [key: string]: any } = {
   },
 };
 const dappName: string = 'Eigenpie';
-export default function useEigenpieRequests(onClaimSucces?: VoidFunction) {
+export default function useEigenpieRequests(onClaimSuccess?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
@@ -119,7 +119,7 @@ export default function useEigenpieRequests(onClaimSucces?: VoidFunction) {
 
         if (status === 1) {
           toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
-          onClaimSucces?.();
+          onClaimSuccess?.();
         } else {
           toast.fail({ title: `Claim faily!` });
         }
