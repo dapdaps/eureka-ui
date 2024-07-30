@@ -1,19 +1,18 @@
-import styled from 'styled-components';
-
+import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
 import { formatValueDecimal } from '@/utils/formate';
 import Big from 'big.js';
 import { format } from 'date-fns';
 import { useEffect, useMemo } from 'react';
+import styled from 'styled-components';
 import AreaChart from '../components/AreaChart';
-import usePrice from '../hooks/usePrice';
-import { StyledFlex } from '@/styled/styles';
 import Ring from '../components/Ring';
+import usePrice from '../hooks/usePrice';
 const Summary = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
   grid-column-gap: 8px;
 
-  margin-bottom: 50px;
+  /* margin-bottom: 50px; */
 `;
 const SummaryItem = styled.div`
   .key {
@@ -38,7 +37,7 @@ const Detail = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-row-gap: 50px;
-  margin-top: 56px;
+  /* margin-top: 56px; */
 `;
 
 const Title = styled.div`
@@ -89,9 +88,29 @@ const Tr = styled.div`
   }
 `;
 
-export default function Comp({ pool }: any) {
+const StyledMaxRaiseAmount = styled.div`
+  padding: 4px 16px;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-radius: 16px;
+  border: 2px solid rgb(84, 61, 201);
+
+`
+const StyledMaxRaiseAmountL = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+const StyledMaxRaiseAmountR = styled.div`
+  
+`
+
+export default function Comp({ pool, totalSupply }: any) {
   const { loading, priceData, queryPrice } = usePrice()
 
+  const isFixedPriceSale = useMemo(() => pool?.mode === 'fixed_price', [pool])
   const previous = useMemo(() => {
     let _previous = null
     try {
@@ -106,40 +125,86 @@ export default function Comp({ pool }: any) {
       pool: pool?.pool
     })
   }
+  const fdv = useMemo(() => {
+    console.log('=totalSupply', totalSupply)
+    return formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '', 2)
+  }, [totalSupply, pool])
+
   useEffect(() => {
     pool?.pool && handleQueryPrice()
   }, [])
   return (
     <div>
-      <Summary>
-        <SummaryItem className="tiled">
-          <div className="key">Funds Raised</div>
-          <div className="value">{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</div>
-        </SummaryItem>
-        <SummaryItem className="tiled">
-          <div className="key">Price</div>
-          <div className="value">{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</div>
-        </SummaryItem>
-        <SummaryItem className="tiled">
-          <div className="key">Volume</div>
-          <div className="value">{formatValueDecimal(pool?.volume ?? 0, '$', 2)}</div>
-        </SummaryItem>
-        <SummaryItem className="tiled">
-          <div className="key">Liquidity</div>
-          <div className="value">{formatValueDecimal(pool?.liquidity ?? 0, '$', 2, true)}</div>
-        </SummaryItem>
-
-        <StyledFlex gap='10px'>
-          <Ring percent={Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)} />
-          <SummaryItem className="tiled">
-            <div className="key">Token Released / Available</div>
-            <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
-          </SummaryItem>
-        </StyledFlex>
-      </Summary>
-      <AreaChart
-        data={priceData}
-      />
+      {
+        isFixedPriceSale ? (
+          <StyledFlex gap='10px'>
+            <Summary style={{ gridTemplateColumns: 'repeat(3, 1fr)', flex: 1 }}>
+              <SummaryItem className="tiled">
+                <div className="key">Price Per RAGE</div>
+                <div className="value">{formatValueDecimal(pool?.price ?? 0, '$', 2, true)} {pool?.asset_token_symbol}</div>
+              </SummaryItem>
+              <SummaryItem className="tiled">
+                <div className="key">Max Allocation per Wallet</div>
+                <div className="value">{formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
+              </SummaryItem>
+              <SummaryItem className="tiled">
+                <div className="key">Soft Cap</div>
+                <div className="value">0</div>
+              </SummaryItem>
+              <SummaryItem className="tiled">
+                <div className="key">Funds Raised</div>
+                <div className="value">{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</div>
+              </SummaryItem>
+              <SummaryItem className="tiled">
+                <div className="key">FDV</div>
+                <div className="value">{fdv}</div>
+              </SummaryItem>
+              <SummaryItem className="tiled">
+                <div className="key">Circ. Marketcap</div>
+                <div className="value">{formatValueDecimal(pool?.market_cap ?? 0, '$', 2, true)}</div>
+              </SummaryItem>
+            </Summary>
+            <StyledMaxRaiseAmount>
+              <StyledMaxRaiseAmountL>
+                <StyledFont color='#FFF' fontSize='12px'>Max raise amount:</StyledFont>
+                <StyledFont color='#FFF' fontSize='16px'>{formatValueDecimal(pool?.shares_released ?? 0, '', 2)}/{formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)}</StyledFont>
+              </StyledMaxRaiseAmountL>
+              <StyledFont color='#FFF'>{Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)}%</StyledFont>
+            </StyledMaxRaiseAmount>
+          </StyledFlex>
+        ) : (
+          <Summary>
+            <SummaryItem className="tiled">
+              <div className="key">Funds Raised</div>
+              <div className="value">{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</div>
+            </SummaryItem>
+            <SummaryItem className="tiled">
+              <div className="key">Price</div>
+              <div className="value">{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</div>
+            </SummaryItem>
+            <SummaryItem className="tiled">
+              <div className="key">Volume</div>
+              <div className="value">{formatValueDecimal(pool?.volume ?? 0, '$', 2)}</div>
+            </SummaryItem>
+            <SummaryItem className="tiled">
+              <div className="key">Liquidity</div>
+              <div className="value">{formatValueDecimal(pool?.liquidity ?? 0, '$', 2, true)}</div>
+            </SummaryItem>
+            <StyledFlex gap='10px'>
+              <Ring percent={Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)} />
+              <SummaryItem className="tiled">
+                <div className="key">Token Released / Available</div>
+                <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
+              </SummaryItem>
+            </StyledFlex>
+          </Summary>
+        )
+      }
+      <StyledContainer style={{ marginTop: 50, marginBottom: 56 }}>
+        <AreaChart
+          data={priceData}
+        />
+      </StyledContainer>
       <Detail>
         <SummaryItem className="overlap">
           <div className="key">Sale Start Time</div>
@@ -216,6 +281,6 @@ export default function Comp({ pool }: any) {
         <div>$1,000,000</div>
         <div>$10,000,000</div>
       </Tr> */}
-    </div>
+    </div >
   );
 }

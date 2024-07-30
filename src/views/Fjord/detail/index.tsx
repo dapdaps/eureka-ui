@@ -4,11 +4,13 @@ import FjordModal from '@/components/fjord-modal';
 import tokenConfig from '@/components/fjord-modal/hooks/tokenConfig';
 import Tabs from '@/components/fjord-modal/tabs';
 import Timer from '@/components/fjord-modal/timer';
+import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 import { StyledContainer, StyledFlex, StyledFont, StyledLoadingWrapper } from '@/styled/styles';
 import type { Token } from '@/types';
 import { formatValueDecimal } from '@/utils/formate';
+import { ethers } from 'ethers';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import SocialButton from '../components/SocialButton';
@@ -49,6 +51,7 @@ export default function LaunchpadYoursPage() {
   const { add } = useAddTokenToWallet();
   const { loading, pool, queryPool } = usePool()
   const { shares, queryShares } = useShares(account)
+  const [totalSupply, setTotalSupply] = useState<any>(0)
   const [currentTab, setCurrentTab] = useState('ProjectDetails');
   const tabData = [
     {
@@ -91,13 +94,39 @@ export default function LaunchpadYoursPage() {
       address: account
     })
   }
+  const queryTotalSupply = async function (pool: any) {
+    const abi = [{
+      "inputs": [],
+      "name": "totalSupply",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }]
+    const rpcUrl = chains[pool?.chain_id]?.rpcUrls[0] ?? ''
+    if (rpcUrl) {
+      const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+      const contract = new ethers.Contract(pool?.share_token_address, abi, provider)
+      const _totalSupply = await contract.totalSupply()
+      setTotalSupply(_totalSupply)
+    }
+  }
 
   useEffect(() => {
     account && handleQueryPool()
   }, [account])
 
   useEffect(() => {
-    pool && queryShares(pool)
+    if (pool) {
+      queryShares(pool)
+      queryTotalSupply(pool)
+    }
+
   }, [pool])
 
   return pool ? (
@@ -263,7 +292,7 @@ export default function LaunchpadYoursPage() {
           )}
           {currentTab === 'SaleDetails' && (
             <TabBody>
-              <SaleDetail pool={pool} />
+              <SaleDetail pool={pool} totalSupply={totalSupply}/>
             </TabBody>
           )}
           {currentTab === 'Trades' && (
