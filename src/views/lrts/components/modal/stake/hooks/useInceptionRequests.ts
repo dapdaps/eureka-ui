@@ -84,7 +84,6 @@ export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
           multicallAddress,
           provider,
         });
-
         if (!pendingResult && !claimableResult) throw Error('');
 
         const _list: any = [];
@@ -102,8 +101,7 @@ export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
                 asset: token,
               },
             });
-          }
-          if (queuedAmount && queuedAmount.gt(0)) {
+          } else if (queuedAmount && queuedAmount.gt(0)) {
             _list.push({
               amount: Big(queuedAmount).div(1e18).toString(),
               token0: token.from,
@@ -135,7 +133,7 @@ export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
         Contract = new ethers.Contract(contracts[chainId].RestakingPool, abi, provider?.getSigner());
       } else {
         method = 'redeem';
-        console.log('=contracts[chainId].vault[record.token1.symbol]', contracts[chainId].vault[record.token1.symbol])
+        console.log('=contracts[chainId].vault[record.token1.symbol]', contracts[chainId].vault[record.token1.symbol]);
         Contract = new ethers.Contract(contracts[chainId].vault[record.token1.symbol], abi, provider?.getSigner());
       }
       onLoading(true);
