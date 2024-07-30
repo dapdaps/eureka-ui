@@ -1,4 +1,3 @@
-import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useState } from 'react';
 
@@ -8,7 +7,8 @@ import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { multicall } from '@/utils/multicall';
-import abi from '@/views/lrts/config/abi/kelp-dao';
+import abi from '@/views/lrts/config/abi/restake-finance';
+import Big from 'big.js';
 type Record = {
   amount: number;
   token0: any;
@@ -19,72 +19,87 @@ type Record = {
   data: any;
 };
 
-const UNSTAKE_ADDRESS = '0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16';
-const LRT_DEPOSIT_POOL = '0x036676389e48133B63a802f8635AD39E752D375D';
-const { UNSTAKE_ADDRESS_ABI, LRT_DEPOSIT_POOL_ABI, FIRST_TOKEN_ABI, SECOND_TOKEN_ABI } = abi;
+// const UNSTAKE_ADDRESS = "0x62De59c08eB5dAE4b7E6F7a8cAd3006d6965ec16"
+// const LRT_DEPOSIT_POOL = "0x036676389e48133B63a802f8635AD39E752D375D"
 
-const dappName: string = 'RestakeFinance';
-export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
+const CONTRACT_ADDRESS_MAPPING: any = {
+  stETH: '0xe384251B5f445A006519A2197bc6bD8E5fA228E5',
+  mETH: '0x0448FddC3f4D666eC81DAc8172E60b8e5852386c',
+  osETH: '0x357DEeD02020b73F8A124c4ea2bE3B6A725aaeC2',
+  sfrxETH: '0xD7BC2FE1d0167BD2532587e991abE556E3a66f3b',
+}
+const {
+  CONTRACT_ADDRESS_ABI,
+  FIRST_TOKEN_ABI,
+  SECOND_TOKEN_ABI
+} = abi
+const TOKENS_MAPPING = {
+  [ethereum['stETH'].address]: [ethereum['mETH'], ethereum['rstETH']],
+  [ethereum['mETH'].address]: [ethereum['mETH'], ethereum['rmETH']],
+  [ethereum['sfrxETH'].address]: [ethereum['sfrxETH'], ethereum['rsfrxETH']],
+}
+const dappName: string = "RestakeFinance"
+export default function useRestakeFinanceRequests(onClaimSuccess?: VoidFunction) {
   const { account, chainId, provider } = useAccount();
   const [requests, setRequests] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { addAction } = useAddAction('lrts');
 
-  const token0 = ethereum['stETH'];
-  const token1 = ethereum['rsETH'];
-
   const queryRequests = useCallback(
     async (asset?: any) => {
       if (!chainId) return;
+      const tokens = asset ? [TOKENS_MAPPING[asset]] : Object.values(TOKENS_MAPPING)
       setLoading(true);
       try {
-        const _asset = asset ? asset : '0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84';
-        const contract = new ethers.Contract(UNSTAKE_ADDRESS, UNSTAKE_ADDRESS_ABI, provider);
-        const noncesResult = await contract.userAssociatedNonces(_asset, account);
-        const nextNonceResult = await contract.nextLockedNonce(_asset);
-        const delayBlocksResult = await contract.withdrawalDelayBlocks();
-
-        const blockNumber = await provider.getBlockNumber();
-        const _begin: any = ethers.utils.formatUnits(noncesResult[0], 0);
-        const _end: any = ethers.utils.formatUnits(noncesResult[1], 0);
         const multicallAddress = multicallAddresses[chainId];
-        const calls = [];
-        for (let i = _begin; i < _end; i++) {
-          calls.push({
-            address: UNSTAKE_ADDRESS,
-            name: 'getUserWithdrawalRequest',
-            params: [_asset, account, i],
-          });
-        }
-        console.log('===calls', calls);
-
-        console.log('=multicallAddress', multicallAddress);
-        console.log('=UNSTAKE_ADDRESS_ABI', UNSTAKE_ADDRESS_ABI);
-        const requestResult = await multicall({
-          abi: UNSTAKE_ADDRESS_ABI,
+        const getLastRedeemableIdCalls = tokens.map(token => {
+          return {
+            address: CONTRACT_ADDRESS_MAPPING[token[0]?.symbol ?? "stETH" as string],
+            name: 'getLastRedeemableId',
+          }
+        })
+        const getLastRedeemableIdResult = await multicall({
+          abi: CONTRACT_ADDRESS_ABI,
           options: {},
-          calls,
+          calls: getLastRedeemableIdCalls,
           multicallAddress,
           provider,
-        });
-        console.log('===blockNumber', blockNumber);
-        console.log('===requestResult', requestResult);
-        setRequests(
-          requestResult.map((request: any, index: number) => {
-            return {
-              amount: ethers.utils.formatUnits(request?.rsETHAmount, 18),
+        })
+        const getAllQueuePositionsForAddressCalls = tokens.map(token => {
+          return {
+            address: CONTRACT_ADDRESS_MAPPING[token[0]?.symbol ?? "stETH" as string],
+            name: 'getAllQueuePositionsForAddress',
+            params: [account]
+          }
+        })
+        const getAllQueuePositionsForAddressResult = await multicall({
+          abi: CONTRACT_ADDRESS_ABI,
+          options: {},
+          calls: getAllQueuePositionsForAddressCalls,
+          multicallAddress,
+          provider,
+        })
+
+        if (!getLastRedeemableIdResult && !getAllQueuePositionsForAddressResult) throw Error('');
+        const _requests: any = []
+        tokens.forEach((token, index) => {
+          const [token0, token1] = token
+          const lastRedeemableId = getLastRedeemableIdResult[index][0]
+          const allQueuePositionsForAddress = getAllQueuePositionsForAddressResult[index][0]
+          allQueuePositionsForAddress.forEach((request: any) => {
+            _requests.push({
+              amount: ethers.utils.formatUnits(request?.currentValue, 18),
               token0,
               token1,
-              status:
-                Big(blockNumber).gt(Big(request.withdrawalStartBlock).plus(delayBlocksResult)) &&
-                Big(request.userNonce).lt(nextNonceResult)
-                  ? 'Claimable'
-                  : 'In Progress',
-              data: {},
-            };
-          }),
-        );
+              status: Big(lastRedeemableId).gt(request.id) ? 'In Progress' : 'Claimable',
+              data: {
+                requestId: request.id,
+              },
+            })
+          })
+        })
+        setRequests(_requests);
         setLoading(false);
       } catch (err) {
         console.log('err', err);
@@ -98,11 +113,11 @@ export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
   const claim = useCallback(
     async (record: any, onLoading: any) => {
       if (!chainId) return;
-      const contract = new ethers.Contract(UNSTAKE_ADDRESS, UNSTAKE_ADDRESS_ABI, provider?.getSigner());
+      const contract = new ethers.Contract(CONTRACT_ADDRESS_MAPPING[record?.token0.symbol ?? "stETH"], CONTRACT_ADDRESS_ABI, provider?.getSigner());
       onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
-        const tx = await contract.completeWithdrawal();
+        const tx = await contract.redeemUnderlying(record?.data?.requestId);
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
         const { status, transactionHash } = await tx.wait();

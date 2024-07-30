@@ -108,6 +108,7 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
       })
       .catch((error: any) => {
         console.log('=error', error)
+        setApproving(false)
         setIsLoading(false)
         toast?.dismiss(toastId);
         toast?.fail({
@@ -117,6 +118,10 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
   }
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount)
+    if (Big(amount || 0).eq(0)) {
+      setOutAmount('');
+      return;
+    }
     try {
       const _outAmount = amount
       setOutAmount(_outAmount)
@@ -186,6 +191,14 @@ export default function useEtherFi({ gem, dapp, token0, token1, addAction, actio
         });
       })
   }
+  const handleReset = function () {
+    setInAmount('')
+    setApproved(true)
+    setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])

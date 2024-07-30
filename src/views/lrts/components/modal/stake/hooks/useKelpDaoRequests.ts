@@ -68,23 +68,19 @@ export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
           multicallAddress,
           provider,
         });
-        console.log('===blockNumber', blockNumber);
-        console.log('===requestResult', requestResult);
-        setRequests(
-          requestResult.map((request: any, index: number) => {
-            return {
-              amount: ethers.utils.formatUnits(request?.rsETHAmount, 18),
-              token0,
-              token1,
-              status:
-                Big(blockNumber).gt(Big(request.withdrawalStartBlock).plus(delayBlocksResult)) &&
-                Big(request.userNonce).lt(nextNonceResult)
-                  ? 'Claimable'
-                  : 'In Progress',
-              data: {},
-            };
-          }),
-        );
+        console.log('===blockNumber', blockNumber)
+        console.log('===requestResult', requestResult)
+        setRequests(requestResult.map((request: any, index: number) => {
+          return {
+            amount: ethers.utils.formatUnits(request?.rsETHAmount, 18),
+            token0,
+            token1,
+            status: Big(blockNumber).gt(Big(request.withdrawalStartBlock).plus(delayBlocksResult)) && Big(request.userNonce).lt(nextNonceResult) ? 'Claimable' : 'In Progress',
+            data: {
+              asset: _asset
+            },
+          }
+        }));
         setLoading(false);
       } catch (err) {
         console.log('err', err);
@@ -102,7 +98,7 @@ export default function useInceptionRequests(onClaimSuccess?: VoidFunction) {
       onLoading(true);
       let toastId = toast.loading({ title: 'Confirming...' });
       try {
-        const tx = await contract.completeWithdrawal();
+        const tx = await contract.completeWithdrawal(record?.data?.asset);
         toast.dismiss(toastId);
         toastId = toast.loading({ title: 'Pending...', tx: tx.hash, chainId });
         const { status, transactionHash } = await tx.wait();

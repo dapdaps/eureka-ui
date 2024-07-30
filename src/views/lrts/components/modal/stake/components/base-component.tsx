@@ -77,9 +77,9 @@ const BaseComponent = function (props: any) {
   const [isActive, setIsActive] = useState(true);
   const actionTypeList = [gem ? 'restake' : 'stake', 'unstake'];
   
-  useEffect(() => {
-    setInAmount && setInAmount("")
-  }, [actionType])
+  // useEffect(() => {
+  //   setInAmount && setInAmount("")
+  // }, [actionType])
   return (
     <StyledStakeContainer>
       {gem?.dapp?.logo ? (
@@ -274,8 +274,8 @@ const BaseComponent = function (props: any) {
             <StyledMaxAndSymbol>
               <StyledMax onClick={handleMax}>Max</StyledMax>
               <StyledSymbol>
-                <StyledSymbolImage src={inToken.icon} />
-                <StyledSymbolTxt>{inToken.symbol}</StyledSymbolTxt>
+                <StyledSymbolImage src={inToken?.icon} />
+                <StyledSymbolTxt>{inToken?.symbol}</StyledSymbolTxt>
               </StyledSymbol>
             </StyledMaxAndSymbol>
           </StyledInputContainer>

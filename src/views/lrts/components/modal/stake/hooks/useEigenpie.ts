@@ -201,6 +201,14 @@ export default function useEigenpie({ token0, token1, actionType, gem, dapp, onS
     [actionType],
   );
 
+  const handleReset = function () {
+    setInAmount('')
+    // setApproved(true)
+    // setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     if (!account) return;
     getStakedAmount();

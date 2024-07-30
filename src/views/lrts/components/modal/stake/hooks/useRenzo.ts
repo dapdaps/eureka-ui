@@ -204,6 +204,15 @@ export default function useRenzo({ token0, token1, actionType, gem, dapp, onSucc
     [actionType],
   );
 
+  
+  const handleReset = function () {
+    setInAmount('')
+    // setApproved(true)
+    // setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   return {
     data,
     inAmount,

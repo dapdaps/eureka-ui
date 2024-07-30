@@ -1,5 +1,7 @@
+import { useEffect } from 'react';
 import BaseComponent from '../components/base-component';
-import useRestakeFinance from '../hooks/useRestakeFinance'
+import useRestakeFinance from '../hooks/useRestakeFinance';
+import useRestakeFinanceRequests from '../hooks/useRestakeFinanceRequests';
 
 const RestakeFinance = function ({ box, gem, dapp, actionType, addAction, handleAddMetaMask, handleChangeActionType, setShow, token0, token1, onSuccess }: any) {
 
@@ -28,7 +30,10 @@ const RestakeFinance = function ({ box, gem, dapp, actionType, addAction, handle
     actionType,
     onSuccess
   })
-
+  const { requests, loading: requestsLoading, queryRequests, claim } = useRestakeFinanceRequests();
+  useEffect(() => {
+    actionType === 'unstake' && queryRequests(token0.address);
+  }, [actionType]);
   return (
     <BaseComponent
       componentProps={{
@@ -48,6 +53,10 @@ const RestakeFinance = function ({ box, gem, dapp, actionType, addAction, handle
         inToken,
         outToken,
         isInSufficient,
+        requests,
+        requestsLoading,
+        queryRequests,
+        claim,
         handleApprove,
         handleAmountChange,
         handleMax,

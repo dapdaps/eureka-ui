@@ -95,6 +95,7 @@ export default function useMantle({ gem, dapp, token0, token1, addAction, action
         });
       })
       .catch((error: any) => {
+        setApproving(false)
         setIsLoading(false)
         toast?.dismiss(toastId);
         toast?.fail({
@@ -104,6 +105,10 @@ export default function useMantle({ gem, dapp, token0, token1, addAction, action
   }
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount)
+    if (Big(amount || 0).eq(0)) {
+      setOutAmount('');
+      return;
+    }
     try {
       const wei = Big(amount)
         .mul(Big(10).pow(18))
@@ -185,10 +190,17 @@ export default function useMantle({ gem, dapp, token0, token1, addAction, action
         });
       })
   }
+  const handleReset = function () {
+    setInAmount('')
+    setApproved(true)
+    setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])
-
   return {
     data,
     inAmount,

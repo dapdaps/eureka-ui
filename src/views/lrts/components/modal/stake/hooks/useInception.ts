@@ -220,10 +220,17 @@ export default function useInception({ token0, token1, actionType, gem, dapp, on
     [tokenBalance, stakedAmount],
   );
 
+  const handleReset = function () {
+    setInAmount('')
+    // setApproved(true)
+    // setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     if (!account) return;
     getStakedAmount();
-    // getWithdrawlRequests();
   }, [account]);
 
   return {

@@ -96,6 +96,7 @@ export default function useKelpDao({ gem, dapp, token0, token1, addAction, actio
       })
       .catch((error: any) => {
         console.log('=error', error)
+        setApproving(false)
         setIsLoading(false)
         toast?.dismiss(toastId);
         toast?.fail({
@@ -105,6 +106,10 @@ export default function useKelpDao({ gem, dapp, token0, token1, addAction, actio
   }
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount)
+    if (Big(amount || 0).eq(0)) {
+      setOutAmount('');
+      return;
+    }
     try {
       if (['stake', 'restake'].includes(actionType)) {
         const _outAmount = Big(amount).times(data?.exchangeRate).toFixed()
@@ -179,6 +184,15 @@ export default function useKelpDao({ gem, dapp, token0, token1, addAction, actio
         });
       })
   }
+
+  const handleReset = function () {
+    setInAmount('')
+    setApproved(true)
+    setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     provider && handleQueryData()
   }, [provider])

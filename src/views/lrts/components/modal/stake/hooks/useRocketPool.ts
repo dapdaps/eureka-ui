@@ -242,6 +242,14 @@ const useRocketPool = ({ actionType, token0, token1, provider, account, gem, dap
     }
   };
 
+  const handleReset = function () {
+    setInAmount('')
+    setApproved(true)
+    setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     if (provider) handleQueryData();
   }, [provider, handleQueryData]);

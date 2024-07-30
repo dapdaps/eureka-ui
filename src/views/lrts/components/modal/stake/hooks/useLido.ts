@@ -182,6 +182,14 @@ export default function useLido({ gem, dapp, token0, token1, addAction, actionTy
         });
       });
   };
+  const handleReset = function () {
+    setInAmount('')
+    setApproved(true)
+    setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     provider && handleQueryData();
   }, [provider]);

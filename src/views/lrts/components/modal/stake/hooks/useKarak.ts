@@ -142,6 +142,15 @@ export default function useKarak({ token0, token1, actionType, gem, dapp, onSucc
     [tokenBalance, stakedAmount],
   );
 
+  const handleReset = function () {
+    setInAmount('')
+    // setApproved(true)
+    // setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
+
   return {
     data,
     inAmount,

@@ -56,15 +56,17 @@ export default function Button({
     return <BaseButton disabled>Enter An Amount</BaseButton>;
   }
 
+  if (Big(inAmount ? inAmount : 0).lt(leastAmount)) {
+    return <BaseButton disabled>The minimum amount is {leastAmount}</BaseButton>;
+  }
+  
   if (!approved) {
     return <BaseButton onClick={onApprove}>Approve</BaseButton>;
   }
 
   if (isInSufficient) return <BaseButton disabled>InSufficient Balance</BaseButton>;
 
-  if (Big(inAmount ? inAmount : 0).lt(leastAmount)) {
-    return <BaseButton disabled>The minimum amount is {leastAmount}</BaseButton>;
-  }
+  
 
   return <BaseButton onClick={handleStake}>{actionType}</BaseButton>;
 }

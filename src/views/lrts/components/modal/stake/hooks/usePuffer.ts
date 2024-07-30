@@ -222,6 +222,15 @@ export default function usePuffer({ token0, token1, actionType, gem, dapp, onSuc
     getStakedAmount();
   }, [account]);
 
+  const handleReset = function () {
+    setInAmount('')
+    // setApproved(true)
+    // setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
+
   return {
     data,
     inAmount,

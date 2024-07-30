@@ -339,6 +339,7 @@ const useRestakeFinance = function ({ gem, dapp, token0, token1, addAction, acti
       })
       .catch((error: any) => {
         console.log('=error', error);
+        setApproving(false);
         setIsLoading(false);
         toast?.dismiss(toastId);
         toast?.fail({
@@ -348,6 +349,10 @@ const useRestakeFinance = function ({ gem, dapp, token0, token1, addAction, acti
   };
   const handleAmountChange = async function (amount: number | string) {
     setInAmount(amount);
+    if (Big(amount || 0).eq(0)) {
+      setOutAmount('');
+      return;
+    }
     try {
       const _amount = Big(amount).mul(Big(10).pow(18)).toFixed(0);
       setOutAmount(amount);
@@ -408,6 +413,14 @@ const useRestakeFinance = function ({ gem, dapp, token0, token1, addAction, acti
         });
       });
   };
+  const handleReset = function () {
+    setInAmount('')
+    setApproved(true)
+    setApproving(false)
+  }
+  useEffect(() => {
+    handleReset()
+  }, [actionType])
   useEffect(() => {
     provider && handleQueryData();
   }, [provider]);
