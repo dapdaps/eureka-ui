@@ -138,7 +138,7 @@ export default function Comp({ pool, totalSupply }: any) {
     <div>
       {
         isFixedPriceSale ? (
-          <StyledFlex gap='10px'>
+          <StyledFlex gap='10px' style={{ marginBottom: 50 }}>
             <Summary style={{ gridTemplateColumns: 'repeat(3, 1fr)', flex: 1 }}>
               <SummaryItem className="tiled">
                 <div className="key">Price Per RAGE</div>
@@ -174,38 +174,41 @@ export default function Comp({ pool, totalSupply }: any) {
             </StyledMaxRaiseAmount>
           </StyledFlex>
         ) : (
-          <Summary>
-            <SummaryItem className="tiled">
-              <div className="key">Funds Raised</div>
-              <div className="value">{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</div>
-            </SummaryItem>
-            <SummaryItem className="tiled">
-              <div className="key">Price</div>
-              <div className="value">{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</div>
-            </SummaryItem>
-            <SummaryItem className="tiled">
-              <div className="key">Volume</div>
-              <div className="value">{formatValueDecimal(pool?.volume ?? 0, '$', 2)}</div>
-            </SummaryItem>
-            <SummaryItem className="tiled">
-              <div className="key">Liquidity</div>
-              <div className="value">{formatValueDecimal(pool?.liquidity ?? 0, '$', 2, true)}</div>
-            </SummaryItem>
-            <StyledFlex gap='10px'>
-              <Ring percent={Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)} />
+          <>
+            <Summary>
               <SummaryItem className="tiled">
-                <div className="key">Token Released / Available</div>
-                <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
+                <div className="key">Funds Raised</div>
+                <div className="value">{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</div>
               </SummaryItem>
-            </StyledFlex>
-          </Summary>
+              <SummaryItem className="tiled">
+                <div className="key">Price</div>
+                <div className="value">{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</div>
+              </SummaryItem>
+              <SummaryItem className="tiled">
+                <div className="key">Volume</div>
+                <div className="value">{formatValueDecimal(pool?.volume ?? 0, '$', 2)}</div>
+              </SummaryItem>
+              <SummaryItem className="tiled">
+                <div className="key">Liquidity</div>
+                <div className="value">{formatValueDecimal(pool?.liquidity ?? 0, '$', 2, true)}</div>
+              </SummaryItem>
+              <StyledFlex gap='10px'>
+                <Ring percent={Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)} />
+                <SummaryItem className="tiled">
+                  <div className="key">Token Released / Available</div>
+                  <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
+                </SummaryItem>
+              </StyledFlex>
+            </Summary>
+            <StyledContainer style={{ marginTop: 50, marginBottom: 56 }}>
+              <AreaChart
+                data={priceData}
+              />
+            </StyledContainer>
+          </>
         )
       }
-      <StyledContainer style={{ marginTop: 50, marginBottom: 56 }}>
-        <AreaChart
-          data={priceData}
-        />
-      </StyledContainer>
+
       <Detail>
         <SummaryItem className="overlap">
           <div className="key">Sale Start Time</div>
@@ -254,7 +257,7 @@ export default function Comp({ pool, totalSupply }: any) {
         <div>Valuation of Round</div>
       </Th>
       {
-        previous.map((item: any, index: number) => {
+        previous?.map((item: any, index: number) => {
           return (
             <Tr key={index}>
               <div>{index + 1}</div>
@@ -268,7 +271,7 @@ export default function Comp({ pool, totalSupply }: any) {
               <div>{formatValueDecimal(item?.roundValuation || 0, '$', 2, true)}</div>
             </Tr>
           )
-        })
+        }) ?? <></>
       }
 
       {/* <Tr>
