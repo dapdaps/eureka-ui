@@ -29,25 +29,26 @@ export const StyledNetworkDropdownItem = styled.div`
   align-items: center;
   gap: 5px;
 `;
-export const StyledRewardNow = styled.div`
+export const StyledRadio = styled.div<{ $selected?: boolean; }>`
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 10px;
-  width: 156px;
-  height: 38px;
+  padding-left: 13px;
+  padding-right: 15px;
+  height: 40px;
   border-radius: 10px;
   color: #FFF;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 100%;
-  padding: 0 16px 0 13px;
   cursor: pointer;
-  transition: background .2s ease;
-  background: #18191E url("/images/alldapps/btn-border.svg") no-repeat center center / contain;
-  
-  .reward-now-radio {
+  border: 1px solid #333648;
+  background: ${({ $selected }) => $selected ? '#1F2229' : '#18191E'};
+  transition: all .3s ease;
+
+  .radio-control {
     flex-shrink: 0;
     width: 14px;
     height: 14px;
@@ -56,28 +57,35 @@ export const StyledRewardNow = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    
+
     &::after {
+      display: block;
       content: "";
       width: 12px;
       height: 12px;
       border-radius: 50%;
       background: #EBF479;
-      display: none;
       border: 1px solid #18191E;
+      transition: all .3s ease;
+      opacity: ${({ $selected }) => $selected ? 1 : 0};
     }
   }
-  .reward-now-text {
+  .radio-text {
     flex: 1;
   }
-  
-  &.selected {
-    background: linear-gradient(90deg, #FFAF65 3.39%, #FF84EB 50.73%, #9B82FF 100%);
-    .reward-now-radio::after {
-      display: block;
-    }
-  }
 `;
+
+export const StyledRewardNow = styled(StyledRadio)`
+  width: 142px;
+  border: 0;
+  background: ${({ $selected }) => {
+    if ($selected) {
+      return 'linear-gradient(90deg, #FFAF65 3.39%, #FF84EB 50.73%, #9B82FF 100%)';
+    }
+    return '#18191E url("/images/alldapps/btn-border.svg") no-repeat center center / 142px 40px';
+  }};
+`;
+
 export const StyledSearch = styled.div`
   display: flex;
   justify-content: space-between;

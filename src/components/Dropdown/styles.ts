@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
   display: inline-block;
-  height: 36px;
+  height: 40px;
   position: relative;
   padding: 0 12px 0 16px;
 `;
@@ -18,9 +18,9 @@ export const StyledInner = styled.div`
 `;
 export const StyledShown = styled.div`
   color: #FFF;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 100%;
 `;
 export const StyledArrow = styled(motion.div)`
@@ -42,9 +42,9 @@ export const StyledPopup = styled(motion.div)`
   padding-bottom: 1px;
   left: 0;
   color: #FFF;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 100%;
   overflow-y: auto;
 `;
@@ -57,8 +57,8 @@ export const StyledPopupList = styled.ul`
 
 export const StyledPopupItem = styled.ul`
   width: 100%;
-  height: 48px;
-  line-height: 48px;
+  height: 46px;
+  line-height: 46px;
   display: flex;
   justify-content: flex-start;
   align-items: center;

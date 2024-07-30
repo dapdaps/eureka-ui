@@ -13,6 +13,7 @@ export default function useList(props: Props) {
     category,
     searchText,
     rewardNow,
+    airdrop,
   } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
@@ -29,6 +30,8 @@ export default function useList(props: Props) {
         is_favorite: false,
         page_size: PageSize,
         page,
+        rewardNow,
+        airdrop,
       };
       if (sort) {
         params.sort = sort;
@@ -77,7 +80,7 @@ export default function useList(props: Props) {
 
   useEffect(() => {
     getDappList(1);
-  }, [network, sort, rewardNow, category, searchText]);
+  }, [network, sort, rewardNow, category, searchText, airdrop]);
 
   return {
     loading,
@@ -106,4 +109,6 @@ export interface Props {
   // data anchor
   bp?: { detail: string; dapp: string; };
   style?: React.CSSProperties;
+  // Potential Airdrop
+  airdrop?: boolean;
 }

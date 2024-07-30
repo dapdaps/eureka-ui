@@ -2,16 +2,16 @@ import {
   StyledBody,
   StyledContainer,
   StyledFilters,
-  StyledNetworkDropdownItem,
+  StyledNetworkDropdownItem, StyledRadio,
   StyledRewardNow,
   StyledSearch,
   StyledSearchIcon,
   StyledSearchInput,
-  StyledSelectorLoading
+  StyledSelectorLoading,
 } from '@/views/AllDapps/styles';
 import AllDappsTitle from '@/views/AllDapps/components/Title';
 import Selector from '@/components/Dropdown/Selector';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import Image from 'next/image';
@@ -20,6 +20,7 @@ import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
 import DappList from './components/DappList';
+import { checkQueryEmpty } from '@/views/AllDapps/utils';
 
 const AllDapps = (props: Props) => {
   const {} = props;
@@ -34,8 +35,13 @@ const AllDapps = (props: Props) => {
   const [network, setNetwork] = useState<any>(AllNetworks.id);
   const [sort, setSort] = useState<any>(SortList[0].value);
   const [rewardNow, setRewardNow] = useState<boolean>(false);
+  const [airdrop, setAirdrop] = useState<boolean>(false);
   const [category, setCategory] = useState<number| string>();
   const [searchWord, setSearchWord] = useState<string>();
+
+  const setQueryParams = useCallback((params: any) => {
+    router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
+  }, [router, pathname]);
 
   const fetchNetworkData = async () => {
     try {
@@ -44,7 +50,6 @@ const AllDapps = (props: Props) => {
       const data = resultNetwork.data || [];
       data.unshift(AllNetworks);
       setNetworkList(data);
-      console.log(data);
       setNetworkLoading(false);
     } catch (error) {
       console.error('Error fetching resultNetwork data:', error);
@@ -59,7 +64,7 @@ const AllDapps = (props: Props) => {
     } else {
       params.set('network', _network.toString());
     }
-    router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
+    setQueryParams(params);
   }
 
   const onSortSelect = (_sort: number) => {
@@ -69,7 +74,7 @@ const AllDapps = (props: Props) => {
     } else {
       params.set('sort', _sort.toString());
     }
-    router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
+    setQueryParams(params);
   }
 
   const onSelectCategory = (_category: any) => {
@@ -79,25 +84,43 @@ const AllDapps = (props: Props) => {
     } else {
       params.set('category', _category.toString());
     }
-    router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
+    setQueryParams(params);
   }
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchWord(e.target.value.trim());
   }
 
+  const onRewardToggle = () => {
+    const _rewardNow = !rewardNow;
+    const params = new URLSearchParams(searchParams);
+    if (_rewardNow) {
+      params.set('reward', '1');
+    } else {
+      params.delete('reward');
+    }
+    setQueryParams(params);
+  };
+
   useEffect(() => {
     fetchNetworkData();
   }, []);
 
   useEffect(() => {
-    const queryNetwork = router.query.network;
-    if (queryNetwork && queryNetwork !== 'undefined' && !isNaN(Number(queryNetwork))) {
-      setNetwork(Number(queryNetwork));
+    console.log('router.query: %o', router.query);
+    const {
+      network: _network,
+      reward: _reward,
+      sort: _sort,
+    } = router.query;
+    if (checkQueryEmpty(_network as string, () => {
+      return networkList.some((it: any) => it.id === Number(_network));
+    })) {
+      setNetwork(Number(_network));
     } else {
-      setNetwork(AllNetworks.id)
+      setNetwork(AllNetworks.id);
     }
-  }, [router.query?.network]);
+  }, [router.query, networkList]);
 
   useEffect(() => {
     const querySort = router.query.sort;
@@ -174,14 +197,23 @@ const AllDapps = (props: Props) => {
               maxHeight: 300,
             }}
           />
-          <StyledRewardNow
-            className={rewardNow ? 'selected' : ''}
+          <StyledRadio
+            $selected={airdrop}
             onClick={() => {
-              setRewardNow(!rewardNow);
+              setAirdrop(!airdrop);
             }}
           >
-            <div className="reward-now-radio"></div>
-            <div className="reward-now-text">
+            <div className="radio-control"></div>
+            <div className="radio-text">
+              Potential Airdrop
+            </div>
+          </StyledRadio>
+          <StyledRewardNow
+            $selected={rewardNow}
+            onClick={onRewardToggle}
+          >
+            <div className="radio-control"></div>
+            <div className="radio-text">
               Reward now
             </div>
           </StyledRewardNow>
@@ -203,6 +235,7 @@ const AllDapps = (props: Props) => {
           rewardNow={rewardNow}
           category={category}
           searchText={searchWord}
+          airdrop={airdrop}
           bp={{ detail: '10011-001', dapp: '10011-002' }}
         />
       </StyledBody>
