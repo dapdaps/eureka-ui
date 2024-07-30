@@ -171,11 +171,7 @@ export default function LaunchpadYoursPage() {
                 social?.website && (
                   <SocialButton
                     icon={
-                      <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19.8002 10.4992C19.8002 15.6355 15.6364 19.7992 10.5002 19.7992C5.36395 19.7992 1.2002 15.6355 1.2002 10.4992C1.2002 5.36297 5.36395 1.19922 10.5002 1.19922C15.6364 1.19922 19.8002 5.36297 19.8002 10.4992Z" stroke="white" />
-                      </svg>
-
-
+                      <img width={20} src='/images/icon-website.png' />
                     }
                     alt="Website"
                     url={social?.website}
