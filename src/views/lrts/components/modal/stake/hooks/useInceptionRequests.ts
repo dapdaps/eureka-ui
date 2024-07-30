@@ -24,19 +24,19 @@ type Record = {
 
 const tokens: { [key: string]: any } = {
   [ethereum.stETH.address]: {
-    from: ethereum.mstETH,
+    from: ethereum.instETH,
     to: ethereum.stETH,
   },
   [ethereum.mETH.address]: {
-    from: ethereum.mmETH,
+    from: ethereum.inmETH,
     to: ethereum.mETH,
   },
   [ethereum.sfrxETH.address]: {
-    from: ethereum.msfrxETH,
+    from: ethereum.insfrxETH,
     to: ethereum.sfrxETH,
   },
   [ethereum.rETH.address]: {
-    from: ethereum.mrETH,
+    from: ethereum.inrETH,
     to: ethereum.rETH,
   },
 };
