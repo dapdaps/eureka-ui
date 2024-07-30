@@ -11,6 +11,7 @@ const Summary = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
   grid-column-gap: 8px;
+  grid-row-gap: 8px;
 
   /* margin-bottom: 50px; */
 `;
@@ -90,7 +91,7 @@ const Tr = styled.div`
 
 const StyledMaxRaiseAmount = styled.div`
   padding: 4px 16px;
-  flex: 1;
+  flex: 0.3;
   display: flex;
   align-items: center;
   justify-content: space-between;

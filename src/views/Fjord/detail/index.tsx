@@ -18,6 +18,7 @@ import usePool from '../hooks/usePool';
 import useShares from '../hooks/useShares';
 import ProjectDetail from './project';
 import SaleDetail from './sale';
+import { format } from 'date-fns';
 import {
   Banner,
   BannerBody,
@@ -117,6 +118,9 @@ export default function LaunchpadYoursPage() {
     }
   }
 
+  const handleReminder = function () {
+    window.open(`http://www.google.com/calendar/event?action=TEMPLATE&text=${pool?.share_token_name}&dates=${format(pool?.start_time * 1000, "yyyyMMdd'T'HHmmss'Z'")}/${format(pool?.end_time * 1000, "yyyyMMdd'T'HHmmss'Z'")}&details=${pool?.description}`)
+  }
   useEffect(() => {
     account && handleQueryPool()
   }, [account])
@@ -292,7 +296,7 @@ export default function LaunchpadYoursPage() {
           )}
           {currentTab === 'SaleDetails' && (
             <TabBody>
-              <SaleDetail pool={pool} totalSupply={totalSupply}/>
+              <SaleDetail pool={pool} totalSupply={totalSupply} />
             </TabBody>
           )}
           {currentTab === 'Trades' && (
@@ -332,33 +336,6 @@ export default function LaunchpadYoursPage() {
                   chainId={pool?.chain_id}
                   price={pool?.price_usd}
                 />
-                // <FjordModal
-                //   isModal={false}
-                //   isFixedPriceSale={true}
-                //   pool={"0xB192fAcb963e006F510E8A40618DFD8C7C04F1C8"}
-                //   token={{
-                //     chainId: 11155111,
-                //     address: "0x579ee71640b64fBacB08d62DF20928362485660E",
-                //     name: "18decimalToken",
-                //     symbol: "18DT",
-                //     icon: "https://www.santarosaforward.com/img/managed/Image/111/file.jpg",
-                //     logoURI: "https://www.santarosaforward.com/img/managed/Image/111/file.jpg",
-                //     decimals: 18,
-                //     isNative: false,
-                //   } as Token}
-                //   midToken={{
-                //     chainId: 11155111,
-                //     address: "0x0000000000000000000000000000000000000000",
-                //     name: "Sepolia Ether",
-                //     symbol: "ETH",
-                //     icon: tokenConfig["ETH"]?.icon,
-                //     logoURI: tokenConfig["ETH"]?.icon,
-                //     decimals: 18,
-                //     isNative: false,
-                //   } as Token}
-                //   chainId={11155111}
-                //   price={pool?.price_usd}
-                // />
               )
             ) : (
               pool?.status === "upcoming" ? (
@@ -377,7 +354,7 @@ export default function LaunchpadYoursPage() {
                   <StyledFont color='#979ABE' fontSize="14px" style={{ width: 426, textAlign: 'center', marginTop: 60, marginBottom: 80 }}>
                     This LBP is coming soon! Check back soon and stay up to date via the <span style={{ textDecoration: 'underline' }}>projects website</span>
                   </StyledFont>
-                  <StyledSiderButton>
+                  <StyledSiderButton onClick={handleReminder}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 17 20" fill="none">
                       <path d="M3.71933 2.39646L3.51451 1.67258C3.35312 1.10218 3.69054 0.502112 4.26694 0.339023C4.84198 0.176321 5.44515 0.51025 5.60654 1.08066L5.81136 1.80453C9.00177 1.45189 11.545 3.68799 12.4768 6.98141L13.6066 10.9743L16.2558 12.1844C16.7704 12.6651 16.906 13.1079 16.7352 13.7899C16.5666 14.4742 15.9794 14.7195 15.299 14.9121L2.50582 18.5318C1.82536 18.7243 1.19672 18.823 0.693905 18.3316C0.192465 17.8398 0.0752398 17.3889 0.261053 16.7129L0.282649 16.6481L1.86943 14.2967L0.739683 10.3038C-0.19217 7.0104 0.814379 3.76846 3.71933 2.39646ZM10.8045 16.7969C11.0747 17.7516 10.6078 19.0807 9.64534 19.353C8.68285 19.6253 7.58888 18.7379 7.31874 17.7832L10.8045 16.7969Z" fill="white" />
                     </svg>
