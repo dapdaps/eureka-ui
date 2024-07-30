@@ -8,7 +8,7 @@ import useToast from '@/hooks/useToast';
 import { ENTER_QUEUE_ABI } from '@/views/lrts/config/abi/frax';
 
 import { useSelectedToken } from '../modules/Frax/hooks/useSelectedToken';
-import _ from 'lodash';
+
 type Record = {
   amount: number;
   token0: any;
@@ -125,7 +125,9 @@ export default function useFraxRequests(onClaimSuccess?: VoidFunction) {
       } catch (error) {
         return toast.fail({ title: 'Ensure the provided Ethereum address adheres to the correct format.' });
       }
-      const tx = await redemptionQueueContract.burnRedemptionTicketNft(nftId, address);
+      const tx = await redemptionQueueContract.burnRedemptionTicketNft(nftId, address, {
+        gasLimit: 200000,
+      });
       const { status, transactionHash } = await tx.wait();
       toast.success({ title: `Claim successfully!`, tx: transactionHash, chainId });
       onClaimSuccess?.();
