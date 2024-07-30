@@ -92,7 +92,6 @@ export default function LaunchpadYoursPage() {
   const handleQueryPool = function () {
     queryPool({
       id: router.query.id,
-      address: account
     })
   }
   const queryTotalSupply = async function (pool: any) {
@@ -122,8 +121,8 @@ export default function LaunchpadYoursPage() {
     window.open(`http://www.google.com/calendar/event?action=TEMPLATE&text=${pool?.share_token_name}&dates=${format(pool?.start_time * 1000, "yyyyMMdd'T'HHmmss'Z'")}/${format(pool?.end_time * 1000, "yyyyMMdd'T'HHmmss'Z'")}&details=${pool?.description}`)
   }
   useEffect(() => {
-    account && handleQueryPool()
-  }, [account])
+    router.query.id && handleQueryPool()
+  }, [router.query])
 
   useEffect(() => {
     if (pool) {
@@ -172,9 +171,11 @@ export default function LaunchpadYoursPage() {
                 social?.website && (
                   <SocialButton
                     icon={
-                      <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" fill="none">
-                        <path d="M19.8002 10.5C19.8002 15.6362 15.6364 19.8 10.5002 19.8C5.36395 19.8 1.2002 15.6362 1.2002 10.5C1.2002 5.3637 5.36395 1.19995 10.5002 1.19995C15.6364 1.19995 19.8002 5.3637 19.8002 10.5Z" stroke="white" />
+                      <svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19.8002 10.4992C19.8002 15.6355 15.6364 19.7992 10.5002 19.7992C5.36395 19.7992 1.2002 15.6355 1.2002 10.4992C1.2002 5.36297 5.36395 1.19922 10.5002 1.19922C15.6364 1.19922 19.8002 5.36297 19.8002 10.4992Z" stroke="white" />
                       </svg>
+
+
                     }
                     alt="Website"
                     url={social?.website}

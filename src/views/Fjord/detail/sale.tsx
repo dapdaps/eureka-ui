@@ -218,62 +218,50 @@ export default function Comp({ pool, totalSupply }: any) {
           <div className="key">Sale End Time</div>
           <div className="value">{format(new Date(pool.end_time * 1000), 'dd/MM/yyyy HH:mm a')} GMT+8</div>
         </SummaryItem>
-        {/* <SummaryItem className="overlap">
-          <div className="key">Sale Price</div>
-          <div className="value">1 CTG = $0.2</div>
-        </SummaryItem>
-        <SummaryItem className="overlap">
-          <div className="key">Fundraise Goal</div>
-          <div className="value">$10,000,000</div>
-        </SummaryItem> */}
-        <SummaryItem className="overlap">
-          <div className="key">% of Supply Sold in Round</div>
-          <div className="value">{pool?.custom_total_supply ? formatValueDecimal(Big(pool?.custom_total_supply).div(pool?.shares_initial).times(100)) + '%' : '-'}</div>
-        </SummaryItem>
-        <SummaryItem className="overlap">
-          <div className="key">Total Supply</div>
-          <div className="value">{formatValueDecimal(pool?.custom_total_supply || 0, '', 0, true)}</div>
-        </SummaryItem>
-        {/* <SummaryItem className="overlap">
-          <div className="key">Initial Circulating Supply</div>
-          <div className="value">74,500,000</div>
-        </SummaryItem>
-        <SummaryItem className="overlap">
-          <div className="key">Initial Market Cap</div>
-          <div className="value">$1,117,500</div>
-        </SummaryItem> */}
-      </Detail>
-      <Title>Previous investment Round Details</Title>
-      <Th>
-        <div>Round</div>
-        <div>TGE</div>
-        {/* <div>Time</div> */}
-        <div>Vesting Length</div>
-        <div>
-          % of Supply <br />
-          Sold in Round
-        </div>
-        <div>Raise Amount</div>
-        <div>Valuation of Round</div>
-      </Th>
-      {
-        previous?.map((item: any, index: number) => {
-          return (
-            <Tr key={index}>
-              <div>{index + 1}</div>
-              <div>{item.tge}%</div>
-              {/* <div>
+        {
+          !isFixedPriceSale && (
+            <>
+              <SummaryItem className="overlap">
+                <div className="key">% of Supply Sold in Round</div>
+                <div className="value">{pool?.custom_total_supply ? formatValueDecimal(Big(pool?.custom_total_supply).div(pool?.shares_initial).times(100)) + '%' : '-'}</div>
+              </SummaryItem>
+              <SummaryItem className="overlap">
+                <div className="key">Total Supply</div>
+                <div className="value">{formatValueDecimal(pool?.custom_total_supply || 0, '', 0, true)}</div>
+              </SummaryItem>
+              <Title>Previous investment Round Details</Title>
+              <Th>
+                <div>Round</div>
+                <div>TGE</div>
+                <div>Vesting Length</div>
+                <div>
+                  % of Supply <br />
+                  Sold in Round
+                </div>
+                <div>Raise Amount</div>
+                <div>Valuation of Round</div>
+              </Th>
+              {
+                previous?.map((item: any, index: number) => {
+                  return (
+                    <Tr key={index}>
+                      <div>{index + 1}</div>
+                      <div>{item.tge}%</div>
+                      {/* <div>
                 2/25/2024 -<br /> 2/26/2024{' '}
               </div> */}
-              <div>{item.vestingLength}</div>
-              <div>{item.raiseAmount}%</div>
-              <div>{formatValueDecimal(item?.raiseAmount || 0, '$', 2, true)}</div>
-              <div>{formatValueDecimal(item?.roundValuation || 0, '$', 2, true)}</div>
-            </Tr>
+                      <div>{item.vestingLength}</div>
+                      <div>{item.raiseAmount}%</div>
+                      <div>{formatValueDecimal(item?.raiseAmount || 0, '$', 2, true)}</div>
+                      <div>{formatValueDecimal(item?.roundValuation || 0, '$', 2, true)}</div>
+                    </Tr>
+                  )
+                }) ?? <></>
+              }
+            </>
           )
-        }) ?? <></>
-      }
-
+        }
+      </Detail>
       {/* <Tr>
         <div>2</div>
         <div>0%</div>

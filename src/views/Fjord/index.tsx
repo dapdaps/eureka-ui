@@ -328,6 +328,37 @@ const StyledPoolStatus = styled.div`
     background: #543DC9;
   }
 `
+
+const StyledSpecitalRewardTips = styled.div`
+  display: none;
+  position: absolute;
+  top: -6px;
+  right: -85px;
+  transform: translateY(-100%);
+  padding: 10px 0 10px 14px;
+  width: 181px;
+  height: 53px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #373A53;
+  background: #373A53;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  color: #979ABE;
+  font-family: Gantari;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`
+const StyledSpecitalReward = styled.div`
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    ${StyledSpecitalRewardTips} {
+      display: block;
+    }
+  }
+`
 const STATUS_TXT_MAPPING: any = {
   'ongoing': 'Live Now',
   'upcoming': 'Coming Soon'
@@ -598,11 +629,11 @@ export default function LaunchpadHomePage() {
     if (typeof Number(number) !== 'number') return 0;
     if (isNaN(Number(number))) return 0;
     if (number >= 1E3 && number < 1E6) {
-      return Big(number).div(1E3).toFixed(decimal) + 'K';
+      return parseFloat(Big(number).div(1E3).toFixed(decimal)) + 'K';
     } else if (number >= 1E6) {
-      return Big(number).div(1E6).toFixed(decimal) + 'M';
+      return parseFloat(Big(number).div(1E6).toFixed(decimal)) + 'M';
     } else {
-      return Big(number).toFixed(decimal);
+      return parseFloat(Big(number).toFixed(decimal)).toString();
     }
   }
   const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
@@ -729,13 +760,39 @@ export default function LaunchpadHomePage() {
                       <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Price</StyledFont>
                       <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</StyledFont>
                     </StyledFlex>
+                    {
+                      pool?.share_token_name === 'RAGE' && (
+                        <StyledFlex flexDirection='column' alignItems='flex-start'>
+                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
+                          <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
+                        </StyledFlex>
+                      )
+                    }
                   </StyledFlex>
                   <StyledFlex>
-                    <StyledFlex flexDirection='column' alignItems='flex-start'>
-                      <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
-                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
-                    </StyledFlex>
-
+                    {
+                      pool?.share_token_name === 'RAGE' ? (
+                        <StyledFlex flexDirection='column' alignItems='flex-start'>
+                          <StyledSpecitalReward>
+                            <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Special Reward 🎁</StyledFont>
+                            <StyledSpecitalRewardTips>The first 200 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
+                          </StyledSpecitalReward>
+                          <StyledFlex gap='9px'>
+                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{pool?.buy_part ?? 0}/200</StyledFont>
+                            <StyledSvg style={{ cursor: 'pointer' }}>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6.5712C2 4.05076 4.05347 2 6.59586 2C7.86245 2 9.00705 2.50825 9.8388 3.33211C9.85304 3.34622 9.8676 3.35981 9.88246 3.37289L8.95291 4.00183C8.7765 4.12118 8.68642 4.33284 8.7227 4.54271C8.75898 4.75258 8.91489 4.92171 9.12112 4.97492L11.9203 5.69712C12.0698 5.73569 12.2287 5.70864 12.3569 5.62277C12.4852 5.5369 12.5708 5.40038 12.5921 5.24748L12.9951 2.35867C13.0246 2.14675 12.9267 1.9373 12.7451 1.82413C12.5635 1.71097 12.3323 1.71532 12.1551 1.83522L11.4856 2.28823C11.4369 2.15032 11.3571 2.02099 11.2463 1.91117C10.0543 0.730553 8.40941 0 6.59586 0C2.95723 0 0 2.93787 0 6.5712C0 10.2045 2.95723 13.1424 6.59586 13.1424C9.29961 13.1424 11.6238 11.5213 12.6418 9.20154C12.7745 8.89923 12.885 8.58498 12.9714 8.26086C13.1136 7.72719 12.7962 7.17931 12.2625 7.03712C11.7289 6.89494 11.181 7.2123 11.0388 7.74597C10.979 7.97046 10.9024 8.1882 10.8104 8.39783C10.1014 10.0134 8.48142 11.1424 6.59586 11.1424C4.05347 11.1424 2 9.09165 2 6.5712Z" fill="#979ABE" />
+                              </svg>
+                            </StyledSvg>
+                          </StyledFlex>
+                        </StyledFlex>
+                      ) : (
+                        <StyledFlex flexDirection='column' alignItems='flex-start'>
+                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
+                          <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
+                        </StyledFlex>
+                      )
+                    }
                     <StyledProjectButtonContainer>
                       <StyledProjectButton
                         style={{
