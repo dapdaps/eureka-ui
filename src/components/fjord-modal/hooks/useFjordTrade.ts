@@ -2,7 +2,7 @@ import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import type { Chain, Token } from '@/types';
 import { useSetChain } from '@web3-onboard/react';
-import { Contract, providers } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 import { approve, execute, getQuote, getStatus } from 'super-bridge-sdk';
 
@@ -584,11 +584,13 @@ export function useBuyTrade({
 
             const assetsIn = new Big(_receiveAmount)
             const minSharesOut = getFullNum(new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - _slippage).toNumber())
-
-            await approve(midToken.address, assetsIn, pool, signer)
-
+            if (FIXED_PRICE_RATIO[quote?.toToken?.symbol]) {
+                await approve(midToken.address, Big(assetsIn).times(FIXED_PRICE_RATIO[quote?.toToken?.symbol]).times(10 ** midToken.decimals), pool, signer)
+            } else {
+                await approve(midToken.address, assetsIn, pool, signer)
+            }
             const tx = isFixedPriceSale ?
-                await PoolContract.buyExactShares(getShares(PoolContract, assetsIn.toString(), midToken), recipient) :
+                await PoolContract.buyExactShares(await getShares(PoolContract, assetsIn.toString(), quote), recipient) :
                 await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
             await tx.wait()
             setLoading(false)
@@ -601,6 +603,7 @@ export function useBuyTrade({
 
             return tx.hash
         } catch (err) {
+            console.log('====error', err)
             setLoading(false)
 
             fail({
@@ -869,13 +872,12 @@ function getPoolContract(pool: string, chainId: number) {
     return PoolContract
 }
 
-async function getShares(contract: any, assetsIn: string, midToken: Token) {
+async function getShares(contract: any, assetsIn: any, quote: QuoteProps): Promise<any> {
     try {
-        const ppt = midToken.isNative ? await contract.weiPerToken() : await contract.assetsPerToken()
-        const platformFeeWADResult = await contract.platformFeeWAD()
-        const swapFeesResult = await contract.swapFees()
-        const swapFee = Big(platformFeeWADResult).plus(swapFeesResult)
-        return Big(assetsIn).div(Big(Big(1).plus(swapFee)).times(ppt)).toString()
+        const ppt: any = (quote?.fromToken?.isNative || quote?.fromToken?.symbol === 'ETH') ? await contract.weiPerToken() : await contract.assetsPerToken()
+        const platformFeeWADResult: any = await contract.platformFeeWAD()
+        const swapFee: string = utils.formatUnits(platformFeeWADResult, 18)
+        return Big(assetsIn * FIXED_PRICE_RATIO[quote?.toToken?.symbol]).times(10 ** quote?.fromToken?.decimals ?? 0).div(Big(Big(1).plus(swapFee)).times(ppt)).toString()
     } catch (err) {
         return '0'
     }

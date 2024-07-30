@@ -89,9 +89,9 @@ export default function LaunchpadYoursPage() {
   const onTabsChange = (key: string) => {
     setCurrentTab(key);
   };
-  const handleQueryPool = function () {
+  const handleQueryPool = function (id: any) {
     queryPool({
-      id: router.query.id,
+      id
     })
   }
   const queryTotalSupply = async function (pool: any) {
@@ -121,7 +121,7 @@ export default function LaunchpadYoursPage() {
     window.open(`http://www.google.com/calendar/event?action=TEMPLATE&text=${pool?.share_token_name}&dates=${format(pool?.start_time * 1000, "yyyyMMdd'T'HHmmss'Z'")}/${format(pool?.end_time * 1000, "yyyyMMdd'T'HHmmss'Z'")}&details=${pool?.description}`)
   }
   useEffect(() => {
-    router.query.id && handleQueryPool()
+    router.query.id && handleQueryPool(router.query.id)
   }, [router.query])
 
   useEffect(() => {
