@@ -7,18 +7,8 @@ import Loading from '@/components/Icons/Loading';
 import { ethereum } from '@/config/tokens/ethereum';
 import useAccount from '@/hooks/useAccount';
 import { balanceFormated } from '@/utils/balance';
-import { CustomTable, PolygonBtn } from '@/views/lrts/components';
-// unstake list hooks
-import useEigenpieRequests from '@/views/lrts/components/modal/stake/hooks/useEigenpieRequests';
-import useEtherFiRequests from '@/views/lrts/components/modal/stake/hooks/useEtherFiRequests';
-import useFraxRequests from '@/views/lrts/components/modal/stake/hooks/useFraxRequests';
-import useInceptionRequests from '@/views/lrts/components/modal/stake/hooks/useInceptionRequests';
-import useKarakRequests from '@/views/lrts/components/modal/stake/hooks/useKarakRequests';
-import useKelpDaoRequests from '@/views/lrts/components/modal/stake/hooks/useKelpDaoRequests';
-import useLidoRequests from '@/views/lrts/components/modal/stake/hooks/useLidoRequests';
-import useMantleRequests from '@/views/lrts/components/modal/stake/hooks/useMantleRequests';
-import useRenzoRequests from '@/views/lrts/components/modal/stake/hooks/useRenzoRequests';
-import useRestakeFinanceRequests from '@/views/lrts/components/modal/stake/hooks/useRestakeFinanceRequests';
+
+import useUnstakeRequests from './hooks/useUnstakeRequests';
 
 // const requireContext = require?.context('@/views/lrts/components/modal/stake/hooks', false, /useRenzoRequests\.ts$/);
 // requireContext.keys().forEach((key: any) => {
@@ -122,94 +112,63 @@ const ClaimButton = ({
   );
 };
 
-const UnstakeTable: FC<IProps> = (props) => {
+const tokens = Object.values(ethereum);
+
+
+const UnstakeTable: FC<IProps> = () => {
   const { chainId, account } = useAccount();
-
-  // const { requests, loading: requestsLoading, queryRequests, claim } = useRenzoRequests();
-
-  const handleUpdater = () => {
-    setUpdater((n) => n + 1);
-  };
-
-  const renzoRequests = useRenzoRequests(handleUpdater);
-  const eigenpieRequests = useEigenpieRequests(handleUpdater);
-  const kelpDaoRequests = useKelpDaoRequests(handleUpdater);
-  const etherFiRequests = useEtherFiRequests(handleUpdater);
-  const fraxRequests = useFraxRequests(handleUpdater);
-  const inceptionRequests = useInceptionRequests(handleUpdater);
-  const karakRequests = useKarakRequests(handleUpdater);
-  const lidoRequests = useLidoRequests(handleUpdater);
-  const mantleRequests = useMantleRequests(handleUpdater);
-  const restakeFinanceRequests = useRestakeFinanceRequests(handleUpdater);
-
   const [updater, setUpdater] = useState(0);
+  const allHooks = useUnstakeRequests(() => setUpdater((n) => n + 1));
 
-  const allHooks = [
-    renzoRequests,
-    eigenpieRequests,
-    kelpDaoRequests,
-    etherFiRequests,
-    fraxRequests,
-    inceptionRequests,
-    karakRequests,
-    lidoRequests,
-    mantleRequests,
-    restakeFinanceRequests,
-  ];
+  const sortedRequests = useMemo(() => {
+    const allRequests = allHooks.flatMap(({ requests, claim }) => 
+      requests.map(request => ({ ...request, claim }))
+    );
+    return allRequests.sort((a, b) => (a.status === 'Claimable' ? -1 : 1));
+  }, [allHooks]);
+
 
   useEffect(() => {
-    console.log('queryRequests--');
-
     allHooks.forEach((item: any) => {
       item.queryRequests();
     });
   }, [chainId, account, updater]);
 
-  console.log('unstake-list--', allHooks);
-  const tokens = Object.values(ethereum);
   return (
     <>
       <THead>
         <div>Amount</div>
-        {/* <div>Date</div> */}
         <div>Status</div>
       </THead>
-      {allHooks?.map((_hooks: any) => {
-        const { requests, claim } = _hooks;
-        return requests.map((item: any, index: number) => {
-          const { token0, token1 } = item;
-          const fromTokenSymbol = token0?.symbol;
-          const toTokenSymbol = token1?.symbol;
+      {sortedRequests.map((item, index) => {
+        const { token0, token1, status } = item;
+        const fromToken = tokens.find((token: any) => token?.symbol === token0?.symbol);
+        const toToken = tokens.find((token: any) => token?.symbol === token1?.symbol);
 
-          const fromToken = tokens.find((token: any) => token?.symbol === fromTokenSymbol);
-          const toToken = tokens.find((token: any) => token?.symbol === toTokenSymbol);
-          return (
-            <List key={index}>
-              <Item>
-                {fromToken ? <Image src={fromToken.icon || ''} width={30} height={30} alt="" /> : null}
-                <span>{balanceFormated(item?.amount, 3)}</span>
-                {fromTokenSymbol}
-                <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
-                  <path d="M1 1L5 5L1 9" stroke="white" stroke-linecap="round" />
-                </svg>
-                {toToken ? <Image src={toToken.icon || ''} width={30} height={30} alt="" /> : null}
-                {toTokenSymbol}
-              </Item>
-
-              <Item>
-                {item.status === 'In Progress' ? (
-                  'In Progress'
-                ) : (
-                  <ClaimButton
-                    // claiming={claiming}
-                    claim={claim}
-                    request={item}
-                  />
-                )}
-              </Item>
-            </List>
-          );
-        });
+        return (
+          <List key={index}>
+            <Item>
+              {fromToken && <Image src={fromToken.icon || ''} width={30} height={30} alt="" />}
+              <span>{balanceFormated(item?.amount, 3)}</span>
+              {token0?.symbol}
+              <svg xmlns="http://www.w3.org/2000/svg" width="6" height="10" viewBox="0 0 6 10" fill="none">
+                <path d="M1 1L5 5L1 9" stroke="white" stroke-linecap="round" />
+              </svg>
+              {toToken && <Image src={toToken.icon || ''} width={30} height={30} alt="" />}
+              {token1?.symbol}
+            </Item>
+            <Item>
+              {status === 'In Progress' ? (
+                'In Progress'
+              ) : (
+                <ClaimButton
+                  claim={item.claim}
+                  request={item}
+                />
+              )}
+            </Item>
+          </List>
+        );
       })}
     </>
   );
