@@ -578,7 +578,7 @@ export function useBuyTrade({
             const minSharesOut = getFullNum(new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - _slippage).toNumber())
             await approve(midToken.address, assetsIn, pool, signer)
             const tx = isFixedPriceSale ?
-                await PoolContract.buyExactShares(await getShares(PoolContract, assetsIn.toString(), quote), recipient) :
+                await PoolContract.buyExactShares(await getShares(PoolContract, Big(assetsIn).div(10 ** quote?.fromToken?.decimals).toString(), quote), recipient) :
                 await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
             await tx.wait()
             setLoading(false)
