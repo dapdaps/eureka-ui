@@ -28,6 +28,7 @@ const NpcDialog: FC<IProps> = ({ isPlayed, onClose, onPlayed, lstIndex }) => {
   const lrtsData = useLrtDataStore((store: any) => store.data);
   const { completed } = useLrtsList();
   const [text, setText] = useState('');
+  const [start, setStart] = useState(false);
 
   useEffect(() => {
     const _data = lrtsData[lstIndex];
@@ -39,10 +40,15 @@ and the top TVL reached $${setNumKMB(_data?.maxTvl, 2)} from ${_data?.maxTvlSymb
     setText(_text);
   }, [lstIndex, lrtsData, completed]);
 
+  const handleSpeed = () => {
+    setStart(true);
+    onPlayed(lstIndex);
+  }
+
   return (
     <Wrap>
-      <Dialog onClose={() => onClose(lstIndex)}>
-        {isPlayed ? (
+      <Dialog onClose={() => onClose(lstIndex)} onHandle={handleSpeed}>
+        {isPlayed || start ? (
           <span>
             Sir!
             <br />
@@ -54,7 +60,7 @@ and the top TVL reached $${setNumKMB(_data?.maxTvl, 2)} from ${_data?.maxTvlSymb
               options={{
                 //   strings: ['Hello', 'World'],
                 autoStart: true,
-                delay: 20,
+                delay: 0,
               }}
               onInit={(typewriter) => {
                 // playSound('/images/compass/audio/rolling.mp4');
@@ -62,12 +68,6 @@ and the top TVL reached $${setNumKMB(_data?.maxTvl, 2)} from ${_data?.maxTvlSymb
                   .typeString('Sir!<br />')
                   .typeString(text)
                   .callFunction(() => {
-                    // console.log('String typed out!');
-                  })
-                  // .pauseFor(2500)
-                  // .deleteAll()
-                  .callFunction(() => {
-                    // console.log('All strings were deleted');
                     onPlayed(lstIndex);
                   })
                   .start();
@@ -100,7 +100,7 @@ and the top TVL reached $${setNumKMB(_data?.maxTvl, 2)} from ${_data?.maxTvlSymb
           />
         )} */}
       </Dialog>
-      <Npc />
+      <Npc onHandle={handleSpeed}/>
     </Wrap>
   );
 };

@@ -14,9 +14,13 @@ const NpcImage = styled(motion.img)`
   -webkit-user-drag: none;
 `;
 
-interface IProps {}
+interface IProps {
+  onHandle?: () => void;
+}
 
-const Npc: FC<IProps> = (props) => {
+const Npc: FC<IProps> = ({
+  onHandle
+}) => {
   const anim = {
     initial: { x: 50, opacity: 0 },
     animate: {
@@ -28,7 +32,7 @@ const Npc: FC<IProps> = (props) => {
       duration: 0.5,
     },
   };
-  return <NpcImage {...anim} src="/images/lrts/npc-male.png" alt="npc" />;
+  return <NpcImage {...anim} src="/images/lrts/npc-male.png" alt="npc" onClick={onHandle}/>;
 };
 
 export default Npc;

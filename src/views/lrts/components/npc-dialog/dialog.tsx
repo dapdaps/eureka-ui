@@ -6,6 +6,7 @@ import styled from 'styled-components';
 interface IProps {
   children: ReactNode;
   onClose: () => void;
+  onHandle?: () => void;
 }
 
 const Wrap = styled(motion.div)`
@@ -44,7 +45,8 @@ const CloseIcon = styled.span`
   margin-top: -18px;
   position: absolute;
 `;
-const Dialog: FC<IProps> = ({ children, onClose }) => {
+
+const Dialog: FC<IProps> = ({ children, onClose, onHandle }) => {
   const anim = {
     initial: { opacity: 0 },
     animate: {
@@ -70,7 +72,7 @@ const Dialog: FC<IProps> = ({ children, onClose }) => {
           />
         </svg>
       </CloseIcon>
-      <PolygonDiv>{children}</PolygonDiv>
+      <PolygonDiv onClick={onHandle}>{children}</PolygonDiv>
     </Wrap>
   );
 };
