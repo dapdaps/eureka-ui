@@ -1,7 +1,8 @@
 
 import styled from "styled-components"
 import IconUp from '@public/images/header/up.svg';
-
+import Link from "next/link";
+import IconLink from '@public/images/header/link.svg';
 
 const StyleTitle = styled.div`
     font-size: 14px;
@@ -10,7 +11,22 @@ const StyleTitle = styled.div`
     margin-bottom: 16px;
     color: #979ABE;
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    padding: 0 20px;
+    .links {
+        font-size: 12px;
+        line-height: 12px;
+        font-weight: 400;
+        color: #979ABE;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        &:hover {
+            color: #fff;
+            cursor: pointer;
+        }
+    }
 `
 
 const StylePopular = styled.div`
@@ -68,21 +84,14 @@ const StylePopular = styled.div`
 const Popular = () => {
     return (
         <StylePopular>
-        <StyleTitle style={{ padding: '0 30px'}}>
+        <StyleTitle>
           <span>Popular Chains</span>
-          <span>Trading Volume via DapDap</span>
+          <Link href={''} className='links'>View all <IconLink /></Link>
         </StyleTitle>
         <div className='list'>
           <div className='label'>
             <img className='brand' src="https://s3.amazonaws.com/dapdap.prod/images/mode.png" alt="" />
             <span className='name'>Mode</span>
-          </div>
-          <div className='value'>
-            <span className='tvl'>$164.1m</span>
-            <div className='icon'>
-              <IconUp />
-              <span className='up'>0.23%</span>
-            </div>
           </div>
         </div>
       </StylePopular>

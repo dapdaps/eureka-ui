@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useRecentStore } from "./hooks/useRecentStore";
+import { motion, AnimatePresence } from 'framer-motion';
 
 const StyleRecent = styled.div`
   margin-bottom: 30px;
@@ -29,14 +31,57 @@ const StyleTitle = styled.div`
     font-weight: 500;
     margin-bottom: 16px;
     color: #979ABE;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .clean {
+        font-size: 12px;
+        line-height: 12px;
+        font-weight: 400;
+        color: #979ABE;
+        cursor: pointer;
+        &:hover {
+            color: #fff;
+        }
+    }
 `
 
 const RecentSearch = () => {
+
+  const { recentSearches, clearRecentSearches } = useRecentStore();
+
+  const truncateText = (text: string, maxLength = 20) => {
+    if (text.length > maxLength) {
+      return text.slice(0, maxLength) + '...';
+    }
+    return text;
+  };
+  
+
+  if (recentSearches.length === 0) return null;
     return (
         <StyleRecent>
-        <StyleTitle>Recent Searches</StyleTitle>
+        <StyleTitle>
+            <span className='title'>Recent Searches</span>
+            <span className="clean" onClick={clearRecentSearches}>Clean</span>
+        </StyleTitle>
         <div className='gird'>
-          <div className='item'>Mode</div>
+        <AnimatePresence>
+          {
+            recentSearches.map((item: any) => (
+              <motion.div
+                className='item'
+                key={item}
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
+                exit={{ opacity: 0, y: 10, transition: { duration: 0.4 } }}
+                title={item}
+              >
+                {truncateText(item, 20)}
+              </motion.div>
+            ))
+          }
+          </AnimatePresence>
         </div>
       </StyleRecent>
     )

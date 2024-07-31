@@ -82,7 +82,7 @@ export const Wrapper = styled.div`
       top: 56px;
       left: 0px;
       width: 814px;
-      padding: 30px 0;
+      padding: 25px 0;
     }
     &.chains {
       top: 56px;

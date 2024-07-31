@@ -15,7 +15,7 @@ const Flex = styled.div`
     cursor: pointer;
   }
   &.bridge-nav {
-    padding: 15px 0;
+    padding: 0;
     &:hover {
       background: rgba(31, 34, 41, 1);
     }
