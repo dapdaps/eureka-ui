@@ -408,7 +408,7 @@ const executorAbi = [
 
 
 
-export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, signer: Signer, isFixedPriceSale): QuoteResProps {
+export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, signer: Signer, isFixedPriceSale: boolean): QuoteResProps {
     const [loading, setLoading] = useState(false)
     const [shareVal, setShareVal] = useState('')
     const [receiveAmount, setReceiveAmount] = useState('')
