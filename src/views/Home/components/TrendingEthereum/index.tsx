@@ -41,7 +41,7 @@ const TrendingEthereum = ({ chains }: any) => {
             }}
           >
             {showBg === chain.id && (
-              <StyledChainColorBg style={{ color: chainsConfig[IdToPath[chain.id]].selectBgColor }}>
+              <StyledChainColorBg style={{ color: chainsConfig[IdToPath[chain.id]]?.selectBgColor }}>
                 <ChainBg />
               </StyledChainColorBg>
             )}

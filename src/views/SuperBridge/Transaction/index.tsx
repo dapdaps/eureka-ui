@@ -8,6 +8,7 @@ import PublicTitle from '../PublicTitle';
 import { ArrowRight } from '../Arrow'
 import TransactionPanel from './TransactionPanel';
 import { useEffect, useState } from 'react';
+import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
 
 const Container = styled.div`
     background-color: rgba(38, 40, 54, 1);
@@ -76,8 +77,10 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
     const [proccessSum, setProccessSum] = useState(0)
     const [value, setValue] = useState('')
     const [searchValue, setSearchValueValue] = useState('')
+    const [tabIndex, setTabIndex] = useState(1)
     const { account, chainId, provider } = useAccount();
     const router = useRouter();
+    const { transactionList: gasTransactionList } = useTransction(account as string)
 
     async function refreshTransactionList() {
         if (!account) {
@@ -141,7 +144,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
 
         refreshTransactionList()
     }, [account, updater])
- 
+
     return <Container>
         <PublicTitle
             title="My transactions"
@@ -158,7 +161,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
                 </AmountWapper>
             </SingleStatus>
             <Sep />
-            <SingleStatus onClick={() => { setSearchValueValue(value); setTransactionModalShow(true) }}>
+            <SingleStatus onClick={() => { setTabIndex(1); setSearchValueValue(value); setTransactionModalShow(true) }}>
                 <AmountWapper>
                     <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <rect x="1" y="1" width="14" height="15" rx="3" stroke="#979ABE" stroke-width="2" />
@@ -174,6 +177,21 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
             </SingleStatus>
         </StatusWapper>
 
+        <StatusWapper style={{ marginTop: 10 }}>
+            <SingleStatus onClick={() => { setTabIndex(2); setSearchValueValue(value); setTransactionModalShow(true) }}>
+                <AmountWapper>
+                    <svg width="16" height="14" viewBox="0 0 16 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0.820513 12.8333V0.777778C0.820513 0.571498 0.906959 0.373668 1.06084 0.227806C1.21471 0.0819443 1.42341 0 1.64103 0H9.02564C9.24325 4.83468e-09 9.45195 0.0819443 9.60583 0.227806C9.75971 0.373668 9.84615 0.571498 9.84615 0.777778V7H11.4872C11.9224 7 12.3398 7.16389 12.6476 7.45561C12.9553 7.74733 13.1282 8.143 13.1282 8.55556V12.0556C13.1282 12.2618 13.2147 12.4596 13.3686 12.6055C13.5224 12.7513 13.7311 12.8332 13.9487 12.8332C14.1663 12.8332 14.375 12.7513 14.5289 12.6055C14.6827 12.4596 14.7692 12.2618 14.7692 12.0556V6.22222H13.1282C12.9106 6.22222 12.7019 6.14028 12.548 5.99442C12.3941 5.84855 12.3077 5.65072 12.3077 5.44444V2.65533L11.4142 1.80833C11.3533 1.7507 11.3052 1.68214 11.2726 1.60668C11.24 1.53121 11.2237 1.45035 11.2244 1.36881C11.2252 1.28728 11.2431 1.2067 11.2771 1.1318C11.3111 1.05689 11.3604 0.98916 11.4224 0.932555C11.5493 0.816508 11.719 0.752112 11.8953 0.75313C12.0716 0.754147 12.2406 0.820497 12.3659 0.938L15.7596 4.11678C15.8359 4.18891 15.8964 4.27462 15.9377 4.36899C15.9789 4.46335 16.0001 4.56452 16 4.66667V12.0556C16 13.3443 15.1056 14 13.9487 14C12.7918 14 11.8974 13.3443 11.8974 12.0556V8.55556C11.8974 8.45242 11.8542 8.3535 11.7773 8.28057C11.7003 8.20764 11.596 8.16667 11.4872 8.16667H9.84615V12.8333H10.0513C10.2145 12.8333 10.371 12.8948 10.4864 13.0042C10.6018 13.1136 10.6667 13.262 10.6667 13.4167C10.6667 13.5714 10.6018 13.7197 10.4864 13.8291C10.371 13.9385 10.2145 14 10.0513 14H0.615385C0.452174 14 0.295649 13.9385 0.180242 13.8291C0.064835 13.7197 0 13.5714 0 13.4167C0 13.262 0.064835 13.1136 0.180242 13.0042C0.295649 12.8948 0.452174 12.8333 0.615385 12.8333H0.820513ZM2.05128 1.55556V5.83333C2.05128 5.8844 2.06189 5.93497 2.08251 5.98215C2.10313 6.02934 2.13335 6.07221 2.17144 6.10832C2.20954 6.14443 2.25477 6.17308 2.30454 6.19262C2.35431 6.21216 2.40766 6.22222 2.46154 6.22222H8.20513C8.31394 6.22222 8.41829 6.18125 8.49522 6.10832C8.57216 6.03539 8.61538 5.93647 8.61538 5.83333V1.55556C8.61538 1.50449 8.60477 1.45392 8.58416 1.40673C8.56354 1.35955 8.53332 1.31668 8.49522 1.28057C8.45713 1.24446 8.4119 1.21581 8.36213 1.19627C8.31235 1.17673 8.259 1.16667 8.20513 1.16667H2.46154C2.40766 1.16667 2.35431 1.17673 2.30454 1.19627C2.25477 1.21581 2.20954 1.24446 2.17144 1.28057C2.13335 1.31668 2.10313 1.35955 2.08251 1.40673C2.06189 1.45392 2.05128 1.50449 2.05128 1.55556Z" fill="#979ABE" />
+                    </svg>
+                    {gasTransactionList.length}
+                    &nbsp;Gas transaction history
+                </AmountWapper>
+                <div>
+                    <ArrowRight />
+                </div>
+            </SingleStatus>
+        </StatusWapper>
+
         <InputWapper>
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="8.73312" cy="8.73311" r="6.01829" transform="rotate(16.6277 8.73312 8.73311)" stroke="#979ABE" stroke-width="2" />
@@ -181,6 +199,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
             </svg>
             <Input placeholder='Search by address or Tx Hash' value={value} onChange={e => setValue(e.target.value)} onKeyDown={e => {
                 if (e.code === 'Enter') {
+                    setTabIndex(1)
                     setSearchValueValue(value)
                     setTransactionModalShow(true)
                     setValue('')
@@ -189,14 +208,18 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
         </InputWapper>
 
         {
-            transactionModalShow && <TransactionPanel addressOrHash={searchValue} transactionList={transactionList} onClose={() => {
-                if (initModalShow) {
-                    router.back()
-                } else {
-                    setTransactionModalShow(false)
-                }
+            transactionModalShow && <TransactionPanel
+                initTabIndex={tabIndex}
+                addressOrHash={searchValue}
+                transactionList={transactionList}
+                onClose={() => {
+                    if (initModalShow) {
+                        router.back()
+                    } else {
+                        setTransactionModalShow(false)
+                    }
 
-            }} />
+                }} />
         }
     </Container>
 }

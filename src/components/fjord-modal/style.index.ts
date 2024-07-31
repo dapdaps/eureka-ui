@@ -4,6 +4,7 @@ export const Panel = styled.div`
   position: relative;
   height: 258px;
   background-color: #1e1f2a;
+  z-index: 10;
 `;
 export const Body = styled.div`
   height: 378px;
