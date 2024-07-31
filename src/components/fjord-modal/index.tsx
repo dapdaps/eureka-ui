@@ -114,6 +114,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
     midToken: midToken as Token,
     recipient: account as string,
   })
+  console.log('====token', token)
 
   const { loading: sellLoading, excuteSellTrade } = useSellTrade({
     pool,
@@ -232,11 +233,18 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
   }, [currentTab, pool, fromChain, fromToken, _sendAmount, account])
 
   useEffect(() => {
+    if (token.symbol === "RAGE") {
+      setBtnDisbaled(true)
+      setText("Slot Out")
+      return
+    }
+
     if (!_sendAmount) {
       setBtnDisbaled(true)
       setText("Buy")
       return
     }
+
     if (currentTab === 'BUY') {
       if (!shareVal && !buyQuoteLoading && _sendAmount) {
         setBtnDisbaled(true)
