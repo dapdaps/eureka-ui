@@ -11,7 +11,7 @@ const Summary = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr) auto;
   grid-column-gap: 8px;
-  grid-row-gap: 8px;
+  grid-row-gap: 14px;
 
   /* margin-bottom: 50px; */
 `;
@@ -126,6 +126,9 @@ export default function Comp({ pool, totalSupply }: any) {
       pool: pool?.pool
     })
   }
+  const showZero = function (value) {
+    return value === '-' ? "0" : value
+  }
   const fdv = useMemo(() => {
     return formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '$', 2, true)
   }, [totalSupply, pool])
@@ -141,7 +144,7 @@ export default function Comp({ pool, totalSupply }: any) {
             <Summary style={{ gridTemplateColumns: 'repeat(3, 1fr)', flex: 1 }}>
               <SummaryItem className="tiled">
                 <div className="key">Price Per RAGE</div>
-                <div className="value">{formatValueDecimal(pool?.price ?? 0, '$', 2, true)} {pool?.asset_token_symbol}</div>
+                <div className="value">{formatValueDecimal(pool?.price ?? 0, '', 2, true)} {pool?.asset_token_symbol}</div>
               </SummaryItem>
               <SummaryItem className="tiled">
                 <div className="key">Max Allocation per Wallet</div>
@@ -149,11 +152,11 @@ export default function Comp({ pool, totalSupply }: any) {
               </SummaryItem>
               <SummaryItem className="tiled">
                 <div className="key">Soft Cap</div>
-                <div className="value">0</div>
+                <div className="value">0 {pool?.share_token_symbol}</div>
               </SummaryItem>
               <SummaryItem className="tiled">
                 <div className="key">Funds Raised</div>
-                <div className="value">{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</div>
+                <div className="value">{showZero(formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true))}</div>
               </SummaryItem>
               <SummaryItem className="tiled">
                 <div className="key">FDV</div>
@@ -167,7 +170,7 @@ export default function Comp({ pool, totalSupply }: any) {
             <StyledMaxRaiseAmount>
               <StyledMaxRaiseAmountL>
                 <StyledFont color='#FFF' fontSize='12px'>Max raise amount:</StyledFont>
-                <StyledFont color='#FFF' fontSize='16px'>{formatValueDecimal(pool?.shares_released ?? 0, '', 2)}/{formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)}</StyledFont>
+                <StyledFont color='#FFF' fontSize='16px'>{showZero(formatValueDecimal(pool?.shares_released ?? 0, '', 2))}/{formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)}</StyledFont>
               </StyledMaxRaiseAmountL>
               <StyledFont color='#FFF'>{Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)}%</StyledFont>
             </StyledMaxRaiseAmount>

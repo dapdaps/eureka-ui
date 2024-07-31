@@ -74,9 +74,9 @@ const simplifyNumber = function (number: number, decimal: number) {
   if (typeof Number(number) !== 'number') return 0;
   if (isNaN(Number(number))) return 0;
   if (number >= 1E3 && number < 1E6) {
-    return Math.floor(number / 1E3) + 'K';
+    return Math.round(number / 1E3) + 'K';
   } else if (number >= 1E6) {
-    return Math.floor(number / 1E6) + 'M';
+    return Math.round(number / 1E6) + 'M';
   } else {
     return Big(number).toFixed(decimal);
   }

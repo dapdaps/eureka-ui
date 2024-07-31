@@ -756,11 +756,13 @@ export default function LaunchpadHomePage() {
                             <StyledSpecitalRewardTips>The first 100 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
                           </StyledSpecitalReward>
                           <StyledFlex gap='9px'>
-                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{pool?.buy_part ?? 0}/100</StyledFont>
+                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{Math.min(pool?.buy_part ?? 0, 100)}/100</StyledFont>
                             <StyledSvg
                               style={{ cursor: 'pointer' }}
                               onClick={() => {
-                                !poolLoading && queryPool(pool?.id)
+                                !poolLoading && queryPool({
+                                  id: pool?.id
+                                })
                               }}
                             >
                               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">

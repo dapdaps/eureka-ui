@@ -113,7 +113,7 @@ export default function LaunchpadYoursPage() {
       const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
       const contract = new ethers.Contract(pool?.share_token_address, abi, provider)
       const _totalSupply = await contract.totalSupply()
-      setTotalSupply(_totalSupply)
+      setTotalSupply(ethers.utils.formatUnits(_totalSupply, pool?.share_token_decimal))
     }
   }
 
