@@ -127,8 +127,7 @@ export default function Comp({ pool, totalSupply }: any) {
     })
   }
   const fdv = useMemo(() => {
-    console.log('=totalSupply', totalSupply)
-    return formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '', 2)
+    return formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '$', 2, true)
   }, [totalSupply, pool])
 
   useEffect(() => {
