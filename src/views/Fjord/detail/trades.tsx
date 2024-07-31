@@ -8,6 +8,7 @@ import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Tabs from '../components/tabs';
 import useTrades from '../hooks/useTrades';
+import _ from 'lodash';
 const Th = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 2fr 1fr;
@@ -177,8 +178,9 @@ export default function Comp({ pool }: any) {
   }
   useEffect(() => {
     setTabData(prev => {
-      prev[1].name = "Your Trades (" + yourTotal + ")"
-      return prev
+      const curr = _.cloneDeep(prev)
+      curr[1].name = "Your Trades (" + yourTotal + ")"
+      return curr
     })
   }, [yourTotal])
 
@@ -222,13 +224,13 @@ export default function Comp({ pool }: any) {
                         className="icon"
                         alt=""
                       />
-                      {formatValueDecimal(trade?.extra_data?.token0?.amount, '', 4)} <Arrow />
+                      {formatValueDecimal(trade?.extra_data?.token0?.amount ?? 0, '', 4)} <Arrow />
                       <img
                         src={trade?.extra_data?.token1?.icon}
                         className="icon"
                         alt=""
                       />
-                      {formatValueDecimal(trade?.extra_data?.token1?.amount, '', 4)}
+                      {formatValueDecimal(trade?.extra_data?.token1?.amount ?? 0, '', 4)}
                     </div>
                     <div className={trade?.extra_data?.trade_type}>{trade?.extra_data?.trade_type}</div>
                   </Tr>

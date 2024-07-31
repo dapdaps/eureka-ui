@@ -28,6 +28,7 @@ export default function useTrades() {
           extra_data
         }
       }));
+      console.log('===query?.account', query?.account)
       query?.account ? setYourTotal(result?.total ?? 0) : setHistoryTotal(result?.total ?? 0)
       setLoading(false);
     } catch (err) {
@@ -38,7 +39,7 @@ export default function useTrades() {
   const queryYourTotal = async function (query: any) {
     try {
       const result = await get(`/api/launchpad/trades`, query);
-      setYourTotal(result?.total ?? 0)
+      setYourTotal(result?.data?.total ?? 0)
     } catch (err) {
       console.log('=err', err)
     }

@@ -126,8 +126,8 @@ export default function Comp({ pool, totalSupply }: any) {
       pool: pool?.pool
     })
   }
-  const showZero = function (value: string) {
-    return value === '-' ? "0" : value
+  const showZero = function (value: string, unit?: string) {
+    return value === '-' ? unit + "0" : value
   }
   const fdv = useMemo(() => {
     return formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '$', 2, true)
@@ -156,7 +156,7 @@ export default function Comp({ pool, totalSupply }: any) {
               </SummaryItem>
               <SummaryItem className="tiled">
                 <div className="key">Funds Raised</div>
-                <div className="value">{showZero(formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true))}</div>
+                <div className="value">{showZero(formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true), '$')}</div>
               </SummaryItem>
               <SummaryItem className="tiled">
                 <div className="key">FDV</div>
@@ -172,7 +172,7 @@ export default function Comp({ pool, totalSupply }: any) {
                 <StyledFont color='#FFF' fontSize='12px'>Max raise amount:</StyledFont>
                 <StyledFont color='#FFF' fontSize='16px'>{showZero(formatValueDecimal(pool?.shares_released ?? 0, '', 2))}/{formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)}</StyledFont>
               </StyledMaxRaiseAmountL>
-              <StyledFont color='#FFF'>{Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)}%</StyledFont>
+              <StyledFont color='#FFF'>{Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).times(100).toFixed(2)}%</StyledFont>
             </StyledMaxRaiseAmount>
           </StyledFlex>
         ) : (
@@ -195,10 +195,10 @@ export default function Comp({ pool, totalSupply }: any) {
                 <div className="value">{formatValueDecimal(pool?.liquidity ?? 0, '$', 2, true)}</div>
               </SummaryItem>
               <StyledFlex gap='10px'>
-                <Ring percent={Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).toFixed(2)} />
+                <Ring percent={Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).times(100).toFixed(2)} />
                 <SummaryItem className="tiled">
                   <div className="key">Token Released / Available</div>
-                  <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
+                  <div className="value">{formatValueDecimal(pool?.shares_released ?? 0, '$', 2, true)} / {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)}</div>
                 </SummaryItem>
               </StyledFlex>
             </Summary>
@@ -231,50 +231,46 @@ export default function Comp({ pool, totalSupply }: any) {
                 <div className="key">Total Supply</div>
                 <div className="value">{formatValueDecimal(pool?.custom_total_supply || 0, '', 0, true)}</div>
               </SummaryItem>
-              <Title>Previous investment Round Details</Title>
-              <Th>
-                <div>Round</div>
-                <div>TGE</div>
-                <div>Vesting Length</div>
-                <div>
-                  % of Supply <br />
-                  Sold in Round
-                </div>
-                <div>Raise Amount</div>
-                <div>Valuation of Round</div>
-              </Th>
-              {
-                previous?.map((item: any, index: number) => {
-                  return (
-                    <Tr key={index}>
-                      <div>{index + 1}</div>
-                      <div>{item.tge}%</div>
-                      {/* <div>
-                2/25/2024 -<br /> 2/26/2024{' '}
-              </div> */}
-                      <div>{item.vestingLength}</div>
-                      <div>{item.raiseAmount}%</div>
-                      <div>{formatValueDecimal(item?.raiseAmount || 0, '$', 2, true)}</div>
-                      <div>{formatValueDecimal(item?.roundValuation || 0, '$', 2, true)}</div>
-                    </Tr>
-                  )
-                }) ?? <></>
-              }
             </>
           )
         }
       </Detail>
-      {/* <Tr>
-        <div>2</div>
-        <div>0%</div>
-        <div>
-          2/25/2024 -<br /> 2/26/2024{' '}
-        </div>
-        <div>1 year</div>
-        <div>10%</div>
-        <div>$1,000,000</div>
-        <div>$10,000,000</div>
-      </Tr> */}
+      {
+        !isFixedPriceSale && (
+          <>
+            <Title>Previous investment Round Details</Title>
+            <Th>
+              <div>Round</div>
+              <div>TGE</div>
+              <div>Vesting Length</div>
+              <div>
+                % of Supply <br />
+                Sold in Round
+              </div>
+              <div>Raise Amount</div>
+              <div>Valuation of Round</div>
+            </Th>
+            {
+              previous?.map((item: any, index: number) => {
+                return (
+                  <Tr key={index}>
+                    <div>{index + 1}</div>
+                    <div>{item.tge}%</div>
+                    {/* <div>
+                2/25/2024 -<br /> 2/26/2024{' '}
+              </div> */}
+                    <div>{item.vestingLength}</div>
+                    <div>{item.raiseAmount}%</div>
+                    <div>{formatValueDecimal(item?.raiseAmount || 0, '$', 2, true)}</div>
+                    <div>{formatValueDecimal(item?.roundValuation || 0, '$', 2, true)}</div>
+                  </Tr>
+                )
+              }) ?? <></>
+            }
+          </>
+        )
+      }
+
     </div >
   );
 }
