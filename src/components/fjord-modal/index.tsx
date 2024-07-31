@@ -235,7 +235,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
   useEffect(() => {
     if (token.symbol === "RAGE") {
       setBtnDisbaled(true)
-      setText("Slot Out")
+      setText("Sold Out")
       return
     }
 
