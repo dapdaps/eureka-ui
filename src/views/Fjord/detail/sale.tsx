@@ -127,7 +127,7 @@ export default function Comp({ pool, totalSupply }: any) {
     })
   }
   const showZero = function (value: string, unit?: string) {
-    return value === '-' ? unit + "0" : value
+    return value === '-' ? (unit || '') + "0" : value
   }
   const fdv = useMemo(() => {
     return formatValueDecimal(Big(pool?.price ?? 0).times(totalSupply), '$', 2, true)
@@ -170,7 +170,8 @@ export default function Comp({ pool, totalSupply }: any) {
             <StyledMaxRaiseAmount>
               <StyledMaxRaiseAmountL>
                 <StyledFont color='#FFF' fontSize='12px'>Max raise amount:</StyledFont>
-                <StyledFont color='#FFF' fontSize='16px'>{showZero(formatValueDecimal(pool?.shares_released ?? 0, '', 2))}/{formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)}</StyledFont>
+
+                <StyledFont color='#FFF' fontSize='16px'>{showZero(formatValueDecimal(pool?.shares_released ?? 0, '', 2, true))}/{formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)}</StyledFont>
               </StyledMaxRaiseAmountL>
               <StyledFont color='#FFF'>{Big(pool?.shares_released ?? 0).div(pool?.shares_initial ?? 1).times(100).toFixed(2)}%</StyledFont>
             </StyledMaxRaiseAmount>
