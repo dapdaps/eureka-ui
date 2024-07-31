@@ -126,7 +126,7 @@ export default function Comp({ pool, totalSupply }: any) {
       pool: pool?.pool
     })
   }
-  const showZero = function (value) {
+  const showZero = function (value: string) {
     return value === '-' ? "0" : value
   }
   const fdv = useMemo(() => {
