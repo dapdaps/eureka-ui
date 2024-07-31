@@ -6,6 +6,7 @@ import FjordModal from '@/components/fjord-modal';
 import tokenConfig from '@/components/fjord-modal/hooks/tokenConfig';
 import chainCofig from '@/config/chains';
 import { useUserStore } from '@/stores/user';
+
 import {
   StyledContainer,
   StyledFlex,
@@ -14,12 +15,14 @@ import {
   StyledSvg
 } from '@/styled/styles';
 import type { Token } from '@/types';
+import { formatValueDecimal } from '@/utils/formate';
 import Big from 'big.js';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Timer from './components/Timer';
+import usePool from './hooks/usePool';
 import usePools from './hooks/usePools';
 import useUser from './hooks/useUser';
 
@@ -328,6 +331,55 @@ const StyledPoolStatus = styled.div`
     background: #543DC9;
   }
 `
+
+const StyledSpecitalRewardTips = styled.div`
+  display: none;
+  position: absolute;
+  top: -6px;
+  right: -85px;
+  transform: translateY(-100%);
+  padding: 10px 0 10px 14px;
+  width: 181px;
+  height: 53px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #373A53;
+  background: #373A53;
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  color: #979ABE;
+  font-family: Gantari;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`
+const StyledSpecitalReward = styled.div`
+  position: relative;
+  cursor: pointer;
+  &:hover {
+    ${StyledSpecitalRewardTips} {
+      display: block;
+    }
+  }
+`
+const StyledCircleSvg = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @keyframes rotateAnimate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  &.loading {
+    animation: rotateAnimate 1s linear infinite;
+  }
+`
 const STATUS_TXT_MAPPING: any = {
   'ongoing': 'Live Now',
   'upcoming': 'Coming Soon'
@@ -340,7 +392,7 @@ const COLUMN_LIST = [{
   label: "Rate of Return",
   sortable: true
 }, {
-  key: "funds_raised",
+  key: "funds_raised_usd",
   label: "Funds Raised",
   sortable: true
 }, {
@@ -495,10 +547,10 @@ const ChainList = function (props: any) {
   )
 }
 export default function LaunchpadHomePage() {
-
   const router = useRouter();
   const userStore = useUserStore((store: any) => store.user);
-  const { loading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
+  const { loading, setLoading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
+  const { loading: poolLoading, queryPool } = usePool()
   const { user, queryUser } = useUser()
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
@@ -510,6 +562,7 @@ export default function LaunchpadHomePage() {
   const [upcomingAndOngoingChainId, setUpcomingAndOngoingChainId] = useState("0")
   const [poolStatusIndex, setPoolStatusIndex] = useState(0)
   const [completedPoolsChainId, setCompletedPoolsChainId] = useState("0")
+  const [isFixedPriceSale, setIsFixedPriceSale] = useState(false)
 
   const upcomingAndOngoingPoolsMapping = useMemo(() => {
     const filterPools = pools.filter(pool => pool.status === 'upcoming' || pool.status === 'ongoing')
@@ -560,6 +613,7 @@ export default function LaunchpadHomePage() {
     if (data.status === 'upcoming') {
       return
     }
+    setIsFixedPriceSale(data?.mode === 'fixed_price')
     setCheckedPoolAddress(data.pool)
 
     setPoolToken({
@@ -592,30 +646,9 @@ export default function LaunchpadHomePage() {
   const handleSort = function (key?: any) {
     key && setSortKey(key === sortKey ? "" : key)
   }
-  const simplifyNumber = function (number: number, decimal: number) {
-    if (typeof Number(number) !== 'number') return 0;
-    if (isNaN(Number(number))) return 0;
-    if (number >= 1E3 && number < 1E6) {
-      return Big(number).div(1E3).toFixed(decimal) + 'K';
-    } else if (number >= 1E6) {
-      return Big(number).div(1E6).toFixed(decimal) + 'M';
-    } else {
-      return Big(number).toFixed(decimal);
-    }
-  }
-  const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
-    const target = Big(1).div(Math.pow(10, decimal))
-    if (Big(value).eq(0)) {
-      return '-'
-    } else if (Big(value).gt(0)) {
-      if (Big(value).lt(target)) {
-        return `<${unit}${target}`
-      } else {
-        return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
-      }
-    } else {
-      return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
-    }
+  const handlePoolStatusIndexChange = function (index: number) {
+    queryPools()
+    setPoolStatusIndex(index)
   }
 
   useEffect(() => {
@@ -683,9 +716,9 @@ export default function LaunchpadHomePage() {
               poolsMapping={upcomingAndOngoingPoolsMapping}
             />
             <StyledPoolStatusContainer>
-              <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => setPoolStatusIndex(0)}>Live</StyledPoolStatus>
-              <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => setPoolStatusIndex(1)}>Upcoming</StyledPoolStatus>
-              <StyledPoolStatus className={poolStatusIndex === 2 ? 'active' : ''} onClick={() => setPoolStatusIndex(2)}>All</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(0)}>Live</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(1)}>Upcoming</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 2 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(2)}>All</StyledPoolStatus>
             </StyledPoolStatusContainer>
           </StyledFlex>
         </StyledFlex>
@@ -717,7 +750,7 @@ export default function LaunchpadHomePage() {
                   <StyledFlex justifyContent='space-between' style={{ marginTop: 106, marginBottom: 30 }}>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Participants</StyledFont>
-                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.participants)}</StyledFont>
+                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.total_participants)}</StyledFont>
                     </StyledFlex>
                     <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
                       <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
@@ -727,13 +760,51 @@ export default function LaunchpadHomePage() {
                       <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Price</StyledFont>
                       <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</StyledFont>
                     </StyledFlex>
+                    {
+                      pool?.share_token_name === 'RAGE' && (
+                        <StyledFlex flexDirection='column' alignItems='flex-start'>
+                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
+                          <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
+                        </StyledFlex>
+                      )
+                    }
                   </StyledFlex>
                   <StyledFlex>
-                    <StyledFlex flexDirection='column' alignItems='flex-start'>
-                      <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
-                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
-                    </StyledFlex>
+                    {
+                      pool?.share_token_name === 'RAGE' ? (
+                        <StyledFlex flexDirection='column' alignItems='flex-start'>
+                          <StyledSpecitalReward>
+                            <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Special Reward 🎁</StyledFont>
+                            <StyledSpecitalRewardTips>The first 100 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
+                          </StyledSpecitalReward>
 
+                          <StyledFlex gap='9px'>
+                            <StyledSpecitalReward>
+                              <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{Math.min(pool?.buy_part ?? 0, 100)}/100</StyledFont>
+                              <StyledSpecitalRewardTips style={{ bottom: -6, top: 'unset', right: '50%', transform: 'translate(50%, 100%)' }}>There are {Math.min(pool?.buy_part ?? 0, 100)} users got spcial reward currently</StyledSpecitalRewardTips>
+                            </StyledSpecitalReward>
+
+                            <StyledCircleSvg
+                              className={poolLoading ? 'loading' : ''}
+                              onClick={() => {
+                                !poolLoading && queryPool({
+                                  id: pool?.id
+                                })
+                              }}
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6.5712C2 4.05076 4.05347 2 6.59586 2C7.86245 2 9.00705 2.50825 9.8388 3.33211C9.85304 3.34622 9.8676 3.35981 9.88246 3.37289L8.95291 4.00183C8.7765 4.12118 8.68642 4.33284 8.7227 4.54271C8.75898 4.75258 8.91489 4.92171 9.12112 4.97492L11.9203 5.69712C12.0698 5.73569 12.2287 5.70864 12.3569 5.62277C12.4852 5.5369 12.5708 5.40038 12.5921 5.24748L12.9951 2.35867C13.0246 2.14675 12.9267 1.9373 12.7451 1.82413C12.5635 1.71097 12.3323 1.71532 12.1551 1.83522L11.4856 2.28823C11.4369 2.15032 11.3571 2.02099 11.2463 1.91117C10.0543 0.730553 8.40941 0 6.59586 0C2.95723 0 0 2.93787 0 6.5712C0 10.2045 2.95723 13.1424 6.59586 13.1424C9.29961 13.1424 11.6238 11.5213 12.6418 9.20154C12.7745 8.89923 12.885 8.58498 12.9714 8.26086C13.1136 7.72719 12.7962 7.17931 12.2625 7.03712C11.7289 6.89494 11.181 7.2123 11.0388 7.74597C10.979 7.97046 10.9024 8.1882 10.8104 8.39783C10.1014 10.0134 8.48142 11.1424 6.59586 11.1424C4.05347 11.1424 2 9.09165 2 6.5712Z" fill="#979ABE" />
+                              </svg>
+                            </StyledCircleSvg>
+                          </StyledFlex>
+                        </StyledFlex>
+                      ) : (
+                        <StyledFlex flexDirection='column' alignItems='flex-start'>
+                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
+                          <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
+                        </StyledFlex>
+                      )
+                    }
                     <StyledProjectButtonContainer>
                       <StyledProjectButton
                         style={{
@@ -742,6 +813,11 @@ export default function LaunchpadHomePage() {
                         }}
                         onClick={() => handleBuyOrSell(pool)}
                       >{pool.status === "upcoming" ? "Coming Soon" : "Buy Now"}</StyledProjectButton>
+                      <StyledProjectButton
+                        onClick={() => {
+                          router.push('/stake/fjord/detail?id=' + pool?.id)
+                        }}
+                      >View More</StyledProjectButton>
                     </StyledProjectButtonContainer>
                   </StyledFlex>
                 </StyledContainer>
@@ -818,7 +894,12 @@ export default function LaunchpadHomePage() {
               </StyledLoadingWrapper>
             ) : (
               completedPools && completedPools.length > 0 ? completedPools.map((pool: any, index: number) => (
-                <StyledCompletedSalesTr key={index}>
+                <StyledCompletedSalesTr
+                  key={index}
+                  onClick={() => {
+                    router.push('/stake/fjord/detail?id=' + pool?.id)
+                  }}
+                >
                   <StyledCompletedSalesTd>
                     <StyledFlex gap='10px' style={{ paddingLeft: 20 }}>
                       <StyledTokenImageContainer style={{ width: 36, height: 36 }}>
@@ -870,6 +951,7 @@ export default function LaunchpadHomePage() {
       {
         fjordModalShow && checkedPoolAddress && (
           <FjordModal
+            isFixedPriceSale={isFixedPriceSale}
             pool={checkedPoolAddress}
             token={poolToken as Token}
             midToken={midToken as Token}

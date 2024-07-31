@@ -1,19 +1,19 @@
-import type { Chain, Token } from '@/types'
-import { useEffect, useState } from 'react';
-import { Contract, providers, utils } from 'ethers';
-import { getQuote, getStatus, execute, approve } from 'super-bridge-sdk'
-import { useSetChain } from '@web3-onboard/react';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
+import type { Chain, Token } from '@/types';
+import { useSetChain } from '@web3-onboard/react';
+import { Contract, providers, utils } from 'ethers';
+import { useEffect, useState } from 'react';
+import { approve, execute, getQuote, getStatus } from 'super-bridge-sdk';
 
-import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
 import chainCofig from '@/config/chains';
+import { errorFormated, getFullNum } from '@/utils/balance';
 
-import type { QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
 import type { Signer } from 'ethers';
+import type { QuoteResponse } from 'super-bridge-sdk';
 
 
-import tokenConfig from './tokenConfig'
+import { FIXED_PRICE_RATIO } from '@/config/fjoid';
 import Big from 'big.js';
 
 export interface QuoteProps {
@@ -32,6 +32,7 @@ export interface QuoteResProps {
     bridgeRoute: QuoteResponse | null;
     receiveAmount: string;
     tradeType: number;
+    isFixedPriceSale?: boolean;
 }
 
 export interface TradeProps {
@@ -45,7 +46,9 @@ export interface TradeProps {
     quote: QuoteProps | undefined;
     chainId: number;
     slippage: string;
+    isFixedPriceSale?: boolean;
 }
+
 
 const poolAbi = [
     {
@@ -239,6 +242,82 @@ const poolAbi = [
         "stateMutability": "nonpayable",
         "type": "function"
     },
+    {
+        "inputs": [
+            {
+                "internalType": "uint256",
+                "name": "shares",
+                "type": "uint256"
+            },
+            {
+                "internalType": "address",
+                "name": "recipient",
+                "type": "address"
+            }
+        ],
+        "name": "buyExactShares",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "assetsIn",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "assetsPerToken",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "platformFeeWAD",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "swapFees",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "inputs": [],
+        "name": "weiPerToken",
+        "outputs": [
+            {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "stateMutability": "view",
+        "type": "function"
+    }
 ]
 
 const executorAbi = [
@@ -327,7 +406,9 @@ const executorAbi = [
     },
 ]
 
-export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, signer: Signer): QuoteResProps {
+
+
+export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, signer: Signer, isFixedPriceSale: boolean): QuoteResProps {
     const [loading, setLoading] = useState(false)
     const [shareVal, setShareVal] = useState('')
     const [receiveAmount, setReceiveAmount] = useState('')
@@ -340,11 +421,6 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
         }
     }, [quote, midToken])
 
-    useEffect(() => {
-        if (quote) {
-            getMidToken(quote.pool)
-        }
-    }, [quote])
 
     async function excuteQuote(quote: QuoteProps, midToken: Token,) {
         setLoading(true)
@@ -358,7 +434,6 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
             poolAbi,
             provider,
         )
-
         try {
             if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.address?.toLocaleLowerCase() === midToken.address?.toLocaleLowerCase()) {
                 setReceiveAmount(quote.amount.toString())
@@ -400,7 +475,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
         }
 
         let maxRoute = bridgeQuote[0]
-        for(let i = 0;i<bridgeQuote.length;i++) {
+        for (let i = 0; i < bridgeQuote.length; i++) {
             if (Number(bridgeQuote[i].duration) < 10 && Number(bridgeQuote[i].receiveAmount) > Number(maxRoute.receiveAmount)) {
                 maxRoute = bridgeQuote[i]
             }
@@ -409,30 +484,25 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
 
         const route = maxRoute
         const receiveAmount = route.receiveAmount
-        const targetShareVal = await PoolContract.previewSharesOut(receiveAmount)
-
-        console.log('maxRoute:', maxRoute)
-
-        setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
+        getAssetRuote({
+            ...quote,
+            amount: Big(receiveAmount),
+        }, midToken, PoolContract, providers)
         setBridgeRoute(route)
-        setReceiveAmount(receiveAmount)
         setLoading(false)
     }
 
     async function getAssetRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, provider: any) {
-        const targetShareVal = await PoolContract.previewSharesOut(quote.amount.toString())
-
-        setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
+        if (isFixedPriceSale) {
+            const _shares = await getShares(PoolContract, Big(quote.amount).div(10 ** quote?.fromToken?.decimals).toString(), quote)
+            setShareVal(_shares)
+        } else {
+            const targetShareVal = await PoolContract.previewSharesOut(quote.amount.toString())
+            setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
+        }
         setReceiveAmount(quote.amount.toString())
         setLoading(false)
     }
-
-    async function getMidToken(pool: string) {
-        const PoolContract = getPoolContract(pool, quote?.chainId as number)
-        const middleTokenAddress = await PoolContract.asset()
-        const midToken = tokenConfig[middleTokenAddress]
-    }
-
     return {
         shareVal,
         loading,
@@ -452,6 +522,7 @@ export function useBuyTrade({
     recipient,
     slippage,
     quote,
+    isFixedPriceSale
 }: TradeProps) {
     const [loading, setLoading] = useState(false)
     const { fail, success } = useToast()
@@ -465,7 +536,6 @@ export function useBuyTrade({
 
         try {
             setLoading(true)
-
             if (tradeType === 3 && bridgeRoute) { // 1:bridge 2:asset token => target 
                 const bridgeHash = await execute(bridgeRoute, signer)
 
@@ -483,7 +553,6 @@ export function useBuyTrade({
                     await sleep(1000 * 30)
                 }
             }
-
             if (Number(quote?.fromChain.chainId) !== Number(quote.chainId)) {
                 await setChain({ chainId: `0x${(quote.chainId).toString(16)}` })
             }
@@ -507,13 +576,12 @@ export function useBuyTrade({
 
             const assetsIn = new Big(_receiveAmount)
             const minSharesOut = getFullNum(new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - _slippage).toNumber())
-
             await approve(midToken.address, assetsIn, pool, signer)
-
-            const tx = await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
+            const tx = isFixedPriceSale ?
+                await PoolContract.buyExactShares(await getShares(PoolContract, Big(assetsIn).div(10 ** quote?.fromToken?.decimals).toString(), quote), recipient) :
+                await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
             await tx.wait()
             setLoading(false)
-
             success({
                 title: 'Transaction success',
                 text: 'Buy success',
@@ -522,6 +590,7 @@ export function useBuyTrade({
 
             return tx.hash
         } catch (err) {
+            console.log('====error', err)
             setLoading(false)
 
             fail({
@@ -530,8 +599,6 @@ export function useBuyTrade({
             })
         }
     }
-
-    
 
     return {
         excuteBuyTrade,
@@ -545,7 +612,7 @@ export function useSellQuote({
     amount: string, pool: string, recipient: string | null, toToken: Token, midToken: Token, chainId: number
 }) {
     const [assetOut, setAssetOut] = useState('')
-    
+
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
@@ -561,7 +628,7 @@ export function useSellQuote({
         }
     }, [amount, recipient])
 
-   
+
 
 
     return {
@@ -573,7 +640,6 @@ export function useDetail(pool: string, recipient: string, toToken: Token, chain
     const [startTime, setStartTime] = useState('')
     const [endTime, setEndTime] = useState('')
     const [isClosed, setIsClosed] = useState(false)
-    const [midToken, setMidToken] = useState<Token | null>(null)
     const [balance, setBalance] = useState('')
 
 
@@ -595,12 +661,6 @@ export function useDetail(pool: string, recipient: string, toToken: Token, chain
         setIsClosed(isClosed)
     }
 
-    async function getMidToken() {
-        const PoolContract = getPoolContract(pool, chainId)
-        const middleTokenAddress = await PoolContract.asset()
-        const midToken = tokenConfig[middleTokenAddress]
-        setMidToken(midToken)
-    }
 
     useEffect(() => {
         if (recipient) {
@@ -615,11 +675,10 @@ export function useDetail(pool: string, recipient: string, toToken: Token, chain
         saleStart()
         saleEnd()
         getClosed()
-        getMidToken()
     }, [updater])
 
     return {
-        startTime, endTime, isClosed, midToken, balance,
+        startTime, endTime, isClosed, balance,
     }
 }
 
@@ -682,11 +741,11 @@ export function useSellTrade({
             let gasLimit = 19200
             try {
                 gasLimit = (await PoolContract.estimateGas.swapExactSharesForAssets(_amount, minAssetsOut, recipient)).toNumber()
-            } catch(e) {
+            } catch (e) {
                 console.log(e)
             }
 
-            const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient, { 
+            const tx = await PoolContract.swapExactSharesForAssets(_amount, minAssetsOut, recipient, {
                 gasLimit: gasLimit
             })
             const v = await tx.wait()
@@ -726,15 +785,15 @@ export function useRedeem() {
                 poolAbi,
                 signer,
             )
-    
-            const tx = await PoolContract.redeem()    
+
+            const tx = await PoolContract.redeem()
             await tx.wait()
             success({
                 title: 'Transaction success',
                 text: '',
             })
             return tx.hahh
-        } catch(err) {
+        } catch (err) {
             fail({
                 title: 'Transaction failed',
                 text: errorFormated(err),
@@ -788,7 +847,7 @@ function sleep(time: number) {
 }
 
 function getPoolContract(pool: string, chainId: number) {
-    const rpcUrl = chainCofig[chainId].rpcUrls[0]
+    const rpcUrl = chainCofig[chainId]?.rpcUrls[0]
 
     const provider = new providers.JsonRpcProvider(rpcUrl);
     const PoolContract = new Contract(
@@ -798,4 +857,16 @@ function getPoolContract(pool: string, chainId: number) {
     )
 
     return PoolContract
+}
+
+async function getShares(contract: any, assetsIn: any, quote: QuoteProps): Promise<any> {
+    try {
+        const ppt: any = (quote?.fromToken?.isNative || quote?.fromToken?.symbol === 'ETH') ? await contract.weiPerToken() : await contract.assetsPerToken()
+        const platformFeeWADResult: any = await contract.platformFeeWAD()
+        const swapFee: string = utils.formatUnits(platformFeeWADResult, 18)
+        return Big(assetsIn).times(10 ** Math.max(quote?.fromToken?.decimals ?? 0, quote?.toToken?.decimals)).div(Big(Big(1).plus(swapFee)).times(ppt)).times(0.99).toFixed(0)
+    } catch (err) {
+        return '0'
+    }
+
 }
