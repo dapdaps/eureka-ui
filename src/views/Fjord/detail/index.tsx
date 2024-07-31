@@ -272,7 +272,7 @@ export default function LaunchpadYoursPage() {
       </StyledBreadcrumbAndBanner>
       <Content>
         <Main>
-          <TimerTitle>End in</TimerTitle>
+          <TimerTitle>{pool?.status === 'upcoming' ? 'Start' : 'End'} in</TimerTitle>
           <TimerWrap>
             {pool?.start_time * 1000 > Date.now() ? (
               <Timer color="white" endTime={Number(pool?.start_time)} />

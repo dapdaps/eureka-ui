@@ -362,6 +362,24 @@ const StyledSpecitalReward = styled.div`
     }
   }
 `
+const StyledCircleSvg = styled.div`
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  @keyframes rotateAnimate {
+    0% {
+      transform: rotate(0);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  &.loading {
+    animation: rotateAnimate 1s linear infinite;
+  }
+`
 const STATUS_TXT_MAPPING: any = {
   'ongoing': 'Live Now',
   'upcoming': 'Coming Soon'
@@ -531,7 +549,7 @@ const ChainList = function (props: any) {
 export default function LaunchpadHomePage() {
   const router = useRouter();
   const userStore = useUserStore((store: any) => store.user);
-  const { loading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
+  const { loading, setLoading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
   const { loading: poolLoading, queryPool } = usePool()
   const { user, queryUser } = useUser()
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
@@ -628,6 +646,10 @@ export default function LaunchpadHomePage() {
   const handleSort = function (key?: any) {
     key && setSortKey(key === sortKey ? "" : key)
   }
+  const handlePoolStatusIndexChange = function (index: number) {
+    queryPools()
+    setPoolStatusIndex(index)
+  }
 
   useEffect(() => {
     queryPools()
@@ -694,9 +716,9 @@ export default function LaunchpadHomePage() {
               poolsMapping={upcomingAndOngoingPoolsMapping}
             />
             <StyledPoolStatusContainer>
-              <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => setPoolStatusIndex(0)}>Live</StyledPoolStatus>
-              <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => setPoolStatusIndex(1)}>Upcoming</StyledPoolStatus>
-              <StyledPoolStatus className={poolStatusIndex === 2 ? 'active' : ''} onClick={() => setPoolStatusIndex(2)}>All</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(0)}>Live</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(1)}>Upcoming</StyledPoolStatus>
+              <StyledPoolStatus className={poolStatusIndex === 2 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(2)}>All</StyledPoolStatus>
             </StyledPoolStatusContainer>
           </StyledFlex>
         </StyledFlex>
@@ -755,10 +777,15 @@ export default function LaunchpadHomePage() {
                             <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Special Reward 🎁</StyledFont>
                             <StyledSpecitalRewardTips>The first 100 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
                           </StyledSpecitalReward>
+
                           <StyledFlex gap='9px'>
-                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{Math.min(pool?.buy_part ?? 0, 100)}/100</StyledFont>
-                            <StyledSvg
-                              style={{ cursor: 'pointer' }}
+                            <StyledSpecitalReward>
+                              <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{Math.min(pool?.buy_part ?? 0, 100)}/100</StyledFont>
+                              <StyledSpecitalRewardTips style={{ bottom: -6, top: 'unset', right: '50%', transform: 'translate(50%, 100%)' }}>There are {Math.min(pool?.buy_part ?? 0, 100)} users got spcial reward currently</StyledSpecitalRewardTips>
+                            </StyledSpecitalReward>
+
+                            <StyledCircleSvg
+                              className={poolLoading ? 'loading' : ''}
                               onClick={() => {
                                 !poolLoading && queryPool({
                                   id: pool?.id
@@ -768,7 +795,7 @@ export default function LaunchpadHomePage() {
                               <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
                                 <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6.5712C2 4.05076 4.05347 2 6.59586 2C7.86245 2 9.00705 2.50825 9.8388 3.33211C9.85304 3.34622 9.8676 3.35981 9.88246 3.37289L8.95291 4.00183C8.7765 4.12118 8.68642 4.33284 8.7227 4.54271C8.75898 4.75258 8.91489 4.92171 9.12112 4.97492L11.9203 5.69712C12.0698 5.73569 12.2287 5.70864 12.3569 5.62277C12.4852 5.5369 12.5708 5.40038 12.5921 5.24748L12.9951 2.35867C13.0246 2.14675 12.9267 1.9373 12.7451 1.82413C12.5635 1.71097 12.3323 1.71532 12.1551 1.83522L11.4856 2.28823C11.4369 2.15032 11.3571 2.02099 11.2463 1.91117C10.0543 0.730553 8.40941 0 6.59586 0C2.95723 0 0 2.93787 0 6.5712C0 10.2045 2.95723 13.1424 6.59586 13.1424C9.29961 13.1424 11.6238 11.5213 12.6418 9.20154C12.7745 8.89923 12.885 8.58498 12.9714 8.26086C13.1136 7.72719 12.7962 7.17931 12.2625 7.03712C11.7289 6.89494 11.181 7.2123 11.0388 7.74597C10.979 7.97046 10.9024 8.1882 10.8104 8.39783C10.1014 10.0134 8.48142 11.1424 6.59586 11.1424C4.05347 11.1424 2 9.09165 2 6.5712Z" fill="#979ABE" />
                               </svg>
-                            </StyledSvg>
+                            </StyledCircleSvg>
                           </StyledFlex>
                         </StyledFlex>
                       ) : (

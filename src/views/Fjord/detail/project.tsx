@@ -43,7 +43,8 @@ const SytledMain = styled.div`
   } 
   .border-\[#3E68FF1A\]{
     border-color: #3e68ff1a;
-  } 
+  }
+  
   .gap-2.5{
     gap: .625rem;
   } 
@@ -89,6 +90,11 @@ const SytledMain = styled.div`
   }
   .list-disc {
     list-style-type: disc
+  }
+
+  .text-purple-300 {
+    --tw-text-opacity: 1;
+    color: rgb(159 162 255/var(--tw-text-opacity))
   }
 `;
 const StyledLi = styled.li``;
