@@ -88,7 +88,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
   const price = usePriceStore((store) => store.price);
   const { startTime, endTime, isClosed, balance } = useDetail(pool, account as string, token, targetChainId, updateBanlance)
 
-  const { shareVal, loading: buyQuoteLoading, bridgeRoute, receiveAmount, tradeType } = useBuyQuote(buyQuote, midToken, provider?.getSigner())
+  const { shareVal, loading: buyQuoteLoading, bridgeRoute, receiveAmount, tradeType } = useBuyQuote(buyQuote, midToken, provider?.getSigner(), isFixedPriceSale)
 
   const { excuteBuyTrade, loading: buyExcuteLoading } = useBuyTrade({
     shareVal,
@@ -159,6 +159,62 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
     isPure: false,
   })
 
+  const handleBuyAndSell = async () => {
+    let hash
+    if (currentTab === 'BUY') {
+      hash = await excuteBuyTrade(provider?.getSigner())
+    } else if (currentTab === 'SELL') {
+      hash = await excuteSellTrade(provider?.getSigner())
+    }
+
+    if (hash) {
+      let amount, trade_type, token0, token1
+      if (currentTab === 'BUY') {
+        const _receiveAmount = new Big(receiveAmount).div(10 ** midToken.decimals).toString()
+        amount = _receiveAmount
+        trade_type = 'buy'
+        token0 = {
+          ...midToken,
+          amount: _receiveAmount,
+        }
+        if (isFixedPriceSale) {
+          token1 = {
+            ...token,
+            amount: shareVal
+          }
+        } else {
+          token1 = token
+          shareTokenPrice = (Number(price[midToken.symbol]) * Number(_receiveAmount) / Number(shareVal)).toString()
+        }
+      } else {
+        amount = _sellAmount
+        trade_type = 'sell'
+        token0 = {
+          ...token,
+          amount: _sellAmount,
+        }
+        token1 = midToken
+        shareTokenPrice = (Number(price[midToken.symbol]) * Number(assetOut) / Number(_sellAmount)).toString()
+      }
+      addAction({
+        type: "Swap",
+        fromChainId: fromChain.chainId,
+        token: fromToken,
+        amount: amount,
+        template: 'launchpad',
+        add: false,
+        status: 1,
+        transactionHash: hash,
+        token0,
+        token1,
+        trade_type: trade_type,
+        shareTokenPrice,
+        pool,
+      })
+    }
+    setUpdateBanlance(updateBanlance + 1)
+  }
+
   useEffect(() => {
     if (currentTab === 'BUY') {
       if (account && fromChain && fromToken && Number(_sendAmount) > 0) {
@@ -184,11 +240,14 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
     if (currentTab === 'BUY') {
       if (!shareVal && !buyQuoteLoading && _sendAmount) {
         setBtnDisbaled(true)
-        FIXED_PRICE_RATIO[buyQuote?.toToken?.symbol as any] ? setText("Buy") : setText('No route')
+        setText('No route')
         return
       }
-
-
+      if (isFixedPriceSale && Big(shareVal ? shareVal : 0).eq(0)) {
+        setBtnDisbaled(true)
+        setText('Buy')
+        return
+      }
       if (_sendAmount && Number(inputBalance) < Number(_sendAmount)) {
         setBtnDisbaled(true)
         setText('Insufficient balance')
@@ -302,56 +361,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
             defaultText={currentTab === 'BUY' ? 'Buy' : 'Sell'}
             text={text}
             fromChain={currentTab === 'BUY' ? fromChain : { chainId: Number(targetChainId) } as Chain}
-            onClick={async () => {
-              let hash
-              if (currentTab === 'BUY') {
-                hash = await excuteBuyTrade(provider?.getSigner())
-              } else if (currentTab === 'SELL') {
-                hash = await excuteSellTrade(provider?.getSigner())
-              }
-
-              if (hash) {
-                let amount, trade_type, token0, token1, shareTokenPrice
-                if (currentTab === 'BUY') {
-                  const _receiveAmount = new Big(receiveAmount).div(10 ** midToken.decimals).toString()
-                  amount = _receiveAmount
-                  trade_type = 'buy'
-                  token0 = {
-                    ...midToken,
-                    amount: _receiveAmount,
-                  }
-                  token1 = token
-                  shareTokenPrice = (Number(price[midToken.symbol]) * Number(_receiveAmount) / Number(shareVal)).toString()
-                } else {
-                  amount = _sellAmount
-                  trade_type = 'sell'
-                  token0 = {
-                    ...token,
-                    amount: _sellAmount,
-                  }
-                  token1 = midToken
-                  shareTokenPrice = (Number(price[midToken.symbol]) * Number(assetOut) / Number(_sellAmount)).toString()
-                }
-
-                addAction({
-                  type: "Swap",
-                  fromChainId: fromChain.chainId,
-                  token: fromToken,
-                  amount: amount,
-                  template: 'launchpad',
-                  add: false,
-                  status: 1,
-                  transactionHash: hash,
-                  token0,
-                  token1,
-                  trade_type: trade_type,
-                  shareTokenPrice,
-                  pool,
-                })
-              }
-
-              setUpdateBanlance(updateBanlance + 1)
-            }}
+            onClick={handleBuyAndSell}
             disabled={btnDisbaled}
           />
 
@@ -431,56 +441,7 @@ const LaunchPadModal: FC<IProps> = ({ onClose, pool, chainId: targetChainId, tok
             defaultText={currentTab === 'BUY' ? 'Buy' : 'Sell'}
             text={text}
             fromChain={currentTab === 'BUY' ? fromChain : { chainId: Number(targetChainId) } as Chain}
-            onClick={async () => {
-              let hash
-              if (currentTab === 'BUY') {
-                hash = await excuteBuyTrade(provider?.getSigner())
-              } else if (currentTab === 'SELL') {
-                hash = await excuteSellTrade(provider?.getSigner())
-              }
-
-              if (hash) {
-                let amount, trade_type, token0, token1, shareTokenPrice
-                if (currentTab === 'BUY') {
-                  const _receiveAmount = new Big(receiveAmount).div(10 ** midToken.decimals).toString()
-                  amount = _receiveAmount
-                  trade_type = 'buy'
-                  token0 = {
-                    ...midToken,
-                    amount: _receiveAmount,
-                  }
-                  token1 = token
-                  shareTokenPrice = (Number(price[midToken.symbol]) * Number(_receiveAmount) / Number(shareVal)).toString()
-                } else {
-                  amount = _sellAmount
-                  trade_type = 'sell'
-                  token0 = {
-                    ...token,
-                    amount: _sellAmount,
-                  }
-                  token1 = midToken
-                  shareTokenPrice = (Number(price[midToken.symbol]) * Number(assetOut) / Number(_sellAmount)).toString()
-                }
-
-                addAction({
-                  type: "Swap",
-                  fromChainId: fromChain.chainId,
-                  token: fromToken,
-                  amount: amount,
-                  template: 'launchpad',
-                  add: false,
-                  status: 1,
-                  transactionHash: hash,
-                  token0,
-                  token1,
-                  trade_type: trade_type,
-                  shareTokenPrice,
-                  pool,
-                })
-              }
-
-              setUpdateBanlance(updateBanlance + 1)
-            }}
+            onClick={handleBuyAndSell}
             disabled={btnDisbaled}
           />
 

@@ -374,7 +374,7 @@ const COLUMN_LIST = [{
   label: "Rate of Return",
   sortable: true
 }, {
-  key: "funds_raised",
+  key: "funds_raised_usd",
   label: "Funds Raised",
   sortable: true
 }, {

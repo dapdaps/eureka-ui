@@ -32,6 +32,7 @@ export interface QuoteResProps {
     bridgeRoute: QuoteResponse | null;
     receiveAmount: string;
     tradeType: number;
+    isFixedPriceSale?: boolean;
 }
 
 export interface TradeProps {
@@ -407,7 +408,7 @@ const executorAbi = [
 
 
 
-export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, signer: Signer): QuoteResProps {
+export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, signer: Signer, isFixedPriceSale): QuoteResProps {
     const [loading, setLoading] = useState(false)
     const [shareVal, setShareVal] = useState('')
     const [receiveAmount, setReceiveAmount] = useState('')
@@ -433,9 +434,7 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
             poolAbi,
             provider,
         )
-
         try {
-            console.log('===111222===')
             if (Number(quote.fromChain.chainId) === Number(quote.chainId) && quote.fromToken.address?.toLocaleLowerCase() === midToken.address?.toLocaleLowerCase()) {
                 setReceiveAmount(quote.amount.toString())
                 await getAssetRuote(quote, midToken, PoolContract, provider)
@@ -485,9 +484,6 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
 
         const route = maxRoute
         const receiveAmount = route.receiveAmount
-        // const targetShareVal = await PoolContract.previewSharesOut(receiveAmount)
-        // setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
-        // setReceiveAmount(receiveAmount)
         getAssetRuote({
             ...quote,
             amount: Big(receiveAmount),
@@ -497,16 +493,14 @@ export function useBuyQuote(quote: QuoteProps | undefined, midToken: Token, sign
     }
 
     async function getAssetRuote(quote: QuoteProps, midToken: Token, PoolContract: Contract, provider: any) {
-        const ratio = FIXED_PRICE_RATIO[quote?.toToken?.symbol]
-        if (ratio) {
-            const _receiveAmount = Big(quote.amount).div(10 ** quote?.fromToken?.decimals).div(ratio).toFixed(0)
-            setShareVal(Big(_receiveAmount).gt(0) ? _receiveAmount : "")
-            setReceiveAmount(Big(_receiveAmount).gt(0) ? _receiveAmount : "")
+        if (isFixedPriceSale) {
+            const _shares = await getShares(PoolContract, Big(quote.amount).div(10 ** quote?.fromToken?.decimals).toString(), quote)
+            setShareVal(_shares)
         } else {
             const targetShareVal = await PoolContract.previewSharesOut(quote.amount.toString())
             setShareVal(new Big(targetShareVal).div(10 ** quote.toToken.decimals).toString())
-            setReceiveAmount(quote.amount.toString())
         }
+        setReceiveAmount(quote.amount.toString())
         setLoading(false)
     }
     return {
@@ -542,7 +536,6 @@ export function useBuyTrade({
 
         try {
             setLoading(true)
-
             if (tradeType === 3 && bridgeRoute) { // 1:bridge 2:asset token => target 
                 const bridgeHash = await execute(bridgeRoute, signer)
 
@@ -560,7 +553,6 @@ export function useBuyTrade({
                     await sleep(1000 * 30)
                 }
             }
-
             if (Number(quote?.fromChain.chainId) !== Number(quote.chainId)) {
                 await setChain({ chainId: `0x${(quote.chainId).toString(16)}` })
             }
@@ -584,17 +576,12 @@ export function useBuyTrade({
 
             const assetsIn = new Big(_receiveAmount)
             const minSharesOut = getFullNum(new Big(shareVal).mul(10 ** quote.toToken.decimals).mul(1 - _slippage).toNumber())
-            if (FIXED_PRICE_RATIO[quote?.toToken?.symbol]) {
-                await approve(midToken.address, Big(assetsIn).times(FIXED_PRICE_RATIO[quote?.toToken?.symbol]).times(10 ** midToken.decimals), pool, signer)
-            } else {
-                await approve(midToken.address, assetsIn, pool, signer)
-            }
+            await approve(midToken.address, assetsIn, pool, signer)
             const tx = isFixedPriceSale ?
                 await PoolContract.buyExactShares(await getShares(PoolContract, assetsIn.toString(), quote), recipient) :
                 await PoolContract.swapExactAssetsForShares(assetsIn.toString(), minSharesOut.toString(), recipient)
             await tx.wait()
             setLoading(false)
-
             success({
                 title: 'Transaction success',
                 text: 'Buy success',
@@ -877,7 +864,7 @@ async function getShares(contract: any, assetsIn: any, quote: QuoteProps): Promi
         const ppt: any = (quote?.fromToken?.isNative || quote?.fromToken?.symbol === 'ETH') ? await contract.weiPerToken() : await contract.assetsPerToken()
         const platformFeeWADResult: any = await contract.platformFeeWAD()
         const swapFee: string = utils.formatUnits(platformFeeWADResult, 18)
-        return Big(assetsIn * FIXED_PRICE_RATIO[quote?.toToken?.symbol]).times(10 ** quote?.fromToken?.decimals ?? 0).div(Big(Big(1).plus(swapFee)).times(ppt)).toString()
+        return Big(assetsIn).times(10 ** Math.max(quote?.fromToken?.decimals ?? 0, quote?.toToken?.decimals)).div(Big(Big(1).plus(swapFee)).times(ppt)).times(0.99).toFixed(0)
     } catch (err) {
         return '0'
     }
