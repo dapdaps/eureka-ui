@@ -753,10 +753,10 @@ export default function LaunchpadHomePage() {
                         <StyledFlex flexDirection='column' alignItems='flex-start'>
                           <StyledSpecitalReward>
                             <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Special Reward 🎁</StyledFont>
-                            <StyledSpecitalRewardTips>The first 200 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
+                            <StyledSpecitalRewardTips>The first 100 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
                           </StyledSpecitalReward>
                           <StyledFlex gap='9px'>
-                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{pool?.buy_part ?? 0}/200</StyledFont>
+                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{pool?.buy_part ?? 0}/100</StyledFont>
                             <StyledSvg
                               style={{ cursor: 'pointer' }}
                               onClick={() => {
