@@ -104,7 +104,7 @@ const TooltipList = ({
             <AnimatePresence>
               <Tooltip x={x}>
                 <div className="compass">
-                  <Status status={StatusType.LIVE} className="status" />
+                  <Status status={StatusType.ongoing} className="status" />
                   <div className="c_container">
                     <div className="c_title">{item.title}</div>
                     <div className="c_subtitle">{item.subtitle}</div>

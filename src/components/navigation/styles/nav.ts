@@ -18,7 +18,17 @@ export const Wrapper = styled.div`
       position: relative;
     }
   }
+  .CaretDown {
+      position: relative;
+      color: var(--violet-10);
+      top: 1px;
+      transition: transform 250ms ease;
+    }
 
+    [data-state='open'] > .CaretDown {
+      transform: rotate(-180deg);
+    }
+    
   .NavigationMenuTrigger,
   .NavigationMenuLink {
     all: unset;
@@ -31,6 +41,7 @@ export const Wrapper = styled.div`
     position: relative;
     gap: 2px;
     padding: 10px 14px;
+
     .arrow-icon {
       width: 12px;
       height: 6px;
@@ -79,7 +90,7 @@ export const Wrapper = styled.div`
     &.bridge { 
       top: 56px;
       left: 0px;
-      width: 814px;
+      width: 754px;
       padding: 25px 0;
       display: flex;
       flex-direction: column;
@@ -148,6 +159,10 @@ export const Wrapper = styled.div`
     list-style: none;
     width: 754px;
     gap: 50px;
+    &.bridge {
+      gap: 0;
+      padding: 0 10px;
+    }
     &.chain {
       width: 425px;
       padding: 0

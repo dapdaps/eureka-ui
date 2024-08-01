@@ -17,9 +17,11 @@ export default function useCompassList(campaign_id?: string) {
       setLoading(false);
       odysseyStore.setOdyssey(data);
     } catch (err) {
+      console.log(err, 'err'); 
+    } finally {
       setLoading(false);
     }
-  }, [loading]);
+  }, []);
 
   useEffect(() => {
     if (odysseyStore.odyssey.length) {

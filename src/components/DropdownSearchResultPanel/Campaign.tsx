@@ -55,7 +55,7 @@ const Campaign = () => {
         imgSrc="https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png"
         isNew={true}
         title="Odyssey Vol.5"
-        status={StatusType.LIVE}
+        status={StatusType.ongoing}
         description="DapDap x Mode: The Airdrop Ascendancy"
       />
     </Container>

@@ -4,9 +4,9 @@ import styled from 'styled-components';
 import cls from 'classnames';
 
 export enum StatusType {
-    LIVE = 'LIVE',
-    ENDED = 'ENDED',
-    INCOMING = 'INCOMING'
+    ongoing = 'ongoing',
+    ended = 'ended',
+    un_start = 'un_start'
   }
   
 
@@ -38,7 +38,7 @@ const StyleStatus = styled.div`
     text-transform: capitalize;
   }
 
-  &.LIVE {
+  &.ongoing {
     border-color: #57DB64;
     box-shadow: 0px 0px 3px 0px rgba(87, 219, 100, 0.2);
     .dot {
@@ -46,7 +46,7 @@ const StyleStatus = styled.div`
     }
   }
 
-  &.ENDED {
+  &.ended {
     border: 1px solid rgba(255, 255, 255, 0.15);
     .dot {
         background: rgba(151, 154, 190, 1);
@@ -61,7 +61,7 @@ const StyleStatus = styled.div`
 const Status: React.FC<StatusProps> = ({ status, className }) => (
   <StyleStatus className={cls(status, className)}>
     <div className="dot"></div>
-    <div className="activity">{status?.toLocaleLowerCase() || 'Ended'}</div>
+    <div className="activity">{status?.toLocaleLowerCase() || StatusType.un_start}</div>
   </StyleStatus>
 );
 
