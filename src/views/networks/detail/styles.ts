@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   background: #000;
+  padding-bottom: 50px;
 `;
 export const DappTitle = styled.div`
   width: 1244px;
@@ -58,13 +59,7 @@ export const StyledDetail = styled.div`
   justify-content: space-between;
   width: 1244px;
   margin: 80px auto 0;
-  /* gap: 68px; */
-  .left {
-    width: 720px;
-  }
-  .right {
-    width: 500px;
-  }
+  column-gap: 68px;
 `;
 
 export const TabHead = styled.div`
@@ -258,4 +253,12 @@ export const IconGroup = styled.div`
     height: 26px;
     margin-left: -10px;
   }
+`;
+
+export const StyledRecordContainer = styled.div`
+  flex: 1;
+`;
+export const StyledRelatedOdyssey = styled.div`
+  width: 500px;
+  flex-shrink: 0;
 `;

@@ -1,5 +1,5 @@
 import { forwardRef, memo, useImperativeHandle } from 'react';
-import { StyledContainer, StyledDappList, StyledFoot } from '@/views/AllDapps/components/DappList/styles';
+import { StyledContainer, StyledDappList, StyledFoot, StyledEmptyContainer, StyledEmptyItem, StyledEmptyShadow, StyledEmptyInner, StyledEmptyText } from '@/views/AllDapps/components/DappList/styles';
 import DappLoading from '@/views/AllDapps/Loading/Dapp';
 import DappCard from '@/views/AllDapps/components/DappCard';
 import Empty from '@/components/Empty';
@@ -35,7 +35,7 @@ const DappList = forwardRef((props: Props, ref) => {
         loading ? (
           <DappLoading />
         ) : (
-          dappList.length ? (
+            dappList.length ? (
               <StyledDappList>
                 {
                   dappList.map((dapp: any, idx: number) => (
@@ -60,7 +60,18 @@ const DappList = forwardRef((props: Props, ref) => {
               </StyledDappList>
             )
             : (
-              <Empty size={42} tips="No dApps found" />
+              <StyledEmptyContainer>
+                {
+                  new Array(3).fill('').map((item, index) => (
+                    <StyledEmptyItem key={`empty_${index}`}/>
+                  ))
+                }
+                <StyledEmptyShadow />
+                <StyledEmptyInner>
+                  <Empty size={42} tips={<StyledEmptyText>No dApp found</StyledEmptyText>}/>
+                </StyledEmptyInner>
+              </StyledEmptyContainer>
+
             )
         )
       }

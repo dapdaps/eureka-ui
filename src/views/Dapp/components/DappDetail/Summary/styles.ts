@@ -31,7 +31,7 @@ export const StyledSummaryContainer = styled.div`
 `;
 
 export const StyledDetailLogo = styled.div<{ $logo: string; }>`
-  border-radius: 16px;
+  border-radius: 22px;
   border: 3px solid #202329;
   width: 82px;
   height: 82px;
@@ -132,4 +132,15 @@ export const StyledSummaryAddIcon = styled.div`
   display: flex;
   align-items: center;
   margin-right: 2px;
+`;
+
+export const StyledFavoritedTag = styled.div<{ $isFavorited: boolean }>`
+  width: 36px;
+  height: 24px;
+  box-sizing: content-box;
+  border-radius: 12px;
+  cursor: pointer;
+  border: ${({ $isFavorited }) => $isFavorited ? '1px solid rgba(255, 107, 142, 0.30)' : '1px solid transparent'};
+  background:  ${({ $isFavorited }) => $isFavorited ? 'rgba(255, 107, 142, 0.15)' : '#21222B'};
+  color:  ${({ $isFavorited }) => $isFavorited ? '#FF6B8E' : '#979ABE'};
 `;

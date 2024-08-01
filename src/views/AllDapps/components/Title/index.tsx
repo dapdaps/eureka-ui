@@ -8,15 +8,16 @@ import {
   StyledTitleText,
 } from './styles';
 import Image from 'next/image';
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { CategoryList, TitleDapp, TitleDappList } from '@/views/AllDapps/config';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
-const AllDappsTitle = (props: Props) => {
+const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
   const {
     dappList,
     onCategory = () => {},
-    activeCategory
+    activeCategory,
+    categoryClassname = ''
   } = props;
 
   const { categories } = useCategoryDappList();
@@ -47,7 +48,6 @@ const AllDappsTitle = (props: Props) => {
   }, [dappList]);
 
   useEffect(() => {
-    console.log(activeCategory);
     if (activeCategory) {
       setCurrentCategory({key: activeCategory})
     }
@@ -106,7 +106,7 @@ const AllDappsTitle = (props: Props) => {
       <StyledTitleSub>
         Discover the most popular
       </StyledTitleSub>
-      <StyledCategory>
+      <StyledCategory ref={categoryRef} className={categoryClassname}>
         {
           categoryList.map((cate: any) => (
             <StyledCategoryItem
@@ -122,8 +122,7 @@ const AllDappsTitle = (props: Props) => {
       </StyledCategory>
     </StyledHead>
   );
-};
-
+})
 export default AllDappsTitle;
 
 export interface Props {
@@ -133,6 +132,8 @@ export interface Props {
   onCategory?(categoryId?: number): void;
 
   activeCategory?: any;
+
+  categoryClassname?: string;
 }
 
 export interface Dapp {

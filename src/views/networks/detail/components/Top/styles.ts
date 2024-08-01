@@ -1,3 +1,4 @@
+import hexToRgba from '@/utils/hexToRgba';
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
@@ -46,12 +47,15 @@ export const StyledContent = styled.div`
   width: 1244px;
   margin: 0 auto;
 `;
-export const StyledBgWrapper = styled.div`
+export const StyledBgWrapper = styled.div<{color?: string}>`
   position: absolute;
   left: 0px;
   right: 0px;
+  border-radius: 1544px;
+  opacity: 0.2;
   width: 100%;
-  height: calc(100% - 30px);
+  height: 400px;
+  background: ${props => props.color ? `radial-gradient(50% 50% at 50% 50%, ${props.color} 0%, ${hexToRgba(props.color, 0)} 100%)` : 'transparent'};  
 `;
 
 export const StyledBg = styled.div`
@@ -93,10 +97,10 @@ export const StyledChainLogo = styled.img`
   width: 48px;
 `;
 export const StyledInfo = styled.div`
-  display: flex;
-  height: 100px;
-  flex-direction: column;
-  justify-content: space-between;
+  //display: flex;
+  //height: 100px;
+  //flex-direction: column;
+  //justify-content: space-between;
 `;
 export const StyledChainName = styled.div`
   color: #fff;
@@ -105,6 +109,7 @@ export const StyledChainName = styled.div`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  margin-bottom: 9px;
 `;
 export const StyledActions = styled.div`
   display: flex;

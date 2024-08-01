@@ -4,17 +4,34 @@ import {
   StyledTabs,
   StyledTab,
   StyledTabsContent,
-  StyledTabContainer, StyledTabText,
+  StyledTabContainer,
+  StyledTabText,
+  StyledTabIcon
 } from './styles';
-import {TABS, MyHistoryTab } from "../config";
+import {TABS } from "../config";
 import MyHistory from "./MyHistory";
 import Overview from "./Overview";
 import { AnimatePresence } from 'framer-motion';
 import Animate from './Animate';
+import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
 
-const DetailTabs = ({ activity, loading, name, description }: any) => {
+const DetailTabs = (props: Props) => {
 
   const [currTab, setCurrTab] = useState<string>(TABS[0].key);
+
+  const {
+    logo,
+    historyType,
+    overviewTitle,
+  } = props;
+
+  const {
+    loading,
+    historyList,
+    pageTotal,
+    pageIndex,
+    fetchHistoryList,
+  } = useMyHistory();
 
   return (
     <StyledContainer>
@@ -27,7 +44,9 @@ const DetailTabs = ({ activity, loading, name, description }: any) => {
                 key={item.key}
                 onClick={() => setCurrTab(item.key)}
               >
+
                 <StyledTabText active={currTab === item.key}>
+                  { item.key === TABS[TABS.length - 1].key && (<StyledTabIcon url={logo}/>)}
                   {item.label}
                 </StyledTabText>
               </StyledTab>
@@ -40,14 +59,21 @@ const DetailTabs = ({ activity, loading, name, description }: any) => {
           {
             currTab === TABS[0].key && (
               <Animate key="overview">
-                <Overview name={name} description={description} />
+                <Overview title={overviewTitle} {...props} />
               </Animate>
             )
           }
           {
-            currTab === MyHistoryTab.key && (
+            currTab === TABS[1].key && (
               <Animate key="my-history">
-                <MyHistory list={[]} loading={false}/>
+                <MyHistory
+                  type={historyType}
+                  loading={loading}
+                  historyList={historyList}
+                  pageTotal={pageTotal}
+                  pageIndex={pageIndex}
+                  fetchHistoryList={fetchHistoryList}
+                />
               </Animate>
             )
           }
@@ -58,3 +84,15 @@ const DetailTabs = ({ activity, loading, name, description }: any) => {
 };
 
 export default DetailTabs;
+
+interface Props {
+  name: string;
+  logo: string;
+  description: string;
+  historyType: 'dApp' | 'chain';
+  overviewTitle: string;
+  overviewShadow?: {
+    icon?: string;
+    color?: string;
+  };
+}

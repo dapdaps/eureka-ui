@@ -8,6 +8,7 @@ const Pagination = (props: PaginationProps) => {
     pageTotal,
     onPage,
     className,
+    pageClassName = ''
   } = props;
 
   const handlePreviousPage = () => {
@@ -23,6 +24,7 @@ const Pagination = (props: PaginationProps) => {
   return (
     <StyledContainer className={className}>
       <StyledBtnPrevious
+        className='pagination-previous'
         title="previous"
         style={{ cursor: pageIndex > 1 ? 'pointer' : 'not-allowed' }}
         onClick={handlePreviousPage}
@@ -41,12 +43,13 @@ const Pagination = (props: PaginationProps) => {
       {
         pageTotal > 1 && (
           <>
-            {renderPageMiddle({ pageIndex, pageTotal, onPage })}
+            {renderPageMiddle({ pageIndex, pageTotal, onPage, className: pageClassName })}
             <PageButton className="last-page" page={pageTotal} pageIndex={pageIndex} onPage={onPage} />
           </>
         )
       }
       <StyledBtnNext
+        className='pagination-next'
         title="next"
         style={{ cursor: pageIndex < pageTotal ? 'pointer' : 'not-allowed' }}
         onClick={handleNextPage}
@@ -69,6 +72,7 @@ interface PaginationProps {
   pageIndex: number;
   pageTotal: number;
   className?: string;
+  pageClassName?: string;
 
   onPage(page: number): void;
 }

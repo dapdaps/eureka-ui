@@ -88,6 +88,7 @@ export function renderPageMiddle(options: RenderPageMiddleOptions) {
 export interface RenderPageMiddleOptions {
   pageIndex: number;
   pageTotal: number;
+  className?: string;
 
   onPage(page: number): void;
 }

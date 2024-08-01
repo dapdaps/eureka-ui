@@ -13,3 +13,16 @@ export function formateTxDate(_date: any) {
 
   return `${monthStr} ${day}, ${year} ${toTwo(hourStr)}:${toTwo(minutes)} ${unit}`;
 }
+
+export function formatUSDate(timestamp: number) {
+  const date = new Date(timestamp * 1000);
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  } as const;
+  return date.toLocaleString('en-US', options);
+}

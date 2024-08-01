@@ -1,4 +1,4 @@
-export function checkQueryEmpty(query: string, checkFn?: () => true): boolean {
+export function checkQueryEmpty(query: string, checkFn?: () => boolean): boolean {
   if (query && query !== 'null' && query !== 'undefined') {
     if (typeof checkFn === 'function') {
       return checkFn();

@@ -63,6 +63,9 @@ export const StyledMedalTag = styled.div`
   line-height: 1;
   padding: 7px 15px;
   white-space: nowrap;
+  &.active {
+    color: #EBF479;
+  }
 `;
 
 export const StyledMedalName = styled.div`
@@ -73,4 +76,11 @@ export const StyledMedalName = styled.div`
   font-weight: 500;
   line-height: normal;
   margin-top: 10px;
+`;
+
+export const StyledMedals = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 13px;
 `;

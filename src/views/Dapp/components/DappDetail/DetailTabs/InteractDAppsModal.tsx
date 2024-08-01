@@ -1,0 +1,141 @@
+import styled from "styled-components";
+import Modal from "@/components/Modal";
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+
+const StyledModalTitle = styled.div`
+  font-weight: 700;
+`;
+
+const StyledModalBody = styled.div`
+  padding: 24px 30px 63px 30px;
+`;
+
+const StyledDesc = styled.div`
+  color: #979ABE;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 24px;
+`;
+
+const StyledBodyItem = styled.div`
+  border-radius: 12px;
+  background: rgba(0,0,0,0.2);
+  padding: 18px 21px;
+  display: flex;
+  column-gap: 20px;
+  justify-content: space-between;
+  cursor: pointer;
+  &:not(:last-child) {
+    margin-bottom: 10px;
+  }
+`;
+
+const StyledItemInfo = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 11px;
+`;
+
+const StyledDappLogo = styled.div<{url?: string}>`
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px #202329;
+  background:${props => props.url ? `url(${props.url }) center no-repeat` : 'unset'};
+  background-size: contain;
+  flex-shrink: 0;
+`;
+
+const StyledDappName = styled.div`
+  color: #FFF;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 600;
+`;
+
+const StyledArrow = styled.div`
+  opacity: 0.8;
+  transform: rotate(-90deg);
+  color: #ffffff;
+`;
+
+const StyledModal = styled.div`
+  .interact-modal-overlay {
+    backdrop-filter: blur(5px);
+  }
+  .interact-modal {
+    background: #18191E;
+    border: 1px solid #202329;
+    backdrop-filter: blur(10px);
+  }
+`;
+
+const dAppsList = [
+  {
+    logo: '',
+    name: 'Quickswap',
+    path: ''
+  },
+  {
+    logo: '',
+    name: 'Mantis Swap',
+    path: ''
+  },
+  {
+    logo: '',
+    name: '0vix',
+    path: ''
+  },
+  {
+    logo: '',
+    name: 'Satori Finance',
+    path: ''
+  },
+]
+
+const InteractDAppsModal = (props: any) => {
+
+  const {
+    display = false,
+    onClose = () => {},
+    chainName = ''
+  } = props;
+
+  const onDappClick = (item: any) => {
+    console.log(item.path);
+  }
+
+  return (
+    <StyledModal>
+      <Modal
+        width={562}
+        display={display}
+        onClose={onClose}
+        overlayClassName='interact-modal-overlay'
+        className='interact-modal'
+        title={<StyledModalTitle>Interact with {chainName} DApps</StyledModalTitle>}
+        content={<StyledModalBody>
+          <StyledDesc>
+            Here are the top dApps in {chainName} ranked by total value locked (TVL). Try to perform transactions consistently every week as frequency of smart contract interaction is an important criterion to qualify for the airdrop:
+          </StyledDesc>
+          {
+            dAppsList.map((item, index) => (<StyledBodyItem key={index} onClick={() => onDappClick(item)}>
+              <StyledItemInfo>
+                <StyledDappLogo url={item.logo}/>
+                <StyledDappName>{item.name}</StyledDappName>
+              </StyledItemInfo>
+              <StyledArrow>
+                <ArrowIcon size={11}/>
+              </StyledArrow>
+            </StyledBodyItem>))
+          }
+        </StyledModalBody>}
+      />
+    </StyledModal>
+  );
+};
+
+
+export default InteractDAppsModal;

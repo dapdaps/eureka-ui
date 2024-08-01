@@ -2,11 +2,30 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   font-family: Montserrat;
+  .history-pagination {
+    column-gap: 24px;
+    .pagination-previous {
+      margin-right: 0;
+    }
+    .pagination-next {
+      margin-left: 0;
+    }
+    .first-page,
+    .last-page {
+      border: none;
+      font-size: 14px;
+      width: auto;
+    }
+
+    .history-pagination-item {
+      border: none;
+      font-size: 14px;
+      width: auto;
+    }
+  }
 `;
 
 export const StyledTabContainer = styled.div`
-  padding-left: 40px;
-  padding-right: 25px;
 `;
 
 export const StyledTabs = styled.div`
@@ -55,11 +74,10 @@ export const StyledTabsContent = styled.div`
   border-radius: 20px;
   border: 1px solid #202329;
   background-color: #18191E;
-  backdrop-filter: blur(10px);
   width: 100%;
-  .activity-table {
-    .activity-table-body {
-      .activity-table-row {
+  .history-table {
+    .history-table-body {
+      .history-table-row {
         padding-left: 13px;
         &:hover {
           background: rgba(0, 0, 0, 0.2);
@@ -68,20 +86,19 @@ export const StyledTabsContent = styled.div`
       }
     }
 
-    .activity-table-head {
+    .history-table-head {
       padding-left: 13px;
-      .activity-table-col {
+      .history-table-col {
         padding-top: 0;
         padding-bottom: 10px;
         color: #979ABE;
         font-family: Montserrat;
       }
     }
-    .activity-table-col {
+    .history-table-col {
       padding-top: 23px;
       padding-bottom: 23px;
     }
-    
   }
 `;
 
@@ -97,7 +114,7 @@ export const StyledHeadText = styled.div`
   font-family: Montserrat;
   font-size: 14px;
   font-weight: 500;
-  line-height: 1;
+  line-height: 1; 
   margin-right: 60px;
   .light {
     font-size: 20px;
@@ -132,7 +149,6 @@ export const StyledMyAvatar = styled.div<{url: string}>`
 
 export const StyledHeadOther = styled.div`
   color: #979ABE;
-  font-family: Montserrat;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
@@ -155,7 +171,6 @@ export const StyledHeadInfo = styled.div`
 export const StyledMyAddress = styled.div`
   color: #FFF;
   text-align: center;
-  font-family: Montserrat;
   font-size: 20px;
   font-weight: 600;
   line-height: 1;
@@ -176,11 +191,14 @@ export const StyledTitleText = styled.div`
 export const StyledOverviewContainer = styled.div`
   padding: 30px 22px 44px 30px;
   font-family: Montserrat;
+  position: relative;
+  min-height: 500px;
 `;
 
 export const StyledOverview = styled.div`
-  border-bottom: 1px solid #202329;
   padding-bottom: 25px;
+  position: relative;
+  z-index: 1;
 `;
 
 export const StyledOverviewTitle = styled.div`
@@ -196,8 +214,15 @@ export const StyledOverviewDesc = styled.div`
   font-weight: 400;
 `;
 
-export const StyledToken = styled.div`
+export const StyledTokenContainer = styled.div`
   margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+`;
+
+export const StyledTokenItem = styled.div`
+  flex-shrink: 0;
 `;
 
 export const StyledTokenLabel = styled.div`
@@ -216,6 +241,9 @@ export const StyledTokenValue = styled.div`
 export const StyledAirdrop = styled.div`
   color: #ffffff;
   padding-top: 22px;
+  border-top: 1px solid #202329;
+  position: relative;
+  z-index: 1;
 `;
 
 export const StyledAirdropMainTitle = styled.div`
@@ -319,4 +347,117 @@ export const StyledAirdropArrow = styled.div`
   color: #ffffff;
   opacity: 0.8;
   transform: rotate(-90deg);
+`;
+
+
+export const StyledTabIcon = styled.div<{url?: string}>`
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: ${props => props.url ? `url(${props.url}) no-repeat center`: ''};
+  background-size: contain;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 7px;
+`;
+
+export const StyledEmptyText = styled.div`
+  background: linear-gradient(90deg, #FFF 0%, #979ABE 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 600;
+`;
+
+export const StyledEmptyTxt = styled.div`
+  color: #979ABE;
+  font-family: Montserrat;
+  font-weight: 400;
+`;
+
+export const StyledHistoryDapp = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+`;
+
+export const StyledHistoryDappLogo = styled.div<{url?: string}>`
+  border-radius: 6px;
+  width: 20px;
+  height: 20px;
+  background: ${props => props.url ? `url(${props.url}) no-repeat center` : 'unset'};
+  background-size: contain;
+`;
+
+export const  StyledHistoryDappName = styled.div`
+  color: #FFF;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 400;
+`;
+
+
+export const StyledTokenPrice = styled.div`
+  color: #ffffff;
+  font-family: Montserrat;
+  font-size: 16px;
+  display: flex;
+  align-items: flex-end;
+  column-gap: 8px;
+`;
+
+export const StyledSummaryAdd = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 3px;
+`;
+
+export const StyledSummaryAddIcon = styled.div`
+  width: 10px;
+  height: 8px;
+  color: #06C17E;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StyledAddText = styled.div`
+  color: #06C17E;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-weight: 500;
+`;
+
+export const StyledTokenInfo = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+`;
+
+export const StyledTokenLogo = styled.div<{url?: string}>`
+  background: ${props => props.url ? `url(${props.url}) no-repeat center`: 'unset'};
+  background-size: contain;
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+`;
+
+export const StyledTokenAddress = styled.div`
+  color: #FFF;
+  font-family: Montserrat;
+  font-size: 16px;
+`;
+
+export const StyledOverviewShadow = styled.img`
+  width: 345px;
+  height: 300px;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  z-index: 0;
+  transform: translateX(-10000px);
+  object-fit: contain;
 `;

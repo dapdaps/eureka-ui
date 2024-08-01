@@ -47,8 +47,3 @@ export const TABS = [
     label: 'My History'
   }
 ]
-
-export const MyHistoryTab =  {
-  key: '2',
-  label: 'My History'
-}

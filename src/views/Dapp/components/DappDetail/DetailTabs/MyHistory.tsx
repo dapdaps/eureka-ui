@@ -10,43 +10,32 @@ import {
   StyledMyAddress,
   StyledDateText,
   StyledTitleText,
+  StyledEmptyTxt,
+  StyledHistoryDapp,
+  StyledHistoryDappLogo,
+  StyledHistoryDappName
 } from './styles';
 import { Column } from "../../FlexTable/styles";
 import { formatTitle } from '@/views/OnBoarding/helpers';
 import useCopy from "@/hooks/useCopy";
+import Empty from "@/components/Empty";
+import Pagination from '@/components/pagination';
+import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
+import { formateAddress } from "@/utils/formate";
+import { formatUSDate } from "@/utils/date";
 
-const MyHistory = ({ loading, list }: any) => {
+const MyHistory = ({type, loading, historyList, pageTotal, pageIndex, fetchHistoryList}: any) => {
 
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
 
   const { copy } = useCopy();
 
-  const formatId = (tx: string) => {
-    if (!tx) return '-';
-    else {
-      return <>{tx.substring(0, 6) + '...' + tx.substring(tx.length - 4, tx.length)}</>;
-    }
-  };
-
-  function formatDate(timestamp: number) {
-    const date = new Date(timestamp * 1000);
-    const options = {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    } as const;
-    return date.toLocaleString('en-US', options);
-  }
-
   const onPortfolioClick = () => {}
 
   const onShareClick = () => {}
 
-  const historyColumns: Column[] = [
+  const historyDappColumns: Column[] = [
     {
       dataIndex: 'actions',
       title: 'Actions',
@@ -55,7 +44,29 @@ const MyHistory = ({ loading, list }: any) => {
     {
       dataIndex: 'timestamp',
       title: 'Time',
-      render: (_, record) => <StyledDateText>{formatDate(record.timestamp)}</StyledDateText>,
+      render: (_, record) => <StyledDateText>{formatUSDate(record.timestamp)}</StyledDateText>,
+      width: '30%'
+    },
+  ];
+
+  const historyChainColumns: Column[] = [
+    {
+      dataIndex: 'actions',
+      title: 'Actions',
+      render: (_, record) =>  <StyledTitleText>{formatTitle(record)}</StyledTitleText>,
+    },
+    {
+      dataIndex: 'dapp',
+      title: 'dApp',
+      render:(_, record) =>  <StyledHistoryDapp>
+        <StyledHistoryDappLogo />
+        <StyledHistoryDappName></StyledHistoryDappName>
+      </StyledHistoryDapp>,
+    },
+    {
+      dataIndex: 'timestamp',
+      title: 'Time',
+      render: (_, record) => <StyledDateText>{formatUSDate(record.timestamp)}</StyledDateText>,
       width: '30%'
     },
   ];
@@ -65,7 +76,7 @@ const MyHistory = ({ loading, list }: any) => {
       <StyledHead>
         <StyledHeadInfo>
           <StyledMyAvatar url={userInfo.avatar}/>
-          <StyledMyAddress>{formatId(account ?? '')}</StyledMyAddress>
+          <StyledMyAddress>{formateAddress(account ?? '')}</StyledMyAddress>
           <Image
             className='head-icon'
             src='/images/alldapps/icon-copy.svg'
@@ -88,11 +99,23 @@ const MyHistory = ({ loading, list }: any) => {
         </StyledHeadOther>
       </StyledHead>
       <FlexTable
-        className='activity-table'
+        className='history-table'
         loading={loading}
-        list={list}
-        columns={historyColumns}
-        emptyText='No history yet'
+        list={historyList}
+        columns={type == 'chain' ? historyChainColumns  : historyDappColumns}
+        emptyText={<Empty
+          size={42}
+          tips={<StyledEmptyTxt>You don’t have any record on this {type} yet</StyledEmptyTxt>}
+        />}
+        pagination={<Pagination
+          pageClassName={'history-pagination-item'}
+          className={'history-pagination'}
+          pageTotal={pageTotal}
+          pageIndex={pageIndex}
+          onPage={(page) => {
+            fetchHistoryList(page);
+          }}
+        />}
       />
     </>
   );

@@ -70,6 +70,8 @@ const Modal = ({
   content,
   showHeader = true,
   onClose = () => { },
+  overlayClassName = '',
+  className = ''
 }: {
   display: boolean;
   title?: string | ReactNode;
@@ -78,13 +80,16 @@ const Modal = ({
   showHeader?: boolean;
   content: ReactNode;
   onClose?: () => void;
+  overlayClassName?: any;
+  className?: any;
 }) => {
   return (
     <AnimatePresence mode="wait">
       {display && (
         <Dialog>
-          <Overlay onClick={onClose} {...overlay}>
+          <Overlay onClick={onClose} {...overlay} className={overlayClassName}>
             <Main
+              className={className}
               {...modal}
               $width={width}
               $hidden={hidden}

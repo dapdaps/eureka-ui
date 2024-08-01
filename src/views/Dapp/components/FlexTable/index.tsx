@@ -48,7 +48,7 @@ function FlexTable<Item = any>(props: Props<Item>) {
       </StyledTableHead>
       {
         loading ? (
-          <StyledLoadingWrapper $h="100px">
+          <StyledLoadingWrapper $h="200px">
             <Loading size={22} />
           </StyledLoadingWrapper>
         ) : (
@@ -81,13 +81,13 @@ function FlexTable<Item = any>(props: Props<Item>) {
       }
       {
         !loading && !list.length && (
-          <StyledLoadingWrapper $h="100px">
+          <StyledLoadingWrapper $h="200px">
             <div className="empty-text">{emptyText}</div>
           </StyledLoadingWrapper>
         )
       }
       {
-        pagination && (
+       pagination && list.length > 0 && (
           <StyledTableFoot className={`${className}-foot`}>
             {pagination}
           </StyledTableFoot>

@@ -8,14 +8,15 @@ import {
   StyledSearchIcon,
   StyledSearchInput,
   StyledSelectorLoading,
+  StyledFiltersBackdrop
 } from '@/views/AllDapps/styles';
 import AllDappsTitle from '@/views/AllDapps/components/Title';
 import Selector from '@/components/Dropdown/Selector';
-import { ChangeEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import Image from 'next/image';
-import { AllNetworks, SortList } from '@/views/AllDapps/config';
+import { AllNetworks, SortList, TrueString } from '@/views/AllDapps/config';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
@@ -30,6 +31,8 @@ const AllDapps = (props: Props) => {
 
   const router = useRouter();
 
+  const categoryRef = useRef<any>(null);
+
   const [networkList, setNetworkList] = useState<any>([AllNetworks]);
   const [networkLoading, setNetworkLoading] = useState<boolean>(false);
   const [network, setNetwork] = useState<any>(AllNetworks.id);
@@ -37,7 +40,8 @@ const AllDapps = (props: Props) => {
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [airdrop, setAirdrop] = useState<boolean>(false);
   const [category, setCategory] = useState<number| string>();
-  const [searchWord, setSearchWord] = useState<string>();
+  const [searchWord, setSearchWord] = useState<string | undefined>();
+  const [scrolled, setScrolled] = useState<boolean>(false);
 
   const setQueryParams = useCallback((params: any) => {
     router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
@@ -88,31 +92,64 @@ const AllDapps = (props: Props) => {
   }
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchWord(e.target.value.trim());
+    const params = new URLSearchParams(searchParams);
+    const _searchWord = e.target.value.trim();
+    setSearchWord(_searchWord);
+    if (_searchWord && _searchWord !== 'undefined') {
+      params.set('searchword', encodeURIComponent(_searchWord));
+    } else {
+      params.delete('searchword');
+    }
+    setQueryParams(params);
   }
 
   const onRewardToggle = () => {
     const _rewardNow = !rewardNow;
     const params = new URLSearchParams(searchParams);
     if (_rewardNow) {
-      params.set('reward', '1');
+      params.set('reward', TrueString);
     } else {
       params.delete('reward');
     }
     setQueryParams(params);
   };
 
+  const onAirdropToggle = () => {
+    const _airdrop = !airdrop;
+    const params = new URLSearchParams(searchParams);
+    if (_airdrop) {
+      params.set('airdrop', TrueString);
+    } else {
+      params.delete('airdrop');
+    }
+    setQueryParams(params);
+  }
+
   useEffect(() => {
     fetchNetworkData();
+    const handleScroll = () => {
+      if (window.scrollY > 294) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
-    console.log('router.query: %o', router.query);
     const {
       network: _network,
       reward: _reward,
       sort: _sort,
+      category: _category,
+      searchword: _searchWord,
+      airdrop: _airdrop
     } = router.query;
+
     if (checkQueryEmpty(_network as string, () => {
       return networkList.some((it: any) => it.id === Number(_network));
     })) {
@@ -120,25 +157,42 @@ const AllDapps = (props: Props) => {
     } else {
       setNetwork(AllNetworks.id);
     }
+
+    if (checkQueryEmpty(_sort as string, () => !isNaN(Number(_sort)))) {
+      setSort(Number(_sort));
+    } else {
+      setSort(SortList[0].value);
+    }
+
+    if (checkQueryEmpty(_category as string, () => !isNaN(Number(_category)))) {
+      setCategory(Number(_category));
+    } else {
+      setCategory(undefined);
+    }
+
+    if (checkQueryEmpty(_reward as string, () => _reward === TrueString)) {
+      setRewardNow(true);
+    } else {
+      setRewardNow(false);
+    }
+
+    if (checkQueryEmpty(_airdrop as string, () => _airdrop === TrueString)) {
+      setAirdrop(true);
+    } else {
+      setAirdrop(false);
+    }
+
+    if (checkQueryEmpty(decodeURIComponent(_searchWord as string), () => true)) {
+      setSearchWord(decodeURIComponent(_searchWord as string));
+    } else {
+      setSearchWord('');
+    }
+
+    if (window.scrollY > 0) {
+      window.scrollTo(0, 0);
+    }
+
   }, [router.query, networkList]);
-
-  useEffect(() => {
-    const querySort = router.query.sort;
-    if (querySort && querySort !== 'undefined' && !isNaN(Number(querySort))) {
-      setSort(Number(querySort));
-    } else {
-      setSort(SortList[0].value)
-    }
-  }, [router.query?.sort]);
-
-  useEffect(() => {
-    const queryCategory = router.query.category;
-    if (queryCategory && queryCategory !== 'undefined' && !isNaN(Number(queryCategory))) {
-      setCategory(Number(queryCategory));
-    } else {
-      setCategory(undefined)
-    }
-  }, [router.query?.category]);
 
   return (
     <StyledContainer>
@@ -153,9 +207,12 @@ const AllDapps = (props: Props) => {
           { logo: '/images/alldapps/icon-title-dapp-5.svg' },
           { logo: '/images/alldapps/icon-title-dapp-6.svg' },
         ]}
+        ref={categoryRef}
+        categoryClassname={scrolled ? 'category-fixed' : ''}
       />
       <StyledBody>
-        <StyledFilters>
+        <StyledFiltersBackdrop show={scrolled}/>
+        <StyledFilters fixed={scrolled}>
           {
             networkLoading ? (
               <StyledSelectorLoading>
@@ -199,9 +256,7 @@ const AllDapps = (props: Props) => {
           />
           <StyledRadio
             $selected={airdrop}
-            onClick={() => {
-              setAirdrop(!airdrop);
-            }}
+            onClick={onAirdropToggle}
           >
             <div className="radio-control"></div>
             <div className="radio-text">

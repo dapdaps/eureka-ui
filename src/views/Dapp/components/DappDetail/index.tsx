@@ -8,9 +8,9 @@ import {
   StyledRelatedOdyssey
 } from '@/views/Dapp/components/DappDetail/styles';
 import DappSummary from './Summary';
-import useDappDetail from '../../hooks/useDappDetail';
 import DetailTabs from './DetailTabs/index';
 import RelativeOdyssey from './RelativeOdyssey';
+import Medal from './Medal';
 
 const summaryList = [
   {
@@ -33,11 +33,15 @@ const summaryList = [
   },
 ];
 
+const medalList = [
+  {
+    label:'Bridger Junior',
+    logo:'/images/alldapps/icon-medal.png',
+    percent:0.35
+  }
+]
+
 const DappDetail = (props: any) => {
-  const {
-    activity,
-    activityLoading
-  } = useDappDetail(props.id);
 
   return (
     <StyledContainer>
@@ -54,14 +58,11 @@ const DappDetail = (props: any) => {
       />
       <StyledRelatedContainer>
         <StyledRecordContainer>
-          <DetailTabs
-            loading={activityLoading}
-            activity={activity}
-            {...props}
-          />
+          <DetailTabs {...props} overviewTitle={`What is ${props.name ?? ''} ?`} historyType='dApp'/>
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
-          <RelativeOdyssey />
+          <Medal medalList={medalList}/>
+          <RelativeOdyssey title='Related Campaign'/>
         </StyledRelatedOdyssey>
       </StyledRelatedContainer>
   </StyledContainer>

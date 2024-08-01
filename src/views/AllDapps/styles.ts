@@ -11,17 +11,26 @@ export const StyledContainer = styled.div`
   min-height: 100vh;
   color: #FFF;
   padding-top: 59px;
+  .category-fixed {
+    position: fixed;
+    z-index: 50;
+    top: 88px;
+  }
 `;
 export const StyledBody = styled(AllDappsWrapper)`
   padding-bottom: 150px;
 `;
-export const StyledFilters = styled.div`
-  margin-top: 66px;
+export const StyledFilters = styled.div<{fixed?: boolean}>`
+  margin-top: ${props => props.fixed ? '20px' : '66px'};
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 16px;
   margin-bottom: 36px;
+  position: ${props => props.fixed ? 'fixed' : 'relative'};
+  top: ${props => !props.fixed ? '0' : '150px'};
+  z-index: ${props => props.fixed ? '50' : '1'};
+  width: 1247px;
 `;
 export const StyledNetworkDropdownItem = styled.div`
   display: flex;
@@ -127,4 +136,16 @@ export const StyledSelectorLoading = styled.div`
   border-radius: 10px;
   border: 1px solid rgb(51, 54, 72);
   background: rgb(24, 25, 30);
+`;
+
+
+export const StyledFiltersBackdrop = styled.div<{show: boolean}>`
+  display: ${props => props.show ? 'block' : 'none'};
+  position: fixed;
+  top: 74px;
+  width: 100%;
+  height: 170px;
+  background: #000 url("/images/alldapps/bg.svg") no-repeat center top/1471px 512px;
+  z-index: 40;
+  left: 0;
 `;

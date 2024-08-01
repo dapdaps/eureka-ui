@@ -1,35 +1,21 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useState } from 'react';
 import Breadcrumb from '@/components/Breadcrumb';
-import Bg from './Bg';
 import Header from './Header';
-import MorePanel from './MorePanel';
-import MoreButton from '../MoreButton';
 import {
   StyledContainer,
   StyledBox,
   StyledBgWrapper,
-  StyledBg,
-  StyledBgImg,
   StyledContent,
-  StyledMoreButton,
-  StyledTags,
-  StyledTag,
-  StyledTagLabel,
-  StyledTagValue,
 } from './styles';
 
 const Top = ({ chain }: any) => {
+
   const [more, setMore] = useState(false);
 
   return (
     <StyledContainer style={{ color: chain?.selectBgColor }} className={more ? 'more' : ''}>
       <StyledBox>
-        <StyledBgWrapper>
-          <StyledBg>
-            <Bg />
-          </StyledBg>
-          {/* <StyledBgImg src={chain.icon} more={more} /> */}
-        </StyledBgWrapper>
+        <StyledBgWrapper color={chain?.bgColor}/>
         <StyledContent>
           <Breadcrumb
             navs={[

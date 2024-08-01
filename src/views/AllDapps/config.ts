@@ -41,3 +41,6 @@ export const AllNetworks = {
 };
 
 export const PageSize = 18;
+
+
+export const TrueString = '1';
