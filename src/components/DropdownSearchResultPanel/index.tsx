@@ -20,7 +20,7 @@ import Medal from './Medal';
 
 
 
-const DropdownSearchResultPanel = ({ searchText, show }: any) => {
+const DropdownSearchResultPanel = ({ searchText, setShowSearch }: any) => {
   const router = useRouter();
 
   const [searchResults, setSearchResults] = useState<any | null>(null);
@@ -62,7 +62,7 @@ const DropdownSearchResultPanel = ({ searchText, show }: any) => {
       ) : (
         <>
           <StyleTop>
-            <Search />
+            <Search setShowSearch={setShowSearch}/>
             <RecentSearch />
           </StyleTop>
 

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
@@ -96,6 +96,20 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
 
   const isFromActivity = router.pathname.match(activityReg);
 
+  // Listen for ESC key press to close search
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowSearch(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <Container $expand={showMenuContent}>
       <div className="container-nav">
@@ -134,7 +148,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
         </ChainAndAccountWrapper>
       </div>
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
-      { showSearch && (<DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} />)}
+      { showSearch && (<DropdownSearchResultPanel setShowSearch={setShowSearch} searchText={searchContent} setSearchContent={setSearchContent} />)}
     </Container>
   );
 };

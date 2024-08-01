@@ -12,6 +12,8 @@ import IconArrowRight from '@public/images/header/arrow-right.svg'
 import { StatusType } from './components/Status';
 import Chains from './components/Chains';
 import ListItem from './components/ListItem';
+import useNetworks from '@/views/networks/list/hooks/useNetworks';
+import { DividerHorizontalIcon } from '@radix-ui/react-icons';
 
 
 const StyleView = styled.div`
@@ -45,26 +47,10 @@ const StyleView = styled.div`
 
 
 
-const items = [
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Arbitrum' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Avalanche' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Base' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Blast' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'BNB' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Gnosis' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Linea' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Manta' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Mantle' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Metis' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Mode' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Optimism' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Polygon' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Polygon zkEVM' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'Scroll' },
-  { iconSrc: 'https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png', label: 'zksync' },
-];
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
+  const { loading: networkLoading, networkList } = useNetworks();
+
   return (
     <Wrapper className={className}>
       <NavigationMenu.Root className="NavigationMenuRoot">
@@ -75,8 +61,8 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
               <IconOdyssey />
               <IconArrowDown />
             </NavigationMenu.Trigger>
-            <NavigationMenu.Content className="NavigationMenuContent bridge">
-              <ul className="List">
+            <NavigationMenu.Content className="NavigationMenuContentV2 bridge">
+              <div className="List">
                 <ListItem
                   imgSrc="https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png"
                   isNew={true}
@@ -85,34 +71,34 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                   description="DapDap x Mode: The Airdrop Ascendancy"
                   className='bridge-nav'
                 />
-              </ul>
+              </div>
               <StyleView><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={recordMouseEnter}>
+            <NavigationMenu.Trigger className="NavigationMenuTrigger">
               <IconBridge />
               Bridge
             </NavigationMenu.Trigger>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={recordMouseEnter}>
+            <NavigationMenu.Trigger className="NavigationMenuTrigger">
               <IconSwap />
               Swap
             </NavigationMenu.Trigger>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={recordMouseEnter}>
+            <NavigationMenu.Trigger className="NavigationMenuTrigger">
               Chains
               <IconArrowDown />
             </NavigationMenu.Trigger>
-            <NavigationMenu.Content className="NavigationMenuContent chains">
-              <ul className="List chain">
-                <Chains items={items}></Chains>
-              </ul>
+            <NavigationMenu.Content className="NavigationMenuContentV2 chains">
+              <div className="List chain">
+                <Chains loading={networkLoading} data={networkList} />
+              </div>
               <StyleView className='chain-all'><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>

@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
+import useNetworks from '@/views/networks/list/hooks/useNetworks';
+
 
 const GridContainer = styled.div`
   padding: 16px 12px;
@@ -47,24 +50,34 @@ const GridItemContainer = styled.div`
   }
 `;
 
-interface GridItemProps {
-  iconSrc: string;
-  label: string;
+const LoadingCard = () => {
+  return Array.from({ length: 16 }).map((_) => (
+    <GridItemContainer>
+      <Skeleton width="60px" height="60px" borderRadius="12px" />
+      <Skeleton width="86px" height="16px" borderRadius="6px" />
+    </GridItemContainer>
+  ));
 }
 
-interface GridProps {
-  items: GridItemProps[];
-}
+const Chains = ({
+  loading,
+  data,
+}: {
+  loading: boolean;
+  data: { name: string; logo: string }[];
+}) => {
+  const items = useMemo(() =>  data.map(item => ({ iconSrc: item.logo, label: item.name })), [data]);
 
-const Chains: React.FC<GridProps> = ({ items }) => (
-  <GridContainer>
-    {items.map((item, index) => (
-      <GridItemContainer key={index}>
-        <img src={item.iconSrc} alt={item.label} />
-        <div className='label'>{item.label}</div>
-      </GridItemContainer>
-    ))}
-  </GridContainer>
-);
+  return (
+    <GridContainer>
+      {loading ? <LoadingCard /> : items.map((item, index) => (
+        <GridItemContainer key={index}>
+          <img src={item.iconSrc} alt={item.label} />
+          <div className="label">{item.label}</div>
+        </GridItemContainer>
+      ))}
+    </GridContainer>
+  );
+};
 
 export default Chains;

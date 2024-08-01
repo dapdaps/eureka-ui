@@ -44,7 +44,11 @@ const InputCloseIcon = styled.div`
     opacity: 0.8;
   }
 `;
-const Search = () => {
+const Search = ({
+  setShowSearch
+}: {
+  setShowSearch: (show: boolean) => void;
+}) => {
   const { currentSearch, setSearch, addRecentSearch } = useRecentStore();
 
   const { run: handleSearch } = useDebounceFn(
@@ -88,6 +92,7 @@ const Search = () => {
       <InputCloseIcon
         onClick={() => {
           setSearch('');
+          setShowSearch(false)
         }}
       >
         <IconClear />

@@ -14,8 +14,9 @@ export default function useNetworks() {
       const resultNetwork = await get(`${QUEST_PATH}/api/network/list`);
       setNetworkList(resultNetwork.data || []);
     } catch (error) {
-      setLoading(false);
       console.error('Error fetching resultNetwork data:', error);
+    } finally {
+      setLoading(false);
     }
   };
 

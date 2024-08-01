@@ -67,9 +67,7 @@ export const Wrapper = styled.div`
     font-weight: 600;
   }
 
-
-
-  .NavigationMenuContent {
+  .NavigationMenuContentV2 {
     position: absolute;
     background-color: #1F2229;
     animation-duration: 250ms;
@@ -83,12 +81,27 @@ export const Wrapper = styled.div`
       left: 0px;
       width: 814px;
       padding: 25px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     &.chains {
       top: 56px;
       width: 425px;
       left: -152px
     }
+  }
+
+  .NavigationMenuContent {
+    position: absolute;
+    background-color: #1F2229;
+    animation-duration: 250ms;
+    animation-timing-function: ease;
+    border-radius: 12px;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(51, 54, 72, 1);
+    background: rgba(31, 34, 41, 1);
   }
 
 
