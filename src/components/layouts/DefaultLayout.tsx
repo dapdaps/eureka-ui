@@ -27,7 +27,7 @@ const Layout = styled.div`
   }
 `;
 
-const BLACK_PATH = ['/odyssey/[version]', '/']
+const BLACK_PATH = ['/odyssey/[version]', '/', '/odyssey/list']
 
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();

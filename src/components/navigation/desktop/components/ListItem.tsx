@@ -10,6 +10,7 @@ const Flex = styled.div`
   padding: 15px 20px;
   padding-right: 0;
   gap: 12px;
+  border-radius: 6px;
   &:hover {
     cursor: pointer;
     background: rgba(0, 0, 0, .25);
@@ -148,7 +149,13 @@ const ListItem: React.FC<IProps> = ({ data, loading, className }) => {
         <LoadingList />
       ) : (
         newData.map((item, index) => (
-          <Flex key={index} className={className}>
+          <Flex 
+            key={index} 
+            className={className}
+            style={{
+              filter: item.status === StatusType.ended ? 'grayscale(100%)' : 'grayscale(0%)',
+            }}
+            >
             <StyleImage className="bridgeImage">
               <img src={item.banner} alt="bridge" />
               {item.isNew && <StyleNew />}
