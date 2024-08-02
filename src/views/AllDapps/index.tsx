@@ -71,12 +71,12 @@ const AllDapps = (props: Props) => {
     setQueryParams(params);
   }
 
-  const onSortSelect = (_sort: number) => {
+  const onSortSelect = (_sort: string) => {
     const params = new URLSearchParams(searchParams);
-    if (_sort === 1) {
+    if (_sort === SortList[0].value) {
       params.delete('sort');
     } else {
-      params.set('sort', _sort.toString());
+      params.set('sort', _sort);
     }
     setQueryParams(params);
   }
@@ -151,15 +151,15 @@ const AllDapps = (props: Props) => {
     } = router.query;
 
     if (checkQueryEmpty(_network as string, () => {
-      return networkList.some((it: any) => it.id === Number(_network));
+      return networkList.some((it: any) => it.chain_id === Number(_network));
     })) {
       setNetwork(Number(_network));
     } else {
       setNetwork(AllNetworks.id);
     }
 
-    if (checkQueryEmpty(_sort as string, () => !isNaN(Number(_sort)))) {
-      setSort(Number(_sort));
+    if (checkQueryEmpty(_sort as string, () => true)) {
+      setSort(_sort);
     } else {
       setSort(SortList[0].value);
     }
@@ -223,7 +223,7 @@ const AllDapps = (props: Props) => {
                 list={networkList}
                 value={network}
                 onSelect={onSelectNetwork}
-                itemValueKey="id"
+                itemValueKey="chain_id"
                 itemLabelKey="name"
                 popupStyle={{
                   width: 196,

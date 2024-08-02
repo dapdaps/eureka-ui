@@ -142,7 +142,7 @@ export const StyledSelectorLoading = styled.div`
 export const StyledFiltersBackdrop = styled.div<{show: boolean}>`
   display: ${props => props.show ? 'block' : 'none'};
   position: fixed;
-  top: 74px;
+  top: 70px;
   width: 100%;
   height: 170px;
   background: #000 url("/images/alldapps/bg.svg") no-repeat center top/1471px 512px;

@@ -1,42 +1,57 @@
 import { useEffect, useState } from "react";
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
+import useAccount from "@/hooks/useAccount";
+import useAuthCheck from "@/hooks/useAuthCheck";
+import { useDebounceFn } from "ahooks";
 
-export default function useMyHistory() {
+export default function useMyHistory(chainId?: number) {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [historyList, setHistoryList] = useState<any>([]);
   const [pageTotal, setPageTotal] = useState<number>(0);
+  const [total, setTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
+  const { account } = useAccount();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const fetchHistoryList = async (page: number) => {
     setPageIndex(page);
     try {
       setLoading(true);
       const params: Record<string, any> = {
-        tbd_token: false,
-        is_favorite: false,
+        account_id: account,
         page_size: 10,
         page,
       };
+      if (chainId) {
+        params.chain_id = chainId;
+      }
 
       const result = await get(
-        `${QUEST_PATH}/api/`,
+        `${QUEST_PATH}/api/action/get-actions-by-account`,
         params
       );
       const data = result?.data?.data ??  [];
       setHistoryList(data);
-      setPageTotal(result.data.total_page || 0);
+      setPageTotal(result.data?.total_page || 0);
+      setTotal(result.data?.total ?? 0);
       setLoading(false);
     } catch (error) {
-      console.error('Error fetching resultDapp data:', error);
+      console.error('Error fetching actions data:', error);
       setLoading(false);
     }
   };
 
+  const { run } = useDebounceFn(
+    () => {
+      check(() => fetchHistoryList(1));
+    },
+    { wait: 300 })
+
   useEffect(() => {
-    // fetchHistoryList(1);
-  }, []);
+    run();
+  }, [chainId, account]);
 
   return {
     loading,
@@ -44,5 +59,6 @@ export default function useMyHistory() {
     pageTotal,
     pageIndex,
     fetchHistoryList,
+    total
   }
 };

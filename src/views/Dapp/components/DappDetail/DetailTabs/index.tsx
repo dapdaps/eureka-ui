@@ -23,6 +23,7 @@ const DetailTabs = (props: Props) => {
     logo,
     historyType,
     overviewTitle,
+    chain_id
   } = props;
 
   const {
@@ -31,8 +32,14 @@ const DetailTabs = (props: Props) => {
     pageTotal,
     pageIndex,
     fetchHistoryList,
-  } = useMyHistory();
+    total
+  } = useMyHistory(chain_id);
 
+  const isHistoryTab = (tab: string) => {
+    return tab === TABS[1].key;
+  }
+
+  console.log(props);
   return (
     <StyledContainer>
       <StyledTabContainer>
@@ -46,8 +53,8 @@ const DetailTabs = (props: Props) => {
               >
 
                 <StyledTabText active={currTab === item.key}>
-                  { item.key === TABS[TABS.length - 1].key && (<StyledTabIcon url={logo}/>)}
-                  {item.label}
+                  { isHistoryTab(item.key) && (<StyledTabIcon url={logo}/>)}
+                  {item.label} { isHistoryTab(item.key) && (`(${total})`) }
                 </StyledTabText>
               </StyledTab>
             ))
@@ -95,4 +102,5 @@ interface Props {
     icon?: string;
     color?: string;
   };
+  chain_id?: number;
 }

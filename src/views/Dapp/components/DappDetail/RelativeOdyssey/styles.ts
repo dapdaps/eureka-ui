@@ -83,30 +83,6 @@ export const StyledOdysseyTag = styled.div`
   }
 `;
 
-export const StyledRewardTag = styled.div<{url: string}>`
-  position: absolute;
-  right: 3px;
-  top: -12px;
-  width: 91px;
-  height: 91px;
-  z-index: 2;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center`: ''};
-  background-size: contain;
-`;
-
-export const StyledRewardText = styled.div`
-  position: absolute;
-  color: #000;
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 900;
-  text-transform: uppercase;
-  transform: rotate(-15deg);
-  left: 0;
-  right: -6px;
-`;
-
 export const StyledRelatedTitle = styled.div`
   display: inline-block;
   font-size: 20px;

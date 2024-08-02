@@ -1,11 +1,11 @@
 export const CategoryList = [
-  { key: 1, label: 'Bridge', value: 41, colorRgb: '247,255,154' },
-  { key: 2, label: 'Dex', value: 69, colorRgb: '172,252,237' },
-  { key: 3, label: 'Lending', value: 29, colorRgb: '173,255,181' },
-  { key: 4, label: 'Liquidity', value: 10, colorRgb: '170,214,255' },
-  { key: 5, label: 'Staking', value: 41, colorRgb: '193,191,255' },
-  { key: 6, label: 'Yield', value: 41, colorRgb: '249,181,230' },
-  { key: 7, label: 'Launchpad', value: 41, colorRgb: '153,114,238' },
+  { key: 1, label: 'Bridge', colorRgb: '247,255,154' },
+  { key: 2, label: 'Dex', colorRgb: '172,252,237' },
+  { key: 3, label: 'Lending', colorRgb: '173,255,181' },
+  { key: 4, label: 'Liquidity', colorRgb: '170,214,255' },
+  { key: 5, label: 'Staking', colorRgb: '193,191,255' },
+  { key: 6, label: 'Yield', colorRgb: '249,181,230' },
+  { key: 7, label: 'Launchpad', colorRgb: '153,114,238' },
 ];
 
 export interface TitleDapp {
@@ -28,10 +28,10 @@ export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [
 ];
 
 export const SortList = [
-  { key: 1, value: 1, label: 'Sort by TVL' },
-  { key: 2, value: 2, label: 'Sort by users' },
-  { key: 3, value: 3, label: 'A-Z' },
-  { key: 4, value: 4, label: 'Z-A' },
+  { key: 1, value: 'volume', label: 'Sort by Volume' },
+  { key: 2, value: 'users', label: 'Sort by users' },
+  { key: 3, value: 'a-z', label: 'A-Z' },
+  { key: 4, value: 'z-a', label: 'Z-A' },
 ];
 
 export const AllNetworks = {

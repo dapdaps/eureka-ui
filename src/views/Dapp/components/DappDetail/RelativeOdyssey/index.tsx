@@ -1,11 +1,9 @@
 import {
   StyledContainer,
   StyledOdysseyContainer,
-  StyledRewardTag,
   StyledOdysseyBanner,
   StyledOdysseyTitle,
   StyledOdysseyTag,
-  StyledRewardText,
   StyledOdysseyDetail,
   StyledRelatedTitle,
   StyledOdysseyBody,

@@ -29,6 +29,8 @@ const DappList = forwardRef((props: Props, ref) => {
     pageIndex,
   }));
 
+  console.log(dappList);
+
   return (
     <StyledContainer style={props?.style}>
       {
@@ -48,12 +50,9 @@ const DappList = forwardRef((props: Props, ref) => {
                       categories={dapp.categories}
                       networks={dapp.networks}
                       onClick={() => onDappCardClick(dapp)}
-                      badges={[
-                        { icon: '/images/alldapps/icon-exchange.svg', iconSize: 17, value: '$23.56k' },
-                        { icon: '/images/alldapps/icon-fire.svg', iconSize: 17, value: '1,235' },
-                        { icon: '/images/alldapps/icon-mode.svg', iconSize: 24 },
-                        { icon: '/images/alldapps/icon-dapdap-point.svg', iconSize: 24 },
-                      ]}
+                      trading_volume={dapp?.trading_volume}
+                      participants={dapp?.participants}
+                      badges={dapp.rewards}
                     />
                   ))
                 }

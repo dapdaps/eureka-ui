@@ -20,11 +20,18 @@ import { formatTitle } from '@/views/OnBoarding/helpers';
 import useCopy from "@/hooks/useCopy";
 import Empty from "@/components/Empty";
 import Pagination from '@/components/pagination';
-import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
 import { formateAddress } from "@/utils/formate";
 import { formatUSDate } from "@/utils/date";
 
-const MyHistory = ({type, loading, historyList, pageTotal, pageIndex, fetchHistoryList}: any) => {
+const MyHistory = (
+  {
+    type,
+    loading,
+    historyList,
+    pageTotal,
+    pageIndex,
+    fetchHistoryList
+  }: any) => {
 
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
@@ -77,26 +84,31 @@ const MyHistory = ({type, loading, historyList, pageTotal, pageIndex, fetchHisto
         <StyledHeadInfo>
           <StyledMyAvatar url={userInfo.avatar}/>
           <StyledMyAddress>{formateAddress(account ?? '')}</StyledMyAddress>
-          <Image
-            className='head-icon'
-            src='/images/alldapps/icon-copy.svg'
-            width={14}
-            height={14}
-            alt='copy'
-            onClick={() => copy(account ?? '')}
-          />
-          <Image
-            className='head-icon'
-            src='/images/alldapps/icon-share.svg'
-            width={12}
-            height={12}
-            alt='share'
-            onClick={onShareClick}
-          />
+          {
+            account && (<>
+              <Image
+                className='head-icon'
+                src='/images/alldapps/icon-copy.svg'
+                width={14}
+                height={14}
+                alt='copy'
+                onClick={() => copy(account ?? '')}
+              />
+              <Image
+                className='head-icon'
+                src='/images/alldapps/icon-share.svg'
+                width={12}
+                height={12}
+                alt='share'
+                onClick={onShareClick}
+              />
+            </>)
+          }
         </StyledHeadInfo>
-        <StyledHeadOther onClick={onPortfolioClick}>
+        { account && (<StyledHeadOther onClick={onPortfolioClick}>
           View more on Portfolio
-        </StyledHeadOther>
+        </StyledHeadOther>)
+        }
       </StyledHead>
       <FlexTable
         className='history-table'
