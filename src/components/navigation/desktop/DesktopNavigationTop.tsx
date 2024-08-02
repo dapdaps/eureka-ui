@@ -185,7 +185,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
       {
         isHomePage && <StyledConfirmOfficialUrl onClick={() => setShowTips(false)}/>
       }
-      <Container $expand={showMenuContent} $top={showTips ? '54px' : '0px' }>
+      <Container $expand={showMenuContent} $top={showTips && isHomePage ? '54px' : '0px' }>
         <div className="container-nav">
           {isFromActivity ? (
             <LogoContainer onClick={goHomeWithFresh}>
