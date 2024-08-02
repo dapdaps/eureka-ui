@@ -14,6 +14,8 @@ import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
 
 import OdysseyIcon from './OdysseyIcon';
+import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
+import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
 
 const LoginContainer = styled.div`
   width: auto;
@@ -25,12 +27,12 @@ const AccountWrapper = styled.div<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
 
-const Container = styled.div<{ $expand: boolean }>`
+const Container = styled.div<{ $expand: boolean, $top?: string }>`
   position: relative;
   color: #979abe;
   padding: 20px 36px;
   position: sticky;
-  top: 0;
+  top: ${( { $top } ) => ($top ? $top : '0')};
   width: 100%;
   z-index: 50;
   background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(22, 24, 29, 0.9)')};
@@ -155,6 +157,11 @@ const BridgeWapper = styled.div`
   }
 `;
 
+const StyledConfirmOfficialUrl = styled(ConfirmOfficialUrl)`
+  position: sticky;
+  width: 100vw;
+`
+
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
 const ExpandIcon = 'https://assets.dapdap.net/images/bafkreiam7p4ewrfedupruquxtsgrj7x2m425tky6htqdalbxa6l74hstpi.svg';
@@ -169,108 +176,115 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
+  const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl)
 
   const isFromActivity = router.pathname.match(activityReg);
 
+  const isHomePage = router.pathname === '/';
   return (
-    <Container $expand={showMenuContent}>
-      <div className="container-nav">
-        {isFromActivity ? (
-          <LogoContainer onClick={goHomeWithFresh}>
-            <img src={logoUrl} alt="" />
-          </LogoContainer>
-        ) : (
-          <Link href="/">
-            <LogoContainer>
+    <>
+      {
+        isHomePage && <StyledConfirmOfficialUrl/>
+      }
+      <Container $expand={showMenuContent} $top={showConfirmOfficialUrl && isHomePage ? '54px' : '0px' }>
+        <div className="container-nav">
+          {isFromActivity ? (
+            <LogoContainer onClick={goHomeWithFresh}>
               <img src={logoUrl} alt="" />
             </LogoContainer>
-          </Link>
-        )}
+          ) : (
+            <Link href="/">
+              <LogoContainer>
+                <img src={logoUrl} alt="" />
+              </LogoContainer>
+            </Link>
+          )}
 
-        <MenuContainer>
-          <Search>
-            <InputWrapper>
-              <input
-                type="text"
-                placeholder="search dApps, chains..."
-                value={searchContent}
-                onChange={(e) => setSearchContent(e.target.value)}
-                autoFocus
-                id="nav-top-search"
-                className="top-nav-input"
-              />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="21"
-                height="15"
-                viewBox="0 0 21 15"
-                fill="none"
-                className="search-icon"
-              >
-                <circle cx="7.01829" cy="7.01829" r="6.01829" stroke="#EBF479" strokeWidth="2" />
-                <rect
-                  x="14.9138"
-                  y="9.64978"
-                  width="6.141"
-                  height="2.63186"
-                  rx="1.31593"
-                  transform="rotate(30 14.9138 9.64978)"
-                  fill="#EBF479"
+          <MenuContainer>
+            <Search>
+              <InputWrapper>
+                <input
+                  type="text"
+                  placeholder="search dApps, chains..."
+                  value={searchContent}
+                  onChange={(e) => setSearchContent(e.target.value)}
+                  autoFocus
+                  id="nav-top-search"
+                  className="top-nav-input"
                 />
-              </svg>
-              {searchContent && (
-                <InputCloseIcon
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="21"
+                  height="15"
+                  viewBox="0 0 21 15"
+                  fill="none"
+                  className="search-icon"
+                >
+                  <circle cx="7.01829" cy="7.01829" r="6.01829" stroke="#EBF479" strokeWidth="2" />
+                  <rect
+                    x="14.9138"
+                    y="9.64978"
+                    width="6.141"
+                    height="2.63186"
+                    rx="1.31593"
+                    transform="rotate(30 14.9138 9.64978)"
+                    fill="#EBF479"
+                  />
+                </svg>
+                {searchContent && (
+                  <InputCloseIcon
+                    onClick={() => {
+                      setSearchContent('');
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                      <circle cx="12" cy="12" r="12" fill="#303142" />
+                      <path
+                        d="M13.444 12L16.7799 8.66415C17.0307 8.41332 17.0735 8.0494 16.8756 7.85157L16.1482 7.12424C15.9503 6.92632 15.5869 6.96974 15.3356 7.22041L12.0001 10.5561L8.66433 7.22049C8.41349 6.96941 8.04957 6.92632 7.85165 7.12449L7.12431 7.8519C6.92648 8.04949 6.96931 8.4134 7.22048 8.66423L10.5563 12L7.22048 15.336C6.96973 15.5866 6.92631 15.9503 7.12431 16.1482L7.85165 16.8756C8.04957 17.0735 8.41349 17.0306 8.66433 16.7799L12.0003 13.4439L15.3357 16.7794C15.587 17.0307 15.9504 17.0735 16.1483 16.8756L16.8757 16.1482C17.0735 15.9503 17.0307 15.5866 16.78 15.3356L13.444 12Z"
+                        fill="#979ABE"
+                      />
+                    </svg>
+                  </InputCloseIcon>
+                )}
+              </InputWrapper>
+              <div className="switch-icon" onClick={() => setShowMenuContent(!showMenuContent)} data-bp="3001-001">
+                <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
+                <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
+              </div>
+              <OdysseyIcon />
+            </Search>
+          </MenuContainer>
+          {/* Page don't need account section */}
+
+          <BridgeWapper>
+            <img
+              src="/images/dashboard/bridge.svg"
+              onClick={() => {
+                router.push('/super-bridge');
+              }}
+              className="bridge-icon"
+            />
+            {isHideAccount ? (
+              <div />
+            ) : account ? (
+              <LoginContainer>
+                <Chain showName={false} bp="3001-003" />
+                <AccountWrapper
                   onClick={() => {
-                    setSearchContent('');
+                    setLayoutStore({ showAccountSider: true });
                   }}
                 >
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <circle cx="12" cy="12" r="12" fill="#303142" />
-                    <path
-                      d="M13.444 12L16.7799 8.66415C17.0307 8.41332 17.0735 8.0494 16.8756 7.85157L16.1482 7.12424C15.9503 6.92632 15.5869 6.96974 15.3356 7.22041L12.0001 10.5561L8.66433 7.22049C8.41349 6.96941 8.04957 6.92632 7.85165 7.12449L7.12431 7.8519C6.92648 8.04949 6.96931 8.4134 7.22048 8.66423L10.5563 12L7.22048 15.336C6.96973 15.5866 6.92631 15.9503 7.12431 16.1482L7.85165 16.8756C8.04957 17.0735 8.41349 17.0306 8.66433 16.7799L12.0003 13.4439L15.3357 16.7794C15.587 17.0307 15.9504 17.0735 16.1483 16.8756L16.8757 16.1482C17.0735 15.9503 17.0307 15.5866 16.78 15.3356L13.444 12Z"
-                      fill="#979ABE"
-                    />
-                  </svg>
-                </InputCloseIcon>
-              )}
-            </InputWrapper>
-            <div className="switch-icon" onClick={() => setShowMenuContent(!showMenuContent)} data-bp="3001-001">
-              <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
-              <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
-            </div>
-            <OdysseyIcon />
-          </Search>
-        </MenuContainer>
-        {/* Page don't need account section */}
-
-        <BridgeWapper>
-          <img
-            src="/images/dashboard/bridge.svg"
-            onClick={() => {
-              router.push('/super-bridge');
-            }}
-            className="bridge-icon"
-          />
-          {isHideAccount ? (
-            <div />
-          ) : account ? (
-            <LoginContainer>
-              <Chain showName={false} bp="3001-003" />
-              <AccountWrapper
-                onClick={() => {
-                  setLayoutStore({ showAccountSider: true });
-                }}
-              >
-                <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
-              </AccountWrapper>
-            </LoginContainer>
-          ) : (
-            <ConnectWallet />
-          )}
-        </BridgeWapper>
-      </div>
-      <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
-      <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
-    </Container>
+                  <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
+                </AccountWrapper>
+              </LoginContainer>
+            ) : (
+              <ConnectWallet />
+            )}
+          </BridgeWapper>
+        </div>
+        <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
+        <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
+      </Container>
+    </>
   );
 };
