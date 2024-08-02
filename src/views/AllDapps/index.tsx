@@ -211,8 +211,43 @@ const AllDapps = (props: Props) => {
         categoryClassname={scrolled ? 'category-fixed' : ''}
       />
       <StyledBody>
-        <StyledFiltersBackdrop show={scrolled}/>
-        <StyledFilters fixed={scrolled}>
+        <StyledFiltersBackdrop
+          variants={{
+            visible: {
+              opacity: 1,
+              display: 'block',
+              y: 0,
+            },
+            hidden: {
+              opacity: 0,
+              display: 'none',
+              y: -50,
+            },
+          }}
+          initial="hidden"
+          animate={scrolled ? 'visible' : 'hidden'}
+          transition={{
+            duration: 0.6,
+          }}
+        />
+        <StyledFilters
+          fixed={scrolled}
+          variants={{
+            visible: {
+              zIndex: 50,
+              y: 104,
+            },
+            hidden: {
+              zIndex: 2,
+              y: 0,
+            },
+          }}
+          initial="hidden"
+          animate={scrolled ? 'visible' : 'hidden'}
+          transition={{
+            duration: 0.6,
+          }}
+        >
           {
             networkLoading ? (
               <StyledSelectorLoading>

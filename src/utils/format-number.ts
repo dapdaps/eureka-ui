@@ -37,23 +37,32 @@ export const simplifyNum = (number: number) => {
   }
 };
 
-export const formateInteger = (num: number | undefined, type?: 'simplify' | 'thousand') => {
-  if (!num) {
-    return 0;
+export const formatIntegerThousandsSeparator = (integer?: number, precision: number = 2, type?: 'simplify' | 'thousand') => {
+  if (!integer) {
+    return '0';
   }
-  if (typeof Number(num) !== 'number') return 0;
-  if (isNaN(Number(num))) return 0;
+  if (typeof Number(integer) !== 'number') return '0';
+  if (isNaN(Number(integer))) return '0';
   const _type = type ?? 'simplify';
   if (_type === 'thousand') {
-    return num.toString().replace(/\d(?=(\d{3})+\b)/g, '$&,')
+    return integer.toString().replace(/\d(?=(\d{3})+\b)/g, '$&,');
   }
   if (_type === 'simplify') {
-    if (num > 1000) {
-      const _num = Big(num).div(1000).toFixed(2).replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
+    const formatter = (split: number, unit: string): string => {
+      const _num = Big(integer).div(split).toFixed(precision, 0).replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
       const inter = _num.split('.')?.[0]?.replace(/\d(?=(\d{3})+\b)/g, '$&,');
       const decimal = _num.split('.')?.[1] ?? '';
-      return `${inter}${decimal ? '.' + decimal : ''}k`
+      return `${inter}${decimal ? '.' + decimal : ''}${unit}`;
+    };
+    if (Big(integer).gte(1e9)) {
+      return formatter(1e9, 'b');
     }
-    return num;
+    if (Big(integer).gte(1e6)) {
+      return formatter(1e6, 'm');
+    }
+    if (Big(integer).gte(1e3)) {
+      return formatter(1e3, 'k');
+    }
+    return Big(Big(integer).toFixed(precision, 0)).toString();
   }
 }

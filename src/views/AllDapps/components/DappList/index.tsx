@@ -29,8 +29,6 @@ const DappList = forwardRef((props: Props, ref) => {
     pageIndex,
   }));
 
-  console.log(dappList);
-
   return (
     <StyledContainer style={props?.style}>
       {
@@ -70,7 +68,6 @@ const DappList = forwardRef((props: Props, ref) => {
                   <Empty size={42} tips={<StyledEmptyText>No dApp found</StyledEmptyText>}/>
                 </StyledEmptyInner>
               </StyledEmptyContainer>
-
             )
         )
       }

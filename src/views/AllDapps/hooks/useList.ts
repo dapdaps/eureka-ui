@@ -57,7 +57,7 @@ export default function useList(props: Props) {
         //#region format categories
         dapp.categories = [];
         dapp.dapp_category && dapp.dapp_category.forEach((it: any) => {
-          const curr = CategoryList.find((_it) => _it.key === it);
+          const curr = CategoryList.find((_it) => _it.key === it.category_id);
           curr && dapp.categories.push(curr);
         });
         //#endregion

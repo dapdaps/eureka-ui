@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AnimatePresence, useMotionValue } from 'framer-motion';
 import Tooltip from './';
-import Status, { StatusType } from '@/components/navigation/desktop/components/Status';
+import OdysseyCard from './Odyssey';
+import { StatusType } from '@/components/navigation/desktop/components/Status';
 
 const ToolList = styled.div`
   display: flex;
@@ -21,50 +22,6 @@ const ToolList = styled.div`
       height: 72px;
       border-radius: 50%;
       border: 4px solid #292b33;
-    }
-  }
-  .compass {
-    position: relative;
-    .status {
-      position: absolute;
-      top: -40px;
-      left: 50%;
-      transform: translateX(-50%);
-    }
-
-    .c_container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      .c_title {
-        font-weight: 700;
-        font-size: 20px;
-        line-height: 20px;
-        color: #fff;
-        max-width: 214px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        margin-bottom: 5px;
-      }
-
-      .c_subtitle {
-        font-size: 16px;
-        line-height: 16px;
-        font-weight: 500;
-        color: #fff;
-        margin-bottom: 10px;
-        max-width: 214px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-      .c_image {
-        width: 100%;
-        height: 116px;
-      }
     }
   }
 `;
@@ -105,14 +62,13 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
                 showAnimateTooltip={true}
                 animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
               >
-                <div className="compass">
-                  <Status status={StatusType.ongoing} className="status" />
-                  <div className="c_container">
-                    <div className="c_title">{item.title}</div>
-                    <div className="c_subtitle">{item.subtitle}</div>
-                    <img className="c_image" src={item.imageUrl} alt={item.title} />
-                  </div>
-                </div>
+                <OdysseyCard
+                  status={StatusType.ended}
+                  title={item.title}
+                  subtitle={item.subtitle}
+                  imageUrl={item.imageUrl}
+                  withoutCardStyle
+                />
               </Tooltip>
             </AnimatePresence>
           )}
