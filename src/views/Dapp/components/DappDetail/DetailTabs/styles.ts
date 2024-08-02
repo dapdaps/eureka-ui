@@ -384,7 +384,7 @@ export const StyledHistoryDapp = styled.div`
   column-gap: 8px;
 `;
 
-export const StyledHistoryDappLogo = styled.div<{url?: string}>`
+export const StyledHistoryDappLogo = styled.div<{url: string}>`
   border-radius: 6px;
   width: 20px;
   height: 20px;

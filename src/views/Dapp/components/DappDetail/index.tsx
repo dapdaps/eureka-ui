@@ -50,6 +50,7 @@ const DappDetail = (props: any) => {
         <ArrowIcon size={12}/>
       </StyledMoreContainer>
       <DappSummary
+        dappId={props?.id}
         name={props?.name ?? ''}
         logo={props?.logo ?? ''}
         networks={props?.dapp_network ?? []}
@@ -58,7 +59,11 @@ const DappDetail = (props: any) => {
       />
       <StyledRelatedContainer>
         <StyledRecordContainer>
-          <DetailTabs {...props} overviewTitle={`What is ${props.name ?? ''} ?`} historyType='dApp'/>
+          <DetailTabs
+            {...props}
+            overviewTitle={props?.name && `What is ${props.name} ?`}
+            historyType='dApp'
+          />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
           <Medal medalList={medalList}/>

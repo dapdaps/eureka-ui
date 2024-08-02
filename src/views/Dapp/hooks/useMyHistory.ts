@@ -45,6 +45,14 @@ export default function useMyHistory(chainId?: number) {
 
   const { run } = useDebounceFn(
     () => {
+      if (!account) {
+        if (historyList.length > 0) {
+          setHistoryList([]);
+          setPageTotal(0);
+          setTotal(0);
+        }
+        return;
+      }
       check(() => fetchHistoryList(1));
     },
     { wait: 300 })

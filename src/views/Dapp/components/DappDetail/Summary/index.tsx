@@ -19,6 +19,7 @@ import {
   StyledSummaryAddIcon,
   StyledFavoritedTag
 } from './styles';
+import useLike from '@/views/Quest/hooks/useLike';
 
 const renderArrowIcon = () => {
   return (
@@ -74,9 +75,12 @@ const DappSummary = (props: Props) => {
     logo,
     categories,
     summaries,
+    dappId
   } = props;
 
   const { loading, categories: allCaregories } = useCategoryDappList();
+
+  const { like, handleLike } = useLike(dappId, 'dapp');
 
   function getCategoryNames(dappCategories: any[], categoryArray: any[]) {
     if (!Array.isArray(dappCategories)) {
@@ -109,8 +113,8 @@ const DappSummary = (props: Props) => {
                   {categoryName}
                 </StyledDetailCategory>
               ))}
-            <StyledFavoritedTag $isFavorited={true}>
-              {renderFavoritedIcon(true)}
+            <StyledFavoritedTag $isFavorited={like} onClick={() => handleLike(!like)}>
+              {renderFavoritedIcon(like)}
             </StyledFavoritedTag>
           </StyledDetailDesc>
           <StyledNetworksContainer>
@@ -162,4 +166,5 @@ interface Props {
   logo: string;
   categories: Record<string, any>[];
   summaries: Record<string, any>[];
+  dappId?: any;
 }
