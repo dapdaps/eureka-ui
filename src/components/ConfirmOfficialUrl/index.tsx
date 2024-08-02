@@ -1,6 +1,7 @@
 import { StyledFlex, StyledText, StyledSvg } from '@/views/bns/styles';
 import { useState } from 'react';
 import styled from 'styled-components';
+import { useShowTipsStore } from './hooks/useShowTipsStore';
 
 const StyledTips = styled.div`
   position: fixed;
@@ -16,16 +17,15 @@ const StyledTips = styled.div`
 `;
 
 const ConfirmOfficialUrl = ({
-    className,
-    onClick,
+    className
 }: {
     className?: string;
-    onClick?: () => void;
 }) => {
-  const [showTips, setShowTips] = useState(true);
+  const setConfirmOfficialUrlStore  = useShowTipsStore(store => store.set)
+  const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl)
   return (
     <>
-      {showTips && (
+      {showConfirmOfficialUrl && (
         <StyledTips className={className}>
           <StyledFlex $gap="8px">
             <StyledText $color="#000" $size="20px" $weight="500">
@@ -44,8 +44,9 @@ const ConfirmOfficialUrl = ({
               cursor: 'pointer',
             }}
             onClick={() => {
-                setShowTips(false);
-                onClick?.();
+              setConfirmOfficialUrlStore({
+                    showConfirmOfficialUrl: false
+                });
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">

@@ -15,6 +15,7 @@ import { goHomeWithFresh } from '@/utils/activity-utils';
 
 import OdysseyIcon from './OdysseyIcon';
 import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
+import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
 
 const LoginContainer = styled.div`
   width: auto;
@@ -175,17 +176,17 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
-  const [showTips, setShowTips] = useState(true);
+  const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl)
+
   const isFromActivity = router.pathname.match(activityReg);
 
   const isHomePage = router.pathname === '/';
-
   return (
     <>
       {
-        isHomePage && <StyledConfirmOfficialUrl onClick={() => setShowTips(false)}/>
+        isHomePage && <StyledConfirmOfficialUrl/>
       }
-      <Container $expand={showMenuContent} $top={showTips && isHomePage ? '54px' : '0px' }>
+      <Container $expand={showMenuContent} $top={showConfirmOfficialUrl && isHomePage ? '54px' : '0px' }>
         <div className="container-nav">
           {isFromActivity ? (
             <LogoContainer onClick={goHomeWithFresh}>
