@@ -1,96 +1,94 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { AnimatePresence, useMotionValue } from 'framer-motion';
-import Tooltip from '.';
+import Tooltip from './';
 import Status, { StatusType } from '@/components/navigation/desktop/components/Status';
 
 const ToolList = styled.div`
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 
-    .box {
-      position: relative;
-      padding-top: 20px;
+  .box {
+    position: relative;
+    padding-top: 20px;
 
-      &:not(:first-child) {
-        margin-left: -6px;
+    &:not(:first-child) {
+      margin-left: -6px;
+    }
+
+    .brand {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      border: 4px solid #292b33;
+    }
+  }
+  .compass {
+    position: relative;
+    .status {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .c_container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .c_title {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 20px;
+        color: #fff;
+        max-width: 214px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 5px;
       }
 
-      .brand {
-        width: 72px;
-        height: 72px;
-        border-radius: 50%;
-        border: 4px solid #292b33;
+      .c_subtitle {
+        font-size: 16px;
+        line-height: 16px;
+        font-weight: 500;
+        color: #fff;
+        margin-bottom: 10px;
+        max-width: 214px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .c_image {
+        width: 100%;
+        height: 116px;
       }
     }
-    .compass {
-        position: relative;
-        .status {
-        position: absolute;
-        top: -40px;
-        left: 50%;
-        transform: translateX(-50%);
-        }
-
-        .c_container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .c_title {
-            font-weight: 700;
-            font-size: 20px;
-            line-height: 20px;
-            color: #fff;
-            max-width: 214px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin-bottom: 5px;
-        }
-
-        .c_subtitle {
-            font-size: 16px;
-            line-height: 16px;
-            font-weight: 500;
-            color: #fff;
-            margin-bottom: 10px;
-            max-width: 214px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .c_image {
-            width: 100%;
-            height: 116px;
-        }
-        }
   }
-`
+`;
 
 type IData = {
-    imgSrc: string;
-    title: string;
-    subtitle: string;
-    imageUrl: string;
-
-}
+  imgSrc: string;
+  title: string;
+  subtitle: string;
+  imageUrl: string;
+};
 
 interface TooltipListProps {
-    data: IData[];
+  data: IData[];
 }
 
-const TooltipList = ({
-    data
-}: TooltipListProps) => {
+const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   const x = useMotionValue(0);
-  const handleMouseMove = (event: any) => {
-    const halfWidth = event.target.offsetWidth / 2;
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    const halfWidth = event.currentTarget.offsetWidth / 2;
     x.set(event.nativeEvent.offsetX - halfWidth);
   };
+
   return (
     <ToolList>
       {data.map((item, index) => (
@@ -102,7 +100,11 @@ const TooltipList = ({
         >
           {hoveredIndex === index && (
             <AnimatePresence>
-              <Tooltip x={x}>
+              <Tooltip
+                x={x}
+                showAnimateTooltip={true}
+                animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
+              >
                 <div className="compass">
                   <Status status={StatusType.ongoing} className="status" />
                   <div className="c_container">
@@ -120,4 +122,5 @@ const TooltipList = ({
     </ToolList>
   );
 };
+
 export default TooltipList;

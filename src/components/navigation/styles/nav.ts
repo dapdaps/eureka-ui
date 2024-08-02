@@ -18,17 +18,21 @@ export const Wrapper = styled.div`
       position: relative;
     }
   }
-  .CaretDown {
-      position: relative;
-      color: var(--violet-10);
-      top: 1px;
-      transition: transform 250ms ease;
-    }
 
-    [data-state='open'] > .CaretDown {
+  .CaretDown {
+    transition: transform 250ms ease;
+  }
+
+  [data-state='open'] {
+    &.NavigationMenuTrigger {
+      color: #EBF479;
+    }
+    .CaretDown {
+      color: #EBF479;
       transform: rotate(-180deg);
     }
-    
+  }
+
   .NavigationMenuTrigger,
   .NavigationMenuLink {
     all: unset;

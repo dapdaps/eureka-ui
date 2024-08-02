@@ -1,8 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { motion, useTransform, useSpring } from 'framer-motion';
+import { motion, useTransform, useSpring, MotionValue, useMotionValue } from 'framer-motion';
+import classNames from 'classnames';
 
-const StyledTooltip = styled(motion.div)`
+const StyledTooltip = styled.div`
   border: 1px solid;
   border-image-source: linear-gradient(180deg, #464b56 0%, rgba(0, 0, 0, 0) 100%);
   background: #21232a;
@@ -17,36 +18,87 @@ const StyledTooltip = styled(motion.div)`
   box-sizing: border-box;
 `;
 
-interface TooltipProps {
-  x: any;
-  children: React.ReactNode;
+interface AnimationProps {
+  type?: string;
+  stiffness?: number;
+  damping?: number;
+  duration?: number;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ x, children }) => {
+interface TooltipProps {
+  x?: MotionValue<number>;
+  children: React.ReactNode;
+  showAnimateTooltip?: boolean;
+  customClass?: string;
+  animationProps?: AnimationProps;
+}
+
+
+/**
+ *
+ * @param x - The x-coordinate of the tooltip.
+ * @param children - The content of the tooltip.
+ * @param showAnimateTooltip - Whether to show an animated tooltip. Default is false.
+ * @param customClass - Custom CSS class for the tooltip.
+ * @param animationProps - Animation properties for the tooltip.
+ * @param animationProps.type - The type of animation. Default is 'spring'.
+ * @param animationProps.stiffness - The stiffness of the animation. Default is 260.
+ * @param animationProps.damping - The damping of the animation. Default is 10.
+ * @param animationProps.duration - The duration of the animation. Default is 0.3.
+ *
+ * @returns The Tooltip component.
+ */
+const Tooltip: React.FC<TooltipProps> = ({
+  x,
+  children,
+  showAnimateTooltip = false,
+  customClass,
+  animationProps = {}
+}) => {
   const springConfig = { stiffness: 100, damping: 5 };
-  const rotate = useSpring(useTransform(x, [-100, 100], [-45, 45]), springConfig);
-  const translateX = useSpring(useTransform(x, [-100, 100], [-50, 50]), springConfig);
-  return (
+  const rotate = useSpring(useTransform(x || useMotionValue(0), [-100, 100], [-45, 45]), springConfig);
+  const translateX = useSpring(useTransform(x || useMotionValue(0), [-100, 100], [-50, 50]), springConfig);
+
+  let style = {};
+  if (showAnimateTooltip && x) {
+    style = {
+      translateX,
+      rotate,
+      whiteSpace: 'nowrap',
+    };
+  } else {
+    style = { whiteSpace: 'nowrap' };
+  }
+
+  const {
+    type = 'spring',
+    stiffness = 260,
+    damping = 10,
+    duration = 0.3,
+  } = animationProps;
+
+  const commonProps = {
+    className: classNames(customClass),
+    style,
+  };
+
+  return showAnimateTooltip && x ? (
     <StyledTooltip
+      as={motion.div}
       initial={{ opacity: 0, y: 20, scale: 0.6 }}
       animate={{
         opacity: 1,
         y: 0,
         scale: 1,
-        transition: {
-          type: 'spring',
-          stiffness: 260,
-          damping: 10,
-        },
+        transition: { type, stiffness, damping, duration },
       }}
       exit={{ opacity: 0, y: 20, scale: 0.6 }}
-      style={{
-        translateX: translateX,
-        rotate: rotate,
-        whiteSpace: 'nowrap',
-      }}
-      className="tooltip"
+      {...commonProps}
     >
+      {children}
+    </StyledTooltip>
+  ) : (
+    <StyledTooltip {...commonProps}>
       {children}
     </StyledTooltip>
   );
