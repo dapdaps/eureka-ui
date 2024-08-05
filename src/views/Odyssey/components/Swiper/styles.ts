@@ -7,7 +7,7 @@ export const StyledContainer = styled.div`
 
 export const StyledContent = styled.div`
   width: 1244px;
-  margin: 80px auto 0px;
+  margin: 0 auto;
   position: relative;
 `;
 
@@ -44,8 +44,8 @@ export const StyledCard = styled.div`
 `;
 
 export const StyledCardBackgroundImage = styled.img`
-      width: 720px;
-      height: 500px;
+      width: 660px;
+      height: 380px;
 `;
 
 export const StyledCardMainContent = styled.div`
@@ -57,6 +57,9 @@ export const StyledCardMainContent = styled.div`
     line-height: 24px;
     font-weight: 500;
     margin-bottom: 106px;
+    .tag {
+      position: absolute;
+    }
   }
   .card_section {
     .logo {
@@ -116,7 +119,7 @@ export const StyledCardDesc = styled.div`
 `;
 
 export const StyledCardButton = styled.div`
-  margin-top: 108px;
+  margin-top: 50px;
   width: 100%;
   height: 50px;
   flex-shrink: 0;

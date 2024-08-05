@@ -3,6 +3,7 @@ import Skeleton from 'react-loading-skeleton';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import Status, { StatusType } from '../components/Status';
 import { useMemo } from "react";
+import Tag from "@/views/Odyssey/components/Tag";
 
 const Flex = styled.div`
   display: flex;
@@ -117,7 +118,7 @@ const generateNewWithLiveArr = (arr: IData[]): IData[] => {
     return (currentItem.id > maxItem.id) ? currentItem : maxItem;
   }, ongoingItems[0]);
 
-  return arr.map(item => ({ ...item, isNew: item.id === maxIdItem.id && item.status === 'ongoing' }));
+  return arr.map(item => ({ ...item, isNew: item.id === maxIdItem.id && item.status === StatusType.ongoing }));
 };
 
 
@@ -130,7 +131,6 @@ const LoadingList = () => {
       <StyleText>
         <StyleHeader>
           <Skeleton width="120px" height="14px" />
-          <Status status={StatusType.ongoing} />
         </StyleHeader>
         <Skeleton width="200px" height="32px" />
       </StyleText>
@@ -163,7 +163,7 @@ const ListItem: React.FC<IProps> = ({ data, loading, className }) => {
             <StyleText>
               <StyleHeader>
                 <div className="title">{item.name}</div>
-                <Status status={item.status} />
+                <Tag status={item.status} />
               </StyleHeader>
               <StyleDesc>{item.description}</StyleDesc>
             </StyleText>

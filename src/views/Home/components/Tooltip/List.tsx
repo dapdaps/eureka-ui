@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { AnimatePresence, useMotionValue } from 'framer-motion';
 import Tooltip from './';
 import OdysseyCard from './Odyssey';
-import { StatusType } from '@/components/navigation/desktop/components/Status';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 const ToolList = styled.div`
   display: flex;

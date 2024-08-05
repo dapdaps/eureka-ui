@@ -11,8 +11,6 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
 
-import IconArrow from '@public/images/home/arrow-right.svg'
-
 import {
   StyledCard,
   StyledCardBackgroundImage,
@@ -23,11 +21,11 @@ import {
   StyledContent,
   StyledInner,
   StyledLoadingWrapper,
-  StyledSwiperNextButton,
-  StyledSwiperPrevButton,
   StyledSwiperWrapper,
 } from './styles';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import ParallelogramButton from '@/components/base-button/Parallelogram';
+import Tag, { StatusType } from '../Tag';
 
 const Card = function ({ compass }: any) {
   const toast = useToast();
@@ -55,9 +53,11 @@ const Card = function ({ compass }: any) {
           }}
         />
         <StyledCardMainContent>
-          <div className='title'>Featured</div>
+          <div className='title'>Featured <Tag className='tag' status={StatusType.ended}></Tag></div>
+          
           <div className="card_section">
-            <img className='logo' src="/images/home/super-bridge.png" alt="" />
+            <ParallelogramButton>Vol.5</ParallelogramButton>
+            
             {/* <div className="head">DapDap X Mode: <br />The Airdrop Ascendancy</div> */}
             <div className='card-tips'>One UI to rule them all, getting the best price from 30+ Dex pools.</div>
           </div>
@@ -80,8 +80,7 @@ const Card = function ({ compass }: any) {
     </StyledCard>
   );
 };
-const Compass = () => {
-  const router = useRouter();
+const SwiperList = () => {
   const size: any = useSize(window.document.getElementsByTagName('body')[0]);
   const { loading, compassList } = useCompassList();
   const swiperRef = useRef<any>();
@@ -106,13 +105,6 @@ const Compass = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
-              pagination={{
-                el: '.swiper-pagination',
-                clickable: true,
-                renderBullet: (index, className) => {
-                  return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
-                }
-              }}
               loop={true}
             >
               {compassList.map((compass: any, index: number) => (
@@ -127,11 +119,6 @@ const Compass = () => {
                     </StyledCompassIcon>
                   )}
 
-                  {/* {odyssey[compass.id]?.reward && (
-                    <StyledWinPtsIcon>
-                      <WinPtsIcon num={odyssey[compass.id].reward} />
-                    </StyledWinPtsIcon>
-                  )} */}
                   {odyssey[compass.id]?.reward && (
                     <div
                       style={
@@ -176,21 +163,6 @@ const Compass = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <StyledSwiperPrevButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slidePrev();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperPrevButton>
-            <StyledSwiperNextButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slideNext();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperNextButton>
-            <div className="swiper-pagination"></div>
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
@@ -198,4 +170,4 @@ const Compass = () => {
   );
 };
 
-export default memo(Compass);
+export default memo(SwiperList);

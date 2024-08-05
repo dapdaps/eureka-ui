@@ -1,9 +1,11 @@
 import styled from 'styled-components';
 import ListItem from '../navigation/desktop/components/ListItem';
-import { StatusType } from '../navigation/desktop/components/Status';
+
 
 import IconLink from '@public/images/header/link.svg';
 import Link from 'next/link';
+import { StatusType } from '@/views/Odyssey/components/Tag';
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 
 const Container = styled.div`
     .campaign {
@@ -42,6 +44,8 @@ const StyleTitle = styled.div`
 `
 
 const Campaign = () => {
+  const { loading: compassListLoading, compassList } = useCompassList()
+
   return (
     <Container>
       <StyleCampaign>
@@ -51,13 +55,9 @@ const Campaign = () => {
         </StyleTitle>
       </StyleCampaign>
       <ListItem
-        className="campaign"
-        imgSrc="https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png"
-        isNew={true}
-        title="Odyssey Vol.5"
-        status={StatusType.ongoing}
-        description="DapDap x Mode: The Airdrop Ascendancy"
-      />
+          data={compassList}
+          loading={compassListLoading}
+        />
     </Container>
   );
 };

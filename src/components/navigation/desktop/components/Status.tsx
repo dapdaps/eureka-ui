@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import cls from 'classnames';
 
 export enum StatusType {
-    ongoing = 'ongoing',
+    ongoing = 'live',
     ended = 'ended',
     un_start = 'un_start'
   }
@@ -38,9 +38,33 @@ const StyleStatus = styled.div`
     text-transform: capitalize;
   }
 
-  &.ongoing {
+  &.live {
     border-color: #57DB64;
     box-shadow: 0px 0px 3px 0px rgba(87, 219, 100, 0.2);
+    position: relative;
+    &:before {
+      content: '';
+      position: absolute;
+      border-radius: 16px;
+      width: 100%;
+      height: 100%;
+      left: 0;
+      right: 0;
+      box-shadow: 0px 0px 5px 6px rgba(87, 219, 100, 0.2);
+      background: rgba(32, 34, 47, 0.8);
+      animation: 1.5s linear infinite firstAnimation;
+    }
+    @keyframes firstAnimation {
+      0% {
+        transform: scale(0.8);
+      }
+      50% {
+        transform: scale(1);
+      }
+      100% {
+        transform: scale(0.8);
+      }
+    }
     .dot {
       background-color: #57DB64;
     }

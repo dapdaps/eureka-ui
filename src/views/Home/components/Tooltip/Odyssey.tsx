@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import Status, { StatusType } from '@/components/navigation/desktop/components/Status';
+
 import Image from 'next/image';
+import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 
 const OdysseyCard = (props: Props) => {
   const {
@@ -14,7 +15,7 @@ const OdysseyCard = (props: Props) => {
 
   return (
     <StyledContainer $withoutCardStyle={withoutCardStyle}>
-      <Status status={status} className="status" />
+      <Tag status={status} className='status' />
       <StyledContent>
         <StyledTitle>{title}</StyledTitle>
         <StyledTitleSub>{subtitle}</StyledTitleSub>
