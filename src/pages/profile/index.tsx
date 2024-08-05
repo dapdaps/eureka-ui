@@ -1,11 +1,11 @@
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import QuestProfileView from '@/views/QuestProfile';
+import ProfileView from '@/views/Profile';
 
-const QuestProfilePage: NextPageWithLayout = () => {
-  return <QuestProfileView />;
+const ProfilePage: NextPageWithLayout = () => {
+  return <ProfileView />;
 };
 
-QuestProfilePage.getLayout = useDefaultLayout;
+ProfilePage.getLayout = useDefaultLayout;
 
-export default QuestProfilePage;
+export default ProfilePage;

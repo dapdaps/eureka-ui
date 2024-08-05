@@ -4,10 +4,7 @@ import { Medal } from './medal';
 import { random } from 'lodash';
 
 const StyledCanvas = styled.canvas`
-  position: absolute;
   z-index: 10;
-  right: 10px;
-  top: 10px;
 `;
 
 class BouncingMedals extends React.Component<BouncingMedalsProps, any> {

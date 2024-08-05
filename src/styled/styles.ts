@@ -25,6 +25,7 @@ export const StyledFlex = styled.div<FlexProps>`
   align-items: ${(props) => props.alignItems || 'center'};
   justify-content: ${(props) => props.justifyContent || 'flex-start'};
   gap: ${(props) => props.gap || '0px'};
+  flex-wrap: ${(props) => props.flexWrap || 'no-wrap'};
 `;
 export const StyledSvg = styled.div`
   display: flex;
