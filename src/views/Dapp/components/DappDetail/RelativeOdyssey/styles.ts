@@ -106,6 +106,7 @@ export const StyledRelatedTitle = styled.div`
 
 export const StyledOdysseyBody = styled.div`
   padding: 16px 20px 20px 20px;
+  overflow: hidden;
 `;
 
 export const StyledOdysseyIcon = styled.div`

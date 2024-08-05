@@ -1,13 +1,13 @@
-import { forwardRef, memo, useImperativeHandle } from 'react';
+import { memo } from 'react';
 import { StyledContainer, StyledDappList, StyledFoot, StyledEmptyContainer, StyledEmptyItem, StyledEmptyShadow, StyledEmptyInner, StyledEmptyText } from '@/views/AllDapps/components/DappList/styles';
 import DappLoading from '@/views/AllDapps/Loading/Dapp';
 import DappCard from '@/views/AllDapps/components/DappCard';
 import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
-import useList, { Props } from '@/views/AllDapps/hooks/useList';
 import useDappOpen from '@/hooks/useDappOpen';
+import { PageSize } from '../../config';
 
-const DappList = forwardRef((props: Props, ref) => {
+const DappList = (props: Props) => {
   const { open } = useDappOpen();
 
   const {
@@ -16,24 +16,20 @@ const DappList = forwardRef((props: Props, ref) => {
     pageTotal,
     pageIndex,
     fetchDappList,
-  } = useList(props);
+    from = 'alldapps',
+    loadingLength = PageSize,
+    loadFromApi = true
+  } = props
 
   const onDappCardClick = (dapp: any) => {
-    open({ dapp, from: 'alldapps' });
+    open({ dapp, from });
   };
-
-  useImperativeHandle(ref, () => ({
-    dappList,
-    fetchDappList,
-    pageTotal,
-    pageIndex,
-  }));
 
   return (
     <StyledContainer style={props?.style}>
       {
         loading ? (
-          <DappLoading />
+          <DappLoading length={loadingLength}/>
         ) : (
             dappList.length ? (
               <StyledDappList>
@@ -76,13 +72,28 @@ const DappList = forwardRef((props: Props, ref) => {
           pageTotal={pageTotal}
           pageIndex={pageIndex}
           onPage={(page) => {
-            fetchDappList(page);
+            loadFromApi && fetchDappList(page);
             props.onPage && props.onPage(page);
           }}
         />
       </StyledFoot>
     </StyledContainer>
   );
-});
+};
 
 export default memo(DappList);
+
+interface Props {
+  onPage?(page: number): void;
+  // data anchor
+  bp?: { detail: string; dapp: string; };
+  loading: boolean;
+  dappList: Record<string, any>[];
+  pageTotal: number;
+  pageIndex: number;
+  fetchDappList: (page: number) => void;
+  style?: React.CSSProperties;
+  from?:  'home' | 'quest' | 'alldapps'
+  loadingLength?: number;
+  loadFromApi?: boolean;
+}

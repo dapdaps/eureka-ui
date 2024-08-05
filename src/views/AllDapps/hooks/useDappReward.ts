@@ -7,7 +7,6 @@ export default function useDappReward() {
 
     try {
       const result = await get(`${QUEST_PATH}/api/compass/reward-list`);
-      console.log(result);
       return result?.data ?? [];
     } catch {
       return [];

@@ -25,14 +25,7 @@ const DiscoveryDapps = () => {
         <AllDappsTitle
           onCategory={onSelectCategory}
           activeCategory={category}
-          dappList={[
-            { logo: '/images/alldapps/icon-title-dapp-1.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-2.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-3.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-4.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-5.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-6.svg' },
-          ]}
+          dappList={featuredDapps?.titleDapps ?? []}
         />
       </StyledWrapper>
       <StyledSwiperWrapper>
@@ -60,7 +53,7 @@ const DiscoveryDapps = () => {
                 }}
               >
                 {
-                  featuredDapps ? featuredDapps.map((dapp: any, idx: number) => (
+                  featuredDapps?.dapps ? featuredDapps.dapps.map((dapp: any, idx: number) => (
                     <SwiperSlide key={idx}>
                       <DappCard
                         bp={{ detail: '1001-004', dapp: '1001-005' }}

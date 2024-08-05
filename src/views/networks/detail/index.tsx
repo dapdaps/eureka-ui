@@ -21,6 +21,7 @@ import {
 import DetailTabs from '@/views/Dapp/components/DappDetail/DetailTabs/index';
 import RelativeOdyssey from '@/views/Dapp/components/DappDetail/RelativeOdyssey';
 import Medal from '@/views/Dapp/components/DappDetail/Medal/index';
+import { useChainDapps } from './hooks/useChainDapps';
 import { Category } from '@/hooks/useAirdrop';
 
 const medalList: any = [
@@ -37,8 +38,11 @@ const medalList: any = [
 ];
 
 const ChainDetail = ({ path }: any) => {
-  const { loading, detail, hotDapps, quests } = useDetail(PathToId[path]);
+
+  const { detail } = useDetail(PathToId[path]);
+
   const { handleReport } = useReport();
+
   const currentChain = useMemo(() => {
     return chainsConfig[path];
   }, [path]);
@@ -48,6 +52,7 @@ const ChainDetail = ({ path }: any) => {
       handleReport(`network/${path}`);
     }
   }, [path]);
+
   const { categories } = useCategoryDappList();
 
   const categoryList = useMemo(() => {
@@ -58,16 +63,30 @@ const ChainDetail = ({ path }: any) => {
       };
     });
   }, [categories, CategoryList]);
+
   const [category, setCategory] = useState<number | string>();
   const [currentCategory, setCurrentCategory] = useState<any>();
   const handleCurrentCategory = (category: any) => {
     setCategory(category.key);
     if (category.key === currentCategory?.key) {
+      setCategory(undefined);
       setCurrentCategory(undefined);
       return;
     }
     setCurrentCategory(category);
   };
+
+  const {
+    loading,
+    fetchDappList,
+    dappList,
+    pageTotal,
+    pageIndex,
+    total,
+    pageSize,
+    onPage
+  } = useChainDapps(detail?.chain_id, category);
+
 
   return (
     <StyledContainer>
@@ -91,7 +110,7 @@ const ChainDetail = ({ path }: any) => {
       </StyledDetail>
 
       <DappTitle>
-        <span className="highlight">20</span> dApps on Mode
+        <span className="highlight">{total}</span> dApps on Mode
       </DappTitle>
       <StyledCategory>
         {categoryList.map((cate: any) => (
@@ -110,8 +129,15 @@ const ChainDetail = ({ path }: any) => {
           width: '1247px',
           margin: '30px auto 0',
         }}
-        category={category}
+        loading={loading}
+        dappList={dappList}
+        pageTotal={pageTotal}
+        pageIndex={pageIndex}
+        fetchDappList={fetchDappList}
         bp={{ detail: '10011-001', dapp: '10011-002' }}
+        loadingLength={pageSize}
+        loadFromApi={false}
+        onPage={onPage}
       />
     </StyledContainer>
   );

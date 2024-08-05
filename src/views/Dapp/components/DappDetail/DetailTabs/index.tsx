@@ -24,7 +24,8 @@ const DetailTabs = (props: Props) => {
     logo,
     category,
     overviewTitle,
-    chain_id
+    chain_id,
+    dapp_network = []
   } = props;
 
   const {
@@ -80,6 +81,7 @@ const DetailTabs = (props: Props) => {
                   pageTotal={pageTotal}
                   pageIndex={pageIndex}
                   fetchHistoryList={fetchHistoryList}
+                  chainIds={historyType === 'chain' ? [chain_id] : dapp_network.map(item => item.chain_id)}
                 />
               </Animate>
             )
@@ -103,4 +105,5 @@ interface Props {
     color?: string;
   };
   chain_id?: number;
+  dapp_network?: Record<string, any>[];
 }

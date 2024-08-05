@@ -20,8 +20,10 @@ import { formatTitle } from '@/views/OnBoarding/helpers';
 import useCopy from '@/hooks/useCopy';
 import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
-import { formateAddress } from '@/utils/formate';
-import { formatUSDate } from '@/utils/date';
+import { formateAddress } from "@/utils/formate";
+import { formatUSDate } from "@/utils/date";
+import { useMemo } from "react";
+import {chainPortfolioShowConfig} from "@/views/Dapp/components/DappDetail/config";
 import { Category } from '@/hooks/useAirdrop';
 
 const Types = {
@@ -37,8 +39,8 @@ const MyHistory = (
     pageTotal,
     pageIndex,
     fetchHistoryList,
+    chainIds,
   }: Props) => {
-
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
 
@@ -87,6 +89,10 @@ const MyHistory = (
     },
   ];
 
+  const isShowPortfolio = useMemo(() => {
+    return chainIds.some((chain: number) => chainPortfolioShowConfig.includes(chain));
+  }, [chainIds]);
+
   return (
     <>
       <StyledHead>
@@ -114,7 +120,7 @@ const MyHistory = (
             </>)
           }
         </StyledHeadInfo>
-        {account && (<StyledHeadOther onClick={onPortfolioClick}>
+        { account && isShowPortfolio && (<StyledHeadOther onClick={onPortfolioClick}>
           View more on Portfolio
         </StyledHeadOther>)
         }
@@ -151,4 +157,5 @@ interface Props {
   pageTotal: number;
   pageIndex: number;
   fetchHistoryList: any;
+  chainIds: any;
 }

@@ -21,6 +21,7 @@ export default function useList(props: Props) {
 
   const [loading, setLoading] = useState<boolean>(false);
   const [dappList, setDappList] = useState<any>([]);
+  const [titleDappList, setTitleDappList] = useState<any>([]);
   const [rewardList, setRewardList] = useState<any>([]);
   const [pageTotal, setPageTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
@@ -29,6 +30,7 @@ export default function useList(props: Props) {
     setPageIndex(page);
     try {
       setLoading(true);
+      setTitleDappList([]);
       const params: Record<string, any> = {
         page_size: PageSize,
         page,
@@ -83,8 +85,10 @@ export default function useList(props: Props) {
             }
           })
         }
-      })
+      });
       setDappList(data);
+      const titleDapps = (result?.data?.top_dapps ?? []).map((item: any) => ({logo: item}));
+      setTitleDappList(titleDapps);
       setPageTotal(result.data.total_page || 0);
       setLoading(false);
     } catch (error) {
@@ -114,6 +118,7 @@ export default function useList(props: Props) {
     pageTotal,
     pageIndex,
     fetchDappList,
+    titleDappList
   };
 }
 
@@ -132,10 +137,6 @@ export interface Props {
   category?: number | string;
   searchText?: string;
   rewardNow?: boolean;
-  // data anchor
-  bp?: { detail: string; dapp: string; };
-  style?: React.CSSProperties;
   // Potential Airdrop
   airdrop?: boolean;
-  onPage?(page: number): void;
 }

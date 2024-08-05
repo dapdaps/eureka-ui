@@ -32,5 +32,9 @@ export const TABS = [
   {
     key: '2',
     label: 'My History',
-  },
-];
+  }
+]
+
+
+// Polygon zkEVM, zkSync, Linea, Scroll, Blast
+export const chainPortfolioShowConfig = [1101, 324, 59144, 534352, 81457];

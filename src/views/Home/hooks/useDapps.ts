@@ -14,16 +14,25 @@ const useDapps = () => {
 
   const queryDapps = useCallback(async (_category?: any) => {
     setLoading(true);
-    const params: any = {};
-    if (category) {
-      params.category_ids = _category || category;
-    }
     try {
-      const response = await get(`${QUEST_PATH}/api/dapp/recommend`,  params);
-
-      console.log(response);
+      setFeaturedDapps({titleDapps: []});
+      let response: any = {};
+      const params: any = {
+        page_size: 15,
+        page: 1,
+        sort: 'volume'
+      };
+      if (_category) {
+          const currCategory = CategoryList.find((it) => it.key == _category);
+          if (currCategory) {
+            params.category = currCategory.name;
+          }
+        response =  await get(`${QUEST_PATH}/api/dapp/search`,  params);
+      } else {
+        response = await get(`${QUEST_PATH}/api/dapp/recommend`);
+      }
       const rewardList = await fetchRewardData() ?? [];
-      const data = response?.data ?? [];
+      const data = response?.data?.data ?? [];
       data.forEach((dapp: any) => {
         //#region format categories
         dapp.categories = [];
@@ -50,8 +59,9 @@ const useDapps = () => {
             }
           })
         }
-      })
-      setFeaturedDapps(data);
+      });
+      const topDapps = (response?.data?.top_dapps ?? []).map((item: any) => ({logo: item}));
+      setFeaturedDapps({dapps: data, titleDapps: topDapps});
     } catch (err) {
       console.log(err);
     }
@@ -64,7 +74,7 @@ const useDapps = () => {
   };
 
   useEffect(() => {
-    queryDapps()
+    queryDapps();
   }, []);
 
   return { loading, featuredDapps, category, onSelectCategory };

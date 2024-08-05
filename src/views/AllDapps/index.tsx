@@ -12,7 +12,7 @@ import {
 } from '@/views/AllDapps/styles';
 import AllDappsTitle from '@/views/AllDapps/components/Title';
 import Selector from '@/components/Dropdown/Selector';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import Image from 'next/image';
@@ -22,6 +22,7 @@ import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
 import DappList from './components/DappList';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
+import useList from './hooks/useList';
 
 const AllDapps = (props: Props) => {
   const {} = props;
@@ -30,8 +31,6 @@ const AllDapps = (props: Props) => {
   const pathname = usePathname();
 
   const router = useRouter();
-
-  const categoryRef = useRef<any>(null);
 
   const [networkList, setNetworkList] = useState<any>([AllNetworks]);
   const [networkLoading, setNetworkLoading] = useState<boolean>(false);
@@ -42,6 +41,22 @@ const AllDapps = (props: Props) => {
   const [category, setCategory] = useState<number| string>();
   const [searchWord, setSearchWord] = useState<string | undefined>();
   const [scrolled, setScrolled] = useState<boolean>(false);
+
+  const {
+    loading,
+    dappList,
+    pageTotal,
+    pageIndex,
+    fetchDappList,
+    titleDappList
+  } = useList({
+    network,
+    sort,
+    rewardNow,
+    searchText: searchWord,
+    airdrop,
+    category
+  });
 
   const setQueryParams = useCallback((params: any) => {
     router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
@@ -201,23 +216,15 @@ const AllDapps = (props: Props) => {
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
     }
-
   }, [router.query, networkList]);
+
 
   return (
     <StyledContainer>
       <AllDappsTitle
         onCategory={onSelectCategory}
         activeCategory={category}
-        dappList={[
-          { logo: '/images/alldapps/icon-title-dapp-1.svg' },
-          { logo: '/images/alldapps/icon-title-dapp-2.svg' },
-          { logo: '/images/alldapps/icon-title-dapp-3.svg' },
-          { logo: '/images/alldapps/icon-title-dapp-4.svg' },
-          { logo: '/images/alldapps/icon-title-dapp-5.svg' },
-          { logo: '/images/alldapps/icon-title-dapp-6.svg' },
-        ]}
-        ref={categoryRef}
+        dappList={titleDappList ?? []}
         categoryClassname={scrolled ? 'category-fixed' : ''}
       />
       <StyledBody>
@@ -329,12 +336,11 @@ const AllDapps = (props: Props) => {
           </StyledSearch>
         </StyledFilters>
         <DappList
-          network={network}
-          sort={sort}
-          rewardNow={rewardNow}
-          category={category}
-          searchText={searchWord}
-          airdrop={airdrop}
+          loading={loading}
+          dappList={dappList}
+          pageTotal={pageTotal}
+          pageIndex={pageIndex}
+          fetchDappList={fetchDappList}
           bp={{ detail: '10011-001', dapp: '10011-002' }}
         />
       </StyledBody>

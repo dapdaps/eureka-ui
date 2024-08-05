@@ -16,7 +16,7 @@ import {
   StyledTitleText,
 } from './styles';
 
-const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
+const AllDappsTitle = (props: Props) => {
   const {
     dappList,
     onCategory = () => {},
@@ -121,7 +121,7 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
       <StyledTitleSub>
         Discover the most popular
       </StyledTitleSub>
-      <StyledCategory ref={categoryRef} className={categoryClassname}>
+      <StyledCategory className={categoryClassname}>
         {
           loading
             ? (new Array(7).fill('').map((_, index) => (
@@ -142,7 +142,7 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
       </StyledCategory>
     </StyledHead>
   );
-})
+}
 export default AllDappsTitle;
 
 export interface Props {
