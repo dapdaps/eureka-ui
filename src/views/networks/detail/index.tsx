@@ -39,7 +39,7 @@ const medalList: any = [
 
 const ChainDetail = ({ path }: any) => {
 
-  const { detail } = useDetail(PathToId[path]);
+  const { detail, loading: detailLoading } = useDetail(PathToId[path]);
 
   const { handleReport } = useReport();
 
@@ -53,19 +53,33 @@ const ChainDetail = ({ path }: any) => {
     }
   }, [path]);
 
+  const [category, setCategory] = useState<number | string>();
+  const [currentCategory, setCurrentCategory] = useState<any>();
+
   const { categories } = useCategoryDappList();
+  const {
+    loading,
+    fetchDappList,
+    dappList,
+    pageTotal,
+    pageIndex,
+    total,
+    pageSize,
+    onPage,
+    allDappListTotal,
+  } = useChainDapps(detail?.chain_id, category);
 
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
       const curr = CategoryList.find((_it) => _it.key === it.id);
+      const dappCount = allDappListTotal.filter((__it) => __it.category_ids.includes(it.id)).length;
       return {
         ...curr,
+        value: dappCount,
       };
     });
-  }, [categories, CategoryList]);
+  }, [categories, CategoryList, allDappListTotal]);
 
-  const [category, setCategory] = useState<number | string>();
-  const [currentCategory, setCurrentCategory] = useState<any>();
   const handleCurrentCategory = (category: any) => {
     setCategory(category.key);
     if (category.key === currentCategory?.key) {
@@ -75,18 +89,6 @@ const ChainDetail = ({ path }: any) => {
     }
     setCurrentCategory(category);
   };
-
-  const {
-    loading,
-    fetchDappList,
-    dappList,
-    pageTotal,
-    pageIndex,
-    total,
-    pageSize,
-    onPage
-  } = useChainDapps(detail?.chain_id, category);
-
 
   return (
     <StyledContainer>
@@ -100,7 +102,7 @@ const ChainDetail = ({ path }: any) => {
             overviewTitle={detail?.name ? `Introducing ${detail.name}` : ''}
             overviewShadow={{icon: currentChain?.bgIcon, color: currentChain?.selectBgColor}}
             category={Category.network}
-            loading={loading}
+            loading={detailLoading}
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
@@ -117,8 +119,14 @@ const ChainDetail = ({ path }: any) => {
           <StyledCategoryItem
             key={cate.key}
             $colorRgb={cate.colorRgb}
+            $disabled={cate.value < 1}
             className={currentCategory?.key === cate.key ? 'selected' : ''}
-            onClick={() => handleCurrentCategory(cate)}
+            onClick={() => {
+              if (cate.value < 1) {
+                return;
+              }
+              handleCurrentCategory(cate);
+            }}
           >
             {cate.value} {cate.label}
           </StyledCategoryItem>

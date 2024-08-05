@@ -75,10 +75,10 @@ const MyHistory = (
     {
       dataIndex: 'dapp',
       title: 'dApp',
-      width: '25%',
+      width: '28%',
       render: (_, record) => <StyledHistoryDapp>
         <StyledHistoryDappLogo url={record.dapp_logo} />
-        <StyledHistoryDappName>{record.dapp_name ?? '-'}</StyledHistoryDappName>
+        <StyledHistoryDappName>{record.template ?? '-'}</StyledHistoryDappName>
       </StyledHistoryDapp>,
     },
     {

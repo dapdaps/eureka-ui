@@ -4,8 +4,14 @@ import { QUEST_PATH } from '@/config/quest';
 import useAccount from "@/hooks/useAccount";
 import useAuthCheck from "@/hooks/useAuthCheck";
 import { useDebounceFn } from "ahooks";
+import { Category } from '@/hooks/useAirdrop';
 
-export default function useMyHistory(chainId?: number) {
+export default function useMyHistory(props: { chainId?: number; id: number; category: Category }) {
+  const {
+    chainId,
+    id,
+    category,
+  } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [historyList, setHistoryList] = useState<any>([]);
@@ -24,8 +30,19 @@ export default function useMyHistory(chainId?: number) {
         page_size: 10,
         page,
       };
-      if (chainId) {
+      if (category === Category.network) {
+        if (!chainId) {
+          setLoading(false);
+          return;
+        }
         params.chain_id = chainId;
+      }
+      if (category === Category.dApp) {
+        if (!id) {
+          setLoading(false);
+          return;
+        }
+        params.dapp_id = id;
       }
 
       const result = await get(
@@ -59,7 +76,7 @@ export default function useMyHistory(chainId?: number) {
 
   useEffect(() => {
     run();
-  }, [chainId, account]);
+  }, [chainId, account, id, category]);
 
   return {
     loading,

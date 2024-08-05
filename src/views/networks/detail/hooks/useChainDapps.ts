@@ -11,6 +11,7 @@ export function useChainDapps(chain_id: string, category?: string | number) {
   const [ loading, setLoading ] = useState<boolean>(false);
   const [ dappList, setDappList ] = useState<any>([]);
   const [ allDappList, setAllDappList ] = useState<any>([]);
+  const [ allDappListTotal, setAllDappListTotal ] = useState<any>([]);
   const [ total , setTotal ] = useState<number>(0);
   const [ pageTotal, setPageTotal] = useState<number>(0);
   const [ pageIndex, setPageIndex] = useState<number>(1);
@@ -41,9 +42,7 @@ export function useChainDapps(chain_id: string, category?: string | number) {
           curr && dapp.networks.push({ ...curr });
         });
         //#endregion
-      });
 
-      data.forEach((dapp: any) => {
         dapp.rewards = [];
         if (dapp?.networks && dapp.networks.length) {
           rewardList.forEach((item: any) => {
@@ -54,11 +53,13 @@ export function useChainDapps(chain_id: string, category?: string | number) {
           })
         }
       });
+
       let filteredData = data;
       if (category) {
         filteredData = data.filter((item: any) => item.dapp_category && item.dapp_category.find((dapp: any) => dapp.category_id == category));
       }
       setAllDappList(filteredData);
+      setAllDappListTotal(data);
       onPage(1, filteredData, true);
       setTotal(filteredData.length);
       setPageTotal(Math.ceil(filteredData.length / pageSize));
@@ -97,7 +98,6 @@ export function useChainDapps(chain_id: string, category?: string | number) {
     fetchDappList();
   }, [chain_id, category]);
 
-
   return {
     loading,
     dappList,
@@ -106,6 +106,7 @@ export function useChainDapps(chain_id: string, category?: string | number) {
     pageIndex,
     fetchDappList,
     pageSize,
-    onPage
+    onPage,
+    allDappListTotal,
   }
 };

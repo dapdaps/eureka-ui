@@ -30,7 +30,7 @@ function FlexTable<Item = any>(props: Props<Item>) {
   return (
     <StyledTable style={style} className={className}>
       <StyledTableHead className={`${className}-head`}>
-        <StyledTableRow border={false} bg="none" className={`${className}-row`}>
+        <StyledTableRow $border={false} bg="none" className={`${className}-row`}>
           {
             columns.map((column) => (
               <StyledTableCol

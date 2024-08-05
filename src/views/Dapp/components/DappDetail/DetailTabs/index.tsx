@@ -25,7 +25,7 @@ const DetailTabs = (props: Props) => {
     category,
     overviewTitle,
     chain_id,
-    dapp_network = []
+    dapp_network = [],
   } = props;
 
   const {
@@ -35,7 +35,7 @@ const DetailTabs = (props: Props) => {
     pageIndex,
     fetchHistoryList,
     total
-  } = useMyHistory(chain_id);
+  } = useMyHistory({ category, id: props.id, chainId: chain_id });
 
   const isHistoryTab = (tab: string) => {
     return tab === TABS[1].key;
@@ -81,7 +81,7 @@ const DetailTabs = (props: Props) => {
                   pageTotal={pageTotal}
                   pageIndex={pageIndex}
                   fetchHistoryList={fetchHistoryList}
-                  chainIds={historyType === 'chain' ? [chain_id] : dapp_network.map(item => item.chain_id)}
+                  chainIds={category === 'network' ? [chain_id] : dapp_network.map(item => item.chain_id)}
                 />
               </Animate>
             )
