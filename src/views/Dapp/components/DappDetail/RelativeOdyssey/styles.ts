@@ -17,13 +17,12 @@ export const StyledOdysseyDetail = styled.div`
 `;
 
 export const StyledOdysseyBanner = styled.div<{ url: string }>`
-  width: 500px;
+  width: 100%;
   height: 202px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center top` : ''};
+  background: ${props => props.url ? `url('${props.url}') no-repeat center top` : ''};
   background-size: cover;
-
   &.gray {
     filter: grayscale(100%);
   }
@@ -34,6 +33,7 @@ export const StyledOdysseyTitle = styled.div`
   font-size: 20px;
   font-weight: 600;
   height: 48px;
+  line-height: 24px;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
@@ -163,7 +163,8 @@ export const StyledOdysseyTop = styled.div`
   position: relative;
 `;
 
-export const StyledVideoModal = styled.div`
+export const StyledVideoModal = styled.div<{ visible?: boolean }>`
+  display: ${props => props.visible ? 'block' : 'none'};
   .video-modal-overlay {
     backdrop-filter: blur(5px);
   }

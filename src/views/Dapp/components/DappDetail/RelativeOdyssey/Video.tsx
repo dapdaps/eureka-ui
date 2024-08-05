@@ -10,7 +10,7 @@ const OdysseyVideo = (props: Props) => {
   } = props;
 
   return (
-    <StyledVideoModal>
+    <StyledVideoModal visible={visible || false}>
       <Modal
         width={620}
         overlayClassName="video-modal-overlay"

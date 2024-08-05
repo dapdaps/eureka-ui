@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import SwiperList from "./components/Swiper";
 import ToggleTab from "./components/Tabs";
+import OdysseyCard from '@/views/Dapp/components/DappDetail/RelativeOdyssey/Card';
+import useCompassList from "../Home/components/Compass/hooks/useCompassList";
 
 
 const StyledWrapper = styled.div`
@@ -55,9 +57,13 @@ const StyledWrapper = styled.div`
             }
         }
         .odyssey-list {
+            width: var(--var-container-width);
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 16px; 
+            gap: 14px; 
+            .odyssey-card {
+                width: 405px;
+            }
         }
     }
 `
@@ -66,7 +72,9 @@ const StyledWrapper = styled.div`
 
 
 const OdysseyList = () => {
-
+    const { loading, compassList } = useCompassList()
+    console.log(compassList, 'compassList');
+    
     return (
         <>
             <StyledWrapper>
@@ -85,7 +93,24 @@ const OdysseyList = () => {
                             <ToggleTab />
                         </div>
                         <div className="odyssey-list">
-  
+                            {
+                                compassList?.map((compass: any) => (
+                                    <OdysseyCard
+                                        className="odyssey-card"
+                                        key={compass.id}
+                                        id={compass.id}
+                                        name={compass.name}
+                                        banner={compass.banner}
+                                        status={compass.status}
+                                        rewards={compass.reward}
+                                        volume={compass.trading_volume}
+                                        users={compass.total_users}
+                                        // medals={[
+                                        //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
+                                        // ]}
+                                    />
+                                ))
+                            }
                         </div>
                     </div>
             </StyledWrapper>

@@ -20,8 +20,8 @@ const Box = styled.div<{ status: DayStatus }>`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 82px;
-  height: 82px;
+  width: 80px;
+  height: 80px;
   justify-content: space-around;
   background-color: ${({ status }) => 
     status === DayStatus.Checked ? '#000000' : 'rgba(31, 34, 41, 1)'};
@@ -35,7 +35,7 @@ const Box = styled.div<{ status: DayStatus }>`
     if (status === DayStatus.Special) {
       return css`
         background-image: url('/images/header/check-box.png');
-        background-size: cover;
+        background-size: 80px 80px;
         background-position: center;
         background-repeat: no-repeat;
       `;

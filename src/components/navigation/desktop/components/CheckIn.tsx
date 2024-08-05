@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import CheckInGrid from './CheckInGrid';
 import { useState, useRef, useEffect } from 'react';
+import MedalCard from '@/views/Profile/components/MedalCard';
 
 const StyleCheckIn = styled.div`
   display: flex;
@@ -101,6 +102,9 @@ const StyleDropdown = styled.div`
   .dropdown-main {
     padding: 16px 20px 22px 20px;
     text-align: center;
+    .dropdown-medals {
+        margin-bottom: 16px;
+    }
     .mystery-img {
       width: 220px;
       height: 20px;
@@ -167,7 +171,9 @@ const CheckIn = () => {
               <div className="dap-check">Dap me up!</div>
             </div>
             <div className="dropdown-main">
-              <div className="dropdown-medals"></div>
+              <div className="dropdown-medals">
+                <MedalCard style={{ width: '100%', height: '142px' }} />
+              </div>
               <div className="dropdown-mystery">
                 <img className="mystery-img" src="/images/header/dapdap-mystery-text.png" alt="mystery" />
                 <div className="dropdown-mystery-box">

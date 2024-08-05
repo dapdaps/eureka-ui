@@ -42,6 +42,7 @@ const OdysseyCardComponent = (props: Props) => {
     volume,
     users,
     medals,
+    className
   } = props;
 
   const [show, setShow] = useState<boolean>(false);
@@ -143,7 +144,7 @@ const OdysseyCardComponent = (props: Props) => {
 
   return (
     <>
-      <StyledOdysseyContainer>
+      <StyledOdysseyContainer className={className}>
         <StyledOdysseyTop>
           <StyledOdysseyBanner
             url={banner}
@@ -272,6 +273,8 @@ export interface Props {
   // if there are badges
   // please prop them as an array
   medals?: {icon: string; id: number;}[];
+  // custom className
+  className?: string; 
 }
 
 const odysseyIsLive = (status: StatusType) => {
