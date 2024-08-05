@@ -1,220 +1,328 @@
-import { useState } from 'react';
-import Image from 'next/image';
+import { useMemo, useState } from 'react';
 
 import AddMetaMaskModal from './AddMetaMaskModal';
 import InteractDAppsModal from './InteractDAppsModal';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 
-import { actionList, airdropList } from '../config';
-
 import {
-  StyledOverviewTitle,
-  StyledOverviewDesc,
+  StyledAirdrop,
+  StyledAirdropActions,
+  StyledAirdropActionsSub,
+  StyledAirdropActionsText,
+  StyledAirdropActionsTextPrimary,
+  StyledAirdropArrow,
+  StyledAirdropBody,
+  StyledAirdropBodyItem,
+  StyledAirdropHead,
+  StyledAirdropIcon,
+  StyledAirdropLabel,
+  StyledAirdropMainTitle,
+  StyledAirdropShadow,
+  StyledAirdropTitle,
+  StyledAirdropValue,
   StyledOverview,
+  StyledOverviewContainer,
+  StyledOverviewDesc,
+  StyledOverviewShadow,
+  StyledOverviewTitle,
   StyledTokenContainer,
   StyledTokenItem,
   StyledTokenLabel,
   StyledTokenValue,
-  StyledAirdrop,
-  StyledAirdropHead,
-  StyledAirdropLabel,
-  StyledAirdropValue,
-  StyledAirdropBody,
-  StyledAirdropBodyItem,
-  StyledAirdropShadow,
-  StyledAirdropIcon,
-  StyledAirdropTitle,
-  StyledAirdropArrow,
-  StyledOverviewContainer,
-  StyledAirdropMainTitle,
-  StyledAirdropActions,
-  StyledAirdropActionsText,
-  StyledAirdropActionsTextPrimary,
-  StyledTokenPrice,
-  StyledSummaryAdd,
-  StyledSummaryAddIcon,
-  StyledAddText,
-  StyledTokenInfo,
-  StyledTokenAddress,
-  StyledTokenLogo,
-  StyledOverviewShadow
 } from './styles';
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 import { useSetChain } from '@web3-onboard/react';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import hexToRgba from '@/utils/hexToRgba';
-
-const renderIcon = () => {
-  return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-      <path
-        d="M4.56699 0.75C4.75944 0.416667 5.24056 0.416667 5.43301 0.75L8.89711 6.75C9.08956 7.08333 8.849 7.5 8.4641 7.5H1.5359C1.151 7.5 0.910436 7.08333 1.10289 6.75L4.56699 0.75Z"
-        fill="currentColor" stroke="url(#paint0_linear_16163_4093)"
-      />
-      <defs>
-        <linearGradient
-          id="paint0_linear_16163_4093"
-          x1="10.9668"
-          y1="1.71698"
-          x2="-1"
-          y2="1.71698"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="currentColor" />
-          <stop offset="1" stopColor="currentColor" stopOpacity="0.1" />
-        </linearGradient>
-      </defs>
-    </svg>
-  );
-};
+import { Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
+import Loading from '@/components/Icons/Loading';
+import useToast from '@/hooks/useToast';
+import { useRouter } from 'next/router';
+import { StyledFlex } from '@/styled/styles';
 
 const Overview = (props: any) => {
 
-  const { description, title, tbd_token, native_currency, logo, historyType, overviewShadow } = props;
+  const {
+    description,
+    title,
+    tbd_token,
+    native_currency,
+    overviewShadow,
+    category,
+    id,
+    rpc,
+    loading,
+  } = props;
 
-  const isTbd = tbd_token === 'Y';
+  console.log('props: %o', props);
 
+  const router = useRouter();
   const [{}, setChain] = useSetChain();
   const { check } = useAuthCheck({ isNeedAk: false });
+  const toast = useToast();
+  const {
+    data: airdropData,
+    loading: airdropLoading,
+    reportAdditionResult,
+  } = useAirdrop({ category, id });
+
+  console.log('airdrop: category=%o, id=%o, res=%o', category, id, airdropData);
 
   const [addMetaMaskShow, setAddMetaMaskShow] = useState<boolean>(false);
-  const [interactShow, setInteractShow] = useState<boolean>(false);
+  const [dappListVisible, setDappListVisible] = useState<boolean>(false);
+  const [dappList, setDappList] = useState<QuestDapp[]>([]);
+  const [taskDescription, setTaskDescription] = useState<string>('');
+  const [actionLoading, setActionLoading] = useState<boolean>(false);
 
-  const onAction = (action: any) => {
-    if (action.finished) {
+  const nativeCurrency = useMemo(() => {
+    if (!native_currency) return '';
+    try {
+      return JSON.parse(native_currency).name || '';
+    } catch (err) {
+      console.log(err);
+    }
+    return '';
+  }, [native_currency]);
+
+  const defaultRpc = useMemo(() => {
+    if (!rpc) return '';
+    try {
+      return JSON.parse(rpc)[0] || '';
+    } catch (err) {
+      console.log(err);
+    }
+    return '';
+  }, [rpc]);
+
+  const onAction = async (action: Quest) => {
+    // cannot click after the task is completed
+    if (action.completed || actionLoading) {
       return;
     }
-    setInteractShow(true);
-  }
+    setActionLoading(true);
+    // add metamask
+    if (action.category === QuestCategory.metamask) {
+      const toastId = toast.loading({ title: 'Adding to wallet...' });
+      setAddMetaMaskShow(true);
+      const succeed = await onAddMetaMask();
+      if (succeed) {
+        // report addition result
+        const reportRes = await reportAdditionResult(action.id);
+        toast.dismiss(toastId);
+        if (reportRes.success) {
+          toast.success({ title: reportRes.msg });
+          setActionLoading(false);
+          return;
+        }
+        toast.fail({ title: reportRes.msg || 'Add failed!' });
+        setActionLoading(false);
+        return;
+      }
+      toast.dismiss(toastId);
+      toast.fail({ title: 'Add failed!' });
+      setActionLoading(false);
+      return;
+    }
+    // open dApp
+    if (action.category === QuestCategory.dApp) {
+      // open url
+      if (action.url) {
+        router.push(action.url);
+        setActionLoading(false);
+        return;
+      }
+      // open dapp
+      if (action.dapps && action.dapps.length > 0) {
+        // directly jump to a dApp
+        if (action.dapps.length === 1) {
+          router.push(`/${action.dapps[0].route}`);
+          setActionLoading(false);
+          return;
+        }
+        // open DApp list popup
+        setDappList(action.dapps);
+        setTaskDescription(action.description);
+        setDappListVisible(true);
+      }
+      // ⚠️ below are the unprocessed categories
+      setActionLoading(false);
+      return;
+    }
+    setActionLoading(false);
+  };
 
   const onAddMetaMask = () => {
-    check(() => {
-      setChain({ chainId: `0x${props.chain_id.toString(16)}` });
+    return new Promise((resolve) => {
+      check(() => {
+        setChain({ chainId: `0x${props.chain_id.toString(16)}` }).then((res) => {
+          resolve(res);
+        }).catch(() => {
+          resolve(false);
+        });
+      });
     });
-  }
+  };
 
-  const onCopy = () => {
-
-  }
-
-    return (
+  return (
     <div>
       <StyledOverviewContainer>
-        { overviewShadow?.icon && <StyledOverviewShadow src={overviewShadow.icon ?? ''} style={overviewShadow?.color ? {filter: `drop-shadow(${hexToRgba(overviewShadow?.color, 0.03)} 10000px 0)`} : {}}/> }
-        <StyledOverview>
-          <StyledOverviewTitle>{title}</StyledOverviewTitle>
-          <StyledOverviewDesc>{description ?? ''}</StyledOverviewDesc>
-          <StyledTokenContainer>
-            <StyledTokenItem>
-              <StyledTokenLabel>Project Token</StyledTokenLabel>
-              <StyledTokenValue>
-                <NativeCurrency tbdToken={tbd_token} nativeCurrency={native_currency}/>
-              </StyledTokenValue>
-            </StyledTokenItem>
-            {
-              historyType === 'chain' && (<>
-                <StyledTokenItem>
-                  <StyledTokenLabel>Token Price</StyledTokenLabel>
-                  <StyledTokenPrice>
-                    $0.02735
-                    <StyledSummaryAdd>
-                      <StyledSummaryAddIcon>
-                        {renderIcon()}
-                      </StyledSummaryAddIcon>
-                      <StyledAddText>1.7%</StyledAddText>
-                    </StyledSummaryAdd>
-                  </StyledTokenPrice>
-                </StyledTokenItem>
-              </>)
-            }
-          </StyledTokenContainer>
-          {
-            historyType === 'chain' && (
+        {
+          overviewShadow?.icon && (
+            <StyledOverviewShadow
+              src={overviewShadow.icon ?? ''}
+              style={
+                overviewShadow?.color ?
+                  { filter: `drop-shadow(${hexToRgba(overviewShadow?.color, 0.03)} 10000px 0)` } :
+                  {}
+              }
+            />
+          )
+        }
+        {
+          loading ? (
+            <StyledFlex justifyContent="center" alignItems="center" style={{ height: 150 }}>
+              <Loading size={16} />
+            </StyledFlex>
+          ) : (
+            <StyledOverview>
+              <StyledOverviewTitle>{title}</StyledOverviewTitle>
+              <StyledOverviewDesc>{description ?? ''}</StyledOverviewDesc>
               <StyledTokenContainer>
                 <StyledTokenItem>
-                  <StyledTokenLabel>Token Address</StyledTokenLabel>
-                  <StyledTokenInfo>
-                    <StyledTokenLogo url={logo}/>
-                    <StyledTokenAddress>0xdfc...e3167a</StyledTokenAddress>
-                    <Image src='/images/alldapps/icon-copy.svg' width={14} height={14} alt='copy' onClick={onCopy} />
-                    <Image src='/images/alldapps/icon-share.svg' width={12} height={12} alt='share'/>
-                    <Image src='/images/alldapps/icon-metamask.svg' width={17} height={17} alt='metamask' onClick={onAddMetaMask}/>
-                  </StyledTokenInfo>
+                  <StyledTokenLabel>Project Token</StyledTokenLabel>
+                  <StyledTokenValue>
+                    <NativeCurrency tbdToken={tbd_token} nativeCurrency={native_currency} />
+                  </StyledTokenValue>
                 </StyledTokenItem>
               </StyledTokenContainer>
-            )
-          }
-        </StyledOverview>
+            </StyledOverview>
+          )
+        }
         {
-          isTbd && ( <StyledAirdrop>
-            <StyledAirdropMainTitle>Airdrop 🪂</StyledAirdropMainTitle>
-            <StyledAirdropHead>
-              {
-                airdropList.map(airdrop => (
-                  <div key={airdrop.key} className="airdrop-item">
-                    <StyledAirdropLabel>{airdrop.label}</StyledAirdropLabel>
-                    <StyledAirdropValue>{airdrop.value}</StyledAirdropValue>
-                  </div>
-                ))
-              }
-            </StyledAirdropHead>
-            <StyledAirdropBody>
-              <StyledAirdropActions>
-                Actions
-                <StyledAirdropActionsText>
-                  <StyledAirdropActionsTextPrimary>1</StyledAirdropActionsTextPrimary>
-                  <span>/</span>
-                  <span>{actionList.length}</span>
-                </StyledAirdropActionsText>
-              </StyledAirdropActions>
-              {
-                actionList.map((item) => (
-                  <StyledAirdropBodyItem $finished={item.finished} onClick={() => onAction(item)}>
-                    <div>
-                      <StyledAirdropShadow className={item.finished ? 'finished' : ''}>
-                        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path
-                            d="M0 12C0 5.37258 5.37258 0 12 0H30L0 30V12Z"
-                            fill={item.finished ? '#EBF479' : '#979ABE'}
-                            opacity={item.finished ? 1 : 0.2}
-                          />
-                        </svg>
+          airdropLoading ? (
+            <StyledFlex justifyContent="center" alignItems="center" style={{ height: 150 }}>
+              <Loading size={16} />
+            </StyledFlex>
+          ) : (
+            airdropData.id ? (
+              <StyledAirdrop>
+                <StyledAirdropMainTitle>Potential Airdrop 🪂</StyledAirdropMainTitle>
+                <StyledAirdropHead>
+                  {
+                    airdropData.potential?.map((airdrop) => (
+                      <div key={airdrop.key} className="airdrop-item">
+                        <StyledAirdropLabel>{airdrop.label}</StyledAirdropLabel>
+                        <StyledAirdropValue>
+                          {
+                            airdropLoading ? (
+                              <Loading size={16} />
+                            ) : airdrop.value
+                          }
+                        </StyledAirdropValue>
+                      </div>
+                    ))
+                  }
+                </StyledAirdropHead>
+                {
+                  airdropData.quests && airdropData.quests.length > 0 && (
+                    <StyledAirdropBody>
+                      <StyledAirdropActions>
+                        Recommended Actions
                         {
-                          item.finished && (
-                            <StyledAirdropIcon url="/images/alldapps/icon-checked.svg" />
+                          !airdropLoading && (
+                            <StyledAirdropActionsText>
+                              <StyledAirdropActionsTextPrimary>
+                                {airdropData.completedCount}
+                              </StyledAirdropActionsTextPrimary>
+                              <span>/</span>
+                              <span>{airdropData.quests?.length}</span>
+                            </StyledAirdropActionsText>
                           )
                         }
-                      </StyledAirdropShadow>
-                      <StyledAirdropTitle>{item.label}</StyledAirdropTitle>
-                    </div>
-                    <StyledAirdropArrow>
-                      <ArrowIcon size={11} />
-                    </StyledAirdropArrow>
-                  </StyledAirdropBodyItem>
-                ))
-              }
-            </StyledAirdropBody>
-          </StyledAirdrop>)
+                      </StyledAirdropActions>
+                      <StyledAirdropActionsSub>
+                        <svg
+                          style={{ transform: `translateY(-2px)` }}
+                          width="14"
+                          height="13"
+                          viewBox="0 0 14 13"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M9.34133 1.36842L13.6338 8.89473C14.6744 10.7193 13.3736 13 11.2924 13H2.70757C0.626391 13 -0.674354 10.7193 0.366238 8.89474L4.65867 1.36842C5.69926 -0.456136 8.30074 -0.456144 9.34133 1.36842ZM8.56089 1.82456C7.86716 0.608186 6.13284 0.608189 5.43911 1.82456L1.14668 9.35088C0.452954 10.5673 1.32012 12.0877 2.70757 12.0877H11.2924C12.6799 12.0877 13.547 10.5672 12.8533 9.35087L8.56089 1.82456Z"
+                            fill="#979ABE"
+                          />
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M7 3C7.55228 3 8 3.33579 8 3.75V7.25C8 7.66421 7.55228 8 7 8C6.44772 8 6 7.66421 6 7.25V3.75C6 3.33579 6.44772 3 7 3ZM7 9C7.55228 9 8 9.33579 8 9.75V10.25C8 10.6642 7.55228 11 7 11C6.44772 11 6 10.6642 6 10.25V9.75C6 9.33579 6.44772 9 7 9Z"
+                            fill="#979ABE"
+                          />
+                        </svg>
+                        &nbsp;
+                        The following actions are for reference only, and there is no guarantee that official airdrops can be obtained
+                      </StyledAirdropActionsSub>
+                      {
+                        airdropData.quests?.map((item) => (
+                          <StyledAirdropBodyItem $finished={item.completed} onClick={() => onAction(item)}>
+                            <div>
+                              <StyledAirdropShadow className={item.completed ? 'finished' : ''}>
+                                <svg
+                                  width="30"
+                                  height="30"
+                                  viewBox="0 0 30 30"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 12C0 5.37258 5.37258 0 12 0H30L0 30V12Z"
+                                    fill={item.completed ? '#EBF479' : '#979ABE'}
+                                    opacity={item.completed ? 1 : 0.2}
+                                  />
+                                </svg>
+                                {
+                                  item.completed && (
+                                    <StyledAirdropIcon url="/images/alldapps/icon-checked.svg" />
+                                  )
+                                }
+                              </StyledAirdropShadow>
+                              <StyledAirdropTitle>{item.name}</StyledAirdropTitle>
+                            </div>
+                            <StyledAirdropArrow>
+                              <ArrowIcon size={11} />
+                            </StyledAirdropArrow>
+                          </StyledAirdropBodyItem>
+                        ))
+                      }
+                    </StyledAirdropBody>
+                  )
+                }
+              </StyledAirdrop>
+            ) : null
+          )
         }
-
       </StyledOverviewContainer>
       <AddMetaMaskModal
         display={addMetaMaskShow}
         onClose={() => setAddMetaMaskShow(false)}
-        rpc={'http://zkevm-rpc.com'}
-        chainId={1101}
-        chainName={'Polygon zkEVM'}
-        symbol={'ETH'}
-        explorerUrl={'http://zkevm.polygonscan.com/'}
+        rpc={defaultRpc}
+        chainId={props.chain_id}
+        chainName={props.name}
+        symbol={nativeCurrency}
+        explorerUrl={props.block_explorer}
       />
       <InteractDAppsModal
-        display={interactShow}
-        onClose={() => setInteractShow(false)}
-        chainName={'Polygon zkEVM'}
+        display={dappListVisible}
+        onClose={() => setDappListVisible(false)}
+        chainName={props.name}
+        dapps={dappList}
+        description={taskDescription}
       />
     </div>
   );
 };
-
 
 export default Overview;

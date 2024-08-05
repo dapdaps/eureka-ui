@@ -2,7 +2,7 @@ import { useSetChain } from '@web3-onboard/react';
 import Link from 'next/link';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus, getBridgeTokens } from 'super-bridge-sdk';
 
@@ -19,6 +19,10 @@ import BridgeX from '@/components/BridgeX/Index';
 
 import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
+import DappBack from '@/components/DappBack';
+import DappFallback from '@/views/Dapp/components/Fallback';
+
+const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 
 const arrow = (
     <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,6 +76,7 @@ const Bridge: NextPageWithLayout = () => {
     const [name, setName] = useState('')
     const [color, setColor] = useState('')
     const [template, setTemplate] = useState('')
+    const [dappDetail, setDappDetail] = useState<any>({})
 
     // const { icon, name, color } = getBridgeMsg(tool)
 
@@ -89,6 +94,8 @@ const Bridge: NextPageWithLayout = () => {
                         setName(res.data.name)
                         setIcon(res.data.logo)
                         // setChainConfig(res.data)
+                        // 🔔 for use in the new dApp detail page
+                        setDappDetail(res.data || {});
                     }
                 })
         }
@@ -96,13 +103,7 @@ const Bridge: NextPageWithLayout = () => {
 
     return (
         <Container>
-            <BreadCrumbs>
-                <Link href="/">Home</Link>
-                {arrow}
-                <Link href="/alldapps">dApp</Link>
-                {arrow}
-                <span>{name}</span>
-            </BreadCrumbs>
+            <DappBack />
 
             <BridgeX
                 addAction={addAction}
@@ -125,6 +126,9 @@ const Bridge: NextPageWithLayout = () => {
                 fromChainId={router.query.fromChainId as string}
                 setChain={setChain}
             />
+            <Suspense fallback={<DappFallback />}>
+                <DappDetail {...dappDetail} />
+            </Suspense>
         </Container>
     )
 };

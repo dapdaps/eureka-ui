@@ -192,7 +192,7 @@ export const StyledOverviewContainer = styled.div`
   padding: 30px 22px 44px 30px;
   font-family: Montserrat;
   position: relative;
-  min-height: 500px;
+  min-height: 300px;
 `;
 
 export const StyledOverview = styled.div`
@@ -291,7 +291,16 @@ export const StyledAirdropActions = styled.div`
   line-height: 150%;
   display: flex;
   gap: 13px;
-  margin-bottom: 21px;
+`;
+
+export const StyledAirdropActionsSub = styled.div`
+  color: #979ABE;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+  margin-top: 10px;
+  margin-bottom: 20px;
 `;
 
 export const StyledAirdropActionsText = styled.div`

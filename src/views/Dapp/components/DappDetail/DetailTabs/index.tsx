@@ -14,6 +14,7 @@ import Overview from "./Overview";
 import { AnimatePresence } from 'framer-motion';
 import Animate from './Animate';
 import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
+import { Category } from '@/hooks/useAirdrop';
 
 const DetailTabs = (props: Props) => {
 
@@ -21,7 +22,7 @@ const DetailTabs = (props: Props) => {
 
   const {
     logo,
-    historyType,
+    category,
     overviewTitle,
     chain_id
   } = props;
@@ -73,7 +74,7 @@ const DetailTabs = (props: Props) => {
             currTab === TABS[1].key && (
               <Animate key="my-history">
                 <MyHistory
-                  type={historyType}
+                  category={category}
                   loading={loading}
                   historyList={historyList}
                   pageTotal={pageTotal}
@@ -95,7 +96,7 @@ interface Props {
   name: string;
   logo: string;
   description: string;
-  historyType: 'dApp' | 'chain';
+  category: Category;
   overviewTitle: string;
   overviewShadow?: {
     icon?: string;

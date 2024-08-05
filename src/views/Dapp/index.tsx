@@ -3,7 +3,8 @@ import DappCom from './DappCom';
 import ExtraWard from './components/ExtraReward';
 import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper, StyledLoadingWrapper } from './styles';
 import Loading from '@/components/Icons/Loading';
-import DappBack from '@/views/Dapp/components/Back';
+import DappBack from '@/components/DappBack';
+import DappFallback from '@/views/Dapp/components/Fallback';
 
 export { default as Empty } from './Empty';
 
@@ -30,7 +31,7 @@ const Dapp = (props: any) => {
           {dapp.name === 'Ring Protocol' && <ExtraWard dapp={dapp} />}
           <DappCom {...props} />
         </StyledDappWrapper>
-        <Suspense fallback={<SuspenseFallback />}>
+        <Suspense fallback={<DappFallback />}>
           <DappDetail {...dapp}/>
         </Suspense>
       </div>
@@ -39,11 +40,3 @@ const Dapp = (props: any) => {
 };
 
 export default memo(Dapp);
-
-const SuspenseFallback = () => {
-  return (
-    <StyledLoadingWrapper>
-      <Loading size={60} />
-    </StyledLoadingWrapper>
-  );
-};

@@ -1,28 +1,13 @@
 import { memo } from 'react';
-import  styled from 'styled-components';
+import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 const DappBack = () => {
   const router = useRouter();
 
   const onClick = () => {
-    if (window.history.length === 1) {
+    if (window.history.length <= 1) {
       router.replace('/alldapps');
-      return;
-    }
-    const handleEmptyPage = () => {
-      try {
-        if (window.history?.state?.__PRIVATE_NEXTJS_INTERNALS_TREE[window.history.length - 2] === '') {
-          router.replace('/alldapps');
-          return false;
-        }
-        return true;
-      } catch (err) {
-        return true;
-      }
-    };
-    const continued = handleEmptyPage();
-    if (!continued) {
       return;
     }
     router.back();

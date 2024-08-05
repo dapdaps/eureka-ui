@@ -12,7 +12,7 @@ import DetailTabs from './DetailTabs/index';
 import RelativeOdyssey from './RelativeOdyssey';
 import Medal from './Medal';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import { useAirdrop } from '@/hooks/useAirdrop';
+import { Category } from '@/hooks/useAirdrop';
 
 const medalList = [
   {
@@ -22,7 +22,7 @@ const medalList = [
   }
 ]
 
-const DappDetail = (props: any) => {
+const DappDetail = (props: Props) => {
   const {
     trading_volume,
     trading_volume_change_percent,
@@ -36,7 +36,7 @@ const DappDetail = (props: any) => {
       key: 'volume',
       label: 'Trading Volume on DapDap',
       value: `$${formatIntegerThousandsSeparator(trading_volume, 1)}`,
-      increaseValue: `${trading_volume_change_percent}`,
+      increaseValue: trading_volume_change_percent || '',
     },
     {
       key: 'txns',
@@ -48,11 +48,9 @@ const DappDetail = (props: any) => {
       key: 'user',
       label: 'User',
       value: `${formatIntegerThousandsSeparator(participants, 1)}`,
-      increaseValue: `${participants_change_percent}`,
+      increaseValue: participants_change_percent || '',
     },
   ];
-  const airdrop = useAirdrop({ category: 'dapp', id: props.id });
-  console.log('airdrop: %o', airdrop);
 
   return (
     <StyledContainer>
@@ -73,7 +71,7 @@ const DappDetail = (props: any) => {
           <DetailTabs
             {...props}
             overviewTitle={props?.name && `What is ${props.name} ?`}
-            historyType='dApp'
+            category={Category.dApp}
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
@@ -89,3 +87,24 @@ const DappDetail = (props: any) => {
 }
 
 export default DappDetail;
+
+export interface Props {
+  trading_volume: string;
+  trading_volume_change_percent: string;
+  total_execution: string;
+  participants: string;
+  participants_change_percent: string;
+  name: string;
+  logo: string;
+  id: number;
+  dapp_network: any;
+  dapp_category: any;
+  description: string;
+  category: Category;
+  overviewTitle: string;
+  chain_id?: number;
+  overviewShadow?: {
+    icon?: string;
+    color?: string;
+  };
+}

@@ -21,6 +21,7 @@ import {
 import DetailTabs from '@/views/Dapp/components/DappDetail/DetailTabs/index';
 import RelativeOdyssey from '@/views/Dapp/components/DappDetail/RelativeOdyssey';
 import Medal from '@/views/Dapp/components/DappDetail/Medal/index';
+import { Category } from '@/hooks/useAirdrop';
 
 const medalList: any = [
   {
@@ -79,7 +80,8 @@ const ChainDetail = ({ path }: any) => {
             {...detail}
             overviewTitle={detail?.name ? `Introducing ${detail.name}` : ''}
             overviewShadow={{icon: currentChain?.bgIcon, color: currentChain?.selectBgColor}}
-            historyType='chain'
+            category={Category.network}
+            loading={loading}
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>

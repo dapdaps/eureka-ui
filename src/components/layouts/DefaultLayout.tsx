@@ -27,7 +27,16 @@ const Layout = styled.div`
   }
 `;
 
-const BLACK_PATH = ['/odyssey/[version]', '/', '/odyssey/list']
+const BLACK_PATH = [
+  '/odyssey/[version]',
+  '/',
+  '/odyssey/list',
+  '/dapp/[dappRoute]',
+  '/alldapps',
+  '/networks',
+  '/networks/[path]',
+  '/bridge-x/[tool]',
+]
 
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();

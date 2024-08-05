@@ -1,7 +1,7 @@
-import FlexTable from "../../FlexTable";
+import FlexTable from '../../FlexTable';
 import Image from 'next/image';
-import useAccount from "@/hooks/useAccount";
-import { useUserStore } from "@/stores/user";
+import useAccount from '@/hooks/useAccount';
+import { useUserStore } from '@/stores/user';
 import {
   StyledHead,
   StyledMyAvatar,
@@ -13,46 +13,54 @@ import {
   StyledEmptyTxt,
   StyledHistoryDapp,
   StyledHistoryDappLogo,
-  StyledHistoryDappName
+  StyledHistoryDappName,
 } from './styles';
-import { Column } from "../../FlexTable/styles";
+import { Column } from '../../FlexTable/styles';
 import { formatTitle } from '@/views/OnBoarding/helpers';
-import useCopy from "@/hooks/useCopy";
-import Empty from "@/components/Empty";
+import useCopy from '@/hooks/useCopy';
+import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
-import { formateAddress } from "@/utils/formate";
-import { formatUSDate } from "@/utils/date";
+import { formateAddress } from '@/utils/formate';
+import { formatUSDate } from '@/utils/date';
+import { Category } from '@/hooks/useAirdrop';
+
+const Types = {
+  network: 'chain',
+  dapp: 'dApp',
+};
 
 const MyHistory = (
   {
-    type,
+    category,
     loading,
     historyList,
     pageTotal,
     pageIndex,
-    fetchHistoryList
-  }: any) => {
+    fetchHistoryList,
+  }: Props) => {
 
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
 
   const { copy } = useCopy();
 
-  const onPortfolioClick = () => {}
+  const onPortfolioClick = () => {
+  };
 
-  const onShareClick = () => {}
+  const onShareClick = () => {
+  };
 
   const historyDappColumns: Column[] = [
     {
       dataIndex: 'actions',
       title: 'Actions',
-      render: (_, record) =>  <StyledTitleText>{formatTitle(record)}</StyledTitleText>,
+      render: (_, record) => <StyledTitleText>{formatTitle(record)}</StyledTitleText>,
     },
     {
       dataIndex: 'timestamp',
       title: 'Time',
       render: (_, record) => <StyledDateText>{formatUSDate(record.timestamp)}</StyledDateText>,
-      width: '30%'
+      width: '30%',
     },
   ];
 
@@ -60,14 +68,14 @@ const MyHistory = (
     {
       dataIndex: 'actions',
       title: 'Actions',
-      render: (_, record) =>  <StyledTitleText>{formatTitle(record)}</StyledTitleText>,
+      render: (_, record) => <StyledTitleText>{formatTitle(record)}</StyledTitleText>,
     },
     {
       dataIndex: 'dapp',
       title: 'dApp',
       width: '25%',
-      render:(_, record) =>  <StyledHistoryDapp>
-        <StyledHistoryDappLogo url={record.dapp_logo}/>
+      render: (_, record) => <StyledHistoryDapp>
+        <StyledHistoryDappLogo url={record.dapp_logo} />
         <StyledHistoryDappName>{record.dapp_name ?? '-'}</StyledHistoryDappName>
       </StyledHistoryDapp>,
     },
@@ -75,7 +83,7 @@ const MyHistory = (
       dataIndex: 'timestamp',
       title: 'Time',
       render: (_, record) => <StyledDateText>{formatUSDate(record.timestamp)}</StyledDateText>,
-      width: '30%'
+      width: '30%',
     },
   ];
 
@@ -83,42 +91,42 @@ const MyHistory = (
     <>
       <StyledHead>
         <StyledHeadInfo>
-          <StyledMyAvatar url={userInfo.avatar}/>
+          <StyledMyAvatar url={userInfo.avatar} />
           <StyledMyAddress>{formateAddress(account ?? '')}</StyledMyAddress>
           {
             account && (<>
               <Image
-                className='head-icon'
-                src='/images/alldapps/icon-copy.svg'
+                className="head-icon"
+                src="/images/alldapps/icon-copy.svg"
                 width={14}
                 height={14}
-                alt='copy'
+                alt="copy"
                 onClick={() => copy(account ?? '')}
               />
               <Image
-                className='head-icon'
-                src='/images/alldapps/icon-share.svg'
+                className="head-icon"
+                src="/images/alldapps/icon-share.svg"
                 width={12}
                 height={12}
-                alt='share'
+                alt="share"
                 onClick={onShareClick}
               />
             </>)
           }
         </StyledHeadInfo>
-        { account && (<StyledHeadOther onClick={onPortfolioClick}>
+        {account && (<StyledHeadOther onClick={onPortfolioClick}>
           View more on Portfolio
         </StyledHeadOther>)
         }
       </StyledHead>
       <FlexTable
-        className='history-table'
+        className="history-table"
         loading={loading}
         list={historyList}
-        columns={type == 'chain' ? historyChainColumns  : historyDappColumns}
+        columns={category == 'network' ? historyChainColumns : historyDappColumns}
         emptyText={<Empty
           size={42}
-          tips={<StyledEmptyTxt>You don’t have any record on this {type} yet</StyledEmptyTxt>}
+          tips={<StyledEmptyTxt>You don’t have any record on this {Types[category]} yet</StyledEmptyTxt>}
         />}
         pagination={<Pagination
           pageClassName={'history-pagination-item'}
@@ -135,3 +143,12 @@ const MyHistory = (
 };
 
 export default MyHistory;
+
+interface Props {
+  category: Category;
+  loading: boolean;
+  historyList: any;
+  pageTotal: number;
+  pageIndex: number;
+  fetchHistoryList: any;
+}

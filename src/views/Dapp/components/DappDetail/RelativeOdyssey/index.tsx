@@ -26,7 +26,6 @@ const RelativeOdyssey = (props: Props) => {
     try {
       if (dappId) {
         const result = await get(`/api/compass/list-by-dapp?dapp_id=${dappId}`);
-        console.log(result);
         const data = result.data || [];
         setOdysseyList(data.sort((a: any, b: any) => b.end_time - a.end_time));
       }
@@ -38,7 +37,7 @@ const RelativeOdyssey = (props: Props) => {
 
   useEffect(() => {
     getOdysseyList();
-  }, []);
+  }, [dappId, networkId, chainId]);
 
   return (
     <StyledContainer>
@@ -54,7 +53,7 @@ const RelativeOdyssey = (props: Props) => {
                   <OdysseyCard
                     key={compass.id}
                     id={compass.id}
-                    name={compass.description}
+                    name={compass.name}
                     banner={compass.banner}
                     status={compass.status}
                     rewards={compass.reward}
