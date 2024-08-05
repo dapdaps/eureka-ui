@@ -1,11 +1,11 @@
 export const CategoryList = [
-  { key: 1, label: 'Bridge', colorRgb: '247,255,154' },
-  { key: 2, label: 'Dex', colorRgb: '172,252,237' },
-  { key: 3, label: 'Lending', colorRgb: '173,255,181' },
-  { key: 4, label: 'Liquidity', colorRgb: '170,214,255' },
-  { key: 5, label: 'Staking', colorRgb: '193,191,255' },
-  { key: 6, label: 'Yield', colorRgb: '249,181,230' },
-  { key: 7, label: 'Launchpad', colorRgb: '153,114,238' },
+  { key: 1, label: 'Bridge', name: 'Bridge', colorRgb: '247,255,154' },
+  { key: 2, label: 'Dex', name: 'Swap', colorRgb: '172,252,237' },
+  { key: 3, label: 'Lending', name: 'Lending', colorRgb: '173,255,181' },
+  { key: 4, label: 'Liquidity', name: 'Liquidity', colorRgb: '170,214,255' },
+  { key: 5, label: 'Staking', name: 'Staking', colorRgb: '193,191,255' },
+  { key: 6, label: 'Yield', name: 'Yield', colorRgb: '249,181,230' },
+  { key: 7, label: 'Launchpad', name: 'Launchpad', colorRgb: '153,114,238' },
 ];
 
 export interface TitleDapp {

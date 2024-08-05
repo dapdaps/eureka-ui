@@ -77,6 +77,7 @@ const DappList = forwardRef((props: Props, ref) => {
           pageIndex={pageIndex}
           onPage={(page) => {
             fetchDappList(page);
+            props.onPage && props.onPage(page);
           }}
         />
       </StyledFoot>

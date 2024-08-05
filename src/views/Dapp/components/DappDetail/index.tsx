@@ -11,27 +11,8 @@ import DappSummary from './Summary';
 import DetailTabs from './DetailTabs/index';
 import RelativeOdyssey from './RelativeOdyssey';
 import Medal from './Medal';
-
-const summaryList = [
-  {
-    key: 'volume',
-    label: 'Trading Volume on DapDap',
-    value: '$16.7k',
-    increaseValue: '0.23%'
-  },
-  {
-    key: 'txns',
-    label: 'Total txns',
-    value: '1.2k',
-    increaseValue: ''
-  },
-  {
-    key: 'user',
-    label: 'User',
-    value: '351',
-    increaseValue: ''
-  },
-];
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { useAirdrop } from '@/hooks/useAirdrop';
 
 const medalList = [
   {
@@ -42,6 +23,36 @@ const medalList = [
 ]
 
 const DappDetail = (props: any) => {
+  const {
+    trading_volume,
+    trading_volume_change_percent,
+    total_execution,
+    participants,
+    participants_change_percent,
+  } = props;
+
+  const summaryList = [
+    {
+      key: 'volume',
+      label: 'Trading Volume on DapDap',
+      value: `$${formatIntegerThousandsSeparator(trading_volume, 1)}`,
+      increaseValue: `${trading_volume_change_percent}`,
+    },
+    {
+      key: 'txns',
+      label: 'Total txns',
+      value: `${formatIntegerThousandsSeparator(total_execution, 1)}`,
+      increaseValue: '',
+    },
+    {
+      key: 'user',
+      label: 'User',
+      value: `${formatIntegerThousandsSeparator(participants, 1)}`,
+      increaseValue: `${participants_change_percent}`,
+    },
+  ];
+  const airdrop = useAirdrop({ category: 'dapp', id: props.id });
+  console.log('airdrop: %o', airdrop);
 
   return (
     <StyledContainer>

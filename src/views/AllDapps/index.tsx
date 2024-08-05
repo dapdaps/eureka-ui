@@ -125,6 +125,16 @@ const AllDapps = (props: Props) => {
     setQueryParams(params);
   }
 
+  const onPage = (_page: number) => {
+    const params = new URLSearchParams(searchParams);
+    if (!_page || _page === 1) {
+      params.delete('page');
+    } else {
+      params.set('page', _page + '');
+    }
+    setQueryParams(params);
+  };
+
   useEffect(() => {
     fetchNetworkData();
     const handleScroll = () => {
@@ -279,7 +289,6 @@ const AllDapps = (props: Props) => {
               />
             )
           }
-
           <Selector
             list={SortList}
             value={sort}

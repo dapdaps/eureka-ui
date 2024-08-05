@@ -33,7 +33,7 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
       const curr = CategoryList.find((_it) => _it.key === it.id);
       return {
         ...curr,
-        sum: curr ? (curr.label === 'Dex' ? (categoryMap['Swap'] ?? 0) : categoryMap[curr.label] ?? 0) : 0
+        sum: curr ? (categoryMap[curr.name] ?? 0) : 0
       };
     });
   }, [categories, CategoryList, categoryMap]);
@@ -56,7 +56,8 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
 
   useEffect(() => {
     if (activeCategory) {
-      setCurrentCategory({key: activeCategory})
+      const curr = categoryList.find((_it) => _it.key == activeCategory);
+      setCurrentCategory({ key: activeCategory, ...curr });
     }
   }, [activeCategory]);
 
@@ -91,7 +92,14 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
           }
         </div>
         <StyledTitleText>
-          Discover <StyledTitlePrimary>150+ dApps</StyledTitlePrimary>
+          Discover&nbsp;
+          <StyledTitlePrimary
+            style={{
+              color: currentCategory?.colorRgb ? `rgb(${currentCategory.colorRgb})` : '#EBF479',
+            }}
+          >
+            {currentCategory? (currentCategory.sum || '') : '150+'} {currentCategory? currentCategory.label : 'dApps'}
+          </StyledTitlePrimary>
         </StyledTitleText>
         <div>
           {

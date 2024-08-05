@@ -42,7 +42,10 @@ export default function useList(props: Props) {
         params.chain_id = network;
       }
       if (category) {
-        params.category_ids = category;
+        const currCategory = CategoryList.find((it) => it.key == category);
+        if (currCategory) {
+          params.category = currCategory.name;
+        }
       }
       if (searchText) {
         params.content = searchText;
@@ -134,4 +137,5 @@ export interface Props {
   style?: React.CSSProperties;
   // Potential Airdrop
   airdrop?: boolean;
+  onPage?(page: number): void;
 }

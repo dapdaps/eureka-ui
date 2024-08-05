@@ -50,7 +50,7 @@ export default function useLike(id: string, category: string) {
         });
       }
     },
-    [id, category],
+    [id, category, loading],
   );
 
   const onLike = (favorite: boolean) => {

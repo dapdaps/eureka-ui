@@ -1,23 +1,19 @@
-import { memo } from 'react';
-import Breadcrumb from '@/components/Breadcrumb';
+import { memo, Suspense, lazy } from 'react';
 import DappCom from './DappCom';
 import ExtraWard from './components/ExtraReward';
-import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper } from './styles';
-import DappDetail from './components/DappDetail';
+import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper, StyledLoadingWrapper } from './styles';
+import Loading from '@/components/Icons/Loading';
+import DappBack from '@/views/Dapp/components/Back';
 
 export { default as Empty } from './Empty';
+
+const DappDetail = lazy(() => import('./components/DappDetail'));
 
 const Dapp = (props: any) => {
   const { dapp } = props;
   return (
     <StyledPage>
-      <Breadcrumb
-        navs={[
-          { name: 'Home', path: '/' },
-          { name: 'dApps', path: '/alldapps' },
-          { name: dapp.name, path: '' },
-        ]}
-      />
+      <DappBack />
       <div style={{ margin: '0 auto', padding: '20px 0px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '11px', justifyContent: 'center' }}>
           <img src={dapp.logo} style={{ width: '32px', height: '31px' }} />
@@ -34,10 +30,20 @@ const Dapp = (props: any) => {
           {dapp.name === 'Ring Protocol' && <ExtraWard dapp={dapp} />}
           <DappCom {...props} />
         </StyledDappWrapper>
-        <DappDetail {...dapp}/>
+        <Suspense fallback={<SuspenseFallback />}>
+          <DappDetail {...dapp}/>
+        </Suspense>
       </div>
     </StyledPage>
   );
 };
 
 export default memo(Dapp);
+
+const SuspenseFallback = () => {
+  return (
+    <StyledLoadingWrapper>
+      <Loading size={60} />
+    </StyledLoadingWrapper>
+  );
+};

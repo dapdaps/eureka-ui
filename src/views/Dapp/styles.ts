@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledPage = styled.div`
-  padding: 50px 80px 0px;
+  padding: 42px 80px 0;
 `;
 
 export const DappName = styled.div`
@@ -30,4 +30,11 @@ export const StyledPowerHints = styled.div`
 export const StyledDappWrapper = styled.div`
   position: relative;
   padding-top: 18px;
+`;
+
+export const StyledLoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
 `;
