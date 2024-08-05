@@ -37,7 +37,7 @@ export const simplifyNum = (number: number) => {
   }
 };
 
-export const formatIntegerThousandsSeparator = (integer?: number, precision: number = 2, type?: 'simplify' | 'thousand') => {
+export const formatIntegerThousandsSeparator = (integer?: number | string, precision: number = 2, type?: 'simplify' | 'thousand') => {
   if (!integer) {
     return '0';
   }

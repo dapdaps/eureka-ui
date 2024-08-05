@@ -67,7 +67,10 @@ const DappDetail = (props: any) => {
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
           <Medal medalList={medalList}/>
-          <RelativeOdyssey title='Related Campaign'/>
+          <RelativeOdyssey
+            title='Related Campaign'
+            dappId={props?.id}
+          />
         </StyledRelatedOdyssey>
       </StyledRelatedContainer>
   </StyledContainer>

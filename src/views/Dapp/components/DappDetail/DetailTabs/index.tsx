@@ -39,7 +39,6 @@ const DetailTabs = (props: Props) => {
     return tab === TABS[1].key;
   }
 
-  console.log(props);
   return (
     <StyledContainer>
       <StyledTabContainer>

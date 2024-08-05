@@ -32,7 +32,7 @@ export const SortList = [
   { key: 2, value: 'users', label: 'Sort by users' },
   { key: 3, value: 'a-z', label: 'A-Z' },
   { key: 4, value: 'z-a', label: 'Z-A' },
-  { key: 5, value: 'launched', label: 'New launched' },
+  { key: 5, value: 'create_time', label: 'New launched' },
 ];
 
 export const AllNetworks = {
