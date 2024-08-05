@@ -60,7 +60,7 @@ const ChainList = styled.div<{ display?: number }>`
 const ChainItem = styled(StyledChain)<{ active?: number }>`
   padding: 0px 10px;
   display: flex;
-  alignitems: center;
+  align-items: center;
   justify-content: space-between;
   &:hover {
     background-color: rgba(24, 26, 39, 0.3);

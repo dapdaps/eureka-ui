@@ -14,6 +14,8 @@ import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
 import IconSearch from '@public/images/header/search.svg'
 import { NavMainV2 } from './NavMainV2';
+import CheckInGrid from './components/CheckInGrid';
+import CheckIn from './components/CheckIn';
 
 
 const Flex = styled.div`
@@ -133,6 +135,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
             <div />
           ) : account ? (
             <LoginContainer>
+              <CheckIn />
               <Chain showName={false} bp="3001-003" />
               <AccountWrapper
                 onClick={() => {
