@@ -40,21 +40,7 @@ export const StyledCircle = styled.div`
   left: -215px;
 `;
 
-export const StyledAvatarContainer = styled.div`
-  position: relative;
-`
-export const StyledAvatar = styled.img`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-`;
 
-export const StyledAvatarBox = styled.div`
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  background-image: conic-gradient(from 180deg at 50% 50%, #00d1ff 0deg, #ff008a 360deg);
-`;
 export const StyledKol = styled.div`
   position: absolute;
   bottom: -8px;

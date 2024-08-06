@@ -9,9 +9,11 @@ import UserInfoPopUp from '@/components/UserInfoPopUp';
 
 const StyledLogoContainer = styled.div`
   position: relative;
+  
 `;
 const StyledLogo = styled.div`
   position: relative;
+  cursor: pointer;
 `;
 const StyledKol = styled.div`
   position: absolute;
@@ -57,32 +59,25 @@ const StyledPopup = styled.div`
   transform: translateY(100%);
 `
 
-const AccountItem = ({
-  showCopy = true,
+const AccountLogo = ({
   logoSize = 38,
   bp,
 }: {
   bp?: string;
-  showCopy?: boolean;
   logoSize?: number;
 }) => {
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
-
-  const [ready, setReady] = useState(false);
-  const [show, setShow] = useState(true)
-  useEffect(() => {
-    setReady(true);
-  }, []);
-  return ready ? (
+  const [show, setShow] = useState(false)
+  return (
     <StyledLogoContainer
       data-bp={bp}
       onMouseEnter={() => {
         setShow(true)
       }}
-      // onMouseLeave={() => {
-      //   setShow(false)
-      // }}
+      onMouseLeave={() => {
+        setShow(false)
+      }}
     >
       <StyledLogo>
         {userInfo?.avatar ? <LogoImage src={userInfo.avatar} size={logoSize} /> : <Logo size={logoSize} />}
@@ -116,14 +111,12 @@ const AccountItem = ({
       {
         show && (
           <StyledPopup>
-            {/* <UserInfoPopUp /> */}
+            <UserInfoPopUp />
           </StyledPopup>
         )
       }
     </StyledLogoContainer>
-  ) : (
-    <div />
   );
 };
 
-export default memo(AccountItem);
+export default memo(AccountLogo);

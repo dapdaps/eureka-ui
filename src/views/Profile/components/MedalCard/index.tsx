@@ -6,12 +6,12 @@ import {
 } from './styles';
 
 
-export default function MedalCard(props: { style?: React.CSSProperties; }) {
+export default function MedalCard(props: { style?: React.CSSProperties; barWidth?: string }) {
   return (
     <StyledMedalCard style={props.style}>
       <StyledFlex gap='15px'>
         <StyledSvg>
-          <svg xmlns="http://www.w3.org/2000/svg" width="84" height="74" viewBox="0 0 84 74" fill="none">
+          {/* <svg xmlns="http://www.w3.org/2000/svg" width="84" height="74" viewBox="0 0 84 74" fill="none">
             <path d="M4.97846 34.0954C6.11502 53.6467 29.1329 69.3441 48.5511 68.4042C71.2846 62.2944 88.6603 30.7478 73.1735 11.5372C61.8068 -2.56277 40.028 4.95573 34.3412 17.6458C26.2921 11.5372 3.69431 12.0052 4.97846 34.0954Z" fill="url(#paint0_linear_16556_12640)" />
             <g filter="url(#filter0_d_16556_12640)">
               <path fill-rule="evenodd" clip-rule="evenodd" d="M31.3135 14.9717C21.399 10.3409 1.82605 12.6695 3.05529 33.9708C4.20893 53.9622 26.7931 70.1512 46.7277 70.3682C47.6114 70.3778 48.0533 70.3826 48.8909 70.2488C49.7286 70.1151 50.1397 69.9753 50.962 69.6959C73.8394 61.9208 90.6106 29.8315 74.793 10.0658C63.663 -3.84223 43.043 2.0987 35.4187 13.8326C34.5662 15.1447 32.7312 15.6339 31.3135 14.9717ZM50.6772 66.5528C49.8011 66.8729 49.3631 67.0329 48.4176 67.1849C47.4721 67.3368 46.9956 67.3218 46.0425 67.2916C37.3764 67.0177 28.0817 63.5144 20.5865 57.8444C12.2973 51.5737 6.61942 42.9825 6.08913 33.7932C5.78203 28.4714 6.91235 24.7498 8.63914 22.1748C10.3689 19.5954 12.871 17.907 15.7584 16.96C18.6694 16.0053 21.9138 15.8292 24.9175 16.2695C27.9494 16.7138 30.4999 17.7497 32.1062 18.9778C33.6602 20.1658 35.9215 19.5784 36.7166 17.7911C39.2435 12.1106 45.5707 7.27923 52.7941 5.64324C59.8953 4.03491 67.3292 5.6169 72.4271 11.9872C79.6053 20.957 79.3795 33.0509 74.1743 44.0894C69.3725 54.2726 60.5859 62.9327 50.6772 66.5528Z" fill="url(#paint1_linear_16556_12640)" />
@@ -71,9 +71,9 @@ export default function MedalCard(props: { style?: React.CSSProperties; }) {
                 <stop offset="1" stop-color="#FF9D9D" />
               </linearGradient>
             </defs>
-          </svg>
+          </svg> */}
         </StyledSvg>
-        <StyledFlex flexDirection='column' gap='8px'>
+        <StyledFlex flexDirection='column' alignItems='flex-start' gap='8px'>
           <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>5 Odyssey Explorer</StyledFont>
           <StyledFont color='#979ABE' fontSize='14px'>Participant 5 Odyssey Campaigns</StyledFont>
         </StyledFlex>
@@ -94,7 +94,7 @@ export default function MedalCard(props: { style?: React.CSSProperties; }) {
           </svg>
         </StyledSvg>
       </StyledMark>
-      <ProgressBar quantity={10} total={50} />
+      <ProgressBar quantity={10} total={50} barWidth={props?.barWidth} />
     </StyledMedalCard>
   )
 }

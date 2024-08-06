@@ -153,16 +153,14 @@ export const StyledRow = styled.div`
 export const StyledColumn = styled.div<{ $width: number; $align?: Align }>`
   width: ${({ $width }) => $width + '%'};
   text-align: ${({ $align }) => $align};
+
 `;
 
 export const StyledTableHeader = styled.div`
   display: flex;
   align-items: center;
-  color: #979abe;
-  font-size: 14px;
-  font-weight: 400;
-  padding: 0px 30px 10px;
-  margin-top: 30px;
+  justify-content: space-between;
+  padding: 0 35px 11px;
 `;
 
 export const StyledBody = styled.div`
@@ -248,4 +246,10 @@ export const StyledBackground = styled.div`
   right: 0;
   height: 196px;
   background: #1B1C27;
+`
+export const StyledMedalContainer = styled.div`
+  padding: 16px 25px 20px;
+  display: flex;
+  justify-content: center;
+  
 `

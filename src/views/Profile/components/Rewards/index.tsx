@@ -1,4 +1,4 @@
-import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 
 import {
   StyledReward
@@ -69,22 +69,28 @@ const PlusSvg = (
     <path d="M11.7971 10.1801L11.7971 6.44392C11.7971 6.16303 11.6173 5.93524 11.3956 5.93529L10.581 5.93529C10.3593 5.93529 10.1801 6.16312 10.1798 6.4442L10.1799 10.1802L6.44388 10.1802C6.1628 10.1801 5.93487 10.3597 5.93501 10.5816L5.93506 11.3962C5.93492 11.6177 6.1627 11.7975 6.44383 11.7973L10.18 11.7972L10.1801 15.5335C10.18 15.8143 10.3594 16.0423 10.5811 16.0423L11.3958 16.0423C11.6174 16.0423 11.7972 15.8145 11.7973 15.5336L11.7972 11.7972L15.533 11.7973C15.8144 11.7973 16.0419 11.6178 16.0419 11.3961L16.0419 10.5815C16.0419 10.3598 15.8142 10.1802 15.5333 10.18L11.7971 10.1801Z" fill="#979ABE" />
   </svg>
 )
-export default function Rewards() {
+type PropsType = {
+  onInviteCodeClick: VoidFunction;
+  referrals: number
+}
+export default function Rewards({ onInviteCodeClick, referrals }: PropsType) {
   return (
-    <StyledFlex gap='14px' style={{ marginTop: 36 }}>
-      <StyledReward>
-        <StyledSvg>{MedalSvg}</StyledSvg>
-        <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>5</span> Medals</StyledFont>
-      </StyledReward>
-      <StyledReward>
-        <StyledSvg>{GemSvg}</StyledSvg>
-        <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>23</span> Gems</StyledFont>
-      </StyledReward>
-      <StyledReward style={{ width: 178 }}>
-        <StyledSvg>{ReferralSvg}</StyledSvg>
-        <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>5</span> Referrals</StyledFont>
-        <StyledSvg>{PlusSvg}</StyledSvg>
-      </StyledReward>
-    </StyledFlex>
+    <StyledContainer>
+      <StyledFlex gap='14px' style={{ marginTop: 36 }}>
+        <StyledReward>
+          <StyledSvg>{MedalSvg}</StyledSvg>
+          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>5</span> Medals</StyledFont>
+        </StyledReward>
+        <StyledReward>
+          <StyledSvg>{GemSvg}</StyledSvg>
+          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>23</span> Gems</StyledFont>
+        </StyledReward>
+        <StyledReward style={{ width: 178 }} onClick={onInviteCodeClick}>
+          <StyledSvg>{ReferralSvg}</StyledSvg>
+          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{referrals}</span> Referrals</StyledFont>
+          <StyledSvg>{PlusSvg}</StyledSvg>
+        </StyledReward>
+      </StyledFlex>
+    </StyledContainer>
   )
 }

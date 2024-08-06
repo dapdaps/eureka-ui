@@ -22,4 +22,5 @@ export const StyledViewMore = styled.div`
   align-items: center;
   justify-content: center;
   gap: 12px;
+  cursor: pointer;
 `

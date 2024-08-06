@@ -1,38 +1,31 @@
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import Loading from '@/components/Icons/Loading';
 import Modal from '@/components/Modal';
 import useCopy from '@/hooks/useCopy';
 import { ellipsAccount } from '@/utils/account';
 
-import linkModalBg from '@/assets/images/link_modal_bg.svg';
-import { useUserStore } from '@/stores/user';
 import useUserReward from '@/hooks/useUserReward';
+import { useUserStore } from '@/stores/user';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import Image from 'next/image';
 import useRewardsClaim from '../../hooks/useRewardsClaim';
+import MedalCard from '../MedalCard';
 import type { Column } from '../Pts/types';
+import UserAvatar from '../UserAvatar';
 import PendingHints from './PendingHints';
 import {
   StyledAvatar,
-  StyledBackground,
   StyledBody,
   StyledCell,
-  StyledClaimButton,
   StyledColumn,
-  StyledDesc,
-  StyledDescBox,
-  StyledHeader,
   StyledLink,
+  StyledMedalContainer,
   StyledPendingCell,
   StyledRewards,
   StyledRow,
-  StyledSubTitle,
   StyledTableHeader,
   StyledTips,
-  StyledTitle,
   StyledUserAddress,
-  StyledUserName,
+  StyledUserName
 } from './styles';
 
 export const COLUMNS: Column[] = [
@@ -43,23 +36,11 @@ export const COLUMNS: Column[] = [
     gap: 26,
     align: 'left',
   },
-  // {
-  //   label: 'Code used',
-  //   width: 20,
-  //   key: 'code',
-  //   align: 'center',
-  // },
   {
     label: 'Status',
     width: 20,
     key: 'status',
     align: 'center',
-  },
-  {
-    label: 'Your reward',
-    width: 20,
-    key: 'rewards',
-    align: 'right',
   },
 ];
 
@@ -106,74 +87,22 @@ const InviteFirendsModal = ({
   return (
     <Modal
       display={open}
-      title={<StyledTitle>Invite</StyledTitle>}
-      width={954}
+      showHeader={false}
+      width={558}
       hidden={true}
       onClose={onClose}
       content={
         <>
-          <StyledBackground>
+          {/* <StyledBackground>
             <Image src={linkModalBg} alt="linkModalBg" />
-          </StyledBackground>
+          </StyledBackground> */}
           <StyledContainer style={{ position: 'relative', zIndex: 10 }}>
             <StyledFlex
               justifyContent="space-between"
               alignItems="flex-end"
               style={{ paddingRight: 39, paddingLeft: 31, height: 110 }}
             >
-              <StyledFlex flexDirection="column" gap="7px">
-                <StyledFlex justifyContent="flex-start" style={{ width: '100%' }}>
-                  {userInfo?.is_kol && (
-                    <StyledSvg>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="24" viewBox="0 0 50 24" fill="none">
-                        <path
-                          d="M44.3889 18.9069C48.8954 16.4102 50.622 10.5252 48.2949 5.76544C45.9602 0.990032 40.4017 -0.89757 35.8755 1.61001C34.07 2.61031 30.0392 3.55216 24.8576 3.58646C19.7383 3.62035 15.4613 2.75713 13.4354 1.80102C8.76818 -0.401638 3.33463 1.85445 1.28681 6.77152C-0.755132 11.6745 1.31166 17.436 5.96008 19.6297C11.3571 22.1768 18.5858 23.1414 24.9724 23.0991C31.297 23.0573 38.7717 22.0189 44.3889 18.9069Z"
-                          fill="#EBF479"
-                          stroke="#262836"
-                          strokeLinecap="round"
-                        />
-                        <path
-                          d="M6.11957 15.2897C5.45731 14.639 7.7592 8.30179 8.87232 5.31495C9.55069 3.49452 13.307 5.04409 13.6013 5.36706C14.1911 6.01427 12.3422 7.45567 11.9148 9.56847C13.644 8.27455 15.6808 6.2246 16.2956 6.29128C17.0641 6.37464 20.0492 9.39398 19.223 9.74881C18.562 10.0327 15.8056 11.5188 13.3656 12.2911C15.4981 13.8558 19.0195 15.3708 18.9593 16.2579C18.8712 17.5537 16.1055 18.6201 14.434 18.4001C13.018 18.2137 11.974 15.195 11.3558 13.8172C11.2597 14.5476 11.4632 16.9181 10.8902 17.358C10.089 17.9729 6.64159 16.7992 6.11957 15.2897Z"
-                          fill="black"
-                        />
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M25.5229 19.6729C28.8498 19.6729 31.5468 16.8736 31.5468 13.4205C31.5468 9.96748 28.8498 7.16821 25.5229 7.16821C22.196 7.16821 19.499 9.96748 19.499 13.4205C19.499 16.8736 22.196 19.6729 25.5229 19.6729ZM25.6626 15.6694C26.5137 15.6694 27.2037 14.6344 27.2037 13.3577C27.2037 12.0811 26.5137 11.0461 25.6626 11.0461C24.8115 11.0461 24.1215 12.0811 24.1215 13.3577C24.1215 14.6344 24.8115 15.6694 25.6626 15.6694Z"
-                          fill="black"
-                        />
-                        <path
-                          d="M43.5916 15.9159C40.9845 17.0077 37.827 17.4145 35.6956 17.6007C35.1941 17.6445 34.7402 17.3073 34.6652 16.8147C34.3337 14.6367 33.7454 9.49554 32.8659 6.96371C32.3897 5.59107 37.2251 5.08483 38.0792 5.41514C38.9332 5.74546 37.5546 13.2623 38.044 13.6688C38.4577 14.0124 42.7962 10.6686 43.8707 11.6637C44.2443 12.0097 44.5489 15.515 43.5916 15.9159Z"
-                          fill="black"
-                        />
-                      </svg>
-                    </StyledSvg>
-                  )}
-                  <StyledFont color="#FFF" fontWeight="600">
-                    Your invite link:
-                  </StyledFont>
-                </StyledFlex>
-                <StyledFont
-                  color="#979ABE"
-                  fontSize="16px"
-                  style={{
-                    width: 495,
-                  }}
-                >
-                  {userInfo?.is_kol ? (
-                    <>
-                      As an official KOL, you will have your a special KOL landingpage. And you will get{' '}
-                      <span style={{ fontWeight: 700 }}>100 PTS</span> for every user you invited, and{' '}
-                      <span style={{ fontWeight: 700 }}>200 PTS</span> for invited users.
-                    </>
-                  ) : (
-                    <>
-                      You will get <span style={{ fontWeight: 700 }}>100 PTS</span> for every user you invited, and{' '}
-                      <span style={{ fontWeight: 700 }}>100 PTS</span> for invited users.
-                    </>
-                  )}
-                </StyledFont>
-              </StyledFlex>
+              <UserAvatar userInfo={userInfo} />
               <StyledLink>
                 <StyledSvg>
                   <svg width="371" height="58" viewBox="0 0 371 58" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -262,45 +191,30 @@ const InviteFirendsModal = ({
                 )}
               </StyledLink>
             </StyledFlex>
-            <StyledHeader style={{ marginTop: 50 }}>
-              <StyledSubTitle>Invited friends ({list.length})</StyledSubTitle>
-              <StyledClaimButton
-                disabled={claiming || claimableRewards === 0}
-                onClick={() => {
-                  handleClaim();
-                }}
-              >
-                {claiming && <Loading />}
-                Claim all: {claimableRewards} PTS
-              </StyledClaimButton>
-            </StyledHeader>
-            {/* <StyledDescBox>
-              <StyledDesc>
-                You invited {list.length} friends, {activeCodes.length} of them are active, you will get {reward} PTS for
-                each active account.
-              </StyledDesc>
-              <StyledClaimButton
-                disabled={claiming || claimableRewards === 0}
-                onClick={() => {
-                  handleClaim();
-                }}
-              >
-                {claiming && <Loading />}
-                Claim {claimableRewards} PTS
-              </StyledClaimButton>
-            </StyledDescBox> */}
+            <StyledMedalContainer>
+              <MedalCard style={{ width: 508, height: 133 }} barWidth='403px' />
+            </StyledMedalContainer>
             <StyledTableHeader>
-              {COLUMNS.map((column) => (
-                <StyledColumn key={column.key} $width={column.width} $align={column.align}>
-                  {column.label}
-                </StyledColumn>
-              ))}
+              <StyledFont color='#979ABE'><span style={{ fontWeight: 600 }}>34</span> Invited</StyledFont>
+              <StyledFont color='#979ABE'><span style={{ color: '#EBF479', fontWeight: 600 }}>12</span> Active Referrals</StyledFont>
             </StyledTableHeader>
             <StyledBody>
               {list.length > 0 ? (
                 list.map((row: any, i: number) => (
                   <StyledRow key={row.invited_user?.address || i}>
-                    {COLUMNS.map((column) => (
+                    <StyledCell>
+                      <Friend {...row.invited_user} />
+                    </StyledCell>
+                    <StyledCell>
+                      {(row.status === 'Pending' ? (
+                        <StyledPendingCell>
+                          <span> {row.status + '...'}</span> <PendingHints />
+                        </StyledPendingCell>
+                      ) : (
+                        row.status
+                      ))}
+                    </StyledCell>
+                    {/* {COLUMNS.map((column) => (
                       <StyledCell key={column.key} $width={column.width} $gap={column.gap} $align={column.align}>
                         {column.key === 'friend' && <Friend {...row.invited_user} />}
                         {column.key === 'code' && <span className="delete">{row.code}</span>}
@@ -321,7 +235,7 @@ const InviteFirendsModal = ({
                             <span className="rewards">-</span>
                           ))}
                       </StyledCell>
-                    ))}
+                    ))} */}
                   </StyledRow>
                 ))
               ) : (

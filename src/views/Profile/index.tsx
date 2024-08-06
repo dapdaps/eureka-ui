@@ -3,10 +3,16 @@ import useUserReward from '@/hooks/useUserReward';
 import { useRouter } from 'next/router';
 import { memo, useState } from 'react';
 
+import useAuthCheck from '@/hooks/useAuthCheck';
 import BouncingMedal from '@/components/bouncing-medal';
+import useAccount from '@/hooks/useAccount';
+import useInviteList from '@/hooks/useInviteList';
+import useReport from '@/views/Landing/hooks/useReport';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import FavoriteApps from './components/FavoriteApps';
 import InProgress from './components/InProgress';
+import InviteFirendsModal from './components/InviteFirendsModal';
 import RewardHistory from './components/RewardHistory';
 import Rewards from './components/Rewards';
 import Tabs from './components/Tabs';
@@ -42,18 +48,39 @@ const StyledBouncingMedalContainer = styled.div`
 `
 export default memo(function ProfileView() {
   const router = useRouter();
+  const { account } = useAccount();
   const { userInfo } = useUserInfo();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
+  const { handleReport } = useReport();
   const [tab, setTab] = useState<Tab>('InProgress');
+  const [openCodes, setOpenCodes] = useState(false);
+  const { inviteInfo, queryInviteList } = useInviteList();
   const { info: rewardInfo, queryUserReward } = useUserReward();
+
   const handleChange = function (_tab) {
     setTab(_tab);
   };
+
+  useEffect(() => {
+    account && check(() => {
+      queryInviteList();
+    });
+  }, [account]);
   return (
     <StyledContainer>
+
       <StyledInnerContainer>
+
+
         <StyledContainerTop>
           <UserInfo info={userInfo} rewardInfo={rewardInfo} />
-          <Rewards />
+          <Rewards
+            referrals={inviteInfo?.data?.length}
+            onInviteCodeClick={() => {
+              handleReport('invite');
+              setOpenCodes(true);
+            }}
+          />
           <StyledBouncingMedalContainer>
             <BouncingMedal
               width={500}
@@ -100,6 +127,15 @@ export default memo(function ProfileView() {
           {tab === "RewardHistory" && <RewardHistory />}
         </StyledContainerBottom>
       </StyledInnerContainer>
+      <InviteFirendsModal
+        open={openCodes}
+        list={inviteInfo?.data || []}
+        totalRewards={inviteInfo?.reward}
+        reward={inviteInfo?.invite_reward}
+        onClose={() => {
+          setOpenCodes(false);
+        }}
+      />
     </StyledContainer>
   );
 });

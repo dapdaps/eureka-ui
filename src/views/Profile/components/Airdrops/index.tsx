@@ -1,18 +1,74 @@
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import RectangleNumber from '../RectangleNumber';
 import ProgressBar from '../ProgressBar';
+import AirdrapLoading from '../../Loading/AirdrapLoading';
 import {
   StyledContainer,
-  StyledAirdropCard
+  StyledAirdropCard,
+  StyledNetworkImage,
+  StyledCategoryContainer,
+  StyledCategory
 } from './styles';
-export default function Airdrops() {
+type PropsType = {
+  loading: boolean;
+  airdropList: any[]
+}
+export default function Airdrops({ loading, airdropList }: PropsType) {
   return (
     <StyledContainer style={{ marginTop: 81 }}>
       <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
         <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Following Potential Airdrops</StyledFont>
-        <RectangleNumber quantity={2} />
+        <RectangleNumber quantity={airdropList?.length} />
       </StyledFlex>
-      <StyledFlex gap='16px'>
+      {
+        loading ? (
+          <AirdrapLoading />
+        ) : airdropList && airdropList.length > 0 ? airdropList.map((airdrop, index) => (
+          <StyledFlex gap='16px' key={index}>
+            <StyledAirdropCard>
+              <StyledFlex gap='20px' alignItems='flex-start'>
+                <StyledNetworkImage src={airdrop?.network?.logo} />
+                <StyledFlex flexDirection='column' alignItems='flex-start' style={{ flex: 1 }}>
+                  <StyledFlex justifyContent='space-between' style={{ width: '100%' }}>
+                    <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{airdrop?.network?.name}</StyledFont>
+                    {
+                      airdrop?.category === 'network' ? (
+                        <StyledFont color='#ACFCED' fontSize='12px' fontWeight='500' style={{ textTransform: 'uppercase' }}>Chain</StyledFont>
+                      ) : (
+                        <StyledCategoryContainer color='#C1BFFF'>
+                          <StyledCategory>Staking</StyledCategory>
+                        </StyledCategoryContainer>
+                      )
+                    }
+                  </StyledFlex>
+                  {
+                    airdrop?.category === "dapp" && (
+                      <StyledFlex gap='4px' style={{ flexWrap: 'wrap' }}>
+                        <StyledSvg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <rect x="20" y="20" width="20" height="20" rx="6" transform="rotate(180 20 20)" fill="#FDFE03" />
+                            <path d="M4.52874 5L2 6.9186H14.7011L14.0115 8.95349H8.89655L8.43678 10.5233H13.5517L12.7471 13.0814H5.62069L7.11494 8.48837L5.44828 7.2093L2.97701 15H12.1149L14.5287 13.8372L15.3908 11.1628L13.7816 9.94186L16.1954 8.72093L17 6.22093L15.3333 5H4.52874Z" fill="black" />
+                          </svg>
+                        </StyledSvg>
+                      </StyledFlex>
+                    )
+                  }
+                </StyledFlex>
+
+              </StyledFlex>
+              <StyledFlex gap='11px' alignItems='flex-end' style={{ marginTop: 20, marginBottom: 12 }}>
+                <StyledFont color='#FFF' fontSize='14px' lineHeight='150%'>Estimated date</StyledFont>
+                <StyledFont color='#FFF' fontWeight='500' lineHeight='150%'>{airdrop?.estimated_date}</StyledFont>
+              </StyledFlex>
+              <ProgressBar quantity={airdrop?.completed_count} total={airdrop?.total_quest} />
+            </StyledAirdropCard>
+          </StyledFlex>
+        )) : (
+          <></>
+        )
+      }
+
+      {/* <StyledFlex gap='16px'>
         <StyledAirdropCard>
           <StyledFlex gap='20px' alignItems='flex-start'>
             <StyledSvg>
@@ -49,9 +105,8 @@ export default function Airdrops() {
           </StyledFlex>
           <ProgressBar quantity={1} total={3} />
         </StyledAirdropCard>
-      </StyledFlex>
+      </StyledFlex> */}
     </StyledContainer>
-
   )
 
 }
