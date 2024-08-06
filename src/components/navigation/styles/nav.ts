@@ -64,6 +64,7 @@ export const Wrapper = styled.div`
   } */
   .NavigationMenuTrigger:hover,
   .NavigationMenuLink:hover {
+    cursor: pointer;
     color: #EBF479;
     .arrow-icon:hover { color: #EBF479; }
   }

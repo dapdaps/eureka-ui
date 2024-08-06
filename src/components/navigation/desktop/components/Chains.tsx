@@ -1,6 +1,8 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import { useRouter } from 'next/router';
+import { IdToPath } from '@/config/all-in-one/chains';
 
 
 const GridContainer = styled.div`
@@ -58,21 +60,30 @@ const LoadingCard = () => {
   ));
 }
 
+interface IData {
+  logo: string;
+  name: string;
+  id: string;
+}
+
 const Chains = ({
   loading,
   data,
 }: {
   loading: boolean;
-  data: { name: string; logo: string }[];
+  data: IData[];
 }) => {
-  const items = useMemo(() =>  data.map(item => ({ iconSrc: item.logo, label: item.name })), [data]);
-
+  const router = useRouter()
+  
+  const handleClick = (item: IData) => {
+    router.push(`/network/${IdToPath[item.id]}`);
+  }
   return (
     <GridContainer>
-      {loading ? <LoadingCard /> : items.map((item, index) => (
-        <GridItemContainer key={index}>
-          <img src={item.iconSrc} alt={item.label} />
-          <div className="label">{item.label}</div>
+      {loading ? <LoadingCard /> : data.map((item) => (
+        <GridItemContainer key={item.id} onClick={() => handleClick(item)}>
+          <img src={item.logo} alt={item.name} />
+          <div className="name">{item.name}</div>
         </GridItemContainer>
       ))}
     </GridContainer>

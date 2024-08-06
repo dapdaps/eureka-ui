@@ -16,6 +16,7 @@ import useNetworks from '@/views/networks/list/hooks/useNetworks';
 import { DividerHorizontalIcon } from '@radix-ui/react-icons';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import { useMemo } from 'react';
+import { useRouter } from 'next/router';
 
 const StyleView = styled.div`
   margin: 0 auto;
@@ -52,7 +53,7 @@ const StyleView = styled.div`
 export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: networkLoading, networkList } = useNetworks();
   const { loading: compassListLoading, compassList } = useCompassList()
-
+  const router = useRouter();
   const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.status === StatusType.ongoing), [compassList])
 
   return (
@@ -72,12 +73,12 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                   loading={compassListLoading}
                 />
               </div>
-              <StyleView><div>View all</div><IconArrowRight /></StyleView>
+              <StyleView onClick={() => router.push('/odyssey-list')}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger">
+            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={() => router.push('/super-bridge')}>
               <IconBridge />
               Bridge
             </NavigationMenu.Trigger>
@@ -99,12 +100,15 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
               <div className="List chain">
                 <Chains loading={networkLoading} data={networkList} />
               </div>
-              <StyleView className='chain-all'><div>View all</div><IconArrowRight /></StyleView>
+              <StyleView className='chain-all' onClick={() => router.push('/networks')}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={recordMouseEnter}>
+            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={(e) => {
+              router.push('/alldapps')
+              recordMouseEnter(e)
+            }}>
               DApps
             </NavigationMenu.Trigger>
           </NavigationMenu.Item>
