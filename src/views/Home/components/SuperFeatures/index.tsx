@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { get } from '@/utils/http';
+import { useEffect, useState } from 'react';
+import { formatDateString } from "@/utils/format-time";
+import { QUEST_PATH } from "@/config/quest";
+import { formatIntegerThousandsSeparator } from "@/utils/format-number";
 
 const StyleFeatures = styled.div`
     margin: 0 auto;
@@ -114,7 +119,30 @@ const StyleFeatures = styled.div`
     }
 `
 
+interface IData {
+    total_users?: number;
+    total_transactions?: number;
+    total_trading_volume?: number;
+    updated_at?: string;
+}
+
 const SuperFeatures = () => {
+    const [statData, setStatData] = useState<IData>({})
+    
+    const fetchStatData = () => {
+        get(`${QUEST_PATH}/api/dashboard/summary`).then((res) => {
+            console.log(res, 'res');
+            
+            setStatData(res.data)
+        }).catch((err) => {
+            console.log(err)
+        })
+    }
+
+    useEffect(() => {
+        fetchStatData()
+    }, [])
+
     return <StyleFeatures>
         <div className="title">Super <span>Features</span></div>
         <div className="subTitle">DapDap engages users in 5-10 mins in Super features by helping users to jump in crypto world more effectively.</div>
@@ -137,20 +165,20 @@ const SuperFeatures = () => {
         <div className="platform">
             <div className="head">
                 <span className="title">Platform <span>Stats</span></span>
-                <span className="time">15 July, 2024 | Monday 10 : 26 AM</span>
+                <span className="time">{formatDateString(statData.updated_at) || '-'}</span>
             </div>
             <div className="modules">
                 <div className="item">
                     <div className="name">Participants</div>
-                    <div className="value">142.70K</div>
+                    <div className="value">{formatIntegerThousandsSeparator(statData.total_users)}</div>
                 </div>
                 <div className="item">
-                    <div className="name">Participants</div>
-                    <div className="value">142.70K</div>
+                    <div className="name">Transactions</div>
+                    <div className="value">{formatIntegerThousandsSeparator(statData.total_transactions)}</div>
                 </div>
                 <div className="item">
-                    <div className="name">Participants</div>
-                    <div className="value">142.70K</div>
+                    <div className="name">Trading Volume</div>
+                    <div className="value">{formatIntegerThousandsSeparator(statData.total_trading_volume)}</div>
                 </div>
             </div>
         </div>
