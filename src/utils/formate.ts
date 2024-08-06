@@ -26,6 +26,7 @@ const formateValue = (value: string | number, precision: number) => {
 };
 
 const formateValueWithThousandSeparator = (value: string | number, precision: number) => {
+  if (!value) return '0';
   if (Big(value).eq(0)) return '0';
 
   if (Big(value).lt(Big(10).pow(-precision))) {
