@@ -3,31 +3,41 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import { CategoryList } from '@/views/AllDapps/config';
 import chainCofig from '@/config/chains';
+import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 
 const useDapps = () => {
   const [featuredDapps, setFeaturedDapps] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState<any>();
 
+  const { fetchRewardData } = useDappReward();
+
   const queryDapps = useCallback(async (_category?: any) => {
     setLoading(true);
-    const params: Record<string, any> = {
-      tbd_token: false,
-      is_favorite: false,
-      page_size: 10,
-      page: 1,
-    };
-    if (category) {
-      params.category_ids = _category || category;
-    }
     try {
-      const response = await get(`${QUEST_PATH}/api/dapp/filter_list`, params);
-      const data = response.data?.data || [];
+      setFeaturedDapps({titleDapps: []});
+      let response: any = {};
+      const params: any = {
+        page_size: 15,
+        page: 1,
+        sort: 'volume'
+      };
+      if (_category) {
+          const currCategory = CategoryList.find((it) => it.key == _category);
+          if (currCategory) {
+            params.category = currCategory.name;
+          }
+        response =  await get(`${QUEST_PATH}/api/dapp/search`,  params);
+      } else {
+        response = await get(`${QUEST_PATH}/api/dapp/recommend`);
+      }
+      const rewardList = await fetchRewardData() ?? [];
+      const data = response?.data?.data ?? [];
       data.forEach((dapp: any) => {
         //#region format categories
         dapp.categories = [];
-        dapp.category_ids && dapp.category_ids.forEach((it: any) => {
-          const curr = CategoryList.find((_it) => _it.key === it);
+        dapp.dapp_category && dapp.dapp_category.forEach((it: any) => {
+          const curr = CategoryList.find((_it) => _it.key === it.category_id);
           curr && dapp.categories.push(curr);
         });
         //#endregion
@@ -39,7 +49,19 @@ const useDapps = () => {
         });
         //#endregion
       });
-      setFeaturedDapps(data);
+      data.forEach((dapp: any) => {
+        dapp.rewards = [];
+        if (dapp?.networks && dapp.networks.length) {
+          rewardList.forEach((item: any) => {
+            const _reward = dapp.networks.find((network: any) => item.chains_id == network.chainId);
+            if (_reward) {
+              dapp.rewards.push(item);
+            }
+          })
+        }
+      });
+      const topDapps = (response?.data?.top_dapps ?? []).map((item: any) => ({logo: item}));
+      setFeaturedDapps({dapps: data, titleDapps: topDapps});
     } catch (err) {
       console.log(err);
     }
@@ -52,7 +74,7 @@ const useDapps = () => {
   };
 
   useEffect(() => {
-    queryDapps()
+    queryDapps();
   }, []);
 
   return { loading, featuredDapps, category, onSelectCategory };

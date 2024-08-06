@@ -15,6 +15,9 @@ import { goHomeWithFresh } from '@/utils/activity-utils';
 import IconSearch from '@public/images/header/search.svg'
 import { NavMainV2 } from './NavMainV2';
 import Notification from './Notification';
+import CheckInGrid from './components/CheckInGrid';
+import CheckIn from './components/CheckIn';
+import AccountLogo from '@/components/AccountSider/components/AccountLogo';
 
 
 const Flex = styled.div`
@@ -116,16 +119,16 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
       <div className="container-nav">
         <Flex>
           {isFromActivity ? (
-              <LogoContainer onClick={goHomeWithFresh}>
+            <LogoContainer onClick={goHomeWithFresh}>
+              <img src={logoUrl} alt="" />
+            </LogoContainer>
+          ) : (
+            <Link href="/">
+              <LogoContainer>
                 <img src={logoUrl} alt="" />
               </LogoContainer>
-            ) : (
-              <Link href="/">
-                <LogoContainer>
-                  <img src={logoUrl} alt="" />
-                </LogoContainer>
-              </Link>
-            )}
+            </Link>
+          )}
           <StyledNav />
           <StyledSearch onClick={() => setShowSearch(true)}><IconSearch /></StyledSearch>
         </Flex>
@@ -135,14 +138,10 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
           ) : account ? (
             <LoginContainer>
               <Notification />
+              <CheckIn />
               <Chain showName={false} bp="3001-003" />
-              <AccountWrapper
-                onClick={() => {
-                  setLayoutStore({ showAccountSider: true });
-                }}
-              >
-                <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
-              </AccountWrapper>
+              {/* <AccountItem showCopy={false} logoSize={28} bp="3001-004" /> */}
+              <AccountLogo logoSize={28} />
             </LoginContainer>
           ) : (
             <ConnectWallet />
@@ -150,7 +149,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
         </ChainAndAccountWrapper>
       </div>
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
-      { showSearch && (<DropdownSearchResultPanel setShowSearch={setShowSearch} searchText={searchContent} setSearchContent={setSearchContent} />)}
+      { showSearch && (<DropdownSearchResultPanel setShowSearch={setShowSearch} />)}
     </Container>
   );
 };

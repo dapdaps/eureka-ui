@@ -30,7 +30,7 @@ export const StyledCategory = styled.div`
   gap: 8px;
   margin: 30px auto 0;
 `;
-export const StyledCategoryItem = styled.div<{ $colorRgb: string }>`
+export const StyledCategoryItem = styled.div<{ $colorRgb: string; $disabled?: boolean; }>`
   display: inline-flex;
   align-items: center;
   height: 36px;
@@ -44,13 +44,32 @@ export const StyledCategoryItem = styled.div<{ $colorRgb: string }>`
   font-style: normal;
   font-weight: 500;
   transition: all ease-in-out 0.3s;
+  ${({ $disabled }) => {
+    if ($disabled) {
+      return {
+        opacity: '0.3',
+        cursor: 'not-allowed',
+      };
+    }
+    return {
+      opacity: '1',
+      cursor: 'pointer',
+    };
+  }}
 
   &.selected,
   &:hover {
-    border-color: ${({ $colorRgb }) => `rgb(${$colorRgb})`};
-    background: ${({ $colorRgb }) => `rgb(${$colorRgb})`};
-    color: #000;
-    box-shadow: ${({ $colorRgb }) => `0px 0px 10px 0px rgba(${$colorRgb}, 0.60)`};
+    ${({ $disabled, $colorRgb }) => {
+      if ($disabled) {
+        return '';
+      }
+      return {
+        'border-color': `rgb(${$colorRgb})`,
+        'background': `rgb(${$colorRgb})`,
+        'color': '#000',
+        'box-shadow': `0px 0px 10px 0px rgba(${$colorRgb}, 0.60)`,
+      };
+    }}
   }
 `;
 

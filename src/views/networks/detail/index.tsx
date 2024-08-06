@@ -21,6 +21,8 @@ import {
 import DetailTabs from '@/views/Dapp/components/DappDetail/DetailTabs/index';
 import RelativeOdyssey from '@/views/Dapp/components/DappDetail/RelativeOdyssey';
 import Medal from '@/views/Dapp/components/DappDetail/Medal/index';
+import { useChainDapps } from './hooks/useChainDapps';
+import { Category } from '@/hooks/useAirdrop';
 
 const medalList: any = [
   {
@@ -36,8 +38,11 @@ const medalList: any = [
 ];
 
 const ChainDetail = ({ path }: any) => {
-  const { loading, detail, hotDapps, quests } = useDetail(PathToId[path]);
+
+  const { detail, loading: detailLoading } = useDetail(PathToId[path]);
+
   const { handleReport } = useReport();
+
   const currentChain = useMemo(() => {
     return chainsConfig[path];
   }, [path]);
@@ -47,21 +52,38 @@ const ChainDetail = ({ path }: any) => {
       handleReport(`network/${path}`);
     }
   }, [path]);
+
+  const [category, setCategory] = useState<number | string>();
+  const [currentCategory, setCurrentCategory] = useState<any>();
+
   const { categories } = useCategoryDappList();
+  const {
+    loading,
+    fetchDappList,
+    dappList,
+    pageTotal,
+    pageIndex,
+    total,
+    pageSize,
+    onPage,
+    allDappListTotal,
+  } = useChainDapps(detail?.chain_id, category);
 
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
       const curr = CategoryList.find((_it) => _it.key === it.id);
+      const dappCount = allDappListTotal.filter((__it: any) => __it.category_ids.includes(it.id)).length;
       return {
         ...curr,
+        value: dappCount,
       };
     });
-  }, [categories, CategoryList]);
-  const [category, setCategory] = useState<number | string>();
-  const [currentCategory, setCurrentCategory] = useState<any>();
+  }, [categories, CategoryList, allDappListTotal]);
+
   const handleCurrentCategory = (category: any) => {
     setCategory(category.key);
     if (category.key === currentCategory?.key) {
+      setCategory(undefined);
       setCurrentCategory(undefined);
       return;
     }
@@ -79,7 +101,8 @@ const ChainDetail = ({ path }: any) => {
             {...detail}
             overviewTitle={detail?.name ? `Introducing ${detail.name}` : ''}
             overviewShadow={{icon: currentChain?.bgIcon, color: currentChain?.selectBgColor}}
-            historyType='chain'
+            category={Category.network}
+            loading={detailLoading}
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
@@ -89,15 +112,21 @@ const ChainDetail = ({ path }: any) => {
       </StyledDetail>
 
       <DappTitle>
-        <span className="highlight">20</span> dApps on Mode
+        <span className="highlight">{total}</span> dApps on Mode
       </DappTitle>
       <StyledCategory>
         {categoryList.map((cate: any) => (
           <StyledCategoryItem
             key={cate.key}
             $colorRgb={cate.colorRgb}
+            $disabled={cate.value < 1}
             className={currentCategory?.key === cate.key ? 'selected' : ''}
-            onClick={() => handleCurrentCategory(cate)}
+            onClick={() => {
+              if (cate.value < 1) {
+                return;
+              }
+              handleCurrentCategory(cate);
+            }}
           >
             {cate.value} {cate.label}
           </StyledCategoryItem>
@@ -108,8 +137,15 @@ const ChainDetail = ({ path }: any) => {
           width: '1247px',
           margin: '30px auto 0',
         }}
-        category={category}
+        loading={loading}
+        dappList={dappList}
+        pageTotal={pageTotal}
+        pageIndex={pageIndex}
+        fetchDappList={fetchDappList}
         bp={{ detail: '10011-001', dapp: '10011-002' }}
+        loadingLength={pageSize}
+        loadFromApi={false}
+        onPage={onPage}
       />
     </StyledContainer>
   );

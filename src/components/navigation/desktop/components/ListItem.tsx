@@ -1,18 +1,24 @@
 import styled from "styled-components"
-
+import Skeleton from 'react-loading-skeleton';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
-import Status, { StatusType } from '../components/Status';
 
-
+import Tag, { StatusType } from "@/views/Odyssey/components/Tag";
+import { Odyssey } from "@/components/DropdownSearchResultPanel/hooks/useDefaultSearch";
+import { useRouter } from "next/router";
 
 const Flex = styled.div`
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 15px 30px;
+  padding: 15px 20px;
+  padding-right: 0;
+  gap: 12px;
+  border-radius: 6px;
   &:hover {
-    background: rgba(0, 0, 0, 0.25);
     cursor: pointer;
+    background: rgba(0, 0, 0, .25);
+    .bridgeImage{
+      transform: translateY(-5px); 
+    }
   }
   &.bridge-nav {
     padding: 0;
@@ -29,13 +35,10 @@ const Flex = styled.div`
   }
 `
 
-
-
 const StyleImage = styled.div`
   position: relative;
   transition: transform 0.3s ease-in-out;
   &:hover {
-    transform: translateY(-5px); 
   }
   img {
     width: 100px;
@@ -68,6 +71,10 @@ const StyleHeader = styled.div`
     font-weight: 600;
     font-size: 14px;
     color: #fff;
+    max-width: 120px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 `
 
@@ -75,30 +82,92 @@ const StyleDesc = styled.div`
   font-size: 16px;
   color: #fff;
   line-height: 1;
+  max-width: 350px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 `
-interface ListItemProps {
-    imgSrc: string;
-    isNew: boolean;
-    title: string;
-    status: StatusType;
-    description: string;
-    className?: string
-  }
 
-const ListItem: React.FC<ListItemProps> = ({ imgSrc, isNew, title, status, description, className }) => (
-    <Flex className={className}>
-      <StyleImage className="nav">
-        {isNew && <StyleNew />}
-        <img src={imgSrc} alt="" />
+interface IProps {
+    data: Odyssey[];
+    loading: boolean
+    className?: string
+    onClick?: () => void
+} 
+
+
+// const generateNewWithLiveArr = (arr: Odyssey[]): Odyssey[] => {
+
+//   if (arr.length === 0) return [];
+
+//   const ongoingItems = arr.filter(item => item.status === StatusType.ongoing);
+
+//   if (ongoingItems.length === 0) return arr;
+
+//   const maxIdItem = ongoingItems.reduce((maxItem, currentItem) => {
+//     return (currentItem.id > maxItem.id) ? currentItem : maxItem;
+//   }, ongoingItems[0]);
+
+//   return arr.map(item => ({ ...item, is_New: item.id === maxIdItem.id && item.status === StatusType.ongoing }));
+// };
+
+
+const LoadingList = () => {
+  return Array.from({ length: 8 }).map((_, index) => (
+    <Flex key={index}>
+      <StyleImage>
+        <Skeleton width="100px" height="60px" />
       </StyleImage>
       <StyleText>
         <StyleHeader>
-          <div className="title">{title}</div>
-          <Status status={status} />
+          <Skeleton width="120px" height="14px" />
         </StyleHeader>
-        <StyleDesc>{description}</StyleDesc>
+        <Skeleton width="200px" height="32px" />
       </StyleText>
     </Flex>
+  ));
+}
+
+
+const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
+  const router = useRouter()
+  const handleClick = (item: Odyssey) => {
+    onClick?.();
+    router.push(`/odyssey/home?id=${item.id}`);
+  }
+
+  return (
+    <>
+      {loading ? (
+        <LoadingList />
+      ) : (
+        data.map((item: Odyssey, index) => (
+          <Flex 
+            key={index} 
+            className={className}
+            onClick={() => handleClick(item)}
+            style={{
+              filter: item.status === StatusType.ended ? 'grayscale(100%)' : 'grayscale(0%)',
+            }}
+            >
+            <StyleImage className="bridgeImage">
+              <img src={item.banner || '/images/odyssey/v2/default.jpg'} alt="bridge" />
+              {item.is_new && <StyleNew />}
+            </StyleImage>
+            <StyleText>
+              <StyleHeader>
+                <div className="title">{item.name}</div>
+                <Tag status={item.status}  className="tag"/>
+              </StyleHeader>
+              <StyleDesc>{item.description}</StyleDesc>
+            </StyleText>
+          </Flex>
+        ))
+      )}
+    </>
   );
+}
 
   export default ListItem;

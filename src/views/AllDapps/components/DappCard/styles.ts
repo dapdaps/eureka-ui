@@ -1,4 +1,6 @@
 import { styled } from 'styled-components';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export const StyledDappCard = styled.div`
   font-family: Montserrat;
@@ -14,6 +16,7 @@ export const StyledDappCardHead = styled.div<{ $logo: string; }>`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  gap: 69px;
   height: 146px;
   padding: 20px;
   background: ${({ $logo }) => `url("${$logo}") no-repeat center top 40px / 185px auto`};
@@ -111,7 +114,7 @@ export const StyledDappCardStatics = styled.div`
   gap: 6px;
   margin-top: 20px;
 `;
-export const StyledDappCardBadge = styled.div`
+export const StyledDappCardBadge = styled(motion.div)`
   height: 32px;
   flex-shrink: 0;
   border-radius: 34px;
@@ -126,6 +129,7 @@ export const StyledDappCardBadge = styled.div`
   justify-content: center;
   align-items: center;
   gap: 6px;
+  position: relative;
   
   &.group {
     padding-left: 8px;
@@ -140,4 +144,41 @@ export const StyledDappCardBadge = styled.div`
       }
     }
   }
+  
+  .dapp-card-odyssey-tooltip {
+    z-index: 2;
+    width: auto;
+  }
+`;
+
+export const StyledDappCardBadgeItem = styled(motion.div)`
+  position: relative;
+  margin-left: -6px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+  
+  .dapp-card-odyssey-tooltip {
+    z-index: 2;
+    width: auto;
+  }
+`;
+export const StyledDappCardBadgeTooltipList = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  gap: 20px;
+  //height: 215px;
+  //flex-shrink: 0;
+  //border-radius: 12px;
+  //border: 1px solid #464B56;
+  background: #21232A;
+  //box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+`;
+export const StyledDappCardBadgeImage = styled(motion(Image))`
+  border-radius: 50%;
+  border: 2px solid #292B33;
+  position: relative;
 `;

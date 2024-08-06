@@ -1,3 +1,11 @@
+import React, { useEffect, useMemo, useState } from 'react';
+import Image from 'next/image';
+import Skeleton from 'react-loading-skeleton';
+
+import { CategoryList, TitleDapp, TitleDappList } from '@/views/AllDapps/config';
+import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
+import useDappCategoriesSum from '@/views/AllDapps/hooks/useDappCategoriesSum';
+
 import {
   StyledCategory,
   StyledCategoryItem,
@@ -7,12 +15,8 @@ import {
   StyledTitleSub,
   StyledTitleText,
 } from './styles';
-import Image from 'next/image';
-import React, { useEffect, useMemo, useState } from 'react';
-import { CategoryList, TitleDapp, TitleDappList } from '@/views/AllDapps/config';
-import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
-const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
+const AllDappsTitle = (props: Props) => {
   const {
     dappList,
     onCategory = () => {},
@@ -22,14 +26,17 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
 
   const { categories } = useCategoryDappList();
 
+  const { loading , categoryMap } = useDappCategoriesSum();
+
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
       const curr = CategoryList.find((_it) => _it.key === it.id);
       return {
         ...curr,
+        sum: curr ? (categoryMap[curr.name] ?? 0) : 0
       };
     });
-  }, [categories, CategoryList]);
+  }, [categories, CategoryList, categoryMap]);
 
   const dappListShown = useMemo(() => {
     if (!dappList) return [];
@@ -49,7 +56,8 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
 
   useEffect(() => {
     if (activeCategory) {
-      setCurrentCategory({key: activeCategory})
+      const curr = categoryList.find((_it) => _it.key == activeCategory);
+      setCurrentCategory({ key: activeCategory, ...curr });
     }
   }, [activeCategory]);
 
@@ -84,7 +92,14 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
           }
         </div>
         <StyledTitleText>
-          Discover <StyledTitlePrimary>150+ dApps</StyledTitlePrimary>
+          Discover&nbsp;
+          <StyledTitlePrimary
+            style={{
+              color: currentCategory?.colorRgb ? `rgb(${currentCategory.colorRgb})` : '#EBF479',
+            }}
+          >
+            {currentCategory? (currentCategory.sum || '') : '150+'} {currentCategory? currentCategory.label : 'dApps'}
+          </StyledTitlePrimary>
         </StyledTitleText>
         <div>
           {
@@ -106,23 +121,28 @@ const AllDappsTitle = React.forwardRef((props: Props, categoryRef: any) => {
       <StyledTitleSub>
         Discover the most popular
       </StyledTitleSub>
-      <StyledCategory ref={categoryRef} className={categoryClassname}>
+      <StyledCategory className={categoryClassname}>
         {
-          categoryList.map((cate: any) => (
-            <StyledCategoryItem
-              key={cate.key}
-              $colorRgb={cate.colorRgb}
-              className={currentCategory?.key === cate.key ? 'selected' : ''}
-              onClick={() => handleCurrentCategory(cate)}
-            >
-              {cate.value} {cate.label}
-            </StyledCategoryItem>
-          ))
+          loading
+            ? (new Array(7).fill('').map((_, index) => (
+              <Skeleton key={index} width={130} height={46} />
+          ))) : (
+              categoryList.map((cate: any) => (
+                <StyledCategoryItem
+                  key={cate.key}
+                  $colorRgb={cate.colorRgb}
+                  className={currentCategory?.key === cate.key ? 'selected' : ''}
+                  onClick={() => handleCurrentCategory(cate)}
+                >
+                  {cate.sum} {cate.label}
+                </StyledCategoryItem>
+              ))
+            )
         }
       </StyledCategory>
     </StyledHead>
   );
-})
+}
 export default AllDappsTitle;
 
 export interface Props {

@@ -4,6 +4,7 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import chainCofig from '@/config/chains';
 import { useDebounceFn } from 'ahooks';
+import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 
 
 export default function useList(props: Props) {
@@ -16,8 +17,12 @@ export default function useList(props: Props) {
     airdrop,
   } = props;
 
+  const {fetchRewardData} = useDappReward();
+
   const [loading, setLoading] = useState<boolean>(false);
   const [dappList, setDappList] = useState<any>([]);
+  const [titleDappList, setTitleDappList] = useState<any>([]);
+  const [rewardList, setRewardList] = useState<any>([]);
   const [pageTotal, setPageTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
 
@@ -25,37 +30,39 @@ export default function useList(props: Props) {
     setPageIndex(page);
     try {
       setLoading(true);
+      setTitleDappList([]);
       const params: Record<string, any> = {
-        tbd_token: false,
-        is_favorite: false,
         page_size: PageSize,
         page,
-        rewardNow,
+        reward_now: rewardNow,
         airdrop,
       };
       if (sort) {
         params.sort = sort;
       }
       if (network && network > -1) {
-        params.network_ids = network;
+        params.chain_id = network;
       }
       if (category) {
-        params.category_ids = category;
+        const currCategory = CategoryList.find((it) => it.key == category);
+        if (currCategory) {
+          params.category = currCategory.name;
+        }
       }
       if (searchText) {
-        params.searchWord = searchText;
+        params.content = searchText;
       }
 
-      const resultNativeToken = await get(
-        `${QUEST_PATH}/api/dapp/filter_list`,
+      const result = await get(
+        `${QUEST_PATH}/api/dapp/search`,
         params
       );
-      const data = resultNativeToken.data?.data || [];
+      const data = result.data?.data || [];
       data.forEach((dapp: any) => {
         //#region format categories
         dapp.categories = [];
-        dapp.category_ids && dapp.category_ids.forEach((it: any) => {
-          const curr = CategoryList.find((_it) => _it.key === it);
+        dapp.dapp_category && dapp.dapp_category.forEach((it: any) => {
+          const curr = CategoryList.find((_it) => _it.key === it.category_id);
           curr && dapp.categories.push(curr);
         });
         //#endregion
@@ -67,8 +74,22 @@ export default function useList(props: Props) {
         });
         //#endregion
       });
+
+      data.forEach((dapp: any) => {
+        dapp.rewards = [];
+        if (dapp?.networks && dapp.networks.length) {
+          rewardList.forEach((item: any) => {
+            const _reward = dapp.networks.find((network: any) => item.chains_id == network.chainId);
+            if (_reward) {
+              dapp.rewards.push(item);
+            }
+          })
+        }
+      });
       setDappList(data);
-      setPageTotal(resultNativeToken.data.total_page || 0);
+      const titleDapps = (result?.data?.top_dapps ?? []).map((item: any) => ({logo: item}));
+      setTitleDappList(titleDapps);
+      setPageTotal(result.data.total_page || 0);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching resultDapp data:', error);
@@ -76,11 +97,20 @@ export default function useList(props: Props) {
     }
   };
 
+  const getRewardList = async () => {
+    const result = await fetchRewardData();
+    setRewardList(result ?? []);
+  }
+
   const { run: getDappList } = useDebounceFn(fetchDappList, { wait: 600 });
 
   useEffect(() => {
     getDappList(1);
   }, [network, sort, rewardNow, category, searchText, airdrop]);
+
+  useEffect(() => {
+    getRewardList();
+  }, []);
 
   return {
     loading,
@@ -88,6 +118,7 @@ export default function useList(props: Props) {
     pageTotal,
     pageIndex,
     fetchDappList,
+    titleDappList
   };
 }
 
@@ -106,9 +137,6 @@ export interface Props {
   category?: number | string;
   searchText?: string;
   rewardNow?: boolean;
-  // data anchor
-  bp?: { detail: string; dapp: string; };
-  style?: React.CSSProperties;
   // Potential Airdrop
   airdrop?: boolean;
 }

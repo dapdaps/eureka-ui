@@ -14,6 +14,7 @@ import Overview from "./Overview";
 import { AnimatePresence } from 'framer-motion';
 import Animate from './Animate';
 import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
+import { Category } from '@/hooks/useAirdrop';
 
 const DetailTabs = (props: Props) => {
 
@@ -21,8 +22,10 @@ const DetailTabs = (props: Props) => {
 
   const {
     logo,
-    historyType,
+    category,
     overviewTitle,
+    chain_id,
+    dapp_network = [],
   } = props;
 
   const {
@@ -31,7 +34,12 @@ const DetailTabs = (props: Props) => {
     pageTotal,
     pageIndex,
     fetchHistoryList,
-  } = useMyHistory();
+    total
+  } = useMyHistory({ category, id: props.id, chainId: chain_id });
+
+  const isHistoryTab = (tab: string) => {
+    return tab === TABS[1].key;
+  }
 
   return (
     <StyledContainer>
@@ -46,8 +54,8 @@ const DetailTabs = (props: Props) => {
               >
 
                 <StyledTabText active={currTab === item.key}>
-                  { item.key === TABS[TABS.length - 1].key && (<StyledTabIcon url={logo}/>)}
-                  {item.label}
+                  { isHistoryTab(item.key) && (<StyledTabIcon url={logo}/>)}
+                  {item.label} { isHistoryTab(item.key) && (`(${total})`) }
                 </StyledTabText>
               </StyledTab>
             ))
@@ -67,12 +75,13 @@ const DetailTabs = (props: Props) => {
             currTab === TABS[1].key && (
               <Animate key="my-history">
                 <MyHistory
-                  type={historyType}
+                  category={category}
                   loading={loading}
                   historyList={historyList}
                   pageTotal={pageTotal}
                   pageIndex={pageIndex}
                   fetchHistoryList={fetchHistoryList}
+                  chainIds={category === 'network' ? [chain_id] : dapp_network.map(item => item.chain_id)}
                 />
               </Animate>
             )
@@ -88,11 +97,14 @@ export default DetailTabs;
 interface Props {
   name: string;
   logo: string;
+  id: number;
   description: string;
-  historyType: 'dApp' | 'chain';
+  category: Category;
   overviewTitle: string;
   overviewShadow?: {
     icon?: string;
     color?: string;
   };
+  chain_id?: number;
+  dapp_network?: Record<string, any>[];
 }

@@ -1,4 +1,4 @@
-import { memo, useRef } from 'react';
+import { memo, useMemo, useRef } from 'react';
 import { StyledContainer, StyledFooter, StyledMask, StyledSwiperWrapper, StyledViewAll, StyledWrapper } from './styles';
 import AllDappsTitle from '@/views/AllDapps/components/Title';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -25,14 +25,7 @@ const DiscoveryDapps = () => {
         <AllDappsTitle
           onCategory={onSelectCategory}
           activeCategory={category}
-          dappList={[
-            { logo: '/images/alldapps/icon-title-dapp-1.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-2.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-3.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-4.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-5.svg' },
-            { logo: '/images/alldapps/icon-title-dapp-6.svg' },
-          ]}
+          dappList={featuredDapps?.titleDapps ?? []}
         />
       </StyledWrapper>
       <StyledSwiperWrapper>
@@ -60,7 +53,7 @@ const DiscoveryDapps = () => {
                 }}
               >
                 {
-                  featuredDapps ? featuredDapps.map((dapp: any, idx: number) => (
+                  featuredDapps?.dapps ? featuredDapps.dapps.map((dapp: any, idx: number) => (
                     <SwiperSlide key={idx}>
                       <DappCard
                         bp={{ detail: '1001-004', dapp: '1001-005' }}
@@ -70,12 +63,9 @@ const DiscoveryDapps = () => {
                         categories={dapp.categories}
                         networks={dapp.networks}
                         onClick={() => onDappCardClick(dapp)}
-                        badges={[
-                          { icon: '/images/alldapps/icon-exchange.svg', iconSize: 17, value: '$23.56k' },
-                          { icon: '/images/alldapps/icon-fire.svg', iconSize: 17, value: '1,235' },
-                          { icon: '/images/alldapps/icon-mode.svg', iconSize: 24 },
-                          { icon: '/images/alldapps/icon-dapdap-point.svg', iconSize: 24 },
-                        ]}
+                        trading_volume={dapp.trading_volume}
+                        participants={dapp.participants}
+                        badges={dapp.rewards}
                       />
                     </SwiperSlide>
                   )) : (

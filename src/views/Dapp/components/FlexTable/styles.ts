@@ -39,12 +39,12 @@ export const StyledTableBody = styled.div`
   flex-wrap: nowrap;
   align-items: stretch;
 `;
-export const StyledTableRow = styled.div<{ bg?: string, borderColor?: string, border?: boolean, align?: RowAlign }>`
+export const StyledTableRow = styled.div<{ bg?: string, borderColor?: string, $border?: boolean, align?: RowAlign }>`
   display: flex;
   justify-content: space-between;
   align-items: ${({ align }) => align || 'stretch'};
   flex-wrap: nowrap;
-  border: ${({ borderColor, border }) => border ? `1px solid ${borderColor || '#333549'}` : 0};
+  border: ${({ borderColor, $border }) => $border ? `1px solid ${borderColor || '#333549'}` : 0};
   background: ${({ bg }) => bg || 'transparent'};
 `;
 export type Align = 'left' | 'right' | 'center';

@@ -1,36 +1,40 @@
-
-import styled from "styled-components"
-import IconUp from '@public/images/header/up.svg';
-import Link from "next/link";
+import styled from 'styled-components';
+import Link from 'next/link';
 import IconLink from '@public/images/header/link.svg';
+import { Dapp, Network } from './hooks/useDefaultSearch';
+import useDappOpen from '@/hooks/useDappOpen';
+import { IdToPath } from '@/config/all-in-one/chains';
+import { useRouter } from 'next/router';
+import Skeleton from 'react-loading-skeleton';
 
 const StyleTitle = styled.div`
-    font-size: 14px;
-    line-height: 14px;
-    font-weight: 500;
-    margin-bottom: 16px;
-    color: #979ABE;
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+  color: #979abe;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  .links {
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 400;
+    color: #979abe;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 20px;
-    .links {
-        font-size: 12px;
-        line-height: 12px;
-        font-weight: 400;
-        color: #979ABE;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        &:hover {
-            color: #fff;
-            cursor: pointer;
-        }
+    gap: 6px;
+    &:hover {
+      color: #fff;
+      cursor: pointer;
     }
-`
+  }
+`;
 
-const StylePopular = styled.div`
-  .list {
+const StylePopular = styled.div``;
+
+const StyleList = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -74,28 +78,85 @@ const StylePopular = styled.div`
         .up {
           font-size: 12px;
           line-height: 12px;
-          color: #06C17E;
+          color: #06c17e;
         }
       }
     }
-  }
 `
 
-const Popular = () => {
-    return (
-        <StylePopular>
-        <StyleTitle>
-          <span>Popular Chains</span>
-          <Link href={''} className='links'>View all <IconLink /></Link>
-        </StyleTitle>
-        <div className='list'>
-          <div className='label'>
-            <img className='brand' src="https://s3.amazonaws.com/dapdap.prod/images/mode.png" alt="" />
-            <span className='name'>Mode</span>
-          </div>
-        </div>
-      </StylePopular>
-    )
+export enum PopularType {
+  Chains = 'Chains',
+  dApps = 'dApps',
 }
 
-export default Popular
+type PopularItem = Network | Dapp;
+
+
+const LoadingCard = () => {
+  return Array.from({ length: 3 }).map((_) => (
+    <StyleList>
+      <div className="label">
+        <Skeleton width="30px" height="30px"  borderRadius={'6px'}/>
+        <Skeleton width="350px" height="16px" />
+      </div>
+    </StyleList>
+  ));
+}
+
+const Popular = ({
+  title,
+  data,
+  loading,
+  classNames,
+  sx,
+  onClick
+}: {
+  title: PopularType;
+  data: PopularItem[];
+  loading: boolean;
+  classNames?: string;
+  sx?: React.CSSProperties;
+  onClick?: () => void;
+}) => {
+  const { open } = useDappOpen();
+  const router = useRouter();
+  const onDappCardClick = (dapp: any) => {
+    open({ dapp, from: 'alldapps' });
+  };
+
+  const handleClick = (item: PopularItem) => {
+    if (title === PopularType.dApps) {
+      const dapp = item as Dapp;
+      return onDappCardClick(dapp.id);
+    } else {
+      const network = item as Network;
+      router.push(`/networks/${IdToPath[network.id]}`);
+    }
+    onClick?.()
+  }
+
+  return (
+    <StylePopular className={classNames} style={sx}>
+      <StyleTitle>
+        <span>Popular {title}</span>
+        <Link href={''} className="links">
+          View all <IconLink />
+        </Link>
+      </StyleTitle>
+      {
+        loading ? <LoadingCard /> : (
+          data.map((item: PopularItem) => (
+            <StyleList key={item.id} onClick={() => handleClick(item)}>
+              <div className="label">
+                <img className="brand" src={item.logo} alt="" />
+                <span className="name">{item.name}</span>
+              </div>
+            </StyleList>
+          ))
+        )
+      }
+    </StylePopular>
+  );
+};
+
+export default Popular;

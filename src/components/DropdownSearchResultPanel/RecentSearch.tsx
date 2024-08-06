@@ -3,7 +3,7 @@ import { useRecentStore } from "./hooks/useRecentStore";
 import { motion, AnimatePresence } from 'framer-motion';
 
 const StyleRecent = styled.div`
-  margin-bottom: 30px;
+  margin-top: 20px;
   .gird {
     display: flex;
     align-items: center;

@@ -10,8 +10,7 @@ export const StyledContainer = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  column-gap: 60px;
-  margin: 0 auto;
+  column-gap: 30px;
 `;
 
 
@@ -80,6 +79,9 @@ export const StyledDetailCategory = styled.div`
   }
 `;
 export const StyledNetworksContainer = styled.div`
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
 `;
 export const StyledNetworks = styled.div<{ $logo: string; }>`
   width: 20px;
@@ -143,4 +145,5 @@ export const StyledFavoritedTag = styled.div<{ $isFavorited: boolean }>`
   border: ${({ $isFavorited }) => $isFavorited ? '1px solid rgba(255, 107, 142, 0.30)' : '1px solid transparent'};
   background:  ${({ $isFavorited }) => $isFavorited ? 'rgba(255, 107, 142, 0.15)' : '#21222B'};
   color:  ${({ $isFavorited }) => $isFavorited ? '#FF6B8E' : '#979ABE'};
+  transition: background .2s ease;
 `;

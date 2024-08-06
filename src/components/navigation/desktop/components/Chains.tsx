@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
-import useNetworks from '@/views/networks/list/hooks/useNetworks';
 
 
 const GridContainer = styled.div`

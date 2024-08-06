@@ -1,6 +1,8 @@
-import styled from "styled-components";
-import Modal from "@/components/Modal";
+import styled from 'styled-components';
+import Modal from '@/components/Modal';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
+import { QuestDapp } from '@/hooks/useAirdrop';
+import { useRouter } from 'next/router';
 
 const StyledModalTitle = styled.div`
   font-weight: 700;
@@ -21,12 +23,13 @@ const StyledDesc = styled.div`
 
 const StyledBodyItem = styled.div`
   border-radius: 12px;
-  background: rgba(0,0,0,0.2);
+  background: rgba(0, 0, 0, 0.2);
   padding: 18px 21px;
   display: flex;
   column-gap: 20px;
   justify-content: space-between;
   cursor: pointer;
+
   &:not(:last-child) {
     margin-bottom: 10px;
   }
@@ -38,12 +41,12 @@ const StyledItemInfo = styled.div`
   column-gap: 11px;
 `;
 
-const StyledDappLogo = styled.div<{url?: string}>`
+const StyledDappLogo = styled.div<{ url?: string }>`
   width: 26px;
   height: 26px;
   border-radius: 6px;
   border: 1px #202329;
-  background:${props => props.url ? `url(${props.url }) center no-repeat` : 'unset'};
+  background: ${props => props.url ? `url(${props.url}) center no-repeat` : 'unset'};
   background-size: contain;
   flex-shrink: 0;
 `;
@@ -65,6 +68,7 @@ const StyledModal = styled.div`
   .interact-modal-overlay {
     backdrop-filter: blur(5px);
   }
+
   .interact-modal {
     background: #18191E;
     border: 1px solid #202329;
@@ -72,40 +76,21 @@ const StyledModal = styled.div`
   }
 `;
 
-const dAppsList = [
-  {
-    logo: '',
-    name: 'Quickswap',
-    path: ''
-  },
-  {
-    logo: '',
-    name: 'Mantis Swap',
-    path: ''
-  },
-  {
-    logo: '',
-    name: '0vix',
-    path: ''
-  },
-  {
-    logo: '',
-    name: 'Satori Finance',
-    path: ''
-  },
-]
-
-const InteractDAppsModal = (props: any) => {
-
+const InteractDAppsModal = (props: Props) => {
   const {
-    display = false,
-    onClose = () => {},
-    chainName = ''
+    display,
+    chainName,
+    dapps,
+    description,
+    onClose = () => {
+    },
   } = props;
 
-  const onDappClick = (item: any) => {
-    console.log(item.path);
-  }
+  const router = useRouter();
+
+  const onDappClick = (item: QuestDapp) => {
+    router.push(`/${item.route}`);
+  };
 
   return (
     <StyledModal>
@@ -113,25 +98,33 @@ const InteractDAppsModal = (props: any) => {
         width={562}
         display={display}
         onClose={onClose}
-        overlayClassName='interact-modal-overlay'
-        className='interact-modal'
+        overlayClassName="interact-modal-overlay"
+        className="interact-modal"
         title={<StyledModalTitle>Interact with {chainName} DApps</StyledModalTitle>}
-        content={<StyledModalBody>
-          <StyledDesc>
-            Here are the top dApps in {chainName} ranked by total value locked (TVL). Try to perform transactions consistently every week as frequency of smart contract interaction is an important criterion to qualify for the airdrop:
-          </StyledDesc>
-          {
-            dAppsList.map((item, index) => (<StyledBodyItem key={index} onClick={() => onDappClick(item)}>
-              <StyledItemInfo>
-                <StyledDappLogo url={item.logo}/>
-                <StyledDappName>{item.name}</StyledDappName>
-              </StyledItemInfo>
-              <StyledArrow>
-                <ArrowIcon size={11}/>
-              </StyledArrow>
-            </StyledBodyItem>))
-          }
-        </StyledModalBody>}
+        content={
+          <StyledModalBody>
+            <StyledDesc>
+              {
+                description ?
+                  description :
+                  `Here are the top dApps in ${chainName} ranked by total value locked (TVL). Try to perform transactions consistently every week as frequency of smart contract interaction is an important criterion to qualify for the airdrop:`
+              }
+            </StyledDesc>
+            {
+              dapps.map((item, index) => (
+                <StyledBodyItem key={index} onClick={() => onDappClick(item)}>
+                  <StyledItemInfo>
+                    <StyledDappLogo url={item.logo} />
+                    <StyledDappName>{item.name}</StyledDappName>
+                  </StyledItemInfo>
+                  <StyledArrow>
+                    <ArrowIcon size={11} />
+                  </StyledArrow>
+                </StyledBodyItem>
+              ))
+            }
+          </StyledModalBody>
+        }
       />
     </StyledModal>
   );
@@ -139,3 +132,12 @@ const InteractDAppsModal = (props: any) => {
 
 
 export default InteractDAppsModal;
+
+interface Props {
+  display: boolean;
+  chainName: string;
+  dapps: QuestDapp[];
+  description: string;
+
+  onClose?(): void;
+}

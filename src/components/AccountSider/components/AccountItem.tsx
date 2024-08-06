@@ -5,11 +5,10 @@ import CopyButton from '@/components/CopyButton';
 import useAccount from '@/hooks/useAccount';
 import { useUserStore } from '@/stores/user';
 import { ellipsAccount, ellipsAll } from '@/utils/account';
+import UserInfoPopUp from '@/components/UserInfoPopUp';
 
-const StyledItem = styled.div`
-  display: flex;
-  gap: 6px;
-  align-items: center;
+const StyledLogoContainer = styled.div`
+  position: relative;
 `;
 const StyledLogo = styled.div`
   position: relative;
@@ -50,6 +49,13 @@ const Address = styled.div`
   align-items: center;
   gap: 8px;
 `;
+const StyledPopup = styled.div`
+  position: absolute;
+  padding-top: 15px;
+  bottom: 0;
+  right: -20px;
+  transform: translateY(100%);
+`
 
 const AccountItem = ({
   showCopy = true,
@@ -64,11 +70,20 @@ const AccountItem = ({
   const userInfo = useUserStore((store: any) => store.user);
 
   const [ready, setReady] = useState(false);
+  const [show, setShow] = useState(true)
   useEffect(() => {
     setReady(true);
   }, []);
   return ready ? (
-    <StyledItem data-bp={bp}>
+    <StyledLogoContainer
+      data-bp={bp}
+      onMouseEnter={() => {
+        setShow(true)
+      }}
+      // onMouseLeave={() => {
+      //   setShow(false)
+      // }}
+    >
       <StyledLogo>
         {userInfo?.avatar ? <LogoImage src={userInfo.avatar} size={logoSize} /> : <Logo size={logoSize} />}
         {userInfo?.is_kol && (
@@ -98,43 +113,14 @@ const AccountItem = ({
           </StyledKol>
         )}
       </StyledLogo>
-      <div>
-        <Account>
-          {userInfo?.username ? (
-            ellipsAll(userInfo?.username)
-          ) : (
-            <>
-              {ellipsAccount(account)}
-              {account && showCopy && (
-                <CopyButton
-                  size={16}
-                  text={account}
-                  tooltipMessage="Copied"
-                  tooltipTop={-31}
-                  tooltipRight={-12}
-                  tooltipFontSize={12}
-                />
-              )}
-            </>
-          )}{' '}
-        </Account>
-        {userInfo?.username && (
-          <Address>
-            <span>{ellipsAccount(account)} </span>
-            {account && showCopy && (
-              <CopyButton
-                size={16}
-                text={account}
-                tooltipMessage="Copied"
-                tooltipTop={-31}
-                tooltipRight={-12}
-                tooltipFontSize={12}
-              />
-            )}
-          </Address>
-        )}
-      </div>
-    </StyledItem>
+      {
+        show && (
+          <StyledPopup>
+            {/* <UserInfoPopUp /> */}
+          </StyledPopup>
+        )
+      }
+    </StyledLogoContainer>
   ) : (
     <div />
   );

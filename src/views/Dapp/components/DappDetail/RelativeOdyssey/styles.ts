@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
   font-family: Montserrat;
@@ -15,12 +16,12 @@ export const StyledOdysseyDetail = styled.div`
   margin-bottom: 30px;
 `;
 
-export const StyledOdysseyBanner = styled.div<{url: string}>`
-  width: 500px;
-  height: 200px;
+export const StyledOdysseyBanner = styled.div<{ url: string }>`
+  width: 100%;
+  height: 202px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center top`: ''};
+  background: ${props => props.url ? `url('${props.url}') no-repeat center top` : ''};
   background-size: cover;
   &.gray {
     filter: grayscale(100%);
@@ -31,7 +32,13 @@ export const StyledOdysseyTitle = styled.div`
   color: #FFF;
   font-size: 20px;
   font-weight: 600;
-  margin-bottom: 32px;
+  height: 48px;
+  line-height: 24px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const StyledOdysseyHead = styled.div`
@@ -46,7 +53,7 @@ export const StyledOdysseyHead = styled.div`
   z-index: 1;
 `;
 
-export const StyledOdysseyTagShadow = styled.div<{live:boolean}>`
+export const StyledOdysseyTagShadow = styled.div<{ live: boolean }>`
   padding: 5px;
   border-radius: 16px;
   background: ${props => props.live ? 'rgba(87, 219, 100, 0.5)' : 'transparent'};
@@ -74,37 +81,15 @@ export const StyledOdysseyTag = styled.div`
     background-color: #979ABE;
     margin-right: 5px;
   }
+
   &.odyssey-live {
     color: #ffffff;
     border: 1px solid #57DB64;
+
     &::before {
       background-color: #57DB64;
     }
   }
-`;
-
-export const StyledRewardTag = styled.div<{url: string}>`
-  position: absolute;
-  right: 3px;
-  top: -12px;
-  width: 91px;
-  height: 91px;
-  z-index: 2;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center`: ''};
-  background-size: contain;
-`;
-
-export const StyledRewardText = styled.div`
-  position: absolute;
-  color: #000;
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 900;
-  text-transform: uppercase;
-  transform: rotate(-15deg);
-  left: 0;
-  right: -6px;
 `;
 
 export const StyledRelatedTitle = styled.div`
@@ -121,6 +106,7 @@ export const StyledRelatedTitle = styled.div`
 
 export const StyledOdysseyBody = styled.div`
   padding: 16px 20px 20px 20px;
+  overflow: hidden;
 `;
 
 export const StyledOdysseyIcon = styled.div`
@@ -151,7 +137,7 @@ export const StyledOdysseyIconTitle = styled.div`
   justify-content: center;
 `;
 
-export const StyledVideo = styled.div<{url?: string}>`
+export const StyledVideo = styled.div<{ url?: string }>`
   width: 80px;
   height: 40px;
   border-radius: 4px;
@@ -178,7 +164,8 @@ export const StyledOdysseyTop = styled.div`
   position: relative;
 `;
 
-export const StyledVideoModal = styled.div`
+export const StyledVideoModal = styled.div<{ visible?: boolean }>`
+  display: ${props => props.visible ? 'block' : 'none'};
   .video-modal-overlay {
     backdrop-filter: blur(5px);
   }
@@ -192,6 +179,7 @@ export const StyledVideoModal = styled.div`
 
 export const StyledVideoContent = styled.div`
   padding: 10px;
+
   video {
     width: 600px;
     height: 337.5px;
@@ -202,6 +190,7 @@ export const StyledTagList = styled.div`
   display: flex;
   align-items: center;
   column-gap: 10px;
+  margin-top: 40px;
 `;
 
 export const StyledTagItem = styled.div`
@@ -214,10 +203,11 @@ export const StyledTagItem = styled.div`
   min-height: 32px;
   font-size: 14px;
   line-height: 1;
-  
+
   &.tag-default {
     border: 1px solid #373A53;
     background: rgba(16, 17, 21, 0.8);
+
     .reward-text {
       color: #979ABE;
       font-weight: 600;
@@ -230,6 +220,7 @@ export const StyledTagItem = styled.div`
     background-clip: padding-box;
     border: 2px solid transparent;
     height: 36px;
+
     &::before {
       content: '';
       position: absolute;
@@ -242,6 +233,7 @@ export const StyledTagItem = styled.div`
       border-radius: inherit; /*important*/
       background: rgba(16, 17, 21);
     }
+
     .reward-text {
       font-weight: 600;
       background: linear-gradient(90deg, #FFAF65 3.39%, #FF84EB 50.73%, #9B82FF 100%);
@@ -269,14 +261,23 @@ export const StyledTagChains = styled.div`
   align-items: center;
 `;
 
-export const StyledTagChain = styled.div<{url?: string}>`
-  width: 20px;
-  height: 20px;
+export const StyledTagChain = styled(motion.div)`
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: 2px solid #292B33;
-  background: ${props => props.url ? `url(${props.url} no-repeat center` : '#000000'};
   position: relative;
-  z-index: 2;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-left: -6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
   &.tag-more {
     &::before {
       display: block;
@@ -287,6 +288,15 @@ export const StyledTagChain = styled.div<{url?: string}>`
       top: 30%;
       left: 50%;
       transform: translate(-50%, -50%);
-    }    
+    }
   }
+`;
+
+export const StyledBadgeTooltipList = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  gap: 20px;
+  background: #21232A;
 `;

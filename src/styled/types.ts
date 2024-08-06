@@ -3,6 +3,7 @@ export interface FlexProps {
   alignItems?: string;
   justifyContent?: string;
   gap?: string;
+  flexWrap?: string;
 }
 export interface FontProps {
   color?: string;

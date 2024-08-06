@@ -9,12 +9,13 @@ import IconSwap from '@public/images/header/swap.svg';
 import IconBridge from '@public/images/header/bridge.svg';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import IconArrowRight from '@public/images/header/arrow-right.svg'
-import { StatusType } from './components/Status';
+import { StatusType } from "@/views/Odyssey/components/Tag";
 import Chains from './components/Chains';
 import ListItem from './components/ListItem';
 import useNetworks from '@/views/networks/list/hooks/useNetworks';
 import { DividerHorizontalIcon } from '@radix-ui/react-icons';
-
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import { useMemo } from 'react';
 
 const StyleView = styled.div`
   margin: 0 auto;
@@ -50,6 +51,9 @@ const StyleView = styled.div`
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: networkLoading, networkList } = useNetworks();
+  const { loading: compassListLoading, compassList } = useCompassList()
+
+  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.status === StatusType.ongoing), [compassList])
 
   return (
     <Wrapper className={className}>
@@ -58,18 +62,14 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger">
               Odyssey
-              <IconOdyssey />
-              <IconArrowDown />
+              { hasNewOdyssey && <IconOdyssey />}
+              <IconArrowDown className="CaretDown" aria-hidden />
             </NavigationMenu.Trigger>
             <NavigationMenu.Content className="NavigationMenuContentV2 bridge">
-              <div className="List">
+              <div className="List bridge">
                 <ListItem
-                  imgSrc="https://s3.amazonaws.com/dapdap.prod/images/group 48098858.png"
-                  isNew={true}
-                  title="Odyssey Vol.5"
-                  status={StatusType.LIVE}
-                  description="DapDap x Mode: The Airdrop Ascendancy"
-                  className='bridge-nav'
+                  data={compassList}
+                  loading={compassListLoading}
                 />
               </div>
               <StyleView><div>View all</div><IconArrowRight /></StyleView>
@@ -93,7 +93,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger">
               Chains
-              <IconArrowDown />
+              <IconArrowDown className="CaretDown" aria-hidden />
             </NavigationMenu.Trigger>
             <NavigationMenu.Content className="NavigationMenuContentV2 chains">
               <div className="List chain">

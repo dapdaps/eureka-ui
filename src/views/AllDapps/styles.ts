@@ -1,4 +1,5 @@
 import { styled } from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const AllDappsWrapper = styled.div`
   width: 1247px;
@@ -20,16 +21,15 @@ export const StyledContainer = styled.div`
 export const StyledBody = styled(AllDappsWrapper)`
   padding-bottom: 150px;
 `;
-export const StyledFilters = styled.div<{fixed?: boolean}>`
-  margin-top: ${props => props.fixed ? '20px' : '66px'};
+export const StyledFilters = styled(motion.div)<{fixed?: boolean}>`
+  margin-top: 66px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 16px;
   margin-bottom: 36px;
-  position: ${props => props.fixed ? 'fixed' : 'relative'};
-  top: ${props => !props.fixed ? '0' : '150px'};
-  z-index: ${props => props.fixed ? '50' : '1'};
+  position: ${(props) => props.fixed ? 'fixed' : 'relative'};
+  top: 0;
   width: 1247px;
 `;
 export const StyledNetworkDropdownItem = styled.div`
@@ -139,10 +139,9 @@ export const StyledSelectorLoading = styled.div`
 `;
 
 
-export const StyledFiltersBackdrop = styled.div<{show: boolean}>`
-  display: ${props => props.show ? 'block' : 'none'};
+export const StyledFiltersBackdrop = styled(motion.div)`
   position: fixed;
-  top: 74px;
+  top: 70px;
   width: 100%;
   height: 170px;
   background: #000 url("/images/alldapps/bg.svg") no-repeat center top/1471px 512px;
