@@ -72,7 +72,7 @@ const ChainDetail = ({ path }: any) => {
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
       const curr = CategoryList.find((_it) => _it.key === it.id);
-      const dappCount = allDappListTotal.filter((__it) => __it.category_ids.includes(it.id)).length;
+      const dappCount = allDappListTotal.filter((__it: any) => __it.category_ids.includes(it.id)).length;
       return {
         ...curr,
         value: dappCount,

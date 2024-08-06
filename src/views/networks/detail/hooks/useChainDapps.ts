@@ -61,7 +61,7 @@ export function useChainDapps(chain_id: string, category?: string | number) {
       setAllDappList(filteredData);
       setAllDappListTotal(data);
       onPage(1, filteredData, true);
-      setTotal(filteredData.length);
+      setTotal(data.length);
       setPageTotal(Math.ceil(filteredData.length / pageSize));
       setLoading(false);
     } catch {
