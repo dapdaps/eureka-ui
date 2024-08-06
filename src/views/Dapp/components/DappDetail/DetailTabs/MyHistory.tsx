@@ -20,11 +20,12 @@ import { formatTitle } from '@/views/OnBoarding/helpers';
 import useCopy from '@/hooks/useCopy';
 import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
-import { formateAddress } from "@/utils/formate";
-import { formatUSDate } from "@/utils/date";
-import { useMemo } from "react";
-import {chainPortfolioShowConfig} from "@/views/Dapp/components/DappDetail/config";
+import { formateAddress } from '@/utils/formate';
+import { formatUSDate } from '@/utils/date';
+import { useMemo } from 'react';
+import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/config';
 import { Category } from '@/hooks/useAirdrop';
+import { useRouter } from 'next/router';
 
 const Types = {
   network: 'chain',
@@ -41,12 +42,15 @@ const MyHistory = (
     fetchHistoryList,
     chainIds,
   }: Props) => {
+
+  const router = useRouter();
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
 
   const { copy } = useCopy();
 
   const onPortfolioClick = () => {
+    router.push('/portfolio');
   };
 
   const onShareClick = () => {
@@ -120,7 +124,7 @@ const MyHistory = (
             </>)
           }
         </StyledHeadInfo>
-        { account && isShowPortfolio && (<StyledHeadOther onClick={onPortfolioClick}>
+        {account && isShowPortfolio && (<StyledHeadOther onClick={onPortfolioClick}>
           View more on Portfolio
         </StyledHeadOther>)
         }

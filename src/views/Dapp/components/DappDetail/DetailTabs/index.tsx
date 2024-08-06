@@ -97,6 +97,7 @@ export default DetailTabs;
 interface Props {
   name: string;
   logo: string;
+  id: number;
   description: string;
   category: Category;
   overviewTitle: string;

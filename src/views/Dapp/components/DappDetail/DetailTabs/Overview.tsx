@@ -54,8 +54,6 @@ const Overview = (props: any) => {
     loading,
   } = props;
 
-  console.log('props: %o', props);
-
   const router = useRouter();
   const [{}, setChain] = useSetChain();
   const { check } = useAuthCheck({ isNeedAk: false });
@@ -65,8 +63,6 @@ const Overview = (props: any) => {
     loading: airdropLoading,
     reportAdditionResult,
   } = useAirdrop({ category, id });
-
-  console.log('airdrop: category=%o, id=%o, res=%o', category, id, airdropData);
 
   const [addMetaMaskShow, setAddMetaMaskShow] = useState<boolean>(false);
   const [dappListVisible, setDappListVisible] = useState<boolean>(false);
