@@ -2,6 +2,7 @@ import { upperFirst } from 'lodash';
 import { styled } from 'styled-components';
 
 import { formateValue, formateValueWithThousandSeparator } from '@/utils/formate';
+import Big from 'big.js';
 
 const StyledRecord = styled.div`
   display: flex;
@@ -145,3 +146,20 @@ export function getTime(timeStr: number) {
   const second = String(date.getSeconds()).padStart(2, '0');
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
+
+export const formatPercentNumber = (
+  val: string | number,
+  div: string | number,
+  isSimply?: boolean
+) => {
+  if (!val || val == 0) {
+    return Big(0).toFixed(isSimply ? 0 : 2);
+  }
+
+  const result = Big(val).div(div).times(100);
+  if (isSimply) {
+    const decimal = result.toString().split('.')?.[1]?.length ?? 0;
+    return Big(result.toFixed(decimal > 2 ? 2 : 0)).toString();
+  }
+  return Big(result.toFixed(2)).toString();
+};

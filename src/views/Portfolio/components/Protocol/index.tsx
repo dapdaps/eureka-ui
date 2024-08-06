@@ -5,8 +5,6 @@ import React, { memo, useMemo, useState } from 'react';
 
 import { container } from '@/components/animation';
 import Loading from '@/components/Icons/Loading';
-import popupsData from '@/config/all-in-one/chains';
-import chains from '@/config/chains';
 import { StyledFlex, StyledLoadingWrapper } from '@/styled/styles';
 import { NoDataLayout } from '@/views/Portfolio/components/NoDataLayout';
 import Category from '@/views/Portfolio/components/Protocol/Category';

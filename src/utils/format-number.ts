@@ -37,13 +37,24 @@ export const simplifyNum = (number: number) => {
   }
 };
 
-export const formatIntegerThousandsSeparator = (integer?: number | string, precision: number = 2, type?: 'simplify' | 'thousand') => {
+interface Options {
+  type?: 'simplify' | 'thousand';
+  isFullDecimal?: boolean;
+}
+
+export const formatIntegerThousandsSeparator = (integer?: number | string, precision: number = 2, options?: Options) => {
+  options = options || {};
+  const zero = options.isFullDecimal ? Big(0).toFixed(precision) : '0';
   if (!integer) {
-    return '0';
+    return zero;
   }
-  if (typeof Number(integer) !== 'number') return '0';
-  if (isNaN(Number(integer))) return '0';
-  const _type = type ?? 'simplify';
+  if (typeof Number(integer) !== 'number') {
+    return zero;
+  }
+  if (isNaN(Number(integer))) {
+    return zero;
+  }
+  const _type = options.type ?? 'simplify';
   if (_type === 'thousand') {
     return integer.toString().replace(/\d(?=(\d{3})+\b)/g, '$&,');
   }
@@ -62,6 +73,9 @@ export const formatIntegerThousandsSeparator = (integer?: number | string, preci
     }
     if (Big(integer).gte(1e3)) {
       return formatter(1e3, 'k');
+    }
+    if (options.isFullDecimal) {
+      return Big(Big(integer).toFixed(precision, 0));
     }
     return Big(Big(integer).toFixed(precision, 0)).toString();
   }

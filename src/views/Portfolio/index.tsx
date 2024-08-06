@@ -11,15 +11,16 @@ import useDapps from './hooks/useDapps';
 import useExecuteRecords from './hooks/useExecuteRecords';
 import useTokens from './hooks/useTokens';
 import { StyledContainer, StyledContent } from './styles';
+import NotificationBar from '@/components/NotificationBar';
 
 const TABS = [
   {
     key: '1',
-    title: 'Wallet'
+    title: 'In Wallet'
   },
   {
     key: '2',
-    title: 'Protocol'
+    title: 'DeFi Portfolio'
   },
   {
     key: '3',
@@ -30,6 +31,7 @@ const TABS = [
 export default function Portfolio() {
   const [tab, setTab] = useState(TABS[0].key);
   const [network, setNetwork] = useState('all');
+  const [notiVisible, setNotiVisible] = useState(true);
 
   const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens();
   const {
@@ -59,6 +61,20 @@ export default function Portfolio() {
 
   return (
     <StyledContainer>
+      {
+        notiVisible && (
+          <NotificationBar
+            styles={{
+              position: 'relative',
+            }}
+            onClose={() => {
+              setNotiVisible(false);
+            }}
+          >
+            The Portfolio on DapDap now supports 5 networks: Polygon zkEVM, zkSync, Linea, Scroll, Blast. More is coming soon...
+          </NotificationBar>
+        )
+      }
       <StyledContent>
         <Top />
         <Tab tab={tab} setTab={setTab} tabs={TABS}>
