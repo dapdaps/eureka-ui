@@ -9,6 +9,7 @@ import { memo, useEffect, useState } from 'react';
 import OdysseyCard from './Card';
 import { get } from '@/utils/http';
 import Empty from '@/components/Empty';
+import { StyledFlex } from '@/styled/styles';
 
 const RelativeOdyssey = (props: Props) => {
   const {
@@ -24,12 +25,29 @@ const RelativeOdyssey = (props: Props) => {
   const getOdysseyList = async () => {
     if (loading) return;
     setLoading(true);
+    let url: string = '';
+    let params: any;
+    if (dappId) {
+      url = '/api/compass/list-by-dapp';
+      params = {
+        dapp_id: dappId,
+      };
+    }
+    if (networkId) {
+      url = '/api/compass/list-by-network';
+      params = {
+        network_id: networkId,
+        chain_id: chainId,
+      };
+    }
+    if (!url) {
+      setLoading(false);
+      return;
+    }
     try {
-      if (dappId) {
-        const result = await get(`/api/compass/list-by-dapp?dapp_id=${dappId}`);
-        const data = result.data || [];
-        setOdysseyList(data.sort((a: any, b: any) => b.end_time - a.end_time));
-      }
+      const result = await get(url, params);
+      const data = result.data || [];
+      setOdysseyList(data.sort((a: any, b: any) => b.end_time - a.end_time));
     } catch (err) {
       console.log(err, 'err');
     }
@@ -45,7 +63,9 @@ const RelativeOdyssey = (props: Props) => {
       <StyledRelatedTitle>{title}</StyledRelatedTitle>
       {
         loading ? (
-          <Loading size={24} />
+          <StyledFlex style={{ height: 150 }} justifyContent="center" alignItems="center">
+            <Loading size={24} />
+          </StyledFlex>
         ) : (
           odysseyList.length ? (
             <StyledOdysseyDetail>

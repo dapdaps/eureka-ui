@@ -4,6 +4,9 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import { L1ChainIds } from '@/config/chains';
 import { StatusType } from '@/views/Odyssey/components/Tag';
+import { IdToPath } from '@/config/all-in-one/chains';
+
+const InConfigNetworkIds = Object.keys(IdToPath);
 
 export default function useNetworks() {
   const [loading, setLoading] = useState(false);
@@ -16,11 +19,11 @@ export default function useNetworks() {
     setLoading(true);
     try {
       const resultNetwork = await get(`${QUEST_PATH}/api/network/all`);
-      const data: Network[] = resultNetwork.data || [];
+      let data: Network[] = resultNetwork.data || [];
+      data = data.filter((it) => InConfigNetworkIds.includes(it.id + ''));
       const _l1NetworkList = [];
       const _l2NetworkList = [];
       for (const network of data) {
-        if (network.chain_id === 1) continue;
         if (L1ChainIds.includes(network.chain_id)) {
           _l1NetworkList.push(network);
           continue;

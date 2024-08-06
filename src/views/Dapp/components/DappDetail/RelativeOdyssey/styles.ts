@@ -54,16 +54,16 @@ export const StyledOdysseyHead = styled.div`
   z-index: 1;
 `;
 
-export const StyledOdysseyTagShadow = styled.div<{ live: boolean }>`
+export const StyledOdysseyTagShadow = styled.div`
   padding: 5px;
   border-radius: 16px;
-  background: ${props => props.live ? 'rgba(87, 219, 100, 0.5)' : 'transparent'};
+  position: relative;
 `;
 
 export const StyledOdysseyTag = styled.div`
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(32, 34, 47, 0.8);
+  background: rgba(32, 34, 47, 1);
   padding: 6px 10px;
   display: flex;
   align-items: center;
@@ -72,6 +72,8 @@ export const StyledOdysseyTag = styled.div`
   font-size: 12px;
   font-weight: 500;
   line-height: 1;
+  position: relative;
+  z-index: 2;
 
   &::before {
     display: block;
@@ -82,15 +84,18 @@ export const StyledOdysseyTag = styled.div`
     background-color: #979ABE;
     margin-right: 5px;
   }
+`;
 
-  &.odyssey-live {
-    color: #ffffff;
-    border: 1px solid #57DB64;
-
-    &::before {
-      background-color: #57DB64;
-    }
-  }
+export const StyledLiveBg = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  background: rgba(87, 219, 100, .2);
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  backdrop-filter: blur(4px);
 `;
 
 export const StyledRelatedTitle = styled.div`

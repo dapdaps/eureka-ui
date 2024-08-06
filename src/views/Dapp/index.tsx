@@ -2,8 +2,8 @@ import { memo, Suspense, lazy } from 'react';
 import DappCom from './DappCom';
 import ExtraWard from './components/ExtraReward';
 import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper, StyledLoadingWrapper } from './styles';
-import Loading from '@/components/Icons/Loading';
-import DappBack from '@/components/DappBack';
+import DappDetailScroll from './components/DappDetail/Scroll';
+import DappBack from '@/components/PageBack';
 import DappFallback from '@/views/Dapp/components/Fallback';
 
 export { default as Empty } from './Empty';
@@ -14,7 +14,7 @@ const Dapp = (props: any) => {
   const { dapp } = props;
   return (
     <StyledPage>
-      <DappBack />
+      <DappBack defaultPath="/alldapps" />
       <div style={{ margin: '0 auto', padding: '20px 0px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '11px', justifyContent: 'center' }}>
           <img src={dapp.logo} style={{ width: '32px', height: '31px' }} />
@@ -31,6 +31,7 @@ const Dapp = (props: any) => {
           {dapp.name === 'Ring Protocol' && <ExtraWard dapp={dapp} />}
           <DappCom {...props} />
         </StyledDappWrapper>
+        <DappDetailScroll />
         <Suspense fallback={<DappFallback />}>
           <DappDetail {...dapp}/>
         </Suspense>

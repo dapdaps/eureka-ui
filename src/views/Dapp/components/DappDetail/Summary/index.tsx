@@ -21,6 +21,7 @@ import {
 } from './styles';
 import useLike from '@/views/Quest/hooks/useLike';
 import Big from 'big.js';
+import { percentDirection } from '@/views/networks/list/components/value-percent';
 
 const DappSummary = (props: Props) => {
 
@@ -89,14 +90,8 @@ const DappSummary = (props: Props) => {
       <StyledSummaryContainer>
         {
           summaries.map((item, index) => {
-            let increaseValue = item.increaseValue;
-            const increaseValueDirection = () => {
-              if (!increaseValue) return { rotate: false, color: '#FFFFFF' };
-              if (Big(increaseValue || 0).gt(0)) return { rotate: 0, color: '#06C17E' };
-              if (Big(increaseValue || 0).lt(0)) return { rotate: 180, color: '#FFFFFF' };
-              return { rotate: false, color: '#FFFFFF' };
-            };
-            const direction = increaseValueDirection();
+            const increaseValue = item.increaseValue;
+            const direction = percentDirection(increaseValue);
             return (
               <StyledSummary key={`summaries${index}`}>
                 <StyledSummaryLabel>{item.label}</StyledSummaryLabel>
@@ -108,7 +103,7 @@ const DappSummary = (props: Props) => {
                         <StyledSummaryAddIcon>
                           {renderArrowIcon(direction)}
                         </StyledSummaryAddIcon>
-                        {increaseValue}%
+                        {Big(increaseValue || 0).toFixed(2)}%
                       </StyledSummaryAdd>
                     )
                   }

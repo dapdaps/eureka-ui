@@ -109,7 +109,7 @@ export const StyledSummaryValue = styled.div`
   line-height: 1;
   flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   column-gap: 10px;
 `;
 export const StyledSummaryLabel = styled.div`
@@ -127,6 +127,7 @@ export const StyledSummaryAdd = styled.div`
   font-size: 12px;
   font-weight: 500;
   align-items: center;
+  transform: translateY(-5px);
 `;
 export const StyledSummaryAddIcon = styled.div`
   width: 10px;

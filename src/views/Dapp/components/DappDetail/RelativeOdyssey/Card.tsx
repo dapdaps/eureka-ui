@@ -1,6 +1,6 @@
 import { memo, useMemo, useRef, useState } from 'react';
 import {
-  StyledBadgeTooltipList,
+  StyledBadgeTooltipList, StyledLiveBg,
   StyledOdysseyBanner,
   StyledOdysseyBody,
   StyledOdysseyContainer,
@@ -21,7 +21,7 @@ import {
   StyledVideo,
   StyledVideoIcon,
 } from '@/views/Dapp/components/DappDetail/RelativeOdyssey/styles';
-import { StatusType } from "@/views/Odyssey/components/Tag";
+import { StatusType } from '@/views/Odyssey/components/Tag';
 import OdysseyVideo from './Video';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import Image from 'next/image';
@@ -42,7 +42,7 @@ const OdysseyCardComponent = (props: Props) => {
     volume,
     users,
     medals,
-    className
+    className,
   } = props;
 
   const tagListRef = useRef<any>();
@@ -151,8 +151,14 @@ const OdysseyCardComponent = (props: Props) => {
           </StyledBadgeTooltipList>
         </Tooltip>
       </AnimatePresence>
-    )
+    );
   };
+
+  const isLive = odysseyIsLive(status);
+  const statusText = useMemo(() => {
+    if (isLive) return 'live';
+    return status;
+  }, [isLive]);
 
   return (
     <>
@@ -160,7 +166,7 @@ const OdysseyCardComponent = (props: Props) => {
         <StyledOdysseyTop>
           <StyledOdysseyBanner
             url={banner}
-            className={!odysseyIsLive(status) ? 'gray' : ''}
+            className={!isLive ? 'gray' : ''}
           />
           <StyledOdysseyHead>
             <StyledOdysseyInfo>
@@ -169,10 +175,31 @@ const OdysseyCardComponent = (props: Props) => {
                 Vol.{renderVolNo({ name, id })}
               </StyledOdysseyIconTitle>
             </StyledOdysseyInfo>
-            <StyledOdysseyTagShadow live={odysseyIsLive(status)}>
-              <StyledOdysseyTag className={odysseyIsLive(status) ? 'odyssey-live' : ''}>
-                {status.replace(/^\S|\s(\S)/g, (s: string) => s.toUpperCase())}
+            <StyledOdysseyTagShadow>
+              <StyledOdysseyTag>
+                {statusText.replace(/^\S|\s(\S)/g, (s: string) => s.toUpperCase())}
               </StyledOdysseyTag>
+              <AnimatePresence mode="wait">
+                {
+                  isLive && (
+                    <>
+                      <StyledLiveBg
+                        initial={LiveAnimate.initial}
+                        animate={LiveAnimate.animate}
+                        transition={LiveAnimate.transition}
+                      />
+                      <StyledLiveBg
+                        initial={LiveAnimate.initial}
+                        animate={LiveAnimate.animate}
+                        transition={{
+                          ...LiveAnimate.transition,
+                          delay: 1,
+                        }}
+                      />
+                    </>
+                  )
+                }
+              </AnimatePresence>
             </StyledOdysseyTagShadow>
           </StyledOdysseyHead>
           {
@@ -220,7 +247,7 @@ const OdysseyCardComponent = (props: Props) => {
                   key="reward"
                   className="reward"
                 >
-                  <StyledTagItemInner className={`reward ${odysseyIsLive(status) ? 'tag-active' : 'tag-default'}`}>
+                  <StyledTagItemInner className={`reward ${isLive ? 'tag-active' : 'tag-default'}`}>
                     <div className="reward-text">{Config.reward}</div>
                     {
                       badges && badges?.length > 0 && (
@@ -272,6 +299,26 @@ const OdysseyCardComponent = (props: Props) => {
   );
 };
 
+const LiveAnimate = {
+  initial: {
+    scaleX: 0.8,
+    scaleY: 0.7,
+    opacity: 1,
+  },
+  animate: {
+    scaleX: [0.8, 0.8, 1, 1.2],
+    scaleY: [0.7, 0.7, 1, 1.2],
+    opacity: [0.5, 1, 1, 0],
+  },
+  transition: {
+    times: [0, 0.1, 0.7, 1],
+    duration: 2,
+    repeat: Infinity,
+    ease: 'linear',
+    repeatDelay: 0.1,
+  },
+};
+
 export default memo(OdysseyCardComponent);
 
 export interface Props {
@@ -289,9 +336,9 @@ export interface Props {
   users?: string;
   // if there are badges
   // please prop them as an array
-  medals?: {icon: string; id: number;}[];
+  medals?: { icon: string; id: number; }[];
   // custom className
-  className?: string; 
+  className?: string;
 }
 
 const odysseyIsLive = (status: StatusType) => {

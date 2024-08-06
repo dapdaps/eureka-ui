@@ -7,28 +7,41 @@ export const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 16px;
 `;
 
-export const StyledItem = styled.div<{ $active: boolean; $bgColor: string }>`
+export const StyledItem = styled.div<{ $bgColor: string; $key: string; }>`
+  font-family: Montserrat;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 14px;
-  width: ${(props) => (props.$active ? '420px' : '260px')};
   height: 60px;
   border-radius: 10px;
-  border: ${(props) => (props.$active ? 'none' : '1px solid #333648')};
-  background: ${(props) => (props.$active ? props.$bgColor : '#18191e')};
-  color: ${(props) => (props.$active ? '#02051E' : '#fff')};
+  border: 1px solid #333648;
+  background: #18191e;
+  color: #fff;
   text-align: center;
-  font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  border-radius: 10px;
   opacity: 0.8;
-  cursor: pointer;
+  ${({ $key, $bgColor }) => {
+    const styles: any = {
+      cursor: 'pointer',
+    };
+    if ($key === 'Chain-Navi') {
+      styles.cursor = 'default';
+      styles.width = '420px';
+      styles.border = 'none';
+      styles.background = $bgColor;
+      styles.color = '#02051E';
+    } else {
+      styles.flex = 1;
+    }
+    return styles;
+  }};
 `;
 
 export const StyledItemBg = styled.div`

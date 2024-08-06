@@ -139,7 +139,8 @@ export default function BridgeX({
     toChainId,
     execute,
     getChainScan,
-    addAction
+    addAction,
+    onSuccess,
 }: any) {
     const { fail, success } = useToast()
     const [updater, setUpdater] = useState(1)
@@ -634,6 +635,10 @@ export default function BridgeX({
                             title: 'Transaction success',
                             text: '',
                         })
+
+                        if (typeof onSuccess === 'function') {
+                            onSuccess();
+                        }
 
                         setUpdater(updater + 1)
 

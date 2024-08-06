@@ -28,18 +28,20 @@ const medalList: any = [
   {
     label: 'Mode Trader',
     percent: 1,
-    logo: ''
+    logo: '',
   },
   {
     label: 'Mode Voyager',
     percent: 0.8,
-    logo: ''
-  }
+    logo: '',
+  },
 ];
 
 const ChainDetail = ({ path }: any) => {
 
   const { detail, loading: detailLoading } = useDetail(PathToId[path]);
+
+  console.log('detail: %o', detail);
 
   const { handleReport } = useReport();
 
@@ -93,21 +95,25 @@ const ChainDetail = ({ path }: any) => {
   return (
     <StyledContainer>
       <Top chain={{ ...currentChain, ...detail }} />
-      <QuickOnboarding path={path} chain={{ ...currentChain }} />
+      <QuickOnboarding chain={{ ...currentChain }} />
 
       <StyledDetail>
         <StyledRecordContainer>
           <DetailTabs
             {...detail}
-            overviewTitle={detail?.name ? `Introducing ${detail.name}` : ''}
-            overviewShadow={{icon: currentChain?.bgIcon, color: currentChain?.selectBgColor}}
+            overviewTitle={detail?.name ? `Introducing ${detail?.name}` : ''}
+            overviewShadow={{ icon: currentChain?.bgIcon, color: currentChain?.selectBgColor }}
             category={Category.network}
             loading={detailLoading}
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
-          <Medal medalList={medalList}/>
-          <RelativeOdyssey title='Campaign and Rewards'/>
+          <Medal medalList={medalList} />
+          <RelativeOdyssey
+            title="Campaign and Rewards"
+            networkId={detail?.id}
+            chainId={detail?.chain_id}
+          />
         </StyledRelatedOdyssey>
       </StyledDetail>
 

@@ -1,8 +1,9 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
   width: 1260px;
-  padding: 50px 0;
+  padding: 0 0 50px 0;
   margin: 0 auto;
 `;
 
@@ -33,7 +34,7 @@ export const StyledRelatedOdyssey = styled.div`
   flex-shrink: 0;
 `;
 
-export const StyledTitle = styled.div`
+export const StyledArrowDown = styled(motion.div)`
   font-family: Montserrat;
   font-size: 20px;
   font-weight: 600;

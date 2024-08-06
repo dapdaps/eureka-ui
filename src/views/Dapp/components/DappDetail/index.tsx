@@ -5,7 +5,7 @@ import {
   StyledMoreText,
   StyledRelatedContainer,
   StyledRecordContainer,
-  StyledRelatedOdyssey
+  StyledRelatedOdyssey, StyledArrowDown,
 } from '@/views/Dapp/components/DappDetail/styles';
 import DappSummary from './Summary';
 import DetailTabs from './DetailTabs/index';
@@ -41,23 +41,19 @@ const DappDetail = (props: Props) => {
     {
       key: 'txns',
       label: 'Total txns',
-      value: `${formatIntegerThousandsSeparator(total_execution, 1)}`,
+      value: `${formatIntegerThousandsSeparator(total_execution, 0)}`,
       increaseValue: '',
     },
     {
       key: 'user',
       label: 'User',
-      value: `${formatIntegerThousandsSeparator(participants, 1)}`,
+      value: `${formatIntegerThousandsSeparator(participants, 0)}`,
       increaseValue: participants_change_percent || '',
     },
   ];
 
   return (
     <StyledContainer>
-      <StyledMoreContainer>
-        <StyledMoreText>Scroll to learn more</StyledMoreText>
-        <ArrowIcon size={12}/>
-      </StyledMoreContainer>
       <DappSummary
         dappId={props?.id}
         name={props?.name ?? ''}

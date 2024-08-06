@@ -232,26 +232,30 @@ export const StyledStatItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font-family: Montserrat;
+
   .key {
     color: #979abe;
-    text-align: center;
-    font-family: Montserrat;
+    text-align: left;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
-  .value {
+  .tvl-value {
     color: #fff;
-    font-family: Montserrat;
+    
     font-size: 26px;
     font-style: normal;
     font-weight: 600;
     line-height: 100%; /* 26px */
+    
+    .tvl-value-percent {
+      transform: translateY(-5px);
+    }
   }
   .up {
     color: #06c17e;
-    font-family: Montserrat;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;

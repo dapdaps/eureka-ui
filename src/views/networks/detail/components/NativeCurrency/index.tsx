@@ -1,40 +1,42 @@
-import ArrowIcon from "@/components/Icons/ArrowIcon";
-import { useMemo } from "react";
-import styled from "styled-components";
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import { useMemo } from 'react';
+import styled from 'styled-components';
 
 const StyledNativeCurrency = styled.div`
   display: flex;
   align-items: center;
   column-gap: 6px;
   width: fit-content;
+
   .small-logo {
     width: 20px;
     height: 20px;
   }
+
   .empty-logo::before {
-      display: block;
-      content: '?';
-      color: #979ABE;
-      font-family: Gantari;
-      font-size: 14px;
-      font-weight: 400;
-      text-align: center;
+    display: block;
+    content: '?';
+    color: #979ABE;
+    font-family: Gantari;
+    font-size: 14px;
+    font-weight: 400;
+    text-align: center;
   }
-  
+
   .currency-name-small {
     color: #FFF;
     font-family: Gantari;
     font-size: 16px;
     font-weight: 400;
   }
-  
+
   .currency-name {
     color: #FFF;
     font-family: Montserrat;
     font-size: 16px;
     font-weight: 500;
   }
-  
+
   &.currency-tag {
     border-radius: 34px;
     background: #21222B;
@@ -43,7 +45,7 @@ const StyledNativeCurrency = styled.div`
   }
 `;
 
-const StyledNativeCurrencyLogo = styled.div<{url?: string}>`
+const StyledNativeCurrencyLogo = styled.div<{ url?: string }>`
   width: 26px;
   height: 26px;
   border-radius: 50%;
@@ -62,7 +64,8 @@ const NativeCurrency = (
     nativeCurrency,
     className = '',
     isTag = false,
-    onClick =() => {}
+    onClick = () => {
+    },
   }: Props) => {
 
   const mergedCurrency = useMemo<any>(() => {
@@ -78,15 +81,27 @@ const NativeCurrency = (
       return;
     }
     typeof onClick === 'function' && onClick();
-  }
+  };
 
   return (
     <StyledNativeCurrency className={`${isTag ? 'currency-tag' : ''} ${className}`} onClick={onCurrency}>
-      { (isTag || (!isTag && mergedCurrency?.logo)) && <StyledNativeCurrencyLogo url={mergedCurrency?.logo} className={`${isTag ? `small-logo` : ''} ${isTBD ? 'empty-logo' : ''}`} /> }
+      {
+        (
+          isTag || (
+            !isTag && mergedCurrency?.logo
+          )
+        ) && <StyledNativeCurrencyLogo
+          url={mergedCurrency?.logo}
+          className={`${isTag ? `small-logo` : ''} ${isTBD ? 'empty-logo' : ''}`}
+        />
+      }
       <div className={isTag ? 'currency-name-small' : 'currency-name'}>{currencyName.toUpperCase()}</div>
-      { isTag && <StyledArrow><ArrowIcon size={11}/></StyledArrow> }
+      {
+        isTag && (
+          <StyledArrow><ArrowIcon size={11} /></StyledArrow>
+        )
+      }
     </StyledNativeCurrency>
-
   );
 };
 

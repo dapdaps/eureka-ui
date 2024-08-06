@@ -1,6 +1,4 @@
-import { memo, useMemo } from 'react';
-import AddMetaMask from '../AddMetaMask';
-import Actions from './Actions';
+import { memo } from 'react';
 import {
   StyledHeaderWrapper,
   StyledTitleWrapper,
@@ -13,8 +11,23 @@ import {
 } from './styles';
 
 import NativeCurrency from '../NativeCurrency';
+import ValuePercent from '@/views/networks/list/components/value-percent';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 
-const Header = ({ logo, name, chainId, bgColor, path, id, deepdive, tbd_token, nativeCurrency }: any) => {
+const Header = ({ chain }: any) => {
+
+  let {
+    logo,
+    name,
+    bgColor,
+    tbd_token,
+    native_currency,
+    trading_volume,
+    trading_volume_change_percent,
+    total_execution,
+    participants,
+    participants_change_percent,
+  } = chain;
 
   const onNativeClick = () => {}
 
@@ -27,22 +40,27 @@ const Header = ({ logo, name, chainId, bgColor, path, id, deepdive, tbd_token, n
         <StyledInfo>
           <StyledChainName>{name}</StyledChainName>
           {/* <AddMetaMask chainId={chainId} bp="100121-001" /> */}
-          <NativeCurrency isTag tbdToken={tbd_token} nativeCurrency={nativeCurrency} onClick={onNativeClick}/>
+          <NativeCurrency isTag tbdToken={tbd_token} nativeCurrency={native_currency} onClick={onNativeClick}/>
         </StyledInfo>
       </StyledTitleWrapper>
-      {/* <Actions path={path} id={id} deepdive={deepdive} /> */}
       <StyledStat>
         <StyledStatItem>
           <span className="key">Trading Volume on DapDap</span>
-          <span className="value">$164.1m</span>
+          <ValuePercent percent={trading_volume_change_percent} className="tvl-value">
+            ${formatIntegerThousandsSeparator(trading_volume, 1)}
+          </ValuePercent>
         </StyledStatItem>
         <StyledStatItem>
           <span className="key">Total txns</span>
-          <span className="value">64.1k</span>
+          <ValuePercent className="tvl-value">
+            {formatIntegerThousandsSeparator(total_execution, 0)}
+          </ValuePercent>
         </StyledStatItem>
         <StyledStatItem>
           <span className="key">User</span>
-          <span className="value">16.2k</span>
+          <ValuePercent percent={participants_change_percent} className="tvl-value">
+            {formatIntegerThousandsSeparator(participants, 0)}
+          </ValuePercent>
         </StyledStatItem>
       </StyledStat>
     </StyledHeaderWrapper>

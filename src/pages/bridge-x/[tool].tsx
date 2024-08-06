@@ -19,8 +19,9 @@ import BridgeX from '@/components/BridgeX/Index';
 
 import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
-import DappBack from '@/components/DappBack';
+import DappBack from '@/components/PageBack';
 import DappFallback from '@/views/Dapp/components/Fallback';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
 
 const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 
@@ -77,6 +78,7 @@ const Bridge: NextPageWithLayout = () => {
     const [color, setColor] = useState('')
     const [template, setTemplate] = useState('')
     const [dappDetail, setDappDetail] = useState<any>({})
+    const [updateDetail, setUpdateDetail] = useState<boolean>(false);
 
     // const { icon, name, color } = getBridgeMsg(tool)
 
@@ -103,7 +105,7 @@ const Bridge: NextPageWithLayout = () => {
 
     return (
         <Container>
-            <DappBack />
+            <DappBack defaultPath="/alldapps" />
 
             <BridgeX
                 addAction={addAction}
@@ -125,9 +127,21 @@ const Bridge: NextPageWithLayout = () => {
                 toChainId={router.query.toChainId as string}
                 fromChainId={router.query.fromChainId as string}
                 setChain={setChain}
+                onSuccess={() => {
+                  setUpdateDetail(true);
+                  const timer = setTimeout(() => {
+                    clearTimeout(timer);
+                    setUpdateDetail(false);
+                  }, 0);
+                }}
             />
+            <DappDetailScroll />
             <Suspense fallback={<DappFallback />}>
-                <DappDetail {...dappDetail} />
+              {
+                updateDetail ? null : (
+                  <DappDetail {...dappDetail} />
+                )
+              }
             </Suspense>
         </Container>
     )

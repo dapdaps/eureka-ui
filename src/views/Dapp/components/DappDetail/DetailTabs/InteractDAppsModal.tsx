@@ -3,6 +3,7 @@ import Modal from '@/components/Modal';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { QuestDapp } from '@/hooks/useAirdrop';
 import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 
 const StyledModalTitle = styled.div`
   font-weight: 700;
@@ -87,9 +88,15 @@ const InteractDAppsModal = (props: Props) => {
   } = props;
 
   const router = useRouter();
+  const pathname = usePathname();
 
   const onDappClick = (item: QuestDapp) => {
-    router.push(`/${item.route}`);
+    const dappRoute = `/${item.route}`;
+    if (pathname === dappRoute) {
+      router.replace(dappRoute);
+    } else {
+      router.push(dappRoute);
+    }
   };
 
   return (

@@ -7,6 +7,7 @@ import {
   StyledBgWrapper,
   StyledContent,
 } from './styles';
+import PageBack from '@/components/PageBack';
 
 const Top = ({ chain }: any) => {
 
@@ -15,26 +16,10 @@ const Top = ({ chain }: any) => {
   return (
     <StyledContainer style={{ color: chain?.selectBgColor }} className={more ? 'more' : ''}>
       <StyledBox>
-        <StyledBgWrapper color={chain?.bgColor}/>
+        <StyledBgWrapper color={chain?.selectBgColor}/>
         <StyledContent>
-          <Breadcrumb
-            navs={[
-              { name: 'Home', path: '/' },
-              { name: 'Networks', path: '/networks' },
-              { name: chain?.title, path: '' },
-            ]}
-          />
-          <Header
-            bgColor={chain?.bgColor}
-            logo={chain?.icon}
-            name={chain?.title}
-            chainId={chain?.chainId}
-            path={chain?.path}
-            deepdive={chain?.deepdive}
-            id={chain?.id}
-            tbd_token={chain?.tbd_token}
-            nativeCurrency={chain?.native_currency}
-          />
+          <PageBack defaultPath="/networks" />
+          <Header chain={chain} />
         </StyledContent>
       </StyledBox>
     </StyledContainer>

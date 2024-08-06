@@ -39,6 +39,7 @@ import Loading from '@/components/Icons/Loading';
 import useToast from '@/hooks/useToast';
 import { useRouter } from 'next/router';
 import { StyledFlex } from '@/styled/styles';
+import { usePathname } from 'next/navigation';
 
 const Overview = (props: any) => {
 
@@ -55,6 +56,7 @@ const Overview = (props: any) => {
   } = props;
 
   const router = useRouter();
+  const pathname = usePathname()
   const [{}, setChain] = useSetChain();
   const { check } = useAuthCheck({ isNeedAk: false });
   const toast = useToast();
@@ -131,7 +133,12 @@ const Overview = (props: any) => {
       if (action.dapps && action.dapps.length > 0) {
         // directly jump to a dApp
         if (action.dapps.length === 1) {
-          router.push(`/${action.dapps[0].route}`);
+          const dappRoute = `/${action.dapps[0].route}`;
+          if (pathname === dappRoute) {
+            router.replace(dappRoute);
+          } else {
+            router.push(dappRoute);
+          }
           setActionLoading(false);
           return;
         }
