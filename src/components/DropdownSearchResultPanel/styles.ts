@@ -11,6 +11,7 @@ export const LoadingWrapper = styled.div`
   gap: 10px;
   padding-bottom: 20px;
   padding-left: 30px;
+  margin-top: 10px;
 `;
 
 export const StyledSearchResults = styled.div`
@@ -75,17 +76,17 @@ export const StyledResultTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 7px 30px;
+  padding: 7px 20px;
 `;
 
 export const StyledResultItem = styled.div`
   display: flex;
   align-items: center;
-  padding: 7px 30px;
+  padding: 10px 20px;
   cursor: pointer;
   transition: 0.3s;
   &:hover {
-    background-color: rgba(24, 26, 39, 0.3);
+    background-color: rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -109,7 +110,7 @@ export const StyledMore = styled.div`
 
 export const StyleView = styled.div`
   margin: 0 auto;
-  margin-top: 30px;
+  margin-top: 20px;
   padding: 0 30px;
   width: calc(100% - 60px);
   display: flex;

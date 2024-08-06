@@ -1,9 +1,10 @@
 import styled from "styled-components"
 import Skeleton from 'react-loading-skeleton';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
-import Status, { StatusType } from '../components/Status';
-import { useMemo } from "react";
-import Tag from "@/views/Odyssey/components/Tag";
+
+import Tag, { StatusType } from "@/views/Odyssey/components/Tag";
+import { Odyssey } from "@/components/DropdownSearchResultPanel/hooks/useDefaultSearch";
+import { useRouter } from "next/router";
 
 const Flex = styled.div`
   display: flex;
@@ -81,7 +82,7 @@ const StyleDesc = styled.div`
   font-size: 16px;
   color: #fff;
   line-height: 1;
-  max-width: 200px;
+  max-width: 350px;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
@@ -89,37 +90,28 @@ const StyleDesc = styled.div`
   -webkit-box-orient: vertical;
 `
 
-interface IData {
-    id: number;
-    banner: string;
-    isNew: boolean;
-    name: string;
-    status: StatusType;
-    description: string;
-    className?: string
-  }
-
 interface IProps {
-    data: IData[];
+    data: Odyssey[];
     loading: boolean
     className?: string
+    onClick?: () => void
 } 
 
 
-const generateNewWithLiveArr = (arr: IData[]): IData[] => {
+// const generateNewWithLiveArr = (arr: Odyssey[]): Odyssey[] => {
 
-  if (arr.length === 0) return [];
+//   if (arr.length === 0) return [];
 
-  const ongoingItems = arr.filter(item => item.status === StatusType.ongoing);
+//   const ongoingItems = arr.filter(item => item.status === StatusType.ongoing);
 
-  if (ongoingItems.length === 0) return arr;
+//   if (ongoingItems.length === 0) return arr;
 
-  const maxIdItem = ongoingItems.reduce((maxItem, currentItem) => {
-    return (currentItem.id > maxItem.id) ? currentItem : maxItem;
-  }, ongoingItems[0]);
+//   const maxIdItem = ongoingItems.reduce((maxItem, currentItem) => {
+//     return (currentItem.id > maxItem.id) ? currentItem : maxItem;
+//   }, ongoingItems[0]);
 
-  return arr.map(item => ({ ...item, isNew: item.id === maxIdItem.id && item.status === StatusType.ongoing }));
-};
+//   return arr.map(item => ({ ...item, is_New: item.id === maxIdItem.id && item.status === StatusType.ongoing }));
+// };
 
 
 const LoadingList = () => {
@@ -139,31 +131,35 @@ const LoadingList = () => {
 }
 
 
-const ListItem: React.FC<IProps> = ({ data, loading, className }) => {
-
-  const newData = useMemo(() => generateNewWithLiveArr(data), [data]);
+const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
+  const router = useRouter()
+  const handleClick = (item: Odyssey) => {
+    onClick?.();
+    router.push(`/odyssey/home?id=${item.id}`);
+  }
 
   return (
     <>
       {loading ? (
         <LoadingList />
       ) : (
-        newData.map((item, index) => (
+        data.map((item: Odyssey, index) => (
           <Flex 
             key={index} 
             className={className}
+            onClick={() => handleClick(item)}
             style={{
               filter: item.status === StatusType.ended ? 'grayscale(100%)' : 'grayscale(0%)',
             }}
             >
             <StyleImage className="bridgeImage">
-              <img src={item.banner} alt="bridge" />
-              {item.isNew && <StyleNew />}
+              <img src={item.banner || '/images/odyssey/v2/default.jpg'} alt="bridge" />
+              {item.is_new && <StyleNew />}
             </StyleImage>
             <StyleText>
               <StyleHeader>
                 <div className="title">{item.name}</div>
-                <Tag status={item.status} />
+                <Tag status={item.status}  className="tag"/>
               </StyleHeader>
               <StyleDesc>{item.description}</StyleDesc>
             </StyleText>

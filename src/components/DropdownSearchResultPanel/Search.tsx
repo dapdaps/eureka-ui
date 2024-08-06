@@ -3,15 +3,14 @@ import styled from 'styled-components';
 import IconSearch from '@public/images/header/input-prefix.svg';
 import IconClear from '@public/images/header/input-clear.svg';
 
-import { useCallback, useState } from 'react';
-import { useDebounceFn } from 'ahooks';
 import { useRecentStore } from './hooks/useRecentStore';
+import { useEffect } from 'react';
 
 const StyleSearch = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   padding-bottom: 10px;
   border-bottom: 1px solid #333648;
   color: #fff;
@@ -45,35 +44,31 @@ const InputCloseIcon = styled.div`
   }
 `;
 const Search = ({
-  setShowSearch
+  setShowSearch,
+  onSearch
 }: {
   setShowSearch: (show: boolean) => void;
+  onSearch: (query: string) => void;
 }) => {
   const { currentSearch, setSearch, addRecentSearch } = useRecentStore();
 
-  const { run: handleSearch } = useDebounceFn(
-    (query: string) => {
-      if (query.length > 0) {
-        // wait api
-      }
-    },
-    { wait: 300 }
-  );
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
-    handleSearch(value);
+    onSearch(value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
+      onSearch(currentSearch);
       if (currentSearch.trim().length > 0) {
         addRecentSearch(currentSearch.trim());
-        handleSearch(currentSearch);
       }
     }
   };
+
+  useEffect(() => setSearch(''), [])
 
   return (
     <StyleSearch>
@@ -84,7 +79,12 @@ const Search = ({
         placeholder="search for chain, dApp, campaign, or medal"
         value={currentSearch}
         onKeyDown={handleKeyDown}
-        onBlur={() => currentSearch.trim().length > 0 && addRecentSearch(currentSearch.trim())}
+        onBlur={() => {
+          onSearch(currentSearch);
+          if (currentSearch.trim().length > 0) {
+            addRecentSearch(currentSearch.trim())
+          }
+        }}
         onChange={handleChange}
         autoFocus
         className="nav-input"

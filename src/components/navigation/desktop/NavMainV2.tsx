@@ -9,7 +9,7 @@ import IconSwap from '@public/images/header/swap.svg';
 import IconBridge from '@public/images/header/bridge.svg';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import IconArrowRight from '@public/images/header/arrow-right.svg'
-import { StatusType } from './components/Status';
+import { StatusType } from "@/views/Odyssey/components/Tag";
 import Chains from './components/Chains';
 import ListItem from './components/ListItem';
 import useNetworks from '@/views/networks/list/hooks/useNetworks';

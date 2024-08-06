@@ -1,32 +1,37 @@
 import styled from 'styled-components';
-import { StyledFont } from '@/styled/styles';
-import cls from 'classnames'
+import cls from 'classnames';
+
 export enum StatusType {
-  ongoing = 'live',
+  ongoing = 'ongoing',
   ended = 'ended',
-  un_start = 'upcoming'
+  un_start = 'un_start',
 }
 
-const StyledTagContainer = styled.div`
+export const statusMap = {
+  [StatusType.ongoing]: 'Live',
+  [StatusType.ended]: 'Ended',
+  [StatusType.un_start]: 'Upcoming',
+};
 
+const StyledTagContainer = styled.div`
+  position: relative;
   .pool {
     position: relative;
     z-index: 5;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-transform: capitalize;
     gap: 4px;
     padding: 6px 12px;
     border-radius: 16px;
     border: 1px solid;
     background: rgba(32, 34, 47, 0.8);
     border-color: rgba(255, 255, 255, 0.15);
-    &.live {
+    &.ongoing {
       border-color: #57db64;
     }
   }
-  &.live {
+  &.ongoing {
     &:before {
       content: '';
       position: absolute;
@@ -51,17 +56,23 @@ const StyledTagContainer = styled.div`
     }
   }
 `;
+const StyledFont = styled.div`
+  color: #fff;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 12px;
+  position: relative;
+  text-transform: capitalize;
+`;
 
 export default function Tag({ status, className }: { status: StatusType; className?: string }) {
   return (
-    <StyledTagContainer className={cls(`${className} ${status}`)} >
+    <StyledTagContainer className={cls(`${className} ${status}`)}>
       <div className={cls('pool', status)}>
         <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none">
           <circle cx="4" cy="4" r="4" fill={status === StatusType.ongoing ? '#57DB64' : '#979ABE'} />
         </svg>
-        <StyledFont color="#FFF" fontSize="12px" fontWeight="500" lineHeight="12px">
-          {status?.toLocaleLowerCase() || StatusType.un_start}
-        </StyledFont>
+        <StyledFont>{statusMap[status] || statusMap[StatusType.un_start]}</StyledFont>
       </div>
     </StyledTagContainer>
   );

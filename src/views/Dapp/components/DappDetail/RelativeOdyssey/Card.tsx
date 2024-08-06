@@ -21,7 +21,7 @@ import {
   StyledVideo,
   StyledVideoIcon,
 } from '@/views/Dapp/components/DappDetail/RelativeOdyssey/styles';
-import { StatusType } from '@/components/navigation/desktop/components/Status';
+import { StatusType } from "@/views/Odyssey/components/Tag";
 import OdysseyVideo from './Video';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import Image from 'next/image';

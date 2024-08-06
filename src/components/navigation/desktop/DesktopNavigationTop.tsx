@@ -147,7 +147,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
         </ChainAndAccountWrapper>
       </div>
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
-      {showSearch && (<DropdownSearchResultPanel setShowSearch={setShowSearch} searchText={searchContent} setSearchContent={setSearchContent} />)}
+      { showSearch && (<DropdownSearchResultPanel setShowSearch={setShowSearch} />)}
     </Container>
   );
 };
