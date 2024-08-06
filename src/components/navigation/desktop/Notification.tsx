@@ -35,6 +35,7 @@ const Trigger = styled.div`
 
 const Layer = styled.div`
     position: absolute;
+    display: none;
     top: 110%;
     right: 0;
     width: 436px;
