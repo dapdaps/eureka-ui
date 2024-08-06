@@ -21,7 +21,7 @@ import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import Tooltip from '@/views/Home/components/Tooltip';
-import { AnimatePresence, useMotionValue } from 'framer-motion';
+import { AnimatePresence } from 'framer-motion';
 
 const DappCard = (props: Props) => {
   const {
@@ -88,18 +88,12 @@ const DappCard = (props: Props) => {
     return _badges;
   }, [badges]);
 
-  const x = useMotionValue(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const handleMouseMove = (event: any) => {
-    const halfWidth = event.currentTarget.offsetWidth / 2;
-    x.set(event.nativeEvent.offsetX - halfWidth);
-  };
 
   const renderBadgesTooltip = (key: string, badge: Badge, index: number) => {
     return badge.odyssey && hoveredIndex === index && (
       <AnimatePresence>
-        <Tooltip x={x} customClass="dapp-card-odyssey-tooltip" key={key}>
+        <Tooltip customClass="dapp-card-odyssey-tooltip" key={key}>
           <StyledDappCardBadgeTooltipList>
             {
               badge.odyssey.map((ody) => (
@@ -126,7 +120,6 @@ const DappCard = (props: Props) => {
         return (
           <StyledDappCardBadge
             key={index}
-            onMouseMove={handleMouseMove}
             whileHover="active"
             initial="default"
             onHoverStart={() => {
@@ -191,7 +184,6 @@ const DappCard = (props: Props) => {
                   alt=""
                   width={getIconSize(badge.iconSize).w}
                   height={getIconSize(badge.iconSize).h}
-                  onMouseMove={handleMouseMove}
                   initial={{
                     zIndex: 1,
                   }}

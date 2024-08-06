@@ -39,6 +39,7 @@ export const StyledOdysseyTitle = styled.div`
   -webkit-line-clamp: 2;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-right: 20px;
 `;
 
 export const StyledOdysseyHead = styled.div`
@@ -105,8 +106,8 @@ export const StyledRelatedTitle = styled.div`
 `;
 
 export const StyledOdysseyBody = styled.div`
-  padding: 16px 20px 20px 20px;
-  overflow: hidden;
+  padding: 16px 0 20px 20px;
+  width: 100%;
 `;
 
 export const StyledOdysseyIcon = styled.div`
@@ -191,6 +192,8 @@ export const StyledTagList = styled.div`
   align-items: center;
   column-gap: 10px;
   margin-top: 40px;
+  width: 100%;
+  position: relative;
 `;
 
 export const StyledTagItem = styled.div`
@@ -203,7 +206,24 @@ export const StyledTagItem = styled.div`
   min-height: 32px;
   font-size: 14px;
   line-height: 1;
-
+  
+  &.reward {
+    padding: 0;
+    background: unset;
+    flex: 1;
+    width: 0;
+    overflow: hidden;
+    border-radius: 0;
+  }
+`;
+export const StyledTagItemInner = styled.div`
+  border-radius: 34px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+  padding: 0 9px;
+  
   &.tag-default {
     border: 1px solid #373A53;
     background: rgba(16, 17, 21, 0.8);
@@ -259,6 +279,11 @@ export const StyledTagLabel = styled.div`
 export const StyledTagChains = styled.div`
   display: flex;
   align-items: center;
+  
+  .dapp-odyssey-card-tooltip {
+    z-index: 1;
+    width: auto;
+  }
 `;
 
 export const StyledTagChain = styled(motion.div)`

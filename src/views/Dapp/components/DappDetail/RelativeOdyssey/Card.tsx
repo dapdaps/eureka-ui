@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import {
   StyledBadgeTooltipList,
   StyledOdysseyBanner,
@@ -15,7 +15,7 @@ import {
   StyledTagChain,
   StyledTagChains,
   StyledTagIcon,
-  StyledTagItem,
+  StyledTagItem, StyledTagItemInner,
   StyledTagLabel,
   StyledTagList,
   StyledVideo,
@@ -45,14 +45,19 @@ const OdysseyCardComponent = (props: Props) => {
     className
   } = props;
 
+  const tagListRef = useRef<any>();
+
   const [show, setShow] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const x = useMotionValue(0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const handleMouseMove = (event: any) => {
-    const halfWidth = event.currentTarget.offsetWidth / 2;
-    x.set(event.nativeEvent.offsetX - halfWidth);
+    const curr = event.clientX;
+    const container = tagListRef.current;
+    if (!container) return;
+    const containerRect = container.getBoundingClientRect();
+    x.set(curr - containerRect.x);
   };
 
   const activity = {
@@ -122,7 +127,13 @@ const OdysseyCardComponent = (props: Props) => {
   const renderBadgesTooltip = (key: string, badge: any, index: number) => {
     return badge.odyssey && hoveredIndex === index && (
       <AnimatePresence>
-        <Tooltip x={x} customClass="dapp-odyssey-card-tooltip" key={key}>
+        <Tooltip
+          customClass="dapp-odyssey-card-tooltip"
+          key={key}
+          customStyle={{
+            transform: `translateX(${x.get()}px)`,
+          }}
+        >
           <StyledBadgeTooltipList>
             {
               badge.odyssey.map((ody: any) => (
@@ -175,7 +186,7 @@ const OdysseyCardComponent = (props: Props) => {
           <StyledOdysseyTitle>
             {name?.split(': ')?.[0] ?? ''}：<br />{name?.split(': ')?.[1] ?? ''}
           </StyledOdysseyTitle>
-          <StyledTagList>
+          <StyledTagList ref={tagListRef}>
             {
               summaryList.map((item: any, index: number) => (
                 <StyledTagItem key={item.key}>
@@ -202,45 +213,50 @@ const OdysseyCardComponent = (props: Props) => {
                 </StyledTagItem>
               )
             }
-            <StyledTagItem
-              key="reward"
-              className={odysseyIsLive(status) ? 'tag-active' : 'tag-default'}
-              style={{
-                padding: '0 9px',
-              }}
-            >
-              <div className="reward-text">{Config.reward}</div>
-              {
-                badges && badges?.length > 0 && (
-                  <StyledTagChains>
+            {
+              Config.path ? (
+                <StyledTagItem
+                  key="reward"
+                  className="reward"
+                >
+                  <StyledTagItemInner className={`reward ${odysseyIsLive(status) ? 'tag-active' : 'tag-default'}`}>
+                    <div className="reward-text">{Config.reward}</div>
                     {
-                      badges.map((badge: any, idx: number) => (
-                        <StyledTagChain
-                          key={badge.name}
-                          onMouseMove={handleMouseMove}
-                          onHoverStart={() => {
-                            setHoveredIndex(idx);
-                          }}
-                          onHoverEnd={() => {
-                            setHoveredIndex(null);
-                          }}
-                          initial={{
-                            zIndex: 1,
-                          }}
-                          whileHover={{
-                            scale: 1.2,
-                            zIndex: 2,
-                          }}
-                        >
-                          <Image src={badge.icon} alt="" width={badge.iconSize} height={badge.iconSize} />
-                          {renderBadgesTooltip(badge.name, badge, idx)}
-                        </StyledTagChain>
-                      ))
+                      badges && badges?.length > 0 && (
+                        <StyledTagChains>
+                          {
+                            badges.map((badge: any, idx: number) => (
+                              <StyledTagChain
+                                key={badge.name}
+                                onMouseMove={handleMouseMove}
+                                onHoverStart={() => {
+                                  setHoveredIndex(idx);
+                                }}
+                                onHoverEnd={() => {
+                                  setHoveredIndex(null);
+                                }}
+                                initial={{
+                                  zIndex: 1,
+                                }}
+                                whileHover={{
+                                  scale: 1.2,
+                                  zIndex: 2,
+                                }}
+                              >
+                                <Image src={badge.icon} alt="" width={badge.iconSize} height={badge.iconSize} />
+                              </StyledTagChain>
+                            ))
+                          }
+                        </StyledTagChains>
+                      )
                     }
-                  </StyledTagChains>
-                )
-              }
-            </StyledTagItem>
+                  </StyledTagItemInner>
+                </StyledTagItem>
+              ) : null
+            }
+            {
+              badges && badges?.length > 0 && badges.map((badge: any, idx: number) => renderBadgesTooltip(badge.name, badge, idx))
+            }
           </StyledTagList>
         </StyledOdysseyBody>
       </StyledOdysseyContainer>

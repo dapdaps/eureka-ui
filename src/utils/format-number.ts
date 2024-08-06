@@ -1,6 +1,6 @@
-import Big from "big.js";
+import Big from 'big.js';
 
-export function formatThousandsSeparator(n: number | string): string {
+export function formatThousandsSeparator(n: number | string, precision?: number): string {
   if (isNaN(Number(n))) return '';
   const strSplit = n.toString().split('.');
   const integer = strSplit[0].split('');
@@ -16,6 +16,10 @@ export function formatThousandsSeparator(n: number | string): string {
   newInteger.reverse();
   let s = newInteger.join('');
   if (decimal) {
+    if (typeof precision === 'number') {
+      const fixedDecimal = Big(`0.${decimal}`).toFixed(precision, 0).replace(/^\d/, '');
+      return s + fixedDecimal;
+    }
     s += `.${decimal}`;
   }
   return s;
@@ -42,7 +46,7 @@ interface Options {
   isFullDecimal?: boolean;
 }
 
-export const formatIntegerThousandsSeparator = (integer?: number | string, precision: number = 2, options?: Options) => {
+export const formatIntegerThousandsSeparator = (integer?: number | string, precision: number = 2, options?: Options): string => {
   options = options || {};
   const zero = options.isFullDecimal ? Big(0).toFixed(precision) : '0';
   if (!integer) {
@@ -56,7 +60,7 @@ export const formatIntegerThousandsSeparator = (integer?: number | string, preci
   }
   const _type = options.type ?? 'simplify';
   if (_type === 'thousand') {
-    return integer.toString().replace(/\d(?=(\d{3})+\b)/g, '$&,');
+    return formatThousandsSeparator(integer, precision);
   }
   if (_type === 'simplify') {
     const formatter = (split: number, unit: string): string => {
@@ -75,8 +79,9 @@ export const formatIntegerThousandsSeparator = (integer?: number | string, preci
       return formatter(1e3, 'k');
     }
     if (options.isFullDecimal) {
-      return Big(Big(integer).toFixed(precision, 0));
+      return Big(integer).toFixed(precision, 0);
     }
     return Big(Big(integer).toFixed(precision, 0)).toString();
   }
+  return '';
 }

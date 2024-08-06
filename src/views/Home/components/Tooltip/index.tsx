@@ -31,6 +31,7 @@ interface TooltipProps {
   showAnimateTooltip?: boolean;
   customClass?: string;
   animationProps?: AnimationProps;
+  customStyle?: React.CSSProperties;
 }
 
 
@@ -45,6 +46,7 @@ interface TooltipProps {
  * @param animationProps.stiffness - The stiffness of the animation. Default is 260.
  * @param animationProps.damping - The damping of the animation. Default is 10.
  * @param animationProps.duration - The duration of the animation. Default is 0.3.
+ * @param customStyle
  *
  * @returns The Tooltip component.
  */
@@ -53,7 +55,8 @@ const Tooltip: React.FC<TooltipProps> = ({
   children,
   showAnimateTooltip = false,
   customClass,
-  animationProps = {}
+  animationProps = {},
+  customStyle
 }) => {
   const springConfig = { stiffness: 100, damping: 5 };
   const rotate = useSpring(useTransform(x || useMotionValue(0), [-100, 100], [-45, 45]), springConfig);
@@ -67,9 +70,10 @@ const Tooltip: React.FC<TooltipProps> = ({
       translateX,
       rotate,
       whiteSpace: 'nowrap',
+      ...customStyle
     };
   } else {
-    style = { whiteSpace: 'nowrap' };
+    style = { whiteSpace: 'nowrap', ...customStyle };
   }
 
   const {

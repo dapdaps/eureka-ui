@@ -161,3 +161,12 @@ const chainCofig = {
 } as { [key: number]: Chain };
 
 export default chainCofig;
+
+export const L1ChainIds = [
+  // Ethereum
+  1,
+  // binance
+  56,
+  // Polygon
+  137,
+];
