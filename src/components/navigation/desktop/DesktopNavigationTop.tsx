@@ -14,6 +14,7 @@ import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
 import IconSearch from '@public/images/header/search.svg'
 import { NavMainV2 } from './NavMainV2';
+import Notification from './Notification';
 
 
 const Flex = styled.div`
@@ -133,6 +134,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
             <div />
           ) : account ? (
             <LoginContainer>
+              <Notification />
               <Chain showName={false} bp="3001-003" />
               <AccountWrapper
                 onClick={() => {

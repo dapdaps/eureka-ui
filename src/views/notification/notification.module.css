@@ -1,0 +1,39 @@
+.wrapper {
+    color: #fff;
+    background: url(/images/networks/notification-bg.svg) no-repeat left bottom;
+    min-height: calc(100vh - 80px);
+    .content {
+        width: 1244px;
+        margin: 0 auto;
+        padding: 67px 0;
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            .headerTitle {
+                font-size: 20px;
+                font-weight: 600;
+                height: 26px;
+                line-height: 26px;
+                background: linear-gradient(90deg, #FFFFFF 0%, #979ABE 100%);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+            .headerAmount {
+                background: rgba(34, 36, 48, 1);
+                height: 26px;
+                line-height: 26px;
+                text-align: center;
+                padding: 0 10px;
+                border-radius: 10px;
+                font-size: 16px;
+            }
+        }
+    }
+    .page {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 30px;
+    }
+}

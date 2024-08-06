@@ -1,0 +1,48 @@
+.wrapper {
+    border: 1px solid rgba(32, 35, 41, 1);
+    border-radius: 12px;
+    background-color: rgba(16, 17, 21, 1);
+    /* margin-top: 20px; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 10px;
+    .content {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        .title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .subTtitle {
+            font-size: 14px;
+            font-weight: 400;
+            color: rgba(255, 255, 255, .6);
+            margin-top: 5px;
+        }
+    }
+    .icon {
+        width: 60px;
+        height: 60px;
+    }
+    .time {
+        padding-right: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 10px;
+        .dot {
+            width: 7px;
+            height: 7px;
+            background-color: rgba(255, 0, 138, 1);
+            border-radius: 7px;
+            margin-top: 4px;
+        }
+        .timeText {
+            color: rgba(151, 154, 190, 1);
+            font-size: 14px;
+            font-weight: 400;
+        }
+    }
+}
