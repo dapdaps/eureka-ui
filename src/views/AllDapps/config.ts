@@ -16,6 +16,7 @@ export interface TitleDapp {
   position: 'left' | 'right';
   x: number;
   y: number;
+  rotate?: number;
 }
 
 export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [

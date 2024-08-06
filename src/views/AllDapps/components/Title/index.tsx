@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import Image from 'next/image';
+import Logo from './Logo';
 import Skeleton from 'react-loading-skeleton';
 
 import { CategoryList, TitleDapp, TitleDappList } from '@/views/AllDapps/config';
@@ -15,25 +15,27 @@ import {
   StyledTitleSub,
   StyledTitleText,
 } from './styles';
+import { random } from 'lodash';
 
 const AllDappsTitle = (props: Props) => {
   const {
     dappList,
-    onCategory = () => {},
+    onCategory = () => {
+    },
     activeCategory,
-    categoryClassname = ''
+    categoryClassname = '',
   } = props;
 
   const { categories } = useCategoryDappList();
 
-  const { loading , categoryMap } = useDappCategoriesSum();
+  const { loading, categoryMap } = useDappCategoriesSum();
 
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
       const curr = CategoryList.find((_it) => _it.key === it.id);
       return {
         ...curr,
-        sum: curr ? (categoryMap[curr.name] ?? 0) : 0
+        sum: curr ? (categoryMap[curr.name] ?? 0) : 0,
       };
     });
   }, [categories, CategoryList, categoryMap]);
@@ -49,6 +51,7 @@ const AllDappsTitle = (props: Props) => {
         logo: dapp.logo,
         width: dapp.width || position.width,
         height: dapp.height || position.height,
+        rotate: random(-45, 45),
       });
     });
     return result;
@@ -75,22 +78,7 @@ const AllDappsTitle = (props: Props) => {
   return (
     <StyledHead>
       <StyledTitle>
-        <div>
-          {
-            dappListShown.filter((it) => it.position === 'left').map((it) => (
-              <Image
-                key={it.key}
-                src={it.logo}
-                alt=""
-                width={it.width}
-                height={it.height}
-                style={{
-                  transform: `translate(${it.x}px, ${it.y}px)`,
-                }}
-              />
-            ))
-          }
-        </div>
+        <Logo dappList={dappListShown} position="left" />
         <StyledTitleText>
           Discover&nbsp;
           <StyledTitlePrimary
@@ -98,25 +86,10 @@ const AllDappsTitle = (props: Props) => {
               color: currentCategory?.colorRgb ? `rgb(${currentCategory.colorRgb})` : '#EBF479',
             }}
           >
-            {currentCategory? (currentCategory.sum || '') : '150+'} {currentCategory? currentCategory.label : 'dApps'}
+            {currentCategory ? (currentCategory.sum || '') : '150+'} {currentCategory ? currentCategory.label : 'dApps'}
           </StyledTitlePrimary>
         </StyledTitleText>
-        <div>
-          {
-            dappListShown.filter((it) => it.position === 'right').map((it) => (
-              <Image
-                key={it.key}
-                src={it.logo}
-                alt=""
-                width={it.width}
-                height={it.height}
-                style={{
-                  transform: `translate(${it.x}px, ${it.y}px)`,
-                }}
-              />
-            ))
-          }
-        </div>
+        <Logo dappList={dappListShown} position="right" />
       </StyledTitle>
       <StyledTitleSub>
         Discover the most popular
@@ -126,7 +99,7 @@ const AllDappsTitle = (props: Props) => {
           loading
             ? (new Array(7).fill('').map((_, index) => (
               <Skeleton key={index} width={130} height={46} />
-          ))) : (
+            ))) : (
               categoryList.map((cate: any) => (
                 <StyledCategoryItem
                   key={cate.key}
@@ -142,7 +115,7 @@ const AllDappsTitle = (props: Props) => {
       </StyledCategory>
     </StyledHead>
   );
-}
+};
 export default AllDappsTitle;
 
 export interface Props {

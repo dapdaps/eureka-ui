@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 import { AllDappsWrapper } from '@/views/AllDapps/styles';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
 
 export const StyledHead = styled(AllDappsWrapper)`
   padding: 0;
@@ -15,6 +17,7 @@ export const StyledTitle = styled.div`
   text-transform: uppercase;
   display: flex;
   justify-content: center;
+  position: relative;
 `;
 export const StyledTitleText = styled.div`
   padding: 101px 0 0 27px;
@@ -60,4 +63,19 @@ export const StyledCategoryItem = styled.div<{ $colorRgb: string; }>`
     color: #000;
     box-shadow: ${({ $colorRgb }) => `0px 0px 10px 0px rgba(${$colorRgb}, 0.60)`};
   }
+`;
+export const StyledTopDappLogo = styled(motion(Image))``;
+export const StyledTopDappLogoWrapper = styled.div<{ $position: 'left' | 'right'; }>`
+  position: absolute;
+  
+  ${({ $position }) => {
+    if ($position === 'left') {
+      return {
+        left: 42,
+      };
+    }
+    return {
+      right: 60,
+    };
+  }}
 `;
