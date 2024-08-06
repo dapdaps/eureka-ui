@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import TooltipList from '../Tooltip/List';
+import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 
 const StyledRecentRewards = styled.div`
   height: 646px;
@@ -33,23 +34,14 @@ const StyledRecentRewards = styled.div`
 
 `;
 
-const data = [
-  {
-    imgSrc: 'https://s3.amazonaws.com/dapdap.prod/images/base.png',
-    title: '$15k MODE',
-    subtitle: 'Odyssey Vol.5: The Airdrop sdasdasdasada',
-    imageUrl: 'https://s3.amazonaws.com/dapdap.prod/images/mode7.png',
-  },
-  {
-    imgSrc: 'https://s3.amazonaws.com/dapdap.prod/images/linea.png',
-    title: '$10k LINEA',
-    subtitle: 'Linea Odyssey: The Adventure',
-    imageUrl: 'https://s3.amazonaws.com/dapdap.prod/images/linea.png',
-  },
-];
-
 const RecentRewards = () => {
-
+  const { fetchRewardData, formatRewardList } = useDappReward()
+  const [data, setData] = useState<any>([])
+  useEffect(() => {
+    fetchRewardData().then((data) => {
+      setData(formatRewardList(data))
+    })
+  }, [])
 
   return (
     <StyledRecentRewards>

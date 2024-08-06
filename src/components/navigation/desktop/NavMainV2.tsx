@@ -54,7 +54,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: networkLoading, networkList } = useNetworks();
   const { loading: compassListLoading, compassList } = useCompassList()
   const router = useRouter();
-  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.status === StatusType.ongoing), [compassList])
+  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_New), [compassList])
 
   return (
     <Wrapper className={className}>

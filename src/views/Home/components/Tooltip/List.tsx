@@ -4,6 +4,8 @@ import { AnimatePresence, useMotionValue } from 'framer-motion';
 import Tooltip from './';
 import OdysseyCard from './Odyssey';
 import { StatusType } from '@/views/Odyssey/components/Tag';
+import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
+import RewardIconsMap from '@/views/OdysseyV8/RewardIcons';
 
 const ToolList = styled.div`
   display: flex;
@@ -14,7 +16,7 @@ const ToolList = styled.div`
     padding-top: 20px;
 
     &:not(:first-child) {
-      margin-left: -6px;
+      margin-left: -8px;
     }
 
     .brand {
@@ -26,15 +28,16 @@ const ToolList = styled.div`
   }
 `;
 
-type IData = {
-  imgSrc: string;
-  title: string;
-  subtitle: string;
-  imageUrl: string;
-};
+const StyledTooltipList = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: #21232A;
+`;
 
 interface TooltipListProps {
-  data: IData[];
+  data: FormattedRewardList[];
 }
 
 const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
@@ -62,17 +65,24 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
                 showAnimateTooltip={true}
                 animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
               >
-                <OdysseyCard
-                  status={StatusType.ended}
-                  title={item.title}
-                  subtitle={item.subtitle}
-                  imageUrl={item.imageUrl}
-                  withoutCardStyle
-                />
+                <StyledTooltipList>
+                  {
+                    item.odysseys.map((odyssey) => (
+                      <OdysseyCard
+                        key={odyssey.id}
+                        status={odyssey.status}
+                        title={odyssey.name}
+                        subtitle={odyssey.description}
+                        imageUrl={odyssey.banner}
+                        withoutCardStyle
+                      />
+                    ))
+                  }
+                </StyledTooltipList>
               </Tooltip>
             </AnimatePresence>
           )}
-          <img className="brand" src={item.imgSrc} alt="" onMouseMove={handleMouseMove} />
+          <img className="brand" src={RewardIconsMap[item.logo_key]?.icon} alt="" onMouseMove={handleMouseMove} />
         </div>
       ))}
     </ToolList>

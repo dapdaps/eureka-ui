@@ -1,18 +1,18 @@
-import React from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { motion, useTransform, useSpring, MotionValue, useMotionValue } from 'framer-motion';
 import classNames from 'classnames';
 
-const StyledTooltip = styled.div`
+const StyledTooltip = styled.div<{ tooltipWidth: number }>`
   border: 1px solid;
   border-image-source: linear-gradient(180deg, #464b56 0%, rgba(0, 0, 0, 0) 100%);
   background: #21232a;
   box-shadow: 0px 10px 20px 0px #00000040;
-  width: 244px;
+  width: max-content;
   height: 205px;
   position: absolute;
   top: -205px;
-  left: -90px;
+  left: ${({ tooltipWidth }) => `calc(50% - ${tooltipWidth / 2}px)`};
   border-radius: 12px;
   padding: 26px 11px 13px 11px;
   box-sizing: border-box;
@@ -58,6 +58,8 @@ const Tooltip: React.FC<TooltipProps> = ({
   const springConfig = { stiffness: 100, damping: 5 };
   const rotate = useSpring(useTransform(x || useMotionValue(0), [-100, 100], [-45, 45]), springConfig);
   const translateX = useSpring(useTransform(x || useMotionValue(0), [-100, 100], [-50, 50]), springConfig);
+  const tooltipRef = useRef<HTMLDivElement>(null);
+  const [tooltipWidth, setTooltipWidth] = useState(0);
 
   let style = {};
   if (showAnimateTooltip && x) {
@@ -82,6 +84,12 @@ const Tooltip: React.FC<TooltipProps> = ({
     style,
   };
 
+  useLayoutEffect(() => {
+    if (tooltipRef.current) {
+      setTooltipWidth(tooltipRef.current.offsetWidth);
+    }
+  }, [children]);
+
   return showAnimateTooltip && x ? (
     <StyledTooltip
       as={motion.div}
@@ -93,12 +101,17 @@ const Tooltip: React.FC<TooltipProps> = ({
         transition: { type, stiffness, damping, duration },
       }}
       exit={{ opacity: 0, y: 20, scale: 0.6 }}
+      ref={tooltipRef}
+      tooltipWidth={tooltipWidth}
       {...commonProps}
     >
       {children}
     </StyledTooltip>
   ) : (
-    <StyledTooltip {...commonProps}>
+    <StyledTooltip
+          ref={tooltipRef}
+          tooltipWidth={tooltipWidth} 
+          {...commonProps}>
       {children}
     </StyledTooltip>
   );
