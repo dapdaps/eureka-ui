@@ -132,6 +132,7 @@ const OdysseyCardComponent = (props: Props) => {
           key={key}
           customStyle={{
             transform: `translateX(${x.get()}px)`,
+            left: -150,
           }}
         >
           <StyledBadgeTooltipList>

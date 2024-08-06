@@ -105,6 +105,16 @@ export const StyledRelatedTitle = styled.div`
   margin-top: 30px;
 `;
 
+export const StyledEmpty = styled.div`
+  color: #979ABE;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
+
 export const StyledOdysseyBody = styled.div`
   padding: 16px 0 20px 20px;
   width: 100%;

@@ -1,5 +1,5 @@
 import {
-  StyledContainer,
+  StyledContainer, StyledEmpty,
   StyledOdysseyDetail,
   StyledRelatedTitle,
 } from './styles';
@@ -8,6 +8,7 @@ import Loading from '@/components/Icons/Loading';
 import { memo, useEffect, useState } from 'react';
 import OdysseyCard from './Card';
 import { get } from '@/utils/http';
+import Empty from '@/components/Empty';
 
 const RelativeOdyssey = (props: Props) => {
   const {
@@ -46,7 +47,7 @@ const RelativeOdyssey = (props: Props) => {
         loading ? (
           <Loading size={24} />
         ) : (
-          <>
+          odysseyList.length ? (
             <StyledOdysseyDetail>
               {
                 odysseyList.map((compass) => (
@@ -66,7 +67,14 @@ const RelativeOdyssey = (props: Props) => {
                 ))
               }
             </StyledOdysseyDetail>
-          </>
+          ) : (
+            <Empty
+              tips={(
+                <StyledEmpty>No related campaign and rewards now.</StyledEmpty>
+              )}
+              size={42}
+            />
+          )
         )
       }
     </StyledContainer>

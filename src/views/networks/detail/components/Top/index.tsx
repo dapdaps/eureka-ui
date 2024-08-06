@@ -35,39 +35,8 @@ const Top = ({ chain }: any) => {
             tbd_token={chain?.tbd_token}
             nativeCurrency={chain?.native_currency}
           />
-
-          {/* <StyledTags>
-            <StyledTag>
-              <StyledTagLabel>Technology</StyledTagLabel>
-              <StyledTagValue>{chain?.technology || '-'}</StyledTagValue>
-            </StyledTag>
-            <StyledTag>
-              <StyledTagLabel>Native Token</StyledTagLabel>
-              <StyledTagValue>
-                {chain?.tbd_token === 'Y' ? 'TBD🔥' : <NativeCurrency nativeCurrency={chain?.native_currency} />}
-              </StyledTagValue>
-            </StyledTag>
-          </StyledTags> */}
-          {/* {more && (
-            <MorePanel
-              technology={chain?.technology}
-              tbd_token={chain?.tbd_token}
-              nativeCurrency={chain?.native_currency}
-              milestones={chain?.milestones}
-              subname={chain?.sub_description}
-            />
-          )} */}
         </StyledContent>
       </StyledBox>
-      {/* <StyledMoreButton>
-        <MoreButton
-          isMore={more}
-          onClick={() => {
-            setMore((prev) => !prev);
-          }}
-          bp="100121-005"
-        />
-      </StyledMoreButton> */}
     </StyledContainer>
   );
 };
