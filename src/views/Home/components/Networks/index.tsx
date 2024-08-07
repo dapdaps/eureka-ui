@@ -350,7 +350,7 @@ const Dapp = ({ dapp, onDappCardClick }: any) => {
     </div>
   )
 }
-const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork }: any) => {
+const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVolume }: any) => {
   const path = IdToPath[network?.id]
   const currentChain = chainsConfig[path]
   return (
@@ -369,10 +369,19 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork }: any) =
         <div className="head">
           <div style={{ position: 'relative' }}>
             <Image src={network?.logo} width={106} height={106} alt="" />
-            <TopTvl>
-              <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="" />
-              TOP Volume
-            </TopTvl>
+            {
+              isTopVolume ? (
+                <TopTvl>
+                  <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="topVolume" />
+                  TOP Volume
+                </TopTvl>
+              ) : (
+                <Hottest>
+                  <Image src={'/images/networks/icon-hot.png'} width={54} height={54} alt="hottest" />
+                  Hottest
+                </Hottest>
+              )
+            }
           </div>
           <div className="intro">
             <div className="intro-title">{network?.name}</div>
@@ -456,12 +465,12 @@ const Networks: FC<IProps> = (props) => {
       <PrimaryPanels>
         {
           recommendNetwork?.top_volume && (
-            <PrimaryNetwork network={recommendNetwork?.top_volume} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
+            <PrimaryNetwork isTopVolume={true} network={recommendNetwork?.top_volume} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
           )
         }
         {
           recommendNetwork?.hottest && (
-            <PrimaryNetwork network={recommendNetwork?.hottest} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
+            <PrimaryNetwork isTopVolume={false} network={recommendNetwork?.hottest} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
           )
         }
       </PrimaryPanels>
