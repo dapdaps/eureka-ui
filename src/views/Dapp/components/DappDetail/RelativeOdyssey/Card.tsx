@@ -22,7 +22,7 @@ import {
   StyledVideo,
   StyledVideoIcon,
 } from '@/views/Dapp/components/DappDetail/RelativeOdyssey/styles';
-import { StatusType } from '@/views/Odyssey/components/Tag';
+import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 import OdysseyVideo from './Video';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import Image from 'next/image';
@@ -126,10 +126,6 @@ const OdysseyCardComponent = (props: Props) => {
   }, [rewards, activity]);
 
   const isLive = odysseyIsLive(status);
-  const statusText = useMemo(() => {
-    if (isLive) return 'live';
-    return status;
-  }, [isLive]);
 
   return (
     <>
@@ -146,32 +142,7 @@ const OdysseyCardComponent = (props: Props) => {
                 Vol.{renderVolNo({ name, id })}
               </StyledOdysseyIconTitle>
             </StyledOdysseyInfo>
-            <StyledOdysseyTagShadow>
-              <StyledOdysseyTag>
-                {statusText.replace(/^\S|\s(\S)/g, (s: string) => s.toUpperCase())}
-              </StyledOdysseyTag>
-              <AnimatePresence mode="wait">
-                {
-                  isLive && (
-                    <>
-                      <StyledLiveBg
-                        initial={LiveAnimate.initial}
-                        animate={LiveAnimate.animate}
-                        transition={LiveAnimate.transition}
-                      />
-                      <StyledLiveBg
-                        initial={LiveAnimate.initial}
-                        animate={LiveAnimate.animate}
-                        transition={{
-                          ...LiveAnimate.transition,
-                          delay: 1,
-                        }}
-                      />
-                    </>
-                  )
-                }
-              </AnimatePresence>
-            </StyledOdysseyTagShadow>
+            <Tag status={status} />
           </StyledOdysseyHead>
           {
             Config.video && (
