@@ -1,17 +1,14 @@
-import type { CSSProperties, FC, ReactNode } from 'react';
-import React, { memo, useEffect, useState } from 'react';
-import styled from 'styled-components';
-import Link from 'next/link';
-import Image from 'next/image';
-import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 import chainCofig from '@/config/chains';
 import Badges from '@/views/AllDapps/components/Badges';
+import Image from 'next/image';
+import Link from 'next/link';
+import type { CSSProperties, FC, ReactNode } from 'react';
+import styled from 'styled-components';
+import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 
-import { CategoryList, PageSize } from '@/views/AllDapps/config';
-import { useRouter } from 'next/router';
+import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
 import useDappOpen from '@/hooks/useDappOpen';
-import popupsData, { IdToPath } from '@/config/all-in-one/chains';
-import { network } from '@/utils/config';
+import { useRouter } from 'next/router';
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -94,6 +91,11 @@ const PrimaryPanels = styled.div`
     &:hover {
       top: -5px;
     }
+  }
+  .odyssey-svg {
+    position: absolute;
+    right: -16px;
+    top: -14px;
   }
   .head {
     display: flex;
@@ -228,6 +230,7 @@ const SubPanels = styled.div`
   align-items: center;
   justify-content: space-between;
   .panel {
+    cursor: pointer;
     text-align: center;
     padding-top: 40px;
     width: 234px;
@@ -347,6 +350,78 @@ const Dapp = ({ dapp, onDappCardClick }: any) => {
     </div>
   )
 }
+const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork }: any) => {
+  const path = IdToPath[network?.id]
+  const currentChain = chainsConfig[path]
+  return (
+    <div className="panel" onClick={() => {
+      handleClickNetwork(network)
+    }}>
+      <div className='panel-top'>
+        <Image className="bg" src={currentChain?.icon} width={207} height={179} style={{ opacity: 0.04 }} alt="" />
+        {
+          network?.odyssey?.length > 0 && (
+            <div className='odyssey-svg'>
+              <Image src={'/images/networks/odyssey.svg'} width={100} height={100} alt='odyssey' />
+            </div>
+          )
+        }
+        <div className="head">
+          <div style={{ position: 'relative' }}>
+            <Image src={network?.logo} width={106} height={106} alt="" />
+            <TopTvl>
+              <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="" />
+              TOP Volume
+            </TopTvl>
+          </div>
+          <div className="intro">
+            <div className="intro-title">{network?.name}</div>
+            <div className="intro-detail">
+              <Badges
+                users={network?.participants}
+                rewards={network?.odyssey}
+                tradingVolume={network?.trading_volume}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="dapp-title">{network?.dapps?.length} dApps</div>
+      </div>
+      <div className='panel-bottom'>
+        <div className='dapp-list-container'>
+          <div className='dapp-list'>
+            {
+              network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
+            }
+          </div>
+          <div className='dapp-list'>
+            {
+              network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+const SubNetwork = ({ network, handleClickNetwork }: any) => {
+  return (
+    <div className="panel" onClick={() => {
+      handleClickNetwork(network)
+    }}>
+      <Image src={chainCofig[network?.chain_id]?.icon} width={72} height={72} alt={network?.name} />
+      <div className="title">{network?.name}</div>
+      <BadgesContainer>
+        <Badges
+          users={network?.participants}
+          rewards={network?.rewards}
+          tradingVolume={network?.trading_volume}
+        />
+      </BadgesContainer>
+    </div>
+  )
+}
 const Networks: FC<IProps> = (props) => {
   const router = useRouter()
   const { open } = useDappOpen();
@@ -381,141 +456,19 @@ const Networks: FC<IProps> = (props) => {
       <PrimaryPanels>
         {
           recommendNetwork?.top_volume && (
-            <div className="panel" onClick={() => {
-              handleClickNetwork(recommendNetwork?.top_volume)
-            }}>
-              <div className='panel-top'>
-                <Image className="bg" src={recommendNetwork?.top_volume?.logo} width={106} height={106} style={{ opacity: 0.5 }} alt="" />
-                <div className="head">
-                  <div style={{ position: 'relative' }}>
-                    <Image src={recommendNetwork?.top_volume?.logo} width={106} height={106} alt="" />
-                    <TopTvl>
-                      <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="" />
-                      TOP Volume
-                    </TopTvl>
-                  </div>
-
-                  <div className="intro">
-                    <div className="intro-title">{recommendNetwork?.top_volume?.name}</div>
-                    <div className="intro-detail">
-                      <Badges
-                        users={recommendNetwork?.top_volume?.participants}
-                        rewards={recommendNetwork?.top_volume?.odyssey}
-                        tradingVolume={recommendNetwork?.top_volume?.trading_volume}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="dapp-title">{recommendNetwork?.top_volume?.dapps?.length} dApps</div>
-              </div>
-              <div className='panel-bottom'>
-                <div className='dapp-list-container'>
-                  <div className='dapp-list'>
-                    {
-                      recommendNetwork?.top_volume?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
-                    }
-                  </div>
-                  <div className='dapp-list'>
-                    {
-                      recommendNetwork?.top_volume?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PrimaryNetwork network={recommendNetwork?.top_volume} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
           )
         }
         {
           recommendNetwork?.hottest && (
-            <div className="panel" onClick={() => {
-              handleClickNetwork(recommendNetwork?.hottest)
-            }}>
-              <div className='panel-top'>
-                <Image className="bg" src={recommendNetwork?.hottest?.logo} width={106} height={106} style={{ opacity: 0.5 }} alt="" />
-                <div className="head">
-                  <div style={{ position: 'relative' }}>
-                    <Image src={recommendNetwork?.hottest?.logo} width={106} height={106} alt="" />
-                    <Hottest>
-                      <Image src={'/images/networks/icon-hot.png'} width={47} height={47} alt="" />Hottest
-                    </Hottest>
-                  </div>
-
-                  <div className="intro">
-                    <div className="intro-title">{recommendNetwork?.hottest?.name}</div>
-                    <div className="intro-detail">
-                      <Badges
-                        users={recommendNetwork?.hottest?.participants}
-                        rewards={recommendNetwork?.hottest?.odyssey}
-                        tradingVolume={recommendNetwork?.hottest?.trading_volume}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="dapp-title">{recommendNetwork?.hottest?.dapps?.length} dApps</div>
-              </div>
-              <div className='panel-bottom'>
-                <div className='dapp-list-container'>
-                  <div className='dapp-list'>
-                    {
-                      recommendNetwork?.hottest?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
-                    }
-                  </div>
-                  <div className='dapp-list'>
-                    {
-                      recommendNetwork?.hottest?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
-                    }
-                  </div>
-                </div>
-              </div>
-            </div>
+            <PrimaryNetwork network={recommendNetwork?.hottest} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
           )
         }
       </PrimaryPanels>
       <SubPanels>
         {
-          recommendNetwork?.list?.map((network: any) => {
-            return (
-              <div className="panel" onClick={() => {
-                handleClickNetwork(network)
-              }}>
-                <Image src={chainCofig[network?.chain_id]?.icon} width={72} height={72} alt={network?.name} />
-                <div className="title">{network?.name}</div>
-                {/* <Tags>
-                  <div className="tag">
-                    <Image
-                      alt=""
-                      width="17"
-                      height="17"
-                      decoding="async"
-                      data-nimg="1"
-                      src="/images/alldapps/icon-exchange.svg"
-                    />
-                    $23.56k
-                  </div>
-                  <div className="tag">
-                    <Image
-                      alt=""
-                      width="17"
-                      height="17"
-                      decoding="async"
-                      data-nimg="1"
-                      src="/images/alldapps/icon-fire.svg"
-                    />
-                    1,235
-                  </div>
-                </Tags> */}
-                <BadgesContainer>
-                  <Badges
-                    users={network?.participants}
-                    rewards={network?.rewards}
-                    tradingVolume={network?.trading_volume}
-                  />
-                </BadgesContainer>
-              </div>
-            )
-          })
+          recommendNetwork?.list?.map((network: any, index: number) => <SubNetwork key={index} network={network} handleClickNetwork={handleClickNetwork} />)
         }
-
       </SubPanels>
     </Container>
   );
