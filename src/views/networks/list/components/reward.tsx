@@ -1,4 +1,4 @@
-import { memo, useMemo, useState } from 'react';
+import React, { memo, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
@@ -7,9 +7,13 @@ import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 import { AnimatePresence, motion } from 'framer-motion';
 import Tooltip from '@/views/Home/components/Tooltip';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
+import { useRouter } from 'next/router';
+import odysseies from '@/config/odyssey';
 
 const Reward = (props: Props) => {
   const { odyssey } = props;
+
+  const router = useRouter();
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -34,7 +38,7 @@ const Reward = (props: Props) => {
         console.log(err);
       }
       rewards.forEach((r: any) => {
-        const idx = _badges.findIndex((it: any) => it.name === r.name)
+        const idx = _badges.findIndex((it: any) => it.name === r.name);
         if (idx < 0) {
           _badges.push({
             ...r,
@@ -51,6 +55,15 @@ const Reward = (props: Props) => {
     return _badges;
   }, [odyssey]);
 
+  const onOdyClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, ody: any) => {
+    router.push(odysseies[ody.id]?.path);
+  };
+
+  const onBadgeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, badge: any) => {
+    e.stopPropagation();
+    console.log('badge: %o', badge);
+  };
+
   const renderBadgesTooltip = (key: string, badge: any, index: number) => {
     return badge.odyssey && hoveredIndex === index && (
       <AnimatePresence>
@@ -65,13 +78,14 @@ const Reward = (props: Props) => {
                   subtitle={ody.description}
                   imageUrl={ody.banner}
                   withoutCardStyle
+                  onClick={(e) => onOdyClick(e, ody)}
                 />
               ))
             }
           </StyledBadgeTooltipList>
         </Tooltip>
       </AnimatePresence>
-    )
+    );
   };
 
   return (
@@ -118,6 +132,7 @@ const Reward = (props: Props) => {
               onHoverEnd={() => {
                 setHoveredIndex(null);
               }}
+              onClick={(e) => onBadgeClick(e, b)}
             >
               <Image src={b.logo} alt="" width={20} height={20} />
               {renderBadgesTooltip(b.name, b, idx)}
@@ -172,11 +187,11 @@ const StyledBadge = styled(motion.div)`
   justify-content: center;
   align-items: center;
   position: relative;
-  
+
   &:first-child {
     margin-left: 0;
   }
-  
+
   .network-odyssey-card-tooltip {
     width: auto;
   }

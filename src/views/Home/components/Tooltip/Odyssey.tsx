@@ -34,12 +34,12 @@ const OdysseyCard = (props: Props) => {
     subtitle,
     imageUrl,
     withoutCardStyle,
-    reward
+    reward,
+    onClick = () => {},
   } = props;
-  console.log(reward, 'reward');
-  
+
   return (
-    <StyledContainer $withoutCardStyle={withoutCardStyle}>
+    <StyledContainer $withoutCardStyle={withoutCardStyle} onClick={onClick}>
       <Tag status={status} className='status' />
       <StyledContent>
         <StyleHead>
@@ -63,7 +63,9 @@ export interface Props {
   subtitle: string;
   imageUrl: string;
   withoutCardStyle?: boolean;
-  reward?: FormattedRewardList
+  reward?: FormattedRewardList;
+
+  onClick?(e: React.MouseEvent<HTMLElement, MouseEvent>): void;
 }
 
 const StyleHead = styled.div`

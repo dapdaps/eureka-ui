@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import {
   StyledDappCard,
   StyledDappCardBadge, StyledDappCardBadgeImage,
@@ -22,6 +22,8 @@ import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import Tooltip from '@/views/Home/components/Tooltip';
 import { AnimatePresence } from 'framer-motion';
+import { useRouter } from 'next/router';
+import odyssey from '@/config/odyssey';
 
 const DappCard = (props: Props) => {
   const {
@@ -32,10 +34,13 @@ const DappCard = (props: Props) => {
     networks,
     badges,
     bp = {},
-    onClick = () => {},
+    onClick = () => {
+    },
     participants = 0,
-    trading_volume = 0
+    trading_volume = 0,
   } = props;
+
+  const router = useRouter();
 
   const initBadges: Badge[] = [
     {
@@ -48,8 +53,8 @@ const DappCard = (props: Props) => {
       name: 'participants',
       icon: '/images/alldapps/icon-fire.svg',
       value: formatIntegerThousandsSeparator(participants),
-      iconSize: 17
-    }
+      iconSize: 17,
+    },
   ];
 
   const allBadges: Badge[] = useMemo(() => {
@@ -57,7 +62,7 @@ const DappCard = (props: Props) => {
     if (badges && badges.length) {
       const rewardActivities = badges.map((b: any) => ({
         ...b,
-        rewards: b.reward ? JSON.parse(b.reward) : null
+        rewards: b.reward ? JSON.parse(b.reward) : null,
       }));
       for (const activity of rewardActivities) {
         if (!activity.rewards) continue;
@@ -90,6 +95,15 @@ const DappCard = (props: Props) => {
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
+  const onBadgeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, badge: Badge) => {
+    e.stopPropagation();
+  };
+
+  const onOdysseyClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, ody: any) => {
+    e.stopPropagation();
+    router.push(odyssey[ody.id]?.path);
+  };
+
   const renderBadgesTooltip = (key: string, badge: Badge, index: number) => {
     return badge.odyssey && hoveredIndex === index && (
       <AnimatePresence>
@@ -103,13 +117,14 @@ const DappCard = (props: Props) => {
                   subtitle={ody.description}
                   imageUrl={ody.banner}
                   withoutCardStyle
+                  onClick={(e) => onOdysseyClick(e, ody)}
                 />
               ))
             }
           </StyledDappCardBadgeTooltipList>
         </Tooltip>
       </AnimatePresence>
-    )
+    );
   };
 
   const renderBadges = () => {
@@ -128,6 +143,7 @@ const DappCard = (props: Props) => {
             onHoverEnd={() => {
               setHoveredIndex(null);
             }}
+            onClick={(e) => onBadgeClick(e, badge)}
           >
             <StyledDappCardBadgeImage
               src={badge.icon}
@@ -154,7 +170,10 @@ const DappCard = (props: Props) => {
       <>
         {
           allBadges.slice(0, 2).map((badge: Badge, index: number) => (
-            <StyledDappCardBadge key={index}>
+            <StyledDappCardBadge
+              key={index}
+              onClick={(e) => onBadgeClick(e, badge)}
+            >
               <Image
                 src={badge.icon}
                 alt=""
@@ -177,6 +196,7 @@ const DappCard = (props: Props) => {
                 onHoverEnd={() => {
                   setHoveredIndex(null);
                 }}
+                onClick={(e) => onBadgeClick(e, badge)}
               >
                 <StyledDappCardBadgeImage
                   key={index}

@@ -10,6 +10,7 @@ export const StyledOdysseyContainer = styled.div`
   border-radius: 20px;
   border: 1px solid #202329;
   background: #101115;
+  cursor: pointer;
 `;
 
 export const StyledOdysseyDetail = styled.div`
