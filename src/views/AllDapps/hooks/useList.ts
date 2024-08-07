@@ -6,7 +6,6 @@ import chainCofig from '@/config/chains';
 import { useDebounceFn } from 'ahooks';
 import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 
-
 export default function useList(props: Props) {
   const {
     network,

@@ -1,0 +1,78 @@
+import styled from 'styled-components';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+
+export const StyledContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 6px;
+  margin-top: 20px;
+`;
+export const StyledBadge = styled(motion.div)`
+  height: 32px;
+  flex-shrink: 0;
+  border-radius: 34px;
+  background: #21222B;
+  padding: 0 14px 0 11px;
+  color: #FFF;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+
+  &.group {
+    padding-left: 8px;
+    padding-right: 10px;
+    gap: 0;
+
+    > img {
+      border: 2px solid #292B33;
+      border-radius: 50%;
+      &:not(:first-child) {
+        margin-left: -6px;
+      }
+    }
+  }
+
+  .dapp-card-odyssey-tooltip {
+    z-index: 2;
+    width: auto;
+  }
+`;
+export const StyledBadgeItem = styled(motion.div)`
+  position: relative;
+  margin-left: -6px;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  .dapp-card-odyssey-tooltip {
+    z-index: 2;
+    width: auto;
+  }
+`;
+export const StyledBadgeImage = styled(motion(Image))`
+  border-radius: 50%;
+  border: 2px solid #292B33;
+  position: relative;
+`;
+export const StyledBadgeTooltip = styled(motion.div)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  gap: 20px;
+  //height: 215px;
+  //flex-shrink: 0;
+  //border-radius: 12px;
+  //border: 1px solid #464B56;
+  background: #21232A;
+  //box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+`;

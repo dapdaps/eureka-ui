@@ -115,11 +115,13 @@ export default function Dapps() {
           categories={dapp?.categories}
           networks={dapp.networks}
           // onClick={() => onDappCardClick(dapp)}
-          badges={[
-            { icon: '/images/alldapps/icon-exchange.svg', iconSize: 17, value: '$23.56k' },
-            { icon: '/images/alldapps/icon-fire.svg', iconSize: 17, value: '1,235' },
-            { icon: '/images/alldapps/icon-mode.svg', iconSize: 24 },
-            { icon: '/images/alldapps/icon-dapdap-point.svg', iconSize: 24 },
+          tradingVolume={0}
+          users={0}
+          rewards={[
+            // { icon: '/images/alldapps/icon-exchange.svg', iconSize: 17, value: '$23.56k' },
+            // { icon: '/images/alldapps/icon-fire.svg', iconSize: 17, value: '1,235' },
+            // { icon: '/images/alldapps/icon-mode.svg', iconSize: 24 },
+            // { icon: '/images/alldapps/icon-dapdap-point.svg', iconSize: 24 },
           ]}
         />
         {/* <StyledDapp>
