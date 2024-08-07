@@ -11,23 +11,34 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
 
+import IconArrow from '@public/images/home/arrow-right.svg';
+import IconClickArrow from '@public/images/home/click-arrow.svg';
+
 import {
   StyledCard,
   StyledCardBackgroundImage,
   StyledCardButton,
   StyledCardMainContent,
-  StyledCompassIcon,
   StyledContainer,
   StyledContent,
   StyledInner,
   StyledLoadingWrapper,
+  StyledSwiperNextButton,
+  StyledSwiperPrevButton,
   StyledSwiperWrapper,
+  StyleAdTitle,
+  StyledCardDesc,
+  StyledCardTitle,
+  StyledCominsoon,
+  StyledCompassIcon,
+  StyledCompassButton,
+  StyledChainsImg
 } from './styles';
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import ParallelogramButton from '@/components/base-button/Parallelogram';
-import Tag, { StatusType } from '../Tag';
 
-const Card = function ({ compass }: any) {
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+
+
+const CompassCard = function ({ compass }: any) {
   const toast = useToast();
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true });
@@ -44,45 +55,66 @@ const Card = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems='flex-start'>
+      <StyledFlex gap="32px" alignItems="flex-start">
         <StyledCardBackgroundImage
-          src={compass.banner}
+          src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
           style={{
             filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
           }}
         />
         <StyledCardMainContent>
-          <div className='title'>Featured <Tag className='tag' status={StatusType.ended}></Tag></div>
-          
-          <div className="card_section">
-            <ParallelogramButton>Vol.5</ParallelogramButton>
-            
-            {/* <div className="head">DapDap X Mode: <br />The Airdrop Ascendancy</div> */}
-            <div className='card-tips'>One UI to rule them all, getting the best price from 30+ Dex pools.</div>
-          </div>
-          <StyledCardButton
+          <div className="title">Odyssey</div>
+          {/* <StyledOdysseyHead>
+            <StyledOdysseyInfo>
+              <StyledOdysseyIcon />
+              <StyledOdysseyIconTitle>Vol.{renderVolNo({ name: compass.name, id: compass.id })}</StyledOdysseyIconTitle>
+              {odyssey[compass.id]?.chainsImg && (
+                <StyledChainsImg
+                  src={odyssey[compass.id]?.chainsImg}
+                  style={{ height: odyssey[compass.id]?.chainsHeight }}
+                />
+              )}
+            </StyledOdysseyInfo>
+            <Tag status={compass.status} />
+          </StyledOdysseyHead> */}
+          <StyledCardTitle>{compass.name}</StyledCardTitle>
+          <StyledCardDesc>{compass.description}</StyledCardDesc>
+          {compass.status === 'un_start' ? (
+            <StyledCominsoon>Coming soon...</StyledCominsoon>
+          ) : (
+            <div className="btns">
+              <StyledCompassButton
                 onClick={() => {
                   check(handleExplore);
                 }}
                 data-bp="1001-003"
               >
-                <div>Explore now</div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
-                  <path
-                    d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
-                    fill="black"
-                  />
-                </svg>
-              </StyledCardButton>
+                <div>Start now</div>
+                <IconClickArrow />
+              </StyledCompassButton>
+              <StyledCompassButton
+                className="plain"
+                onClick={() => {
+                  router.push('/odyssey/list')
+                }}
+              >
+                <div>Explore All</div>
+                <IconClickArrow />
+              </StyledCompassButton>
+            </div>
+          )}
         </StyledCardMainContent>
       </StyledFlex>
     </StyledCard>
   );
 };
-const SwiperList = () => {
+
+const Compass = () => {
   const size: any = useSize(window.document.getElementsByTagName('body')[0]);
+
   const { loading, compassList } = useCompassList();
+
   const swiperRef = useRef<any>();
 
   return loading ? (
@@ -105,20 +137,26 @@ const SwiperList = () => {
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              pagination={{
+                el: '.swiper-pagination',
+                clickable: true,
+                renderBullet: (index, className) => {
+                  return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
+                },
+              }}
               loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
-                    <Card compass={compass} />
-                    <StyledCompassIcon>
-                      <CompassIcon />
-                    </StyledCompassIcon>
+                  <CompassCard compass={compass} />
+                  <StyledCompassIcon>
+                    <CompassIcon />
+                  </StyledCompassIcon>
                   {compass.name === 'THRUSTER TURBO SPIN' ? null : (
                     <StyledCompassIcon>
                       <CompassIcon />
                     </StyledCompassIcon>
                   )}
-
                   {odyssey[compass.id]?.reward && (
                     <div
                       style={
@@ -163,6 +201,21 @@ const SwiperList = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            <StyledSwiperPrevButton
+              onClick={() => {
+                swiperRef.current && swiperRef.current.slidePrev();
+              }}
+            >
+              <IconArrow />
+            </StyledSwiperPrevButton>
+            <StyledSwiperNextButton
+              onClick={() => {
+                swiperRef.current && swiperRef.current.slideNext();
+              }}
+            >
+              <IconArrow />
+            </StyledSwiperNextButton>
+            <div className="swiper-pagination"></div>
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
@@ -170,4 +223,4 @@ const SwiperList = () => {
   );
 };
 
-export default memo(SwiperList);
+export default memo(Compass);
