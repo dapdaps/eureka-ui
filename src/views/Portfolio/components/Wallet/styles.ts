@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const ProtocolSelectBox = styled.div`
   width: max-content;
@@ -40,7 +41,7 @@ export const ProtocolSelectBox = styled.div`
   }
 `;
 
-export const StyledWalletContainer = styled.div``;
+export const StyledWalletContainer = styled(motion.div)``;
 
 export const StyledLoading = styled.div<{ height?: string }>`
   height: ${({ height }) => height};

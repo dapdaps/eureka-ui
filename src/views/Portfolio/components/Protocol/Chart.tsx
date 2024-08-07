@@ -1,12 +1,12 @@
-import { random } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 import styled from 'styled-components';
 
 import { formatDateTime } from '@/utils/date';
-import { formateValueWithThousandSeparator } from '@/utils/formate';
-import Dropdown from '@/views/Portfolio/components/Dropdown';
+import { formateValueWithThousandSeparator, formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import Big from 'big.js';
+import { useWorth } from '@/views/Portfolio/hooks/useWorth';
+import Selector from '@/components/Dropdown/Selector';
 
 export const StyledContainer = styled.div`
   width: 574px;
@@ -62,6 +62,30 @@ export const StyledContainer = styled.div`
   }
 
   .head-right {
+    width: auto;
+    height: 26px;
+    padding: 0 9px;
+    border-color: #3D405A;
+
+    &-popup {
+      top: 30px;
+      left: unset;
+      right: 0;
+    }
+
+    &-trigger {
+      color: #979ABE;
+      text-align: right;
+      font-family: Montserrat;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+
+      &-arrow {
+        color: #979ABE;
+      }
+    }
   }
 
   .chart-wrapper {
@@ -91,26 +115,20 @@ const dropdownList = [
   },
 ];
 
-const ChartComponent = (props: any) => {
-  const {} = props;
+const ChartComponent = (props: Props) => {
+  const { totalWorth } = props;
 
-  const [data, setData] = useState<{ day_time: number; worth: number; }[]>([]);
-  const [percent, setPercent] = useState<string>('');
+  const {
+    list,
+    loading,
+    increase,
+  } = useWorth();
 
-  const getData = () => {
-    const startDate = new Date('2024-01-01');
-    const _data = [...new Array(200).keys()].map((i) => ({
-      day_time: new Date(new Date(startDate).setDate(i)).getTime(),
-      worth: i + random(0.001, 100, true),
-    }));
-    const _sorted = _data.sort((a, b) => b.day_time - a.day_time);
-    setData(_sorted);
-    setPercent(Big(_sorted[0].worth).minus(_sorted[1].worth).div(_sorted[1].worth).times(100).toFixed(2));
-  };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  const isUp = useMemo(() => {
+    if (!increase) return true;
+    const increaseNumber = Big(increase).toNumber();
+    return increaseNumber >= 0;
+  }, [increase]);
 
   const [dropdown, setDropdown] = useState(dropdownList[0].value);
 
@@ -118,24 +136,41 @@ const ChartComponent = (props: any) => {
     setDropdown(value);
   };
 
+  const totalWorthShown = useMemo(() => {
+    let _totalWorth = 0;
+    if (totalWorth) {
+      _totalWorth = Big(totalWorth).toNumber();
+    }
+    return formateValueWithThousandSeparatorAndFont(_totalWorth, 2, false, { prefix: '$', isLTIntegerZero: true });
+  }, [totalWorth]);
+
   return (
     <StyledContainer>
       <div className="chart-head">
         <div className="head-left">
           <div className="title">Total Worth</div>
           <div className="summary">
-            <div className="usd">$0<span className="sm">.00</span></div>
+            <div className="usd">{totalWorthShown.integer}<span className="sm">{totalWorthShown.decimal}</span></div>
             <div className="rate">
-              {Big(percent || 0).gt(0) ? '+' : ''}{percent}%
+              {isUp ? '+' : '-'}{Big(increase).toFixed(2)}%
             </div>
           </div>
         </div>
-        <Dropdown
+        <Selector
           className="head-right"
+          triggerClassName="head-right-trigger"
+          arrowClassName="head-right-trigger-arrow"
+          popupClassName="head-right-popup"
           list={dropdownList}
           value={dropdown}
           onSelect={handleDropdownSelect}
-          dropdownWidth={100}
+          popupStyle={{
+            width: 100,
+          }}
+          style={{
+            borderRadius: 6,
+            background: '#1B1D25',
+          }}
         />
       </div>
       <div className="chart-wrapper">
@@ -143,7 +178,7 @@ const ChartComponent = (props: any) => {
           <AreaChart
             width={531}
             height={198}
-            data={data}
+            data={list}
             margin={{
               top: 10,
               right: 30,
@@ -177,8 +212,8 @@ const ChartComponent = (props: any) => {
               type="linear"
               stroke="#63C341"
               fill="url(#paint0_linear_12309_49)"
-              min={Math.min(...data.map((item) => item.worth))}
-              max={Math.max(...data.map((item) => item.worth))}
+              min={Math.min(...list.map((item) => Big(item.worth).toNumber()))}
+              max={Math.max(...list.map((item) => Big(item.worth).toNumber()))}
             />
             <Tooltip
               content={<CustomTooltip />}
@@ -206,3 +241,7 @@ const CustomTooltip = (props: any) => {
     </StyledTooltip>
   );
 };
+
+export interface Props {
+  totalWorth: Big.Big;
+}

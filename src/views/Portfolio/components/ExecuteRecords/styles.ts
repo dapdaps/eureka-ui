@@ -13,6 +13,13 @@ export const StyledHead = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
+  
+  .filter-chain,
+  .filter-dapp {
+    height: 26px;
+    flex-shrink: 0;
+    padding: 0 10px;
+  }
 `;
 export const StyledContent = styled.div`
   .execute-records-table {

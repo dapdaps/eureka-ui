@@ -5,9 +5,10 @@ export const StyledContainer = styled.div`
   --portfolio-gutter: 50px;
   --switch-color: #ebf479;
   font-family: Montserrat;
-  padding: 0 0 60px;
+  padding: 60px 0 60px;
   background: #101115;
   min-height: 100vh;
+  position: relative;
 
   .frcs-gm {
     display: flex;
@@ -44,5 +45,21 @@ export const StyledContainer = styled.div`
 export const StyledContent = styled.div`
   max-width: ${() => `var(--portfolio-width)`};
   padding: 0  ${() => `var(--portfolio-gutter)`};
-  margin: 40px auto 0;
+  margin: 0 auto;
+`;
+
+export const StyledFeedbackContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 4px;
+  > a {
+    color: #000;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+  }
 `;

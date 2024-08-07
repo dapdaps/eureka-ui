@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { styled } from 'styled-components';
 
-import { formateValueWithThousandSeparator } from '@/utils/formate';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
 
 export const StyledContainer = styled(motion.div)`
@@ -39,6 +39,7 @@ export const StyledContainer = styled(motion.div)`
 `;
 
 export const StyledContent = styled.div`
+  white-space: nowrap;
 `;
 
 const DAppCard = (props: any) => {
@@ -69,7 +70,7 @@ const DAppCard = (props: any) => {
       <StyledContent>
         <div className="name">{dapp.show_name}</div>
         <div className="usd">
-          ${formateValueWithThousandSeparator(dapp.totalUsd, 2)}
+          {formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, true, { prefix: '$' })}
         </div>
       </StyledContent>
     </StyledContainer>

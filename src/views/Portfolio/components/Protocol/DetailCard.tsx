@@ -1,12 +1,13 @@
 import { styled } from 'styled-components';
 
 import { StyledFlex } from '@/styled/styles';
-import { formateValueWithThousandSeparator, formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import FlexTable from '@/views/Portfolio/components/FlexTable';
 import type { Column } from '@/views/Portfolio/components/FlexTable/styles';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { getTokenLogo } from '@/views/Portfolio/helpers';
+import Big from 'big.js';
 
 export const StyledContainer = styled.div`
   border-radius: 12px;
@@ -90,7 +91,7 @@ export const StyledIcon = styled.div<{ src: string }>`
   border-radius: 50%;
   flex-shrink: 0;
   background: ${({ src }) => `url("${src}") no-repeat center / contain`};
-  
+
   &:not(:first-child) {
     margin-left: -10px;
   }
@@ -106,11 +107,14 @@ const DetailCard = (props: any) => {
     type,
   } = dapp;
 
+  const isLending = ['Lending', 'Yield'].includes(type);
+
   const columns: Column[] = [
     {
       title: 'Pool',
       dataIndex: 'pool',
       align: 'left',
+      width: '55%',
       render: (text, record) => {
         if (!record.assets) {
           return null;
@@ -120,7 +124,7 @@ const DetailCard = (props: any) => {
             <StyledFlex alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
               {
                 record.assets.map((token: any, idx: number) => (
-                  <StyledIcon key={idx} src={getTokenLogo(token.symbol)} />
+                  <StyledIcon key={idx} src={token.tokenLogo || getTokenLogo(token.symbol)} />
                 ))
               }
             </StyledFlex>
@@ -133,28 +137,132 @@ const DetailCard = (props: any) => {
       title: 'Amount',
       dataIndex: 'amount',
       align: 'left',
-      width: '300px',
+      width: '30%',
       render: (text, record) => {
         if (!record.assets) {
           return null;
         }
-        return `${record.assets[0].amount} ${record.assets[0].symbol}`;
+        return (
+          <StyledFlex flexDirection="column" gap="5px" alignItems="flex-start">
+            {
+              record.assets.map((asset: any, idx: number) => (
+                <span key={idx}>{asset.amount} {asset.symbol}</span>
+              ))
+            }
+          </StyledFlex>
+        );
       },
     },
     {
       title: 'Value',
       dataIndex: 'value',
       align: 'right',
-      width: '150px',
+      width: '15%',
       render: (text, record) => {
-        return `$${formateValueWithThousandSeparator(record.totalUsd, 2)}`;
+        return `${formateValueWithThousandSeparatorAndFont(record.totalUsd, 2, true, { prefix: '$' })}`;
       },
     },
   ];
 
+  const LendingColumns: Column[] = [
+    {
+      title: 'Pool',
+      dataIndex: 'pool',
+      align: 'left',
+      width: '20%',
+      render: (text: string, record: any, index: number) => {
+        return (
+          <StyledFlex gap="14px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
+            <StyledFlex alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
+              <StyledIcon src={record.logo || getTokenLogo(record.symbol)} />
+            </StyledFlex>
+            {record.symbol}
+          </StyledFlex>
+        );
+      },
+    },
+    {
+      title: 'Supply',
+      dataIndex: 'supply',
+      align: 'left',
+      width: '25%',
+      render: (text, record) => {
+        if (Big(record.supplyAmount).gt(0)) {
+          return `${Big(record.supplyAmount).lt(1e-9) ? Big(record.supplyAmount).toFixed(record.decimals) : Big(record.supplyAmount).toString()} ${record.symbol}`;
+        }
+        return '-';
+      },
+    },
+    {
+      title: 'Borrow',
+      dataIndex: 'borrow',
+      align: 'left',
+      width: '25%',
+      render: (text, record) => {
+        if (Big(record.borrowAmount).gt(0)) {
+          return `${Big(record.borrowAmount).toString()} ${record.symbol}`;
+        }
+        return '-';
+      },
+    },
+    {
+      title: 'Debt Ratio',
+      dataIndex: 'debtRatio',
+      align: 'left',
+      width: '15%',
+      render: (text, record) => {
+        return `${calcDebtRatio(record.borrowAmount, record.supplyAmount).toFixed(2)}%`;
+      },
+    },
+    columns[2],
+  ];
+
   const tableList = useMemo<any[]>(() => {
+    // merge same currency
+    if (isLending) {
+      const _tableList: any = [];
+      dapp.detailList.forEach((it: any) => {
+        // Supply / Borrow
+        const _type = it.type;
+        it.assets.forEach((token: any) => {
+          const tokenIdx = _tableList.findIndex((_it: any) => _it.symbol === token.symbol);
+          if (tokenIdx < 0) {
+            const cell = {
+              symbol: token.symbol,
+              decimals: token.decimals,
+              logo: token.tokenLogo || getTokenLogo(token.symbol),
+              usd: Big(token.usd || 0),
+              supplyAmount: Big(0),
+              borrowAmount: Big(0),
+              totalUsd: Big(token.usd || 0),
+            };
+            if (_type === 'Supply') {
+              cell.supplyAmount = Big(token.amount || 0);
+            }
+            if (_type === 'Borrow') {
+              cell.borrowAmount = Big(token.amount || 0);
+            }
+            _tableList.push(cell);
+          } else {
+            if (_type === 'Supply') {
+              _tableList[tokenIdx].supplyAmount = Big(_tableList[tokenIdx].supplyAmount).plus(token.amount || 0);
+            }
+            if (_type === 'Borrow') {
+              _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
+            }
+            _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
+          }
+        });
+      });
+      return _tableList;
+    }
     return dapp.detailList;
-  }, [dapp]);
+  }, [dapp, isLending]);
+
+  const cardTotalUsd = formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, false, {
+    prefix: '$',
+    isLTIntegerZero: true,
+  });
 
   return (
     <StyledContainer style={style} id={`portfolioProtocolDetail-${dapp.chain_id}-${dapp.type}-${dapp.name}`}>
@@ -179,12 +287,12 @@ const DetailCard = (props: any) => {
           </svg>
         </StyledManageButton>
         <div className="summary">
-          ${formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2).integer}
-          <span className="sm">{formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2).decimal}</span>
+          {cardTotalUsd.integer}
+          <span className="sm">{cardTotalUsd.decimal}</span>
         </div>
       </StyledHead>
       <StyledContent>
-        <FlexTable columns={columns} list={tableList} />
+        <FlexTable columns={isLending ? LendingColumns : columns} list={tableList} />
       </StyledContent>
       <StyledFoot></StyledFoot>
     </StyledContainer>
@@ -192,3 +300,16 @@ const DetailCard = (props: any) => {
 };
 
 export default DetailCard;
+
+export function calcDebtRatio(borrowAmount: Big.Big, supplyAmount: Big.Big) {
+  if (Big(supplyAmount).eq(0)) {
+    if (Big(borrowAmount).gt(0)) {
+      return Big(100);
+    }
+    return Big(0);
+  }
+  if (Big(borrowAmount).eq(0)) {
+    return Big(0);
+  }
+  return Big(borrowAmount).div(supplyAmount).times(100);
+}

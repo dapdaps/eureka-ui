@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 export { ProtocolSelectBox } from '../Wallet/styles';
 
 export const YourAssetsTitle = styled.div`
@@ -224,6 +225,6 @@ export const ProtocolTableHeader = styled.thead`
 export const ProtocolTableRow = styled.tr``;
 
 
-export const StyledContainer = styled.div`
+export const StyledContainer = styled(motion.div)`
   
 `;

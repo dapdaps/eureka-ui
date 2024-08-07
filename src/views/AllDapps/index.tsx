@@ -12,17 +12,16 @@ import {
 } from '@/views/AllDapps/styles';
 import AllDappsTitle from '@/views/AllDapps/components/Title';
 import Selector from '@/components/Dropdown/Selector';
-import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { get } from '@/utils/http';
-import { QUEST_PATH } from '@/config/quest';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
-import { AllNetworks, SortList, TrueString } from '@/views/AllDapps/config';
+import { SortList, TrueString } from '@/views/AllDapps/config';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
 import DappList from './components/DappList';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
 import useList from './hooks/useList';
+import { NetworkAll, useNetworks } from '@/hooks/useNetworks';
 
 const AllDapps = (props: Props) => {
   const {} = props;
@@ -31,10 +30,9 @@ const AllDapps = (props: Props) => {
   const pathname = usePathname();
 
   const router = useRouter();
+  const { networkList, networkLoading } = useNetworks({ isAll: true, isAllIcon: false });
 
-  const [networkList, setNetworkList] = useState<any>([AllNetworks]);
-  const [networkLoading, setNetworkLoading] = useState<boolean>(false);
-  const [network, setNetwork] = useState<any>(AllNetworks.id);
+  const [network, setNetwork] = useState<any>(NetworkAll.id);
   const [sort, setSort] = useState<any>(SortList[0].value);
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [airdrop, setAirdrop] = useState<boolean>(false);
@@ -61,20 +59,6 @@ const AllDapps = (props: Props) => {
   const setQueryParams = useCallback((params: any) => {
     router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
   }, [router, pathname]);
-
-  const fetchNetworkData = async () => {
-    try {
-      setNetworkLoading(true);
-      const resultNetwork = await get(`${QUEST_PATH}/api/network/list`);
-      const data = resultNetwork.data || [];
-      data.unshift(AllNetworks);
-      setNetworkList(data);
-      setNetworkLoading(false);
-    } catch (error) {
-      console.error('Error fetching resultNetwork data:', error);
-      setNetworkLoading(false);
-    }
-  };
 
   const onSelectNetwork = (_network: number) => {
     const params = new URLSearchParams(searchParams);
@@ -151,7 +135,6 @@ const AllDapps = (props: Props) => {
   };
 
   useEffect(() => {
-    fetchNetworkData();
     const handleScroll = () => {
       if (window.scrollY > 294) {
         setScrolled(true);
@@ -180,7 +163,7 @@ const AllDapps = (props: Props) => {
     })) {
       setNetwork(Number(_network));
     } else {
-      setNetwork(AllNetworks.id);
+      setNetwork(NetworkAll.id);
     }
 
     if (checkQueryEmpty(_sort as string, () => true)) {
@@ -217,7 +200,6 @@ const AllDapps = (props: Props) => {
       window.scrollTo(0, 0);
     }
   }, [router.query, networkList]);
-
 
   return (
     <StyledContainer>
@@ -272,7 +254,7 @@ const AllDapps = (props: Props) => {
               </StyledSelectorLoading>
               ) : (
               <Selector
-                list={networkList}
+                list={networkList.map((n) => ({ ...n, key: n.id, label: n.name, value: n.chain_id }))}
                 value={network}
                 onSelect={onSelectNetwork}
                 itemValueKey="chain_id"
