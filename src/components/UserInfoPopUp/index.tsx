@@ -118,8 +118,8 @@ const GemSvg = (
   </svg>
 )
 type PropsType = {
-  show: boolean;
-  setShow: (prevState: boolean) => boolean;
+  show?: boolean;
+  setShow?: (prevState: boolean) => boolean;
 }
 export default function UserInfoPopUp({ show, setShow }: PropsType) {
   const userInfo = useUserStore((store: any) => store.user);

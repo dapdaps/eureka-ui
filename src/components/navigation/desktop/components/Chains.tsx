@@ -1,8 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router';
 import { IdToPath } from '@/config/all-in-one/chains';
+import { Network } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 
 
 const GridContainer = styled.div`
@@ -60,22 +61,17 @@ const LoadingCard = () => {
   ));
 }
 
-interface IData {
-  logo: string;
-  name: string;
-  id: string;
-}
 
 const Chains = ({
   loading,
   data,
 }: {
   loading: boolean;
-  data: IData[];
+  data: Network[];
 }) => {
   const router = useRouter()
   
-  const handleClick = (item: IData) => {
+  const handleClick = (item: Network) => {
     router.push(`/network/${IdToPath[item.id]}`);
   }
   return (

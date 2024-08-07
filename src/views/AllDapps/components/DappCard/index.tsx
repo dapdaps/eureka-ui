@@ -293,7 +293,7 @@ export interface Network {
 }
 
 export interface Badge {
-  name: string;
+  name?: string;
   icon: string;
   // if you need to specify different width and height
   // please pass in an array: [width, height]

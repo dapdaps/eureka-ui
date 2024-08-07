@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { get, post } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
 import useAuthCheck from '@/hooks/useAuthCheck';
-import { StatusType } from '@/components/navigation/desktop/components/Status';
 import { AirdropList, Potential } from '@/views/Dapp/components/DappDetail/config';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 export function useAirdrop(props: Props) {
   const {

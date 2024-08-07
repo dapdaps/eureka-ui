@@ -7,6 +7,7 @@ import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import Big from 'big.js';
 
 const formatValue = (value: string): string => {
+  if (!value) return ''
   const unitsConfig = [
     { unit: 'B', threshold: 1e9 },
     { unit: 'M', threshold: 1e6 },
@@ -42,7 +43,9 @@ const OdysseyCard = (props: Props) => {
       <Tag status={status} className='status' />
       <StyledContent>
         <StyleHead>
-          <StyledValue>${formatValue(reward.value)} <span>{reward.name}</span></StyledValue>
+          {
+            reward?.value && <StyledValue>${formatValue(reward.value)} <span>{reward?.name}</span></StyledValue>
+          }
         </StyleHead>
         <StyledTitle>{title}</StyledTitle>
         {/* <StyledTitleSub>{subtitle}</StyledTitleSub> */}
@@ -60,7 +63,7 @@ export interface Props {
   subtitle: string;
   imageUrl: string;
   withoutCardStyle?: boolean;
-  reward: FormattedRewardList
+  reward?: FormattedRewardList
 }
 
 const StyleHead = styled.div`
