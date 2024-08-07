@@ -3,6 +3,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
+import { CategoryList, PageSize } from '@/views/AllDapps/config';
 export default function useRecommendNetwork() {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
@@ -16,6 +17,17 @@ export default function useRecommendNetwork() {
     try {
       const result = await get('/api/network/recommend');
       const data = (result.data || null);
+
+      data?.top_volume?.dapps.forEach((dapp: any) => {
+        dapp.categories = dapp?.dapp_category?.map((category: any) => {
+          return CategoryList.find(_c => _c.key === category.category_id)
+        })
+      })
+      data?.hottest?.dapps.forEach((dapp: any) => {
+        dapp.categories = dapp?.dapp_category?.map((category: any) => {
+          return CategoryList.find(_c => _c.key === category.category_id)
+        })
+      })
       setRecommendNetwork(data);
       setLoading(false);
     } catch (err) {
@@ -24,18 +36,9 @@ export default function useRecommendNetwork() {
       setLoading(false);
     }
   };
-  const { run } = useDebounceFn(
-    () => {
-      account && check(() => {
-        queryRecommendNetwork()
-      });
-    },
-    { wait: recommendNetwork ? 800 : 3000 },
-  );
-
   useEffect(() => {
-    run();
-  }, [account]);
+    queryRecommendNetwork()
+  }, []);
 
   return { loading, recommendNetwork, queryRecommendNetwork };
 }
