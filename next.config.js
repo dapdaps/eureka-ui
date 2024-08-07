@@ -151,6 +151,7 @@ const nextConfig = {
     esmExternals: 'loose',
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.resolve.alias.stream = 'stream-browserify'
     return config;
   },
 };
