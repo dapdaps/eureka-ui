@@ -175,7 +175,13 @@ const OdysseyCardComponent = (props: Props) => {
           </StyledOdysseyHead>
           {
             Config.video && (
-              <StyledVideo url={banner} onClick={() => showVideo(Config.video)}>
+              <StyledVideo
+                url={banner}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  showVideo(Config.video);
+                }}
+              >
                 <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
               </StyledVideo>
             )
