@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export const StyledProgressBar = styled.div<{ width?: number; height?: number; }>`
-  width: ${({ width }) => width ? width : '307px'};
-  height: ${({ height }) => height ? height : '10px'};
+export const StyledProgressBar = styled.div<{ $width?: string | undefined; $height?: string | undefined; }>`
+  width: ${({ $width }) => $width ? $width : '307px'};
+  height: ${({ $height }) => $height ? $height : '10px'};
   padding: 2px 3px;
   border-radius: 5px;
   background: #222430;

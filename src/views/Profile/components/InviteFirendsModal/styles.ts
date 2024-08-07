@@ -1,9 +1,28 @@
 import styled from 'styled-components';
 
-import type { Align } from '../Pts/types';
+import type { Align } from '../../types';
 
-export { LoadingWrapper, Empty } from '../../styles';
+// export { LoadingWrapper, Empty } from '../../styles';
 
+export const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Empty = styled.div`
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+`;
 export const StyledTitle = styled.div`
   color: #fff;
   font-size: 26px;
@@ -168,20 +187,9 @@ export const StyledBody = styled.div`
   overflow-y: auto;
 `;
 
-export const StyledCell = styled.div<{ $gap?: number; $width: number; $align?: Align }>`
+export const StyledCell = styled.div`
   display: flex;
   align-items: center;
-  gap: ${({ $gap }) => $gap + 'px'};
-  width: ${({ $width }) => $width + '%'};
-  justify-content: ${({ $align }) => ($align === 'left' ? 'flex-start' : $align === 'right' ? 'flex-end' : 'center')};
-
-  & .delete {
-    text-decoration: line-through;
-  }
-
-  & .rewards {
-    color: #ebf479;
-  }
 `;
 
 export const StyledAvatar = styled.img`

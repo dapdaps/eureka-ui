@@ -15,6 +15,13 @@ const StyledAvatarBox = styled.div`
   border-radius: 50%;
   background-image: conic-gradient(from 180deg at 50% 50%, #00d1ff 0deg, #ff008a 360deg);
 `;
+const StyledKol = styled.div`
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+`
 export default memo(function UserAavatar({ userInfo }: any) {
   return (
     <StyledUserAvatar>

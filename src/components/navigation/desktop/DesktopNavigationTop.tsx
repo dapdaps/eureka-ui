@@ -17,7 +17,7 @@ import { NavMainV2 } from './NavMainV2';
 import Notification from './Notification';
 import CheckInGrid from './components/CheckInGrid';
 import CheckIn from './components/CheckIn';
-import AccountLogo from '@/components/AccountSider/components/AccountLogo';
+import AccountLogo from './components/AccountLogo';
 
 
 const Flex = styled.div`
@@ -140,7 +140,6 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <Notification />
               <CheckIn />
               <Chain showName={false} bp="3001-003" />
-              {/* <AccountItem showCopy={false} logoSize={28} bp="3001-004" /> */}
               <AccountLogo logoSize={28} />
             </LoginContainer>
           ) : (

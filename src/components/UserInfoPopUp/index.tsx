@@ -117,11 +117,7 @@ const GemSvg = (
     <path d="M17.6162 10.4525L21.1394 11.8335L12.5075 20L11.0479 16.6667L17.6162 10.4525Z" fill="#F0CC00" />
   </svg>
 )
-type PropsType = {
-  show?: boolean;
-  setShow?: (prevState: boolean) => boolean;
-}
-export default function UserInfoPopUp({ show, setShow }: PropsType) {
+export default function UserInfoPopUp() {
   const userInfo = useUserStore((store: any) => store.user);
   const features = [{
     icon: (

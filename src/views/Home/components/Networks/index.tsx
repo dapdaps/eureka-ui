@@ -3,6 +3,8 @@ import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import Image from 'next/image';
+import useRecommendNetwork from '../../hooks/useRecommendNetwork';
+
 
 interface IProps {
   children?: ReactNode;
@@ -105,6 +107,15 @@ const PrimaryPanels = styled.div`
     font-weight: 600;
     line-height: normal;
   }
+  .dapp-list {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 83px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #18191E 0%, rgba(24, 25, 30, 0.00) 25.5%, rgba(24, 25, 30, 0.00) 78.5%, #18191E 100%);
+  }
   .badge {
     /* justify-content: space-between; */
   }
@@ -158,13 +169,19 @@ const Tags = styled.div`
   }
 `;
 
-const IconGroup = styled.div`
-  svg {
-    width: 26px;
-    height: 26px;
-    margin-left: -10px;
-  }
-`;
+const StyledOdysseyImageList = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 4px;
+  border-radius: 34px;
+  background: #21222B;
+`
+const StyledOdysseyImage = styled.img`
+  border-radius: 50%;
+  border: 2px solid #292B33;
+  width: 20px;
+  height: 20px;
+`
 const TopTvl = styled.div`
   position: absolute;
   width: 120px;
@@ -172,19 +189,28 @@ const TopTvl = styled.div`
   left: -7px;
   display: flex;
   align-items: center;
+  justify-content: center;
   height: 32px;
   color: #000;
   font-family: Montserrat;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 100%; /* 16px */
   border-radius: 10px;
   border: 2px solid #101115;
   background: #00d1ff;
+  img {
+    position: absolute;
+    left: -28px;
+    top: -12px;
+    transform: rotate(-10deg);
+
+  }
 `;
 
 const Networks: FC<IProps> = (props) => {
+  const { recommendNetwork } = useRecommendNetwork()
   return (
     <Container>
       <Title>
@@ -205,18 +231,18 @@ const Networks: FC<IProps> = (props) => {
       </Title>
       <PrimaryPanels>
         <div className="panel">
-          <Image className="bg" src={'/images/networks/mode-bg.png'} width={106} height={106} alt="" />
+          <Image className="bg" src={recommendNetwork?.top_volume?.logo} width={106} height={106} style={{ opacity: 0.5 }} alt="" />
           <div className="head">
             <div style={{ position: 'relative' }}>
-              <Image src={'/images/networks/mode.png'} width={106} height={106} alt="" />
+              <Image src={recommendNetwork?.top_volume?.logo} width={106} height={106} alt="" />
               <TopTvl>
-                <Image src={'/images/networks/icon-top.png'} width={40} height={40} alt="" />
-                TOP TVL
+                <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="" />
+                TOP Volume
               </TopTvl>
             </div>
 
             <div className="intro">
-              <div className="intro-title">Mode</div>
+              <div className="intro-title">{recommendNetwork?.top_volume?.name}</div>
               <div className="intro-detail">
                 <Tags>
                   <div className="tag">
@@ -242,8 +268,8 @@ const Networks: FC<IProps> = (props) => {
                     1,235
                   </div>
                 </Tags>
-                <IconGroup>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
+                <StyledOdysseyImageList>
+                  {/* <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
                     <rect x="1" y="1" width="28" height="28" rx="14" fill="#DFFE00" stroke="#292B33" stroke-width="2" />
                     <path
                       d="M10.8001 21.0667H8.06641V8.93335H12.1392L14.6687 15.8457V17.8311H15.4126V15.8457L17.9421 8.93335H21.9331V21.0667H19.2813V15.0368L20.3972 11.5806L19.6532 11.36L16.0822 21.0667H13.9991L10.5025 11.36L9.68412 11.5806L10.8001 15.0368V21.0667Z"
@@ -258,12 +284,23 @@ const Networks: FC<IProps> = (props) => {
                       d="M14.9347 7.95662L17.6804 6.375C17.8987 6.24928 18.1691 6.40982 18.1691 6.66515V6.73338C18.1691 7.08653 18.334 7.41865 18.6132 7.62808L21.2905 9.63582C22.2099 10.3253 22.1288 11.7496 21.1373 12.3262L18.5796 13.8139C17.9597 14.1744 17.9093 15.0651 18.4844 15.4958L21.2859 17.5935C22.2066 18.2829 22.1253 19.7091 21.1323 20.2853L18.3721 21.8871C18.1539 22.0137 17.8826 21.8533 17.8826 21.5974V21.5143C17.8826 21.1629 17.7194 20.8322 17.4424 20.6226L14.7734 18.6019C13.8575 17.9085 13.9444 16.4854 14.9375 15.9128L17.4672 14.4542C18.0872 14.0968 18.1422 13.2086 17.5712 12.7747L14.7678 10.6442C13.8539 9.9498 13.9423 8.52832 14.9347 7.95662ZM8.86795 10.5566L11.6137 8.97501C11.8319 8.84927 12.1023 9.00982 12.1023 9.26515V9.33338C12.1023 9.68653 12.2672 10.0186 12.5465 10.2281L15.2238 12.2358C16.1431 12.9253 16.062 14.3496 15.0706 14.9262L12.5129 16.4138C11.893 16.7744 11.8425 17.6651 12.4177 18.0957L15.2191 20.1935C16.1399 20.8829 16.0585 22.3091 15.0655 22.8853L12.3054 24.4871C12.0871 24.6137 11.8158 24.4532 11.8158 24.1975V24.1142C11.8158 23.7629 11.6526 23.4322 11.3757 23.2225L8.70658 21.2019C7.79076 20.5085 7.8776 19.0854 8.87067 18.5128L11.4004 17.0542C12.0204 16.6967 12.0754 15.8086 11.5044 15.3747L8.70099 13.2442C7.78717 12.5498 7.87547 11.1283 8.86795 10.5566Z"
                       fill="#075A5A"
                     />
-                  </svg>
-                </IconGroup>
+                  </svg> */}
+                  {/* <StyledOdysseyImage src=''/> */}
+                  {
+                    recommendNetwork?.top_volume?.odyssey?.map((odyssey: any, index: number) => {
+                      return (
+                        <StyledOdysseyImage key={index} src={odyssey?.banner} />
+                      )
+                    })
+                  }
+                </StyledOdysseyImageList>
               </div>
             </div>
           </div>
-          <div className="dapp-title">20 dApps</div>
+          <div className="dapp-title">{recommendNetwork?.top_volume?.dapps?.length} dApps</div>
+          <div className='dapp-list'>
+            <div className='dapp'></div>
+          </div>
         </div>
         <div className="panel"></div>
       </PrimaryPanels>

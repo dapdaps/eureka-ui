@@ -97,7 +97,9 @@ export default function Dapps() {
         "chain_id": 34443,
         "dapp_src": "dapdapbos.near/widget/Bridge.Index"
       }
-    ]
+    ],
+    "categories": [],
+    "networks": []
   }
   return (
     <StyledContainer style={{ marginTop: 80 }}>
@@ -110,7 +112,7 @@ export default function Dapps() {
           name={dapp.name}
           logo={dapp.logo}
           description={dapp.description}
-          categories={dapp.categories}
+          categories={dapp?.categories}
           networks={dapp.networks}
           // onClick={() => onDappCardClick(dapp)}
           badges={[

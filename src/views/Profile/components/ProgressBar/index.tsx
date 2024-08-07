@@ -8,7 +8,7 @@ import {
 type ProgressType = {
   quantity: number;
   total: number;
-  width?: string;
+  barWidth?: string | undefined;
 }
 export default function Progress({ quantity, total, barWidth }: ProgressType) {
   return (
@@ -27,7 +27,7 @@ export default function Progress({ quantity, total, barWidth }: ProgressType) {
           </StyledAchievedContainer>
         )
       }
-      <StyledProgressBar width={barWidth}>
+      <StyledProgressBar $width={barWidth}>
         <StyledInnerProgressBar $percent={(quantity / total) * 100} />
       </StyledProgressBar>
       <StyledFont color="#979ABE" fontSize="14px" fontWeight="500">{quantity}/{total}</StyledFont>

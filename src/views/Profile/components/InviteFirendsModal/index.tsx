@@ -8,19 +8,17 @@ import useUserReward from '@/hooks/useUserReward';
 import { useUserStore } from '@/stores/user';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import useRewardsClaim from '../../hooks/useRewardsClaim';
+import type { Column } from '../../types';
 import MedalCard from '../MedalCard';
-import type { Column } from '../Pts/types';
 import UserAvatar from '../UserAvatar';
 import PendingHints from './PendingHints';
 import {
   StyledAvatar,
   StyledBody,
   StyledCell,
-  StyledColumn,
   StyledLink,
   StyledMedalContainer,
   StyledPendingCell,
-  StyledRewards,
   StyledRow,
   StyledTableHeader,
   StyledTips,
@@ -214,28 +212,6 @@ const InviteFirendsModal = ({
                         row.status
                       ))}
                     </StyledCell>
-                    {/* {COLUMNS.map((column) => (
-                      <StyledCell key={column.key} $width={column.width} $gap={column.gap} $align={column.align}>
-                        {column.key === 'friend' && <Friend {...row.invited_user} />}
-                        {column.key === 'code' && <span className="delete">{row.code}</span>}
-                        {column.key === 'status' &&
-                          (row.status === 'Pending' ? (
-                            <StyledPendingCell>
-                              <span> {row.status + '...'}</span> <PendingHints />
-                            </StyledPendingCell>
-                          ) : (
-                            row.status
-                          ))}
-                        {column.key === 'rewards' &&
-                          (row.reward ? (
-                            <StyledRewards style={{ color: row.is_claimed ? 'rgba(235, 244, 121, 0.3)' : '#ebf479' }}>
-                              {row.reward} PTS
-                            </StyledRewards>
-                          ) : (
-                            <span className="rewards">-</span>
-                          ))}
-                      </StyledCell>
-                    ))} */}
                   </StyledRow>
                 ))
               ) : (

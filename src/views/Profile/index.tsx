@@ -57,7 +57,7 @@ export default memo(function ProfileView() {
   const { inviteInfo, queryInviteList } = useInviteList();
   const { info: rewardInfo, queryUserReward } = useUserReward();
 
-  const handleChange = function (_tab) {
+  const handleChange = function (_tab: Tab) {
     setTab(_tab);
   };
 
