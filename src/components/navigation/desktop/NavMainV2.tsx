@@ -73,7 +73,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                   loading={compassListLoading}
                 />
               </div>
-              <StyleView onClick={() => router.push('/odyssey-list')}><div>View all</div><IconArrowRight /></StyleView>
+              <StyleView onClick={() => router.push('/odyssey/list')}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
