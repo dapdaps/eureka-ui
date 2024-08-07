@@ -6,7 +6,7 @@ import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import Big from 'big.js';
 
-const formatValue = (value: string): string => {
+export const formatValue = (value: string): string => {
   if (!value) return ''
   const unitsConfig = [
     { unit: 'B', threshold: 1e9 },

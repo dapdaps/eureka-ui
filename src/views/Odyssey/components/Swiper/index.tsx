@@ -1,7 +1,6 @@
 import { useSize } from 'ahooks';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { memo, useRef } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import CompassIcon from '@/components/Icons/Compass';
@@ -10,9 +9,11 @@ import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
+import ChainMap from '@/config/chains';
 
 import IconArrow from '@public/images/home/arrow-right.svg';
 import IconClickArrow from '@public/images/home/click-arrow.svg';
+import OdysseyVideo from '@/views/Dapp/components/DappDetail/RelativeOdyssey/Video';
 
 import {
   StyledCard,
@@ -32,16 +33,30 @@ import {
   StyledCominsoon,
   StyledCompassIcon,
   StyledCompassButton,
-  StyledChainsImg
+  StyledOdysseyIconTitle,
+  StyledOdysseyHead,
+  StyledOdysseyInfo,
+  StyledOdysseyIcon,
+  StyleList,
+  StyledVideo,
+  StyledVideoIcon,
+  StyleChainIconImg
 } from './styles';
 
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import Tag from '../Tag';
+import RewardList from '../Reward';
+import MedalList from '../Medal';
 
+
+const parseChainsId = (chains_id: string | null): string[] => 
+  chains_id ? chains_id.split(',').map(id => id.trim()) : [];
 
 const CompassCard = function ({ compass }: any) {
   const toast = useToast();
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true });
+
   const handleExplore = async function () {
     if (compass.status === 'un_start') {
       toast.fail({
@@ -51,6 +66,22 @@ const CompassCard = function ({ compass }: any) {
     }
     if (!odyssey[compass.id]) return;
     router.push(odyssey[compass.id].path);
+  };
+
+  const renderVolNo = (options: { name: string; id: number; }) => {
+    const {
+      name,
+      id,
+    } = options;
+    if (!name) return null;
+    if (name.indexOf('Vol.4+:') > -1) {
+      return '4+';
+    }
+    // ⚠️ Special: mode-odyssey id is 7, but show number is 5
+    if (id === 7) {
+      return 5;
+    }
+    return id;
   };
 
   return (
@@ -64,22 +95,26 @@ const CompassCard = function ({ compass }: any) {
           }}
         />
         <StyledCardMainContent>
-          <div className="title">Odyssey</div>
-          {/* <StyledOdysseyHead>
+          <StyledOdysseyHead>
             <StyledOdysseyInfo>
               <StyledOdysseyIcon />
               <StyledOdysseyIconTitle>Vol.{renderVolNo({ name: compass.name, id: compass.id })}</StyledOdysseyIconTitle>
-              {odyssey[compass.id]?.chainsImg && (
-                <StyledChainsImg
-                  src={odyssey[compass.id]?.chainsImg}
-                  style={{ height: odyssey[compass.id]?.chainsHeight }}
-                />
-              )}
+              <div className='chainList'>
+                {
+                  parseChainsId(compass.chains_id).map((chain: any) => (
+                    <StyleChainIconImg src={ChainMap[chain].icon} alt="" />
+                  ))
+                }
+              </div>
             </StyledOdysseyInfo>
             <Tag status={compass.status} />
-          </StyledOdysseyHead> */}
+          </StyledOdysseyHead>
           <StyledCardTitle>{compass.name}</StyledCardTitle>
-          <StyledCardDesc>{compass.description}</StyledCardDesc>
+          <StyleList>
+            <RewardList odyssey={compass} />
+            <MedalList medals={[1]}/>
+          </StyleList>
+          {/* <StyledCardDesc>{compass.description}</StyledCardDesc> */}
           {compass.status === 'un_start' ? (
             <StyledCominsoon>Coming soon...</StyledCominsoon>
           ) : (
@@ -117,6 +152,18 @@ const Compass = () => {
 
   const swiperRef = useRef<any>();
 
+  const [show, setShow] = useState<boolean>(false);
+  const [videoUrl, setVideoUrl] = useState<string>('');
+  const showVideo = (_video: string) => {
+    if (!_video) {
+      return;
+    }
+    setVideoUrl(_video);
+    setShow(true);
+  };
+
+ 
+
   return loading ? (
     <StyledLoadingWrapper>
       <Loading size={60} />
@@ -149,7 +196,28 @@ const Compass = () => {
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
                   <CompassCard compass={compass} />
-                  <StyledCompassIcon>
+                  {
+
+                      odyssey[compass?.id]?.video && (
+                        <StyledVideo
+                          url={compass.banner}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            showVideo(odyssey[compass?.id]?.video);
+                          }}
+                        >
+                          <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+                        </StyledVideo>
+                      )
+                    }
+                <OdysseyVideo
+                  src={videoUrl}
+                  visible={show}
+                  close={() => {
+                    setShow(false);
+                  }}
+                />
+                  {/* <StyledCompassIcon>
                     <CompassIcon />
                   </StyledCompassIcon>
                   {compass.name === 'THRUSTER TURBO SPIN' ? null : (
@@ -197,7 +265,7 @@ const Compass = () => {
                         {odyssey[compass.id]?.reward}
                       </StyledFont>
                     </div>
-                  )}
+                  )} */}
                 </SwiperSlide>
               ))}
             </Swiper>

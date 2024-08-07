@@ -44,7 +44,7 @@ export const StyledCard = styled.div`
 `;
 
 export const StyledCardBackgroundImage = styled.img`
-  width: 720px;
+  width: 660px;
   height: 380px;
 `;
 
@@ -103,17 +103,18 @@ export const StyledCardChains = styled.img`
 
 export const StyledCardTitle = styled.div`
   color: #fff;
-  font-family: Gantari;
-  font-size: 36px;
-  font-style: normal;
+  font-family: Montserrat;
+  font-size: 32px;
   font-weight: 700;
-  width: 460px;
+  width: 508px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  line-height: 39px; 
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 106px;
+  margin-top: 45px;
+  margin-bottom: 28px;
 `;
 
 export const StyledCardDesc = styled.div`
@@ -130,7 +131,10 @@ export const StyledCardDesc = styled.div`
   text-overflow: ellipsis;
 `;
 
-
+export const StyleChainIconImg = styled.img`
+  width: 30px;
+  height: 30px;
+`
 
 export const StyledCompassButton = styled.div`
   width: 100%;
@@ -210,7 +214,7 @@ export const StyledSwiperWrapper = styled.div`
   position: relative;
   .swiper-pagination {
     position: absolute;
-    bottom: -70px;
+    bottom: -74px;
     right: 50%;
     display: flex;
     align-items: center;
@@ -296,13 +300,26 @@ export const StyleAdTitle = styled.div`
 
 export const StyledOdysseyHead = styled.div`
   display: flex;
-  align-items: center;
   justify-content: space-between;
 `;
 
 export const StyledOdysseyInfo = styled.div`
   display: flex;
   align-items: center;
+
+  .chainList {
+    margin-left: 14px;
+    display: flex;
+    max-width: 180px;
+    flex-flow: wrap row;
+
+    gap: 4px;
+    span {
+      width: 30px;
+      height: 30px;
+      background-color: #f00;
+    }
+  }
 `;
 
 export const StyledOdysseyIcon = styled.div`
@@ -326,4 +343,32 @@ export const StyledOdysseyIconTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`;
+
+export const StyleList = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
+export const StyledVideo = styled.div<{ url?: string }>`
+  width: 80px;
+  height: 40px;
+  border-radius: 4px;
+  position: absolute;
+  bottom: 10px;
+  left: 560px;
+  background: ${props => props.url ? `url(${props.url}) no-repeat center` : ''};
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+`;
+
+export const StyledVideoIcon = styled.img`
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  object-fit: contain;
 `;

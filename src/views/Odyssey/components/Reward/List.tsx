@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useMemo, useState } from 'react';
+import styled, { CSSProperties } from 'styled-components';
 import { AnimatePresence, useMotionValue } from 'framer-motion';
-import Tooltip from './';
-import OdysseyCard from './Odyssey';
 import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import RewardIconsMap from '@/views/OdysseyV8/RewardIcons';
 import { motion } from 'framer-motion';
+import Tooltip from '@/views/Home/components/Tooltip';
+import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
+import { parseReward } from '.';
+import { StatusType } from '../Tag';
+
 const ToolList = styled.div`
   display: flex;
   align-items: center;
 
   .box {
     position: relative;
-    padding-top: 20px;
 
     &:not(:first-child) {
       margin-left: -8px;
@@ -20,13 +22,6 @@ const ToolList = styled.div`
   }
 `;
 
-const StyledTooltipList = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  background: #21232a;
-`;
 
 const StyledTagChain = styled(motion.div)`
   width: 72px;
@@ -51,11 +46,21 @@ const StyledTagChain = styled(motion.div)`
   }
 `;
 
-interface TooltipListProps {
-  data: FormattedRewardList[];
+interface IOdyssey {
+  id: string;
+  name: string;
+  description: string;
+  banner: string;
+  reward: string;
+  status: StatusType;
 }
 
-const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
+interface TooltipListProps {
+  odyssey: IOdyssey;
+  sxImg?: CSSProperties
+}
+
+const TooltipList: React.FC<TooltipListProps> = ({ odyssey, sxImg }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const x = useMotionValue(0);
 
@@ -64,9 +69,11 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
     x.set(event.nativeEvent.offsetX - halfWidth);
   };
 
+  const rewards = useMemo(() => parseReward(odyssey?.reward), [odyssey])
+
   return (
     <ToolList>
-      {data.map((item, index) => (
+      {rewards.map((item: any, index: number) => (
         <div
           className="box"
           key={index}
@@ -80,19 +87,15 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
                 showAnimateTooltip={true}
                 animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
               >
-                <StyledTooltipList>
-                  {item.odysseys.map((odyssey) => (
-                    <OdysseyCard
-                      key={odyssey.id}
-                      status={odyssey.status}
-                      title={odyssey.name}
-                      subtitle={odyssey.description}
-                      imageUrl={odyssey.banner}
-                      reward={item}
-                      withoutCardStyle
-                    />
-                  ))}
-                </StyledTooltipList>
+                <OdysseyCard
+                    key={odyssey.id}
+                    status={odyssey.status}
+                    title={odyssey.name}
+                    subtitle={odyssey.description}
+                    imageUrl={odyssey.banner}
+                    reward={item}
+                    withoutCardStyle
+                />
               </Tooltip>
             </AnimatePresence>
           )}
@@ -106,6 +109,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
               zIndex: 2,
             }}
             onMouseMove={handleMouseMove}
+            style={sxImg}
           >
             <img
               src={RewardIconsMap[item.logo_key]?.icon}
