@@ -71,10 +71,28 @@ function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+
+
+/**
+ * Extracts the path from a given URL.
+ * 
+ * @param url - The URL from which to extract the path.
+ * @returns The extracted path from the URL.
+ */
+const extractPathFromUrl = (url: string): string => {
+  try {
+    const urlObject = new URL(url);
+    return urlObject.pathname + urlObject.search + urlObject.hash;
+  } catch (error) {
+    return '';
+  }
+};
+
 export {
   formateAddress,
   formateValue,
   formateValueWithThousandSeparator,
   formateValueWithThousandSeparatorAndFont,
   getRandomInt,
+  extractPathFromUrl
 };

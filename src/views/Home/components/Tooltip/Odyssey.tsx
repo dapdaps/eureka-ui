@@ -3,6 +3,28 @@ import styled from 'styled-components';
 
 import Image from 'next/image';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
+import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
+import Big from 'big.js';
+
+const formatValue = (value: string): string => {
+  const unitsConfig = [
+    { unit: 'B', threshold: 1e9 },
+    { unit: 'M', threshold: 1e6 },
+    { unit: 'K', threshold: 1e3 },
+  ];
+  value = value.toUpperCase();
+  if (unitsConfig.some(config => value.endsWith(config.unit))) {
+    return value;
+  }
+  for (const config of unitsConfig) {
+    if (Big(value).gte(config.threshold)) {
+      const newValue = Big(value).div(config.threshold).toFixed(2);
+      return parseFloat(newValue) + config.unit;
+    }
+  }
+  const newValue = Big(value).toFixed(2);
+  return parseFloat(newValue).toString();
+};
 
 const OdysseyCard = (props: Props) => {
   const {
@@ -11,14 +33,19 @@ const OdysseyCard = (props: Props) => {
     subtitle,
     imageUrl,
     withoutCardStyle,
+    reward
   } = props;
-
+  console.log(reward, 'reward');
+  
   return (
     <StyledContainer $withoutCardStyle={withoutCardStyle}>
       <Tag status={status} className='status' />
       <StyledContent>
+        <StyleHead>
+          <StyledValue>${formatValue(reward.value)} <span>{reward.name}</span></StyledValue>
+        </StyleHead>
         <StyledTitle>{title}</StyledTitle>
-        <StyledTitleSub>{subtitle}</StyledTitleSub>
+        {/* <StyledTitleSub>{subtitle}</StyledTitleSub> */}
         <StyledImage src={imageUrl} alt={title} width={235} height={116} />
       </StyledContent>
     </StyledContainer>
@@ -33,7 +60,28 @@ export interface Props {
   subtitle: string;
   imageUrl: string;
   withoutCardStyle?: boolean;
+  reward: FormattedRewardList
 }
+
+const StyleHead = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+`
+
+const StyledValue = styled.div`
+  font-family: Montserrat;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  color: #EBF479;
+  margin-right: 5px;
+  span {
+    color: #fff;
+  }
+`
 
 const StyledContainer = styled.div<{ $withoutCardStyle?: boolean; }>`
   position: relative;

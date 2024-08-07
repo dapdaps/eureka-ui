@@ -16,6 +16,7 @@ const StyledTooltip = styled.div<{ tooltipWidth: number }>`
   border-radius: 12px;
   padding: 26px 11px 13px 11px;
   box-sizing: border-box;
+  z-index: 10;
 `;
 
 interface AnimationProps {
