@@ -134,7 +134,6 @@ const Badges = (props: Props) => {
                 setHoveredIndex(null);
               }}
               onClick={(e) => onBadgeClick(e, badge)}
-              onMouseMove={handleMouseMove}
             >
               <StyledBadgeImage
                 src={badge.icon}
@@ -150,6 +149,7 @@ const Badges = (props: Props) => {
                     zIndex: 1,
                   },
                 }}
+                onMouseMove={handleMouseMove}
               />
               {badge.value}
               {renderBadgesTooltip('single', badge, index)}
@@ -202,7 +202,6 @@ const Badges = (props: Props) => {
                   setHoveredIndex(null);
                 }}
                 onClick={(e) => onBadgeClick(e, badge)}
-                onMouseMove={handleMouseMove}
               >
                 <StyledBadgeImage
                   key={index}
@@ -217,6 +216,7 @@ const Badges = (props: Props) => {
                     scale: 1.2,
                     zIndex: 2,
                   }}
+                  onMouseMove={handleMouseMove}
                 />
                 {renderBadgesTooltip('group', badge, index)}
               </StyledBadgeItem>
