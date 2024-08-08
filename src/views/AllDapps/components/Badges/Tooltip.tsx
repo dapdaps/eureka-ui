@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const Tooltip = (props: Props) => {
-  const { children, tooltip, style } = props;
+  const { children, tooltip, style, tooltipStyle } = props;
 
   if (!tooltip) return children;
 
@@ -27,6 +27,7 @@ const Tooltip = (props: Props) => {
             y: 'calc(-100%)',
           },
         }}
+        style={tooltipStyle}
       >
         {tooltip}
       </StyledTooltip>
@@ -40,6 +41,7 @@ export interface Props {
   children: any;
   tooltip: any;
   style?: React.CSSProperties;
+  tooltipStyle?: React.CSSProperties;
 }
 
 const StyledContainer = styled(motion.div)`

@@ -41,6 +41,7 @@ export const StyledOdysseyTitle = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   padding-right: 20px;
+  padding-left: 20px;
 `;
 
 export const StyledOdysseyHead = styled.div`
@@ -53,50 +54,6 @@ export const StyledOdysseyHead = styled.div`
   justify-content: space-between;
   padding: 0 16px;
   z-index: 1;
-`;
-
-export const StyledOdysseyTagShadow = styled.div`
-  padding: 5px;
-  border-radius: 16px;
-  position: relative;
-`;
-
-export const StyledOdysseyTag = styled.div`
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(32, 34, 47, 1);
-  padding: 6px 10px;
-  display: flex;
-  align-items: center;
-  color: #979ABE;
-  font-family: Gantari;
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  position: relative;
-  z-index: 2;
-
-  &::before {
-    display: block;
-    content: '';
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background-color: #979ABE;
-    margin-right: 5px;
-  }
-`;
-
-export const StyledLiveBg = styled(motion.div)`
-  width: 100%;
-  height: 100%;
-  border-radius: 999px;
-  background: rgba(87, 219, 100, .2);
-  position: absolute;
-  z-index: 0;
-  top: 0;
-  left: 0;
-  backdrop-filter: blur(4px);
 `;
 
 export const StyledRelatedTitle = styled.div`
@@ -122,7 +79,7 @@ export const StyledEmpty = styled.div`
 `;
 
 export const StyledOdysseyBody = styled.div`
-  padding: 16px 0 20px 20px;
+  padding: 16px 0 20px 0;
   width: 100%;
 `;
 
@@ -204,15 +161,23 @@ export const StyledVideoContent = styled.div`
 `;
 
 export const StyledTagList = styled.div`
+  padding-top: 40px;
+  width: 100%;
+  position: relative;
+  overflow-x: auto;
+  scrollbar-width: none;
   display: flex;
   align-items: center;
   column-gap: 10px;
-  margin-top: 40px;
-  width: 100%;
-  position: relative;
+  padding-right: 20px;
+  padding-left: 20px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-export const StyledTagItem = styled.div`
+export const StyledTagItem = styled(motion.div)`
   border-radius: 34px;
   background: #21222B;
   padding: 4px 12px;
@@ -227,8 +192,6 @@ export const StyledTagItem = styled.div`
     padding: 0;
     background: unset;
     flex: 1;
-    width: 0;
-    overflow: hidden;
     border-radius: 0;
   }
 `;
@@ -239,6 +202,7 @@ export const StyledTagItemInner = styled.div`
   align-items: center;
   column-gap: 6px;
   padding: 0 9px;
+  white-space: nowrap;
   
   &.tag-default {
     border: 1px solid #373A53;
@@ -247,6 +211,7 @@ export const StyledTagItemInner = styled.div`
     .reward-text {
       color: #979ABE;
       font-weight: 600;
+      white-space: nowrap;
     }
   }
 
