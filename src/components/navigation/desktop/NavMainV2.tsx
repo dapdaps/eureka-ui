@@ -12,7 +12,7 @@ import IconArrowRight from '@public/images/header/arrow-right.svg'
 import { StatusType } from "@/views/Odyssey/components/Tag";
 import Chains from './components/Chains';
 import ListItem from './components/ListItem';
-import useNetworks from '@/views/networks/list/hooks/useNetworks';
+import { useNetworks } from '@/hooks/useNetworks';
 import { DividerHorizontalIcon } from '@radix-ui/react-icons';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import { useMemo } from 'react';
@@ -51,7 +51,7 @@ const StyleView = styled.div`
 
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
-  const { loading: networkLoading, networkList } = useNetworks();
+  const { networkLoading, networkList } = useNetworks();
   const { loading: compassListLoading, compassList } = useCompassList()
   const router = useRouter();
   const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_New), [compassList])

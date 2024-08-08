@@ -50,6 +50,10 @@ const GridItemContainer = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .name {
+    white-space: nowrap;
+  }
 `;
 
 const LoadingCard = () => {
@@ -72,7 +76,7 @@ const Chains = ({
   const router = useRouter()
   
   const handleClick = (item: Network) => {
-    router.push(`/network/${IdToPath[item.id]}`);
+    router.push(`/networks/${IdToPath[item.id]}`);
   }
   return (
     <GridContainer>

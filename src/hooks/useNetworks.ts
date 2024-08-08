@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
+import { orderBy } from 'lodash';
+import { IdToPath } from '@/config/all-in-one/chains';
+
+const InConfigNetworkIds = Object.keys(IdToPath);
 
 // query all networks
 export function useNetworks(props?: Props) {
@@ -21,14 +25,16 @@ export function useNetworks(props?: Props) {
     setNetworkLoading(true);
     try {
       const resultNetwork = await get(`${QUEST_PATH}/api/network/list`);
-      const data = resultNetwork.data || [];
+      let data = resultNetwork.data || [];
+      data = data.filter((it: any) => InConfigNetworkIds.includes(it.id + ''));
+      const dataSorted = orderBy(data, 'name', 'asc');
       if (isAll) {
-        data.unshift({
+        dataSorted.unshift({
           ...NetworkAll,
           logo: isAllIcon ? NetworkAll.logo : '',
         });
       }
-      setNetworkList(data);
+      setNetworkList(dataSorted);
     } catch (error) {
       console.error('Error fetching resultNetwork data:', error);
     }

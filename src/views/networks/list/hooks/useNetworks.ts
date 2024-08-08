@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import { L1ChainIds } from '@/config/chains';
 import { StatusType } from '@/views/Odyssey/components/Tag';
 import { IdToPath } from '@/config/all-in-one/chains';
+import { orderBy } from 'lodash';
+import Big from 'big.js';
 
 const InConfigNetworkIds = Object.keys(IdToPath);
 
@@ -14,6 +16,10 @@ export default function useNetworks() {
   const [l1NetworkList, setL1NetworkList] = useState<Network[]>([]);
   const [l2networkList, setL2NetworkList] = useState<Network[]>([]);
 
+  const networkListSortByAZ = useMemo(() => {
+    return orderBy(networkList, 'name', 'asc');
+  }, [networkList]);
+
   const fetchNetworkData = async () => {
     if (loading) return;
     setLoading(true);
@@ -21,6 +27,7 @@ export default function useNetworks() {
       const resultNetwork = await get(`${QUEST_PATH}/api/network/all`);
       let data: Network[] = resultNetwork.data || [];
       data = data.filter((it) => InConfigNetworkIds.includes(it.id + ''));
+      data = orderBy(data, (it) => Big(it.trading_volume).toNumber(), 'desc');
       const _l1NetworkList = [];
       const _l2NetworkList = [];
       for (const network of data) {
@@ -44,7 +51,7 @@ export default function useNetworks() {
     fetchNetworkData();
   }, []);
 
-  return { loading, networkList, l1NetworkList, l2networkList };
+  return { loading, networkList, l1NetworkList, l2networkList, networkListSortByAZ };
 }
 
 export interface Network {

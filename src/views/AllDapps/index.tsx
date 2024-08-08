@@ -233,7 +233,7 @@ const AllDapps = (props: Props) => {
           fixed={scrolled}
           variants={{
             visible: {
-              zIndex: 50,
+              zIndex: 41,
               y: 104,
             },
             hidden: {
