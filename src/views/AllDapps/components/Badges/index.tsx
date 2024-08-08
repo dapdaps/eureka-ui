@@ -1,6 +1,5 @@
-import Image from 'next/image';
 import React, { useMemo, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, useMotionValue } from 'framer-motion';
 import Tooltip from '@/views/Home/components/Tooltip';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import odyssey from '@/config/odyssey';
@@ -10,6 +9,8 @@ import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { cloneDeep } from 'lodash';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
+import { StatusType } from '@/views/Odyssey/components/Tag';
+import TooltipSimple from './Tooltip';
 
 const Badges = (props: Props) => {
   const { rewards, tradingVolume, users } = props;
@@ -18,13 +19,13 @@ const Badges = (props: Props) => {
 
   const initBadges: Badge[] = [
     {
-      name: 'tradingVolume',
+      name: 'Trading Volume',
       icon: '/images/alldapps/icon-exchange.svg',
       value: '$' + formatIntegerThousandsSeparator(tradingVolume, 2),
       iconSize: 17,
     },
     {
-      name: 'participants',
+      name: 'User Amount',
       icon: '/images/alldapps/icon-fire.svg',
       value: formatIntegerThousandsSeparator(users, 0),
       iconSize: 17,
@@ -47,7 +48,8 @@ const Badges = (props: Props) => {
               name: reward.name,
               icon: RewardIcons[reward.logo_key]?.icon ?? '',
               iconSize: 20,
-              defaultValue: reward.value,
+              value: reward.value,
+              status: activity.status,
               odyssey: [{
                 ...activity,
                 badgeValue: reward.value,
@@ -68,6 +70,12 @@ const Badges = (props: Props) => {
   }, [rewards]);
 
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const x = useMotionValue(0);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    const halfWidth = event.currentTarget.offsetWidth / 2;
+    x.set(event.nativeEvent.offsetX - halfWidth);
+  };
 
   const onBadgeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, badge: Badge) => {
     e.stopPropagation();
@@ -81,7 +89,13 @@ const Badges = (props: Props) => {
   const renderBadgesTooltip = (key: string, badge: Badge, index: number) => {
     return badge.odyssey && hoveredIndex === index && (
       <AnimatePresence>
-        <Tooltip customClass="dapp-card-odyssey-tooltip" key={key}>
+        <Tooltip
+          customClass="dapp-card-odyssey-tooltip"
+          key={key}
+          x={x}
+          showAnimateTooltip={true}
+          animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
+        >
           <StyledBadgeTooltip>
             {
               badge.odyssey.map((ody) => (
@@ -91,6 +105,7 @@ const Badges = (props: Props) => {
                   subtitle={ody.description}
                   imageUrl={ody.banner}
                   withoutCardStyle
+                  reward={{ value: ody.badgeValue as string, name: badge.name as string }}
                   onClick={(e) => onOdysseyClick(e, ody)}
                 />
               ))
@@ -107,36 +122,39 @@ const Badges = (props: Props) => {
       return allBadges.map((badge: Badge, index: number) => {
         const iconSize = getIconSize(badge.iconSize);
         return (
-          <StyledBadge
-            key={index}
-            whileHover="active"
-            initial="default"
-            onHoverStart={() => {
-              setHoveredIndex(index);
-            }}
-            onHoverEnd={() => {
-              setHoveredIndex(null);
-            }}
-            onClick={(e) => onBadgeClick(e, badge)}
-          >
-            <StyledBadgeImage
-              src={badge.icon}
-              alt=""
-              width={iconSize.w}
-              height={iconSize.h}
-              variants={{
-                active: {
-                  scale: 1.2,
-                  zIndex: 2,
-                },
-                default: {
-                  zIndex: 1,
-                },
+          <TooltipSimple tooltip={badge.name} key={index} style={{ whiteSpace: 'nowrap' }}>
+            <StyledBadge
+              $status={badge.status}
+              whileHover="active"
+              initial="default"
+              onHoverStart={() => {
+                setHoveredIndex(index);
               }}
-            />
-            {badge.defaultValue || badge.value}
-            {renderBadgesTooltip('single', badge, index)}
-          </StyledBadge>
+              onHoverEnd={() => {
+                setHoveredIndex(null);
+              }}
+              onClick={(e) => onBadgeClick(e, badge)}
+              onMouseMove={handleMouseMove}
+            >
+              <StyledBadgeImage
+                src={badge.icon}
+                alt=""
+                width={iconSize.w}
+                height={iconSize.h}
+                variants={{
+                  active: {
+                    scale: 1.2,
+                    zIndex: 2,
+                  },
+                  default: {
+                    zIndex: 1,
+                  },
+                }}
+              />
+              {badge.value}
+              {renderBadgesTooltip('single', badge, index)}
+            </StyledBadge>
+          </TooltipSimple>
         );
       });
     }
@@ -144,18 +162,31 @@ const Badges = (props: Props) => {
       <>
         {
           allBadges.slice(0, 2).map((badge: Badge, index: number) => (
-            <StyledBadge
-              key={index}
-              onClick={(e) => onBadgeClick(e, badge)}
-            >
-              <Image
-                src={badge.icon}
-                alt=""
-                width={getIconSize(badge.iconSize).w}
-                height={getIconSize(badge.iconSize).h}
-              />
-              {badge.value}
-            </StyledBadge>
+            <TooltipSimple tooltip={badge.name} key={index} style={{ whiteSpace: 'nowrap' }}>
+              <StyledBadge
+                $status={badge.status}
+                onClick={(e) => onBadgeClick(e, badge)}
+                whileHover="active"
+                initial="default"
+              >
+                <StyledBadgeImage
+                  src={badge.icon}
+                  alt=""
+                  width={getIconSize(badge.iconSize).w}
+                  height={getIconSize(badge.iconSize).h}
+                  variants={{
+                    active: {
+                      scale: 1.2,
+                      zIndex: 2,
+                    },
+                    default: {
+                      zIndex: 1,
+                    },
+                  }}
+                />
+                {badge.value}
+              </StyledBadge>
+            </TooltipSimple>
           ))
         }
         <StyledBadge className="group">
@@ -171,6 +202,7 @@ const Badges = (props: Props) => {
                   setHoveredIndex(null);
                 }}
                 onClick={(e) => onBadgeClick(e, badge)}
+                onMouseMove={handleMouseMove}
               >
                 <StyledBadgeImage
                   key={index}
@@ -217,7 +249,7 @@ export interface Badge {
   // please pass in an array: [width, height]
   iconSize: number | number[];
   value?: string | number;
-  defaultValue?: string | number;
+  status?: StatusType;
   odyssey?: Record<string, any>[];
 }
 

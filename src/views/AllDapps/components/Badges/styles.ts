@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 export const StyledContainer = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const StyledContainer = styled.div`
   gap: 6px;
   margin-top: 20px;
 `;
-export const StyledBadge = styled(motion.div)`
+export const StyledBadge = styled(motion.div)<{ $status?: StatusType }>`
   height: 32px;
   flex-shrink: 0;
   border-radius: 34px;
@@ -25,6 +26,7 @@ export const StyledBadge = styled(motion.div)`
   align-items: center;
   gap: 6px;
   position: relative;
+  opacity: ${({ $status }) => $status ? ($status === StatusType.ongoing ? 1 : 0.5) : 1};
 
   &.group {
     padding-left: 8px;
