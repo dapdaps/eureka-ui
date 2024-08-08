@@ -76,7 +76,10 @@ export default function useList(props: Props) {
         dapp.rewards = [];
         if (dapp?.networks && dapp.networks.length) {
           rewardList.forEach((item: any) => {
-            const _reward = dapp.networks.find((network: any) => item.chains_id == network.chainId);
+            const rewardChainList = item.chains_id.split(',')?.map((chain_id: string) => Number(chain_id)) || [];
+            const _reward = dapp.networks.find((network: any) => {
+              return rewardChainList.some((chain_id: string) => chain_id === network.chainId);
+            });
             if (_reward) {
               dapp.rewards.push(item);
             }

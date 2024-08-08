@@ -390,6 +390,8 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
                 users={network?.participants}
                 rewards={network?.odyssey}
                 tradingVolume={network?.trading_volume}
+                tradingVolumeTooltip="Total trading volume on DapDap"
+                usersTooltip="User amount of this chain on DapDap"
               />
             </div>
           </div>

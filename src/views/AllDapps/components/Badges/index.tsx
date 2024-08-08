@@ -13,7 +13,13 @@ import { StatusType } from '@/views/Odyssey/components/Tag';
 import TooltipSimple from './Tooltip';
 
 const Badges = (props: Props) => {
-  const { rewards, tradingVolume, users } = props;
+  const {
+    rewards,
+    tradingVolume,
+    users,
+    tradingVolumeTooltip,
+    usersTooltip,
+  } = props;
 
   const router = useRouter();
 
@@ -23,12 +29,14 @@ const Badges = (props: Props) => {
       icon: '/images/alldapps/icon-exchange.svg',
       value: '$' + formatIntegerThousandsSeparator(tradingVolume, 2),
       iconSize: 17,
+      tooltip: tradingVolumeTooltip || 'Trading Volume',
     },
     {
       name: 'User Amount',
       icon: '/images/alldapps/icon-fire.svg',
       value: formatIntegerThousandsSeparator(users, 0),
       iconSize: 17,
+      tooltip: usersTooltip || 'User Amount',
     },
   ];
 
@@ -122,9 +130,8 @@ const Badges = (props: Props) => {
       return allBadges.map((badge: Badge, index: number) => {
         const iconSize = getIconSize(badge.iconSize);
         return (
-          <TooltipSimple tooltip={badge.name} key={index} style={{ whiteSpace: 'nowrap' }}>
+          <TooltipSimple tooltip={badge.tooltip} key={index} style={{ whiteSpace: 'nowrap' }}>
             <StyledBadge
-              $status={badge.status}
               whileHover="active"
               initial="default"
               onHoverStart={() => {
@@ -162,9 +169,8 @@ const Badges = (props: Props) => {
       <>
         {
           allBadges.slice(0, 2).map((badge: Badge, index: number) => (
-            <TooltipSimple tooltip={badge.name} key={index} style={{ whiteSpace: 'nowrap' }}>
+            <TooltipSimple tooltip={badge.tooltip} key={index} style={{ whiteSpace: 'nowrap' }}>
               <StyledBadge
-                $status={badge.status}
                 onClick={(e) => onBadgeClick(e, badge)}
                 whileHover="active"
                 initial="default"
@@ -240,6 +246,8 @@ export interface Props {
   rewards?: Partial<NetworkOdyssey>[];
   tradingVolume: string | number;
   users: string | number;
+  tradingVolumeTooltip?: string;
+  usersTooltip?: string;
 }
 
 export interface Badge {
@@ -251,6 +259,7 @@ export interface Badge {
   value?: string | number;
   status?: StatusType;
   odyssey?: Record<string, any>[];
+  tooltip?: string;
 }
 
 const getIconSize = (size: number | number[]) => {

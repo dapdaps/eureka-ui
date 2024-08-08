@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 const Tooltip = (props: Props) => {
   const { children, tooltip, style } = props;
 
+  if (!tooltip) return children;
+
   return (
     <StyledContainer
       initial="hidden"
