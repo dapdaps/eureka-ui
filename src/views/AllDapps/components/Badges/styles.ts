@@ -9,6 +9,13 @@ export const StyledContainer = styled.div`
   align-items: center;
   gap: 6px;
   margin-top: 20px;
+  width: 100%;
+  //overflow-x: auto;
+  //overflow-y: hidden;
+  //scrollbar-width: none;
+  //&::-webkit-scrollbar {
+  //  display: none;
+  //}
 `;
 export const StyledBadge = styled(motion.div)<{ $status?: StatusType }>`
   height: 32px;

@@ -41,8 +41,6 @@ const ChainDetail = ({ path }: any) => {
 
   const { detail, loading: detailLoading } = useDetail(PathToId[path]);
 
-  console.log('detail: %o', detail);
-
   const { handleReport } = useReport();
 
   const currentChain = useMemo(() => {
@@ -94,7 +92,7 @@ const ChainDetail = ({ path }: any) => {
 
   return (
     <StyledContainer>
-      <Top chain={{ ...currentChain, ...detail }} />
+      <Top chain={{ ...currentChain, ...detail }} loading={detailLoading} />
       <QuickOnboarding chain={{ ...currentChain }} />
 
       <StyledDetail>

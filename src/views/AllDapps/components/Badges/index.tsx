@@ -130,7 +130,7 @@ const Badges = (props: Props) => {
       return allBadges.map((badge: Badge, index: number) => {
         const iconSize = getIconSize(badge.iconSize);
         return (
-          <TooltipSimple tooltip={badge.tooltip} key={index} style={{ whiteSpace: 'nowrap' }}>
+          <TooltipSimple tooltip={badge.tooltip} key={index}>
             <StyledBadge
               whileHover="active"
               initial="default"
@@ -169,7 +169,7 @@ const Badges = (props: Props) => {
       <>
         {
           allBadges.slice(0, 2).map((badge: Badge, index: number) => (
-            <TooltipSimple tooltip={badge.tooltip} key={index} style={{ whiteSpace: 'nowrap' }}>
+            <TooltipSimple tooltip={badge.tooltip} key={index}>
               <StyledBadge
                 onClick={(e) => onBadgeClick(e, badge)}
                 whileHover="active"

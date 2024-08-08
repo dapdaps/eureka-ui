@@ -426,7 +426,7 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
       <BadgesContainer>
         <Badges
           users={network?.participants}
-          rewards={network?.rewards}
+          rewards={network?.odyssey}
           tradingVolume={network?.trading_volume}
         />
       </BadgesContainer>

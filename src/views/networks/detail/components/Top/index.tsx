@@ -1,5 +1,4 @@
 import { memo, useState } from 'react';
-import Breadcrumb from '@/components/Breadcrumb';
 import Header from './Header';
 import {
   StyledContainer,
@@ -9,7 +8,8 @@ import {
 } from './styles';
 import PageBack from '@/components/PageBack';
 
-const Top = ({ chain }: any) => {
+const Top = (props: { chain: any; loading?: boolean; }) => {
+  const { chain, loading } = props;
 
   const [more, setMore] = useState(false);
 
@@ -19,7 +19,7 @@ const Top = ({ chain }: any) => {
         <StyledBgWrapper color={chain?.selectBgColor}/>
         <StyledContent>
           <PageBack defaultPath="/networks" />
-          <Header chain={chain} />
+          <Header chain={chain} loading={loading} />
         </StyledContent>
       </StyledBox>
     </StyledContainer>

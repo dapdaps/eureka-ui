@@ -83,19 +83,7 @@ export const StyledTitleWrapper = styled.div`
   align-items: center;
   gap: 23px;
 `;
-export const StyledChainLogoWrapper = styled.div`
-  width: 100px;
-  height: 100px;
-  flex-shrink: 0;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
-export const StyledChainLogo = styled.img`
-  width: 48px;
-`;
 export const StyledInfo = styled.div`
   //display: flex;
   //height: 100px;
