@@ -35,4 +35,12 @@ export default {
     icon: '/images/odyssey/v8/yield.svg',
     label: 'Crypto Valleys Yield token',
   },
+  USDC: {
+    icon: '/images/odyssey/v5/mastery/coin/usdc.svg',
+    label: 'USDC',
+  },
+  SMD: {
+    icon: '/images/odyssey/v5/mastery/temp/smd.svg',
+    label: '$SMD',
+  },
 } as any;
