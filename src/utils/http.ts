@@ -57,7 +57,7 @@ const getWithoutActive = async (
   activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx',
   query?: Record<string, any>,
 ) => {
-  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');  
   const options = {
     method: 'GET',
     headers: {

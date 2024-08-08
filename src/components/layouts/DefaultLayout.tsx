@@ -36,6 +36,7 @@ const BLACK_PATH = [
   '/networks',
   '/networks/[path]',
   '/bridge-x/[tool]',
+  '/notification'
 ]
 
 export function DefaultLayout({ children }: Props) {

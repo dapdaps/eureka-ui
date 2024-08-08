@@ -131,8 +131,6 @@ const SuperFeatures = () => {
     
     const fetchStatData = () => {
         get(`${QUEST_PATH}/api/dashboard/summary`).then((res) => {
-            console.log(res, 'res');
-            
             setStatData(res.data)
         }).catch((err) => {
             console.log(err)

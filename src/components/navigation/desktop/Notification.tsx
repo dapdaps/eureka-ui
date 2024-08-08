@@ -3,6 +3,14 @@ import styled from 'styled-components';
 import NotificationItem from '@/components/notification';
 import { useEffect, useRef, useState } from 'react';
 import { get } from '@/utils/http';
+import { useRouter } from 'next/router';
+import Skeleton from 'react-loading-skeleton';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import useAccount from '@/hooks/useAccount';
+import Empty from '@/components/Empty';
+import { useDebounceFn } from 'ahooks';
+import { useNeedRefreshStore } from '@/stores/useNeedRefreshStore';
+
 
 const Wrapper = styled.div`
   position: relative;
@@ -75,6 +83,10 @@ const LayerHeader = styled.div`
   }
 `;
 
+const StyleLoading = styled.div`
+  padding: 16px;
+`
+
 export interface INotification {
   created_at: string;
   status: number;
@@ -90,21 +102,31 @@ export interface INotificationsResponse {
   data: INotification[];
 }
 
+
+const LoadingList = () => (
+  <>
+    <StyleLoading>
+      <Skeleton height={80} count={3} borderRadius={'12px'}/>
+    </StyleLoading>    
+  </>
+)
+
 export default function Notification() {
   const [isHovered, setIsHovered] = useState(false);
   const [data, setData] = useState<INotificationsResponse>();
   const ref = useRef<HTMLDivElement>(null);
-
+  const router = useRouter()
+  const [loading, setLoading] = useState<boolean>(false);
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
+  const { account } = useAccount();
+  const refresh = useNeedRefreshStore((state) => state.refresh);
+  
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
     setIsHovered(false);
-  };
-
-  const handleClick = () => {
-    setIsHovered(true);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
@@ -121,16 +143,28 @@ export default function Notification() {
 
   const fetchNotification = async () => {
     try {
+      setLoading(true);
       const result = await get(`/api/notification/latest`);
       setData(result.data);
     } catch (err) {
       console.log(err, 'err');
-    } 
+    } finally {
+      setLoading(false);
+    }
   };
 
+  const { run } = useDebounceFn(
+    () => {
+      check(() => fetchNotification());
+    },
+    { wait: 300 },
+  );
+
   useEffect(() => {
-    fetchNotification();
-  }, []);
+    run();
+  }, [account, refresh]);
+
+
 
   return (
     <Wrapper ref={ref} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
@@ -142,17 +176,23 @@ export default function Notification() {
           />
         </svg>
       </Trigger>
-      {data?.unread && <div className="dot">{data.unread}</div>}
-      {isHovered && data && data.unread > 0 && (
+
+      {!!data?.unread && <div className="dot">{data.unread}</div>}
+
+      {isHovered && (
         <Layer>
           <LayerHeader>
             <div className="noti-title">Notifications</div>
-            <div className="noti-read-all">Read all</div>
+            <div className="noti-read-all" onClick={() => router.push('/notification') }>Read all</div>
           </LayerHeader>
           <div className="noti-content">
-            {data.data.map((item) => {
-              return <NotificationItem key={item.id} data={item}/>;
-            })}
+            {
+              loading ? <LoadingList /> : data?.data.length === 0 ? 
+              <Empty size={48} tips="Waiting New Notifications" />:
+              data?.data.map((item) => {
+                return <NotificationItem key={item.id} data={item} onClick={() => router.push('/notification')}/>;
+              })
+            }
           </div>
         </Layer>
       )}
