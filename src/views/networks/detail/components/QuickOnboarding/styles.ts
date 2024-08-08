@@ -10,7 +10,7 @@ export const StyledContainer = styled.div`
   gap: 16px;
 `;
 
-export const StyledItem = styled.div<{ $bgColor: string; $key: string; }>`
+export const StyledItem = styled.div<{ $bgColor: string; $color: string; $key: string; }>`
   font-family: Montserrat;
   display: flex;
   align-items: center;
@@ -27,7 +27,9 @@ export const StyledItem = styled.div<{ $bgColor: string; $key: string; }>`
   font-weight: 600;
   line-height: normal;
   opacity: 0.8;
-  ${({ $key, $bgColor }) => {
+  transition: all linear 0.2s;
+  
+  ${({ $key, $bgColor, $color }) => {
     const styles: any = {
       cursor: 'pointer',
     };
@@ -36,12 +38,16 @@ export const StyledItem = styled.div<{ $bgColor: string; $key: string; }>`
       styles.width = '420px';
       styles.border = 'none';
       styles.background = $bgColor;
-      styles.color = '#02051E';
+      styles.color = $color;
     } else {
       styles.flex = 1;
     }
     return styles;
   }};
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const StyledItemBg = styled.div`

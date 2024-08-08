@@ -8,6 +8,12 @@ export default {
   chainId: 42161,
   rpcUrls: ['https://arb1.arbitrum.io/rpc'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#3564AB',
+      text: '#FFF',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

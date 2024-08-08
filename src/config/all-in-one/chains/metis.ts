@@ -8,6 +8,12 @@ export default {
   chainId: 1088,
   rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#00D3FF',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

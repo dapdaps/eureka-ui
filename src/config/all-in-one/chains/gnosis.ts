@@ -8,6 +8,12 @@ export default {
   chainId: 100,
   rpcUrls: ['https://rpc.ankr.com/gnosis'],
   defaultTab: 'Swap',
+  theme: {
+    button: {
+      bg: '#0C532D',
+      text: '#FFF',
+    },
+  },
   menuConfig: {
     Swap: {
       tab: 'Swap',

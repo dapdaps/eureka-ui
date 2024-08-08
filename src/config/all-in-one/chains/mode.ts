@@ -8,6 +8,12 @@ export default {
   chainId: 34443,
   rpcUrls: ['https://mainnet.mode.network'],
   defaultTab: 'Swap',
+  theme: {
+    button: {
+      bg: '#DFFE00',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

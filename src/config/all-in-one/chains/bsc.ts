@@ -8,6 +8,12 @@ export default {
   chainId: 56,
   rpcUrls: ['https://binance.llamarpc.com'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#E2A300',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

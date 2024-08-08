@@ -33,7 +33,8 @@ const QuickOnboarding = ({ chain }: any) => {
           data-bp="100121-008"
           key={item.key}
           $key={item.key}
-          $bgColor={chain?.selectBgColor}
+          $bgColor={chain?.theme.button.bg}
+          $color={chain?.theme.button.text}
           onClick={() => {
             if (!menuConfig[item.key]) return;
             open(path, item.key);
