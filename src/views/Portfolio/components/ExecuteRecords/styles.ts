@@ -37,6 +37,22 @@ export const StyledContent = styled.div`
         }
       }
     }
+    
+    .dapp-name {
+      color: #FFF;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 159.476%;
+      
+      .token {
+        color: #979ABE;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 156.991%;
+      }
+    }
   }
 `;
 
