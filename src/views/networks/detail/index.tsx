@@ -108,7 +108,7 @@ const ChainDetail = ({ path }: any) => {
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
-          <Medal medalList={medalList} />
+          <Medal id={detail?.chain_id} type={Category.chain} />
           <RelativeOdyssey
             title="Campaign and Rewards"
             networkId={detail?.id}

@@ -23,24 +23,27 @@ export const StyledMedalContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 158px;
-  height: 176px;
+  min-height: 176px;
   flex-shrink: 0;
   background-color: #18191E;
-  padding: 33px 0 16px 0;
+  padding: 28px 0 14px 0;
   border-radius: 20px;
   position: relative;
   border: 1px solid #202329;
 `;
 
 export const StyledMedalLogo = styled.div<{url: string}>`
-  width: 74px;
-  height: 63px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center`: ''};
+  width: 80px;
+  height: 80px;
+  background: ${(props) => props.url ? `url(${props.url}) no-repeat center`: ''};
   background-size: contain;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  &.dark {
+    filter: grayscale(1);
+  }
 `;
 
 export const StyledMedalInner = styled.div`
@@ -63,6 +66,9 @@ export const StyledMedalTag = styled.div`
   line-height: 1;
   padding: 7px 15px;
   white-space: nowrap;
+  &.default {
+    filter: grayscale(1);
+  }
   &.active {
     color: #EBF479;
   }
@@ -72,15 +78,25 @@ export const StyledMedalName = styled.div`
   color: #FFF;
   text-align: center;
   font-size: 14px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  margin-top: 10px;
+  padding: 8px 10px 0 10px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  display:-webkit-box;
+  /*! autoprefixer: off */
+  -webkit-box-orient:vertical;
 `;
 
 export const StyledMedals = styled.div`
   display: flex;
-  align-items: center;
+  align-items: stretch;
   flex-wrap: wrap;
-  gap: 13px;
+  gap: 23px 13px;
+  justify-content: flex-start;
+`;
+
+export const StyledLoading = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

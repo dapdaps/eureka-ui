@@ -68,6 +68,7 @@ export const StyledTab = styled.div`
 export const StyledTabText = styled.div<{active: boolean}>`
   padding-bottom: 17px;
   border-bottom: ${props => props.active ? '4px solid #EBF479' : '4px solid transparent'};
+  white-space: nowrap;
 `;
 
 export const StyledTabsContent = styled.div`
@@ -106,6 +107,8 @@ export const StyledHead = styled.div`
   padding: 30px 40px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  row-gap: 10px;
 `;
 
 

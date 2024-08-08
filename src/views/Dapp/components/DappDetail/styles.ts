@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
-  width: 1260px;
+  --container-width: 1260px;
+  width: var(--container-width);
   padding: 0 0 50px 0;
   margin: 0 auto;
 `;
@@ -19,6 +20,7 @@ export const StyledMoreText = styled.div`
   font-weight: 400;
   line-height: 1;
   margin-bottom: 20px;
+  padding-top: 50px;
 `;
 
 export const StyledRelatedContainer = styled.div`
@@ -30,8 +32,9 @@ export const StyledRecordContainer = styled.div`
   flex: 1;
 `;
 export const StyledRelatedOdyssey = styled.div`
-  width: 500px;
-  flex-shrink: 0;
+  max-width: 500px;
+  width: 100%;
+  min-width: 320px;
 `;
 
 export const StyledArrowDown = styled(motion.div)`

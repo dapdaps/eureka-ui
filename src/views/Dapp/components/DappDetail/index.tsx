@@ -1,11 +1,8 @@
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 import {
   StyledContainer,
-  StyledMoreContainer,
-  StyledMoreText,
   StyledRelatedContainer,
   StyledRecordContainer,
-  StyledRelatedOdyssey, StyledArrowDown,
+  StyledRelatedOdyssey,
 } from '@/views/Dapp/components/DappDetail/styles';
 import DappSummary from './Summary';
 import DetailTabs from './DetailTabs/index';
@@ -13,14 +10,6 @@ import RelativeOdyssey from './RelativeOdyssey';
 import Medal from './Medal';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { Category } from '@/hooks/useAirdrop';
-
-const medalList = [
-  {
-    label:'Bridger Junior',
-    logo:'/images/alldapps/icon-medal.png',
-    percent:0.35
-  }
-]
 
 const DappDetail = (props: Props) => {
   const {
@@ -71,7 +60,7 @@ const DappDetail = (props: Props) => {
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
-          <Medal medalList={medalList}/>
+          <Medal id={props?.id} type={Category.dApp} />
           <RelativeOdyssey
             title='Related Campaign'
             dappId={props?.id}

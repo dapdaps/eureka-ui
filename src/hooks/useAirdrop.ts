@@ -145,6 +145,7 @@ export interface QuestDapp {
 export enum Category {
   network = 'network',
   dApp = 'dapp',
+  chain = 'chain',
 }
 
 export enum QuestCategory {
