@@ -116,8 +116,9 @@ const StyleDropdown = styled.div`
 
 const CheckIn = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
   const navHeaderRef = useRef<HTMLDivElement>(null);
+
+  const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
 
   const handleMouseEnter = () => {
     setIsHovered(true);
