@@ -172,7 +172,7 @@ const CheckIn = () => {
             </div>
             <div className="dropdown-main">
               <div className="dropdown-medals">
-                <MedalCard style={{ width: '100%', height: '142px' }} />
+                {/* <MedalCard style={{ width: '100%', height: '142px' }} /> */}
               </div>
               <div className="dropdown-mystery">
                 <img className="mystery-img" src="/images/header/dapdap-mystery-text.png" alt="mystery" />

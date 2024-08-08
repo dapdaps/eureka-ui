@@ -190,7 +190,7 @@ const InviteFirendsModal = ({
               </StyledLink>
             </StyledFlex>
             <StyledMedalContainer>
-              <MedalCard style={{ width: 508, height: 133 }} barWidth='403px' />
+              {/* <MedalCard style={{ width: 508, height: 133 }} barWidth='403px' /> */}
             </StyledMedalContainer>
             <StyledTableHeader>
               <StyledFont color='#979ABE'><span style={{ fontWeight: 600 }}>34</span> Invited</StyledFont>

@@ -3,9 +3,9 @@ import useUserReward from '@/hooks/useUserReward';
 import { useRouter } from 'next/router';
 import { memo, useState } from 'react';
 
-import useAuthCheck from '@/hooks/useAuthCheck';
 import BouncingMedal from '@/components/bouncing-medal';
 import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useInviteList from '@/hooks/useInviteList';
 import useReport from '@/views/Landing/hooks/useReport';
 import { useEffect } from 'react';
@@ -17,6 +17,9 @@ import RewardHistory from './components/RewardHistory';
 import Rewards from './components/Rewards';
 import Tabs from './components/Tabs';
 import UserInfo from './components/UserInfo';
+import useAirdropList from './hooks/useAirdropList';
+import useCompassList from './hooks/useCompassList';
+import useMedalList from './hooks/useUserMedalList';
 import { Tab } from './types';
 
 
@@ -32,7 +35,7 @@ const StyledContainerTop = styled.div`
   height: 313px;
 `
 const StyledContainerBottom = styled.div`
-  padding-top: 40px;
+  padding: 40px 0 110px;
   background-color: #000;
 `
 const StyledInnerContainer = styled.div`
@@ -52,29 +55,46 @@ export default memo(function ProfileView() {
   const { userInfo } = useUserInfo();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { handleReport } = useReport();
+
+  const { loading: compassLoading, compassList, } = useCompassList()
+  const { loading: airdropLoading, airdropList } = useAirdropList()
+  const { loading: medalLoading, userMedalList } = useMedalList()
+
+
   const [tab, setTab] = useState<Tab>('InProgress');
   const [openCodes, setOpenCodes] = useState(false);
   const { inviteInfo, queryInviteList } = useInviteList();
   const { info: rewardInfo, queryUserReward } = useUserReward();
-
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
   };
-
   useEffect(() => {
     account && check(() => {
       queryInviteList();
     });
   }, [account]);
+
+
+  useEffect(() => {
+    const target = router?.query?.target
+    if (target) {
+      if (target === "favorite") {
+        setTab("FavoriteApps")
+      } else {
+        setOpenCodes(true)
+      }
+    }
+  }, [router.query])
+
   return (
     <StyledContainer>
 
       <StyledInnerContainer>
-
-
         <StyledContainerTop>
           <UserInfo info={userInfo} rewardInfo={rewardInfo} />
           <Rewards
+            medals={userInfo?.medals?.length}
+            gems={userInfo?.gem}
             referrals={inviteInfo?.data?.length}
             onInviteCodeClick={() => {
               handleReport('invite');
@@ -122,7 +142,11 @@ export default memo(function ProfileView() {
         </StyledContainerTop>
         <StyledContainerBottom>
           <Tabs current={tab} onChange={handleChange} />
-          {tab === "InProgress" && <InProgress />}
+          {tab === "InProgress" && (
+            <InProgress
+              {...{ compassLoading, compassList, airdropLoading, airdropList, medalLoading, userMedalList }}
+            />
+          )}
           {tab === "FavoriteApps" && <FavoriteApps />}
           {tab === "RewardHistory" && <RewardHistory />}
         </StyledContainerBottom>

@@ -10,7 +10,7 @@ type AirdropType = any
 type NetworkType = any
 type CategoryType = any
 
-export default function useAirdropList(campaign_id?: string) {
+export default function useAirdropList() {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
@@ -23,7 +23,6 @@ export default function useAirdropList(campaign_id?: string) {
     try {
       const result = await get(`/api/airdrop/list-by-account`, query);
       const data = (result.data || []).map((airdrop: AirdropType) => {
-        console.log('=airdrop', airdrop, '=chainCofig', chainCofig)
         if (airdrop?.category === 'dapp') {
           const ids = airdrop?.dapp?.network_ids?.split(',')
           const networks: NetworkType[] = []
