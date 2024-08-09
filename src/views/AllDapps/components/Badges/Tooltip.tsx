@@ -1,90 +1,127 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { useDebounceFn } from 'ahooks';
 
+// a simple tooltip component that supports rendering content to the root node (document.body)
 const Tooltip = (props: Props) => {
-  const { children, tooltip, style, tooltipStyle } = props;
+  const {
+    children,
+    tooltip,
+    containerStyle,
+    style,
+    height = 38,
+    isShake,
+  } = props;
+
+  const offset = 10;
 
   const triggerRef = useRef<any>();
   const tooltipRef = useRef<any>();
   const [visible, setVisible] = useState(false);
+  const [realVisible, setRealVisible] = useState(false);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
-  useEffect(() => {
-    const el = triggerRef.current;
-    const onMouseMove = (e: MouseEvent) => {
-      const elTooltip = tooltipRef.current;
-      if (el && el.getBoundingClientRect()) {
-        const { width, height, x, y } = el.getBoundingClientRect();
-        setX(x);
-        setY(y - 15 - height);
-        const middleWidth = x + width / 2;
-        if (elTooltip) {
-          const { width: w } = elTooltip.getBoundingClientRect();
-          const targetMiddleWidth = x + w / 2;
-          let targetX = x - (targetMiddleWidth - middleWidth);
-          if (targetX < 0) {
-            targetX = 0;
-          }
-          if (targetX + w > window.innerWidth) {
-            targetX = window.innerWidth - w;
-          }
-          setX(targetX);
-        }
-        return;
-      }
-      setX(e.clientX);
-      setY(e.clientY);
-    };
-    const onMouseEnter = () => {
-      setVisible(true);
-    };
-    const onMouseLeave = () => {
-      setVisible(false);
-    };
-    el && el.addEventListener('mousemove', onMouseMove);
-    el && el.addEventListener('mouseenter', onMouseEnter);
-    el && el.addEventListener('mouseleave', onMouseLeave);
+  const springX = useMotionValue(0);
+  const springConfig = { stiffness: 100, damping: 5 };
+  const rotate = useSpring(useTransform(springX || useMotionValue(0), [-100, 100], [-45, 45]), springConfig);
+  const translateX = useSpring(useTransform(springX || useMotionValue(0), [-100, 100], [-50, 50]), springConfig);
 
-    return () => {
-      el && el.removeEventListener('mousemove', onMouseMove);
-      el && el.removeEventListener('mouseenter', onMouseEnter);
-      el && el.removeEventListener('mouseleave', onMouseLeave);
-    };
-  }, []);
+  const { run: closeTooltip, cancel: cancelCloseTooltip } = useDebounceFn(() => {
+    setVisible(false);
+    setRealVisible(false);
+  }, {
+    wait: 150,
+  });
+
+  const onMouseMove = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    if (isShake) {
+      const halfWidth = e.currentTarget.offsetWidth / 2;
+      springX.set(e.nativeEvent.offsetX - halfWidth);
+    }
+
+    const el = e.currentTarget;
+    const elTooltip = tooltipRef.current;
+    if (el && el.getBoundingClientRect()) {
+      const { width: elW, x: elX, y: elY } = el.getBoundingClientRect();
+      setX(elX);
+      setY(elY - height - offset);
+      const middleWidth = elX + elW / 2;
+      if (elTooltip) {
+        const { width: w } = elTooltip.getBoundingClientRect();
+        const targetMiddleWidth = elX + w / 2;
+        let targetX = elX - (targetMiddleWidth - middleWidth);
+        if (targetX < 0) {
+          targetX = 0;
+        }
+        if (targetX + w > window.innerWidth) {
+          targetX = window.innerWidth - w;
+        }
+        setX(targetX);
+        setRealVisible(true);
+      }
+      return;
+    }
+    setX(e.clientX);
+    setY(e.clientY);
+  };
 
   if (!tooltip) return children;
 
   const popup = (
+    <AnimatePresence mode="wait">
     <StyledTooltip
       ref={tooltipRef}
       style={{
-        ...tooltipStyle,
+        ...style,
+        height,
         left: x,
         top: y,
+        translateX,
+        rotate,
+        visibility: realVisible ? 'visible' : 'hidden',
       }}
       animate={{
         opacity: 1,
         y: 0,
+        transition: { type: 'spring', stiffness: 200, damping: 15, duration: 0.5 },
       }}
       exit={{
         opacity: 0,
-        y: 10,
+        y: 20,
       }}
       initial={{
         opacity: 0,
-        y: 10,
+        y: 20,
+      }}
+      onHoverStart={() => {
+        setVisible(true);
+        cancelCloseTooltip();
+      }}
+      onHoverEnd={() => {
+        closeTooltip();
       }}
     >
       {tooltip}
     </StyledTooltip>
+    </AnimatePresence>
   );
 
   return (
-    <StyledContainer style={style}>
-      <StyledTooltipTrigger ref={triggerRef}>
+    <StyledContainer style={containerStyle}>
+      <StyledTooltipTrigger
+        ref={triggerRef}
+        onHoverStart={() => {
+          setVisible(true);
+          cancelCloseTooltip();
+        }}
+        onHoverEnd={() => {
+          closeTooltip();
+        }}
+        onMouseMove={onMouseMove}
+      >
         {children}
       </StyledTooltipTrigger>
       {
@@ -99,8 +136,10 @@ export default memo(Tooltip);
 export interface Props {
   children: any;
   tooltip: any;
+  height?: number;
   style?: React.CSSProperties;
-  tooltipStyle?: React.CSSProperties;
+  containerStyle?: React.CSSProperties;
+  isShake?: boolean;
 }
 
 const StyledContainer = styled.div`
@@ -122,10 +161,10 @@ const StyledTooltip = styled(motion.div)`
   font-style: normal;
   font-weight: 400;
   line-height: 100%;
-  padding: 12px 17px;
+  padding: 0 17px;
   display: flex;
   justify-content: center;
   align-items: center;
   white-space: nowrap;
 `;
-const StyledTooltipTrigger = styled.div``;
+const StyledTooltipTrigger = styled(motion.div)``;

@@ -237,17 +237,18 @@ const OdysseyCardComponent = (props: Props) => {
                     <StyledTagChains>
                       {
                         badges.map((badge: any, idx: number) => (
-                          <SimpleTooltip key={badge.name} tooltip={badge.name}>
-                            <StyledTagChain
-                              initial={{
-                                zIndex: 1,
-                              }}
-                              whileHover={{
-                                scale: 1.2,
-                                zIndex: 2,
-                              }}
-                              onClick={(e) => onBadgeClick(e, badge)}
-                            >
+                          <StyledTagChain
+                            key={badge.name}
+                            initial={{
+                              zIndex: 1,
+                            }}
+                            whileHover={{
+                              scale: 1.2,
+                              zIndex: 2,
+                            }}
+                            onClick={(e) => onBadgeClick(e, badge)}
+                          >
+                            <SimpleTooltip tooltip={badge.name}>
                               <Image
                                 src={badge.icon}
                                 alt=""
@@ -257,8 +258,9 @@ const OdysseyCardComponent = (props: Props) => {
                                   opacity: isLive ? 1 : 0.5,
                                 }}
                               />
-                            </StyledTagChain>
-                          </SimpleTooltip>
+                            </SimpleTooltip>
+                          </StyledTagChain>
+
                         ))
                       }
                     </StyledTagChains>

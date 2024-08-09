@@ -9,15 +9,16 @@ export const StyledContainer = styled.div`
   align-items: center;
   gap: 6px;
   margin-top: 20px;
+  padding-right: 0;
   width: 100%;
-  //overflow-x: auto;
-  //overflow-y: hidden;
-  //scrollbar-width: none;
-  //&::-webkit-scrollbar {
-  //  display: none;
-  //}
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
-export const StyledBadge = styled(motion.div)<{ $status?: StatusType }>`
+export const StyledBadge = styled(motion.div)<{ $status?: StatusType; }>`
   height: 32px;
   flex-shrink: 0;
   border-radius: 34px;
@@ -78,10 +79,10 @@ export const StyledBadgeTooltip = styled(motion.div)`
   align-items: center;
   padding: 0 14px;
   gap: 20px;
-  //height: 215px;
-  //flex-shrink: 0;
-  //border-radius: 12px;
-  //border: 1px solid #464B56;
+  height: 215px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  border: 1px solid #464B56;
   background: #21232A;
-  //box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
 `;

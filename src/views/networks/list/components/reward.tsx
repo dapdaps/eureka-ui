@@ -1,31 +1,18 @@
-import React, { memo, useMemo, useState } from 'react';
+import React, { memo, useMemo } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
-import odysseyConfig from '@/config/odyssey';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
-import { AnimatePresence, motion } from 'framer-motion';
-import Tooltip from '@/views/Home/components/Tooltip';
+import { motion } from 'framer-motion';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import { useRouter } from 'next/router';
 import odysseies from '@/config/odyssey';
+import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 
 const Reward = (props: Props) => {
   const { odyssey } = props;
 
   const router = useRouter();
-
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const defaultValue = useMemo(() => {
-    if (!odyssey || !odyssey.length) return '';
-    for (const o of odyssey) {
-      if (odysseyConfig[o.id]) {
-        return odysseyConfig[o.id].reward;
-      }
-    }
-    return '';
-  }, [odyssey]);
 
   const badges = useMemo<Badge[]>(() => {
     if (!odyssey || !odyssey.length) return [];
@@ -64,30 +51,6 @@ const Reward = (props: Props) => {
     console.log('badge: %o', badge);
   };
 
-  const renderBadgesTooltip = (key: string, badge: any, index: number) => {
-    return badge.odyssey && hoveredIndex === index && (
-      <AnimatePresence>
-        <Tooltip customClass="network-odyssey-card-tooltip" key={key}>
-          <StyledBadgeTooltipList>
-            {
-              badge.odyssey.map((ody: any) => (
-                <OdysseyCard
-                  key={ody.id}
-                  status={ody.status}
-                  title={ody.name}
-                  subtitle={ody.description}
-                  imageUrl={ody.banner}
-                  withoutCardStyle
-                  onClick={(e) => onOdyClick(e, ody)}
-                />
-              ))
-            }
-          </StyledBadgeTooltipList>
-        </Tooltip>
-      </AnimatePresence>
-    );
-  };
-
   return (
     <StyledContainer
       whileHover="active"
@@ -106,7 +69,7 @@ const Reward = (props: Props) => {
           duration: 0.3,
         }}
       >
-        {badges.length ? defaultValue : (defaultValue || '-')}
+        {badges.length ? `${badges[0].value} ${badges[0].name.toUpperCase()}` : ''}
       </StyledValue>
       <StyledBadges>
         {
@@ -126,16 +89,31 @@ const Reward = (props: Props) => {
               transition={{
                 duration: 0.3,
               }}
-              onHoverStart={() => {
-                setHoveredIndex(idx);
-              }}
-              onHoverEnd={() => {
-                setHoveredIndex(null);
-              }}
               onClick={(e) => onBadgeClick(e, b)}
             >
-              <Image src={b.logo} alt="" width={20} height={20} />
-              {renderBadgesTooltip(b.name, b, idx)}
+              <TooltipSimple
+                isShake
+                height={215}
+                tooltip={b.odyssey && (
+                  <StyledBadgeTooltipList>
+                    {
+                      b.odyssey.map((ody: any) => (
+                        <OdysseyCard
+                          key={ody.id}
+                          status={ody.status}
+                          title={ody.name}
+                          subtitle={ody.description}
+                          imageUrl={ody.banner}
+                          withoutCardStyle
+                          onClick={(e) => onOdyClick(e, ody)}
+                        />
+                      ))
+                    }
+                  </StyledBadgeTooltipList>
+                )}
+              >
+                <Image src={b.logo} alt="" width={20} height={20} />
+              </TooltipSimple>
             </StyledBadge>
           ))
         }
@@ -155,6 +133,7 @@ export interface Badge {
   value: string;
   logo_key: string;
   logo: string;
+  odyssey?: any[];
 }
 
 const StyledContainer = styled(motion.div)`

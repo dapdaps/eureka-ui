@@ -1,12 +1,11 @@
 import type { CSSProperties, FC, ReactNode } from 'react';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import popupsData, { IdToPath } from '@/config/all-in-one/chains';
 import { Network } from '@/views/networks/list/hooks/useNetworks';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import Big from 'big.js';
 import ValuePercent from '@/views/networks/list/components/value-percent';
 import Reward from '@/views/networks/list/components/reward';
 

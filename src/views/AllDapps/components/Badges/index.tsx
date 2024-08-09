@@ -1,6 +1,5 @@
-import React, { useMemo, useState } from 'react';
-import { AnimatePresence, useMotionValue } from 'framer-motion';
-import Tooltip from '@/views/Home/components/Tooltip';
+import React, { useMemo, useRef } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import odyssey from '@/config/odyssey';
 import { useRouter } from 'next/router';
@@ -19,9 +18,11 @@ const Badges = (props: Props) => {
     users,
     tradingVolumeTooltip,
     usersTooltip,
+    customBadges = [],
   } = props;
 
   const router = useRouter();
+  const rewardListRef = useRef<any>();
 
   const initBadges: Badge[] = [
     {
@@ -38,6 +39,7 @@ const Badges = (props: Props) => {
       iconSize: 17,
       tooltip: usersTooltip || 'User Amount',
     },
+    ...customBadges,
   ];
 
   const allBadges: Badge[] = useMemo(() => {
@@ -77,14 +79,6 @@ const Badges = (props: Props) => {
     return _badges;
   }, [rewards]);
 
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const x = useMotionValue(0);
-
-  const handleMouseMove = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
-    const halfWidth = event.currentTarget.offsetWidth / 2;
-    x.set(event.nativeEvent.offsetX - halfWidth);
-  };
-
   const onBadgeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, badge: Badge) => {
     e.stopPropagation();
   };
@@ -94,32 +88,54 @@ const Badges = (props: Props) => {
     router.push(odyssey[ody.id]?.path);
   };
 
-  const renderBadgesTooltip = (key: string, badge: Badge, index: number) => {
-    return badge.odyssey && hoveredIndex === index && (
+  const onRewardHover = () => {
+    if (!rewardListRef.current) return;
+    rewardListRef.current.scrollTo({
+      left: rewardListRef.current.scrollWidth,
+      behavior: 'smooth',
+    });
+  };
+
+  const onRewardLeave = () => {
+    if (!rewardListRef.current) return;
+    rewardListRef.current.scrollTo({
+      left: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const renderBadgesTooltip = (key: string, badge: Badge, index: number, children: any) => {
+    return (
       <AnimatePresence>
-        <Tooltip
-          customClass="dapp-card-odyssey-tooltip"
+        <TooltipSimple
           key={key}
-          x={x}
-          showAnimateTooltip={true}
-          animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
+          height={215}
+          isShake
+          style={{
+            background: 'unset',
+            padding: 0,
+            borderRadius: 0,
+          }}
+          tooltip={badge.odyssey && (
+            <StyledBadgeTooltip>
+              {
+                badge.odyssey.map((ody) => (
+                  <OdysseyCard
+                    status={ody.status}
+                    title={ody.name}
+                    subtitle={ody.description}
+                    imageUrl={ody.banner}
+                    withoutCardStyle
+                    reward={{ value: ody.badgeValue as string, name: badge.name as string }}
+                    onClick={(e) => onOdysseyClick(e, ody)}
+                  />
+                ))
+              }
+            </StyledBadgeTooltip>
+          )}
         >
-          <StyledBadgeTooltip>
-            {
-              badge.odyssey.map((ody) => (
-                <OdysseyCard
-                  status={ody.status}
-                  title={ody.name}
-                  subtitle={ody.description}
-                  imageUrl={ody.banner}
-                  withoutCardStyle
-                  reward={{ value: ody.badgeValue as string, name: badge.name as string }}
-                  onClick={(e) => onOdysseyClick(e, ody)}
-                />
-              ))
-            }
-          </StyledBadgeTooltip>
-        </Tooltip>
+          {children}
+        </TooltipSimple>
       </AnimatePresence>
     );
   };
@@ -129,40 +145,61 @@ const Badges = (props: Props) => {
     if (allBadges.length <= 3) {
       return allBadges.map((badge: Badge, index: number) => {
         const iconSize = getIconSize(badge.iconSize);
-        return (
-          <TooltipSimple tooltip={badge.tooltip} key={index}>
-            <StyledBadge
-              whileHover="active"
-              initial="default"
-              onHoverStart={() => {
-                setHoveredIndex(index);
+        if (!badge.odyssey) {
+          return (
+            <TooltipSimple tooltip={badge.tooltip} key={index}>
+              <StyledBadge
+                whileHover="active"
+                initial="default"
+                onClick={(e) => onBadgeClick(e, badge)}
+                $status={badge.status}
+              >
+                <StyledBadgeImage
+                  src={badge.icon}
+                  alt=""
+                  width={iconSize.w}
+                  height={iconSize.h}
+                  variants={{
+                    active: {
+                      scale: 1.2,
+                      zIndex: 2,
+                    },
+                    default: {
+                      zIndex: 1,
+                    },
+                  }}
+                />
+                {badge.value}
+              </StyledBadge>
+            </TooltipSimple>
+          );
+        }
+        return renderBadgesTooltip('single', badge, index, (
+          <StyledBadge
+            whileHover="active"
+            initial="default"
+            onClick={(e) => onBadgeClick(e, badge)}
+            onHoverStart={onRewardHover}
+            onHoverEnd={onRewardLeave}
+          >
+            <StyledBadgeImage
+              src={badge.icon}
+              alt=""
+              width={iconSize.w}
+              height={iconSize.h}
+              variants={{
+                active: {
+                  scale: 1.2,
+                  zIndex: 2,
+                },
+                default: {
+                  zIndex: 1,
+                },
               }}
-              onHoverEnd={() => {
-                setHoveredIndex(null);
-              }}
-              onClick={(e) => onBadgeClick(e, badge)}
-            >
-              <StyledBadgeImage
-                src={badge.icon}
-                alt=""
-                width={iconSize.w}
-                height={iconSize.h}
-                variants={{
-                  active: {
-                    scale: 1.2,
-                    zIndex: 2,
-                  },
-                  default: {
-                    zIndex: 1,
-                  },
-                }}
-                onMouseMove={handleMouseMove}
-              />
-              {badge.value}
-              {renderBadgesTooltip('single', badge, index)}
-            </StyledBadge>
-          </TooltipSimple>
-        );
+            />
+            {badge.value}
+          </StyledBadge>
+        ));
       });
     }
     return (
@@ -195,36 +232,37 @@ const Badges = (props: Props) => {
             </TooltipSimple>
           ))
         }
-        <StyledBadge className="group">
+        <StyledBadge
+          className="group"
+          onHoverStart={onRewardHover}
+          onHoverEnd={onRewardLeave}
+        >
           {
             allBadges.slice(2).map((badge: Badge, index: number) => (
               <StyledBadgeItem
                 key={index}
                 initial="hidden"
                 whileHover="visible"
-                onHoverStart={() => {
-                  setHoveredIndex(index);
-                }}
-                onHoverEnd={() => {
-                  setHoveredIndex(null);
-                }}
                 onClick={(e) => onBadgeClick(e, badge)}
               >
-                <StyledBadgeImage
-                  src={badge.icon}
-                  alt=""
-                  width={getIconSize(badge.iconSize).w}
-                  height={getIconSize(badge.iconSize).h}
-                  initial={{
-                    zIndex: 1,
-                  }}
-                  whileHover={{
-                    scale: 1.2,
-                    zIndex: 2,
-                  }}
-                  onMouseMove={handleMouseMove}
-                />
-                {renderBadgesTooltip('group', badge, index)}
+                {
+                  renderBadgesTooltip('group', badge, index, (
+                    <StyledBadgeImage
+                      key={index}
+                      src={badge.icon}
+                      alt=""
+                      width={getIconSize(badge.iconSize).w}
+                      height={getIconSize(badge.iconSize).h}
+                      initial={{
+                        zIndex: 1,
+                      }}
+                      whileHover={{
+                        scale: 1.2,
+                        zIndex: 2,
+                      }}
+                    />
+                  ))
+                }
               </StyledBadgeItem>
             ))
           }
@@ -234,7 +272,7 @@ const Badges = (props: Props) => {
   };
 
   return (
-    <StyledContainer>
+    <StyledContainer ref={rewardListRef}>
       {renderBadges()}
     </StyledContainer>
   );
@@ -248,6 +286,7 @@ export interface Props {
   users: string | number;
   tradingVolumeTooltip?: string;
   usersTooltip?: string;
+  customBadges?: Badge[];
 }
 
 export interface Badge {

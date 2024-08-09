@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   StyledDappCard,
   StyledDappCardBody,
@@ -12,8 +12,22 @@ import {
   StyledDappCardTitle,
 } from './styles';
 import Image from 'next/image';
-import Badges from '@/views/AllDapps/components/Badges';
-import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
+import Badges, { Badge } from '@/views/AllDapps/components/Badges';
+import { StatusType } from '@/views/Odyssey/components/Tag';
+import RewardIcons from '@/views/OdysseyV8/RewardIcons';
+
+const DAppRewardList: { [k: string]: Badge[] } = {
+  SwapMode: [
+    {
+      name: RewardIcons['SMD']?.label || '',
+      value: '$20-25k',
+      icon: RewardIcons['SMD']?.icon || '',
+      status: StatusType.ended,
+      tooltip: '$20-25k $SMD',
+      iconSize: 20,
+    },
+  ],
+};
 
 const DappCard = (props: Props) => {
   const {
@@ -22,13 +36,22 @@ const DappCard = (props: Props) => {
     description,
     categories,
     networks,
-    rewards,
     bp = {},
     onClick = () => {
     },
     users = 0,
     tradingVolume = 0,
   } = props;
+
+  const rewardList = useMemo(() => {
+    const _rewardList: Badge[] = [];
+    if (DAppRewardList[name]) {
+      DAppRewardList[name].forEach((b) => {
+        _rewardList.push(b);
+      });
+    }
+    return _rewardList;
+  }, [name]);
 
   return (
     <StyledDappCard data-bp={bp?.dapp} onClick={onClick}>
@@ -68,7 +91,7 @@ const DappCard = (props: Props) => {
           {description}
         </StyledDappCardDescription>
         <Badges
-          rewards={rewards}
+          customBadges={rewardList}
           users={users}
           tradingVolume={tradingVolume}
         />
@@ -87,7 +110,6 @@ export interface Props {
   users: number | string;
   categories?: Category[];
   networks?: Network[];
-  rewards?: Partial<NetworkOdyssey>[];
   bp?: bp;
   onClick?: () => void;
 }

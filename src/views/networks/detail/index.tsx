@@ -103,7 +103,7 @@ const ChainDetail = ({ path }: any) => {
       </StyledDetail>
 
       <DappTitle>
-        <span className="highlight">{total}</span> dApps on Mode
+        <span className="highlight">{total}</span> dApps on {detail?.name}
       </DappTitle>
       <CategoryFilter
         classname='category-filter'

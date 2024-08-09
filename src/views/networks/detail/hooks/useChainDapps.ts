@@ -3,7 +3,6 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import { CategoryList } from '@/views/AllDapps/config';
 import chainCofig from '@/config/chains';
-import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 import { useDebounceFn } from 'ahooks';
 
 export function useChainDapps(chain_id: string, category?: string | number) {
@@ -16,7 +15,6 @@ export function useChainDapps(chain_id: string, category?: string | number) {
   const [pageTotal, setPageTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
   const pageSize = 9;
-  const { fetchRewardData } = useDappReward();
 
   const fetchDappList = async () => {
     try {
@@ -26,7 +24,6 @@ export function useChainDapps(chain_id: string, category?: string | number) {
         { chain_id },
       );
       const data = result.data || [];
-      const rewardList = await fetchRewardData() || [];
       data.forEach((dapp: any) => {
         //#region format categories
         dapp.categories = [];
@@ -42,16 +39,6 @@ export function useChainDapps(chain_id: string, category?: string | number) {
           curr && dapp.networks.push({ ...curr });
         });
         //#endregion
-
-        dapp.rewards = [];
-        if (dapp?.networks && dapp.networks.length) {
-          rewardList.forEach((item: any) => {
-            const _reward = dapp.networks.find((network: any) => item.chains_id == network.chainId);
-            if (_reward) {
-              dapp.rewards.push(item);
-            }
-          });
-        }
       });
 
       let filteredData = data;

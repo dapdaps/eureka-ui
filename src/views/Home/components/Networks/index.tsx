@@ -262,11 +262,23 @@ const SubPanels = styled.div`
   }
 `;
 const BadgesContainer = styled.div`
-  
+  padding-left: 7px;
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
+const StyledLogoWrapper = styled.div`
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  margin: 0 auto;
+`;
+const StyledLogoEmpty = styled.div`
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: #21222B;
+`;
 
 const StyledOdysseyImageList = styled.div`
   display: flex;
@@ -463,7 +475,15 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
     <div className="panel" onClick={() => {
       handleClickNetwork(network)
     }}>
-      <Image src={chainCofig[network?.chain_id]?.icon} width={72} height={72} alt={network?.name} />
+      <StyledLogoWrapper>
+        {
+          chainCofig[network?.chain_id]?.icon ? (
+            <Image src={chainCofig[network?.chain_id]?.icon} width={72} height={72} alt={network?.name} />
+            ) : (
+            <StyledLogoEmpty />
+          )
+        }
+      </StyledLogoWrapper>
       <div className="title">{network?.name}</div>
       <BadgesContainer>
         <Badges

@@ -4,7 +4,6 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import chainCofig from '@/config/chains';
 import { useDebounceFn } from 'ahooks';
-import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 
 export default function useList(props: Props) {
   const {
@@ -15,8 +14,6 @@ export default function useList(props: Props) {
     rewardNow,
     airdrop,
   } = props;
-
-  const { fetchRewardData } = useDappReward();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [dappList, setDappList] = useState<any>([]);
@@ -55,7 +52,6 @@ export default function useList(props: Props) {
         `${QUEST_PATH}/api/dapp/search`,
         params,
       );
-      const rewardList = await fetchRewardData() || [];
       const data = result.data?.data || [];
       data.forEach((dapp: any) => {
         //#region format categories
@@ -71,20 +67,6 @@ export default function useList(props: Props) {
           const curr = chainCofig[it.chain_id];
           curr && dapp.networks.push({ ...curr });
         });
-        //#endregion
-        //#region format rewards
-        dapp.rewards = [];
-        if (dapp?.networks && dapp.networks.length) {
-          rewardList.forEach((item: any) => {
-            const rewardChainList = item.chains_id.split(',')?.map((chain_id: string) => Number(chain_id)) || [];
-            const _reward = dapp.networks.find((network: any) => {
-              return rewardChainList.some((chain_id: string) => chain_id === network.chainId);
-            });
-            if (_reward) {
-              dapp.rewards.push(item);
-            }
-          });
-        }
         //#endregion
       });
       setDappList(data);
