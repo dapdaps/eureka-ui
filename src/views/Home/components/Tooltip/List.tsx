@@ -34,6 +34,16 @@ const StyledTooltipList = styled.div`
   cursor: pointer;
 `;
 
+const StyledTagChainMask = styled(motion.div)`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+`;
+
 const StyledTagChain = styled(motion.div)`
   width: 72px;
   height: 72px;
@@ -115,15 +125,31 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
           )}
           <StyledTagChain
             key={item.logo_key}
-            initial={{
-              zIndex: 1,
-            }}
-            whileHover={{
-              scale: 1.2,
-              zIndex: 2,
-            }}
+            initial="default"
+            whileHover="hover"
             onMouseMove={handleMouseMove}
+            variants={{
+              hover: {
+                scale: 1.2,
+                zIndex: 2,
+                filter: 'drop-shadow(0px 0px 10px rgba(223, 254, 0, 0.60))',
+              },
+              default: {
+                zIndex: 1,
+                filter: 'unset',
+              },
+            }}
           >
+            <StyledTagChainMask
+              variants={{
+                hover: {
+                  opacity: 0,
+                },
+                default: {
+                  opacity: 1,
+                },
+              }}
+            />
             <img
               src={RewardIconsMap[item.logo_key]?.icon}
             />
