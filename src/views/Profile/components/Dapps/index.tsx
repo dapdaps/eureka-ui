@@ -28,7 +28,6 @@ export default function Dapps({ dapps }: any) {
                 onClick={() => onDappCardClick(dapp)}
                 tradingVolume={dapp.trading_volume}
                 users={dapp.participants}
-                rewards={dapp.rewards}
               />
             )
           })

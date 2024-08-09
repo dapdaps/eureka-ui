@@ -65,7 +65,6 @@ const DiscoveryDapps = () => {
                         onClick={() => onDappCardClick(dapp)}
                         tradingVolume={dapp.trading_volume}
                         users={dapp.participants}
-                        rewards={dapp.rewards}
                       />
                     </SwiperSlide>
                   )) : (

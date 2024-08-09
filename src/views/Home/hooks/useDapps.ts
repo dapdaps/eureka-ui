@@ -3,14 +3,11 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import { CategoryList } from '@/views/AllDapps/config';
 import chainCofig from '@/config/chains';
-import useDappReward from '@/views/AllDapps/hooks/useDappReward';
 
 const useDapps = () => {
   const [featuredDapps, setFeaturedDapps] = useState<any>();
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState<any>();
-
-  const { fetchRewardData } = useDappReward();
 
   const queryDapps = useCallback(async (_category?: any) => {
     setLoading(true);
@@ -31,7 +28,6 @@ const useDapps = () => {
       } else {
         response = await get(`${QUEST_PATH}/api/dapp/recommend`);
       }
-      const rewardList = await fetchRewardData() ?? [];
       const data = response?.data?.data ?? [];
       data.forEach((dapp: any) => {
         //#region format categories
@@ -48,17 +44,6 @@ const useDapps = () => {
           curr && dapp.networks.push({ ...curr });
         });
         //#endregion
-      });
-      data.forEach((dapp: any) => {
-        dapp.rewards = [];
-        if (dapp?.networks && dapp.networks.length) {
-          rewardList.forEach((item: any) => {
-            const _reward = dapp.networks.find((network: any) => item.chains_id == network.chainId);
-            if (_reward) {
-              dapp.rewards.push(item);
-            }
-          })
-        }
       });
       const topDapps = (response?.data?.top_dapps ?? []).map((item: any) => ({logo: item}));
       setFeaturedDapps({dapps: data, titleDapps: topDapps});
