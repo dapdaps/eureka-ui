@@ -36,7 +36,7 @@ type ToastType = 'success' | 'error' | 'info' | 'pending';
 
 interface ToastParams {
   title?: string;
-  text?: string;
+  text?: string | null;
   tx?: string;
   chainId?: number;
   closeToast?: boolean;

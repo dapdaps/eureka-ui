@@ -517,7 +517,7 @@ export function useBuyTrade({
             success({
                 title: 'Transaction success',
                 text: 'Buy success',
-                token: quote.toToken
+                // token: quote.toToken
             })
 
             return tx.hash
