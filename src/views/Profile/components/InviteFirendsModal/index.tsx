@@ -193,8 +193,8 @@ const InviteFirendsModal = ({
               )
             }
             <StyledTableHeader>
-              <StyledFont color='#979ABE'><span style={{ fontWeight: 600 }}>34</span> Invited</StyledFont>
-              <StyledFont color='#979ABE'><span style={{ color: '#EBF479', fontWeight: 600 }}>12</span> Active Referrals</StyledFont>
+              <StyledFont color='#979ABE'><span style={{ fontWeight: 600 }}>{inviteList?.total}</span> Invited</StyledFont>
+              <StyledFont color='#979ABE'><span style={{ color: '#EBF479', fontWeight: 600 }}>{inviteList?.total_active}</span> Active Referrals</StyledFont>
             </StyledTableHeader>
             <StyledBody>
               {list?.length ?? 0 > 0 ? (

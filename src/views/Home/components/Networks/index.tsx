@@ -2,7 +2,7 @@ import chainCofig from '@/config/chains';
 import Badges from '@/views/AllDapps/components/Badges';
 import Image from 'next/image';
 import Link from 'next/link';
-import type { CSSProperties, FC, ReactNode } from 'react';
+import { useState, type CSSProperties, type FC, type ReactNode } from 'react';
 import styled from 'styled-components';
 import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 
@@ -148,6 +148,10 @@ const PrimaryPanels = styled.div`
     align-items: center;
     gap: 14px;
     animation: translateLeft 5s linear infinite;
+    animation-play-state: paused;
+    &.start {
+      animation-play-state: running;
+    }
     @keyframes translateLeft {
       0% {
         transform: translate(0);
@@ -353,10 +357,16 @@ const Dapp = ({ dapp, onDappCardClick }: any) => {
 const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVolume }: any) => {
   const path = IdToPath[network?.id]
   const currentChain = chainsConfig[path]
+  const [running, setRunning] = useState(false)
   return (
-    <div className="panel" onClick={() => {
-      handleClickNetwork(network)
-    }}>
+    <div
+      className="panel"
+      onMouseOver={() => setRunning(true)}
+      onMouseLeave={() => setRunning(false)}
+      onClick={() => {
+        handleClickNetwork(network)
+      }}
+    >
       <div className='panel-top'>
         <Image className="bg" src={currentChain?.icon} width={207} height={179} style={{ opacity: 0.04 }} alt="" />
         {
@@ -399,7 +409,17 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
         <div className="dapp-title">{network?.dapps?.length} dApps</div>
       </div>
       <div className='panel-bottom'>
-        <div className='dapp-list-container'>
+        <div
+          className={['dapp-list-container', running ? 'start' : ''].join(' ')}
+          onMouseOver={(event) => {
+            event.stopPropagation()
+            setRunning(false)
+          }}
+          onMouseLeave={() => {
+            event.stopPropagation()
+            setRunning(true)
+          }}
+        >
           <div className='dapp-list'>
             {
               network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
