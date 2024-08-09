@@ -6,6 +6,11 @@ import OdysseyCard from './Odyssey';
 import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import RewardIconsMap from '@/views/OdysseyV8/RewardIcons';
 import { motion } from 'framer-motion';
+import { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
+import odyssey from '@/config/odyssey';
+import { useRouter } from 'next/router';
+import useToast from '@/hooks/useToast';
+
 const ToolList = styled.div`
   display: flex;
   align-items: center;
@@ -26,6 +31,7 @@ const StyledTooltipList = styled.div`
   align-items: center;
   gap: 20px;
   background: #21232a;
+  cursor: pointer;
 `;
 
 const StyledTagChain = styled(motion.div)`
@@ -58,10 +64,20 @@ interface TooltipListProps {
 const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const x = useMotionValue(0);
+  const router = useRouter();
+  const toast = useToast();
 
   const handleMouseMove = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     const halfWidth = event.currentTarget.offsetWidth / 2;
     x.set(event.nativeEvent.offsetX - halfWidth);
+  };
+
+  const onOdysseyClick = (ody: Odyssey) => {
+    if (odyssey[ody.id]) {
+      router.push(odyssey[ody.id].path);
+      return;
+    }
+    toast.fail('Invalid odyssey id!');
   };
 
   return (
@@ -90,6 +106,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
                       imageUrl={odyssey.banner}
                       reward={item}
                       withoutCardStyle
+                      onClick={() => onOdysseyClick(odyssey)}
                     />
                   ))}
                 </StyledTooltipList>
