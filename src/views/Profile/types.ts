@@ -81,10 +81,12 @@ export type DappType = {
 export type FeatureType = {
 
 }
+
+type MedalCategory = "dapp" | "invite" | "chain" | "check_in" | "odyssey"
 export type MedalType = {
   "id": number;
   "category": string;
-  "medal_category": "dapp" | "invite";
+  "medal_category": MedalCategory;
   "medal_name": string;
   "relate": number;
   "level": number;

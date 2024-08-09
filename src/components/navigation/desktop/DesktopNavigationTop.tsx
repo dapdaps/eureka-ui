@@ -137,8 +137,8 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
             <div />
           ) : account ? (
             <LoginContainer>
-              <Notification />
               <CheckIn />
+              <Notification />
               <Chain showName={false} bp="3001-003" />
               <AccountLogo logoSize={28} />
             </LoginContainer>
