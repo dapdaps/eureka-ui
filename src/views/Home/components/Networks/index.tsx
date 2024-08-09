@@ -415,7 +415,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
             event.stopPropagation()
             setRunning(false)
           }}
-          onMouseLeave={() => {
+          onMouseLeave={(event) => {
             event.stopPropagation()
             setRunning(true)
           }}
