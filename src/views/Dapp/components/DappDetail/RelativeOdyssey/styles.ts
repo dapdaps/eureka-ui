@@ -138,19 +138,6 @@ export const StyledOdysseyTop = styled.div`
   position: relative;
 `;
 
-export const StyledVideoModal = styled.div<{ $visible?: boolean }>`
-  display: ${($visible) => $visible ? 'block' : 'none'};
-  .video-modal-overlay {
-    backdrop-filter: blur(5px);
-  }
-
-  .video-modal {
-    background: #18191E;
-    border: 1px solid #202329;
-    backdrop-filter: blur(10px);
-  }
-`;
-
 export const StyledVideoContent = styled.div`
   padding: 10px;
 

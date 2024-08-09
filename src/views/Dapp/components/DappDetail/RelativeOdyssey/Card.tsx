@@ -183,8 +183,6 @@ const OdysseyCardComponent = (props: Props) => {
                 <SimpleTooltip
                   tooltip={item.tooltip}
                   key={item.key}
-                  style={{ whiteSpace: 'nowrap' }}
-                  tooltipStyle={{ padding: '8px 15px' }}
                 >
                   <StyledTagItem onClick={(e) => onBadgeClick(e, item)}>
                     {item.icon && (
@@ -233,21 +231,16 @@ const OdysseyCardComponent = (props: Props) => {
                     <StyledTagChains>
                       {
                         badges.map((badge: any, idx: number) => (
-                          <StyledTagChain
-                            key={badge.name}
-                            initial={{
-                              zIndex: 1,
-                            }}
-                            whileHover={{
-                              scale: 1.2,
-                              zIndex: 2,
-                            }}
-                            onClick={(e) => onBadgeClick(e, badge)}
-                          >
-                            <SimpleTooltip
-                              tooltip={badge.name}
-                              style={{ whiteSpace: 'nowrap' }}
-                              tooltipStyle={{ padding: '8px 15px', right: -20 }}
+                          <SimpleTooltip key={badge.name} tooltip={badge.name}>
+                            <StyledTagChain
+                              initial={{
+                                zIndex: 1,
+                              }}
+                              whileHover={{
+                                scale: 1.2,
+                                zIndex: 2,
+                              }}
+                              onClick={(e) => onBadgeClick(e, badge)}
                             >
                               <Image
                                 src={badge.icon}
@@ -258,8 +251,8 @@ const OdysseyCardComponent = (props: Props) => {
                                   opacity: isLive ? 1 : 0.5,
                                 }}
                               />
-                            </SimpleTooltip>
-                          </StyledTagChain>
+                            </StyledTagChain>
+                          </SimpleTooltip>
                         ))
                       }
                     </StyledTagChains>
