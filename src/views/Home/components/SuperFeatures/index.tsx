@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { get } from '@/utils/http';
 import { useEffect, useState } from 'react';
-import { formatDateString } from "@/utils/format-time";
 import { QUEST_PATH } from "@/config/quest";
 import { formatIntegerThousandsSeparator } from "@/utils/format-number";
 import { useRouter } from "next/router";
@@ -177,7 +176,7 @@ const SuperFeatures = () => {
         <div className="platform">
             <div className="head">
                 <span className="title">Platform <span>Stats</span></span>
-                <span className="time">{formatDateString(statData.updated_at) || '-'}</span>
+                {/* <span className="time">{formatDateString(statData.updated_at) || '-'}</span> */}
             </div>
             <div className="modules">
                 <div className="item">

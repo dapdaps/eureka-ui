@@ -119,7 +119,7 @@ const CompassCard = function ({ compass }: any) {
           <StyledCardTitle>{compass.name}</StyledCardTitle>
           <StyledCardDesc>{compass.description}</StyledCardDesc>
           {compass.status === 'un_start' ? (
-            <StyledCominsoon>Coming soon...</StyledCominsoon>
+            <div className="btns">Coming soon...</div>
           ) : (
             <div className="btns">
               <StyledCompassButton
