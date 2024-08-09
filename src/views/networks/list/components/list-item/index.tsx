@@ -78,9 +78,15 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
              {formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' })}
           </span>
         </div>
-        <div className="item">
+        <div className="item rewards">
           <span className="key">Campaign Reward</span>
-          <Reward odyssey={odyssey} />
+          {
+            odyssey && odyssey.length > 0 ? (
+              <Reward odyssey={odyssey} />
+            ) : (
+              <span className="value">-</span>
+            )
+          }
         </div>
       </DataList>
     </Wrap>
@@ -193,11 +199,17 @@ const DataList = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+    
+    &.rewards {
+      width: 250px;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
   }
 
   .key {
     color: #979abe;
-    text-align: center;
+    text-align: left;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

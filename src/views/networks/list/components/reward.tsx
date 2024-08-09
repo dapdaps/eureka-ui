@@ -1,18 +1,23 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Image from 'next/image';
 import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import { useRouter } from 'next/router';
 import odysseies from '@/config/odyssey';
 import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import { useDebounceFn } from 'ahooks';
 
 const Reward = (props: Props) => {
   const { odyssey } = props;
 
   const router = useRouter();
+  const containerRef = useRef<any>(null);
+
+  const [overflow, setOverflow] = useState(false);
+  const [overflowVisible, setOverflowVisible] = useState(false);
 
   const badges = useMemo<Badge[]>(() => {
     if (!odyssey || !odyssey.length) return [];
@@ -51,73 +56,136 @@ const Reward = (props: Props) => {
     console.log('badge: %o', badge);
   };
 
+  const { run: onRewardLeave, cancel: onRewardLeaveCancel } = useDebounceFn(() => {
+    if (!containerRef.current) return;
+    containerRef.current.scrollTo({
+      left: 0,
+      behavior: 'smooth',
+    });
+    setOverflowVisible(true);
+  }, { wait: 300 });
+
+  const onRewardHover = () => {
+    if (!containerRef.current) return;
+    onRewardLeaveCancel();
+    containerRef.current.scrollTo({
+      left: containerRef.current.scrollWidth,
+      behavior: 'smooth',
+    });
+    setOverflowVisible(false);
+  };
+
+  useLayoutEffect(() => {
+    if (!containerRef.current) return;
+    setOverflow(isOverflowX(containerRef.current));
+    setOverflowVisible(true);
+  }, []);
+
   return (
     <StyledContainer
       whileHover="active"
       initial="default"
     >
-      <StyledValue
-        variants={{
-          active: {
-            color: '#fff',
-          },
-          default: {
-            color: '#979ABE',
-          },
-        }}
-        transition={{
-          duration: 0.3,
-        }}
-      >
-        {badges.length ? `${badges[0].value} ${badges[0].name.toUpperCase()}` : ''}
-      </StyledValue>
-      <StyledBadges>
+      <StyledContainerInner ref={containerRef}>
+        <StyledValue
+          variants={{
+            active: {
+              color: '#fff',
+            },
+            default: {
+              color: '#979ABE',
+            },
+          }}
+          transition={{
+            duration: 0.3,
+          }}
+        >
+          {badges.length ? `${badges[0].value} ${badges[0].name.toUpperCase()}` : ''}
+        </StyledValue>
+        <StyledBadges
+          onHoverStart={onRewardHover}
+          onHoverEnd={onRewardLeave}
+        >
+          {
+            badges.map((b, idx) => (
+              <StyledBadge
+                whileHover="tooltip"
+                initial="default"
+                variants={{
+                  tooltip: {
+                    scale: 1.2,
+                    zIndex: 2,
+                  },
+                  default: {
+                    scale: 1,
+                  },
+                }}
+                transition={{
+                  duration: 0.3,
+                }}
+                onClick={(e) => onBadgeClick(e, b)}
+              >
+                <TooltipSimple
+                  isShake
+                  height={215}
+                  tooltip={b.odyssey && (
+                    <StyledBadgeTooltipList>
+                      {
+                        b.odyssey.map((ody: any) => (
+                          <OdysseyCard
+                            key={ody.id}
+                            status={ody.status}
+                            title={ody.name}
+                            subtitle={ody.description}
+                            imageUrl={ody.banner}
+                            withoutCardStyle
+                            onClick={(e) => onOdyClick(e, ody)}
+                          />
+                        ))
+                      }
+                    </StyledBadgeTooltipList>
+                  )}
+                >
+                  <Image className="badge-img" src={b.logo} alt="" width={20} height={20} />
+                </TooltipSimple>
+              </StyledBadge>
+            ))
+          }
+        </StyledBadges>
+      </StyledContainerInner>
+      <AnimatePresence>
         {
-          badges.map((b, idx) => (
+          overflow && overflowVisible ? (
             <StyledBadge
-              whileHover="tooltip"
-              initial="default"
+              className="overflowed"
+              initial="hidden"
+              exit="hidden"
+              animate="visible"
               variants={{
-                tooltip: {
-                  scale: 1.2,
+                visible: {
+                  opacity: 1,
                   zIndex: 2,
                 },
-                default: {
-                  scale: 1,
+                hidden: {
+                  opacity: 0,
+                  zIndex: 1,
                 },
               }}
               transition={{
                 duration: 0.3,
               }}
-              onClick={(e) => onBadgeClick(e, b)}
+              onHoverStart={onRewardHover}
             >
-              <TooltipSimple
-                isShake
-                height={215}
-                tooltip={b.odyssey && (
-                  <StyledBadgeTooltipList>
-                    {
-                      b.odyssey.map((ody: any) => (
-                        <OdysseyCard
-                          key={ody.id}
-                          status={ody.status}
-                          title={ody.name}
-                          subtitle={ody.description}
-                          imageUrl={ody.banner}
-                          withoutCardStyle
-                          onClick={(e) => onOdyClick(e, ody)}
-                        />
-                      ))
-                    }
-                  </StyledBadgeTooltipList>
-                )}
-              >
-                <Image src={b.logo} alt="" width={20} height={20} />
-              </TooltipSimple>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="12" cy="12" r="11" fill="black" stroke="#292B33" strokeWidth="2" />
+                <circle cx="8.36368" cy="11.9999" r="0.909091" fill="#979ABE" />
+                <circle cx="12" cy="11.9999" r="0.909091" fill="#979ABE" />
+                <circle cx="15.6364" cy="11.9999" r="0.909091" fill="#979ABE" />
+              </svg>
             </StyledBadge>
-          ))
+          ) : null
         }
-      </StyledBadges>
+      </AnimatePresence>
     </StyledContainer>
   );
 };
@@ -136,12 +204,29 @@ export interface Badge {
   odyssey?: any[];
 }
 
+function isOverflowX(element: any) {
+  return element.scrollWidth > element.clientWidth;
+}
+
 const StyledContainer = styled(motion.div)`
+  width: 100%;
+  position: relative;
+`;
+const StyledContainerInner = styled(motion.div)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
   gap: 8px;
+  width: 100%;
+  padding: 4px 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 const StyledValue = styled(motion.div)`
   color: #979ABE;
@@ -149,8 +234,9 @@ const StyledValue = styled(motion.div)`
   font-style: normal;
   font-weight: 600;
   line-height: 100%;
+  white-space: nowrap;
 `;
-const StyledBadges = styled.div`
+const StyledBadges = styled(motion.div)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -161,6 +247,7 @@ const StyledBadge = styled(motion.div)`
   height: 24px;
   border-radius: 50%;
   border: 2px solid #292B33;
+  background: #292B33;
   margin-left: -8px;
   display: flex;
   justify-content: center;
@@ -171,8 +258,15 @@ const StyledBadge = styled(motion.div)`
     margin-left: 0;
   }
 
-  .network-odyssey-card-tooltip {
-    width: auto;
+  .badge-img {
+    width: 20px;
+    height: 20px;
+  }
+
+  &.overflowed {
+    position: absolute;
+    right: -14px;
+    top: 4px;
   }
 `;
 const StyledBadgeTooltipList = styled.div`
