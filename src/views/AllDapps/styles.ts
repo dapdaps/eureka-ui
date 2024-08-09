@@ -2,11 +2,13 @@ import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const AllDappsWrapper = styled.div`
-  width: 1247px;
+  --container-width: 1247px;
+  width: var(--container-width);
   margin: 0 auto;
 `;
 
 export const StyledContainer = styled.div`
+  --container-width: 1247px;
   font-family: Montserrat;
   background: #000 url("/images/alldapps/bg.svg") no-repeat center top / 1451px 512px;
   min-height: 100vh;
@@ -14,23 +16,38 @@ export const StyledContainer = styled.div`
   padding-top: 59px;
   .category-fixed {
     position: fixed;
-    z-index: 50;
-    top: 88px;
+    left: 0;
+    width: 100%;
+    padding-left: calc((100% - var(--container-width)) / 2);
+    padding-right: calc((100% - var(--container-width)) / 2);
+    justify-content: flex-start;
+  }
+  .category-title {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 100%;
+      height: 170px;
+      background: #000 url("/images/alldapps/bg.svg") no-repeat center top/1471px 512px;
+      z-index: -1;
+      left: 0;
+    }
   }
 `;
 export const StyledBody = styled(AllDappsWrapper)`
   padding-bottom: 150px;
 `;
-export const StyledFilters = styled(motion.div)<{fixed?: boolean}>`
+export const StyledFilters = styled(motion.div)<{$fixed?: boolean}>`
   margin-top: 66px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 16px;
   margin-bottom: 36px;
-  position: ${(props) => props.fixed ? 'fixed' : 'relative'};
+  position: ${({$fixed}) => $fixed ? 'fixed' : 'relative'};
   top: 0;
-  width: 1247px;
+  width:  ${({$fixed}) => $fixed ? 'var(--container-width)' : 'auto'};
 `;
 export const StyledNetworkDropdownItem = styled.div`
   display: flex;

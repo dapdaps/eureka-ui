@@ -1,76 +1,32 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  background: #000;
   padding-bottom: 50px;
+  --container-width: 1244px;
+  width: var(--container-width);
+  margin: 0 auto;
+  font-family: Montserrat;
+  
+  .category-filter {
+    justify-content: flex-start;
+  }
 `;
 export const DappTitle = styled.div`
-  width: 1244px;
-  margin: 100px auto 0;
+  margin: 100px auto 30px;
   color: #fff;
-  font-family: Montserrat;
   font-size: 32px;
-  font-style: normal;
   font-weight: 700;
-  line-height: 100%;
+  line-height: 1;
   .highlight {
     color: #ebf479;
-    font-family: Montserrat;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 100%; /* 32px */
   }
 `;
 
 export const StyledCategory = styled.div`
   display: flex;
-  width: 1244px;
   align-items: center;
   gap: 8px;
   margin: 30px auto 0;
-`;
-export const StyledCategoryItem = styled.div<{ $colorRgb: string; $disabled?: boolean; }>`
-  display: inline-flex;
-  align-items: center;
-  height: 36px;
-  border-radius: 32px;
-  border: ${({ $colorRgb }) => `1px solid rgba(${$colorRgb},.5)`};
-  color: ${({ $colorRgb }) => `rgb(${$colorRgb})`};
-  padding: 0 14px;
-  cursor: pointer;
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  transition: all ease-in-out 0.3s;
-  ${({ $disabled }) => {
-    if ($disabled) {
-      return {
-        opacity: '0.3',
-        cursor: 'not-allowed',
-      };
-    }
-    return {
-      opacity: '1',
-      cursor: 'pointer',
-    };
-  }}
-
-  &.selected,
-  &:hover {
-    ${({ $disabled, $colorRgb }) => {
-      if ($disabled) {
-        return '';
-      }
-      return {
-        'border-color': `rgb(${$colorRgb})`,
-        'background': `rgb(${$colorRgb})`,
-        'color': '#000',
-        'box-shadow': `0px 0px 10px 0px rgba(${$colorRgb}, 0.60)`,
-      };
-    }}
-  }
 `;
 
 export const StyledDetail = styled.div`

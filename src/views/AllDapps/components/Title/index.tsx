@@ -1,14 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import Logo from './Logo';
-import Skeleton from 'react-loading-skeleton';
 
 import { CategoryList, TitleDapp, TitleDappList } from '@/views/AllDapps/config';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 import useDappCategoriesSum from '@/views/AllDapps/hooks/useDappCategoriesSum';
 
 import {
-  StyledCategory,
-  StyledCategoryItem,
   StyledHead,
   StyledTitle,
   StyledTitlePrimary,
@@ -16,6 +13,7 @@ import {
   StyledTitleText,
 } from './styles';
 import { random } from 'lodash';
+import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
 
 const AllDappsTitle = (props: Props) => {
   const {
@@ -24,6 +22,8 @@ const AllDappsTitle = (props: Props) => {
     },
     activeCategory,
     categoryClassname = '',
+    animation = {},
+    categoryRef
   } = props;
 
   const { categories } = useCategoryDappList();
@@ -94,25 +94,16 @@ const AllDappsTitle = (props: Props) => {
       <StyledTitleSub>
         Discover the most popular
       </StyledTitleSub>
-      <StyledCategory className={categoryClassname}>
-        {
-          loading
-            ? (new Array(7).fill('').map((_, index) => (
-              <Skeleton key={index} width={130} height={46} />
-            ))) : (
-              categoryList.map((cate: any) => (
-                <StyledCategoryItem
-                  key={cate.key}
-                  $colorRgb={cate.colorRgb}
-                  className={currentCategory?.key === cate.key ? 'selected' : ''}
-                  onClick={() => handleCurrentCategory(cate)}
-                >
-                  {cate.sum} {cate.label}
-                </StyledCategoryItem>
-              ))
-            )
-        }
-      </StyledCategory>
+
+      <CategoryFilter
+        ref={categoryRef}
+        animation={animation}
+        classname={categoryClassname}
+        categoryList={categoryList}
+        loading={loading}
+        currentCategory={currentCategory}
+        onSelect={handleCurrentCategory}
+      />
     </StyledHead>
   );
 };
@@ -127,6 +118,8 @@ export interface Props {
   activeCategory?: any;
 
   categoryClassname?: string;
+  animation?: any;
+  categoryRef?: any;
 }
 
 export interface Dapp {

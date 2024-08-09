@@ -199,6 +199,7 @@ const Badges = (props: Props) => {
           {
             allBadges.slice(2).map((badge: Badge, index: number) => (
               <StyledBadgeItem
+                key={index}
                 initial="hidden"
                 whileHover="visible"
                 onHoverStart={() => {
@@ -210,7 +211,6 @@ const Badges = (props: Props) => {
                 onClick={(e) => onBadgeClick(e, badge)}
               >
                 <StyledBadgeImage
-                  key={index}
                   src={badge.icon}
                   alt=""
                   width={getIconSize(badge.iconSize).w}
