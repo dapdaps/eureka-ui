@@ -8,7 +8,7 @@ import {
 type ProgressType = {
   quantity: number;
   total: number;
-  barWidth?: string | undefined;
+  barWidth?: string;
 }
 export default function Progress({ quantity, total, barWidth }: ProgressType) {
   return (

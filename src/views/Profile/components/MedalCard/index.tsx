@@ -15,7 +15,7 @@ type PropsType = {
   barWidth?: string
 }
 export default function MedalCard({ medal, style, barWidth }: PropsType) {
-  const total = 100
+  const total = useMemo(() => medal?.medal_category === "invite" ? medal?.threshold : 100, [medal])
   const quantity = useMemo(() => medal?.completed_status === "completed" ? total : medal?.completed_percent, [medal])
   return (
     <StyledMedalCard style={style}>

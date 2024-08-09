@@ -1,24 +1,23 @@
-import { memo, useEffect, useMemo, useState } from 'react';
-
 import Modal from '@/components/Modal';
 import useCopy from '@/hooks/useCopy';
 import { ellipsAccount } from '@/utils/account';
+import Image from 'next/image';
+import { memo, useMemo, useState } from 'react';
 
-import useUserReward from '@/hooks/useUserReward';
 import { useUserStore } from '@/stores/user';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import useRewardsClaim from '../../hooks/useRewardsClaim';
-import type { Column } from '../../types';
+import type { Column, InviteListType } from '../../types';
 import MedalCard from '../MedalCard';
 import UserAvatar from '../UserAvatar';
-import PendingHints from './PendingHints';
 import {
   StyledAvatar,
+  StyledBackground,
   StyledBody,
-  StyledCell,
+  StyledClose,
   StyledLink,
   StyledMedalContainer,
-  StyledPendingCell,
+  StyledPending,
+  StyledPendingTips,
   StyledRow,
   StyledTableHeader,
   StyledTips,
@@ -56,32 +55,24 @@ const Friend = ({ username, address, avatar }: { username: string; address: stri
 
 const InviteFirendsModal = ({
   open,
-  list,
-  totalRewards,
-  reward,
+  loading,
+  inviteList,
   onClose,
 }: {
-  list: any;
-  totalRewards: number;
-  reward: number;
+  inviteList: InviteListType | null;
   open: boolean;
+  loading: boolean;
   onClose: VoidFunction;
 }) => {
   const userInfo = useUserStore((store: any) => store.user);
-  const { queryUserReward } = useUserReward();
   const { copy } = useCopy();
-  const [claimableRewards, setClaimableRewards] = useState(totalRewards);
-  const { loading: claiming, handleClaim } = useRewardsClaim(() => {
-    queryUserReward();
-    setClaimableRewards(0);
-  });
+  const [pendingBoundingClientRect, setPendingBoundingClientRect] = useState<any>(null);
+
   const link = useMemo(
     () => location.origin + (userInfo?.is_kol ? `/invite/${userInfo?.kol_name}` : `/referral/${userInfo?.invite_code}`),
     [userInfo],
   );
-  useEffect(() => {
-    setClaimableRewards(totalRewards);
-  }, [totalRewards]);
+  const list = useMemo(() => inviteList?.data, [inviteList])
   return (
     <Modal
       display={open}
@@ -91,14 +82,19 @@ const InviteFirendsModal = ({
       onClose={onClose}
       content={
         <>
-          {/* <StyledBackground>
-            <Image src={linkModalBg} alt="linkModalBg" />
-          </StyledBackground> */}
+          <StyledClose onClick={onClose}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M7.73284 6.00004L11.7359 1.99701C12.0368 1.696 12.0882 1.2593 11.8507 1.0219L10.9779 0.14909C10.7404 -0.0884125 10.3043 -0.0363122 10.0028 0.264491L6.00013 4.26743L1.99719 0.264591C1.69619 -0.036712 1.25948 -0.0884125 1.02198 0.14939L0.149174 1.0223C-0.0882276 1.2594 -0.0368271 1.6961 0.264576 1.99711L4.26761 6.00004L0.264576 10.0033C-0.0363271 10.3041 -0.0884276 10.7405 0.149174 10.978L1.02198 11.8509C1.25948 12.0884 1.69619 12.0369 1.99719 11.736L6.00033 7.73276L10.0029 11.7354C10.3044 12.037 10.7405 12.0884 10.978 11.8509L11.8508 10.978C12.0882 10.7405 12.0368 10.3041 11.736 10.0029L7.73284 6.00004Z" fill="#979ABE" />
+            </svg>
+          </StyledClose>
+          <StyledBackground>
+            <Image src="/images/profile/invite_bg.png" width={558} height={148} alt="inviteBg" />
+          </StyledBackground>
           <StyledContainer style={{ position: 'relative', zIndex: 10 }}>
             <StyledFlex
               justifyContent="space-between"
               alignItems="flex-end"
-              style={{ paddingRight: 39, paddingLeft: 31, height: 110 }}
+              style={{ paddingTop: 30, paddingBottom: 26, paddingRight: 23, paddingLeft: 31, height: 148 }}
             >
               <UserAvatar userInfo={userInfo} />
               <StyledLink>
@@ -189,29 +185,51 @@ const InviteFirendsModal = ({
                 )}
               </StyledLink>
             </StyledFlex>
-            <StyledMedalContainer>
-              {/* <MedalCard style={{ width: 508, height: 133 }} barWidth='403px' /> */}
-            </StyledMedalContainer>
+            {
+              inviteList?.medal && (
+                <StyledMedalContainer>
+                  <MedalCard medal={{ ...inviteList?.medal, completed_percent: inviteList?.total_active ?? 0 }} style={{ width: 508, height: 133 }} barWidth='403px' />
+                </StyledMedalContainer>
+              )
+            }
             <StyledTableHeader>
               <StyledFont color='#979ABE'><span style={{ fontWeight: 600 }}>34</span> Invited</StyledFont>
               <StyledFont color='#979ABE'><span style={{ color: '#EBF479', fontWeight: 600 }}>12</span> Active Referrals</StyledFont>
             </StyledTableHeader>
             <StyledBody>
-              {list.length > 0 ? (
-                list.map((row: any, i: number) => (
+              {list?.length ?? 0 > 0 ? (
+                list?.map((row: any, i: number) => (
                   <StyledRow key={row.invited_user?.address || i}>
-                    <StyledCell>
+                    <StyledFlex gap='10px'>
                       <Friend {...row.invited_user} />
-                    </StyledCell>
-                    <StyledCell>
-                      {(row.status === 'Pending' ? (
-                        <StyledPendingCell>
-                          <span> {row.status + '...'}</span> <PendingHints />
-                        </StyledPendingCell>
+                    </StyledFlex>
+                    <StyledFlex gap='10px'>
+                      {row.status === 'Pending' ? (
+                        <StyledPending
+                          onMouseOver={(event: any) => {
+                            setPendingBoundingClientRect(event?.target?.getBoundingClientRect())
+                          }}
+                          onMouseLeave={(event) => {
+                            setPendingBoundingClientRect(null)
+                          }}
+                        >
+                          <StyledFont color='#979ABE'>
+                            To be activated...
+                          </StyledFont>
+                        </StyledPending>
                       ) : (
-                        row.status
-                      ))}
-                    </StyledCell>
+                        <>
+                          <StyledFont color='#FFF'>
+                            {row.status}
+                          </StyledFont>
+                          <StyledSvg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="13" viewBox="0 0 16 13" fill="none">
+                              <path d="M2 6.5L6 10.5L14.5 2" stroke="#EBF479" stroke-width="3" stroke-linecap="round" />
+                            </svg>
+                          </StyledSvg>
+                        </>
+                      )}
+                    </StyledFlex>
                   </StyledRow>
                 ))
               ) : (
@@ -254,10 +272,19 @@ const InviteFirendsModal = ({
                 </StyledFlex>
               )}
             </StyledBody>
+            {
+              pendingBoundingClientRect && (
+                <StyledPendingTips style={{ left: pendingBoundingClientRect.x, top: pendingBoundingClientRect.y }}>
+                  This user hasn't generated any on-chain actions by DapDap yet.
+                </StyledPendingTips>
+              )
+            }
           </StyledContainer>
         </>
       }
     />
+
+
   );
 };
 

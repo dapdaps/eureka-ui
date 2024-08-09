@@ -1,4 +1,5 @@
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles'
+import { FeatureType } from '../../types'
 import RectangleNumber from '../RectangleNumber'
 import {
   StyledFeature,
@@ -6,12 +7,17 @@ import {
   StyledIntroImageContainer,
   StyledMasker
 } from './styles'
-export default function Features() {
+type PropsType = {
+  features: FeatureType[]
+}
+export default function Features({
+  features
+}: PropsType) {
   return (
     <StyledContainer style={{ marginTop: 30 }}>
       <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
         <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Features</StyledFont>
-        <RectangleNumber quantity={2} />
+        <RectangleNumber quantity={features?.length} />
       </StyledFlex>
       <StyledFlex gap="28px" style={{ flexWrap: 'wrap' }}>
         <StyledFeature>
