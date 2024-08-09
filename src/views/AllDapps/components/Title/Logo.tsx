@@ -9,7 +9,7 @@ const Logo = (props: Props) => {
     <StyledTopDappLogoWrapper $position={position}>
       <AnimatePresence mode="wait">
         {
-          dappList.length > 3 && dappList.filter((it: any) => it.position === position).map((it: any) => (
+         dappList.filter((it: any) => it.position === position).map((it: any) => (
             <StyledTopDappLogo
               key={it.key}
               src={it.logo}

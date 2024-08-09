@@ -1,4 +1,4 @@
-import { memo, useMemo, useRef } from 'react';
+import { memo, useRef } from 'react';
 import { StyledContainer, StyledFooter, StyledMask, StyledSwiperWrapper, StyledViewAll, StyledWrapper } from './styles';
 import AllDappsTitle from '@/views/AllDapps/components/Title';
 import { Swiper, SwiperSlide } from 'swiper/react';

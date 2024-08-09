@@ -148,6 +148,17 @@ const OdysseyCardComponent = (props: Props) => {
 
   const isLive = odysseyIsLive(status);
 
+  const formatTitle = (_name: string | undefined) => {
+    if (!_name) {
+      return '';
+    }
+    const reg = /\：|\:/;
+    if (_name.includes('：') || _name.includes(':')) {
+      return <>{ _name.split(reg)?.[0] ?? ''}: <br />{name?.split(reg)?.[1] ?? '' }</>
+    }
+    return _name;
+  }
+
   return (
     <>
       <StyledOdysseyContainer className={className} onClick={onCardClick}>
@@ -181,7 +192,9 @@ const OdysseyCardComponent = (props: Props) => {
         </StyledOdysseyTop>
         <StyledOdysseyBody>
           <StyledOdysseyTitle>
-            {name?.split(': ')?.[0] ?? ''}：<br />{name?.split(': ')?.[1] ?? ''}
+            {
+              formatTitle(name)
+            }
           </StyledOdysseyTitle>
           <StyledTagList ref={tagListRef}>
             {

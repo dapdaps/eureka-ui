@@ -8,10 +8,10 @@ export const StyledContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 16px;
+  font-family: Montserrat;
 `;
 
 export const StyledItem = styled.div<{ $bgColor: string; $color: string; $key: string; }>`
-  font-family: Montserrat;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -23,9 +23,7 @@ export const StyledItem = styled.div<{ $bgColor: string; $color: string; $key: s
   color: #fff;
   text-align: center;
   font-size: 16px;
-  font-style: normal;
   font-weight: 600;
-  line-height: normal;
   opacity: 0.8;
   transition: all linear 0.2s;
   
@@ -34,7 +32,6 @@ export const StyledItem = styled.div<{ $bgColor: string; $color: string; $key: s
       cursor: 'pointer',
     };
     if ($key === 'Chain-Navi') {
-      styles.cursor = 'default';
       styles.width = '420px';
       styles.border = 'none';
       styles.background = $bgColor;

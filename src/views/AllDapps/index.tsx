@@ -249,10 +249,8 @@ const AllDapps = (props: Props) => {
                 renderItem={(item) => (
                   <StyledNetworkDropdownItem>
                     {
-                      item.logo ? (
+                      item.logo && (
                         <Image src={item.logo} alt="" width={22} height={22} />
-                      ) : (
-                        <div style={{ width: 22, height: 22 }} />
                       )
                     }
                     {item.name}

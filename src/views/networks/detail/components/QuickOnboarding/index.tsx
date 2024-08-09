@@ -11,6 +11,7 @@ const MENUS = [
 
 const QuickOnboarding = ({ chain }: any) => {
   const { menuConfig, path } = chain;
+
   const { open } = useAllInOneOpen();
 
   const menuList = useMemo(() => {
@@ -36,6 +37,13 @@ const QuickOnboarding = ({ chain }: any) => {
           $bgColor={chain?.theme.button.bg}
           $color={chain?.theme.button.text}
           onClick={() => {
+            if (item.key === 'Chain-Navi') {
+              if (!chain?.defaultTab) {
+                return;
+              }
+              open(path, chain.defaultTab);
+              return;
+            }
             if (!menuConfig[item.key]) return;
             open(path, item.key);
           }}
