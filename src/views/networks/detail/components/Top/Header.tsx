@@ -60,7 +60,10 @@ const Header = (props: { chain: any; loading?: boolean; }) => {
                 containerClassName="skeleton"
               />
             ) : (
-              <AddMetaMask chainId={chainId} bp="100121-001" />
+              <AddMetaMask
+                chainId={chainId}
+                bp="100121-001"
+              />
             )
           }
           {/*<NativeCurrency isTag tbdToken={tbd_token} nativeCurrency={native_currency} onClick={onNativeClick}/>*/}

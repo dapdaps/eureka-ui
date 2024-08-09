@@ -1,17 +1,40 @@
 import { memo } from 'react';
-import { useSetChain } from '@web3-onboard/react';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { StyledAddMeta } from './styles';
+import chainCofig from '@/config/chains';
+import useToast from '@/hooks/useToast';
 
 const AddMetaMask = ({ chainId, bp }: any) => {
-  const [{}, setChain] = useSetChain();
   const { check } = useAuthCheck({ isNeedAk: false });
+  const toast = useToast();
+
+  const addNetwork = async () => {
+    const currChain = chainCofig[chainId];
+    if (typeof window.ethereum === 'undefined' || !currChain) {
+      return;
+    }
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: `0x${chainId.toString(16)}`,
+          rpcUrls: currChain.rpcUrls,
+          chainName: currChain.chainName,
+          nativeCurrency: currChain.nativeCurrency,
+          blockExplorerUrls: [currChain.blockExplorers],
+        }],
+      });
+    } catch (err) {
+      console.log('add metamask failed: %o', err);
+      toast.fail('Failed to add network!');
+    }
+  };
+
   return (
     <StyledAddMeta
       onClick={() => {
-        check(() => {
-          setChain({ chainId: `0x${chainId.toString(16)}` });
-        });
+        check(addNetwork);
       }}
       data-bp={bp}
     >
