@@ -206,7 +206,7 @@ const InviteFirendsModal = ({
                     <StyledFlex gap='10px'>
                       {row.status === 'Pending' ? (
                         <StyledPending
-                          onMouseOver={(event: any) => {
+                          onMouseEnter={(event: any) => {
                             setPendingBoundingClientRect(event?.target?.getBoundingClientRect())
                           }}
                           onMouseLeave={(event) => {

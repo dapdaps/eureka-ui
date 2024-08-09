@@ -19,8 +19,11 @@ const StyledUserInfo = styled.div`
   padding: 20px 16px 14px;
   height: 124px;
   border-radius: 10px;
-  border: 1px solid #333648;
-  background: #18191E;
+  border: 1px solid transparent;
+  &:hover {
+    border-color: #333648;
+    background: #18191E;
+  }
 `
 const StyledUserAvatar = styled.img`
   width: 38px;
@@ -191,7 +194,13 @@ export default function UserInfoPopUp() {
     <StyledUserInfoPopUp>
       <StyledUserInfoContainer>
         <StyledUserInfo>
-          <StyledFlex justifyContent="space-between">
+          <StyledFlex
+            justifyContent="space-between"
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              router.push('/profile')
+            }}
+          >
             <StyledFlex gap="10px">
               <StyledUserAvatar src={userInfo?.avatar} />
               <StyledFlex
@@ -199,7 +208,7 @@ export default function UserInfoPopUp() {
                 alignItems="flex-start"
               >
                 {
-                  userInfo?.twitter?.is_bind && (
+                  userInfo?.twitter?.twitter_username && (
                     <StyledFont color="#FFF" fontSize="18px" fontWeight="600">{userInfo?.twitter?.twitter_username}</StyledFont>
                   )
                 }

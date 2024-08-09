@@ -1,5 +1,6 @@
 import chainCofig from '@/config/chains';
 import Badges from '@/views/AllDapps/components/Badges';
+import NetworksBg from '@public/images/home/networks_bg.svg'
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, type CSSProperties, type FC, type ReactNode } from 'react';
@@ -9,6 +10,8 @@ import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useRouter } from 'next/router';
+import { StyledSvg } from '@/styled/styles';
+import { DappType } from '@/views/Profile/types';
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -17,10 +20,15 @@ interface IProps {
 }
 
 const Container = styled.div`
+  position: relative;
   width: 1244px;
   margin: 200px auto 54px;
 `;
-
+const StyledNetworksBg = styled.div`
+  position: absolute;
+  left: -199px;
+  top: 57px;
+`
 const Title = styled.div`
   display: flex;
   justify-content: space-between;
@@ -133,15 +141,19 @@ const PrimaryPanels = styled.div`
     left: 0;
     bottom: 0;
     width: 100%;
-    height: 83px;
     border-radius: 20px;
+    padding: 0 20px ;
+    
+
+  }
+  .panel-bottom-content {
+    height: 83px;
     overflow: hidden;
     padding-top: 14px;
     &:hover {
       height: 163px;
       padding-top: 94px;
     }
-
   }
   .dapp-list-container {
     display: flex;
@@ -166,57 +178,51 @@ const PrimaryPanels = styled.div`
     align-items: center;
     gap: 14px;
   }
+  .dapp-message {
+    display: flex;
+    position: fixed;
+    transform: translate(calc(-50% + 24px), calc(-100% - 14px));
+    z-index: 10;
+    width: 300px;
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid #333648;
+    background: #1F2229;
+    box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+    /* display: flex; */
+    align-items: center;
+    justify-content: space-between;
+    .dapp-name {
+      color: #FFF;
+      font-family: Montserrat;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+    }
+    .dapp-categories {
+      display: flex;
+      align-items: center;
+    }
+    .dapp-category {
+      padding: 6px 12px;
+      font-family: Montserrat;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 100%; /* 12px */
+      border-radius: 30px;
+      color: #ACFCED;
+      border: 1px solid #ACFCED;
+    }
+  }
   .dapp {
     position: relative;
     cursor: pointer;
-    &:hover {
-      .dapp-message {
-        display: flex;
-      }
-    }
     .dapp-image {
       border: 3px solid #202329;
       border-radius: 14px;
       overflow: hidden;
-    }
-    .dapp-message {
-      display: none;
-      position: absolute;
-      left: 50%;
-      top: -14px;
-      transform: translate(-50%, -100%);
-      width: 300px;
-      padding: 14px;
-      border-radius: 12px;
-      border: 1px solid #333648;
-      background: #1F2229;
-      box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-      /* display: flex; */
-      align-items: center;
-      justify-content: space-between;
-      .dapp-name {
-        color: #FFF;
-        font-family: Montserrat;
-        font-size: 20px;
-        font-style: normal;
-        font-weight: 700;
-        line-height: normal;
-      }
-      .dapp-categories {
-        display: flex;
-        align-items: center;
-      }
-      .dapp-category {
-        padding: 6px 12px;
-        font-family: Montserrat;
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 100%; /* 12px */
-        border-radius: 30px;
-        color: #ACFCED;
-        border: 1px solid #ACFCED;
-      }
     }
     &:hover {
       top: -5px;
@@ -326,9 +332,17 @@ const Hottest = styled.div`
   }
 `
 
-const Dapp = ({ dapp, onDappCardClick }: any) => {
+const Dapp = ({ dapp, setCurrentDapp, setBoundingClientRect, onDappCardClick }: any) => {
   return (
     <div className='dapp'
+      onMouseEnter={(event: any) => {
+        setCurrentDapp(dapp)
+        setBoundingClientRect(event?.target?.getBoundingClientRect())
+      }}
+      onMouseLeave={() => {
+        setCurrentDapp(null)
+        setBoundingClientRect(null)
+      }}
       onClick={(event) => {
         event.stopPropagation()
         onDappCardClick && onDappCardClick(dapp)
@@ -337,20 +351,6 @@ const Dapp = ({ dapp, onDappCardClick }: any) => {
       <div className='dapp-image'>
         <Image src={dapp?.logo} width={42} height={42} alt={dapp?.name} />
       </div>
-      <div className='dapp-message'>
-        <div className='dapp-name'>{dapp?.name}</div>
-        <div className='dapp-categories'>
-          {
-            dapp?.categories?.map((category: any, index: number) => {
-              return (
-                <div className='dapp-category' key={index} style={{ color: `rgb(${category.colorRgb})`, borderColor: `rgb(${category.colorRgb})` }}>
-                  {category?.name}
-                </div>
-              )
-            })
-          }
-        </div>
-      </div>
     </div>
   )
 }
@@ -358,81 +358,103 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
   const path = IdToPath[network?.id]
   const currentChain = chainsConfig[path]
   const [running, setRunning] = useState(false)
+  const [currentDapp, setCurrentDapp] = useState<DappType | null>(null)
+  const [boundingClientRect, setBoundingClientRect] = useState<any>(null)
   return (
-    <div
-      className="panel"
-      onMouseOver={() => setRunning(true)}
-      onMouseLeave={() => setRunning(false)}
-      onClick={() => {
-        handleClickNetwork(network)
-      }}
-    >
-      <div className='panel-top'>
-        <Image className="bg" src={currentChain?.icon} width={207} height={179} style={{ opacity: 0.04 }} alt="" />
-        {
-          network?.odyssey?.length > 0 && (
-            <div className='odyssey-svg'>
-              <Image src={'/images/networks/odyssey.svg'} width={100} height={100} alt='odyssey' />
+    <>
+      <div
+        className="panel"
+        onMouseEnter={() => setRunning(true)}
+        onMouseLeave={() => setRunning(false)}
+        onClick={() => {
+          handleClickNetwork(network)
+        }}
+      >
+        <div className='panel-top'>
+          <Image className="bg" src={currentChain?.icon} width={207} height={179} style={{ opacity: 0.04 }} alt="" />
+          {
+            network?.odyssey?.length > 0 && (
+              <div className='odyssey-svg'>
+                <Image src={'/images/networks/odyssey.svg'} width={100} height={100} alt='odyssey' />
+              </div>
+            )
+          }
+          <div className="head">
+            <div style={{ position: 'relative' }}>
+              <Image src={network?.logo} width={106} height={106} alt="" />
+              {
+                isTopVolume ? (
+                  <TopTvl>
+                    <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="topVolume" />
+                    TOP Volume
+                  </TopTvl>
+                ) : (
+                  <Hottest>
+                    <Image src={'/images/networks/icon-hot.png'} width={54} height={54} alt="hottest" />
+                    Hottest
+                  </Hottest>
+                )
+              }
             </div>
-          )
-        }
-        <div className="head">
-          <div style={{ position: 'relative' }}>
-            <Image src={network?.logo} width={106} height={106} alt="" />
-            {
-              isTopVolume ? (
-                <TopTvl>
-                  <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="topVolume" />
-                  TOP Volume
-                </TopTvl>
-              ) : (
-                <Hottest>
-                  <Image src={'/images/networks/icon-hot.png'} width={54} height={54} alt="hottest" />
-                  Hottest
-                </Hottest>
-              )
-            }
+            <div className="intro">
+              <div className="intro-title">{network?.name}</div>
+              <div className="intro-detail">
+                <Badges
+                  users={network?.participants}
+                  rewards={network?.odyssey}
+                  tradingVolume={network?.trading_volume}
+                  tradingVolumeTooltip="Total trading volume on DapDap"
+                  usersTooltip="User amount of this chain on DapDap"
+                />
+              </div>
+            </div>
           </div>
-          <div className="intro">
-            <div className="intro-title">{network?.name}</div>
-            <div className="intro-detail">
-              <Badges
-                users={network?.participants}
-                rewards={network?.odyssey}
-                tradingVolume={network?.trading_volume}
-                tradingVolumeTooltip="Total trading volume on DapDap"
-                usersTooltip="User amount of this chain on DapDap"
-              />
+          <div className="dapp-title">{network?.dapps?.length} dApps</div>
+        </div>
+        <div className='panel-bottom'>
+          <div className='panel-bottom-content'>
+            <div
+              className={['dapp-list-container', running ? 'start' : ''].join(' ')}
+              onMouseEnter={(event) => {
+                setRunning(false)
+              }}
+              onMouseLeave={(event) => {
+                setRunning(true)
+              }}
+            >
+              <div className='dapp-list'>
+                {
+                  network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} setCurrentDapp={setCurrentDapp} setBoundingClientRect={setBoundingClientRect} onDappCardClick={onDappCardClick} />)
+                }
+              </div>
+              <div className='dapp-list'>
+                {
+                  network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} setCurrentDapp={setCurrentDapp} setBoundingClientRect={setBoundingClientRect} onDappCardClick={onDappCardClick} />)
+                }
+              </div>
             </div>
           </div>
         </div>
-        <div className="dapp-title">{network?.dapps?.length} dApps</div>
       </div>
-      <div className='panel-bottom'>
-        <div
-          className={['dapp-list-container', running ? 'start' : ''].join(' ')}
-          onMouseOver={(event) => {
-            event.stopPropagation()
-            setRunning(false)
-          }}
-          onMouseLeave={(event) => {
-            event.stopPropagation()
-            setRunning(true)
-          }}
-        >
-          <div className='dapp-list'>
-            {
-              network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
-            }
+      {
+        currentDapp && boundingClientRect && (
+          <div className='dapp-message' style={{ left: boundingClientRect.x, top: boundingClientRect.y }}>
+            <div className='dapp-name'>{currentDapp?.name}</div>
+            <div className='dapp-categories'>
+              {
+                currentDapp?.categories?.map((category: any, index: number) => {
+                  return (
+                    <div className='dapp-category' key={index} style={{ color: `rgb(${category.colorRgb})`, borderColor: `rgb(${category.colorRgb})` }}>
+                      {category?.name}
+                    </div>
+                  )
+                })
+              }
+            </div>
           </div>
-          <div className='dapp-list'>
-            {
-              network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} onDappCardClick={onDappCardClick} />)
-            }
-          </div>
-        </div>
-      </div>
-    </div>
+        )
+      }
+    </>
   )
 }
 
@@ -468,6 +490,9 @@ const Networks: FC<IProps> = (props) => {
   }
   return (
     <Container>
+      <StyledNetworksBg>
+        <NetworksBg />
+      </StyledNetworksBg>
       <Title>
         <span>
           EXPLORE
