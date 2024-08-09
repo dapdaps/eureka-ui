@@ -134,7 +134,7 @@ const CompassCard = function ({ compass }: any) {
               <StyledCompassButton
                 className="plain"
                 onClick={() => {
-                  router.push('/odyssey/list')
+                  router.push('/odyssey')
                 }}
               >
                 <div>Explore All</div>

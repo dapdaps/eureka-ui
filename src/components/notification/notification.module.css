@@ -90,7 +90,7 @@
     }
 }
 
-.wrapper:hover {
+.NotificationComWrapper:hover {
     cursor: pointer;
     background-color: rgba(16, 17, 21, 1);
 
@@ -99,7 +99,7 @@
     }
 }
 
-.wrapper:last-child:hover {
+.NotificationComWrapper:last-child:hover {
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
 }

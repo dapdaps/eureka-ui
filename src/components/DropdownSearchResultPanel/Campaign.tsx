@@ -49,7 +49,7 @@ const StyledText = styled.div`
 const Campaign = ({ data, loading, onClick }: { data: Odyssey[]; loading: boolean; onClick?: () => void }) => {
   const router = useRouter();
   const handleClick = () => {
-    router.push('/odyssey/list');
+    router.push('/odyssey');
     onClick?.();
   };
 

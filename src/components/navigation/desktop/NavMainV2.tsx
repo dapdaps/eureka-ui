@@ -15,7 +15,7 @@ import ListItem from './components/ListItem';
 import { useNetworks } from '@/hooks/useNetworks';
 import { DividerHorizontalIcon } from '@radix-ui/react-icons';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import { useMemo } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
 
 const StyleView = styled.div`
@@ -54,14 +54,16 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
   const { networkLoading, networkList } = useNetworks();
   const { loading: compassListLoading, compassList } = useCompassList()
   const router = useRouter();
-  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_New), [compassList])
-
+  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_new), [compassList])
+  const OdysseyRef = useRef<any>()
+  const ChainRef = useRef<any>()
+  
   return (
     <Wrapper className={className}>
       <NavigationMenu.Root className="NavigationMenuRoot">
         <NavigationMenu.List className="NavigationMenuList">
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger">
+            <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={OdysseyRef}>
               Odyssey
               { hasNewOdyssey && <IconOdyssey />}
               <IconArrowDown className="CaretDown" aria-hidden />
@@ -71,9 +73,13 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                 <ListItem
                   data={compassList}
                   loading={compassListLoading}
+                  onClick={() => OdysseyRef?.current?.click()}
                 />
               </div>
-              <StyleView onClick={() => router.push('/odyssey/list')}><div>View all</div><IconArrowRight /></StyleView>
+              <StyleView onClick={() => {
+                OdysseyRef?.current?.click();
+                router.push('/odyssey')
+              }}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
@@ -92,15 +98,18 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger">
+            <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={ChainRef}>
               Chains
               <IconArrowDown className="CaretDown" aria-hidden />
             </NavigationMenu.Trigger>
             <NavigationMenu.Content className="NavigationMenuContentV2 chains">
               <div className="List chain">
-                <Chains loading={networkLoading} data={networkList} />
+                <Chains loading={networkLoading} data={networkList} onClick={() => ChainRef?.current?.click()}/>
               </div>
-              <StyleView className='chain-all' onClick={() => router.push('/networks')}><div>View all</div><IconArrowRight /></StyleView>
+              <StyleView className='chain-all' onClick={() => {
+                ChainRef?.current?.click()
+                router.push('/networks')
+              }}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 

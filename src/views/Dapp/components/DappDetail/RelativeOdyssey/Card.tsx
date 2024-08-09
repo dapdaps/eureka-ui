@@ -29,7 +29,8 @@ import odysseyConfig from '@/config/odyssey';
 import { useRouter } from 'next/router';
 import odyssey from '@/config/odyssey';
 import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
-
+import useToast from '@/hooks/useToast';
+const isDevelopment = process.env.NODE_ENV === 'development';
 const OdysseyCardComponent = (props: Props) => {
   const {
     banner,
@@ -64,9 +65,14 @@ const OdysseyCardComponent = (props: Props) => {
 
   const [show, setShow] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>('');
-
-  const onCardClick = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    router.push(odyssey[id]?.path);
+  const toast = useToast()
+  const onCardClick = () => {
+    if(isDevelopment) {
+      toast.fail('This Odyssey ID is not available in the current FE version')
+    }
+    if (odyssey[id]) {
+      router.push(odyssey[id].path);
+    }
   };
 
   const onBadgeClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, badge: any) => {

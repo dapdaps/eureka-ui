@@ -17,7 +17,7 @@ const ToolList = styled.div`
     position: relative;
 
     &:not(:first-child) {
-      margin-left: -8px;
+      margin-left: -2px;
     }
   }
 `;
@@ -27,7 +27,7 @@ const StyledTagChain = styled(motion.div)`
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  border: 4px solid #292b33;
+  border: 1px solid #292b33;
   position: relative;
   z-index: 1;
   flex-shrink: 0;
@@ -41,9 +41,6 @@ const StyledTagChain = styled(motion.div)`
     height: 100%;
   }
 
-  &:first-child {
-    margin-left: 0;
-  }
 `;
 
 interface IOdyssey {

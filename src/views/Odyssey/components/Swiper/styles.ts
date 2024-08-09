@@ -134,6 +134,9 @@ export const StyledCardDesc = styled.div`
 export const StyleChainIconImg = styled.img`
   width: 30px;
   height: 30px;
+  &:hover {
+    cursor: pointer;
+  }
 `
 
 export const StyledCompassButton = styled.div`

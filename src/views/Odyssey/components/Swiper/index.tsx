@@ -40,7 +40,7 @@ import {
   StyleList,
   StyledVideo,
   StyledVideoIcon,
-  StyleChainIconImg
+  StyleChainIconImg,
 } from './styles';
 
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
@@ -49,8 +49,23 @@ import RewardList from '../Reward';
 import MedalList from '../Medal';
 
 
-const parseChainsId = (chains_id: string | null): string[] => 
-  chains_id ? chains_id.split(',').map(id => id.trim()) : [];
+
+export const formatCompassName = (name: string) =>  {
+  if (!name) return '';
+
+  const parts = name.split(': ');
+  return parts.length > 1 ? (
+    <>
+      {parts[0]}：<br />
+      {parts[1]}
+    </>
+  ) : (
+    name
+  );
+}
+
+const parseChainsId = (chains_id: string | null): string[] =>
+  chains_id ? chains_id.split(',').map((id) => id.trim()) : [];
 
 const CompassCard = function ({ compass }: any) {
   const toast = useToast();
@@ -68,11 +83,8 @@ const CompassCard = function ({ compass }: any) {
     router.push(odyssey[compass.id].path);
   };
 
-  const renderVolNo = (options: { name: string; id: number; }) => {
-    const {
-      name,
-      id,
-    } = options;
+  const renderVolNo = (options: { name: string; id: number }) => {
+    const { name, id } = options;
     if (!name) return null;
     if (name.indexOf('Vol.4+:') > -1) {
       return '4+';
@@ -99,20 +111,18 @@ const CompassCard = function ({ compass }: any) {
             <StyledOdysseyInfo>
               <StyledOdysseyIcon />
               <StyledOdysseyIconTitle>Vol.{renderVolNo({ name: compass.name, id: compass.id })}</StyledOdysseyIconTitle>
-              <div className='chainList'>
-                {
-                  parseChainsId(compass.chains_id).map((chain: any) => (
-                    <StyleChainIconImg src={ChainMap[chain].icon} alt="" />
-                  ))
-                }
+              <div className="chainList">
+                {parseChainsId(compass.chains_id).map((chain: any) => (
+                  <StyleChainIconImg src={ChainMap[chain].icon} alt="" />
+                ))}
               </div>
             </StyledOdysseyInfo>
             <Tag status={compass.status} />
           </StyledOdysseyHead>
-          <StyledCardTitle>{compass.name}</StyledCardTitle>
+          <StyledCardTitle>{formatCompassName(compass.name)}</StyledCardTitle>
           <StyleList>
             <RewardList odyssey={compass} />
-            <MedalList medals={[1]}/>
+            <MedalList medals={[1]} />
           </StyleList>
           {/* <StyledCardDesc>{compass.description}</StyledCardDesc> */}
           {compass.status === 'un_start' ? (
@@ -125,18 +135,18 @@ const CompassCard = function ({ compass }: any) {
                 }}
                 data-bp="1001-003"
               >
-                <div>Start now</div>
+                <div>Explore All</div>
                 <IconClickArrow />
               </StyledCompassButton>
-              <StyledCompassButton
+              {/* <StyledCompassButton
                 className="plain"
                 onClick={() => {
-                  router.push('/odyssey/list')
+                  router.push('/odyssey');
                 }}
               >
                 <div>Explore All</div>
                 <IconClickArrow />
-              </StyledCompassButton>
+              </StyledCompassButton> */}
             </div>
           )}
         </StyledCardMainContent>
@@ -161,8 +171,6 @@ const Compass = () => {
     setVideoUrl(_video);
     setShow(true);
   };
-
- 
 
   return loading ? (
     <StyledLoadingWrapper>
@@ -196,27 +204,24 @@ const Compass = () => {
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
                   <CompassCard compass={compass} />
-                  {
-
-                      odyssey[compass?.id]?.video && (
-                        <StyledVideo
-                          url={compass.banner}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            showVideo(odyssey[compass?.id]?.video);
-                          }}
-                        >
-                          <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
-                        </StyledVideo>
-                      )
-                    }
-                <OdysseyVideo
-                  src={videoUrl}
-                  visible={show}
-                  close={() => {
-                    setShow(false);
-                  }}
-                />
+                  {odyssey[compass?.id]?.video && (
+                    <StyledVideo
+                      url={compass.banner}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        showVideo(odyssey[compass?.id]?.video);
+                      }}
+                    >
+                      <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+                    </StyledVideo>
+                  )}
+                  <OdysseyVideo
+                    src={videoUrl}
+                    visible={show}
+                    close={() => {
+                      setShow(false);
+                    }}
+                  />
                   {/* <StyledCompassIcon>
                     <CompassIcon />
                   </StyledCompassIcon>

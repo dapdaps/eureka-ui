@@ -44,10 +44,8 @@ const InputCloseIcon = styled.div`
   }
 `;
 const Search = ({
-  setShowSearch,
   onSearch
 }: {
-  setShowSearch: (show: boolean) => void;
   onSearch: (query: string) => void;
 }) => {
   const { currentSearch, setSearch, addRecentSearch } = useRecentStore();
@@ -92,7 +90,7 @@ const Search = ({
       <InputCloseIcon
         onClick={() => {
           setSearch('');
-          setShowSearch(false)
+          onSearch('');
         }}
       >
         <IconClear />

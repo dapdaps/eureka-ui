@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
@@ -89,10 +89,10 @@ const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
 export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolean }) => {
   const router = useRouter();
-  const setLayoutStore = useLayoutStore((store) => store.set);
+  // const setLayoutStore = useLayoutStore((store) => store.set);
   const { account } = useAccount();
 
-  const [searchContent, setSearchContent] = useState<string>();
+  // const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
 

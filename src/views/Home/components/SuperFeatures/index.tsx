@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { formatDateString } from "@/utils/format-time";
 import { QUEST_PATH } from "@/config/quest";
 import { formatIntegerThousandsSeparator } from "@/utils/format-number";
+import { useRouter } from "next/router";
 
 const StyleFeatures = styled.div`
     margin: 0 auto;
@@ -43,6 +44,11 @@ const StyleFeatures = styled.div`
             display: flex;
             align-items: center;
             gap: 28px;
+            &.bridge {
+                &:hover {
+                    cursor: pointer;
+                }
+            }
             .logo {
                 width: 150px;
                 height: 150px;
@@ -51,7 +57,15 @@ const StyleFeatures = styled.div`
                 .desc-img {
                     width: 204px;
                     height: 45px;
-                    margin: 20px 0 15px 0;
+                }
+                .desc-title {
+                    margin: 20px 0 26px 0;
+                    font-family: Montserrat;
+                    font-size: 26px;
+                    font-weight: 700;
+                    line-height: 32px;
+                    text-align: left;
+                    color: #fff;
                 }
                 .tips {
                     width: 320px;
@@ -128,7 +142,7 @@ interface IData {
 
 const SuperFeatures = () => {
     const [statData, setStatData] = useState<IData>({})
-    
+    const router = useRouter()
     const fetchStatData = () => {
         get(`${QUEST_PATH}/api/dashboard/summary`).then((res) => {
             setStatData(res.data)
@@ -145,17 +159,17 @@ const SuperFeatures = () => {
         <div className="title">Super <span>Features</span></div>
         <div className="subTitle">DapDap engages users in 5-10 mins in Super features by helping users to jump in crypto world more effectively.</div>
         <div className="engages">
-            <div className="section">
+            <div className="section bridge" onClick={() => router.push('/super-bridge')}>
                 <img className="logo" src="/images/home/logo-bridge.png" alt="bridge" />
-                <div className="desc">
-                    <img className="desc-img" src="/images/home/group-bridge.png" alt="" />
+                <div className="desc" >
+                    <div className="desc-title">Super Bridge</div>
                     <div className="tips">Transfer assets between Ethereum and EVM L2s super easily.</div>
                 </div>
             </div>
             <div className="section">
                 <img className="logo" src="/images/home/logo-swap.png" alt="swap" />
                 <div className="desc">
-                    <img  className="desc-img" src="/images/home/group-swap.png" alt="" />
+                    <div className="desc-title">Super Swap</div>
                     <div className="tips">Transfer assets between Ethereum and EVM L2s super easily.</div>
                 </div>
             </div>

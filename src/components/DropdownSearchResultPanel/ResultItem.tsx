@@ -40,8 +40,8 @@ const ResultItem = ({ title, loading, items, onClick }: any) => {
             </StyledResultItem>
           ))}
           {items.length > 5 && (
-            <StyleView>
-              <div onClick={() => setShowAll(!showAll)}>{showAll ? 'Hide' : 'Show'} all</div>
+            <StyleView onClick={() => setShowAll(!showAll)}>
+              <div>{showAll ? 'Hide' : 'Show'} all</div>
             </StyleView>
           )}
         </>

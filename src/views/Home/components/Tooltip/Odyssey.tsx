@@ -23,16 +23,16 @@ export const formatValue = (value: string): string => {
 
   value = value.toUpperCase();
   if (unitsConfig.some(config => value.endsWith(config.unit))) {
-    return `$${value}`;
+    return `${value}`;
   }
   for (const config of unitsConfig) {
     if (Big(value).gte(config.threshold)) {
       const newValue = Big(value).div(config.threshold).toFixed(2);
-      return `$${parseFloat(newValue) + config.unit}`;
+      return `${parseFloat(newValue) + config.unit}`;
     }
   }
   const newValue = Big(value).toFixed(2);
-  return `$${parseFloat(newValue).toString()}`;
+  return `${parseFloat(newValue).toString()}`;
 };
 
 const OdysseyCard = (props: Props) => {

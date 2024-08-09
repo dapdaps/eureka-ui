@@ -30,7 +30,7 @@ const Layout = styled.div`
 const BLACK_PATH = [
   '/odyssey/[version]',
   '/',
-  '/odyssey/list',
+  '/odyssey',
   '/dapp/[dappRoute]',
   '/alldapps',
   '/networks',

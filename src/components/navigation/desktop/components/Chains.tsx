@@ -5,7 +5,6 @@ import { useRouter } from 'next/router';
 import { IdToPath } from '@/config/all-in-one/chains';
 import { Network } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 
-
 const GridContainer = styled.div`
   padding: 16px 12px;
   display: grid;
@@ -53,6 +52,10 @@ const GridItemContainer = styled.div`
 
   .name {
     white-space: nowrap;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 `;
 
@@ -69,13 +72,16 @@ const LoadingCard = () => {
 const Chains = ({
   loading,
   data,
+  onClick
 }: {
   loading: boolean;
   data: Network[];
+  onClick?: () => void
 }) => {
   const router = useRouter()
   
   const handleClick = (item: Network) => {
+    onClick?.();
     router.push(`/networks/${IdToPath[item.id]}`);
   }
   return (

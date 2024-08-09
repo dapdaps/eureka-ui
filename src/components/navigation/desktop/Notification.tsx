@@ -183,14 +183,20 @@ export default function Notification() {
         <Layer>
           <LayerHeader>
             <div className="noti-title">Notifications</div>
-            <div className="noti-read-all" onClick={() => router.push('/notification') }>Read all</div>
+            <div className="noti-read-all" onClick={() => {
+              router.push('/notification')
+              setIsHovered(false);
+            } }>Read all</div>
           </LayerHeader>
           <div className="noti-content">
             {
               loading ? <LoadingList /> : data?.data.length === 0 ? 
               <Empty size={48} tips="Waiting New Notifications" />:
               data?.data.map((item) => {
-                return <NotificationItem key={item.id} data={item} onClick={() => router.push('/notification')}/>;
+                return <NotificationItem key={item.id} data={item} onClick={() => {
+                  router.push('/notification')
+                  setIsHovered(false)
+                }}/>;
               })
             }
           </div>

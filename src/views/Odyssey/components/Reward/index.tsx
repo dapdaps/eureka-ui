@@ -25,7 +25,7 @@ const RewardList = ({
   return (
     <StyledTagItem>
       <StyledTagItemInner className={`reward ${odyssey.status === StatusType.ongoing ? 'tag-active' : 'tag-default'}`}>
-        <div className="reward-text">${formatValue(rewards[0]?.value)} {rewards[0]?.name}</div>
+        <div className="reward-text">{formatValue(rewards[0]?.value)} {rewards[0]?.name}</div>
         <TooltipList odyssey={odyssey} sxImg={{ width: '20px', height: '20px'}}/>
       </StyledTagItemInner>
     </StyledTagItem>

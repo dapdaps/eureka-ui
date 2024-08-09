@@ -46,7 +46,11 @@ const StyleTitle = styled.div`
     }
 `
 
-const RecentSearch = () => {
+const RecentSearch = ({
+  onClick
+}: {
+  onClick: (item: string) => void;
+}) => {
 
   const { recentSearches, clearRecentSearches } = useRecentStore();
 
@@ -68,7 +72,7 @@ const RecentSearch = () => {
         <div className='gird'>
         <AnimatePresence>
           {
-            recentSearches.map((item: any) => (
+            recentSearches.map((item) => (
               <motion.div
                 className='item'
                 key={item}
@@ -76,6 +80,7 @@ const RecentSearch = () => {
                 animate={{ opacity: 1, y: 0, transition: { duration: 0.4 } }}
                 exit={{ opacity: 0, y: 10, transition: { duration: 0.4 } }}
                 title={item}
+                onClick={() => onClick(item)}
               >
                 {truncateText(item, 20)}
               </motion.div>
