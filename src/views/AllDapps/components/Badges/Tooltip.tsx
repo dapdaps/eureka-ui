@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
@@ -67,6 +67,16 @@ const Tooltip = (props: Props) => {
     setX(e.clientX);
     setY(e.clientY);
   };
+
+  useEffect(() => {
+    const onScroll = () => {
+      setVisible(false);
+    };
+    document.addEventListener('scroll', onScroll);
+    return () => {
+      document.removeEventListener('scroll', onScroll);
+    };
+  }, []);
 
   if (!tooltip) return children;
 
