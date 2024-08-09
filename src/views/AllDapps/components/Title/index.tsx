@@ -48,8 +48,32 @@ const AllDappsTitle = (props: Props) => {
     dappList.forEach((dapp, idx) => {
       const position = TitleDappList[idx];
       if (!position) return;
+      let x = position.x;
+      let y = position.y;
+      if (dappList.length <= 4) {
+        if (position.position === 'left') {
+          x = x + 100;
+        } else {
+          x = x - 100;
+        }
+      }
+      if (dappList.length <= 2) {
+        y = y - 50;
+        if (position.position === 'left') {
+          x = x + 100;
+        } else {
+          x = x - 100;
+        }
+      }
+      if (dappList.length === 1) {
+        x = x + 330;
+        y = y - 80;
+      }
+
       result.push({
         ...position,
+        x,
+        y,
         logo: dapp.logo,
         width: dapp.width || position.width,
         height: dapp.height || position.height,
@@ -101,12 +125,12 @@ const AllDappsTitle = (props: Props) => {
             <span>
               {currentCategory ? (
                 <Counter
-                  from={0}
+                  from={1}
                   to={+currentCategory.sum || 0}
                 />
               ) : (
                 <Counter
-                  from={0}
+                  from={1}
                   to={totalDapps}
                   formatter={(value) => {
                     return Big(value).gt(10) ? `${Big(value).div(10).toFixed(0, 0)}0+` : Big(value).toFixed(0, 0);
