@@ -3,7 +3,6 @@ import { useRouter } from 'next/router';
 import { memo, useMemo, useRef, useState } from 'react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
@@ -18,7 +17,6 @@ import OdysseyVideo from '@/views/Dapp/components/DappDetail/RelativeOdyssey/Vid
 import {
   StyledCard,
   StyledCardBackgroundImage,
-  StyledCardButton,
   StyledCardMainContent,
   StyledContainer,
   StyledContent,
@@ -27,11 +25,8 @@ import {
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
-  StyleAdTitle,
-  StyledCardDesc,
   StyledCardTitle,
   StyledCominsoon,
-  StyledCompassIcon,
   StyledCompassButton,
   StyledOdysseyIconTitle,
   StyledOdysseyHead,
@@ -48,9 +43,7 @@ import Tag from '../Tag';
 import RewardList from '../Reward';
 import MedalList from '../Medal';
 
-
-
-export const formatCompassName = (name: string) =>  {
+export const formatCompassName = (name: string) => {
   if (!name) return '';
 
   const parts = name.split(': ');
@@ -62,7 +55,7 @@ export const formatCompassName = (name: string) =>  {
   ) : (
     name
   );
-}
+};
 
 const parseChainsId = (chains_id: string | null): string[] =>
   chains_id ? chains_id.split(',').map((id) => id.trim()) : [];
@@ -165,6 +158,8 @@ const Compass = () => {
   const [show, setShow] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const showVideo = (_video: string) => {
+    console.log(_video, '_video');
+
     if (!_video) {
       return;
     }
@@ -215,13 +210,6 @@ const Compass = () => {
                       <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
                     </StyledVideo>
                   )}
-                  <OdysseyVideo
-                    src={videoUrl}
-                    visible={show}
-                    close={() => {
-                      setShow(false);
-                    }}
-                  />
                   {/* <StyledCompassIcon>
                     <CompassIcon />
                   </StyledCompassIcon>
@@ -274,6 +262,13 @@ const Compass = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
+            <OdysseyVideo
+              src={videoUrl}
+              visible={show}
+              close={() => {
+                setShow(false);
+              }}
+            />
             <StyledSwiperPrevButton
               onClick={() => {
                 swiperRef.current && swiperRef.current.slidePrev();

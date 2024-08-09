@@ -8,7 +8,7 @@ const OdysseyVideo = (props: Props) => {
     close,
     src,
   } = props;
-
+  
   return (
     <Modal
       width={620}
