@@ -77,19 +77,21 @@ const StyleHeader = styled.div`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    font-family: Montserrat;
   }
 `
 
 const StyleDesc = styled.div`
   font-size: 16px;
   color: #fff;
-  line-height: 1;
+  line-height: 19px;
   max-width: 350px;
   text-overflow: ellipsis;
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
+  font-family: Montserrat;
 `
 
 interface IProps {

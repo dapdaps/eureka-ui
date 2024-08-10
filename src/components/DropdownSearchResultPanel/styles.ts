@@ -98,6 +98,7 @@ export const StyledResultItemImg = styled.img`
 export const StyledResultItemTitle = styled.div`
   font-size: 16px;
   line-height: 16px;
+  font-family: Montserrat;
   font-weight: 600;
   color: #ffffff;
   margin-left: 10px;
@@ -121,6 +122,7 @@ export const StyleView = styled.div`
   color: #fff;
   font-weight: 600;
   font-size: 16px;
+  font-family: Montserrat;
   cursor: pointer;
   border: 1px solid rgba(51, 54, 72, 1);
   background: rgba(31, 34, 41, 1);

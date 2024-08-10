@@ -35,6 +35,7 @@ const StyleView = styled.div`
   border: 1px solid rgba(51, 54, 72, 1);
   background: rgba(31, 34, 41, 1);
   border-radius: 12px;
+  font-family: Montserrat;
   span {
     text-decoration: underline;
   }

@@ -7,6 +7,7 @@ const StyleChain = styled.div`
   margin-top: 30px;
   .title {
     font-size: 14px;
+    font-family: Montserrat;
     line-height: 14px;
     font-weight: 500;
     margin-bottom: 16px;
@@ -41,6 +42,7 @@ const StyleList = styled.div`
     }
     .name {
       font-weight: 600;
+      font-family: Montserrat;
       font-size: 16px;
       line-height: 16px;
       color: #fff;

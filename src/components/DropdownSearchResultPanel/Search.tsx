@@ -20,6 +20,7 @@ const StyleSearch = styled.div`
     border: none;
     color: #fff;
     font-size: 16px;
+    font-family: Montserrat;
     width: 100%;
     outline: none;
     line-height: 16px;

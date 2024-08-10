@@ -16,6 +16,11 @@ export const Wrapper = styled.div`
       display: flex;  
       align-items: center;
       position: relative;
+      a {
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
   }
 
@@ -41,6 +46,7 @@ export const Wrapper = styled.div`
     font-weight: 600;
     line-height: 1;
     font-size: 16px;
+    font-family: Montserrat;
     color: #fff;
     position: relative;
     gap: 2px;

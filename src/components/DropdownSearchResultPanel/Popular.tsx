@@ -16,6 +16,7 @@ const StyleTitle = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-family: Montserrat;
   padding: 0 20px;
   .links {
     font-size: 12px;
@@ -24,6 +25,7 @@ const StyleTitle = styled.div`
     color: #979abe;
     display: flex;
     align-items: center;
+    font-family: Montserrat;
     gap: 6px;
     &:hover {
       color: #fff;
@@ -58,6 +60,7 @@ const StyleList = styled.div`
         font-size: 16px;
         line-height: 16px;
         color: #fff;
+        font-family: Montserrat;
       }
     }
     .value {
@@ -69,6 +72,7 @@ const StyleList = styled.div`
         font-weight: 500;
         font-size: 14px;
         line-height: 14px;
+        font-family: Montserrat;
         color: #fff;
       }
       .icon {
@@ -78,6 +82,7 @@ const StyleList = styled.div`
         .up {
           font-size: 12px;
           line-height: 12px;
+          font-family: Montserrat;
           color: #06c17e;
         }
       }

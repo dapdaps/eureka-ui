@@ -21,12 +21,14 @@ const StyleTitle = styled.div`
         line-height: 14px;
         font-weight: 500;
         color: #979ABE;
+        font-family: Montserrat;
     }
     .links {
         font-size: 12px;
         line-height: 12px;
         font-weight: 400;
         color: #979ABE;
+        font-family: Montserrat;
         display: flex;
         align-items: center;
         gap: 6px;

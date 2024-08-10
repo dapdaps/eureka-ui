@@ -88,7 +88,6 @@ const StyleDropdown = styled.div`
     }
     .dap-check {
       padding: 16px 28px;
-      font-family: Orbitron;
       font-size: 16px;
       font-weight: 700;
       line-height: 16px;
