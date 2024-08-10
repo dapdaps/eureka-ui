@@ -156,7 +156,6 @@ export const StyledTagList = styled.div`
   display: flex;
   align-items: center;
   column-gap: 10px;
-  padding-right: 20px;
   padding-left: 20px;
 
   &::-webkit-scrollbar {

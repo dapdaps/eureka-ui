@@ -1,33 +1,21 @@
 import { useDefaultLayout } from '@/hooks/useLayout';
 import styled from 'styled-components';
-import Link from 'next/link';
 
 import type { NextPageWithLayout } from '@/utils/types';
 import EtherFi from '@/components/Stake/EtherFi'
+import DappBack from '@/components/PageBack';
+import useDappInfo from '@/hooks/useDappInfo';
+import { useRouter } from 'next/router';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import { Suspense } from 'react';
+import DappFallback from '@/views/Dapp/components/Fallback';
+import DappDetail from '@/views/Dapp/components/DappDetail';
 
 const Container = styled.div`
   margin: 0 8%;
   color: #ffffff;
   padding-top: 50px;
 `
-
-const BreadCrumbs = styled.div`
-  color: #979abe;
-  font-size: 14px;
-  margin-bottom: 32px;
-  a {
-    text-decoration: none;
-    color: #979abe;
-    display: inline-block;
-    cursor: pointer;
-  }
-  svg {
-    margin: 0 8px;
-  }
-  span {
-    color: #ffffff;
-  }
-`;
 
 const TitleWapper = styled.div`
 text-align: center;
@@ -43,18 +31,21 @@ const arrow = (
 );
 
 export const Page: NextPageWithLayout = () => {
+  const router = useRouter();
+  const dappPathname = router.query.dappRoute as string;
+  const { dapp } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
+
   return <Container>
-      <BreadCrumbs>
-        <Link href="/">Home</Link>
-        {arrow}
-        <Link href="/alldapps">dApps</Link>
-        {arrow}
-        <span>ether.fi</span>
-      </BreadCrumbs>
+      <DappBack defaultPath="/alldapps" />
       <TitleWapper>
         <img className="icon" src="/images/apps/etherfi.png" />
       </TitleWapper>
       <EtherFi chainIndex={4}/>
+
+      <DappDetailScroll />
+      <Suspense fallback={<DappFallback />}>
+        <DappDetail {...dapp}/>
+      </Suspense>
     </Container>
 };
 
