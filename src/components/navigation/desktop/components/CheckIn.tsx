@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 import CheckInGrid from './CheckInGrid';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import MedalCard from '@/views/Profile/components/MedalCard';
+import { useDebounceFn } from 'ahooks';
+import { get, post } from '@/utils/http';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import useAccount from '@/hooks/useAccount';
+import { ICheckInData } from './types';
+import Loading from '@/components/Icons/Loading';
+import Skeleton from 'react-loading-skeleton'
 
 const StyleCheckIn = styled.div`
   display: flex;
   align-items: center;
-  margin-right: 14px;
   position: relative;
   display: flex;
   align-items: center;
@@ -14,15 +20,11 @@ const StyleCheckIn = styled.div`
 
   &:hover {
     .text {
-    cursor: pointer;
+      cursor: pointer;
       color: rgba(255, 255, 255, 1);
     }
   }
-  .fist {
-    width: 18px;
-    height: 16px;
-    margin-right: 6px;
-  }
+
   .text {
     font-size: 12px;
     line-height: 12px;
@@ -35,6 +37,7 @@ const StyledImg = styled.img<{ isHovered: boolean }>`
   width: ${(props) => (props.isHovered ? '41px' : '18px')};
   height: ${(props) => (props.isHovered ? '36px' : '16px')};
   transition: width 0.3s, height 0.3s;
+  margin-right: 6px;
 `;
 
 const StyleDropdown = styled.div`
@@ -103,7 +106,7 @@ const StyleDropdown = styled.div`
     padding: 16px 20px 22px 20px;
     text-align: center;
     .dropdown-medals {
-        margin-bottom: 16px;
+      margin-bottom: 16px;
     }
     .mystery-img {
       width: 220px;
@@ -114,10 +117,47 @@ const StyleDropdown = styled.div`
   }
 `;
 
+const StyledButton = styled.button`
+  width: 154px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
+  color: #1e2028;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  transition: 0.3s;
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 0.8;
+  }
+  &:disabled {
+    background: #7c7f96;
+    opacity: 0.5;
+  }
+`;
+
+const LoadingCard = () => (
+  <>
+    <Skeleton width={432} height={145} borderRadius={'12px'} />
+    <Skeleton width={432} height={200} borderRadius={'12px'} style={{ marginTop: '20px'}} />
+  </>
+);
+
 const CheckIn = () => {
   const [isHovered, setIsHovered] = useState(false);
-  const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
   const navHeaderRef = useRef<HTMLDivElement>(null);
+
+  const [data, setData] = useState<ICheckInData>();
+  const [loading, setLoading] = useState<boolean>(false);
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
+  const { account } = useAccount();
+  const [claimLoading, setClaimLoading] = useState(false);
+
+  const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -147,6 +187,53 @@ const CheckIn = () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, []);
+
+  const fetchSignsInfo = async () => {
+    try {
+      setLoading(true);
+      const result = await get(`/api/check-in`);
+      setData(result.data);
+    } catch (err) {
+      console.log(err, 'err');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const { run } = useDebounceFn(
+    () => {
+      check(() => fetchSignsInfo());
+    },
+    { wait: 300 },
+  );
+
+  useEffect(() => {
+    run();
+  }, [account]);
+
+  const checkIn = async () => {
+    try {
+      setClaimLoading(true);
+      await post(`/api/check-in`);
+    } catch (err) {
+      console.log(err, 'err');
+    } finally {
+      setClaimLoading(false);
+    }
+  };
+
+  const { run: claim } = useDebounceFn(
+    () => {
+      check(() => checkIn());
+    },
+    { wait: 300 },
+  );
+
+  const isClaimed = useMemo(() => {
+    if (!data) return false;
+    return data?.data?.some((item) => item.status === 'claimed' && item?.status);
+  }, [data]);
+
   return (
     <StyleCheckIn
       ref={navHeaderRef}
@@ -154,32 +241,50 @@ const CheckIn = () => {
       onMouseLeave={handleMouseLeave}
       onClick={handleClick}
     >
-      <StyledImg className="fist" src={imgSrc} alt="fist" isHovered={isHovered} />
+      <StyledImg src={imgSrc} alt="fist" isHovered={isHovered} />
       <span className="text">DapMeUp!</span>
       {isHovered && (
         <StyleDropdown>
           <div className="dropdown-content">
             <div className="dropdown-header">
               <div className="header-item">
-                <span className="value">33</span>
+                <span className="value">{data?.total_days ?? '-'}</span>
                 <span className="label">times in total</span>
               </div>
               <div className="header-item">
-                <span className="value">33</span>
+                <span className="value">{data?.consecutive_days ?? '-'}</span>
                 <span className="label">days in a row</span>
               </div>
-              <div className="dap-check">Dap me up!</div>
+              <StyledButton
+                disabled={isClaimed || claimLoading}
+                onClick={() => {
+                  claim();
+                }}
+              >
+                {claimLoading && <Loading size={16} />}
+                <span style={{ marginLeft: claimLoading ? '4px' : '' }}>Dap me up!</span>
+              </StyledButton>
             </div>
             <div className="dropdown-main">
-              <div className="dropdown-medals">
-                <MedalCard style={{ width: '100%', height: '142px' }} />
-              </div>
-              <div className="dropdown-mystery">
-                <img className="mystery-img" src="/images/header/dapdap-mystery-text.png" alt="mystery" />
-                <div className="dropdown-mystery-box">
-                  <CheckInGrid></CheckInGrid>
-                </div>
-              </div>
+              {
+                loading ? <LoadingCard /> : (
+                  <>
+                    {data?.medal && (
+                      <div className="dropdown-medals">
+                        <MedalCard medal={data.medal} style={{ width: '100%', height: '142px' }} />
+                      </div>
+                    )}
+                    {data && data.data?.length > 0 && (
+                      <div className="dropdown-mystery">
+                        <img className="mystery-img" src="/images/header/dapdap-mystery-text.png" alt="mystery" />
+                        <div className="dropdown-mystery-box">
+                          <CheckInGrid dayStatus={data.data} />
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )
+              }
             </div>
           </div>
         </StyleDropdown>

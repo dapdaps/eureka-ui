@@ -44,13 +44,15 @@ export const StyledCard = styled.div`
 `;
 
 export const StyledCardBackgroundImage = styled.img`
-      width: 720px;
-      height: 500px;
+  width: 720px;
+  height: 500px;
 `;
 
 export const StyledCardMainContent = styled.div`
   padding: 30px 30px 30px 0;
   flex: 1;
+  align-self: stretch;
+  position: relative;
   .title {
     color: #979ABE;
     font-size: 20px;
@@ -78,6 +80,20 @@ export const StyledCardMainContent = styled.div`
       color: #979ABE;
     }
   }
+  .btns {
+    position: absolute;
+    width: calc(100% - 50px);
+    bottom: 70px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    & > *:only-child {
+      flex: 1;
+    }
+    & > *:not(:only-child) {
+      flex: 1 0 50%;
+    }
+  }
 `;
 
 export const StyledCardChains = styled.img`
@@ -91,13 +107,13 @@ export const StyledCardTitle = styled.div`
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
-  line-height: normal;
-  width: 508px;
+  width: 460px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 106px;
 `;
 
 export const StyledCardDesc = styled.div`
@@ -106,8 +122,7 @@ export const StyledCardDesc = styled.div`
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: 150%; /* 27px */
-  width: 500px;
+  width: 460px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -115,14 +130,49 @@ export const StyledCardDesc = styled.div`
   text-overflow: ellipsis;
 `;
 
-export const StyledCardButton = styled.div`
-  margin-top: 108px;
+
+
+export const StyledCompassButton = styled.div`
   width: 100%;
   height: 50px;
   flex-shrink: 0;
   border-radius: 12px;
-  background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
-  color: #02051e;
+  background: #EBF479;
+  color: rgb(2, 5, 30);
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  cursor: pointer;
+  transition: all 0.5s ease 0s;
+  &.plain {
+    background: transparent;
+    color: #EBF479;
+    border: 1px solid #EBF479;
+  }
+  &:hover {
+    opacity: 0.9;
+  }
+  &:active {
+    opacity: 0.8;
+  }
+`
+
+export const StyledCardButton = styled.div`
+  position: absolute;
+  left: 706px;
+  bottom: 29px;
+  width: 213px;
+  height: 50px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: linear-gradient(rgb(238, 243, 191) 0%, rgb(233, 244, 86) 100%);
+  color: rgb(2, 5, 30);
   text-align: center;
   font-family: Gantari;
   font-size: 16px;
@@ -134,8 +184,7 @@ export const StyledCardButton = styled.div`
   justify-content: center;
   gap: 9px;
   cursor: pointer;
-  transition: 0.5s;
-
+  transition: all 0.5s ease 0s;
   &:hover {
     opacity: 0.9;
   }
@@ -161,12 +210,13 @@ export const StyledSwiperWrapper = styled.div`
   position: relative;
   .swiper-pagination {
     position: absolute;
-    bottom: 30px;
-    right: 70px;
+    bottom: -40px;
+    right: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 10;
+    transform: translateX(50%);
   }
 
   .swiper-pagination-bullet {
@@ -214,7 +264,10 @@ export const StyledSwiperPrevButton = styled.div`
   border-radius: 10px;
   border: 1px solid #333648;
 `;
-export const StyledChainsImg = styled.img``;
+export const StyledChainsImg = styled.img`
+  width: auto;
+  margin-left: 16px;
+`;
 
 export const StyledCominsoon = styled.div`
   color: #00e2ff;
@@ -228,4 +281,49 @@ export const StyledCominsoon = styled.div`
   bottom: 29px;
   width: 213px;
   height: 50px;
+`;
+
+
+export const StyleAdTitle = styled.div`
+  font-family: Montserrat;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 39px;
+  text-align: left;
+  color: #fff;
+`
+
+
+export const StyledOdysseyHead = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const StyledOdysseyInfo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const StyledOdysseyIcon = styled.div`
+  width: 121px;
+  height: 17px;
+  background: url('/images/alldapps/icon-odyssey.svg') no-repeat center;
+  background-size: contain;
+`;
+
+export const StyledOdysseyIconTitle = styled.div`
+  height: 17px;
+  background: linear-gradient(180deg, #FFF 0%, #999 100%);
+  border-radius: 3px;
+  transform: skewX(-20deg);
+  padding: 2px 5px;
+  color: #000;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;

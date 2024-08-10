@@ -13,21 +13,22 @@ export const StyledAirdropCard = styled.div`
 export const StyledNetworkImage = styled.img`
   width: 72px;
 `
-export const StyledCategoryContainer = styled.div<{ color: string }>`
-  padding: 1px;
-  border-radius: 30px;
-  background-color: ${({ color }) => color};
-  color: ${({ color }) => color};
+export const StyledCategories = styled.div`
+  display: flex;
+  align-items: center;
 `
-export const StyledCategory = styled.div`
+export const StyledCategory = styled.div<{ colorRgb: string }>`
   padding: 6px 10px;
   border-radius: 30px;
-  /* border: 1px solid #C1BFFF;
-  opacity: 0.5; */
-  /* color: #C1BFFF; */
+  border: 1px solid rgba(${({ colorRgb }) => colorRgb}, 0.5);
+  color: rgb(${({ colorRgb }) => colorRgb});
   font-family: Montserrat;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 100%; /* 12px */
+`
+export const StyledChainImage = styled.img`
+  width: 20px;
+  height: 20px;
 `

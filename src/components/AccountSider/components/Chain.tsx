@@ -51,7 +51,7 @@ const ChainList = styled.div<{ display?: number }>`
   background-color: #303142;
   position: absolute;
   top: 34px;
-  left: 0px;
+  right: -50px;
   box-sizing: border-box;
   display: ${({ display }) => (display ? 'block' : 'none')};
   z-index: 200;

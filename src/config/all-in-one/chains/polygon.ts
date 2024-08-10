@@ -8,6 +8,12 @@ export default {
   chainId: 137,
   rpcUrls: ['https://polygon.llamarpc.com'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#5C28D8',
+      text: '#FFF',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

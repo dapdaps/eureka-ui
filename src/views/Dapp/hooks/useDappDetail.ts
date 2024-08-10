@@ -1,12 +1,8 @@
-import router from "next/router";
 import { useEffect, useState } from "react";
 import { get } from '@/utils/http';
 import { QUEST_PATH } from "@/config/quest";
 
 export default function useDappDetail(dapp_id?: string) {
-
-  console.log(dapp_id);
-
   const [detail, setDetail] = useState<any>(null);
   const [ detailLoading, setDetailLoading ] = useState<boolean>(false);
   const [ activityLoading, setActivityLoading ] = useState<boolean>(false);

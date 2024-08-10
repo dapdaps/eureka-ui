@@ -1,30 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 import { get } from '@/utils/http';
-import { QUEST_PATH } from "@/config/quest";
-import { CategoryList } from "@/views/AllDapps/config";
-import chainCofig from "@/config/chains";
-import useDappReward from "@/views/AllDapps/hooks/useDappReward";
-import { useDebounceFn } from "ahooks";
+import { QUEST_PATH } from '@/config/quest';
+import { CategoryList } from '@/views/AllDapps/config';
+import chainCofig from '@/config/chains';
+import { useDebounceFn } from 'ahooks';
 
 export function useChainDapps(chain_id: string, category?: string | number) {
 
-  const [ loading, setLoading ] = useState<boolean>(false);
-  const [ dappList, setDappList ] = useState<any>([]);
-  const [ allDappList, setAllDappList ] = useState<any>([]);
-  const [ allDappListTotal, setAllDappListTotal ] = useState<any>([]);
-  const [ total , setTotal ] = useState<number>(0);
-  const [ pageTotal, setPageTotal] = useState<number>(0);
-  const [ pageIndex, setPageIndex] = useState<number>(1);
-  const [rewardList, setRewardList] = useState<any>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [dappList, setDappList] = useState<any>([]);
+  const [allDappList, setAllDappList] = useState<any>([]);
+  const [allDappListTotal, setAllDappListTotal] = useState<any>([]);
+  const [total, setTotal] = useState<number>(0);
+  const [pageTotal, setPageTotal] = useState<number>(0);
+  const [pageIndex, setPageIndex] = useState<number>(1);
   const pageSize = 9;
-  const {fetchRewardData} = useDappReward();
 
   const fetchDappList = async () => {
     try {
       setLoading(true);
       const result = await get(
         `${QUEST_PATH}/api/dapp/list_by_network`,
-        {chain_id}
+        { chain_id },
       );
       const data = result.data || [];
       data.forEach((dapp: any) => {
@@ -42,16 +39,6 @@ export function useChainDapps(chain_id: string, category?: string | number) {
           curr && dapp.networks.push({ ...curr });
         });
         //#endregion
-
-        dapp.rewards = [];
-        if (dapp?.networks && dapp.networks.length) {
-          rewardList.forEach((item: any) => {
-            const _reward = dapp.networks.find((network: any) => item.chains_id == network.chainId);
-            if (_reward) {
-              dapp.rewards.push(item);
-            }
-          })
-        }
       });
 
       let filteredData = data;
@@ -69,11 +56,6 @@ export function useChainDapps(chain_id: string, category?: string | number) {
     }
   };
 
-  const getRewardList = async () => {
-    const result = await fetchRewardData();
-    setRewardList(result ?? []);
-  }
-
   const { run } = useDebounceFn(() => setLoading(false), { wait: 300 });
 
   const onPage = (page: number, allData?: any, noLoading?: boolean) => {
@@ -85,11 +67,7 @@ export function useChainDapps(chain_id: string, category?: string | number) {
     if (!noLoading) {
       run();
     }
-  }
-
-  useEffect(() => {
-    getRewardList();
-  }, []);
+  };
 
   useEffect(() => {
     if (!chain_id) {
@@ -108,5 +86,5 @@ export function useChainDapps(chain_id: string, category?: string | number) {
     pageSize,
     onPage,
     allDappListTotal,
-  }
+  };
 };

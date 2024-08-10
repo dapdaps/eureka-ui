@@ -14,6 +14,8 @@ const Dropdown = (props: DropdownProps) => {
     clickTriggerClose,
     triggerClassName,
     triggerStyle,
+    arrowClassName,
+    arrowStyle,
   } = props;
 
   const dropdownRef = useRef<any>();
@@ -68,13 +70,15 @@ const Dropdown = (props: DropdownProps) => {
           }}
           initial="hide"
           animate={visible ? 'visible' : 'hide'}
+          className={arrowClassName}
+          style={arrowStyle}
         >
           <svg width="12" height="6" viewBox="0 0 12 6" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
               fillRule="evenodd"
               clipRule="evenodd"
               d="M0.175334 0.300273C0.451342 -0.0447361 0.954776 -0.100673 1.29979 0.175334L5.80003 3.77553L10.3003 0.175334C10.6453 -0.100673 11.1487 -0.0447361 11.4247 0.300273C11.7007 0.645283 11.6448 1.14872 11.2998 1.42472L5.80003 5.82453L0.300273 1.42472C-0.0447361 1.14872 -0.100673 0.645283 0.175334 0.300273Z"
-              fill="white"
+              fill="currentColor"
             />
           </svg>
         </StyledArrow>
@@ -117,4 +121,6 @@ export interface DropdownProps {
   clickPopupClose?: boolean;
   clickTriggerClose?: boolean;
   triggerClassName?: string;
+  arrowClassName?: string;
+  arrowStyle?: React.CSSProperties;
 }

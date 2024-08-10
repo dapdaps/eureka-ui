@@ -10,7 +10,8 @@ export const StyledContainer = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  column-gap: 30px;
+  gap: 30px 100px;
+  flex-wrap: wrap;
 `;
 
 
@@ -24,9 +25,10 @@ export const StyledDetailContainer = styled.div`
 export const StyledSummaryContainer = styled.div`
   display: flex;
   align-items: center;
-  column-gap: 104px;
+  justify-content: space-around;
+  flex-grow: 1;
   flex-shrink: 0;
-  padding-right: 96px;
+  column-gap: 16px;
 `;
 
 export const StyledDetailLogo = styled.div<{ $logo: string; }>`
@@ -109,7 +111,7 @@ export const StyledSummaryValue = styled.div`
   line-height: 1;
   flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   column-gap: 10px;
 `;
 export const StyledSummaryLabel = styled.div`
@@ -127,6 +129,7 @@ export const StyledSummaryAdd = styled.div`
   font-size: 12px;
   font-weight: 500;
   align-items: center;
+  transform: translateY(-5px);
 `;
 export const StyledSummaryAddIcon = styled.div`
   width: 10px;

@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { memo } from 'react';
 import styled from 'styled-components';
 
@@ -71,7 +71,9 @@ const Modal = ({
   showHeader = true,
   onClose = () => { },
   overlayClassName = '',
-  className = ''
+  overlayStyle,
+  className = '',
+  style,
 }: {
   display: boolean;
   title?: string | ReactNode;
@@ -81,15 +83,18 @@ const Modal = ({
   content: ReactNode;
   onClose?: () => void;
   overlayClassName?: any;
+  overlayStyle?: React.CSSProperties;
   className?: any;
+  style?: React.CSSProperties;
 }) => {
   return (
     <AnimatePresence mode="wait">
       {display && (
         <Dialog>
-          <Overlay onClick={onClose} {...overlay} className={overlayClassName}>
+          <Overlay onClick={onClose} {...overlay} className={overlayClassName} style={overlayStyle}>
             <Main
               className={className}
+              style={style}
               {...modal}
               $width={width}
               $hidden={hidden}

@@ -1,7 +1,9 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
-
+import { useRouter } from 'next/router';
+import { IdToPath } from '@/config/all-in-one/chains';
+import { Network } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 
 const GridContainer = styled.div`
   padding: 16px 12px;
@@ -47,6 +49,14 @@ const GridItemContainer = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .name {
+    white-space: nowrap;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 `;
 
 const LoadingCard = () => {
@@ -58,21 +68,28 @@ const LoadingCard = () => {
   ));
 }
 
+
 const Chains = ({
   loading,
   data,
+  onClick
 }: {
   loading: boolean;
-  data: { name: string; logo: string }[];
+  data: Network[];
+  onClick?: () => void
 }) => {
-  const items = useMemo(() =>  data.map(item => ({ iconSrc: item.logo, label: item.name })), [data]);
-
+  const router = useRouter()
+  
+  const handleClick = (item: Network) => {
+    onClick?.();
+    router.push(`/networks/${IdToPath[item.id]}`);
+  }
   return (
     <GridContainer>
-      {loading ? <LoadingCard /> : items.map((item, index) => (
-        <GridItemContainer key={index}>
-          <img src={item.iconSrc} alt={item.label} />
-          <div className="label">{item.label}</div>
+      {loading ? <LoadingCard /> : data.map((item) => (
+        <GridItemContainer key={item.id} onClick={() => handleClick(item)}>
+          <img src={item.logo} alt={item.name} />
+          <div className="name">{item.name}</div>
         </GridItemContainer>
       ))}
     </GridContainer>

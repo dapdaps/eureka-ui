@@ -57,7 +57,7 @@ const getWithoutActive = async (
   activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx',
   query?: Record<string, any>,
 ) => {
-  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
+  const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');  
   const options = {
     method: 'GET',
     headers: {
@@ -77,7 +77,7 @@ const getWithoutActive = async (
   return res.json() as any;
 };
 
-const post = async (url: string, data: object) => {
+const post = async (url: string, data?: object) => {
   const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const res = await fetch(getUrl(url), {
     method: 'POST',
@@ -85,7 +85,7 @@ const post = async (url: string, data: object) => {
       Authorization: `Bearer ${tokens.access_token || ''}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: data ? JSON.stringify(data) : undefined,
   });
   return (await res.json()) as any;
 };

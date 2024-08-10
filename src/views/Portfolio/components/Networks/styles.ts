@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const StyledNetworkTabWrapper = styled.div<{fold: boolean}>`
   display: flex;
@@ -6,26 +7,28 @@ export const StyledNetworkTabWrapper = styled.div<{fold: boolean}>`
   gap: 10px;
   flex-wrap: wrap;
   margin-bottom: 38px;
-  height: ${({ fold }) => fold ? '110px' : 'unset'};
+  height: ${({ fold }) => fold ? '120px' : 'unset'};
   overflow: hidden;
 `;
 
-export const StyledTabItem = styled.div`
+export const StyledTabItem = styled(motion.div)`
   border-radius: 8px;
   border: 1px solid #282A3C;
   background: #1B1D25;
-  padding: 6px;
+  padding: 7px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  column-gap: 14px;
+  justify-content: flex-start;
+  column-gap: 7px;
   width: 158px;
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 
   &:hover {
-    background: #262836;
-    border-color: #373A53;
+    &:not(.disabled) {
+      background: #262836;
+      border-color: #373A53;
+    }
   }
 
   &.active {
@@ -35,13 +38,17 @@ export const StyledTabItem = styled.div`
       color: #EBF479;
     }
   }
+  &.disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
 `;
 
 export const StyledItemIcon = styled.div<{ url?: string }>`
   color: #2D2F42;
   width: 36px;
   height: 36px;
-  background: ${props => props?.url ? `url(${props.url}) center no-repeat`: 'unset' };
+  background: ${props => props?.url ? `url("${props.url}") center no-repeat`: 'unset' };
   background-size: contain;
   border-radius: 10px;
   display: flex;
@@ -60,7 +67,7 @@ export const StyledItemName = styled.div`
   font-weight: 400;
   text-overflow: ellipsis;
   overflow:hidden;
-  line-height: 1;
+  line-height: 15px;
   white-space: nowrap;
 `;
 
@@ -73,7 +80,6 @@ export const StyledItemNum = styled.div`
   white-space: nowrap;
   column-gap: 5px;
   margin-top: 4px;
-  
 `;
 
 export const StyledItemUSD = styled.div`

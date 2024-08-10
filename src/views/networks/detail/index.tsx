@@ -13,7 +13,6 @@ import {
   StyledContainer,
   DappTitle,
   StyledCategory,
-  StyledCategoryItem,
   StyledDetail,
   StyledRecordContainer,
   StyledRelatedOdyssey,
@@ -23,19 +22,7 @@ import RelativeOdyssey from '@/views/Dapp/components/DappDetail/RelativeOdyssey'
 import Medal from '@/views/Dapp/components/DappDetail/Medal/index';
 import { useChainDapps } from './hooks/useChainDapps';
 import { Category } from '@/hooks/useAirdrop';
-
-const medalList: any = [
-  {
-    label: 'Mode Trader',
-    percent: 1,
-    logo: ''
-  },
-  {
-    label: 'Mode Voyager',
-    percent: 0.8,
-    logo: ''
-  }
-];
+import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
 
 const ChainDetail = ({ path }: any) => {
 
@@ -75,7 +62,7 @@ const ChainDetail = ({ path }: any) => {
       const dappCount = allDappListTotal.filter((__it: any) => __it.category_ids.includes(it.id)).length;
       return {
         ...curr,
-        value: dappCount,
+        sum: dappCount,
       };
     });
   }, [categories, CategoryList, allDappListTotal]);
@@ -92,46 +79,39 @@ const ChainDetail = ({ path }: any) => {
 
   return (
     <StyledContainer>
-      <Top chain={{ ...currentChain, ...detail }} />
-      <QuickOnboarding path={path} chain={{ ...currentChain }} />
+      <Top chain={{ ...currentChain, ...detail }} loading={detailLoading} />
+      <QuickOnboarding chain={{ ...currentChain }} />
 
       <StyledDetail>
         <StyledRecordContainer>
           <DetailTabs
             {...detail}
-            overviewTitle={detail?.name ? `Introducing ${detail.name}` : ''}
-            overviewShadow={{icon: currentChain?.bgIcon, color: currentChain?.selectBgColor}}
+            overviewTitle={detail?.name ? `Introducing ${detail?.name}` : ''}
+            overviewShadow={{ icon: currentChain?.bgIcon, color: currentChain?.selectBgColor }}
             category={Category.network}
             loading={detailLoading}
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
-          <Medal medalList={medalList}/>
-          <RelativeOdyssey title='Campaign and Rewards'/>
+          <Medal id={detail?.chain_id} type={Category.chain} />
+          <RelativeOdyssey
+            title="Campaign and Rewards"
+            networkId={detail?.id}
+            chainId={detail?.chain_id}
+          />
         </StyledRelatedOdyssey>
       </StyledDetail>
 
       <DappTitle>
-        <span className="highlight">{total}</span> dApps on Mode
+        <span className="highlight">{total}</span> dApps on {detail?.name}
       </DappTitle>
-      <StyledCategory>
-        {categoryList.map((cate: any) => (
-          <StyledCategoryItem
-            key={cate.key}
-            $colorRgb={cate.colorRgb}
-            $disabled={cate.value < 1}
-            className={currentCategory?.key === cate.key ? 'selected' : ''}
-            onClick={() => {
-              if (cate.value < 1) {
-                return;
-              }
-              handleCurrentCategory(cate);
-            }}
-          >
-            {cate.value} {cate.label}
-          </StyledCategoryItem>
-        ))}
-      </StyledCategory>
+      <CategoryFilter
+        classname='category-filter'
+        size={'small'}
+        categoryList={categoryList}
+        currentCategory={currentCategory}
+        onSelect={handleCurrentCategory}
+      />
       <DappList
         style={{
           width: '1247px',

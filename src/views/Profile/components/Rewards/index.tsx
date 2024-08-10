@@ -71,19 +71,21 @@ const PlusSvg = (
 )
 type PropsType = {
   onInviteCodeClick: VoidFunction;
-  referrals: number
+  medals: number;
+  gems: number;
+  referrals: number;
 }
-export default function Rewards({ onInviteCodeClick, referrals }: PropsType) {
+export default function Rewards({ onInviteCodeClick, medals, gems, referrals }: PropsType) {
   return (
     <StyledContainer>
       <StyledFlex gap='14px' style={{ marginTop: 36 }}>
         <StyledReward>
           <StyledSvg>{MedalSvg}</StyledSvg>
-          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>5</span> Medals</StyledFont>
+          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{medals}</span> Medals</StyledFont>
         </StyledReward>
         <StyledReward>
           <StyledSvg>{GemSvg}</StyledSvg>
-          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>23</span> Gems</StyledFont>
+          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{gems}</span> Gems</StyledFont>
         </StyledReward>
         <StyledReward style={{ width: 178 }} onClick={onInviteCodeClick}>
           <StyledSvg>{ReferralSvg}</StyledSvg>

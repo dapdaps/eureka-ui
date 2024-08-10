@@ -3,6 +3,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
+type CompassType = any
 export default function useCompassList(campaign_id?: string) {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
@@ -10,12 +11,12 @@ export default function useCompassList(campaign_id?: string) {
   const [compassList, setCompassList] = useState<any>([]);
   const [loading, setLoading] = useState(false);
 
-  const queryCompassListByAccount = async (query) => {
+  const queryCompassListByAccount = async (query: any) => {
     if (loading) return;
     setLoading(true);
     try {
       const result = await get(`/api/compass/list-by-account`, query);
-      const data = (result.data || []).map(compass => {
+      const data = (result.data || []).map((compass: CompassType) => {
         let reward = null, rule = null
         try {
           reward = JSON.parse(compass.reward)

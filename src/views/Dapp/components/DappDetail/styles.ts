@@ -1,15 +1,21 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
-  width: 1260px;
-  padding: 50px 0;
+  --container-width: 1260px;
+  width: var(--container-width);
   margin: 0 auto;
+`;
+
+export const StyledContainerInner = styled(motion.div)`
+  padding: 0 0 0 0;
+  margin-bottom: 100px;
 `;
 
 export const StyledMoreContainer = styled.div`
   color: #ffffff;
   text-align: center;
-  padding-bottom: 80px;
+  margin-bottom: 80px;
 `;
 
 export const StyledMoreText = styled.div`
@@ -18,6 +24,7 @@ export const StyledMoreText = styled.div`
   font-weight: 400;
   line-height: 1;
   margin-bottom: 20px;
+  padding-top: 50px;
 `;
 
 export const StyledRelatedContainer = styled.div`
@@ -29,11 +36,12 @@ export const StyledRecordContainer = styled.div`
   flex: 1;
 `;
 export const StyledRelatedOdyssey = styled.div`
-  width: 500px;
-  flex-shrink: 0;
+  max-width: 500px;
+  width: 100%;
+  min-width: 320px;
 `;
 
-export const StyledTitle = styled.div`
+export const StyledArrowDown = styled(motion.div)`
   font-family: Montserrat;
   font-size: 20px;
   font-weight: 600;
@@ -41,4 +49,13 @@ export const StyledTitle = styled.div`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  width: fit-content;
+  margin: 0 auto;
+`;
+
+export const StyledArrowDownWrapper = styled.div`
+  height: 40px;
+  width: 100px;
+  margin: 0 auto;
+  cursor: pointer;
 `;

@@ -8,6 +8,12 @@ export default {
   chainId: 43114,
   rpcUrls: ['https://api.avax.network/ext/bc/C/rpc'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#AF1616',
+      text: '#FFF',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

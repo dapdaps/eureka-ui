@@ -27,6 +27,7 @@ import {
     saveTransaction,
     isNumeric,
 } from './Utils'
+import useScrollMore from '@/views/Dapp/components/DappDetail/useScrollMore';
 
 const BridgePanel = styled.div`
   width: 478px;
@@ -139,7 +140,8 @@ export default function BridgeX({
     toChainId,
     execute,
     getChainScan,
-    addAction
+    addAction,
+    onSuccess,
 }: any) {
     const { fail, success } = useToast()
     const [updater, setUpdater] = useState(1)
@@ -177,6 +179,7 @@ export default function BridgeX({
 
     const { chainId, provider } = useAccount();
     const { onConnect } = useConnectWallet();
+    const { viewHeight } = useScrollMore();
 
     const { balance: inputBalance, loading: inputBalanceLoading } = useTokenBalance({
         currency: selectInputToken,
@@ -409,7 +412,7 @@ export default function BridgeX({
         }
     }
 
-    return <BridgePanel>
+    return <BridgePanel style={{ minHeight: viewHeight }}>
         <Header>
             <BridgeIcon>
                 <img src={icon} />
@@ -634,6 +637,10 @@ export default function BridgeX({
                             title: 'Transaction success',
                             text: '',
                         })
+
+                        if (typeof onSuccess === 'function') {
+                            onSuccess();
+                        }
 
                         setUpdater(updater + 1)
 

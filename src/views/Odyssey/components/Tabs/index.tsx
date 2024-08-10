@@ -30,10 +30,10 @@ const StyledTab = styled.button<{ active: boolean }>`
   transition: background-color 0.3s, color 0.3s;
 `;
 
-const ToggleTab: React.FC = ({
+const ToggleTab = ({
     onClick
 }: {
-    onClick?: (tab: Tab) => void;
+  onClick?: (tab: Tab) => void;
 }) => {
   const [activeTab, setActiveTab] = useState<Tab>(Tab.All);
 

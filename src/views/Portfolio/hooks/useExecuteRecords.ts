@@ -7,7 +7,7 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
-import { formatGas, formatQuest, getChainLogo, getDappLogo } from '../helpers';
+import { formatExecution, formatGas, getChainLogo, getDappLogo } from '../helpers';
 
 export default function useExecuteRecords() {
   const { account } = useAccount();
@@ -47,7 +47,7 @@ export default function useExecuteRecords() {
               key: record.id,
               ...record,
               id: record.id,
-              executed: formatQuest(record),
+              executed: formatExecution(record),
               action: upperFirst(record.type),
               gas: formatGas(record),
               dapp_logo: getDappLogo(record.dapp),
@@ -131,7 +131,7 @@ export default function useExecuteRecords() {
         check(fetchRecordList);
       }
     },
-    { wait: records ? 600 : 3000 },
+    { wait: records.length ? 600 : 3000 },
   );
 
   const handleChain = (val: string) => {

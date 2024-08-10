@@ -7,6 +7,7 @@ export const StyledReward = styled.div`
   gap: 8px;
   width: 160px;
   height: 48px;
+  cursor: pointer;
   
   border-radius: 24px;
   border: 1px solid #373A53;

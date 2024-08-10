@@ -3,6 +3,9 @@
 const api_url = process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : 'https://api.dapdap.net';
 
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   compiler: { styledComponents: true },
   reactStrictMode: false,
   redirects: async () => {

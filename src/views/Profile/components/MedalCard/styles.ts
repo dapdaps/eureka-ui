@@ -11,7 +11,9 @@ export const StyledMedalCard = styled.div`
   border-radius: 12px;
   border: 1px solid #202329;
   background: #101115;
-  
+`
+export const StyledMedalImage = styled.img`
+  width: 78px;
 `
 export const StyledMark = styled.div`
   position: absolute;

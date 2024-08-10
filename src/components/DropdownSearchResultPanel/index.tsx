@@ -1,4 +1,4 @@
-import { memo, useState, useEffect, useMemo } from 'react';
+import { memo, useState, useEffect, useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
@@ -16,6 +16,7 @@ import Chain from './Chain';
 import Campaign from './Campaign';
 import Medal from './Medal';
 import useDefaultSearch from './hooks/useDefaultSearch';
+import { useRecentStore } from './hooks/useRecentStore';
 
 const StyleEmpty = styled.div`
   display: flex;
@@ -47,7 +48,9 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
   const [empty, setEmpty] = useState(false);
   const [searchContent, setSearchContent] = useState<any>();
   const [searchResult, setSearchResult] = useState<any>();
-
+  const ref = useRef<HTMLDivElement>(null);
+  const { setSearch, addRecentSearch } = useRecentStore()
+  
   const { loading: defaultSearchLoading, defaultNetworks, defaultDapps, defaultOdysseys } = useDefaultSearch();
   const { run: handleSearch } = useDebounceFn(
     async () => {
@@ -85,17 +88,37 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
     handleSearch();
   }, [searchContent]);
 
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (ref.current && !ref.current.contains(event.target as Node)) {
+      setShowSearch(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const handleRecent = (recent: string) => {
+    setSearchContent(recent);
+    setSearch(recent)
+    addRecentSearch(recent)
+  }
+
   return (
-    <StyledSearchResults>
+    <StyledSearchResults ref={ref}>
       <StyleTop>
-        <Search setShowSearch={setShowSearch} onSearch={(query) => {
+        <Search onSearch={(query) => {
           if (!query) {
             setSearchResult('');
             setEmpty(false);
           }
           setSearchContent(query.trim())
         }} />
-        {!searchContent && <RecentSearch />}
+        {!searchContent && <RecentSearch onClick={(recent) => handleRecent(recent)}/>}
       </StyleTop>
       {empty && !loading ? (
         <Empty />
@@ -125,6 +148,7 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
             onClick={(item: any) => {
               router.push(`/dapps-details?dapp_id=${item.id}`);
               setSearchResult('');
+              setShowSearch(false)
             }}
           />
           <Chain
@@ -133,10 +157,12 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
             onClick={(item: any) => {
               router.push(`/network/${IdToPath[item.id]}`);
               setSearchResult('');
+              setShowSearch(false)
             }}
           />
           <Campaign data={shouldRenderPopular ? defaultOdysseys : searchResult?.odysseys} loading={searchContent ? loading : defaultSearchLoading} onClick={() => setShowSearch(false)} />
 
+          {/* v2版本 */}
           {/* <Medal /> */}
         </>
       )}

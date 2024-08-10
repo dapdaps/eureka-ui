@@ -80,4 +80,8 @@ export const StyledPopupItemInner = styled.div`
 export const StyledPopupItemCheck = styled.div`
   margin-left: auto;
   flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #EBF479;
 `;

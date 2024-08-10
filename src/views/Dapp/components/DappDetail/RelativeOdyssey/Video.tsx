@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import Modal from '@/components/Modal';
-import { StyledVideoContent, StyledVideoModal } from './styles';
+import { StyledVideoContent } from './styles';
 
 const OdysseyVideo = (props: Props) => {
   const {
@@ -8,24 +8,30 @@ const OdysseyVideo = (props: Props) => {
     close,
     src,
   } = props;
-
+  
   return (
-    <StyledVideoModal visible={visible || false}>
-      <Modal
-        width={620}
-        overlayClassName="video-modal-overlay"
-        className="video-modal"
-        display={visible || false}
-        onClose={() => close && close()}
-        content={
-          <StyledVideoContent>
-            <video controls>
-              <source src={src} type="video/mp4" />
-            </video>
-          </StyledVideoContent>
-        }
-      />
-    </StyledVideoModal>
+    <Modal
+      width={620}
+      overlayClassName="video-modal-overlay"
+      overlayStyle={{
+        backdropFilter: 'blur(5px)',
+      }}
+      className="video-modal"
+      style={{
+        background: '#18191E',
+        border: '1px solid #202329',
+        backdropFilter: 'blur(10px)',
+      }}
+      display={visible || false}
+      onClose={() => close && close()}
+      content={
+        <StyledVideoContent>
+          <video controls>
+            <source src={src} type="video/mp4" />
+          </video>
+        </StyledVideoContent>
+      }
+    />
   );
 };
 

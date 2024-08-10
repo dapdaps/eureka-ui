@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import IconFistUnActive from '@public/images/header/fist-unactive.svg'
 import IconCheckIn from '@public/images/header/checkIn.svg'
-enum DayStatus {
-  NotChecked,
-  Checked,
-  Special
-}
+import { CheckInStatus, IDayStatus } from './types';
+import { post } from '@/utils/http';
+import { useDebounceFn } from 'ahooks';
+import useAuthCheck from '@/hooks/useAuthCheck';
+
+
 
 const Container = styled.div`
   display: grid;
@@ -16,7 +17,7 @@ const Container = styled.div`
   column-gap: 8px;
 `;
 
-const Box = styled.div<{ status: DayStatus }>`
+const Box = styled.div<{ status: CheckInStatus }>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -24,22 +25,22 @@ const Box = styled.div<{ status: DayStatus }>`
   height: 80px;
   justify-content: space-around;
   background-color: ${({ status }) => 
-    status === DayStatus.Checked ? '#000000' : 'rgba(31, 34, 41, 1)'};
+    status === CheckInStatus.claimed ? '#000000' : 'rgba(31, 34, 41, 1)'};
   border-radius: 8px;
 
   position: relative;
   ${({ status }) => {
-    if (status === DayStatus.NotChecked) {
+    if (status === CheckInStatus.will_claim || status === CheckInStatus.claim) {
       return css`border: 1px dashed rgba(55, 58, 83, 1);`;
     }
-    if (status === DayStatus.Special) {
-      return css`
-        background-image: url('/images/header/check-box.png');
-        background-size: 80px 80px;
-        background-position: center;
-        background-repeat: no-repeat;
-      `;
-    }
+    // if (status === CheckInStatus.Special) {
+    //   return css`
+    //     background-image: url('/images/header/check-box.png');
+    //     background-size: 80px 80px;
+    //     background-position: center;
+    //     background-repeat: no-repeat;
+    //   `;
+    // }
     return css`border: none;`;
   }}
 
@@ -70,44 +71,47 @@ const StyleIcon = styled.div`
     align-items: center;
     justify-content: center;
     height: 34px;
+    .wait-checkin {
+      width: 46px;
+      height: 46px;
+    }
 `
 
-const initialStatus = [
-  DayStatus.Checked,
-  DayStatus.Checked,
-  DayStatus.Checked,
-  DayStatus.NotChecked,
-  DayStatus.Special,
-  DayStatus.NotChecked,
-  DayStatus.NotChecked,
-  DayStatus.Special,
-  DayStatus.NotChecked,
-  DayStatus.NotChecked,
-];
 
-const CheckInGrid: React.FC = () => {
-  const [statuses, setStatuses] = useState<DayStatus[]>(initialStatus);
 
+interface IProps {
+  dayStatus: IDayStatus[];
+}
+
+const CheckInGrid: React.FC<IProps> = ({
+  dayStatus
+}) => {
+  const [statuses, setStatuses] = useState<IDayStatus[]>(dayStatus);
+
+  
   const handleClick = (index: number) => {
     const newStatuses = statuses.slice();
-    if (newStatuses[index] === DayStatus.NotChecked) {
-      newStatuses[index] = DayStatus.Checked;
+    if (newStatuses[index].status === CheckInStatus.claim) {
+      newStatuses[index].status = CheckInStatus.claimed;
       setStatuses(newStatuses);
     }
   };
 
   return (
     <Container>
-      {statuses.map((status, index) => (
+      {statuses.map((item, index) => (
         <Box 
           key={index} 
-          status={status} 
+          status={item.status} 
           onClick={() => handleClick(index)}
         >
-          <DayLabel>Day {index + 1}</DayLabel>
+          <DayLabel>Day {item.day ?? 'x'}</DayLabel>
           <StyleIcon>
-            {status === DayStatus.Checked && <CheckMark />}
-            {status === DayStatus.NotChecked && <FistIcon />}
+            {item.status === CheckInStatus.claimed && <CheckMark />}
+            {item.status === CheckInStatus.will_claim && <FistIcon />}
+            {
+              item.status === CheckInStatus.claim && <img className='wait-checkin' src="/images/header/wait-checkin.gif" alt="" />
+            }
           </StyleIcon>
         </Box>
       ))}

@@ -7,37 +7,39 @@ import {
   StyledMedalInner,
   StyledMedalTag,
   StyledMedalName,
-  StyledMedals
+  StyledMedals,
+  StyledLoading
 } from './styles';
 import { motion } from 'framer-motion';
 import Empty from '@/components/Empty';
+import useChainDappMedal from '@/views/Dapp/hooks/useChainDappMedal';
+import { Category } from '@/hooks/useAirdrop';
 
-const Medal = (props: Props) => {
+const Medal = ({ id, type }: Props) => {
 
-  const {
-   medalList = [],
-    loading
-  } = props;
-
+  const  { loading,medalList, account } = useChainDappMedal(type, id);
 
   return (
     <StyledContainer>
       <StyledTitle>Medal{medalList.length > 1 ? 's' : ''}</StyledTitle>
       {
-        loading ? <Loading /> :(
+        loading ? (<StyledLoading>
+          <Loading />
+        </StyledLoading>) : (
           medalList.length > 0 ? (<StyledMedals>
             {
-              medalList.map((medal, index) => {
-                const isFinshed = medal.percent === 1;
+              medalList.map((medal: Medal, index: number) => {
+                medal.completed_percent = isNaN(Number(medal?.completed_percent)) ? '0' : medal.completed_percent;
+                const _percent: any = Number(parseFloat(medal.completed_percent).toFixed(2));
+                const isFinished = _percent === 100;
                 return (
-
                   <StyledMedalContainer key={`medal_${index}`}>
-                    <StyledMedalTag className={medal.percent === 1 ? 'active' : ''}>
-                      {isFinshed ? 'Acheived' : ` Process ${medal.percent * 100}%`}
-                    </StyledMedalTag>
+                    {account && (<StyledMedalTag className={isFinished ? 'active' : ''}>
+                      {isFinished ? 'Achieved' : ` Process ${_percent}%`}
+                    </StyledMedalTag>)}
                     <StyledMedalInner>
                       {
-                        !isFinshed && (<svg xmlns="http://www.w3.org/2000/svg" width="102" height="102" viewBox="0 0 102 102" fill="none">
+                        !isFinished && (<svg xmlns="http://www.w3.org/2000/svg" width="102" height="102" viewBox="0 0 102 102" fill="none">
                         <circle cx="51" cy="51" r="50" stroke="#292C41" strokeWidth="2" />
                         <motion.circle
                           cx="51"
@@ -50,7 +52,7 @@ const Medal = (props: Props) => {
                             pathLength: 0,
                           }}
                           animate={{
-                            pathLength: medal.percent,
+                            pathLength: _percent / 100,
                           }}
                           transition={{
                             duration: 1,
@@ -58,9 +60,9 @@ const Medal = (props: Props) => {
                         />
                       </svg>)
                       }
-                      <StyledMedalLogo url={medal.logo} />
+                      <StyledMedalLogo url={medal.logo} className={!isFinished ? 'dark' : ''}/>
                     </StyledMedalInner>
-                    <StyledMedalName>{medal.label}</StyledMedalName>
+                    <StyledMedalName>{medal.medal_name}</StyledMedalName>
                   </StyledMedalContainer>
                 )
               })
@@ -74,12 +76,12 @@ const Medal = (props: Props) => {
 export default Medal;
 
 interface Props {
-  medalList: Medal[];
-  loading?: boolean;
+  id: number;
+  type: Category;
 }
 
 interface Medal {
-  percent: number;
+  completed_percent: string;
   logo: string;
-  label: string;
+  medal_name: string;
 }

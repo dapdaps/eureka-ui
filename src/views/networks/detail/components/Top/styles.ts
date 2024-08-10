@@ -83,19 +83,7 @@ export const StyledTitleWrapper = styled.div`
   align-items: center;
   gap: 23px;
 `;
-export const StyledChainLogoWrapper = styled.div`
-  width: 100px;
-  height: 100px;
-  flex-shrink: 0;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
-export const StyledChainLogo = styled.img`
-  width: 48px;
-`;
 export const StyledInfo = styled.div`
   //display: flex;
   //height: 100px;
@@ -232,26 +220,30 @@ export const StyledStatItem = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+  font-family: Montserrat;
+
   .key {
     color: #979abe;
-    text-align: center;
-    font-family: Montserrat;
+    text-align: left;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
-  .value {
+  .tvl-value {
     color: #fff;
-    font-family: Montserrat;
+    
     font-size: 26px;
     font-style: normal;
     font-weight: 600;
     line-height: 100%; /* 26px */
+    
+    .tvl-value-percent {
+      transform: translateY(-5px);
+    }
   }
   .up {
     color: #06c17e;
-    font-family: Montserrat;
     font-size: 12px;
     font-style: normal;
     font-weight: 500;

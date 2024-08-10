@@ -4,8 +4,9 @@ import { styled } from 'styled-components';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { DefaultIcon } from '@/views/Portfolio/config';
 import Big from 'big.js';
+import Image from 'next/image';
 
-export const StyledContainer = styled(motion.div)<{bgColor: string}>`
+export const StyledContainer = styled(motion.div)<{ bgColor: string }>`
   width: 325px;
   height: 70px;
   flex-shrink: 0;
@@ -17,7 +18,7 @@ export const StyledContainer = styled(motion.div)<{bgColor: string}>`
   overflow: hidden;
   background: #20212D;
   padding: 12px;
-  
+
   //&:hover {
   //  .bg {
   //    animation-name: fadeOut;
@@ -27,25 +28,27 @@ export const StyledContainer = styled(motion.div)<{bgColor: string}>`
   //    animation-name: fadeIn;
   //  }
   //}
-  
-   .bg,
-   .bg-active {
-     position: absolute;
-     z-index: 0;
-     left: 0;
-     top: 0;
-     width: 100%;
-     height: 100%;
-     opacity: 0;
-     //animation-fill-mode: both;
-     //animation-timing-function: linear;
-     //animation-duration: .6s;
-   }
+
+  .bg,
+  .bg-active {
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    //animation-fill-mode: both;
+    //animation-timing-function: linear;
+    //animation-duration: .6s;
+  }
+
   .bg {
     opacity: 1;
     background: ${({ bgColor }) => `radial-gradient(46.69% 100% at 12.07% 0%, ${bgColor} 0%, #20212D 100%)`};
     //animation-delay: .6s;
   }
+
   .bg-active {
     background: ${({ bgColor }) => `radial-gradient(46.69% 100% at 50% 0%, ${bgColor} 0%, #1B1D25 100%)`};
     //animation-name: fadeOut;
@@ -70,12 +73,14 @@ export const StyledContainer = styled(motion.div)<{bgColor: string}>`
   }
 `;
 
-export const StyledIcon = styled.div<{src: string}>`
-  background: ${({ src }) => `url("${src}") no-repeat center / contain`};
+export const StyledIcon = styled.div`
   width: 46px;
   height: 46px;
   border-radius: 8px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const StyledContent = styled.div`
@@ -107,10 +112,18 @@ export const StyledContent = styled.div`
   }
 `;
 
-const ChainCard = (props: any) => {
-  const { chain, onClick = () => {} } = props;
+const ChainCard = (props: Props) => {
+  const {
+    chain, onClick = () => {
+    },
+  } = props;
 
   const disabled = Big(chain.totalUsdValue || 0).lte(0);
+
+  const cardTotalUsd = formateValueWithThousandSeparatorAndFont(chain.totalUsdValue, 2, false, {
+    prefix: '$',
+    isLTIntegerZero: true,
+  });
 
   return (
     <StyledContainer
@@ -170,11 +183,13 @@ const ChainCard = (props: any) => {
         }}
       />
       <StyledContent>
-        <StyledIcon src={chain.logo || DefaultIcon} />
+        <StyledIcon>
+          <Image style={{ color: '#000' }} src={chain.logo || DefaultIcon} alt="" width={46} height={46} />
+        </StyledIcon>
         <div className="name">{chain.name}</div>
         <div className="usd">
-          ${formateValueWithThousandSeparatorAndFont(chain.totalUsdValue, 2).integer}
-          <span className="sm">{formateValueWithThousandSeparatorAndFont(chain.totalUsdValue, 2).decimal}</span>
+          {cardTotalUsd.integer}
+          <span className="sm">{cardTotalUsd.decimal}</span>
         </div>
       </StyledContent>
     </StyledContainer>
@@ -182,3 +197,9 @@ const ChainCard = (props: any) => {
 };
 
 export default ChainCard;
+
+export interface Props {
+  chain: any;
+
+  onClick?(): void;
+}

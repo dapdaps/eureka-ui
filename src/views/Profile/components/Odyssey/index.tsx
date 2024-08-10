@@ -19,16 +19,17 @@ import {
   StyledTransactionsAndEarned
 } from './styles';
 
+type CompassType = any
 type PropsType = {
   loading: boolean;
-  compassList: any[]
+  compassList: CompassType[]
 }
 export default function Odyssey({ loading, compassList }: PropsType) {
   const toast = useToast();
   const router = useRouter();
-  const handleGetRewardName = function (compass) {
+  const handleGetRewardName = function (compass: CompassType) {
     let rewardName = ""
-    compass.reward.forEach(r => {
+    compass.reward.forEach((r: any) => {
       if (compass.claimed_reward[0]?.category === r.logo_key) {
         rewardName = r.name
         return
@@ -36,7 +37,7 @@ export default function Odyssey({ loading, compassList }: PropsType) {
     })
     return rewardName
   }
-  const handleExplore = async function (compass) {
+  const handleExplore = async function (compass: CompassType) {
     if (compass.status === 'un_start') {
       toast.fail({
         title: 'Odyssey is upcoming...',

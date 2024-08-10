@@ -41,13 +41,6 @@ export const StyledCircle = styled.div`
 `;
 
 
-export const StyledKol = styled.div`
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-`
 
 export const StyledNameWrapper = styled.div`
   width: calc(100% - 132px);

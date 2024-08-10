@@ -1,7 +1,8 @@
+import useAuth from '@/hooks/useAuth';
 import { useUserStore } from '@/stores/user';
-import { StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
+import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 import { ellipsAccount } from '@/utils/account';
-import { useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from "styled-components";
 const StyledUserInfoPopUp = styled.div`
   width: 294px;
@@ -18,8 +19,11 @@ const StyledUserInfo = styled.div`
   padding: 20px 16px 14px;
   height: 124px;
   border-radius: 10px;
-  border: 1px solid #333648;
-  background: #18191E;
+  border: 1px solid transparent;
+  &:hover {
+    border-color: #333648;
+    background: #18191E;
+  }
 `
 const StyledUserAvatar = styled.img`
   width: 38px;
@@ -40,6 +44,22 @@ const StyledReward = styled.div`
 const StyledFeatures = styled.div`
   
 `
+const StyledBeta = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 37px;
+  height: 16px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #7C7F96;
+  color: #101010;
+  font-family: Montserrat;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+`
 const StyledIcon = styled.div`
   display: flex;
   align-items: center;
@@ -50,7 +70,9 @@ const StyledFeature = styled.div`
   height: 50px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding-left: 28px;
+  padding-right: 20px;
   cursor: pointer;
   &:hover {
     background-color: rgba(0,0,0,0.2);
@@ -117,12 +139,10 @@ const GemSvg = (
     <path d="M17.6162 10.4525L21.1394 11.8335L12.5075 20L11.0479 16.6667L17.6162 10.4525Z" fill="#F0CC00" />
   </svg>
 )
-type PropsType = {
-  show: boolean;
-  setShow: (prevState: boolean) => boolean;
-}
-export default function UserInfoPopUp({ show, setShow }: PropsType) {
+export default function UserInfoPopUp() {
+  const router = useRouter()
   const userInfo = useUserStore((store: any) => store.user);
+  const { logging, logout } = useAuth();
   const features = [{
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 17 20" fill="none">
@@ -132,7 +152,8 @@ export default function UserInfoPopUp({ show, setShow }: PropsType) {
       </svg>
     ),
     label: "Portfolio",
-    new: true
+    new: true,
+    path: '/portfolio'
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="23" viewBox="0 0 16 23" fill="none">
@@ -142,21 +163,24 @@ export default function UserInfoPopUp({ show, setShow }: PropsType) {
         </g>
       </svg>
     ),
-    label: "Achievements"
+    label: "Achievements",
+    path: '/profile/medals'
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="19" height="22" viewBox="0 0 19 22" fill="none">
         <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M14.7991 5.79761C14.7991 7.75914 13.8118 9.48554 12.3071 10.542C15.4055 11.9173 18.0309 15.3121 18.0277 18.3559C18.0277 18.3559 19.0268 21.5 9.02771 21.5C-0.971418 21.5 0.0277178 18.2689 0.0277178 18.2689C0.0277178 15.6632 2.5801 11.9753 5.63407 10.5549C4.11343 9.51453 3.11026 7.75914 3.11026 5.78151C3.11026 2.59282 5.72295 0 8.9547 0C12.1896 0 14.7991 2.59282 14.7991 5.79761ZM9.90209 16.8721H11.158C11.6401 16.8721 12.03 16.4821 12.027 16C12.027 15.5179 11.637 15.1279 11.1549 15.1279H9.89902V13.8721C9.89902 13.39 9.50905 13 9.02696 13C8.54487 13 8.15491 13.39 8.15491 13.8721V15.1279H6.89902C6.41694 15.1279 6.02697 15.5179 6.02697 16C6.02697 16.4821 6.41694 16.8721 6.89902 16.8721H8.15798V18.1279C8.15798 18.61 8.54795 19 9.03003 19C9.51212 19 9.90209 18.61 9.90209 18.1279V16.8721ZM7.64809 6.57964C7.41593 6.2366 6.94964 6.14672 6.60661 6.37888C6.26357 6.61104 6.17369 7.07733 6.40585 7.42036C6.87392 8.11198 7.74747 8.62686 8.69537 8.73061C9.68729 8.83917 10.7749 8.50011 11.6092 7.47282C11.8703 7.15128 11.8213 6.67894 11.4998 6.41781C11.1783 6.15668 10.7059 6.20565 10.4448 6.52718C9.94574 7.14166 9.36665 7.29512 8.85857 7.23951C8.30647 7.17908 7.84669 6.87308 7.64809 6.57964Z" fill="#979ABE" />
       </svg>
     ),
-    label: "Invite friends"
+    label: "Invite friends",
+    path: "/profile?target=inviteFriends"
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="21" height="19" viewBox="0 0 21 19" fill="none">
         <path opacity="0.5" fill-rule="evenodd" clip-rule="evenodd" d="M9.71362 18.705C9.90688 18.8881 10.1612 19 10.4358 19C10.7002 19 10.9647 18.8983 11.158 18.705L19 10.863C20.1918 9.67033 20.8613 8.05328 20.8613 6.36724C20.8613 4.6812 20.1918 3.06415 19 1.87152C16.6606 -0.478051 12.9278 -0.600107 10.4358 1.47484C9.28643 0.518737 7.86245 0 6.35709 0C4.65848 0 3.06159 0.661135 1.86138 1.86135C0.661161 3.06156 2.57657e-05 4.65846 2.57657e-05 6.35707C-0.00235973 7.19228 0.160922 8.01967 0.480422 8.79135C0.799921 9.56304 1.26929 10.2637 1.86138 10.8528L9.71362 18.705ZM5.9205 8.20788C7.0902 9.44878 8.72778 10.1709 10.4366 10.1709C11.2856 10.1707 12.1253 9.99436 12.9026 9.65296C13.68 9.31156 14.378 8.81257 14.9526 8.18754C15.1347 7.98926 15.2306 7.72678 15.2191 7.45782C15.2077 7.18886 15.0899 6.93547 14.8916 6.75338C14.6933 6.57129 14.4308 6.47543 14.1619 6.48687C13.8929 6.49832 13.6395 6.61614 13.4574 6.81441C12.6844 7.65863 11.5757 8.14685 10.4264 8.14685C9.26686 8.14685 8.19887 7.67897 7.40551 6.82458C7.22207 6.62766 6.96792 6.51167 6.69896 6.50213C6.56579 6.49741 6.43299 6.51896 6.30815 6.56556C6.1833 6.61216 6.06886 6.6829 5.97135 6.77373C5.87385 6.86455 5.79519 6.9737 5.73986 7.09493C5.68453 7.21616 5.65363 7.3471 5.6489 7.48027C5.63937 7.74923 5.73706 8.01095 5.9205 8.20788Z" fill="#979ABE" />
       </svg>
     ),
-    label: "Favorite"
+    label: "Favorite",
+    path: '/profile?target=favorite'
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
@@ -165,11 +189,18 @@ export default function UserInfoPopUp({ show, setShow }: PropsType) {
     ),
     label: "Logout"
   },]
+  console.log('===userInfo', userInfo)
   return (
     <StyledUserInfoPopUp>
       <StyledUserInfoContainer>
         <StyledUserInfo>
-          <StyledFlex justifyContent="space-between">
+          <StyledFlex
+            justifyContent="space-between"
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              router.push('/profile')
+            }}
+          >
             <StyledFlex gap="10px">
               <StyledUserAvatar src={userInfo?.avatar} />
               <StyledFlex
@@ -177,7 +208,7 @@ export default function UserInfoPopUp({ show, setShow }: PropsType) {
                 alignItems="flex-start"
               >
                 {
-                  userInfo?.twitter?.is_bind && (
+                  userInfo?.twitter?.twitter_username && (
                     <StyledFont color="#FFF" fontSize="18px" fontWeight="600">{userInfo?.twitter?.twitter_username}</StyledFont>
                   )
                 }
@@ -195,13 +226,13 @@ export default function UserInfoPopUp({ show, setShow }: PropsType) {
               <StyledSvg>
                 {MedalSvg}
               </StyledSvg>
-              <StyledFont color="#FFF" fontSize="14px" fontWeight="500" lineHeight="100%">3 Medals</StyledFont>
+              <StyledFont color="#FFF" fontSize="14px" fontWeight="500" lineHeight="100%">{userInfo?.medals?.length} Medals</StyledFont>
             </StyledReward>
             <StyledReward>
               <StyledSvg>
                 {GemSvg}
               </StyledSvg>
-              <StyledFont color="#FFF" fontSize="14px" fontWeight="500" lineHeight="100%">12 Gems</StyledFont>
+              <StyledFont color="#FFF" fontSize="14px" fontWeight="500" lineHeight="100%">{userInfo?.gem} Gems</StyledFont>
             </StyledReward>
           </StyledFlex>
         </StyledUserInfo>
@@ -210,13 +241,27 @@ export default function UserInfoPopUp({ show, setShow }: PropsType) {
         {
           features.map(feature => {
             return (
-              <StyledFeature>
-                <StyledIcon>{feature.icon}</StyledIcon>
-                <StyledFont
-                  color="#979ABE"
-                  fontWeight="500"
-                  style={{ marginLeft: 14, marginRight: 7 }}
-                >{feature.label}</StyledFont>
+              <StyledFeature onClick={() => {
+                if (feature.label === "Logout") {
+                  logout()
+                } else {
+                  feature?.path && router.push(feature.path)
+                }
+              }}>
+                <StyledFlex gap='14px'>
+                  <StyledIcon>{feature.icon}</StyledIcon>
+                  <StyledFlex gap='4px'>
+                    <StyledFont
+                      color="#979ABE"
+                      fontWeight="500"
+                    >{feature.label}</StyledFont>
+                    {
+                      feature.new && (
+                        <StyledBeta>Beta</StyledBeta>
+                      )
+                    }
+                  </StyledFlex>
+                </StyledFlex>
                 {
                   feature.new && (
                     <StyledSvg>

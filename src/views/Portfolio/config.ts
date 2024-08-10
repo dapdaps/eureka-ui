@@ -18,14 +18,14 @@ export const CategoryList = {
   },
   liquidity: {
     key: 1,
-    label: 'Liquidity',
+    label: 'Added Liquidity',
     icon: '/images/portfolio/liquidity.svg',
     usd: '0.00',
     executions: 0,
   },
   lending: {
     key: 1,
-    label: 'Lending',
+    label: 'Lent & Borrowed',
     icon: '/images/portfolio/lending.svg',
     usd: '0.00',
     executions: 0,

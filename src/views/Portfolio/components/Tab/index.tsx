@@ -37,7 +37,7 @@ const Tab = ({ tab, setTab, children, tabs }: any) => {
           initial={{ x: 0 }}
         />
       </StyledPortfolioTabHead>
-      <PortfolioTabContent>{ children }</PortfolioTabContent>
+      <PortfolioTabContent>{children}</PortfolioTabContent>
     </PortfolioTabs>
   );
 };

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
@@ -17,7 +17,7 @@ import { NavMainV2 } from './NavMainV2';
 import Notification from './Notification';
 import CheckInGrid from './components/CheckInGrid';
 import CheckIn from './components/CheckIn';
-import AccountLogo from '@/components/AccountSider/components/AccountLogo';
+import AccountLogo from './components/AccountLogo';
 
 
 const Flex = styled.div`
@@ -89,10 +89,10 @@ const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
 export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolean }) => {
   const router = useRouter();
-  const setLayoutStore = useLayoutStore((store) => store.set);
+  // const setLayoutStore = useLayoutStore((store) => store.set);
   const { account } = useAccount();
 
-  const [searchContent, setSearchContent] = useState<string>();
+  // const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
 
@@ -137,10 +137,9 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
             <div />
           ) : account ? (
             <LoginContainer>
-              <Notification />
               <CheckIn />
+              <Notification />
               <Chain showName={false} bp="3001-003" />
-              {/* <AccountItem showCopy={false} logoSize={28} bp="3001-004" /> */}
               <AccountLogo logoSize={28} />
             </LoginContainer>
           ) : (

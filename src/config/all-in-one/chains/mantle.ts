@@ -8,6 +8,12 @@ export default {
   chainId: 5000,
   rpcUrls: ['https://mantle-mainnet.public.blastapi.io'],
   defaultTab: 'Swap',
+  theme: {
+    button: {
+      bg: '#00C6A3',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Swap: {
       tab: 'Swap',

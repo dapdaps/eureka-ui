@@ -1,12 +1,11 @@
 import useUserInfo from '@/hooks/useUserInfo';
 import useUserReward from '@/hooks/useUserReward';
 import { useRouter } from 'next/router';
-import { memo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 
-import useAuthCheck from '@/hooks/useAuthCheck';
 import BouncingMedal from '@/components/bouncing-medal';
 import useAccount from '@/hooks/useAccount';
-import useInviteList from '@/hooks/useInviteList';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useReport from '@/views/Landing/hooks/useReport';
 import { useEffect } from 'react';
 import styled from 'styled-components';
@@ -17,6 +16,12 @@ import RewardHistory from './components/RewardHistory';
 import Rewards from './components/Rewards';
 import Tabs from './components/Tabs';
 import UserInfo from './components/UserInfo';
+import useAirdropList from './hooks/useAirdropList';
+import useCompassList from './hooks/useCompassList';
+import useInviteList from './hooks/useInviteList';
+import useUserFavorites from "./hooks/useUserFavorites";
+import useMedalList from './hooks/useUserMedalList';
+import useUserRewardRecords from './hooks/useUserRewardRecords';
 import { Tab } from './types';
 
 
@@ -32,7 +37,7 @@ const StyledContainerTop = styled.div`
   height: 313px;
 `
 const StyledContainerBottom = styled.div`
-  padding-top: 40px;
+  padding: 40px 0 110px;
   background-color: #000;
 `
 const StyledInnerContainer = styled.div`
@@ -52,88 +57,103 @@ export default memo(function ProfileView() {
   const { userInfo } = useUserInfo();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { handleReport } = useReport();
+
+  const { loading: inviteLoading, inviteList } = useInviteList();
+  const { loading: compassLoading, compassList, } = useCompassList()
+  const { loading: airdropLoading, airdropList } = useAirdropList()
+  const { loading: medalLoading, userMedalList } = useMedalList()
+  const { loading: favoriteLoading, userFavorites } = useUserFavorites()
+  const { loading: rewardLoading, userRewardRecords, queryUserRewardRecords, pager, setPager } = useUserRewardRecords()
+
   const [tab, setTab] = useState<Tab>('InProgress');
-  const [openCodes, setOpenCodes] = useState(false);
-  const { inviteInfo, queryInviteList } = useInviteList();
+  const [openInviteFirendsModal, setOpenInviteFirendsModal] = useState(false);
+
   const { info: rewardInfo, queryUserReward } = useUserReward();
 
-  const handleChange = function (_tab) {
+  const maxPage = useMemo(() => Math.ceil(userRewardRecords?.total ?? 0 / pager.page_size), [userRewardRecords?.total, pager])
+  const tabsQuantity = useMemo(() => {
+    const inProgressQuantity = compassList?.length + airdropList?.length + userMedalList?.length
+    const favoriteAppsQuantity = userFavorites?.total ?? 0
+    const rewardHistoryQuantity = userRewardRecords?.total ?? 0
+    return [inProgressQuantity, favoriteAppsQuantity, rewardHistoryQuantity]
+  }, [compassList, airdropList, userMedalList, userFavorites, userRewardRecords])
+
+  const bouncingMedals = useMemo(() => {
+    return userMedalList?.slice(0, 5)?.map((medal, index) => {
+      return {
+        key: index,
+        icon: medal?.logo,
+        x: index * 100,
+        mass: (index === 0 || index === userMedalList.length - 1) ? 50 : 30
+      }
+    }) ?? []
+  }, [userMedalList])
+  const handleChange = function (_tab: Tab) {
     setTab(_tab);
   };
+  const handlePageChange = function (page: number) {
+    if (page < 1 || page > maxPage) {
+      return
+    }
+    const _pager = {
+      ...pager,
+      page
+    }
+    queryUserRewardRecords(_pager)
+    setPager(_pager)
+  }
 
   useEffect(() => {
-    account && check(() => {
-      queryInviteList();
-    });
-  }, [account]);
+    const target = router?.query?.target
+    if (target) {
+      if (target === "favorite") {
+        setTab("FavoriteApps")
+      } else {
+        setOpenInviteFirendsModal(true)
+      }
+    }
+  }, [router.query])
+
   return (
     <StyledContainer>
 
       <StyledInnerContainer>
-
-
         <StyledContainerTop>
           <UserInfo info={userInfo} rewardInfo={rewardInfo} />
           <Rewards
-            referrals={inviteInfo?.data?.length}
+            medals={userInfo?.medals?.length ?? 0}
+            gems={userInfo?.gem ?? 0}
+            referrals={inviteList?.total ?? 0}
             onInviteCodeClick={() => {
               handleReport('invite');
-              setOpenCodes(true);
+              setOpenInviteFirendsModal(true);
             }}
           />
           <StyledBouncingMedalContainer>
             <BouncingMedal
               width={500}
               height={300}
-              medals={[
-                {
-                  key: 1,
-                  icon: '/images/medals/medal-trader.svg',
-                  x: 200,
-                  mass: 50,
-                },
-                {
-                  key: 2,
-                  icon: '/images/medals/medal-voyager.svg',
-                  x: 300,
-                  mass: 30,
-                },
-                {
-                  key: 3,
-                  icon: '/images/medals/medal-pioneer.svg',
-                  x: 410,
-                  mass: 30,
-                },
-                {
-                  key: 4,
-                  icon: '/images/medals/medal-pioneer.svg',
-                  x: 505,
-                  mass: 30,
-                },
-                {
-                  key: 5,
-                  icon: '/images/medals/medal-trader.svg',
-                  x: 606,
-                  mass: 50,
-                },
-              ]}
+              medals={bouncingMedals}
             />
           </StyledBouncingMedalContainer>
         </StyledContainerTop>
         <StyledContainerBottom>
-          <Tabs current={tab} onChange={handleChange} />
-          {tab === "InProgress" && <InProgress />}
-          {tab === "FavoriteApps" && <FavoriteApps />}
-          {tab === "RewardHistory" && <RewardHistory />}
+          <Tabs current={tab} tabsQuantity={tabsQuantity} onChange={handleChange} />
+          {tab === "InProgress" && (
+            <InProgress
+              {...{ compassLoading, compassList, airdropLoading, airdropList, medalLoading, userMedalList }}
+            />
+          )}
+          {tab === "FavoriteApps" && <FavoriteApps {...{ loading: favoriteLoading, userFavorites }} />}
+          {tab === "RewardHistory" && <RewardHistory {...{ loading: rewardLoading, userRewardRecords, pager, maxPage, onPageChange: handlePageChange }} />}
         </StyledContainerBottom>
       </StyledInnerContainer>
       <InviteFirendsModal
-        open={openCodes}
-        list={inviteInfo?.data || []}
-        totalRewards={inviteInfo?.reward}
-        reward={inviteInfo?.invite_reward}
+        open={openInviteFirendsModal}
+        loading={inviteLoading}
+        inviteList={inviteList}
         onClose={() => {
-          setOpenCodes(false);
+          setOpenInviteFirendsModal(false);
         }}
       />
     </StyledContainer>

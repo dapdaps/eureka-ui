@@ -36,9 +36,10 @@ export default function useDapps() {
         totalUsdValue: Big(0),
         totalUsd: '0.00',
         dappList: [],
-        logo: chain.icon,
+        logo: chainCofig[chain.chainId]?.icon || chain.icon,
         name: chain.title,
         selectBgColor: chain.selectBgColor,
+        bgColor: chain.bgColor,
       }));
       for (const _dapp of data) {
         let dappTotalUsd = Big(0);
@@ -157,4 +158,5 @@ export interface DappsByChain {
   logo: string;
   name: string;
   selectBgColor?: string;
+  bgColor?: string;
 }

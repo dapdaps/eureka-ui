@@ -1,12 +1,102 @@
 import type { CSSProperties, FC, ReactNode } from 'react';
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import popupsData, { IdToPath } from '@/config/all-in-one/chains';
+import { Network } from '@/views/networks/list/hooks/useNetworks';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import ValuePercent from '@/views/networks/list/components/value-percent';
+import Reward from '@/views/networks/list/components/reward';
+
+const ListItem: FC<IProps> = ({ dataSource }) => {
+  const {
+    id,
+    logo,
+    name,
+    chain_id,
+    tbd_token,
+    native_currency,
+    trading_volume,
+    trading_volume_change_percent,
+    participants,
+    participants_change_percent,
+    total_integrated_dapp,
+    odyssey,
+  } = dataSource;
+
+  const popupsDataArray = Object.values(popupsData);
+  const matchedItem = popupsDataArray.find((item) => item.chainId === chain_id);
+  const path = matchedItem ? matchedItem.path : '';
+
+  return (
+    <Wrap>
+      <Head>
+        <LogoGroup>
+          <Image src={logo} width={60} height={60} alt="network" />
+          <ChainInfo>
+            <ChainName>{name}</ChainName>
+            <ChainDesc>
+              {tbd_token === 'Y' ? (
+                'TBD🔥'
+              ) : (
+                <>
+                  {JSON.parse(native_currency).logo && (
+                    <Image src={JSON.parse(native_currency).logo} width={16} height={16} alt="" />
+                  )}
+                  {JSON.parse(native_currency).name}
+                </>
+              )}
+            </ChainDesc>
+          </ChainInfo>
+        </LogoGroup>
+        <BtnGroup>
+          <Btn href={`/all-in-one/${path}`} data-bp="10012-003">
+            Chain-Navi
+          </Btn>
+          <Btn href={`/networks/${IdToPath[id]}`} data-bp="10012-002">
+            Details
+          </Btn>
+        </BtnGroup>
+      </Head>
+      <DataList>
+        <div className="item">
+          <span className="key">Trading Volume via DapDap</span>
+          <ValuePercent percent={trading_volume_change_percent}>
+            ${formatIntegerThousandsSeparator(trading_volume, 1)}
+          </ValuePercent>
+        </div>
+        <div className="item">
+          <span className="key">Users</span>
+          <ValuePercent percent={participants_change_percent}>
+            {formatIntegerThousandsSeparator(participants, 0)}
+          </ValuePercent>
+        </div>
+        <div className="item">
+          <span className="key">Integrated dApps</span>
+          <span className="value">
+             {formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' })}
+          </span>
+        </div>
+        <div className="item rewards">
+          <span className="key">Campaign Reward</span>
+          {
+            odyssey && odyssey.length > 0 ? (
+              <Reward odyssey={odyssey} />
+            ) : (
+              <span className="value">-</span>
+            )
+          }
+        </div>
+      </DataList>
+    </Wrap>
+  );
+};
+
+export default memo(ListItem);
 
 interface IProps {
-  dataSource: any;
+  dataSource: Network;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -24,9 +114,11 @@ const Wrap = styled.div`
   margin-bottom: 20px;
   transition: border 0.2s ease-in;
   cursor: pointer;
+
   &:last-child {
     margin-bottom: 0;
   }
+
   &:hover {
     border: 1px solid rgb(235, 244, 121);
   }
@@ -85,11 +177,13 @@ const Btn = styled(Link)`
   border-radius: 12px;
   padding: 12px 22px;
   cursor: pointer;
+
   &:hover {
     text-decoration: none;
     background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
     color: rgba(30, 32, 40, 1);
   }
+
   @media (max-width: 1478px) {
     font-size: 14px;
   }
@@ -99,85 +193,34 @@ const DataList = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 20px;
+  font-family: Montserrat;
+
   .item {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    
+    &.rewards {
+      width: 250px;
+      flex-shrink: 0;
+      flex-grow: 0;
+    }
   }
+
   .key {
     color: #979abe;
-    text-align: center;
-    font-family: Montserrat;
+    text-align: left;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: normal;
   }
+  
   .value {
     color: #fff;
-    font-family: Montserrat;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 100%; /* 16px */
+    line-height: 100%;
   }
 `;
-
-const ListItem: FC<IProps> = ({ dataSource }) => {
-  const { id, logo, name, chain_id, tbd_token, native_currency } = dataSource;
-  const popupsDataArray = Object.values(popupsData);
-  const matchedItem = popupsDataArray.find((item) => item.chainId === chain_id);
-  const path = matchedItem ? matchedItem.path : '';
-  return (
-    <Wrap>
-      <Head>
-        <LogoGroup>
-          <Image src={logo} width={60} height={60} alt="network" />
-          <ChainInfo>
-            <ChainName>{name}</ChainName>
-            <ChainDesc>
-              {tbd_token === 'Y' ? (
-                'TBD🔥'
-              ) : (
-                <>
-                  {JSON.parse(native_currency).logo && (
-                    <Image src={JSON.parse(native_currency).logo} width={16} height={16} alt="" />
-                  )}
-                  {JSON.parse(native_currency).name}
-                </>
-              )}
-            </ChainDesc>
-          </ChainInfo>
-        </LogoGroup>
-        <BtnGroup>
-          <Btn href={`/all-in-one/${path}`} data-bp="10012-003">
-            Chain-Navi
-          </Btn>
-          <Btn href={`/networks/${IdToPath[id]}`} data-bp="10012-002">
-            Details
-          </Btn>
-        </BtnGroup>
-      </Head>
-      <DataList>
-        <div className="item">
-          <span className="key">Trading Volume via DapDap</span>
-          <span className="value">$13.4m</span>
-        </div>
-        <div className="item">
-          <span className="key">Users</span>
-          <span className="value">17.9k</span>
-        </div>
-        <div className="item">
-          <span className="key">Integrated dApps</span>
-          <span className="value">30</span>
-        </div>
-        <div className="item">
-          <span className="key">Campaign Reward</span>
-          <span className="value">92.9m</span>
-        </div>
-      </DataList>
-    </Wrap>
-  );
-};
-
-export default memo(ListItem);

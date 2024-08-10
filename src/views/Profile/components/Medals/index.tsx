@@ -8,15 +8,19 @@ import ProgressBar from '../ProgressBar';
 import RectangleNumber from '../RectangleNumber'
 import MedalCard from '../MedalCard';
 import MedalLoading from '../../Loading/MedalLoading';
+import { MedalType } from '../../types';
 
 
-export default function Medals() {
+export default function Medals({
+  loading,
+  medalList
+}: any) {
   return (
     <StyledContainer style={{ marginTop: 88 }}>
       <StyledFlex justifyContent='space-between' style={{ marginBottom: 20 }}>
         <StyledFlex gap='6px'>
           <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Medals</StyledFont>
-          <RectangleNumber quantity={2} />
+          <RectangleNumber quantity={medalList?.length} />
         </StyledFlex>
         <StyledViewMore>
           <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>View all</StyledFont>
@@ -28,10 +32,24 @@ export default function Medals() {
         </StyledViewMore>
 
       </StyledFlex>
-      <MedalLoading />
-      {/* <StyledFlex gap='20px'>
-        <MedalCard />
-      </StyledFlex> */}
+
+      {
+        loading ? (
+          <MedalLoading />
+        ) : medalList && medalList.length > 0 ? (
+          <StyledFlex gap='20px' flexWrap='wrap'>
+            {
+              medalList.map((medal: MedalType) => {
+                return (
+                  <MedalCard medal={medal} />
+                )
+              })
+            }
+          </StyledFlex>
+        ) : (
+          <></>
+        )
+      }
     </StyledContainer>
   )
 }

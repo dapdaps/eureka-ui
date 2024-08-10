@@ -8,6 +8,12 @@ export default {
   chainId: 10,
   rpcUrls: ['https://rpc.ankr.com/optimism'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#CA0C0C',
+      text: '#FFF',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

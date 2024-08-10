@@ -1,21 +1,17 @@
 import { memo } from 'react';
 
 import { ellipsAccount } from '@/utils/account';
+import UserAvatar from '../UserAvatar';
 import {
   StyledAddress,
-  StyledAvatar,
-  StyledAvatarBox,
-  StyledAvatarContainer,
   StyledBg,
   StyledCircle,
   StyledContainer,
   StyledContent,
   StyledInfo,
-  StyledKol,
   StyledName,
   StyledNameWrapper
 } from './styles';
-import UserAvatar from '../UserAvatar';
 
 const UserInfo = ({ info, rewardInfo }: any) => {
   return (

@@ -5,9 +5,10 @@ import {
   StyledContainer,
   StyledAccount,
   StyledAvatar,
-  StyledTitle
+  StyledTitle,
 } from './styles';
 import useUserInfo from '@/hooks/useUserInfo';
+import Beta from '../Beta';
 
 const Top = () => {
   const { account } = useAccount();
@@ -15,12 +16,12 @@ const Top = () => {
 
   return (
     <StyledContainer>
-          <StyledTitle>
-            YOUR PORTFOLIO
-            { userInfo.avatar && <StyledAvatar url={userInfo.avatar}/>}
-          </StyledTitle>
-        { account && <StyledAccount>{ellipsAccount(account)}</StyledAccount> }
-
+      <StyledTitle>
+        YOUR PORTFOLIO
+        {userInfo.avatar && <StyledAvatar url={userInfo.avatar} />}
+        <Beta />
+      </StyledTitle>
+      {account && <StyledAccount>{ellipsAccount(account)}</StyledAccount>}
     </StyledContainer>
   );
 };

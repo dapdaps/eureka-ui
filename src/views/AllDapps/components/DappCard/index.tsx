@@ -1,9 +1,6 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import {
   StyledDappCard,
-  StyledDappCardBadge, StyledDappCardBadgeImage,
-  StyledDappCardBadgeItem,
-  StyledDappCardBadgeTooltipList,
   StyledDappCardBody,
   StyledDappCardCategory,
   StyledDappCardCategoryItem,
@@ -12,16 +9,25 @@ import {
   StyledDappCardLogo,
   StyledDappCardName,
   StyledDappCardNetworks,
-  StyledDappCardStatics,
   StyledDappCardTitle,
 } from './styles';
 import Image from 'next/image';
-import { cloneDeep } from 'lodash';
+import Badges, { Badge } from '@/views/AllDapps/components/Badges';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
-import Tooltip from '@/views/Home/components/Tooltip';
-import { AnimatePresence, useMotionValue } from 'framer-motion';
+
+const DAppRewardList: { [k: string]: Badge[] } = {
+  SwapMode: [
+    {
+      name: RewardIcons['SMD']?.label || '',
+      value: '$20-25k',
+      icon: RewardIcons['SMD']?.icon || '',
+      status: StatusType.ended,
+      tooltip: '$20-25k $SMD',
+      iconSize: 20,
+    },
+  ],
+};
 
 const DappCard = (props: Props) => {
   const {
@@ -30,184 +36,22 @@ const DappCard = (props: Props) => {
     description,
     categories,
     networks,
-    badges,
     bp = {},
-    onClick = () => {},
-    participants = 0,
-    trading_volume = 0
+    onClick = () => {
+    },
+    users = 0,
+    tradingVolume = 0,
   } = props;
 
-  const initBadges: Badge[] = [
-    {
-      name: 'tradingVolume',
-      icon: '/images/alldapps/icon-exchange.svg',
-      value: '$' + formatIntegerThousandsSeparator(trading_volume),
-      iconSize: 17,
-    },
-    {
-      name: 'participants',
-      icon: '/images/alldapps/icon-fire.svg',
-      value: formatIntegerThousandsSeparator(participants),
-      iconSize: 17
-    }
-  ];
-
-  const allBadges: Badge[] = useMemo(() => {
-    const _badges: any = cloneDeep(initBadges);
-    if (badges && badges.length) {
-      const rewardActivities = badges.map((b: any) => ({
-        ...b,
-        rewards: b.reward ? JSON.parse(b.reward) : null
-      }));
-      for (const activity of rewardActivities) {
-        if (!activity.rewards) continue;
-        activity.rewards.forEach((reward: any) => {
-          const currIdx = _badges.findIndex((it: any) => it.name === reward.name);
-          if (currIdx < 0) {
-            _badges.push({
-              name: reward.name,
-              icon: RewardIcons[reward.logo_key]?.icon ?? '',
-              iconSize: 20,
-              defaultValue: reward.value,
-              odyssey: [{
-                ...activity,
-                badgeValue: reward.value,
-              }],
-            });
-          } else {
-            if (!_badges[currIdx].odyssey.some((ody: any) => ody.id === activity.id)) {
-              _badges[currIdx].odyssey.push({
-                ...activity,
-                badgeValue: reward.value,
-              });
-            }
-          }
-        });
-      }
-    }
-    return _badges;
-  }, [badges]);
-
-  const x = useMotionValue(0);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
-  const handleMouseMove = (event: any) => {
-    const halfWidth = event.currentTarget.offsetWidth / 2;
-    x.set(event.nativeEvent.offsetX - halfWidth);
-  };
-
-  const renderBadgesTooltip = (key: string, badge: Badge, index: number) => {
-    return badge.odyssey && hoveredIndex === index && (
-      <AnimatePresence>
-        <Tooltip x={x} customClass="dapp-card-odyssey-tooltip" key={key}>
-          <StyledDappCardBadgeTooltipList>
-            {
-              badge.odyssey.map((ody) => (
-                <OdysseyCard
-                  status={ody.status}
-                  title={ody.name}
-                  subtitle={ody.description}
-                  imageUrl={ody.banner}
-                  withoutCardStyle
-                />
-              ))
-            }
-          </StyledDappCardBadgeTooltipList>
-        </Tooltip>
-      </AnimatePresence>
-    )
-  };
-
-  const renderBadges = () => {
-    if (!allBadges) return null;
-    if (allBadges.length <= 3) {
-      return allBadges.map((badge: Badge, index: number) => {
-        const iconSize = getIconSize(badge.iconSize);
-        return (
-          <StyledDappCardBadge
-            key={index}
-            onMouseMove={handleMouseMove}
-            whileHover="active"
-            initial="default"
-            onHoverStart={() => {
-              setHoveredIndex(index);
-            }}
-            onHoverEnd={() => {
-              setHoveredIndex(null);
-            }}
-          >
-            <StyledDappCardBadgeImage
-              src={badge.icon}
-              alt=""
-              width={iconSize.w}
-              height={iconSize.h}
-              variants={{
-                active: {
-                  scale: 1.2,
-                  zIndex: 2,
-                },
-                default: {
-                  zIndex: 1,
-                },
-              }}
-            />
-            {badge.defaultValue || badge.value}
-            {renderBadgesTooltip('single', badge, index)}
-          </StyledDappCardBadge>
-        );
+  const rewardList = useMemo(() => {
+    const _rewardList: Badge[] = [];
+    if (DAppRewardList[name]) {
+      DAppRewardList[name].forEach((b) => {
+        _rewardList.push(b);
       });
     }
-    return (
-      <>
-        {
-          allBadges.slice(0, 2).map((badge: Badge, index: number) => (
-            <StyledDappCardBadge key={index}>
-              <Image
-                src={badge.icon}
-                alt=""
-                width={getIconSize(badge.iconSize).w}
-                height={getIconSize(badge.iconSize).h}
-              />
-              {badge.value}
-            </StyledDappCardBadge>
-          ))
-        }
-        <StyledDappCardBadge className="group">
-          {
-            allBadges.slice(2).map((badge: Badge, index: number) => (
-              <StyledDappCardBadgeItem
-                initial="hidden"
-                whileHover="visible"
-                onHoverStart={() => {
-                  setHoveredIndex(index);
-                }}
-                onHoverEnd={() => {
-                  setHoveredIndex(null);
-                }}
-              >
-                <StyledDappCardBadgeImage
-                  key={index}
-                  src={badge.icon}
-                  alt=""
-                  width={getIconSize(badge.iconSize).w}
-                  height={getIconSize(badge.iconSize).h}
-                  onMouseMove={handleMouseMove}
-                  initial={{
-                    zIndex: 1,
-                  }}
-                  whileHover={{
-                    scale: 1.2,
-                    zIndex: 2,
-                  }}
-                />
-                {renderBadgesTooltip('group', badge, index)}
-              </StyledDappCardBadgeItem>
-            ))
-          }
-        </StyledDappCardBadge>
-      </>
-    );
-  };
+    return _rewardList;
+  }, [name]);
 
   return (
     <StyledDappCard data-bp={bp?.dapp} onClick={onClick}>
@@ -246,9 +90,11 @@ const DappCard = (props: Props) => {
         <StyledDappCardDescription>
           {description}
         </StyledDappCardDescription>
-        <StyledDappCardStatics>
-          {renderBadges()}
-        </StyledDappCardStatics>
+        <Badges
+          customBadges={rewardList}
+          users={users}
+          tradingVolume={tradingVolume}
+        />
       </StyledDappCardBody>
     </StyledDappCard>
   );
@@ -256,28 +102,14 @@ const DappCard = (props: Props) => {
 
 export default DappCard;
 
-const getIconSize = (size: number | number[]) => {
-  if (Array.isArray(size)) {
-    return {
-      w: size[0],
-      h: size[1],
-    };
-  }
-  return {
-    w: size,
-    h: size,
-  };
-};
-
 export interface Props {
   name: string;
   logo: string;
   description?: string;
-  trading_volume?: number;
-  participants?: number;
+  tradingVolume: number | string;
+  users: number | string;
   categories?: Category[];
   networks?: Network[];
-  badges?: Badge[];
   bp?: bp;
   onClick?: () => void;
 }
@@ -298,21 +130,4 @@ export interface Category {
 export interface Network {
   chainId?: number;
   icon: string;
-}
-
-export interface Badge {
-  name: string;
-  icon: string;
-  // if you need to specify different width and height
-  // please pass in an array: [width, height]
-  iconSize: number | number[];
-  value?: string | number;
-  defaultValue?: string | number;
-  odyssey?: Record<string, any>[];
-}
-
-export interface Rewards {
-  chain_id: string;
-  network_id: string;
-  reward: string;
 }

@@ -6,7 +6,6 @@ import { container } from '@/components/animation';
 import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
 import { StyledFlex, StyledLoadingWrapper } from '@/styled/styles';
-import Dropdown from '@/views/Portfolio/components/Dropdown';
 import FlexTable from '@/views/Portfolio/components/FlexTable';
 import type { Column } from '@/views/Portfolio/components/FlexTable/styles';
 import { NoDataLayout } from '@/views/Portfolio/components/NoDataLayout';
@@ -14,13 +13,14 @@ import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWit
 
 import { getTime } from '../../helpers';
 import { StyledContainer, StyledContent, StyledHead, StyledPagination } from './styles';
+import Selector from '@/components/Dropdown/Selector';
 
-const ExecuteRecords = ({ hasMore, records, loading, pageIndex, networks, dapps, dapp, chain, handlePrev, handleNext, handleDapp, handleChain }: any) => {
+const ExecuteRecords = ({ hasMore, records, loading, pageIndex, dapps, dapp, chain, handlePrev, handleNext, handleDapp, handleChain }: any) => {
   const chainList = useMemo<any[]>(() => {
-    const _networks = networks.map((it: any) => {
+    const _networks = Object.values(chains).map((it: any) => {
       return {
-        value: it.id,
-        label: chains[it.id]?.chainName,
+        value: it.chainId,
+        label: it.chainName,
       };
     });
     _networks.unshift({
@@ -28,7 +28,7 @@ const ExecuteRecords = ({ hasMore, records, loading, pageIndex, networks, dapps,
       value: 'all',
     });
     return uniqBy(_networks, 'value');
-  }, [networks]);
+  }, []);
   const dappList = useMemo<any[]>(() => {
     const _dapps = dapps.map((it: any) => {
       return {
@@ -103,17 +103,41 @@ const ExecuteRecords = ({ hasMore, records, loading, pageIndex, networks, dapps,
         <StyledHead>
           <div className="total"></div>
           <StyledFlex justifyContent="flex-end" alignItems="center" gap="14px" className="filters">
-            <Dropdown
+            <Selector
               className="filter-chain"
               list={chainList}
               value={chain}
               onSelect={handleChain}
+              style={{
+                borderRadius: 6,
+                border: '1px solid #3D405A',
+                background: '#101115',
+              }}
+              popupStyle={{
+                top: 36,
+                left: 'unset',
+                right: 0,
+                width: 150,
+                maxHeight: 350,
+              }}
             />
-            <Dropdown
+            <Selector
               className="filter-dapp"
               list={dappList}
               value={dapp}
               onSelect={handleDapp}
+              style={{
+                borderRadius: 6,
+                border: '1px solid #3D405A',
+                background: '#101115',
+              }}
+              popupStyle={{
+                top: 36,
+                left: 'unset',
+                right: 0,
+                width: 150,
+                maxHeight: 350,
+              }}
             />
           </StyledFlex>
         </StyledHead>

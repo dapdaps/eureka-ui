@@ -8,6 +8,12 @@ export default {
   chainId: 81457,
   rpcUrls: ['https://rpc.blast.io'],
   defaultTab: 'Swap',
+  theme: {
+    button: {
+      bg: '#FDFE03',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

@@ -1,11 +1,8 @@
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 import {
   StyledContainer,
-  StyledMoreContainer,
-  StyledMoreText,
   StyledRelatedContainer,
   StyledRecordContainer,
-  StyledRelatedOdyssey
+  StyledRelatedOdyssey, StyledContainerInner,
 } from '@/views/Dapp/components/DappDetail/styles';
 import DappSummary from './Summary';
 import DetailTabs from './DetailTabs/index';
@@ -13,14 +10,9 @@ import RelativeOdyssey from './RelativeOdyssey';
 import Medal from './Medal';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { Category } from '@/hooks/useAirdrop';
-
-const medalList = [
-  {
-    label:'Bridger Junior',
-    logo:'/images/alldapps/icon-medal.png',
-    percent:0.35
-  }
-]
+import { useEffect } from 'react';
+import { useAnimate, useInView } from 'framer-motion';
+import { useDebounceFn } from 'ahooks';
 
 const DappDetail = (props: Props) => {
   const {
@@ -30,6 +22,9 @@ const DappDetail = (props: Props) => {
     participants,
     participants_change_percent,
   } = props;
+
+  const [ref, animate] = useAnimate();
+  const isInView = useInView(ref, { once: true });
 
   const summaryList = [
     {
@@ -41,47 +36,68 @@ const DappDetail = (props: Props) => {
     {
       key: 'txns',
       label: 'Total txns',
-      value: `${formatIntegerThousandsSeparator(total_execution, 1)}`,
+      value: `${formatIntegerThousandsSeparator(total_execution, 0)}`,
       increaseValue: '',
     },
     {
       key: 'user',
       label: 'User',
-      value: `${formatIntegerThousandsSeparator(participants, 1)}`,
+      value: `${formatIntegerThousandsSeparator(participants, 0)}`,
       increaseValue: participants_change_percent || '',
     },
   ];
 
+  const visible = useDebounceFn(() => {
+    animate(ref.current, {
+      opacity: 1,
+      y: 0,
+    }, {
+      duration: 1,
+    });
+  }, { wait: 300 });
+
+  useEffect(() => {
+    if (!ref.current) return;
+    if (!isInView) {
+      return;
+    }
+    visible.run();
+  }, [isInView]);
+
   return (
     <StyledContainer>
-      <StyledMoreContainer>
-        <StyledMoreText>Scroll to learn more</StyledMoreText>
-        <ArrowIcon size={12}/>
-      </StyledMoreContainer>
-      <DappSummary
-        dappId={props?.id}
-        name={props?.name ?? ''}
-        logo={props?.logo ?? ''}
-        networks={props?.dapp_network ?? []}
-        categories={props?.dapp_category ?? []}
-        summaries={summaryList}
-      />
-      <StyledRelatedContainer>
-        <StyledRecordContainer>
-          <DetailTabs
-            {...props}
-            overviewTitle={props?.name && `What is ${props.name} ?`}
-            category={Category.dApp}
-          />
-        </StyledRecordContainer>
-        <StyledRelatedOdyssey>
-          <Medal medalList={medalList}/>
-          <RelativeOdyssey
-            title='Related Campaign'
-            dappId={props?.id}
-          />
-        </StyledRelatedOdyssey>
-      </StyledRelatedContainer>
+      <StyledContainerInner
+        ref={ref}
+        initial={{
+          opacity: 0,
+          y: 100,
+        }}
+      >
+        <DappSummary
+          dappId={props?.id}
+          name={props?.name ?? ''}
+          logo={props?.logo ?? ''}
+          networks={props?.dapp_network ?? []}
+          categories={props?.dapp_category ?? []}
+          summaries={summaryList}
+        />
+        <StyledRelatedContainer>
+          <StyledRecordContainer>
+            <DetailTabs
+              {...props}
+              overviewTitle={props?.name && `What is ${props.name} ?`}
+              category={Category.dApp}
+            />
+          </StyledRecordContainer>
+          <StyledRelatedOdyssey>
+            <Medal id={props?.id} type={Category.dApp} />
+            <RelativeOdyssey
+              title='Related Campaign'
+              dappId={props?.id}
+            />
+          </StyledRelatedOdyssey>
+        </StyledRelatedContainer>
+      </StyledContainerInner>
   </StyledContainer>
   );
 }

@@ -1,9 +1,11 @@
 import styled from "styled-components";
 import SwiperList from "./components/Swiper";
-import ToggleTab from "./components/Tabs";
+import ToggleTab, { Tab } from "./components/Tabs";
 import OdysseyCard from '@/views/Dapp/components/DappDetail/RelativeOdyssey/Card';
 import useCompassList from "../Home/components/Compass/hooks/useCompassList";
-
+import { useEffect, useMemo, useState } from "react";
+import { StatusType } from "./components/Tag";
+import Skeleton from "react-loading-skeleton";
 
 const StyledWrapper = styled.div`
     --var-container-width: 1244px;
@@ -58,6 +60,7 @@ const StyledWrapper = styled.div`
         }
         .odyssey-list {
             width: var(--var-container-width);
+            margin-top: 26px;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 14px; 
@@ -68,13 +71,36 @@ const StyledWrapper = styled.div`
     }
 `
 
+const LoadingSkeleton = () => (
+    <div className="odyssey-list">
+        {
+            Array.from({ length: 9 }).map((_, index) => (
+                <div key={index}>
+                    <Skeleton height={405} borderRadius={12} />
+                </div>
+            ))
+        }
+    </div>
+)
+
 
 
 
 const OdysseyList = () => {
     const { loading, compassList } = useCompassList()
-    console.log(compassList, 'compassList');
-    
+    const [tab, setTab] = useState<Tab>(Tab.All);
+
+    const filterConditions = {
+        [Tab.All]: () => true,
+        [Tab.Live]: (compass: any) => compass.status === StatusType.ongoing,
+        [Tab.Ended]: (compass: any) => compass.status === StatusType.ended,
+    };
+
+    const filteredCompassList = useMemo(() => {
+        return compassList?.filter(filterConditions[tab]);
+    }, [tab, compassList]);
+
+
     return (
         <>
             <StyledWrapper>
@@ -90,28 +116,34 @@ const OdysseyList = () => {
                 <div className="odyssey">
                         <div className="header">
                             <img className="all-odyssey-text" src="/images/odyssey/all-odyssey-text.png" alt="text" />
-                            <ToggleTab />
+                            <ToggleTab onClick={(tab) => setTab(tab)} />
                         </div>
-                        <div className="odyssey-list">
-                            {
-                                compassList?.map((compass: any) => (
-                                    <OdysseyCard
-                                        className="odyssey-card"
-                                        key={compass.id}
-                                        id={compass.id}
-                                        name={compass.name}
-                                        banner={compass.banner}
-                                        status={compass.status}
-                                        rewards={compass.reward}
-                                        volume={compass.trading_volume}
-                                        users={compass.total_users}
-                                        // medals={[
-                                        //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
-                                        // ]}
-                                    />
-                                ))
-                            }
-                        </div>
+                        {
+                            loading ? <LoadingSkeleton /> : (
+                                <div className="odyssey-list">
+                                {
+                                    filteredCompassList?.map((compass: any) => (
+                                        <OdysseyCard
+                                            className="odyssey-card"
+                                            key={compass.id}
+                                            id={compass.id}
+                                            name={compass.name}
+                                            banner={compass.banner}
+                                            status={compass.status}
+                                            rewards={compass.reward}
+                                            volume={compass.trading_volume}
+                                            users={compass.total_users}
+                                            // medals={[
+                                            //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
+                                            // ]}
+                                        />
+                                    ))
+                                }
+                            </div>
+                            )
+                        }
+
+
                     </div>
             </StyledWrapper>
         </>

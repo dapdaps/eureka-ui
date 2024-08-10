@@ -1,36 +1,70 @@
 import { useSize } from 'ahooks';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { memo, useRef } from 'react';
+import { memo, useMemo, useRef, useState } from 'react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
+import ChainMap from '@/config/chains';
+
+import IconArrow from '@public/images/home/arrow-right.svg';
+import IconClickArrow from '@public/images/home/click-arrow.svg';
+import OdysseyVideo from '@/views/Dapp/components/DappDetail/RelativeOdyssey/Video';
 
 import {
   StyledCard,
   StyledCardBackgroundImage,
-  StyledCardButton,
   StyledCardMainContent,
-  StyledCompassIcon,
   StyledContainer,
   StyledContent,
   StyledInner,
   StyledLoadingWrapper,
+  StyledSwiperNextButton,
+  StyledSwiperPrevButton,
   StyledSwiperWrapper,
+  StyledCardTitle,
+  StyledCominsoon,
+  StyledCompassButton,
+  StyledOdysseyIconTitle,
+  StyledOdysseyHead,
+  StyledOdysseyInfo,
+  StyledOdysseyIcon,
+  StyleList,
+  StyledVideo,
+  StyledVideoIcon,
+  StyleChainIconImg,
 } from './styles';
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import ParallelogramButton from '@/components/base-button/Parallelogram';
-import Tag, { StatusType } from '../Tag';
 
-const Card = function ({ compass }: any) {
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import Tag from '../Tag';
+import RewardList from '../Reward';
+import MedalList from '../Medal';
+
+export const formatCompassName = (name: string) => {
+  if (!name) return '';
+
+  const parts = name.split(': ');
+  return parts.length > 1 ? (
+    <>
+      {parts[0]}：<br />
+      {parts[1]}
+    </>
+  ) : (
+    name
+  );
+};
+
+const parseChainsId = (chains_id: string | null): string[] =>
+  chains_id ? chains_id.split(',').map((id) => id.trim()) : [];
+
+const CompassCard = function ({ compass }: any) {
   const toast = useToast();
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true });
+
   const handleExplore = async function () {
     if (compass.status === 'un_start') {
       toast.fail({
@@ -42,48 +76,96 @@ const Card = function ({ compass }: any) {
     router.push(odyssey[compass.id].path);
   };
 
+  const renderVolNo = (options: { name: string; id: number }) => {
+    const { name, id } = options;
+    if (!name) return null;
+    if (name.indexOf('Vol.4+:') > -1) {
+      return '4+';
+    }
+    // ⚠️ Special: mode-odyssey id is 7, but show number is 5
+    if (id === 7) {
+      return 5;
+    }
+    return id;
+  };
+
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems='flex-start'>
+      <StyledFlex gap="32px" alignItems="flex-start">
         <StyledCardBackgroundImage
-          src={compass.banner}
+          src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
           style={{
             filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
           }}
         />
         <StyledCardMainContent>
-          <div className='title'>Featured <Tag className='tag' status={StatusType.ended}></Tag></div>
-          
-          <div className="card_section">
-            <ParallelogramButton>Vol.5</ParallelogramButton>
-            
-            {/* <div className="head">DapDap X Mode: <br />The Airdrop Ascendancy</div> */}
-            <div className='card-tips'>One UI to rule them all, getting the best price from 30+ Dex pools.</div>
-          </div>
-          <StyledCardButton
+          <StyledOdysseyHead>
+            <StyledOdysseyInfo>
+              <StyledOdysseyIcon />
+              <StyledOdysseyIconTitle>Vol.{renderVolNo({ name: compass.name, id: compass.id })}</StyledOdysseyIconTitle>
+              <div className="chainList">
+                {parseChainsId(compass.chains_id).map((chain: any) => (
+                  <StyleChainIconImg src={ChainMap[chain].icon} alt="" />
+                ))}
+              </div>
+            </StyledOdysseyInfo>
+            <Tag status={compass.status} />
+          </StyledOdysseyHead>
+          <StyledCardTitle>{formatCompassName(compass.name)}</StyledCardTitle>
+          <StyleList>
+            <RewardList odyssey={compass} />
+            <MedalList medals={[1]} />
+          </StyleList>
+          {/* <StyledCardDesc>{compass.description}</StyledCardDesc> */}
+          {compass.status === 'un_start' ? (
+            <div className="btns">Coming soon...</div>
+          ) : (
+            <div className="btns">
+              <StyledCompassButton
                 onClick={() => {
                   check(handleExplore);
                 }}
                 data-bp="1001-003"
               >
-                <div>Explore now</div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
-                  <path
-                    d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
-                    fill="black"
-                  />
-                </svg>
-              </StyledCardButton>
+                <div>Explore All</div>
+                <IconClickArrow />
+              </StyledCompassButton>
+              {/* <StyledCompassButton
+                className="plain"
+                onClick={() => {
+                  router.push('/odyssey');
+                }}
+              >
+                <div>Explore All</div>
+                <IconClickArrow />
+              </StyledCompassButton> */}
+            </div>
+          )}
         </StyledCardMainContent>
       </StyledFlex>
     </StyledCard>
   );
 };
-const SwiperList = () => {
+
+const Compass = () => {
   const size: any = useSize(window.document.getElementsByTagName('body')[0]);
+
   const { loading, compassList } = useCompassList();
+
   const swiperRef = useRef<any>();
+
+  const [show, setShow] = useState<boolean>(false);
+  const [videoUrl, setVideoUrl] = useState<string>('');
+  const showVideo = (_video: string) => {
+    console.log(_video, '_video');
+
+    if (!_video) {
+      return;
+    }
+    setVideoUrl(_video);
+    setShow(true);
+  };
 
   return loading ? (
     <StyledLoadingWrapper>
@@ -98,27 +180,44 @@ const SwiperList = () => {
               width={1244}
               modules={[Autoplay, Pagination]}
               slidesPerView={1}
-              autoplay={{ delay: 113000 }}
+              autoplay={{ delay: 3000 }}
               speed={1000}
               spaceBetween={(size?.width - 1244) / 2 + 100}
               updateOnWindowResize={true}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              pagination={{
+                el: '.swiper-pagination',
+                clickable: true,
+                renderBullet: (index, className) => {
+                  return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
+                },
+              }}
               loop={true}
             >
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
-                    <Card compass={compass} />
-                    <StyledCompassIcon>
-                      <CompassIcon />
-                    </StyledCompassIcon>
+                  <CompassCard compass={compass} />
+                  {odyssey[compass?.id]?.video && (
+                    <StyledVideo
+                      url={compass.banner}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        showVideo(odyssey[compass?.id]?.video);
+                      }}
+                    >
+                      <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+                    </StyledVideo>
+                  )}
+                  {/* <StyledCompassIcon>
+                    <CompassIcon />
+                  </StyledCompassIcon>
                   {compass.name === 'THRUSTER TURBO SPIN' ? null : (
                     <StyledCompassIcon>
                       <CompassIcon />
                     </StyledCompassIcon>
                   )}
-
                   {odyssey[compass.id]?.reward && (
                     <div
                       style={
@@ -159,10 +258,32 @@ const SwiperList = () => {
                         {odyssey[compass.id]?.reward}
                       </StyledFont>
                     </div>
-                  )}
+                  )} */}
                 </SwiperSlide>
               ))}
             </Swiper>
+            <OdysseyVideo
+              src={videoUrl}
+              visible={show}
+              close={() => {
+                setShow(false);
+              }}
+            />
+            <StyledSwiperPrevButton
+              onClick={() => {
+                swiperRef.current && swiperRef.current.slidePrev();
+              }}
+            >
+              <IconArrow />
+            </StyledSwiperPrevButton>
+            <StyledSwiperNextButton
+              onClick={() => {
+                swiperRef.current && swiperRef.current.slideNext();
+              }}
+            >
+              <IconArrow />
+            </StyledSwiperNextButton>
+            <div className="swiper-pagination"></div>
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
@@ -170,4 +291,4 @@ const SwiperList = () => {
   );
 };
 
-export default memo(SwiperList);
+export default memo(Compass);

@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const key = process.env.NEXT_PUBLIC_CRYPTO_KEY;
+const key = 'yQmRxqD#c^DefKhxeuK,2V-M?}3om~eu' //process.env.NEXT_PUBLIC_CRYPTO_KEY;
 
 export const getSignature = (plaintext: string) => {
   if (!key) return;

@@ -27,7 +27,7 @@ import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/con
 import { Category } from '@/hooks/useAirdrop';
 import { useRouter } from 'next/router';
 
-const Types = {
+const Types: any = {
   network: 'chain',
   dapp: 'dApp',
 };

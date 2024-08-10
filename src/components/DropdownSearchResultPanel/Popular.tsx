@@ -135,13 +135,22 @@ const Popular = ({
     onClick?.()
   }
 
+  const handleGotoAll = () => {
+    if (title === PopularType.dApps) {
+      router.push('/alldapps');
+    } else {
+      router.push('/networks');
+    }
+    onClick?.()
+  }
+
   return (
     <StylePopular className={classNames} style={sx}>
       <StyleTitle>
         <span>Popular {title}</span>
-        <Link href={''} className="links">
+        <div onClick={handleGotoAll} className="links">
           View all <IconLink />
-        </Link>
+        </div>
       </StyleTitle>
       {
         loading ? <LoadingCard /> : (

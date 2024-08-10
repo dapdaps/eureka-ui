@@ -2,27 +2,38 @@ import {
   StyledBody,
   StyledContainer,
   StyledFilters,
-  StyledNetworkDropdownItem, StyledRadio,
+  StyledNetworkDropdownItem,
+  StyledRadio,
   StyledRewardNow,
   StyledSearch,
   StyledSearchIcon,
   StyledSearchInput,
-  StyledSelectorLoading,
-  StyledFiltersBackdrop
+  StyledSelectorLoading
 } from '@/views/AllDapps/styles';
 import AllDappsTitle from '@/views/AllDapps/components/Title';
 import Selector from '@/components/Dropdown/Selector';
-import { ChangeEvent, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { get } from '@/utils/http';
-import { QUEST_PATH } from '@/config/quest';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { AllNetworks, SortList, TrueString } from '@/views/AllDapps/config';
+import { SortList, TrueString } from '@/views/AllDapps/config';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Icons/Loading';
 import DappList from './components/DappList';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
 import useList from './hooks/useList';
+import { NetworkAll, useNetworks } from '@/hooks/useNetworks';
+
+const categoryAnimation = (_scrolled: boolean, visible = {}, hidden = {}) => ({
+  variants:{
+    visible,
+    hidden,
+  },
+  initial:"hidden",
+  animate: _scrolled ? 'visible' : 'hidden',
+  transition:{
+    duration: 0.6,
+  }
+})
 
 const AllDapps = (props: Props) => {
   const {} = props;
@@ -31,16 +42,16 @@ const AllDapps = (props: Props) => {
   const pathname = usePathname();
 
   const router = useRouter();
+  const { networkList, networkLoading } = useNetworks({ isAll: true, isAllIcon: false });
 
-  const [networkList, setNetworkList] = useState<any>([AllNetworks]);
-  const [networkLoading, setNetworkLoading] = useState<boolean>(false);
-  const [network, setNetwork] = useState<any>(AllNetworks.id);
+  const [network, setNetwork] = useState<any>(NetworkAll.id);
   const [sort, setSort] = useState<any>(SortList[0].value);
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [airdrop, setAirdrop] = useState<boolean>(false);
   const [category, setCategory] = useState<number| string>();
   const [searchWord, setSearchWord] = useState<string | undefined>();
   const [scrolled, setScrolled] = useState<boolean>(false);
+  const categoryRef = useRef<any>(null);
 
   const {
     loading,
@@ -61,20 +72,6 @@ const AllDapps = (props: Props) => {
   const setQueryParams = useCallback((params: any) => {
     router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
   }, [router, pathname]);
-
-  const fetchNetworkData = async () => {
-    try {
-      setNetworkLoading(true);
-      const resultNetwork = await get(`${QUEST_PATH}/api/network/list`);
-      const data = resultNetwork.data || [];
-      data.unshift(AllNetworks);
-      setNetworkList(data);
-      setNetworkLoading(false);
-    } catch (error) {
-      console.error('Error fetching resultNetwork data:', error);
-      setNetworkLoading(false);
-    }
-  };
 
   const onSelectNetwork = (_network: number) => {
     const params = new URLSearchParams(searchParams);
@@ -151,19 +148,17 @@ const AllDapps = (props: Props) => {
   };
 
   useEffect(() => {
-    fetchNetworkData();
+    const navbarTop = categoryRef?.current?.offsetTop ?? 278;
+
     const handleScroll = () => {
-      if (window.scrollY > 294) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      setScrolled(scrollTop > navbarTop);
     };
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [categoryRef]);
 
   useEffect(() => {
     const {
@@ -180,7 +175,7 @@ const AllDapps = (props: Props) => {
     })) {
       setNetwork(Number(_network));
     } else {
-      setNetwork(AllNetworks.id);
+      setNetwork(NetworkAll.id);
     }
 
     if (checkQueryEmpty(_sort as string, () => true)) {
@@ -218,52 +213,22 @@ const AllDapps = (props: Props) => {
     }
   }, [router.query, networkList]);
 
-
   return (
     <StyledContainer>
       <AllDappsTitle
+        categoryRef={categoryRef}
+        animation={categoryAnimation(scrolled, {zIndex: 49, top: 72 }, { zIndex: 0, top: 0 })}
         onCategory={onSelectCategory}
         activeCategory={category}
         dappList={titleDappList ?? []}
-        categoryClassname={scrolled ? 'category-fixed' : ''}
+        categoryClassname={`${scrolled ? 'category-fixed' : ''} category-title`}
       />
       <StyledBody>
-        <StyledFiltersBackdrop
-          variants={{
-            visible: {
-              opacity: 1,
-              display: 'block',
-              y: 0,
-            },
-            hidden: {
-              opacity: 0,
-              display: 'none',
-              y: -50,
-            },
-          }}
-          initial="hidden"
-          animate={scrolled ? 'visible' : 'hidden'}
-          transition={{
-            duration: 0.6,
-          }}
-        />
         <StyledFilters
-          fixed={scrolled}
-          variants={{
-            visible: {
-              zIndex: 50,
-              y: 104,
-            },
-            hidden: {
-              zIndex: 2,
-              y: 0,
-            },
-          }}
-          initial="hidden"
-          animate={scrolled ? 'visible' : 'hidden'}
-          transition={{
-            duration: 0.6,
-          }}
+          $fixed={scrolled}
+          {
+            ...categoryAnimation(scrolled, {zIndex: 49, top: 104 }, { zIndex: 2, top: 0 })
+          }
         >
           {
             networkLoading ? (
@@ -272,7 +237,7 @@ const AllDapps = (props: Props) => {
               </StyledSelectorLoading>
               ) : (
               <Selector
-                list={networkList}
+                list={networkList.map((n) => ({ ...n, key: n.id, label: n.name, value: n.chain_id }))}
                 value={network}
                 onSelect={onSelectNetwork}
                 itemValueKey="chain_id"
@@ -284,10 +249,8 @@ const AllDapps = (props: Props) => {
                 renderItem={(item) => (
                   <StyledNetworkDropdownItem>
                     {
-                      item.logo ? (
+                      item.logo && (
                         <Image src={item.logo} alt="" width={22} height={22} />
-                      ) : (
-                        <div style={{ width: 22, height: 22 }} />
                       )
                     }
                     {item.name}

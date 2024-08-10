@@ -1,5 +1,4 @@
 import { memo, useState } from 'react';
-import Breadcrumb from '@/components/Breadcrumb';
 import Header from './Header';
 import {
   StyledContainer,
@@ -7,67 +6,22 @@ import {
   StyledBgWrapper,
   StyledContent,
 } from './styles';
+import PageBack from '@/components/PageBack';
 
-const Top = ({ chain }: any) => {
+const Top = (props: { chain: any; loading?: boolean; }) => {
+  const { chain, loading } = props;
 
   const [more, setMore] = useState(false);
 
   return (
     <StyledContainer style={{ color: chain?.selectBgColor }} className={more ? 'more' : ''}>
       <StyledBox>
-        <StyledBgWrapper color={chain?.bgColor}/>
+        <StyledBgWrapper color={chain?.selectBgColor}/>
         <StyledContent>
-          <Breadcrumb
-            navs={[
-              { name: 'Home', path: '/' },
-              { name: 'Networks', path: '/networks' },
-              { name: chain?.title, path: '' },
-            ]}
-          />
-          <Header
-            bgColor={chain?.bgColor}
-            logo={chain?.icon}
-            name={chain?.title}
-            chainId={chain?.chainId}
-            path={chain?.path}
-            deepdive={chain?.deepdive}
-            id={chain?.id}
-            tbd_token={chain?.tbd_token}
-            nativeCurrency={chain?.native_currency}
-          />
-
-          {/* <StyledTags>
-            <StyledTag>
-              <StyledTagLabel>Technology</StyledTagLabel>
-              <StyledTagValue>{chain?.technology || '-'}</StyledTagValue>
-            </StyledTag>
-            <StyledTag>
-              <StyledTagLabel>Native Token</StyledTagLabel>
-              <StyledTagValue>
-                {chain?.tbd_token === 'Y' ? 'TBD🔥' : <NativeCurrency nativeCurrency={chain?.native_currency} />}
-              </StyledTagValue>
-            </StyledTag>
-          </StyledTags> */}
-          {/* {more && (
-            <MorePanel
-              technology={chain?.technology}
-              tbd_token={chain?.tbd_token}
-              nativeCurrency={chain?.native_currency}
-              milestones={chain?.milestones}
-              subname={chain?.sub_description}
-            />
-          )} */}
+          <PageBack defaultPath="/networks" />
+          <Header chain={chain} loading={loading} />
         </StyledContent>
       </StyledBox>
-      {/* <StyledMoreButton>
-        <MoreButton
-          isMore={more}
-          onClick={() => {
-            setMore((prev) => !prev);
-          }}
-          bp="100121-005"
-        />
-      </StyledMoreButton> */}
     </StyledContainer>
   );
 };

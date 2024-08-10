@@ -8,6 +8,12 @@ export default {
   chainId: 534352,
   rpcUrls: ['https://rpc.scroll.io'],
   defaultTab: 'Swap',
+  theme: {
+    button: {
+      bg: '#FFEEDA',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

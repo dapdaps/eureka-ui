@@ -8,6 +8,12 @@ export default {
   chainId: 1101,
   rpcUrls: ['https://zkevm-rpc.com'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: 'linear-gradient(269deg, #803DE0 36.18%, #9E2AC7 60.54%)',
+      text: '#FFF',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

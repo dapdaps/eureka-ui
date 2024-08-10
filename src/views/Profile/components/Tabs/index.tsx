@@ -23,7 +23,7 @@ const TABS: { name: string; key: Tab }[] = [
   },
 ];
 
-const Tabs = ({ current, onChange }: { current: Tab; onChange: (tab: Tab) => void }) => {
+const Tabs = ({ current, tabsQuantity, onChange, }: { current: Tab; tabsQuantity: number[], onChange: (tab: Tab) => void }) => {
   const index = useRef<number>(0);
   return (
     <StyledTabs>
@@ -37,7 +37,7 @@ const Tabs = ({ current, onChange }: { current: Tab; onChange: (tab: Tab) => voi
           }}
         >
           <StyledTab >{tab.name}</StyledTab>
-          <RectangleNumber quantity={12} />
+          <RectangleNumber quantity={tabsQuantity[i]} />
         </StyledTabWrap>
       ))}
     </StyledTabs>

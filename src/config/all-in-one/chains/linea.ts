@@ -9,6 +9,12 @@ export default {
   chainId: 59144,
   rpcUrls: ['https://linea.blockpi.network/v1/rpc/public'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#00E2FF',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

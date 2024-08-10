@@ -16,14 +16,15 @@ export interface TitleDapp {
   position: 'left' | 'right';
   x: number;
   y: number;
+  rotate?: number;
 }
 
 export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [
   { key: 1, position: 'left', width: 93, height: 93, x: 0, y: 99 },
-  { key: 2, position: 'left', width: 89, height: 89, x: 19, y: 0 },
-  { key: 3, position: 'left', width: 86, height: 86, x: -19, y: 116 },
   { key: 4, position: 'right', width: 88, height: 88, x: -8, y: 10 },
+  { key: 2, position: 'left', width: 89, height: 89, x: 19, y: 0 },
   { key: 5, position: 'right', width: 86, height: 86, x: -11, y: 116 },
+  { key: 3, position: 'left', width: 86, height: 86, x: -19, y: 116 },
   { key: 6, position: 'right', width: 89, height: 89, x: 30, y: 36 },
 ];
 
@@ -34,12 +35,6 @@ export const SortList = [
   { key: 4, value: 'z-a', label: 'Z-A' },
   { key: 5, value: 'create_time', label: 'New launched' },
 ];
-
-export const AllNetworks = {
-  chain_id: -1,
-  id: -1,
-  name: 'All Networks',
-};
 
 export const PageSize = 18;
 

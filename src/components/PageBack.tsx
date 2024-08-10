@@ -2,12 +2,14 @@ import { memo } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
-const DappBack = () => {
+const PageBack = (props: Props) => {
+  const { defaultPath } = props;
+
   const router = useRouter();
 
   const onClick = () => {
-    if (window.history.length <= 1) {
-      router.replace('/alldapps');
+    if (window.history.length <= 1 && defaultPath) {
+      router.replace(defaultPath);
       return;
     }
     router.back();
@@ -31,7 +33,11 @@ const DappBack = () => {
   );
 };
 
-export default memo(DappBack);
+export default memo(PageBack);
+
+export interface Props {
+  defaultPath?: string;
+}
 
 const StyledContainer = styled.div`
   display: flex;

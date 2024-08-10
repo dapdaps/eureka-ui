@@ -5,8 +5,6 @@ import React, { memo, useMemo, useState } from 'react';
 
 import { container } from '@/components/animation';
 import Loading from '@/components/Icons/Loading';
-import popupsData from '@/config/all-in-one/chains';
-import chains from '@/config/chains';
 import { StyledFlex, StyledLoadingWrapper } from '@/styled/styles';
 import { NoDataLayout } from '@/views/Portfolio/components/NoDataLayout';
 import Category from '@/views/Portfolio/components/Protocol/Category';
@@ -18,8 +16,11 @@ import Distribution from '@/views/Portfolio/components/Protocol/Distribution';
 import { StyledContainer } from '@/views/Portfolio/components/Protocol/styles';
 import Title from '@/views/Portfolio/components/Protocol/Title';
 import { CategoryList } from '@/views/Portfolio/config';
+import { a } from 'msw/lib/SetupServerApi-1855d9c6';
 
-const Protocol = ({ dapps, loading, dappsByChain }: any) => {
+const Protocol = (props: Props) => {
+  const { dapps, loading, dappsByChain, totalWorth } = props;
+
   const [currentChain, setCurrentChain] = useState<any>();
 
   const chainList = useMemo<any[]>(() => {
@@ -165,7 +166,7 @@ const Protocol = ({ dapps, loading, dappsByChain }: any) => {
     <AnimatePresence mode="wait">
       <StyledContainer {...container}>
         <StyledFlex justifyContent="space-between" alignItems="stretch" gap="16px" style={{ flexWrap: 'wrap' }}>
-          <ChartComponent />
+          <ChartComponent totalWorth={totalWorth} />
           <Distribution
             chainData={chainList}
             dAppData={dappListMerged}
@@ -227,3 +228,10 @@ const Protocol = ({ dapps, loading, dappsByChain }: any) => {
 };
 
 export default memo(Protocol);
+
+export interface Props {
+  dapps: any;
+  dappsByChain: any;
+  loading?: boolean;
+  totalWorth: Big.Big;
+}

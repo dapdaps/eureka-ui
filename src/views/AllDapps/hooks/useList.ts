@@ -4,8 +4,6 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import chainCofig from '@/config/chains';
 import { useDebounceFn } from 'ahooks';
-import useDappReward from '@/views/AllDapps/hooks/useDappReward';
-
 
 export default function useList(props: Props) {
   const {
@@ -17,12 +15,9 @@ export default function useList(props: Props) {
     airdrop,
   } = props;
 
-  const {fetchRewardData} = useDappReward();
-
   const [loading, setLoading] = useState<boolean>(false);
   const [dappList, setDappList] = useState<any>([]);
   const [titleDappList, setTitleDappList] = useState<any>([]);
-  const [rewardList, setRewardList] = useState<any>([]);
   const [pageTotal, setPageTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
 
@@ -55,7 +50,7 @@ export default function useList(props: Props) {
 
       const result = await get(
         `${QUEST_PATH}/api/dapp/search`,
-        params
+        params,
       );
       const data = result.data?.data || [];
       data.forEach((dapp: any) => {
@@ -74,20 +69,8 @@ export default function useList(props: Props) {
         });
         //#endregion
       });
-
-      data.forEach((dapp: any) => {
-        dapp.rewards = [];
-        if (dapp?.networks && dapp.networks.length) {
-          rewardList.forEach((item: any) => {
-            const _reward = dapp.networks.find((network: any) => item.chains_id == network.chainId);
-            if (_reward) {
-              dapp.rewards.push(item);
-            }
-          })
-        }
-      });
       setDappList(data);
-      const titleDapps = (result?.data?.top_dapps ?? []).map((item: any) => ({logo: item}));
+      const titleDapps = (result?.data?.top_dapps ?? []).map((item: any) => ({ logo: item }));
       setTitleDappList(titleDapps);
       setPageTotal(result.data.total_page || 0);
       setLoading(false);
@@ -97,20 +80,11 @@ export default function useList(props: Props) {
     }
   };
 
-  const getRewardList = async () => {
-    const result = await fetchRewardData();
-    setRewardList(result ?? []);
-  }
-
   const { run: getDappList } = useDebounceFn(fetchDappList, { wait: 600 });
 
   useEffect(() => {
     getDappList(1);
   }, [network, sort, rewardNow, category, searchText, airdrop]);
-
-  useEffect(() => {
-    getRewardList();
-  }, []);
 
   return {
     loading,
@@ -118,7 +92,7 @@ export default function useList(props: Props) {
     pageTotal,
     pageIndex,
     fetchDappList,
-    titleDappList
+    titleDappList,
   };
 }
 

@@ -5,6 +5,8 @@ import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import Tag, { StatusType } from "@/views/Odyssey/components/Tag";
 import { Odyssey } from "@/components/DropdownSearchResultPanel/hooks/useDefaultSearch";
 import { useRouter } from "next/router";
+import odyssey from "@/config/odyssey";
+import useToast from "@/hooks/useToast";
 
 const Flex = styled.div`
   display: flex;
@@ -133,9 +135,17 @@ const LoadingList = () => {
 
 const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
   const router = useRouter()
+  const toast = useToast();
   const handleClick = (item: Odyssey) => {
     onClick?.();
-    router.push(`/odyssey/home?id=${item.id}`);
+    if (item.status === StatusType.un_start) {
+      toast.fail({
+        title: 'Odyssey is upcoming...',
+      });
+      return;
+    }
+    if (!odyssey[item.id]) return;
+    router.push(odyssey[item.id].path);
   }
 
   return (

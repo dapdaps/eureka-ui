@@ -5,6 +5,9 @@ import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+import { formatPercentNumber } from '@/views/Portfolio/helpers';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import ChartEmpty from '@/views/Portfolio/components/Protocol/ChartEmpty';
 
 export const StyledContainer = styled.div`
   width: 410px;
@@ -153,11 +156,25 @@ const Distribution = (props: any) => {
   }, [activeTab]);
   const [activePie, setActivePie] = useState(0);
   const displayChartData = useMemo(() => {
-    if (activeTab === tabs[0].key) return chainData;
-    return dAppData;
+    let _data = activeTab === tabs[0].key ? chainData : dAppData;
+    const total = _data.length
+      ? _data.map((chain: any) => chain.usd).reduce((a: number, b: number) => Big(a).plus(b).toNumber())
+      : 0;
+    _data = _data.map((d: any) => ({
+      ...d,
+      percent: d.usd ? formatPercentNumber(d.usd, total, true) : 0,
+      total: Big(d.usd).toNumber(),
+      assets: `${formatIntegerThousandsSeparator(d.usd, 2, { isFullDecimal: true })}`,
+    }));
+    return _data;
   }, [chainData, dAppData, activeTab]);
 
-  console.log('displayChartData: %o', displayChartData);
+  const dataNoValue = useMemo(() => {
+    if (!displayChartData.length) return true;
+    return displayChartData.every((it: any) => Big(it.total).lte(0));
+  }, [displayChartData]);
+
+  console.log('displayChartData= %o, activePie=%o', displayChartData, activePie);
 
   const handleTab = (tabKey: any) => {
     if (tabKey === activeTab) return;
@@ -168,14 +185,6 @@ const Distribution = (props: any) => {
   const handleChartEnter = (e: any, index: number) => {
     setActivePie(index);
   };
-
-  const calcChartRate = useMemo(() => {
-    if (!displayChartData || !displayChartData.length || activePie < 0) return;
-    const total = displayChartData
-      .map((chain: any) => chain.usd)
-      .reduce((a: number, b: number) => Big(a).plus(b).toNumber());
-    return Big(displayChartData[activePie].usd).div(total).times(100).toFixed(0);
-  }, [displayChartData, activePie]);
 
   return (
     <StyledContainer>
@@ -200,48 +209,56 @@ const Distribution = (props: any) => {
         </StyledTabs>
       </div>
       <div className="chart-wrapper">
-        <ResponsiveContainer width="100%" height="100%">
-          <PieChart width={240} height={240}>
-            <Pie
-              data={displayChartData}
-              cx={115}
-              cy={115}
-              innerRadius={93}
-              outerRadius={117}
-              fill="#8884d8"
-              paddingAngle={1}
-              dataKey="usd"
-              startAngle={90}
-              endAngle={-270}
-              onMouseEnter={handleChartEnter}
-              cornerRadius={2}
-            >
-              {displayChartData.map((entry: any, index: number) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={activePie === index ? '#edf48a' : COLORS[index % COLORS.length]}
-                  strokeWidth={0}
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
         {
-          displayChartData[activePie] && (
-            <div className="pie-tooltip">
-              <div
-                className="icon"
-                style={{ backgroundImage: `url("${displayChartData[activePie]?.icon}")` }}
-              />
-              <div className="name">{displayChartData[activePie]?.name}</div>
-              <div className="usd">
-                ${formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).integer}
-                <span className="sm">
-                  {formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).decimal}
-                </span>
-              </div>
-              <div className="rate">{calcChartRate}%</div>
-            </div>
+          dataNoValue ? (
+            <ChartEmpty />
+          ) : (
+            <>
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart width={240} height={240}>
+                  <Pie
+                    data={displayChartData}
+                    cx={115}
+                    cy={115}
+                    innerRadius={93}
+                    outerRadius={117}
+                    fill="#8884d8"
+                    paddingAngle={1}
+                    dataKey="usd"
+                    startAngle={90}
+                    endAngle={-270}
+                    onMouseEnter={handleChartEnter}
+                    cornerRadius={2}
+                  >
+                    {displayChartData.map((entry: any, index: number) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={activePie === index ? '#edf48a' : COLORS[index % COLORS.length]}
+                        strokeWidth={0}
+                      />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+              {
+                displayChartData[activePie] && (
+                  <div className="pie-tooltip">
+                    <div
+                      className="icon"
+                      style={{ backgroundImage: `url("${displayChartData[activePie]?.icon}")` }}
+                    />
+                    <div className="name">{displayChartData[activePie]?.name}</div>
+                    <div className="usd">
+                      ${formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).integer}
+                      <span className="sm">
+                        {formateValueWithThousandSeparatorAndFont(displayChartData[activePie]?.usd, 2).decimal}
+                      </span>
+                    </div>
+                    <div className="rate">{displayChartData[activePie]?.percent}%</div>
+                  </div>
+                )
+              }
+            </>
           )
         }
       </div>

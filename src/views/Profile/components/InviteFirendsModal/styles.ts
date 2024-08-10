@@ -1,9 +1,28 @@
 import styled from 'styled-components';
 
-import type { Align } from '../Pts/types';
+import type { Align } from '../../types';
 
-export { LoadingWrapper, Empty } from '../../styles';
+// export { LoadingWrapper, Empty } from '../../styles';
 
+export const LoadingWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Empty = styled.div`
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100px;
+`;
 export const StyledTitle = styled.div`
   color: #fff;
   font-size: 26px;
@@ -136,17 +155,17 @@ export const StyledClaimButton = styled.button`
 
 export const StyledRow = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   height: 60px;
   transition: 0.3s;
-  margin-bottom: 20px;
   color: #fff;
   font-size: 16px;
   font-weight: 400;
-  padding: 10px 30px;
+  padding: 0 40px 0 30px;
 
   &:hover {
-    background: rgba(55, 58, 83, 0.2);
+    background: rgba(0, 0, 0, 0.2);
   }
 `;
 
@@ -168,20 +187,9 @@ export const StyledBody = styled.div`
   overflow-y: auto;
 `;
 
-export const StyledCell = styled.div<{ $gap?: number; $width: number; $align?: Align }>`
+export const StyledCell = styled.div`
   display: flex;
   align-items: center;
-  gap: ${({ $gap }) => $gap + 'px'};
-  width: ${({ $width }) => $width + '%'};
-  justify-content: ${({ $align }) => ($align === 'left' ? 'flex-start' : $align === 'right' ? 'flex-end' : 'center')};
-
-  & .delete {
-    text-decoration: line-through;
-  }
-
-  & .rewards {
-    color: #ebf479;
-  }
 `;
 
 export const StyledAvatar = styled.img`
@@ -211,18 +219,40 @@ export const StyledUserAddress = styled.div`
   margin-top: 2px;
 `;
 
-export const StyledPendingCell = styled.div`
+// export const StyledPendingTipsContainer = styled.div`
+//   display: none;
+//   position: absolute;
+//   left: 50%;
+//   top: 0;
+//   transform: translate(-50%, -100%);
+// `
+export const StyledPendingTips = styled.div`
+  transform: translate(-25%, calc(-100% - 8px) );
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 265px;
+  height: 61px;
+  padding: 8px 17px 0;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1px solid #333648;
+  background: #1F2229;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+
+  color: #979ABE;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
+`
+export const StyledPending = styled.div`
   cursor: pointer;
   position: relative;
-
-  &:hover {
-    opacity: 0.8;
-
-    & .hints {
-      opacity: 1;
-    }
-  }
 `;
+
 export const StyledLink = styled.div`
   position: relative;
 `
@@ -244,7 +274,6 @@ export const StyledBackground = styled.div`
   left: 0;
   top: 0;
   right: 0;
-  height: 196px;
   background: #1B1C27;
 `
 export const StyledMedalContainer = styled.div`
@@ -252,4 +281,14 @@ export const StyledMedalContainer = styled.div`
   display: flex;
   justify-content: center;
   
+`
+export const StyledClose = styled.div`
+  position: absolute;
+  right: 24px;
+  top: 29px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  cursor: pointer;
 `

@@ -1,84 +1,202 @@
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
+import { format } from "date-fns";
+import { useMemo } from "react";
+import { PagerType, RewardRecordsType, RewardType } from "../../types";
+import Empty from "../Empty";
 import {
-  StyledFilter,
-  StyledFilterCurrent,
-  StyledFilterOption,
-  StyledFilterOptions,
-  StyledFilterOptionsWrap,
+  StyledRecord,
+  StyledRecordHeader,
   StyledReward,
-  StyledRewardHeader,
+  StyledRewardImage,
+  StyledRewardList,
+  StyledRewardListPopUp,
+  StyledRewardListPopUpContainer,
   StyledSource,
   StyledSourceImage,
-  StyledSourceMessage
+  StyledSourceMessage,
+  StyledPageNumberContainer,
+  StyledPageNumber
 } from './styles';
-export default function RewardHistory() {
+type PropsType = {
+  loading: boolean;
+  userRewardRecords: RewardRecordsType | null;
+  pager: PagerType;
+  maxPage: number;
+  onPageChange: (page: number) => void;
+}
+type RewardsType = {
+  rewards: string;
+}
+const Rewards = function ({ rewards }: RewardsType) {
+  const target = 1
+  const rewardList = useMemo(() => {
+    let _rewardList = null
+    try {
+      _rewardList = JSON.parse(rewards)
+    } catch (error) {
+      console.log('===error', error)
+      _rewardList = []
+    }
+    return _rewardList
+  }, [rewards])
   return (
-    <StyledContainer>
-      <StyledRewardHeader>
-        <StyledFilter style={{ flex: 3 }}>
-          <StyledFilterCurrent>
-            <StyledFont color="#FFF" lineHeight="100%">All Sources</StyledFont>
-            <StyledSvg>
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6" fill="none">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.175334 0.300273C0.451342 -0.0447361 0.954776 -0.100673 1.29979 0.175334L5.80003 3.77553L10.3003 0.175334C10.6453 -0.100673 11.1487 -0.0447361 11.4247 0.300273C11.7007 0.645283 11.6448 1.14872 11.2998 1.42472L5.80003 5.82453L0.300273 1.42472C-0.0447361 1.14872 -0.100673 0.645283 0.175334 0.300273Z" fill="white" />
-              </svg>
-            </StyledSvg>
-          </StyledFilterCurrent>
-          <StyledFilterOptionsWrap>
-            <StyledFilterOptions>
-              <StyledFilterOption className="active">All Sources</StyledFilterOption>
-              <StyledFilterOption>Odyssey</StyledFilterOption>
-            </StyledFilterOptions>
-          </StyledFilterOptionsWrap>
-        </StyledFilter>
+    <StyledFlex style={{ flex: 1 }}>
+      <StyledRewardList>
+        {
+          rewardList.map((reward: any, index: number) => {
+            return (
+              <StyledReward style={{ marginLeft: -7 * index }} key={index}>
+                <StyledRewardImage src={reward?.logo} />
+                {
+                  rewardList.length === target && (
+                    <StyledFont color="#FFF" fontSize="18px" fontWeight="700">{reward.amount} {reward?.name}</StyledFont>
+                  )
+                }
+              </StyledReward>
+            )
+          })
+        }
+        {
+          rewardList.length > target && (
+            <StyledRewardListPopUpContainer>
+              <StyledRewardListPopUp>
+                {
+                  rewardList.map((reward: any, index: number) => {
+                    return (
+                      <StyledFlex justifyContent="space-between" key={index}>
+                        <StyledReward>
+                          <StyledRewardImage src={reward?.logo} />
+                          <StyledFont color="#979ABE" fontWeight="500">{reward?.name}</StyledFont>
+                        </StyledReward>
+                        <StyledFont color="#FFF" fontWeight="500">{reward.amount}</StyledFont>
+                      </StyledFlex>
+                    )
+                  })
+                }
+              </StyledRewardListPopUp>
+            </StyledRewardListPopUpContainer>
+          )
+        }
+      </StyledRewardList>
+    </StyledFlex>
+  )
+}
 
-        <StyledFilter style={{ flex: 1 }}>
-          <StyledFilterCurrent>
-            <StyledFont color="#FFF" lineHeight="100%">All Rewards</StyledFont>
-            <StyledSvg>
-              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="6" viewBox="0 0 12 6" fill="none">
-                <path fill-rule="evenodd" clip-rule="evenodd" d="M0.175334 0.300273C0.451342 -0.0447361 0.954776 -0.100673 1.29979 0.175334L5.80003 3.77553L10.3003 0.175334C10.6453 -0.100673 11.1487 -0.0447361 11.4247 0.300273C11.7007 0.645283 11.6448 1.14872 11.2998 1.42472L5.80003 5.82453L0.300273 1.42472C-0.0447361 1.14872 -0.100673 0.645283 0.175334 0.300273Z" fill="white" />
-              </svg>
-            </StyledSvg>
-          </StyledFilterCurrent>
-          <StyledFilterOptionsWrap>
-            <StyledFilterOptions>
-              <StyledFilterOption className="active">All Rewards</StyledFilterOption>
-              <StyledFilterOption>Gem</StyledFilterOption>
-            </StyledFilterOptions>
-          </StyledFilterOptionsWrap>
-        </StyledFilter>
-        <StyledFont color="#FFF" style={{ flex: 1 }}>Time</StyledFont>
-      </StyledRewardHeader>
-      <StyledFlex flexDirection="column" gap="20px">
-        <StyledReward>
-          <StyledSource style={{ flex: 3 }}>
-            <StyledSourceImage />
-            <StyledSourceMessage>
-              <StyledFont color="#FFF" fontWeight="600" lineHeight="120%" style={{ textTransform: 'capitalize' }}>Odyssey Vol.5 | DapDap x Mode: The Airdrop Ascendancy </StyledFont>
-              <StyledFlex gap="5px">
-                <StyledFont color="#979ABE" fontSize="14px">Odyssey</StyledFont>
-                <StyledSvg>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
-                    <path d="M10.8182 8.72727V10C10.8182 11.1046 9.92275 12 8.81818 12H3C1.89543 12 1 11.1046 1 10V4.18182C1 3.07725 1.89543 2.18182 3 2.18182H4.27273" stroke="#979ABE" />
-                    <path d="M5 8.63636L12.6364 1M12.6364 1H7.29091M12.6364 1V6.34545" stroke="#979ABE" />
-                  </svg>
-                </StyledSvg>
-              </StyledFlex>
-            </StyledSourceMessage>
-          </StyledSource>
-          <StyledFlex gap="12px" style={{ flex: 1 }}>
-            <StyledSvg>
-              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30" fill="none">
-                <rect x="1" y="1" width="28" height="28" rx="14" fill="#DFFE00" stroke="#343434" stroke-width="2" />
-                <path d="M10.8003 21.0664H8.06665V8.93311H12.1394L14.6689 15.8454V17.8309H15.4129V15.8454L17.9424 8.93311H21.9333V21.0664H19.2815V15.0365L20.3974 11.5804L19.6535 11.3598L16.0825 21.0664H13.9994L10.5027 11.3598L9.68436 11.5804L10.8003 15.0365V21.0664Z" fill="black" />
-              </svg>
-            </StyledSvg>
-            <StyledFont color="#FFF" fontWeight="700">200 MODE</StyledFont>
-          </StyledFlex>
-          <StyledFont color="#FFF" style={{ flex: 1 }}>Jul 12, 2024, 20:45</StyledFont>
-        </StyledReward>
+const Pager = function ({ maxPage, pager, onPageChange }: {
+  maxPage: number;
+  pager: PagerType;
+  onPageChange: (page: number) => void;
+}) {
+  return (
+    <StyledFlex justifyContent="flex-end" gap="12px" style={{ marginTop: 30 }}>
+      <StyledSvg
+        style={{ cursor: pager.page === 1 ? 'not-allowed' : 'pointer' }}
+        onClick={() => {
+          onPageChange(pager.page - 1)
+        }}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect width="48" height="48" rx="10" transform={pager.page === 1 ? "matrix(-1 0 0 1 48 0)" : ""} fill="#101115" />
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M26.6907 29.8186C27.0461 29.5331 27.1037 29.0123 26.8194 28.6554L23.1107 24L26.8194 19.3446C27.1037 18.9877 27.0461 18.4669 26.6907 18.1814C26.3353 17.8959 25.8167 17.9537 25.5324 18.3106L21 24L25.5324 29.6894C25.8167 30.0463 26.3353 30.1041 26.6907 29.8186Z" fill="#979ABE" />
+        </svg>
+      </StyledSvg>
+      <StyledFlex>
+        {
+          new Array(maxPage).fill("").map((_, index) => {
+            const pageNumber = index + 1
+            return (
+              <StyledPageNumberContainer
+                key={index}
+                onClick={() => {
+                  onPageChange(pageNumber)
+                }}
+              >
+                {
+                  pageNumber === pager?.page ? (
+                    <StyledSvg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 50 50" fill="none">
+                        <rect x="0.5" y="0.5" width="49" height="49" rx="10.5" fill="#1E2027" stroke="#333648" />
+                      </svg>
+                    </StyledSvg>
+                  ) : (
+                    <StyledSvg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <rect width="48" height="48" rx="10" fill="#101115" />
+                      </svg>
+                    </StyledSvg>
+                  )
+                }
+                <StyledPageNumber style={{ color: pageNumber === pager?.page ? "#FFF" : "#979ABE" }}>{pageNumber}</StyledPageNumber>
+              </StyledPageNumberContainer>
+            )
+          })
+        }
       </StyledFlex>
+      <StyledSvg
+        style={{ cursor: pager.page === maxPage ? 'not-allowed' : 'pointer' }}
+        onClick={() => {
+          onPageChange(pager.page + 1)
+        }}
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <rect width="48" height="48" rx="10" transform={pager.page === maxPage ? "matrix(-1 0 0 1 48 0)" : ""} fill="#101115" />
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M21.3093 29.8186C20.9539 29.5331 20.8963 29.0123 21.1806 28.6554L24.8893 24L21.1806 19.3446C20.8963 18.9877 20.9539 18.4669 21.3093 18.1814C21.6647 17.8959 22.1833 17.9537 22.4676 18.3106L27 24L22.4676 29.6894C22.1833 30.0463 21.6647 30.1041 21.3093 29.8186Z" fill="#979ABE" />
+        </svg>
+      </StyledSvg>
+    </StyledFlex>
+  )
+}
+export default function RewardHistory({
+  loading,
+  userRewardRecords,
+  pager,
+  maxPage,
+  onPageChange
+}: PropsType) {
+
+  // const maxPage = useMemo(() => Math.ceil(userRewardRecords?.total / pager.page_size), [userRewardRecords?.total, pager])
+  return userRewardRecords?.total ?? 0 > 0 ? (
+    <StyledContainer>
+      <StyledRecordHeader>
+        <StyledFont color="#FFF" style={{ flex: 3 }}>All Sources</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 1 }}>All Rewards</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 1 }}>Time</StyledFont>
+      </StyledRecordHeader>
+      <StyledFlex flexDirection="column" gap="20px">
+        {
+          userRewardRecords?.data?.map((record: RewardType, index: number) => {
+            return (
+              <StyledRecord key={index}>
+                <StyledSource style={{ flex: 3 }}>
+                  <StyledSourceImage src={record?.logo} />
+                  <StyledSourceMessage>
+                    <StyledFont color="#FFF" fontWeight="600" lineHeight="120%" style={{ textTransform: 'capitalize' }}>{record?.title}</StyledFont>
+                    <StyledFlex gap="5px">
+                      <StyledFont color="#979ABE" fontSize="14px">{record?.source}</StyledFont>
+                      <StyledSvg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
+                          <path d="M10.8182 8.72727V10C10.8182 11.1046 9.92275 12 8.81818 12H3C1.89543 12 1 11.1046 1 10V4.18182C1 3.07725 1.89543 2.18182 3 2.18182H4.27273" stroke="#979ABE" />
+                          <path d="M5 8.63636L12.6364 1M12.6364 1H7.29091M12.6364 1V6.34545" stroke="#979ABE" />
+                        </svg>
+                      </StyledSvg>
+                    </StyledFlex>
+                  </StyledSourceMessage>
+                </StyledSource>
+                <Rewards rewards={record?.rewards} />
+                <StyledFont color="#FFF" style={{ flex: 1 }}>{format(new Date(record?.created_at), "MMM dd, u, HH:mm")}</StyledFont>
+              </StyledRecord>
+            )
+          })
+        }
+      </StyledFlex>
+
+      <Pager maxPage={maxPage} pager={pager} onPageChange={onPageChange} />
     </StyledContainer>
+  ) : (
+    <Empty
+      title="You don’t have any rewards record"
+      tips="The reward from odyessey participation, medals, daily dap me up will be displayed here"
+      btnTxt="Start your journey"
+    />
   )
 }

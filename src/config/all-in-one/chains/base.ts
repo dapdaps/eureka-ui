@@ -8,6 +8,12 @@ export default {
   chainId: 8453,
   rpcUrls: ['https://developer-access-mainnet.base.org'],
   defaultTab: 'Bridge',
+  theme: {
+    button: {
+      bg: '#0038FF',
+      text: '#FFF',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',

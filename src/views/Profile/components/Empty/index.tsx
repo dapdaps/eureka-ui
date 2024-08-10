@@ -12,7 +12,7 @@ type PropsType = {
   title: string;
   tips: string;
   btnTxt: string;
-  onClick: VoidFunction;
+  onClick?: VoidFunction;
 }
 export default function Empty(props: PropsType) {
   return (

@@ -3,7 +3,13 @@ import styled from 'styled-components';
 import { AnimatePresence, useMotionValue } from 'framer-motion';
 import Tooltip from './';
 import OdysseyCard from './Odyssey';
-import { StatusType } from '@/views/Odyssey/components/Tag';
+import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
+import RewardIconsMap from '@/views/OdysseyV8/RewardIcons';
+import { motion } from 'framer-motion';
+import { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
+import odyssey from '@/config/odyssey';
+import { useRouter } from 'next/router';
+import useToast from '@/hooks/useToast';
 
 const ToolList = styled.div`
   display: flex;
@@ -14,36 +20,74 @@ const ToolList = styled.div`
     padding-top: 20px;
 
     &:not(:first-child) {
-      margin-left: -6px;
-    }
-
-    .brand {
-      width: 72px;
-      height: 72px;
-      border-radius: 50%;
-      border: 4px solid #292b33;
+      margin-left: -8px;
     }
   }
 `;
 
-type IData = {
-  imgSrc: string;
-  title: string;
-  subtitle: string;
-  imageUrl: string;
-};
+const StyledTooltipList = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: #21232a;
+  cursor: pointer;
+`;
+
+const StyledTagChainMask = styled(motion.div)`
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 50%;
+`;
+
+const StyledTagChain = styled(motion.div)`
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 4px solid #292b33;
+  position: relative;
+  z-index: 1;
+  flex-shrink: 0;
+  margin-left: -6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
+
+  &:first-child {
+    margin-left: 0;
+  }
+`;
 
 interface TooltipListProps {
-  data: IData[];
+  data: FormattedRewardList[];
 }
 
 const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const x = useMotionValue(0);
+  const router = useRouter();
+  const toast = useToast();
 
   const handleMouseMove = (event: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
     const halfWidth = event.currentTarget.offsetWidth / 2;
     x.set(event.nativeEvent.offsetX - halfWidth);
+  };
+
+  const onOdysseyClick = (ody: Odyssey) => {
+    if (odyssey[ody.id]) {
+      router.push(odyssey[ody.id].path);
+      return;
+    }
+    toast.fail('Invalid odyssey id!');
   };
 
   return (
@@ -62,17 +106,54 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
                 showAnimateTooltip={true}
                 animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
               >
-                <OdysseyCard
-                  status={StatusType.ended}
-                  title={item.title}
-                  subtitle={item.subtitle}
-                  imageUrl={item.imageUrl}
-                  withoutCardStyle
-                />
+                <StyledTooltipList>
+                  {item.odysseys.map((odyssey) => (
+                    <OdysseyCard
+                      key={odyssey.id}
+                      status={odyssey.status}
+                      title={odyssey.name}
+                      subtitle={odyssey.description}
+                      imageUrl={odyssey.banner}
+                      reward={item}
+                      withoutCardStyle
+                      onClick={() => onOdysseyClick(odyssey)}
+                    />
+                  ))}
+                </StyledTooltipList>
               </Tooltip>
             </AnimatePresence>
           )}
-          <img className="brand" src={item.imgSrc} alt="" onMouseMove={handleMouseMove} />
+          <StyledTagChain
+            key={item.logo_key}
+            initial="default"
+            whileHover="hover"
+            onMouseMove={handleMouseMove}
+            variants={{
+              hover: {
+                scale: 1.2,
+                zIndex: 2,
+                filter: 'drop-shadow(0px 0px 10px rgba(223, 254, 0, 0.60))',
+              },
+              default: {
+                zIndex: 1,
+                filter: 'unset',
+              },
+            }}
+          >
+            <StyledTagChainMask
+              variants={{
+                hover: {
+                  opacity: 0,
+                },
+                default: {
+                  opacity: 1,
+                },
+              }}
+            />
+            <img
+              src={RewardIconsMap[item.logo_key]?.icon}
+            />
+          </StyledTagChain>
         </div>
       ))}
     </ToolList>

@@ -8,6 +8,12 @@ export default {
   chainId: 324,
   rpcUrls: ['https://mainnet.era.zksync.io'],
   defaultTab: 'Swap',
+  theme: {
+    button: {
+      bg: '#FFF',
+      text: '#02051E',
+    },
+  },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
