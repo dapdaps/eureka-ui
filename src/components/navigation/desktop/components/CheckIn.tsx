@@ -161,6 +161,8 @@ const CheckIn = () => {
 
   const [medalData, setMedalData] = useState<MedalType>();
   const [medalVisible, setMedalVisible] = useState(false);
+  const [checkDisabled, setCheckDisabled] = useState(false);
+
 
   const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
   const checkInGridRef = useRef<CheckInGridRef>(null);
@@ -241,7 +243,7 @@ const CheckIn = () => {
         setMedalData(data.data.medal);
         setMedalVisible(true);
       }
-
+      setCheckDisabled(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
@@ -280,7 +282,7 @@ const CheckIn = () => {
                   <span className="label">days in a row</span>
                 </div>
                 <StyledButton
-                  disabled={isClaimed || claimLoading}
+                  disabled={isClaimed || claimLoading || checkDisabled}
                   onClick={() => {
                     claim();
                   }}
