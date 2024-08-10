@@ -92,12 +92,12 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     };
   }, []);
 
-  useEffect(() => {
-    const x = import('@/views/SuperBridge/BridgeAction')
-    x.then(res => {
-      // console.log(res)
-    })
-  }, [])
+  // useEffect(() => {
+  //   const x = import('@/views/SuperBridge/BridgeAction')
+  //   x.then(res => {
+  //     // console.log(res)
+  //   })
+  // }, [])
 
   return (
     <>

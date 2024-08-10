@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import dynamic from 'next/dynamic';
 
 // import BridgeAction from '@/views/SuperBridge/BridgeAction';
-import Transaction from '@/views/SuperBridge/Transaction';
+// import Transaction from '@/views/SuperBridge/Transaction';
 import Medal from '@/views/SuperBridge/Medal';
 
 import chainCofig from '@/config/chains'
@@ -60,6 +60,10 @@ const TestChains: Chain[] = [
 // chainList.unshift(TestChains[0])
 
 const BridgeAction = dynamic(() => import('@/views/SuperBridge/BridgeAction'), {
+  ssr: false,
+});
+
+const Transaction = dynamic(() => import('@/views/SuperBridge/Transaction'), {
   ssr: false,
 });
 
