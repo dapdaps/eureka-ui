@@ -53,8 +53,8 @@ export const StyledLoading = styled.div<{ height?: string }>`
 export const  StyledWalletTable = styled.div`
   border-radius: 12px;
   border: 1px solid #373A53;
-  background: #262836;
   overflow: hidden;
+  background: #262836;
 `;
 
 export const  StyledWalletTableItem = styled.div`
@@ -65,10 +65,20 @@ export const  StyledWalletTableItem = styled.div`
   color: #fff;
   font-size: 14px;
   font-weight: 400;
+  height: 60px;
+  
+  &:nth-child(even) {
+    background: rgba(53, 55, 73, 0.50);
+  }
+
   &:first-child {
     color: #7C7F96;
     border-bottom: 1px solid #373a53;
     padding-bottom: 10px;
+  }
+  
+  &.portfolio-table-head {
+    height: 48px;
   }
 `;
 
