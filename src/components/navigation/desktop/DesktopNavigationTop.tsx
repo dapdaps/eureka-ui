@@ -41,7 +41,7 @@ const Container = styled.div<{ $expand: boolean }>`
   position: sticky;
   top: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 90;
   background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(0, 0, 0, 1)')};
   backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
 

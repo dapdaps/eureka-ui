@@ -57,7 +57,24 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
   const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_new), [compassList])
   const OdysseyRef = useRef<any>()
   const ChainRef = useRef<any>()
+
+  const sortCompassList = useMemo(() => {
+    const statusMap: any = {
+      [StatusType.ongoing]: [],
+      [StatusType.ended]: [],
+      [StatusType.un_start]: [],
+    };
+    compassList.forEach((item: any) => {
+      if (!item || !item.status) {
+        return;
+      }
+      statusMap[item.status].push(item);
+    });
   
+    return [...statusMap[StatusType.ongoing], ...statusMap[StatusType.ended], ...statusMap[StatusType.un_start]].slice(0, 4);
+  }, [compassList]);
+
+
   return (
     <Wrapper className={className}>
       <NavigationMenu.Root className="NavigationMenuRoot">
@@ -71,13 +88,14 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
             <NavigationMenu.Content className="NavigationMenuContentV2 bridge">
               <div className="List bridge">
                 <ListItem
-                  data={compassList}
+                  data={sortCompassList}
                   loading={compassListLoading}
                   onClick={() => OdysseyRef?.current?.click()}
                 />
               </div>
               <StyleView onClick={() => {
                 OdysseyRef?.current?.click();
+                router.prefetch('/odyssey')
                 router.push('/odyssey')
               }}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
@@ -110,18 +128,18 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
               </div>
               <StyleView className='chain-all' onClick={() => {
                 ChainRef?.current?.click()
+                router.prefetch('/networks') 
                 router.push('/networks')
               }}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={(e) => {
-              router.push('/alldapps')
-              recordMouseEnter(e)
-            }}>
+          <Link href='/alldapps'>
+            <NavigationMenu.Trigger className="NavigationMenuTrigger">
               DApps
             </NavigationMenu.Trigger>
+            </Link>
           </NavigationMenu.Item>
         </NavigationMenu.List>
       </NavigationMenu.Root>
