@@ -29,6 +29,7 @@ const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
   ssr: false,
 });
 
+
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
@@ -90,6 +91,13 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
       clearInterval(interval);
     };
   }, []);
+
+  useEffect(() => {
+    const x = import('@/views/SuperBridge/BridgeAction')
+    x.then(res => {
+      console.log(res)
+    })
+  }, [])
 
   return (
     <>

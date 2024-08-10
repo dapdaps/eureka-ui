@@ -3,8 +3,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 
-import BridgeAction from '@/views/SuperBridge/BridgeAction';
+// import BridgeAction from '@/views/SuperBridge/BridgeAction';
 import Transaction from '@/views/SuperBridge/Transaction';
 import Medal from '@/views/SuperBridge/Medal';
 
@@ -57,6 +58,10 @@ const TestChains: Chain[] = [
 
 // chainList.unshift(TestChains[1])
 // chainList.unshift(TestChains[0])
+
+const BridgeAction = dynamic(() => import('@/views/SuperBridge/BridgeAction'), {
+  ssr: false,
+});
 
 const Bridge: NextPageWithLayout = () => {
   const router = useRouter();
