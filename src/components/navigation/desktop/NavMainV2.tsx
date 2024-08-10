@@ -83,7 +83,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
-          <NavigationMenu.Item>
+           <NavigationMenu.Item>
             <Link href="/super-bridge" >
               <NavigationMenu.Trigger className="NavigationMenuTrigger">
                   <IconBridge />

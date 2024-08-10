@@ -19,7 +19,7 @@ const Container = styled.div`
     transform: translateX(-50%);
     top: 80px;
     z-index: 11;
-    bottom: 100px;
+    bottom: 80px;
 `
 
 const Header = styled.div`
