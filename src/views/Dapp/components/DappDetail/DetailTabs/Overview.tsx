@@ -40,7 +40,7 @@ import {
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import hexToRgba from '@/utils/hexToRgba';
-import { Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
+import { Category, Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
 import Loading from '@/components/Icons/Loading';
 import useToast from '@/hooks/useToast';
 import { useRouter } from 'next/router';
@@ -270,42 +270,42 @@ const Overview = (props: any) => {
                   </StyledTokenValue>
                 </StyledTokenItem>
                 {
-                  tbd_token !== 'Y' && (
+                  tbd_token !== 'Y' && category === Category.network && (
                     <StyledTokenItem>
                       <StyledTokenLabel>Token Price</StyledTokenLabel>
                       <StyledTokenPrice>
                         ${nativeCurrency?.price}
                         {/*<StyledSummaryAdd>
-                          <StyledSummaryAddIcon>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                              <path
-                                d="M4.56699 0.75C4.75944 0.416667 5.24056 0.416667 5.43301 0.75L8.89711 6.75C9.08956 7.08333 8.849 7.5 8.4641 7.5H1.5359C1.151 7.5 0.910436 7.08333 1.10289 6.75L4.56699 0.75Z"
-                                fill="currentColor" stroke="url(#paint0_linear_16163_4093)"
-                              />
-                              <defs>
-                                <linearGradient
-                                  id="paint0_linear_16163_4093"
-                                  x1="10.9668"
-                                  y1="1.71698"
-                                  x2="-1"
-                                  y2="1.71698"
-                                  gradientUnits="userSpaceOnUse"
-                                >
-                                  <stop stopColor="currentColor" />
-                                  <stop offset="1" stopColor="currentColor" stopOpacity="0.1" />
-                                </linearGradient>
-                              </defs>
-                            </svg>
-                          </StyledSummaryAddIcon>
-                          <StyledAddText>1.7%</StyledAddText>
-                        </StyledSummaryAdd>*/}
+                         <StyledSummaryAddIcon>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+                         <path
+                         d="M4.56699 0.75C4.75944 0.416667 5.24056 0.416667 5.43301 0.75L8.89711 6.75C9.08956 7.08333 8.849 7.5 8.4641 7.5H1.5359C1.151 7.5 0.910436 7.08333 1.10289 6.75L4.56699 0.75Z"
+                         fill="currentColor" stroke="url(#paint0_linear_16163_4093)"
+                         />
+                         <defs>
+                         <linearGradient
+                         id="paint0_linear_16163_4093"
+                         x1="10.9668"
+                         y1="1.71698"
+                         x2="-1"
+                         y2="1.71698"
+                         gradientUnits="userSpaceOnUse"
+                         >
+                         <stop stopColor="currentColor" />
+                         <stop offset="1" stopColor="currentColor" stopOpacity="0.1" />
+                         </linearGradient>
+                         </defs>
+                         </svg>
+                         </StyledSummaryAddIcon>
+                         <StyledAddText>1.7%</StyledAddText>
+                         </StyledSummaryAdd>*/}
                       </StyledTokenPrice>
                     </StyledTokenItem>
                   )
                 }
               </StyledTokenContainer>
               {
-                tbd_token !== 'Y' && (
+                tbd_token !== 'Y' && category === Category.network && (
                   <StyledTokenContainer>
                     <StyledTokenItem>
                       <StyledTokenLabel>Token Address</StyledTokenLabel>
@@ -421,7 +421,8 @@ const Overview = (props: any) => {
                             check(() => {
                               onAction(item);
                             });
-                          }}>
+                          }}
+                          >
                             <div>
                               <StyledAirdropShadow className={item.completed ? 'finished' : ''}>
                                 <svg
