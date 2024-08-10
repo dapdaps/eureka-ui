@@ -8,7 +8,9 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import useAccount from '@/hooks/useAccount';
 import { ICheckInData } from './types';
 import Loading from '@/components/Icons/Loading';
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton';
+import MedalPopup from './MedalPopup';
+import { MedalType } from "@/views/Profile/types";
 
 const StyleCheckIn = styled.div`
   display: flex;
@@ -143,7 +145,7 @@ const StyledButton = styled.button`
 const LoadingCard = () => (
   <>
     <Skeleton width={432} height={145} borderRadius={'12px'} />
-    <Skeleton width={432} height={200} borderRadius={'12px'} style={{ marginTop: '20px'}} />
+    <Skeleton width={432} height={200} borderRadius={'12px'} style={{ marginTop: '20px' }} />
   </>
 );
 
@@ -156,6 +158,9 @@ const CheckIn = () => {
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { account } = useAccount();
   const [claimLoading, setClaimLoading] = useState(false);
+
+  const [medalData, setMedalData] = useState<MedalType>();
+  const [medalVisible, setMedalVisible] = useState(false);
 
   const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
 
@@ -214,7 +219,11 @@ const CheckIn = () => {
   const checkIn = async () => {
     try {
       setClaimLoading(true);
-      await post(`/api/check-in`);
+      const data = await post(`/api/check-in`);
+      if (data?.data?.medal) {
+        setMedalData(data.data.medal);
+        setMedalVisible(true);
+      }
     } catch (err) {
       console.log(err, 'err');
     } finally {
@@ -235,39 +244,41 @@ const CheckIn = () => {
   }, [data]);
 
   return (
-    <StyleCheckIn
-      ref={navHeaderRef}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      onClick={handleClick}
-    >
-      <StyledImg src={imgSrc} alt="fist" isHovered={isHovered} />
-      <span className="text">DapMeUp!</span>
-      {isHovered && (
-        <StyleDropdown>
-          <div className="dropdown-content">
-            <div className="dropdown-header">
-              <div className="header-item">
-                <span className="value">{data?.total_days ?? '-'}</span>
-                <span className="label">times in total</span>
+    <>
+      <StyleCheckIn
+        ref={navHeaderRef}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onClick={handleClick}
+      >
+        <StyledImg src={imgSrc} alt="fist" isHovered={isHovered} />
+        <span className="text">DapMeUp!</span>
+        {isHovered && (
+          <StyleDropdown>
+            <div className="dropdown-content">
+              <div className="dropdown-header">
+                <div className="header-item">
+                  <span className="value">{data?.total_days ?? '-'}</span>
+                  <span className="label">times in total</span>
+                </div>
+                <div className="header-item">
+                  <span className="value">{data?.consecutive_days ?? '-'}</span>
+                  <span className="label">days in a row</span>
+                </div>
+                <StyledButton
+                  disabled={isClaimed || claimLoading}
+                  onClick={() => {
+                    claim();
+                  }}
+                >
+                  {claimLoading && <Loading size={16} />}
+                  <span style={{ marginLeft: claimLoading ? '4px' : '' }}>Dap me up!</span>
+                </StyledButton>
               </div>
-              <div className="header-item">
-                <span className="value">{data?.consecutive_days ?? '-'}</span>
-                <span className="label">days in a row</span>
-              </div>
-              <StyledButton
-                disabled={isClaimed || claimLoading}
-                onClick={() => {
-                  claim();
-                }}
-              >
-                {claimLoading && <Loading size={16} />}
-                <span style={{ marginLeft: claimLoading ? '4px' : '' }}>Dap me up!</span>
-              </StyledButton>
-            </div>
-            <div className="dropdown-main">
-              {
-                loading ? <LoadingCard /> : (
+              <div className="dropdown-main">
+                {loading ? (
+                  <LoadingCard />
+                ) : (
                   <>
                     {data?.medal && (
                       <div className="dropdown-medals">
@@ -283,13 +294,16 @@ const CheckIn = () => {
                       </div>
                     )}
                   </>
-                )
-              }
+                )}
+              </div>
             </div>
-          </div>
-        </StyleDropdown>
-      )}
-    </StyleCheckIn>
+          </StyleDropdown>
+        )}
+      </StyleCheckIn>
+      {
+        medalData && <MedalPopup visible={medalVisible} data={medalData} close={() => setMedalVisible(false)}></MedalPopup>
+      }
+    </>
   );
 };
 

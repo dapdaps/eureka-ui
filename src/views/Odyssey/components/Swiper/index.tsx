@@ -39,7 +39,7 @@ import {
 } from './styles';
 
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import Tag from '../Tag';
+import Tag, { StatusType } from '../Tag';
 import RewardList from '../Reward';
 import MedalList from '../Medal';
 
@@ -167,6 +167,13 @@ const Compass = () => {
     setShow(true);
   };
 
+  // compassList 只要有live状态就不要显示ended的 items ，没有live的话就全显
+  const filterCompassList = useMemo(() => {
+    const hasLive = compassList.some((compass: any) => compass.status === StatusType.ongoing);
+    return hasLive ? compassList.filter((compass: any) => compass.status === StatusType.ongoing) : compassList;
+  }
+  , [compassList]);
+
   return loading ? (
     <StyledLoadingWrapper>
       <Loading size={60} />
@@ -196,7 +203,7 @@ const Compass = () => {
               }}
               loop={true}
             >
-              {compassList.map((compass: any, index: number) => (
+              {filterCompassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
                   <CompassCard compass={compass} />
                   {odyssey[compass?.id]?.video && (
