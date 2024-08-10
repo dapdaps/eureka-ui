@@ -1,3 +1,5 @@
+import { random } from 'lodash';
+
 export const CategoryList = [
   { key: 1, label: 'Bridge', name: 'Bridge', colorRgb: '247,255,154' },
   { key: 2, label: 'Dex', name: 'Swap', colorRgb: '172,252,237' },
@@ -20,12 +22,12 @@ export interface TitleDapp {
 }
 
 export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [
-  { key: 1, position: 'left', width: 72, height: 72, x: 0, y: 99 },
-  { key: 4, position: 'right', width: 72, height: 72, x: -8, y: 10 },
-  { key: 2, position: 'left', width: 72, height: 72, x: 19, y: 0 },
-  { key: 5, position: 'right', width: 72, height: 72, x: -11, y: 116 },
-  { key: 3, position: 'left', width: 72, height: 72, x: -19, y: 116 },
-  { key: 6, position: 'right', width: 72, height: 72, x: 30, y: 36 },
+  { key: 1, position: 'left', width: 72, height: 72, x: 0, y: 99, rotate: random(-45, 45) },
+  { key: 4, position: 'right', width: 72, height: 72, x: -8, y: 10, rotate: random(-45, 45) },
+  { key: 2, position: 'left', width: 72, height: 72, x: 19, y: 0, rotate: random(-45, 45) },
+  { key: 5, position: 'right', width: 72, height: 72, x: -11, y: 116, rotate: random(-45, 45) },
+  { key: 3, position: 'left', width: 72, height: 72, x: -19, y: 116, rotate: random(-45, 45) },
+  { key: 6, position: 'right', width: 72, height: 72, x: 30, y: 36, rotate: random(-45, 45) },
 ];
 
 export const SortList = [
