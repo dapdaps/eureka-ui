@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import React, { ReactNode } from 'react';
 import { memo } from 'react';
 import styled from 'styled-components';
+import ReactDOM from 'react-dom';
 
 import { modal, overlay } from '@/components/animation';
 
@@ -28,10 +29,10 @@ const Overlay = styled(motion.div)`
     align-items: flex-end;
   }
 `;
-const Main = styled(motion.div) <{ $width: number, $hidden: boolean }>`
+const Main = styled(motion.div)<{ $width: number; $hidden: boolean }>`
   position: relative;
   width: ${({ $width }) => $width + 'px'};
-  overflow: ${($hidden) => $hidden ? 'hidden' : 'normal'};
+  overflow: ${($hidden) => ($hidden ? 'hidden' : 'normal')};
   border-radius: 20px;
   border: 1px solid #373a53;
   background: #262836;
@@ -69,25 +70,14 @@ const Modal = ({
   hidden = false,
   content,
   showHeader = true,
-  onClose = () => { },
+  onClose = () => {},
   overlayClassName = '',
   overlayStyle,
   className = '',
   style,
-}: {
-  display: boolean;
-  title?: string | ReactNode;
-  width?: number;
-  hidden?: boolean;
-  showHeader?: boolean;
-  content: ReactNode;
-  onClose?: () => void;
-  overlayClassName?: any;
-  overlayStyle?: React.CSSProperties;
-  className?: any;
-  style?: React.CSSProperties;
-}) => {
-  return (
+  portal = false
+}: any): React.ReactPortal | ReactNode => {
+  const renderModal = (): ReactNode => (
     <AnimatePresence mode="wait">
       {display && (
         <Dialog>
@@ -117,6 +107,10 @@ const Modal = ({
       )}
     </AnimatePresence>
   );
+
+  if (!portal) return renderModal();
+
+  return ReactDOM.createPortal(renderModal() as any, document.body) as unknown as React.ReactPortal;
 };
 
-export default memo(Modal);
+export default Modal;

@@ -18,6 +18,7 @@ const StyleFeatures = styled.div`
         font-size: 42px;
         color: #fff;
         margin-bottom: 30px;
+        font-family: Montserrat;
         line-height: 34px;
         span {
             font-weight: 700;
@@ -31,6 +32,7 @@ const StyleFeatures = styled.div`
         color: #979ABE;
         width: 835px;
         text-align: center;
+        font-family: Montserrat;
         margin-bottom: 50px;
     }
     .engages {
@@ -70,6 +72,7 @@ const StyleFeatures = styled.div`
                     width: 320px;
                     text-align: left;
                     font-size: 16px;
+                    font-family: Montserrat;
                     font-weight: 400;
                     color: #979ABE;
                 }
@@ -86,6 +89,7 @@ const StyleFeatures = styled.div`
             .title {
                 font-weight: 500;
                 font-size: 42px;
+                font-family: Montserrat;
                 color: #fff;
                 margin-bottom: 20px;
                 line-height: 34px;
@@ -98,6 +102,7 @@ const StyleFeatures = styled.div`
                 color: #979ABE;
                 font-size: 16px;
                 line-height: 20px;
+                font-family: Montserrat;
                 font-weight: 400;
             }
         }
@@ -114,6 +119,7 @@ const StyleFeatures = styled.div`
                 padding: 30px 36px;
                 .name {
                     font-size: 20px;
+                    font-family: Montserrat;
                     line-height: 20px;
                     display: inline-block;
                     border-bottom: 2px dotted #EBF479;
@@ -124,6 +130,7 @@ const StyleFeatures = styled.div`
                 .value {
                     font-weight: 700;
                     color: #fff;
+                    font-family: Montserrat;
                     font-size: 42px;
                     line-height: 51px;
                 }

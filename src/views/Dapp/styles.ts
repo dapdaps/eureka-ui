@@ -38,3 +38,8 @@ export const StyledLoadingWrapper = styled.div`
   align-items: center;
   padding: 100px 0;
 `;
+
+export const StyledDAppContent = styled.div`
+  margin: 0 auto;
+  padding: 20px 0;
+`;

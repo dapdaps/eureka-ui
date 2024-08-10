@@ -25,7 +25,6 @@ export default function useList(props: Props) {
     setPageIndex(page);
     try {
       setLoading(true);
-      setTitleDappList([]);
       const params: Record<string, any> = {
         page_size: PageSize,
         page,
@@ -83,8 +82,12 @@ export default function useList(props: Props) {
   const { run: getDappList } = useDebounceFn(fetchDappList, { wait: 600 });
 
   useEffect(() => {
+    fetchDappList(1);
+  }, [network, sort, rewardNow, category, airdrop]);
+
+  useEffect(() => {
     getDappList(1);
-  }, [network, sort, rewardNow, category, searchText, airdrop]);
+  }, [searchText]);
 
   return {
     loading,

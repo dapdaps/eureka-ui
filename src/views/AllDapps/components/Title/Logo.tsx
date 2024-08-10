@@ -17,15 +17,16 @@ const Logo = (props: Props) => {
               width={it.width}
               height={it.height}
               initial={{
-                scale: 0.5,
+                scale: 0.3,
                 opacity: 0,
                 x: it.x,
                 y: it.y,
-                rotate: it.rotate || 0,
+                rotate: 0,
               }}
               animate={{
                 scale: 1,
                 opacity: 1,
+                rotate: it.rotate || 0,
               }}
               exit={{
                 scale: 0.5,
@@ -34,7 +35,8 @@ const Logo = (props: Props) => {
               transition={{
                 scale: {
                   type: 'spring',
-                  duration: 0.6,
+                  duration: 0.9,
+                  bounce: 0.5,
                 },
               }}
             />

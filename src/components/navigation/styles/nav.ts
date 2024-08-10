@@ -16,6 +16,11 @@ export const Wrapper = styled.div`
       display: flex;  
       align-items: center;
       position: relative;
+      a {
+        &:hover {
+          text-decoration: none;
+        }
+      }
     }
   }
 
@@ -24,9 +29,14 @@ export const Wrapper = styled.div`
   }
 
   [data-state='open'] {
-    &.NavigationMenuTrigger {
+    &.NavigationMenuTrigger{
       color: #EBF479;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background-color: #1F2229;
+      box-sizing: border-box;
     }
+
     .CaretDown {
       color: #EBF479;
       transform: rotate(-180deg);
@@ -41,6 +51,7 @@ export const Wrapper = styled.div`
     font-weight: 600;
     line-height: 1;
     font-size: 16px;
+    font-family: Montserrat;
     color: #fff;
     position: relative;
     gap: 2px;

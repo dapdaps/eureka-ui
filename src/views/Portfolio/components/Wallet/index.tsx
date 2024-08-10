@@ -49,7 +49,7 @@ const Wallet = ({ loading, tokens, filterFunc }: any) => {
           ) : (
             tokens.length ? (
               <StyledWalletTable>
-                <StyledWalletTableItem>
+                <StyledWalletTableItem className="portfolio-table-head">
                   {
                     TABLE_HEAD.map(t => (
                       <StyledTableItemTxt key={t.key}>{t.title}</StyledTableItemTxt>
@@ -58,7 +58,7 @@ const Wallet = ({ loading, tokens, filterFunc }: any) => {
                 </StyledWalletTableItem>
                 {
                   tokens.length ? tokens.filter((token: any) => filterFunc(token)).map((token: any) => (
-                    <StyledWalletTableItem key={token.id}>
+                    <StyledWalletTableItem className="portfolio-table-body" key={token.id}>
                       <StyledTableItemTxt>
                         <StyledTokenIcon>
                           <StyledTokenIconImg src={getTokenLogo(token.symbol)} />

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useCompassList from './useCompassList'
 import { get } from '@/utils/http';
 
@@ -25,6 +25,11 @@ const useCompassCombineAd  = () => {
         fetchBannerAd();
     }, []);
 
-    return { loading, adList: data, compassList };
+    const filerCompassList = useMemo(() => {
+        if (!compassList || compassList.length === 0) return [];
+        return compassList.filter((item: any) => item.status === 'ongoing')
+    }, [compassList]);
+
+    return { loading, adList: data, compassList: filerCompassList };
 }
 export default useCompassCombineAd

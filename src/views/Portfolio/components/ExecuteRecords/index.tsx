@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { uniqBy, upperFirst } from 'lodash';
+import { orderBy, uniqBy, upperFirst } from 'lodash';
 import React, { useMemo } from 'react';
 
 import { container } from '@/components/animation';
@@ -105,7 +105,7 @@ const ExecuteRecords = ({ hasMore, records, loading, pageIndex, dapps, dapp, cha
           <StyledFlex justifyContent="flex-end" alignItems="center" gap="14px" className="filters">
             <Selector
               className="filter-chain"
-              list={chainList}
+              list={orderBy(chainList || [], 'label')}
               value={chain}
               onSelect={handleChain}
               style={{

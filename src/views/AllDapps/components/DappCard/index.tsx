@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import {
   StyledDappCard,
   StyledDappCardBody,
@@ -15,6 +15,7 @@ import Image from 'next/image';
 import Badges, { Badge } from '@/views/AllDapps/components/Badges';
 import { StatusType } from '@/views/Odyssey/components/Tag';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
+import { useRouter } from 'next/router';
 
 const DAppRewardList: { [k: string]: Badge[] } = {
   SwapMode: [
@@ -41,7 +42,10 @@ const DappCard = (props: Props) => {
     },
     users = 0,
     tradingVolume = 0,
+    route,
   } = props;
+
+  const router = useRouter();
 
   const rewardList = useMemo(() => {
     const _rewardList: Badge[] = [];
@@ -52,6 +56,11 @@ const DappCard = (props: Props) => {
     }
     return _rewardList;
   }, [name]);
+
+  useEffect(() => {
+    if (!route) return;
+    router.prefetch(route);
+  }, [route]);
 
   return (
     <StyledDappCard data-bp={bp?.dapp} onClick={onClick}>
@@ -111,6 +120,7 @@ export interface Props {
   categories?: Category[];
   networks?: Network[];
   bp?: bp;
+  route?: string;
   onClick?: () => void;
 }
 

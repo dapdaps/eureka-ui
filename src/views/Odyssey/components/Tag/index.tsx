@@ -63,6 +63,7 @@ const StyledFont = styled.div`
   line-height: 12px;
   position: relative;
   text-transform: capitalize;
+  font-family: Montserrat;
 `;
 
 export default function Tag({ status, className }: { status: StatusType; className?: string }) {

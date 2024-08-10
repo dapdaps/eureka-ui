@@ -2,16 +2,20 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
-  --container-width: 1260px;
-  width: var(--container-width);
-  padding: 0 0 50px 0;
+  max-width: 1260px;;
+  min-width: 1060px;;
   margin: 0 auto;
+`;
+
+export const StyledContainerInner = styled(motion.div)`
+  padding: 0 0 0 0;
+  margin-bottom: 100px;
 `;
 
 export const StyledMoreContainer = styled.div`
   color: #ffffff;
   text-align: center;
-  padding-bottom: 80px;
+  margin-bottom: 80px;
 `;
 
 export const StyledMoreText = styled.div`
@@ -45,4 +49,13 @@ export const StyledArrowDown = styled(motion.div)`
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  width: fit-content;
+  margin: 0 auto;
+`;
+
+export const StyledArrowDownWrapper = styled.div`
+  height: 40px;
+  width: 100px;
+  margin: 0 auto;
+  cursor: pointer;
 `;

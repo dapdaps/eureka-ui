@@ -2,9 +2,6 @@ import styled from 'styled-components';
 import ListItem from '../navigation/desktop/components/ListItem';
 
 import IconLink from '@public/images/header/link.svg';
-import Link from 'next/link';
-import { StatusType } from '@/views/Odyssey/components/Tag';
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import { Odyssey } from './hooks/useDefaultSearch';
 import { useRouter } from 'next/router';
 
@@ -27,6 +24,7 @@ const StyleTitle = styled.div`
     font-size: 14px;
     line-height: 14px;
     font-weight: 500;
+    font-family: Montserrat;
     color: #979abe;
   }
 `;
@@ -37,6 +35,7 @@ const StyledText = styled.div`
   font-weight: 400;
   color: #979abe;
   display: flex;
+  font-family: Montserrat;
   align-items: center;
   gap: 6px;
   &:hover {

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Image from 'next/image';
 
 export const StyledContainer = styled.div`
   font-family: Montserrat;
@@ -425,6 +426,7 @@ export const StyledSummaryAdd = styled.div`
   display: flex;
   align-items: center;
   column-gap: 3px;
+  transform: translateY(-2px);
 `;
 
 export const StyledSummaryAddIcon = styled.div`
@@ -450,7 +452,7 @@ export const StyledTokenInfo = styled.div`
 `;
 
 export const StyledTokenLogo = styled.div<{url?: string}>`
-  background: ${props => props.url ? `url(${props.url}) no-repeat center`: 'unset'};
+  background: ${props => props.url ? `url("${props.url}") no-repeat center`: 'unset'};
   background-size: contain;
   width: 20px;
   height: 20px;
@@ -472,4 +474,8 @@ export const StyledOverviewShadow = styled.img`
   z-index: 0;
   transform: translateX(-10000px);
   object-fit: contain;
+`;
+
+export const StyledImageButton = styled(Image)`
+  cursor: pointer;
 `;

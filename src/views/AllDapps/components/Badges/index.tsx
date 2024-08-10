@@ -110,7 +110,6 @@ const Badges = (props: Props) => {
         <TooltipSimple
           key={key}
           height={215}
-          isShake
           style={{
             background: 'unset',
             padding: 0,

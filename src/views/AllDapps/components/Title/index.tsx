@@ -13,7 +13,6 @@ import {
   StyledTitleSub,
   StyledTitleText,
 } from './styles';
-import { random } from 'lodash';
 import Big from 'big.js';
 import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
 
@@ -32,6 +31,8 @@ const AllDappsTitle = (props: Props) => {
 
   const { loading, categoryMap } = useDappCategoriesSum();
 
+  const [dappListShown, setDappListShown] = useState<any>([]);
+
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
       const curr = CategoryList.find((_it) => _it.key === it.id);
@@ -42,8 +43,41 @@ const AllDappsTitle = (props: Props) => {
     });
   }, [categories, CategoryList, categoryMap]);
 
-  const dappListShown = useMemo(() => {
-    if (!dappList) return [];
+  useEffect(() => {
+    if (activeCategory) {
+      const curr = categoryList.find((_it) => _it.key == activeCategory);
+      setCurrentCategory({ key: activeCategory, ...curr });
+    }
+  }, [activeCategory, categoryList]);
+
+  const [currentCategory, setCurrentCategory] = useState<any>();
+  const handleCurrentCategory = (category: any) => {
+    setDappListShown([]);
+
+    if (category.key === currentCategory?.key) {
+      setCurrentCategory(undefined);
+      onCategory(undefined);
+      return;
+    }
+    setCurrentCategory(category);
+    onCategory(category.key);
+  };
+
+  const totalDapps = useMemo(() => {
+    if (!categoryList || !categoryList.length) return 0;
+    let _total: any = Big(0);
+    for (const cate of categoryList) {
+      _total = Big(_total).plus(cate.sum);
+    }
+    _total = _total.div(10).toFixed(0, 0);
+    return Big(_total).times(10).toNumber();
+  }, [categoryList]);
+
+  useEffect(() => {
+    if (!dappList) {
+      setDappListShown([]);
+      return;
+    }
     const result: TitleDapp[] = [];
     dappList.forEach((dapp, idx) => {
       const position = TitleDappList[idx];
@@ -77,39 +111,11 @@ const AllDappsTitle = (props: Props) => {
         logo: dapp.logo,
         width: dapp.width || position.width,
         height: dapp.height || position.height,
-        rotate: random(-45, 45),
+        rotate: position.rotate || 0,
       });
     });
-    return result;
+    setDappListShown(result);
   }, [dappList]);
-
-  useEffect(() => {
-    if (activeCategory) {
-      const curr = categoryList.find((_it) => _it.key == activeCategory);
-      setCurrentCategory({ key: activeCategory, ...curr });
-    }
-  }, [activeCategory, categoryList]);
-
-  const [currentCategory, setCurrentCategory] = useState<any>();
-  const handleCurrentCategory = (category: any) => {
-    if (category.key === currentCategory?.key) {
-      setCurrentCategory(undefined);
-      onCategory(undefined);
-      return;
-    }
-    setCurrentCategory(category);
-    onCategory(category.key);
-  };
-
-  const totalDapps = useMemo(() => {
-    if (!categoryList || !categoryList.length) return 0;
-    let _total: any = Big(0);
-    for (const cate of categoryList) {
-      _total = Big(_total).plus(cate.sum);
-    }
-    _total = _total.div(10).toFixed(0, 0);
-    return Big(_total).times(10).toNumber();
-  }, [categoryList]);
 
   return (
     <StyledHead>

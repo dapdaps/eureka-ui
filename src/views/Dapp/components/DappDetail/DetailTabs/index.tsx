@@ -25,6 +25,7 @@ const DetailTabs = (props: Props) => {
     category,
     overviewTitle,
     chain_id,
+    default_chain_id,
     dapp_network = [],
   } = props;
 
@@ -67,7 +68,11 @@ const DetailTabs = (props: Props) => {
           {
             currTab === TABS[0].key && (
               <Animate key="overview">
-                <Overview title={overviewTitle} {...props} />
+                <Overview
+                  title={overviewTitle}
+                  {...props}
+                  chain_id={chain_id || default_chain_id}
+                />
               </Animate>
             )
           }
@@ -106,5 +111,6 @@ interface Props {
     color?: string;
   };
   chain_id?: number;
+  default_chain_id?: number;
   dapp_network?: Record<string, any>[];
 }

@@ -1,6 +1,5 @@
+"use client";
 
-"use client"
-import Breadcrumb from '@/components/Breadcrumb';
 import Loading from '@/components/Icons/Loading';
 import FjordModal from '@/components/fjord-modal';
 import tokenConfig from '@/components/fjord-modal/hooks/tokenConfig';
@@ -17,11 +16,16 @@ import type { Token } from '@/types';
 import Big from 'big.js';
 import { format } from 'date-fns';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import Timer from './components/Timer';
 import usePools from './hooks/usePools';
 import useUser from './hooks/useUser';
+import DappBack from '@/components/PageBack';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
+import DappDetail from '@/views/Dapp/components/DappDetail';
+import useDappInfo from '@/hooks/useDappInfo';
 
 const StyledFjordSvgContainer = styled.div`
   position: absolute;
@@ -500,6 +504,9 @@ export default function LaunchpadHomePage() {
   const userStore = useUserStore((store: any) => store.user);
   const { loading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
   const { user, queryUser } = useUser()
+  const dappPathname = router.query.dappRoute as string;
+  const { dapp } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
+
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
   const [midToken, setMidToken] = useState<Token>()
@@ -626,13 +633,8 @@ export default function LaunchpadHomePage() {
   }, [userStore.address])
   return (
     <StyledContainer style={{ width: 1124, margin: '0 auto', paddingTop: 138, position: 'relative' }}>
-      <StyledContainer style={{ position: 'absolute', left: -60, top: 30 }}>
-        <Breadcrumb
-          navs={[
-            { name: 'Home', path: '/' },
-            { name: 'Fjord', path: '/stake/fjord' },
-          ]}
-        />
+      <StyledContainer style={{ position: 'absolute', left: 0, top: 30 }}>
+        <DappBack defaultPath="/alldapps" />
       </StyledContainer>
       <StyledFjordSvgContainer>
         {FjordSvg}
@@ -882,6 +884,12 @@ export default function LaunchpadHomePage() {
           />
         )
       }
+
+      <DappDetailScroll />
+      <Suspense fallback={<DappFallback />}>
+        <DappDetail {...dapp}/>
+      </Suspense>
+
     </StyledContainer >
   )
 }

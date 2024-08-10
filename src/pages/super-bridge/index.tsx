@@ -1,11 +1,14 @@
+import { Suspense } from 'react'
 import { useSetChain } from '@web3-onboard/react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import Skeleton from 'react-loading-skeleton';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import dynamic from 'next/dynamic';
 
-import BridgeAction from '@/views/SuperBridge/BridgeAction';
-import Transaction from '@/views/SuperBridge/Transaction';
+// import BridgeAction from '@/views/SuperBridge/BridgeAction';
+// import Transaction from '@/views/SuperBridge/Transaction';
 import Medal from '@/views/SuperBridge/Medal';
 
 import chainCofig from '@/config/chains'
@@ -14,6 +17,7 @@ import { useDefaultLayout } from '@/hooks/useLayout';
 
 import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
+
 
 const Container = styled.div`
   display: flex;
@@ -58,18 +62,40 @@ const TestChains: Chain[] = [
 // chainList.unshift(TestChains[1])
 // chainList.unshift(TestChains[0])
 
+const BridgeAction = dynamic(() => import('@/views/SuperBridge/BridgeAction'), {
+  ssr: false,
+  loading: () => <div style={{ width: 800 }}>
+    <Skeleton width="550px" height="72px" borderRadius="16px" containerClassName="skeleton" />
+    <Skeleton style={{ marginTop: 20 }} width="800px" height="150px" borderRadius="6px" containerClassName="skeleton" />
+    <Skeleton style={{ marginTop: 20 }} width="800px" height="150px" borderRadius="6px" containerClassName="skeleton" />
+    <Skeleton style={{ marginTop: 20 }} width="800px" height="50px" borderRadius="6px" containerClassName="skeleton" />
+  </div>
+});
+
+const Transaction = dynamic(() => import('@/views/SuperBridge/Transaction'), {
+  ssr: false,
+  loading: () => <div style={{ width: 414 }}>
+    <Skeleton width="250px" height="72px" borderRadius="16px" containerClassName="skeleton" />
+    <Skeleton style={{ marginTop: 20 }} width="414px" height="50px" borderRadius="6px" containerClassName="skeleton" />
+    <Skeleton style={{ marginTop: 20 }} width="414px" height="50px" borderRadius="6px" containerClassName="skeleton" />
+  </div>
+});
+
 const Bridge: NextPageWithLayout = () => {
   const router = useRouter();
   const [updater, setUpdater] = useState(1)
 
   return (
     <Container>
-      <BridgeAction
-        chainList={chainList}
-        onTransactionUpdate={() => {
-          setUpdater(updater + 1)
-        }}
-      />
+      
+        <BridgeAction
+          chainList={chainList}
+          onTransactionUpdate={() => {
+            setUpdater(updater + 1)
+          }}
+        />
+      
+      
       <RightContainer>
         <Transaction updater={updater}/>
         <Sep />

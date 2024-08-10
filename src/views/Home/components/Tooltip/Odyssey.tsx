@@ -136,6 +136,7 @@ const StyledTitle = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-family: Montserrat;
   margin-bottom: 5px;
 `;
 const StyledTitleSub = styled.div`

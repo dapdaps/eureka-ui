@@ -44,7 +44,7 @@ const Header = (props: { chain: any; loading?: boolean; }) => {
               loading ? (
                 <Skeleton
                   width="140px"
-                  height="80px"
+                  height="50px"
                   borderRadius="16px"
                   containerClassName="skeleton"
                 />

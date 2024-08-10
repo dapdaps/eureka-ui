@@ -3,8 +3,10 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   position: relative;
-  height: 274px;
+  height: 210px;
+  max-height: 210px;
   animation: chainDetailUp 0.5s ease forwards;
+
   &.more {
     animation: chainDetailDown 0.5s ease forwards;
   }

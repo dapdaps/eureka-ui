@@ -5,6 +5,7 @@ import InteractDAppsModal from './InteractDAppsModal';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 
 import {
+  StyledAddText,
   StyledAirdrop,
   StyledAirdropActions,
   StyledAirdropActionsSub,
@@ -19,29 +20,40 @@ import {
   StyledAirdropMainTitle,
   StyledAirdropShadow,
   StyledAirdropTitle,
-  StyledAirdropValue,
+  StyledAirdropValue, StyledImageButton,
   StyledOverview,
   StyledOverviewContainer,
   StyledOverviewDesc,
   StyledOverviewShadow,
   StyledOverviewTitle,
+  StyledSummaryAdd,
+  StyledSummaryAddIcon,
+  StyledTokenAddress,
   StyledTokenContainer,
+  StyledTokenInfo,
   StyledTokenItem,
   StyledTokenLabel,
+  StyledTokenLogo,
+  StyledTokenPrice,
   StyledTokenValue,
 } from './styles';
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
-import { useSetChain } from '@web3-onboard/react';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import hexToRgba from '@/utils/hexToRgba';
-import { Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
+import { Category, Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
 import Loading from '@/components/Icons/Loading';
 import useToast from '@/hooks/useToast';
 import { useRouter } from 'next/router';
 import { StyledFlex } from '@/styled/styles';
 import { usePathname } from 'next/navigation';
+import tokens, { NativeTokenAddressMap } from '@/config/tokens';
+import { usePriceStore } from '@/stores/price';
+import chainCofig from '@/config/chains';
+import useCopy from '@/hooks/useCopy';
+import { formatThousandsSeparator } from '@/utils/format-number';
 
 const Overview = (props: any) => {
+  const prices = usePriceStore((store) => store.price);
 
   const {
     description,
@@ -53,11 +65,11 @@ const Overview = (props: any) => {
     id,
     rpc,
     loading,
+    chain_id,
   } = props;
 
   const router = useRouter();
-  const pathname = usePathname()
-  const [{}, setChain] = useSetChain();
+  const pathname = usePathname();
   const { check } = useAuthCheck({ isNeedAk: false });
   const toast = useToast();
   const {
@@ -65,6 +77,7 @@ const Overview = (props: any) => {
     loading: airdropLoading,
     reportAdditionResult,
   } = useAirdrop({ category, id });
+  const { copy } = useCopy();
 
   const [addMetaMaskShow, setAddMetaMaskShow] = useState<boolean>(false);
   const [dappListVisible, setDappListVisible] = useState<boolean>(false);
@@ -73,14 +86,27 @@ const Overview = (props: any) => {
   const [actionLoading, setActionLoading] = useState<boolean>(false);
 
   const nativeCurrency = useMemo(() => {
-    if (!native_currency) return '';
+    if (!native_currency) return undefined;
     try {
-      return JSON.parse(native_currency).name || '';
+      const json = JSON.parse(native_currency) || undefined;
+      if (json) {
+        json.address = NativeTokenAddressMap[json.symbol.toUpperCase()];
+        if (!json.address && chain_id) {
+          const currChainTokenList = tokens[chain_id];
+          if (currChainTokenList) {
+            const currToken = Object.values(currChainTokenList).find((t) => t.symbol.toUpperCase() === json.symbol.toUpperCase());
+            json.address = currToken?.address;
+          }
+        }
+        json.price = prices[json.symbol.toUpperCase()];
+        json.price = formatThousandsSeparator(json.price, 2);
+        return json;
+      }
     } catch (err) {
-      console.log(err);
+      console.log('%cerror: %o', 'background:#f00;', err);
     }
-    return '';
-  }, [native_currency]);
+    return undefined;
+  }, [native_currency, chain_id, prices]);
 
   const defaultRpc = useMemo(() => {
     if (!rpc) return '';
@@ -154,16 +180,69 @@ const Overview = (props: any) => {
     setActionLoading(false);
   };
 
-  const onAddMetaMask = () => {
-    return new Promise((resolve) => {
-      check(() => {
-        setChain({ chainId: `0x${props.chain_id.toString(16)}` }).then((res) => {
-          resolve(res);
-        }).catch(() => {
-          resolve(false);
-        });
+  const handleAddWallet = async () => {
+    if (!window.ethereum || window.ethereum === void 0 || typeof window.ethereum === 'undefined') return;
+    await window.ethereum.request({ method: 'eth_requestAccounts', params: [] });
+    try {
+      await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: NativeTokenAddressMap[nativeCurrency?.symbol?.toUpperCase()],
+            symbol: nativeCurrency?.symbol,
+            decimals: nativeCurrency?.decimals,
+            image: nativeCurrency?.logo,
+          },
+        },
       });
-    });
+      toast.success({
+        title: 'Add successfully!',
+      });
+    } catch (err: any) {
+      let msg = '';
+      if (err?.message?.includes('User denied')) {
+        msg = 'User denied';
+      }
+      console.log(err);
+      toast.fail({
+        title: 'Add failure!',
+        text: msg,
+      });
+    }
+  };
+
+  const onAddMetaMask = async () => {
+    const currChain = chainCofig[chain_id];
+    if (typeof window.ethereum === 'undefined' || !currChain) {
+      return false;
+    }
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: `0x${chain_id.toString(16)}`,
+          rpcUrls: currChain.rpcUrls,
+          chainName: currChain.chainName,
+          nativeCurrency: currChain.nativeCurrency,
+          blockExplorerUrls: [currChain.blockExplorers],
+        }],
+      });
+      return true;
+    } catch (err) {
+      console.log('add metamask failed: %o', err);
+      toast.fail('Failed to add network!');
+      return false;
+    }
+  };
+
+  const onCopyCurrency = () => {
+    copy(nativeCurrency?.address);
+  };
+
+  const onBrowser = () => {
+    window.open(`https://etherscan.io/token/${nativeCurrency?.address}`);
   };
 
   return (
@@ -197,7 +276,81 @@ const Overview = (props: any) => {
                     <NativeCurrency tbdToken={tbd_token} nativeCurrency={native_currency} />
                   </StyledTokenValue>
                 </StyledTokenItem>
+                {
+                  tbd_token !== 'Y' && (
+                    <StyledTokenItem>
+                      <StyledTokenLabel>Token Price</StyledTokenLabel>
+                      <StyledTokenPrice>
+                        ${nativeCurrency?.price || '-'}
+                        {/*<StyledSummaryAdd>
+                         <StyledSummaryAddIcon>
+                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+                         <path
+                         d="M4.56699 0.75C4.75944 0.416667 5.24056 0.416667 5.43301 0.75L8.89711 6.75C9.08956 7.08333 8.849 7.5 8.4641 7.5H1.5359C1.151 7.5 0.910436 7.08333 1.10289 6.75L4.56699 0.75Z"
+                         fill="currentColor" stroke="url(#paint0_linear_16163_4093)"
+                         />
+                         <defs>
+                         <linearGradient
+                         id="paint0_linear_16163_4093"
+                         x1="10.9668"
+                         y1="1.71698"
+                         x2="-1"
+                         y2="1.71698"
+                         gradientUnits="userSpaceOnUse"
+                         >
+                         <stop stopColor="currentColor" />
+                         <stop offset="1" stopColor="currentColor" stopOpacity="0.1" />
+                         </linearGradient>
+                         </defs>
+                         </svg>
+                         </StyledSummaryAddIcon>
+                         <StyledAddText>1.7%</StyledAddText>
+                         </StyledSummaryAdd>*/}
+                      </StyledTokenPrice>
+                    </StyledTokenItem>
+                  )
+                }
               </StyledTokenContainer>
+              {
+                tbd_token !== 'Y' && (
+                  <StyledTokenContainer>
+                    <StyledTokenItem>
+                      <StyledTokenLabel>Token Address</StyledTokenLabel>
+                      <StyledTokenInfo>
+                        <StyledTokenLogo url={nativeCurrency?.logo} />
+                        <StyledTokenAddress>
+                          {nativeCurrency?.address ? nativeCurrency?.address.substring(0, 5) + '...' + nativeCurrency?.address.substring(nativeCurrency?.address.length - 6) : ''}
+                        </StyledTokenAddress>
+                        <StyledImageButton
+                          src="/images/alldapps/icon-copy.svg"
+                          width={14}
+                          height={14}
+                          alt="copy"
+                          onClick={onCopyCurrency}
+                        />
+                        <StyledImageButton
+                          src="/images/alldapps/icon-share.svg"
+                          width={12}
+                          height={12}
+                          alt="share"
+                          onClick={onBrowser}
+                        />
+                        <StyledImageButton
+                          src="/images/alldapps/icon-metamask.svg"
+                          width={17}
+                          height={17}
+                          alt="metamask"
+                          onClick={() => {
+                            check(() => {
+                              handleAddWallet();
+                            });
+                          }}
+                        />
+                      </StyledTokenInfo>
+                    </StyledTokenItem>
+                  </StyledTokenContainer>
+                )
+              }
             </StyledOverview>
           )
         }
@@ -270,7 +423,13 @@ const Overview = (props: any) => {
                       </StyledAirdropActionsSub>
                       {
                         airdropData.quests?.map((item) => (
-                          <StyledAirdropBodyItem $finished={item.completed} onClick={() => onAction(item)}>
+                          <StyledAirdropBodyItem
+                            $finished={item.completed} onClick={() => {
+                            check(() => {
+                              onAction(item);
+                            });
+                          }}
+                          >
                             <div>
                               <StyledAirdropShadow className={item.completed ? 'finished' : ''}>
                                 <svg
@@ -314,7 +473,7 @@ const Overview = (props: any) => {
         rpc={defaultRpc}
         chainId={props.chain_id}
         chainName={props.name}
-        symbol={nativeCurrency}
+        symbol={nativeCurrency?.symbol}
         explorerUrl={props.block_explorer}
       />
       <InteractDAppsModal

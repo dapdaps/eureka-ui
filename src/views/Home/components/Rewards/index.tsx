@@ -13,12 +13,14 @@ const StyledRecentRewards = styled.div`
   .title {
     font-size: 42px;
     font-weight: 500;
+    font-family: Montserrat;
     color: #fff;
     margin-bottom: 35px;
 
     span {
       color: #ebf479;
       line-height: 51px;
+      font-family: Montserrat;
       font-weight: 700;
     }
   }
@@ -26,6 +28,7 @@ const StyledRecentRewards = styled.div`
   .words {
     font-size: 20px;
     font-weight: 400;
+    font-family: Montserrat;
     line-height: 24px;
     text-align: center;
     margin-bottom: 72px;

@@ -29,3 +29,7 @@ export default function useDappInfo(pathname?: string) {
 
   return { dapp: dappStore.dapp || {}, loading };
 }
+
+export function useDappsInfo() {
+
+}

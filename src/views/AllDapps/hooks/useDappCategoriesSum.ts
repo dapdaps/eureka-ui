@@ -11,7 +11,6 @@ export default function useDappCategoriesSum() {
     try {
       setLoading(true);
       const result = await get(`${QUEST_PATH}/api/dapp/categories`);
-      console.log(result);
       setCategoryList(result?.data ?? {})
       setLoading(false);
     } catch {

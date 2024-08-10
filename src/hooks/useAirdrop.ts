@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { get, post } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
-import useAuthCheck from '@/hooks/useAuthCheck';
 import { AirdropList, Potential } from '@/views/Dapp/components/DappDetail/config';
 import { StatusType } from '@/views/Odyssey/components/Tag';
 
@@ -10,8 +9,6 @@ export function useAirdrop(props: Props) {
     category,
     id,
   } = props;
-
-  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Partial<Airdrop>>({
@@ -52,7 +49,7 @@ export function useAirdrop(props: Props) {
 
   const { run: getDataDebounce } = useDebounceFn(
     () => {
-      check(() => getData());
+      getData();
     },
     { wait: 300 },
   );

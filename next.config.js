@@ -158,7 +158,16 @@ const nextConfig = {
       test: /\.svg$/,
       use: ['@svgr/webpack'],
     });
-
+    if (!isServer) {
+      config.optimization.splitChunks.cacheGroups = {
+        VmInitializer: {
+          test: /[\\/]src[\\/]components[\\/]vm[\\/]VmInitializer\.tsx$/,
+          name: 'VmInitializer',
+          chunks: 'initial',
+          enforce: true,
+        },
+      };
+    }
     return config;
   },
 };
