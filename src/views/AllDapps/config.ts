@@ -20,12 +20,12 @@ export interface TitleDapp {
 }
 
 export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [
-  { key: 1, position: 'left', width: 93, height: 93, x: 0, y: 99 },
-  { key: 4, position: 'right', width: 88, height: 88, x: -8, y: 10 },
-  { key: 2, position: 'left', width: 89, height: 89, x: 19, y: 0 },
-  { key: 5, position: 'right', width: 86, height: 86, x: -11, y: 116 },
-  { key: 3, position: 'left', width: 86, height: 86, x: -19, y: 116 },
-  { key: 6, position: 'right', width: 89, height: 89, x: 30, y: 36 },
+  { key: 1, position: 'left', width: 72, height: 72, x: 0, y: 99 },
+  { key: 4, position: 'right', width: 72, height: 72, x: -8, y: 10 },
+  { key: 2, position: 'left', width: 72, height: 72, x: 19, y: 0 },
+  { key: 5, position: 'right', width: 72, height: 72, x: -11, y: 116 },
+  { key: 3, position: 'left', width: 72, height: 72, x: -19, y: 116 },
+  { key: 6, position: 'right', width: 72, height: 72, x: 30, y: 36 },
 ];
 
 export const SortList = [

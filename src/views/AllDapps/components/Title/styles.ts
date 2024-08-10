@@ -95,7 +95,13 @@ export const StyledCategoryItem = styled.div<{ $colorRgb: string; $disabled?: bo
     }}
   }
 `;
-export const StyledTopDappLogo = styled(motion(Image))``;
+export const StyledTopDappLogo = styled(motion(Image))`
+  border: 3px solid #202329;
+  border-radius: 24px;
+  background: #131419;
+  width: 72px;
+  height: 72px;
+`;
 export const StyledTopDappLogoWrapper = styled.div<{ $position: 'left' | 'right'; }>`
   position: absolute;
   
