@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import IconMedal from '@public/images/odyssey/medal.svg'
+import { MedalType } from "@/views/Profile/types"
 const Wrapper = styled.div`
     background: linear-gradient(90deg, #898E46 0%, #EBF479 100%);
     position: relative;
@@ -39,12 +40,17 @@ const Wrapper = styled.div`
 const WrapperImg = styled.div`
     display: flex;
     align-items: center;
+    img {
+        width: 22px;
+        height: 28px;
+        object-fit: contain;
+    }
 `
 
 const MedalList = ({
     medals
 }: {
-    medals: any[]
+    medals: MedalType[]
 }) => {
 
     if (!medals || medals.length === 0) {
@@ -55,13 +61,13 @@ const MedalList = ({
         <Wrapper>
             <div className="label">
                 {
-                    medals.map(() => (
+                    medals.map((item) => (
                         <WrapperImg>
-                            <IconMedal />
+                            <img src={item.logo} alt={item.medal_name} />
                         </WrapperImg>
                     ))
                 }
-                <span>{medals.length > 1 ? `${medals.length} Medals`: 'Mode Voyager Medal'}</span>
+                <span>{medals.length > 1 ? `${medals.length} Medals`: medals[0].medal_name}</span>
             </div>
         </Wrapper>
     )

@@ -82,6 +82,7 @@ const Chains = ({
   
   const handleClick = (item: Network) => {
     onClick?.();
+    router.prefetch(`/networks/${IdToPath[item.id]}`);
     router.push(`/networks/${IdToPath[item.id]}`);
   }
   return (

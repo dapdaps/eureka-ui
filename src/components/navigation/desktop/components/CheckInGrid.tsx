@@ -1,12 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useImperativeHandle, forwardRef } from 'react';
 import styled, { css } from 'styled-components';
 import IconFistUnActive from '@public/images/header/fist-unactive.svg'
 import IconCheckIn from '@public/images/header/checkIn.svg'
 import { CheckInStatus, IDayStatus } from './types';
-import { post } from '@/utils/http';
-import { useDebounceFn } from 'ahooks';
-import useAuthCheck from '@/hooks/useAuthCheck';
-
 
 
 const Container = styled.div`
@@ -83,14 +79,22 @@ interface IProps {
   dayStatus: IDayStatus[];
 }
 
-const CheckInGrid: React.FC<IProps> = ({
-  dayStatus
-}) => {
+export interface CheckInGridRef {
+  triggerCheckIn: (day: number) => void;
+}
+
+const CheckInGrid = forwardRef<CheckInGridRef, IProps>(
+  ({ dayStatus }, ref) => {
+
   const [statuses, setStatuses] = useState<IDayStatus[]>(dayStatus);
 
+  useImperativeHandle(ref, () => ({
+    triggerCheckIn
+  }));
   
-  const handleClick = (index: number) => {
+  const triggerCheckIn = (day: number) => {
     const newStatuses = statuses.slice();
+    const index = newStatuses.findIndex((item) => item.day === day);
     if (newStatuses[index].status === CheckInStatus.claim) {
       newStatuses[index].status = CheckInStatus.claimed;
       setStatuses(newStatuses);
@@ -103,7 +107,6 @@ const CheckInGrid: React.FC<IProps> = ({
         <Box 
           key={index} 
           status={item.status} 
-          onClick={() => handleClick(index)}
         >
           <DayLabel>Day {item.day ?? 'x'}</DayLabel>
           <StyleIcon>
@@ -117,6 +120,6 @@ const CheckInGrid: React.FC<IProps> = ({
       ))}
     </Container>
   );
-};
+});
 
 export default CheckInGrid;

@@ -115,7 +115,7 @@ const CompassCard = function ({ compass }: any) {
           <StyledCardTitle>{formatCompassName(compass.name)}</StyledCardTitle>
           <StyleList>
             <RewardList odyssey={compass} />
-            <MedalList medals={[1]} />
+            <MedalList medals={compass.medals} />
           </StyleList>
           {/* <StyledCardDesc>{compass.description}</StyledCardDesc> */}
           {compass.status === 'un_start' ? (
