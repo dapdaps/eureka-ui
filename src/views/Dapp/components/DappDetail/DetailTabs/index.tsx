@@ -67,7 +67,7 @@ const DetailTabs = (props: Props) => {
           {
             currTab === TABS[0].key && (
               <Animate key="overview">
-                <Overview title={overviewTitle} {...props} />
+                <Overview title={overviewTitle} {...props} chain_id={chain_id} />
               </Animate>
             )
           }
