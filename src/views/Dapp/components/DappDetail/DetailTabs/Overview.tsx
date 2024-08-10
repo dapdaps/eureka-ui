@@ -46,7 +46,7 @@ import useToast from '@/hooks/useToast';
 import { useRouter } from 'next/router';
 import { StyledFlex } from '@/styled/styles';
 import { usePathname } from 'next/navigation';
-import { NativeTokenAddressMap } from '@/config/tokens';
+import tokens, { NativeTokenAddressMap } from '@/config/tokens';
 import { usePriceStore } from '@/stores/price';
 import chainCofig from '@/config/chains';
 import useCopy from '@/hooks/useCopy';
@@ -89,8 +89,15 @@ const Overview = (props: any) => {
     if (!native_currency) return undefined;
     try {
       const json = JSON.parse(native_currency) || undefined;
-      if (json && chain_id) {
+      if (json) {
         json.address = NativeTokenAddressMap[json.symbol.toUpperCase()];
+        if (!json.address && chain_id) {
+          const currChainTokenList = tokens[chain_id];
+          if (currChainTokenList) {
+            const currToken = Object.values(currChainTokenList).find((t) => t.symbol.toUpperCase() === json.symbol.toUpperCase());
+            json.address = currToken?.address;
+          }
+        }
         json.price = prices[json.symbol.toUpperCase()];
         json.price = formatThousandsSeparator(json.price, 2);
         return json;
@@ -270,11 +277,11 @@ const Overview = (props: any) => {
                   </StyledTokenValue>
                 </StyledTokenItem>
                 {
-                  tbd_token !== 'Y' && category === Category.network && (
+                  tbd_token !== 'Y' && (
                     <StyledTokenItem>
                       <StyledTokenLabel>Token Price</StyledTokenLabel>
                       <StyledTokenPrice>
-                        ${nativeCurrency?.price}
+                        ${nativeCurrency?.price || '-'}
                         {/*<StyledSummaryAdd>
                          <StyledSummaryAddIcon>
                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
@@ -305,7 +312,7 @@ const Overview = (props: any) => {
                 }
               </StyledTokenContainer>
               {
-                tbd_token !== 'Y' && category === Category.network && (
+                tbd_token !== 'Y' && (
                   <StyledTokenContainer>
                     <StyledTokenItem>
                       <StyledTokenLabel>Token Address</StyledTokenLabel>

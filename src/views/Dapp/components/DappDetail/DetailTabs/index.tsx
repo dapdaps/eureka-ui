@@ -71,8 +71,7 @@ const DetailTabs = (props: Props) => {
                 <Overview
                   title={overviewTitle}
                   {...props}
-                  chain_id={chain_id}
-                  default_chain_id={default_chain_id}
+                  chain_id={chain_id || default_chain_id}
                 />
               </Animate>
             )

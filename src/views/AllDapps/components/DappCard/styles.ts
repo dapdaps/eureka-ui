@@ -31,7 +31,7 @@ export const StyledDappCardHead = styled.div<{ $logo: string; }>`
     left: 0;
     top: 0;
     width: 100%;
-    height: 100%;
+    height: calc(100% + 1px);
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(10px);
     border-top-left-radius: 20px;
