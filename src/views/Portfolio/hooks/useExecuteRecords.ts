@@ -11,6 +11,7 @@ import { formatExecution, formatGas, getChainLogo, getDappLogo } from '../helper
 
 export default function useExecuteRecords() {
   const { account } = useAccount();
+
   const [hasMore, setHasMore] = useState(false);
   const [records, setRecords] = useState<any>([]);
   const [loading, setLoading] = useState(true);

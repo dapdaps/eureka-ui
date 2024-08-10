@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useRef, useState } from 'react';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import {
   StyledOdysseyBanner,
   StyledOdysseyBody,
@@ -30,7 +30,10 @@ import { useRouter } from 'next/router';
 import odyssey from '@/config/odyssey';
 import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
 import useToast from '@/hooks/useToast';
+import { useDebounceFn } from 'ahooks';
+
 const isDevelopment = process.env.NODE_ENV === 'development';
+
 const OdysseyCardComponent = (props: Props) => {
   const {
     banner,
@@ -48,18 +51,19 @@ const OdysseyCardComponent = (props: Props) => {
 
   const onRewardHover = () => {
     if (!tagListRef.current) return;
+    onRewardLeaveCancel();
     tagListRef.current.scrollTo({
       left: tagListRef.current.scrollWidth,
       behavior: 'smooth',
     });
   };
-  const onRewardLeave = () => {
+  const { run: onRewardLeave, cancel: onRewardLeaveCancel } = useDebounceFn(() => {
     if (!tagListRef.current) return;
     tagListRef.current.scrollTo({
       left: 0,
       behavior: 'smooth',
     });
-  };
+  }, { wait: 300 });
 
   const router = useRouter();
 
@@ -158,6 +162,12 @@ const OdysseyCardComponent = (props: Props) => {
     }
     return _name;
   }
+
+  useEffect(() => {
+    if (odyssey[id]) {
+      router.prefetch(odyssey[id].path);
+    }
+  }, [id]);
 
   return (
     <>
@@ -273,7 +283,6 @@ const OdysseyCardComponent = (props: Props) => {
                               />
                             </SimpleTooltip>
                           </StyledTagChain>
-
                         ))
                       }
                     </StyledTagChains>

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import CheckInGrid from './CheckInGrid';
+import CheckInGrid, { CheckInGridRef } from './CheckInGrid';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import MedalCard from '@/views/Profile/components/MedalCard';
 import { useDebounceFn } from 'ahooks';
@@ -88,7 +88,6 @@ const StyleDropdown = styled.div`
     }
     .dap-check {
       padding: 16px 28px;
-      font-family: Orbitron;
       font-size: 16px;
       font-weight: 700;
       line-height: 16px;
@@ -161,8 +160,22 @@ const CheckIn = () => {
 
   const [medalData, setMedalData] = useState<MedalType>();
   const [medalVisible, setMedalVisible] = useState(false);
+  const [checkDisabled, setCheckDisabled] = useState(false);
+
 
   const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
+  const checkInGridRef = useRef<CheckInGridRef>(null);
+  
+  const isClaimed = useMemo(() => {
+    if (!data) return false;
+    return data?.data?.some((item) => item.status === 'claimed' && item?.today);
+  }, [data]);
+
+  const isTodayClaim = useMemo(() => {
+    if (!data) return false;
+    return data?.data?.find((item) => item.today)?.day
+  }, [data])
+
 
   const handleMouseEnter = () => {
     setIsHovered(true);
@@ -220,10 +233,16 @@ const CheckIn = () => {
     try {
       setClaimLoading(true);
       const data = await post(`/api/check-in`);
+
+      if (checkInGridRef.current && isTodayClaim) { // to trigger check in grid animation
+        checkInGridRef.current.triggerCheckIn(isTodayClaim);
+      }
+
       if (data?.data?.medal) {
         setMedalData(data.data.medal);
         setMedalVisible(true);
       }
+      setCheckDisabled(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
@@ -238,10 +257,6 @@ const CheckIn = () => {
     { wait: 300 },
   );
 
-  const isClaimed = useMemo(() => {
-    if (!data) return false;
-    return data?.data?.some((item) => item.status === 'claimed' && item?.status);
-  }, [data]);
 
   return (
     <>
@@ -266,7 +281,7 @@ const CheckIn = () => {
                   <span className="label">days in a row</span>
                 </div>
                 <StyledButton
-                  disabled={isClaimed || claimLoading}
+                  disabled={isClaimed || claimLoading || checkDisabled}
                   onClick={() => {
                     claim();
                   }}
@@ -289,7 +304,7 @@ const CheckIn = () => {
                       <div className="dropdown-mystery">
                         <img className="mystery-img" src="/images/header/dapdap-mystery-text.png" alt="mystery" />
                         <div className="dropdown-mystery-box">
-                          <CheckInGrid dayStatus={data.data} />
+                          <CheckInGrid ref={checkInGridRef} dayStatus={data.data} />
                         </div>
                       </div>
                     )}

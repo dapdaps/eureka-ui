@@ -17,7 +17,7 @@ import { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
 const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: number, setNetwork: any }) => {
   const { chain, totalBalance, network, setNetwork } = props;
   const percentage = useMemo(() => {
-    if (!totalBalance || !chain.usd) return '0';
+    if (!totalBalance || !chain.usd || Big(totalBalance).eq(0)) return '0';
     return new Big(chain.usd).div(totalBalance).mul(100).toFixed(2);
   }, [totalBalance, chain.usd]);
 

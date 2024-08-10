@@ -10,12 +10,13 @@ import ChainsData from '@/config/all-in-one/chains';
 import chainCofig from '@/config/chains';
 
 export default function useDapps() {
+  const { account } = useAccount();
+
   const [loading, setLoading] = useState(false);
   const [dapps, setDapps] = useState<any>([]);
   const [dappsByChain, setDappsByChain] = useState<any>([]);
   const [totalBalance, setTotalBalance] = useState<Big.Big>();
 
-  const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const fetchDapps = useCallback(async () => {

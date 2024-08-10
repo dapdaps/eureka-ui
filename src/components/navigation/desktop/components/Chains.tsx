@@ -39,23 +39,18 @@ const GridItemContainer = styled.div`
     opacity: 0.6;
   }
 
-  .label {
-    color: #fff;
-    font-size: 16px;
-    height: 16px;
-    line-height: 16px;
-    width: 86px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
   .name {
     white-space: nowrap;
     max-width: 90px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    font-family: Montserrat;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 16px;
+    text-align: center;
+    color: #fff;
   }
 `;
 
@@ -82,6 +77,7 @@ const Chains = ({
   
   const handleClick = (item: Network) => {
     onClick?.();
+    router.prefetch(`/networks/${IdToPath[item.id]}`);
     router.push(`/networks/${IdToPath[item.id]}`);
   }
   return (

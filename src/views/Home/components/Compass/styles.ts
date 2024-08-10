@@ -3,12 +3,23 @@ import styled from 'styled-components';
 export const StyledContainer = styled.div`
   height: 560px;
   background: #000;
+  @media (max-width: 1440px) {
+      transform: scale(.88);
+      transform-origin: center; 
+      transition: all 0.5s ease 0s;
+      position: relative;
+      z-index: 10;
+  }
 `;
 
 export const StyledContent = styled.div`
   width: 1244px;
   margin: 80px auto 0px;
   position: relative;
+  @media (max-width: 1440px) {
+    margin-top: 20px;
+    transition: all 0.5s ease 0s;
+  }
 `;
 
 export const StyledInner = styled.div`
@@ -56,6 +67,7 @@ export const StyledCardMainContent = styled.div`
   .title {
     color: #979ABE;
     font-size: 20px;
+    font-family: Montserrat;
     line-height: 24px;
     font-weight: 500;
     margin-bottom: 106px;
@@ -68,6 +80,7 @@ export const StyledCardMainContent = styled.div`
     .head {
       width: 412px;
       font-size: 32px;
+      font-family: Montserrat;
       font-weight: 700;
       line-height: 39px;
       color: #fff;
@@ -75,6 +88,7 @@ export const StyledCardMainContent = styled.div`
     .card-tips {
       margin-top: 20px;
       font-size: 16px;
+      font-family: Montserrat;
       line-height: 24px;
       font-weight: 400;
       color: #979ABE;
@@ -85,6 +99,7 @@ export const StyledCardMainContent = styled.div`
     width: calc(100% - 50px);
     bottom: 70px;
     display: flex;
+    font-family: Montserrat;
     justify-content: space-between;
     gap: 20px;
     & > *:only-child {
@@ -103,7 +118,7 @@ export const StyledCardChains = styled.img`
 
 export const StyledCardTitle = styled.div`
   color: #fff;
-  font-family: Gantari;
+  font-family: Montserrat;
   font-size: 36px;
   font-style: normal;
   font-weight: 700;
@@ -174,7 +189,7 @@ export const StyledCardButton = styled.div`
   background: linear-gradient(rgb(238, 243, 191) 0%, rgb(233, 244, 86) 100%);
   color: rgb(2, 5, 30);
   text-align: center;
-  font-family: Gantari;
+font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;

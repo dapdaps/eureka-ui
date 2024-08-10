@@ -14,7 +14,7 @@ import RecentSearch from './RecentSearch';
 import Popular, { PopularType } from './Popular';
 import Chain from './Chain';
 import Campaign from './Campaign';
-import Medal from './Medal';
+// import Medal from './Medal';
 import useDefaultSearch from './hooks/useDefaultSearch';
 import { useRecentStore } from './hooks/useRecentStore';
 
@@ -146,6 +146,7 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
             loading={loading}
             items={searchResult?.dapps}
             onClick={(item: any) => {
+              router.prefetch(`/dapps-details?dapp_id=${item.id}`);
               router.push(`/dapps-details?dapp_id=${item.id}`);
               setSearchResult('');
               setShowSearch(false)
@@ -155,6 +156,7 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
             loading={loading}
             data={searchResult?.networks}
             onClick={(item: any) => {
+              router.prefetch(`/network/${IdToPath[item.id]}`);
               router.push(`/network/${IdToPath[item.id]}`);
               setSearchResult('');
               setShowSearch(false)

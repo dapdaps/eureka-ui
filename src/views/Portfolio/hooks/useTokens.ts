@@ -9,11 +9,12 @@ import { Network } from '@/hooks/useNetworks';
 export default function useTokens(props: { networkList: Network[]; }) {
   const { networkList } = props;
 
+  const { account } = useAccount();
+
   const [loading, setLoading] = useState(true);
   const [tokens, setTokens] = useState<any>([]);
   const [networks, setNetworks] = useState<any>([]);
   const [totalBalance, setTotalBalance] = useState<Big.Big>();
-  const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const fetchTokens = useCallback(async () => {

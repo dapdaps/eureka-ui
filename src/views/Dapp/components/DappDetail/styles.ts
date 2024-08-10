@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 export const StyledContainer = styled.div`
-  --container-width: 1260px;
-  width: var(--container-width);
+  max-width: 1260px;;
+  min-width: 1060px;;
   margin: 0 auto;
 `;
 
