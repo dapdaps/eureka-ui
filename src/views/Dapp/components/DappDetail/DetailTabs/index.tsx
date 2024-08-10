@@ -29,8 +29,6 @@ const DetailTabs = (props: Props) => {
     dapp_network = [],
   } = props;
 
-  console.log('props: %o', props);
-
   const {
     loading,
     historyList,
