@@ -1,6 +1,6 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import styled from 'styled-components';
-
+import Link from 'next/link'
 import { recordMouseEnter } from '@/utils/analytics';
 
 import { Wrapper } from '../styles/nav';
@@ -84,10 +84,12 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger" onClick={() => router.push('/super-bridge')}>
-              <IconBridge />
-              Bridge
-            </NavigationMenu.Trigger>
+            <Link href="/super-bridge" >
+              <NavigationMenu.Trigger className="NavigationMenuTrigger">
+                  <IconBridge />
+                  Bridge
+              </NavigationMenu.Trigger>
+            </Link>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
