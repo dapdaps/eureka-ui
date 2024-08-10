@@ -44,24 +44,28 @@ export const StyledCircle = styled.div`
 
 export const StyledNameWrapper = styled.div`
   width: calc(100% - 132px);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 `;
 
 export const StyledName = styled.div`
   color: #fff;
   text-align: left;
   font-size: 32px;
-  font-weight: 500;
+  font-weight: 600;
   overflow: hidden;
   width: 100%;
   white-space: nowrap;
   text-overflow: ellipsis;
+  line-height: 100%;
 `;
 
 export const StyledAddress = styled.div`
   color: #fff;
   font-size: 20px;
   font-weight: 500;
-  margin-top: 10px;
+  line-height: 100%;
 `;
 
 export const StyledLabels = styled.div`

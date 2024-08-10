@@ -3,28 +3,32 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
-import { MedalType } from '../types';
+import { MedalType, Tab } from '../types';
 
 
-export default function useMedalList() {
+export default function useMedalList(tab: Tab) {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const [userMedalList, setUserMedalList] = useState<MedalType[]>([]);
+  const [loaded, setLoaded] = useState(false)
   const [loading, setLoading] = useState(false);
 
   const queryUserMedalList = async (query: any) => {
     if (loading) return;
     setLoading(true);
+    setLoaded(false);
     try {
       const result = await get(`/api/medal/list-by-account`, query);
       const data = (result.data || [])
       setUserMedalList(data);
       setLoading(false);
+      setLoaded(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
       setLoading(false);
+      setLoaded(true);
     }
   };
 
@@ -41,8 +45,8 @@ export default function useMedalList() {
   );
 
   useEffect(() => {
-    run();
-  }, [account]);
+    tab === 'InProgress' && run();
+  }, [account, tab]);
 
-  return { loading, userMedalList, queryUserMedalList };
+  return { loading, loaded, userMedalList, queryUserMedalList };
 }

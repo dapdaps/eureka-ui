@@ -3,17 +3,20 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
+import { Tab } from '../types';
 type CompassType = any
-export default function useCompassList(campaign_id?: string) {
+export default function useCompassList(tab: Tab) {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const [compassList, setCompassList] = useState<any>([]);
+  const [loaded, setLoaded] = useState(false)
   const [loading, setLoading] = useState(false);
 
   const queryCompassListByAccount = async (query: any) => {
     if (loading) return;
     setLoading(true);
+    setLoaded(false)
     try {
       const result = await get(`/api/compass/list-by-account`, query);
       const data = (result.data || []).map((compass: CompassType) => {
@@ -38,10 +41,12 @@ export default function useCompassList(campaign_id?: string) {
       });
       setCompassList(data);
       setLoading(false);
+      setLoaded(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
       setLoading(false);
+      setLoaded(true);
     }
   };
 
@@ -56,10 +61,9 @@ export default function useCompassList(campaign_id?: string) {
     },
     { wait: compassList ? 800 : 3000 },
   );
-
   useEffect(() => {
-    run();
-  }, [account]);
+    tab === 'InProgress' && run();
+  }, [account, tab]);
 
-  return { loading, compassList, queryCompassListByAccount };
+  return { loading, loaded, compassList, queryCompassListByAccount };
 }

@@ -6,7 +6,7 @@ const StyledDapps = styled.div`
   display: flex;
   justify-content: start;
   align-items: center;
-  column-gap: 16px;
+  column-gap: 14px;
   row-gap: 20px;
   flex-wrap: wrap;
   margin-top: 36px;

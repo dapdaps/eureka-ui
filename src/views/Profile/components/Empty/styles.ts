@@ -11,7 +11,6 @@ export const StyledEmpty = styled.div`
   align-items: center;
   padding-top: 24px;
   min-height: 523px;
-  z-index: 50;
 `
 export const StyledRangeContainer = styled.div`
   /* padding-top: 76px; */
@@ -36,6 +35,13 @@ export const StyledRangeContainer = styled.div`
 export const StyledRange = styled.div`
   flex: 1;
   height: 220px;
+  border-radius: 12px;
+  border: 1px solid #202329;
+  background: #101115;
+`
+export const StyledSecondRange = styled.div`
+  flex: 1;
+  height: 84px;
   border-radius: 12px;
   border: 1px solid #202329;
   background: #101115;

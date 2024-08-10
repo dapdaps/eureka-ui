@@ -3,25 +3,30 @@ import Airdrops from '../Airdrops';
 import Empty from '../Empty';
 import Medals from '../Medals';
 import Odyssey from '../Odyssey';
+import { useMemo } from 'react';
 const StyledContainer = styled.div`
   
 `
 export default function InProgress({
-  compassLoading,
+  compassLoaded,
   compassList,
-  airdropLoading,
+  airdropLoaded,
   airdropList,
-  medalLoading,
+  medalLoaded,
   userMedalList
 }: any) {
-  return (compassList?.length + airdropList?.length + userMedalList?.length) > 0 ? (
+  const isHave = useMemo(() => {
+    return compassList?.length + airdropList?.length + userMedalList?.length > 0 || !(compassLoaded && airdropLoaded && medalLoaded)
+  }, [compassLoaded, compassList, airdropLoaded, airdropList, medalLoaded, userMedalList])
+  return isHave ? (
     <StyledContainer>
-      <Odyssey loading={compassLoading} compassList={compassList} />
-      <Airdrops loading={airdropLoading} airdropList={airdropList} />
-      <Medals loading={medalLoading} medalList={userMedalList} />
+      <Odyssey loaded={compassLoaded} compassList={compassList} />
+      <Airdrops loaded={airdropLoaded} airdropList={airdropList} />
+      <Medals loaded={medalLoaded} medalList={userMedalList} />
     </StyledContainer>
   ) : (
     <Empty
+      type={0}
       title='You don’t have any actions in progress'
       tips='All the Odyssey, airdrop actions, bridging trasactions, and medals which you are in progress will be displayed here'
       btnTxt='Start your journey'

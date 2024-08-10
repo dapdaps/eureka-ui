@@ -17,8 +17,9 @@ import {
   StyledPageNumberContainer,
   StyledPageNumber
 } from './styles';
+import RewardHistoryLoading from "../../Loading/RewardHistoryLoading";
 type PropsType = {
-  loading: boolean;
+  loaded: boolean;
   userRewardRecords: RewardRecordsType | null;
   pager: PagerType;
   maxPage: number;
@@ -147,15 +148,24 @@ const Pager = function ({ maxPage, pager, onPageChange }: {
   )
 }
 export default function RewardHistory({
-  loading,
+  loaded,
   userRewardRecords,
   pager,
   maxPage,
   onPageChange
 }: PropsType) {
 
-  // const maxPage = useMemo(() => Math.ceil(userRewardRecords?.total / pager.page_size), [userRewardRecords?.total, pager])
-  return userRewardRecords?.total ?? 0 > 0 ? (
+  return !loaded ? (
+    <StyledContainer>
+      <StyledRecordHeader>
+        <StyledFont color="#FFF" style={{ flex: 3 }}>All Sources</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 1 }}>All Rewards</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 1 }}>Time</StyledFont>
+      </StyledRecordHeader>
+      <RewardHistoryLoading />
+      <Pager maxPage={maxPage} pager={pager} onPageChange={onPageChange} />
+    </StyledContainer>
+  ) : (loaded && (userRewardRecords?.total ?? 0) > 0) ? (
     <StyledContainer>
       <StyledRecordHeader>
         <StyledFont color="#FFF" style={{ flex: 3 }}>All Sources</StyledFont>
@@ -189,11 +199,11 @@ export default function RewardHistory({
           })
         }
       </StyledFlex>
-
       <Pager maxPage={maxPage} pager={pager} onPageChange={onPageChange} />
     </StyledContainer>
   ) : (
     <Empty
+      type={1}
       title="You don’t have any rewards record"
       tips="The reward from odyessey participation, medals, daily dap me up will be displayed here"
       btnTxt="Start your journey"

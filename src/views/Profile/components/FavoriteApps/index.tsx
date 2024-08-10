@@ -5,20 +5,21 @@ import { FavoriteType } from "../../types";
 import Empty from "../Empty";
 
 type PropsType = {
-  loading: boolean;
+  loaded: boolean;
   userFavorites: FavoriteType | null
 }
 export default function FavoriteApps({
-  loading,
+  loaded,
   userFavorites
 }: PropsType) {
   return (userFavorites?.total ?? 0) > 0 ? (
     <StyledContainer>
-      <Features features={userFavorites?.features ?? []} />
-      <Dapps dapps={userFavorites?.dapps ?? []} />
+      {/* <Features features={userFavorites?.features ?? []} /> */}
+      <Dapps loaded={loaded} dapps={userFavorites?.dapps ?? []} />
     </StyledContainer>
   ) : (
     <Empty
+      type={0}
       title="You don’t have any favorites"
       tips="Your favorite features, dApps will be displayed here"
       btnTxt="Explore now"

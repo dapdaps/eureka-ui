@@ -53,19 +53,19 @@ const StyledBouncingMedalContainer = styled.div`
 `
 export default memo(function ProfileView() {
   const router = useRouter();
+  const [tab, setTab] = useState<Tab>('InProgress');
   const { account } = useAccount();
   const { userInfo } = useUserInfo();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { handleReport } = useReport();
-
   const { loading: inviteLoading, inviteList } = useInviteList();
-  const { loading: compassLoading, compassList, } = useCompassList()
-  const { loading: airdropLoading, airdropList } = useAirdropList()
-  const { loading: medalLoading, userMedalList } = useMedalList()
-  const { loading: favoriteLoading, userFavorites } = useUserFavorites()
-  const { loading: rewardLoading, userRewardRecords, queryUserRewardRecords, pager, setPager } = useUserRewardRecords()
+  const { loaded: compassLoaded, compassList, } = useCompassList(tab)
+  const { loaded: airdropLoaded, airdropList } = useAirdropList(tab)
+  const { loaded: medalLoaded, userMedalList } = useMedalList(tab)
+  const { loaded: favoriteLoaded, userFavorites } = useUserFavorites(tab)
+  const { loaded: rewardLoaded, userRewardRecords, queryUserRewardRecords, pager, setPager } = useUserRewardRecords(tab)
 
-  const [tab, setTab] = useState<Tab>('InProgress');
+
   const [openInviteFirendsModal, setOpenInviteFirendsModal] = useState(false);
 
   const { info: rewardInfo, queryUserReward } = useUserReward();
@@ -141,11 +141,11 @@ export default memo(function ProfileView() {
           <Tabs current={tab} tabsQuantity={tabsQuantity} onChange={handleChange} />
           {tab === "InProgress" && (
             <InProgress
-              {...{ compassLoading, compassList, airdropLoading, airdropList, medalLoading, userMedalList }}
+              {...{ compassLoaded, compassList, airdropLoaded, airdropList, medalLoaded, userMedalList }}
             />
           )}
-          {tab === "FavoriteApps" && <FavoriteApps {...{ loading: favoriteLoading, userFavorites }} />}
-          {tab === "RewardHistory" && <RewardHistory {...{ loading: rewardLoading, userRewardRecords, pager, maxPage, onPageChange: handlePageChange }} />}
+          {tab === "FavoriteApps" && <FavoriteApps {...{ loaded: favoriteLoaded, userFavorites }} />}
+          {tab === "RewardHistory" && <RewardHistory {...{ loaded: rewardLoaded, userRewardRecords, pager, maxPage, onPageChange: handlePageChange }} />}
         </StyledContainerBottom>
       </StyledInnerContainer>
       <InviteFirendsModal

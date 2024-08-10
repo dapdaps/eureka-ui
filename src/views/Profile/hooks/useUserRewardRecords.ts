@@ -1,17 +1,16 @@
-import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-import { CategoryList } from '@/views/AllDapps/config';
 import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
-import { DappCategoryType, DappNetworkType, FavoriteType, PagerType, RewardRecordsType } from '../types';
+import { PagerType, RewardRecordsType, Tab } from '../types';
 
 
-export default function useUserRewardRecords() {
+export default function useUserRewardRecords(tab: Tab) {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const [userRewardRecords, setUserRewardRecords] = useState<RewardRecordsType | null>(null);
+  const [loaded, setLoaded] = useState(false)
   const [loading, setLoading] = useState(false);
   const [pager, setPager] = useState<PagerType>({
     page: 1,
@@ -21,6 +20,7 @@ export default function useUserRewardRecords() {
   const queryUserRewardRecords = async (_pager: PagerType) => {
     if (loading) return;
     setLoading(true);
+    setLoaded(false);
     try {
       const result = await get(`/api/user/reward/records`, {
         ..._pager
@@ -28,10 +28,12 @@ export default function useUserRewardRecords() {
       const data = (result.data || [])
       setUserRewardRecords(data);
       setLoading(false);
+      setLoaded(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
       setLoading(false);
+      setLoaded(true);
     }
   };
 
@@ -46,8 +48,8 @@ export default function useUserRewardRecords() {
   );
 
   useEffect(() => {
-    run();
-  }, [account]);
+    tab === "RewardHistory" && run();
+  }, [account, tab]);
 
-  return { loading, pager, setPager, userRewardRecords, queryUserRewardRecords };
+  return { loading, loaded, pager, setPager, userRewardRecords, queryUserRewardRecords };
 }

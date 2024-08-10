@@ -111,7 +111,7 @@ const AccountLogo = ({
       {
         show && (
           <StyledPopup>
-            <UserInfoPopUp />
+            <UserInfoPopUp setShow={setShow} />
           </StyledPopup>
         )
       }
