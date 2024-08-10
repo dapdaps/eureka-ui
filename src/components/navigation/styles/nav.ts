@@ -29,9 +29,14 @@ export const Wrapper = styled.div`
   }
 
   [data-state='open'] {
-    &.NavigationMenuTrigger {
+    &.NavigationMenuTrigger{
       color: #EBF479;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background-color: #1F2229;
+      box-sizing: border-box;
     }
+
     .CaretDown {
       color: #EBF479;
       transform: rotate(-180deg);
