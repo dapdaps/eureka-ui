@@ -167,7 +167,6 @@ const Compass = () => {
     setShow(true);
   };
 
-  // compassList 只要有live状态就不要显示ended的 items ，没有live的话就全显
   const filterCompassList = useMemo(() => {
     const hasLive = compassList.some((compass: any) => compass.status === StatusType.ongoing);
     return hasLive ? compassList.filter((compass: any) => compass.status === StatusType.ongoing) : compassList;
@@ -276,21 +275,28 @@ const Compass = () => {
                 setShow(false);
               }}
             />
-            <StyledSwiperPrevButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slidePrev();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperPrevButton>
-            <StyledSwiperNextButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slideNext();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperNextButton>
-            <div className="swiper-pagination"></div>
+            {
+              filterCompassList?.length > 1 && (
+                <>
+                  <StyledSwiperPrevButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slidePrev();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperPrevButton>
+                  <StyledSwiperNextButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slideNext();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperNextButton>
+                  <div className="swiper-pagination"></div>
+                </>
+              )
+            }
+
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>

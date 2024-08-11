@@ -245,21 +245,28 @@ const Compass = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <StyledSwiperPrevButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slidePrev();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperPrevButton>
-            <StyledSwiperNextButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slideNext();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperNextButton>
-            <div className="swiper-pagination"></div>
+            {
+              compassList?.length > 1 && (
+                <>
+                  <StyledSwiperPrevButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slidePrev();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperPrevButton>
+                  <StyledSwiperNextButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slideNext();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperNextButton>
+                  <div className="swiper-pagination"></div>
+                      </>
+              )
+            }
+
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
