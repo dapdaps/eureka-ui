@@ -109,7 +109,6 @@ const Badges = (props: Props) => {
       <AnimatePresence>
         <TooltipSimple
           key={key}
-          height={215}
           style={{
             background: 'unset',
             padding: 0,

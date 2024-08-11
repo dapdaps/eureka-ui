@@ -84,7 +84,7 @@ export default function Portfolio() {
               <span>
               The Portfolio. beta on DapDap now supports 5 networks: Polygon zkEVM, zkSync, Linea, Scroll, Blast. If there is any issue, please
             </span>
-              <a href="javascript: void(0);">feedback here.</a>
+              <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">feedback here.</a>
             </StyledFeedbackContainer>
           </NotificationBar>
         )

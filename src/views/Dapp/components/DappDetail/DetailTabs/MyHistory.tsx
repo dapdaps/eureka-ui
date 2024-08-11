@@ -17,15 +17,16 @@ import {
 } from './styles';
 import { Column } from '../../FlexTable/styles';
 import { formatTitle } from '@/views/OnBoarding/helpers';
-import useCopy from '@/hooks/useCopy';
 import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
 import { formateAddress } from '@/utils/formate';
 import { formatUSDate } from '@/utils/date';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/config';
 import { Category } from '@/hooks/useAirdrop';
 import { useRouter } from 'next/router';
+import { copyText } from '@/utils/copy';
+import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 
 const Types: any = {
   network: 'chain',
@@ -47,7 +48,7 @@ const MyHistory = (
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
 
-  const { copy } = useCopy();
+  const copyTooltipRef = useRef<any>(null);
 
   const onPortfolioClick = () => {
     router.push('/portfolio');
@@ -104,24 +105,37 @@ const MyHistory = (
           <StyledMyAvatar url={userInfo.avatar} />
           <StyledMyAddress>{formateAddress(account ?? '')}</StyledMyAddress>
           {
-            account && (<>
-              <Image
-                className="head-icon"
-                src="/images/alldapps/icon-copy.svg"
-                width={14}
-                height={14}
-                alt="copy"
-                onClick={() => copy(account ?? '')}
-              />
-              <Image
-                className="head-icon"
-                src="/images/alldapps/icon-share.svg"
-                width={12}
-                height={12}
-                alt="share"
-                onClick={onShareClick}
-              />
-            </>)
+            account && (
+              <>
+              <TooltipSimple
+                ref={copyTooltipRef}
+                tooltip="Copied!"
+                isControlled
+              >
+                <Image
+                  className="head-icon"
+                  src="/images/alldapps/icon-copy.svg"
+                  width={14}
+                  height={14}
+                  alt="copy"
+                  onClick={() => {
+                    copyText(account ?? '', () => {
+                      if (!copyTooltipRef.current) return;
+                      copyTooltipRef.current.open();
+                    });
+                  }}
+                />
+              </TooltipSimple>
+                <Image
+                  className="head-icon"
+                  src="/images/alldapps/icon-share.svg"
+                  width={12}
+                  height={12}
+                  alt="share"
+                  onClick={onShareClick}
+                />
+              </>
+            )
           }
         </StyledHeadInfo>
         {account && isShowPortfolio && (<StyledHeadOther onClick={onPortfolioClick}>
