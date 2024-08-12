@@ -23,7 +23,7 @@ export default function Airdrops({ loaded, airdropList }: PropsType) {
   const handleClickAirdrop = function (airdrop: any) {
     console.log('=airdrop', airdrop)
     if (airdrop?.category === "network") {
-      router.push(`/networks/${IdToPath[airdrop?.id]}`)
+      router.push(`/networks/${IdToPath[airdrop?.network?.id]}`)
     } else {
       open({ dapp: airdrop?.dapp, from: "alldapps" });
     }
