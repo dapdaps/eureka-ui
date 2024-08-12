@@ -129,7 +129,11 @@ const Lending = (props: Props) => {
       setUpdateData(currMarket === 'All' ? 'All' : currMarket);
     }
   }, [forceUpdate, currMarket]);
-  
+
+  useEffect(() => {
+    triggerDataRefetch();
+  }, [account]);
+
   const getMarketsElement = () => (
     <Container>
       {updateData && (
