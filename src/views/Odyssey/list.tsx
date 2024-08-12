@@ -5,15 +5,16 @@ import { useMemo, useState } from 'react';
 import { StatusType } from './components/Tag';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
-
+import OdysseyChroma from './components/OdysseyChroma'
 
 const StyledWrapper = styled.div`
   --var-container-width: 1244px;
+  position: relative;
   .section {
-    background-image: url('/images/odyssey/odyssey-list-bg.png');
+    /* background-image: url('/images/odyssey/odyssey-list-bg.png');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
     height: 745px;
     display: flex;
     align-items: center;
@@ -21,6 +22,7 @@ const StyledWrapper = styled.div`
     flex-flow: column wrap;
     gap: 116px;
     @media (max-width: 1440px) {
+      transform: scale(0.95);
       gap: 56px;
       transition: all 0.5s ease 0s;
     }
@@ -77,6 +79,20 @@ const StyledWrapper = styled.div`
     }
 `;
 
+const StyledContent = styled.div`
+  position: relative;
+  z-index: 1;
+`
+
+const OdysseyChromaWrapper = styled.div`
+  width: 100%;
+  height: 745px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+`
+
 const LoadingSkeleton = () => (
     <StyledWrapper>
         <div className="odyssey-card">
@@ -98,7 +114,7 @@ const SwiperList = dynamic(() => import('./components/Swiper'), {
   });
 
 const OdysseyList = () => {
-  const { loading, compassList } = useCompassList();
+  const { compassList } = useCompassList();
   const [tab, setTab] = useState<Tab>(Tab.All);
 
   const filterConditions = {
@@ -114,6 +130,7 @@ const OdysseyList = () => {
   return (
     <>
       <StyledWrapper>
+        <StyledContent>
         <div className="section">
           <div className="head">
             <img className="slogen" src="/images/odyssey/welcome/logo.png" alt="logo"></img>
@@ -147,6 +164,10 @@ const OdysseyList = () => {
             ))}
           </div>
         </div>
+        </StyledContent>
+        <OdysseyChromaWrapper>
+          <OdysseyChroma />
+        </OdysseyChromaWrapper>
       </StyledWrapper>
     </>
   );
