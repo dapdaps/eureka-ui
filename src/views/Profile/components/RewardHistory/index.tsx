@@ -101,13 +101,14 @@ const Pager = function ({ maxPage, pager, onPageChange }: {
           <path fill-rule="evenodd" clip-rule="evenodd" d="M26.6907 29.8186C27.0461 29.5331 27.1037 29.0123 26.8194 28.6554L23.1107 24L26.8194 19.3446C27.1037 18.9877 27.0461 18.4669 26.6907 18.1814C26.3353 17.8959 25.8167 17.9537 25.5324 18.3106L21 24L25.5324 29.6894C25.8167 30.0463 26.3353 30.1041 26.6907 29.8186Z" fill="#979ABE" />
         </svg>
       </StyledSvg>
-      <StyledFlex>
+      <StyledFlex gap="12px">
         {
           new Array(maxPage).fill("").map((_, index) => {
             const pageNumber = index + 1
             return (
               <StyledPageNumberContainer
                 key={index}
+                style={{ cursor: pageNumber === pager?.page ? 'not-allowed' : 'pointer' }}
                 onClick={() => {
                   onPageChange(pageNumber)
                 }}

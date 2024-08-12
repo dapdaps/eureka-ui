@@ -393,7 +393,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
           <StyledPanelBg
             src={currentChain?.bgIcon}
             style={
-              currentChain?.bgColor ? { filter: `drop-shadow(${hexToRgba(currentChain?.bgColor, 0.03)} 10000px 0)` } : {}
+              currentChain?.selectBgColor ? { filter: `drop-shadow(${hexToRgba(currentChain?.selectBgColor, 0.03)} 10000px 0)` } : {}
             } alt=""
           />
           {
