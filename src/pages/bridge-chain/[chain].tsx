@@ -1,13 +1,7 @@
-import { useSetChain } from '@web3-onboard/react';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import createKeccakHash from 'keccak'
-import swapConfig from '@/config/swap/networks';
-import lendingConfig from '@/config/lending/networks';
-import useReport from '@/views/Landing/hooks/useReport';
-import useAuthCheck from '@/hooks/useAuthCheck';
 import useAccount from '@/hooks/useAccount';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import popupsData from '@/config/all-in-one/chains';
@@ -18,25 +12,19 @@ import { useDebounceFn } from 'ahooks';
 import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
 import { get } from '@/utils/http'
-import { ethers } from 'ethers'
 import type { NextPageWithLayout } from '@/utils/types';
-
-
-const arrow = (
-  <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1 1L4 4L1 7" stroke="#979ABE" strokeLinecap="round" />
-  </svg>
-);
-
-const narrowUrl = 'https://assets.dapdap.net/images/bafkreien4qagdjuudb6yj53wutsj4f6zfodrgv4ztftzjgkvcdtjnjk564.svg';
-
-const checkMark = 'https://assets.dapdap.net/images/bafkreig7b3k2jhkk6znb56pdsaj2f4mzadbxdac37lypsbdgwkj2obxu4y.svg';
+import DappBack from '@/components/PageBack';
+import DappFallback from '@/views/Dapp/components/Fallback';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
 
 const Container = styled.div`
   margin: 0 8%;
   color: #ffffff;
   position: relative;
   padding-top: 50px;
+  .page-back {
+    margin-bottom: 32px;
+  }
   .top-login-select {
     margin-right: 16px;
     border-radius: 12px;
@@ -125,6 +113,7 @@ const Container = styled.div`
     width: 100%;
     position: relative;
     padding-top: 50px;
+    min-height: 575px;
     /* position: absolute; */
   }
   .select-bg-icon {
@@ -188,15 +177,11 @@ const AllInOne: NextPageWithLayout = () => {
   const [chainConfig, setChainConfig] = useState<any>(null)
   const { account, chainId } = useAccount();
   const [ checkSumAccount, setCheckSumAccount ] = useState<string>()
-  const [{ settingChain }, setChain] = useSetChain();
-  const { handleReport } = useReport();
   const prices = usePriceStore((store) => store.price);
   const [tab, setTab] = useState('');
-  const sourceTab = useAllInOneTabStore((store: any) => store.tab);
   const cachedTabsStore: any = useAllInOneTabCachedStore();
   const { addAction } = useAddAction('dapp');
-  const popupRef = useRef<HTMLDivElement | null>(null);
-  const { check } = useAuthCheck({ isNeedAk: false });
+  const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 
   const { run } = useDebounceFn(
     () => {
@@ -210,7 +195,6 @@ const AllInOne: NextPageWithLayout = () => {
 
   useEffect(() => {
     if (currentChain && !chainConfig) {
-      // get(`https://api.dapdap.net/api/dapp?route=bridge-chain/${currentChain.path}`)
       get(`/api/dapp?route=bridge-chain/${currentChain.path}`)
       .then(res => {
         if (res.code === 0) {
@@ -231,17 +215,13 @@ const AllInOne: NextPageWithLayout = () => {
       setCheckSumAccount(checkSumAccount)
     }
   }, [account])
-  
 
-  return currentChain ? (
+  return (
+      currentChain ? (
     <Container key={chain}>
-      <BreadCrumbs>
-        <Link href="/">Home</Link>
-        {arrow}
-        <Link href="/alldapps">dApps</Link>
-        {arrow}
-        <span>{currentChain.title} Bridge</span>
-      </BreadCrumbs>
+      <div className='page-back'>
+        <DappBack defaultPath="/alldapps"/>
+      </div>
       <>
         <div className="select-bg-icon">
           <div className="select-bg-content">
@@ -266,14 +246,21 @@ const AllInOne: NextPageWithLayout = () => {
               onChangeTab: (tab: string) => {
                 cachedTabsStore.setCachedTab(tab, currentChain.chainId);
                 setTab(tab);
-              },
+              }
             }}
           />
         </div>
       </>
+      <DappDetailScroll />
+      <Suspense fallback={<DappFallback />}>
+        {
+          chainConfig ? <DappDetail {...chainConfig} /> : null
+        }
+      </Suspense>
     </Container>
   ) : (
     <div />
+  )
   );
 };
 

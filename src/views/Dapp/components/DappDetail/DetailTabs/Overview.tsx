@@ -92,7 +92,7 @@ const Overview = (props: any) => {
     try {
       const json = JSON.parse(native_currency) || undefined;
       if (json) {
-        json.address = NativeTokenAddressMap[json.symbol.toUpperCase()];
+        json.address = json?.address || NativeTokenAddressMap[json.symbol.toUpperCase()];
         if (!json.address && chain_id) {
           const currChainTokenList = tokens[chain_id];
           if (currChainTokenList) {
@@ -322,41 +322,45 @@ const Overview = (props: any) => {
                     <StyledTokenItem>
                       <StyledTokenLabel>Token Address</StyledTokenLabel>
                       <StyledTokenInfo>
-                        <StyledTokenLogo url={nativeCurrency?.logo} />
+                        { nativeCurrency?.logo && (<StyledTokenLogo url={nativeCurrency?.logo} />)}
                         <StyledTokenAddress>
-                          {nativeCurrency?.address ? nativeCurrency?.address.substring(0, 5) + '...' + nativeCurrency?.address.substring(nativeCurrency?.address.length - 6) : ''}
+                          {nativeCurrency?.address ? nativeCurrency?.address.substring(0, 5) + '...' + nativeCurrency?.address.substring(nativeCurrency?.address.length - 6) : '-'}
                         </StyledTokenAddress>
-                        <TooltipSimple
-                          ref={copyTooltipRef}
-                          tooltip="Copied!"
-                          isControlled
-                        >
-                          <StyledImageButton
-                            src="/images/alldapps/icon-copy.svg"
-                            width={14}
-                            height={14}
-                            alt="copy"
-                            onClick={onCopyCurrency}
-                          />
-                        </TooltipSimple>
-                        <StyledImageButton
-                          src="/images/alldapps/icon-share.svg"
-                          width={12}
-                          height={12}
-                          alt="share"
-                          onClick={onBrowser}
-                        />
-                        <StyledImageButton
-                          src="/images/alldapps/icon-metamask.svg"
-                          width={17}
-                          height={17}
-                          alt="metamask"
-                          onClick={() => {
-                            check(() => {
-                              handleAddWallet();
-                            });
-                          }}
-                        />
+                        {
+                          nativeCurrency?.address && (<>
+                            <TooltipSimple
+                              ref={copyTooltipRef}
+                              tooltip="Copied!"
+                              isControlled
+                            >
+                              <StyledImageButton
+                                src="/images/alldapps/icon-copy.svg"
+                                width={14}
+                                height={14}
+                                alt="copy"
+                                onClick={onCopyCurrency}
+                              />
+                            </TooltipSimple>
+                            <StyledImageButton
+                              src="/images/alldapps/icon-share.svg"
+                              width={12}
+                              height={12}
+                              alt="share"
+                              onClick={onBrowser}
+                            />
+                            <StyledImageButton
+                              src="/images/alldapps/icon-metamask.svg"
+                              width={17}
+                              height={17}
+                              alt="metamask"
+                              onClick={() => {
+                                check(() => {
+                                  handleAddWallet();
+                                });
+                              }}
+                            />
+                          </>)
+                        }
                       </StyledTokenInfo>
                     </StyledTokenItem>
                   </StyledTokenContainer>

@@ -449,6 +449,7 @@ export const StyledTokenInfo = styled.div`
   display: flex;
   align-items: center;
   column-gap: 12px;
+  color: #ffffff;
 `;
 
 export const StyledTokenLogo = styled.div<{url?: string}>`

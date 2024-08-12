@@ -74,7 +74,7 @@ const NativeCurrency = (
   }, [nativeCurrency]);
 
   const isTBD = tbdToken === 'Y';
-  const currencyName = isTBD ? 'TBD🔥' : (mergedCurrency?.symbol ?? '');
+  const currencyName = isTBD ? 'TBD🔥' : (mergedCurrency?.symbol || '-');
 
   const onCurrency = () => {
     if (!isTag) {

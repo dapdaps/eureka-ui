@@ -504,8 +504,8 @@ export default function LaunchpadHomePage() {
   const userStore = useUserStore((store: any) => store.user);
   const { loading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
   const { user, queryUser } = useUser()
-  const dappPathname = router.query.dappRoute as string;
-  const { dapp } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
+  const dappPathname = router.pathname ?? '';
+  const { dapp } = useDappInfo(dappPathname.slice(1));
 
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
