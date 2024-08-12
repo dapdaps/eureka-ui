@@ -1,3 +1,4 @@
+import popupsData, { IdToPath } from '@/config/all-in-one/chains';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
@@ -29,7 +30,8 @@ export default function useAirdropList(tab: Tab) {
           const ids = airdrop?.dapp?.network_ids?.split(',')
           const networks: NetworkType[] = []
           ids.forEach((id: number) => {
-            const chain = chainCofig[id]
+            const currChain = popupsData[IdToPath[id]]
+            const chain = chainCofig[currChain?.chainId]
             chain && networks.push(chain)
           })
           airdrop.dapp.networks = networks

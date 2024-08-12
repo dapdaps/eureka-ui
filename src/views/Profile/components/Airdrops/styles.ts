@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const StyledContainer = styled.div`
 `
 export const StyledAirdropCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 405px;
   height: 174px;
   padding: 19px 20px 14px;
