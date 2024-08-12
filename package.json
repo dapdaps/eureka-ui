@@ -68,6 +68,7 @@
     "ethers": "^5.5.0",
     "find-replacement-tx": "^1.2.3",
     "firebase": "^10.6.0",
+    "framer": "^2.4.1",
     "framer-motion": "^10.16.5",
     "iframe-resizer-react": "^1.1.0",
     "jsbi": "^4.3.0",
