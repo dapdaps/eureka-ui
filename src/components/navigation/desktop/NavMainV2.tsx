@@ -112,10 +112,12 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger">
-              <IconSwap />
-              Swap
-            </NavigationMenu.Trigger>
+            <Link href="/super-swap">
+              <NavigationMenu.Trigger className="NavigationMenuTrigger">
+                <IconSwap />
+                Swap
+              </NavigationMenu.Trigger>
+            </Link>
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
@@ -136,11 +138,11 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-          <Link href='/alldapps'>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger">
-              DApps
-            </NavigationMenu.Trigger>
-            </Link>
+            <Link href='/alldapps'>
+              <NavigationMenu.Trigger className="NavigationMenuTrigger">
+                DApps
+              </NavigationMenu.Trigger>
+              </Link>
           </NavigationMenu.Item>
         </NavigationMenu.List>
       </NavigationMenu.Root>
