@@ -30,11 +30,11 @@ export const Wrapper = styled.div`
 
   [data-state='open'] {
     &.NavigationMenuTrigger{
-      color: #EBF479;
       padding: 10px 14px;
       border-radius: 12px;
       background-color: #1F2229;
       box-sizing: border-box;
+      cursor: pointer;
     }
 
     .CaretDown {
@@ -73,12 +73,7 @@ export const Wrapper = styled.div`
     box-sizing: border-box;
     .arrow-icon:hover { color: #EBF479; }
   } */
-  .NavigationMenuTrigger:hover,
-  .NavigationMenuLink:hover {
-    cursor: pointer;
-    color: #EBF479;
-    .arrow-icon:hover { color: #EBF479; }
-  }
+
 
   .NavigationMenuTrigger {
     display: flex;
