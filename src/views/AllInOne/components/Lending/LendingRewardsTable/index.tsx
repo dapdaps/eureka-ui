@@ -113,7 +113,7 @@ const LendingRewardsTable = (props: IProps) => {
             onButtonClick={handleButtonClick}
         />
       </RewardsTable>
-      {state.loading && state.dapp && (
+      {state.dapp && (
         <VmComponent
           src={state.dapp.handlerClaim}
           props={{
