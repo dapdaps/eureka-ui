@@ -115,6 +115,17 @@ const StyleDropdown = styled.div`
       margin-bottom: 24px;
       display: inline-block;
     }
+    .mystery-header {
+        font-family: Montserrat;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        background: linear-gradient(90deg, #FFFFFF 0%, #979ABE 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+    }
   }
 `;
 
@@ -300,7 +311,7 @@ const CheckIn = () => {
                     )}
                     {data && data.data?.length > 0 && (
                       <div className="dropdown-mystery">
-                        <img className="mystery-img" src="/images/header/dapdap-mystery-text.png" alt="mystery" />
+                        <div className='mystery-header'>GM, Keep the Streak Alive !</div>
                         <div className="dropdown-mystery-box">
                           <CheckInGrid ref={checkInGridRef} dayStatus={data.data} />
                         </div>

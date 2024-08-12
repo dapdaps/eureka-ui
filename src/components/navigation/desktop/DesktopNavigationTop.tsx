@@ -82,6 +82,11 @@ const StyledSearch = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  &:hover {
+      border-radius: 12px;
+      background-color: #1F2229;
+      box-sizing: border-box;
+  }
 `
 
 

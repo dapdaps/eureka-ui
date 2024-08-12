@@ -9,6 +9,7 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
 import ChainMap from '@/config/chains';
+import Skeleton from 'react-loading-skeleton';
 
 import IconArrow from '@public/images/home/arrow-right.svg';
 import IconClickArrow from '@public/images/home/click-arrow.svg';
@@ -174,9 +175,7 @@ const Compass = () => {
   , [compassList]);
 
   return loading ? (
-    <StyledLoadingWrapper>
-      <Loading size={60} />
-    </StyledLoadingWrapper>
+    <Skeleton height={405} borderRadius={12} />
   ) : (
     <StyledContainer>
       <StyledContent>
