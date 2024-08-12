@@ -3,10 +3,13 @@ import '@/styles/globals.css';
 import '@near-wallet-selector/modal-ui/styles.css';
 import 'react-toastify/dist/ReactToastify.css';
 import 'react-loading-skeleton/dist/skeleton.css';
+import 'nprogress/nprogress.css';
 
 import { useDebounceFn } from 'ahooks';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
+import NProgress from 'nprogress';
+
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
@@ -47,6 +50,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const authStore = useAuthStore();
 
   const componentSrc = router.query;
+
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      NProgress.start()
+    });
+    router.events.on('routeChangeComplete', () => {
+      NProgress.done()
+    });
+    router.events.on('routeChangeError', () => {
+      NProgress.done()
+    });
+  }, [])
 
   useEffect(() => {
     // Displays the Zendesk widget only if user is signed in and on the home page
