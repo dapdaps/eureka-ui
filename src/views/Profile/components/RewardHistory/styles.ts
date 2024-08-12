@@ -137,6 +137,7 @@ export const StyledRewardList = styled.div`
 `
 export const StyledPageNumberContainer = styled.div`
   position: relative;
+  cursor: pointer;
 `
 export const StyledPageNumber = styled.div`
   position: absolute;

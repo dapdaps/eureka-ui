@@ -70,7 +70,7 @@ export default memo(function ProfileView() {
 
   const { info: rewardInfo, queryUserReward } = useUserReward();
 
-  const maxPage = useMemo(() => Math.ceil(userRewardRecords?.total ?? 0 / pager.page_size), [userRewardRecords?.total, pager])
+  const maxPage = useMemo(() => Math.ceil((userRewardRecords?.total ?? 0) / pager.page_size), [userRewardRecords?.total, pager])
   const tabsQuantity = useMemo(() => {
     const inProgressQuantity = compassList?.length + airdropList?.length + userMedalList?.length
     const favoriteAppsQuantity = userFavorites?.total ?? 0
@@ -92,7 +92,7 @@ export default memo(function ProfileView() {
     setTab(_tab);
   };
   const handlePageChange = function (page: number) {
-    if (page < 1 || page > maxPage) {
+    if (page < 1 || page > maxPage || page === pager.page) {
       return
     }
     const _pager = {
