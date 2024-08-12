@@ -117,7 +117,7 @@ const Lending = (props: Props) => {
     onMarketChange(_tabConfig?.defaultDapp ?? 'All');
   }, [chain]);
 
-  const RestTheme = chain.menuConfig.Lending?.Theme;
+  const RestTheme = chain.menuConfig.Lending?.Theme ?? styled.div``;
   const [forceUpdate, setForceUpdate] = useState(0);
 
   const triggerDataRefetch = useCallback(() => {
