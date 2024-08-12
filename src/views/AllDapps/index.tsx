@@ -205,7 +205,7 @@ const AllDapps = (props: Props) => {
     if (checkQueryEmpty(decodeURIComponent(_searchWord as string), () => true)) {
       setSearchWord(decodeURIComponent(_searchWord as string));
     } else {
-      setSearchWord('');
+      setSearchWord(undefined);
     }
 
     if (window.scrollY > 0) {
