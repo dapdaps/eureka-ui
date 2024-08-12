@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { QUEST_PATH } from "@/config/quest";
 import { formatIntegerThousandsSeparator } from "@/utils/format-number";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 const StyleFeatures = styled.div`
     margin: 0 auto;
@@ -41,6 +42,11 @@ const StyleFeatures = styled.div`
         align-items: center;
         gap: 158px;
         margin-bottom: 200px;
+        a {
+            &:hover {
+                text-decoration: none;
+            }
+        }
         .section {
             display: flex;
             align-items: center;
@@ -165,20 +171,24 @@ const SuperFeatures = () => {
         <div className="title">Super <span>Features</span></div>
         <div className="subTitle">DapDap engages users in 5-10 mins in Super features by helping users to jump in crypto world more effectively.</div>
         <div className="engages">
-            <div className="section bridge" onClick={() => router.push('/super-bridge')}>
-                <img className="logo" src="/images/home/logo-bridge.png" alt="bridge" />
-                <div className="desc" >
-                    <div className="desc-title">Super Bridge</div>
-                    <div className="tips">Transfer assets between Ethereum and EVM L2s super easily.</div>
+            <Link href='/super-bridge'>
+                <div className="section bridge">
+                    <img className="logo" src="/images/home/logo-bridge.png" alt="bridge" />
+                    <div className="desc" >
+                        <div className="desc-title">Super Bridge</div>
+                        <div className="tips">Transfer assets between Ethereum and EVM L2s super easily.</div>
+                    </div>
                 </div>
-            </div>
+            </Link>
+            <Link href='/super-swap'>
             <div className="section">
                 <img className="logo" src="/images/home/logo-swap.png" alt="swap" />
                 <div className="desc">
                     <div className="desc-title">Super Swap</div>
                     <div className="tips">Transfer assets between Ethereum and EVM L2s super easily.</div>
                 </div>
-            </div>
+            </div> 
+            </Link>
         </div>
         <div className="platform">
             <div className="head">
