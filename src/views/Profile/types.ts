@@ -79,7 +79,10 @@ export type DappType = {
 }
 
 export type FeatureType = {
-
+  relate_id: number;
+  id: number;
+  account_id: number;
+  category: string;
 }
 
 type MedalCategory = "dapp" | "invite" | "chain" | "check_in" | "odyssey"

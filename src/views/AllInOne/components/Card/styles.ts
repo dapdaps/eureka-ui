@@ -121,6 +121,11 @@ export const StyledTitle = styled.div`
       display: none;
     }
   }
+  .like-tag {
+    border: 1px #373A53;
+    background: rgba(16, 17, 21, 0.50);
+    backdrop-filter: blur(5px);
+  }
 `;
 
 export const StyledContent = styled.div`

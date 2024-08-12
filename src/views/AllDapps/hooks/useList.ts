@@ -22,9 +22,6 @@ export default function useList(props: Props) {
   const [pageIndex, setPageIndex] = useState<number>(1);
 
   const fetchDappList = async (page: number) => {
-    if (loading) {
-      return;
-    }
     setPageIndex(page);
     try {
       setLoading(true);

@@ -3,6 +3,7 @@ import React, { memo } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 import { StyledContent, StyledDetailCard, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
+import Like from '@/components/Like/index';
 
 const AllInOneDetailCardView: React.FC<Props> = (props) => {
   const {
@@ -11,7 +12,8 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
     subTitle,
     style,
     config,
-    onShowSettings = () => {}
+    onShowSettings = () => {},
+    likeId
   } = props;
 
   const router = useRouter();
@@ -33,6 +35,7 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
               <ArrowBack classname="arrow-back" />
             </StyledPointer>
             <h3>{title}</h3>
+            <Like id={likeId} category='all-in-one' classname='like-tag'/>
           </StyledFlex>
           <div className="sub-title">{subTitle}</div>
         </StyledTitle>
@@ -62,6 +65,7 @@ interface Props {
   style?: React.CSSProperties;
   config?: boolean;
   onShowSettings?: () => void;
+  likeId: number;
 }
 
 const ArrowBack = ({ classname }: { classname?: string }) => {
@@ -76,7 +80,11 @@ const ArrowBack = ({ classname }: { classname?: string }) => {
     >
       <path
         d="M7 12.4999H9.2C11.2987 12.4999 13 10.7986 13 8.6999V8.6999C13 6.60122 11.2987 4.8999 9.2 4.8999H1M1 4.8999L4.8999 1M1 4.8999L4.6001 8.5"
-        stroke="#979ABE" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        stroke="#979ABE"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };

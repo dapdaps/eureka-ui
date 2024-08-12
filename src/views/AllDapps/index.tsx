@@ -217,7 +217,7 @@ const AllDapps = (props: Props) => {
     <StyledContainer>
       <AllDappsTitle
         categoryRef={categoryRef}
-        animation={categoryAnimation(scrolled, {zIndex: 49, top: 72 }, { zIndex: 0, top: 0 })}
+        animation={categoryAnimation(scrolled, {zIndex: 49, top: 70 }, { zIndex: 0, top: 0 })}
         onCategory={onSelectCategory}
         activeCategory={category}
         dappList={titleDappList ?? []}

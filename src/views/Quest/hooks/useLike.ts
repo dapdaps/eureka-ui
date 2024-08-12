@@ -4,7 +4,7 @@ import { QUEST_PATH } from '@/config/quest';
 import useToast from '@/hooks/useToast';
 import { get, post } from '@/utils/http';
 
-export default function useLike(id: string, category: string) {
+export default function useLike(id: string | number, category: string) {
   const [like, setLike] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();

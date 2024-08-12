@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
-import Bridge from '@/views/AllInOne/components/Bridge';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
-import chainCofig from '@/config/chains'
-import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent'
+import chainCofig from '@/config/chains';
+import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent';
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
@@ -47,6 +46,14 @@ const AllInOneDetailView = (props: Props) => {
     return !['liquidity', 'lending'].includes(menu);
   }, [menu]);
 
+  const formatLikeId = () => {
+    if (currentChain.chainId && currentMenu.id) {
+      const _id = currentChain.chainId + '' + currentMenu.id;
+      return isNaN(Number(_id)) ? -1 : Number(_id);
+    }
+    return -1;
+  }
+
   return (
     <>
       <StyledContainer>
@@ -63,6 +70,7 @@ const AllInOneDetailView = (props: Props) => {
             {
               showComponent && (
                 <AllInOneDetailCardView
+                  likeId={formatLikeId()}
                   key={menu}
                   title={currentMenu?.tab}
                   subTitle={currentMenu.description}

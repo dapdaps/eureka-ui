@@ -16,12 +16,11 @@ import {
   StyledSummaryLabel,
   StyledSummaryValue,
   StyledSummaryAdd,
-  StyledSummaryAddIcon,
-  StyledFavoritedTag,
+  StyledSummaryAddIcon
 } from './styles';
-import useLike from '@/views/Quest/hooks/useLike';
 import Big from 'big.js';
 import { percentDirection } from '@/views/networks/list/components/value-percent';
+import Like from '@/components/Like/index';
 
 const DappSummary = (props: Props) => {
 
@@ -34,9 +33,7 @@ const DappSummary = (props: Props) => {
     dappId,
   } = props;
 
-  const { loading, categories: allCaregories } = useCategoryDappList();
-
-  const { like, handleLike } = useLike(dappId, 'dapp');
+  const { categories: allCaregories } = useCategoryDappList();
 
   function getCategoryNames(dappCategories: any[], categoryArray: any[]) {
     if (!Array.isArray(dappCategories)) {
@@ -68,9 +65,7 @@ const DappSummary = (props: Props) => {
                   {categoryName}
                 </StyledDetailCategory>
               ))}
-            <StyledFavoritedTag $isFavorited={like} onClick={() => handleLike(!like)}>
-              {renderFavoritedIcon(like)}
-            </StyledFavoritedTag>
+           <Like id={dappId} category='dapp' />
           </StyledDetailDesc>
           <StyledNetworksContainer>
             {
