@@ -55,7 +55,7 @@ export default function useUserFavorites(tab: Tab) {
   );
 
   useEffect(() => {
-    tab === "FavoriteApps" && run();
+    (tab === "FavoriteApps" || !loaded) && run();
   }, [account, tab]);
 
   return { loading, loaded, userFavorites, queryUserFavorites };

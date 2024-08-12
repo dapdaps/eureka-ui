@@ -150,7 +150,7 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
 
   const twitterUsername = useMemo(() => {
     const _twitterUsername = userInfo?.twitter?.twitter_username
-    return _twitterUsername.length > 10 ? _twitterUsername.slice(0, 10) + '...' : _twitterUsername
+    return _twitterUsername?.length > 10 ? _twitterUsername.slice(0, 10) + '...' : _twitterUsername
   }, [userInfo])
   const features = [{
     icon: (

@@ -1,6 +1,6 @@
 import chainCofig from '@/config/chains';
 import Badges from '@/views/AllDapps/components/Badges';
-import NetworksBg from '@public/images/home/networks_bg.svg'
+import NetworksBg from '@public/images/home/networks_bg.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, type CSSProperties, type FC, type ReactNode } from 'react';
@@ -9,9 +9,10 @@ import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 
 import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
 import useDappOpen from '@/hooks/useDappOpen';
-import { useRouter } from 'next/router';
-import { StyledContainer, StyledSvg } from '@/styled/styles';
+import { StyledContainer } from '@/styled/styles';
+import hexToRgba from '@/utils/hexToRgba';
 import { DappType } from '@/views/Profile/types';
+import { useRouter } from 'next/router';
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -72,11 +73,6 @@ const PrimaryPanels = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .bg {
-    position: absolute;
-    top: 79px;
-    right: 30px;
-  }
   .panel {
     display: flex;
     flex-direction: column;
@@ -93,6 +89,7 @@ const PrimaryPanels = styled.div`
     backdrop-filter: blur(10px);
   }
   .panel-top {
+    position: relative;
     width: 100%;
     flex: 1;
     padding: 30px 30px 0;
@@ -343,6 +340,15 @@ const Hottest = styled.div`
     top: -18px;
   }
 `
+const StyledPanelBg = styled.img`
+  position: absolute;
+  top: 79px;
+  right: 30px;
+  width: 207px;
+  height: 179px;
+  transform: translateX(-10000px);
+  object-fit: contain;
+`
 
 const Dapp = ({ dapp, setCurrentDapp, setBoundingClientRect, onDappCardClick }: any) => {
   return (
@@ -372,6 +378,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
   const [running, setRunning] = useState(false)
   const [currentDapp, setCurrentDapp] = useState<DappType | null>(null)
   const [boundingClientRect, setBoundingClientRect] = useState<any>(null)
+  console.log('====currentChain', currentChain)
   return (
     <>
       <div
@@ -383,7 +390,12 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
         }}
       >
         <div className='panel-top'>
-          <Image className="bg" src={currentChain?.icon} width={207} height={179} style={{ opacity: 0.04 }} alt="" />
+          <StyledPanelBg
+            src={currentChain?.bgIcon}
+            style={
+              currentChain?.bgColor ? { filter: `drop-shadow(${hexToRgba(currentChain?.bgColor, 0.03)} 10000px 0)` } : {}
+            } alt=""
+          />
           {
             network?.odyssey?.length > 0 && (
               <div className='odyssey-svg'>
