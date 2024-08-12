@@ -49,7 +49,8 @@ const Liquidity = (props: Props) => {
             curChain: {
               ...currentChain,
               logo: currentChain?.icon,
-              name: currentChain?.chainName
+              name: currentChain?.chainName,
+              chain_id: currentChain?.chainId
             },
 
             multicallAddress: multicallConfig[currentChain?.chainId as any],
