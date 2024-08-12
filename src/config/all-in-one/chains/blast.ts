@@ -4,6 +4,7 @@ export default {
   icon: '/images/chains/blast.svg',
   bgColor: '#FDFE03',
   bgIcon: '/images/chains/blast_white.svg',
+  textColor: '#000',
   selectBgColor: '#FDFE03',
   chainId: 81457,
   rpcUrls: ['https://rpc.blast.io'],
@@ -18,10 +19,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Blast.BridgeAuthority.Index',
+      description: 'Intuitively across different network to Blast',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Blast.Swap',
+      description: 'Efficiently from/to any assets on Blast',
+    },
+    Liquidity: {
+      tab: 'Liquidity',
+      path: 'bluebiu.near/widget/Liquidity.ALL',
+      description: 'Seamlessly adding LP to any pair',
     },
     // Lending: {
     //   tab: 'Lending',

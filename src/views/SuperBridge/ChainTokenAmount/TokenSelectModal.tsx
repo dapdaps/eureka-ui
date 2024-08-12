@@ -15,7 +15,7 @@ import { chain } from "lodash";
 
 const Container = styled.div`
     display: flex;
-    max-height: 500px;
+    height: 500px;
 `
 
 const ChainWapper = styled.div`
@@ -24,7 +24,6 @@ const ChainWapper = styled.div`
     padding: 20px 0 20px 0;
     max-height: 100%;
     min-height: 100px;
-    
     .chain-tip {
         position: absolute;
         left: 0;

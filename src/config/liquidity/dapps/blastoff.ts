@@ -5,6 +5,7 @@ import { optimism } from '@/config/tokens/optimism';
 
 const basic = {
   name: 'BlastOff',
+  dappSrc: 'bluebiu.near/widget/Liquidity.Gamma',
 };
 const networks = {
   // blast

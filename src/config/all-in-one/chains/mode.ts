@@ -5,6 +5,7 @@ export default {
   bgColor: '#DFFE00',
   bgIcon: '/images/chains/mode_white.svg',
   selectBgColor: '#DFFE00',
+  textColor: '#000',
   chainId: 34443,
   rpcUrls: ['https://mainnet.mode.network'],
   defaultTab: 'Swap',
@@ -20,7 +21,7 @@ export default {
       path: 'bluebiu.near/widget/Mode.BridgeAuthority.Index',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Mode.Swap',
     },
     Lending: {

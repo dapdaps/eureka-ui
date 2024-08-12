@@ -68,6 +68,7 @@ interface Props {
     fromToken: Token | undefined;
     toToken: Token | undefined;
     amount: string;
+    theme?: any;
     reciveAmount: string | null;
     toAddress: string;
     route: QuoteResponse | null;
@@ -77,10 +78,12 @@ interface Props {
 }
 
 export default function ConfirmModal({
-    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, toAddress, route, reciveAmount, isLoading, onTransactionClick
+    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, theme, toAddress, route, reciveAmount, isLoading, onTransactionClick
 } : Props) {
     const prices = usePriceStore((store) => store.price);
     const router = useRouter();
+
+    const styles = { backgroundColor: theme.selectBgColor, color: theme.textColor }
 
     return <Modal onClose={() => {
         onClose()
@@ -96,14 +99,11 @@ export default function ConfirmModal({
 
         <Desc>
             Transaction completed. You can view it on <span className="transactions" onClick={() => {
-                // onTransactionClick && onTransactionClick()
                 router.push('/super-bridge/transaction')
             }}>My Transactions </span>page.
         </Desc>
        
-        <Container onClick={onClick}>+ New Transfer</Container>
+        <Container style={styles} onClick={onClick}>+ New Transfer</Container>
         
     </Modal>
-
-    
 }

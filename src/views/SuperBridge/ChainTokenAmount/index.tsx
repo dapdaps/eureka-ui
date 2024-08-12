@@ -79,6 +79,8 @@ const Content = styled.div`
     justify-content: space-between;
     gap: 10px;
     padding: 12px 16px;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
 `
 
 const AmountWapper = styled.div`
@@ -230,7 +232,7 @@ export default function ChainTokenAmount({
         symbol: currentToken?.symbol
     })
 
-    return <Wapper style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
+    return <Wapper style={{ background: 'rgba(46, 49, 66, 1)' }}>
         <Header>
             <ChainWapper>
                 <ChainName>{title}</ChainName>
@@ -244,7 +246,7 @@ export default function ChainTokenAmount({
             </ChainWapper>
             <AddressWapper>{address}</AddressWapper>
         </Header>
-        <Content>
+        <Content style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
             <AmountWapper>
                 <AmountInput value={amount} onFocus={() => {
                     setFocus(true)

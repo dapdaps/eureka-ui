@@ -1,5 +1,6 @@
 import weths from '../../contract/weth';
-
+import gamma from '../dapps/gamma';
+import steer from '../dapps/steer';
 const CHAIN_ID = 81457;
 const CHAIN_NAME = 'Blast';
 export default {
@@ -13,7 +14,15 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: '',
+  defaultDapp: 'gamma',
   dapps: {
+    gamma: {
+      ...gamma.basic,
+      ...gamma.networks[CHAIN_ID],
+    },
+    steer: {
+      ...steer.basic,
+      ...steer.networks[CHAIN_ID]
+    }
   },
 };

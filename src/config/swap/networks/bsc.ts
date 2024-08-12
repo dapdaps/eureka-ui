@@ -3,19 +3,12 @@ import { basic as apeSwapBasic, networks as apeSwapNetworks } from '../dapps/ape
 import { basic as orionBasic, networks as orionNetworks } from '../dapps/orion';
 import { basic as thenaV1Basic, networks as thenaV1Networks } from '../dapps/thena-v1';
 import { basic as joeTraderBasic, networks as joeTraderNetworks } from '../dapps/trader-joe';
-
+import { bsc } from '@/config/tokens/bsc';
 const CHAIN_ID = 56;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'BNB',
-  displayChainName: 'BNB Chain',
-  wethAddress: '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
-  connectProps: {
-    noAccountTips: 'BNB Chain Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to BNB Chain.',
-  },
-  defalutDex: 'Biswap',
+  defalutInputCurrency: bsc['bnb'],
   dexs: {
     Biswap: {
       ...biSwapBasic,
