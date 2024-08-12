@@ -28,8 +28,8 @@ const LandingPage: NextPageWithLayout = () => {
   }
 
   useEffect(() => {
-    getKolInfo();
-  }, []);
+    router?.query?.kolName && getKolInfo();
+  }, [router?.query?.kolName]);
 
   return isKol ? (
     <Dashboard platform="kol" kolName={kolName as string} />

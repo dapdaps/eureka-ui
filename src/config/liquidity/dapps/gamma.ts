@@ -7,7 +7,7 @@ const basic = {
   name: 'Gamma',
   icon: '/images/apps/gamma.png',
   logo: 'https://ipfs.near.social/ipfs/bafkreibgmu62fb5o3n3s54srlzyf7ppn2c42racp5q3gnukcjgkfwkzuse',
-  amountOutFn: 'bluebiu.near/widget/Liquidity.Gamma',
+  dappSrc: 'bluebiu.near/widget/Liquidity.GAMMA',
   ICON_VAULT_MAP: {
     USDC: 'https://app.gamma.xyz/_next/static/media/icon.4435c0e9.svg',
     "USDC.e": 'https://app.gamma.xyz/_next/static/media/icon.4435c0e9.svg',

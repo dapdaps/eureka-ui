@@ -1,20 +1,22 @@
+import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
+import { CategoryList } from '@/views/AllDapps/config';
 import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
-import { CategoryList, PageSize } from '@/views/AllDapps/config';
-import chainCofig from '@/config/chains';
+import { Tab } from '../types';
 
 type AirdropType = any
 type NetworkType = any
 type CategoryType = any
 
-export default function useAirdropList() {
+export default function useAirdropList(tab: Tab) {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const [airdropList, setAirdropList] = useState<any>([]);
+  const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const queryAirdropListByAccount = async (query: any) => {
@@ -43,13 +45,14 @@ export default function useAirdropList() {
       })
       setAirdropList(data);
       setLoading(false);
+      setLoaded(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
       setLoading(false);
+      setLoaded(true);
     }
   };
-
 
   const { run } = useDebounceFn(
     () => {
@@ -63,8 +66,8 @@ export default function useAirdropList() {
   );
 
   useEffect(() => {
-    run();
-  }, [account]);
+    (tab === 'InProgress' || !loaded) && run();
+  }, [account, tab]);
 
-  return { loading, airdropList, queryAirdropListByAccount };
+  return { loading, loaded, airdropList, queryAirdropListByAccount };
 }

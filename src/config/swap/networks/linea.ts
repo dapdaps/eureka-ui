@@ -8,19 +8,14 @@ import { basic as xfaiBasic, networks as xfaiNetworks } from '../dapps/xfai';
 import { basic as lynexBasic, networks as lynexNetworks } from '../dapps/lynex';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
+import { linea } from '@/config/tokens/linea';
 import chains from '../../chains';
 
 const CHAIN_ID = 59144;
 
 export default {
   ...chains[CHAIN_ID],
-  displayChainName: 'Linea',
-  wethAddress: '0xe5D7C2a44FfDDf6b295A15c148167daaAf5Cf34f',
-  connectProps: {
-    noAccountTips: 'Linea Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Linea Chain.',
-  },
-  defalutDex: 'SyncSwap',
+  defalutInputCurrency: linea['eth'],
   dexs: {
     SyncSwap: {
       ...SyncSwapBasic,

@@ -45,7 +45,6 @@ export default function useAddAction(source: string) {
           const toChain = chains.find((chain: any) => chain.chain_id === data.toChainId) || {
             name: 'Ethereum Mainnet',
           };
-          console.info('chains: ', fromChain, toChain, currentChain);
           params = {
             action_title: `Bridge ${data.amount} ${data.token.symbol} to ${toChain?.name}`,
             action_type: 'Bridge',
@@ -63,7 +62,6 @@ export default function useAddAction(source: string) {
             to_chain_id: data.toChainId,
             extra_data: JSON.stringify(data.extra_data),
           };
-          console.info('params:', params);
         } catch (error) {
           console.info('bridge err', error);
         }

@@ -3,6 +3,7 @@ import { useUserStore } from '@/stores/user';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 import { ellipsAccount } from '@/utils/account';
 import { useRouter } from 'next/router';
+import { useMemo, Dispatch, SetStateAction } from 'react';
 import styled from "styled-components";
 const StyledUserInfoPopUp = styled.div`
   width: 294px;
@@ -139,10 +140,18 @@ const GemSvg = (
     <path d="M17.6162 10.4525L21.1394 11.8335L12.5075 20L11.0479 16.6667L17.6162 10.4525Z" fill="#F0CC00" />
   </svg>
 )
-export default function UserInfoPopUp() {
+type PropsType = {
+  setShow: Dispatch<SetStateAction<boolean>>
+}
+export default function UserInfoPopUp({ setShow }: PropsType) {
   const router = useRouter()
   const userInfo = useUserStore((store: any) => store.user);
   const { logging, logout } = useAuth();
+
+  const twitterUsername = useMemo(() => {
+    const _twitterUsername = userInfo?.twitter?.twitter_username
+    return _twitterUsername?.length > 10 ? _twitterUsername.slice(0, 10) + '...' : _twitterUsername
+  }, [userInfo])
   const features = [{
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="17" height="20" viewBox="0 0 17 20" fill="none">
@@ -189,7 +198,6 @@ export default function UserInfoPopUp() {
     ),
     label: "Logout"
   },]
-  console.log('===userInfo', userInfo)
   return (
     <StyledUserInfoPopUp>
       <StyledUserInfoContainer>
@@ -199,6 +207,7 @@ export default function UserInfoPopUp() {
             style={{ cursor: 'pointer' }}
             onClick={() => {
               router.push('/profile')
+              setShow && setShow(false)
             }}
           >
             <StyledFlex gap="10px">
@@ -208,11 +217,15 @@ export default function UserInfoPopUp() {
                 alignItems="flex-start"
               >
                 {
-                  userInfo?.twitter?.twitter_username && (
-                    <StyledFont color="#FFF" fontSize="18px" fontWeight="600">{userInfo?.twitter?.twitter_username}</StyledFont>
+                  twitterUsername ? (
+                    <>
+                      <StyledFont color="#FFF" fontSize="18px" fontWeight="600">{twitterUsername}</StyledFont>
+                      <StyledFont color="#FFF" fontSize="12px">{ellipsAccount(userInfo?.address)}</StyledFont>
+                    </>
+                  ) : (
+                    <StyledFont color="#FFF" fontSize="18px" fontWeight="600">{ellipsAccount(userInfo?.address)}</StyledFont>
                   )
                 }
-                <StyledFont color="#FFF" fontSize="12px">{ellipsAccount(userInfo?.address)}</StyledFont>
               </StyledFlex>
             </StyledFlex>
             <StyledSvg>
@@ -247,6 +260,7 @@ export default function UserInfoPopUp() {
                 } else {
                   feature?.path && router.push(feature.path)
                 }
+                setShow && setShow(false)
               }}>
                 <StyledFlex gap='14px'>
                   <StyledIcon>{feature.icon}</StyledIcon>

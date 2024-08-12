@@ -37,6 +37,7 @@ import {
 import useCompassCombineAd from './hooks/useCompassCombineAd';
 import { extractPathFromUrl } from '@/utils/formate';
 import Tag from '@/views/Odyssey/components/Tag';
+import Skeleton from 'react-loading-skeleton';
 
 const AdCard = function ({ ad }: any) {
   const router = useRouter();
@@ -156,9 +157,9 @@ const Compass = () => {
   const swiperRef = useRef<any>();
 
   return loading ? (
-    <StyledLoadingWrapper>
-      <Loading size={60} />
-    </StyledLoadingWrapper>
+    <StyledContent>
+      <Skeleton height={500} borderRadius={12} />
+    </StyledContent>
   ) : (
     <StyledContainer>
       <StyledContent>
@@ -245,21 +246,28 @@ const Compass = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <StyledSwiperPrevButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slidePrev();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperPrevButton>
-            <StyledSwiperNextButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slideNext();
-              }}
-            >
-              <IconArrow />
-            </StyledSwiperNextButton>
-            <div className="swiper-pagination"></div>
+            {
+              compassList?.length > 1 && (
+                <>
+                  <StyledSwiperPrevButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slidePrev();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperPrevButton>
+                  <StyledSwiperNextButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slideNext();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperNextButton>
+                  <div className="swiper-pagination"></div>
+                      </>
+              )
+            }
+
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>

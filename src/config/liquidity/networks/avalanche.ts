@@ -1,6 +1,6 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
-
+import steakhut from '../dapps/steakhut';
 const CHAIN_ID = 43114;
 const CHAIN_NAME = 'Avalanche';
 
@@ -15,6 +15,11 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defalutDex: 'Trader Joe',
-  dapps: {},
+  defaultDapp: 'steakhut',
+  dapps: {
+    steakhut: {
+      ...steakhut.basic,
+      ...steakhut.networks[CHAIN_ID]
+    }
+  },
 };

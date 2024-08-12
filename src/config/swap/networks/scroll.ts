@@ -10,19 +10,13 @@ import { basic as dodoBasic, networks as dodoNetworks } from '../dapps/dodo';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
 import { basic as univ3Basic, networks as univ3Networks } from '../dapps/uniswapv3';
+import { scroll } from '@/config/tokens/scroll';
 
 const CHAIN_ID = 534352;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Scroll',
-  displayChainName: 'Scroll',
-  wethAddress: weths[CHAIN_ID],
-  connectProps: {
-    noAccountTips: 'Scroll Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Scroll Chain.',
-  },
-  defalutDex: 'Ambient',
+  defalutInputCurrency: scroll['eth'],
   dexs: {
     Ambient: {
       ...ambientBasic,

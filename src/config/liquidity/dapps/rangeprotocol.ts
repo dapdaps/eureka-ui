@@ -1,6 +1,8 @@
 
 const basic = {
   name: 'Rangeprotocol',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/090-rageprotocal.png',
+  dappSrc: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
   amountOutFn: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
   ICON_VAULT_MAP: {
     USDT: 'https://app.rangeprotocol.com/images/coins/56/0x55d398326f99059fF775485246999027B3197955.png',

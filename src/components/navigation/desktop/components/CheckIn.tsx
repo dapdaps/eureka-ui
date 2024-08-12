@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import CheckInGrid, { CheckInGridRef } from './CheckInGrid';
 import { useState, useRef, useEffect, useMemo } from 'react';
-import MedalCard from '@/views/Profile/components/MedalCard';
+import MedalCard from './MedalCard';
 import { useDebounceFn } from 'ahooks';
 import { get, post } from '@/utils/http';
 import useAuthCheck from '@/hooks/useAuthCheck';
@@ -115,6 +115,17 @@ const StyleDropdown = styled.div`
       margin-bottom: 24px;
       display: inline-block;
     }
+    .mystery-header {
+        font-family: Montserrat;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 20px;
+        background: linear-gradient(90deg, #FFFFFF 0%, #979ABE 100%);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-bottom: 20px;
+    }
   }
 `;
 
@@ -160,7 +171,7 @@ const CheckIn = () => {
 
   const [medalData, setMedalData] = useState<MedalType>();
   const [medalVisible, setMedalVisible] = useState(false);
-  const [checkDisabled, setCheckDisabled] = useState(false);
+  // const [checkDisabled, setCheckDisabled] = useState(false);
 
 
   const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
@@ -171,10 +182,10 @@ const CheckIn = () => {
     return data?.data?.some((item) => item.status === 'claimed' && item?.today);
   }, [data]);
 
-  const isTodayClaim = useMemo(() => {
-    if (!data) return false;
-    return data?.data?.find((item) => item.today)?.day
-  }, [data])
+  // const isTodayClaim = useMemo(() => {
+  //   if (!data) return false;
+  //   return data?.data?.find((item) => item.today)?.day
+  // }, [data])
 
 
   const handleMouseEnter = () => {
@@ -234,15 +245,14 @@ const CheckIn = () => {
       setClaimLoading(true);
       const data = await post(`/api/check-in`);
 
-      if (checkInGridRef.current && isTodayClaim) { // to trigger check in grid animation
-        checkInGridRef.current.triggerCheckIn(isTodayClaim);
-      }
-
+      // if (checkInGridRef.current && isTodayClaim) { // to trigger check in grid animation
+      //   checkInGridRef.current.triggerCheckIn(isTodayClaim);
+      // }
+      run()
       if (data?.data?.medal) {
         setMedalData(data.data.medal);
         setMedalVisible(true);
       }
-      setCheckDisabled(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
@@ -256,7 +266,6 @@ const CheckIn = () => {
     },
     { wait: 300 },
   );
-
 
   return (
     <>
@@ -281,7 +290,7 @@ const CheckIn = () => {
                   <span className="label">days in a row</span>
                 </div>
                 <StyledButton
-                  disabled={isClaimed || claimLoading || checkDisabled}
+                  disabled={isClaimed || claimLoading}
                   onClick={() => {
                     claim();
                   }}
@@ -297,12 +306,12 @@ const CheckIn = () => {
                   <>
                     {data?.medal && (
                       <div className="dropdown-medals">
-                        <MedalCard medal={data.medal} style={{ width: '100%', height: '142px' }} />
+                        <MedalCard threshold={data.medal.threshold} today_days={data.total_days} medal={data.medal} style={{ width: '100%', height: '142px' }} />
                       </div>
                     )}
                     {data && data.data?.length > 0 && (
                       <div className="dropdown-mystery">
-                        <img className="mystery-img" src="/images/header/dapdap-mystery-text.png" alt="mystery" />
+                        <div className='mystery-header'>GM, Keep the Streak Alive !</div>
                         <div className="dropdown-mystery-box">
                           <CheckInGrid ref={checkInGridRef} dayStatus={data.data} />
                         </div>

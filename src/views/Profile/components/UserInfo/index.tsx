@@ -20,8 +20,16 @@ const UserInfo = ({ info, rewardInfo }: any) => {
         <StyledInfo>
           <UserAvatar userInfo={info} />
           <StyledNameWrapper>
-            <StyledName>{info.username}</StyledName>
-            <StyledAddress>{ellipsAccount(info.address)}</StyledAddress>
+            {
+              info?.twitter?.twitter_username ? (
+                <>
+                  <StyledName>{info?.twitter?.twitter_username}</StyledName>
+                  <StyledAddress>{ellipsAccount(info.address)}</StyledAddress>
+                </>
+              ) : (
+                <StyledAddress style={{ fontSize: 32, fontWeight: 600 }}>{ellipsAccount(info.address)}</StyledAddress>
+              )
+            }
           </StyledNameWrapper>
         </StyledInfo>
 

@@ -3,20 +3,22 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
 import { useEffect, useState } from 'react';
-import { DappType, FavoriteType } from '../types';
+import { DappType, FavoriteType, Tab } from '../types';
 import { CategoryList } from '@/views/AllDapps/config';
 import chainCofig from '@/config/chains';
 
 
-export default function useUserFavorites() {
+export default function useUserFavorites(tab: Tab) {
   const { account } = useAccount()
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const [userFavorites, setUserFavorites] = useState<FavoriteType | null>(null);
+  const [loaded, setLoaded] = useState(false)
   const [loading, setLoading] = useState(false);
 
   const queryUserFavorites = async () => {
     if (loading) return;
     setLoading(true);
+    setLoaded(false)
     try {
       const result = await get(`/api/user/favorites`);
       const data = (result.data || [])
@@ -35,10 +37,12 @@ export default function useUserFavorites() {
       console.log('===data', data)
       setUserFavorites(data);
       setLoading(false);
+      setLoaded(true)
     } catch (err) {
       console.log(err, 'err');
     } finally {
       setLoading(false);
+      setLoaded(true)
     }
   };
 
@@ -51,8 +55,8 @@ export default function useUserFavorites() {
   );
 
   useEffect(() => {
-    run();
-  }, [account]);
+    (tab === "FavoriteApps" || !loaded) && run();
+  }, [account, tab]);
 
-  return { loading, userFavorites, queryUserFavorites };
+  return { loading, loaded, userFavorites, queryUserFavorites };
 }

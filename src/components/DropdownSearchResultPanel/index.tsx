@@ -17,6 +17,7 @@ import Campaign from './Campaign';
 // import Medal from './Medal';
 import useDefaultSearch from './hooks/useDefaultSearch';
 import { useRecentStore } from './hooks/useRecentStore';
+import useDappOpen from '@/hooks/useDappOpen';
 
 const StyleEmpty = styled.div`
   display: flex;
@@ -43,14 +44,14 @@ const Empty = () => (
 
 const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: boolean) => void }) => {
   const router = useRouter();
-
   const [loading, setLoading] = useState(false);
   const [empty, setEmpty] = useState(false);
   const [searchContent, setSearchContent] = useState<any>();
   const [searchResult, setSearchResult] = useState<any>();
   const ref = useRef<HTMLDivElement>(null);
   const { setSearch, addRecentSearch } = useRecentStore()
-  
+  const { open } = useDappOpen();
+
   const { loading: defaultSearchLoading, defaultNetworks, defaultDapps, defaultOdysseys } = useDefaultSearch();
   const { run: handleSearch } = useDebounceFn(
     async () => {
@@ -108,6 +109,10 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
     addRecentSearch(recent)
   }
 
+  const onDappCardClick = (dapp: any) => {
+    open({ dapp, from: 'alldapps' });
+  };
+
   return (
     <StyledSearchResults ref={ref}>
       <StyleTop>
@@ -146,8 +151,7 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
             loading={loading}
             items={searchResult?.dapps}
             onClick={(item: any) => {
-              router.prefetch(`/dapps-details?dapp_id=${item.id}`);
-              router.push(`/dapps-details?dapp_id=${item.id}`);
+              onDappCardClick(item)
               setSearchResult('');
               setShowSearch(false)
             }}

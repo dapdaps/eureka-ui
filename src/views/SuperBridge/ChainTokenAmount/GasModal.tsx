@@ -14,7 +14,6 @@ import type { Chain, Token } from '@/types';
 import { useCallback, useEffect, useState } from 'react';
 import Big from 'big.js';
 
-
 const Tip = styled.div`
     font-size: 16px;
     font-weight: 400;
@@ -40,7 +39,7 @@ const RefuelAmount = styled.div`
 
 const Range = styled.input<{ max: any, value: any }>`
     width: 100%;
-    -webkit-appearance: none; /* 去掉底部的 track 默认样式，就是整个灰条 */
+    -webkit-appearance: none; 
     background: transparent; 
     &::-webkit-slider-thumb {
         /* -webkit-appearance: none; */
@@ -108,6 +107,7 @@ interface Props {
     toChain: Chain | undefined;
     toAddress: string;
     maxBalance: string | undefined;
+    theme?: any;
     onClick: () => void;
     onClose: () => void;
 }
@@ -115,7 +115,7 @@ interface Props {
 const max$ = 200
 
 export default function GasModal({
-    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance
+    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, theme
 } : Props) {
     const { account, chainId, provider } = useAccount();
     const prices = usePriceStore((store) => store.price);
@@ -210,6 +210,7 @@ export default function GasModal({
             isLoading={isLoading}
             disabled={disabled}
             text="Confirm"
+            theme={theme}
             fromChain={fromChain as Chain}
             onClick={senGas}
             defaultText="Confirm"

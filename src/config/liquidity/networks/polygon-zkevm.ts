@@ -14,9 +14,9 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: 'Gamma',
+  defaultDapp: 'gamma',
   dapps: {
-    Gamma: {
+    gamma: {
       ...gamma.basic,
       ...gamma.networks[CHAIN_ID],
     },

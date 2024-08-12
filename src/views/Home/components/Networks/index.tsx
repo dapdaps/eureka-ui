@@ -1,6 +1,6 @@
 import chainCofig from '@/config/chains';
 import Badges from '@/views/AllDapps/components/Badges';
-import NetworksBg from '@public/images/home/networks_bg.svg'
+import NetworksBg from '@public/images/home/networks_bg.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState, type CSSProperties, type FC, type ReactNode } from 'react';
@@ -9,9 +9,10 @@ import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 
 import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
 import useDappOpen from '@/hooks/useDappOpen';
-import { useRouter } from 'next/router';
-import { StyledSvg } from '@/styled/styles';
+import { StyledContainer } from '@/styled/styles';
+import hexToRgba from '@/utils/hexToRgba';
 import { DappType } from '@/views/Profile/types';
+import { useRouter } from 'next/router';
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -20,13 +21,13 @@ interface IProps {
 }
 
 const Container = styled.div`
-  position: relative;
+  /* position: relative; */
   width: 1244px;
   margin: 200px auto 54px;
 `;
 const StyledNetworksBg = styled.div`
   position: absolute;
-  left: -199px;
+  left: 0;
   top: 57px;
 `
 const Title = styled.div`
@@ -72,11 +73,6 @@ const PrimaryPanels = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  .bg {
-    position: absolute;
-    top: 79px;
-    right: 30px;
-  }
   .panel {
     display: flex;
     flex-direction: column;
@@ -93,6 +89,7 @@ const PrimaryPanels = styled.div`
     backdrop-filter: blur(10px);
   }
   .panel-top {
+    position: relative;
     width: 100%;
     flex: 1;
     padding: 30px 30px 0;
@@ -343,6 +340,15 @@ const Hottest = styled.div`
     top: -18px;
   }
 `
+const StyledPanelBg = styled.img`
+  position: absolute;
+  top: 79px;
+  right: 30px;
+  width: 207px;
+  height: 179px;
+  transform: translateX(-10000px);
+  object-fit: contain;
+`
 
 const Dapp = ({ dapp, setCurrentDapp, setBoundingClientRect, onDappCardClick }: any) => {
   return (
@@ -372,6 +378,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
   const [running, setRunning] = useState(false)
   const [currentDapp, setCurrentDapp] = useState<DappType | null>(null)
   const [boundingClientRect, setBoundingClientRect] = useState<any>(null)
+  console.log('====currentChain', currentChain)
   return (
     <>
       <div
@@ -383,7 +390,12 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
         }}
       >
         <div className='panel-top'>
-          <Image className="bg" src={currentChain?.icon} width={207} height={179} style={{ opacity: 0.04 }} alt="" />
+          <StyledPanelBg
+            src={currentChain?.bgIcon}
+            style={
+              currentChain?.bgColor ? { filter: `drop-shadow(${hexToRgba(currentChain?.bgColor, 0.03)} 10000px 0)` } : {}
+            } alt=""
+          />
           {
             network?.odyssey?.length > 0 && (
               <div className='odyssey-svg'>
@@ -479,7 +491,7 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
         {
           chainCofig[network?.chain_id]?.icon ? (
             <Image src={chainCofig[network?.chain_id]?.icon} width={72} height={72} alt={network?.name} />
-            ) : (
+          ) : (
             <StyledLogoEmpty />
           )
         }
@@ -509,44 +521,46 @@ const Networks: FC<IProps> = (props) => {
     router.push(`/networks/${IdToPath[network?.id]}`)
   }
   return (
-    <Container>
+    <StyledContainer style={{ position: 'relative' }}>
       <StyledNetworksBg>
         <NetworksBg />
       </StyledNetworksBg>
-      <Title>
-        <span>
-          EXPLORE
-          <span className="highlight"> 15+ L2</span> NETWORKS
-        </span>
+      <Container>
+        <Title>
+          <span>
+            EXPLORE
+            <span className="highlight"> 15+ L2</span> NETWORKS
+          </span>
 
-        <ViewAll href="/networks">
-          View all
-          <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM15.5657 6.56569C15.8781 6.25327 15.8781 5.74674 15.5657 5.43432L10.4745 0.343147C10.1621 0.0307272 9.65557 0.0307272 9.34315 0.343147C9.03073 0.655566 9.03073 1.1621 9.34315 1.47452L13.8686 6L9.34314 10.5255C9.03073 10.8379 9.03073 11.3444 9.34314 11.6569C9.65556 11.9693 10.1621 11.9693 10.4745 11.6569L15.5657 6.56569ZM1 6.8L15 6.8L15 5.2L1 5.2L1 6.8Z"
-              fill="white"
-            ></path>
-          </svg>
-        </ViewAll>
-      </Title>
-      <PrimaryPanels>
-        {
-          recommendNetwork?.top_volume && (
-            <PrimaryNetwork isTopVolume={true} network={recommendNetwork?.top_volume} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
-          )
-        }
-        {
-          recommendNetwork?.hottest && (
-            <PrimaryNetwork isTopVolume={false} network={recommendNetwork?.hottest} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
-          )
-        }
-      </PrimaryPanels>
-      <SubPanels>
-        {
-          recommendNetwork?.list?.map((network: any, index: number) => <SubNetwork key={index} network={network} handleClickNetwork={handleClickNetwork} />)
-        }
-      </SubPanels>
-    </Container>
+          <ViewAll href="/networks">
+            View all
+            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM15.5657 6.56569C15.8781 6.25327 15.8781 5.74674 15.5657 5.43432L10.4745 0.343147C10.1621 0.0307272 9.65557 0.0307272 9.34315 0.343147C9.03073 0.655566 9.03073 1.1621 9.34315 1.47452L13.8686 6L9.34314 10.5255C9.03073 10.8379 9.03073 11.3444 9.34314 11.6569C9.65556 11.9693 10.1621 11.9693 10.4745 11.6569L15.5657 6.56569ZM1 6.8L15 6.8L15 5.2L1 5.2L1 6.8Z"
+                fill="white"
+              ></path>
+            </svg>
+          </ViewAll>
+        </Title>
+        <PrimaryPanels>
+          {
+            recommendNetwork?.top_volume && (
+              <PrimaryNetwork isTopVolume={true} network={recommendNetwork?.top_volume} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
+            )
+          }
+          {
+            recommendNetwork?.hottest && (
+              <PrimaryNetwork isTopVolume={false} network={recommendNetwork?.hottest} onDappCardClick={onDappCardClick} handleClickNetwork={handleClickNetwork} />
+            )
+          }
+        </PrimaryPanels>
+        <SubPanels>
+          {
+            recommendNetwork?.list?.map((network: any, index: number) => <SubNetwork key={index} network={network} handleClickNetwork={handleClickNetwork} />)
+          }
+        </SubPanels>
+      </Container>
+    </StyledContainer>
   );
 };
 

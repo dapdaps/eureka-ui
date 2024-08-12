@@ -5,6 +5,7 @@ export default {
   bgColor: '#000000',
   bgIcon: '/images/chains/metis_white.svg',
   selectBgColor: '#00dacc',
+  textColor: '#000',
   chainId: 1088,
   rpcUrls: ['https://andromeda.metis.io/?owner=1088'],
   defaultTab: 'Bridge',
@@ -18,10 +19,17 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Metis.Bridge',
+      description: 'Intuitively across different network to Metis',
     },
     Swap: {
-      tab: 'Swap',
+      tab: 'Trade',
       path: 'bluebiu.near/widget/Metis.Swap.Dex',
+      description: 'Efficiently from/to any assets on Metis',
+    },
+    Liquidity: {
+      tab: 'Liquidity',
+      path: 'bluebiu.near/widget/Liquidity.ALL',
+      description: 'Seamlessly adding LP to any pair',
     },
   },
 };

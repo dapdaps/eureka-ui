@@ -126,7 +126,6 @@ const Reward = (props: Props) => {
                 onClick={(e) => onBadgeClick(e, b)}
               >
                 <TooltipSimple
-                  height={215}
                   tooltip={b.odyssey && (
                     <StyledBadgeTooltipList>
                       {

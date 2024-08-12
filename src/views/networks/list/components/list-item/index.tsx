@@ -160,6 +160,8 @@ const LogoGroup = styled.div`
 const BtnGroup = styled.div`
   display: flex;
   gap: 16px;
+  width: 250px;
+  white-space: nowrap;
 `;
 const Btn = styled(Link)`
   height: 40px;

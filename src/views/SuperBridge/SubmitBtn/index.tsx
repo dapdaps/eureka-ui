@@ -30,6 +30,7 @@ interface Props {
     fromChain: Chain | null;
     onClick: () => void;
     defaultText?: string;   
+    theme?: any;
 }
 
 export default function SubmitBtn({

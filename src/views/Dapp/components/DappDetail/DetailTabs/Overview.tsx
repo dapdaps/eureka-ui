@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 
 import AddMetaMaskModal from './AddMetaMaskModal';
 import InteractDAppsModal from './InteractDAppsModal';
@@ -40,7 +40,7 @@ import {
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import hexToRgba from '@/utils/hexToRgba';
-import { Category, Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
+import { Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
 import Loading from '@/components/Icons/Loading';
 import useToast from '@/hooks/useToast';
 import { useRouter } from 'next/router';
@@ -49,8 +49,9 @@ import { usePathname } from 'next/navigation';
 import tokens, { NativeTokenAddressMap } from '@/config/tokens';
 import { usePriceStore } from '@/stores/price';
 import chainCofig from '@/config/chains';
-import useCopy from '@/hooks/useCopy';
 import { formatThousandsSeparator } from '@/utils/format-number';
+import { copyText } from '@/utils/copy';
+import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 
 const Overview = (props: any) => {
   const prices = usePriceStore((store) => store.price);
@@ -77,7 +78,8 @@ const Overview = (props: any) => {
     loading: airdropLoading,
     reportAdditionResult,
   } = useAirdrop({ category, id });
-  const { copy } = useCopy();
+
+  const copyTooltipRef = useRef<any>(null);
 
   const [addMetaMaskShow, setAddMetaMaskShow] = useState<boolean>(false);
   const [dappListVisible, setDappListVisible] = useState<boolean>(false);
@@ -238,7 +240,10 @@ const Overview = (props: any) => {
   };
 
   const onCopyCurrency = () => {
-    copy(nativeCurrency?.address);
+    copyText(nativeCurrency?.address, () => {
+      if (!copyTooltipRef.current) return;
+      copyTooltipRef.current.open();
+    });
   };
 
   const onBrowser = () => {
@@ -321,13 +326,19 @@ const Overview = (props: any) => {
                         <StyledTokenAddress>
                           {nativeCurrency?.address ? nativeCurrency?.address.substring(0, 5) + '...' + nativeCurrency?.address.substring(nativeCurrency?.address.length - 6) : ''}
                         </StyledTokenAddress>
-                        <StyledImageButton
-                          src="/images/alldapps/icon-copy.svg"
-                          width={14}
-                          height={14}
-                          alt="copy"
-                          onClick={onCopyCurrency}
-                        />
+                        <TooltipSimple
+                          ref={copyTooltipRef}
+                          tooltip="Copied!"
+                          isControlled
+                        >
+                          <StyledImageButton
+                            src="/images/alldapps/icon-copy.svg"
+                            width={14}
+                            height={14}
+                            alt="copy"
+                            onClick={onCopyCurrency}
+                          />
+                        </TooltipSimple>
                         <StyledImageButton
                           src="/images/alldapps/icon-share.svg"
                           width={12}
