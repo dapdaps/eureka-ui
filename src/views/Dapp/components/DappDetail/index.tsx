@@ -13,7 +13,12 @@ import { Category } from '@/hooks/useAirdrop';
 import { useEffect } from 'react';
 import { useAnimate, useInView } from 'framer-motion';
 import { useDebounceFn } from 'ahooks';
+import styled from 'styled-components';
 
+
+const StyleImageMedals = styled.img`
+  margin-top: 51px;
+`
 const DappDetail = (props: Props) => {
   const {
     trading_volume,
@@ -90,7 +95,8 @@ const DappDetail = (props: Props) => {
             />
           </StyledRecordContainer>
           <StyledRelatedOdyssey>
-            <Medal id={props?.id} type={Category.dApp} />
+            <StyleImageMedals src="/images/medals/coming-soon-medal.png" alt="medals" />
+            {/* <Medal id={props?.id} type={Category.dApp} /> */}
             <RelativeOdyssey
               title='Related Campaign'
               dappId={props?.id}

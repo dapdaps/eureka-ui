@@ -23,6 +23,12 @@ import Medal from '@/views/Dapp/components/DappDetail/Medal/index';
 import { useChainDapps } from './hooks/useChainDapps';
 import { Category } from '@/hooks/useAirdrop';
 import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
+import styled from 'styled-components';
+
+
+const StyleImageMedals = styled.img`
+  margin-top: 51px;
+`
 
 const ChainDetail = ({ path }: any) => {
 
@@ -93,7 +99,8 @@ const ChainDetail = ({ path }: any) => {
           />
         </StyledRecordContainer>
         <StyledRelatedOdyssey>
-          <Medal id={detail?.chain_id} type={Category.chain} />
+          <StyleImageMedals src="/images/medals/coming-soon-medal.png" alt="medals" />
+          {/* <Medal id={detail?.chain_id} type={Category.chain} /> */}
           <RelativeOdyssey
             title="Campaign and Rewards"
             networkId={detail?.id}

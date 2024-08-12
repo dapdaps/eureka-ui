@@ -168,7 +168,7 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
           />
           <Campaign data={shouldRenderPopular ? defaultOdysseys : searchResult?.odysseys} loading={searchContent ? loading : defaultSearchLoading} onClick={() => setShowSearch(false)} />
 
-          {/* v2版本 */}
+          {/* Todo: hide Medal  */}
           {/* <Medal /> */}
         </>
       )}

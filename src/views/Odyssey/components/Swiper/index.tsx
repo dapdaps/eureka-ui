@@ -22,12 +22,10 @@ import {
   StyledContainer,
   StyledContent,
   StyledInner,
-  StyledLoadingWrapper,
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
   StyledCardTitle,
-  StyledCominsoon,
   StyledCompassButton,
   StyledOdysseyIconTitle,
   StyledOdysseyHead,
@@ -92,7 +90,7 @@ const CompassCard = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems="flex-start">
+      <StyledFlex gap=".32rem" alignItems="flex-start">
         <StyledCardBackgroundImage
           src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
@@ -116,7 +114,8 @@ const CompassCard = function ({ compass }: any) {
           <StyledCardTitle>{formatCompassName(compass.name)}</StyledCardTitle>
           <StyleList>
             <RewardList odyssey={compass} />
-            <MedalList medals={compass.medals} />
+            {/* Todo: hide Medal  */}
+            {/* <MedalList medals={compass.medals} /> */}
           </StyleList>
           {/* <StyledCardDesc>{compass.description}</StyledCardDesc> */}
           {compass.status === 'un_start' ? (
@@ -247,7 +246,7 @@ const Compass = () => {
                         <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={111} height={111} />
                       )}
                       <StyledFont
-                        fontSize="18px"
+                        fontSize=".18rem"
                         fontWeight="700"
                         lineHeight="150%"
                         style={{
