@@ -68,18 +68,20 @@ const networks = {
         address: '0xEF6d459FE81C3Ed53d292c936b2df5a8084975De',
         underlyingToken: bsc['usdt'],
       },
-      '0x3942936782d788ce69155F776A51A5F1C9dd9B22': {
-        decimals: 8,
-        symbol: 'crLINK',
-        address: '0x3942936782d788ce69155F776A51A5F1C9dd9B22',
-        underlyingToken: bsc['link'],
-      },
-      '0x81C15D3E956e55e77E1f3F257f0A65Bd2725fC55': {
-        decimals: 8,
-        symbol: 'crADA',
-        address: '0x81C15D3E956e55e77E1f3F257f0A65Bd2725fC55',
-        underlyingToken: bsc['ada'],
-      },
+      // fix#DAP-628
+      // '0x3942936782d788ce69155F776A51A5F1C9dd9B22': {
+      //   decimals: 8,
+      //   symbol: 'crLINK',
+      //   address: '0x3942936782d788ce69155F776A51A5F1C9dd9B22',
+      //   underlyingToken: bsc['link'],
+      // },
+      // fix#DAP-628
+      // '0x81C15D3E956e55e77E1f3F257f0A65Bd2725fC55': {
+      //   decimals: 8,
+      //   symbol: 'crADA',
+      //   address: '0x81C15D3E956e55e77E1f3F257f0A65Bd2725fC55',
+      //   underlyingToken: bsc['ada'],
+      // },
     },
   },
   137: {
