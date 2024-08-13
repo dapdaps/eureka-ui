@@ -74,7 +74,7 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
   };
 
   useEffect(() => {
-    if (token?.isNative) {
+    if (spender === 'native') {
       setApproved(true);
       return;
     }

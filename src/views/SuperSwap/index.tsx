@@ -142,7 +142,15 @@ export default function SuperSwap() {
           {trade && <Result trade={trade} bestTrade={bestTrade}/>}
         </StyledTradeFooter>
 
-        <Button errorTips={errorTips} trade={trade} token={inputCurrency} loading={loading} onClick={onSwap} disabled={!trade?.txn} />
+        <Button 
+          spender={outputCurrency?.address}
+          amount={inputCurrencyAmount}
+          errorTips={errorTips} 
+          trade={trade} 
+          token={inputCurrency} 
+          loading={loading} 
+          onClick={onSwap} 
+          disabled={!trade?.txn} />
 
         {
           trade && (

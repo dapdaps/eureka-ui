@@ -37,6 +37,10 @@ const TradeButton = ({ spender, token, amount, loading, errorTips, disabled, onC
     token,
     spender,
   });
+  console.log(  amount,
+    token,
+    spender,);
+  
   const { switching, switchChain } = useSwitchChain();
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
