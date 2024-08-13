@@ -1,4 +1,4 @@
-import loginLogo from '@/assets/images/login_logo.svg';
+import LoginLogo from '@/assets/images/login_logo.svg';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import { ellipsAccount } from '@/utils/account';
 import { useConnectWallet } from '@web3-onboard/react';
@@ -29,6 +29,9 @@ const StyledUserContainer = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #979ABE;
 `
 const StyledUser = styled.div`
   min-width: 169px;
@@ -172,7 +175,7 @@ const LoginView = () => {
       </StyledImage>
       <StyledFlex $direction="column">
         <StyledImage style={{ marginBottom: 24 }}>
-          <Image style={{ width: 409 }} src={loginLogo} alt="loginLogo" />
+          <LoginLogo />
         </StyledImage>
         {/* <StyledInvitedUsers>Invited users only</StyledInvitedUsers> */}
 
@@ -200,7 +203,9 @@ const LoginView = () => {
             </StyledUserContainer>
           )
         }
-        <StyledInvitedAward>💡 Sign up through this invite link, you and the inviter will earn 100 PTS for each.</StyledInvitedAward>
+        <StyledInvitedAward>
+          💡You’ve been invited to join DapDap! By joining through this referral link and completing a valid transaction, you’ll help your friend progress toward earning the Promotional Maestro Medal.
+        </StyledInvitedAward>
         <StyledLoginConnectWalletButton
           onClick={() => {
             connect();

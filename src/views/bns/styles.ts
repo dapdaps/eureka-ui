@@ -35,13 +35,16 @@ export const StyledInvitedUsers = styled.div`
 `;
 export const StyledInvitedAward = styled.div`
   margin-bottom: 24px;
-  width: 306px;
-  color: #979abe;
+  width: 594px;
+  color: #979ABE;
   font-family: Gantari;
-  font-size: 16px;
+  font-size: 18px;
   font-style: normal;
   font-weight: 400;
-  line-height: normal;
+  line-height: 22px;
+  word-break: auto-phrase;
+  border: 5px solid #FF0505;
+  padding: 9px 11px;
 `;
 // guide
 
