@@ -217,5 +217,5 @@ export default function useTrade({ chainId }: any) {
     if (chainId) getTokens();
   }, [chainId]);
 
-  return { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap };
+  return { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade };
 }

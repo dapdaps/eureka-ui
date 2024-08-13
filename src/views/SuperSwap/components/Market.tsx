@@ -8,9 +8,6 @@ const StyledIcon = styled.img`
   border-radius: 6px;
 `;
 
-const StyledAmount = styled.div`
-  color: #979abe;
-`;
 
 export default function Market({ trade, bestTrade, length, onProvidersClick }: any) {
   return (
@@ -19,18 +16,6 @@ export default function Market({ trade, bestTrade, length, onProvidersClick }: a
         <StyledIcon src={trade.logo} />
         <div>{trade.name}</div>
         {bestTrade?.name === trade.name && <StyledBestPrice>Best Price</StyledBestPrice>}
-      </StyledFlex>
-      <StyledFlex gap="5px">
-        <StyledAmount
-          className="link"
-          onClick={() => {
-            if (!length) return;
-            onProvidersClick();
-          }}
-        >
-          {length || 0}
-        </StyledAmount>
-        <div>Providers</div>
       </StyledFlex>
     </StyledFlex>
   );

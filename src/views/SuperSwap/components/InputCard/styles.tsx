@@ -90,6 +90,10 @@ export const StyledTradeBalance = styled.div<{ underline?: boolean }>`
 
   .trade-balance {
     text-decoration: ${(props) => (props?.underline ? 'underline' : 'none')};
+    &:hover {
+      color: #fff;
+      cursor: pointer;
+    }
   }
 `;
 

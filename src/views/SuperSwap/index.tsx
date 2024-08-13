@@ -6,7 +6,7 @@ import Market from './components/Market';
 import Button from './components/Button';
 import SelectTokensModal from './components/SelectTokensModal';
 import MarketsModal from './components/MarketsModal';
-import { StyledContainer, StyledContent, StyledTradeIcon, StyledInputs, StyledTradeFooter } from './styles';
+import { StyledContainer, StyledContent, StyledTradeIcon, StyledInputs, StyledTradeFooter, StyledAmount, StyleProviderHeader } from './styles';
 
 import Big from 'big.js';
 
@@ -16,6 +16,7 @@ import useTrade from './hooks/useTrade';
 import { useDebounceFn } from 'ahooks';
 
 import type { Token } from '@/types';
+import { StyledFlex } from '@/styled/styles';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
@@ -29,7 +30,7 @@ export default function SuperSwap() {
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
 
-  const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap } = useTrade({
+  const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
     chainId,
     onSuccess() {
       setUpdater(Date.now());
@@ -86,9 +87,13 @@ export default function SuperSwap() {
     runQuoter();
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
-  console.log(trade, 'trade');
-  
 
+  useEffect(() => {
+    setInputCurrencyAmount('')
+    setTrade(null as any)
+    setInputCurrency(null as any)
+    setOutputCurrency(null as any)
+  }, [chainId]);
 
   return (
     <StyledContainer>
@@ -134,19 +139,23 @@ export default function SuperSwap() {
           />
         </StyledInputs>
         <StyledTradeFooter>
-          {trade && <Result trade={trade} />}
-          {trade && (
-            <Market
-              trade={trade}
-              bestTrade={bestTrade}
-              onProvidersClick={() => {
-                setShowMarkets(true);
-              }}
-              length={markets?.length}
-            />
-          )}
+          {trade && <Result trade={trade} bestTrade={bestTrade}/>}
         </StyledTradeFooter>
-        <Button errorTips={errorTips} token={inputCurrency} loading={loading} onClick={onSwap} disabled={!trade?.txn} />
+
+        <Button errorTips={errorTips} trade={trade} token={inputCurrency} loading={loading} onClick={onSwap} disabled={!trade?.txn} />
+
+        <StyleProviderHeader>
+          <StyledAmount
+            onClick={() => {
+              if (!markets?.length) return;
+              setShowMarkets(true);
+            }}
+          >
+            {markets?.length || 0} Providers
+          </StyledAmount>
+        </StyleProviderHeader>
+
+
       </StyledContent>
       <SelectTokensModal
         tokens={tokens || []}
