@@ -11,7 +11,7 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
   const [approving, setApproving] = useState(false);
   const [checking, setChecking] = useState(false);
   const { account, provider } = useAccount();
-
+  
   const checkApproved = async () => {
     if (!token?.address || !amount || !spender || amount === '0') return;
     setChecking(true);
@@ -74,7 +74,7 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
   };
 
   useEffect(() => {
-    if (spender === 'native') {
+    if (token?.isNative) {
       setApproved(true);
       return;
     }

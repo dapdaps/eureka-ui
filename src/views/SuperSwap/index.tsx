@@ -94,7 +94,7 @@ export default function SuperSwap() {
     setInputCurrency(null as any)
     setOutputCurrency(null as any)
   }, [chainId]);
-
+  
   return (
     <StyledContainer>
       <StyledContent>
@@ -143,7 +143,7 @@ export default function SuperSwap() {
         </StyledTradeFooter>
 
         <Button 
-          spender={outputCurrency?.address}
+          spender={trade?.routerAddress}
           amount={inputCurrencyAmount}
           errorTips={errorTips} 
           trade={trade} 
