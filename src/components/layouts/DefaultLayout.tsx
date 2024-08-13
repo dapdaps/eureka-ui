@@ -45,7 +45,8 @@ const HideFooterRoutes = [
   '/uniswap',
   '/all-in-one/[chain]',
   '/all-in-one/[chain]/[menu]',
-];
+  '/coin68'
+]
 
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();
