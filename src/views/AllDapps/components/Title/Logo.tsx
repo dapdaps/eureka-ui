@@ -9,7 +9,7 @@ const Logo = (props: Props) => {
     <StyledTopDappLogoWrapper $position={position}>
       <AnimatePresence mode="wait">
         {
-         dappList.filter((it: any) => it.position === position).map((it: any) => (
+          dappList.length > 0 ? dappList.map((it: any) => (
             <StyledTopDappLogo
               key={it.key}
               src={it.logo}
@@ -19,9 +19,9 @@ const Logo = (props: Props) => {
               initial={{
                 scale: 0.3,
                 opacity: 0,
+                rotate: 0,
                 x: it.x,
                 y: it.y,
-                rotate: 0,
               }}
               animate={{
                 scale: 1,
@@ -33,14 +33,12 @@ const Logo = (props: Props) => {
                 opacity: 0,
               }}
               transition={{
-                scale: {
-                  type: 'spring',
-                  duration: 0.9,
-                  bounce: 0.5,
-                },
+                type: 'spring',
+                duration: 0.6,
+                bounce: 0.5,
               }}
             />
-          ))
+          )) : null
         }
       </AnimatePresence>
     </StyledTopDappLogoWrapper>
