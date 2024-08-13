@@ -100,7 +100,7 @@ const AllInOneDetailView = (props: Props) => {
                     )
                   }
                   {
-                    menu === 'trade' && (
+                    menu === 'swap' && (
                       <Trade chain={currentChain} />
                     )
                   }
