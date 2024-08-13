@@ -48,7 +48,7 @@ const Friend = ({ username, address, avatar }: { username: string; address: stri
       <StyledAvatar src={avatar} />
       <div>
         <StyledUserName>{username}</StyledUserName>
-        <StyledUserAddress>{ellipsAccount(address)}</StyledUserAddress>
+        <StyledUserAddress style={{ color: username ? '#979ABE' : '#FFF' }}>{ellipsAccount(address)}</StyledUserAddress>
       </div>
     </>
   );
