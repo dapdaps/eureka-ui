@@ -36,7 +36,16 @@ const BLACK_PATH = [
   '/networks',
   '/networks/[path]',
   '/bridge-x/[tool]',
-  '/notification'
+  '/notification',
+  '/all-in-one/[chain]',
+  '/all-in-one/[chain]/[menu]'
+];
+
+const HideFooterRoutes = [
+  '/uniswap',
+  '/all-in-one/[chain]',
+  '/all-in-one/[chain]/[menu]',
+  '/coin68'
 ]
 
 export function DefaultLayout({ children }: Props) {
