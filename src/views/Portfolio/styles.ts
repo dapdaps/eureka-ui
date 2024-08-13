@@ -73,5 +73,4 @@ export const StyledLink = styled.div`
 `;
 
 export const StyledFeedbackText = styled.div`
-  color: #ffffff;
 `;
