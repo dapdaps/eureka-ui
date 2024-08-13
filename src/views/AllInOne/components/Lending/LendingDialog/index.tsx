@@ -436,7 +436,7 @@ const LendingDialog = (props: IProps) => {
                       const balanceStr = Big(balanceNumber).toFixed(data.decimals || 18);
                       setState((prevState) => ({
                         ...prevState,
-                        amount: Big(balanceStr).eq(0) ? '0' : balanceStr.replace(/0+$/, ''),
+                        amount: Big(balanceStr).eq(0) ? '0' : balanceStr.replace(/0+$/, '').replace(/\.$/, ''),
                         isMax: true,
                       }));
                     }}

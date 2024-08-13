@@ -108,6 +108,7 @@ const DetailCard = (props: any) => {
   } = dapp;
 
   const isLending = ['Lending', 'Yield'].includes(type);
+  const isFarming = ['Leveraged Farming'].includes(type);
 
   const columns: Column[] = [
     {
@@ -188,7 +189,7 @@ const DetailCard = (props: any) => {
       width: '25%',
       render: (text, record) => {
         if (Big(record.supplyAmount).gt(0)) {
-          return `${Big(record.supplyAmount).lt(1e-9) ? Big(record.supplyAmount).toFixed(record.decimals) : Big(record.supplyAmount).toString()} ${record.symbol}`;
+          return `${Big(record.supplyAmount).toFixed(record.decimals).replace(/0+$/, '').replace(/\.$/, '')} ${record.symbol}`;
         }
         return '-';
       },
@@ -200,7 +201,7 @@ const DetailCard = (props: any) => {
       width: '25%',
       render: (text, record) => {
         if (Big(record.borrowAmount).gt(0)) {
-          return `${Big(record.borrowAmount).toString()} ${record.symbol}`;
+          return `${Big(record.borrowAmount).toFixed(record.decimals).replace(/0+$/, '').replace(/\.$/, '')} ${record.symbol}`;
         }
         return '-';
       },
@@ -256,8 +257,57 @@ const DetailCard = (props: any) => {
       });
       return _tableList;
     }
+    if (isFarming) {
+      const _tableList: any = [];
+      dapp.detailList.forEach((it: any) => {
+        // The first item in the innermost assets is Supply
+        // while the others are Borrow.
+        it.assets.forEach((token: any, index: number) => {
+          const tokenIdx = _tableList.findIndex((_it: any) => _it.symbol === token.symbol);
+          // Supply
+          if (index === 0) {
+            if (tokenIdx < 0) {
+              const cell = {
+                symbol: token.symbol,
+                decimals: token.decimals,
+                logo: token.tokenLogo || getTokenLogo(token.symbol),
+                usd: Big(token.usd || 0),
+                supplyAmount: Big(0),
+                borrowAmount: Big(0),
+                totalUsd: Big(token.usd || 0),
+              };
+              cell.supplyAmount = Big(token.amount || 0);
+              _tableList.push(cell);
+            } else {
+              _tableList[tokenIdx].supplyAmount = Big(_tableList[tokenIdx].supplyAmount).plus(token.amount || 0);
+              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
+            }
+          }
+          // Borrow
+          else {
+            if (tokenIdx < 0) {
+              const cell = {
+                symbol: token.symbol,
+                decimals: token.decimals,
+                logo: token.tokenLogo || getTokenLogo(token.symbol),
+                usd: Big(token.usd || 0),
+                supplyAmount: Big(0),
+                borrowAmount: Big(0),
+                totalUsd: Big(token.usd || 0),
+              };
+              cell.borrowAmount = Big(token.amount || 0);
+              _tableList.push(cell);
+            } else {
+              _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
+              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
+            }
+          }
+        });
+      });
+      return _tableList;
+    }
     return dapp.detailList;
-  }, [dapp, isLending]);
+  }, [dapp, isLending, isFarming]);
 
   const cardTotalUsd = formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, false, {
     prefix: '$',
@@ -292,7 +342,7 @@ const DetailCard = (props: any) => {
         </div>
       </StyledHead>
       <StyledContent>
-        <FlexTable columns={isLending ? LendingColumns : columns} list={tableList} />
+        <FlexTable columns={isLending || isFarming ? LendingColumns : columns} list={tableList} />
       </StyledContent>
       <StyledFoot></StyledFoot>
     </StyledContainer>
