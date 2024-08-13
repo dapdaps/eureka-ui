@@ -21,6 +21,9 @@ export default function useMedalList(tab: Tab) {
     try {
       const result = await get(`/api/medal/list-by-account`, query);
       const data = (result.data || [])
+        .filter((medal: MedalType) => {
+          return medal?.completed_status === "in_process"
+        })
       setUserMedalList(data);
       setLoading(false);
       setLoaded(true);
