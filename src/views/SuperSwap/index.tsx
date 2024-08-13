@@ -144,16 +144,20 @@ export default function SuperSwap() {
 
         <Button errorTips={errorTips} trade={trade} token={inputCurrency} loading={loading} onClick={onSwap} disabled={!trade?.txn} />
 
-        <StyleProviderHeader>
-          <StyledAmount
-            onClick={() => {
-              if (!markets?.length) return;
-              setShowMarkets(true);
-            }}
-          >
-            {markets?.length || 0} Providers
-          </StyledAmount>
-        </StyleProviderHeader>
+        {
+          trade && (
+            <StyleProviderHeader>
+              <StyledAmount
+                onClick={() => {
+                  if (!markets?.length) return;
+                  setShowMarkets(true);
+                }}
+              >
+                {markets?.length || 0} Providers
+              </StyledAmount>
+            </StyleProviderHeader>
+          )
+        }
 
 
       </StyledContent>

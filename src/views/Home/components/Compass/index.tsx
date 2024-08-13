@@ -17,22 +17,18 @@ import IconClickArrow from '@public/images/home/click-arrow.svg';
 import {
   StyledCard,
   StyledCardBackgroundImage,
-  StyledCardButton,
   StyledCardMainContent,
   StyledContainer,
   StyledContent,
   StyledInner,
-  StyledLoadingWrapper,
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
   StyleAdTitle,
   StyledCardDesc,
   StyledCardTitle,
-  StyledCominsoon,
   StyledCompassIcon,
   StyledCompassButton,
-  StyledChainsImg
 } from './styles';
 import useCompassCombineAd from './hooks/useCompassCombineAd';
 import { extractPathFromUrl } from '@/utils/formate';
@@ -247,7 +243,7 @@ const Compass = () => {
               ))}
             </Swiper>
             {
-              compassList?.length > 1 && (
+              compassList?.length > 0 && (
                 <>
                   <StyledSwiperPrevButton
                     onClick={() => {

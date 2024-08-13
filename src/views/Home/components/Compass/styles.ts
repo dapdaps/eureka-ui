@@ -47,7 +47,7 @@ export const StyledLoadingWrapper = styled.div`
 export const StyledCard = styled.div`
   position: relative;
   width: 1244px;
-  height: 500px;
+  height: 400px;
   border-radius: 20px;
   border: 1px solid; 
   border-image-source: linear-gradient(180deg, #202329 0%, #101115 100%);
@@ -56,7 +56,7 @@ export const StyledCard = styled.div`
 
 export const StyledCardBackgroundImage = styled.img`
   width: 720px;
-  height: 500px;
+  height: 400px;
 `;
 
 export const StyledCardMainContent = styled.div`
@@ -70,7 +70,7 @@ export const StyledCardMainContent = styled.div`
     font-family: Montserrat;
     line-height: 24px;
     font-weight: 500;
-    margin-bottom: 106px;
+    margin-bottom: 62px;
   }
   .card_section {
     .logo {
@@ -97,7 +97,7 @@ export const StyledCardMainContent = styled.div`
   .btns {
     position: absolute;
     width: calc(100% - 50px);
-    bottom: 70px;
+    bottom: 40px;
     display: flex;
     font-family: Montserrat;
     justify-content: space-between;
@@ -128,7 +128,6 @@ export const StyledCardTitle = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin-top: 106px;
 `;
 
 export const StyledCardDesc = styled.div`

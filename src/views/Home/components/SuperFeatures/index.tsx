@@ -184,7 +184,7 @@ const SuperFeatures = () => {
                 <img className="logo" src="/images/home/logo-swap.png" alt="swap" />
                 <div className="desc">
                     <div className="desc-title">Super Swap</div>
-                    <div className="tips">Transfer assets between Ethereum and EVM L2s super easily.</div>
+                    <div className="tips">Effortlessly swap tokens within any blockchain with Superswap's seamless exchange solution.</div>
                 </div>
             </div> 
             </Link>

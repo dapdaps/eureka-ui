@@ -129,7 +129,7 @@ const CompassCard = function ({ compass }: any) {
                 }}
                 data-bp="1001-003"
               >
-                <div>Explore All</div>
+                <div>Explore Now</div>
                 <IconClickArrow />
               </StyledCompassButton>
               {/* <StyledCompassButton

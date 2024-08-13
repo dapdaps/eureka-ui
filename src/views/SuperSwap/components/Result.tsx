@@ -69,13 +69,14 @@ const StyledIconAlertTriangle = styled(IconAlertTriangle)<{ impact:  PriceImpact
 `
 
 
-export const getPriceImpactLevel = (impact: number): PriceImpactLevel => {
+export const getPriceImpactLevel = (impact: number): PriceImpactLevel | string => {
+  if (!impact) return '';
   if (impact >= -1) return 'low';
   if (impact >= -2) return 'medium';
   return 'high';
 };
 
-export const getAlertColor = (level: PriceImpactLevel): string => {
+export const getAlertColor = (level: string): string => {
   switch (level) {
     case 'low': return '';
     case 'medium': return '#F88C39';
