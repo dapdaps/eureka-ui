@@ -132,6 +132,14 @@ export default function useTrade({ chainId }: any) {
           .filter((item: any) => item.txn && item.outputCurrencyAmount)
           .sort((a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount)
           .map((item: any) => {
+            console.log(item,
+              rawBalance,
+              gasPrice,
+              prices,
+              inputCurrency,
+              outputCurrency,
+              inputCurrencyAmount, '_trade');
+            
             const _trade = formatTrade({
               market: item,
               rawBalance,
@@ -143,13 +151,15 @@ export default function useTrade({ chainId }: any) {
             });
             return { ..._trade, name: item.template, logo: dexs[item.template].logo };
           });
+          console.log(_markets, '_markets');
+          
 
         setBestTrade(_markets[0]);
         setTrade({ ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency });
         setMarkets(_markets);
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        console.log(err, 'useTrade - onQuoter');
         setTrade({
           inputCurrency,
           inputCurrencyAmount,

@@ -16,7 +16,6 @@ import useTrade from './hooks/useTrade';
 import { useDebounceFn } from 'ahooks';
 
 import type { Token } from '@/types';
-import { StyledFlex } from '@/styled/styles';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
@@ -94,7 +93,13 @@ export default function SuperSwap() {
     setInputCurrency(null as any)
     setOutputCurrency(null as any)
   }, [chainId]);
-  
+
+  const changeTokenType = useCallback(() => {
+    // setInputCurrency(outputCurrency);
+    // setOutputCurrency(inputCurrency);
+    // setSelectType('in')
+  }, [outputCurrency, outputCurrency]);
+
   return (
     <StyledContainer>
       <StyledContent>
@@ -122,7 +127,7 @@ export default function SuperSwap() {
               onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
             }}
           />
-          <StyledTradeIcon disabled={false}>
+          <StyledTradeIcon disabled={false} onClick={changeTokenType}>
             <Arrow2Down />
           </StyledTradeIcon>
           <InputCard
