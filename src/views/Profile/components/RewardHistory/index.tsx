@@ -18,6 +18,7 @@ import {
   StyledPageNumber
 } from './styles';
 import RewardHistoryLoading from "../../Loading/RewardHistoryLoading";
+import { useRouter } from "next/router";
 type PropsType = {
   loaded: boolean;
   userRewardRecords: RewardRecordsType | null;
@@ -156,6 +157,14 @@ export default function RewardHistory({
   onPageChange
 }: PropsType) {
 
+  const router = useRouter()
+  const handleClickSource = function (record: RewardType) {
+    if (record?.source === "Medals") {
+      router.push("/profile/medals")
+    } else {
+      router.push("/odyssey/home?id=" + record?.relate_id)
+    }
+  }
   return !loaded ? (
     <StyledContainer>
       <StyledRecordHeader>
@@ -182,7 +191,12 @@ export default function RewardHistory({
                   <StyledSourceImage src={record?.logo} />
                   <StyledSourceMessage>
                     <StyledFont color="#FFF" fontWeight="600" lineHeight="120%" style={{ textTransform: 'capitalize' }}>{record?.title}</StyledFont>
-                    <StyledFlex gap="5px">
+                    <StyledFlex
+                      gap="5px"
+                      onClick={() => {
+                        handleClickSource(record)
+                      }}
+                    >
                       <StyledFont color="#979ABE" fontSize="14px">{record?.source}</StyledFont>
                       <StyledSvg>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
