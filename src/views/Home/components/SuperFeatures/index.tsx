@@ -149,14 +149,13 @@ interface IData {
     total_users?: number;
     total_transactions?: number;
     total_trading_volume?: number;
-    updated_at?: string;
 }
 
 const SuperFeatures = () => {
     const [statData, setStatData] = useState<IData>({})
     const router = useRouter()
     const fetchStatData = () => {
-        get(`${QUEST_PATH}/api/dashboard/summary`).then((res) => {
+        get(`${QUEST_PATH}/api/stats`).then((res) => {
             setStatData(res.data)
         }).catch((err) => {
             console.log(err)
