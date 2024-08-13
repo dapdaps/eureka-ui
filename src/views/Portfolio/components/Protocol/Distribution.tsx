@@ -174,8 +174,6 @@ const Distribution = (props: any) => {
     return displayChartData.every((it: any) => Big(it.total).lte(0));
   }, [displayChartData]);
 
-  console.log('displayChartData= %o, activePie=%o', displayChartData, activePie);
-
   const handleTab = (tabKey: any) => {
     if (tabKey === activeTab) return;
     setActiveTab(tabKey);

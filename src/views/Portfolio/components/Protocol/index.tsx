@@ -19,7 +19,17 @@ import { CategoryList } from '@/views/Portfolio/config';
 import { a } from 'msw/lib/SetupServerApi-1855d9c6';
 
 const Protocol = (props: Props) => {
-  const { dapps, loading, dappsByChain, totalWorth } = props;
+  const {
+    dapps,
+    loading,
+    dappsByChain,
+    totalWorth,
+    worthList,
+    worthLoading,
+    worthIncrease,
+    tvls,
+    tvlsLoading,
+  } = props;
 
   const [currentChain, setCurrentChain] = useState<any>();
 
@@ -166,21 +176,33 @@ const Protocol = (props: Props) => {
     <AnimatePresence mode="wait">
       <StyledContainer {...container}>
         <StyledFlex justifyContent="space-between" alignItems="stretch" gap="16px" style={{ flexWrap: 'wrap' }}>
-          <ChartComponent totalWorth={totalWorth} />
+          <ChartComponent
+            totalWorth={totalWorth}
+            list={worthList}
+            loading={worthLoading}
+            increase={worthIncrease}
+          />
           <Distribution
             chainData={chainList}
             dAppData={dappListMerged}
           />
         </StyledFlex>
-        <StyledFlex justifyContent="space-between" alignItems="stretch" gap="10px" style={{ flexWrap: 'wrap', marginTop: 16 }}>
+        <StyledFlex
+          justifyContent="space-between"
+          alignItems="stretch"
+          gap="10px"
+          style={{ flexWrap: 'wrap', marginTop: 16 }}
+        >
           {
-            Object.values(CategoryList).map((cate) => (
+            tvls.map((cate) => (
               <Category
                 key={cate.key}
                 title={cate.label}
                 icon={cate.icon}
                 usd={cate.usd}
+                tradingVolume={cate.tradingVolume}
                 executions={cate.executions}
+                loading={tvlsLoading}
               />
             ))
           }
@@ -234,4 +256,9 @@ export interface Props {
   dappsByChain: any;
   loading?: boolean;
   totalWorth: Big.Big;
+  worthList: any[];
+  worthLoading: boolean;
+  worthIncrease: any;
+  tvls: any[];
+  tvlsLoading: boolean;
 }

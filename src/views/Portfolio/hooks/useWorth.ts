@@ -3,6 +3,7 @@ import Big from 'big.js';
 import useAccount from '@/hooks/useAccount';
 import { useDebounceFn } from 'ahooks';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import { get } from '@/utils/http';
 
 export const IntervalList = [
   {
@@ -31,37 +32,16 @@ export function useWorth() {
   const getList = async () => {
     setLoading(true);
     try {
-      // const res = await getTotalWorth(account || '');
-      // if (res.code !== 200) {
-      //   setLoading(false);
-      //   return;
-      // }
-      const res: any = {
-        data: {
-          list: [
-            {
-              day_time: new Date(new Date().setDate(0)).getTime(),
-              worth: 0,
-            },
-            {
-              day_time: new Date(new Date().setDate(1)).getTime(),
-              worth: 0,
-            },
-            {
-              day_time: new Date(new Date().setDate(2)).getTime(),
-              worth: 0,
-            },
-          ],
-        },
-      };
-      let _list: Worth[] = res.data.list || [];
+      const result = await get(`/db3`, { url: 'api/account/worth', params: JSON.stringify({ address: account }) });
+      let _list: any = result?.data?.list ?? [];
       let _total = Big(0);
       let _diff = Big(0);
-      _list.forEach((it) => {
+      _list.forEach((it: any) => {
+        it.day_time = it.day_time * 1000;
         it.worth = it.worth.toString();
         _total = Big(_total).plus(Big(it.worth));
       });
-      _list = _list.sort((a, b) => b.day_time - a.day_time);
+      _list = _list.sort((a: any, b: any) => b.day_time - a.day_time);
       if (_list.length > 1) {
         const last = Big(_list[0].worth);
         const prev = Big(_list[1].worth);

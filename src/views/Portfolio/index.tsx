@@ -21,6 +21,8 @@ import NotificationBar from '@/components/NotificationBar';
 import { useNetworks } from '@/hooks/useNetworks';
 import Big from 'big.js';
 import { usePortfolioStore } from '@/stores/portfolio';
+import { useWorth } from '@/views/Portfolio/hooks/useWorth';
+import useTvls from '@/views/Portfolio/hooks/useTvls';
 
 const TABS = [
   {
@@ -49,6 +51,15 @@ export default function Portfolio() {
     dappsByChain,
     totalBalance: totalBalanceByDapps,
   } = useDapps();
+  const {
+    list: worthList,
+    loading: worthLoading,
+    increase: worthIncrease,
+  } = useWorth();
+  const {
+    tvls,
+    loading: tvlsLoading,
+  } = useTvls();
 
   const show = usePortfolioStore((store: any) => store.show);
   const setShow = usePortfolioStore((store: any) => store.setShow);
@@ -132,6 +143,11 @@ export default function Portfolio() {
                 dapps={dapps}
                 dappsByChain={dappsByChain}
                 totalWorth={totalWorth}
+                worthList={worthList}
+                worthLoading={worthLoading}
+                worthIncrease={worthIncrease}
+                tvls={tvls}
+                tvlsLoading={tvlsLoading}
               />
             )}
             {tab === TABS[2].key && (
