@@ -87,23 +87,24 @@ export type FeatureType = {
 
 type MedalCategory = "dapp" | "invite" | "chain" | "check_in" | "odyssey"
 export type MedalType = {
-  "id": number;
-  "category": string;
-  "medal_category": MedalCategory;
-  "medal_name": string;
-  "relate": number;
-  "level": number;
-  "level_name": string;
-  "level_description": string;
-  "threshold": number;
-  "trading_volume": number;
-  "trading_type": string;
-  "chain_id": number;
-  "logo": string;
-  "completed_percent": string | number;
-  "completed_status": string;
-  "gem": number;
-  "online": number
+  id: number;
+  category: string;
+  medal_category: string;
+  medal_name: string;
+  relate: number;
+  level: number;
+  level_name: string;
+  level_description: string;
+  threshold: number;
+  trading_volume: number;
+  trading_type: null;
+  logo: string;
+  gem: number;
+  online: number;
+  completed_status: string;
+  completed_percent: string | number;
+  completed_threshold: number;
+  completed_volume: number;
 }
 export type FavoriteType = {
   total: number;
@@ -124,6 +125,8 @@ export type RewardType = {
   logo: string;
   rewards: string;
   category: string;
+  relate_id: number;
+  reward_time: number;
 }
 
 export type InviteListType = {
