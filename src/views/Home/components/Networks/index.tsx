@@ -377,7 +377,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
   const [running, setRunning] = useState(false)
   const [currentDapp, setCurrentDapp] = useState<DappType | null>(null)
   const [boundingClientRect, setBoundingClientRect] = useState<any>(null)
-  console.log('====currentChain', currentChain)
+
   return (
     <>
       <div
@@ -503,6 +503,7 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
           users={network?.participants}
           rewards={network?.odyssey}
           tradingVolume={network?.trading_volume}
+          isCenter
         />
       </BadgesContainer>
     </div>
