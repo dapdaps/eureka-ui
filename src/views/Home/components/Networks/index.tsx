@@ -139,7 +139,7 @@ const PrimaryPanels = styled.div`
     bottom: 0;
     width: 100%;
     border-radius: 20px;
-    padding: 0 20px ;
+    padding-left: 20px;
     
 
   }

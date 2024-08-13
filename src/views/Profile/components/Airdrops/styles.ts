@@ -12,6 +12,7 @@ export const StyledAirdropCard = styled.div`
   border-radius: 12px;
   border: 1px solid #202329;
   background: #101115;
+  cursor: pointer;
 `
 export const StyledNetworkImage = styled.img`
   width: 72px;
