@@ -73,6 +73,7 @@ const Modal = ({
   onClose = () => {},
   overlayClassName = '',
   overlayStyle,
+  headerStyle,
   className = '',
   style,
   portal = false
@@ -93,7 +94,7 @@ const Modal = ({
               }}
             >
               {showHeader && (
-                <Header>
+                <Header style={headerStyle}>
                   <Title>{title}</Title>
                   <StyledCloseIcon>
                     <CloseIcon onClose={onClose} />
