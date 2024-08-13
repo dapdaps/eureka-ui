@@ -25,26 +25,30 @@ export default function useAirdropList(tab: Tab) {
     setLoading(true);
     try {
       const result = await get(`/api/airdrop/list-by-account`, query);
-      const data = (result.data || []).map((airdrop: AirdropType) => {
-        if (airdrop?.category === 'dapp') {
-          const ids = airdrop?.dapp?.network_ids?.split(',')
-          const networks: NetworkType[] = []
-          ids.forEach((id: number) => {
-            const currChain = popupsData[IdToPath[id]]
-            const chain = chainCofig[currChain?.chainId]
-            chain && networks.push(chain)
-          })
-          airdrop.dapp.networks = networks
-          const c_ids = airdrop?.dapp?.category_ids?.split(',')
-          const categories: CategoryType[] = []
-          c_ids.forEach((c_id: string) => {
-            const category = CategoryList.find(_c => (_c.key + "") === c_id)
-            category && categories.push(category)
-          })
-          airdrop.dapp.categories = categories
-        }
-        return airdrop
-      })
+      const data = (result.data || [])
+        .filter((airdrop: AirdropType) => {
+          return airdrop?.completed_count < airdrop?.total_quest
+        })
+        .map((airdrop: AirdropType) => {
+          if (airdrop?.category === 'dapp') {
+            const ids = airdrop?.dapp?.network_ids?.split(',')
+            const networks: NetworkType[] = []
+            ids.forEach((id: number) => {
+              const currChain = popupsData[IdToPath[id]]
+              const chain = chainCofig[currChain?.chainId]
+              chain && networks.push(chain)
+            })
+            airdrop.dapp.networks = networks
+            const c_ids = airdrop?.dapp?.category_ids?.split(',')
+            const categories: CategoryType[] = []
+            c_ids.forEach((c_id: string) => {
+              const category = CategoryList.find(_c => (_c.key + "") === c_id)
+              category && categories.push(category)
+            })
+            airdrop.dapp.categories = categories
+          }
+          return airdrop
+        })
       setAirdropList(data);
       setLoading(false);
       setLoaded(true);
