@@ -16,6 +16,7 @@ const AllInOneCardView: React.FC<Props> = (props) => {
     if (!networks[chainId]) return [];
     return Object.values(networks[chainId].dexs);
   }, [chainId]);
+
   return (
     <StyledCard style={style} className={type} bgColor={bgColor} onClick={handleSelect}>
       <Gradient
@@ -33,7 +34,7 @@ const AllInOneCardView: React.FC<Props> = (props) => {
           <div className="sub-title">{subTitle}</div>
         </StyledTitle>
         <StyledPointer>
-          {title === 'Trade' && (
+          {title?.includes('Trade') && (
             <StyledIcons>
               {dexs
                 .filter((dex, i) => i < 5)

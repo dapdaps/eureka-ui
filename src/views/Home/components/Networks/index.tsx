@@ -346,7 +346,6 @@ const StyledPanelBg = styled.img`
   right: 30px;
   width: 207px;
   height: 179px;
-  transform: translateX(-10000px);
   object-fit: contain;
 `
 
@@ -393,8 +392,10 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
           <StyledPanelBg
             src={currentChain?.bgIcon}
             style={
-              currentChain?.selectBgColor ? { filter: `drop-shadow(${hexToRgba(currentChain?.selectBgColor, 0.03)} 10000px 0)` } : {}
-            } alt=""
+              currentChain?.selectBgColor ? { filter: `drop-shadow(${hexToRgba(currentChain?.selectBgColor, 0.03)} 100vw 0)`,
+                transform: 'translateX(-100vw)' } : {}
+            }
+            alt=""
           />
           {
             network?.odyssey?.length > 0 && (

@@ -196,7 +196,7 @@ export const StyledOverviewContainer = styled.div`
   padding: 30px 22px 44px 30px;
   font-family: Montserrat;
   position: relative;
-  min-height: 300px;
+  min-height: 400px;
 `;
 
 export const StyledOverview = styled.div`
@@ -470,10 +470,9 @@ export const StyledOverviewShadow = styled.img`
   width: 345px;
   height: 300px;
   position: absolute;
-  right: 0px;
-  bottom: 0px;
+  right: 0;
+  bottom: 0;
   z-index: 0;
-  transform: translateX(-10000px);
   object-fit: contain;
 `;
 

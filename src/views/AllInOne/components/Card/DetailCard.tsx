@@ -65,7 +65,7 @@ interface Props {
   style?: React.CSSProperties;
   config?: boolean;
   onShowSettings?: () => void;
-  likeId: number;
+  likeId: number | null;
 }
 
 const ArrowBack = ({ classname }: { classname?: string }) => {

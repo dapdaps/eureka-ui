@@ -49,9 +49,9 @@ const AllInOneDetailView = (props: Props) => {
   const formatLikeId = () => {
     if (currentChain.chainId && currentMenu.id) {
       const _id = currentChain.chainId + '' + currentMenu.id;
-      return isNaN(Number(_id)) ? -1 : Number(_id);
+      return isNaN(Number(_id)) ? null : Number(_id);
     }
-    return -1;
+    return null;
   }
 
   return (

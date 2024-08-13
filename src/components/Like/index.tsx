@@ -56,7 +56,7 @@ const Like = ({ id, category, classname = '' }: Props) => {
 export default Like;
 
 interface Props {
-  id: number;
+  id:any;
   category: string;
   classname?: string;
 }

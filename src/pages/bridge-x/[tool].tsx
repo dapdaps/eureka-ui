@@ -135,14 +135,14 @@ const Bridge: NextPageWithLayout = () => {
                   }, 0);
                 }}
             />
+          {
+            updateDetail ? null : (<>
             <DappDetailScroll />
             <Suspense fallback={<DappFallback />}>
-              {
-                updateDetail ? null : (
-                  <DappDetail {...dappDetail} />
-                )
-              }
+              <DappDetail {...dappDetail} />
             </Suspense>
+            </>)
+          }
         </Container>
     )
 };
