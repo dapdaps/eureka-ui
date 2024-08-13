@@ -38,6 +38,7 @@ export default function SuperSwap() {
 
   const { run: runQuoter } = useDebounceFn(
     () => {
+      if (loading || errorTips) return;
       onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
     },
     {
@@ -84,6 +85,10 @@ export default function SuperSwap() {
     onSelectMarket(null);
     runQuoter();
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
+
+  console.log(trade, 'trade');
+  
+
 
   return (
     <StyledContainer>
@@ -150,16 +155,20 @@ export default function SuperSwap() {
         currency={selectType === 'in' ? inputCurrency : outputCurrency}
         onSelect={onSelectToken}
       />
-      <MarketsModal
-        display={showMarkets}
-        onClose={() => {
-          setShowMarkets(false);
-        }}
-        markets={markets}
-        bestTrade={bestTrade}
-        outputCurrency={outputCurrency}
-        onSelectMarket={onSelectMarket}
-      />
+      {
+        showMarkets && outputCurrency && (
+          <MarketsModal
+            display={showMarkets}
+            onClose={() => {
+              setShowMarkets(false);
+            }}
+            markets={markets}
+            bestTrade={bestTrade}
+            outputCurrency={outputCurrency}
+            onSelectMarket={onSelectMarket}
+          />
+        )
+      }
     </StyledContainer>
   );
 }

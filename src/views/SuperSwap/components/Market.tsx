@@ -18,7 +18,7 @@ export default function Market({ trade, bestTrade, length, onProvidersClick }: a
       <StyledFlex gap="5px">
         <StyledIcon src={trade.logo} />
         <div>{trade.name}</div>
-        {bestTrade.name === trade.name && <StyledBestPrice>Best Price</StyledBestPrice>}
+        {bestTrade?.name === trade.name && <StyledBestPrice>Best Price</StyledBestPrice>}
       </StyledFlex>
       <StyledFlex gap="5px">
         <StyledAmount

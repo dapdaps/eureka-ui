@@ -38,7 +38,7 @@ const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrenc
                 <StyledFlex gap="6px">
                   <StyledIcon src={item.logo} />
                   <StyledTitle>{item.name}</StyledTitle>
-                  {bestTrade.name === item.name && <StyledBestPrice>Best Price</StyledBestPrice>}
+                  {bestTrade?.name === item.name && <StyledBestPrice>Best Price</StyledBestPrice>}
                 </StyledFlex>
                 <StyledFlex gap="6px">
                   <StyledTitle>
