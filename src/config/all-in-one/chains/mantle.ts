@@ -56,7 +56,7 @@ export default {
     },
     Liquidity: {
       tab: 'Liquidity',
-      path: 'bluebiu.near/widget/Mantle.GAMMA',
+      path: 'bluebiu.near/widget/Liquidity.ALL',
       description: 'Seamlessly adding LP to any pair',
     },
     Lending: {
