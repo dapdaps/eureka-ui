@@ -12,7 +12,7 @@ export const MenuConfig: { [k: string]: any } = {
     component: Bridge,
     id: 1000
   },
-  'Trade': {
+  'Swap': {
     component: Trade,
     id: 1001
   },

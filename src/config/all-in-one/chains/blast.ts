@@ -19,12 +19,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Blast.BridgeAuthority.Index',
-      description: 'Intuitively across different network to Blast',
+      description: 'Intuitively bridge from different networks to Blast, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Blast.Swap',
-      description: 'Efficiently from/to any assets on Blast',
+      description: 'Trade efficiently across any assets on Blast.',
     },
     Liquidity: {
       tab: 'Liquidity',

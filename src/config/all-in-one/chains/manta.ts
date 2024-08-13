@@ -48,12 +48,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Intuitively across different network to Manta',
+      description: 'Intuitively bridge from different networks to Manta, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Manta.Swap',
-      description: 'Efficiently from/to any assets on Manta',
+      description: 'Trade efficiently across any assets on Manta.',
     },
     Liquidity: {
       tab: 'Liquidity',

@@ -47,12 +47,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Linea.Bridge',
-      description: 'Intuitively across different network to Linea',
+      description: 'Intuitively bridge from different networks to Linea, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Linea.Swap.Dex',
-      description: 'Efficiently from/to any assets on Linea',
+      description: 'Trade efficiently across any assets on Linea.',
     },
     Liquidity: {
       tab: 'Liquidity',

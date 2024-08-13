@@ -19,12 +19,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'guessme.near/widget/ZKEVMSwap.zkevm-bridge',
-      description: 'Intuitively across different network to Polygon zkEVM',
+      description: 'Intuitively bridge from different networks to Polygon zkEVM, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/PolygonZkevm.Swap.Dex',
-      description: 'Efficiently from/to any assets on Polygon zkEVM',
+      description: 'Trade efficiently across any assets on Polygon zkEVM.',
     },
     Liquidity: {
       tab: 'Liquidity',

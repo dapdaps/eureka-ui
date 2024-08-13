@@ -48,12 +48,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Optimism.Bridge',
-      description: 'Intuitively across different network to Optimism',
+      description: 'Intuitively bridge from different networks to Optimism, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Optimism.Dex',
-      description: 'Efficiently from/to any assets on Optimism',
+      description: 'Trade efficiently across any assets on Optimism.',
     },
     Liquidity: {
       tab: 'Liquidity',

@@ -4,6 +4,7 @@ import React, { memo } from 'react';
 import { StyledFlex } from '@/styled/styles';
 import { StyledContent, StyledDetailCard, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
 import Like from '@/components/Like/index';
+import { renderTitle } from '@/views/AllInOne/utils';
 
 const AllInOneDetailCardView: React.FC<Props> = (props) => {
   const {
@@ -34,8 +35,8 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
             <StyledPointer onClick={handleBack}>
               <ArrowBack classname="arrow-back" />
             </StyledPointer>
-            <h3>{title}</h3>
-            <Like id={likeId} category='all-in-one' classname='like-tag'/>
+            <h3>{renderTitle(title)}</h3>
+            <Like id={likeId} category="all-in-one" classname="like-tag" />
           </StyledFlex>
           <div className="sub-title">{subTitle}</div>
         </StyledTitle>

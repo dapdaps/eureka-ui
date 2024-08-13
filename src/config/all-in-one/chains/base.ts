@@ -48,12 +48,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Base.Bridge',
-      description: ' Intuitively across different network to Base',
+      description: 'Intuitively bridge from different networks to Base, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Base.BaseDex',
-      description: 'Efficiently from/to any assets on Base',
+      description: 'Trade efficiently across any assets on Base.',
     },
     Liquidity: {
       tab: 'Liquidity',

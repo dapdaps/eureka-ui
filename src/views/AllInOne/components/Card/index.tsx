@@ -4,6 +4,7 @@ import { StyledFlex } from '@/styled/styles';
 import { StyledCard, StyledContent, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import { StyledIcons, StyledIcon } from './styles';
+import { renderTitle } from '@/views/AllInOne/utils';
 
 const AllInOneCardView: React.FC<Props> = (props) => {
   const { children, title, bgColor, subTitle, style, chainId, type = 'normal', onSelect = () => {} } = props;
@@ -30,11 +31,11 @@ const AllInOneCardView: React.FC<Props> = (props) => {
       />
       <StyledFlex justifyContent="space-between" alignItems="flex-start">
         <StyledTitle className={type}>
-          <h3>{title}</h3>
+          <h3>{renderTitle(title)}</h3>
           <div className="sub-title">{subTitle}</div>
         </StyledTitle>
         <StyledPointer>
-          {title?.includes('Trade') && (
+          {title === 'Swap' && (
             <StyledIcons>
               {dexs
                 .filter((dex, i) => i < 5)
