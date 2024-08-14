@@ -41,7 +41,7 @@ export default {
   theme: {
     button: {
       bg: '#0038FF',
-      text: '#FFF',
+      text: '#FFFFFF',
     },
   },
   menuConfig: {

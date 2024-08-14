@@ -39,8 +39,8 @@ export default {
   defaultTab: 'Swap',
   theme: {
     button: {
-      bg: '#00C6A3',
-      text: '#02051E',
+      bg: '#163719',
+      text: '#FFFFFF',
     },
   },
   menuConfig: {

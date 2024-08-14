@@ -11,7 +11,7 @@ export default {
   defaultTab: 'Bridge',
   theme: {
     button: {
-      bg: 'linear-gradient(269deg, #803DE0 36.18%, #9E2AC7 60.54%)',
+      bg: '#6C00F6',
       text: '#FFF',
     },
   },

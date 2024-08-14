@@ -30,8 +30,8 @@ const List = ({ path }: any) => {
         {
           loading ? [...new Array(5).keys()].map((key) => (
             <LoadingSkeleton key={key} />
-          )) : l2networkList.map((item: any) => (
-            <ListItem dataSource={item} />
+          )) : l2networkList.map((item: any, index: number) => (
+            <ListItem dataSource={{...item, index}} key={item.id}/>
           ))
         }
         <H1>L1 Networks</H1>

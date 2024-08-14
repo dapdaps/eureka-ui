@@ -40,7 +40,7 @@ export default {
   defaultTab: 'Swap',
   theme: {
     button: {
-      bg: 'linear-gradient(89deg, #29CCB9 0%, #0091FF 49%, #FF66B7 100%)',
+      bg: '#707EDF',
       text: '#FFF',
     },
   },

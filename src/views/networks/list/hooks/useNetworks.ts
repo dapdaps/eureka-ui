@@ -76,6 +76,7 @@ export interface Network {
   trading_volume: string;
   trading_volume_change_percent: string;
   odyssey: NetworkOdyssey[];
+  index?: number;
 }
 
 export interface NetworkOdyssey {

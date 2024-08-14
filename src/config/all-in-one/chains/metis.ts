@@ -12,7 +12,7 @@ export default {
   theme: {
     button: {
       bg: '#00D3FF',
-      text: '#02051E',
+      text: '#000000',
     },
   },
   menuConfig: {
