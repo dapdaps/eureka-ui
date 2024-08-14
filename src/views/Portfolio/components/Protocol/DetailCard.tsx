@@ -8,6 +8,9 @@ import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWit
 import React, { useMemo } from 'react';
 import { getTokenLogo } from '@/views/Portfolio/helpers';
 import Big from 'big.js';
+import { get } from '@/utils/http';
+import Loading from '@/components/Icons/Loading';
+import useDappOpen from '@/hooks/useDappOpen';
 
 export const StyledContainer = styled.div`
   border-radius: 12px;
@@ -62,7 +65,7 @@ export const StyledHead = styled.div`
 `;
 export const StyledContent = styled.div``;
 export const StyledFoot = styled.div``;
-export const StyledManageButton = styled.a`
+export const StyledManageButton = styled.button`
   color: #000;
   font-size: 14px;
   font-style: normal;
@@ -106,6 +109,10 @@ const DetailCard = (props: any) => {
     show_name,
     type,
   } = dapp;
+
+  const { open } = useDappOpen();
+
+  const [managePending, setManagePending] = React.useState(false);
 
   const isLending = ['Lending', 'Yield'].includes(type);
   const isFarming = ['Leveraged Farming'].includes(type);
@@ -235,23 +242,26 @@ const DetailCard = (props: any) => {
               usd: Big(token.usd || 0),
               supplyAmount: Big(0),
               borrowAmount: Big(0),
-              totalUsd: Big(token.usd || 0),
+              totalUsd: Big(0),
             };
             if (_type === 'Supply') {
               cell.supplyAmount = Big(token.amount || 0);
+              cell.totalUsd = Big(cell.totalUsd).plus(token.usd || 0);
             }
             if (_type === 'Borrow') {
               cell.borrowAmount = Big(token.amount || 0);
+              cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
             }
             _tableList.push(cell);
           } else {
             if (_type === 'Supply') {
               _tableList[tokenIdx].supplyAmount = Big(_tableList[tokenIdx].supplyAmount).plus(token.amount || 0);
+              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
             }
             if (_type === 'Borrow') {
               _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
+              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
             }
-            _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
           }
         });
       });
@@ -293,13 +303,14 @@ const DetailCard = (props: any) => {
                 usd: Big(token.usd || 0),
                 supplyAmount: Big(0),
                 borrowAmount: Big(0),
-                totalUsd: Big(token.usd || 0),
+                totalUsd: Big(0),
               };
               cell.borrowAmount = Big(token.amount || 0);
+              cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
               _tableList.push(cell);
             } else {
               _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
-              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
+              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
             }
           }
         });
@@ -314,6 +325,30 @@ const DetailCard = (props: any) => {
     isLTIntegerZero: true,
   });
 
+  const handleManage = async () => {
+    if (managePending) return;
+    setManagePending(true);
+    const { show_name } = dapp;
+    let dappId = 0;
+    try {
+      const dappIdRes = await get('/api/dapp/id', {
+        name: show_name,
+      });
+      dappId = dappIdRes?.data?.id || 0;
+    } catch (err) {
+      console.log('get dapp id by show_name failed: %o', err);
+    }
+    if (dappId <= 0) {
+      setManagePending(false);
+      return;
+    }
+    await open({
+      dapp: { id: dappId },
+      from: 'alldapps',
+    });
+    setManagePending(false);
+  };
+
   return (
     <StyledContainer style={style} id={`portfolioProtocolDetail-${dapp.chain_id}-${dapp.type}-${dapp.name}`}>
       <StyledHead>
@@ -324,7 +359,12 @@ const DetailCard = (props: any) => {
         />
         <div className="name">{show_name}</div>
         <div className="category">{type}</div>
-        <StyledManageButton href="/" target="_blank">
+        <StyledManageButton onClick={handleManage}>
+          {
+            managePending && (
+              <Loading size={12} />
+            )
+          }
           Manage
           <svg width="15" height="11" viewBox="0 0 15 11" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path

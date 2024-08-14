@@ -44,14 +44,39 @@ export default function useDapps() {
       }));
       for (const _dapp of data) {
         let dappTotalUsd = Big(0);
+        const dappType = _dapp.type;
         if (!_dapp.assets) continue;
         for (const typeAsset of _dapp.assets) {
+          const assetType = typeAsset.type;
           typeAsset.totalUsd = Big(0);
           if (!typeAsset.assets) continue;
-          for (const tokenAsset of typeAsset.assets) {
+          for (let i = 0; i < typeAsset.assets.length; i++) {
+            const tokenAsset = typeAsset.assets[i];
             tokenAsset.tokenLogo = getTokenLogo(tokenAsset.symbol);
-            dappTotalUsd = dappTotalUsd.plus(tokenAsset.usd || 0);
-            typeAsset.totalUsd = typeAsset.totalUsd.plus(tokenAsset.usd || 0);
+
+            // Leveraged Farming
+            if (['Leveraged Farming'].includes(dappType)) {
+              // The first item in the innermost assets is Supply
+              if (i === 0) {
+                typeAsset.totalUsd = typeAsset.totalUsd.plus(tokenAsset.usd || 0);
+                dappTotalUsd = dappTotalUsd.plus(tokenAsset.usd || 0);
+              }
+              // while the others are Borrow
+              else {
+                typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
+                dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
+              }
+            }
+            // other dApp types
+            else {
+              if (assetType === 'Borrow') {
+                typeAsset.totalUsd = typeAsset.totalUsd.minus(tokenAsset.usd || 0);
+                dappTotalUsd = dappTotalUsd.minus(tokenAsset.usd || 0);
+              } else {
+                typeAsset.totalUsd = typeAsset.totalUsd.plus(tokenAsset.usd || 0);
+                dappTotalUsd = dappTotalUsd.plus(tokenAsset.usd || 0);
+              }
+            }
           }
         }
         _totalBalance = _totalBalance.plus(dappTotalUsd);
@@ -76,10 +101,6 @@ export default function useDapps() {
         }
       }
       const _dappsByChainSorted = _dappsByChain.sort((a, b) => Big(b.totalUsdValue).toNumber() - Big(a.totalUsdValue).toNumber());
-
-      console.log('dappsList: %o', dappsList);
-      console.log('_dappsByChainSorted: %o', _dappsByChainSorted);
-      console.log('_totalBalance: %o', _totalBalance);
 
       setDapps(dappsList);
       setDappsByChain(_dappsByChainSorted);
