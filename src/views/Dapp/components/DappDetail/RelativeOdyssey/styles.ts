@@ -15,6 +15,53 @@ export const StyledOdysseyContainer = styled.div`
 
 export const StyledOdysseyDetail = styled.div`
   margin-bottom: 30px;
+  position: relative;
+  
+  .detail-page-relative-odyssey-swiper {
+    overflow: hidden;
+  }
+
+  .swiper-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .swiper-pagination-bullet {
+    width: 25px;
+    height: 6px;
+    background: rgba(55, 58, 83, 0.5);
+    display: inline-block;
+    margin: 0 6px;
+    border-radius: 3px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .swiper-pagination-bullet-active {
+    width: 150px;
+    background: #575A77;
+  }
+  
+  .detail-page-relative-odyssey-card {
+    margin-bottom: 0;
+  }
+  
+  .swiper-pagination-button {
+    position: absolute;
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+    
+    &.next {
+      left: unset;
+      right: -60px;
+    }
+  }
 `;
 
 export const StyledOdysseyBanner = styled.div<{ url: string }>`
