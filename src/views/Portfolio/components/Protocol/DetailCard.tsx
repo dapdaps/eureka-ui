@@ -232,8 +232,9 @@ const DetailCard = (props: any) => {
       dapp.detailList.forEach((it: any) => {
         // Supply / Borrow
         const _type = it.type;
+        const _tokenList: any = [];
         it.assets.forEach((token: any) => {
-          const tokenIdx = _tableList.findIndex((_it: any) => _it.symbol === token.symbol);
+          const tokenIdx = _tokenList.findIndex((_it: any) => _it.symbol === token.symbol);
           if (tokenIdx < 0) {
             const cell = {
               symbol: token.symbol,
@@ -252,17 +253,20 @@ const DetailCard = (props: any) => {
               cell.borrowAmount = Big(token.amount || 0);
               cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
             }
-            _tableList.push(cell);
+            _tokenList.push(cell);
           } else {
             if (_type === 'Supply') {
-              _tableList[tokenIdx].supplyAmount = Big(_tableList[tokenIdx].supplyAmount).plus(token.amount || 0);
-              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
+              _tokenList[tokenIdx].supplyAmount = Big(_tokenList[tokenIdx].supplyAmount).plus(token.amount || 0);
+              _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).plus(token.usd || 0);
             }
             if (_type === 'Borrow') {
-              _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
-              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
+              _tokenList[tokenIdx].borrowAmount = Big(_tokenList[tokenIdx].borrowAmount).plus(token.amount || 0);
+              _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).minus(token.usd || 0);
             }
           }
+        });
+        _tokenList.forEach((t: any) => {
+          _tableList.push(t);
         });
       });
       return _tableList;
@@ -272,8 +276,9 @@ const DetailCard = (props: any) => {
       dapp.detailList.forEach((it: any) => {
         // The first item in the innermost assets is Supply
         // while the others are Borrow.
+        const _tokenList: any = [];
         it.assets.forEach((token: any, index: number) => {
-          const tokenIdx = _tableList.findIndex((_it: any) => _it.symbol === token.symbol);
+          const tokenIdx = _tokenList.findIndex((_it: any) => _it.symbol === token.symbol);
           // Supply
           if (index === 0) {
             if (tokenIdx < 0) {
@@ -287,10 +292,10 @@ const DetailCard = (props: any) => {
                 totalUsd: Big(token.usd || 0),
               };
               cell.supplyAmount = Big(token.amount || 0);
-              _tableList.push(cell);
+              _tokenList.push(cell);
             } else {
-              _tableList[tokenIdx].supplyAmount = Big(_tableList[tokenIdx].supplyAmount).plus(token.amount || 0);
-              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).plus(token.usd || 0);
+              _tokenList[tokenIdx].supplyAmount = Big(_tokenList[tokenIdx].supplyAmount).plus(token.amount || 0);
+              _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).plus(token.usd || 0);
             }
           }
           // Borrow
@@ -307,12 +312,15 @@ const DetailCard = (props: any) => {
               };
               cell.borrowAmount = Big(token.amount || 0);
               cell.totalUsd = Big(cell.totalUsd).minus(token.usd || 0);
-              _tableList.push(cell);
+              _tokenList.push(cell);
             } else {
-              _tableList[tokenIdx].borrowAmount = Big(_tableList[tokenIdx].borrowAmount).plus(token.amount || 0);
-              _tableList[tokenIdx].totalUsd = Big(_tableList[tokenIdx].totalUsd).minus(token.usd || 0);
+              _tokenList[tokenIdx].borrowAmount = Big(_tokenList[tokenIdx].borrowAmount).plus(token.amount || 0);
+              _tokenList[tokenIdx].totalUsd = Big(_tokenList[tokenIdx].totalUsd).minus(token.usd || 0);
             }
           }
+        });
+        _tokenList.forEach((t: any) => {
+          _tableList.push(t);
         });
       });
       return _tableList;
