@@ -18,18 +18,20 @@ const StyledContainer = styled.div`
   font-size: 12px;
   line-height: 14px;
   font-weight: 400;
-  padding: 0 36px;
-  height: 60px;
+  padding: 0;
+  height: 55px;
   color: #979ABE;
   font-family: Montserrat;
   font-style: normal;
 `;
 const StyledContainerInner = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   max-width: 1248px;
   margin: 0 auto;
+  height: 100%;
 `;
 const StyledSocials = styled.div`
   display: flex;
@@ -45,13 +47,19 @@ const StyledSocialButton = styled(motion.div)`
 const StyledFooterLeft = styled.div`
   flex-grow: 1;
   text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 25px;
 `;
 const StyledFooterRight = styled.div`
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 38px;
 `;
 const StyledRpcs = styled.div<{ $color?: string; }>`
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
   display: flex;
   align-items: center;
   gap: 5px;
@@ -63,6 +71,10 @@ const StyledRpcs = styled.div<{ $color?: string; }>`
   cursor: pointer;
   opacity: 0.8;
   transition: opacity 0.2s linear;
+
+  @media (max-width: 1394px) {
+    bottom: 60px;
+  }
 
   &:hover {
     opacity: 1;
@@ -78,6 +90,7 @@ const StyledRpcs = styled.div<{ $color?: string; }>`
     border-radius: 50%;
   }
 `;
+const StyledCopyright = styled.div``;
 
 const SocialButton = ({ icon, alt, url }: { icon: any; alt: string; url?: string }) => {
   return url ? (
@@ -112,7 +125,8 @@ const Footer = () => {
     <StyledContainer>
       <StyledContainerInner>
         <StyledFooterLeft>
-          Created by DapDap team with ❤️ Powered by NEAR | Copyright 2024 DapDap
+          <span>Created by DapDap team with ❤️</span>
+          <span>Powered by NEAR</span>
         </StyledFooterLeft>
         <StyledFooterRight>
           <StyledSocials>
@@ -243,10 +257,13 @@ const Footer = () => {
               url="https://dapdap.mirror.xyz/"
             />
           </StyledSocials>
-          <StyledRpcs $color={renderPingConfig(ping).color} onClick={handleRpc}>
-            {renderPing(ping)}
-          </StyledRpcs>
+          <StyledCopyright>
+            Copyright 2024 DapDap
+          </StyledCopyright>
         </StyledFooterRight>
+        <StyledRpcs $color={renderPingConfig(ping).color} onClick={handleRpc}>
+          {renderPing(ping)}
+        </StyledRpcs>
       </StyledContainerInner>
       <RpcSelector
         visible={rpcStore.visible}
