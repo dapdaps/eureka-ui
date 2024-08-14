@@ -42,7 +42,7 @@ const TagList = [
   {
     label: 'Top Volume',
     bgColor: '#00D1FF',
-    icon: '/images/networks/icon-top.png',
+    icon: '/images/networks/icon-top.gif',
     classname: 'tag-top'
   },
   {

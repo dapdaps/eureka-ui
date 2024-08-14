@@ -391,7 +391,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
               {
                 isTopVolume ? (
                   <TopTvl>
-                    <Image src={'/images/networks/icon-top.png'} width={47} height={47} alt="topVolume" />
+                    <Image src={'/images/networks/icon-top.gif'} width={47} height={47} alt="topVolume" />
                     TOP Volume
                   </TopTvl>
                 ) : (
