@@ -18,7 +18,7 @@ export const StyledAchievedContainer = styled.div`
   border-color: rgba(87, 219, 100, 0.5);
   border-width: 2px;
   border-style: solid;
-
+  transform: translateX(26px);
 `
 export const StyledAchieved = styled.div`
   display: flex;

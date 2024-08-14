@@ -14,7 +14,7 @@ type ProgressType = {
 export default function Progress({ quantity, total, showAchieved, barWidth }: ProgressType) {
   quantity = quantity > total ? total : quantity
   return (
-    <StyledFlex justifyContent="space-between" gap="37px">
+    <StyledFlex justifyContent="center" gap="37px" style={{ position: 'relative', paddingRight: 52 }}>
       {
         quantity >= total && showAchieved ? (
           <StyledAchievedContainer>
@@ -33,7 +33,9 @@ export default function Progress({ quantity, total, showAchieved, barWidth }: Pr
           </StyledProgressBar>
         )
       }
-      <StyledFont color="#979ABE" fontSize="14px" fontWeight="500">{quantity}/{total}</StyledFont>
+      <StyledFont color="#979ABE" fontSize="14px" fontWeight="500" style={{ position: 'absolute', right: 0 }}>
+        {quantity}/{total}
+      </StyledFont>
     </StyledFlex>
   )
 }

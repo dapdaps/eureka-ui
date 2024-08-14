@@ -56,7 +56,16 @@ export default memo(function MedalsView() {
                   {
                     medalMapping[key]?.map((medal: any, index: number) => {
                       return (
-                        <MedalCard key={key + '|' + index} medal={medal} style={{ width: 311, height: 150 }} />
+                        <MedalCard
+                          key={key + '|' + index} medal={medal}
+                          style={{
+                            width: 311,
+                            height: 150,
+                          }}
+                          nameStyle={{
+                            fontSize: 16,
+                          }}
+                        />
                       )
                     })
                   }
