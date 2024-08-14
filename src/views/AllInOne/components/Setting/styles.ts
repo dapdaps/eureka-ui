@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  padding: 20px 22px 24px 20px;
+  padding: 20px 22px 44px 20px;
 `;
 
 export const StyledHeader = styled.div`
@@ -90,10 +90,10 @@ export const StyledPopupItem = styled.div`
     flex-grow: 1;
   }
 
-  &:hover,
+  /* &:hover,
   &.selected {
     background: #2a2a3a;
-  }
+  } */
 `;
 
 export const StyledPopupText = styled.div`
@@ -114,11 +114,11 @@ export const StyledTitle = styled.div`
 
 export const StyledPopup = styled.div`
   position: absolute;
-  top: 42px;
+  top: 41px;
   left: 0;
   background: #303142;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  border-radius: 12px;
+  border-radius: 0 0 12px 12px;
   padding: 7px 0;
   width: 136px;
   max-height: 450px;

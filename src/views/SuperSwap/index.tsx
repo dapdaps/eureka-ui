@@ -16,6 +16,7 @@ import useTrade from './hooks/useTrade';
 import { useDebounceFn } from 'ahooks';
 
 import type { Token } from '@/types';
+import { set } from 'lodash';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
@@ -95,11 +96,12 @@ export default function SuperSwap() {
   }, [chainId]);
 
   const changeTokenType = useCallback(() => {
-    // setInputCurrency(outputCurrency);
-    // setOutputCurrency(inputCurrency);
-    // setSelectType('in')
-  }, [outputCurrency, outputCurrency]);
-  console.log(trade, 'trade');
+    setInputCurrency(outputCurrency);
+    setOutputCurrency(inputCurrency);
+    setSelectType('in')
+    setInputCurrencyAmount(trade.outputCurrencyAmount);
+    runQuoter();
+  }, [outputCurrency, outputCurrency, trade]);
   
   return (
     <StyledContainer>

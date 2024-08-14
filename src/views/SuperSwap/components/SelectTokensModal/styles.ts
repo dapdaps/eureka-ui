@@ -72,11 +72,13 @@ export const CurrencyAmount = styled.div`
   font-size: 18px;
   font-weight: 500;
   color: #fff;
+  text-align: right;
 `;
 export const StyledBalanceWrap = styled.div`
   display: flex;
   flex-direction: column;
   color: #fff;
+  text-align: right;
 `;
 
 export const StyledRowR = styled.div`
