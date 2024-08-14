@@ -1,26 +1,35 @@
-import { memo } from 'react';
+import { getAccessToken } from '@/apis';
+import { QUEST_PATH } from '@/config/quest';
+import { get } from '@/utils/http';
 import {
-  StyledContainer,
-  StyledHead,
-  StyledLogo,
-  StyledLogoText,
-  StyledX,
-  StyledName,
-  StyledDesc,
-  StyledInner,
-  StyledConnectButton,
-  StyledXContainer,
-  StyledRect,
   StyledBg,
-  StyledLight,
-  StyledAperture,
-  StyledMedals,
-  StyledMedal,
-  StyledLogoContainer,
+  StyledBgImage,
+  StyledConnectButton,
+  StyledContainer,
   StyledContent,
-  StyledRectBg
+  StyledDesc,
+  StyledHead,
+  StyledInner,
+  StyledLRect,
+  StyledLeftMouseImage,
+  StyledLogo,
+  StyledLogoContainer,
+  StyledLogoText,
+  StyledMedal,
+  StyledMedals,
+  StyledName,
+  StyledRRect,
+  StyledRadialGradient,
+  StyledRect,
+  StyledRightMouseImage,
+  StyledX,
+  StyledXContainer
 } from '@/views/marketing/invite/styles';
 import { useConnectWallet } from '@web3-onboard/react';
+import { setCookie } from 'cookies-next';
+import { memo, useEffect, useState } from 'react';
+import { InviteModal, KolUserInfo } from '../components';
+
 
 const Invite = (props: Props) => {
   const {
@@ -33,17 +42,41 @@ const Invite = (props: Props) => {
     medals = [],
     isMobile
   } = props;
-
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
-
-  const onConnectWallet = () => {
-      connect();
+  const [address, setAddress] = useState('');
+  const [isShowModal, setIsShowModal] = useState(false);
+  const [modalType, setModalType] = useState<'success' | 'fail'>('success');
+  const [updater, setUpdater] = useState(0);
+  async function checkAddress() {
+    const res: any = await get(`${QUEST_PATH}/api/invite/check-address/${address}`);
+    if ((res.code as number) !== 0) return;
+    if (res.data.is_activated) {
+      setModalType("fail")
+    } else {
+      setModalType("success")
+    }
+    setIsShowModal(true)
   }
 
-  console.log(wallet);
+  const onConnectWallet = () => {
+    connect();
+  }
+
+  useEffect(() => {
+    if (wallet) {
+      setAddress((wallet as any)['accounts'][0]?.address);
+    }
+  }, [wallet]);
+
+  useEffect(() => {
+    if (address) {
+      setUpdater(Date.now());
+      checkAddress()
+    }
+  }, [address]);
 
   return (
-    <StyledContainer className={ isMobile ? 'mobile-invite' : 'invite' }>
+    <StyledContainer className={isMobile ? 'mobile-invite' : 'invite'}>
       <StyledInner>
         <StyledHead>
           <StyledLogoContainer className='logo-container'>
@@ -54,43 +87,58 @@ const Invite = (props: Props) => {
             <StyledX>X</StyledX>
             <StyledContent>
               <StyledDesc>
-                <p>Unlock the exclusive {name} Pioneer Badge by connecting your wallet through this page! </p>
-                <p>If you connect with {name} for the first time:</p>
-                <p>10% Gems Bonus: You will receive an additional 10% Gems on all future Gem acquisitions.</p>
-                <p>Monthly Settlement: This bonus will be calculated and credited on the first day of each month.</p>
-                <p>Don't miss out on maximizing your rewards!</p>
+                <p>You are visiting a invitation link from DadDap partener {name}. </p>
+                <p>Connect your wallet to keep visiting.</p>
               </StyledDesc>
               {
                 medals?.length > 0 && (
                   <StyledMedals>
                     {
-                      medals.map((medal, index) => (<StyledMedal $url={medal}/>))
+                      medals.map((medal, index) => (<StyledMedal $url={medal} key={index} />))
                     }
                   </StyledMedals>
                 )
               }
               {
 
-                !wallet && (<StyledConnectButton onClick={onConnectWallet}>
-                  Connect Your Wallet
-                </StyledConnectButton>)
+                !wallet ? (
+                  <StyledConnectButton onClick={onConnectWallet}>
+                    Connect Your Wallet
+                  </StyledConnectButton>
+                ) : (
+                  <StyledConnectButton style={{ cursor: 'not-allowed' }}>
+                    Successfully Connected
+                  </StyledConnectButton>
+                )
               }
             </StyledContent>
-            <StyledBg>
-              <StyledRectBg>
-                <StyledRect></StyledRect>
-              </StyledRectBg>
 
-              <StyledLight></StyledLight>
-              <StyledAperture></StyledAperture>
+            <StyledBg>
+              <StyledBgImage src='/images/invite/invite_bg.png' />
+              <StyledRect>
+                <StyledLRect>
+                  <StyledLeftMouseImage src='/images/invite/left_mouse.svg' />
+                </StyledLRect>
+                <StyledRRect>
+                  <StyledRightMouseImage src='/images/invite/right_mouse.svg' />
+                </StyledRRect>
+              </StyledRect>
+              <StyledRadialGradient />
             </StyledBg>
           </StyledXContainer>
-          <StyledLogoContainer className='logo-container'>
-            <StyledLogo src={logo} alt={name} width={logoSize.width} height={logoSize.height} />
-            <StyledName className='dapp-name'>{name}</StyledName>
-          </StyledLogoContainer>
+          {
+            name === "Kol" ? (
+              <KolUserInfo />
+            ) : (
+              <StyledLogoContainer className='logo-container'>
+                <StyledLogo src={logo} alt={name} width={logoSize.width} height={logoSize.height} />
+                <StyledName className='dapp-name'>{name}</StyledName>
+              </StyledLogoContainer>
+            )
+          }
         </StyledHead>
       </StyledInner>
+      <InviteModal type={modalType} open={isShowModal} onClose={() => setIsShowModal(false)}></InviteModal>
     </StyledContainer>
   );
 };
