@@ -24,7 +24,6 @@ import useMedalList from './hooks/useUserMedalList';
 import useUserRewardRecords from './hooks/useUserRewardRecords';
 import { Tab } from './types';
 
-
 const StyledContainer = styled.div`
   background-image: url(/images/profile/top_bg.png);
   background-repeat: no-repeat;
@@ -82,7 +81,7 @@ export default memo(function ProfileView() {
     return userMedalList?.slice(0, 5)?.map((medal, index) => {
       return {
         key: index,
-        icon: medal?.logo,
+        icon: medal?.logo || '/images/tokens/default_icon.png',
         x: index * 100,
         mass: (index === 0 || index === userMedalList.length - 1) ? 50 : 30
       }
@@ -130,11 +129,15 @@ export default memo(function ProfileView() {
             }}
           />
           <StyledBouncingMedalContainer>
-            <BouncingMedal
-              width={500}
-              height={300}
-              medals={bouncingMedals}
-            />
+            {
+              bouncingMedals && bouncingMedals.length > 0 && (
+                <BouncingMedal
+                  width={500}
+                  height={300}
+                  medals={bouncingMedals}
+                />
+              )
+            }
           </StyledBouncingMedalContainer>
         </StyledContainerTop>
         <StyledContainerBottom>
