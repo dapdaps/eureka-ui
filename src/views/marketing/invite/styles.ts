@@ -41,6 +41,8 @@ export const StyledInner = styled.div`
 `;
 
 export const StyledHead = styled.div`
+  position: relative;
+  z-index: 10;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -64,6 +66,8 @@ export const StyledXContainer = styled.div`
 
 
 export const StyledX = styled.div`
+  position: relative;
+  z-index: 5;
   font-size: 52px;
   font-weight: 300;
   margin-left: 32px;
@@ -71,42 +75,117 @@ export const StyledX = styled.div`
 `;
 
 export const StyledBg = styled.div`
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: -1;
   position: absolute;
-  top: var(--padding-top);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  width: 100vw;
+  width: 1544px;
+  left: 50%;
+  transform: translate(-50%, -208px);
 `;
-
+export const StyledBgImage = styled.img`
+  /* display: block; */
+  position: relative;
+  width: 1544px;
+  
+`
+export const StyledBgImageContainer = styled.div`
+  position: fixed;
+  top: 0;
+  transform: translateX(-756px);
+  z-index: 10;
+`
 export const StyledRect = styled.div`
-    width: 66px;
-    height: 100%;
-    background: #EBF479;
-    margin: 0 auto;
-`;
-
-export const StyledLight = styled.div`
-  width: 1000px;
-  height: 198px;
-  background: url("/images/marketing/flashlight.svg") no-repeat center;
-  background-size: contain;
-`;
-
-export const StyledAperture = styled.div`
+  position: absolute;
+  left: -50%;
+  right: -50%;
+  top: 0;
+  display: flex;
+  gap: 51px;
+  z-index: 0;
+  /* background: linear-gradient(0deg, #000 0%, #EBF479 75.02%); */
+`
+export const StyledLRect = styled.div`
+  position: relative;
+  flex: 1;
+  height: 757px;
+  background: linear-gradient(346deg, #1D1F07 4.22%, #000 37.86%);
+`
+export const StyledRRect = styled.div`
+  position: relative;
+  flex: 1;
+  height: 757px;
+  background: linear-gradient(14deg, #1D1F07 4.22%, #000 37.86%);
+`
+export const StyledRadialGradient = styled.div`
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  /* top: 0; */
+  transform: translateX(-50%);
+  width: 450px;
+  height: 420px;
+  flex-shrink: 0;
   border-radius: 450px;
   opacity: 0.6;
   background: radial-gradient(35.95% 35.95% at 50% 50%, #EBF479 0%, rgba(235, 244, 121, 0.00) 100%);
   filter: blur(50px);
-  width: 450px;
-  height: 420px;
+  z-index: 10;
+`
+export const StyledMouseImage = styled.img`
   position: absolute;
-  bottom: 80px;
-  `;
+  animation: jump linear 1.5s infinite;
+  @keyframes jump {
+    0% {
+      transform: translateY(0);
+    }
+    25% {
+      transform: translateY(-15%);
+    }
+    50% {
+      transform: translateY(0);
+    }
+    75% {
+      transform: translateY(15%);
+    }
+    100% {
+      transform: 0;
+    }
+  }
+`
+export const StyledLeftMouseImage = styled(StyledMouseImage)`
+  right: 140px;
+  bottom: 0;
+  width: 293px;
+`
+export const StyledRightMouseImage = styled(StyledMouseImage)`
+  position: absolute;
+  left: 241px;
+  bottom: 154px;
+  width: 159px;
+`
+
+// export const StyledRect = styled.div`
+//     width: 66px;
+//     height: 100%;
+//     background: #EBF479;
+//     margin: 0 auto;
+// `;
+
+// export const StyledLight = styled.div`
+//   width: 1000px;
+//   height: 198px;
+//   background: url("/images/marketing/flashlight.svg") no-repeat center;
+//   background-size: contain;
+// `;
+
+// export const StyledAperture = styled.div`
+//   border-radius: 450px;
+//   opacity: 0.6;
+//   background: radial-gradient(35.95% 35.95% at 50% 50%, #EBF479 0%, rgba(235, 244, 121, 0.00) 100%);
+//   filter: blur(50px);
+//   width: 450px;
+//   height: 420px;
+//   position: absolute;
+//   bottom: 80px;
+//   `;
 
 export const StyledName = styled.div`
   font-weight: 700;
@@ -151,13 +230,13 @@ export const StyledMedals = styled.div`
   position: relative;
   z-index: 1;
 `;
-export const StyledMedal = styled.div<{$url: string}>`
+export const StyledMedal = styled.div<{ $url: string }>`
   filter: drop-shadow(0px 0px 20px #FFF);
   width: 136px;
   height: 136px;
   background-color: #fff;
   border-radius: 50%;
-  background-image: ${({$url}) => 'url(' + $url + ')'};
+  background-image: ${({ $url }) => 'url(' + $url + ')'};
   background-size: 100px 100px;
   background-position: center;
   background-repeat: no-repeat;
@@ -165,6 +244,8 @@ export const StyledMedal = styled.div<{$url: string}>`
 `;
 
 export const StyledLogoContainer = styled.div`
+  position: relative;
+  z-index: 5;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -180,9 +261,4 @@ export const StyledContent = styled.div`
   justify-content: center;
   flex-direction: column;
   z-index: 2;
-`;
-
-export const StyledRectBg = styled.div`
-  width: 100%;
-  height: 75vh;
 `;
