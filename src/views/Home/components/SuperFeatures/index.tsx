@@ -1,9 +1,4 @@
 import styled from "styled-components";
-import { get } from '@/utils/http';
-import { useEffect, useState } from 'react';
-import { QUEST_PATH } from "@/config/quest";
-import { formatIntegerThousandsSeparator } from "@/utils/format-number";
-import { useRouter } from "next/router";
 import Link from "next/link";
 
 const StyleFeatures = styled.div`
@@ -87,8 +82,6 @@ const StyleFeatures = styled.div`
 `;
 
 const SuperFeatures = () => {
-    const router = useRouter();
-
     return <StyleFeatures>
         <div className="title">SUPER <span>FEATURES</span></div>
         <div className="subTitle">DapDap engages users in 5-10 mins in Super features by helping users to jump in crypto world more effectively.</div>

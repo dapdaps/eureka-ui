@@ -2,7 +2,6 @@ import Header from './components/Header';
 import InputCard from './components/InputCard';
 import Arrow2Down from './components/Arrow2Down';
 import Result from './components/Result';
-import Market from './components/Market';
 import Button from './components/Button';
 import SelectTokensModal from './components/SelectTokensModal';
 import MarketsModal from './components/MarketsModal';
@@ -16,7 +15,7 @@ import useTrade from './hooks/useTrade';
 import { useDebounceFn } from 'ahooks';
 
 import type { Token } from '@/types';
-import { set } from 'lodash';
+import KLineChart from './components/KLineChart';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
@@ -174,6 +173,7 @@ export default function SuperSwap() {
           )
         }
 
+      <KLineChart />
 
       </StyledContent>
       <SelectTokensModal
