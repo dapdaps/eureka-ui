@@ -72,7 +72,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       statusMap[item.status].push(item);
     });
   
-    return [...statusMap[StatusType.ongoing], ...statusMap[StatusType.ended], ...statusMap[StatusType.un_start]].slice(0, 4);
+    return [...statusMap[StatusType.ongoing], ...statusMap[StatusType.un_start], ...statusMap[StatusType.ended]].slice(0, 4);
   }, [compassList]);
 
 

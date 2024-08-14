@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import useCompassList from './useCompassList'
 import { get } from '@/utils/http';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 
 const useCompassCombineAd  = () => {
@@ -27,7 +28,8 @@ const useCompassCombineAd  = () => {
 
     const filerCompassList = useMemo(() => {
         if (!compassList || compassList.length === 0) return [];
-        return compassList.filter((item: any) => item.status === 'ongoing')
+        // fix#DAP-785
+        return compassList.filter((item: any) => [StatusType.un_start, StatusType.ongoing].includes(item.status))
     }, [compassList]);
 
     return { loading, adList: data, compassList: filerCompassList };
