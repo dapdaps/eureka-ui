@@ -11,23 +11,23 @@ import PrizeModal from './PrizeModal';
 import Spin from './Spin';
 import Summary from './Summary';
 
-import controllerImg from './img/ctr.svg';
-import controllerActiveImg from './img/ctr-active.svg';
-import actionBg from './img/action-bg.svg';
+import controllerImg from './img/ctr.svg?url';
+import controllerActiveImg from './img/ctr-active.svg?url';
+import actionBg from './img/action-bg.svg?url';
 
-import ruleImg from './img/rule.svg';
-import clamImg from './img/clam.svg';
-import rulePressImg from './img/rule-press.svg';
-import clamPressImg from './img/clam-press.svg';
-import btnBgImg from './img/btn-bg.svg';
-import btnImg from './img/btn.svg';
-import btnActiveImg from './img/btn-active.svg';
+import ruleImg from './img/rule.svg?url';
+import clamImg from './img/clam.svg?url';
+import rulePressImg from './img/rule-press.svg?url';
+import clamPressImg from './img/clam-press.svg?url';
+import btnBgImg from './img/btn-bg.svg?url';
+import btnImg from './img/btn.svg?url';
+import btnActiveImg from './img/btn-active.svg?url';
 import coverTopImg from './img/cover-top.png';
 
-import yellowLeftImg from './img/yellow-left.svg';
-import yellowMidImg from './img/yellow-mid.svg';
-import yellowRightImg from './img/yellow-right.svg';
-import bgImg from './img/bg.svg';
+import yellowLeftImg from './img/yellow-left.svg?url';
+import yellowMidImg from './img/yellow-mid.svg?url';
+import yellowRightImg from './img/yellow-right.svg?url';
+import bgImg from './img/bg.svg?url';
 
 import DisabledMark from './DisabledMark';
 import Pilcrow from './Pilcrow';
@@ -296,7 +296,7 @@ function SlotMachine({
   useEffect(() => {
     rewardRef.current = reward;
   }, [reward]);
-
+  
   useEffect(() => {
     // const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
     // const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);

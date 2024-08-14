@@ -1,7 +1,7 @@
 import { Desc, StyledContainer, Title, CtrolImg, UnionImg } from './styles';
 
-import ctrolImg from '../img/ctrol-Img.svg'
-import unionImg from '../img/union.svg'
+import ctrolImg from '../img/ctrol-Img.svg?url'
+import unionImg from '../img/union.svg?url'
 
 export default function Pilcrow({ title, desc }: any) {
   return (
