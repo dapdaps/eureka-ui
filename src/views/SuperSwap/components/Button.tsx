@@ -6,7 +6,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import networks from '@/config/swap/networks';
 import Loading from '@/components/Icons/Loading';
-import { getAlertColor, getPriceImpactLevel } from './Result';
+import { PriceImpactTypeColorMap } from './Result';
 
 const StyledButton = styled.button<{ color?: string }>`
   border-radius: 10px;
@@ -31,19 +31,30 @@ const BaseButton = ({ disabled, onClick, children, color }: any) => {
   );
 };
 
-const TradeButton = ({ spender, token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
+const getButtonImpactProps = (trade: any) => {
+  if (trade?.priceImpactType === 2) {
+    return {
+      color: PriceImpactTypeColorMap[trade.priceImpactType],
+      text: 'I noticed the price impact, swap anyway',
+    };
+  }
+  return {
+    color: null,
+    text: 'Swap',
+  };
+};
+
+const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
-    spender,
+    spender: trade?.routerAddress,
   });
   
   const { switching, switchChain } = useSwitchChain();
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
-
-  const impactLevel = getPriceImpactLevel(trade?.priceImpact);
-  const alertColor = getAlertColor(impactLevel);
+  const { color, text } = getButtonImpactProps(trade);
 
   if (!account || !chainId) {
     return (
@@ -78,7 +89,7 @@ const TradeButton = ({ spender, token, amount, loading, errorTips, disabled, onC
 
   if (checking || approving || loading) {
     return (
-      <BaseButton color={alertColor} disabled>
+      <BaseButton color={color} disabled>
         <Loading />
       </BaseButton>
     );
@@ -87,15 +98,9 @@ const TradeButton = ({ spender, token, amount, loading, errorTips, disabled, onC
     return <BaseButton onClick={approve}>Approve {token?.symbol}</BaseButton>;
   }
 
-  if (!trade) {
-    return <BaseButton onClick={onClick} disabled={disabled}>
-      Swap
-    </BaseButton>
-  }
-
   return (
-    <BaseButton onClick={onClick} disabled={disabled} color={alertColor}>
-      {impactLevel === 'high' ? 'I noticed the price impact, swap anyway' : 'Swap'}
+    <BaseButton onClick={onClick} disabled={disabled} color={color}>
+      {text}
     </BaseButton>
   );
 };

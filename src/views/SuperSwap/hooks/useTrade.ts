@@ -143,7 +143,6 @@ export default function useTrade({ chainId }: any) {
             });
             return { ..._trade, name: item.template, logo: dexs[item.template].logo };
           });
-
         setBestTrade(_markets[0]);
         setTrade({ ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency });
         setMarkets(_markets);

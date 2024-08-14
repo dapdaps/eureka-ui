@@ -13,7 +13,7 @@ import {
   StyledChainTokenIcon,
   StyledChainTokenSymbol,
 } from './styles';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export default function ChainSelector() {
   const chain = useChain();
@@ -21,6 +21,12 @@ export default function ChainSelector() {
   const [showChains, setShowChains] = useState(false);
   const { switching, switchChain } = useSwitchChain();
 
+  const sortChains = useMemo(() => {
+    return chains.sort((a: any, b: any) => {
+      return a.name.localeCompare(b.name);
+    });
+  } , [chains])
+  
   useEffect(() => {
     const close = () => {
       setShowChains(false);
@@ -48,7 +54,7 @@ export default function ChainSelector() {
       {showChains && (
         <StyledChainListWrapper>
           <StyledChainList>
-            {chains.map((chain: any) => (
+            {sortChains.map((chain: any) => (
               <StyledChainItem
                 key={chain.chain_id}
                 onClick={() => {

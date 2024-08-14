@@ -99,7 +99,8 @@ export default function SuperSwap() {
     // setOutputCurrency(inputCurrency);
     // setSelectType('in')
   }, [outputCurrency, outputCurrency]);
-
+  console.log(trade, 'trade');
+  
   return (
     <StyledContainer>
       <StyledContent>
@@ -148,7 +149,6 @@ export default function SuperSwap() {
         </StyledTradeFooter>
 
         <Button 
-          spender={trade?.routerAddress}
           amount={inputCurrencyAmount}
           errorTips={errorTips} 
           trade={trade} 

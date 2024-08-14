@@ -10,10 +10,10 @@ export const StyledContainer = styled.div`
     color: #33b65f;
   }
   .price-impact-1 {
-    color: #ff9445;
+    color: #F88C39;
   }
   .price-impact-2 {
-    color: #ff547d;
+    color: #E956A6;
   }
 `;
 

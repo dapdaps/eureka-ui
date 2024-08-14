@@ -54,49 +54,38 @@ const Value = styled.span`
   color: #979ABE;
 `;
 
-const WarningValue = styled(Value)<{ color: string }>`
-  color: ${({ color }) => color};
+
+export const PriceImpactTypeColorMap: Record<number, string> = {
+  0: '#33b65f',
+  1: '#F88C39',
+  2: '#E956A6',
+}
+
+const WarningValue = styled(Value)<{ color: number }>`
+  color: ${({ color }) => PriceImpactTypeColorMap[color]};
   display: flex;
   align-items: center;
   gap: 4px;
 `;
 
-const StyledIconAlertTriangle = styled(IconAlertTriangle)<{ impact:  PriceImpactLevel}>`
+const StyledIconAlertTriangle = styled(IconAlertTriangle)<{ impact:  number}>`
   width: 22px;
   height: 22px;
   margin-top: 4px;
-  color: ${({ impact }) => (impact === 'medium' ? '#F88C39' : '#E956A6')};
+  color: ${({ impact }) => PriceImpactTypeColorMap[impact]};
 `
 
-
-export const getPriceImpactLevel = (impact: number): PriceImpactLevel | string => {
-  if (!impact) return '';
-  if (impact >= -1) return 'low';
-  if (impact >= -2) return 'medium';
-  return 'high';
-};
-
-export const getAlertColor = (level: string): string => {
-  switch (level) {
-    case 'low': return '';
-    case 'medium': return '#F88C39';
-    case 'high': return '#E956A6';
-    default: return '';
-  }
-};
 
 export default function Result({ trade, bestTrade, markets }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const slippage: any = useSettingsStore((store: any) => store.slippage);
 
-  const impactLevel = getPriceImpactLevel(trade.priceImpact);
-  const alertColor = getAlertColor(impactLevel);
 
   useEffect(() => {
     if (markets?.length === 0) return
-    const shouldOpen = impactLevel !== 'low';
+    const shouldOpen = trade.priceImpactType !== 0;
     setIsOpen(shouldOpen);
-  }, [impactLevel]);
+  }, [trade]);
 
 
   return (
@@ -130,7 +119,7 @@ export default function Result({ trade, bestTrade, markets }: any) {
                 <StyledIcon src={trade.logo} />
                 <div>{trade.name}</div>
                 {
-                  impactLevel !== 'low' ? (<StyledIconAlertTriangle impact={impactLevel} />) : (bestTrade?.name === trade.name && <StyledBestPrice>Cheapest</StyledBestPrice>)
+                  trade.priceImpactType !== 0 ? (<StyledIconAlertTriangle impact={trade.priceImpactType} />) : (bestTrade?.name === trade.name && <StyledBestPrice>Cheapest</StyledBestPrice>)
                 }
                 
                 <StyledIconArrow  isOpen={isOpen}/>
@@ -143,11 +132,11 @@ export default function Result({ trade, bestTrade, markets }: any) {
         <Row>
           <span>Price impact</span>
           {
-            impactLevel === 'low' ? (
+            trade.priceImpactType === 0 ? (
               <Value>{trade.priceImpact}</Value>
             ) : (
-              <WarningValue color={alertColor}>
-                <StyledIconAlertTriangle impact={impactLevel} /> {trade.priceImpact}% / - {Big(trade.inputCurrencyAmount || 0).mul(trade.priceImpact || 0).div(100).toFixed(8)} {trade.inputCurrency.symbol}
+              <WarningValue color={trade.priceImpactType}>
+                <StyledIconAlertTriangle impact={trade.priceImpactType} /> {trade.priceImpact || '-'}% / - {Big(trade.inputCurrencyAmount || 0).mul(trade.priceImpact || 0).div(100).toFixed(8)} {trade.inputCurrency.symbol}
               </WarningValue>
             )
           }
