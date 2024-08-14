@@ -53,7 +53,7 @@ interface IData {
 
 const StyledContainer = styled.div`
   padding-bottom: 94px;
-  margin: 150px auto 0;
+  margin: 160px auto 0;
   width: 1248px;
   max-width: 1248px;
 

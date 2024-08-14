@@ -12,11 +12,11 @@ const Home = () => {
   return (
     <StyledContainer>
       <Banner />
-      <RecentRewards />
-      <DiscoveryDapps />
       <Compass />
-      <SuperFeatures />
       <Networks />
+      <DiscoveryDapps />
+      <RecentRewards />
+      <SuperFeatures />
       <PlatformStats />
 
       {/* <TrendingEthereum chains={chains} />

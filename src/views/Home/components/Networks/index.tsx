@@ -24,7 +24,7 @@ interface IProps {
 const Container = styled.div`
   /* position: relative; */
   width: 1244px;
-  margin: 200px auto 54px;
+  margin: 0px auto 54px;
 `;
 const StyledNetworksBg = styled.div`
   position: absolute;

@@ -7,7 +7,7 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledContainer = styled.div`
-  margin-top: 0;
+  margin-top: 113px;
   font-family: Montserrat;
 `;
 
