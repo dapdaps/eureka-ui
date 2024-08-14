@@ -1,3 +1,4 @@
+import popupsData, { IdToPath } from '@/config/all-in-one/chains';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';

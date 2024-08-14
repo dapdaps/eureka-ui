@@ -259,7 +259,10 @@ const Overview = (props: any) => {
               src={overviewShadow.icon ?? ''}
               style={
                 overviewShadow?.color ?
-                  { filter: `drop-shadow(${hexToRgba(overviewShadow?.color, 0.03)} 10000px 0)` } :
+                  {
+                    filter: `drop-shadow(${hexToRgba(overviewShadow?.color, 0.03)} 100vw 0)`,
+                    transform: 'translateX(-100vw)'
+                  } :
                   {}
               }
             />

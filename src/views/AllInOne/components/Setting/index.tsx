@@ -137,6 +137,7 @@ const Setting = (props: PropsType) => {
         width={468}
         display={props.display}
         showHeader={false}
+        onClose={onClose}
         content={
           <StyledContainer>
             <StyledHeader>
@@ -148,13 +149,13 @@ const Setting = (props: PropsType) => {
             <StyledBody>
               <StyledBodyItem>
                 <StyledItemTitle>Preference for Route</StyledItemTitle>
-                <StyledFlex gap="10px" onClick={handleSelectClick} className="select-container">
+                <StyledFlex gap="10px"  ref={popupRef} onClick={handleSelectClick} className="select-container">
                   <StyledTitle>{storeRoute}</StyledTitle>
                   <StyledArrowIconWrap isSelected={isSelectedRoute}>
                     <ArrowIcon size={10} />
                   </StyledArrowIconWrap>
                   {isSelectedRoute ? (
-                    <StyledPopup ref={popupRef}>
+                    <StyledPopup>
                       {ROUTE_LIST.map((item) => (
                         <StyledPopupItem
                           className={`${storeRoute === item.value ? 'selected' : ''}`}

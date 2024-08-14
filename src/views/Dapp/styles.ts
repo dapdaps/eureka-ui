@@ -42,4 +42,7 @@ export const StyledLoadingWrapper = styled.div`
 export const StyledDAppContent = styled.div`
   margin: 0 auto;
   padding: 20px 0;
+  // fix#DAP-799
+  position: relative;
+  z-index: 2;
 `;

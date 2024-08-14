@@ -5,11 +5,14 @@ import {
 } from './styles';
 
 import Loading from '@/components/Icons/Loading';
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import OdysseyCard from './Card';
 import { get } from '@/utils/http';
 import Empty from '@/components/Empty';
 import { StyledFlex } from '@/styled/styles';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import PageButton from './PageButton';
 
 const RelativeOdyssey = (props: Props) => {
   const {
@@ -19,8 +22,11 @@ const RelativeOdyssey = (props: Props) => {
     chainId,
   } = props;
 
+  const swiperRef = useRef<any>();
+
   const [odysseyList, setOdysseyList] = useState<Record<string, any>[]>([]);
   const [loading, setLoading] = useState(false);
+  const [odysseyPage, setOdysseyPage] = useState(0);
 
   const getOdysseyList = async () => {
     if (loading) return;
@@ -54,6 +60,14 @@ const RelativeOdyssey = (props: Props) => {
     setLoading(false);
   };
 
+  const handleOdysseyPage = (direction: 'prev' | 'next') => {
+    if (direction === 'prev') {
+      swiperRef.current && swiperRef.current.slidePrev();
+      return;
+    }
+    swiperRef.current && swiperRef.current.slideNext();
+  };
+
   useEffect(() => {
     getOdysseyList();
   }, [dappId, networkId, chainId]);
@@ -69,22 +83,64 @@ const RelativeOdyssey = (props: Props) => {
         ) : (
           odysseyList.length ? (
             <StyledOdysseyDetail>
+              <Swiper
+                className="detail-page-relative-odyssey-swiper"
+                width={498}
+                modules={[Pagination]}
+                slidesPerView={1}
+                autoplay={{ delay: 3000 }}
+                speed={1000}
+                spaceBetween={10}
+                updateOnWindowResize={true}
+                onSwiper={(swiper) => {
+                  swiperRef.current = swiper;
+                }}
+                pagination={{
+                  el: '.swiper-pagination',
+                  clickable: true,
+                  renderBullet: (index, className) => {
+                    return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
+                  },
+                }}
+                onSlideChange={(swiper) => {
+                  setOdysseyPage(swiper.activeIndex);
+                }}
+              >
+                {
+                  odysseyList.map((compass) => (
+                    <SwiperSlide key={compass.id}>
+                      <OdysseyCard
+                        className="detail-page-relative-odyssey-card"
+                        key={compass.id}
+                        id={compass.id}
+                        name={compass.name}
+                        banner={compass.banner}
+                        status={compass.status}
+                        rewards={compass.reward}
+                        volume={compass.trading_volume}
+                        users={compass.total_users}
+                        // medals={[
+                        //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
+                        // ]}
+                      />
+                    </SwiperSlide>
+                  ))
+                }
+              </Swiper>
               {
-                odysseyList.map((compass) => (
-                  <OdysseyCard
-                    key={compass.id}
-                    id={compass.id}
-                    name={compass.name}
-                    banner={compass.banner}
-                    status={compass.status}
-                    rewards={compass.reward}
-                    volume={compass.trading_volume}
-                    users={compass.total_users}
-                    // medals={[
-                    //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
-                    // ]}
-                  />
-                ))
+                odysseyList.length > 1 && (
+                  <div className="swiper-pagination"></div>
+                )
+              }
+              {
+                odysseyPage > 0 && (
+                  <PageButton direction="prev" className="swiper-pagination-button prev" onClick={() => handleOdysseyPage('prev')} />
+                )
+              }
+              {
+                odysseyPage < odysseyList.length - 1 && (
+                  <PageButton direction="next" className="swiper-pagination-button next" onClick={() => handleOdysseyPage('next')} />
+                )
               }
             </StyledOdysseyDetail>
           ) : (

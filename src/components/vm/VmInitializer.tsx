@@ -32,7 +32,7 @@ import { setupFastAuth } from '@/lib/selector/setup';
 import { useAuthStore } from '@/stores/auth';
 import { useVmStore } from '@/stores/vm';
 import { recordWalletConnect, reset as resetSegment } from '@/utils/analytics';
-import { networkId, signInContractId } from '@/utils/config';
+import { network, networkId, signInContractId } from '@/utils/config';
 import { KEYPOM_OPTIONS } from '@/utils/keypom-options';
 import useMobile from '@/hooks/useMobile';
 
@@ -56,6 +56,10 @@ export default function VmInitializer() {
     initNear &&
       initNear({
         networkId,
+        // add nodeUrl switch
+        config: {
+          ...network(),
+        },
         walletConnectCallback: recordWalletConnect,
         selector: setupWalletSelector({
           network: networkId,

@@ -143,13 +143,12 @@ export default function useTrade({ chainId }: any) {
             });
             return { ..._trade, name: item.template, logo: dexs[item.template].logo };
           });
-
         setBestTrade(_markets[0]);
         setTrade({ ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency });
         setMarkets(_markets);
         setLoading(false);
       } catch (err) {
-        console.log(err);
+        console.log(err, 'useTrade - onQuoter');
         setTrade({
           inputCurrency,
           inputCurrencyAmount,
@@ -217,5 +216,5 @@ export default function useTrade({ chainId }: any) {
     if (chainId) getTokens();
   }, [chainId]);
 
-  return { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap };
+  return { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade };
 }

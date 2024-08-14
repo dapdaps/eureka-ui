@@ -40,7 +40,7 @@ export default {
   defaultTab: 'Swap',
   theme: {
     button: {
-      bg: 'linear-gradient(89deg, #29CCB9 0%, #0091FF 49%, #FF66B7 100%)',
+      bg: '#707EDF',
       text: '#FFF',
     },
   },
@@ -48,12 +48,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Intuitively across different network to Manta',
+      description: 'Intuitively bridge from different networks to Manta, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Manta.Swap',
-      description: 'Efficiently from/to any assets on Manta',
+      description: 'Trade efficiently across any assets on Manta.',
     },
     Liquidity: {
       tab: 'Liquidity',

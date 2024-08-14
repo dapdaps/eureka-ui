@@ -154,6 +154,8 @@ const LendingDepositTable = (props: Partial<IProps>) => {
                           text={button.text}
                           loading={typeof button.loading === 'function' ? button.loading(record) : button.loading}
                           onClick={() => {
+                              const _loading = typeof button.loading === 'function' ? button.loading(record) : button.loading;
+                              if (_loading) return;
                               if (button.text === 'Claim') {
                                   onButtonClick?.(record);
                               } else {

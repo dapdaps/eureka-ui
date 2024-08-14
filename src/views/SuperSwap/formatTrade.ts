@@ -31,21 +31,19 @@ const formatTrade = ({
   if (inputCurrencyPrice && outputCurrencyPrice) {
     const poolPrice = Big(inputCurrencyPrice).div(outputCurrencyPrice);
     const amountoutPrice = Big(market.outputCurrencyAmount).div(inputCurrencyAmount);
-    priceImpact = poolPrice.minus(amountoutPrice).div(poolPrice).mul(100).abs().toFixed(2);
+    priceImpact = poolPrice.minus(amountoutPrice).div(poolPrice).mul(100).toFixed(2);
 
     if (Big(priceImpact).gt(100)) priceImpact = 100;
 
     if (
       Big(priceImpact || 0)
-        .abs()
-        .gt(1)
+        .lt(-1)
     ) {
       priceImpactType = 1;
     }
     if (
       Big(priceImpact || 0)
-        .abs()
-        .gt(2)
+        .lt(-2)
     ) {
       priceImpactType = 2;
     }

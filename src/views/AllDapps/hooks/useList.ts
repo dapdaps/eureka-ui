@@ -89,6 +89,8 @@ export default function useList(props: Props) {
     getDappList(1);
   }, [searchText]);
 
+
+
   return {
     loading,
     dappList,

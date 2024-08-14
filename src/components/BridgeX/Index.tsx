@@ -7,10 +7,9 @@ import allTokens from '@/config/bridge/allTokens';
 import useToast from '@/hooks/useToast';
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
-import { useSetChain } from '@web3-onboard/react';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated, errorFormated, getFullNum } from '@/utils/balance';
+import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
 
 import ChainSelector from './components/ChainSelector'
 import FeeMsg from './components/FeeMsg';
@@ -19,15 +18,11 @@ import Transaction from './components/Transaction';
 import Confirm from './components/Confirm'
 import Token from './components/Token'
 
-import usePriceValue from './hooks/usePriceValue';
-
 import {
     addressFormated,
-    getTransaction,
     saveTransaction,
     isNumeric,
 } from './Utils'
-import useScrollMore from '@/views/Dapp/components/DappDetail/useScrollMore';
 
 const BridgePanel = styled.div`
   width: 478px;
@@ -179,7 +174,6 @@ export default function BridgeX({
 
     const { chainId, provider } = useAccount();
     const { onConnect } = useConnectWallet();
-    const { viewHeight } = useScrollMore();
 
     const { balance: inputBalance, loading: inputBalanceLoading } = useTokenBalance({
         currency: selectInputToken,
@@ -412,7 +406,7 @@ export default function BridgeX({
         }
     }
 
-    return <BridgePanel style={{ minHeight: viewHeight }}>
+    return <BridgePanel>
         <Header>
             <BridgeIcon>
                 <img src={icon} />

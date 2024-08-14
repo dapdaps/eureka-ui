@@ -205,7 +205,7 @@ const AllDapps = (props: Props) => {
     if (checkQueryEmpty(decodeURIComponent(_searchWord as string), () => true)) {
       setSearchWord(decodeURIComponent(_searchWord as string));
     } else {
-      setSearchWord('');
+      setSearchWord(undefined);
     }
 
     if (window.scrollY > 0) {
@@ -217,7 +217,7 @@ const AllDapps = (props: Props) => {
     <StyledContainer>
       <AllDappsTitle
         categoryRef={categoryRef}
-        animation={categoryAnimation(scrolled, {zIndex: 49, top: 72 }, { zIndex: 0, top: 0 })}
+        animation={categoryAnimation(scrolled, {zIndex: 49, top: 70 }, { zIndex: 0, top: 0 })}
         onCategory={onSelectCategory}
         activeCategory={category}
         dappList={titleDappList ?? []}
@@ -256,6 +256,7 @@ const AllDapps = (props: Props) => {
                     {item.name}
                   </StyledNetworkDropdownItem>
                 )}
+                isArrowRotate={false}
               />
             )
           }
@@ -267,6 +268,7 @@ const AllDapps = (props: Props) => {
               width: 169,
               maxHeight: 300,
             }}
+            isArrowRotate={false}
           />
           <StyledRadio
             $selected={airdrop}

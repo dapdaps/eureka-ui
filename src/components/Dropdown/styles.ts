@@ -6,6 +6,19 @@ export const StyledContainer = styled.div`
   height: 40px;
   position: relative;
   padding: 0 12px 0 16px;
+  transition: background linear 0.2s;
+  
+  &.dropdown-selector {
+    border-radius: 10px;
+    border: 1px solid #333648;
+    background: #18191E;
+
+    &:hover,
+    &.opened {
+      background: #1F2229;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
+    }
+  }
 `;
 export const StyledInner = styled.div`
   width: 100%;
@@ -30,7 +43,7 @@ export const StyledArrow = styled(motion.div)`
   flex-shrink: 0;
 `;
 export const StyledPopup = styled(motion.div)`
-  top: 46px;
+  top: 44px;
   width: 100%;
   position: absolute;
   z-index: 2;

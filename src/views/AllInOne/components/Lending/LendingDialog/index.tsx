@@ -433,10 +433,10 @@ const LendingDialog = (props: IProps) => {
                       if (state.balanceLoading || isNaN(Number(state.balance))) return;
                       handleAmountChange(state.balance);
                       const balanceNumber = Big(state.balance || 0);
-                      const balanceStr = Big(balanceNumber).toFixed(12);
+                      const balanceStr = Big(balanceNumber).toFixed(data.decimals || 18);
                       setState((prevState) => ({
                         ...prevState,
-                        amount: Big(balanceStr).eq(0) ? '0' : Big(balanceStr).toString(),
+                        amount: Big(balanceStr).eq(0) ? '0' : balanceStr.replace(/0+$/, '').replace(/\.$/, ''),
                         isMax: true,
                       }));
                     }}

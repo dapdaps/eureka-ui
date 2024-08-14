@@ -12,9 +12,9 @@ export default function FavoriteApps({
   loaded,
   userFavorites
 }: PropsType) {
-  return (userFavorites?.total ?? 0) > 0 ? (
+  return (!loaded || (userFavorites?.total ?? 0) > 0) ? (
     <StyledContainer>
-      {/* <Features features={userFavorites?.features ?? []} /> */}
+      <Features features={userFavorites?.features ?? []} loaded={loaded}/>
       <Dapps loaded={loaded} dapps={userFavorites?.dapps ?? []} />
     </StyledContainer>
   ) : (

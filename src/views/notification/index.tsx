@@ -43,8 +43,15 @@ const StyleNotification = styled.div`
   & .list-notice {
     position: relative;
     z-index: 2;
+    
+    // fix#DAP-783
+    cursor: default;
     &:hover {
-      cursor: pointer;
+      cursor: default;
+      
+      .list-notice-sub-title {
+        color: rgba(255, 255, 255, .6);
+      }
     }
   }
 `;

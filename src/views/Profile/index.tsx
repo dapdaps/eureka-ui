@@ -24,7 +24,6 @@ import useMedalList from './hooks/useUserMedalList';
 import useUserRewardRecords from './hooks/useUserRewardRecords';
 import { Tab } from './types';
 
-
 const StyledContainer = styled.div`
   background-image: url(/images/profile/top_bg.png);
   background-repeat: no-repeat;
@@ -79,14 +78,14 @@ export default memo(function ProfileView() {
   }, [compassList, airdropList, userMedalList, userFavorites, userRewardRecords])
 
   const bouncingMedals = useMemo(() => {
-    return userMedalList?.slice(0, 5)?.map((medal, index) => {
+    return userMedalList?.map((medal, index) => {
       return {
         key: index,
         icon: medal?.logo,
         x: index * 100,
         mass: (index === 0 || index === userMedalList.length - 1) ? 50 : 30
       }
-    }) ?? []
+    })?.filter((medal) => !!medal.icon)?.slice(0, 5) ?? []
   }, [userMedalList])
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
@@ -130,11 +129,15 @@ export default memo(function ProfileView() {
             }}
           />
           <StyledBouncingMedalContainer>
-            <BouncingMedal
-              width={500}
-              height={300}
-              medals={bouncingMedals}
-            />
+            {
+              bouncingMedals && bouncingMedals.length > 0 && (
+                <BouncingMedal
+                  width={500}
+                  height={300}
+                  medals={bouncingMedals}
+                />
+              )
+            }
           </StyledBouncingMedalContainer>
         </StyledContainerTop>
         <StyledContainerBottom>

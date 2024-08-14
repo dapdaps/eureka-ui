@@ -90,5 +90,5 @@ export interface AllInOneChain {
       text: string;
     };
   };
-  menuConfig: {[tab: string]: { tab: string; path: string; }};
+  menuConfig: {[tab: string]: { tab: string; path: string; id?: number }};
 }

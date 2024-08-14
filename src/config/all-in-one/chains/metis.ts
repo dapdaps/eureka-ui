@@ -12,19 +12,19 @@ export default {
   theme: {
     button: {
       bg: '#00D3FF',
-      text: '#02051E',
+      text: '#000000',
     },
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Metis.Bridge',
-      description: 'Intuitively across different network to Metis',
+      description: 'Intuitively bridge from different networks to Metis, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Metis.Swap.Dex',
-      description: 'Efficiently from/to any assets on Metis',
+      description: 'Trade efficiently across any assets on Metis.',
     },
     Liquidity: {
       tab: 'Liquidity',

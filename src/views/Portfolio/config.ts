@@ -8,6 +8,7 @@ export const CategoryList = {
     icon: '/images/portfolio/bridged.svg',
     usd: '0.00',
     executions: 0,
+    protocol: 'bridge',
   },
   swapped: {
     key: 1,
@@ -15,6 +16,7 @@ export const CategoryList = {
     icon: '/images/portfolio/swapped.svg',
     usd: '0.00',
     executions: 0,
+    protocol: 'swap',
   },
   liquidity: {
     key: 1,
@@ -22,6 +24,7 @@ export const CategoryList = {
     icon: '/images/portfolio/liquidity.svg',
     usd: '0.00',
     executions: 0,
+    protocol: 'liquidity',
   },
   lending: {
     key: 1,
@@ -29,5 +32,6 @@ export const CategoryList = {
     icon: '/images/portfolio/lending.svg',
     usd: '0.00',
     executions: 0,
+    protocol: 'lending',
   },
 };

@@ -2,11 +2,10 @@ import Header from './components/Header';
 import InputCard from './components/InputCard';
 import Arrow2Down from './components/Arrow2Down';
 import Result from './components/Result';
-import Market from './components/Market';
 import Button from './components/Button';
 import SelectTokensModal from './components/SelectTokensModal';
 import MarketsModal from './components/MarketsModal';
-import { StyledContainer, StyledContent, StyledTradeIcon, StyledInputs, StyledTradeFooter } from './styles';
+import { StyledContainer, StyledContent, StyledTradeIcon, StyledInputs, StyledTradeFooter, StyledAmount, StyleProviderHeader } from './styles';
 
 import Big from 'big.js';
 
@@ -16,6 +15,7 @@ import useTrade from './hooks/useTrade';
 import { useDebounceFn } from 'ahooks';
 
 import type { Token } from '@/types';
+import KLineChart from './components/KLineChart';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
@@ -29,7 +29,7 @@ export default function SuperSwap() {
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
 
-  const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap } = useTrade({
+  const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
     chainId,
     onSuccess() {
       setUpdater(Date.now());
@@ -38,6 +38,7 @@ export default function SuperSwap() {
 
   const { run: runQuoter } = useDebounceFn(
     () => {
+      if (loading || errorTips) return;
       onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
     },
     {
@@ -85,6 +86,22 @@ export default function SuperSwap() {
     runQuoter();
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
+
+  useEffect(() => {
+    setInputCurrencyAmount('')
+    setTrade(null as any)
+    setInputCurrency(null as any)
+    setOutputCurrency(null as any)
+  }, [chainId]);
+
+  const changeTokenType = useCallback(() => {
+    setInputCurrency(outputCurrency);
+    setOutputCurrency(inputCurrency);
+    setSelectType('in')
+    setInputCurrencyAmount(trade.outputCurrencyAmount);
+    runQuoter();
+  }, [outputCurrency, outputCurrency, trade]);
+  
   return (
     <StyledContainer>
       <StyledContent>
@@ -112,7 +129,7 @@ export default function SuperSwap() {
               onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
             }}
           />
-          <StyledTradeIcon disabled={false}>
+          <StyledTradeIcon disabled={false} onClick={changeTokenType}>
             <Arrow2Down />
           </StyledTradeIcon>
           <InputCard
@@ -129,19 +146,35 @@ export default function SuperSwap() {
           />
         </StyledInputs>
         <StyledTradeFooter>
-          {trade && <Result trade={trade} />}
-          {trade && (
-            <Market
-              trade={trade}
-              bestTrade={bestTrade}
-              onProvidersClick={() => {
-                setShowMarkets(true);
-              }}
-              length={markets?.length}
-            />
-          )}
+          {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}/>}
         </StyledTradeFooter>
-        <Button errorTips={errorTips} token={inputCurrency} loading={loading} onClick={onSwap} disabled={!trade?.txn} />
+
+        <Button 
+          amount={inputCurrencyAmount}
+          errorTips={errorTips} 
+          trade={trade} 
+          token={inputCurrency} 
+          loading={loading} 
+          onClick={onSwap} 
+          disabled={!trade?.txn} />
+
+        {
+          trade && (
+            <StyleProviderHeader>
+              <StyledAmount
+                onClick={() => {
+                  if (!markets?.length) return;
+                  setShowMarkets(true);
+                }}
+              >
+                {markets?.length || 0} Providers
+              </StyledAmount>
+            </StyleProviderHeader>
+          )
+        }
+
+      <KLineChart />
+
       </StyledContent>
       <SelectTokensModal
         tokens={tokens || []}
@@ -150,16 +183,21 @@ export default function SuperSwap() {
         currency={selectType === 'in' ? inputCurrency : outputCurrency}
         onSelect={onSelectToken}
       />
-      <MarketsModal
-        display={showMarkets}
-        onClose={() => {
-          setShowMarkets(false);
-        }}
-        markets={markets}
-        bestTrade={bestTrade}
-        outputCurrency={outputCurrency}
-        onSelectMarket={onSelectMarket}
-      />
+      {
+        showMarkets && outputCurrency && (
+          <MarketsModal
+            display={showMarkets}
+            onClose={() => {
+              setShowMarkets(false);
+            }}
+            markets={markets}
+            trade={trade} 
+            bestTrade={bestTrade}
+            outputCurrency={outputCurrency}
+            onSelectMarket={onSelectMarket}
+          />
+        )
+      }
     </StyledContainer>
   );
 }

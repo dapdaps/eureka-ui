@@ -1,5 +1,5 @@
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { MedalType } from '../../types';
 import ProgressBar from '../ProgressBar';
 import {
@@ -12,9 +12,10 @@ import {
 type PropsType = {
   medal: MedalType;
   style?: React.CSSProperties;
+  nameStyle?: React.CSSProperties;
   barWidth?: string
 }
-export default function MedalCard({ medal, style, barWidth }: PropsType) {
+export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsType) {
   const total = useMemo(() => medal?.threshold, [medal])
   const quantity = useMemo(() => medal?.completed_threshold, [medal])
   return (
@@ -22,7 +23,7 @@ export default function MedalCard({ medal, style, barWidth }: PropsType) {
       <StyledFlex gap='15px'>
         <StyledMedalImage style={{ filter: +medal?.completed_percent < total ? 'grayscale(100%)' : 'grayscale(0)' }} src={medal?.logo} />
         <StyledFlex flexDirection='column' alignItems='flex-start' gap='8px'>
-          <StyledFont color='#FFF' fontSize='20px' fontWeight='700' lineClamp="2" className='ellipsis'>{medal?.level_name}</StyledFont>
+          <StyledFont color='#FFF' fontSize='20px' fontWeight='700' lineClamp="2" className='ellipsis' style={nameStyle}>{medal?.level_name}</StyledFont>
           <StyledFont color='#979ABE' fontSize='14px' lineClamp="2" className='ellipsis'>{medal?.level_description}</StyledFont>
         </StyledFlex>
       </StyledFlex>
@@ -42,7 +43,8 @@ export default function MedalCard({ medal, style, barWidth }: PropsType) {
           </svg>
         </StyledSvg>
       </StyledMark>
-      <ProgressBar quantity={+quantity} total={total} barWidth={barWidth} />
+
+      <ProgressBar quantity={+quantity} total={total} showAchieved={true} barWidth={barWidth} />
     </StyledMedalCard>
   )
 }

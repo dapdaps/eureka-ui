@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import createKeccakHash from 'keccak'
 import useAccount from '@/hooks/useAccount';
@@ -9,7 +9,7 @@ import useAddAction from '@/hooks/useAddAction';
 import { useDefaultLayout } from '@/hooks/useLayout';
 import { usePriceStore } from '@/stores/price';
 import { useDebounceFn } from 'ahooks';
-import { useAllInOneTabStore, useAllInOneTabCachedStore } from '@/stores/all-in-one';
+import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { multicall } from '@/utils/multicall';
 import { get } from '@/utils/http'
 import type { NextPageWithLayout } from '@/utils/types';
@@ -136,23 +136,6 @@ const Container = styled.div`
     }
   }
 `;
-const BreadCrumbs = styled.div`
-  color: #979abe;
-  font-size: 14px;
-  margin-bottom: 32px;
-  a {
-    text-decoration: none;
-    color: #979abe;
-    display: inline-block;
-    cursor: pointer;
-  }
-  svg {
-    margin: 0 8px;
-  }
-  span {
-    color: #ffffff;
-  }
-`;
 
 function toChecksumAddress (address: string): string {
   address = address.toLowerCase().replace('0x', '')
@@ -251,12 +234,15 @@ const AllInOne: NextPageWithLayout = () => {
           />
         </div>
       </>
-      <DappDetailScroll />
-      <Suspense fallback={<DappFallback />}>
-        {
-          chainConfig ? <DappDetail {...chainConfig} /> : null
-        }
-      </Suspense>
+      {
+        chainConfig ? (<>
+            <DappDetailScroll />
+           <Suspense fallback={<DappFallback />}>
+             <DappDetail {...chainConfig} />
+           </Suspense>
+          </>)
+          : null
+      }
     </Container>
   ) : (
     <div />

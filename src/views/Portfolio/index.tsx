@@ -10,10 +10,19 @@ import Wallet from './components/Wallet/index';
 import useDapps from './hooks/useDapps';
 import useExecuteRecords from './hooks/useExecuteRecords';
 import useTokens from './hooks/useTokens';
-import { StyledContainer, StyledContent, StyledFeedbackContainer } from './styles';
+import {
+  StyledContainer,
+  StyledContent,
+  StyledFeedbackContainer,
+  StyledLink,
+  StyledFeedbackText
+} from './styles';
 import NotificationBar from '@/components/NotificationBar';
 import { useNetworks } from '@/hooks/useNetworks';
 import Big from 'big.js';
+import { usePortfolioStore } from '@/stores/portfolio';
+import { useWorth } from '@/views/Portfolio/hooks/useWorth';
+import useTvls from '@/views/Portfolio/hooks/useTvls';
 
 const TABS = [
   {
@@ -33,7 +42,6 @@ const TABS = [
 export default function Portfolio() {
   const [tab, setTab] = useState(TABS[0].key);
   const [network, setNetwork] = useState<number>(-1);
-  const [notiVisible, setNotiVisible] = useState(true);
 
   const { networkList } = useNetworks();
   const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens({ networkList });
@@ -43,6 +51,19 @@ export default function Portfolio() {
     dappsByChain,
     totalBalance: totalBalanceByDapps,
   } = useDapps();
+  const {
+    list: worthList,
+    loading: worthLoading,
+    increase: worthIncrease,
+  } = useWorth();
+  const {
+    tvls,
+    loading: tvlsLoading,
+  } = useTvls();
+
+  const show = usePortfolioStore((store: any) => store.show);
+  const setShow = usePortfolioStore((store: any) => store.setShow);
+
   const {
     hasMore,
     records,
@@ -66,10 +87,14 @@ export default function Portfolio() {
     return Big(totalBalance || 0).plus(totalBalanceByDapps || 0);
   }, [totalBalance, totalBalanceByDapps]);
 
+  const link = (
+    <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">feedback here</a>
+  );
+
   return (
     <StyledContainer>
       {
-        notiVisible && (
+        show && (
           <NotificationBar
             styles={{
               position: 'absolute',
@@ -77,63 +102,72 @@ export default function Portfolio() {
               top: 0,
             }}
             onClose={() => {
-              setNotiVisible(false);
+              setShow(false)
             }}
           >
             <StyledFeedbackContainer>
-              <span>
+              <StyledFeedbackText>
               The Portfolio. beta on DapDap now supports 5 networks: Polygon zkEVM, zkSync, Linea, Scroll, Blast. If there is any issue, please
-            </span>
-              <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">feedback here.</a>
+            </StyledFeedbackText>
+              <span>{link}.</span>
             </StyledFeedbackContainer>
           </NotificationBar>
         )
       }
       <StyledContent>
         <Top />
-        <Tab tab={tab} setTab={setTab} tabs={TABS}>
-          {tab === TABS[0].key && (
-            <>
-              <Networks
-                networks={networks}
-                totalBalance={totalBalance}
-                network={network}
-                setNetwork={setNetwork}
-                loading={tokensLoading}
+          <Tab
+            tab={tab}
+            setTab={setTab}
+            tabs={TABS}
+            tabsExtra={!show ? (<StyledLink>{link}</StyledLink>) : null}>
+            {tab === TABS[0].key && (
+              <>
+                <Networks
+                  networks={networks}
+                  totalBalance={totalBalance}
+                  network={network}
+                  setNetwork={setNetwork}
+                  loading={tokensLoading}
+                />
+                <Wallet
+                  loading={tokensLoading}
+                  filterFunc={filterFunc}
+                  tokens={tokens}
+                />
+              </>
+            )}
+            {tab === TABS[1].key && (
+              <Protocol
+                loading={dappsLoading}
+                dapps={dapps}
+                dappsByChain={dappsByChain}
+                totalWorth={totalWorth}
+                worthList={worthList}
+                worthLoading={worthLoading}
+                worthIncrease={worthIncrease}
+                tvls={tvls}
+                tvlsLoading={tvlsLoading}
               />
-              <Wallet
-                loading={tokensLoading}
-                filterFunc={filterFunc}
-                tokens={tokens}
+            )}
+            {tab === TABS[2].key && (
+              <ExecuteRecords
+                loading={recordsLoading}
+                records={records}
+                hasMore={hasMore}
+                dapps={dapps}
+                chain={chain}
+                dapp={dapp}
+                handleChain={handleChain}
+                handleDapp={handleDapp}
+                pageIndex={pageIndex}
+                handlePrev={handlePrev}
+                handleNext={handleNext}
+                handleFirst={handleFirst}
+                handleLast={handleLast}
               />
-            </>
-          )}
-          {tab === TABS[1].key && (
-            <Protocol
-              loading={dappsLoading}
-              dapps={dapps}
-              dappsByChain={dappsByChain}
-              totalWorth={totalWorth}
-            />
-          )}
-          {tab === TABS[2].key && (
-            <ExecuteRecords
-              loading={recordsLoading}
-              records={records}
-              hasMore={hasMore}
-              dapps={dapps}
-              chain={chain}
-              dapp={dapp}
-              handleChain={handleChain}
-              handleDapp={handleDapp}
-              pageIndex={pageIndex}
-              handlePrev={handlePrev}
-              handleNext={handleNext}
-              handleFirst={handleFirst}
-              handleLast={handleLast}
-            />
-          )}
-        </Tab>
+            )}
+          </Tab>
       </StyledContent>
     </StyledContainer>
   );

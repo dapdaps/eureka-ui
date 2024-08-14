@@ -8,14 +8,15 @@ import { chains } from '@/config/bridge';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import useSortChains from '@/hooks/useSortChains';
+import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '56px')};
   height: 34px;
   margin: 0 auto;
-  border: 1px solid #373a53;
+  //border: 1px solid #373a53;
   border-radius: 8px;
-  background-color: rgba(55, 58, 83, 0.5);
+  //background-color: rgba(55, 58, 83, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -23,6 +24,18 @@ const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   box-sizing: border-box;
   padding: 0 5px;
   margin-top: ${({ $mt }) => $mt + 'px'};
+  cursor: pointer;
+  
+  &.empty-chain {
+    &:hover {
+      background: #18191E;
+    }
+  }
+  
+  &.has-chain {
+    background: #18191E;
+  }
+
 `;
 const StyledChain = styled.div`
   display: flex;
@@ -43,22 +56,24 @@ const ChainName = styled.div`
 `;
 const ArrowIconWrapper = styled.div`
   color: #979abe;
+  cursor: pointer;
 `;
 const ChainList = styled.div<{ display?: number }>`
   width: 204px;
-  border: 1px solid #373a53;
   border-radius: 12px;
-  background-color: #303142;
   position: absolute;
   top: 34px;
   right: -50px;
   box-sizing: border-box;
   display: ${({ display }) => (display ? 'block' : 'none')};
   z-index: 200;
-  padding: 12px 0px;
+  padding: 12px 0;
+  border: 1px solid #333648;
+  background: #1F2229;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 `;
 const ChainItem = styled(StyledChain)<{ active?: number }>`
-  padding: 0px 10px;
+  padding: 2px 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -134,6 +149,7 @@ const Chain = ({
   return (
     <StyledContainer
       $mt={mt}
+      className={`${!showName && showEmptyChainTips ? 'empty-chain' : ''} ${showName ? Number(showChains || 0) : Number(showList || 0) ? 'has-chain' : ''}`}
       $showName={showName ? 1 : 0}
       onClick={(ev) => {
         ev.stopPropagation();
@@ -151,12 +167,7 @@ const Chain = ({
               !showName && setShowEmptyChainTips(false);
             }}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
-              <path
-                d="M18.3846 20H2.61607C1.55862 20 0.709131 19.5737 0.284885 18.8302C-0.139477 18.0868 -0.0878445 17.1156 0.427057 16.1666L8.38317 1.50385C8.90105 0.547928 9.67117 0 10.4951 0C11.3191 0 12.0885 0.547241 12.6078 1.50232L20.5722 16.1681C21.087 17.1171 21.1403 18.0876 20.7151 18.831C20.2916 19.5744 19.4414 20 18.3846 20ZM10.4959 1.53921C10.2339 1.53921 9.93383 1.80625 9.69057 2.25345L1.73449 16.9177C1.48521 17.3779 1.42685 17.7913 1.57575 18.0521C1.72479 18.3123 2.10415 18.4617 2.61607 18.4617H18.3846C18.8974 18.4617 19.276 18.3131 19.4249 18.0521C19.573 17.792 19.5155 17.3788 19.2655 16.9185L11.3012 2.25343C11.0586 1.80625 10.7571 1.53921 10.4959 1.53921ZM10.5004 13.0566C10.0873 13.0566 9.75202 12.7125 9.75202 12.2869V5.36039C9.75202 4.93552 10.0873 4.59073 10.5004 4.59073C10.9135 4.59073 11.2488 4.93554 11.2488 5.36039V12.2869C11.2488 12.7125 10.9135 13.0566 10.5004 13.0566ZM10.495 16.8186C11.139 16.8186 11.6611 16.2807 11.6611 15.6172C11.6611 14.9538 11.139 14.4159 10.495 14.4159C9.85098 14.4159 9.32889 14.9538 9.32889 15.6172C9.32889 16.2807 9.85098 16.8186 10.495 16.8186Z"
-                fill="#979ABE"
-              />
-            </svg>
+            <IconEmptyNetwork />
             {showEmptyChainTips && (
               <EmptyChainTips className="tips" {...overlay}>
                 <svg

@@ -22,7 +22,7 @@ export const StyledContent = styled.div`
   gap: 24px;
   flex-wrap: wrap;
   justify-content: center;
-  padding: 0 24px 24px;
+  padding: 0 24px 100px;
   /* z-index: 0; */
 `;
 
@@ -43,7 +43,6 @@ export const StyledNavList = styled.div`
   padding-top: 40px;
   gap: 16px;
   overflow: hidden;
-  margin-top: 100px;
   position: fixed;
   bottom: 0;
 `;

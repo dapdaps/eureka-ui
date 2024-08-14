@@ -41,19 +41,19 @@ export default {
   theme: {
     button: {
       bg: '#FFEEDA',
-      text: '#02051E',
+      text: '#000000',
     },
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Scroll.Bridge.Index',
-      description: 'Intuitively across different network to Scroll',
+      description: 'Intuitively bridge from different networks to Scroll, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Scroll.Swap',
-      description: 'Efficiently from/to any assets on Scroll',
+      description: 'Trade efficiently across any assets on Scroll.',
     },
     Lending: {
       tab: 'Lending',

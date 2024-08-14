@@ -18,6 +18,7 @@ import {
   StyledTagList,
   StyledVideo,
   StyledVideoIcon,
+  StyledOdysseyButton
 } from '@/views/Dapp/components/DappDetail/RelativeOdyssey/styles';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 import OdysseyVideo from './Video';
@@ -31,6 +32,8 @@ import odyssey from '@/config/odyssey';
 import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
 import useToast from '@/hooks/useToast';
 import { useDebounceFn } from 'ahooks';
+import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
+import { AnimatePresence } from 'framer-motion';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -69,8 +72,13 @@ const OdysseyCardComponent = (props: Props) => {
 
   const [show, setShow] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>('');
-  const toast = useToast()
-  const onCardClick = () => {
+  const toast = useToast();
+  const [ isHovered, setIsHovered ] = useState<boolean>(false);
+
+  const onCardClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
     if(isDevelopment) {
       toast.fail('This Odyssey ID is not available in the current FE version')
     }
@@ -171,12 +179,39 @@ const OdysseyCardComponent = (props: Props) => {
 
   return (
     <>
-      <StyledOdysseyContainer className={className} onClick={onCardClick}>
-        <StyledOdysseyTop>
+      <StyledOdysseyContainer className={className}>
+        <StyledOdysseyTop
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}>
           <StyledOdysseyBanner
             url={banner}
             className={!isLive ? 'gray' : ''}
           />
+          <AnimatePresence mode="wait">
+            { isHovered && (
+              <StyledOdysseyButton
+                onClick={onCardClick}
+                variants={{
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                  },
+                  hidden: {
+                    opacity: 0,
+                    y: 20,
+                  },
+                }}
+                style={{ x: '-50%' }}
+                initial="hidden"
+                exit="hidden"
+                animate="visible"
+              >
+              <span>{ isLive ? 'Join' : 'View' } Campaign</span>
+              <ArrowLineIcon classname='arrow-right'/>
+            </StyledOdysseyButton>
+            )
+            }
+          </AnimatePresence>
           <StyledOdysseyHead>
             <StyledOdysseyInfo>
               <StyledOdysseyIcon />

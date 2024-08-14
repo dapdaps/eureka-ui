@@ -24,7 +24,7 @@ const AllDappsTitle = (props: Props) => {
     activeCategory,
     categoryClassname = '',
     animation = {},
-    categoryRef
+    categoryRef,
   } = props;
 
   const { categories } = useCategoryDappList();
@@ -32,6 +32,8 @@ const AllDappsTitle = (props: Props) => {
   const { loading, categoryMap } = useDappCategoriesSum();
 
   const [dappListShown, setDappListShown] = useState<any>([]);
+  const [dappListShownLeft, setDappListShownLeft] = useState<any>([]);
+  const [dappListShownRight, setDappListShownRight] = useState<any>([]);
 
   const categoryList = useMemo(() => {
     return Object.values(categories || {}).map((it: any) => {
@@ -52,7 +54,8 @@ const AllDappsTitle = (props: Props) => {
 
   const [currentCategory, setCurrentCategory] = useState<any>();
   const handleCurrentCategory = (category: any) => {
-    setDappListShown([]);
+    setDappListShownLeft([]);
+    setDappListShownRight([]);
 
     if (category.key === currentCategory?.key) {
       setCurrentCategory(undefined);
@@ -75,7 +78,8 @@ const AllDappsTitle = (props: Props) => {
 
   useEffect(() => {
     if (!dappList) {
-      setDappListShown([]);
+      setDappListShownLeft([]);
+      setDappListShownRight([]);
       return;
     }
     const result: TitleDapp[] = [];
@@ -106,6 +110,7 @@ const AllDappsTitle = (props: Props) => {
 
       result.push({
         ...position,
+        key: '' + currentCategory?.label + idx,
         x,
         y,
         logo: dapp.logo,
@@ -114,13 +119,14 @@ const AllDappsTitle = (props: Props) => {
         rotate: position.rotate || 0,
       });
     });
-    setDappListShown(result);
+    setDappListShownLeft(result.filter((it) => it.position === 'left'));
+    setDappListShownRight(result.filter((it) => it.position === 'right'));
   }, [dappList]);
 
   return (
     <StyledHead>
       <StyledTitle>
-        <Logo dappList={dappListShown} position="left" />
+        <Logo key="left" dappList={dappListShownLeft} position="left" />
         <StyledTitleText>
           Discover&nbsp;
           <StyledTitlePrimary
@@ -148,7 +154,7 @@ const AllDappsTitle = (props: Props) => {
             <span>{currentCategory ? currentCategory.label : 'dApps'}</span>
           </StyledTitlePrimary>
         </StyledTitleText>
-        <Logo dappList={dappListShown} position="right" />
+        <Logo key="right" dappList={dappListShownRight} position="right" />
       </StyledTitle>
       <StyledTitleSub>
         Discover the most popular

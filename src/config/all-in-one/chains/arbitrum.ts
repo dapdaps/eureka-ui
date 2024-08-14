@@ -48,12 +48,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Arbitrum.Bridge',
-      description: 'Intuitively across different network to Arbitrum',
+      description: 'Intuitively bridge from different networks to Arbitrum, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Arbitrum.Swap.Dex',
-      description: 'Efficiently from/to any assets on Arbitrum',
+      description: 'Trade efficiently across any assets on Arbitrum.',
     },
     Lending: {
       tab: 'Lending',

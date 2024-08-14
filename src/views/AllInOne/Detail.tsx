@@ -1,14 +1,13 @@
 import { useRouter } from 'next/router';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useMemo, useState } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
-import Bridge from '@/views/AllInOne/components/Bridge';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
 import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
-import chainCofig from '@/config/chains'
-import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent'
+import chainCofig from '@/config/chains';
+import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent';
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
@@ -16,6 +15,7 @@ import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
 
 import Settings from './components/Setting/index';
+import PageBack from '@/components/PageBack';
 
 const AllInOneDetailView = (props: Props) => {
   const { chain, menu } = props;
@@ -47,9 +47,18 @@ const AllInOneDetailView = (props: Props) => {
     return !['liquidity', 'lending'].includes(menu);
   }, [menu]);
 
+  const formatLikeId = () => {
+    if (currentChain.chainId && currentMenu.id) {
+      const _id = currentChain.chainId + '' + currentMenu.id;
+      return isNaN(Number(_id)) ? null : Number(_id);
+    }
+    return null;
+  }
+
   return (
     <>
       <StyledContainer>
+        <PageBack style={{ width: 60, marginLeft: ['swap', 'bridge'].includes(menu) ? 212 : 24 }} />
         <StyledFlex flexDirection="column" justifyContent="center" className="all-in-one-wrapper">
           <AllInOneHeaderView
             chain={chain}
@@ -63,6 +72,7 @@ const AllInOneDetailView = (props: Props) => {
             {
               showComponent && (
                 <AllInOneDetailCardView
+                  likeId={formatLikeId()}
                   key={menu}
                   title={currentMenu?.tab}
                   subTitle={currentMenu.description}
@@ -92,7 +102,7 @@ const AllInOneDetailView = (props: Props) => {
                     )
                   }
                   {
-                    menu === 'trade' && (
+                    menu === 'swap' && (
                       <Trade chain={currentChain} />
                     )
                   }

@@ -7,7 +7,7 @@ export const StyledWrapper = styled.div`
 `;
 
 export const StyledContainer = styled.div`
-  margin-top: 170px;
+  margin-top: 113px;
   font-family: Montserrat;
 `;
 
@@ -36,30 +36,4 @@ export const StyledFooter = styled(StyledWrapper)`
   margin-top: 30px;
   display: flex;
   justify-content: flex-end;
-`;
-
-export const StyledViewAll = styled(Link)`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 11px;
-  width: 118px;
-  height: 48px;
-  flex-shrink: 0;
-  color: #FFF;
-  text-align: center;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: normal;
-  border-radius: 10px;
-  border: 1px solid #333648;
-  background: #18191E;
-  cursor: pointer;
-  transition: all 0.3s linear;
-
-  &:hover {
-    opacity: 0.7;
-    text-decoration: none;
-  }
 `;

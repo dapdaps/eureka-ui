@@ -140,6 +140,8 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
         </StyledTrade>
         <Button
           chain={chain}
+          amount={inputCurrencyAmount}
+          spender={trade?.routerAddress}
           errorTips={errorTips}
           token={inputCurrency}
           loading={loading}

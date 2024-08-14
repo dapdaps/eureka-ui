@@ -40,20 +40,20 @@ export default {
   defaultTab: 'Swap',
   theme: {
     button: {
-      bg: '#FFF',
-      text: '#02051E',
+      bg: '#0469FF',
+      text: '#ffffff',
     },
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/zkSync.Bridge.Index',
-      description: 'Intuitively across different network to zkSync',
+      description: 'Intuitively bridge from different networks to zkSync, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/zkSync.Swap.Dex',
-      description: 'Efficiently from/to any assets on zkSync',
+      description: 'Trade efficiently across any assets on zkSync.',
     },
     Lending: {
       tab: 'Lending',

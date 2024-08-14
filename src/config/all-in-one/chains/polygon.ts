@@ -48,12 +48,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Polygon.Bridge',
-      description: 'Intuitively across different network to Polygon',
+      description: 'Intuitively bridge from different networks to Polygon, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Polygon.Swap.Dex',
-      description: 'Efficiently from/to any assets on Polygon',
+      description: 'Trade efficiently across any assets on Polygon.',
     },
     Liquidity: {
       tab: 'Liquidity',

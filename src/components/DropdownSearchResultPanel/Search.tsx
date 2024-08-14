@@ -51,7 +51,6 @@ const Search = ({
 }) => {
   const { currentSearch, setSearch, addRecentSearch } = useRecentStore();
 
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearch(value);
@@ -88,14 +87,20 @@ const Search = ({
         autoFocus
         className="nav-input"
       />
-      <InputCloseIcon
-        onClick={() => {
-          setSearch('');
-          onSearch('');
-        }}
-      >
-        <IconClear />
-      </InputCloseIcon>
+      {
+        currentSearch && (
+          <InputCloseIcon
+            onClick={() => {
+              setSearch('');
+              onSearch('');
+            }}
+          >
+            <IconClear />
+          </InputCloseIcon>
+        )
+      }
+
+
     </StyleSearch>
   );
 };

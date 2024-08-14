@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import odyssey from '@/config/odyssey';
@@ -19,10 +19,13 @@ const Badges = (props: Props) => {
     tradingVolumeTooltip,
     usersTooltip,
     customBadges = [],
+    isCenter,
   } = props;
 
   const router = useRouter();
   const rewardListRef = useRef<any>();
+
+  const [containerStyle, setContainerStyle] = useState<React.CSSProperties>();
 
   const initBadges: Badge[] = [
     {
@@ -269,8 +272,17 @@ const Badges = (props: Props) => {
     );
   };
 
+  useEffect(() => {
+    if (!rewardListRef.current || !isCenter) return;
+    if (rewardListRef.current.scrollWidth > rewardListRef.current.clientWidth) {
+      setContainerStyle({ justifyContent: 'flex-start' });
+    } else {
+      setContainerStyle({ justifyContent: 'center' });
+    }
+  }, [isCenter]);
+
   return (
-    <StyledContainer ref={rewardListRef}>
+    <StyledContainer ref={rewardListRef} style={containerStyle}>
       {renderBadges()}
     </StyledContainer>
   );
@@ -285,6 +297,7 @@ export interface Props {
   tradingVolumeTooltip?: string;
   usersTooltip?: string;
   customBadges?: Badge[];
+  isCenter?: boolean;
 }
 
 export interface Badge {

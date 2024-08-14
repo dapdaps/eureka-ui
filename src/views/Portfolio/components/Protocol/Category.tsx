@@ -2,6 +2,8 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+import Loading from '@/components/Icons/Loading';
+import Big from 'big.js';
 
 export const StyledContainer = styled.div`
   width: 242px;
@@ -83,7 +85,7 @@ export const StyledIcon = styled.div<{ src: string }>`
 `;
 
 const Category = (props: any) => {
-  const { title, icon, usd, executions } = props;
+  const { title, icon, usd, executions, loading, tradingVolume } = props;
 
   return (
     <StyledContainer>
@@ -92,8 +94,14 @@ const Category = (props: any) => {
         <div className="title">{title}</div>
       </div>
       <div className="body">
-        <div className={`usd ${usd > 0 ? 'active' : ''}`}>
-          ${formateValueWithThousandSeparator(usd, 2)}
+        <div className={`usd ${Big(tradingVolume || 0).gt(0) ? 'active' : ''}`}>
+          {
+            loading ? (
+              <Loading />
+            ) : (
+              <>${usd}</>
+            )
+          }
         </div>
       </div>
       <div className="foot">

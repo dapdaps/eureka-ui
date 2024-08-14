@@ -8,13 +8,15 @@ import {
 type ProgressType = {
   quantity: number;
   total: number;
+  showAchieved?: boolean;
   barWidth?: string;
 }
-export default function Progress({ quantity, total, barWidth }: ProgressType) {
+export default function Progress({ quantity, total, showAchieved, barWidth }: ProgressType) {
+  quantity = quantity > total ? total : quantity
   return (
-    <StyledFlex justifyContent="space-between" gap="37px">
+    <StyledFlex justifyContent="center" gap="37px" style={{ position: 'relative', paddingRight: 52 }}>
       {
-        quantity === total && (
+        quantity >= total && showAchieved ? (
           <StyledAchievedContainer>
             <StyledAchieved>
               <StyledSvg>
@@ -25,12 +27,15 @@ export default function Progress({ quantity, total, barWidth }: ProgressType) {
               <StyledFont color="#FFF" fontSize="14px">Achieved!</StyledFont>
             </StyledAchieved>
           </StyledAchievedContainer>
+        ) : (
+          <StyledProgressBar $width={barWidth}>
+            <StyledInnerProgressBar $percent={(quantity / total) * 100} />
+          </StyledProgressBar>
         )
       }
-      <StyledProgressBar $width={barWidth}>
-        <StyledInnerProgressBar $percent={(quantity / total) * 100} />
-      </StyledProgressBar>
-      <StyledFont color="#979ABE" fontSize="14px" fontWeight="500">{quantity}/{total}</StyledFont>
+      <StyledFont color="#979ABE" fontSize="14px" fontWeight="500" style={{ position: 'absolute', right: 0 }}>
+        {quantity}/{total}
+      </StyledFont>
     </StyledFlex>
   )
 }

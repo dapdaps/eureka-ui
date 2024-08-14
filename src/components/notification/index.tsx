@@ -27,14 +27,14 @@ export default function Notification({
               <div className={styles.timeText}>{formatTimeAgo(data.created_at)}</div>
             </div>
           </div>
-          <div className={styles.subTtitle}>{data.content}</div>
+          <div className={cls(styles.subTtitle, `${className}-sub-title`)}>{data.content}</div>
         </div>
       )}
       {variant === 'list' && (
         <div className={cls(styles.content, styles.notificationList)}>
           <div className={styles.descContent}>
             <div className={styles.title}>{data.title}</div>
-            <div className={styles.subTtitle}>{data.content}</div>
+            <div className={cls(styles.subTtitle, `${className}-sub-title`)}>{data.content}</div>
           </div>
           <div className={styles.time}>
             {!data.status && <div className={styles.dot}></div>}

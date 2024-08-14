@@ -48,12 +48,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Intuitively across different network to Gnosis',
+      description: 'Intuitively bridge from different networks to Gnosis, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Gnosis.Swap.Dex',
-      description: 'Efficiently from/to any assets on Gnosis',
+      description: 'Trade efficiently across any assets on Gnosis.',
     },
     Lending: {
       tab: 'Lending',

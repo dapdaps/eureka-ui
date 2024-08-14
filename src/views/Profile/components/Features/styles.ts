@@ -1,15 +1,17 @@
 import styled from "styled-components";
 
-export const StyledFeature = styled.div`
-  position: relative;
-  width: 612px;
-  height: 308px;
-  flex-shrink: 0;
+export const StyledContainer = styled.div`
+  color: #ffffff;
+`;
 
-  border-radius: 20px;
-  border: 1px solid #202329;
-  background: #101115;
-  cursor: pointer;
+export const StyledCard = styled.div`
+  width: calc(50% - 14px);
+`;
+
+export const StyledFeature = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
 `
 export const StyledMasker = styled.div`
   position: absolute;
@@ -19,16 +21,6 @@ export const StyledMasker = styled.div`
   bottom: 0;
   background: linear-gradient(180deg, rgba(16, 17, 21, 0.00) 0%, #101115 100%);
 `
-export const StyledIntroImageContainer = styled.div`
-  position: absolute;
-  top: 110px;
-  left: 0;
-  width: 100%;
-  height: 198px;
-  border-radius: 16px;
-  overflow: hidden;
-`
-export const StyledIntroImage = styled.img`
+export const StyledEmpty = styled.div`
   margin: 0 auto;
-  width: 599px;
-`
+`;

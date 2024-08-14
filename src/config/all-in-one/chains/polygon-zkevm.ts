@@ -11,7 +11,7 @@ export default {
   defaultTab: 'Bridge',
   theme: {
     button: {
-      bg: 'linear-gradient(269deg, #803DE0 36.18%, #9E2AC7 60.54%)',
+      bg: '#6C00F6',
       text: '#FFF',
     },
   },
@@ -19,12 +19,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'guessme.near/widget/ZKEVMSwap.zkevm-bridge',
-      description: 'Intuitively across different network to Polygon zkEVM',
+      description: 'Intuitively bridge from different networks to Polygon zkEVM, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/PolygonZkevm.Swap.Dex',
-      description: 'Efficiently from/to any assets on Polygon zkEVM',
+      description: 'Trade efficiently across any assets on Polygon zkEVM.',
     },
     Liquidity: {
       tab: 'Liquidity',

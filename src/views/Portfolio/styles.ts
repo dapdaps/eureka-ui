@@ -40,6 +40,16 @@ export const StyledContainer = styled.div`
     border-radius: 100%;
     background: #c7cdff;
   }
+
+  a {
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+    color: #000000;
+  }
 `;
 
 export const StyledContent = styled.div`
@@ -53,13 +63,14 @@ export const StyledFeedbackContainer = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 4px;
-  > a {
-    color: #000;
-    font-family: Montserrat;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    text-decoration-line: underline;
+`;
+
+export const StyledLink = styled.div`
+  a {
+    color: #ffffff;
+    text-decoration: none;
   }
+`;
+
+export const StyledFeedbackText = styled.div`
 `;

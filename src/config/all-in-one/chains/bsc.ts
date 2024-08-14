@@ -40,19 +40,19 @@ export default {
   theme: {
     button: {
       bg: '#E2A300',
-      text: '#02051E',
+      text: '#000000',
     },
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Bsc.Bridge',
-      description: 'Intuitively across different network to BNB Chain',
+      description: 'Intuitively bridge from different networks to BNB Chain, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Bsc.Swap.Dex',
-      description: 'Efficiently from/to any assets on BNB Chain',
+      description: 'Trade efficiently across any assets on BNB Chain.',
     },
     Liquidity: {
       tab: 'Liquidity',

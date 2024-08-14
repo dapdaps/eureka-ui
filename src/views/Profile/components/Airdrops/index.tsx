@@ -86,11 +86,13 @@ export default function Airdrops({ loaded, airdropList }: PropsType) {
                 </StyledFlex>
 
               </StyledFlex>
-              <StyledFlex gap='11px' alignItems='flex-end' style={{ marginTop: 20, marginBottom: 12 }}>
-                <StyledFont color='#FFF' fontSize='14px' lineHeight='150%'>Estimated date</StyledFont>
-                <StyledFont color='#FFF' fontWeight='500' lineHeight='150%'>{airdrop?.estimated_date}</StyledFont>
-              </StyledFlex>
-              <ProgressBar quantity={airdrop?.completed_count} total={airdrop?.total_quest} />
+              <StyledContainer>
+                <StyledFlex gap='11px' alignItems='flex-end' style={{ marginBottom: 8 }}>
+                  <StyledFont color='#FFF' fontSize='14px' lineHeight='150%'>Estimated date</StyledFont>
+                  <StyledFont color='#FFF' fontWeight='500' lineHeight='150%'>{airdrop?.estimated_date}</StyledFont>
+                </StyledFlex>
+                <ProgressBar quantity={airdrop?.completed_count} total={airdrop?.total_quest} />
+              </StyledContainer>
             </StyledAirdropCard>
           ))
         }

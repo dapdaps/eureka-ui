@@ -6,10 +6,11 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import networks from '@/config/swap/networks';
 import Loading from '@/components/Icons/Loading';
+import { PriceImpactTypeColorMap } from './Result';
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{ color?: string }>`
   border-radius: 10px;
-  background: #ebf479;
+  background: ${({ color }) => color || '#ebf479'};
   width: 100%;
   height: 60px;
   color: #000;
@@ -22,23 +23,38 @@ const StyledButton = styled.button`
   margin-top: 20px;
 `;
 
-const BaseButton = ({ disabled, onClick, children }: any) => {
+const BaseButton = ({ disabled, onClick, children, color }: any) => {
   return (
-    <StyledButton disabled={disabled} onClick={onClick}>
+    <StyledButton disabled={disabled} onClick={onClick} color={color} >
       {children}
     </StyledButton>
   );
 };
 
-const TradeButton = ({ spender, token, amount, loading, errorTips, disabled, onClick }: any) => {
+const getButtonImpactProps = (trade: any) => {
+  if (trade?.priceImpactType === 2) {
+    return {
+      color: PriceImpactTypeColorMap[trade.priceImpactType],
+      text: 'I noticed the price impact, swap anyway',
+    };
+  }
+  return {
+    color: null,
+    text: 'Swap',
+  };
+};
+
+const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
-    spender,
+    spender: trade?.routerAddress,
   });
+  
   const { switching, switchChain } = useSwitchChain();
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
+  const { color, text } = getButtonImpactProps(trade);
 
   if (!account || !chainId) {
     return (
@@ -73,7 +89,7 @@ const TradeButton = ({ spender, token, amount, loading, errorTips, disabled, onC
 
   if (checking || approving || loading) {
     return (
-      <BaseButton disabled>
+      <BaseButton color={color} disabled>
         <Loading />
       </BaseButton>
     );
@@ -83,8 +99,8 @@ const TradeButton = ({ spender, token, amount, loading, errorTips, disabled, onC
   }
 
   return (
-    <BaseButton onClick={onClick} disabled={disabled}>
-      Swap
+    <BaseButton onClick={onClick} disabled={disabled} color={color}>
+      {text}
     </BaseButton>
   );
 };

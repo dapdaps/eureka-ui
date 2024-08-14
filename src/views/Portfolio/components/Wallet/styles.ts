@@ -128,5 +128,6 @@ export const StyledTokenIcon = styled.div`
 export const StyledTokenIconImg = styled.div<{ src: string }>`
   width: 100%;
   height: 100%;
+  border-radius: 50%;
   background: ${({ src }) => `url("${src}") no-repeat center / contain`};
 `;

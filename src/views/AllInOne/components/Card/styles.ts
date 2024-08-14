@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import { hexToRgb } from '@/views/AllInOne/utils';
-import { StyledLendingEntry } from '@/views/AllInOne/components/Lending/styles';
+import hexToRgba from '@/utils/hexToRgba';
 
 export const StyledCard = styled.div<{ bgColor?: string }>`
   display: block;
@@ -67,7 +66,7 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
     &:hover {
       transform: translateY(-20px);
       border-color: ${({ bgColor }) => bgColor};
-      box-shadow: ${({ bgColor }) => `0px 0px 10px 0px rgba(${hexToRgb(bgColor as string)}, 0.5)`};
+      box-shadow: ${({ bgColor }) => `0px 0px 10px 0px ${hexToRgba(bgColor as string, 0.5)}`};
 
       .card-active-bg {
         opacity: 0;
@@ -120,6 +119,11 @@ export const StyledTitle = styled.div`
     .sub-title {
       display: none;
     }
+  }
+  .like-tag {
+    border: 1px #373A53;
+    background: rgba(16, 17, 21, 0.50);
+    backdrop-filter: blur(5px);
   }
 `;
 

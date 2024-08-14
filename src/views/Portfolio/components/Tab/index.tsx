@@ -5,9 +5,10 @@ import {
   StyledTabItem,
   StyledPortfolioTabCursor,
   StyledPortfolioTabHead,
+  StyledPortfolioTabBorder
 } from './styles';
 
-const Tab = ({ tab, setTab, children, tabs }: any) => {
+const Tab = ({ tab, setTab, children, tabs, tabsExtra }: any) => {
 
   const tabIndex = useMemo(() => {
     const idx = tabs.findIndex((_tab: any) => _tab.key === tab);
@@ -16,27 +17,30 @@ const Tab = ({ tab, setTab, children, tabs }: any) => {
 
   return (
     <PortfolioTabs>
-      <StyledPortfolioTabHead>
-        {tabs.map((_tab: { key: string, title: string }) => {
-          return (
-            <StyledTabItem
-              key={_tab.key}
-              className={`${tab === _tab.key ? 'active' : ''}`}
-              onClick={() => {
-                setTab(_tab.key as 'Wallet' | 'Protocol' | 'Execution Records');
+      <StyledPortfolioTabBorder className={tabsExtra ? 'tab-flex' : ''}>
+        <StyledPortfolioTabHead>
+            {tabs.map((_tab: { key: string, title: string }) => {
+              return (
+                <StyledTabItem
+                  key={_tab.key}
+                  className={`${tab === _tab.key ? 'active' : ''}`}
+                  onClick={() => {
+                    setTab(_tab.key as 'Wallet' | 'Protocol' | 'Execution Records');
+                  }}
+                >
+                  {_tab.title}
+                </StyledTabItem>
+              );
+            })}
+            <StyledPortfolioTabCursor
+              animate={{
+                x: tabIndex * 200,
               }}
-            >
-              {_tab.title}
-            </StyledTabItem>
-          );
-        })}
-        <StyledPortfolioTabCursor
-          animate={{
-            x: tabIndex * 200,
-          }}
-          initial={{ x: 0 }}
-        />
-      </StyledPortfolioTabHead>
+              initial={{ x: 0 }}
+            />
+        </StyledPortfolioTabHead>
+        { tabsExtra }
+      </StyledPortfolioTabBorder>
       <PortfolioTabContent>{children}</PortfolioTabContent>
     </PortfolioTabs>
   );

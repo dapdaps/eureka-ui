@@ -5,8 +5,8 @@ import styled from 'styled-components';
 import { formatDateTime } from '@/utils/date';
 import { formateValueWithThousandSeparator, formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import Big from 'big.js';
-import { useWorth } from '@/views/Portfolio/hooks/useWorth';
-import Selector from '@/components/Dropdown/Selector';
+import Loading from '@/components/Icons/Loading';
+import { StyledFlex } from '@/styled/styles';
 
 export const StyledContainer = styled.div`
   width: 574px;
@@ -116,13 +116,7 @@ const dropdownList = [
 ];
 
 const ChartComponent = (props: Props) => {
-  const { totalWorth } = props;
-
-  const {
-    list,
-    loading,
-    increase,
-  } = useWorth();
+  const { totalWorth, list, loading, increase } = props;
 
   const isUp = useMemo(() => {
     if (!increase) return true;
@@ -152,11 +146,11 @@ const ChartComponent = (props: Props) => {
           <div className="summary">
             <div className="usd">{totalWorthShown.integer}<span className="sm">{totalWorthShown.decimal}</span></div>
             <div className="rate">
-              {isUp ? '+' : '-'}{Big(increase).toFixed(2)}%
+              {isUp ? '+' : ''}{Big(increase).toFixed(2)}%
             </div>
           </div>
         </div>
-        <Selector
+        {/*<Selector
           className="head-right"
           triggerClassName="head-right-trigger"
           arrowClassName="head-right-trigger-arrow"
@@ -171,55 +165,63 @@ const ChartComponent = (props: Props) => {
             borderRadius: 6,
             background: '#1B1D25',
           }}
-        />
+        />*/}
       </div>
       <div className="chart-wrapper">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            width={531}
-            height={198}
-            data={list}
-            margin={{
-              top: 10,
-              right: 30,
-              left: 0,
-              bottom: 0,
-            }}
-          >
-            <defs>
-              <linearGradient
-                id="paint0_linear_12309_49"
-                x1="265.457"
-                y1="11.4055"
-                x2="265.457"
-                y2="198"
-                gradientUnits="userSpaceOnUse"
+        {
+          loading ? (
+            <StyledFlex style={{ height: '100%' }} justifyContent="center" alignItems="center">
+              <Loading />
+            </StyledFlex>
+            ) : (
+            <ResponsiveContainer width="100%" height="100%">
+              <AreaChart
+                width={531}
+                height={198}
+                data={list}
+                margin={{
+                  top: 10,
+                  right: 30,
+                  left: 0,
+                  bottom: 0,
+                }}
               >
-                <stop stopColor="#41C37D" />
-                <stop offset="1" stopColor="#41C37D" stopOpacity="0" />
-              </linearGradient>
-            </defs>
-            <CartesianGrid stroke="transparent" />
-            <YAxis
-              width={0}
-              axisLine={false}
-              tick={false}
-              tickLine={false}
-              domain={['dataMin', 'dataMax']}
-            />
-            <Area
-              dataKey="worth"
-              type="linear"
-              stroke="#63C341"
-              fill="url(#paint0_linear_12309_49)"
-              min={Math.min(...list.map((item) => Big(item.worth).toNumber()))}
-              max={Math.max(...list.map((item) => Big(item.worth).toNumber()))}
-            />
-            <Tooltip
-              content={<CustomTooltip />}
-            />
-          </AreaChart>
-        </ResponsiveContainer>
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_12309_49"
+                    x1="265.457"
+                    y1="11.4055"
+                    x2="265.457"
+                    y2="198"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#41C37D" />
+                    <stop offset="1" stopColor="#41C37D" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid stroke="transparent" />
+                <YAxis
+                  width={0}
+                  axisLine={false}
+                  tick={false}
+                  tickLine={false}
+                  domain={['dataMin', 'dataMax']}
+                />
+                <Area
+                  dataKey="worth"
+                  type="linear"
+                  stroke="#63C341"
+                  fill="url(#paint0_linear_12309_49)"
+                  min={Math.min(...list.map((item) => Big(item.worth).toNumber()))}
+                  max={Math.max(...list.map((item) => Big(item.worth).toNumber()))}
+                />
+                <Tooltip
+                  content={<CustomTooltip />}
+                />
+              </AreaChart>
+            </ResponsiveContainer>
+          )
+        }
       </div>
     </StyledContainer>
   );
@@ -244,4 +246,7 @@ const CustomTooltip = (props: any) => {
 
 export interface Props {
   totalWorth: Big.Big;
+  list: any[];
+  loading: boolean;
+  increase: any;
 }

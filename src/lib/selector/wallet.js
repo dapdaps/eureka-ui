@@ -17,7 +17,7 @@ export class FastAuthWallet {
 
     this.keyStore = new nearAPI.keyStores.BrowserLocalStorageKeyStore();
     this.near = new nearAPI.Near({
-      ...networks[networkId],
+      ...networks()[networkId],
       deps: { keyStore: this.keyStore },
     });
     this.relayerUrl = relayerUrl;

@@ -16,8 +16,6 @@ const StyleCheckIn = styled.div`
   display: flex;
   align-items: center;
   position: relative;
-  display: flex;
-  align-items: center;
   height: 34px;
 
   &:hover {
@@ -40,6 +38,7 @@ const StyledImg = styled.img<{ isHovered: boolean }>`
   height: ${(props) => (props.isHovered ? '36px' : '16px')};
   transition: width 0.3s, height 0.3s;
   margin-right: 6px;
+  object-fit: contain;
 `;
 
 const StyleDropdown = styled.div`

@@ -1,9 +1,9 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 const PageBack = (props: Props) => {
-  const { defaultPath } = props;
+  const { defaultPath, style } = props;
 
   const router = useRouter();
 
@@ -16,8 +16,8 @@ const PageBack = (props: Props) => {
   };
 
   return (
-    <StyledContainer onClick={onClick}>
-      <StyledInner>
+    <StyledContainer style={style}>
+      <StyledInner onClick={onClick}>
         <svg width="6" height="12" viewBox="0 0 6 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             opacity="0.8"
@@ -37,6 +37,7 @@ export default memo(PageBack);
 
 export interface Props {
   defaultPath?: string;
+  style?: React.CSSProperties;
 }
 
 const StyledContainer = styled.div`

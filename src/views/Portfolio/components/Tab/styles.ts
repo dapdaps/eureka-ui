@@ -3,6 +3,11 @@ import { motion } from 'framer-motion';
 
 export const PortfolioTabs = styled.div`
   font-family: Montserrat;
+  .tab-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 export const PortfolioTabContent = styled.div`
@@ -16,9 +21,12 @@ export const StyledPortfolioTabHead = styled.div`
   position: relative;
   padding: 0 0 11px;
   background: #101115;
+  overflow-x: hidden;
+`;
+
+export const StyledPortfolioTabBorder = styled.div`
   margin-bottom: 24px;
   border-bottom: 1px solid  #373A53;
-  overflow-x: hidden;
 `;
 
 export const StyledTabItem = styled.div`

@@ -8,16 +8,6 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
   const { onConnect } = useConnectWallet();
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const check = async (cb?: any, quiet?: boolean) => {
-    if (!account) {
-      if (quiet !== undefined ? quiet : isQuiet) return;
-      const result = await onConnect();
-      if (result.length) cb?.();
-      return;
-    }
-    if (!isNeedAk) {
-      cb?.();
-      return;
-    }
     const checkAk = async () => {
       const result = window.sessionStorage.getItem(http.AUTH_TOKENS);
       const parsedResult = result ? JSON.parse(result) : {};
@@ -30,6 +20,19 @@ export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean
         checkAk();
       }, 500);
     };
+    if (!account) {
+      if (quiet !== undefined ? quiet : isQuiet) return;
+      const result = await onConnect();
+      if (result.length) {
+        // fix#DAP-747
+        checkAk();
+      }
+      return;
+    }
+    if (!isNeedAk) {
+      cb?.();
+      return;
+    }
     checkAk();
   };
 

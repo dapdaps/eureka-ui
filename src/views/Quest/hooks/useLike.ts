@@ -3,8 +3,10 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { QUEST_PATH } from '@/config/quest';
 import useToast from '@/hooks/useToast';
 import { get, post } from '@/utils/http';
+import useAccount from '@/hooks/useAccount';
 
-export default function useLike(id: string, category: string) {
+export default function useLike(id: string | number, category: string) {
+  const { account } = useAccount();
   const [like, setLike] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -60,11 +62,12 @@ export default function useLike(id: string, category: string) {
   };
 
   useEffect(() => {
-    if (id && category)
+    if (id && category) {
       check(() => {
         queryLike();
       });
-  }, [id, category]);
+    }
+  }, [id, category, account]);
 
   return { like, loading, handleLike: onLike };
 }

@@ -34,7 +34,7 @@ export class Medal {
   }
 
   private readonly gravity = 980;
-  public readonly radiusOffset = 30;
+  public readonly radiusOffset = 20;
   private img: any;
   private context: CanvasRenderingContext2D;
   public key: number;

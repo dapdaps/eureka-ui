@@ -128,7 +128,7 @@ const CompassCard = function ({ compass }: any) {
                 }}
                 data-bp="1001-003"
               >
-                <div>Explore All</div>
+                <div>Explore Now</div>
                 <IconClickArrow />
               </StyledCompassButton>
               {/* <StyledCompassButton
@@ -168,8 +168,9 @@ const Compass = () => {
   };
 
   const filterCompassList = useMemo(() => {
-    const hasLive = compassList.some((compass: any) => compass.status === StatusType.ongoing);
-    return hasLive ? compassList.filter((compass: any) => compass.status === StatusType.ongoing) : compassList;
+    // fix#DAP-785
+    const hasLive = compassList.some((compass: any) => [StatusType.ongoing, StatusType.un_start].includes(compass.status));
+    return hasLive ? compassList.filter((compass: any) => [StatusType.ongoing, StatusType.un_start].includes(compass.status)) : compassList;
   }
   , [compassList]);
 

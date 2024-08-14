@@ -6,6 +6,7 @@ import { StyledContainer } from './styles';
 import RecentRewards from './components/Rewards';
 import Networks from './components/Networks';
 import SuperFeatures from './components/SuperFeatures';
+import PlatformStats from '@/views/Home/components/PlatformStats';
 
 const Home = () => {
   return (
@@ -15,7 +16,9 @@ const Home = () => {
       <Networks />
       <DiscoveryDapps />
       <RecentRewards />
-      <SuperFeatures /> 
+      <SuperFeatures />
+      <PlatformStats />
+
       {/* <TrendingEthereum chains={chains} />
       <QuickOnboarding />
       <SeamlessNavigation chains={chains} />

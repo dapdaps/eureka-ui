@@ -3,6 +3,8 @@ import { get, post } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
 import { AirdropList, Potential } from '@/views/Dapp/components/DappDetail/config';
 import { StatusType } from '@/views/Odyssey/components/Tag';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 
 export function useAirdrop(props: Props) {
   const {
@@ -15,6 +17,8 @@ export function useAirdrop(props: Props) {
     potential: AirdropList,
     quests: [],
   });
+  const { account } = useAccount();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const getData = async () => {
     setLoading(true);
@@ -72,8 +76,12 @@ export function useAirdrop(props: Props) {
 
   useEffect(() => {
     if (!category || !id) return;
+    if (account) {
+      check(getDataDebounce);
+      return;
+    }
     getDataDebounce();
-  }, [category, id]);
+  }, [category, id, account]);
 
   return {
     data,

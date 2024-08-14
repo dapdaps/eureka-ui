@@ -7,11 +7,23 @@ import LendingEntry from '@/views/AllInOne/components/Lending/Entry';
 import LiquidityEntry from '@/views/AllInOne/components/Liquidity/Entry';
 import Trade from '@/views/AllInOne/components/Trade';
 
-const MenuConfig: { [k: string]: any } = {
-  Trade,
-  Bridge,
-  Lending: LendingEntry,
-  Liquidity: LiquidityEntry,
+export const MenuConfig: { [k: string]: any } = {
+  'Bridge': {
+    component: Bridge,
+    id: 1000
+  },
+  'Swap': {
+    component: Trade,
+    id: 1001
+  },
+  'Lending': {
+    component: LendingEntry,
+    id: 1002
+  },
+  'Liquidity': {
+    component: LiquidityEntry,
+    id: 1003
+  },
 };
 
 export function useChain(props: Props) {
@@ -46,7 +58,7 @@ export function useChain(props: Props) {
       const _currentChainMenuList = menuConfigList.map((it: any, idx: number) => {
         const menuItem = {
           ...it,
-          component: MenuConfig[it.tab],
+          component: MenuConfig[it.tab].component,
           entryCardWidth: getEntryCardWidth(idx),
         };
         return menuItem;
@@ -63,6 +75,12 @@ export function useChain(props: Props) {
   const { run } = useDebounceFn(
     () => {
       const _currentChain = popupsData[chain] || popupsData['arbitrum'];
+      if (_currentChain.menuConfig) {
+        for (let key in _currentChain.menuConfig) {
+          const curr = _currentChain.menuConfig[key].tab;
+          _currentChain.menuConfig[key].id = MenuConfig[curr]?.id;
+        }
+      }
       setCurrentChain(_currentChain);
       setShowComponent(true);
     },

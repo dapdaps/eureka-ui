@@ -12,7 +12,6 @@ import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 import {
   StyledContainer,
   DappTitle,
-  StyledCategory,
   StyledDetail,
   StyledRecordContainer,
   StyledRelatedOdyssey,
@@ -121,7 +120,6 @@ const ChainDetail = ({ path }: any) => {
       />
       <DappList
         style={{
-          width: '1247px',
           margin: '30px auto 0',
         }}
         loading={loading}

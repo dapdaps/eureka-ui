@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   padding-bottom: 50px;
-  --container-width: 1244px;
+  --container-width: 1247px;
   width: var(--container-width);
   margin: 0 auto;
   font-family: Montserrat;

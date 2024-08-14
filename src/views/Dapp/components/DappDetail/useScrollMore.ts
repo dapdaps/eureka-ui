@@ -4,7 +4,7 @@ export default function useScrollMore () {
   const [viewHeight, setViewHeight] = useState<number>(650);
 
   useLayoutEffect(() => {
-    const headerHeight = 74;
+    const headerHeight = 70;
     const paddingHeight = 50;
     const backHeight = 14;
     const scrollHeight = 116;

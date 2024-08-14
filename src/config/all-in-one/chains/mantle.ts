@@ -39,20 +39,20 @@ export default {
   defaultTab: 'Swap',
   theme: {
     button: {
-      bg: '#00C6A3',
-      text: '#02051E',
+      bg: '#163719',
+      text: '#FFFFFF',
     },
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: '',
-      description: 'Intuitively across different network to Mantle',
+      description: 'Intuitively bridge from different networks to Mantle, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Mantle.Swap.Dex',
-      description: 'Efficiently from/to any assets on Mantle',
+      description: 'Trade efficiently across any assets on Mantle.',
     },
     Liquidity: {
       tab: 'Liquidity',

@@ -47,12 +47,12 @@ export default {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Avalanche.Bridge',
-      description: 'Intuitively across different network to Avalanche',
+      description: 'Intuitively bridge from different networks to Avalanche, and vice versa.',
     },
     Swap: {
-      tab: 'Trade',
+      tab: 'Swap',
       path: 'bluebiu.near/widget/Avalanche.Swap',
-      description: 'Efficiently from/to any assets on Avalanche',
+      description: 'Trade efficiently across any assets on Avalanche.',
     },
     Liquidity: {
       tab: 'Liquidity',
