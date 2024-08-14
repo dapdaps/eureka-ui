@@ -45,7 +45,7 @@ const QuickOnboarding = ({ chain }: any) => {
               return;
             }
             if (!menuConfig[item.key]) return;
-            open(path, item.key);
+            open(`${path}/${item.key.toLowerCase()}`, item.key);
           }}
         >
           {item.label}
