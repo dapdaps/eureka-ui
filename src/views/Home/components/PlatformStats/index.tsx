@@ -52,9 +52,10 @@ interface IData {
 }
 
 const StyledContainer = styled.div`
-  width: 100%;
   padding-bottom: 94px;
-  margin-top: 150px;
+  margin: 150px auto 0;
+  width: 1248px;
+  max-width: 1248px;
 
   .head {
     display: flex;
