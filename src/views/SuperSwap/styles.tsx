@@ -18,7 +18,7 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledContent = styled.div`
-  width: 420px;
+  width: 580px;
 `;
 
 export const StyledInputs = styled.div`

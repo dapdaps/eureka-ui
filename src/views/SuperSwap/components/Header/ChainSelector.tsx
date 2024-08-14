@@ -14,6 +14,7 @@ import {
   StyledChainTokenSymbol,
 } from './styles';
 import { useEffect, useMemo, useState } from 'react';
+import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
 
 export default function ChainSelector() {
   const chain = useChain();
@@ -45,7 +46,9 @@ export default function ChainSelector() {
           setShowChains(!showChains);
         }}
       >
-        <StyledChainLogo src={chain?.icon} />
+        {
+          chain?.icon ? <StyledChainLogo src={chain.icon} /> : <IconEmptyNetwork />
+        }
         <div>{chain?.chainName}</div>
         <StyledArrowIcon>
           <ArrowIcon />

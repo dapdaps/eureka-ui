@@ -9,17 +9,18 @@ export const StyledContainer = styled.div`
   overflow-y: auto;
 `;
 
-export const StyledItem = styled.div`
+export const StyledItem = styled.div<{ isActive: boolean}>`
   border-radius: 8px;
   border: 1px solid #333648;
   background: #20212d;
   padding: 10px 12px 16px;
   cursor: pointer;
   transition: 0.5s;
-
-  &:hover {
+  border: 1px solid;
+  border-color: ${({ isActive }) => (isActive ? '#ebf479' : 'transparent')};
+  /* &:hover {
     border-color: #ebf479;
-  }
+  } */
 `;
 
 export const StyledIcon = styled.img`

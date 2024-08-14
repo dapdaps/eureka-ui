@@ -189,6 +189,7 @@ export default function SuperSwap() {
               setShowMarkets(false);
             }}
             markets={markets}
+            trade={trade} 
             bestTrade={bestTrade}
             outputCurrency={outputCurrency}
             onSelectMarket={onSelectMarket}

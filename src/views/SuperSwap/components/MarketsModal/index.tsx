@@ -16,7 +16,7 @@ import { useSettingsStore } from '@/stores/settings';
 import { balanceFormated } from '@/utils/balance';
 import Big from 'big.js';
 
-const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrency, onSelectMarket }: any) => {
+const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrency, onSelectMarket, trade }: any) => {
   const slippage: any = useSettingsStore((store: any) => store.slippage);
   return (
     <Modal
@@ -28,6 +28,7 @@ const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrenc
         <StyledContainer>
           {markets.map((item: any) => (
             <StyledItem
+              isActive={trade?.name === item.name}
               key={item.name}
               onClick={() => {
                 onSelectMarket(item);
