@@ -43,8 +43,6 @@ const BLACK_PATH = [
 
 const HideFooterRoutes = [
   '/uniswap',
-  '/all-in-one/[chain]',
-  '/all-in-one/[chain]/[menu]',
   '/coin68'
 ]
 
@@ -79,7 +77,12 @@ export function DefaultLayout({ children }: Props) {
         </div> */}
         {children}
       </div>
-      {!HideFooterRoutes.includes(router.pathname) && <Footer isHideLeft={pathName !== '/'} />}
+      {!HideFooterRoutes.includes(router.pathname) && (
+        <Footer
+          isHideLeft={pathName !== '/'}
+          isHideRight={['/all-in-one/[chain]/[menu]'].includes(pathName)}
+        />
+      )}
       <AccountSider />
     </Layout>
   );
