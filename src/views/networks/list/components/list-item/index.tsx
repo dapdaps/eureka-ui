@@ -336,6 +336,7 @@ const StyledChainTag = styled.div<{$bgColor: string}>`
       height: 35px;
       transform: rotate(-15deg);
       top: -24%;
+      margin-left: 10px;
     }
   }
   

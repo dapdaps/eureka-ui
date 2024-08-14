@@ -11,6 +11,13 @@ export const StyledDappCard = styled.div`
   background: #18191E;
   flex-shrink: 0;
   cursor: pointer;
+  transition: top .2s ease;
+  top: 0;
+  position: relative;
+
+  &:hover {
+    top: -5px;
+  }
 `;
 export const StyledDappCardHead = styled.div<{ $logo: string; }>`
   display: flex;
@@ -71,6 +78,7 @@ export const StyledDappCardBody = styled.div`
   padding: 14px 20px 20px 20px;
   position: relative;
 `;
+
 export const StyledDappCardTitle = styled.div`
   display: flex;
   justify-content: flex-start;

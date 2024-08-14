@@ -22,7 +22,7 @@ const PlatformStats = () => {
   return (
     <StyledContainer className="platform">
       <div className="head">
-        <span className="title">Platform <span>Stats</span></span>
+        <span className="title">PLATFORM <span>STATS</span></span>
         {/* <span className="time">{formatDateString(statData.updated_at) || '-'}</span> */}
       </div>
       <div className="modules">
@@ -97,6 +97,14 @@ const StyledContainer = styled.div`
       border-radius: 20px;
       height: 150px;
       padding: 30px 36px;
+      position: relative;
+      top: 0;
+      transition: top 0.2s ease;
+      cursor: pointer;
+      
+      &:hover {
+        top: -5px;
+      }
 
       .name {
         font-size: 20px;

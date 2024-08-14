@@ -90,7 +90,7 @@ const SuperFeatures = () => {
     const router = useRouter();
 
     return <StyleFeatures>
-        <div className="title">Super <span>Features</span></div>
+        <div className="title">SUPER <span>FEATURES</span></div>
         <div className="subTitle">DapDap engages users in 5-10 mins in Super features by helping users to jump in crypto world more effectively.</div>
         <div className="engages">
             <Link href='/super-bridge'>

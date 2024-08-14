@@ -49,7 +49,7 @@ const RecentRewards = () => {
   return (
     <StyledRecentRewards>
       <div className="title">
-        Recent <span>Rewards</span>
+        RECENT <span>REWARDS</span>
       </div>
       <div className="words">Participate in DapDap's Odyssey or mission with partners to earn multiple rewards.</div>
       <TooltipList data={data} />

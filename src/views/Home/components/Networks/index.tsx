@@ -68,6 +68,12 @@ const PrimaryPanels = styled.div`
     border: 1px solid #202329;
     background: #18191e;
     backdrop-filter: blur(10px);
+    transition: top 0.2s ease;
+    top: 0;
+
+    &:hover {
+      top: -5px;
+    }
   }
   .panel-top {
     position: relative;
@@ -186,7 +192,6 @@ const PrimaryPanels = styled.div`
       padding: 6px 12px;
       font-family: Montserrat;
       font-size: 12px;
-      font-style: normal;
       font-weight: 400;
       line-height: 100%; /* 12px */
       border-radius: 30px;
@@ -227,6 +232,13 @@ const SubPanels = styled.div`
     border: 1px solid #202329;
     background: #18191e;
     backdrop-filter: blur(10px);
+    position: relative;
+    top: 0;
+    transition: top 0.2s ease;
+    
+    &:hover {
+      top: -5px;
+    }
   }
   .title {
     margin: 17px auto 0;
