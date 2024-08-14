@@ -85,7 +85,7 @@ export const getAlertColor = (level: string): string => {
   }
 };
 
-export default function Result({ trade, bestTrade }: any) {
+export default function Result({ trade, bestTrade, markets }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const slippage: any = useSettingsStore((store: any) => store.slippage);
 
@@ -93,6 +93,7 @@ export default function Result({ trade, bestTrade }: any) {
   const alertColor = getAlertColor(impactLevel);
 
   useEffect(() => {
+    if (markets?.length === 0) return
     const shouldOpen = impactLevel !== 'low';
     setIsOpen(shouldOpen);
   }, [impactLevel]);
@@ -123,15 +124,20 @@ export default function Result({ trade, bestTrade }: any) {
               />
             </svg>
           </StyledFlex>
-          <StyledFlex className='trade-display' gap="5px" onClick={() => setIsOpen(!isOpen)}>
-            <StyledIcon src={trade.logo} />
-            <div>{trade.name}</div>
-            {
-              impactLevel !== 'low' ? (<StyledIconAlertTriangle impact={impactLevel} />) : (bestTrade?.name === trade.name && <StyledBestPrice>Cheapest</StyledBestPrice>)
-            }
-            
-            <StyledIconArrow  isOpen={isOpen}/>
-          </StyledFlex>
+          {
+            markets?.length > 0 && (
+              <StyledFlex className='trade-display' gap="5px" onClick={() => setIsOpen(!isOpen)}>
+                <StyledIcon src={trade.logo} />
+                <div>{trade.name}</div>
+                {
+                  impactLevel !== 'low' ? (<StyledIconAlertTriangle impact={impactLevel} />) : (bestTrade?.name === trade.name && <StyledBestPrice>Cheapest</StyledBestPrice>)
+                }
+                
+                <StyledIconArrow  isOpen={isOpen}/>
+              </StyledFlex>
+            )
+          }
+
       </StyledFlex>
       <StylePriceContainer isOpen={isOpen}>
         <Row>
@@ -141,7 +147,7 @@ export default function Result({ trade, bestTrade }: any) {
               <Value>{trade.priceImpact}</Value>
             ) : (
               <WarningValue color={alertColor}>
-                <StyledIconAlertTriangle impact={impactLevel} /> -{trade.priceImpact}% / - {Big(trade.inputCurrencyAmount || 0).mul(trade.priceImpact || 0).div(100).toFixed(8)} {trade.inputCurrency.symbol}
+                <StyledIconAlertTriangle impact={impactLevel} /> {trade.priceImpact}% / - {Big(trade.inputCurrencyAmount || 0).mul(trade.priceImpact || 0).div(100).toFixed(8)} {trade.inputCurrency.symbol}
               </WarningValue>
             )
           }

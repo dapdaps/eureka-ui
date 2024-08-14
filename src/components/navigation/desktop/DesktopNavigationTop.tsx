@@ -71,7 +71,7 @@ const ChainAndAccountWrapper = styled.div`
 `;
 
 const StyledNav = styled(NavMainV2)`
-  margin-left: 60px;
+  margin-left: 36px;
 `
 
 const StyledSearch = styled.div`
@@ -128,11 +128,11 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               <img src={logoUrl} alt="" />
             </LogoContainer>
           ) : (
-            <Link href="/">
               <LogoContainer>
-                <img src={logoUrl} alt="" />
+                <Link href="/">
+                    <img src={logoUrl} alt="" />
+                </Link>
               </LogoContainer>
-            </Link>
           )}
           <StyledNav />
           <StyledSearch onClick={() => setShowSearch(true)}><IconSearch /></StyledSearch>

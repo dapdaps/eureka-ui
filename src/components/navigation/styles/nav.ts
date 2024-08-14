@@ -12,6 +12,9 @@ export const Wrapper = styled.div`
     list-style: none;
     margin: 0;
     gap: 30px;
+    ul {
+      padding: 0;
+    }
     li {
       display: flex;  
       align-items: center;

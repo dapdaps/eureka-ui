@@ -144,7 +144,7 @@ export default function SuperSwap() {
           />
         </StyledInputs>
         <StyledTradeFooter>
-          {trade && <Result trade={trade} bestTrade={bestTrade}/>}
+          {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}/>}
         </StyledTradeFooter>
 
         <Button 
