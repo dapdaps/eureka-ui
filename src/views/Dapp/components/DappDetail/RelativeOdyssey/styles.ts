@@ -11,6 +11,7 @@ export const StyledOdysseyContainer = styled.div`
   border: 1px solid #202329;
   background: #101115;
   cursor: pointer;
+  overflow: hidden;
 `;
 
 export const StyledOdysseyDetail = styled.div`
@@ -184,6 +185,7 @@ export const StyledVideoIcon = styled.img`
 
 export const StyledOdysseyTop = styled.div`
   position: relative;
+  background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
   &::before {
     content: '';
     position: absolute;
