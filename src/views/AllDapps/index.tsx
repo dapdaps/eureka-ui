@@ -256,6 +256,7 @@ const AllDapps = (props: Props) => {
                     {item.name}
                   </StyledNetworkDropdownItem>
                 )}
+                isArrowRotate={false}
               />
             )
           }
@@ -267,6 +268,7 @@ const AllDapps = (props: Props) => {
               width: 169,
               maxHeight: 300,
             }}
+            isArrowRotate={false}
           />
           <StyledRadio
             $selected={airdrop}

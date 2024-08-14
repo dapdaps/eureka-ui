@@ -16,6 +16,7 @@ const Dropdown = (props: DropdownProps) => {
     triggerStyle,
     arrowClassName,
     arrowStyle,
+    isArrowRotate = true,
   } = props;
 
   const dropdownRef = useRef<any>();
@@ -49,7 +50,7 @@ const Dropdown = (props: DropdownProps) => {
   return (
     <StyledContainer
       ref={dropdownRef}
-      className={className}
+      className={`${visible ? 'opened' : 'hidden'} ${className}`}
       style={style}
     >
       <StyledInner onClick={handleClick}>
@@ -69,7 +70,7 @@ const Dropdown = (props: DropdownProps) => {
             },
           }}
           initial="hide"
-          animate={visible ? 'visible' : 'hide'}
+          animate={visible && isArrowRotate ? 'visible' : 'hide'}
           className={arrowClassName}
           style={arrowStyle}
         >
@@ -123,4 +124,5 @@ export interface DropdownProps {
   triggerClassName?: string;
   arrowClassName?: string;
   arrowStyle?: React.CSSProperties;
+  isArrowRotate?: boolean;
 }

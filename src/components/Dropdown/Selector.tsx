@@ -22,7 +22,7 @@ const Selector = (props: SelectorProps) => {
     onSelect,
     renderItem,
     renderChildren,
-    style,
+    className,
     ...restProps
   } = props;
 
@@ -42,12 +42,6 @@ const Selector = (props: SelectorProps) => {
     <Dropdown
       clickPopupClose
       clickTriggerClose
-      style={{
-        borderRadius: 10,
-        border: '1px solid #333648',
-        background: '#18191E',
-        ...style,
-      }}
       {...restProps}
       popup={(
         <StyledPopupList className={listClassName} style={listStyle}>
@@ -77,6 +71,7 @@ const Selector = (props: SelectorProps) => {
           }
         </StyledPopupList>
       )}
+      className={`dropdown-selector ${className}`}
     >
       {renderChildren ? renderChildren(value, selected) : selected?.[itemLabelKey]}
     </Dropdown>
