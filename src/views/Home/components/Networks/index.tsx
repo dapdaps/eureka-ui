@@ -408,7 +408,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
                   </TopTvl>
                 ) : (
                   <Hottest>
-                    <Image src={'/images/networks/icon-hot.png'} width={54} height={54} alt="hottest" />
+                    <Image src={'/images/networks/icon-hot.gif'} width={54} height={54} alt="hottest" />
                     Hottest
                   </Hottest>
                 )
