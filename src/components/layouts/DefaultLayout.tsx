@@ -39,7 +39,13 @@ const BLACK_PATH = [
   '/notification',
   '/all-in-one/[chain]',
   '/all-in-one/[chain]/[menu]'
-]
+];
+
+const HideFooterRoutes = [
+  '/uniswap',
+  '/all-in-one/[chain]',
+  '/all-in-one/[chain]/[menu]',
+];
 
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();
@@ -58,11 +64,6 @@ export function DefaultLayout({ children }: Props) {
     updateAccount();
   }, [account]);
 
-  const hideFooterRoutes = [
-    '^/uniswap$',
-    '^\/all-in-one\/[\\s\\S]+\/[\\s\\S]+$',
-  ];
-
   return (
     <Layout
       style={{
@@ -77,7 +78,7 @@ export function DefaultLayout({ children }: Props) {
         </div> */}
         {children}
       </div>
-      {!hideFooterRoutes.some((reg) => new RegExp(reg).test(pathName)) && <Footer />}
+      {!HideFooterRoutes.includes(router.pathname) && <Footer isHideLeft={pathName !== '/'} />}
       <AccountSider />
     </Layout>
   );

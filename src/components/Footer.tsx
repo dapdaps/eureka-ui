@@ -55,6 +55,7 @@ const StyledFooterRight = styled.div`
   display: flex;
   align-items: center;
   gap: 38px;
+  margin-left: auto;
 `;
 const StyledRpcs = styled.div<{ $color?: string; }>`
   position: fixed;
@@ -92,7 +93,7 @@ const StyledRpcs = styled.div<{ $color?: string; }>`
 `;
 const StyledCopyright = styled.div``;
 
-const SocialButton = ({ icon, alt, url }: { icon: any; alt: string; url?: string }) => {
+const SocialButton = ({ icon, alt, url }: { icon: any; alt: string; url?: string; }) => {
   return url ? (
     <StyledSocialButton
       whileHover={{ opacity: 0.6 }}
@@ -108,7 +109,7 @@ const SocialButton = ({ icon, alt, url }: { icon: any; alt: string; url?: string
     icon
   );
 };
-const Footer = () => {
+const Footer = ({ isHideLeft }: { isHideLeft?: boolean; }) => {
   const router = useRouter();
   const rpcStore = useRpcStore();
   const { ping, getCurrentPing } = useRpc();
@@ -124,10 +125,14 @@ const Footer = () => {
   return (
     <StyledContainer>
       <StyledContainerInner>
-        <StyledFooterLeft>
-          <span>Created by DapDap team with ❤️</span>
-          <span>Powered by NEAR</span>
-        </StyledFooterLeft>
+        {
+          !isHideLeft && (
+            <StyledFooterLeft>
+              <span>Created by DapDap team with ❤️</span>
+              <span>Powered by NEAR</span>
+            </StyledFooterLeft>
+          )
+        }
         <StyledFooterRight>
           <StyledSocials>
             <SocialButton
