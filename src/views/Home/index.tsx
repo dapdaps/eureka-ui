@@ -6,16 +6,19 @@ import { StyledContainer } from './styles';
 import RecentRewards from './components/Rewards';
 import Networks from './components/Networks';
 import SuperFeatures from './components/SuperFeatures';
+import PlatformStats from '@/views/Home/components/PlatformStats';
 
 const Home = () => {
   return (
     <StyledContainer>
       <Banner />
-      <Compass />
-      <Networks />
-      <DiscoveryDapps />
       <RecentRewards />
-      <SuperFeatures /> 
+      <DiscoveryDapps />
+      <Compass />
+      <SuperFeatures />
+      <Networks />
+      <PlatformStats />
+
       {/* <TrendingEthereum chains={chains} />
       <QuickOnboarding />
       <SeamlessNavigation chains={chains} />
