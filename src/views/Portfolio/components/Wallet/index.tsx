@@ -69,7 +69,7 @@ const Wallet = ({ loading, tokens, filterFunc }: any) => {
                         {token.symbol}
                       </StyledTableItemTxt>
                       <StyledTableItemTxt>
-                        {formateValue(token.price, 2)}
+                        {formateValueWithThousandSeparatorAndFont(token.price, 2, true, { prefix: '$' })}
                       </StyledTableItemTxt>
                       <StyledTableItemTxt>
                         {formateValue(token.amount, 4)}
