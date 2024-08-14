@@ -25,6 +25,10 @@ export function useRpc() {
         getRpcPing(list[i].url).then((_ping) => {
           rpcStore.setPing({ [keys[i]]: _ping });
           resolve({ [keys[i]]: _ping });
+          // fix#DAP-781
+          if (rpcStore.selected === keys[i] && _ping < 0) {
+            rpcStore.setAlert(true);
+          }
         });
       }));
     }
