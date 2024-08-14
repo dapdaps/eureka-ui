@@ -14,9 +14,9 @@ const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '56px')};
   height: 34px;
   margin: 0 auto;
-  border: 1px solid #373a53;
+  //border: 1px solid #373a53;
   border-radius: 8px;
-  background-color: rgba(55, 58, 83, 0.5);
+  //background-color: rgba(55, 58, 83, 0.5);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,6 +24,18 @@ const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   box-sizing: border-box;
   padding: 0 5px;
   margin-top: ${({ $mt }) => $mt + 'px'};
+  cursor: pointer;
+  
+  &.empty-chain {
+    &:hover {
+      background: #18191E;
+    }
+  }
+  
+  &.has-chain {
+    background: #18191E;
+  }
+
 `;
 const StyledChain = styled.div`
   display: flex;
@@ -44,22 +56,24 @@ const ChainName = styled.div`
 `;
 const ArrowIconWrapper = styled.div`
   color: #979abe;
+  cursor: pointer;
 `;
 const ChainList = styled.div<{ display?: number }>`
   width: 204px;
-  border: 1px solid #373a53;
   border-radius: 12px;
-  background-color: #303142;
   position: absolute;
   top: 34px;
   right: -50px;
   box-sizing: border-box;
   display: ${({ display }) => (display ? 'block' : 'none')};
   z-index: 200;
-  padding: 12px 0px;
+  padding: 12px 0;
+  border: 1px solid #333648;
+  background: #1F2229;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 `;
 const ChainItem = styled(StyledChain)<{ active?: number }>`
-  padding: 0px 10px;
+  padding: 2px 15px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -135,6 +149,7 @@ const Chain = ({
   return (
     <StyledContainer
       $mt={mt}
+      className={`${!showName && showEmptyChainTips ? 'empty-chain' : ''} ${showName ? Number(showChains || 0) : Number(showList || 0) ? 'has-chain' : ''}`}
       $showName={showName ? 1 : 0}
       onClick={(ev) => {
         ev.stopPropagation();

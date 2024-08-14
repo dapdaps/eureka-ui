@@ -64,7 +64,7 @@ export const StyledOdysseyDetail = styled.div`
   }
 `;
 
-export const StyledOdysseyBanner = styled.div<{ url: string }>`
+export const StyledOdysseyBanner = styled(motion.div)<{ url: string }>`
   width: 100%;
   height: 202px;
   border-top-left-radius: 20px;
@@ -89,6 +89,7 @@ export const StyledOdysseyTitle = styled.div`
   text-overflow: ellipsis;
   padding-right: 20px;
   padding-left: 20px;
+  cursor: text;
 `;
 
 export const StyledOdysseyHead = styled.div`
@@ -183,6 +184,26 @@ export const StyledVideoIcon = styled.img`
 
 export const StyledOdysseyTop = styled.div`
   position: relative;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 3;
+    cursor: default;
+    opacity: 0;
+    transition: opacity 0.1s linear;
+  }
+  &:hover {
+    &::before {
+      opacity: 1;
+    }
+  }
 `;
 
 export const StyledVideoContent = styled.div`
@@ -338,4 +359,31 @@ export const StyledBadgeTooltipList = styled(motion.div)`
   padding: 0 14px;
   gap: 20px;
   background: #21232A;
+`;
+
+
+export const StyledOdysseyButton = styled(motion.button)`
+  min-width: 286px;
+  min-height: 60px;
+  line-height: 1;
+  color: #02051E;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+  z-index: 4;
+  background: #EBF479;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 10px;
+  left: 50%;
+  position: absolute;
+  bottom: 20px;
+  
+  .arrow-right {
+    color: #000000;
+    position: relative;
+    z-index: 5;
+  }
 `;

@@ -94,7 +94,6 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
             <ChainNameContainer>
               <ChainName>{name}</ChainName>
               { index !== undefined && [0, 1].includes(index) ? (<ChainTag idx={index}/>) : null }
-              { odyssey.length > 0 && (<ChainOdyssey src='/images/odyssey/welcome/logo.gif'/>) }
             </ChainNameContainer>
             <ChainDesc>
               {tbd_token === 'Y' ? (
@@ -111,6 +110,7 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
           </ChainInfo>
         </LogoGroup>
         <BtnGroup>
+          { odyssey.length > 0 && (<StyledChainOdyssey><ChainOdyssey src='/images/odyssey/welcome/logo.gif'/></StyledChainOdyssey>) }
           <Btn href={`/networks/${IdToPath[id]}`} data-bp="10012-002">
             Details
           </Btn>
@@ -239,7 +239,7 @@ const BtnGroup = styled.div`
   white-space: nowrap;
 `;
 const Btn = styled(Link)<{ $bgColor?: string, $color?: string }>`
-  height: 48px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -331,12 +331,12 @@ const StyledChainTag = styled.div<{$bgColor: string}>`
   padding: 6px 14px;
   
   &.tag-top {
+    margin-left: 10px;
     .tag-icon {
       width: 35px;
       height: 35px;
       transform: rotate(-15deg);
       top: -24%;
-      margin-left: 10px;
     }
   }
   
@@ -370,4 +370,21 @@ const ChainOdyssey = styled.img`
   width: 104px;
   height: 14px;
   object-fit: contain;
+`;
+
+const StyledChainOdyssey = styled.div`
+  border-radius: 10px;
+  border: 1px solid #45475C;
+  background: #21222B;
+  backdrop-filter: blur(10px);
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 13px;
+  transition: transform 0.2s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
