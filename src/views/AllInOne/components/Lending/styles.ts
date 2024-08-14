@@ -34,12 +34,18 @@ export const StyledConnectButton = styled.button<{ bg: string, color?: string }>
   text-align: center;
   background: ${props => props.bg};
   color: ${props => props.color ?? '#fff'};
-    width: 100%;
-    max-width: 488px;
-    height: 60px;
-    border-radius: 10px;
-    margin-top: 20px;
-    font-size: 18px;
+  width: 100%;
+  max-width: 488px;
+  height: 60px;
+  border-radius: 10px;
+  margin-top: 20px;
+  font-size: 18px;
+  opacity: 0.8;
+  transition: opacity 0.2s linear;
+
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const StyledAccountContainer = styled.div`
