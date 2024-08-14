@@ -38,7 +38,7 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
             <h3>{renderTitle(title)}</h3>
             <Like id={likeId} category="all-in-one" classname="like-tag" />
           </StyledFlex>
-          <div className="sub-title">{subTitle}</div>
+          {/*<div className="sub-title">{subTitle}</div>*/}
         </StyledTitle>
         {
           config && (
