@@ -131,19 +131,19 @@ export const StyledRadialGradient = styled.div`
 `
 export const StyledMouseImage = styled.img`
   position: absolute;
-  animation: jump linear 1.5s infinite;
+  animation: jump linear 2s infinite;
   @keyframes jump {
     0% {
       transform: translateY(0);
     }
     25% {
-      transform: translateY(-15%);
+      transform: translateY(-5%);
     }
     50% {
       transform: translateY(0);
     }
     75% {
-      transform: translateY(15%);
+      transform: translateY(5%);
     }
     100% {
       transform: 0;
@@ -156,6 +156,7 @@ export const StyledLeftMouseImage = styled(StyledMouseImage)`
   width: 293px;
 `
 export const StyledRightMouseImage = styled(StyledMouseImage)`
+  animation-delay: 1s;
   position: absolute;
   left: 241px;
   bottom: 154px;

@@ -107,7 +107,7 @@ const Invite = (props: Props) => {
                   </StyledConnectButton>
                 ) : (
                   <StyledConnectButton style={{ cursor: 'not-allowed' }}>
-                    Successfully Connected
+                    {modalType === "success" ? "Successfully Connected" : "Not eligible to participate"}
                   </StyledConnectButton>
                 )
               }
