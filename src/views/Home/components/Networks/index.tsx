@@ -68,11 +68,11 @@ const PrimaryPanels = styled.div`
     border: 1px solid #202329;
     background: #18191e;
     backdrop-filter: blur(10px);
-    transition: top 0.2s ease;
+    transition: transform 0.2s ease;
     top: 0;
 
     &:hover {
-      top: -5px;
+      transform: translateY(-5px);
     }
   }
   .panel-top {
@@ -80,9 +80,6 @@ const PrimaryPanels = styled.div`
     width: 100%;
     flex: 1;
     padding: 30px 30px 0;
-    &:hover {
-      top: -5px;
-    }
   }
   .odyssey-svg {
     position: absolute;
@@ -208,7 +205,7 @@ const PrimaryPanels = styled.div`
       overflow: hidden;
     }
     &:hover {
-      top: -5px;
+      transform: translateY(-5px);
     }
     
   }
@@ -232,12 +229,10 @@ const SubPanels = styled.div`
     border: 1px solid #202329;
     background: #18191e;
     backdrop-filter: blur(10px);
-    position: relative;
-    top: 0;
-    transition: top 0.2s ease;
+    transition: transform 0.2s ease;
     
     &:hover {
-      top: -5px;
+      transform: translateY(-5px);
     }
   }
   .title {

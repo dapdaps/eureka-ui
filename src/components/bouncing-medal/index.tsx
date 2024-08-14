@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { styled } from 'styled-components';
 import { Medal } from './medal';
-import { random } from 'lodash';
+import { isEqualWith, random } from 'lodash';
 
 const StyledCanvas = styled.canvas`
   z-index: 10;
@@ -172,6 +172,15 @@ class BouncingMedals extends React.Component<BouncingMedalsProps, any> {
   }
 
   componentDidMount() {
+    this.init();
+  }
+
+  componentDidUpdate(prevProps: Readonly<BouncingMedalsProps>, prevState: Readonly<any>, snapshot?: any) {
+    const prevIcons = prevProps.medals.map((it) => it.icon);
+    const currIcons = this.props.medals.map((it) => it.icon);
+    if (isEqualWith(prevIcons, currIcons)) {
+      return;
+    }
     this.init();
   }
 

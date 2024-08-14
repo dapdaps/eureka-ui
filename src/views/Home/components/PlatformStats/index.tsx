@@ -97,13 +97,11 @@ const StyledContainer = styled.div`
       border-radius: 20px;
       height: 150px;
       padding: 30px 36px;
-      position: relative;
-      top: 0;
-      transition: top 0.2s ease;
+      transition: transform 0.2s ease;
       cursor: pointer;
       
       &:hover {
-        top: -5px;
+        transform: translateY(-5px);
       }
 
       .name {

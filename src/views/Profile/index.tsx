@@ -78,14 +78,14 @@ export default memo(function ProfileView() {
   }, [compassList, airdropList, userMedalList, userFavorites, userRewardRecords])
 
   const bouncingMedals = useMemo(() => {
-    return userMedalList?.slice(0, 5)?.map((medal, index) => {
+    return userMedalList?.map((medal, index) => {
       return {
         key: index,
-        icon: medal?.logo || '/images/tokens/default_icon.png',
+        icon: medal?.logo,
         x: index * 100,
         mass: (index === 0 || index === userMedalList.length - 1) ? 50 : 30
       }
-    }) ?? []
+    })?.filter((medal) => !!medal.icon)?.slice(0, 5) ?? []
   }, [userMedalList])
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
