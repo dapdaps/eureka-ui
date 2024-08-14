@@ -19,7 +19,14 @@ const Dapp = (props: any) => {
 
   return (
     <StyledPage>
-      <DappBack defaultPath="/alldapps" />
+      <DappBack
+        defaultPath="/alldapps"
+        style={{
+          maxWidth: 1260,
+          minWidth: 1060,
+          margin: '0 auto',
+        }}
+      />
       <StyledDAppContent>
         <div style={{ display: 'flex', alignItems: 'center', gap: '11px', justifyContent: 'center' }}>
           <img src={dapp.logo} style={{ width: '32px', height: '31px' }} />

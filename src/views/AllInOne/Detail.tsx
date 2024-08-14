@@ -15,6 +15,7 @@ import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
 
 import Settings from './components/Setting/index';
+import PageBack from '@/components/PageBack';
 
 const AllInOneDetailView = (props: Props) => {
   const { chain, menu } = props;
@@ -57,6 +58,7 @@ const AllInOneDetailView = (props: Props) => {
   return (
     <>
       <StyledContainer>
+        <PageBack style={{ width: 60, marginLeft: ['swap', 'bridge'].includes(menu) ? 212 : 24 }} />
         <StyledFlex flexDirection="column" justifyContent="center" className="all-in-one-wrapper">
           <AllInOneHeaderView
             chain={chain}

@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
@@ -17,12 +16,6 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
     likeId
   } = props;
 
-  const router = useRouter();
-
-  const handleBack = () => {
-    router.back();
-  };
-
   const handleShowPointer = () => {
     onShowSettings()
   }
@@ -32,9 +25,6 @@ const AllInOneDetailCardView: React.FC<Props> = (props) => {
       <StyledFlex justifyContent="space-between" alignItems="flex-end">
         <StyledTitle>
           <StyledFlex className="title-text-wrap" justifyContent="flex-start" alignItems="center" gap="10px">
-            <StyledPointer onClick={handleBack}>
-              <ArrowBack classname="arrow-back" />
-            </StyledPointer>
             <h3>{renderTitle(title)}</h3>
             <Like id={likeId} category="all-in-one" classname="like-tag" />
           </StyledFlex>

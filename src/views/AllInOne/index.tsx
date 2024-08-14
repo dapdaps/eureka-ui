@@ -7,6 +7,7 @@ import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
+import PageBack from '@/components/PageBack';
 
 const AllInOneView = (props: Props) => {
   const { chain } = props;
@@ -19,10 +20,9 @@ const AllInOneView = (props: Props) => {
     router.push(`/all-in-one/${currentChain.path}/${tab}`);
   };
 
-  console.log('currentChainMenuList: ', currentChainMenuList)
-
   return (
     <StyledContainer>
+      <PageBack defaultPath="/" style={{ width: 60, marginLeft: 24 }} />
       <StyledFlex flexDirection="column" justifyContent="center" className="all-in-one-wrapper">
         <AllInOneHeaderView
           chain={chain}
