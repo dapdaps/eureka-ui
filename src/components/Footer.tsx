@@ -61,7 +61,13 @@ const StyledRpcs = styled.div<{ $color?: string; }>`
   font-weight: 400;
   line-height: normal;
   cursor: pointer;
-  
+  opacity: 0.8;
+  transition: opacity 0.2s linear;
+
+  &:hover {
+    opacity: 1;
+  }
+
   &&::after {
     content: '';
     display: block;
