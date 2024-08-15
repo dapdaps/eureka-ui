@@ -86,7 +86,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   const { run: updateAccount } = useDebounceFn(
     () => {
-      if (account) report({ code: '2001-001', address: account });
+      if (account) report({ code: '1001-005', address: account });
     },
     { wait: 500 },
   );

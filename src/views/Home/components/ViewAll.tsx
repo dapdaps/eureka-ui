@@ -4,10 +4,11 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const ViewAll = (props: Props) => {
-  const { href } = props;
+  const { href, bp } = props;
 
   return (
     <StyledViewAll
+      data-bp={bp}
       href={href}
       variants={{
         hover: {
@@ -45,6 +46,7 @@ export default memo(ViewAll);
 
 interface Props {
   href: string;
+  bp?: string;
 }
 
 const StyledViewAll = styled(motion(Link))`

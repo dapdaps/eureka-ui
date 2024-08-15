@@ -81,7 +81,7 @@ const DiscoveryDapps = () => {
         <StyledMask></StyledMask>
       </StyledSwiperWrapper>
       <StyledFooter>
-        <ViewAll href="/alldapps" data-bp="1003-008" />
+        <ViewAll href="/alldapps" bp="1003-008" />
       </StyledFooter>
     </StyledContainer>
   );

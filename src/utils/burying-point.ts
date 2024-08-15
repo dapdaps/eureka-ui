@@ -17,6 +17,7 @@ const getReactFCInitializer = ({ onClickEvent }: InitReactTrack) => {
 
   const propsWithTrackEvents = function (props: any) {
     if (props['data-bp']) {
+      console.log('====bp', props['data-bp'])
       const reactClick = props.onClick;
       props.onClick = (e: any) => {
         onClickEvent && onClickEvent(props['data-bp']);

@@ -58,7 +58,7 @@ const useAuth = () => {
         setLogging(false);
         cb?.();
       }
-      report({ code: '2001-001', address: wallet.accounts[0].address });
+      report({ code: '1001-005', address: wallet.accounts[0].address });
       if (router.pathname === '/login' || router.pathname === '/invite-code') {
         router.replace((router.query?.source as string) || '/');
       }

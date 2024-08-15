@@ -211,7 +211,7 @@ const LoginView = () => {
             connect();
           }}
           disabled={connecting}
-          data-bp="2001-001"
+          data-bp="1001-005"
         >
           Connect Wallet
         </StyledLoginConnectWalletButton>
