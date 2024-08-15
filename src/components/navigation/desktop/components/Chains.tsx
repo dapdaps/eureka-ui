@@ -48,7 +48,7 @@ const GridItemContainer = styled.div`
     font-family: Montserrat;
     font-size: 16px;
     font-weight: 600;
-    line-height: 16px;
+    line-height: 18px;
     text-align: center;
     color: #fff;
   }
@@ -83,7 +83,7 @@ const Chains = ({
   return (
     <GridContainer>
       {loading ? <LoadingCard /> : data.map((item) => (
-        <GridItemContainer key={item.id} onClick={() => handleClick(item)}>
+        <GridItemContainer key={item.id} onClick={() => handleClick(item)} title={item.name}>
           <img src={item.logo} alt={item.name} />
           <div className="name">{item.name}</div>
         </GridItemContainer>

@@ -28,7 +28,7 @@ const Theme = styled.div`
 `;
 
 export default {
-  title: 'Manta',
+  title: 'Manta Pacific',
   path: 'manta',
   icon: '/images/chains/manta.svg',
   bgColor: '#fff',

@@ -59,6 +59,8 @@ export const StyledItemIcon = styled.div<{ url?: string }>`
 
 export const StyledItemContent = styled.div`
   color: #2D2F42;
+  width: 0;
+  flex: 1;
 `;
 
 export const StyledItemName = styled.div`
@@ -66,7 +68,7 @@ export const StyledItemName = styled.div`
   font-size: 13px;
   font-weight: 400;
   text-overflow: ellipsis;
-  overflow:hidden;
+  overflow: hidden;
   line-height: 15px;
   white-space: nowrap;
 `;
