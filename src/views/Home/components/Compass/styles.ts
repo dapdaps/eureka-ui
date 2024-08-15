@@ -145,7 +145,17 @@ export const StyledCardDesc = styled.div`
   text-overflow: ellipsis;
 `;
 
-
+export const StyledComingSoon = styled.div`
+  color: #00E2FF;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  
+  &.btns {
+    bottom: 50px;
+  }
+`;
 
 export const StyledCompassButton = styled.div`
   width: 100%;

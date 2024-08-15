@@ -28,7 +28,7 @@ import {
   StyledCardDesc,
   StyledCardTitle,
   StyledCompassIcon,
-  StyledCompassButton,
+  StyledCompassButton, StyledComingSoon,
 } from './styles';
 import useCompassCombineAd from './hooks/useCompassCombineAd';
 import { extractPathFromUrl } from '@/utils/formate';
@@ -116,7 +116,7 @@ const CompassCard = function ({ compass }: any) {
           <StyledCardTitle>{compass.name}</StyledCardTitle>
           <StyledCardDesc>{compass.description}</StyledCardDesc>
           {compass.status === 'un_start' ? (
-            <div className="btns">Coming soon...</div>
+            <StyledComingSoon className="btns">Coming soon...</StyledComingSoon>
           ) : (
             <div className="btns">
               <StyledCompassButton
