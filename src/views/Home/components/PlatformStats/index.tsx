@@ -98,11 +98,7 @@ const StyledContainer = styled.div`
       height: 150px;
       padding: 30px 36px;
       transition: transform 0.2s ease;
-      cursor: pointer;
-      
-      &:hover {
-        transform: translateY(-5px);
-      }
+      cursor: default;
 
       .name {
         font-size: 20px;
