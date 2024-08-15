@@ -36,7 +36,14 @@ export const Page: NextPageWithLayout = () => {
   const { dapp } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
 
   return <Container>
-      <DappBack defaultPath="/alldapps" />
+      <DappBack
+        defaultPath="/alldapps"
+        style={{
+          maxWidth: 1260,
+          minWidth: 1060,
+          margin: '0 auto',
+        }}
+      />
       <TitleWapper>
         <img className="icon" src="/images/apps/etherfi.png" />
       </TitleWapper>
