@@ -8,7 +8,7 @@ const MENUS = [
     key: 'Chain-Navi',
   },
 ];
-const BP_MAPPING = {
+const BP_MAPPING: any = {
   "Chain-Navi": "1006-002-001",
   "Bridge": "1006-002-002",
   "Swap": "1006-002-003",
