@@ -5,6 +5,8 @@ import KimExchangePoolDapp from './KimExchangePool';
 import SwapDapp from './SwapDapp';
 
 const DappCom = (props: any) => {
+  // console.log('%cdapp data: %o', 'background:#3A1078;color:#fff;', props);
+
   const { dapp, localConfig } = props;
 
   const isPool = useMemo(() => ['dapp/thruster-liquidity'].includes(dapp?.route), [dapp]);
