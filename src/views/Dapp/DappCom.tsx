@@ -7,8 +7,6 @@ import SwapDapp from './SwapDapp';
 const DappCom = (props: any) => {
   const { dapp, localConfig } = props;
 
-  console.log(props);
-
   const isPool = useMemo(() => ['dapp/thruster-liquidity'].includes(dapp?.route), [dapp]);
   const isKimExchangePool = useMemo(() => ['dapp/kim-exchange-liquidity'].includes(dapp?.route), [dapp]);
 
