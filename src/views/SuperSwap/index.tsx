@@ -173,7 +173,7 @@ export default function SuperSwap() {
           )
         }
 
-      <KLineChart />
+      { trade && <KLineChart trade={trade} /> }
 
       </StyledContent>
       <SelectTokensModal

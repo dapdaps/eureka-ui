@@ -81,6 +81,7 @@ export function DefaultLayout({ children }: Props) {
         <Footer
           isHideLeft={pathName !== '/'}
           isHideRight={['/all-in-one/[chain]/[menu]'].includes(pathName)}
+          isSuperSwapScrollFooter={pathName === '/super-swap'}
         />
       )}
       <AccountSider />

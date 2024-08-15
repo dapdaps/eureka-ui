@@ -42,7 +42,11 @@ const StyledRpcs = styled.div<{ $color?: string }>`
   }
 `;
 
-const Rpc = () => {
+const Rpc = ({
+  className
+}: {
+  className?: string;
+}) => {
   const rpcStore = useRpcStore();
   const { ping, getCurrentPing } = useRpc();
 
@@ -56,7 +60,7 @@ const Rpc = () => {
 
   return (
     <>
-      <StyledRpcs $color={renderPingConfig(ping).color} onClick={handleRpc}>
+      <StyledRpcs $color={renderPingConfig(ping).color} onClick={handleRpc} className={className}>
         {renderPing(ping)}
       </StyledRpcs>
       <RpcSelector
