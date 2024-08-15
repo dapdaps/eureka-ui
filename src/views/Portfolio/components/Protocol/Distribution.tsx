@@ -8,6 +8,7 @@ import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { formatPercentNumber } from '@/views/Portfolio/helpers';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import ChartEmpty from '@/views/Portfolio/components/Protocol/ChartEmpty';
+import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 export const StyledContainer = styled.div`
   width: 410px;
@@ -241,9 +242,12 @@ const Distribution = (props: any) => {
               {
                 displayChartData[activePie] && (
                   <div className="pie-tooltip">
-                    <div
+                    <ImageFallback
                       className="icon"
-                      style={{ backgroundImage: `url("${displayChartData[activePie]?.icon}")` }}
+                      src={displayChartData[activePie]?.icon}
+                      width={40}
+                      height={40}
+                      alt=""
                     />
                     <div className="name">{displayChartData[activePie]?.name}</div>
                     <div className="usd">

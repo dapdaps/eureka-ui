@@ -244,7 +244,7 @@ const StyledTooltip = styled(motion.div)`
   left: 0;
   flex-shrink: 0;
   border-radius: 12px;
-  border: 1px #333648;
+  border: 1px solid #333648;
   background: #1F2229;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   color: #979ABE;

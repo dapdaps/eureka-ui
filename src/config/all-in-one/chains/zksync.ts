@@ -28,7 +28,7 @@ const Theme = styled.div`
 `;
 
 export default {
-  title: 'zkSync',
+  title: 'ZKsync Era',
   path: 'zksync',
   icon: 'https://assets.dapdap.net/images/bafkreicwo7gbj23ay4r6w5wwdwllyaxd6eo4w2cngr64sp26z5wmke7xju.svg',
   bgColor: '#FFFFFF',

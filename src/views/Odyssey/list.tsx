@@ -6,24 +6,22 @@ import { StatusType } from './components/Tag';
 import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import OdysseyChroma from './components/OdysseyChroma'
+import RecentRewards from '@/views/Home/components/Rewards';
 
 const StyledWrapper = styled.div`
   --var-container-width: 1244px;
   position: relative;
   .section {
-    /* background-image: url('/images/odyssey/odyssey-list-bg.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat; */
-    height: 745px;
+    padding-top: 100px;
+    height: 670px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     flex-flow: column wrap;
-    gap: 116px;
+    gap: 50px;
     @media (max-width: 1440px) {
       transform: scale(0.95);
-      gap: 56px;
+      gap: 50px;
       transition: all 0.5s ease 0s;
     }
     .head {
@@ -140,6 +138,16 @@ const OdysseyList = () => {
             <SwiperList />
           </div>
         </div>
+        <RecentRewards
+          isSubTitle={false}
+          style={{
+            height: 385,
+            marginBottom: 80,
+          }}
+          titleStyle={{
+            marginBottom: 10,
+          }}
+        />
         <div className="odyssey">
           <div className="header">
             <img className="all-odyssey-text" src="/images/odyssey/all-odyssey-text.png" alt="text" />

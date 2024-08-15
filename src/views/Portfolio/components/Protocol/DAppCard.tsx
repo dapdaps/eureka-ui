@@ -63,7 +63,7 @@ const DAppCard = (props: any) => {
       onClick={onClick}
     >
       <DAppIconWithChain
-        size="32px"
+        size={32}
         icon={dapp.dappLogo}
         chainIcon={dapp.chainLogo}
       />

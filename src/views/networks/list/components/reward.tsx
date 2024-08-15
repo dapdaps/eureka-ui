@@ -143,6 +143,9 @@ const Reward = (props: Props) => {
                       }
                     </StyledBadgeTooltipList>
                   )}
+                  style={{
+                    border: 0,
+                  }}
                 >
                   <Image className="badge-img" src={b.logo} alt="" width={20} height={20} />
                 </TooltipSimple>

@@ -11,6 +11,7 @@ import Big from 'big.js';
 import { get } from '@/utils/http';
 import Loading from '@/components/Icons/Loading';
 import useDappOpen from '@/hooks/useDappOpen';
+import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 export const StyledContainer = styled.div`
   border-radius: 12px;
@@ -88,12 +89,11 @@ export const StyledManageButton = styled.button`
     text-decoration: none;
   }
 `;
-export const StyledIcon = styled.div<{ src: string }>`
+export const StyledIcon = styled.div`
   width: 26px;
   height: 26px;
   border-radius: 50%;
   flex-shrink: 0;
-  background: ${({ src }) => `url("${src}") no-repeat center / contain`};
 
   &:not(:first-child) {
     margin-left: -10px;
@@ -132,7 +132,17 @@ const DetailCard = (props: any) => {
             <StyledFlex alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
               {
                 record.assets.map((token: any, idx: number) => (
-                  <StyledIcon key={idx} src={token.tokenLogo || getTokenLogo(token.symbol)} />
+                  <StyledIcon key={idx}>
+                    <ImageFallback
+                      src={token.tokenLogo || getTokenLogo(token.symbol)}
+                      alt=""
+                      width={26}
+                      height={26}
+                      style={{
+                        borderRadius: '50%',
+                      }}
+                    />
+                  </StyledIcon>
                 ))
               }
             </StyledFlex>
@@ -182,7 +192,17 @@ const DetailCard = (props: any) => {
         return (
           <StyledFlex gap="14px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
             <StyledFlex alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
-              <StyledIcon src={record.logo || getTokenLogo(record.symbol)} />
+              <StyledIcon>
+                <ImageFallback
+                  src={record.logo || getTokenLogo(record.symbol)}
+                  alt=""
+                  width={26}
+                  height={26}
+                  style={{
+                    borderRadius: '50%',
+                  }}
+                />
+              </StyledIcon>
             </StyledFlex>
             {record.symbol}
           </StyledFlex>
@@ -361,7 +381,7 @@ const DetailCard = (props: any) => {
     <StyledContainer style={style} id={`portfolioProtocolDetail-${dapp.chain_id}-${dapp.type}-${dapp.name}`}>
       <StyledHead>
         <DAppIconWithChain
-          size="32px"
+          size={32}
           icon={dappLogo}
           chainIcon={chainLogo}
         />

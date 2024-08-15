@@ -27,7 +27,7 @@ const Theme = styled.div`
   --claim-color: #fff;
 `;
 export default {
-  title: 'BNB Chain',
+  title: 'BNB Smart Chain',
   path: 'bnb',
   icon: 'https://assets.dapdap.net/images/bafkreiczurnr4ai5epzfovu4btugbrfsoc57d42wnz22kdjmogz3ewfgcm.svg',
   bgColor: '#FFBF19',

@@ -34,7 +34,7 @@ export class Medal {
   }
 
   private readonly gravity = 980;
-  public readonly radiusOffset = 20;
+  public readonly radiusOffset = 10;
   private img: any;
   private context: CanvasRenderingContext2D;
   public key: number;
@@ -62,7 +62,7 @@ export class Medal {
     this.vy += this.gravity * seconds;
 
     // Prevent endless oscillation
-    if (Math.abs(this.vx) >= 40) {
+    if (Math.abs(this.vx) >= 50) {
       this.x += this.vx * seconds;
     }
     this.y += this.vy * seconds;

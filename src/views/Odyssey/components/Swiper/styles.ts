@@ -217,7 +217,7 @@ export const StyledSwiperWrapper = styled.div`
   position: relative;
   .swiper-pagination {
     position: absolute;
-    bottom: -74px;
+    bottom: -40px;
     right: 50%;
     display: flex;
     align-items: center;

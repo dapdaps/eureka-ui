@@ -31,6 +31,7 @@ const OdysseyVideo = (props: Props) => {
           </video>
         </StyledVideoContent>
       }
+      portal={true}
     />
   );
 };

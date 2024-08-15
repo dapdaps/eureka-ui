@@ -1,34 +1,42 @@
 import { styled } from 'styled-components';
 
 import { DefaultIcon } from '@/views/Portfolio/config';
+import ImageFallback from '@/views/Portfolio/components/ImageFallback';
+import React from 'react';
 
-export const StyledContainer = styled.div<{ src: string, size?: string | number }>`
-  width: ${({ size }) => size};
-  height: ${({ size }) => size};
+export const StyledContainer = styled.div<{ size: string | number }>`
+  width: ${({ size }) => `${size}px`};
+  height: ${({ size }) => `${size}px`};
   flex-shrink: 0;
   border-radius: 16px;
-  background: ${({ src }) => `url("${src}") no-repeat center / contain`};
   position: relative;
+  
+  .main-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
+
+  .sub-image {
+    width: 16px;
+    height: 16px;
+    border-radius: 2px;
+    border: 2px solid #272835;
+    background: #272835;
+    position: absolute;
+    z-index: 1;
+    right: -2px;
+    bottom: -2px;
+  }
 `;
 
-export const StyledChain = styled.div<{ src: string }>`
-  width: 16px;
-  height: 16px;
-  border-radius: 2px;
-  border: 2px solid #272835;
-  background: ${({ src }) => `#272835 url("${src}") no-repeat center / 12px`};
-  position: absolute;
-  z-index: 1;
-  right: -2px;
-  bottom: -2px;
-`;
-
-const DAppIconWithChain = (props: any) => {
-  const { icon, chainIcon, style, size = '32px' } = props;
+const DAppIconWithChain = (props: { icon: string; chainIcon: string; style?: React.CSSProperties; size: number; }) => {
+  const { icon, chainIcon, style, size = 32 } = props;
 
   return (
-    <StyledContainer style={style} src={icon || DefaultIcon} size={size}>
-      <StyledChain src={chainIcon || DefaultIcon}></StyledChain>
+    <StyledContainer style={style} size={size}>
+      <ImageFallback className="main-image" src={icon} width={size} height={size} alt=""  />
+      <ImageFallback className="sub-image" src={chainIcon} width={16} height={16} alt=""  />
     </StyledContainer>
   );
 };

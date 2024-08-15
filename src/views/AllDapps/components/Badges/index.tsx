@@ -116,6 +116,7 @@ const Badges = (props: Props) => {
             background: 'unset',
             padding: 0,
             borderRadius: 0,
+            border: 0,
           }}
           tooltip={badge.odyssey && (
             <StyledBadgeTooltip>

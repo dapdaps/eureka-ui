@@ -2,7 +2,6 @@ import chainCofig from '@/config/chains';
 import Badges from '@/views/AllDapps/components/Badges';
 import NetworksBg from '@public/images/home/networks_bg.svg';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useState, type CSSProperties, type FC, type ReactNode } from 'react';
 import styled from 'styled-components';
 import useRecommendNetwork from '../../hooks/useRecommendNetwork';
@@ -11,9 +10,10 @@ import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
 import useDappOpen from '@/hooks/useDappOpen';
 import { StyledContainer } from '@/styled/styles';
 import hexToRgba from '@/utils/hexToRgba';
-import { DappType } from '@/views/Profile/types';
 import { useRouter } from 'next/router';
 import ViewAll from '@/views/Home/components/ViewAll';
+import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+
 interface IProps {
   children?: ReactNode;
   className?: string;
@@ -199,6 +199,8 @@ const PrimaryPanels = styled.div`
   .dapp {
     position: relative;
     cursor: pointer;
+    transition: transform 0.2s linear;
+
     .dapp-image {
       border: 3px solid #202329;
       border-radius: 14px;
@@ -207,7 +209,6 @@ const PrimaryPanels = styled.div`
     &:hover {
       transform: translateY(-5px);
     }
-    
   }
 `;
 const StyledDappCategory = styled.div`
@@ -337,25 +338,25 @@ const StyledPanelBg = styled.img`
   object-fit: contain;
 `
 
-const Dapp = ({ dapp, setCurrentDapp, setBoundingClientRect, onDappCardClick }: any) => {
+const Dapp = ({ dapp, onDappCardClick }: { dapp: any; onDappCardClick(dapp: any): void; }) => {
   return (
-    <div className='dapp'
-      onMouseEnter={(event: any) => {
-        setCurrentDapp(dapp)
-        setBoundingClientRect(event?.target?.getBoundingClientRect())
-      }}
-      onMouseLeave={() => {
-        setCurrentDapp(null)
-        setBoundingClientRect(null)
-      }}
+    <div
+      className='dapp'
       onClick={(event) => {
         event.stopPropagation()
         onDappCardClick && onDappCardClick(dapp)
       }}
     >
-      <div className='dapp-image'>
-        <Image src={dapp?.logo} width={42} height={42} alt={dapp?.name} />
-      </div>
+      <TooltipSimple
+        tooltip={dapp?.name}
+        style={{
+          height: 45,
+        }}
+      >
+        <div className="dapp-image">
+          <Image src={dapp?.logo} width={42} height={42} alt={dapp?.name} />
+        </div>
+      </TooltipSimple>
     </div>
   )
 }
@@ -363,8 +364,6 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
   const path = IdToPath[network?.id]
   const currentChain = chainsConfig[path]
   const [running, setRunning] = useState(false)
-  const [currentDapp, setCurrentDapp] = useState<DappType | null>(null)
-  const [boundingClientRect, setBoundingClientRect] = useState<any>(null)
 
   return (
     <>
@@ -437,36 +436,30 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
             >
               <div className='dapp-list'>
                 {
-                  network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} setCurrentDapp={setCurrentDapp} setBoundingClientRect={setBoundingClientRect} onDappCardClick={onDappCardClick} />)
+                  network?.dapps.map((dapp: any, index: number) => (
+                    <Dapp
+                      key={index}
+                      dapp={dapp}
+                      onDappCardClick={onDappCardClick}
+                    />
+                  ))
                 }
               </div>
               <div className='dapp-list'>
                 {
-                  network?.dapps.map((dapp: any, index: number) => <Dapp key={index} dapp={dapp} setCurrentDapp={setCurrentDapp} setBoundingClientRect={setBoundingClientRect} onDappCardClick={onDappCardClick} />)
+                  network?.dapps.map((dapp: any, index: number) => (
+                    <Dapp
+                      key={index}
+                      dapp={dapp}
+                      onDappCardClick={onDappCardClick}
+                    />
+                  ))
                 }
               </div>
             </div>
           </div>
         </div>
       </div>
-      {
-        currentDapp && boundingClientRect && (
-          <div className='dapp-message' style={{ left: boundingClientRect.x, top: boundingClientRect.y }}>
-            <div className='dapp-name'>{currentDapp?.name}</div>
-            <div className='dapp-categories'>
-              {
-                currentDapp?.categories?.map((category: any, index: number) => {
-                  return (
-                    <div className='dapp-category' key={index} style={{ color: `rgb(${category.colorRgb})`, borderColor: `rgb(${category.colorRgb})` }}>
-                      {category?.name}
-                    </div>
-                  )
-                })
-              }
-            </div>
-          </div>
-        )
-      }
     </>
   )
 }

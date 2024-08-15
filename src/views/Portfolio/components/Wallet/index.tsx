@@ -19,6 +19,7 @@ import {
   StyledWalletTable,
   StyledWalletTableItem,
 } from './styles';
+import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 const TABLE_HEAD = [
   {
@@ -61,9 +62,22 @@ const Wallet = ({ loading, tokens, filterFunc }: any) => {
                     <StyledWalletTableItem className="portfolio-table-body" key={token.id}>
                       <StyledTableItemTxt>
                         <StyledTokenIcon>
-                          <StyledTokenIconImg src={getTokenLogo(token.symbol)} />
+                          <ImageFallback
+                            src={getTokenLogo(token.symbol)}
+                            alt=""
+                            width={26}
+                            height={26}
+                            style={{
+                              borderRadius: '50%',
+                            }}
+                          />
                           <div className="chain-logo">
-                            <img src={token.chainLogo} alt="" />
+                            <ImageFallback
+                              src={token.chainLogo}
+                              alt=""
+                              width={12}
+                              height={12}
+                            />
                           </div>
                         </StyledTokenIcon>
                         {token.symbol}

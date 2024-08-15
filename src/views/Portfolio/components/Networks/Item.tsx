@@ -35,7 +35,7 @@ const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: numb
         <Image src={chain.icon} alt="" width={36} height={36} />
       </StyledItemIcon>
       <StyledItemContent>
-        <StyledItemName>{chain.name}</StyledItemName>
+        <StyledItemName title={chain.name}>{chain.name}</StyledItemName>
         <StyledItemNum>
           <StyledItemUSD>${formateValueWithThousandSeparator(chain.usd, 2)}</StyledItemUSD>
           {percentage && <StyledItemName>{percentage}%</StyledItemName>}
