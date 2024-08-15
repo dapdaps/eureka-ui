@@ -60,7 +60,7 @@ const ExecuteRecords = ({ hasMore, records, loading, pageIndex, dapps, dapp, cha
         return (
           <StyledFlex gap="11px" alignItems="center" style={{ color: '#fff', fontSize: 14 }}>
             <DAppIconWithChain
-              size="32px"
+              size={32}
               icon={record.dapp_logo}
               chainIcon={record.chain_logo}
             />

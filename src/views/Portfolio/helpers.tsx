@@ -6,6 +6,7 @@ import {
   formateValueWithThousandSeparatorAndFont,
 } from '@/utils/formate';
 import Big from 'big.js';
+import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 const StyledRecord = styled.div`
   display: flex;
@@ -74,10 +75,12 @@ export const formatExecution = (record: any) => {
       <>
         {record[key].map((it: any, idx: number) => (
           <div className="token-amount">
-            <img
+            <ImageFallback
               className="token-icon"
               src={getTokenLogo(it.symbol)}
               alt=""
+              width={20}
+              height={20}
             />
             <span
               className="token-value"

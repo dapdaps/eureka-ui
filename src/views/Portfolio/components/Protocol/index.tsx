@@ -15,8 +15,6 @@ import DetailCard from '@/views/Portfolio/components/Protocol/DetailCard';
 import Distribution from '@/views/Portfolio/components/Protocol/Distribution';
 import { StyledContainer } from '@/views/Portfolio/components/Protocol/styles';
 import Title from '@/views/Portfolio/components/Protocol/Title';
-import { CategoryList } from '@/views/Portfolio/config';
-import { a } from 'msw/lib/SetupServerApi-1855d9c6';
 
 const Protocol = (props: Props) => {
   const {
