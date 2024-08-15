@@ -95,6 +95,7 @@ const LendingRewardsTable = (props: IProps) => {
       toastId,
     }));
   };
+
   return (
     <>
       <RewardsTable>
@@ -113,7 +114,7 @@ const LendingRewardsTable = (props: IProps) => {
             onButtonClick={handleButtonClick}
         />
       </RewardsTable>
-      {state.dapp && (
+      {state.dapp && state.market && (
         <VmComponent
           src={state.dapp.handlerClaim}
           props={{
@@ -128,15 +129,18 @@ const LendingRewardsTable = (props: IProps) => {
               setState((prevState: any) => ({
                 ...prevState,
                 loading: false,
+                market: null,
               }));
               toast?.success({ title: 'Claimed successfully!' });
               onSuccess?.(state.dapp.name);
             },
             onError: (err: any) => {
+              console.log('Claimed error: %o, state: %o', err, state);
               toast?.dismiss(state.toastId);
               setState((prevState: any) => ({
                 ...prevState,
                 loading: false,
+                market: null,
               }));
               toast?.fail({
                 title: err?.message?.includes('user rejected transaction')

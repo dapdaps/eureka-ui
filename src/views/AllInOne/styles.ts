@@ -26,12 +26,19 @@ export const StyledContent = styled.div`
   /* z-index: 0; */
 `;
 
-export const StyledBg = styled.div`
+export const StyledBg = styled.div<{ $color: string; }>`
   position: absolute;
   left: 50%;
   transform: translate(-50%, 0);
   z-index: 0;
-  top: 100px;
+  top: 160px;
+  width: 948px;
+  height: 137px;
+  flex-shrink: 0;
+  border-radius: 948px;
+  opacity: 0.5;
+  background: ${({ $color }) => `radial-gradient(50% 50% at 50% 50%, ${$color} 0%, #16181D 100%)`};
+  filter: blur(40px);
 `;
 
 export const StyledNavList = styled.div`

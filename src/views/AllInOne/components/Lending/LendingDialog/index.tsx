@@ -282,7 +282,7 @@ const LendingDialog = (props: IProps) => {
     } as any;
 
     let isOverSize = false;
-    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20));
+    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20, 0));
     if (isSupply) {
       if (actionText === 'Withdraw' && data.userMerberShip) {
         params.borrowLimit = Big(data.totalCollateralUsd)
@@ -433,7 +433,7 @@ const LendingDialog = (props: IProps) => {
                       if (state.balanceLoading || isNaN(Number(state.balance))) return;
                       handleAmountChange(state.balance);
                       const balanceNumber = Big(state.balance || 0);
-                      const balanceStr = Big(balanceNumber).toFixed(data.decimals || 18);
+                      const balanceStr = Big(balanceNumber).toFixed(18, 0);
                       setState((prevState) => ({
                         ...prevState,
                         amount: Big(balanceStr).eq(0) ? '0' : balanceStr.replace(/0+$/, '').replace(/\.$/, ''),

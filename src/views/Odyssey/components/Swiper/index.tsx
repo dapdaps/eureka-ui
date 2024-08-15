@@ -90,7 +90,7 @@ const CompassCard = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledFlex gap=".32rem" alignItems="flex-start">
+      <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
         <StyledCardBackgroundImage
           src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
@@ -185,7 +185,7 @@ const Compass = () => {
               width={1244}
               modules={[Autoplay, Pagination]}
               slidesPerView={1}
-              autoplay={{ delay: 3000 }}
+              autoplay={{ delay: 113000 }}
               speed={1000}
               spaceBetween={(size?.width - 1244) / 2 + 100}
               updateOnWindowResize={true}

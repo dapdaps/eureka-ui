@@ -1,6 +1,7 @@
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { useMemo } from 'react';
 import styled from 'styled-components';
+import Image from 'next/image';
 
 const StyledNativeCurrency = styled.div`
   display: flex;
@@ -45,12 +46,12 @@ const StyledNativeCurrency = styled.div`
   }
 `;
 
-const StyledNativeCurrencyLogo = styled.div<{ url?: string }>`
+const StyledNativeCurrencyLogo = styled(Image)`
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center` : '#414461'};
-  background-size: contain;
+  background: #414461;
+  object-fit: contain;
 `;
 
 const StyledArrow = styled.div`
@@ -91,8 +92,11 @@ const NativeCurrency = (
             !isTag && mergedCurrency?.logo
           )
         ) && <StyledNativeCurrencyLogo
-          url={mergedCurrency?.logo}
-          className={`${isTag ? `small-logo` : ''} ${isTBD ? 'empty-logo' : ''}`}
+          src={mergedCurrency?.logo}
+          alt='native-logo'
+          className={`native-logo ${isTag ? `small-logo` : ''} ${isTBD ? 'empty-logo' : ''}`}
+          width={26}
+          height={26}
         />
       }
       <div className={isTag ? 'currency-name-small' : 'currency-name'}>{currencyName.toUpperCase()}</div>

@@ -4,7 +4,6 @@ import { memo, useMemo, useState } from 'react';
 import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import chainCofig from '@/config/chains';
 import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent';
@@ -139,9 +138,7 @@ const AllInOneDetailView = (props: Props) => {
             })}
           </StyledNavList>
         </StyledFlex>
-        <StyledBg>
-          <Gradient bgColor={currentChain.selectBgColor} width={720} height={241} rx={280} ry={40.5} />
-        </StyledBg>
+        <StyledBg $color={currentChain.selectBgColor} />
       </StyledContainer>
       <Settings display={showSettings} onClose={() => setShowSettings(false)} />
     </>

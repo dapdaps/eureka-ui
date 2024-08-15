@@ -38,14 +38,16 @@ export const StyledCard = styled.div`
   width: 1244px;
   height: 380px;
   border-radius: 20px;
-  border: 1px solid; 
+  border: 1px solid #202329; 
   border-image-source: linear-gradient(180deg, #202329 0%, #101115 100%);
   background: #18191E;
 `;
 
 export const StyledCardBackgroundImage = styled.img`
   width: 660px;
-  height: 380px;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 `;
 
 export const StyledCardMainContent = styled.div`

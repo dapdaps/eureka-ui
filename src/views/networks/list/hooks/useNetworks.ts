@@ -7,10 +7,12 @@ import { StatusType } from '@/views/Odyssey/components/Tag';
 import { IdToPath } from '@/config/all-in-one/chains';
 import { orderBy } from 'lodash';
 import Big from 'big.js';
+import { SortList } from '@/views/AllDapps/config';
+import { useDebounceFn } from 'ahooks';
 
 const InConfigNetworkIds = Object.keys(IdToPath);
 
-export default function useNetworks() {
+export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
   const [loading, setLoading] = useState(false);
   const [networkList, setNetworkList] = useState<Network[]>([]);
   const [l1NetworkList, setL1NetworkList] = useState<Network[]>([]);
@@ -21,35 +23,78 @@ export default function useNetworks() {
   }, [networkList]);
 
   const fetchNetworkData = async () => {
-    if (loading) return;
+    if (loading) return [];
     setLoading(true);
     try {
       const resultNetwork = await get(`${QUEST_PATH}/api/network/all`);
       let data: Network[] = resultNetwork.data || [];
       data = data.filter((it) => InConfigNetworkIds.includes(it.id + ''));
-      data = orderBy(data, (it) => Big(it.trading_volume).toNumber(), 'desc');
-      const _l1NetworkList = [];
-      const _l2NetworkList = [];
-      for (const network of data) {
-        if (L1ChainIds.includes(network.chain_id)) {
-          _l1NetworkList.push(network);
-          continue;
-        }
-        _l2NetworkList.push(network);
-      }
+      // find trading_volume and participants max
+      const maxVolume = Math.max(...data.map((item: Network) => Big(item.trading_volume || 0).toNumber()));
+      const maxParticipants = Math.max(...data.map((item: Network) => item.participants));
+      data.forEach(item => {
+        item.isTop = Big(item.trading_volume || 0).toNumber() === maxVolume;
+        item.isHot = maxParticipants === item.participants;
+      })
       setNetworkList(data);
-      setL1NetworkList(_l1NetworkList);
-      setL2NetworkList(_l2NetworkList);
+      return data;
     } catch (error) {
       console.error('Error fetching resultNetwork data:', error);
+      return [];
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
   useEffect(() => {
     fetchNetworkData();
-  }, []);
+  }, [mode]);
+
+  const { run } = useDebounceFn(() => {
+    setLoading(false);
+  }, { wait: 300 })
+
+  const filterNetworkData = async () => {
+    setLoading(true);
+    if (!networkList.length) {
+      return;
+    }
+    let _networkList = [...networkList];
+    if (sort) {
+      const findSortVar: any = SortList.find(i => i.value === sort);
+      if (findSortVar?.variable) {
+        if (findSortVar.variable === 'name') {
+          _networkList = orderBy(_networkList, (it) => it.name, findSortVar.value === 'z-a' ? 'desc' : 'asc');
+        } else {
+          _networkList = orderBy(_networkList, (it) => Big(it[findSortVar.variable as  keyof Network] as string || 0).toNumber(), 'desc');
+        }
+      }
+    }
+    if (mode === 'card') {
+      if (airdrop) {
+
+      }
+      if (rewardNow) {
+        _networkList = _networkList.filter(item => item.odyssey && item.odyssey.length > 0);
+      }
+    }
+    const _l1NetworkList = [];
+    const _l2NetworkList = [];
+    for (const network of _networkList) {
+      if (L1ChainIds.includes(network.chain_id)) {
+        _l1NetworkList.push(network);
+        continue;
+      }
+      _l2NetworkList.push(network);
+    }
+    setL1NetworkList(_l1NetworkList);
+    setL2NetworkList(_l2NetworkList);
+    run();
+  }
+
+  useEffect(() => {
+    filterNetworkData();
+  }, [sort, rewardNow, airdrop, networkList]);
 
   return { loading, networkList, l1NetworkList, l2networkList, networkListSortByAZ };
 }
@@ -77,6 +122,8 @@ export interface Network {
   trading_volume_change_percent: string;
   odyssey: NetworkOdyssey[];
   index?: number;
+  isTop?: boolean;
+  isHot?: boolean;
 }
 
 export interface NetworkOdyssey {
