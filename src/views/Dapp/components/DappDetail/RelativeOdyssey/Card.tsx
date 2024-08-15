@@ -48,7 +48,8 @@ const OdysseyCardComponent = (props: Props) => {
     users,
     medals,
     className,
-    bp
+    bp,
+    isHoverButton,
   } = props;
 
   const tagListRef = useRef<any>();
@@ -179,9 +180,17 @@ const OdysseyCardComponent = (props: Props) => {
 
   return (
     <>
-      <StyledOdysseyContainer className={className}>
+      <StyledOdysseyContainer
+        className={className}
+        $isHoverButton={isHoverButton}
+        onClick={(e) => {
+          if (isHoverButton) return;
+          onCardClick(e);
+        }}
+      >
         <StyledOdysseyTop
-          whileHover="visible"
+          $isHoverButton={isHoverButton}
+          whileHover={isHoverButton ? 'visible' : 'hidden'}
           initial="hidden"
         >
           <StyledOdysseyBanner>
@@ -366,6 +375,7 @@ export interface Props {
   // custom className
   className?: string;
   bp?: string;
+  isHoverButton?: boolean;
 }
 
 const odysseyIsLive = (status: StatusType) => {

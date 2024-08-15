@@ -141,8 +141,9 @@ const OdysseyList = () => {
         <RecentRewards
           isSubTitle={false}
           style={{
-            height: 385,
-            marginBottom: 80,
+            height: 330,
+            justifyContent: 'flex-start',
+            paddingTop: 115,
           }}
           titleStyle={{
             marginBottom: 10,

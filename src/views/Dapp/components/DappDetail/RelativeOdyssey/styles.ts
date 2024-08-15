@@ -5,13 +5,18 @@ export const StyledContainer = styled.div`
   font-family: Montserrat;
 `;
 
-export const StyledOdysseyContainer = styled.div`
+export const StyledOdysseyContainer = styled.div<{ $isHoverButton?: boolean; }>`
   margin-bottom: 44px;
   border-radius: 20px;
   border: 1px solid #202329;
   background: #101115;
   cursor: pointer;
   overflow: hidden;
+  transition: transform .2s linear;
+
+  &:hover {
+    transform: ${({ $isHoverButton }) => !$isHoverButton ? `translateY(-5px)` : ''};
+  }
 `;
 
 export const StyledOdysseyDetail = styled.div`
@@ -98,7 +103,6 @@ export const StyledOdysseyTitle = styled.div<{ $isLive?: boolean; }>`
   text-overflow: ellipsis;
   padding-right: 20px;
   padding-left: 20px;
-  cursor: text;
 `;
 
 export const StyledOdysseyHead = styled.div`
@@ -192,11 +196,13 @@ export const StyledVideoIcon = styled.img`
 `;
 
 
-export const StyledOdysseyTop = styled(motion.div)`
+export const StyledOdysseyTop = styled(motion.div)<{ $isHoverButton?: boolean; }>`
   position: relative;
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
+
   &::before {
     content: '';
+    display: ${({ $isHoverButton }) => $isHoverButton ? 'block' : 'none'};
     position: absolute;
     top: 0;
     left: 0;
@@ -212,7 +218,7 @@ export const StyledOdysseyTop = styled(motion.div)`
   }
   &:hover {
     &::before {
-      opacity: 1;
+      opacity: ${({ $isHoverButton }) => $isHoverButton ? 1 : 0};
     }
   }
 `;
