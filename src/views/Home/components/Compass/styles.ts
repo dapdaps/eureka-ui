@@ -262,10 +262,10 @@ export const StyledSwiperWrapper = styled.div`
     background: #575A77;
   }
 `;
-export const StyledSwiperNextButton = styled.div`
+export const StyledSwiperNextButton = styled.button`
   position: absolute;
   right: -64px;
-  bottom: 226px;
+  bottom: 176px;
   cursor: pointer;
   width: 48px;
   height: 48px;
@@ -274,20 +274,19 @@ export const StyledSwiperNextButton = styled.div`
   justify-content: center;
   border-radius: 10px;
   border: 1px solid #333648;
+  background: #18191E;
+  transition: all 0.2s linear;
+  z-index: 6;
+  
+  &:hover,
+  &:focus {
+    background: #1F2229;
+  }
 `;
-export const StyledSwiperPrevButton = styled.div`
-  position: absolute;
+export const StyledSwiperPrevButton = styled(StyledSwiperNextButton)`
   left: -64px;
-  bottom: 226px;
+  right: unset;
   transform: rotate(180deg);
-  cursor: pointer;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  border: 1px solid #333648;
 `;
 export const StyledChainsImg = styled.img`
   width: auto;
