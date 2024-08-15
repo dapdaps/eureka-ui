@@ -37,7 +37,9 @@ const StyledRecentRewards = styled.div`
 
 `;
 
-const RecentRewards = () => {
+const RecentRewards = (props: Props) => {
+  const { style, titleStyle, isSubTitle = true } = props;
+
   const { fetchRewardData, formatRewardList } = useDappReward()
   const [data, setData] = useState<any>([])
   useEffect(() => {
@@ -47,14 +49,24 @@ const RecentRewards = () => {
   }, [])
 
   return (
-    <StyledRecentRewards>
-      <div className="title">
+    <StyledRecentRewards style={style}>
+      <div className="title" style={titleStyle}>
         RECENT <span>REWARDS</span>
       </div>
-      <div className="words">Participate in DapDap's Odyssey or mission with partners to earn multiple rewards.</div>
+      {
+        isSubTitle && (
+          <div className="words">Participate in DapDap's Odyssey or mission with partners to earn multiple rewards.</div>
+        )
+      }
       <TooltipList data={data} />
     </StyledRecentRewards>
   );
 };
 
 export default RecentRewards;
+
+interface Props {
+  style?: React.CSSProperties;
+  titleStyle?: React.CSSProperties;
+  isSubTitle?: boolean;
+}
