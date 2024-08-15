@@ -62,7 +62,7 @@ export class Medal {
     this.vy += this.gravity * seconds;
 
     // Prevent endless oscillation
-    if (Math.abs(this.vx) >= 40) {
+    if (Math.abs(this.vx) >= 50) {
       this.x += this.vx * seconds;
     }
     this.y += this.vy * seconds;

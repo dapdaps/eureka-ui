@@ -155,11 +155,11 @@ class BouncingMedals extends React.Component<BouncingMedalsProps, any> {
           medal.key,
           images[i],
           medal.x,
-          medal.y || -30,
-          medal.vx || random(-this.width, this.width),
-          medal.vy || random(-this.height, this.height),
+          medal.y ?? -30,
+          medal.vx ?? 0,
+          medal.vy ?? random(-this.height, this.height),
           this.DPR,
-          medal.mass || 30,
+          medal.mass ?? 30,
           0.7,
         ));
       }

@@ -78,14 +78,19 @@ export default memo(function ProfileView() {
   }, [compassList, airdropList, userMedalList, userFavorites, userRewardRecords])
 
   const bouncingMedals = useMemo(() => {
-    return userMedalList?.map((medal, index) => {
+    const _bouncingMedals = userMedalList?.map((medal, index) => {
       return {
         key: index,
         icon: medal?.logo,
         x: index * 100,
-        mass: (index === 0 || index === userMedalList.length - 1) ? 50 : 30
+        vx: 0,
+        mass: 30,
       }
-    })?.filter((medal) => !!medal.icon)?.slice(0, 5) ?? []
+    })?.filter((medal) => !!medal.icon)?.slice(0, 5) ?? [];
+    _bouncingMedals.forEach((it, idx) => {
+      it.mass = (idx === 0 || idx === userMedalList.length - 1) ? 60 : 30;
+    });
+    return _bouncingMedals;
   }, [userMedalList])
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
