@@ -3,12 +3,12 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 
 const PageBack = (props: Props) => {
-  const { defaultPath, style } = props;
+  const { defaultPath = '/', style } = props;
 
   const router = useRouter();
 
   const onClick = () => {
-    if (window.history.length <= 1 && defaultPath) {
+    if (document.referrer !== window.location.origin) {
       router.replace(defaultPath);
       return;
     }
