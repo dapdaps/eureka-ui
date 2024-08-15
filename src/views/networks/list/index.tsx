@@ -3,14 +3,14 @@ import { ListItem } from './components';
 import ListCard from './components/list-card';
 import {
   StyledContainer,
-  Banner,
-  Title,
-  Desc,
-  Wrap,
-  H1,
-  Head,
-  Filters,
-  FilterText
+  StyledBanner,
+  StyledTitle,
+  StyledDesc,
+  StyledWrap,
+  StyledH1,
+  StyledHead,
+  StyledFilters,
+  StyledFilterText,
 } from './styles';
 import useNetworks from './hooks/useNetworks';
 import LoadingSkeleton from './components/loading';
@@ -145,20 +145,20 @@ const List = () => {
 
   return (
     <StyledContainer>
-      <Banner>
-        <Title>
+      <StyledBanner>
+        <StyledTitle>
           Explore <span className="highlight">15+ L2</span> Networks
-        </Title>
-        <Desc>
+        </StyledTitle>
+        <StyledDesc>
           Discover the most popular Ethereum roll-ups and EVMs across the market. Also, <br />
           explore related blockchains including Layer-1s, sidechains, and testnets.
-        </Desc>
-      </Banner>
-      <Wrap>
-        <Head>
-          <H1>L2 Networks</H1>
-          <Filters>
-            <FilterText>Sort by</FilterText>
+        </StyledDesc>
+      </StyledBanner>
+      <StyledWrap>
+        <StyledHead>
+          <StyledH1>L2 Networks</StyledH1>
+          <StyledFilters>
+            <StyledFilterText>Sort by</StyledFilterText>
             <SortBy value={sort} isUrlParams onSelect={onSortSelect}/>
             {
               mode === ModeList[1].key && (
@@ -173,8 +173,8 @@ const List = () => {
                 <item.icon key={item.key} className={`filter-icon ${mode === item.key ? 'active' : ''}`} onClick={() => onModeChange(item.key)}/>
               ))
             }
-          </Filters>
-        </Head>
+          </StyledFilters>
+        </StyledHead>
         <ListContainer className={`${mode}-view`}>
           {
             loading ? [...new Array(6).keys()].map((key) => (
@@ -184,9 +184,9 @@ const List = () => {
             ))
           }
         </ListContainer>
-        <Head>
-          <H1>L1 Networks</H1>
-        </Head>
+        <StyledHead>
+          <StyledH1>L1 Networks</StyledH1>
+        </StyledHead>
         <ListContainer className={`${mode}-view`}>
         {
           loading ? [...new Array(2).keys()].map((key) => (
@@ -196,7 +196,7 @@ const List = () => {
           ))
         }
         </ListContainer>
-      </Wrap>
+      </StyledWrap>
     </StyledContainer>
   );
 };
