@@ -18,7 +18,7 @@ import {
   StyledTagList,
   StyledVideo,
   StyledVideoIcon,
-  StyledOdysseyButton
+  StyledOdysseyButton, StyledOdysseyBannerMask,
 } from '@/views/Dapp/components/DappDetail/RelativeOdyssey/styles';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 import OdysseyVideo from './Video';
@@ -33,7 +33,7 @@ import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
 import useToast from '@/hooks/useToast';
 import { useDebounceFn } from 'ahooks';
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
-import { AnimatePresence } from 'framer-motion';
+import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -73,14 +73,13 @@ const OdysseyCardComponent = (props: Props) => {
   const [show, setShow] = useState<boolean>(false);
   const [videoUrl, setVideoUrl] = useState<string>('');
   const toast = useToast();
-  const [ isHovered, setIsHovered ] = useState<boolean>(false);
 
   const onCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
 
-    if(isDevelopment) {
-      toast.fail('This Odyssey ID is not available in the current FE version')
+    if (isDevelopment) {
+      toast.fail('This Odyssey ID is not available in the current FE version');
     }
     if (odyssey[id]) {
       router.push(odyssey[id].path);
@@ -166,10 +165,10 @@ const OdysseyCardComponent = (props: Props) => {
     }
     const reg = /\：|\:/;
     if (_name.includes('：') || _name.includes(':')) {
-      return <>{ _name.split(reg)?.[0] ?? ''}: <br />{name?.split(reg)?.[1] ?? '' }</>
+      return <>{_name.split(reg)?.[0] ?? ''}: <br />{name?.split(reg)?.[1] ?? ''}</>;
     }
     return _name;
-  }
+  };
 
   useEffect(() => {
     if (odyssey[id]) {
@@ -181,37 +180,44 @@ const OdysseyCardComponent = (props: Props) => {
     <>
       <StyledOdysseyContainer className={className}>
         <StyledOdysseyTop
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}>
-          <StyledOdysseyBanner
-            url={banner}
-            className={!isLive ? 'gray' : ''}
-          />
-          <AnimatePresence mode="wait">
-            { isHovered && (
-              <StyledOdysseyButton
-                onClick={onCardClick}
-                variants={{
-                  visible: {
-                    opacity: 1,
-                    y: 0,
-                  },
-                  hidden: {
-                    opacity: 0,
-                    y: 20,
-                  },
-                }}
-                style={{ x: '-50%' }}
-                initial="hidden"
-                exit="hidden"
-                animate="visible"
-              >
-              <span>{ isLive ? 'Join' : 'View' } Campaign</span>
-              <ArrowLineIcon classname='arrow-right'/>
-            </StyledOdysseyButton>
-            )
-            }
-          </AnimatePresence>
+          whileHover="visible"
+          initial="hidden"
+        >
+          <StyledOdysseyBanner>
+            <ImageFallback
+              fallbackSrc="/images/odyssey/fallback.svg"
+              src={banner}
+              alt=""
+              width={403}
+              height={202}
+              style={{
+                width: '100%',
+                opacity: isLive ? 1 : 0.5,
+                filter: isLive ? 'unset' : 'grayscale(100%)',
+                objectFit: 'cover',
+              }}
+            />
+            <StyledOdysseyBannerMask />
+          </StyledOdysseyBanner>
+          <StyledOdysseyButton
+            onClick={onCardClick}
+            variants={{
+              visible: {
+                opacity: 1,
+                display: 'flex',
+                y: 0,
+              },
+              hidden: {
+                opacity: 0.1,
+                display: 'none',
+                y: 20,
+              },
+            }}
+            style={{ x: '-50%' }}
+          >
+            <span>{isLive ? 'Join' : 'View'} Campaign</span>
+            <ArrowLineIcon classname="arrow-right" />
+          </StyledOdysseyButton>
           <StyledOdysseyHead>
             <StyledOdysseyInfo>
               <StyledOdysseyIcon />
@@ -236,10 +242,8 @@ const OdysseyCardComponent = (props: Props) => {
           }
         </StyledOdysseyTop>
         <StyledOdysseyBody>
-          <StyledOdysseyTitle>
-            {
-              formatTitle(name)
-            }
+          <StyledOdysseyTitle $isLive={isLive}>
+            {formatTitle(name)}
           </StyledOdysseyTitle>
           <StyledTagList ref={tagListRef}>
             {

@@ -65,20 +65,28 @@ export const StyledOdysseyDetail = styled.div`
   }
 `;
 
-export const StyledOdysseyBanner = styled(motion.div)<{ url: string }>`
+export const StyledOdysseyBanner = styled(motion.div)`
   width: 100%;
   height: 202px;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  background: ${props => props.url ? `url('${props.url}') no-repeat center top` : ''};
-  background-size: cover;
-  &.gray {
-    filter: grayscale(100%);
-  }
+  overflow: hidden;
+  position: relative;
 `;
 
-export const StyledOdysseyTitle = styled.div`
-  color: #FFF;
+export const StyledOdysseyBannerMask = styled.div`
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.00) 100%);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+`;
+
+export const StyledOdysseyTitle = styled.div<{ $isLive?: boolean; }>`
+  color: ${({ $isLive }) => $isLive ? '#FFF' : '#979ABE'};
+  opacity: ${({ $isLive }) => $isLive ? 1 : 0.5};
   font-size: 20px;
   font-weight: 600;
   height: 48px;
@@ -165,6 +173,7 @@ export const StyledVideo = styled.div<{ url?: string }>`
   height: 40px;
   border-radius: 4px;
   position: absolute;
+  z-index: 5;
   bottom: 10px;
   right: 14px;
   background: ${props => props.url ? `url(${props.url}) no-repeat center` : ''};
@@ -183,7 +192,7 @@ export const StyledVideoIcon = styled.img`
 `;
 
 
-export const StyledOdysseyTop = styled.div`
+export const StyledOdysseyTop = styled(motion.div)`
   position: relative;
   background: linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 100%);
   &::before {
@@ -195,11 +204,11 @@ export const StyledOdysseyTop = styled.div`
     border-top-right-radius: 20px;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.5);
+    background-color: rgba(0, 0, 0, 0.3);
     z-index: 3;
     cursor: default;
     opacity: 0;
-    transition: opacity 0.1s linear;
+    transition: opacity 0.2s linear;
   }
   &:hover {
     &::before {
