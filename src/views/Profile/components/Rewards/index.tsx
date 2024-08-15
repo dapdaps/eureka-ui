@@ -87,7 +87,7 @@ export default function Rewards({ onInviteCodeClick, medals, gems, referrals }: 
           <StyledSvg>{GemSvg}</StyledSvg>
           <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{gems}</span> Gems</StyledFont>
         </StyledReward>
-        <StyledReward style={{ width: 178 }} onClick={onInviteCodeClick}>
+        <StyledReward style={{ width: 178 }} onClick={onInviteCodeClick} data-bp="1009-001">
           <StyledSvg>{ReferralSvg}</StyledSvg>
           <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{referrals}</span> Referrals</StyledFont>
           <StyledSvg>{PlusSvg}</StyledSvg>

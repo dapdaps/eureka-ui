@@ -166,6 +166,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
         </SingleStatus>
         <Sep />
         <SingleStatus
+          data-bp="1005-002"
           onClick={() => {
             setSearchValueValue(value);
             setTransactionModalShow(true);

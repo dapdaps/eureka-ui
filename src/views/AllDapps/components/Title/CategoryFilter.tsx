@@ -4,6 +4,7 @@ import React from 'react';
 
 const CategoryFilter = React.forwardRef((props: Props, ref: any) => {
   const {
+    bp,
     loading = false,
     classname = '',
     categoryList,
@@ -38,6 +39,7 @@ const CategoryFilter = React.forwardRef((props: Props, ref: any) => {
                 $disabled={cate.sum < 1}
                 $colorRgb={cate.colorRgb}
                 className={`category-${size} ${ currentCategory?.key === cate.key ? 'selected' : '' }`}
+                data-bp={bp}
                 onClick={() => onCategoryClick(cate)}
               >
                 {cate.sum} {cate.label}
@@ -52,6 +54,7 @@ const CategoryFilter = React.forwardRef((props: Props, ref: any) => {
 export default CategoryFilter;
 
 interface Props {
+  bp?: string;
   size?: 'small' | 'large';
   classname?: string;
   loading?: boolean;

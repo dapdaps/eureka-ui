@@ -18,6 +18,7 @@ import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
 
 const AllDappsTitle = (props: Props) => {
   const {
+    bp,
     dappList,
     onCategory = () => {
     },
@@ -168,6 +169,7 @@ const AllDappsTitle = (props: Props) => {
         loading={loading}
         currentCategory={currentCategory}
         onSelect={handleCurrentCategory}
+        bp={bp}
       />
     </StyledHead>
   );
@@ -176,12 +178,10 @@ export default AllDappsTitle;
 
 export interface Props {
   // please enter 6 icons from left to right
+  bp?: string;
   dappList: Dapp[];
-
   onCategory?(categoryId?: number): void;
-
   activeCategory?: any;
-
   categoryClassname?: string;
   animation?: any;
   categoryRef?: any;

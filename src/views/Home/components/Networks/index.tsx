@@ -371,6 +371,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
         className="panel"
         onMouseEnter={() => setRunning(true)}
         onMouseLeave={() => setRunning(false)}
+        data-bp={isTopVolume ? "1003-003" : "1003-004"}
         onClick={() => {
           handleClickNetwork(network)
         }}
@@ -379,8 +380,10 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
           <StyledPanelBg
             src={currentChain?.bgIcon}
             style={
-              currentChain?.selectBgColor ? { filter: `drop-shadow(${hexToRgba(currentChain?.selectBgColor, 0.03)} 100vw 0)`,
-                transform: 'translateX(-100vw)' } : {}
+              currentChain?.selectBgColor ? {
+                filter: `drop-shadow(${hexToRgba(currentChain?.selectBgColor, 0.03)} 100vw 0)`,
+                transform: 'translateX(-100vw)'
+              } : {}
             }
             alt=""
           />
@@ -466,7 +469,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
 
 const SubNetwork = ({ network, handleClickNetwork }: any) => {
   return (
-    <div className="panel" onClick={() => {
+    <div className="panel" data-bp="1003-005" onClick={() => {
       handleClickNetwork(network)
     }}>
       <StyledLogoWrapper>
@@ -515,7 +518,7 @@ const Networks: FC<IProps> = (props) => {
             <span className="highlight"> 15+ L2</span> NETWORKS
           </span>
 
-          <ViewAll href="/networks" />
+          <ViewAll href="/networks" data-bp="1003-002" />
         </Title>
         <PrimaryPanels>
           {

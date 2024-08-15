@@ -216,6 +216,7 @@ const AllDapps = (props: Props) => {
   return (
     <StyledContainer>
       <AllDappsTitle
+        bp='1007-001'
         categoryRef={categoryRef}
         animation={categoryAnimation(scrolled, {zIndex: 49, top: 70 }, { zIndex: 0, top: 0 })}
         onCategory={onSelectCategory}
@@ -306,7 +307,7 @@ const AllDapps = (props: Props) => {
           pageTotal={pageTotal}
           pageIndex={pageIndex}
           fetchDappList={fetchDappList}
-          bp={{ detail: '10011-001', dapp: '10011-002' }}
+          bp={{ detail: '', dapp: '1007-002' }}
         />
       </StyledBody>
     </StyledContainer>

@@ -111,10 +111,10 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
         </LogoGroup>
         <BtnGroup>
           { odyssey.length > 0 && (<StyledChainOdyssey><ChainOdyssey src='/images/odyssey/welcome/logo.gif'/></StyledChainOdyssey>) }
-          <Btn href={`/networks/${IdToPath[id]}`} data-bp="10012-002">
+          <Btn href={`/networks/${IdToPath[id]}`} data-bp="1006-002">
             Details
           </Btn>
-          <Btn href={`/all-in-one/${path}`} data-bp="10012-003" className="allinone-btn"
+          <Btn href={`/all-in-one/${path}`} data-bp="1006-001" className="allinone-btn"
                $bgColor={matchedItem?.theme.button.bg} $color={matchedItem?.theme.button.text}>
             All-In-One
           </Btn>

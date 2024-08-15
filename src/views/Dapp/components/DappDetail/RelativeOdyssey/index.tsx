@@ -119,6 +119,7 @@ const RelativeOdyssey = (props: Props) => {
                         rewards={compass.reward}
                         volume={compass.trading_volume}
                         users={compass.total_users}
+                        bp='1006-002-009'
                         // medals={[
                         //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
                         // ]}

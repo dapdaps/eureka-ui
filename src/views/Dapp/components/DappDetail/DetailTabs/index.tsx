@@ -51,6 +51,7 @@ const DetailTabs = (props: Props) => {
               <StyledTab
                 className='history-tab'
                 key={item.key}
+                data-bp={item?.bp}
                 onClick={() => setCurrTab(item.key)}
               >
 

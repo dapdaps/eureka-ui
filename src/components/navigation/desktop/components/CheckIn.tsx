@@ -290,6 +290,7 @@ const CheckIn = () => {
                 </div>
                 <StyledButton
                   disabled={isClaimed || claimLoading}
+                  data-bp="1001-007"
                   onClick={() => {
                     claim();
                   }}

@@ -162,7 +162,8 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
     ),
     label: "Portfolio",
     new: true,
-    path: '/portfolio'
+    path: '/portfolio',
+    bp: "1001-010-002",
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="16" height="23" viewBox="0 0 16 23" fill="none">
@@ -173,7 +174,8 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
       </svg>
     ),
     label: "Achievements",
-    path: '/profile/medals'
+    path: '/profile/medals',
+    bp: "1001-010-003",
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="19" height="22" viewBox="0 0 19 22" fill="none">
@@ -181,7 +183,8 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
       </svg>
     ),
     label: "Invite friends",
-    path: "/profile?target=inviteFriends"
+    path: "/profile?target=inviteFriends",
+    bp: "1001-010-004"
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="21" height="19" viewBox="0 0 21 19" fill="none">
@@ -189,7 +192,8 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
       </svg>
     ),
     label: "Favorite",
-    path: '/profile?target=favorite'
+    path: '/profile?target=favorite',
+    bp: "1001-010-005"
   }, {
     icon: (
       <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
@@ -205,6 +209,7 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
           <StyledFlex
             justifyContent="space-between"
             style={{ cursor: 'pointer' }}
+            data-bp="1001-010-001"
             onClick={() => {
               router.push('/profile')
               setShow && setShow(false)
@@ -254,7 +259,7 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
         {
           features.map(feature => {
             return (
-              <StyledFeature onClick={() => {
+              <StyledFeature data-bp={feature?.bp} onClick={() => {
                 if (feature.label === "Logout") {
                   logout()
                 } else {

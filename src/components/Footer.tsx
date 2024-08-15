@@ -93,7 +93,7 @@ const StyledRpcs = styled.div<{ $color?: string; }>`
 `;
 const StyledCopyright = styled.div``;
 
-const SocialButton = ({ icon, alt, url }: { icon: any; alt: string; url?: string; }) => {
+const SocialButton = ({ icon, alt, url, bp }: { icon: any; alt: string; url?: string; bp?:string }) => {
   return url ? (
     <StyledSocialButton
       whileHover={{ opacity: 0.6 }}
@@ -101,7 +101,7 @@ const SocialButton = ({ icon, alt, url }: { icon: any; alt: string; url?: string
       onClick={() => {
         window.open(url, '_blank');
       }}
-      data-bp="3001-002"
+      data-bp={bp}
     >
       {icon}
     </StyledSocialButton>
@@ -161,6 +161,7 @@ const Footer = ({ isHideLeft, isHideRight }: { isHideLeft?: boolean; isHideRight
                   }
                   alt="Twitter"
                   url="https://twitter.com/DapDapMeUp"
+                  bp="1002-001"
                 />
                 <SocialButton
                   icon={
@@ -186,6 +187,7 @@ const Footer = ({ isHideLeft, isHideRight }: { isHideLeft?: boolean; isHideRight
                   }
                   alt="Discord"
                   url="https://discord.gg/dapdapmeup"
+                  bp="1002-002"
                 />
                 <SocialButton
                   icon={
@@ -211,6 +213,7 @@ const Footer = ({ isHideLeft, isHideRight }: { isHideLeft?: boolean; isHideRight
                   }
                   alt="Tg"
                   url="https://t.me/DapDapDiscussion"
+                  bp="1002-003"
                 />
                 <SocialButton
                   icon={
@@ -220,6 +223,7 @@ const Footer = ({ isHideLeft, isHideRight }: { isHideLeft?: boolean; isHideRight
                   }
                   alt="Gitbook"
                   url="https://docs.dapdap.net/"
+                  bp="1002-004"
                 />
                 <SocialButton
                   icon={
@@ -262,6 +266,7 @@ const Footer = ({ isHideLeft, isHideRight }: { isHideLeft?: boolean; isHideRight
                   }
                   alt="Mirror"
                   url="https://dapdap.mirror.xyz/"
+                  bp="1002-005"
                 />
               </StyledSocials>
               <StyledCopyright>

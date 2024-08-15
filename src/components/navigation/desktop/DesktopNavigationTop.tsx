@@ -135,7 +135,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
               </LogoContainer>
           )}
           <StyledNav />
-          <StyledSearch onClick={() => setShowSearch(true)}><IconSearch /></StyledSearch>
+          <StyledSearch data-bp="1001-004" onClick={() => setShowSearch(true)}><IconSearch /></StyledSearch>
         </Flex>
         <ChainAndAccountWrapper>
           {isHideAccount ? (

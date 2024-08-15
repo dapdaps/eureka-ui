@@ -8,6 +8,14 @@ const MENUS = [
     key: 'Chain-Navi',
   },
 ];
+const BP_MAPPING = {
+  "Chain-Navi": "1006-002-001",
+  "Bridge": "1006-002-002",
+  "Swap": "1006-002-003",
+  "Liquidity": "1006-002-004",
+  "Lending": "1006-002-005",
+  "Stake": "1006-002-006"
+}
 
 const QuickOnboarding = ({ chain }: any) => {
   const { menuConfig, path } = chain;
@@ -31,7 +39,7 @@ const QuickOnboarding = ({ chain }: any) => {
     <StyledContainer>
       {menuList.map((item: any) => (
         <StyledItem
-          data-bp="100121-008"
+          data-bp={BP_MAPPING[item?.key]}
           key={item.key}
           $key={item.key}
           $bgColor={chain?.theme.button.bg}

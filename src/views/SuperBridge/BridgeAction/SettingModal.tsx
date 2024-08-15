@@ -113,7 +113,7 @@ export default function SettingModal({ onClose, routeSortType, onSortTypeChange 
                     layerShow && <div className="layer">
                         {
                             sortList.map(item => {
-                                return <div key={item.key} onClick={() => {
+                                return <div key={item.key} data-bp="1005-001" onClick={() => {
                                     onSortTypeChange(item.key)
                                     setLayerShow(false)
                                 }} className="layer-item">

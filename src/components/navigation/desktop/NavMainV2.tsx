@@ -94,7 +94,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                   onClick={() => OdysseyRef?.current?.click()}
                 />
               </div>
-              <StyleView onClick={() => {
+              <StyleView data-bp="1001-008-001" onClick={() => {
                 OdysseyRef?.current?.click();
                 router.prefetch('/odyssey')
                 router.push('/odyssey')
@@ -103,7 +103,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
            <NavigationMenu.Item>
-            <Link href="/super-bridge" >
+            <Link href="/super-bridge" data-bp="1001-001">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">
                   <IconBridge />
                   Bridge
@@ -112,7 +112,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <Link href="/super-swap">
+            <Link href="/super-swap" data-bp="1001-002">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">
                 <IconSwap />
                 Swap
@@ -129,7 +129,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
               <div className="List chain">
                 <Chains loading={networkLoading} data={networkList} onClick={() => ChainRef?.current?.click()}/>
               </div>
-              <StyleView className='chain-all' onClick={() => {
+              <StyleView className='chain-all' data-bp="1001-009-001" onClick={() => {
                 ChainRef?.current?.click()
                 router.prefetch('/networks') 
                 router.push('/networks')
@@ -138,7 +138,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <Link href='/alldapps'>
+            <Link href='/alldapps' data-bp="1001-003">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">
                 DApps
               </NavigationMenu.Trigger>
