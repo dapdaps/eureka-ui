@@ -86,7 +86,7 @@ const SuperFeatures = () => {
         <div className="title">SUPER <span>FEATURES</span></div>
         <div className="subTitle">DapDap engages users in 5-10 mins in Super features by helping users to jump in crypto world more effectively.</div>
         <div className="engages">
-            <Link href='/super-bridge'>
+            <Link href='/super-bridge' data-bp="1003-009">
                 <div className="section bridge">
                     <img className="logo" src="/images/home/logo-bridge.png" alt="bridge" />
                     <div className="desc" >
@@ -95,7 +95,7 @@ const SuperFeatures = () => {
                     </div>
                 </div>
             </Link>
-            <Link href='/super-swap'>
+            <Link href='/super-swap' data-bp="1003-010">
             <div className="section">
                 <img className="logo" src="/images/home/logo-swap.png" alt="swap" />
                 <div className="desc">

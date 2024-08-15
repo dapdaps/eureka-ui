@@ -24,6 +24,7 @@ const DiscoveryDapps = () => {
     <StyledContainer>
       <StyledWrapper>
         <AllDappsTitle
+          bp='1003-006'
           onCategory={onSelectCategory}
           activeCategory={category}
           dappList={featuredDapps?.titleDapps ?? []}
@@ -57,7 +58,7 @@ const DiscoveryDapps = () => {
                   featuredDapps?.dapps ? featuredDapps.dapps.map((dapp: any, idx: number) => (
                     <SwiperSlide key={idx}>
                       <DappCard
-                        bp={{ detail: '1001-004', dapp: '1001-005' }}
+                        bp={{ detail: '', dapp: '1003-007' }}
                         name={dapp.name}
                         logo={dapp.logo}
                         description={dapp.description}
@@ -80,7 +81,7 @@ const DiscoveryDapps = () => {
         <StyledMask></StyledMask>
       </StyledSwiperWrapper>
       <StyledFooter>
-        <ViewAll href="/alldapps" />
+        <ViewAll href="/alldapps" data-bp="1003-008" />
       </StyledFooter>
     </StyledContainer>
   );

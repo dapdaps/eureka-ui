@@ -159,6 +159,7 @@ const OdysseyList = () => {
                 className="odyssey-card"
                 key={compass.id}
                 id={compass.id}
+                bp='1004-001'
                 name={compass.name}
                 banner={compass.banner}
                 status={compass.status}

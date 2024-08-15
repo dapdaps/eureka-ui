@@ -120,7 +120,7 @@ const ChainDetail = ({ path }: any) => {
         pageTotal={pageTotal}
         pageIndex={pageIndex}
         fetchDappList={fetchDappList}
-        bp={{ detail: '10011-001', dapp: '10011-002' }}
+        bp={{ detail: '', dapp: '1006-002-010' }}
         loadingLength={pageSize}
         loadFromApi={false}
         onPage={onPage}

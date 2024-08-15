@@ -19,11 +19,12 @@ const Tab = ({ tab, setTab, children, tabs, tabsExtra }: any) => {
     <PortfolioTabs>
       <StyledPortfolioTabBorder className={tabsExtra ? 'tab-flex' : ''}>
         <StyledPortfolioTabHead>
-            {tabs.map((_tab: { key: string, title: string }) => {
+            {tabs.map((_tab: { key: string, title: string, bp?: string }) => {
               return (
                 <StyledTabItem
                   key={_tab.key}
                   className={`${tab === _tab.key ? 'active' : ''}`}
+                  data-bp={_tab?.bp}
                   onClick={() => {
                     setTab(_tab.key as 'Wallet' | 'Protocol' | 'Execution Records');
                   }}

@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Tab from '@/views/Portfolio/components/Tab';
 
@@ -23,23 +23,29 @@ import Big from 'big.js';
 import { usePortfolioStore } from '@/stores/portfolio';
 import { useWorth } from '@/views/Portfolio/hooks/useWorth';
 import useTvls from '@/views/Portfolio/hooks/useTvls';
+import useAccount from '@/hooks/useAccount';
+import { report } from '@/utils/burying-point';
 
 const TABS = [
   {
     key: '1',
     title: 'In Wallet',
+    bp: "1008-001"
   },
   {
     key: '2',
     title: 'DeFi Portfolio',
+    bp: "1008-002"
   },
   {
     key: '3',
     title: 'Execution Records',
+    bp: "1008-003"
   },
 ];
 
 export default function Portfolio() {
+  const { account } = useAccount();
   const [tab, setTab] = useState(TABS[0].key);
   const [network, setNetwork] = useState<number>(-1);
 
@@ -90,6 +96,13 @@ export default function Portfolio() {
   const link = (
     <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">feedback here</a>
   );
+
+  useEffect(() => {
+    account && report({
+      address: account,
+      code: TABS[0]?.bp
+    })
+  }, [account])
 
   return (
     <StyledContainer>

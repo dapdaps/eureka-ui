@@ -28,10 +28,12 @@ export const TABS = [
   {
     key: '1',
     label: 'Overview',
+    bp: "1006-002-008"
   },
   {
     key: '2',
     label: 'My History',
+    bp: "1006-002-007"
   },
 ];
 

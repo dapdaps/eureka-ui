@@ -48,6 +48,7 @@ const OdysseyCardComponent = (props: Props) => {
     users,
     medals,
     className,
+    bp
   } = props;
 
   const tagListRef = useRef<any>();
@@ -201,6 +202,7 @@ const OdysseyCardComponent = (props: Props) => {
           </StyledOdysseyBanner>
           <StyledOdysseyButton
             onClick={onCardClick}
+            data-bp={bp}
             variants={{
               visible: {
                 opacity: 1,
@@ -363,6 +365,7 @@ export interface Props {
   medals?: { icon: string; id: number; }[];
   // custom className
   className?: string;
+  bp?: string;
 }
 
 const odysseyIsLive = (status: StatusType) => {
