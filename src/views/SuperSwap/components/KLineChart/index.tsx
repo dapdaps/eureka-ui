@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import IconRefresh from '@public/images/refresh.svg'
+import IconMore from '@public/images/tokens/more.svg'
+import TokenDetailPopup from './TokenDetailPopup';
+
 const ChartContainer = styled.div`
   color: white;
-  padding: 20px;
+  margin-top: 20px;
   width: 100%;
 `;
 
@@ -67,7 +70,19 @@ const Tab = styled.button<{ active: boolean }>`
   line-height: 12px;
 `;
 
-const periods = ['1D', '1W', '1M', '1Y', 'All'];
+const StyledIconMore = styled.div`
+  width: 20px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: #979ABE;
+  &:hover {
+    color: #fff;
+  }
+`
+
+const periods = ['1D', '1W', '1M', '1Y'];
 
 // Mock data for the chart
 const generateMockData = (numPoints: number) => {
@@ -82,6 +97,7 @@ const generateMockData = (numPoints: number) => {
 
 const KLineChart: React.FC = () => {
   const [activePeriod, setActivePeriod] = useState('1D');
+  const [isTokenDetailPopupVisible, setIsTokenDetailPopupVisible] = useState(false);
   const chartData = generateMockData(100);
 
   return (
@@ -105,6 +121,9 @@ const KLineChart: React.FC = () => {
               {period}
             </Tab>
           ))}
+          <StyledIconMore onClick={() => setIsTokenDetailPopupVisible(true)}>
+              <IconMore />
+          </StyledIconMore>
       </TabContainer>
       </Title>
       <ResponsiveContainer width="100%" height={300}>
@@ -124,6 +143,7 @@ const KLineChart: React.FC = () => {
           />
         </LineChart>
       </ResponsiveContainer>
+      <TokenDetailPopup visible={isTokenDetailPopupVisible} close={() => setIsTokenDetailPopupVisible(false)} />
     </ChartContainer>
   );
 };

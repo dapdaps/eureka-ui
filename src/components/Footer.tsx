@@ -1,12 +1,6 @@
 import { motion } from 'framer-motion';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
-import RpcSelector from '@/components/Rpc/Selector';
-import RpcAlert from '@/components/Rpc/Alert';
-import { useRpcStore } from '@/stores/rpc';
-import { useRpc } from '@/hooks/useRpc';
-import { useEffect } from 'react';
-import { renderPing, renderPingConfig } from '@/components/Rpc/utils';
+import Rpc from '@/components/Rpc'
 
 const StyledContainer = styled.div`
   width: 100%;
@@ -57,40 +51,7 @@ const StyledFooterRight = styled.div`
   gap: 38px;
   margin-left: auto;
 `;
-const StyledRpcs = styled.div<{ $color?: string; }>`
-  position: fixed;
-  bottom: 30px;
-  right: 20px;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  color: ${({ $color }) => $color || '#57DB64'};
-  font-size: 12px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  cursor: pointer;
-  opacity: 0.8;
-  transition: opacity 0.2s linear;
 
-  @media (max-width: 1394px) {
-    bottom: 60px;
-  }
-
-  &:hover {
-    opacity: 1;
-  }
-
-  &&::after {
-    content: '';
-    display: block;
-    width: 6px;
-    height: 6px;
-    flex-shrink: 0;
-    background: ${({ $color }) => $color || '#57DB64'};
-    border-radius: 50%;
-  }
-`;
 const StyledCopyright = styled.div``;
 
 const SocialButton = ({ icon, alt, url, bp }: { icon: any; alt: string; url?: string; bp?:string }) => {
@@ -110,18 +71,6 @@ const SocialButton = ({ icon, alt, url, bp }: { icon: any; alt: string; url?: st
   );
 };
 const Footer = ({ isHideLeft, isHideRight }: { isHideLeft?: boolean; isHideRight?: boolean; }) => {
-  const router = useRouter();
-  const rpcStore = useRpcStore();
-  const { ping, getCurrentPing } = useRpc();
-
-  const handleRpc = () => {
-    rpcStore.setVisible(true);
-  };
-
-  useEffect(() => {
-    getCurrentPing();
-  }, []);
-
   return (
     <StyledContainer>
       <StyledContainerInner>
@@ -275,17 +224,8 @@ const Footer = ({ isHideLeft, isHideRight }: { isHideLeft?: boolean; isHideRight
             </StyledFooterRight>
           )
         }
-        <StyledRpcs $color={renderPingConfig(ping).color} onClick={handleRpc}>
-          {renderPing(ping)}
-        </StyledRpcs>
+        <Rpc />
       </StyledContainerInner>
-      <RpcSelector
-        visible={rpcStore.visible}
-        onClose={() => {
-          rpcStore.setVisible(false);
-        }}
-      />
-      <RpcAlert visible={rpcStore.alert} />
     </StyledContainer>
   );
 };

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import RpcList, { Props as RpcListProps } from './index';
+import RpcList, { Props as RpcListProps } from './rpc';
 import Modal from '@/components/Modal';
 
 const RpcSelector = (props: Props) => {
