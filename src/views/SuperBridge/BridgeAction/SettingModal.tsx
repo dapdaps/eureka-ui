@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { ArrowDown } from '../Arrow'
 import Modal from "../Modal";
+import { StyledContainer } from "@/styled/styles";
 
 const ItemWapper = styled.div`
     display: flex;
@@ -113,7 +114,7 @@ export default function SettingModal({ onClose, routeSortType, onSortTypeChange 
                     layerShow && <div className="layer">
                         {
                             sortList.map(item => {
-                                return <div key={item.key} data-bp="1005-001" onClick={() => {
+                                return <StyledContainer key={item.key} data-bp="1005-001" onClick={() => {
                                     onSortTypeChange(item.key)
                                     setLayerShow(false)
                                 }} className="layer-item">
@@ -126,7 +127,7 @@ export default function SettingModal({ onClose, routeSortType, onSortTypeChange 
 
                                         </div>
                                     }
-                                </div>
+                                </StyledContainer>
                             })
                         }
                     </div>

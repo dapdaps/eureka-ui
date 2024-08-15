@@ -10,6 +10,7 @@ import useAccount from '@/hooks/useAccount';
 import Empty from '@/components/Empty';
 import { useDebounceFn } from 'ahooks';
 import { useNeedRefreshStore } from '@/stores/useNeedRefreshStore';
+import { StyledContainer } from '@/styled/styles';
 
 
 const Wrapper = styled.div`
@@ -183,10 +184,10 @@ export default function Notification() {
         <Layer>
           <LayerHeader>
             <div className="noti-title">Notifications</div>
-            <div className="noti-read-all" data-bp="1001-006-001" onClick={() => {
+            <StyledContainer className="noti-read-all" data-bp="1001-006-001" onClick={() => {
               router.push('/notification')
               setIsHovered(false);
-            } }>Read all</div>
+            } }>Read all</StyledContainer>
           </LayerHeader>
           <div className="noti-content">
             {

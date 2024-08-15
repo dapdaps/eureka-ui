@@ -17,7 +17,7 @@ const TABS: { name: string; key: Tab; bp: string }[] = [
   {
     name: 'Favorite Apps',
     key: 'FavoriteApps',
-    bp: "1009-002"
+    bp: "1009-003"
   },
   {
     name: 'Reward History',

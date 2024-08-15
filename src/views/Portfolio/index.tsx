@@ -96,14 +96,7 @@ export default function Portfolio() {
   const link = (
     <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">feedback here</a>
   );
-
-  useEffect(() => {
-    account && report({
-      address: account,
-      code: TABS[0]?.bp
-    })
-  }, [account])
-
+  
   return (
     <StyledContainer>
       {

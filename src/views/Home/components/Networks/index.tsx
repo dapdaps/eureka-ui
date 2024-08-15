@@ -367,7 +367,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
 
   return (
     <>
-      <div
+      <StyledContainer
         className="panel"
         onMouseEnter={() => setRunning(true)}
         onMouseLeave={() => setRunning(false)}
@@ -462,14 +462,14 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
             </div>
           </div>
         </div>
-      </div>
+      </StyledContainer>
     </>
   )
 }
 
 const SubNetwork = ({ network, handleClickNetwork }: any) => {
   return (
-    <div className="panel" data-bp="1003-005" onClick={() => {
+    <StyledContainer className="panel" data-bp="1003-005" onClick={() => {
       handleClickNetwork(network)
     }}>
       <StyledLogoWrapper>
@@ -490,7 +490,7 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
           isCenter
         />
       </BadgesContainer>
-    </div>
+    </StyledContainer>
   )
 }
 const Networks: FC<IProps> = (props) => {
@@ -518,7 +518,7 @@ const Networks: FC<IProps> = (props) => {
             <span className="highlight"> 15+ L2</span> NETWORKS
           </span>
 
-          <ViewAll href="/networks" data-bp="1003-002" />
+          <ViewAll href="/networks" bp="1003-002" />
         </Title>
         <PrimaryPanels>
           {
