@@ -5,15 +5,14 @@ import {
   StyledDataItem,
   StyledItemLabel,
   StyledItemValue,
-  Btn,
   StyledBtnGroup,
   StyledReward
 } from '../styles';
 import React, { FC } from 'react';
 import { IProps } from '@/views/networks/list/components/list-item';
-import { CardHead, DataListShown } from '@/views/networks/list/components/utils';
+import { CardHead, DataListShown, FooterButton } from '@/views/networks/list/components/utils';
 import Reward from '@/views/networks/list/components/reward';
-import popupsData, { IdToPath } from '@/config/all-in-one/chains';
+import popupsData from '@/config/all-in-one/chains';
 
 export const ListCard: FC<IProps> = ({ dataSource }) => {
   const {
@@ -55,13 +54,12 @@ export const ListCard: FC<IProps> = ({ dataSource }) => {
         }
       </StyledReward>
       <StyledBtnGroup>
-        <Btn href={`/networks/${IdToPath[id]}`} data-bp="10012-002">
-          Details
-        </Btn>
-        <Btn href={`/all-in-one/${path}`} data-bp="10012-003" className="allinone-btn"
-             $bgColor={matchedItem?.theme.button.bg} $color={matchedItem?.theme.button.text}>
-          All-In-One
-        </Btn>
+        <FooterButton
+          bgColor={matchedItem?.theme.button.bg}
+          textColor={matchedItem?.theme.button.text}
+          path={path}
+          id={id}
+        />
       </StyledBtnGroup>
     </StyledCardContainer>
   );

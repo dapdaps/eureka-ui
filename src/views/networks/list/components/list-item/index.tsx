@@ -1,10 +1,9 @@
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo } from 'react';
-import popupsData, { IdToPath } from '@/config/all-in-one/chains';
+import popupsData from '@/config/all-in-one/chains';
 import { Network } from '@/views/networks/list/hooks/useNetworks';
 import Reward from '@/views/networks/list/components/reward';
 import {
-  Btn,
   BtnGroup,
   DataList,
   StyledChainOdyssey,
@@ -12,7 +11,7 @@ import {
   Head,
   ChainOdyssey,
 } from '@/views/networks/list/components/styles';
-import { CardHead, DataListShown } from '@/views/networks/list/components/utils';
+import { CardHead, DataListShown, FooterButton } from '@/views/networks/list/components/utils';
 
 const ListItem: FC<IProps> = ({ dataSource }) => {
   const {
@@ -31,13 +30,12 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
         <CardHead {...dataSource}/>
         <BtnGroup>
           { odyssey.length > 0 && (<StyledChainOdyssey><ChainOdyssey src='/images/odyssey/welcome/logo.gif'/></StyledChainOdyssey>) }
-          <Btn href={`/networks/${IdToPath[id]}`} data-bp="1006-002">
-            Details
-          </Btn>
-          <Btn href={`/all-in-one/${path}`} data-bp="1006-001" className="allinone-btn"
-               $bgColor={matchedItem?.theme.button.bg} $color={matchedItem?.theme.button.text}>
-            All-In-One
-          </Btn>
+          <FooterButton
+            bgColor={matchedItem?.theme.button.bg}
+            textColor={matchedItem?.theme.button.text}
+            path={path}
+            id={id}
+          />
         </BtnGroup>
       </Head>
       <DataList>

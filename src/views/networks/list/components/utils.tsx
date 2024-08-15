@@ -1,4 +1,5 @@
 import {
+  Btn,
   ChainDesc,
   ChainInfo, ChainName, ChainNameContainer,
   LogoGroup,
@@ -11,6 +12,7 @@ import ValuePercent from '@/views/networks/list/components/value-percent';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import Image from 'next/image';
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
+import { IdToPath } from '@/config/all-in-one/chains';
 
 export const TagList = [
   {
@@ -100,5 +102,27 @@ export const CardHead = ({ classname, logo, name, isTop,  isHot, tbd_token, nati
       </ChainInfo>
     </LogoGroup>
   );
-
 }
+
+export const FooterButton = ({ bgColor, textColor, id, path }: any) => {
+
+  return (
+    <>
+      <Btn
+        href={`/networks/${IdToPath[id]}`}
+        data-bp="1006-002"
+      >
+        Details
+      </Btn>
+      <Btn
+        href={`/all-in-one/${path}`}
+        data-bp="1006-001"
+        className="allinone-btn"
+        $bgColor={bgColor ?? '#EBF479'}
+        $color={textColor ?? '#000000'}
+      >
+        All-In-One
+      </Btn>
+    </>
+  );
+};
