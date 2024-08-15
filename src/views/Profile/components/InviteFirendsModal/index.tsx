@@ -168,7 +168,7 @@ const InviteFirendsModal = ({
             {
               inviteList?.medal && (
                 <StyledMedalContainer>
-                  <MedalCard medal={{ ...inviteList?.medal, completed_percent: inviteList?.total_active ?? 0 }} style={{ width: 508, height: 133 }} barWidth='403px' />
+                  <MedalCard medal={{ ...inviteList?.medal, completed_threshold: inviteList?.total_active ?? 0 }} style={{ width: 508, height: 133 }} barWidth='403px' />
                 </StyledMedalContainer>
               )
             }
