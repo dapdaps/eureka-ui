@@ -109,6 +109,7 @@ const Reward = (props: Props) => {
           {
             badges.map((b, idx) => (
               <StyledBadge
+                key={idx}
                 whileHover="tooltip"
                 initial="default"
                 variants={{
