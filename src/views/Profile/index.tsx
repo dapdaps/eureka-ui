@@ -22,7 +22,7 @@ import useInviteList from './hooks/useInviteList';
 import useUserFavorites from "./hooks/useUserFavorites";
 import useMedalList from './hooks/useUserMedalList';
 import useUserRewardRecords from './hooks/useUserRewardRecords';
-import { Tab } from './types';
+import { MedalType, Tab } from './types';
 
 const StyledContainer = styled.div`
   background-image: url(/images/profile/top_bg.png);
@@ -78,20 +78,19 @@ export default memo(function ProfileView() {
   }, [compassList, airdropList, userMedalList, userFavorites, userRewardRecords])
 
   const bouncingMedals = useMemo(() => {
-    const _bouncingMedals = userMedalList?.map((medal, index) => {
+    const _filterMedals = userInfo?.medals?.filter((medal: MedalType) => medal?.logo) ?? []
+    const _bouncingMedals = _filterMedals?.map((medal: MedalType, index: number) => {
       return {
         key: index,
         icon: medal?.logo,
         x: index * 100,
         vx: 0,
-        mass: 30,
+        mass: (index === 0 || index === _filterMedals.length - 1) ? 60 : 30,
       }
-    })?.filter((medal) => !!medal.icon)?.slice(0, 5) ?? [];
-    _bouncingMedals.forEach((it, idx) => {
-      it.mass = (idx === 0 || idx === userMedalList.length - 1) ? 60 : 30;
-    });
+    }) ?? [];
+    console.log('=_bouncingMedals', _bouncingMedals)
     return _bouncingMedals;
-  }, [userMedalList])
+  }, [userInfo])
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
   };
