@@ -8,6 +8,8 @@ import { get } from '@/utils/http'
 import useToast from '@/hooks/useToast';
 import { copyText } from '@/utils/copy';
 import chainCofig from '@/config/chains';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formateValueWithThousandSeparator } from '@/utils/formate';
 
 const StyledToken = styled.div`
   padding: 0 24px;
@@ -170,16 +172,16 @@ export interface Props {
   trade?: any;
 }
 
-
 interface IData {
+  id: number;
+  symbol: string;
   circulating_supply: string;
-  fully_diluted_valuation: string;
   max_supply: string;
+  fully_diluted_valuation: string;
   market_cap: string;
   high_24h: string;
   low_24h: string;
-  volume_24h_eth: string;
-  volume_24h_usd: string;
+  volume_24h: string;
 }
 
 const TokenDetailPopup = (props: Props) => {
@@ -190,7 +192,9 @@ const TokenDetailPopup = (props: Props) => {
   const fetchTokenDetail = async () => {
     setLoading(true);
     try {
-      const res = await get(`/api/token/${trade.inputCurrency.address}`);
+      const res = await get(`/api/token/market`, {
+        symbol: trade.inputCurrency.symbol
+      });
       setTokenDetail(res.data);
     } catch (error) {
       console.log(error);
@@ -201,7 +205,7 @@ const TokenDetailPopup = (props: Props) => {
 
   useEffect(() => {
     if (trade?.inputCurrency) {
-      // fetchTokenDetail();
+      fetchTokenDetail();
     }
   }, []);
 
@@ -240,7 +244,6 @@ const TokenDetailPopup = (props: Props) => {
     }
   }
 
-
   return (
     <Modal
       width={476}
@@ -262,56 +265,58 @@ const TokenDetailPopup = (props: Props) => {
         <StyledToken>
           <StyleMain>
             <Header>
-              <img className="token-img" src="/images/tokens/blast.svg" alt="" />
+              <img className="token-img" src={trade.inputCurrency.icon} alt="" />
               <Title>
                 <span className="name">{trade.inputCurrency.symbol}</span>
                 <span className="name-desc">{trade.inputCurrency.name === 'ETH' ? 'Ethereum' : trade.inputCurrency.name }</span>
               </Title>
             </Header>
-
-            <AddressSection>
-              <div className="token-title">Token address</div>
-              <Address>
-                <div className="addr">0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9</div>
-                <div className="options">
-                  <IconCopy onClick={handleCopyCurrency} />
-                  <IconLink onClick={handleLink} />
-                  <IconAdd onClick={hanleAddMask} />
-                </div>
-              </Address>
-            </AddressSection>
+            {
+              trade.inputCurrency.address != 'native' && (
+                <AddressSection>
+                  <Address>
+                    <div className="addr">{trade.inputCurrency.address}</div>
+                    <div className="options">
+                      <IconCopy onClick={handleCopyCurrency} />
+                      <IconLink onClick={handleLink} />
+                      <IconAdd onClick={hanleAddMask} />
+                    </div>
+                  </Address>
+                </AddressSection>
+              )
+            }
             <InfoGrid>
               <InfoItem>
                 <InfoLabel>Circulating supply</InfoLabel>
-                <InfoValue>1.38k</InfoValue>
+                <InfoValue>{formatIntegerThousandsSeparator(tokenDetail?.circulating_supply)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>Fully Diluted Valuation</InfoLabel>
-                <InfoValue>$2.18m</InfoValue>
+                <InfoValue>${formatIntegerThousandsSeparator(tokenDetail?.fully_diluted_valuation)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>Maximum supply</InfoLabel>
-                <InfoValue>1.38k</InfoValue>
+                <InfoValue>{formatIntegerThousandsSeparator(tokenDetail?.max_supply)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>Market cap</InfoLabel>
-                <InfoValue>$4.34m</InfoValue>
+                <InfoValue>${formatIntegerThousandsSeparator(tokenDetail?.market_cap)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h high</InfoLabel>
-                <InfoValue>$3,174.79</InfoValue>
+                <InfoValue>${formateValueWithThousandSeparator(tokenDetail?.high_24h, 2)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24 low</InfoLabel>
-                <InfoValue>$3,074.79</InfoValue>
+                <InfoValue>${formateValueWithThousandSeparator(tokenDetail?.low_24h, 2)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h volume - ETH</InfoLabel>
-                <InfoValue>237.215144</InfoValue>
+                <InfoValue>{formateValueWithThousandSeparator(tokenDetail?.volume_24h, 2)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h volume - USD</InfoLabel>
-                <InfoValue>$738.47k</InfoValue>
+                <InfoValue>${formatIntegerThousandsSeparator(tokenDetail?.volume_24h)}</InfoValue>
               </InfoItem>
             </InfoGrid>
           </StyleMain>
