@@ -88,8 +88,7 @@ export default memo(function ProfileView() {
         mass: (index === 0 || index === _filterMedals.length - 1) ? 60 : 30,
       }
     }) ?? [];
-    console.log('=_bouncingMedals', _bouncingMedals)
-    return _bouncingMedals;
+    return _bouncingMedals.slice(0, 6);
   }, [userInfo])
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
