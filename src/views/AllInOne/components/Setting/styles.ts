@@ -90,10 +90,9 @@ export const StyledPopupItem = styled.div`
     flex-grow: 1;
   }
 
-  /* &:hover,
-  &.selected {
+  &:hover {
     background: #2a2a3a;
-  } */
+  }
 `;
 
 export const StyledPopupText = styled.div`

@@ -38,7 +38,8 @@ const BLACK_PATH = [
   '/bridge-x/[tool]',
   '/notification',
   '/all-in-one/[chain]',
-  '/all-in-one/[chain]/[menu]'
+  '/all-in-one/[chain]/[menu]',
+  '/bridge-chain/[chain]',
 ];
 
 const HideFooterRoutes = [

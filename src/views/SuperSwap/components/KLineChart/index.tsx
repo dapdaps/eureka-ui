@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import IconRefresh from '@public/images/refresh.svg';
@@ -9,7 +9,8 @@ import { useDebounceFn } from 'ahooks';
 import { StyledFlex } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
 import { format } from 'date-fns';
-
+import { useTokenPriceListStore } from '@/stores/tokenPrice';
+import IconArrowUp from '@public/images/tokens/arrow-up.svg';
 
 const ChartContainer = styled.div`
   color: white;
@@ -47,13 +48,23 @@ const PriceInfo = styled.div`
   line-height: 16px;
 `;
 
-const ChangePercentage = styled.span`
-  color: #79ffb7;
+const ChangePercentage = styled.div<{ isPositive: boolean }>`
   font-size: 14px;
   font-family: Gantari;
   font-size: 12px;
   font-weight: 400;
   line-height: 14px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  color: ${isPositive => isPositive ? '#79FFB7' : '#FF3D83'};
+  .up {
+    font-size: 12px;
+  }
+  .down {
+    font-size: 12px;
+    transform: rotate(180deg);
+  }
 `;
 
 const TabContainer = styled.div`
@@ -144,6 +155,7 @@ const KLineChart = ({ trade }: { trade: any }) => {
   const [isTokenDetailPopupVisible, setIsTokenDetailPopupVisible] = useState(false);
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [loading, setLoading] = useState(false);
+  const tokenPriceLatest = useTokenPriceListStore(state => state.list);
 
   const fetchChartData = async () => {
     try {
@@ -172,14 +184,23 @@ const KLineChart = ({ trade }: { trade: any }) => {
     run();
   }, [trade, activePeriod]);
 
+  const selectedToken = useMemo(() => {
+    if (!trade.inputCurrency) return null;
+    return tokenPriceLatest?.[trade.inputCurrency.symbol]
+  }
+  , [trade.inputCurrency, tokenPriceLatest]);
+
   return (
     <ChartContainer>
       <Title>
         <Token>
           <CryptoIcon src={trade.inputCurrency.icon} />
           <Price>
-            <PriceInfo>$3,477</PriceInfo>
-            <ChangePercentage>↑1.23%</ChangePercentage>
+            <PriceInfo>${parseFloat(selectedToken?.price).toFixed(2) || '-'}</PriceInfo>
+            <ChangePercentage isPositive={selectedToken?.change_percent > 0}>
+              <IconArrowUp clasName={selectedToken?.change_percent > 0 ? 'up' : 'down'} />
+              <span>{parseFloat(selectedToken?.change_percent).toFixed(2) || '-'}%</span>
+              </ChangePercentage>
           </Price>
           <IconRefresh />
         </Token>
