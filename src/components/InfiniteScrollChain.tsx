@@ -45,6 +45,7 @@ const ChainIcon = styled.img`
   width: 20px;
   height: 20px;
   margin-right: 4px;
+  border-radius: 50%;
 `;
 
 const ChainText = styled.span`
@@ -80,6 +81,8 @@ interface Token {
   price: string;
   change_percent: string;
   logo: string;
+  symbol: string;
+  isPositive: boolean;
 }
 
 const LoadingCard = () => {
@@ -99,14 +102,11 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
 
   const tokenList = useMemo(() => {
     if (!list) return [];
-    return Object.entries(list).map(([key, value]) => {
-      const token = value as Token;
+    return list.map((token: Token) => {
       return {
-        name: key,
-        price: token.price,
-        change_percent: Math.abs(parseFloat(token.change_percent)),
+        ...token,
+        change_percent: Math.abs(parseFloat(token?.change_percent)) || 0,
         isPositive: parseFloat(token.change_percent) > 0,
-        logo: token.logo || '/images/chains/blast.png',
       };
     });
   }, [list]);
@@ -122,15 +122,15 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
           {loading ? (
             <LoadingCard />
           ) : (
-            tokenList.map((token, index) => (
+            tokenList.map((token: Token, index: number) => (
               <IndexList key={index}>
                 <ChainIcon src={token.logo} alt="" />
                 <ChainText>
-                  {token.name} {parseFloat(token.price).toFixed(2)}
+                  {token.symbol} {parseFloat(token.price).toFixed(2)}
                 </ChainText>
                 <ChainIndex isPositive={token.isPositive}>
                   <div className="token-isPositive">{token.isPositive ? '+' : '-'}</div>
-                  <div className="token-percent">{token.change_percent.toFixed(2)}%</div>
+                  <div className="token-percent">{parseFloat(token.change_percent).toFixed(2)}%</div>
                 </ChainIndex>
               </IndexList>
             ))

@@ -185,10 +185,12 @@ const KLineChart = ({ trade }: { trade: any }) => {
   }, [trade, activePeriod]);
 
   const selectedToken = useMemo(() => {
-    if (!trade.inputCurrency) return null;
+    if (!trade?.inputCurrency) return null;
     return tokenPriceLatest?.[trade.inputCurrency.symbol]
   }
-  , [trade.inputCurrency, tokenPriceLatest]);
+  , [trade?.inputCurrency, tokenPriceLatest]);
+
+  if (!trade?.inputCurrency) return null;
 
   return (
     <ChartContainer>
