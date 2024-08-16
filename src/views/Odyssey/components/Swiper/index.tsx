@@ -43,6 +43,7 @@ import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList
 import Tag, { StatusType } from '../Tag';
 import RewardList from '../Reward';
 import MedalList from '../Medal';
+import { StyledComingSoon } from '@/views/Home/components/Compass/styles';
 
 export const formatCompassName = (name: string) => {
   if (!name) return '';
@@ -120,7 +121,7 @@ const CompassCard = function ({ compass }: any) {
           </StyleList>
           {/* <StyledCardDesc>{compass.description}</StyledCardDesc> */}
           {compass.status === 'un_start' ? (
-            <div className="btns">Coming soon...</div>
+            <StyledComingSoon className="btns">Coming soon...</StyledComingSoon>
           ) : (
             <div className="btns">
               <StyledCompassButton
