@@ -24,18 +24,19 @@ import { useRouter } from 'next/router';
 import { ListContainer } from '@/views/networks/list/components/styles';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
 import { useNetworkStore } from '@/stores/network';
+import Empty from '@/views/networks/list/components/empty';
 
 const ModeList: Mode[] = [
   {
     key: 'list',
     icon: FilterIconList,
-    component: ListItem
+    component: ListItem,
   },
   {
     key: 'card',
     icon: FilterIconCard,
-    component: ListCard
-  }
+    component: ListCard,
+  },
 ];
 
 const List = () => {
@@ -43,10 +44,10 @@ const List = () => {
   const mode = useNetworkStore((store: any) => store.mode);
   const setMode = useNetworkStore((store: any) => store.setMode);
 
-  const [ sort, setSort ] = useState<any>(SortList[0].value);
+  const [sort, setSort] = useState<any>(SortList[0].value);
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [airdrop, setAirdrop] = useState<boolean>(false);
-  const { loading, l1NetworkList, l2networkList } = useNetworks({sort,  mode, rewardNow, airdrop});
+  const { loading, l1NetworkList, l2networkList } = useNetworks({ sort, mode, rewardNow, airdrop });
   const searchParams = useSearchParams();
   const pathname = usePathname();
 
@@ -78,21 +79,21 @@ const List = () => {
     }
     setAirdrop(_airdrop);
     setQueryParams(params);
-  }
+  };
 
   const onSortSelect = (_sort: string) => {
     setSort(_sort);
-  }
+  };
 
   const CurrentComponent = useMemo(() => {
     return ModeList.find(item => item.key === mode)?.component ?? <></>;
-  }, [mode])
+  }, [mode]);
 
   useEffect(() => {
     const _searchParams = new URLSearchParams(location.search);
     const _reward = _searchParams.get('reward');
     const _sort = _searchParams.get('sort');
-    const _airdrop = _searchParams.get('_airdrop');
+    const _airdrop = _searchParams.get('airdrop');
 
     if (checkQueryEmpty(_sort as string, () => true)) {
       setSort(_sort);
@@ -122,14 +123,14 @@ const List = () => {
     const _params: any = new URLSearchParams();
     const _query = router.query;
     if (_mode === 'list') {
-      if (_query.sort){
+      if (_query.sort) {
         _params.set('sort', _query.sort);
       }
       setQueryParams(_params);
       return;
     }
     if (_mode === 'card') {
-      if (sort && sort !== SortList[0].value){
+      if (sort && sort !== SortList[0].value) {
         _params.set('sort', sort);
       }
       if (airdrop) {
@@ -141,7 +142,7 @@ const List = () => {
       setQueryParams(_params);
       return;
     }
-  }
+  };
 
   return (
     <StyledContainer>
@@ -159,18 +160,22 @@ const List = () => {
           <StyledH1>L2 Networks</StyledH1>
           <StyledFilters>
             <StyledFilterText>Sort by</StyledFilterText>
-            <SortBy value={sort} isUrlParams onSelect={onSortSelect}/>
+            <SortBy value={sort} isUrlParams onSelect={onSortSelect} />
             {
               mode === ModeList[1].key && (
                 <>
-                  <Radio selected={airdrop} onChange={onAirdropToggle} label='Potential Airdrop' />
-                  <Radio colorful selected={rewardNow} onChange={onRewardToggle} label='Reward now' />
+                  <Radio selected={airdrop} onChange={onAirdropToggle} label="Potential Airdrop" />
+                  <Radio colorful selected={rewardNow} onChange={onRewardToggle} label="Reward now" />
                 </>
               )
             }
             {
-              ModeList.map((item ) => (
-                <item.icon key={item.key} className={`filter-icon ${mode === item.key ? 'active' : ''}`} onClick={() => onModeChange(item.key)}/>
+              ModeList.map((item) => (
+                <item.icon
+                  key={item.key}
+                  className={`filter-icon ${mode === item.key ? 'active' : ''}`}
+                  onClick={() => onModeChange(item.key)}
+                />
               ))
             }
           </StyledFilters>
@@ -178,23 +183,31 @@ const List = () => {
         <ListContainer className={`${mode}-view`}>
           {
             loading ? [...new Array(6).keys()].map((key) => (
-              <LoadingSkeleton key={key} type={mode}/>
-            )) : l2networkList.map((item: any, index: number) => (
-              <CurrentComponent dataSource={item} key={item.id}/>
-            ))
+              <LoadingSkeleton key={key} type={mode} />
+            )) : (
+              l2networkList.length > 0 ?
+                l2networkList.map((item: any, index: number) => (
+                  <CurrentComponent dataSource={item} key={item.id} />
+                )) :
+                <Empty />
+            )
           }
         </ListContainer>
         <StyledHead>
           <StyledH1>L1 Networks</StyledH1>
         </StyledHead>
         <ListContainer className={`${mode}-view`}>
-        {
-          loading ? [...new Array(2).keys()].map((key) => (
-            <LoadingSkeleton key={key} type={mode}/>
-          )) : l1NetworkList.map((item: any) => (
-            <CurrentComponent dataSource={item} key={item.id}/>
-          ))
-        }
+          {
+            loading ? [...new Array(2).keys()].map((key) => (
+              <LoadingSkeleton key={key} type={mode} />
+            )) : (
+              l1NetworkList.length > 0 ?
+                l1NetworkList.map((item: any) => (
+                  <CurrentComponent dataSource={item} key={item.id} />
+                )) :
+                <Empty />
+            )
+          }
         </ListContainer>
       </StyledWrap>
     </StyledContainer>

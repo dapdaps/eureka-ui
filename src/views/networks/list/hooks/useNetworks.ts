@@ -72,7 +72,7 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
     }
     if (mode === 'card') {
       if (airdrop) {
-
+        _networkList = _networkList.filter(item => item.airdrop && item.airdrop.length > 0);
       }
       if (rewardNow) {
         _networkList = _networkList.filter(item => item.odyssey && item.odyssey.length > 0);
@@ -121,6 +121,7 @@ export interface Network {
   trading_volume: string;
   trading_volume_change_percent: string;
   odyssey: NetworkOdyssey[];
+  airdrop: NetworkAirdrop[];
   index?: number;
   isTop?: boolean;
   isHot?: boolean;
@@ -145,4 +146,18 @@ export interface NetworkOdyssey {
   total_transactions: number;
   total_users: number;
   trading_volume: string;
+}
+
+export interface NetworkAirdrop {
+  category: string;
+  difficulty: string;
+  estimated_date: string;
+  likelihood: string;
+  end_time: number;
+  id: number;
+  online: number;
+  relate_id: number;
+  start_time: number;
+  total_quest: number;
+  status: StatusType;
 }
