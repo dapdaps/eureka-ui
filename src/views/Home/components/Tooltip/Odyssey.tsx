@@ -98,6 +98,7 @@ const StyledValue = styled.div`
 
 const StyledContainer = styled.div<{ $withoutCardStyle?: boolean; }>`
   position: relative;
+  cursor: pointer;
 
   ${({ $withoutCardStyle }) => {
     if (!$withoutCardStyle) {
