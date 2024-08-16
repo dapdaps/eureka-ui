@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { ListItem } from './components';
 import ListCard from './components/list-card';
 import {
@@ -17,14 +17,12 @@ import LoadingSkeleton from './components/loading';
 import FilterIconList from '@public/images/networks/icon-list.svg';
 import FilterIconCard from '@public/images/networks/icon-card.svg';
 import SortBy from '@/views/AllDapps/components/Filters/SortBy';
-import Radio from '@/components/Radio';
-import { SortList, TrueString } from '@/views/AllDapps/config';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
+import { SortList } from '@/views/AllDapps/config';
 import { ListContainer } from '@/views/networks/list/components/styles';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
 import { useNetworkStore } from '@/stores/network';
 import Empty from '@/views/networks/list/components/empty';
+import AdvertiseCardList from '../../AdvertiseCardList';
 
 const ModeList: Mode[] = [
   {
@@ -108,11 +106,19 @@ const List = () => {
             loading ? [...new Array(6).keys()].map((key) => (
               <LoadingSkeleton key={key} type={mode} />
             )) : (
-              l2networkList.length > 0 ?
-                l2networkList.map((item: any, index: number) => (
-                  <CurrentComponent dataSource={item} key={item.id} />
-                )) :
-                <Empty />
+              l2networkList.length > 0
+                ? l2networkList.map((item: any) => {
+                  return mode === 'list'
+                    ? <ListItem key={item.id} dataSource={item} />
+                    : (
+                      item.isAdvertise
+                        ? (<AdvertiseCardList
+                            classname='advertise'
+                            adList={item.advertise}
+                          />)
+                        : (<ListCard dataSource={item} key={item.id}/>))
+                })
+                : <Empty />
             )
           }
         </ListContainer>

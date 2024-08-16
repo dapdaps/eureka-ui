@@ -3,8 +3,6 @@ import {
   StyledContainer,
   StyledFilters,
   StyledNetworkDropdownItem,
-  StyledRadio,
-  StyledRewardNow,
   StyledSearch,
   StyledSearchIcon,
   StyledSearchInput,
@@ -104,7 +102,6 @@ const AllDapps = (props: Props) => {
   }
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    // const params = new URLSearchParams(searchParams);
     const _searchWord = e.target.value.trim();
     setSearchWord(_searchWord);
     if (_searchWord && _searchWord !== 'undefined') {

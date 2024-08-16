@@ -9,14 +9,18 @@ import { orderBy } from 'lodash';
 import Big from 'big.js';
 import { SortList } from '@/views/AllDapps/config';
 import { useDebounceFn } from 'ahooks';
+import { useAdvertise } from '@/hooks/useAdvertise';
 
 const InConfigNetworkIds = Object.keys(IdToPath);
 
 export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
+
+  const  { fetchAdvertise } = useAdvertise('networks');
   const [loading, setLoading] = useState(false);
   const [networkList, setNetworkList] = useState<Network[]>([]);
   const [l1NetworkList, setL1NetworkList] = useState<Network[]>([]);
   const [l2networkList, setL2NetworkList] = useState<Network[]>([]);
+  const [advertise, setAdvertise] = useState<any>([]);
 
   const networkListSortByAZ = useMemo(() => {
     return orderBy(networkList, 'name', 'asc');
@@ -46,9 +50,24 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
     }
   };
 
+  const fetchAdvertiseData = async () => {
+    if (mode === 'card') {
+     const _advertise = await fetchAdvertise();
+     setAdvertise(_advertise);
+    }
+
+  }
+
   useEffect(() => {
-    fetchNetworkData();
+   fetchNetworkData();
   }, [mode]);
+
+  useEffect(() => {
+    fetchAdvertiseData();
+    return () => {
+      setAdvertise([]);
+    }
+  }, []);
 
   const { run } = useDebounceFn(() => {
     setLoading(false);
@@ -79,6 +98,10 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
       }
       _l2NetworkList.push(network);
     }
+    if (advertise.length > 0 && mode === 'card') {
+      _l2NetworkList.splice(5, 0, {isAdvertise: true, advertise } as any);
+    }
+
     setL1NetworkList(_l1NetworkList);
     setL2NetworkList(_l2NetworkList);
     run();
@@ -86,7 +109,7 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
 
   useEffect(() => {
     filterNetworkData();
-  }, [sort, rewardNow, airdrop, networkList]);
+  }, [sort, rewardNow, airdrop, networkList, advertise]);
 
   return { loading, networkList, l1NetworkList, l2networkList, networkListSortByAZ };
 }

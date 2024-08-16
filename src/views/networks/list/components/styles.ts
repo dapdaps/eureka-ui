@@ -6,7 +6,7 @@ import hexToRgba from '@/utils/hexToRgba';
 
 export const StyledCardContainer = styled.div<{$bgColor?: string}>`
   width: 405px;
-  padding: 30px 20px 28px 30px;
+  padding: 30px 20px 30px 30px;
   border-radius: 20px;
   border: 1px solid #202329;
   background: #18191E;
@@ -39,19 +39,24 @@ export const StyledCardContainer = styled.div<{$bgColor?: string}>`
     }
     &-name-container {
       justify-content: space-between;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      /*! autoprefixer: off */
+      -webkit-box-orient: vertical;
     }
   }
 `;
 
-export const StyledCardHead = styled.div``;
-export const StyledCardLogo = styled(Image)`
-  width: 72px;
-  height: 72px;
+export const StyledAdImage = styled(Image)`
+  
 `;
-export const StyledInfo = styled.div``;
-export const StyledNameContainer = styled.div``;
-export const StyledName = styled.div``;
-export const StyledTag = styled.div``;
+
+export const StyledCardHead = styled.div`
+  margin-bottom: 44px;
+`;
+
 export const StyledBtnGroup = styled.div`
   display: flex;
   align-items: center;
@@ -73,9 +78,8 @@ export const StyledData = styled.div`
   justify-content: space-between;
   width: 100%;
   flex-wrap: wrap;
-  row-gap: 36px;
-  margin-top: 44px;
-  margin-bottom: 36px;
+  row-gap: 32px;
+  margin-bottom: 28px;
   .list-card-data {
     &-value {
       font-size: 20px;
@@ -101,7 +105,7 @@ export const StyledItemValue = styled.div<{ $underline?: boolean }>`
 `;
 
 export const StyledReward = styled.div`
-  margin-bottom: 36px;
+  margin-bottom: 32px;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -354,6 +358,14 @@ export const ListContainer = styled.div`
     justify-content: stretch;
     flex-wrap: wrap;
     gap: 30px 20px;
+    
+    .advertise {
+      width: 405px;
+      &-card {
+        width: 405px;
+        height: 475px;
+      }
+    }
   }
   
   &.list-view {
