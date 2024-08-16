@@ -99,6 +99,16 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
     runQuoter();
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
+  const changeTokenType = useCallback(() => {
+    if (!trade || !outputCurrency) return
+    setInputCurrency(outputCurrency);
+    setOutputCurrency(inputCurrency);
+    setSelectType('in')
+    setInputCurrencyAmount(trade?.outputCurrencyAmount);
+    runQuoter();
+  }, [outputCurrency, outputCurrency, trade]);
+  
+
   return (
     <>
       <StyledTradeContainer className={`StyledTradeContainer ${disabled ? 'disabled' : ''}`}>
@@ -123,7 +133,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
               }}
             />
           </div>
-          <StyledTradeIcon disabled={disabled}>
+          <StyledTradeIcon disabled={disabled} onClick={changeTokenType}>
             <Arrow2Down />
           </StyledTradeIcon>
           <Currency

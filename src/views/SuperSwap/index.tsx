@@ -28,7 +28,6 @@ export default function SuperSwap() {
   const [showMarkets, setShowMarkets] = useState<boolean>(false);
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
-
   const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
     chainId,
     onSuccess() {
@@ -95,10 +94,11 @@ export default function SuperSwap() {
   }, [chainId]);
 
   const changeTokenType = useCallback(() => {
+    if (!trade || !outputCurrency) return
     setInputCurrency(outputCurrency);
     setOutputCurrency(inputCurrency);
     setSelectType('in')
-    setInputCurrencyAmount(trade.outputCurrencyAmount);
+    setInputCurrencyAmount(trade?.outputCurrencyAmount);
     runQuoter();
   }, [outputCurrency, outputCurrency, trade]);
   

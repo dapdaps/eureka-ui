@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import { useTokenPriceListStore } from '@/stores/tokenPrice';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -66,6 +67,13 @@ const ChainIndex = styled.span<{ isPositive: boolean }>`
 
 const InfiniteScrollChain = ({ className }: { className?: string }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const { list, loading } = useTokenPriceListStore();
+
+  const tokenList = useMemo(() => {
+    if (!list) return [];
+    // list 
+  }, [list])
 
   return (
     <StyledWrapper className={className}>
