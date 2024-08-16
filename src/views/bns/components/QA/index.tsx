@@ -11,7 +11,7 @@ import {
   StyledText
 } from './styles';
 
-import iconHand from '@/assets/images/icon_hand.svg';
+import iconHand from '@public/images/others/bns/icon_hand.svg?url';
 import Image from 'next/image';
 
 const iconRight = (

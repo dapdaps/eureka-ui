@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 
-import g1Img from '../../img/g-new/g1.svg'
-import g2Img from '../../img/g-new/g2.svg'
-import g3Img from '../../img/g-new/g3.svg'
-import g4Img from '../../img/g-new/g4.svg'
-import g5Img from '../../img/g-new/g5.svg'
-import g6Img from '../../img/g-new/g6.svg'
+import g1Img from '@public/images/others/odyssey/v1/g-new/g1.svg?url'
+import g2Img from '@public/images/others/odyssey/v1/g-new/g2.svg?url'
+import g3Img from '@public/images/others/odyssey/v1/g-new/g3.svg?url'
+import g4Img from '@public/images/others/odyssey/v1/g-new/g4.svg?url'
+import g5Img from '@public/images/others/odyssey/v1/g-new/g5.svg?url'
+import g6Img from '@public/images/others/odyssey/v1/g-new/g6.svg?url'
 import { useCallback, useEffect, useState, useRef } from 'react';
 
 

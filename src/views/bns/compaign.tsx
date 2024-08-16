@@ -1,8 +1,8 @@
 import { getBnsDiscount } from '@/apis';
-import DapXBNS from '@/assets/images/DapXBNS.svg';
-import desktop from '@/assets/images/desktop.png';
-import discountMark from '@/assets/images/discount_mark.svg';
-import iconAchieved from '@/assets/images/icon_achieved.svg';
+import DapXBNS from '@public/images/others/bns/DapXBNS.svg?url';
+import desktop from '@public/images/others/bns/desktop.png';
+import discountMark from '@public/images/others/bns/discount_mark.svg?url';
+import iconAchieved from '@public/images/others/bns/icon_achieved.svg?url';
 import Breadcrumb from '@/components/Breadcrumb';
 import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import useAccount from '@/hooks/useAccount';

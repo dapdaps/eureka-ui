@@ -7,7 +7,7 @@ import Fresh from '../Fresh';
 import Complete from '../Complate';
 import { saveSource } from '../../http/index'
 
-import maskImg from '../../img/mask.svg'
+import maskImg from '@public/images/others/odyssey/v1/mask.svg?url'
 import useQuestStatus from '../../hooks/useQuestStatus';
 
 const PanelWapper = styled.div`
