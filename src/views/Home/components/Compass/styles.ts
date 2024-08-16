@@ -63,6 +63,7 @@ export const StyledCardBackgroundImage = styled.img`
 `;
 
 export const StyledCardMainContent = styled.div`
+  height: 100%;
   padding: 30px 30px 30px 0;
   flex: 1;
   align-self: stretch;
