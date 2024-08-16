@@ -36,7 +36,7 @@ import {
   StyleList,
   StyledVideo,
   StyledVideoIcon,
-  StyleChainIconImg,
+  StyleChainIconImg, StyledSwiperPagination,
 } from './styles';
 
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
@@ -217,54 +217,54 @@ const Compass = () => {
                     </StyledVideo>
                   )}
                   {/* <StyledCompassIcon>
-                    <CompassIcon />
-                  </StyledCompassIcon>
-                  {compass.name === 'THRUSTER TURBO SPIN' ? null : (
-                    <StyledCompassIcon>
-                      <CompassIcon />
-                    </StyledCompassIcon>
-                  )}
-                  {odyssey[compass.id]?.reward && (
-                    <div
-                      style={
-                        compass.name === 'THRUSTER TURBO SPIN'
-                          ? {
-                              position: 'absolute',
-                              right: -27,
-                              top: -33,
-                              zIndex: 20,
-                            }
-                          : {
-                              position: 'absolute',
-                              right: -34,
-                              top: 0,
-                              zIndex: 20,
-                            }
-                      }
-                    >
-                      {['ended', 'un_start'].includes(compass.status) ? (
-                        <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
-                      ) : (
-                        <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={111} height={111} />
-                      )}
-                      <StyledFont
-                        fontSize="18px"
-                        fontWeight="700"
-                        lineHeight="150%"
-                        style={{
-                          position: 'absolute',
-                          left: 0,
-                          right: -8,
-                          top: odyssey[compass.id]?.rewardTop ? odyssey[compass.id]?.rewardTop : 45,
-                          textAlign: 'center',
-                          fontWeight: 900,
-                          transform: 'rotate(-15deg)',
-                        }}
-                      >
-                        {odyssey[compass.id]?.reward}
-                      </StyledFont>
-                    </div>
-                  )} */}
+                   <CompassIcon />
+                   </StyledCompassIcon>
+                   {compass.name === 'THRUSTER TURBO SPIN' ? null : (
+                   <StyledCompassIcon>
+                   <CompassIcon />
+                   </StyledCompassIcon>
+                   )}
+                   {odyssey[compass.id]?.reward && (
+                   <div
+                   style={
+                   compass.name === 'THRUSTER TURBO SPIN'
+                   ? {
+                   position: 'absolute',
+                   right: -27,
+                   top: -33,
+                   zIndex: 20,
+                   }
+                   : {
+                   position: 'absolute',
+                   right: -34,
+                   top: 0,
+                   zIndex: 20,
+                   }
+                   }
+                   >
+                   {['ended', 'un_start'].includes(compass.status) ? (
+                   <Image src={odyssey[compass.id]?.rewardDisableIcon as string} alt="" width={111} height={111} />
+                   ) : (
+                   <Image src={odyssey[compass.id]?.rewardEnableIcon as string} alt="" width={111} height={111} />
+                   )}
+                   <StyledFont
+                   fontSize="18px"
+                   fontWeight="700"
+                   lineHeight="150%"
+                   style={{
+                   position: 'absolute',
+                   left: 0,
+                   right: -8,
+                   top: odyssey[compass.id]?.rewardTop ? odyssey[compass.id]?.rewardTop : 45,
+                   textAlign: 'center',
+                   fontWeight: 900,
+                   transform: 'rotate(-15deg)',
+                   }}
+                   >
+                   {odyssey[compass.id]?.reward}
+                   </StyledFont>
+                   </div>
+                   )} */}
                 </SwiperSlide>
               ))}
             </Swiper>
@@ -292,14 +292,13 @@ const Compass = () => {
                   >
                     <IconArrow />
                   </StyledSwiperNextButton>
-                  <div className="swiper-pagination"></div>
                 </>
               )
             }
-
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
+      <StyledSwiperPagination className="swiper-pagination" />
     </StyledContainer>
   );
 };

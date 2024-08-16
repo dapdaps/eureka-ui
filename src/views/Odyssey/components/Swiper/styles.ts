@@ -2,13 +2,19 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   height: 380px;
-  background: transparent
+  background: transparent;
+  position: relative;
 `;
 
 export const StyledContent = styled.div`
   width: 1244px;
   margin: 0 auto;
   position: relative;
+  transition: all 0.5s ease 0s;
+
+  @media (max-width: 1440px) {
+    transform: scale(0.95);
+  }
 `;
 
 export const StyledInner = styled.div`
@@ -217,16 +223,19 @@ export const StyledWinPtsIcon = styled.div`
 `;
 export const StyledSwiperWrapper = styled.div`
   position: relative;
-  .swiper-pagination {
-    position: absolute;
-    bottom: -40px;
-    right: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transform: translateX(50%);
-  }
+`;
+export const StyledSwiperPagination = styled.div`
+  width: 100%;
+  height: 92px;
+  position: absolute;
+  bottom: -92px;
+  right: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transform: translateX(50%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
 
   .swiper-pagination-bullet {
     width: 25px;
