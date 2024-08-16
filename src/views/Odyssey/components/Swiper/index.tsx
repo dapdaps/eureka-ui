@@ -34,7 +34,7 @@ import {
   StyleList,
   StyledVideo,
   StyledVideoIcon,
-  StyleChainIconImg,
+  StyleChainIconImg, StyledSwiperPagination,
 } from './styles';
 
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
@@ -291,14 +291,13 @@ const Compass = () => {
                   >
                     <IconArrow />
                   </StyledSwiperNextButton>
-                  <div className="swiper-pagination"></div>
                 </>
               )
             }
-
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
+      <StyledSwiperPagination className="swiper-pagination" />
     </StyledContainer>
   );
 };
