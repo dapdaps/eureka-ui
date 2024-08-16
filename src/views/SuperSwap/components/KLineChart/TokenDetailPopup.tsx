@@ -1,11 +1,13 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import styled from 'styled-components';
-import { MedalType } from '@/views/Profile/types';
-import { useRouter } from 'next/router';
 import IconAdd from '@public/images/tokens/add.svg';
 import IconLink from '@public/images/tokens/link.svg';
 import IconCopy from '@public/images/tokens/copy.svg';
+import { get } from '@/utils/http'
+import useToast from '@/hooks/useToast';
+import { copyText } from '@/utils/copy';
+import chainCofig from '@/config/chains';
 
 const StyledToken = styled.div`
   padding: 0 24px;
@@ -164,13 +166,81 @@ const InfoValue = styled.span`
 
 export interface Props {
   visible?: boolean;
-  data?: MedalType;
   close?(): void;
+  trade?: any;
+}
+
+
+interface IData {
+  circulating_supply: string;
+  fully_diluted_valuation: string;
+  max_supply: string;
+  market_cap: string;
+  high_24h: string;
+  low_24h: string;
+  volume_24h_eth: string;
+  volume_24h_usd: string;
 }
 
 const TokenDetailPopup = (props: Props) => {
-  const { visible, close, data } = props;
-  const router = useRouter();
+  const { visible, close, trade } = props;
+  const [loading, setLoading] = useState(false);
+  const [tokenDetail, setTokenDetail] = useState<IData>();
+  const toast = useToast()
+  const fetchTokenDetail = async () => {
+    setLoading(true);
+    try {
+      const res = await get(`/api/token/${trade.inputCurrency.address}`);
+      setTokenDetail(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
+  }
+}
+
+  useEffect(() => {
+    if (trade?.inputCurrency) {
+      // fetchTokenDetail();
+    }
+  }, []);
+
+  const handleCopyCurrency = () => {
+    copyText(trade.inputCurrency.address, () => {
+      toast.success('Copied Successfully');
+    });
+  };
+
+  const handleLink = () => {
+    window.open(`https://etherscan.io/token/${trade.inputCurrency.address}`);
+  }
+
+  const hanleAddMask = async() => {
+    const currChain = chainCofig[trade.inputCurrency.chainId];
+    if (typeof window.ethereum === 'undefined' || !currChain) {
+      return false;
+    }
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: `0x${trade.inputCurrency.chainId.toString(16)}`,
+          rpcUrls: currChain.rpcUrls,
+          chainName: currChain.chainName,
+          nativeCurrency: currChain.nativeCurrency,
+          blockExplorerUrls: [currChain.blockExplorers],
+        }],
+      });
+      return true;
+    } catch (err) {
+      console.log('add metamask failed: %o', err);
+      toast.fail('Failed to add network!');
+      return false;
+    }
+  }
+
+
   return (
     <Modal
       width={476}
@@ -194,8 +264,8 @@ const TokenDetailPopup = (props: Props) => {
             <Header>
               <img className="token-img" src="/images/tokens/blast.svg" alt="" />
               <Title>
-                <span className="name">ETH</span>
-                <span className="name-desc">Ethereum</span>
+                <span className="name">{trade.inputCurrency.symbol}</span>
+                <span className="name-desc">{trade.inputCurrency.name === 'ETH' ? 'Ethereum' : trade.inputCurrency.name }</span>
               </Title>
             </Header>
 
@@ -204,9 +274,9 @@ const TokenDetailPopup = (props: Props) => {
               <Address>
                 <div className="addr">0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9</div>
                 <div className="options">
-                  <IconCopy />
-                  <IconLink />
-                  <IconAdd />
+                  <IconCopy onClick={handleCopyCurrency} />
+                  <IconLink onClick={handleLink} />
+                  <IconAdd onClick={hanleAddMask} />
                 </div>
               </Address>
             </AddressSection>
@@ -216,7 +286,7 @@ const TokenDetailPopup = (props: Props) => {
                 <InfoValue>1.38k</InfoValue>
               </InfoItem>
               <InfoItem>
-                <InfoLabel>Liquidity</InfoLabel>
+                <InfoLabel>Fully Diluted Valuation</InfoLabel>
                 <InfoValue>$2.18m</InfoValue>
               </InfoItem>
               <InfoItem>

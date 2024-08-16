@@ -101,6 +101,7 @@ export default function SuperSwap() {
     setInputCurrencyAmount(trade?.outputCurrencyAmount);
     runQuoter();
   }, [outputCurrency, outputCurrency, trade]);
+  console.log(trade, '<====');
   
   return (
     <StyledContainer>
