@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import Image from 'next/image';
 import Modal from '../Modal';
-import lbImg from './img/Congrates.gif';
-import smImg from './img/sm.svg';
+import lbImg from '@public/images/others/odyssey/v8/components/SlotMachine/Congrates.gif';
+import smImg from '@public/images/others/odyssey/v8/components/SlotMachine/sm.svg?url';
 import RewardIcons from '../../RewardIcons';
 import { useState } from 'react';
 

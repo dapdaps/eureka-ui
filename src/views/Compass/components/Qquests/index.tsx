@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 import Step from '../Step'
 import Panel from './Panel'
-import titleNameImg from '../../img/getPins.svg'
+import titleNameImg from '@public/images/others/odyssey/v1/getPins.svg?url'
 
 const Content = styled.div`
     width: var(--main-width);

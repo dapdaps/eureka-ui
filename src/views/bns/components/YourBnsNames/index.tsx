@@ -8,7 +8,7 @@ import {
   StyledText
 } from './styles';
 
-import bnsAvatar from '@/assets/images/bns_avatar.svg';
+import bnsAvatar from '@public/images/others/bns/bns_avatar.svg?url';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { COIN_TYLE_LIST, COIN_TYLE_MAP } from '../../constants';

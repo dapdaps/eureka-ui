@@ -16,23 +16,20 @@ import useSpin from './hooks/useSpin'
 import useQuestList from './hooks/useQuestList'
 import useTwitterBind from './hooks/useTwitterBind';
 
-import bgImg from './img/bg.gif'
-import g1 from './img/g1.svg'
-import g2 from './img/g2.svg'
-import g3 from './img/g3.svg'
-import g4 from './img/g4.svg'
-import g5 from './img/g5.svg'
-import subImg from './img/getPins2.svg'
-import line1Img from './img/Line1.svg'
-import line2Img from './img/Line2.svg'
-import mImg from './img/m.png'
+import bgImg from '@public/images/others/odyssey/v1/bg.gif'
+import g1 from '@public/images/others/odyssey/v1/g1.svg?url'
+import g2 from '@public/images/others/odyssey/v1/g2.svg?url'
+import g3 from '@public/images/others/odyssey/v1/g3.svg?url'
+import g4 from '@public/images/others/odyssey/v1/g4.svg?url'
+import g5 from '@public/images/others/odyssey/v1/g5.svg?url'
+import subImg from '@public/images/others/odyssey/v1/getPins2.svg?url'
+import line1Img from '@public/images/others/odyssey/v1/Line1.svg?url'
+import line2Img from '@public/images/others/odyssey/v1/Line2.svg?url'
+import mImg from '@public/images/others/odyssey/v1/m.png'
 
 const App = styled.div`
     --main-color: #fff;
     --main-width: 1160px;
-    /* background: url(${bgImg.src}) left top no-repeat;
-    background-size: 100% auto;  */
-    /* background-color: #524f4b; */
     padding-top: 150px;
     
 `
@@ -44,7 +41,6 @@ const BigBg = styled.div`
     right: 0;
     height: 1200px;
     background: rgba(22, 24, 29, 1) url(${bgImg.src}) ;
-        /* linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(22, 24, 29, 0.2)); */
     background-position: center -180px;
     background-repeat: no-repeat;
     background-size: 100% auto; 
@@ -59,7 +55,6 @@ const BigBg2 = styled.div`
     right: 0;
     height: 1300px;
     background: linear-gradient(to bottom, rgba(22, 24, 29, 0) 0%, rgba(22, 24, 29, .8) 50%, rgba(22, 24, 29, 1) 90%);
-    /* background: linear-gradient(to bottom, red, green 20%, blue 70%); */
 `
 
 const MBg = styled.div`
@@ -246,7 +241,7 @@ function Compass() {
         <BigBg />
         <BigBg2 />
         <MBg />
-        <Title>{ name }</Title>
+        <Title>{name}</Title>
         <IconsWapper>
             <img src={g1.src} />
             <img src={g2.src} />
@@ -254,7 +249,7 @@ function Compass() {
             <img src={g4.src} />
             <img src={g5.src} />
         </IconsWapper>
-        <SubTitle>{ description }</SubTitle>
+        <SubTitle>{description}</SubTitle>
         <RecordBox>
             <RecordLine1>
                 <img src={line1Img.src} />
@@ -300,17 +295,17 @@ function Compass() {
             }
         </IconsWapper>
 
-        <Project list={qList} currentChainIndex={chainIndex} getQuestGroupList={getQuestGroupList} getSumaryDetail={getDetail}/>
+        <Project list={qList} currentChainIndex={chainIndex} getQuestGroupList={getQuestGroupList} getSumaryDetail={getDetail} />
 
         <SubJACKTitle className='m180' src={subImg.src} />
         <MiniTitle>Get more spins by sharing and following</MiniTitle>
 
-        <Social 
-        list={questList.twitter} 
-        getQuestGroupList={getQuestGroupList} 
-        getSumaryDetail={getDetail}
-        onShare={redirectToTwitter} 
-        onFollow={redirectToTwitter} />
+        <Social
+            list={questList.twitter}
+            getQuestGroupList={getQuestGroupList}
+            getSumaryDetail={getDetail}
+            onShare={redirectToTwitter}
+            onFollow={redirectToTwitter} />
 
         <NextCompoent />
     </App>

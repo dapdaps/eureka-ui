@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import ShareImg from './img/share.svg';
-import FollowImg from './img/follow.svg';
+import ShareImg from '@public/images/others/odyssey/v1/components/Social/share.svg?url';
+import FollowImg from '@public/images/others/odyssey/v1/components/Social/follow.svg?url';
 import Spin from '../Spin';
 import Fresh from '../Fresh';
 import Complete from '../Complate';

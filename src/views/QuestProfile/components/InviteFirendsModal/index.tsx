@@ -5,7 +5,7 @@ import Modal from '@/components/Modal';
 import useCopy from '@/hooks/useCopy';
 import { ellipsAccount } from '@/utils/account';
 
-import linkModalBg from '@/assets/images/link_modal_bg.svg';
+import linkModalBg from '@public/images/others/bns/link_modal_bg.svg?url';
 import { useUserStore } from '@/stores/user';
 import useUserReward from '@/hooks/useUserReward';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';

@@ -1,4 +1,4 @@
-import loginLogo from '@/assets/images/login_logo.svg';
+import loginLogo from '@public/images/others/bns/login_logo.svg?url';
 import useAuth from '@/hooks/useAuth';
 import Image from 'next/image';
 import { memo } from 'react';
@@ -25,7 +25,7 @@ const LoginView = () => {
       </StyledImage>
       <StyledFlex $direction="column">
         <StyledImage style={{ marginBottom: 89 }}>
-          <Image style={{ width: 409 }} src={loginLogo} alt="loginLogo" />
+          <Image width={409} src={loginLogo} alt="loginLogo" />
         </StyledImage>
         <StyledInvitedUsers>Invited users only</StyledInvitedUsers>
         <StyledLoginConnectWalletButton
