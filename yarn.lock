@@ -7078,6 +7078,11 @@
   resolved "https://registry.npmmirror.com/@types/long/-/long-4.0.2.tgz#b74129719fc8d11c01868010082d483b7545591a"
   integrity sha512-MqTGEo5bj5t157U6fA/BiDynNkn0YknVdh48CMPkTSpFTVmvao5UQmm7uEF6xBEo7qIMAlY/JSleYaE6VOdpaA==
 
+"@types/matter-js@^0.19.7":
+  version "0.19.7"
+  resolved "https://registry.yarnpkg.com/@types/matter-js/-/matter-js-0.19.7.tgz#ef0ada4033945c351e77b85042b3ff22db9ec921"
+  integrity sha512-dlh50YEh1lQS4fiCDGBnK75ocHQIq/1E371Qk6hASJImICIivdZQC2GkOqnfBm0Hac2xLk5+yrqRFDAEfj/yLA==
+
 "@types/mdast@^3.0.0":
   version "3.0.15"
   resolved "https://registry.npmjs.org/@types/mdast/-/mdast-3.0.15.tgz#49c524a263f30ffa28b71ae282f813ed000ab9f5"
@@ -12829,6 +12834,11 @@ markdown-table@^3.0.0:
   version "3.0.3"
   resolved "https://registry.npmjs.org/markdown-table/-/markdown-table-3.0.3.tgz#e6331d30e493127e031dd385488b5bd326e4a6bd"
   integrity sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==
+
+matter-js@^0.20.0:
+  version "0.20.0"
+  resolved "https://registry.yarnpkg.com/matter-js/-/matter-js-0.20.0.tgz#dc3c95c40ea5ef8937788a2770c3f97223b352ed"
+  integrity sha512-iC9fYR7zVT3HppNnsFsp9XOoQdQN2tUyfaKg4CHLH8bN+j6GT4Gw7IH2rP0tflAebrHFw730RR3DkVSZRX8hwA==
 
 md5.js@^1.3.4:
   version "1.3.5"
