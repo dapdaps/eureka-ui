@@ -229,7 +229,7 @@ const KLineChart = ({ trade }: { trade: any }) => {
           </LineChart>
         </ResponsiveContainer>
       )}
-      <TokenDetailPopup visible={isTokenDetailPopupVisible} close={() => setIsTokenDetailPopupVisible(false)} />
+      <TokenDetailPopup trade={trade} visible={isTokenDetailPopupVisible} close={() => setIsTokenDetailPopupVisible(false)} />
     </ChartContainer>
   );
 };
