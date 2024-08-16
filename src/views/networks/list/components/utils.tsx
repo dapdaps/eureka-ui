@@ -36,7 +36,7 @@ export const DataListShown = (
     participants_change_percent,
     participants,
     total_integrated_dapp,
-    medals,
+    total_medal,
     classname
   }: any
 ) => {
@@ -62,11 +62,11 @@ export const DataListShown = (
     underline: true
   }
 ];
-  if (medals !== undefined) {
+  if (total_medal !== undefined) {
     return list.concat({
         key: 'Medals',
         label: 'Medals',
-        value: medals,
+        value: total_medal,
         underline: true
       })
   }

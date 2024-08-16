@@ -13,7 +13,7 @@ export const StyledCardContainer = styled.div<{$bgColor?: string}>`
   backdrop-filter: blur(10px);
   overflow: hidden;
   position: relative;
-  cursor: pointer;
+  cursor: default;
   transition: opacity .2s ease;
   
   &:hover {
