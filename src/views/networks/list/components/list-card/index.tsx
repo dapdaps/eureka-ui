@@ -34,7 +34,8 @@ export const ListCard: FC<IProps> = ({ dataSource }) => {
         {
           DataListShown({
            ...dataSource,
-            medals: 0,
+            // TODO medals hidden
+            // medals: 0,
             classname: 'list-card-data'
           }).map((item) => (
             <StyledDataItem key={item.key}>
