@@ -38,7 +38,6 @@ export function useWorth() {
       let _diff = Big(0);
       _list.forEach((it: any) => {
         it.day_time = it.day_time * 1000;
-        it.worth = it.worth.toString();
         _total = Big(_total).plus(Big(it.worth));
       });
       _list = _list.sort((a: any, b: any) => b.day_time - a.day_time);

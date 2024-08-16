@@ -1,13 +1,12 @@
 import useUserInfo from '@/hooks/useUserInfo';
 import useUserReward from '@/hooks/useUserReward';
 import { useRouter } from 'next/router';
-import { memo, useMemo, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 
-import BouncingMedal from '@/components/bouncing-medal';
+import BouncingMedal, { BouncingMedalItem } from '@/components/bouncing-medal';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useReport from '@/views/Landing/hooks/useReport';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 import FavoriteApps from './components/FavoriteApps';
 import InProgress from './components/InProgress';
@@ -19,10 +18,11 @@ import UserInfo from './components/UserInfo';
 import useAirdropList from './hooks/useAirdropList';
 import useCompassList from './hooks/useCompassList';
 import useInviteList from './hooks/useInviteList';
-import useUserFavorites from "./hooks/useUserFavorites";
+import useUserFavorites from './hooks/useUserFavorites';
 import useMedalList from './hooks/useUserMedalList';
 import useUserRewardRecords from './hooks/useUserRewardRecords';
 import { MedalType, Tab } from './types';
+import { random } from 'lodash';
 
 const StyledContainer = styled.div`
   background-image: url(/images/profile/top_bg.png);
@@ -50,6 +50,10 @@ const StyledBouncingMedalContainer = styled.div`
   right: -104px;
   bottom: 0;
 `
+
+const CanvasWidth = 600;
+const CanvasHeight = 600;
+
 export default memo(function ProfileView() {
   const router = useRouter();
   const [tab, setTab] = useState<Tab>('InProgress');
@@ -78,17 +82,26 @@ export default memo(function ProfileView() {
   }, [compassList, airdropList, userMedalList, userFavorites, userRewardRecords])
 
   const bouncingMedals = useMemo(() => {
-    const _filterMedals = userInfo?.medals?.filter((medal: MedalType) => medal?.logo) ?? []
-    const _bouncingMedals = _filterMedals?.map((medal: MedalType, index: number) => {
-      return {
+    const _filterMedals = userInfo?.medals?.filter((medal: MedalType) => medal?.logo) ?? [];
+    return _filterMedals?.map((medal: MedalType, index: number) => {
+      const renderMedal: BouncingMedalItem = {
         key: index,
         icon: medal?.logo,
-        x: index * 100,
-        vx: 0,
-        mass: (index === 0 || index === _filterMedals.length - 1) ? 60 : 30,
+        width: 90,
+        height: 90,
+        x: index * (CanvasWidth / _filterMedals.length),
+        y: random(0, 300),
+        density: random(1, 10) / 1000,
+      };
+      if (renderMedal.x > CanvasWidth - renderMedal.width) {
+        renderMedal.x = CanvasWidth - renderMedal.width;
       }
+      if (renderMedal.x < renderMedal.width) {
+        renderMedal.x = renderMedal.width;
+      }
+
+      return renderMedal;
     }) ?? [];
-    return _bouncingMedals.slice(0, 6);
   }, [userInfo])
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
@@ -132,15 +145,11 @@ export default memo(function ProfileView() {
             }}
           />
           <StyledBouncingMedalContainer>
-            {
-              bouncingMedals && bouncingMedals.length > 0 && (
-                <BouncingMedal
-                  width={500}
-                  height={300}
-                  medals={bouncingMedals}
-                />
-              )
-            }
+            <BouncingMedal
+              width={CanvasWidth}
+              height={CanvasHeight}
+              medals={bouncingMedals}
+            />
           </StyledBouncingMedalContainer>
         </StyledContainerTop>
         <StyledContainerBottom>
