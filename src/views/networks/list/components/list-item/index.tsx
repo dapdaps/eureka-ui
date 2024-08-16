@@ -10,6 +10,7 @@ import {
   Head,
 } from '@/views/networks/list/components/styles';
 import { CardHead, DataListShown, FooterButton } from '@/views/networks/list/components/utils';
+import { Advertise } from '@/hooks/useAdvertise';
 
 const ListItem: FC<IProps> = ({ dataSource }) => {
   const {
@@ -64,7 +65,7 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
 export default memo(ListItem);
 
 export interface IProps {
-  dataSource: Network;
+  dataSource: Network & Advertise;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;

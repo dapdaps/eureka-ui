@@ -4,6 +4,7 @@ import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 import chainCofig from '@/config/chains';
 import { useDebounceFn } from 'ahooks';
+import { Advertise, useAdvertise } from '@/hooks/useAdvertise';
 
 export default function useList(props: Props) {
   const {
@@ -16,23 +17,33 @@ export default function useList(props: Props) {
   } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
+  const [isRequested, setIsRequested] = useState<boolean>(false);
   const [dappList, setDappList] = useState<any>([]);
+  const [advertise, setAdvertise] = useState<Advertise[]>([]);
   const [titleDappList, setTitleDappList] = useState<any>([]);
   const [pageTotal, setPageTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
 
+  const { fetchAdvertise } = useAdvertise('dapps');
+
+
   const fetchDappList = async (page: number) => {
+    const _advertise = await fetchAdvertiseData();
     setPageIndex(page);
     try {
       setLoading(true);
       const params: Record<string, any> = {
         page_size: PageSize,
         page,
-        reward_now: rewardNow,
-        airdrop,
       };
       if (sort) {
         params.sort = sort;
+      }
+      if (rewardNow) {
+        params.reward_now = rewardNow;
+      }
+      if (airdrop) {
+        params.airdrop = airdrop;
       }
       if (network && network > -1) {
         params.chain_id = network;
@@ -47,11 +58,18 @@ export default function useList(props: Props) {
         params.content = searchText;
       }
 
+      // only sort show advertise
+
+      const showAdvertise = Object.keys(params).length === 3 && !location.search && _advertise.length > 0;
+      if (showAdvertise) {
+        params.page_size = PageSize - 1;
+      }
+
       const result = await get(
         `${QUEST_PATH}/api/dapp/search`,
         params,
       );
-      const data = result.data?.data || [];
+      let data = result.data?.data || [];
       data.forEach((dapp: any) => {
         //#region format categories
         dapp.categories = [];
@@ -68,6 +86,9 @@ export default function useList(props: Props) {
         });
         //#endregion
       });
+      if (showAdvertise) {
+        data.splice(8, 0, {isAdvertise: true, advertise: _advertise } as any);
+      }
       setDappList(data);
       const titleDapps = (result?.data?.top_dapps ?? []).map((item: any) => ({ logo: item }));
       setTitleDappList(titleDapps);
@@ -85,9 +106,28 @@ export default function useList(props: Props) {
     fetchDappList(1);
   }, [network, sort, rewardNow, category, airdrop]);
 
+  // useEffect(() => {
+  //   getDappList(1);
+  // }, [searchText]);
+
+  const fetchAdvertiseData = async () => {
+    if (isRequested) {
+      return advertise ?? [];
+    }
+    setIsRequested(true);
+    const resp = await fetchAdvertise();
+    setAdvertise(resp ?? []);
+    return resp ?? [];
+  }
+
+
   useEffect(() => {
-    getDappList(1);
-  }, [searchText]);
+
+    return () => {
+      setIsRequested(false);
+      setAdvertise([]);
+    }
+  }, []);
 
 
 
