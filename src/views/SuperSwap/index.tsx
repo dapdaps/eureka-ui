@@ -37,7 +37,7 @@ export default function SuperSwap() {
 
   const { run: runQuoter } = useDebounceFn(
     () => {
-      if (loading || errorTips) return;
+      if (loading) return;
       onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
     },
     {
@@ -101,7 +101,6 @@ export default function SuperSwap() {
     setInputCurrencyAmount(trade?.outputCurrencyAmount);
     runQuoter();
   }, [outputCurrency, outputCurrency, trade]);
-  console.log(trade, '<====');
   
   return (
     <StyledContainer>

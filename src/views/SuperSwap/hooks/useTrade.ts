@@ -46,6 +46,7 @@ export default function useTrade({ chainId }: any) {
 
   const onQuoter = useCallback(
     async ({ inputCurrency, outputCurrency, inputCurrencyAmount }: any) => {
+      if (!inputCurrency) return
       const wethAddress = weth[inputCurrency.chainId];
       const wrapType =
         inputCurrency.isNative && outputCurrency.address === wethAddress

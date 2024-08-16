@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useTokenPriceListStore } from '@/stores/tokenPrice';
 import { get } from '@/utils/http';
 
-export default function useTokenPriceList() {
+export default function useTokenPopularList() {
   const [tokenPriceList, setTokenPriceList] = useState<any>({});
   const tokenPriceStore = useTokenPriceListStore(store => store.set);
   const fetchList = useCallback(async () => {
@@ -10,7 +10,8 @@ export default function useTokenPriceList() {
       loading: true,
     })
     try {
-      const result = await get(`/api/token/price/latest`);
+      // /api/token/price/latest The API endpoint to get the latest token price list
+      const result = await get(`/api/token/popular`);
       const data = result.data || {};
       setTokenPriceList(data);
       tokenPriceStore({

@@ -1,10 +1,10 @@
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 import SuperSwap from '@/views/SuperSwap';
-import useTokenPriceList from '@/hooks/useTokenPriceList';
+import useTokenPopularList from '@/hooks/useTokenPopularList';
 
 const SuperSwapPage: NextPageWithLayout = () => {
-  useTokenPriceList()
+  useTokenPopularList()
   return <SuperSwap />;
 };
 
