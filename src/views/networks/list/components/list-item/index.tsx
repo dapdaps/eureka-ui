@@ -6,10 +6,8 @@ import Reward from '@/views/networks/list/components/reward';
 import {
   BtnGroup,
   DataList,
-  StyledChainOdyssey,
   Wrap,
   Head,
-  ChainOdyssey,
 } from '@/views/networks/list/components/styles';
 import { CardHead, DataListShown, FooterButton } from '@/views/networks/list/components/utils';
 
@@ -29,7 +27,6 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
       <Head>
         <CardHead {...dataSource}/>
         <BtnGroup>
-          { odyssey.length > 0 && (<StyledChainOdyssey><ChainOdyssey src='/images/odyssey/welcome/logo.gif'/></StyledChainOdyssey>) }
           <FooterButton
             bgColor={matchedItem?.theme.button.bg}
             textColor={matchedItem?.theme.button.text}

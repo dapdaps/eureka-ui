@@ -60,23 +60,15 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
       return;
     }
     let _networkList = [...networkList];
-    if (sort) {
-      const findSortVar: any = SortList.find(i => i.value === sort);
-      if (findSortVar?.variable) {
-        if (findSortVar.variable === 'name') {
-          _networkList = orderBy(_networkList, (it) => it.name, findSortVar.value === 'z-a' ? 'desc' : 'asc');
-        } else {
-          _networkList = orderBy(_networkList, (it) => Big(it[findSortVar.variable as  keyof Network] as string || 0).toNumber(), 'desc');
-        }
+    const findSortVar: any = SortList.find(i => i.value === sort);
+    if (findSortVar?.variable) {
+      if (findSortVar.variable === 'name') {
+        _networkList = orderBy(_networkList, (it) => it.name, findSortVar.value === 'z-a' ? 'desc' : 'asc');
+      } else {
+        _networkList = orderBy(_networkList, (it) => Big(it[findSortVar.variable as  keyof Network] as string || 0).toNumber(), 'desc');
       }
-    }
-    if (mode === 'card') {
-      if (airdrop) {
-        _networkList = _networkList.filter(item => item.airdrop && item.airdrop.length > 0);
-      }
-      if (rewardNow) {
-        _networkList = _networkList.filter(item => item.odyssey && item.odyssey.length > 0);
-      }
+    } else {
+      _networkList = orderBy(_networkList, (it) => Big(it.trading_volume || 0).toNumber(), 'desc');
     }
     const _l1NetworkList = [];
     const _l2NetworkList = [];

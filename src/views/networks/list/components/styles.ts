@@ -102,6 +102,9 @@ export const StyledItemValue = styled.div<{ $underline?: boolean }>`
 
 export const StyledReward = styled.div`
   margin-bottom: 36px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 `;
 
 export const Wrap = styled.div<{ $bgColor: string }>`

@@ -48,38 +48,6 @@ const List = () => {
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [airdrop, setAirdrop] = useState<boolean>(false);
   const { loading, l1NetworkList, l2networkList } = useNetworks({ sort, mode, rewardNow, airdrop });
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-
-  const router = useRouter();
-
-  const setQueryParams = useCallback((params: any) => {
-    router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
-  }, [router, pathname]);
-
-  const onRewardToggle = () => {
-    const _rewardNow = !rewardNow;
-    const params = new URLSearchParams(searchParams);
-    if (_rewardNow) {
-      params.set('reward', TrueString);
-    } else {
-      params.delete('reward');
-    }
-    setRewardNow(_rewardNow);
-    setQueryParams(params);
-  };
-
-  const onAirdropToggle = () => {
-    const _airdrop = !airdrop;
-    const params = new URLSearchParams(searchParams);
-    if (_airdrop) {
-      params.set('airdrop', TrueString);
-    } else {
-      params.delete('airdrop');
-    }
-    setAirdrop(_airdrop);
-    setQueryParams(params);
-  };
 
   const onSortSelect = (_sort: string) => {
     setSort(_sort);
@@ -91,28 +59,13 @@ const List = () => {
 
   useEffect(() => {
     const _searchParams = new URLSearchParams(location.search);
-    const _reward = _searchParams.get('reward');
     const _sort = _searchParams.get('sort');
-    const _airdrop = _searchParams.get('airdrop');
 
     if (checkQueryEmpty(_sort as string, () => true)) {
       setSort(_sort);
     } else {
       setSort(SortList[0].value);
     }
-
-    if (checkQueryEmpty(_reward as string, () => _reward === TrueString)) {
-      setRewardNow(true);
-    } else {
-      setRewardNow(false);
-    }
-
-    if (checkQueryEmpty(_airdrop as string, () => _airdrop === TrueString)) {
-      setAirdrop(true);
-    } else {
-      setAirdrop(false);
-    }
-
   }, []);
 
   const onModeChange = (_mode: string) => {
@@ -120,28 +73,6 @@ const List = () => {
       return;
     }
     setMode(_mode);
-    const _params: any = new URLSearchParams();
-    const _query = router.query;
-    if (_mode === 'list') {
-      if (_query.sort) {
-        _params.set('sort', _query.sort);
-      }
-      setQueryParams(_params);
-      return;
-    }
-    if (_mode === 'card') {
-      if (sort && sort !== SortList[0].value) {
-        _params.set('sort', sort);
-      }
-      if (airdrop) {
-        _params.set('airdrop', 1);
-      }
-      if (rewardNow) {
-        _params.set('reward', 1);
-      }
-      setQueryParams(_params);
-      return;
-    }
   };
 
   return (
@@ -161,14 +92,6 @@ const List = () => {
           <StyledFilters>
             <StyledFilterText>Sort by</StyledFilterText>
             <SortBy value={sort} isUrlParams onSelect={onSortSelect} />
-            {
-              mode === ModeList[1].key && (
-                <>
-                  <Radio selected={airdrop} onChange={onAirdropToggle} label="Potential Airdrop" />
-                  <Radio colorful selected={rewardNow} onChange={onRewardToggle} label="Reward now" />
-                </>
-              )
-            }
             {
               ModeList.map((item) => (
                 <item.icon

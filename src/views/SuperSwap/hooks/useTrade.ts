@@ -12,6 +12,7 @@ import getWrapOrUnwrapTx from '../getWrapOrUnwrapTx';
 import checkGas from '../checkGas';
 import formatTrade from '../formatTrade';
 import type { Token } from '@/types';
+import { useUpdateBalanceStore } from './useUpdateBalanceStore';
 
 export default function useTrade({ chainId }: any) {
   const slippage: any = useSettingsStore((store: any) => store.slippage);
@@ -26,7 +27,7 @@ export default function useTrade({ chainId }: any) {
   const lastestCachedKey = useRef('');
   const cachedTokens = useRef<any>();
   const prices = usePriceStore((store) => store.price);
-
+  const { setUpdater } = useUpdateBalanceStore()
   const getTokens = useCallback(() => {
     const network = networks[chainId];
     if (!network) return;
@@ -180,6 +181,7 @@ export default function useTrade({ chainId }: any) {
       toast.dismiss(toastId);
 
       if (status === 1) {
+        setUpdater(Date.now());
         toast.success({ title: `Swap successfully!`, tx: transactionHash, chainId });
       } else {
         toast.fail({ title: `Swap faily!` });

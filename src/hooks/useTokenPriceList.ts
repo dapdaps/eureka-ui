@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useTokenPriceListStore } from '@/stores/tokenPrice';
 import { get } from '@/utils/http';
-import { useSelectedLayoutSegments } from 'next/navigation';
 
 export default function useTokenPriceList() {
   const [tokenPriceList, setTokenPriceList] = useState<any>({});
@@ -31,7 +30,6 @@ export default function useTokenPriceList() {
 
   useEffect(() => {
     fetchList();
-    console.log(tokenPriceList, 'tokenPriceList');
   }, []);
 
   return { tokenPriceList };
