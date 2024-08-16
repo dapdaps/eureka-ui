@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import Panel from './Panel'
 
-import lightImg from './img/light.svg'
+import lightImg from '@public/images/others/odyssey/v1/components/NextCompoent/light.svg?url'
 
 const NextWapper = styled.div`
     background: #000 url(${lightImg.src}) 28% top no-repeat;

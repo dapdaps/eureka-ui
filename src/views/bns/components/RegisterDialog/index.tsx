@@ -1,4 +1,4 @@
-import bnsAvatar from '@/assets/images/bns_avatar.svg';
+import bnsAvatar from '@public/images/others/bns/bns_avatar.svg?url';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
 import { balanceFormated } from '@/utils/balance';

@@ -1,6 +1,6 @@
-import LoginLogo from '@/assets/images/login_logo.svg';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import { ellipsAccount } from '@/utils/account';
+import loginLogo from '@public/images/others/bns/login_logo.svg?url';
 import { useConnectWallet } from '@web3-onboard/react';
 import { setCookie } from 'cookies-next';
 import Image from 'next/image';
@@ -14,13 +14,13 @@ import {
   StyledInvitedAward,
   StyledLoginConnectWalletButton,
   StyledLoginVideo,
-  StyledText,
-  StyledSvg
+  StyledSvg,
+  StyledText
 } from './styles';
 
 import { getAccessToken } from '@/apis';
-import { get, post } from '@/utils/http';
 import useToast from '@/hooks/useToast';
+import { get, post } from '@/utils/http';
 
 
 const StyledUserContainer = styled.div`
@@ -175,7 +175,7 @@ const LoginView = () => {
       </StyledImage>
       <StyledFlex $direction="column">
         <StyledImage style={{ marginBottom: 24 }}>
-          <LoginLogo />
+          <Image style={{ width: 409 }} src={loginLogo.src} alt="loginLogo" />
         </StyledImage>
         {/* <StyledInvitedUsers>Invited users only</StyledInvitedUsers> */}
 
