@@ -39,7 +39,7 @@ const AdCard = function ({ ad }: any) {
   const router = useRouter();
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems="flex-start">
+      <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
         <StyledCardBackgroundImage src={ad.ad_images} alt={ad.title} />
         <StyledCardMainContent>
           <div className="title">Featured</div>
