@@ -1,6 +1,5 @@
-import { getAccessToken } from '@/apis';
 import { QUEST_PATH } from '@/config/quest';
-import { get } from '@/utils/http';
+import { getWithoutActive } from '@/utils/http';
 import {
   StyledBg,
   StyledBgImage,
@@ -26,15 +25,16 @@ import {
   StyledXContainer
 } from '@/views/marketing/invite/styles';
 import { useConnectWallet } from '@web3-onboard/react';
-import { setCookie } from 'cookies-next';
 import { memo, useEffect, useState } from 'react';
 import { InviteModal, KolUserInfo } from '../components';
+import { useRouter } from 'next/router';
 
 
 const Invite = (props: Props) => {
   const {
     logo,
     name,
+    platform,
     logoSize = {
       width: 60,
       height: 60,
@@ -42,13 +42,16 @@ const Invite = (props: Props) => {
     medals = [],
     isMobile
   } = props;
+  const router = useRouter()
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [address, setAddress] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
   const [modalType, setModalType] = useState<'success' | 'fail'>('success');
   const [updater, setUpdater] = useState(0);
   async function checkAddress() {
-    const res: any = await get(`${QUEST_PATH}/api/invite/check-address/${address}`);
+    const res: any = await getWithoutActive(`${QUEST_PATH}/api/invite/check-address/${address}`, platform, {
+      name: router?.query?.kolName
+    });
     if ((res.code as number) !== 0) return;
     if (res.data.is_activated) {
       setModalType("fail")
@@ -148,6 +151,7 @@ export default memo(Invite);
 interface Props {
   logo: string;
   name: string;
+  platform: "okx" | "coin68" | "bitget" | "namlongdao" | "kol";
   isMobile?: boolean;
   logoSize?: {
     width: number;

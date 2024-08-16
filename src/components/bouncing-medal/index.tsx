@@ -144,10 +144,13 @@ class BouncingMedals extends React.Component<BouncingMedalsProps, any> {
     const ctx = this.canvasRef.current.getContext('2d');
     if (!ctx) return;
     const { medals, delay = 1000 } = this.props;
+    console.log('==========11111===========')
+    console.log('=====delay=====', delay)
     this.timer = setTimeout(async () => {
       const medalImages = medals.map((it) => loadMedal(it.icon));
       const images = await Promise.all(medalImages);
       const _medals = [];
+      console.log('=====medals=====', medals)
       for (let i = 0; i < medals.length; i++) {
         const medal = medals[i];
         _medals.push(new Medal(
@@ -164,6 +167,7 @@ class BouncingMedals extends React.Component<BouncingMedalsProps, any> {
         ));
       }
       this.medals = _medals;
+      console.log('=====_medals', _medals)
 
       this.animation = window.requestAnimationFrame(this.process);
     }, delay);
@@ -178,9 +182,9 @@ class BouncingMedals extends React.Component<BouncingMedalsProps, any> {
   componentDidUpdate(prevProps: Readonly<BouncingMedalsProps>, prevState: Readonly<any>, snapshot?: any) {
     const prevIcons = prevProps.medals.map((it) => it.icon);
     const currIcons = this.props.medals.map((it) => it.icon);
-    if (isEqualWith(prevIcons, currIcons)) {
-      return;
-    }
+    // if (isEqualWith(prevIcons, currIcons)) {
+    //   return;
+    // }
     this.init();
   }
 
