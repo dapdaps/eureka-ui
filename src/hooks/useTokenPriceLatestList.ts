@@ -1,18 +1,18 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useTokenPriceListStore } from '@/stores/tokenPrice';
+import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
 import { get } from '@/utils/http';
 
-export default function useTokenPopularList() {
-  const [tokenPriceList, setTokenPriceList] = useState<any>({});
-  const tokenPriceStore = useTokenPriceListStore(store => store.set);
+export default function useTokenPriceLatestList() {
+  const [tokenPriceLatest, setTokenPriceLatest] = useState<any>({});
+  const tokenPriceStore = useTokenPriceLatestStore(store => store.set);
   const fetchList = useCallback(async () => {
     tokenPriceStore({
       loading: true,
     })
     try {
-      const result = await get(`/api/token/popular`);
+      const result = await get(`/api/token/price/latest`);
       const data = result.data || {};
-      setTokenPriceList(data);
+      setTokenPriceLatest(data);
       tokenPriceStore({
         list: data,
       })
@@ -32,5 +32,5 @@ export default function useTokenPopularList() {
     fetchList();
   }, []);
 
-  return { tokenPriceList };
+  return { tokenPriceLatest };
 }

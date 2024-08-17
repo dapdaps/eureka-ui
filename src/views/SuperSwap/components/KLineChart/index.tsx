@@ -11,6 +11,7 @@ import Loading from '@/components/Icons/Loading';
 import { format } from 'date-fns';
 import { useTokenPriceListStore } from '@/stores/tokenPrice';
 import IconArrowUp from '@public/images/tokens/arrow-up.svg';
+import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 
 const ChartContainer = styled.div`
   color: white;
@@ -155,7 +156,7 @@ const KLineChart = ({ trade }: { trade: any }) => {
   const [isTokenDetailPopupVisible, setIsTokenDetailPopupVisible] = useState(false);
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [loading, setLoading] = useState(false);
-  const tokenPriceLatest = useTokenPriceListStore(state => state.list);
+  const { tokenPriceLatest } = useTokenPriceLatestList();
 
   const fetchChartData = async () => {
     try {

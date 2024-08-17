@@ -14,3 +14,10 @@ export const useTokenPriceListStore = create<IStore>((set) => ({
   loading: false,
   set: (params) => set(() => ({ ...params })),
 }));
+
+
+export const useTokenPriceLatestStore = create<IStore>((set) => ({
+  list: null,
+  loading: false,
+  set: (params) => set(() => ({ ...params })),
+}));

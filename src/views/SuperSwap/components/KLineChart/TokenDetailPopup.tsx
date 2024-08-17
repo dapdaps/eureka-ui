@@ -116,6 +116,9 @@ const AddressSection = styled.div`
     display: flex;
     align-items: center;
     gap: 12px;
+    & > svg {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -125,7 +128,7 @@ const Address = styled.span`
   justify-content: space-between;
   .addr {
     font-family: Montserrat;
-    font-size: 14px;
+    font-size: 13px; // there is no 13px in the design but 14px is too big so that width is not enough
     font-weight: 400;
     line-height: 17px;
   }
