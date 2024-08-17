@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import LazyImage from '@/components/LazyImage';
 
 export const StyledContainer = styled.div`
   height: 560px;
@@ -55,7 +56,7 @@ export const StyledCard = styled.div`
   background: #18191E;
 `;
 
-export const StyledCardBackgroundImage = styled.img`
+export const StyledCardBackgroundImage = styled(LazyImage)`
   width: 720px;
   height: 100%;
   border-top-left-radius: 20px;

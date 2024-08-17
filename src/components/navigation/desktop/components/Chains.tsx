@@ -4,6 +4,7 @@ import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router';
 import { IdToPath } from '@/config/all-in-one/chains';
 import { Network } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
+import LazyImage from '@/components/LazyImage';
 
 const GridContainer = styled.div`
   padding: 16px 12px;
@@ -84,7 +85,12 @@ const Chains = ({
     <GridContainer>
       {loading ? <LoadingCard /> : data.map((item) => (
         <GridItemContainer key={item.id} onClick={() => handleClick(item)} title={item.name}>
-          <img src={item.logo} alt={item.name} />
+          <LazyImage
+            src={item.logo}
+            alt={item.name}
+            width={60}
+            height={60}
+          />
           <div className="name">{item.name}</div>
         </GridItemContainer>
       ))}
