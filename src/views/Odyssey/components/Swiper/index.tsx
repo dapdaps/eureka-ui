@@ -186,7 +186,7 @@ const Compass = () => {
               width={1244}
               modules={[Autoplay, Pagination]}
               slidesPerView={1}
-              autoplay={{ delay: 113000 }}
+              autoplay={{ delay: 3000 }}
               speed={1000}
               spaceBetween={(size?.width - 1244) / 2 + 100}
               updateOnWindowResize={true}

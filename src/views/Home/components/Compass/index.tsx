@@ -28,7 +28,8 @@ import {
   StyledCardDesc,
   StyledCardTitle,
   StyledCompassIcon,
-  StyledCompassButton, StyledComingSoon,
+  StyledCompassButton,
+  StyledComingSoon,
 } from './styles';
 import useCompassCombineAd from './hooks/useCompassCombineAd';
 import { extractPathFromUrl } from '@/utils/formate';
@@ -40,7 +41,12 @@ const AdCard = function ({ ad }: any) {
   return (
     <StyledCard>
       <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
-        <StyledCardBackgroundImage src={ad.ad_images} alt={ad.title} />
+        <StyledCardBackgroundImage
+          src={ad.ad_images}
+          alt={ad.title}
+          width={720}
+          height={400}
+        />
         <StyledCardMainContent>
           <div className="title">Featured</div>
           <div className="card_section">
@@ -94,6 +100,8 @@ const CompassCard = function ({ compass }: any) {
         <StyledCardBackgroundImage
           src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
+          width={720}
+          height={400}
           style={{
             filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
           }}
@@ -165,7 +173,7 @@ const Compass = () => {
               width={1244}
               modules={[Autoplay, Pagination]}
               slidesPerView={1}
-              autoplay={{ delay: 113000 }}
+              autoplay={{ delay: 3000 }}
               speed={1000}
               spaceBetween={(size?.width - 1244) / 2 + 100}
               updateOnWindowResize={true}
