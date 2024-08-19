@@ -32,7 +32,7 @@ export function useAdvertise(category: CategoryType, categoryId?: string) {
   }
 };
 
-type CategoryType = 'networks' | 'dapp';
+type CategoryType = 'networks' | 'dapps';
 
 interface Params {
   category: CategoryType;

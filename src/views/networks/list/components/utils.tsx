@@ -88,14 +88,14 @@ export const ChainTag = ({ idx }: { idx: number }) => {
   );
 };
 
-export const CardHead = ({ classname, logo, name, isTop, isHot, tbd_token, native_currency }: any) => {
+export const CardHead = ({ classname = '', logo, name, isTop, isHot, tbd_token, native_currency }: any) => {
 
   return (
     <LogoGroup className={classname}>
       <Image src={logo} width={60} height={60} alt="network" className={`${classname}-image`} />
-      <ChainInfo>
+      <ChainInfo className={`${classname}-info`}>
         <ChainNameContainer className={`${classname}-name-container`}>
-          <ChainName>{name}</ChainName>
+          <ChainName className='chain-name'>{name}</ChainName>
           {isTop ? (<ChainTag idx={0} />) : null}
           {isHot ? (<ChainTag idx={1} />) : null}
         </ChainNameContainer>

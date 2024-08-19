@@ -21,7 +21,8 @@ const GridItemContainer = styled.div`
   text-align: center;
   transition: background-color 0.3s, box-shadow 0.3s;
   width: 100px;
-  height: 110px;
+  height: 114px;
+  row-gap: 10px;
   &:hover {
     cursor: pointer;
     border-radius: 6px;
@@ -45,11 +46,10 @@ const GridItemContainer = styled.div`
     max-width: 90px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
     font-family: Montserrat;
     font-size: 16px;
     font-weight: 600;
-    line-height: 18px;
+    line-height: 1;
     text-align: center;
     color: #fff;
   }

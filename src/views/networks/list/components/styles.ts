@@ -16,6 +16,12 @@ export const StyledCardContainer = styled.div<{$bgColor?: string}>`
   cursor: default;
   transition: opacity .2s ease;
   
+  &.card-shadow::before {
+    content: '';
+    opacity: 0;
+  }
+
+  
   &:hover {
     &.card-shadow::before {
       opacity: 0.1;
@@ -33,18 +39,21 @@ export const StyledCardContainer = styled.div<{$bgColor?: string}>`
   }
   
   .card-head {
+    width: 100%;
     &-image {
       width: 72px;
       height: 72px;
     }
     &-name-container {
       justify-content: space-between;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      /*! autoprefixer: off */
-      -webkit-box-orient: vertical;
+      .chain-name {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+    }
+    &-info {
+      width: calc(100% - 88px);
     }
   }
 `;
@@ -126,6 +135,14 @@ export const Wrap = styled.div<{ $bgColor: string }>`
   font-family: Montserrat;
   overflow: hidden;
   
+    &.item-hover {
+      transition: opacity .2s ease;
+      &::before {
+        opacity: 0;
+        content: '';
+      }
+    }
+  
     &:hover {
       &.item-shadow::before {
         opacity: 0.1;
@@ -150,15 +167,18 @@ export const Head = styled.div`
   justify-content: space-between;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  column-gap: 30px;
 `;
 
 export const ChainName = styled.div`
   color: #fff;
   font-family: Montserrat;
   font-size: 20px;
-  font-style: normal;
   font-weight: 700;
-  line-height: normal;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `;
 export const ChainDesc = styled.div`
   display: flex;
@@ -181,8 +201,8 @@ export const ChainDesc = styled.div`
   }
 `;
 export const ChainInfo = styled.div`
-  height: 100%;
-  width: 100%;
+  flex-grow: 1;
+  width: calc(100% - 90px);
 `;
 export const LogoGroup = styled.div`
   display: flex;
@@ -190,6 +210,10 @@ export const LogoGroup = styled.div`
   align-items: center;
   position: relative;
   z-index: 1;
+  width: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  flex-grow: 1;
 `;
 export const BtnGroup = styled.div`
   display: flex;
