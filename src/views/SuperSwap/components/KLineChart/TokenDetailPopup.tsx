@@ -128,7 +128,7 @@ const Address = styled.span`
   justify-content: space-between;
   .addr {
     font-family: Montserrat;
-    font-size: 13px; // there is no 13px in the design but 14px is too big so that width is not enough
+    font-size: 14px; 
     font-weight: 400;
     line-height: 17px;
   }
@@ -249,7 +249,7 @@ const TokenDetailPopup = (props: Props) => {
 
   return (
     <Modal
-      width={476}
+      width={500}
       overlayStyle={{
         backdropFilter: 'blur(10px)',
         height: '100vh',
