@@ -92,6 +92,7 @@ export default function useTrade({ chainId }: any) {
             routerAddress: wethAddress,
             gas,
             isGasEnough,
+            wrapType
           });
           setLoading(false);
           setMarkets([]);
