@@ -9,6 +9,7 @@ import styled from 'styled-components';
 
 const StyledRpcs = styled.div<{ $color?: string }>`
   position: fixed;
+  z-index: 2;
   bottom: 30px;
   right: 20px;
   display: flex;

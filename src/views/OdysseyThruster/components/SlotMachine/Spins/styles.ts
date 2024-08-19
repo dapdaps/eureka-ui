@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-import goldImg from './img/gold.svg';
-import starImg from '../img/star-bg.png';
+import goldImg from '@public/images/others/odyssey/thruster/components/SlotMachine/Spins/gold.svg?url';
+import starImg from '@public/images/others/odyssey/thruster/components/SlotMachine/star-bg.png';
 
 export const StyledContainer = styled(motion.div)`
   width: 1260px;

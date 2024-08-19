@@ -125,12 +125,12 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
         <Flex>
           {isFromActivity ? (
             <LogoContainer onClick={goHomeWithFresh}>
-              <img src={logoUrl} alt="" />
+              <img src={logoUrl} alt="" style={{ width: 120, height: 32 }} />
             </LogoContainer>
           ) : (
               <LogoContainer>
                 <Link href="/">
-                    <img src={logoUrl} alt="" />
+                    <img src={logoUrl} alt="" style={{ width: 120, height: 32 }} />
                 </Link>
               </LogoContainer>
           )}

@@ -6,6 +6,7 @@ import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
 import useDappOpen from '@/hooks/useDappOpen';
 import { PageSize } from '../../config';
+import AdvertiseCardList from '../../../AdvertiseCardList';
 
 const DappList = (props: Props) => {
   const { open } = useDappOpen();
@@ -34,7 +35,14 @@ const DappList = (props: Props) => {
             dappList.length ? (
               <StyledDappList>
                 {
-                  dappList.map((dapp: any, idx: number) => (
+                  dappList.map((dapp: any, idx: number) => dapp.isAdvertise
+                    ? (
+                        <AdvertiseCardList
+                          classname='advertise'
+                          adList={dapp.advertise}
+                        />
+                      )
+                    :(
                     <DappCard
                       bp={props.bp}
                       key={idx}

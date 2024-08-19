@@ -9,6 +9,25 @@ export const StyledDappList = styled.div`
   column-gap: 16px;
   row-gap: 20px;
   flex-wrap: wrap;
+  
+  .advertise {
+    width: 405px;
+    position: relative;
+    transition: transform .2s ease;
+    &:hover {
+      transform: translateY(-5px);
+    }
+    
+    &-card {
+      width: 405px;
+      height: 312px;
+      position: relative;
+      transition: transform .2s ease;
+      &:hover {
+        transform: translateY(-5px);
+      }
+    }
+  }
 `;
 
 export const StyledFoot = styled.div`

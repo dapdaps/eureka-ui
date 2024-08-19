@@ -1,8 +1,13 @@
 import React, { memo, useMemo } from 'react';
 import networks from '@/config/swap/networks';
 import { StyledFlex } from '@/styled/styles';
-import { StyledCard, StyledContent, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
+import {
+  StyledCard,
+  StyledContent,
+  StyledGradient,
+  StyledPointer,
+  StyledTitle,
+} from '@/views/AllInOne/components/Card/styles';
 import { StyledIcons, StyledIcon } from './styles';
 import { renderTitle } from '@/views/AllInOne/utils';
 
@@ -20,14 +25,9 @@ const AllInOneCardView: React.FC<Props> = (props) => {
 
   return (
     <StyledCard style={style} className={type} bgColor={bgColor} onClick={handleSelect}>
-      <Gradient
-        classname="card-active-bg"
-        bgColor={bgColor as string}
-        width={300}
-        height={250}
-        rx={50}
-        ry={20}
-        opacity={1}
+      <StyledGradient
+        className="card-active-bg"
+        $color={bgColor as string}
       />
       <StyledFlex justifyContent="space-between" alignItems="flex-start">
         <StyledTitle className={type}>

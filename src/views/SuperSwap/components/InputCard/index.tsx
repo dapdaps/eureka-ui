@@ -21,6 +21,7 @@ import {
   StyledTradeContent,
 } from './styles';
 import type { Token } from '@/types';
+import { useUpdateBalanceStore } from '../../hooks/useUpdateBalanceStore';
 
 type Props = {
   title: string;

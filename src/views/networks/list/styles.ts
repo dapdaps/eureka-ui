@@ -1,8 +1,11 @@
 import styled from 'styled-components';
+import Image from 'next/image';
 
-export const StyledContainer = styled.div``;
+export const StyledContainer = styled.div`
+  font-family: Montserrat;
+`;
 
-export const Banner = styled.div`
+export const StyledBanner = styled.div`
   width: 1234px;
   height: 600px;
   margin: 0 auto;
@@ -11,10 +14,9 @@ export const Banner = styled.div`
   background-size: cover;
   text-align: center;
 `;
-export const Title = styled.div`
+export const StyledTitle = styled.div`
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
   font-size: 46px;
   font-style: normal;
   font-weight: 500;
@@ -23,7 +25,6 @@ export const Title = styled.div`
   margin-bottom: 27px;
   .highlight {
     color: #ebf479;
-    font-family: Montserrat;
     font-size: 46px;
     font-style: normal;
     font-weight: 700;
@@ -31,27 +32,56 @@ export const Title = styled.div`
     text-transform: uppercase;
   }
 `;
-export const Desc = styled.div`
+export const StyledDesc = styled.div`
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
   font-size: 20px;
   font-style: normal;
   font-weight: 400;
   line-height: 160%; /* 32px */
 `;
 
-export const Wrap = styled.div`
+export const StyledWrap = styled.div`
   width: 1260px;
   margin: -122px auto 0;
 `;
 
-export const H1 = styled.div`
-  padding: 20px 30px;
+export const StyledH1 = styled.div`
   color: #fff;
-  font-family: Montserrat;
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+`;
+
+export const StyledHead = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 30px 27px;
+`;
+
+export const StyledFilters = styled.div`
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  color: #ffffff;
+  
+  .filter-icon {
+    color: #3D405A;
+    cursor: pointer;
+    transition: color .2s ease;
+    
+    &:first-of-type {
+      margin-left: 8px;
+    }
+  }
+  .active {
+    color: #EBF479;
+  }
+`;
+
+export const StyledFilterText = styled.div`
+  color: #979ABE;
+  font-size: 14px;
 `;

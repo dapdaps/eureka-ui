@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
-import goldImg from './img/gold.svg';
+import goldImg from '@public/images/others/odyssey/v8/components/Spins/gold.svg?url';
 
 export const StyledContainer = styled(motion.div)`
   width: 1260px;

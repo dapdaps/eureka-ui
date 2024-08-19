@@ -37,10 +37,16 @@ const StyledContainer = styled.button`
   width: 48px;
   height: 48px;
   flex-shrink: 0;
-  background: #18191E;
   border: 1px solid #333648;
+  background: #18191E;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  transition: all 0.2s linear;
+
+  &:hover,
+  &:focus {
+    background: #1F2229;
+  }
 `;

@@ -7,6 +7,7 @@ import { formateValueWithThousandSeparator, formateValueWithThousandSeparatorAnd
 import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import { StyledFlex } from '@/styled/styles';
+import { max, min } from 'lodash';
 
 export const StyledContainer = styled.div`
   width: 574px;
@@ -181,9 +182,9 @@ const ChartComponent = (props: Props) => {
                 data={list}
                 margin={{
                   top: 10,
-                  right: 30,
-                  left: 0,
-                  bottom: 0,
+                  right: 10,
+                  left: 10,
+                  bottom: 10,
                 }}
               >
                 <defs>
@@ -205,7 +206,18 @@ const ChartComponent = (props: Props) => {
                   axisLine={false}
                   tick={false}
                   tickLine={false}
-                  domain={['dataMin', 'dataMax']}
+                  domain={() => {
+                    const _list = list.map((it) => {
+                      if (!isValidNumber(it.worth)) return 0;
+                      return Big(it.worth).toNumber();
+                    });
+                    const _dataMin = min(_list) ?? 0;
+                    const _dataMax = max(_list) ?? 0;
+                    const _dataMaxLen = Math.floor(_dataMax).toString().length || 1;
+                    const _dataMinRes = 0;
+                    const _dataMaxRes = _dataMax + _dataMax / Math.pow(10, _dataMaxLen - 1);
+                    return [_dataMinRes, _dataMaxRes];
+                  }}
                 />
                 <Area
                   dataKey="worth"
@@ -249,4 +261,13 @@ export interface Props {
   list: any[];
   loading: boolean;
   increase: any;
+}
+
+function isValidNumber(num: number): boolean {
+  try {
+    Big(num);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }

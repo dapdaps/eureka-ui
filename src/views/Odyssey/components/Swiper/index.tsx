@@ -34,13 +34,14 @@ import {
   StyleList,
   StyledVideo,
   StyledVideoIcon,
-  StyleChainIconImg,
+  StyleChainIconImg, StyledSwiperPagination,
 } from './styles';
 
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import Tag, { StatusType } from '../Tag';
 import RewardList from '../Reward';
 import MedalList from '../Medal';
+import { StyledComingSoon } from '@/views/Home/components/Compass/styles';
 
 export const formatCompassName = (name: string) => {
   if (!name) return '';
@@ -90,7 +91,7 @@ const CompassCard = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledFlex gap=".32rem" alignItems="flex-start">
+      <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
         <StyledCardBackgroundImage
           src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
@@ -119,7 +120,7 @@ const CompassCard = function ({ compass }: any) {
           </StyleList>
           {/* <StyledCardDesc>{compass.description}</StyledCardDesc> */}
           {compass.status === 'un_start' ? (
-            <div className="btns">Coming soon...</div>
+            <StyledComingSoon className="btns">Coming soon...</StyledComingSoon>
           ) : (
             <div className="btns">
               <StyledCompassButton
@@ -291,14 +292,13 @@ const Compass = () => {
                   >
                     <IconArrow />
                   </StyledSwiperNextButton>
-                  <div className="swiper-pagination"></div>
                 </>
               )
             }
-
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
+      <StyledSwiperPagination className="swiper-pagination" />
     </StyledContainer>
   );
 };

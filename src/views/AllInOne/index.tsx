@@ -3,7 +3,6 @@ import { memo } from 'react';
 
 import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
@@ -55,9 +54,7 @@ const AllInOneView = (props: Props) => {
           </StyledContent>
         )}
       </StyledFlex>
-      <StyledBg>
-        <Gradient bgColor={currentChain.selectBgColor} width={720} height={241} rx={280} ry={40.5} />
-      </StyledBg>
+      <StyledBg $color={currentChain.selectBgColor} />
     </StyledContainer>
   );
 };

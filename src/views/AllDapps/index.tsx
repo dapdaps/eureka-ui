@@ -3,8 +3,6 @@ import {
   StyledContainer,
   StyledFilters,
   StyledNetworkDropdownItem,
-  StyledRadio,
-  StyledRewardNow,
   StyledSearch,
   StyledSearchIcon,
   StyledSearchInput,
@@ -22,6 +20,8 @@ import DappList from './components/DappList';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
 import useList from './hooks/useList';
 import { NetworkAll, useNetworks } from '@/hooks/useNetworks';
+import SortBy from '@/views/AllDapps/components/Filters/SortBy';
+import Radio from '@/components/Radio';
 
 const categoryAnimation = (_scrolled: boolean, visible = {}, hidden = {}) => ({
   variants:{
@@ -39,6 +39,7 @@ const AllDapps = (props: Props) => {
   const {} = props;
 
   const searchParams = useSearchParams();
+  const params = new URLSearchParams(searchParams);
   const pathname = usePathname();
 
   const router = useRouter();
@@ -74,7 +75,6 @@ const AllDapps = (props: Props) => {
   }, [router, pathname]);
 
   const onSelectNetwork = (_network: number) => {
-    const params = new URLSearchParams(searchParams);
     if (_network === -1) {
       params.delete('network');
     } else {
@@ -84,7 +84,6 @@ const AllDapps = (props: Props) => {
   }
 
   const onSortSelect = (_sort: string) => {
-    const params = new URLSearchParams(searchParams);
     if (_sort === SortList[0].value) {
       params.delete('sort');
     } else {
@@ -94,7 +93,6 @@ const AllDapps = (props: Props) => {
   }
 
   const onSelectCategory = (_category: any) => {
-    const params = new URLSearchParams(searchParams);
     if (!_category) {
       params.delete('category');
     } else {
@@ -104,7 +102,6 @@ const AllDapps = (props: Props) => {
   }
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const params = new URLSearchParams(searchParams);
     const _searchWord = e.target.value.trim();
     setSearchWord(_searchWord);
     if (_searchWord && _searchWord !== 'undefined') {
@@ -117,7 +114,6 @@ const AllDapps = (props: Props) => {
 
   const onRewardToggle = () => {
     const _rewardNow = !rewardNow;
-    const params = new URLSearchParams(searchParams);
     if (_rewardNow) {
       params.set('reward', TrueString);
     } else {
@@ -128,7 +124,6 @@ const AllDapps = (props: Props) => {
 
   const onAirdropToggle = () => {
     const _airdrop = !airdrop;
-    const params = new URLSearchParams(searchParams);
     if (_airdrop) {
       params.set('airdrop', TrueString);
     } else {
@@ -137,19 +132,8 @@ const AllDapps = (props: Props) => {
     setQueryParams(params);
   }
 
-  const onPage = (_page: number) => {
-    const params = new URLSearchParams(searchParams);
-    if (!_page || _page === 1) {
-      params.delete('page');
-    } else {
-      params.set('page', _page + '');
-    }
-    setQueryParams(params);
-  };
-
   useEffect(() => {
     const navbarTop = categoryRef?.current?.offsetTop ?? 278;
-
     const handleScroll = () => {
       const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       setScrolled(scrollTop > navbarTop);
@@ -261,34 +245,9 @@ const AllDapps = (props: Props) => {
               />
             )
           }
-          <Selector
-            list={SortList}
-            value={sort}
-            onSelect={onSortSelect}
-            popupStyle={{
-              width: 169,
-              maxHeight: 300,
-            }}
-            isArrowRotate={false}
-          />
-          <StyledRadio
-            $selected={airdrop}
-            onClick={onAirdropToggle}
-          >
-            <div className="radio-control"></div>
-            <div className="radio-text">
-              Potential Airdrop
-            </div>
-          </StyledRadio>
-          <StyledRewardNow
-            $selected={rewardNow}
-            onClick={onRewardToggle}
-          >
-            <div className="radio-control"></div>
-            <div className="radio-text">
-              Reward now
-            </div>
-          </StyledRewardNow>
+          <SortBy value={sort} onSelect={onSortSelect}/>
+          <Radio selected={airdrop} onChange={onAirdropToggle} label='Potential Airdrop' />
+          <Radio colorful selected={rewardNow} onChange={onRewardToggle} label='Reward now' />
           <StyledSearch>
             <StyledSearchIcon>
               <Image src="/images/alldapps/icon-search.svg" alt="" width={18} height={14} />

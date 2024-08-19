@@ -45,4 +45,7 @@ export const StyledDAppContent = styled.div`
   // fix#DAP-799
   position: relative;
   z-index: 2;
+  // fix#DAP-804
+  max-width: 1260px;
+  min-width: 1060px;
 `;

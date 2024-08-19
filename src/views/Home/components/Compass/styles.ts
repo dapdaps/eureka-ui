@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import LazyImage from '@/components/LazyImage';
 
 export const StyledContainer = styled.div`
   height: 560px;
@@ -50,17 +51,20 @@ export const StyledCard = styled.div`
   width: 1244px;
   height: 400px;
   border-radius: 20px;
-  border: 1px solid; 
+  border: 1px solid #202329;
   border-image-source: linear-gradient(180deg, #202329 0%, #101115 100%);
   background: #18191E;
 `;
 
-export const StyledCardBackgroundImage = styled.img`
+export const StyledCardBackgroundImage = styled(LazyImage)`
   width: 720px;
-  height: 400px;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 `;
 
 export const StyledCardMainContent = styled.div`
+  height: 100%;
   padding: 30px 30px 30px 0;
   flex: 1;
   align-self: stretch;
@@ -145,7 +149,17 @@ export const StyledCardDesc = styled.div`
   text-overflow: ellipsis;
 `;
 
-
+export const StyledComingSoon = styled.div`
+  color: #00E2FF;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  
+  &.btns {
+    bottom: 50px;
+  }
+`;
 
 export const StyledCompassButton = styled.div`
   width: 100%;
@@ -252,10 +266,10 @@ export const StyledSwiperWrapper = styled.div`
     background: #575A77;
   }
 `;
-export const StyledSwiperNextButton = styled.div`
+export const StyledSwiperNextButton = styled.button`
   position: absolute;
   right: -64px;
-  bottom: 226px;
+  bottom: 176px;
   cursor: pointer;
   width: 48px;
   height: 48px;
@@ -264,20 +278,19 @@ export const StyledSwiperNextButton = styled.div`
   justify-content: center;
   border-radius: 10px;
   border: 1px solid #333648;
+  background: #18191E;
+  transition: all 0.2s linear;
+  z-index: 6;
+  
+  &:hover,
+  &:focus {
+    background: #1F2229;
+  }
 `;
-export const StyledSwiperPrevButton = styled.div`
-  position: absolute;
+export const StyledSwiperPrevButton = styled(StyledSwiperNextButton)`
   left: -64px;
-  bottom: 226px;
+  right: unset;
   transform: rotate(180deg);
-  cursor: pointer;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  border: 1px solid #333648;
 `;
 export const StyledChainsImg = styled.img`
   width: auto;

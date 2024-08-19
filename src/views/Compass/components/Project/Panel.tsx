@@ -6,7 +6,7 @@ import Spin from '../Spin';
 import Fresh from '../Fresh';
 import Complete from '../Complate';
 
-import maskImg from '../../img/mask.svg';
+import maskImg from '@public/images/others/odyssey/v1/mask.svg?url';
 
 const PanelWapper = styled.div<{ color: string }>`
     width: 25%;

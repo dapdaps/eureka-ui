@@ -29,6 +29,7 @@ import {
   StyledCardTitle,
   StyledCompassIcon,
   StyledCompassButton,
+  StyledComingSoon,
 } from './styles';
 import useCompassCombineAd from './hooks/useCompassCombineAd';
 import { extractPathFromUrl } from '@/utils/formate';
@@ -39,8 +40,13 @@ const AdCard = function ({ ad }: any) {
   const router = useRouter();
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems="flex-start">
-        <StyledCardBackgroundImage src={ad.ad_images} alt={ad.title} />
+      <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
+        <StyledCardBackgroundImage
+          src={ad.ad_images}
+          alt={ad.title}
+          width={720}
+          height={400}
+        />
         <StyledCardMainContent>
           <div className="title">Featured</div>
           <div className="card_section">
@@ -90,10 +96,12 @@ const CompassCard = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledFlex gap="32px" alignItems="flex-start">
+      <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
         <StyledCardBackgroundImage
           src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
+          width={720}
+          height={400}
           style={{
             filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
           }}
@@ -116,7 +124,7 @@ const CompassCard = function ({ compass }: any) {
           <StyledCardTitle>{compass.name}</StyledCardTitle>
           <StyledCardDesc>{compass.description}</StyledCardDesc>
           {compass.status === 'un_start' ? (
-            <div className="btns">Coming soon...</div>
+            <StyledComingSoon className="btns">Coming soon...</StyledComingSoon>
           ) : (
             <div className="btns">
               <StyledCompassButton

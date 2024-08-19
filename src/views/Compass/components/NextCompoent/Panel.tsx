@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import odyssey from '@/config/odyssey';
-import LineImg from './img/line.svg';
-import g2Img from '../../img/g1.svg';
-import compassImg from './img/odyssey.svg';
+import LineImg from '@public/images/others/odyssey/v1/components/NextCompoent/line.svg?url';
+import g2Img from '@public/images/others/odyssey/v1/g1.svg?url';
+import compassImg from '@public/images/others/odyssey/v1/components/NextCompoent/odyssey.svg?url';
 
 import { StyledCardButton } from '@/views/Home/components/Compass/styles';
 

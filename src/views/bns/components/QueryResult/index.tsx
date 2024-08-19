@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import iconCoin from '@/assets/images/icon_coin.svg';
+import iconCoin from '@public/images/others/bns/icon_coin.svg?url';
 import Image from 'next/image';
 import { CHAIN_LIST } from '../../constants';
 import type { QueryNameStatusType } from '../../types';

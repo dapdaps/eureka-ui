@@ -2,13 +2,19 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   height: 380px;
-  background: transparent
+  background: transparent;
+  position: relative;
 `;
 
 export const StyledContent = styled.div`
   width: 1244px;
   margin: 0 auto;
   position: relative;
+  transition: all 0.5s ease 0s;
+
+  @media (max-width: 1440px) {
+    transform: scale(0.95);
+  }
 `;
 
 export const StyledInner = styled.div`
@@ -38,14 +44,16 @@ export const StyledCard = styled.div`
   width: 1244px;
   height: 380px;
   border-radius: 20px;
-  border: 1px solid; 
+  border: 1px solid #202329; 
   border-image-source: linear-gradient(180deg, #202329 0%, #101115 100%);
   background: #18191E;
 `;
 
 export const StyledCardBackgroundImage = styled.img`
   width: 660px;
-  height: 380px;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
 `;
 
 export const StyledCardMainContent = styled.div`
@@ -215,16 +223,19 @@ export const StyledWinPtsIcon = styled.div`
 `;
 export const StyledSwiperWrapper = styled.div`
   position: relative;
-  .swiper-pagination {
-    position: absolute;
-    bottom: -40px;
-    right: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transform: translateX(50%);
-  }
+`;
+export const StyledSwiperPagination = styled.div`
+  width: 100%;
+  height: 92px;
+  position: absolute;
+  bottom: -92px;
+  right: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transform: translateX(50%);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
 
   .swiper-pagination-bullet {
     width: 25px;
@@ -256,20 +267,18 @@ export const StyledSwiperNextButton = styled.div`
   justify-content: center;
   border-radius: 10px;
   border: 1px solid #333648;
+  background: #18191E;
+  transition: all 0.2s linear;
+
+  &:hover,
+  &:focus {
+    background: #1F2229;
+  }
 `;
-export const StyledSwiperPrevButton = styled.div`
-  position: absolute;
+export const StyledSwiperPrevButton = styled(StyledSwiperNextButton)`
   left: -64px;
-  bottom: 166px;
+  right: unset;
   transform: rotate(180deg);
-  cursor: pointer;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 10px;
-  border: 1px solid #333648;
 `;
 export const StyledChainsImg = styled.img`
   width: auto;

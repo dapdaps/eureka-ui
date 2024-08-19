@@ -109,6 +109,7 @@ const Reward = (props: Props) => {
           {
             badges.map((b, idx) => (
               <StyledBadge
+                key={idx}
                 whileHover="tooltip"
                 initial="default"
                 variants={{
@@ -254,6 +255,7 @@ const StyledBadge = styled(motion.div)`
   justify-content: center;
   align-items: center;
   position: relative;
+  cursor: pointer;
 
   &:first-child {
     margin-left: 0;

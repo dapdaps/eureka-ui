@@ -12,19 +12,23 @@ const StyledWrapper = styled.div`
   --var-container-width: 1244px;
   position: relative;
   .section {
-    padding-top: 100px;
+    padding-top: 123px;
     height: 670px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-flow: column wrap;
     gap: 50px;
+
     @media (max-width: 1440px) {
-      transform: scale(0.95);
-      gap: 50px;
-      transition: all 0.5s ease 0s;
+      .head {
+        transform: scale(0.95);
+      }
     }
+
     .head {
+      transition: all 0.5s ease 0s;
+
       .slogen {
         width: 350px;
         height: 50px;
@@ -38,7 +42,7 @@ const StyledWrapper = styled.div`
     }
   }
   .compass {
-    width: var(--var-container-width);
+    width: 100%;
   }
   .odyssey {
     padding: 55px 0;
@@ -141,8 +145,9 @@ const OdysseyList = () => {
         <RecentRewards
           isSubTitle={false}
           style={{
-            height: 385,
-            marginBottom: 80,
+            height: 330,
+            justifyContent: 'flex-start',
+            paddingTop: 115,
           }}
           titleStyle={{
             marginBottom: 10,

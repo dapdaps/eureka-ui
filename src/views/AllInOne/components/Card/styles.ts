@@ -27,21 +27,11 @@ export const StyledCard = styled.div<{ bgColor?: string }>`
     background: linear-gradient(rgba(0, 0, 0, 0), 80%, rgba(22, 24, 29, 1));
   }
 
-  .card-active-bg {
-    position: absolute;
-    z-index: 0;
-    top: -100px;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    transition: all 0.6s ease;
-  }
-
   &:hover {
     transform: scale(1.04);
 
     .card-active-bg {
-      opacity: 1;
+      opacity: 0.5;
     }
 
     .arrow-top-right {
@@ -93,6 +83,8 @@ export const StyledTitle = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
+  z-index: 1;
 
   h3 {
     font-size: 1em;
@@ -183,4 +175,20 @@ export const StyledIcon = styled.img`
   margin-left: -5px;
   border-radius: 8px;
   border: 2px solid #16181d;
+`;
+
+export const StyledGradient = styled.div<{ $color: string; }>`
+  width: 288px;
+  height: 216px;
+  flex-shrink: 0;
+  border-radius: 288px;
+  background: ${({ $color }) => `radial-gradient(50% 50% at 50% 50%, ${$color} 0%, #16181D 100%)`};
+  filter: blur(40px);
+  position: absolute;
+  z-index: 0;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: all 0.6s ease;
 `;

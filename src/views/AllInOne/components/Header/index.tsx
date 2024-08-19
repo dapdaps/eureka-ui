@@ -4,7 +4,6 @@ import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import popupsData from '@/config/all-in-one/chains';
 import { StyledFlex } from '@/styled/styles';
-import { Gradient } from '@/views/AllInOne/components/Gradient';
 import {
   StyledArrowIconWrap,
   StyledBgLogo,
@@ -82,11 +81,6 @@ const AllInOneHeaderView = (props: Props) => {
             </StyledFlex>
           </StyledMainLogo>
           <StyledBgLogo src={currentChain.bgIcon} />
-          {/*#region Magical bug: In Chrome, if this component is not referenced on here, this component cannot be rendered normally in the parent component*/}
-          <div style={{ display: 'none' }}>
-            <Gradient bgColor="#ffffff" width={720} height={241} rx={280} ry={40.5} />
-          </div>
-          {/*#endregion*/}
         </StyledHeader>
       ) : (
         <Loading />

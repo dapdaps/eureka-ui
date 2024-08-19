@@ -18,7 +18,7 @@ const StyleMain = styled.div`
     margin-bottom: 12px;
   }
   .header {
-    font-size: 700;
+    font-weight: 700;
     font-family: Montserrat;
     font-size: 32px;
     line-height: 40px;

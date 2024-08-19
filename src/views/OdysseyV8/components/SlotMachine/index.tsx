@@ -5,23 +5,23 @@ import ScrollLine from './ScrollLine';
 import RuleModal from './RuleModal';
 import PrizeModal from './PrizeModal';
 
-import controllerImg from './img/ctr.svg';
-import controllerActiveImg from './img/ctr-active.svg';
-import actionBg from './img/action-bg.svg';
+import controllerImg from '@public/images/others/odyssey/v8/components/SlotMachine/ctr.svg?url';
+import controllerActiveImg from '@public/images/others/odyssey/v8/components/SlotMachine/ctr-active.svg?url';
+import actionBg from '@public/images/others/odyssey/v8/components/SlotMachine/action-bg.svg?url';
 
-import ruleImg from './img/rule.svg';
-import clamImg from './img/clam.svg';
-import rulePressImg from './img/rule-press.svg';
-import clamPressImg from './img/clam-press.svg';
-import btnBgImg from './img/btn-bg.svg';
-import btnImg from './img/btn.svg';
-import btnActiveImg from './img/btn-active.svg';
-import coverTopImg from './img/cover-top.png';
+import ruleImg from '@public/images/others/odyssey/v8/components/SlotMachine/rule.svg?url';
+import clamImg from '@public/images/others/odyssey/v8/components/SlotMachine/clam.svg?url';
+import rulePressImg from '@public/images/others/odyssey/v8/components/SlotMachine/rule-press.svg?url';
+import clamPressImg from '@public/images/others/odyssey/v8/components/SlotMachine/clam-press.svg?url';
+import btnBgImg from '@public/images/others/odyssey/v8/components/SlotMachine/btn-bg.svg?url';
+import btnImg from '@public/images/others/odyssey/v8/components/SlotMachine/btn.svg?url';
+import btnActiveImg from '@public/images/others/odyssey/v8/components/SlotMachine/btn-active.svg?url';
+import coverTopImg from '@public/images/others/odyssey/v8/components/SlotMachine/cover-top.png';
 
-import yellowLeftImg from './img/yellow-left.svg';
-import yellowMidImg from './img/yellow-mid.svg';
-import yellowRightImg from './img/yellow-right.svg';
-import bgImg from './img/bg.svg';
+import yellowLeftImg from '@public/images/others/odyssey/v8/components/SlotMachine/yellow-left.svg?url';
+import yellowMidImg from '@public/images/others/odyssey/v8/components/SlotMachine/yellow-mid.svg?url';
+import yellowRightImg from '@public/images/others/odyssey/v8/components/SlotMachine/yellow-right.svg?url';
+import bgImg from '@public/images/others/odyssey/v8/components/SlotMachine/bg.svg?url';
 
 import DisabledMark from './DisabledMark';
 import Pilcrow from '../Pilcrow';

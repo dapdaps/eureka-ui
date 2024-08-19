@@ -1,11 +1,15 @@
-import { memo } from 'react';
+import { memo, useEffect, useState } from 'react';
 import Modal from '@/components/Modal';
 import styled from 'styled-components';
-import { MedalType } from '@/views/Profile/types';
-import { useRouter } from 'next/router';
 import IconAdd from '@public/images/tokens/add.svg';
 import IconLink from '@public/images/tokens/link.svg';
 import IconCopy from '@public/images/tokens/copy.svg';
+import { get } from '@/utils/http'
+import useToast from '@/hooks/useToast';
+import { copyText } from '@/utils/copy';
+import chainCofig from '@/config/chains';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formateValueWithThousandSeparator } from '@/utils/formate';
 
 const StyledToken = styled.div`
   padding: 0 24px;
@@ -112,6 +116,9 @@ const AddressSection = styled.div`
     display: flex;
     align-items: center;
     gap: 12px;
+    & > svg {
+      cursor: pointer;
+    }
   }
 `;
 
@@ -121,7 +128,7 @@ const Address = styled.span`
   justify-content: space-between;
   .addr {
     font-family: Montserrat;
-    font-size: 14px;
+    font-size: 13px; // there is no 13px in the design but 14px is too big so that width is not enough
     font-weight: 400;
     line-height: 17px;
   }
@@ -164,13 +171,82 @@ const InfoValue = styled.span`
 
 export interface Props {
   visible?: boolean;
-  data?: MedalType;
   close?(): void;
+  trade?: any;
+}
+
+interface IData {
+  id: number;
+  symbol: string;
+  circulating_supply: string;
+  max_supply: string;
+  fully_diluted_valuation: string;
+  market_cap: string;
+  high_24h: string;
+  low_24h: string;
+  volume_24h: string;
 }
 
 const TokenDetailPopup = (props: Props) => {
-  const { visible, close, data } = props;
-  const router = useRouter();
+  const { visible, close, trade } = props;
+  const [loading, setLoading] = useState(false);
+  const [tokenDetail, setTokenDetail] = useState<IData>();
+  const toast = useToast()
+  const fetchTokenDetail = async () => {
+    setLoading(true);
+    try {
+      const res = await get(`/api/token/market`, {
+        symbol: trade.inputCurrency.symbol
+      });
+      setTokenDetail(res.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false)
+  }
+}
+
+  useEffect(() => {
+    if (trade?.inputCurrency) {
+      fetchTokenDetail();
+    }
+  }, []);
+
+  const handleCopyCurrency = () => {
+    copyText(trade.inputCurrency.address, () => {
+      toast.success('Copied Successfully');
+    });
+  };
+
+  const handleLink = () => {
+    window.open(`https://etherscan.io/token/${trade.inputCurrency.address}`);
+  }
+
+  const hanleAddMask = async() => {
+    const currChain = chainCofig[trade.inputCurrency.chainId];
+    if (typeof window.ethereum === 'undefined' || !currChain) {
+      return false;
+    }
+
+    try {
+      await window.ethereum.request({
+        method: 'wallet_addEthereumChain',
+        params: [{
+          chainId: `0x${trade.inputCurrency.chainId.toString(16)}`,
+          rpcUrls: currChain.rpcUrls,
+          chainName: currChain.chainName,
+          nativeCurrency: currChain.nativeCurrency,
+          blockExplorerUrls: [currChain.blockExplorers],
+        }],
+      });
+      return true;
+    } catch (err) {
+      console.log('add metamask failed: %o', err);
+      toast.fail('Failed to add network!');
+      return false;
+    }
+  }
+
   return (
     <Modal
       width={476}
@@ -192,56 +268,58 @@ const TokenDetailPopup = (props: Props) => {
         <StyledToken>
           <StyleMain>
             <Header>
-              <img className="token-img" src="/images/tokens/blast.svg" alt="" />
+              <img className="token-img" src={trade.inputCurrency.icon} alt="" />
               <Title>
-                <span className="name">ETH</span>
-                <span className="name-desc">Ethereum</span>
+                <span className="name">{trade.inputCurrency.symbol}</span>
+                <span className="name-desc">{trade.inputCurrency.name === 'ETH' ? 'Ethereum' : trade.inputCurrency.name }</span>
               </Title>
             </Header>
-
-            <AddressSection>
-              <div className="token-title">Token address</div>
-              <Address>
-                <div className="addr">0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9</div>
-                <div className="options">
-                  <IconCopy />
-                  <IconLink />
-                  <IconAdd />
-                </div>
-              </Address>
-            </AddressSection>
+            {
+              trade.inputCurrency.address != 'native' && (
+                <AddressSection>
+                  <Address>
+                    <div className="addr">{trade.inputCurrency.address}</div>
+                    <div className="options">
+                      <IconCopy onClick={handleCopyCurrency} />
+                      <IconLink onClick={handleLink} />
+                      <IconAdd onClick={hanleAddMask} />
+                    </div>
+                  </Address>
+                </AddressSection>
+              )
+            }
             <InfoGrid>
               <InfoItem>
                 <InfoLabel>Circulating supply</InfoLabel>
-                <InfoValue>1.38k</InfoValue>
+                <InfoValue>{formatIntegerThousandsSeparator(tokenDetail?.circulating_supply)}</InfoValue>
               </InfoItem>
               <InfoItem>
-                <InfoLabel>Liquidity</InfoLabel>
-                <InfoValue>$2.18m</InfoValue>
+                <InfoLabel>Fully Diluted Valuation</InfoLabel>
+                <InfoValue>${formatIntegerThousandsSeparator(tokenDetail?.fully_diluted_valuation)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>Maximum supply</InfoLabel>
-                <InfoValue>1.38k</InfoValue>
+                <InfoValue>{formatIntegerThousandsSeparator(tokenDetail?.max_supply)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>Market cap</InfoLabel>
-                <InfoValue>$4.34m</InfoValue>
+                <InfoValue>${formatIntegerThousandsSeparator(tokenDetail?.market_cap)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h high</InfoLabel>
-                <InfoValue>$3,174.79</InfoValue>
+                <InfoValue>${formateValueWithThousandSeparator(tokenDetail?.high_24h, 2)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24 low</InfoLabel>
-                <InfoValue>$3,074.79</InfoValue>
+                <InfoValue>${formateValueWithThousandSeparator(tokenDetail?.low_24h, 2)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h volume - ETH</InfoLabel>
-                <InfoValue>237.215144</InfoValue>
+                <InfoValue>{formateValueWithThousandSeparator(tokenDetail?.volume_24h, 2)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h volume - USD</InfoLabel>
-                <InfoValue>$738.47k</InfoValue>
+                <InfoValue>${formatIntegerThousandsSeparator(tokenDetail?.volume_24h)}</InfoValue>
               </InfoItem>
             </InfoGrid>
           </StyleMain>

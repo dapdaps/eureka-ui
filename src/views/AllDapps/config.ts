@@ -30,12 +30,17 @@ export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [
   { key: '6', position: 'right', width: 72, height: 72, x: 30, y: 36, rotate: random(-45, 45) },
 ];
 
-export const SortList = [
-  { key: 1, value: 'volume', label: 'Sort by Volume' },
-  { key: 2, value: 'users', label: 'Sort by users' },
-  { key: 3, value: 'a-z', label: 'A-Z' },
-  { key: 4, value: 'z-a', label: 'Z-A' },
-  { key: 5, value: 'create_time', label: 'New launched' },
+export const SortList: {
+  key: number,
+  value: string,
+  label: string,
+  variable: any
+}[] = [
+  { key: 1, value: 'volume', label: 'Sort by Volume', variable: 'trading_volume' },
+  { key: 2, value: 'users', label: 'Sort by users', variable: 'participants' },
+  { key: 3, value: 'a-z', label: 'A-Z', variable: 'name' },
+  { key: 4, value: 'z-a', label: 'Z-A', variable: 'name' },
+  { key: 5, value: 'create_time', label: 'New launched', variable: 'id' },
 ];
 
 export const PageSize = 18;

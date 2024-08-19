@@ -7,6 +7,7 @@ import { Odyssey } from "@/components/DropdownSearchResultPanel/hooks/useDefault
 import { useRouter } from "next/router";
 import odyssey from "@/config/odyssey";
 import useToast from "@/hooks/useToast";
+import LazyImage from '@/components/LazyImage';
 
 const Flex = styled.div`
   display: flex;
@@ -165,7 +166,12 @@ const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
             }}
             >
             <StyleImage className="bridgeImage">
-              <img src={item.banner || '/images/odyssey/v2/default.jpg'} alt="bridge" />
+              <LazyImage
+                src={item.banner || '/images/odyssey/v2/default.jpg'}
+                alt="bridge"
+                width={100}
+                height={60}
+              />
               {item.is_new && <StyleNew />}
             </StyleImage>
             <StyleText>

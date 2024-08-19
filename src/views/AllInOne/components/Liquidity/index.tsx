@@ -88,7 +88,11 @@ const Liquidity = (props: Props) => {
     return (
       <StyledAccountContainer>
         <StyledAccountTip>{_textTip}</StyledAccountTip>
-        <StyledConnectButton onClick={onButtonClick} bg={chain.selectBgColor} color={chain?.iconColor}>
+        <StyledConnectButton
+          onClick={onButtonClick}
+          bg={chain.theme?.button?.bg}
+          color={chain.theme?.button?.text}
+        >
           {_buttonText}
         </StyledConnectButton>
       </StyledAccountContainer>

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useOdysseyStore } from '@/stores/odyssey';
 import { get } from '@/utils/http';
 
-export default function useCompassList(campaign_id?: string) {
+export default function useCompassList() {
   const [compassList, setCompassList] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const odysseyStore: any = useOdysseyStore();
