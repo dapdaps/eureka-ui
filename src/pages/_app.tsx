@@ -7,7 +7,6 @@ import 'nprogress/nprogress.css';
 
 import { useDebounceFn } from 'ahooks';
 import type { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
 import NProgress from 'nprogress';
 
 import Head from 'next/head';
@@ -27,11 +26,6 @@ import { useAuthStore } from '@/stores/auth';
 import { report } from '@/utils/burying-point';
 import type { NextPageWithLayout } from '@/utils/types';
 import { styleZendesk } from '@/utils/zendesk';
-
-const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
-  ssr: false,
-});
-
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -180,8 +174,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           };
         `}
       </Script>
-
-      <VmInitializer />
 
       {ready && (
         <>
