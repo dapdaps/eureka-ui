@@ -8,7 +8,8 @@ const PageBack = (props: Props) => {
   const router = useRouter();
 
   const onClick = () => {
-    if (document.referrer !== window.location.origin) {
+    const prevOrigin = /^https?:\/\/[\w-.]+(:\d+)?/i.exec(document.referrer);
+    if (prevOrigin && prevOrigin[0] !== window.location.origin) {
       router.replace(defaultPath);
       return;
     }
