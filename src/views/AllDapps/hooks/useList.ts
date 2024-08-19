@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { CategoryList, PageSize } from '@/views/AllDapps/config';
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
@@ -60,7 +60,7 @@ export default function useList(props: Props) {
 
       // only sort show advertise
 
-      const showAdvertise = Object.keys(params).length === 3 && !location.search && _advertise.length > 0;
+      const showAdvertise = Object.keys(params).length === 3 && params.sort && _advertise.length > 0;
       if (showAdvertise) {
         params.page_size = PageSize - 1;
       }
@@ -102,13 +102,17 @@ export default function useList(props: Props) {
 
   const { run: getDappList } = useDebounceFn(fetchDappList, { wait: 600 });
 
-  useEffect(() => {
-    fetchDappList(1);
-  }, [network, sort, rewardNow, category, airdrop]);
 
-  // useEffect(() => {
-  //   getDappList(1);
-  // }, [searchText]);
+  const prevSearchText = useRef<any>(undefined);
+
+  useEffect(() => {
+    prevSearchText.current = searchText;
+    if (prevSearchText.current === searchText) {
+      getDappList(1);
+    } else {
+      fetchDappList(1);
+    }
+  }, [network, sort, rewardNow, category, airdrop, searchText]);
 
   const fetchAdvertiseData = async () => {
     if (isRequested) {
