@@ -289,9 +289,10 @@ export const StyledChainTag = styled.div<{$bgColor: string}>`
   background-color: ${({$bgColor}) => $bgColor ?? '#ffffff'};
   padding: 6px 14px;
   white-space: nowrap;
-  
+
   &.tag-top {
     margin-left: 10px;
+    width: 108px;
     .tag-icon {
       width: 35px;
       height: 35px;
@@ -301,6 +302,7 @@ export const StyledChainTag = styled.div<{$bgColor: string}>`
   }
   
   &.tag-hot {
+    width: 78px;
     .tag-icon {
       width: 43px;
       height: 43px;

@@ -24,7 +24,7 @@ export default function useList(props: Props) {
   const [pageTotal, setPageTotal] = useState<number>(0);
   const [pageIndex, setPageIndex] = useState<number>(1);
 
-  const { fetchAdvertise } = useAdvertise('dapps');
+  const { fetchAdvertise } = useAdvertise('dapp');
 
 
   const fetchDappList = async (page: number) => {
