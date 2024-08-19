@@ -5,9 +5,11 @@ import styled from 'styled-components';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import { useDebounceFn } from 'ahooks';
 import useAccount from '@/hooks/useAccount';
-import AccountSider from '../AccountSider';
-import Footer from '../Footer';
 import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
+import dynamic from 'next/dynamic';
+
+const AccountSider = dynamic(() => import('../AccountSider'));
+const Footer = dynamic(() => import('../Footer'));
 
 interface Props {
   children: ReactNode;

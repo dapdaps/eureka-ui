@@ -10,13 +10,12 @@ import IconBridge from '@public/images/header/bridge.svg';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import IconArrowRight from '@public/images/header/arrow-right.svg'
 import { StatusType } from "@/views/Odyssey/components/Tag";
-import Chains from './components/Chains';
-import ListItem from './components/ListItem';
 import { useNetworks } from '@/hooks/useNetworks';
 import { DividerHorizontalIcon } from '@radix-ui/react-icons';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import { useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import dynamic from 'next/dynamic';
 
 const StyleView = styled.div`
   margin: 0 auto;
@@ -48,8 +47,8 @@ const StyleView = styled.div`
   }
 `
 
-
-
+const Chains = dynamic(() => import('./components/Chains'));
+const ListItem = dynamic(() => import('./components/ListItem'));
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
   const { networkLoading, networkList } = useNetworks();

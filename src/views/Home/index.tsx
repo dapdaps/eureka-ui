@@ -1,12 +1,13 @@
 import Banner from './components/Banner';
 import Compass from './components/Compass';
-import DiscoveryDapps from './components/DiscoveryDapps';
-
 import { StyledContainer } from './styles';
-import RecentRewards from './components/Rewards';
-import Networks from './components/Networks';
-import SuperFeatures from './components/SuperFeatures';
-import PlatformStats from '@/views/Home/components/PlatformStats';
+import dynamic from 'next/dynamic';
+
+const Networks = dynamic(() => import('./components/Networks'));
+const DiscoveryDapps = dynamic(() => import('./components/DiscoveryDapps'));
+const RecentRewards = dynamic(() => import('./components/Rewards'));
+const SuperFeatures = dynamic(() => import('./components/SuperFeatures'));
+const PlatformStats = dynamic(() => import('./components/PlatformStats'));
 
 const Home = () => {
   return (

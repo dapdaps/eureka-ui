@@ -1,24 +1,22 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import AccountItem from '@/components/AccountSider/components/AccountItem';
-import Chain from '@/components/AccountSider/components/Chain';
-import ConnectWallet from '@/components/ConnectWallet';
-import DropdownMenuPanel from '@/components/DropdownMenuPanel';
-import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
 import useAccount from '@/hooks/useAccount';
-import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
 import IconSearch from '@public/images/header/search.svg'
 import { NavMainV2 } from './NavMainV2';
-import Notification from './Notification';
-import CheckInGrid from './components/CheckInGrid';
 import CheckIn from './components/CheckIn';
 import AccountLogo from './components/AccountLogo';
+import dynamic from 'next/dynamic';
 
+const ConnectWallet = dynamic(() => import('@/components/ConnectWallet'));
+const DropdownMenuPanel = dynamic(() => import('@/components/DropdownMenuPanel'));
+const DropdownSearchResultPanel = dynamic(() => import('@/components/DropdownSearchResultPanel'));
+const Chain = dynamic(() => import('@/components/AccountSider/components/Chain'));
+const Notification = dynamic(() => import('./Notification'));
 
 const Flex = styled.div`
   display: flex;
