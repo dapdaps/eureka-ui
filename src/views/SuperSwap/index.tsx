@@ -28,6 +28,8 @@ export default function SuperSwap() {
   const [showMarkets, setShowMarkets] = useState<boolean>(false);
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
+  const [showChart, setShowChart] = useState(false);
+
   const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
     chainId,
     onSuccess() {
@@ -146,7 +148,7 @@ export default function SuperSwap() {
           />
         </StyledInputs>
         <StyledTradeFooter>
-          {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}/>}
+          {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade} showChart={showChart} onShowChart={() => setShowChart(!showChart)} />}
         </StyledTradeFooter>
 
         <Button 
@@ -173,7 +175,7 @@ export default function SuperSwap() {
           )
         }
 
-      { trade && <KLineChart trade={trade} /> }
+      { trade && showChart && <KLineChart trade={trade} /> }
 
       </StyledContent>
       <SelectTokensModal
