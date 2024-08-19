@@ -38,15 +38,16 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
 
             if (val.identification === newestIdentification.current) {
                 routes.push(val)
+                setLoading(false)
                 // console.log('routes.length: ', routes.length)
                 setRoutes([
                     ...routes
                 ])
             }
-           
         })
         // console.log('routes:', routes)
         if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {
+            setLoading(false)
             setRoutes(_routes)
         }
         

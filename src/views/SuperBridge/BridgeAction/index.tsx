@@ -25,6 +25,7 @@ import GasModal from '../ChainTokenAmount/GasModal';
 
 import useQuote from '../hooks/useQuote';
 import { useGasTokenHooks } from '../hooks/useGasTokenHooks';
+import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance'
 
 import type { Chain, Token } from '@/types';
 
@@ -105,6 +106,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
   const [gasModalShow, setGasModalShow] = useState<boolean>(false);
   const [isSending, setIsSending] = useState<boolean>(false);
   const router = useRouter();
+  usePreloadBalance(allTokens, account)
 
   const inputValue = useDebounce(sendAmount, { wait: 500 });
 

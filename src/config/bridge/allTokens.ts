@@ -32,7 +32,9 @@ const allTokens: { [key: number]: Token[] } = {
     42161: Object.values(arbitrum).map(mapFn),
     43114: Object.values(avalanche).map(mapFn),
     8453: Object.values(base).map(mapFn),
-    56: Object.values(bsc).map(mapFn),
+    56: Object.values(bsc).map(mapFn).filter(item => {
+      return item.symbol !== 'RDNT' && item.symbol !== 'JONES'
+    }),
     1: Object.values(ethereum).map(mapFn),
     100: Object.values(gnosis).map(mapFn),
     59144: Object.values(linea).map(mapFn),
