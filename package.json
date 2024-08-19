@@ -7,9 +7,10 @@
     "npm": ">=0.39.0"
   },
   "scripts": {
-    "dev": "NEXT_PUBLIC_API=https://dapdap-api.bobdev.link next dev",
-    "dev-win": "set NEXT_PUBLIC_API=https://dapdap-api.bobdev.link& call next dev",
+    "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
+    "dev:win": "set NEXT_PUBLIC_API=https://test-api.dapdap.net& call next dev",
     "build": "next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky"
@@ -112,6 +113,7 @@
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.5",
     "@types/analytics-node": "^3.1.14",
     "@types/big.js": "^6.2.2",
     "@types/d3": "^7.4.3",

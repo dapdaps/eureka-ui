@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+});
 
 const api_url = process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : 'https://api.dapdap.net';
 
@@ -172,19 +175,9 @@ const nextConfig = {
         use: ['@svgr/webpack'],
       },
     )
-    fileLoaderRule.exclude = /\.svg$/i
-    if (!isServer) {
-      config.optimization.splitChunks.cacheGroups = {
-        VmInitializer: {
-          test: /[\\/]src[\\/]components[\\/]vm[\\/]VmInitializer\.tsx$/,
-          name: 'VmInitializer',
-          chunks: 'initial',
-          enforce: true,
-        },
-      };
-    }
+    fileLoaderRule.exclude = /\.svg$/i;
     return config;
   },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

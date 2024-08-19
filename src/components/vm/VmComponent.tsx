@@ -3,6 +3,11 @@ import { useBosLoaderStore } from '@/stores/bos-loader';
 import { useVmStore } from '@/stores/vm';
 
 import { Spinner } from '../lib/Spinner';
+import dynamic from 'next/dynamic';
+
+const VmInitializer = dynamic(() => import('@/components/vm/VmInitializer'), {
+  ssr: false,
+});
 
 type Props = {
   src: string;
@@ -14,18 +19,24 @@ export function VmComponent(props: Props) {
   const redirectMapStore = useBosLoaderStore();
   const toast = useToast();
 
-  if (!EthersProvider || !redirectMapStore.hasResolved) {
-    return <Spinner />;
-  }
   return (
-    <EthersProvider value={ethersContext}>
-      <Widget
-        config={{
-          redirectMap: redirectMapStore.redirectMap,
-        }}
-        src={props.src}
-        props={{ toast, ...props.props }}
-      />
-    </EthersProvider>
+    <>
+      <VmInitializer />
+      {
+        !EthersProvider || !redirectMapStore.hasResolved ? (
+          <Spinner />
+        ) : (
+          <EthersProvider value={ethersContext}>
+            <Widget
+              config={{
+                redirectMap: redirectMapStore.redirectMap,
+              }}
+              src={props.src}
+              props={{ toast, ...props.props }}
+            />
+          </EthersProvider>
+        )
+      }
+    </>
   );
 }

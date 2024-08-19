@@ -7,7 +7,7 @@ import 'nprogress/nprogress.css';
 
 import { useDebounceFn } from 'ahooks';
 import type { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
+
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
@@ -25,11 +25,6 @@ import useTokenPrice from '@/hooks/useTokenPrice';
 import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 import { report } from '@/utils/burying-point';
 import type { NextPageWithLayout } from '@/utils/types';
-
-const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
-  ssr: false,
-});
-
 
 type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
@@ -112,8 +107,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           gtag('js', new Date());
           gtag('config', 'G-PR996H5E9T');`}
       </Script>
-
-      <VmInitializer />
 
       {ready && (
         <>
