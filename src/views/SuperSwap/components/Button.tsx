@@ -38,11 +38,20 @@ const getButtonImpactProps = (trade: any) => {
       text: 'I noticed the price impact, swap anyway',
     };
   }
+
+  if (trade?.wrapType) {
+    return {
+      color: null,
+      text: trade?.wrapType === 1 ? 'Wrap' : 'Unwrap',
+    };
+  }
+
   return {
     color: null,
     text: 'Swap',
   };
 };
+
 
 const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
   const { approve, approved, approving, checking } = useApprove({
