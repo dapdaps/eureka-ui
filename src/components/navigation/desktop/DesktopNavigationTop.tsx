@@ -4,10 +4,6 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import Chain from '@/components/AccountSider/components/Chain';
-import ConnectWallet from '@/components/ConnectWallet';
-import DropdownMenuPanel from '@/components/DropdownMenuPanel';
-import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
 import useAccount from '@/hooks/useAccount';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
@@ -15,8 +11,13 @@ import { goHomeWithFresh } from '@/utils/activity-utils';
 import AccountLogo from './components/AccountLogo';
 import CheckIn from './components/CheckIn';
 import { NavMainV2 } from './NavMainV2';
-import Notification from './Notification';
+import dynamic from 'next/dynamic';
 
+const ConnectWallet = dynamic(() => import('@/components/ConnectWallet'));
+const DropdownMenuPanel = dynamic(() => import('@/components/DropdownMenuPanel'));
+const DropdownSearchResultPanel = dynamic(() => import('@/components/DropdownSearchResultPanel'));
+const Chain = dynamic(() => import('@/components/AccountSider/components/Chain'));
+const Notification = dynamic(() => import('./Notification'));
 
 const Flex = styled.div`
   display: flex;

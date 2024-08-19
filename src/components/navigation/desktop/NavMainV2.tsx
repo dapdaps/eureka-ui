@@ -13,7 +13,7 @@ import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList
 import { StatusType } from "@/views/Odyssey/components/Tag";
 
 import { Wrapper } from '../styles/nav';
-import ListItem from './components/ListItem';
+import dynamic from 'next/dynamic';
 
 const StyleView = styled.div`
   margin: 0 auto;
@@ -45,8 +45,7 @@ const StyleView = styled.div`
   }
 `
 
-
-
+const ListItem = dynamic(() => import('./components/ListItem'));
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
   const { loading: compassListLoading, compassList } = useCompassList()
@@ -129,7 +128,7 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
               </div>
               <StyleView className='chain-all' data-bp="1001-009-001" onClick={() => {
                 ChainRef?.current?.click()
-                router.prefetch('') 
+                router.prefetch('')
                 router.push('/networks')
               }}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content> */}

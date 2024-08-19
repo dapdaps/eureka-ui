@@ -2,11 +2,14 @@ import { useVersion } from '@/hooks/useVersion';
 import DAvinciModal from '@/views/Home/components/DAvinci/Modal';
 
 import Compass from './components/Compass';
-import DiscoveryDapps from './components/DiscoveryDapps';
 import GridChains from './components/GridChains';
-import Networks from './components/Networks';
-import RecentRewards from './components/Rewards';
+
 import { StyledContainer } from './styles';
+import dynamic from 'next/dynamic';
+
+const Networks = dynamic(() => import('./components/Networks'));
+const DiscoveryDapps = dynamic(() => import('./components/DiscoveryDapps'));
+const RecentRewards = dynamic(() => import('./components/Rewards'));
 
 const Home = () => {
   const {
