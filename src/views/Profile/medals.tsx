@@ -37,14 +37,13 @@ export default memo(function MedalsView() {
       _medalMapping[medal?.category] = _medalMapping[medal?.category] || []
       _medalMapping[medal?.category].push(medal)
     })
-    console.log('===_medalMapping', _medalMapping)
     return _medalMapping
   }, [medalList])
 
   return (
     <StyledContainer style={{ paddingTop: 85 }}>
       <StyledInnerContainer>
-        <StyledLineGradientFont>achievements</StyledLineGradientFont>
+        <StyledLineGradientFont>Medal Dashboard</StyledLineGradientFont>
         {
           Object.keys(medalMapping).map(key => {
             return (

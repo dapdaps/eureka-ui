@@ -31,7 +31,6 @@ export default function useInititalDataWithAuth() {
 
   const getInitialDataWithAuth = async (address?: string) => {
     window.sessionStorage.setItem(AUTH_TOKENS, '{}');
-    console.log('=router', router)
     if (address && ["/okx","/coin68","/bitget","/namlongdao","/invite/[kolName]"].indexOf(router.pathname) === -1) {
       const checked = await checkAddressIsInvited(address);
       if (!checked) {
