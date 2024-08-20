@@ -29,7 +29,7 @@ import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 import odysseyConfig from '@/config/odyssey';
 import { useRouter } from 'next/router';
 import odyssey from '@/config/odyssey';
-import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
+import SimpleTooltip from '@/components/Tooltip';
 import useToast from '@/hooks/useToast';
 import { useDebounceFn } from 'ahooks';
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';

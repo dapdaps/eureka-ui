@@ -9,7 +9,7 @@ import { cloneDeep } from 'lodash';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 import { StatusType } from '@/views/Odyssey/components/Tag';
-import TooltipSimple from './Tooltip';
+import TooltipSimple from '@/components/Tooltip';
 
 const Badges = (props: Props) => {
   const {

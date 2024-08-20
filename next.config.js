@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
+const createBundleStatsPlugin = require('next-plugin-bundle-stats');
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
+
+const withBundleStatsPlugin = process.env.ANALYZE_STATS === 'true' ? createBundleStatsPlugin({
+  outDir: './analyze',
+}) : (conf) => conf;
 
 const api_url = process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : 'https://api.dapdap.net';
 
@@ -176,8 +181,66 @@ const nextConfig = {
       },
     )
     fileLoaderRule.exclude = /\.svg$/i;
+    if (!isServer) {
+      config.optimization.splitChunks.cacheGroups.srcConfig = {
+        test: /[\\/]src[\\/]config[\\/]/,
+        name: 'src-config',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+      config.optimization.splitChunks.cacheGroups.srcHooks = {
+        test: /[\\/]src[\\/]hooks[\\/]/,
+        name: 'src-hooks',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+      config.optimization.splitChunks.cacheGroups.srcUtils = {
+        test: /[\\/]src[\\/]utils[\\/]/,
+        name: 'src-utils',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+      config.optimization.splitChunks.cacheGroups.srcComponents = {
+        test: /[\\/]src[\\/]components[\\/]/,
+        name: 'src-components',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+      config.optimization.splitChunks.cacheGroups.srcStores = {
+        test: /[\\/]src[\\/]stores[\\/]/,
+        name: 'src-stores',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+      config.optimization.splitChunks.cacheGroups.nextNavigation = {
+        test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]client[\\/]components[\\/]navigation.js/,
+        name: 'next-navigation',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+      config.optimization.splitChunks.cacheGroups.nextRedirect = {
+        test: /[\\/]node_modules[\\/]next[\\/]dist[\\/]client[\\/]components[\\/]redirect.js/,
+        name: 'next-redirect',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+      config.optimization.splitChunks.cacheGroups.fixednumber = {
+        test: /[\\/]node_modules[\\/]@ethersproject[\\/]bignumber[\\/]lib.esm[\\/]fixednumber.js/,
+        name: 'fixednumber',
+        chunks: 'all',
+        priority: 15,
+        minSize: 0,
+      };
+    }
     return config;
   },
 };
 
-module.exports = withBundleAnalyzer(nextConfig);
+module.exports = withBundleAnalyzer(withBundleStatsPlugin(nextConfig));

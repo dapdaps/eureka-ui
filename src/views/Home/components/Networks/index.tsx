@@ -12,7 +12,7 @@ import { StyledContainer } from '@/styled/styles';
 import hexToRgba from '@/utils/hexToRgba';
 import { useRouter } from 'next/router';
 import ViewAll from '@/views/Home/components/ViewAll';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import TooltipSimple from '@/components/Tooltip';
 
 interface IProps {
   children?: ReactNode;

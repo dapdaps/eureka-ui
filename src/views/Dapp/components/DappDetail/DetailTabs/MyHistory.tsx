@@ -26,7 +26,7 @@ import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/con
 import { Category } from '@/hooks/useAirdrop';
 import { useRouter } from 'next/router';
 import { copyText } from '@/utils/copy';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import TooltipSimple from '@/components/Tooltip';
 
 const Types: any = {
   network: 'chain',

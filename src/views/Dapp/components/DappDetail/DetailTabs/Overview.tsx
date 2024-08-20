@@ -51,7 +51,7 @@ import { usePriceStore } from '@/stores/price';
 import chainCofig from '@/config/chains';
 import { formatThousandsSeparator } from '@/utils/format-number';
 import { copyText } from '@/utils/copy';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import TooltipSimple from '@/components/Tooltip';
 
 const Overview = (props: any) => {
   const prices = usePriceStore((store) => store.price);

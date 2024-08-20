@@ -1,8 +1,8 @@
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import styled from 'styled-components';
 import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, MotionValue, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { AnimatePresence, MotionValue, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useDebounceFn } from 'ahooks';
+import { StyledContainer, StyledTooltip, StyledTooltipTrigger } from '@/components/Tooltip/styles';
 
 // a simple tooltip component that supports rendering content to the root node (document.body)
 const Tooltip = forwardRef<Refs, Props>((props, ref) => {
@@ -232,30 +232,3 @@ export interface PopupProps {
 
   closeTooltip(): void;
 }
-
-const StyledContainer = styled.div`
-  display: flex;
-  justify-content: center;
-`;
-const StyledTooltip = styled(motion.div)`
-  position: fixed;
-  z-index: 100;
-  top: 0;
-  left: 0;
-  flex-shrink: 0;
-  border-radius: 12px;
-  border: 1px solid #333648;
-  background: #1F2229;
-  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  color: #979ABE;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 100%;
-  padding: 12px 17px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  white-space: nowrap;
-`;
-const StyledTooltipTrigger = styled(motion.div)``;

@@ -7,7 +7,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import { useRouter } from 'next/router';
 import odysseies from '@/config/odyssey';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import TooltipSimple from '@/components/Tooltip';
 import { useDebounceFn } from 'ahooks';
 
 const Reward = (props: Props) => {

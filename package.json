@@ -10,6 +10,7 @@
     "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
     "dev:win": "set NEXT_PUBLIC_API=https://test-api.dapdap.net& call next dev",
     "build": "next build",
+    "build:analyze:stats": "ANALYZE_STATS=true next build",
     "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint"
@@ -116,6 +117,7 @@
     "eslint": "8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
+    "next-plugin-bundle-stats": "^4.14.1",
     "ts-loader": "^9.5.1",
     "typescript": "5.3.2"
   }
