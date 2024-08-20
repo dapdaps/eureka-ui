@@ -1,5 +1,6 @@
+import { getAccessToken } from '@/apis';
 import { QUEST_PATH } from '@/config/quest';
-import { getWithoutActive } from '@/utils/http';
+import { get, getWithoutActive, post } from '@/utils/http';
 import {
   StyledBg,
   StyledBgImage,
@@ -25,9 +26,10 @@ import {
   StyledXContainer
 } from '@/views/marketing/invite/styles';
 import { useConnectWallet } from '@web3-onboard/react';
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
 import { InviteModal, KolUserInfo } from '../components';
-import { useRouter } from 'next/router';
 
 
 const Invite = (props: Props) => {
@@ -46,7 +48,9 @@ const Invite = (props: Props) => {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [address, setAddress] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
+  const [userStatus, setUserStatus] = useState<'uncheck' | 'new' | 'old'>('uncheck');
   const [modalType, setModalType] = useState<'success' | 'fail'>('success');
+  const [fresh, setFresh] = useState(0);
   const [updater, setUpdater] = useState(0);
   async function checkAddress() {
     const res: any = await getWithoutActive(`${QUEST_PATH}/api/invite/check-address/${address}`, platform, {
@@ -54,12 +58,36 @@ const Invite = (props: Props) => {
     });
     if ((res.code as number) !== 0) return;
     if (res.data.is_activated) {
-      setModalType("fail")
+      fetchAccessToken();
     } else {
-      setModalType("success")
+      activeWithCode();
     }
-    setIsShowModal(true)
   }
+  async function checkAccount() {
+    const res = await get(`${QUEST_PATH}/api/activity/check_account?category=${platform}`);
+    if ((res.code as number) !== 0) return;
+    const status = res.data.is_activity ? 'new' : 'old';
+    setUserStatus(status);
+  }
+  async function activeWithCode() {
+    const res: any = await post(`${QUEST_PATH}/api/invite/activate`, {
+      address,
+    });
+
+    if (res.data.is_success) {
+      fetchAccessToken();
+    }
+  }
+  async function fetchAccessToken() {
+    await getAccessToken(address);
+    setCookie('AUTHED_ACCOUNT', address);
+    checkAccount();
+  }
+
+  const handleFresh = () => {
+    setFresh((n) => n + 1);
+    setUpdater(Date.now());
+  };
 
   const onConnectWallet = () => {
     connect();
@@ -70,6 +98,16 @@ const Invite = (props: Props) => {
       setAddress((wallet as any)['accounts'][0]?.address);
     }
   }, [wallet]);
+
+  useEffect(() => {
+    if (userStatus === 'uncheck') return;
+    if (userStatus === 'old') {
+      setModalType('fail');
+    } else {
+      setModalType('success');
+    }
+    setIsShowModal(true);
+  }, [userStatus, fresh]);
 
   useEffect(() => {
     if (address) {

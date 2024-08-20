@@ -21,7 +21,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsTy
   return (
     <StyledMedalCard style={style}>
       <StyledFlex gap='15px'>
-        <StyledMedalImage style={{ filter: Number(quantity) < total ? 'grayscale(100%)' : 'grayscale(0)' }} src={medal?.logo} />
+        <StyledMedalImage className={Number(quantity) < total ? 'disabled' : ''} src={medal?.logo} />
         <StyledFlex flexDirection='column' alignItems='flex-start' gap='8px'>
           <StyledFont color='#FFF' fontSize='20px' fontWeight='700' lineClamp="2" className='ellipsis' style={nameStyle}>{medal?.level_name}</StyledFont>
           <StyledFont color='#979ABE' fontSize='14px' lineClamp="2" className='ellipsis'>{medal?.level_description}</StyledFont>
