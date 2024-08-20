@@ -9,7 +9,6 @@ import { useDebounceFn } from 'ahooks';
 import { StyledFlex } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
 import { format } from 'date-fns';
-import { useTokenPriceListStore } from '@/stores/tokenPrice';
 import IconArrowUp from '@public/images/tokens/arrow-up.svg';
 import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 
@@ -61,13 +60,9 @@ const ChangePercentage = styled.div<{ isPositive: boolean }>`
   display: flex;
   align-items: center;
   gap: 2px;
-  color: ${isPositive => isPositive ? '#79FFB7' : '#FF3D83'};
-  .up {
-    font-size: 12px;
-  }
-  .down {
-    font-size: 12px;
-    transform: rotate(180deg);
+  color: ${({ isPositive }) => (isPositive ? '#79FFB7' : '#FF3D83')};
+  svg {
+    transform: ${({ isPositive }) => (isPositive ? 'rotate(0deg)' : 'rotate(180deg)')};
   }
 `;
 
@@ -219,8 +214,8 @@ const KLineChart = ({ trade }: { trade: any }) => {
           <CryptoIcon src={currentCurrency?.icon} />
           <Price>
             <PriceInfo>${parseFloat(selectedToken?.price).toFixed(2) || '-'}</PriceInfo>
-            <ChangePercentage isPositive={selectedToken?.change_percent > 0}>
-              <IconArrowUp clasName={selectedToken?.change_percent > 0 ? 'up' : 'down'} />
+            <ChangePercentage isPositive={selectedToken?.change_percent >= 0}>
+              <IconArrowUp clasName={selectedToken?.change_percent >= 0 ? 'up' : 'downs'} />
               <span>{parseFloat(selectedToken?.change_percent).toFixed(2) || '-'}%</span>
               </ChangePercentage>
           </Price>

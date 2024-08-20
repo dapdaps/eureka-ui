@@ -8,10 +8,11 @@ import Skeleton from 'react-loading-skeleton';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useAccount from '@/hooks/useAccount';
 import Empty from '@/components/Empty';
-import { useDebounceFn } from 'ahooks';
+import { useDebounceFn, useLockFn } from 'ahooks';
 import { useNeedRefreshStore } from '@/stores/useNeedRefreshStore';
 import { StyledContainer } from '@/styled/styles';
 
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 
 const Wrapper = styled.div`
   position: relative;
@@ -121,7 +122,8 @@ export default function Notification() {
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { account } = useAccount();
   const refresh = useNeedRefreshStore((state) => state.refresh);
-  
+  const { getInitialDataWithAuth } = useInititalDataWithAuth();
+
   const handleMouseEnter = () => {
     setIsHovered(true);
   };
@@ -161,11 +163,18 @@ export default function Notification() {
     { wait: 300 },
   );
 
+  const updateTokenAndRun = useLockFn(async () => {
+    await getInitialDataWithAuth(account);
+    run();
+  });
+
   useEffect(() => {
     run();
-  }, [account, refresh]);
+  }, [refresh]);
 
-
+  useEffect(() => {
+    updateTokenAndRun();
+  }, [account]);
 
   return (
     <Wrapper ref={ref} onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

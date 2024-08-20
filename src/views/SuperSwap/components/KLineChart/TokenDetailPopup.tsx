@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
 import Modal from '@/components/Modal';
 import styled from 'styled-components';
 import IconAdd from '@public/images/tokens/add.svg';
@@ -10,6 +10,8 @@ import { copyText } from '@/utils/copy';
 import chainCofig from '@/config/chains';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
+import Big from 'big.js';
 
 const StyledToken = styled.div`
   padding: 0 24px;
@@ -192,6 +194,7 @@ const TokenDetailPopup = (props: Props) => {
   const [loading, setLoading] = useState(false);
   const [tokenDetail, setTokenDetail] = useState<IData>();
   const toast = useToast()
+  const priceLatest = useTokenPriceLatestStore(store => store.list);
   const fetchTokenDetail = async () => {
     setLoading(true);
     try {
@@ -246,6 +249,12 @@ const TokenDetailPopup = (props: Props) => {
       return false;
     }
   }
+
+  const convertVolume24hEth = useMemo(() => {
+    if (!priceLatest || !tokenDetail) return 0;
+    const ethUsdtRate = priceLatest['ETH']?.price || 0;
+    return Big(tokenDetail.volume_24h).div(Big(ethUsdtRate)).toFixed(4);
+  }, [priceLatest, tokenDetail]);
 
   return (
     <Modal
@@ -315,7 +324,7 @@ const TokenDetailPopup = (props: Props) => {
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h volume - ETH</InfoLabel>
-                <InfoValue>{formateValueWithThousandSeparator(tokenDetail?.volume_24h, 2)}</InfoValue>
+                <InfoValue>{formateValueWithThousandSeparator(convertVolume24hEth, 2)}</InfoValue>
               </InfoItem>
               <InfoItem>
                 <InfoLabel>24h volume - USD</InfoLabel>
