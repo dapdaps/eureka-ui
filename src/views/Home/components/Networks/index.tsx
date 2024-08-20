@@ -11,12 +11,12 @@ import useDappOpen from '@/hooks/useDappOpen';
 import { StyledContainer } from '@/styled/styles';
 import hexToRgba from '@/utils/hexToRgba';
 import Badges from '@/views/AllDapps/components/Badges';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 import Counter from '@/views/AllDapps/components/Title/Counter';
 import ViewAll from '@/views/Home/components/ViewAll';
 import useStats from '@/views/Intro/hooks/useStats';
 
 import useRecommendNetwork from '../../hooks/useRecommendNetwork';
+import TooltipSimple from '@/components/Tooltip';
 
 interface IProps {
   children?: ReactNode;

@@ -19,7 +19,6 @@ import { StyledFlex } from '@/styled/styles';
 import { copyText } from '@/utils/copy';
 import { formatThousandsSeparator } from '@/utils/format-number';
 import hexToRgba from '@/utils/hexToRgba';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 
 import AddMetaMaskModal from './AddMetaMaskModal';
@@ -56,6 +55,8 @@ import {
   StyledTokenPrice,
   StyledTokenValue,
 } from './styles';
+
+import TooltipSimple from '@/components/Tooltip';
 
 const Overview = (props: any) => {
   const {

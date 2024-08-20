@@ -11,7 +11,7 @@ import type { StatusType } from '@/views/Odyssey/components/Tag';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 
 import { StyledBadge, StyledBadgeImage, StyledBadgeItem, StyledBadgeTooltip, StyledContainer } from './styles';
-import TooltipSimple from './Tooltip';
+import TooltipSimple from '@/components/Tooltip';
 
 const Badges = (props: Props) => {
   const {
