@@ -2,7 +2,7 @@ import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/componen
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import { useChainsStore } from '@/stores/chains';
-import popupsData from '@/config/all-in-one/chains';
+import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
 import useTokens from '@/views/Portfolio/hooks/useTokens';
 import { Network } from '@/hooks/useNetworks';
 import Big from 'big.js';
@@ -11,13 +11,7 @@ import ChainsDockList from '@/components/ChainsDock/List';
 
 // The portfolio chains have been integrated
 // sorted by A-Z
-const ChainsFixed = [
-  popupsData.blast.chainId,
-  popupsData.linea.chainId,
-  popupsData.polygon.chainId,
-  popupsData.scroll.chainId,
-  popupsData.zksync.chainId,
-];
+const ChainsFixed = SupportedChains.map((support) => support.chainId);
 
 const ChainsDock = () => {
   const chains = useChainsStore((store: any) => store.chains);
