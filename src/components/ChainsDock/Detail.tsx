@@ -206,7 +206,11 @@ const Detail = (props: DetailProps) => {
         </StyledFlex>
         <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
         <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>
-        <StyledLink href="/portfolio">Manage Assets</StyledLink>
+        {
+          isSupported && (
+            <StyledLink href="/portfolio">Manage Assets</StyledLink>
+          )
+        }
       </StyledDetail>
     </AnimatePresence>
   );
