@@ -24,7 +24,7 @@ import { usePortfolioStore } from '@/stores/portfolio';
 import { useWorth } from '@/views/Portfolio/hooks/useWorth';
 import useTvls from '@/views/Portfolio/hooks/useTvls';
 import useAccount from '@/hooks/useAccount';
-import { report } from '@/utils/burying-point';
+import { SupportedChains } from '@/views/Portfolio/config';
 
 const TABS = [
   {
@@ -113,7 +113,7 @@ export default function Portfolio() {
           >
             <StyledFeedbackContainer>
               <StyledFeedbackText>
-              The Portfolio. beta on DapDap now supports 5 networks: Polygon zkEVM, zkSync, Linea, Scroll, Blast. If there is any issue, please
+              The Portfolio. beta on DapDap now supports 5 networks: {SupportedChains.map((it) => it.name).join(', ')}. If there is any issue, please
             </StyledFeedbackText>
               <span>{link}.</span>
             </StyledFeedbackContainer>

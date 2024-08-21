@@ -73,15 +73,17 @@ export const StyledItemName = styled.div`
   white-space: nowrap;
 `;
 
-export const StyledItemNum = styled.div`
+export const StyledItemNum = styled.div<{ $blur?: boolean; }>`
   display: flex;
   align-items: flex-end;
   text-overflow: ellipsis;
-  overflow:hidden;
+  overflow: hidden;
   line-height: 1;
   white-space: nowrap;
   column-gap: 5px;
   margin-top: 4px;
+
+  filter: ${({ $blur }) => $blur ? 'blur(5px)' : 'unset'};
 `;
 
 export const StyledItemUSD = styled.div`

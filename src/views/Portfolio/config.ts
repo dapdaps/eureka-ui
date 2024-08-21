@@ -1,3 +1,9 @@
+import popupsData from '@/config/all-in-one/chains';
+import zksync from '@/config/all-in-one/chains/zksync';
+import linea from '@/config/all-in-one/chains/linea';
+import scroll from '@/config/all-in-one/chains/scroll';
+import blast from '@/config/all-in-one/chains/blast';
+
 export const DefaultIcon =
   'https://assets.dapdap.net/images/bafkreiddol6jzrlwliyh2vrjk3u2ajp3z5cubb5gzedifearly2bvdraay.svg';
 
@@ -35,3 +41,27 @@ export const CategoryList = {
     protocol: 'lending',
   },
 };
+
+// Polygon zkEVM, zkSync, Linea, Scroll, Blast
+export const SupportedChains = [
+  {
+    name: popupsData['polygon-zkevm'].title,
+    chainId: popupsData['polygon-zkevm'].chainId,
+  },
+  {
+    name: popupsData.zksync.title,
+    chainId: popupsData.zksync.chainId,
+  },
+  {
+    name: popupsData.linea.title,
+    chainId: popupsData.linea.chainId,
+  },
+  {
+    name: popupsData.scroll.title,
+    chainId: popupsData.scroll.chainId,
+  },
+  {
+    name: popupsData.blast.title,
+    chainId: popupsData.blast.chainId,
+  },
+];
