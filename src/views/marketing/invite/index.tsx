@@ -57,57 +57,21 @@ const Invite = (props: Props) => {
       name: router?.query?.kolName
     });
     if ((res.code as number) !== 0) return;
-    if (res.data.is_activated) {
-      fetchAccessToken();
+    if (res?.data?.is_new_activity_user) {
+      setModalType("success")
     } else {
-      activeWithCode();
+      setModalType("fail")
     }
+    setIsShowModal(true)
   }
-  async function checkAccount() {
-    const res = await get(`${QUEST_PATH}/api/activity/check_account?category=${platform}`);
-    if ((res.code as number) !== 0) return;
-    const status = res.data.is_activity ? 'new' : 'old';
-    setUserStatus(status);
-  }
-  async function activeWithCode() {
-    const res: any = await post(`${QUEST_PATH}/api/invite/activate`, {
-      address,
-    });
-
-    if (res.data.is_success) {
-      fetchAccessToken();
-    }
-  }
-  async function fetchAccessToken() {
-    await getAccessToken(address);
-    setCookie('AUTHED_ACCOUNT', address);
-    checkAccount();
-  }
-
-  const handleFresh = () => {
-    setFresh((n) => n + 1);
-    setUpdater(Date.now());
-  };
-
   const onConnectWallet = () => {
     connect();
   }
-
   useEffect(() => {
     if (wallet) {
       setAddress((wallet as any)['accounts'][0]?.address);
     }
   }, [wallet]);
-
-  useEffect(() => {
-    if (userStatus === 'uncheck') return;
-    if (userStatus === 'old') {
-      setModalType('fail');
-    } else {
-      setModalType('success');
-    }
-    setIsShowModal(true);
-  }, [userStatus, fresh]);
 
   useEffect(() => {
     if (address) {
