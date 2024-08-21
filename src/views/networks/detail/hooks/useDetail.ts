@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { get } from '@/utils/http';
 import { QUEST_PATH } from '@/config/quest';
 
-const useDetail = (id: number) => {
+const useDetail = (id?: number) => {
   const [detail, setDetail] = useState<any>();
   const [loading, setLoading] = useState(false);
 
@@ -22,6 +22,7 @@ const useDetail = (id: number) => {
   }, [id]);
 
   useEffect(() => {
+    if (!id) return;
     init();
   }, [id]);
 

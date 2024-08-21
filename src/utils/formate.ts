@@ -48,18 +48,31 @@ const formateValueWithThousandSeparatorAndFont = (
     // 0 should be displayed in the integer part
     // not in the decimal part
     isLTIntegerZero?: boolean;
+    // should zeros be added at the end
+    isZeroPrecision?: boolean;
   },
 ): any => {
 
-  const { prefix = '', isLTIntegerZero } = options || {};
+  const { prefix = '', isLTIntegerZero, isZeroPrecision } = options || {};
 
-  if (!value || Big(value).eq(0))
-    return isSimple
-      ? `${prefix}0`
-      : {
+  if (!value || Big(value).eq(0)) {
+    if (isSimple) {
+      if (isZeroPrecision) {
+        return `${prefix}${Big(0).toFixed(precision)}`;
+      }
+      return `${prefix}0`;
+    }
+    if (isZeroPrecision) {
+      return {
         integer: `${prefix}0`,
-        decimal: '',
+        decimal: Big(0).toFixed(precision).replace(/^\d/, ''),
       };
+    }
+    return {
+      integer: `${prefix}0`,
+      decimal: '',
+    };
+  }
 
   if (Big(value).lt(Big(10).pow(-precision))) {
     if (isSimple) {
@@ -78,12 +91,22 @@ const formateValueWithThousandSeparatorAndFont = (
   }
 
   const finalValue = addThousandSeparator(Big(value).toFixed(precision));
-  return isSimple
-    ? `${prefix}${finalValue.split('.')[0]}.${finalValue.split('.')[1]}`
-    : {
+  if (isSimple) {
+    if (isZeroPrecision) {
+      return `${prefix}${finalValue.split('.')[0]}.${finalValue.split('.')[1]}`;
+    }
+    return `${prefix}${finalValue.split('.')[0]}${('.' + finalValue.split('.')[1]).replace(/.?0+$/, '')}`;
+  }
+  if (isZeroPrecision) {
+    return {
       integer: `${prefix}${finalValue.split('.')[0]}`,
       decimal: '.' + finalValue.split('.')[1],
     };
+  }
+  return {
+    integer: `${prefix}${finalValue.split('.')[0]}`,
+    decimal: ('.' + finalValue.split('.')[1]).replace(/.?0+$/, ''),
+  };
 };
 
 function getRandomInt(min: number, max: number): number {
