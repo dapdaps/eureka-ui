@@ -68,7 +68,7 @@ export default memo(function MiniCard() {
           <StyledRightSvg style={{ right: 10, top: 10 }}>
             {WhiteRightSvg}
           </StyledRightSvg>
-          <StyledMiniCardImage src="/images/landingpage/allinone-bg.png" style={{ width: 415, position: 'absolute', left: 0, top: -14 }} />
+          <StyledMiniCardImage src="/images/intro/allinone-bg.png" style={{ width: 415, position: 'absolute', left: 0, top: -14 }} />
           <StyledContainer style={{ position: 'absolute', width: 302, right: 33, bottom: 59 }}>
             <StyledFont color="#FFF" fontSize="56px" fontWeight="700" lineHeight="100%">All-In-One</StyledFont>
             <StyledFont color="#FFF" fontSize="32px" fontWeight="700" lineHeight="100%" style={{ marginTop: 13, marginBottom: 27 }}>for 15+ L2s</StyledFont>
@@ -149,7 +149,7 @@ export default memo(function MiniCard() {
             </StyledMiniCard>
           </StyledFlex>
           <StyledContainer style={{ width: "100%" }}>
-            <StyledMiniCard style={{ background: `#EBF479 url(/images/landingpage/portfolio-bg.svg) no-repeat center`, backgroundSize: '100%' }}>
+            <StyledMiniCard style={{ background: `#EBF479 url(/images/intro/portfolio-bg.svg) no-repeat center`, backgroundSize: '100%' }}>
               <StyledContainer style={{ paddingTop: 48, paddingLeft: 32, paddingRight: 25 }}>
                 <StyledFont color="#000" fontSize="36px" fontWeight="700">Portfolio Analytics</StyledFont>
                 <StyledFont color="#000" fontSize="18px" fontWeight="500" lineHeight="150%" style={{ marginTop: 31, marginBottom: 22 }}>Effortlessly view and manage your assets across networks. Track your bridging, swapping, liquidity, and lending activities in real-time with our comprehensive data support.</StyledFont>
@@ -197,7 +197,7 @@ export default memo(function MiniCard() {
       <StyledFlex gap="14px">
         <StyledMiniCard style={{ flex: 2 }}></StyledMiniCard>
         <StyledMiniCard style={{ backgroundColor: "#5B56F3" }}>
-          <StyledMiniCardImage src="/images/landingpage/rewards-bg.png" style={{ position: 'absolute', width: 405, right: 0, top: 0 }} />
+          <StyledMiniCardImage src="/images/intro/rewards-bg.png" style={{ position: 'absolute', width: 405, right: 0, top: 0 }} />
           <StyledContainer style={{ paddingTop: 94, paddingLeft: 35 }}>
             <StyledFont color="#FFF" fontSize="36px" fontWeight="700" lineHeight="150%">Earnig Rewards</StyledFont>
             <StyledFont color="#FFF" fontSize="26px" fontWeight="700" lineHeight="150%">While Exploring</StyledFont>

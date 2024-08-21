@@ -6,7 +6,7 @@ const StyledInto = styled.div`
   position: relative;
   margin-top: -148px;
   height: 590px;
-  background: #EBF479 url("/images/landingpage/into-bg.svg") no-repeat center;
+  background: #EBF479 url("/images/intro/into-bg.svg") no-repeat center;
   background-size: cover;
   z-index: 10;
   overflow: hidden;
