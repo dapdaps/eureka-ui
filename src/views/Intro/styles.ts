@@ -28,7 +28,7 @@ export const StyledBanner = styled.div`
   padding-top: 72px;
   max-width: 1452px;
   width: 100%;
-  background: url('/images/landingpage/banner-bg.svg') no-repeat center;
+  background: url('/images/intro/banner-bg.svg') no-repeat center;
   background-size: 100% 511px;
 `
 export const StyledSuperButton = styled.div`

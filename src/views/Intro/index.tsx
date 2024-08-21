@@ -1,10 +1,10 @@
 import { StyledContainer, StyledFlex, StyledFont } from "@/styled/styles";
-import BridgeSvg from "@public/images/landingpage/bridge.svg";
-import SwapSvg from "@public/images/landingpage/swap.svg";
-import ArrowSvg from "@public/images/landingpage/arrow.svg";
-import ArrowRightSvg from "@public/images/landingpage/arrow-right.svg";
-import PoundSignSvg from "@public/images/landingpage/pound-sign.svg";
-import DavinciSvg from "@public/images/landingpage/davinci.svg";
+import BridgeSvg from "@public/images/intro/bridge.svg";
+import SwapSvg from "@public/images/intro/swap.svg";
+import ArrowSvg from "@public/images/intro/arrow.svg";
+import ArrowRightSvg from "@public/images/intro/arrow-right.svg";
+import PoundSignSvg from "@public/images/intro/pound-sign.svg";
+import DavinciSvg from "@public/images/intro/davinci.svg";
 import { memo } from "react";
 
 import {
