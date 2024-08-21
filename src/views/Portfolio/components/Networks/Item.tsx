@@ -13,7 +13,7 @@ import {
 } from './styles';
 import Image from 'next/image';
 import { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
-import { SupportedChains } from '@/views/Portfolio/config';
+import { SupportedChains } from '@/config/all-in-one/chains';
 
 const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: number, setNetwork: any }) => {
   const { chain, totalBalance, network, setNetwork } = props;
