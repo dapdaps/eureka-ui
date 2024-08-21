@@ -54,7 +54,7 @@ const get = async (url: string, query?: Record<string, any>) => {
 
 const getWithoutActive = async (
   url: string,
-  activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx',
+  activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx' | 'coin98',
   query?: Record<string, any>,
 ) => {
   const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');  

@@ -18,7 +18,7 @@ export default function useInititalDataWithAuth() {
       const result = await get(`${QUEST_PATH}/api/user`);
       const data = result?.data || {};
       setUserInfo({ user: data });
-    } catch (err) {}
+    } catch (err) { }
   }, []);
 
   const queryInviteList = useCallback(async () => {
@@ -26,13 +26,13 @@ export default function useInititalDataWithAuth() {
       const result = await get(`${QUEST_PATH}/api/invite/list`);
       const data = result.data || {};
       setUserInfo({ invite: data });
-    } catch (err) {}
+    } catch (err) { }
   }, []);
 
   const getInitialDataWithAuth = async (address?: string) => {
     window.sessionStorage.setItem(AUTH_TOKENS, '{}');
     if (address) {
-      if (["/okx","/coin68","/bitget","/namlongdao","/invite/[kolName]"].indexOf(router.pathname) === -1) {
+      if (["/okx", "/coin68", "/coin98", "/bitget", "/namlongdao", "/invite/[kolName]"].indexOf(router.pathname) === -1) {
         const checked = await checkAddressIsInvited(address);
         if (!checked) {
           const isBitget = wallet?.label.toLowerCase().includes('bitget');

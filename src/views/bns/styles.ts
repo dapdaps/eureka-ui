@@ -43,7 +43,7 @@ export const StyledInvitedAward = styled.div`
   font-weight: 400;
   line-height: 22px;
   word-break: auto-phrase;
-  border: 5px solid #FF0505;
+  /* border: 5px solid #FF0505; */
   padding: 9px 11px;
 `;
 // guide

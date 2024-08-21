@@ -11,6 +11,7 @@ export const StyledFont = styled.div<FontProps>`
   font-weight: ${(props) => props.fontWeight || '400'};
   line-height: ${(props) => props.lineHeight || 'normal'};
   white-space: ${(props) => props.whiteSpace || 'normal'};
+  text-align: ${(props) => props.textAlign || 'left'};
   &.ellipsis {
     display: -webkit-box;
     -webkit-line-clamp: ${(props) => props.lineClamp || 1};

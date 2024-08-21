@@ -1,7 +1,9 @@
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 
 import {
-  StyledReward
+  StyledReward,
+  StyledRewardContainer,
+  StyledRewardTips
 } from './styles';
 const MedalSvg = (
   <svg xmlns="http://www.w3.org/2000/svg" width="33" height="32" viewBox="0 0 33 32" fill="none">
@@ -79,14 +81,20 @@ export default function Rewards({ onInviteCodeClick, medals, gems, referrals }: 
   return (
     <StyledContainer>
       <StyledFlex gap='14px' style={{ marginTop: 36 }}>
-        <StyledReward>
-          <StyledSvg>{MedalSvg}</StyledSvg>
-          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{medals}</span> Medals</StyledFont>
-        </StyledReward>
-        <StyledReward>
-          <StyledSvg>{GemSvg}</StyledSvg>
-          <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{gems}</span> Gems</StyledFont>
-        </StyledReward>
+        <StyledRewardContainer>
+          <StyledReward>
+            <StyledSvg>{MedalSvg}</StyledSvg>
+            <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{medals}</span> Medals</StyledFont>
+          </StyledReward>
+          <StyledRewardTips style={{ top: -10, transform: 'translate(-50%, -100%)' }}>New Motivational Features, unlock medals by reaching specific milestones on DapDap</StyledRewardTips>
+        </StyledRewardContainer>
+        <StyledRewardContainer>
+          <StyledReward>
+            <StyledSvg>{GemSvg}</StyledSvg>
+            <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{gems}</span> Gems</StyledFont>
+          </StyledReward>
+          <StyledRewardTips style={{ bottom: -10, transform: 'translate(-50%, 100%)' }}>New Motivational Features, unlock medals by reaching specific milestones on DapDap</StyledRewardTips>
+        </StyledRewardContainer>
         <StyledReward style={{ width: 178 }} onClick={onInviteCodeClick} data-bp="1009-001">
           <StyledSvg>{ReferralSvg}</StyledSvg>
           <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{referrals}</span> Referrals</StyledFont>
