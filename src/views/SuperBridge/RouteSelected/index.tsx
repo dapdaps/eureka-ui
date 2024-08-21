@@ -5,6 +5,8 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { ArrowRight } from '../Arrow'
 import Route from '../Route'
 import RouteModal from './RouteModal';
+import useRouteSorted from '../hooks/useRouteSorted'
+
 import type { Chain, Token } from "@/types";
 
 const Container = styled.div`
@@ -52,56 +54,14 @@ export default function RouteSelected(
     { routes, toToken, routeSortType, fromChain, onRouteSelected }: Props
 ) {
     const [routeModalShow, setRouteModalShow] = useState<boolean>(false)
-    const [routeSelected, setRouteSelected] = useState<QuoteResponse | null>(null)
-    const [best, setBest] = useState<QuoteResponse | null>(null)
-    const [fast, setFast] = useState<QuoteResponse | null>(null)
-    const [sortedRoutes, setSortedRoutes] = useState<QuoteResponse[] | null>([])
 
-    useEffect(() => {
-        let bestRoute: QuoteResponse | null = null
-        let fastRoute: QuoteResponse | null = null
-        if (routes && routes.length) {
-            bestRoute = routes[0]
-            fastRoute = routes[0]
-            routes.forEach(route => {
-                if (Number(route.receiveAmount) > Number(bestRoute?.receiveAmount)) {
-                    bestRoute = route
-                }
-
-                if (Number(route.duration) < Number(fastRoute?.duration)) {
-                    fastRoute = route
-                }
-            })
-        }
-        setBest(bestRoute)
-        setFast(fastRoute)
-        if (routeSortType === 1) {
-            setRouteSelected(bestRoute)
-            onRouteSelected(bestRoute)
-        } else if (routeSortType === 2) {
-            setRouteSelected(fastRoute)
-            onRouteSelected(fastRoute)
-        }
-
-        if (!routes || routes.length === 0) {
-            setRouteSelected(null)
-            onRouteSelected(null)
-        }
-        
-    }, [routes, routeSortType])
-
-    useEffect(() => {
-        if (routes) {
-            if (routeSortType === 1) {
-                routes.sort((a, b) => Number(b.receiveAmount) - Number(a.receiveAmount))
-            } else {
-                routes.sort((a, b) => Number(a.duration) - Number(b.duration))
-            }
-            setSortedRoutes(routes)
-        } else {
-            setSortedRoutes(null)
-        }
-    }, [routes, routeSortType])
+    const {
+        routeSelected,
+        best,
+        fast,
+        sortedRoutes,
+        setRouteSelected,
+    } = useRouteSorted(routes, routeSortType, onRouteSelected)
 
     return <Container>
         <TitleWapper>

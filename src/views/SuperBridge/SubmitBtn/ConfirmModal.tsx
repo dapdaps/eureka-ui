@@ -126,7 +126,7 @@ export default function ConfirmModal({
 } : Props) {
     const prices = usePriceStore((store) => store.price);
 
-    const styles = { backgroundColor: theme.selectBgColor, color: theme.textColor }
+    const styles = { backgroundColor: theme?.selectBgColor, color: theme?.textColor }
 
     return <Modal title="Confirm Transaction" onClose={() => {
         !isLoading && onClose()

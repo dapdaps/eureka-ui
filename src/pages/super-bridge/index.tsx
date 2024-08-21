@@ -10,6 +10,7 @@ import dynamic from 'next/dynamic';
 // import BridgeAction from '@/views/SuperBridge/BridgeAction';
 // import Transaction from '@/views/SuperBridge/Transaction';
 import Medal from '@/views/SuperBridge/Medal';
+import QuickBridge from '@/views/SuperBridge/QuickBridge';
 
 import chainCofig from '@/config/chains'
 
@@ -87,20 +88,20 @@ const Bridge: NextPageWithLayout = () => {
 
   return (
     <Container>
-      
-        <BridgeAction
-          chainList={chainList}
-          onTransactionUpdate={() => {
-            setUpdater(updater + 1)
-          }}
-        />
-      
-      
+      <BridgeAction
+        chainList={chainList}
+        onTransactionUpdate={() => {
+          setUpdater(updater + 1)
+        }}
+      />
+
       <RightContainer>
-        <Transaction updater={updater}/>
+        <Transaction updater={updater} />
         <Sep />
         <Medal />
       </RightContainer>
+
+      <QuickBridge fromChainId={81457} toChainId={1}/>
     </Container>
   )
 };

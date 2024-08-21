@@ -11,7 +11,7 @@ import Modal from "../Modal";
 import TokenRow from './Token'
 
 import type { Chain, Token } from '@/types';
-import { chain } from "lodash";
+
 
 const Container = styled.div`
     display: flex;
@@ -34,6 +34,7 @@ const ChainWapper = styled.div`
         display: flex;
         align-items: center;
         z-index: 12;
+        color: #fff;
         background-color: rgba(49, 51, 70, 1);
         border-radius: 0 12px 12px 0;
         border: 1px solid rgba(55, 58, 83, 1);
@@ -85,6 +86,10 @@ const ChainWapper = styled.div`
                border: 1px solid rgba(55, 58, 83, 1);
                border-right: 0;
                box-shadow: 0px 0px 15px 2px rgba(0, 0, 0, .3);
+            }
+            &.disabeld {
+                opacity: 0.2;
+                cursor: default;
             }
         }
     }
@@ -180,12 +185,14 @@ interface Props {
     chainToken: any;
     currentChain: Chain | undefined;
     currentToken: Token | undefined;
+    showSelectChain?: boolean;
+    disabledChainSelector?: boolean;
     onChainChange: (chain: Chain) => void;
     onTokenChange: (token: Token) => void;
 }
 
 const TokenListComp = forwardRef(function TokenListComp({
-    chain, chainToken, currentToken, groupId, searchTxt, filterChain, searchAll, onChainChange, onTokenChange, onClose, onTempChainChange 
+    chain, chainToken, currentToken, groupId, searchTxt, showSelectChain, filterChain, searchAll, onChainChange, onTokenChange, onClose, onTempChainChange 
 }: {
         chain: Chain;
         chainToken: any;
@@ -197,6 +204,7 @@ const TokenListComp = forwardRef(function TokenListComp({
         onClose?: () => void;
         searchTxt: string;
         searchAll: boolean;
+        showSelectChain?: boolean;
         onTempChainChange: (chain: Chain) => void;
     }, ref: any) {
 
@@ -212,7 +220,7 @@ const TokenListComp = forwardRef(function TokenListComp({
 
     return <ChainGroup>
         {
-            <>
+            showSelectChain && <>
                 <div className="ct-title" id={`${groupId}-${chain.chainId}`}>Chain</div>
                 <div className="cur-chian cc-selected" style={{ marginTop: 0 }}>
                     <div className="chain-selected">
@@ -284,6 +292,8 @@ function TokenSelectModal({
     chainToken,
     currentChain,
     currentToken,
+    showSelectChain,
+    disabledChainSelector,
     onChainChange,
     onTokenChange,
 }: Props) {
@@ -395,6 +405,9 @@ function TokenSelectModal({
                                 key={chain.chainId}
                                 id={`${idSuffix}-${chain.chainId}-p`}
                                 onClick={() => {
+                                    if (disabledChainSelector) {
+                                        return
+                                    }
                                     setTempChain(chain)
                                     const ele = document.getElementById(`${idSuffix}-${chain.chainId}`)
                                     if (ele) {
@@ -402,6 +415,9 @@ function TokenSelectModal({
                                     }
                                 }}
                                 onMouseEnter={(e) => {
+                                    if (disabledChainSelector && currentChain?.chainId !== chain.chainId) {
+                                        return
+                                    }
                                     setHoverChain(chain)
                                     let ele: any = e.target
                                     if (ele.tagName.toUpperCase() !== 'DIV') {
@@ -415,7 +431,7 @@ function TokenSelectModal({
                                 onMouseLeave={() => {
                                     setHoverChain(null)
                                 }}
-                                className={`chain ${tempChain?.chainId === chain.chainId ? 'active' : ''}`}>
+                                className={`chain ${tempChain?.chainId === chain.chainId ? 'active' : ''} ${disabledChainSelector && currentChain?.chainId !== chain.chainId ? 'disabeld' : ''}`}>
                                 <Image cls="img" src={chain.icon} />
                             </div>
                         })
@@ -451,6 +467,7 @@ function TokenSelectModal({
                                 chainToken={filterChainVal}
                                 currentToken={currentToken}
                                 groupId={idSuffix}
+                                showSelectChain={showSelectChain}
                                 filterChain={filterChain}
                                 onChainChange={onChainChange}
                                 onTempChainChange={(item) => {

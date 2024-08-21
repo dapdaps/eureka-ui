@@ -5,9 +5,9 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 
 import useAccount from '@/hooks/useAccount';
 
-const timeout = 1000 * 30
+const timeout = 1000 * 10
 
-export default function useQuote(quoteRequest: QuoteRequest | null, identification: string | number) {
+export default function useQuote(quoteRequest: QuoteRequest | null, identification: string | number, quickLoading: boolean = true) {
     const [routes, setRoutes] = useState<QuoteResponse[] | null>(null)
     const [loading, setLoading] = useState(false)
     const {chainId, provider} = useAccount()
@@ -38,7 +38,9 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
 
             if (val.identification === newestIdentification.current) {
                 routes.push(val)
-                setLoading(false)
+                if (quickLoading) {
+                    setLoading(false)
+                } 
                 // console.log('routes.length: ', routes.length)
                 setRoutes([
                     ...routes

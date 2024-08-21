@@ -9,21 +9,30 @@ const Layer = styled.div`
     bottom: 0;
     background-color: rgba(0, 0, 0, .6);
     z-index: 50;
+    
 `
 
 const Container = styled.div<{ size?: number | string }>`
     position: absolute;
-    left: 50%;
-    top: 30%;
-    z-index: 51;
-    transform: translate(-50%, -50%);
-    min-width: 468px;
-    min-height: 100px;
     border: 1px solid rgba(55, 58, 83, 1);
     border-radius: 16px;
     background-color: rgba(38, 40, 54, 1);
     padding: ${({ size = 20 }) => `${size}px`};
+    &.mid {
+        left: 50%;
+        top: 30%;
+        z-index: 51;
+        transform: translate(-50%, -50%);
+        min-width: 468px;
+        min-height: 100px;
+    }
+    &.right-bottom {
+        right: 10px;
+        bottom: 10px;
+    }
 `
+
+
 
 const TitleWapper = styled.div`
     display: flex;
@@ -53,19 +62,24 @@ interface Props {
     height?: number | string;
     onClose?: () => void;
     children?: any;
-    title?: string | null;
+    title?: string | null | React.ReactNode;
     top?: string;
     paddingSize?: number | string;
+    showLayer?: boolean;
+    position?: string;
 }
 
 function Modal({
-    width = 468, height, onClose, title, children, paddingSize = 20, top = '50%'
+    width = 468, height, onClose, title, children, paddingSize = 20, top = '50%', position = 'mid', showLayer = true
 }: Props, ref: any) {
     return <div>
-        <Layer onClick={() => {
-            onClose && onClose()
-        }}/>
-        <Container ref={ref} size={paddingSize} style={{ top, width }}>
+        {
+            showLayer && <Layer onClick={() => {
+                onClose && onClose()
+            }}/>
+        }
+        
+        <Container className={ position } ref={ref} size={paddingSize} style={{ top, width }}>
             <CloseWapper onClick={() => {
                 onClose && onClose()
             }}>
