@@ -13,6 +13,7 @@ const LazyImage = (props: Props) => {
     containerClassName,
     style,
     className,
+    ...restProps
   } = props;
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -41,6 +42,7 @@ const LazyImage = (props: Props) => {
 
   return (
     <StyledLazyImage
+      {...restProps}
       ref={containerRef}
       className={containerClassName}
       style={{
@@ -119,6 +121,7 @@ export interface Props {
   containerClassName?: string;
   style?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
+  [k: string]: any;
 }
 
 const StyledLazyImage = styled(motion.div)`

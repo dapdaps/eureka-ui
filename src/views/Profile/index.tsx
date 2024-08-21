@@ -88,7 +88,6 @@ export default memo(function ProfileView() {
         key: index,
         icon: medal?.logo,
         width: 90,
-        height: 90,
         x: index * (CanvasWidth / _filterMedals.length),
         y: random(0, 300),
         density: random(1, 10) / 1000,

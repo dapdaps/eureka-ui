@@ -21,17 +21,18 @@ const TokenContent = styled(motion.div)<{ isHovered: boolean }>`
   align-items: center;
   gap: 60px;
   height: 100%;
-  animation: translateLeft 15s linear infinite;
+  width: 200%;
+  animation: translateLeft 25s linear infinite;
   animation-play-state: ${({ isHovered }) => (isHovered ? 'paused' : 'running')};
 
   @keyframes translateLeft {
-    0% {
-      transform: translate(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
+  0% {
+    transform: translate3d(0, 0, 0);
   }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
 `;
 
 const IndexList = styled.div`
@@ -109,6 +110,7 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
         isPositive: parseFloat(token.change_percent) > 0,
       };
     });
+    
   }, [list]);
 
   return (
@@ -122,7 +124,7 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
           {loading ? (
             <LoadingCard />
           ) : (
-            tokenList.map((token: Token, index: number) => (
+            tokenList.concat(tokenList).map((token: Token, index: number) => (
               <IndexList key={index}>
                 <ChainIcon src={token.logo} alt="" />
                 <ChainText>

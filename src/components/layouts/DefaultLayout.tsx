@@ -67,7 +67,7 @@ export function DefaultLayout({ children }: Props) {
   return (
     <Layout
       style={{
-        background: BLACK_PATH.includes(router.pathname) ? '#000' : '#16181d',
+        background: BLACK_PATH.includes(router.pathname) ? '#000' : '#101115',
       }}
     >
       {pathName !== '/uniswap' && <DesktopNavigationTop />}

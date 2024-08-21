@@ -84,10 +84,10 @@ const LoadingSkeleton = ({ type }: {type: ModeKey}) => {
     </StyledLoadingBody>
   </StyledLoadingSkeleton>) : (<StyledCardContainer>
     <StyledCardHead>
-      <LogoGroup>
+      <LogoGroup className='card-head'>
         <Skeleton width={72} height={72}/>
-        <ChainInfo>
-          <ChainNameContainer className='chain-name-card'>
+        <ChainInfo className='card-head-info'>
+          <ChainNameContainer className='card-head-name-container'>
            <Skeleton width={60} height={25}/>
            <Skeleton width={100} height={25}/>
           </ChainNameContainer>

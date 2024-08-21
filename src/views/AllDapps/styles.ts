@@ -21,8 +21,6 @@ export const StyledContainer = styled.div`
     padding-left: calc((100% - var(--container-width)) / 2);
     padding-right: calc((100% - var(--container-width)) / 2);
     justify-content: flex-start;
-  }
-  .category-title {
     &::before {
       content: '';
       position: absolute;
@@ -34,6 +32,18 @@ export const StyledContainer = styled.div`
       left: 0;
     }
   }
+  //.category-title {
+  //  &::before {
+  //    content: '';
+  //    position: absolute;
+  //    top: 0;
+  //    width: 100%;
+  //    height: 170px;
+  //    background: #000 url("/images/alldapps/bg.svg") no-repeat center top/1471px 512px;
+  //    z-index: -1;
+  //    left: 0;
+  //  }
+  //}
 `;
 export const StyledBody = styled(AllDappsWrapper)`
   padding-bottom: 150px;

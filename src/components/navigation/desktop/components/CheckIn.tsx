@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import CheckInGrid, { CheckInGridRef } from './CheckInGrid';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import MedalCard from './MedalCard';
-import { useDebounceFn } from 'ahooks';
+import { useDebounceFn, useLockFn } from 'ahooks';
 import { get, post } from '@/utils/http';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useAccount from '@/hooks/useAccount';
@@ -11,6 +11,8 @@ import Loading from '@/components/Icons/Loading';
 import Skeleton from 'react-loading-skeleton';
 import MedalPopup from './MedalPopup';
 import { MedalType } from "@/views/Profile/types";
+
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 
 const StyleCheckIn = styled.div`
   display: flex;
@@ -171,7 +173,7 @@ const CheckIn = () => {
   const [medalData, setMedalData] = useState<MedalType>();
   const [medalVisible, setMedalVisible] = useState(false);
   // const [checkDisabled, setCheckDisabled] = useState(false);
-
+  const { getInitialDataWithAuth } = useInititalDataWithAuth();
 
   const [imgSrc, setImgSrc] = useState('/images/header/fist-dapdap.png');
   const checkInGridRef = useRef<CheckInGridRef>(null);
@@ -235,8 +237,13 @@ const CheckIn = () => {
     { wait: 300 },
   );
 
-  useEffect(() => {
+  const updateTokenAndRun = useLockFn(async () => {
+    await getInitialDataWithAuth(account);
     run();
+  });
+
+  useEffect(() => {
+    updateTokenAndRun();
   }, [account]);
 
   const checkIn = async () => {

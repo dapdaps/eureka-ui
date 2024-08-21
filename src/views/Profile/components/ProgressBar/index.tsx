@@ -9,10 +9,23 @@ type ProgressType = {
   quantity: number;
   total: number;
   showAchieved?: boolean;
+  showPercent?: boolean;
   barWidth?: string;
 }
-export default function Progress({ quantity, total, showAchieved, barWidth }: ProgressType) {
+export default function Progress({ quantity, total, showAchieved, showPercent, barWidth }: ProgressType) {
   quantity = quantity > total ? total : quantity
+
+  const renderRatio = function () {
+    if (showPercent) {
+      if (total === 100) {
+        return quantity + '%'
+      } else {
+        return `${quantity}/${total}`
+      }
+    } else {
+      return `${quantity}/${total}`
+    }
+  }
   return (
     <StyledFlex justifyContent="center" gap="37px" style={{ position: 'relative', paddingRight: 52 }}>
       {
@@ -34,7 +47,7 @@ export default function Progress({ quantity, total, showAchieved, barWidth }: Pr
         )
       }
       <StyledFont color="#979ABE" fontSize="14px" fontWeight="500" style={{ position: 'absolute', right: 0 }}>
-        {quantity}/{total}
+        {renderRatio()}
       </StyledFont>
     </StyledFlex>
   )

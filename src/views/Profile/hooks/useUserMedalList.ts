@@ -22,7 +22,7 @@ export default function useMedalList(tab: Tab) {
       const result = await get(`/api/medal/list-by-account`, query);
       const data = (result.data || [])
         .filter((medal: MedalType) => {
-          return medal?.completed_threshold < medal?.threshold
+          return Number(medal?.completed_percent) < 100
         })
       setUserMedalList(data);
       setLoading(false);

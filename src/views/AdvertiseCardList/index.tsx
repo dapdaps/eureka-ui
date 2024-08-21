@@ -1,17 +1,20 @@
 import { styled } from 'styled-components';
 import Image from 'next/image';
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
+import { useRouter } from 'next/router';
 
 const Card = (
   {
     classname = 'advertise',
     image,
     buttonText,
-    link
+    link,
   }: Card) => {
+
+  const router = useRouter();
 
   const onLink = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -19,28 +22,43 @@ const Card = (
     if (!link) {
       return;
     }
-    window.open(link, '_blank');
+    router.push(link);
   };
 
-  return (<StyledCardContainer className={`${classname}-card`} onClick={onLink}>
-    <StyledCardImage src={image} className={`${classname}-card-img ${buttonText ? 'min-height' : ''}`} width={100} height={100} alt=''/>
-    {
-      buttonText ? (
-        <StyledCardBottom className={`${classname}-card-bottom`}>
-          <StyledCardButton className={`${classname}-card-button`} onClick={onLink}>
-            <span>{ buttonText }</span>
-            <ArrowLineIcon />
-          </StyledCardButton>
-        </StyledCardBottom>
-      ) : null
+  const onHover = () => {
+    if (!link) {
+      return;
     }
-  </StyledCardContainer>)
-}
+    router.prefetch(link);
+  };
+
+  return (
+    <StyledCardContainer className={`${classname}-card`} onClick={onLink} onMouseEnter={onHover}>
+      <StyledCardImage
+        src={image}
+        className={`${classname}-card-img ${buttonText ? 'min-height' : ''}`}
+        width={100}
+        height={100}
+        alt=""
+      />
+      {
+        buttonText ? (
+          <StyledCardBottom className={`${classname}-card-bottom`}>
+            <StyledCardButton className={`${classname}-card-button`} onClick={onLink}>
+              <span>{buttonText}</span>
+              <ArrowLineIcon />
+            </StyledCardButton>
+          </StyledCardBottom>
+        ) : null
+      }
+    </StyledCardContainer>
+  );
+};
 
 const AdvertiseCard = (
   {
     classname = '',
-    adList = []
+    adList = [],
   }: Props) => {
 
   const swiperRef = useRef<any>(null);
@@ -59,16 +77,19 @@ const AdvertiseCard = (
         onSwiper={(swiper) => {
           swiperRef.current = swiper;
         }}
-        pagination={false}>
+        pagination={false}
+      >
         {
-          adList.map((item) => (<SwiperSlide key={item.id}>
-            <Card
-              classname={classname}
-              image={item.ad_images ?? ''}
-              link={item.ad_link ?? ''}
-              buttonText={item.btn ?? ''}
-            />
-          </SwiperSlide>))
+          adList.map((item) => (
+            <SwiperSlide key={item.id}>
+              <Card
+                classname={classname}
+                image={item.ad_images ?? ''}
+                link={item.ad_link ?? ''}
+                buttonText={item.btn ?? ''}
+              />
+            </SwiperSlide>
+          ))
         }
 
       </Swiper>
@@ -76,16 +97,15 @@ const AdvertiseCard = (
       <div className="swiper-pagination"></div>
     </StyledSwiper>
   ) : adList.map((item: Partial<Card>, idx: number) => (
-        <Card
-          classname={classname}
-          image={item.ad_images ?? ''}
-          link={item.ad_link ?? ''}
-          key={idx}
-          buttonText={item.btn ?? ''}
-        />
-    )
-  )
-
+      <Card
+        classname={classname}
+        image={item.ad_images ?? ''}
+        link={item.ad_link ?? ''}
+        key={idx}
+        buttonText={item.btn ?? ''}
+      />
+    ),
+  );
 };
 
 
@@ -108,7 +128,7 @@ interface Props {
 }
 
 const StyledSwiper = styled.div`
-  
+
   .advertise-swiper {
     overflow: hidden;
     height: 100%;
@@ -151,7 +171,7 @@ const StyledCardButton = styled.div`
   transition: opacity .2s ease;
   cursor: pointer;
   font-weight: 600;
-  
+
   &:hover {
     opacity: 1;
   }
@@ -164,7 +184,7 @@ const StyledCardImage = styled(Image)`
   flex-grow: 1;
   cursor: pointer;
   height: 70.51%;
-  
+
   &.min-height {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;

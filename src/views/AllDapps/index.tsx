@@ -49,8 +49,8 @@ const AllDapps = (props: Props) => {
   const [sort, setSort] = useState<any>(SortList[0].value);
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [airdrop, setAirdrop] = useState<boolean>(false);
-  const [category, setCategory] = useState<number| string>();
-  const [searchWord, setSearchWord] = useState<string | undefined>();
+  const [category, setCategory] = useState<number| string | undefined>(undefined);
+  const [searchWord, setSearchWord] = useState<string | undefined>(undefined);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const categoryRef = useRef<any>(null);
 
@@ -81,6 +81,7 @@ const AllDapps = (props: Props) => {
       params.set('network', _network.toString());
     }
     setQueryParams(params);
+    setNetwork(_network);
   }
 
   const onSortSelect = (_sort: string) => {
@@ -90,6 +91,7 @@ const AllDapps = (props: Props) => {
       params.set('sort', _sort);
     }
     setQueryParams(params);
+    setSort(_sort);
   }
 
   const onSelectCategory = (_category: any) => {
@@ -99,6 +101,7 @@ const AllDapps = (props: Props) => {
       params.set('category', _category.toString());
     }
     setQueryParams(params);
+    setCategory(_category);
   }
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -110,6 +113,7 @@ const AllDapps = (props: Props) => {
       params.delete('searchword');
     }
     setQueryParams(params);
+    setSearchWord(_searchWord);
   }
 
   const onRewardToggle = () => {
@@ -120,6 +124,7 @@ const AllDapps = (props: Props) => {
       params.delete('reward');
     }
     setQueryParams(params);
+    setRewardNow(_rewardNow);
   };
 
   const onAirdropToggle = () => {
@@ -130,6 +135,7 @@ const AllDapps = (props: Props) => {
       params.delete('airdrop');
     }
     setQueryParams(params);
+    setAirdrop(_airdrop);
   }
 
   useEffect(() => {
@@ -145,57 +151,44 @@ const AllDapps = (props: Props) => {
   }, [categoryRef]);
 
   useEffect(() => {
-    const {
-      network: _network,
-      reward: _reward,
-      sort: _sort,
-      category: _category,
-      searchword: _searchWord,
-      airdrop: _airdrop
-    } = router.query;
+    const searchParams = new URLSearchParams(location.search);
+    const _network  = searchParams.get('network');
+    const _reward  = searchParams.get('reward');
+    const _sort  = searchParams.get('sort');
+    const _category  = searchParams.get('category');
+    const _searchWord  = searchParams.get('searchword');
+    const _airdrop  = searchParams.get('airdrop');
 
-    if (checkQueryEmpty(_network as string, () => {
+    if (networkList.length && checkQueryEmpty(_network as string, () => {
       return networkList.some((it: any) => it.chain_id === Number(_network));
     })) {
       setNetwork(Number(_network));
-    } else {
-      setNetwork(NetworkAll.id);
     }
 
     if (checkQueryEmpty(_sort as string, () => true)) {
       setSort(_sort);
-    } else {
-      setSort(SortList[0].value);
     }
 
     if (checkQueryEmpty(_category as string, () => !isNaN(Number(_category)))) {
       setCategory(Number(_category));
-    } else {
-      setCategory(undefined);
     }
 
     if (checkQueryEmpty(_reward as string, () => _reward === TrueString)) {
       setRewardNow(true);
-    } else {
-      setRewardNow(false);
     }
 
     if (checkQueryEmpty(_airdrop as string, () => _airdrop === TrueString)) {
       setAirdrop(true);
-    } else {
-      setAirdrop(false);
     }
 
     if (checkQueryEmpty(decodeURIComponent(_searchWord as string), () => true)) {
       setSearchWord(decodeURIComponent(_searchWord as string));
-    } else {
-      setSearchWord(undefined);
     }
 
     if (window.scrollY > 0) {
       window.scrollTo(0, 0);
     }
-  }, [router.query, networkList]);
+  }, [networkList]);
 
   return (
     <StyledContainer>

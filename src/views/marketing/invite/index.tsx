@@ -1,5 +1,6 @@
+import { getAccessToken } from '@/apis';
 import { QUEST_PATH } from '@/config/quest';
-import { getWithoutActive } from '@/utils/http';
+import { get, getWithoutActive, post } from '@/utils/http';
 import {
   StyledBg,
   StyledBgImage,
@@ -25,9 +26,10 @@ import {
   StyledXContainer
 } from '@/views/marketing/invite/styles';
 import { useConnectWallet } from '@web3-onboard/react';
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
 import { InviteModal, KolUserInfo } from '../components';
-import { useRouter } from 'next/router';
 
 
 const Invite = (props: Props) => {
@@ -46,25 +48,25 @@ const Invite = (props: Props) => {
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [address, setAddress] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
+  const [userStatus, setUserStatus] = useState<'uncheck' | 'new' | 'old'>('uncheck');
   const [modalType, setModalType] = useState<'success' | 'fail'>('success');
+  const [fresh, setFresh] = useState(0);
   const [updater, setUpdater] = useState(0);
   async function checkAddress() {
     const res: any = await getWithoutActive(`${QUEST_PATH}/api/invite/check-address/${address}`, platform, {
       name: router?.query?.kolName
     });
     if ((res.code as number) !== 0) return;
-    if (res.data.is_activated) {
-      setModalType("fail")
-    } else {
+    if (res?.data?.is_new_activity_user) {
       setModalType("success")
+    } else {
+      setModalType("fail")
     }
     setIsShowModal(true)
   }
-
   const onConnectWallet = () => {
     connect();
   }
-
   useEffect(() => {
     if (wallet) {
       setAddress((wallet as any)['accounts'][0]?.address);

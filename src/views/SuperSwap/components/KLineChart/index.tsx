@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
-import IconRefresh from '@public/images/refresh.svg';
+import IconSwap from '@public/images/refresh.svg';
 import IconMore from '@public/images/tokens/more.svg';
 import TokenDetailPopup from './TokenDetailPopup';
 import { get } from '@/utils/http';
@@ -9,7 +9,6 @@ import { useDebounceFn } from 'ahooks';
 import { StyledFlex } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
 import { format } from 'date-fns';
-import { useTokenPriceListStore } from '@/stores/tokenPrice';
 import IconArrowUp from '@public/images/tokens/arrow-up.svg';
 import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 
@@ -22,6 +21,9 @@ const ChartContainer = styled.div`
 const Token = styled.div`
   display: flex;
   gap: 6px;
+  .swap {
+    cursor: pointer;
+  }
 `;
 
 const Title = styled.div`
@@ -58,13 +60,9 @@ const ChangePercentage = styled.div<{ isPositive: boolean }>`
   display: flex;
   align-items: center;
   gap: 2px;
-  color: ${isPositive => isPositive ? '#79FFB7' : '#FF3D83'};
-  .up {
-    font-size: 12px;
-  }
-  .down {
-    font-size: 12px;
-    transform: rotate(180deg);
+  color: ${({ isPositive }) => (isPositive ? '#79FFB7' : '#FF3D83')};
+  svg {
+    transform: ${({ isPositive }) => (isPositive ? 'rotate(0deg)' : 'rotate(180deg)')};
   }
 `;
 
@@ -158,11 +156,13 @@ const KLineChart = ({ trade }: { trade: any }) => {
   const [loading, setLoading] = useState(false);
   const { tokenPriceLatest } = useTokenPriceLatestList();
 
+  const [isReversed, setIsReversed] = useState(false);
+
   const fetchChartData = async () => {
     try {
       setLoading(true);
       const { data } = await get(`/api/token/price/list`, {
-        symbol: trade.inputCurrency.symbol,
+        symbol: isReversed ? trade.outputCurrency.symbol : trade.inputCurrency.symbol,
         category: activePeriod,
       });
       const formattedData = data.map((item: IChartData) => ({
@@ -183,29 +183,43 @@ const KLineChart = ({ trade }: { trade: any }) => {
 
   useEffect(() => {
     run();
-  }, [trade, activePeriod]);
+  }, [trade, activePeriod, isReversed]);
 
   const selectedToken = useMemo(() => {
-    if (!trade?.inputCurrency) return null;
-    return tokenPriceLatest?.[trade.inputCurrency.symbol]
-  }
-  , [trade?.inputCurrency, tokenPriceLatest]);
+    const symbol = isReversed ? trade.outputCurrency.symbol : trade.inputCurrency.symbol;
+    return tokenPriceLatest?.[symbol];
+  }, [trade.inputCurrency, trade.outputCurrency, tokenPriceLatest, isReversed]);
 
-  if (!trade?.inputCurrency) return null;
+  const swapChart = () => setIsReversed((prev) => !prev);
+
+  const currentCurrency = isReversed ? trade.outputCurrency : trade.inputCurrency;
+
+  const currentTrade = useMemo(() => {
+    if (isReversed) {
+      return {
+        ...trade,
+        inputCurrency: trade.outputCurrency,
+        outputCurrency: trade.inputCurrency
+      };
+    }
+    return trade;
+  }, [trade, isReversed]);
+
+  if (!currentCurrency) return null;
 
   return (
     <ChartContainer>
       <Title>
         <Token>
-          <CryptoIcon src={trade.inputCurrency.icon} />
+          <CryptoIcon src={currentCurrency?.icon} />
           <Price>
             <PriceInfo>${parseFloat(selectedToken?.price).toFixed(2) || '-'}</PriceInfo>
-            <ChangePercentage isPositive={selectedToken?.change_percent > 0}>
-              <IconArrowUp clasName={selectedToken?.change_percent > 0 ? 'up' : 'down'} />
+            <ChangePercentage isPositive={selectedToken?.change_percent >= 0}>
+              <IconArrowUp clasName={selectedToken?.change_percent >= 0 ? 'up' : 'downs'} />
               <span>{parseFloat(selectedToken?.change_percent).toFixed(2) || '-'}%</span>
               </ChangePercentage>
           </Price>
-          <IconRefresh />
+          <IconSwap className='swap' onClick={swapChart} />
         </Token>
         <TabContainer>
           {periods.map((period) => (
@@ -232,7 +246,7 @@ const KLineChart = ({ trade }: { trade: any }) => {
           </LineChart>
         </ResponsiveContainer>
       )}
-      <TokenDetailPopup trade={trade} visible={isTokenDetailPopupVisible} close={() => setIsTokenDetailPopupVisible(false)} />
+      <TokenDetailPopup trade={currentTrade} visible={isTokenDetailPopupVisible} close={() => setIsTokenDetailPopupVisible(false)} />
     </ChartContainer>
   );
 };
