@@ -1,7 +1,6 @@
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import styled from 'styled-components';
 import Link from 'next/link'
-import { recordMouseEnter } from '@/utils/analytics';
 
 import { Wrapper } from '../styles/nav';
 import IconArrowDown from '@public/images/header/arrow-down.svg';
@@ -10,12 +9,9 @@ import IconBridge from '@public/images/header/bridge.svg';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import IconArrowRight from '@public/images/header/arrow-right.svg'
 import { StatusType } from "@/views/Odyssey/components/Tag";
-import Chains from './components/Chains';
 import ListItem from './components/ListItem';
-import { useNetworks } from '@/hooks/useNetworks';
-import { DividerHorizontalIcon } from '@radix-ui/react-icons';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import { useMemo, useRef, useState } from 'react';
+import { useMemo, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 const StyleView = styled.div`
@@ -52,7 +48,6 @@ const StyleView = styled.div`
 
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
-  const { networkLoading, networkList } = useNetworks();
   const { loading: compassListLoading, compassList } = useCompassList()
   const router = useRouter();
   const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_new), [compassList])
@@ -121,20 +116,22 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={ChainRef}>
-              Chains
-              <IconArrowDown className="CaretDown" aria-hidden />
-            </NavigationMenu.Trigger>
-            <NavigationMenu.Content className="NavigationMenuContentV2 chains">
+            <Link href="/networks" data-bp="1001-009-001">
+              <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={ChainRef}>
+                Chains
+              </NavigationMenu.Trigger>
+            </Link>
+
+            {/* <NavigationMenu.Content className="NavigationMenuContentV2 chains">
               <div className="List chain">
                 <Chains loading={networkLoading} data={networkList} onClick={() => ChainRef?.current?.click()}/>
               </div>
               <StyleView className='chain-all' data-bp="1001-009-001" onClick={() => {
                 ChainRef?.current?.click()
-                router.prefetch('/networks') 
+                router.prefetch('') 
                 router.push('/networks')
               }}><div>View all</div><IconArrowRight /></StyleView>
-            </NavigationMenu.Content>
+            </NavigationMenu.Content> */}
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
