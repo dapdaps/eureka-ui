@@ -1,13 +1,14 @@
 
 export type InviteConfigType = {
-  okx: Bitget;
-  coin68: Bitget;
-  bitget: Bitget;
-  namlongdao: Bitget;
-  kol: Bitget;
+  okx: Wallet;
+  coin68: Wallet;
+  bitget: Wallet;
+  namlongdao: Wallet;
+  kol: Wallet;
+  coin98: Wallet;
 }
 
-export type Bitget = {
+export type Wallet = {
   logo: string;
   name: string;
   platform: keyof InviteConfigType;
@@ -69,6 +70,19 @@ export const InviteConfig: InviteConfigType = {
       height: 80,
     },
   },
+  coin98: {
+    logo: '/images/marketing/coin98.png',
+    name: 'Coin98 Wallet',
+    platform: "coin98",
+    tips: [
+      "You are visiting a invitation link from DadDap partener Coin98 Wallet. ",
+      "Connect your wallet to keep visiting.",
+    ],
+    logoSize: {
+      width: 60,
+      height: 60,
+    },
+  },
   kol: {
     logo: '',
     name: 'Kol',
@@ -81,5 +95,6 @@ export const InviteConfig: InviteConfigType = {
       width: 80,
       height: 80,
     },
-  }
+  },
+
 };
