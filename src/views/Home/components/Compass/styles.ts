@@ -4,7 +4,7 @@ import LazyImage from '@/components/LazyImage';
 export const StyledContainer = styled.div`
   height: 560px;
   background: #000;
-  margin-top: 100px;
+  margin-top: 60px;
   @media (max-width: 1440px) {
       transform: scale(.88);
       transform-origin: center; 
