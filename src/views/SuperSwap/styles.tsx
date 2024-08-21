@@ -5,6 +5,7 @@ export const StyledContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding-top: 50px;
+  flex-direction: column;
 
   .price-impact-0 {
     color: #33b65f;

@@ -123,7 +123,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
             {isRateReversed ? trade.inputCurrency?.symbol : trade.outputCurrency?.symbol}
           </div>
           <IconRefresh className="outputCurrency" onClick={() => setIsRateReversed((prev) => !prev)} />
-          <StyleOptionChart onClick={onShowChart}>{showChart ? 'Hide' : 'Show'} chart</StyleOptionChart>
+          {/* <StyleOptionChart onClick={onShowChart}>{showChart ? 'Hide' : 'Show'} chart</StyleOptionChart> */}
         </StyledFlex>
         {markets?.length > 0 && (
           <StyledFlex className="trade-display" gap="5px" onClick={() => setIsOpen(!isOpen)}>
