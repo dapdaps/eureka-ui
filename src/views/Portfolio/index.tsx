@@ -24,7 +24,7 @@ import { usePortfolioStore } from '@/stores/portfolio';
 import { useWorth } from '@/views/Portfolio/hooks/useWorth';
 import useTvls from '@/views/Portfolio/hooks/useTvls';
 import useAccount from '@/hooks/useAccount';
-import { SupportedChains } from '@/views/Portfolio/config';
+import { SupportedChains } from '@/config/all-in-one/chains';
 
 const TABS = [
   {

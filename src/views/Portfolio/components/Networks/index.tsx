@@ -16,7 +16,7 @@ import IconALl from '@public/images/networks/icon-all.svg';
 import { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
 import Big from 'big.js';
 import Skeleton from 'react-loading-skeleton';
-import { SupportedChains } from '@/views/Portfolio/config';
+import { SupportedChains } from '@/config/all-in-one/chains';
 import { orderBy } from 'lodash';
 
 const ALL = {

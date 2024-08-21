@@ -8,7 +8,7 @@ import useAccount from '@/hooks/useAccount';
 import { NetworkBalance } from '@/components/ChainsDock/index';
 import useDetail from '@/views/networks/detail/hooks/useDetail';
 import { useRouter } from 'next/router';
-import { IdToPath } from '@/config/all-in-one/chains';
+import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
 import LazyImage from '@/components/LazyImage';
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
 import Link from 'next/link';
@@ -86,9 +86,11 @@ const ChainsDockDetail = (props: Props) => {
 const Detail = (props: DetailProps) => {
   const { onLoaded, x, y, visible, network, setVisible, cancelCloseDetail, closeDetail } = props;
 
-  const { id, logo, name } = network;
+  const { id, logo, name, chain_id } = network;
   const { loading, detail = {} } = useDetail(id);
   const router = useRouter();
+
+  const isSupported = SupportedChains.some((support) => support.chainId === chain_id);
 
   const balanceRef = useRef<any>(null);
 
@@ -159,16 +161,16 @@ const Detail = (props: DetailProps) => {
             <ArrowLineIcon classname="arrow-icon" />
           </StyledArrow>
         </StyledHead>
-        <StyledFlex justifyContent="space-between" gap="10px" style={{ marginBottom: '20px' }}>
+        <StyledFlex justifyContent="space-between" gap="10px" style={{ marginBottom: '20px', position: 'relative' }}>
           <StyledFlex flexDirection="column" alignItems="center">
             <StyledSummaryTitle>
               In Wallet
             </StyledSummaryTitle>
             {
-              loading ? (
-                <Skeleton height={30} width={120} />
+              loading && isSupported ? (
+                <Skeleton height={30} width={100} />
               ) : (
-                <StyledSummaryValue>
+                <StyledSummaryValue $blur={!isSupported}>
                   {formateValueWithThousandSeparatorAndFont(network?.balance, 2, true, {
                     prefix: '$',
                     isZeroPrecision: true,
@@ -182,11 +184,11 @@ const Detail = (props: DetailProps) => {
               DeFi
             </StyledSummaryTitle>
             {
-              loading ? (
-                <Skeleton height={30} width={120} />
+              loading && isSupported ? (
+                <Skeleton height={30} width={100} />
               ) : (
-                <StyledSummaryValue>
-                  {formateValueWithThousandSeparatorAndFont(detail?.trading_volume, 2, true, {
+                <StyledSummaryValue $blur={!isSupported}>
+                  {formateValueWithThousandSeparatorAndFont(isSupported ? detail?.trading_volume : 0, 2, true, {
                     prefix: '$',
                     isZeroPrecision: true,
                   })}
@@ -194,6 +196,13 @@ const Detail = (props: DetailProps) => {
               )
             }
           </StyledFlex>
+          {
+            !isSupported && (
+              <StyledComingSoon>
+                Coming soon...
+              </StyledComingSoon>
+            )
+          }
         </StyledFlex>
         <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
         <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>
@@ -333,9 +342,24 @@ const StyledSummaryTitle = styled.div`
   font-size: 14px;
   font-weight: 400;
 `;
-const StyledSummaryValue = styled.div`
+const StyledSummaryValue = styled.div<{ $blur?: boolean; }>`
   text-align: center;
   font-size: 20px;
   font-weight: 600;
-`;
 
+  filter: ${({ $blur }) => $blur ? 'blur(5px)' : 'unset'};
+  opacity: ${({ $blur }) => $blur ? 0.5 : 1};
+`;
+const StyledComingSoon = styled.div`
+  color: #979ABE;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+`;

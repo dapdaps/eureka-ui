@@ -92,3 +92,27 @@ export interface AllInOneChain {
   };
   menuConfig: {[tab: string]: { tab: string; path: string; id?: number }};
 }
+
+// Polygon zkEVM, zkSync, Linea, Scroll, Blast
+export const SupportedChains = [
+  {
+    name: popupsData['polygon-zkevm'].title,
+    chainId: popupsData['polygon-zkevm'].chainId,
+  },
+  {
+    name: popupsData.zksync.title,
+    chainId: popupsData.zksync.chainId,
+  },
+  {
+    name: popupsData.linea.title,
+    chainId: popupsData.linea.chainId,
+  },
+  {
+    name: popupsData.scroll.title,
+    chainId: popupsData.scroll.chainId,
+  },
+  {
+    name: popupsData.blast.title,
+    chainId: popupsData.blast.chainId,
+  },
+];
