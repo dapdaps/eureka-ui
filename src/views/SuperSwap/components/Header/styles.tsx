@@ -5,14 +5,13 @@ export const StyledContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-bottom: 14px;
+  margin-bottom: 25px;
 `;
 
 export const StyledTitle = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
-  padding-left: 16px;
   color: #fff;
   font-size: 22px;
   font-weight: 700;
@@ -27,13 +26,12 @@ export const StyledChain = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #fff;
-  font-family: Montserrat;
-  font-size: 16px;
-  font-weight: 500;
   cursor: pointer;
   transition: 0.5s;
-
+  border: 1px solid #373A53;
+  color: #fff;
+  border-radius: 8px;
+  padding: 14px;
   &:hover {
     opacity: 0.8;
   }
@@ -41,6 +39,13 @@ export const StyledChain = styled.div`
     opacity: 0.7;
   }
 `;
+
+export const StyledChainName = styled.div`
+  font-family: Montserrat;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 14px;
+`
 
 export const StyledChainLogo = styled.img`
   width: 22px;
@@ -50,7 +55,6 @@ export const StyledChainLogo = styled.img`
 
 export const StyledArrowIcon = styled.div`
   transition: 0.5s;
-
   &.expand {
     transform: rotate(-180deg);
   }
@@ -90,4 +94,30 @@ export const StyledChainTokenIcon = styled.img`
 export const StyledChainTokenSymbol = styled.div`
   color: #fff;
   font-size: 14px;
+`;
+
+export const StyleChainItem = styled.div<{ isActive?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+  padding: 9px;
+  border-radius: 10px;
+  background: #18191E;
+  color: #fff;
+  border: ${({ isActive }) => ( isActive ? '1px solid #EBF479' : '1px solid transparent')};
+  .chain-img {
+    width: 26px;
+    height: 26px;
+  }
+  .chain-name {
+    font-family: Montserrat;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 14px;
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `;
