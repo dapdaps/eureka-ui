@@ -14,7 +14,7 @@ import type { NextPageWithLayout } from '@/utils/types';
 // import BridgeAction from '@/views/SuperBridge/BridgeAction';
 // import Transaction from '@/views/SuperBridge/Transaction';
 import Medal from '@/views/SuperBridge/Medal';
-import QuickBridge from '@/views/SuperBridge/QuickBridge';
+
 
 
 const Container = styled.div`
@@ -98,7 +98,6 @@ const Bridge: NextPageWithLayout = () => {
         <Medal />
       </RightContainer>
 
-      {/* <QuickBridge fromChainId={81457} toChainId={1}/> */}
     </Container>
   )
 };

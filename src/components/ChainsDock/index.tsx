@@ -5,7 +5,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 
 import ChainsDockList from '@/components/ChainsDock/List';
 import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
-import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
+import { SupportedChains } from '@/config/all-in-one/chains';
 import type { Network } from '@/hooks/useNetworks';
 import { useChainsStore } from '@/stores/chains';
 import useTokens from '@/views/Portfolio/hooks/useTokens';
@@ -45,6 +45,10 @@ const ChainsDock = () => {
 
   const containerRef = useRef<any>(null);
   const [maskVisible, setMaskVisible] = useState<boolean>(true);
+  const [ quickBridgeShow, setQuickBridgeShow ] = useState(false)
+  const [ fromChainId, setFromChainId ] = useState<number>(0)
+  const [ toChainId, setToChainId ] = useState<number>(0)
+  const [direction, setDirection] = useState('in')
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -61,14 +65,21 @@ const ChainsDock = () => {
     };
   }, []);
 
+  const onBridgeShow = useCallback((fromChainId: number, toChainId: number, direction: string) => {
+    setFromChainId(fromChainId)
+    setToChainId(toChainId)
+    setDirection(direction)
+    setQuickBridgeShow(true)
+  }, [])
+
   return (
     <StyledContainer
       ref={containerRef}
     >
       <StyledInner>
-        <ChainsDockList list={chainList[0]} />
+        <ChainsDockList list={chainList[0]} onBridgeShow={onBridgeShow}/>
         <StyledLine />
-        <ChainsDockList list={chainList[1]} />
+        <ChainsDockList list={chainList[1]} onBridgeShow={onBridgeShow}/>
       </StyledInner>
       <AnimatePresence mode="wait">
         {
@@ -87,6 +98,9 @@ const ChainsDock = () => {
           )
         }
       </AnimatePresence>
+      {
+         quickBridgeShow && <QuickBridge direction={direction} fromChainId={fromChainId} toChainId={toChainId} onClose={() => { setQuickBridgeShow(false) }}/>
+      }
     </StyledContainer>
   );
 };
