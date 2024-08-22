@@ -5,6 +5,7 @@ import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-s
 import { ArrowRight } from '../Arrow'
 import Route from '../Route'
 import RouteModal from './RouteModal';
+import DotFlashing from '../DotFlashing/'
 import useRouteSorted from '../hooks/useRouteSorted'
 
 import type { Chain, Token } from "@/types";
@@ -47,11 +48,12 @@ interface Props {
     routes: QuoteResponse[] | null;
     toToken: Token;
     routeSortType: number;
+    quoteLoading: boolean;
     onRouteSelected: (route: QuoteResponse | null) => void;
 }
 
 export default function RouteSelected(
-    { routes, toToken, routeSortType, fromChain, onRouteSelected }: Props
+    { routes, toToken, routeSortType, fromChain, quoteLoading, onRouteSelected }: Props
 ) {
     const [routeModalShow, setRouteModalShow] = useState<boolean>(false)
 
@@ -63,10 +65,15 @@ export default function RouteSelected(
         setRouteSelected,
     } = useRouteSorted(routes, routeSortType, onRouteSelected)
 
+    console.log(quoteLoading)
+
     return <Container>
         <TitleWapper>
             <div className="title">Select Bridge Route</div>
             <div className="arrow" onClick={() => { setRouteModalShow(true) }}>
+                {
+                    quoteLoading && <DotFlashing />
+                }
                 <span className="route-num">{routes?.length} Routes</span>
                 <ArrowRight />
             </div>
@@ -85,6 +92,7 @@ export default function RouteSelected(
             routeSelected={routeSelected} 
             routes={sortedRoutes} 
             fromChain={fromChain}
+            quoteLoading={quoteLoading}
             onClose={() => { setRouteModalShow(false) }} 
             onRouteSelected={(route) => { 
                 setRouteSelected(route)

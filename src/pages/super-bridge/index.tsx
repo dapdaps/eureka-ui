@@ -101,7 +101,7 @@ const Bridge: NextPageWithLayout = () => {
         <Medal />
       </RightContainer>
 
-      <QuickBridge fromChainId={81457} toChainId={1}/>
+      {/* <QuickBridge fromChainId={81457} toChainId={1}/> */}
     </Container>
   )
 };

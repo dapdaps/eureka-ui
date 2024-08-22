@@ -114,7 +114,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
   const { fail, success } = useToast();
   const [quoteReques, setQuoteRequest] = useState<QuoteRequest | null>(null);
 
-  const { routes, loading } = useQuote(quoteReques, identification);
+  const { routes, loading, quoteLoading } = useQuote(quoteReques, identification);
 
   // console.log('routes:', routes)
 
@@ -328,6 +328,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
       />
       {toToken && routes?.length && (
         <RouteSelected
+          quoteLoading={quoteLoading}
           fromChain={fromChain}
           routeSortType={routeSortType}
           onRouteSelected={(route: QuoteResponse | null) => {
