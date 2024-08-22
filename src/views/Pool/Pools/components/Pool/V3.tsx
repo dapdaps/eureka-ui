@@ -1,12 +1,14 @@
 import { memo, useMemo } from 'react';
-import usePoolInfo from '@/views/Pool/AddLiquidity/hooks/usePoolInfo';
-import useToken from '@/views/Pool/hooks/useToken';
-import TokenIcon from '@/views/Pool/components/TokenIcon';
-import Status from '@/views/Pool/components/Status';
-import Fee from '@/views/Pool/components/Fee';
-import VersionTag from '../VersionTag';
-import { tickToPrice, nearestUsableTick } from '../../../utils/tickMath';
+
 import { formateValue } from '@/utils/formate';
+import usePoolInfo from '@/views/Pool/AddLiquidity/hooks/usePoolInfo';
+import Fee from '@/views/Pool/components/Fee';
+import Status from '@/views/Pool/components/Status';
+import TokenIcon from '@/views/Pool/components/TokenIcon';
+import useToken from '@/views/Pool/hooks/useToken';
+
+import { nearestUsableTick,tickToPrice } from '../../../utils/tickMath';
+import VersionTag from '../VersionTag';
 import { StyledContainer, StyledDetails, StyledPool, StyledRange } from './style';
 
 const Pool = ({ token0, token1, chainId = 81457, fee, poolVersion, liquidity, data = {}, onClick }: any) => {

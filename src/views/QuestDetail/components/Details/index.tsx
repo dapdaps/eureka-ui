@@ -1,10 +1,10 @@
 import { memo } from 'react';
 
+import Steps, { STEPS_MAP } from '@/views/Quest/components/QuestItem/step-icon';
 import { formatPeriodDate, formatTotalUsers } from '@/views/Quest/helpers';
 import useLike from '@/views/Quest/hooks/useLike';
-import Steps, { STEPS_MAP } from '@/views/Quest/components/QuestItem/step-icon';
-import { formatDescription } from '../../helper';
 
+import { formatDescription } from '../../helper';
 import {
   JoinedAccounts,
   JoinedAccountsAmount,

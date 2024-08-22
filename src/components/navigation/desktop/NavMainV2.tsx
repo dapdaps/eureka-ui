@@ -1,18 +1,19 @@
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import styled from 'styled-components';
-import Link from 'next/link'
-
-import { Wrapper } from '../styles/nav';
 import IconArrowDown from '@public/images/header/arrow-down.svg';
-import IconSwap from '@public/images/header/swap.svg';
+import IconArrowRight from '@public/images/header/arrow-right.svg'
 import IconBridge from '@public/images/header/bridge.svg';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
-import IconArrowRight from '@public/images/header/arrow-right.svg'
-import { StatusType } from "@/views/Odyssey/components/Tag";
-import ListItem from './components/ListItem';
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import { useMemo, useRef } from 'react';
+import IconSwap from '@public/images/header/swap.svg';
+import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import Link from 'next/link'
 import { useRouter } from 'next/router';
+import { useMemo, useRef } from 'react';
+import styled from 'styled-components';
+
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import { StatusType } from "@/views/Odyssey/components/Tag";
+
+import { Wrapper } from '../styles/nav';
+import ListItem from './components/ListItem';
 
 const StyleView = styled.div`
   margin: 0 auto;

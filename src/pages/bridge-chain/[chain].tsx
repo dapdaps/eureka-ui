@@ -1,21 +1,22 @@
+import { useDebounceFn } from 'ahooks';
+import createKeccakHash from 'keccak'
 import { useRouter } from 'next/router';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import createKeccakHash from 'keccak'
-import useAccount from '@/hooks/useAccount';
+
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
+import DappBack from '@/components/PageBack';
 import popupsData from '@/config/all-in-one/chains';
+import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import { useDefaultLayout } from '@/hooks/useLayout';
-import { usePriceStore } from '@/stores/price';
-import { useDebounceFn } from 'ahooks';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
-import { multicall } from '@/utils/multicall';
+import { usePriceStore } from '@/stores/price';
 import { get } from '@/utils/http'
+import { multicall } from '@/utils/multicall';
 import type { NextPageWithLayout } from '@/utils/types';
-import DappBack from '@/components/PageBack';
-import DappFallback from '@/views/Dapp/components/Fallback';
 import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
 
 const Container = styled.div`
   margin: 0 8%;

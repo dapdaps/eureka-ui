@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
-import useAuthCheck from '@/hooks/useAuthCheck';
+
 import { QUEST_PATH } from '@/config/quest';
-import { get } from '@/utils/http';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { useUserStore } from '@/stores/user';
+import { get } from '@/utils/http';
 
 export default function useUserParticipations() {
   const [list, setList] = useState<any>([]);

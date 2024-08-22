@@ -1,24 +1,22 @@
+import { useDebounce } from 'ahooks';
+import Big from 'big.js';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDebounce } from 'ahooks';
 
-import { useGasTokenHooks, useGasAmount } from '@/views/SuperBridge/hooks/useGasTokenHooks';
 import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance'
-import { usePriceStore } from '@/stores/price';
 import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+import { useGasAmount,useGasTokenHooks } from '@/views/SuperBridge/hooks/useGasTokenHooks';
 
-
-import ChainSelector from './ChainSelector/index';
-import TokenSeletor from './TokenSelector/index'
 import Amount from './Amount/index'
+import ChainSelector from './ChainSelector/index';
 import DestinationAddress from './DestinationAddress/index'
 import ReceiveDesc from './ReceiveDesc/index'
 import SubmitPanel from './SubmitPanel/index'
 import SubmitProcess from './SubmitPanel/SubmitProcess'
-
-import type { Chain, Token } from '@/types';
-import Big from 'big.js';
+import TokenSeletor from './TokenSelector/index'
 
 const Container = styled.div`
     width: 440px;

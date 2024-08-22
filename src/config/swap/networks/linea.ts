@@ -1,15 +1,16 @@
+import { linea } from '@/config/tokens/linea';
+
+import chains from '../../chains';
 import { basic as HorizonDEXBasic, networks as HorizonDEXNetworks } from '../dapps/horizon-dex';
 import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
-import { basic as SyncSwapBasic, networks as SyncSwapNetworks } from '../dapps/sync-swap';
-import { basic as VelocoreV2Basic, networks as VelocoreV2Networks } from '../dapps/velocore-v2';
+import { basic as lynexBasic, networks as lynexNetworks } from '../dapps/lynex';
 import { basic as metavaultV3Basic, networks as metavaultV3Networks } from '../dapps/metavault-v3';
 import { basic as pancakeSwapBasic, networks as pancakeSwapNetworks } from '../dapps/pancake-swap';
-import { basic as xfaiBasic, networks as xfaiNetworks } from '../dapps/xfai';
-import { basic as lynexBasic, networks as lynexNetworks } from '../dapps/lynex';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { basic as SyncSwapBasic, networks as SyncSwapNetworks } from '../dapps/sync-swap';
+import { basic as VelocoreV2Basic, networks as VelocoreV2Networks } from '../dapps/velocore-v2';
+import { basic as xfaiBasic, networks as xfaiNetworks } from '../dapps/xfai';
 import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
-import { linea } from '@/config/tokens/linea';
-import chains from '../../chains';
 
 const CHAIN_ID = 59144;
 

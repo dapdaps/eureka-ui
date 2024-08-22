@@ -1,4 +1,7 @@
+import iconHand from '@public/images/others/bns/icon_hand.svg?url';
+import Image from 'next/image';
 import { memo, useState } from 'react';
+
 import {
   StyledContainer,
   StyledFlex,
@@ -10,9 +13,6 @@ import {
   StyledSvg,
   StyledText
 } from './styles';
-
-import iconHand from '@public/images/others/bns/icon_hand.svg?url';
-import Image from 'next/image';
 
 const iconRight = (
   <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 10 14" fill="none">

@@ -1,3 +1,11 @@
+import Title from '@public/images/home/next-gen-defi.svg';
+import Big from 'big.js';
+import { random } from 'lodash';
+import { useCallback, useMemo, useState } from 'react';
+
+import LazyImage from '@/components/LazyImage';
+import popupsData from '@/config/all-in-one/chains';
+import { useChainsStore } from '@/stores/chains';
 import {
   StyledContainer,
   StyledGrid,
@@ -11,16 +19,10 @@ import {
   StyledTitle,
   StyledTitleSub,
 } from '@/views/Home/components/GridChains/styles';
-import popupsData from '@/config/all-in-one/chains';
-import Big from 'big.js';
-import LazyImage from '@/components/LazyImage';
-import { useChainsStore } from '@/stores/chains';
-import { useCallback, useMemo, useState } from 'react';
-import Title from '@public/images/home/next-gen-defi.svg';
-import { random } from 'lodash';
+import useTokens from '@/views/Portfolio/hooks/useTokens';
+
 import GridChainBalance from './Balance';
 import GridChainDetail from './Detail';
-import useTokens from '@/views/Portfolio/hooks/useTokens';
 
 const CellSize = 100;
 const GridHeight = 1500;
@@ -232,10 +234,10 @@ const GridChains = () => {
                       }}
                     >
                       {
-                        chainList.map((chain) => {
+                        chainList.map((chain, index) => {
                           if (chain.position[0] - 1 === row && chain.position[1] - 1 === col) {
                             return (
-                              <GridChainBalance balance={chain.balance}>
+                              <GridChainBalance key={index} balance={chain.balance}>
                                 <LazyImage
                                   containerClassName="cell-image"
                                   key={chain.chainId}

@@ -1,8 +1,9 @@
 import { memo, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
+
+import { STEPS } from './config';
 import Reward from './Reward';
 import Slices from './Slices';
-import { STEPS } from './config';
 
 const StyledContainer = styled.div`
   position: relative;

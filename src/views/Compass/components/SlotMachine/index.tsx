@@ -1,36 +1,31 @@
-import styled from 'styled-components';
-import { useCallback, useState, useRef, useEffect } from 'react';
-
-import Spin from '../Spin'
-import ScrollLine from './ScrollLine';
-import RuleModal from './RuleModal';
-import PrizeModal from './PrizeModal'
-
-import titleImg from '@public/images/others/odyssey/v1/components/SlotMachine/title.svg?url'
-import prizeImg from '@public/images/others/odyssey/v1/components/SlotMachine/prize.svg?url'
-import compassImg from '@public/images/others/odyssey/v1/odyssey.svg?url'
-import controllerImg from '@public/images/others/odyssey/v1/components/SlotMachine/ctr.png'
 import actionBg from '@public/images/others/odyssey/v1/components/SlotMachine/action-bg.svg?url'
-
-import ruleImg from '@public/images/others/odyssey/v1/components/SlotMachine/rule.svg?url'
-import clamImg from '@public/images/others/odyssey/v1/components/SlotMachine/clam.svg?url'
-import rulePressImg from '@public/images/others/odyssey/v1/components/SlotMachine/rule-press.svg?url'
-import clamPressImg from '@public/images/others/odyssey/v1/components/SlotMachine/clam-press.svg?url'
-import btnBgImg from '@public/images/others/odyssey/v1/components/SlotMachine/btn-bg.svg?url'
-import btnImg from '@public/images/others/odyssey/v1/components/SlotMachine/btn.svg?url'
-import chainIconsImg from '@public/images/others/odyssey/v1/components/SlotMachine/chianIcons.svg?url'
 import bottomChainIconsImg from '@public/images/others/odyssey/v1/components/SlotMachine/bottomChainIcons.svg?url'
-import coverTopImg from '@public/images/others/odyssey/v1/components/SlotMachine/cover-top.png'
-
-import yellowLeftImg from '@public/images/others/odyssey/v1/components/SlotMachine/yellow-left.svg?url'
-import yellowMidImg from '@public/images/others/odyssey/v1/components/SlotMachine/yellow-mid.svg?url'
-import yellowRightImg from '@public/images/others/odyssey/v1/components/SlotMachine/yellow-right.svg?url'
-
+import btnImg from '@public/images/others/odyssey/v1/components/SlotMachine/btn.svg?url'
+import btnBgImg from '@public/images/others/odyssey/v1/components/SlotMachine/btn-bg.svg?url'
+import chainIconsImg from '@public/images/others/odyssey/v1/components/SlotMachine/chianIcons.svg?url'
+import clamImg from '@public/images/others/odyssey/v1/components/SlotMachine/clam.svg?url'
+import clamPressImg from '@public/images/others/odyssey/v1/components/SlotMachine/clam-press.svg?url'
 import coverLeftImg from '@public/images/others/odyssey/v1/components/SlotMachine/cover-left.svg?url'
 import coverMidImg from '@public/images/others/odyssey/v1/components/SlotMachine/cover-mid.svg?url'
 import coverRightImg from '@public/images/others/odyssey/v1/components/SlotMachine/cover-right.svg?url'
+import coverTopImg from '@public/images/others/odyssey/v1/components/SlotMachine/cover-top.png'
+import controllerImg from '@public/images/others/odyssey/v1/components/SlotMachine/ctr.png'
+import prizeImg from '@public/images/others/odyssey/v1/components/SlotMachine/prize.svg?url'
+import ruleImg from '@public/images/others/odyssey/v1/components/SlotMachine/rule.svg?url'
+import rulePressImg from '@public/images/others/odyssey/v1/components/SlotMachine/rule-press.svg?url'
+import titleImg from '@public/images/others/odyssey/v1/components/SlotMachine/title.svg?url'
+import yellowLeftImg from '@public/images/others/odyssey/v1/components/SlotMachine/yellow-left.svg?url'
+import yellowMidImg from '@public/images/others/odyssey/v1/components/SlotMachine/yellow-mid.svg?url'
+import yellowRightImg from '@public/images/others/odyssey/v1/components/SlotMachine/yellow-right.svg?url'
+import compassImg from '@public/images/others/odyssey/v1/odyssey.svg?url'
+import { useCallback, useEffect,useRef, useState } from 'react';
+import styled from 'styled-components';
 
 import { postClaim } from '../../http/index'
+import Spin from '../Spin'
+import PrizeModal from './PrizeModal'
+import RuleModal from './RuleModal';
+import ScrollLine from './ScrollLine';
 
 const Wapper = styled.div`
     width: var(--main-width);

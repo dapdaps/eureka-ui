@@ -1,21 +1,3 @@
-import { useCallback, useState } from 'react';
-import styled from 'styled-components';
-import { useSearchParams } from 'next/navigation'
-
-import { useDefaultLayout } from '@/hooks/useLayout';
-
-import Record from './components/Record'
-import SlotMachine from './components/SlotMachine'
-import Qquests from './components/Qquests'
-import Project from './components/Project'
-import Social from './components/Social'
-import NextCompoent from './components/NextCompoent'
-
-import useSummary from './hooks/useSummary';
-import useSpin from './hooks/useSpin'
-import useQuestList from './hooks/useQuestList'
-import useTwitterBind from './hooks/useTwitterBind';
-
 import bgImg from '@public/images/others/odyssey/v1/bg.gif'
 import g1 from '@public/images/others/odyssey/v1/g1.svg?url'
 import g2 from '@public/images/others/odyssey/v1/g2.svg?url'
@@ -26,6 +8,22 @@ import subImg from '@public/images/others/odyssey/v1/getPins2.svg?url'
 import line1Img from '@public/images/others/odyssey/v1/Line1.svg?url'
 import line2Img from '@public/images/others/odyssey/v1/Line2.svg?url'
 import mImg from '@public/images/others/odyssey/v1/m.png'
+import { useSearchParams } from 'next/navigation'
+import { useCallback, useState } from 'react';
+import styled from 'styled-components';
+
+import { useDefaultLayout } from '@/hooks/useLayout';
+
+import NextCompoent from './components/NextCompoent'
+import Project from './components/Project'
+import Qquests from './components/Qquests'
+import Record from './components/Record'
+import SlotMachine from './components/SlotMachine'
+import Social from './components/Social'
+import useQuestList from './hooks/useQuestList'
+import useSpin from './hooks/useSpin'
+import useSummary from './hooks/useSummary';
+import useTwitterBind from './hooks/useTwitterBind';
 
 const App = styled.div`
     --main-color: #fff;

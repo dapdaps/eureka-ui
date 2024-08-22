@@ -1,16 +1,17 @@
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo } from 'react';
+
 import popupsData from '@/config/all-in-one/chains';
-import { Network } from '@/views/networks/list/hooks/useNetworks';
+import { type Advertise } from '@/hooks/useAdvertise';
 import Reward from '@/views/networks/list/components/reward';
 import {
   BtnGroup,
   DataList,
-  Wrap,
   Head,
+  Wrap,
 } from '@/views/networks/list/components/styles';
 import { CardHead, DataListShown, FooterButton } from '@/views/networks/list/components/utils';
-import { Advertise } from '@/hooks/useAdvertise';
+import { type Network } from '@/views/networks/list/hooks/useNetworks';
 
 const ListItem: FC<IProps> = ({ dataSource }) => {
   const {

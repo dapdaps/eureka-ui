@@ -1,9 +1,11 @@
 import { memo, useMemo } from 'react';
-import TokenIcon from '@/views/Pool/components/TokenIcon';
-import Status from '@/views/Pool/components/Status';
-import Fee from '@/views/Pool/components/Fee';
-import useToken from '@/views/Pool/hooks/useToken';
+
 import { formateValue } from '@/utils/formate';
+import Fee from '@/views/Pool/components/Fee';
+import Status from '@/views/Pool/components/Status';
+import TokenIcon from '@/views/Pool/components/TokenIcon';
+import useToken from '@/views/Pool/hooks/useToken';
+
 import VersionTag from '../VersionTag';
 import { StyledContainer, StyledDetails, StyledPool, StyledRange } from './style';
 

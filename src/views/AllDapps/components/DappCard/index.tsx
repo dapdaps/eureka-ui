@@ -1,4 +1,12 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { useEffect, useMemo } from 'react';
+
+import type { Badge } from '@/views/AllDapps/components/Badges';
+import Badges from '@/views/AllDapps/components/Badges';
+import { StatusType } from '@/views/Odyssey/components/Tag';
+import RewardIcons from '@/views/OdysseyV8/RewardIcons';
+
 import {
   StyledDappCard,
   StyledDappCardBody,
@@ -11,11 +19,6 @@ import {
   StyledDappCardNetworks,
   StyledDappCardTitle,
 } from './styles';
-import Image from 'next/image';
-import Badges, { Badge } from '@/views/AllDapps/components/Badges';
-import { StatusType } from '@/views/Odyssey/components/Tag';
-import RewardIcons from '@/views/OdysseyV8/RewardIcons';
-import { useRouter } from 'next/router';
 
 const DAppRewardList: { [k: string]: Badge[] } = {
   SwapMode: [

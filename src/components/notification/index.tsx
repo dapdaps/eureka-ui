@@ -1,8 +1,9 @@
-import { INotification } from '@/components/navigation/desktop/Notification';
+import cls from 'classnames';
+
+import type { INotification } from '@/components/navigation/desktop/Notification';
+import { formatTimeAgo } from '@/utils/format-time';
 
 import styles from './notification.module.css';
-import { formatTimeAgo } from '@/utils/format-time';
-import cls from 'classnames';
 
 export default function Notification({
   data,

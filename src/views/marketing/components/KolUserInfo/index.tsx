@@ -1,10 +1,10 @@
+import { useRouter } from "next/router";
 import { memo, useEffect, useState } from "react";
 
 import { QUEST_PATH } from '@/config/quest';
 import { ellipsAccount } from '@/utils/account';
 import { get } from '@/utils/http';
 
-import { useRouter } from "next/router";
 import * as Styles from './styles';
 export default memo(function KolUserInfo() {
   const router = useRouter()

@@ -1,9 +1,9 @@
-import styled from 'styled-components';
-import ListItem from '../navigation/desktop/components/ListItem';
-
 import IconLink from '@public/images/header/link.svg';
-import { Odyssey } from './hooks/useDefaultSearch';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
+import ListItem from '../navigation/desktop/components/ListItem';
+import  { type Odyssey } from './hooks/useDefaultSearch';
 
 const Container = styled.div`
   .campaign {

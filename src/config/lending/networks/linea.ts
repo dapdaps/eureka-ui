@@ -1,8 +1,9 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
+import granaryFinance from '../dapps/granary-finance';
 import layerBank from '../dapps/layer-bank';
 import mendi from '../dapps/mendi-finance';
-import granaryFinance from '../dapps/granary-finance';
 
 const CHAIN_ID = 59144;
 const CHAIN_NAME = 'Linea';

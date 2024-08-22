@@ -1,8 +1,9 @@
+import { useDebounceFn } from 'ahooks';
+import { useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-import { useDebounceFn } from 'ahooks';
-import { useEffect, useState } from 'react';
 import { CategoryList, PageSize } from '@/views/AllDapps/config';
 export default function useRecommendNetwork() {
   const { account } = useAccount()

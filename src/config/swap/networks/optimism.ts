@@ -1,9 +1,10 @@
-import { basic as velodromeV1Basic, networks as velodromeV1Networks } from '../dapps/velodrome-v1';
-import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { optimism } from '@/config/tokens/optimism';
+
 import { basic as beethovenBasic, networks as beethovenNetworks } from '../dapps/beethoven-x';
 import { basic as fraxBasic, networks as fraxNetworks } from '../dapps/frax-swap';
+import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { basic as velodromeV1Basic, networks as velodromeV1Networks } from '../dapps/velodrome-v1';
 import { basic as velodromeBasic, networks as velodromeNetworks } from '../dapps/velodrome-v2';
-import { optimism } from '@/config/tokens/optimism';
 
 const CHAIN_ID = 10;
 

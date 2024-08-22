@@ -1,9 +1,10 @@
+import { gnosis } from '@/config/tokens/gnosis';
+
+import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
+import { basic as elkBasic, networks as elkNetworks } from '../dapps/elk';
 import { basic as honeySwapBasic, networks as honeySwapNetworks } from '../dapps/honey-swap';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as swaprBasic, networks as swaprNetworks } from '../dapps/swapr';
-import { basic as elkBasic, networks as elkNetworks } from '../dapps/elk';
-import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
-import { gnosis } from '@/config/tokens/gnosis';
 const CHAIN_ID = 100;
 
 export default {

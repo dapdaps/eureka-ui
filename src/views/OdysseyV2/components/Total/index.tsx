@@ -1,6 +1,8 @@
-import { formateValueWithThousandSeparator } from '@/utils/formate';
 import Skeleton from 'react-loading-skeleton';
-import { StyledContainer, StyledCard, StyledCardLabel, StyledCardValue } from './styles';
+
+import { formateValueWithThousandSeparator } from '@/utils/formate';
+
+import { StyledCard, StyledCardLabel, StyledCardValue,StyledContainer } from './styles';
 
 const ITEMS = [
   {

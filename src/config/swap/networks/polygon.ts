@@ -1,10 +1,11 @@
-import { basic as retroBasic, networks as retroNetworks } from '../dapps/retro';
+import { polygon } from '@/config/tokens/polygon';
+
 import { basic as apeBasic, networks as apeNetworks } from '../dapps/ape';
 import { basic as honeyBasic, networks as honeyNetworks } from '../dapps/honey-swap';
-import { basic as quickSwapBasic, networks as quickSwapNetworks } from '../dapps/quick-swap';
 import { basic as pearlFiBasic, networks as pearlFiNetworks } from '../dapps/pearl-fi';
+import { basic as quickSwapBasic, networks as quickSwapNetworks } from '../dapps/quick-swap';
+import { basic as retroBasic, networks as retroNetworks } from '../dapps/retro';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
-import { polygon } from '@/config/tokens/polygon';
 
 const CHAIN_ID = 137;
 

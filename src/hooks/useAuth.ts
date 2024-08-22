@@ -1,9 +1,10 @@
 import { deleteCookie, getCookie, setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
-import { report } from '@/utils/burying-point';
-import { checkAddressIsInvited, getAccessToken, insertedAccessKey, getBnsUserName } from '@/apis';
+
+import { checkAddressIsInvited, getAccessToken, getBnsUserName,insertedAccessKey } from '@/apis';
 import { useEthersProviderContext } from '@/data/web3';
+import { report } from '@/utils/burying-point';
 import * as http from '@/utils/http';
 const useAuth = () => {
   const { useConnectWallet } = useEthersProviderContext();

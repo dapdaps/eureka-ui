@@ -1,5 +1,5 @@
-import { mantle } from '@/config/tokens/mantle';
 import { base } from '@/config/tokens/base';
+import { mantle } from '@/config/tokens/mantle';
 
 const basic = {
   name: 'Velocimeter V2',

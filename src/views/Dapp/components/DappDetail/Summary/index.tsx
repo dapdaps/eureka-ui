@@ -1,26 +1,26 @@
+import Big from 'big.js';
+
+import Like from '@/components/Like/index';
 import { useChainsStore } from '@/stores/chains';
+import { percentDirection } from '@/views/networks/list/components/value-percent';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
 import {
   StyledContainer,
-  StyledDetailContainer,
-  StyledSummaryContainer,
-  StyledDetailLogo,
-  StyledDetailContent,
-  StyledDetailName,
   StyledDetailCategory,
-  StyledNetworksContainer,
-  StyledNetworks,
+  StyledDetailContainer,
+  StyledDetailContent,
   StyledDetailDesc,
+  StyledDetailLogo,
+  StyledDetailName,
+  StyledNetworks,
+  StyledNetworksContainer,
   StyledSummary,
-  StyledSummaryLabel,
-  StyledSummaryValue,
   StyledSummaryAdd,
-  StyledSummaryAddIcon
-} from './styles';
-import Big from 'big.js';
-import { percentDirection } from '@/views/networks/list/components/value-percent';
-import Like from '@/components/Like/index';
+  StyledSummaryAddIcon,
+  StyledSummaryContainer,
+  StyledSummaryLabel,
+  StyledSummaryValue} from './styles';
 
 const DappSummary = (props: Props) => {
 

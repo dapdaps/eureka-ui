@@ -1,10 +1,9 @@
-import GridChains from './components/GridChains';
 import Compass from './components/Compass';
 import DiscoveryDapps from './components/DiscoveryDapps';
-
-import { StyledContainer } from './styles';
-import RecentRewards from './components/Rewards';
+import GridChains from './components/GridChains';
 import Networks from './components/Networks';
+import RecentRewards from './components/Rewards';
+import { StyledContainer } from './styles';
 
 const Home = () => {
   return (

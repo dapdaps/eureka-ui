@@ -1,9 +1,10 @@
-import { basic as biSwapBasic, networks as biSwapNetworks } from '../dapps/bi-swap';
+import { bsc } from '@/config/tokens/bsc';
+
 import { basic as apeSwapBasic, networks as apeSwapNetworks } from '../dapps/ape';
+import { basic as biSwapBasic, networks as biSwapNetworks } from '../dapps/bi-swap';
 import { basic as orionBasic, networks as orionNetworks } from '../dapps/orion';
 import { basic as thenaV1Basic, networks as thenaV1Networks } from '../dapps/thena-v1';
 import { basic as joeTraderBasic, networks as joeTraderNetworks } from '../dapps/trader-joe';
-import { bsc } from '@/config/tokens/bsc';
 const CHAIN_ID = 56;
 
 export default {

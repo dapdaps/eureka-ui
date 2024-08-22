@@ -1,5 +1,5 @@
-import styled from "styled-components";
 import Link from "next/link";
+import styled from "styled-components";
 
 const StyleFeatures = styled.div`
     margin: 0 auto;
@@ -100,7 +100,7 @@ const SuperFeatures = () => {
                 <img className="logo" src="/images/home/logo-swap.png" alt="swap" />
                 <div className="desc">
                     <div className="desc-title">Super Swap</div>
-                    <div className="tips">Effortlessly swap tokens within any blockchain with Superswap's seamless exchange solution.</div>
+                    <div className="tips">Effortlessly swap tokens within any blockchain with Superswap&apos;s seamless exchange solution.</div>
                 </div>
             </div> 
             </Link>

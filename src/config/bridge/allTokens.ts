@@ -1,6 +1,7 @@
 import { arbitrum } from '@/config/tokens/arbitrum' 
 import { avalanche } from '@/config/tokens/avalanche' 
 import { base } from '@/config/tokens/base' 
+import { blast } from '@/config/tokens/blast' 
 import { bsc } from '@/config/tokens/bsc' 
 import { ethereum } from '@/config/tokens/ethereum' 
 import { gnosis } from '@/config/tokens/gnosis' 
@@ -14,8 +15,6 @@ import { polygon } from '@/config/tokens/polygon'
 import { polygonZkevm } from '@/config/tokens/polygonZkevm' 
 import { scroll } from '@/config/tokens/scroll' 
 import { zkSync } from '@/config/tokens/zkSync' 
-import { blast } from '@/config/tokens/blast' 
-
 import type { Token } from '@/types';
 
 const mapFn = (item: Token) => {

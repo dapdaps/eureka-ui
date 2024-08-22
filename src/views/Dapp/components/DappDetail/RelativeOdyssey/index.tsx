@@ -1,18 +1,19 @@
+import { memo, useEffect, useRef, useState } from 'react';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import Empty from '@/components/Empty';
+import Loading from '@/components/Icons/Loading';
+import { StyledFlex } from '@/styled/styles';
+import { get } from '@/utils/http';
+
+import OdysseyCard from './Card';
+import PageButton from './PageButton';
 import {
   StyledContainer, StyledEmpty,
   StyledOdysseyDetail,
   StyledRelatedTitle,
 } from './styles';
-
-import Loading from '@/components/Icons/Loading';
-import { memo, useEffect, useRef, useState } from 'react';
-import OdysseyCard from './Card';
-import { get } from '@/utils/http';
-import Empty from '@/components/Empty';
-import { StyledFlex } from '@/styled/styles';
-import { Pagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import PageButton from './PageButton';
 
 const RelativeOdyssey = (props: Props) => {
   const {

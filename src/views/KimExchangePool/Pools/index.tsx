@@ -1,18 +1,20 @@
+import { useRouter } from 'next/router';
+
 import Loading from '@/components/Icons/Loading';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+
 import { COLUMNS } from './config';
-import { useRouter } from 'next/router';
 import {
+  LoadingWrapper,
+  StyledApr,
   StyledContainer,
   StyledHeader,
-  StyledRow,
-  StyledPool,
-  StyledIcons,
   StyledIcon,
-  StyledTitle,
+  StyledIcons,
+  StyledPool,
+  StyledRow,
   StyledTag,
-  StyledApr,
-  LoadingWrapper,
+  StyledTitle,
 } from './styles';
 
 const Pools = ({ pools, loading }: any) => {

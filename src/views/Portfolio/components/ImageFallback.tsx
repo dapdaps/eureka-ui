@@ -1,5 +1,5 @@
-import { memo, useEffect, useState } from 'react';
 import Image from 'next/image';
+import { memo, useEffect, useState } from 'react';
 
 const ImageFallback = (props: any) => {
   const { src, fallbackSrc = '/images/tokens/default_icon.png', ...restProps } = props;

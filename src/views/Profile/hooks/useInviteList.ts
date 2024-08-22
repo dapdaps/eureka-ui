@@ -1,11 +1,14 @@
+import { useDebounceFn } from 'ahooks';
+import { useEffect, useState } from 'react';
+
+import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-import { useDebounceFn } from 'ahooks';
-import { useEffect, useState } from 'react';
-import { FavoriteType, InviteListType } from '../types';
 import { CategoryList } from '@/views/AllDapps/config';
-import chainCofig from '@/config/chains';
+
+import type { InviteListType } from '../types';
+import { FavoriteType } from '../types';
 
 // /api/invite/v1/list
 export default function useInviteList() {

@@ -1,7 +1,7 @@
-import React, { CSSProperties, useState } from 'react';
-import styled from 'styled-components';
-import { motion, AnimatePresence } from 'framer-motion';
 import IconWarning from '@public/images/utils/warning.svg'
+import { AnimatePresence,motion } from 'framer-motion';
+import React, { type CSSProperties, useState } from 'react';
+import styled from 'styled-components';
 
 interface TooltipProps {
   content: string;

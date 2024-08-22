@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { useEffect, useState } from 'react';
 import _ from 'lodash'
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 import Step from '../Step'
 import Panel from './Panel'

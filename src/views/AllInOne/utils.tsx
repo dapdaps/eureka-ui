@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { StyledFlex } from '@/styled/styles';
 
 export function renderTitle(title?: string) {

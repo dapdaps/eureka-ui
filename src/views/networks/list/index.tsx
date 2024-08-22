@@ -1,28 +1,30 @@
-import React, { memo, useEffect, useMemo, useState } from 'react';
-import { ListItem } from './components';
-import ListCard from './components/list-card';
-import {
-  StyledContainer,
-  StyledBanner,
-  StyledTitle,
-  StyledDesc,
-  StyledWrap,
-  StyledH1,
-  StyledHead,
-  StyledFilters,
-  StyledFilterText,
-} from './styles';
-import useNetworks from './hooks/useNetworks';
-import LoadingSkeleton from './components/loading';
-import FilterIconList from '@public/images/networks/icon-list.svg';
 import FilterIconCard from '@public/images/networks/icon-card.svg';
+import FilterIconList from '@public/images/networks/icon-list.svg';
+import React, { memo, useEffect, useMemo, useState } from 'react';
+
+import { useNetworkStore } from '@/stores/network';
 import SortBy from '@/views/AllDapps/components/Filters/SortBy';
 import { SortList } from '@/views/AllDapps/config';
-import { ListContainer } from '@/views/networks/list/components/styles';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
-import { useNetworkStore } from '@/stores/network';
 import Empty from '@/views/networks/list/components/empty';
+import { ListContainer } from '@/views/networks/list/components/styles';
+
 import AdvertiseCardList from '../../AdvertiseCardList';
+import { ListItem } from './components';
+import ListCard from './components/list-card';
+import LoadingSkeleton from './components/loading';
+import useNetworks from './hooks/useNetworks';
+import {
+  StyledBanner,
+  StyledContainer,
+  StyledDesc,
+  StyledFilters,
+  StyledFilterText,
+  StyledH1,
+  StyledHead,
+  StyledTitle,
+  StyledWrap,
+} from './styles';
 
 const ModeList: Mode[] = [
   {

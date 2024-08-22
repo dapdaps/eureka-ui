@@ -1,7 +1,10 @@
 import Big from 'big.js';
+import Image from 'next/image';
 import { memo, useMemo } from 'react';
 
+import { SupportedChains } from '@/config/all-in-one/chains';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+import type { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
 
 import {
   StyledItemContent,
@@ -11,9 +14,6 @@ import {
   StyledItemUSD,
   StyledTabItem,
 } from './styles';
-import Image from 'next/image';
-import { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
-import { SupportedChains } from '@/config/all-in-one/chains';
 
 const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: number, setNetwork: any }) => {
   const { chain, totalBalance, network, setNetwork } = props;

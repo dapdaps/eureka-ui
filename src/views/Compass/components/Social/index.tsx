@@ -1,11 +1,11 @@
-import styled from 'styled-components';
-import Step from '../Step';
-import Panel from './Panel';
-
-import shareImg from '@public/images/others/odyssey/v1/components/Social/share.svg?url';
 import followImg from '@public/images/others/odyssey/v1/components/Social/follow.svg?url';
+import shareImg from '@public/images/others/odyssey/v1/components/Social/share.svg?url';
 import userImg from '@public/images/others/odyssey/v1/components/Social/user.svg?url';
 import xImg from '@public/images/others/odyssey/v1/components/Social/x.svg?url';
+import styled from 'styled-components';
+
+import Step from '../Step';
+import Panel from './Panel';
 
 const Content = styled.div`
   width: var(--main-width);

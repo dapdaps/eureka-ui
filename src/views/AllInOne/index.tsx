@@ -1,12 +1,12 @@
 import { useRouter } from 'next/router';
 import { memo } from 'react';
 
+import PageBack from '@/components/PageBack';
 import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent } from '@/views/AllInOne/styles';
-import PageBack from '@/components/PageBack';
 
 const AllInOneView = (props: Props) => {
   const { chain } = props;

@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import { StyledAddMeta } from './styles';
+
 import chainCofig from '@/config/chains';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
+
+import { StyledAddMeta } from './styles';
 
 const AddMetaMask = ({ chainId, bp }: any) => {
   const { check } = useAuthCheck({ isNeedAk: false });

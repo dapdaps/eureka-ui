@@ -1,7 +1,8 @@
-import ArrowIcon from '@/components/Icons/ArrowIcon';
+import Image from 'next/image';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 
 const StyledNativeCurrency = styled.div`
   display: flex;

@@ -1,20 +1,21 @@
+import { AnimatePresence } from 'framer-motion';
 import { useState } from "react";
-import {
-  StyledContainer,
-  StyledTabs,
-  StyledTab,
-  StyledTabsContent,
-  StyledTabContainer,
-  StyledTabText,
-  StyledTabIcon
-} from './styles';
+
+import type { Category } from '@/hooks/useAirdrop';
+import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
+
 import {TABS } from "../config";
+import Animate from './Animate';
 import MyHistory from "./MyHistory";
 import Overview from "./Overview";
-import { AnimatePresence } from 'framer-motion';
-import Animate from './Animate';
-import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
-import { Category } from '@/hooks/useAirdrop';
+import {
+  StyledContainer,
+  StyledTab,
+  StyledTabContainer,
+  StyledTabIcon,
+  StyledTabs,
+  StyledTabsContent,
+  StyledTabText} from './styles';
 
 const DetailTabs = (props: Props) => {
 

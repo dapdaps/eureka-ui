@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { StyledBtnPage } from '@/components/pagination/styles';
 
 export const PageButton = (props: PageButtonProps) => {

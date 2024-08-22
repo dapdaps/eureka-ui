@@ -1,9 +1,10 @@
 import { memo } from 'react';
-import AllInOneButton from '@/views/AllInOne/components/Button';
+
 import useAccount from '@/hooks/useAccount';
 import useApprove from '@/hooks/useApprove';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useSwitchChain from '@/hooks/useSwitchChain';
+import AllInOneButton from '@/views/AllInOne/components/Button';
 
 const BaseButton = ({ chain, disabled, loading, onClick, children }: any) => {
   return (

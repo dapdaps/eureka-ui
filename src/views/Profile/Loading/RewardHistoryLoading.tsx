@@ -1,7 +1,8 @@
-import { StyledContainer, StyledFlex } from "@/styled/styles";
 import { memo } from "react";
 import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
+
+import { StyledContainer, StyledFlex } from "@/styled/styles";
 const StyledRecord = styled.div`
   display: flex;
   align-items: center;
@@ -41,7 +42,7 @@ export default memo(function OdysseyLoading() {
   return (
     <StyledRecordLoading>
       {
-        new Array(5).fill(0).map(() => <Reward />)
+        new Array(5).fill(0).map((_, index) => <Reward key={index} />)
       }
     </StyledRecordLoading>
   )

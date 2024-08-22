@@ -1,10 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { CategoryList, PageSize } from '@/views/AllDapps/config';
-import { get } from '@/utils/http';
-import { QUEST_PATH } from '@/config/quest';
-import chainCofig from '@/config/chains';
 import { useDebounceFn } from 'ahooks';
-import { Advertise, useAdvertise } from '@/hooks/useAdvertise';
+import { useEffect, useRef, useState } from 'react';
+
+import chainCofig from '@/config/chains';
+import { QUEST_PATH } from '@/config/quest';
+import type { Advertise} from '@/hooks/useAdvertise';
+import { useAdvertise } from '@/hooks/useAdvertise';
+import { get } from '@/utils/http';
+import { CategoryList, PageSize } from '@/views/AllDapps/config';
 
 export default function useList(props: Props) {
   const {
@@ -69,7 +71,7 @@ export default function useList(props: Props) {
         `${QUEST_PATH}/api/dapp/search`,
         params,
       );
-      let data = result.data?.data || [];
+      const data = result.data?.data || [];
       data.forEach((dapp: any) => {
         //#region format categories
         dapp.categories = [];

@@ -1,9 +1,9 @@
+import Big from 'big.js';
 import Image from 'next/image';
 import styled from 'styled-components';
 
-import { formateValueWithThousandSeparator } from '@/utils/formate';
 import Loading from '@/components/Icons/Loading';
-import Big from 'big.js';
+import { formateValueWithThousandSeparator } from '@/utils/formate';
 
 export const StyledContainer = styled.div`
   width: 242px;

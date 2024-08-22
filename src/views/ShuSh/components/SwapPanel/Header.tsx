@@ -1,8 +1,10 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+
 import Question from '@/components/Icons/Question';
 import RefreshIcon from '@/components/Icons/Refresh';
 import Switcher from '@/components/Switcher';
+
 import Hints from './Hints';
 
 export const StyledHeader = styled.div`

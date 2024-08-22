@@ -2,10 +2,10 @@ import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import CopyButton from '@/components/CopyButton';
+import UserInfoPopUp from '@/components/UserInfoPopUp';
 import useAccount from '@/hooks/useAccount';
 import { useUserStore } from '@/stores/user';
 import { ellipsAccount, ellipsAll } from '@/utils/account';
-import UserInfoPopUp from '@/components/UserInfoPopUp';
 
 const StyledLogoContainer = styled.div`
   position: relative;

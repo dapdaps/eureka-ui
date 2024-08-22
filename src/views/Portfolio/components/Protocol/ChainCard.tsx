@@ -1,10 +1,10 @@
+import Big from 'big.js';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { styled } from 'styled-components';
 
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { DefaultIcon } from '@/views/Portfolio/config';
-import Big from 'big.js';
-import Image from 'next/image';
 
 export const StyledContainer = styled(motion.div)<{ bgColor: string }>`
   width: 325px;

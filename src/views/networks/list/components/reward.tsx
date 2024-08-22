@@ -1,14 +1,15 @@
+import { useDebounceFn } from 'ahooks';
+import { AnimatePresence, motion } from 'framer-motion';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { memo, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
-import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
-import RewardIcons from '@/views/OdysseyV8/RewardIcons';
-import { AnimatePresence, motion } from 'framer-motion';
-import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
-import { useRouter } from 'next/router';
+
 import odysseies from '@/config/odyssey';
 import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
-import { useDebounceFn } from 'ahooks';
+import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
+import { type NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
+import RewardIcons from '@/views/OdysseyV8/RewardIcons';
 
 const Reward = (props: Props) => {
   const { odyssey } = props;

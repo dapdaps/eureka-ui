@@ -1,15 +1,17 @@
-import useToast from '@/hooks/useToast';
-import { get } from '@/utils/http';
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import useAuthCheck from '@/hooks/useAuthCheck';
 import { useRouter } from 'next/router';
 import { memo, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import odyssey from '@/config/odyssey';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { LeftButton, RightButton } from './ArrowBtn';
+
+import odyssey from '@/config/odyssey';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import useToast from '@/hooks/useToast';
 import { StyledSvg } from '@/styled/styles';
+import { get } from '@/utils/http';
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import Tag from '@/views/Odyssey/components/Tag';
+
+import { LeftButton, RightButton } from './ArrowBtn';
 
 interface FlexProps {
   flexDirection?: 'row' | 'column';

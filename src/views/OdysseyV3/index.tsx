@@ -1,14 +1,15 @@
-import Banner from './components/Banner';
-import Game from './components/Game';
-import Explore from './components/Explore';
-import Swap from './components/Swap';
-import Bridge from './components/Bridge';
-import Lending from './components/Lending';
-import useDetail from './hooks/useDetail';
-import useQuests from './hooks/useQuests';
 import useUserInfo from '@/hooks/useUserInfo';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
+
+import Banner from './components/Banner';
+import Bridge from './components/Bridge';
+import Explore from './components/Explore';
+import Game from './components/Game';
+import Lending from './components/Lending';
+import Swap from './components/Swap';
+import useDetail from './hooks/useDetail';
+import useQuests from './hooks/useQuests';
 import { StyledContainer } from './styles';
 
 export default function OdysseyV2() {

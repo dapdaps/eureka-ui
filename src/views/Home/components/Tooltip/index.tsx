@@ -1,7 +1,8 @@
+import classNames from 'classnames';
+import type { MotionValue} from 'framer-motion';
+import { motion, useMotionValue,useSpring, useTransform } from 'framer-motion';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { motion, useTransform, useSpring, MotionValue, useMotionValue } from 'framer-motion';
-import classNames from 'classnames';
 
 const StyledTooltip = styled.div<{ tooltipWidth: number }>`
   border: 1px solid;
@@ -60,8 +61,8 @@ const Tooltip: React.FC<TooltipProps> = ({
   customStyle
 }) => {
   const springConfig = { stiffness: 100, damping: 5 };
-  const rotate = useSpring(useTransform(x || useMotionValue(0), [-100, 100], [-45, 45]), springConfig);
-  const translateX = useSpring(useTransform(x || useMotionValue(0), [-100, 100], [-50, 50]), springConfig);
+  const rotate = useSpring(useTransform(useMotionValue(0), [-100, 100], [-45, 45]), springConfig);
+  const translateX = useSpring(useTransform(useMotionValue(0), [-100, 100], [-50, 50]), springConfig);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [tooltipWidth, setTooltipWidth] = useState(0);
 

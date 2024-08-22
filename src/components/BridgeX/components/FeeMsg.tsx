@@ -1,6 +1,6 @@
+import Big from 'big.js'
 import { useEffect, useState } from  'react'
 import styled from 'styled-components';
-import Big from 'big.js'
 
 const FeeWapper = styled.div`
     width: 446px;

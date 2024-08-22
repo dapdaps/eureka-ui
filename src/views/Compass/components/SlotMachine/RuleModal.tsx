@@ -1,12 +1,11 @@
-import styled from 'styled-components';
-
-import Modal from '../Modal'
-
 import r1Img from '@public/images/others/odyssey/v1/components/SlotMachine/r1.jpg'
 import r2Img from '@public/images/others/odyssey/v1/components/SlotMachine/r2.png'
 import r3Img from '@public/images/others/odyssey/v1/components/SlotMachine/r3.png'
 import r4Img from '@public/images/others/odyssey/v1/components/SlotMachine/r4.png'
 import { memo } from 'react';
+import styled from 'styled-components';
+
+import Modal from '../Modal'
 
 const Title = styled.div`
     font-size: 26px;

@@ -1,9 +1,15 @@
-import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 import { format } from "date-fns";
+import { useRouter } from "next/router";
 import { useMemo } from "react";
-import { PagerType, RewardRecordsType, RewardType } from "../../types";
+
+import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
+
+import RewardHistoryLoading from "../../Loading/RewardHistoryLoading";
+import type { PagerType, RewardRecordsType, RewardType } from "../../types";
 import Empty from "../Empty";
 import {
+  StyledPageNumber,
+  StyledPageNumberContainer,
   StyledRecord,
   StyledRecordHeader,
   StyledReward,
@@ -13,12 +19,7 @@ import {
   StyledRewardListPopUpContainer,
   StyledSource,
   StyledSourceImage,
-  StyledSourceMessage,
-  StyledPageNumberContainer,
-  StyledPageNumber
-} from './styles';
-import RewardHistoryLoading from "../../Loading/RewardHistoryLoading";
-import { useRouter } from "next/router";
+  StyledSourceMessage} from './styles';
 type PropsType = {
   loaded: boolean;
   userRewardRecords: RewardRecordsType | null;

@@ -1,40 +1,40 @@
+import IconArrow from '@public/images/home/arrow-right.svg';
+import IconClickArrow from '@public/images/home/click-arrow.svg';
 import { useSize } from 'ahooks';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
+import { extractPathFromUrl } from '@/utils/formate';
+import Tag from '@/views/Odyssey/components/Tag';
 
-import IconArrow from '@public/images/home/arrow-right.svg';
-import IconClickArrow from '@public/images/home/click-arrow.svg';
-
+import useCompassCombineAd from './hooks/useCompassCombineAd';
 import {
+  StyleAdTitle,
   StyledCard,
   StyledCardBackgroundImage,
+  StyledCardDesc,
   StyledCardMainContent,
+  StyledCardTitle,
+  StyledComingSoon,
+  StyledCompassButton,
+  StyledCompassIcon,
   StyledContainer,
   StyledContent,
   StyledInner,
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
-  StyleAdTitle,
-  StyledCardDesc,
-  StyledCardTitle,
-  StyledCompassIcon,
-  StyledCompassButton,
-  StyledComingSoon,
 } from './styles';
-import useCompassCombineAd from './hooks/useCompassCombineAd';
-import { extractPathFromUrl } from '@/utils/formate';
-import Tag from '@/views/Odyssey/components/Tag';
-import Skeleton from 'react-loading-skeleton';
 
 const AdCard = function ({ ad }: any) {
   const router = useRouter();

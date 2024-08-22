@@ -1,8 +1,10 @@
 import { memo, useEffect, useState } from 'react';
+
 import Modal from '@/components/Modal';
+
 import Chains from './Chains';
-import Tokens from './Tokens';
 import { StyledContainer } from './styles';
+import Tokens from './Tokens';
 
 const SelectTokens = ({ display, networks, tokens, tokenId, onClose, onSelectToken }: any) => {
   const [selectedNetwork, setSelectNetwork] = useState(tokens[tokenId]?.network || {});

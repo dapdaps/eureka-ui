@@ -1,23 +1,23 @@
-import { memo, useState, useEffect, useMemo, useRef } from 'react';
+import { useDebounceFn } from 'ahooks';
 import { useRouter } from 'next/router';
+import { memo, useEffect, useMemo, useRef,useState } from 'react';
 import styled from 'styled-components';
 
-import { useDebounceFn } from 'ahooks';
-import { get } from '@/utils/http';
-import { QUEST_PATH } from '@/config/quest';
 import { IdToPath } from '@/config/all-in-one/chains';
-import ResultItem from './ResultItem';
-import { StyledSearchResults, StyleTop } from './styles';
+import { QUEST_PATH } from '@/config/quest';
+import useDappOpen from '@/hooks/useDappOpen';
+import { get } from '@/utils/http';
 
-import Search from './Search';
-import RecentSearch from './RecentSearch';
-import Popular, { PopularType } from './Popular';
-import Chain from './Chain';
 import Campaign from './Campaign';
+import Chain from './Chain';
 // import Medal from './Medal';
 import useDefaultSearch from './hooks/useDefaultSearch';
 import { useRecentStore } from './hooks/useRecentStore';
-import useDappOpen from '@/hooks/useDappOpen';
+import Popular, { PopularType } from './Popular';
+import RecentSearch from './RecentSearch';
+import ResultItem from './ResultItem';
+import Search from './Search';
+import { StyledSearchResults, StyleTop } from './styles';
 
 const StyleEmpty = styled.div`
   display: flex;

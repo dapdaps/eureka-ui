@@ -1,13 +1,13 @@
+import { useConnectWallet } from '@web3-onboard/react';
 import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
-import { inviteCodeActivate, getAccessToken } from '@/apis';
+import { getAccessToken,inviteCodeActivate } from '@/apis';
 import LoadingIcon from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import useAuth from '@/hooks/useAuth';
-import { useConnectWallet } from '@web3-onboard/react';
 
 export const yellowbg =
   'https://assets.dapdap.net/images/bafkreicy6iwoxezg764uhfezusxpc6xd7r3s3hg2nnjdcgt5ktazdnsyje.svg';

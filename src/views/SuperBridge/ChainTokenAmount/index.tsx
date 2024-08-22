@@ -1,17 +1,15 @@
+import { useCallback, useEffect,useRef, useState } from "react";
 import styled from 'styled-components';
-import { useState, useRef, useCallback, useEffect } from "react";
 
-import useTokenBalance from '@/hooks/useCurrencyBalance';
-import usePriceValue from '../hooks/usePriceValue';
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import { ArrowDown } from '../Arrow'
+import usePriceValue from '../hooks/usePriceValue';
 import TokenSelectModal from './TokenSelectModal';
-
-
-import type { Chain, Token } from '@/types';
 
 const Wapper = styled.div`
     min-height: 145px;

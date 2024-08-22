@@ -1,6 +1,8 @@
-import { memo } from 'react';
 import { useSetChain } from '@web3-onboard/react';
+import { memo } from 'react';
+
 import useAuthCheck from '@/hooks/useAuthCheck';
+
 import { StyledAddMeta } from './styles';
 
 const AddMetaMask = ({ chainId, bp }: any) => {

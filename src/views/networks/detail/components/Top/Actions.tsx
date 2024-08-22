@@ -1,6 +1,7 @@
 import { useRouter } from 'next/router';
 import { memo } from 'react';
-import { StyledActions, StyledAction, StyledActionText } from './styles';
+
+import { StyledAction, StyledActions, StyledActionText } from './styles';
 
 const Actions = ({ id, path, deepdive }: any) => {
   const router = useRouter();

@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
-import { StyledContainer, StyledContent } from './styles';
-import LottieEyes from './LottieEyes';
 import Image from 'next/image';
+import React, { memo } from 'react';
+
+import LottieEyes from './LottieEyes';
+import { StyledContainer, StyledContent } from './styles';
 
 const NotificationBar = (props: Props) => {
   const {

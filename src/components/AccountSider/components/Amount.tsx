@@ -1,17 +1,16 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
-import Loading from '@/components/Icons/Loading';
-import useChain from '@/hooks/useChain';
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, valueFormated } from '@/utils/balance';
-import useBakTokenBalance from '@/hooks/useCurrencyBalance';
 import { excludeChain } from '@/components/Bridge/config/chain';
 import useTokenBalance from '@/components/Bridge/hooks/useTokenBalance';
+import Loading from '@/components/Icons/Loading';
+import useChain from '@/hooks/useChain';
+import useBakTokenBalance from '@/hooks/useCurrencyBalance';
+import { usePriceStore } from '@/stores/price';
+import type { Token } from '@/types';
+import { balanceFormated, valueFormated } from '@/utils/balance';
 
 import useTokens from '../hooks/useTokens';
-
-import type { Token } from '@/types';
 
 const StyledWrapper = styled.div<{ mt?: number }>`
   text-align: center;

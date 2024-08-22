@@ -1,9 +1,11 @@
 import { memo, useMemo, useState } from 'react';
+
 import Modal from '@/components/Modal';
-import TokenRow from './TokenRow';
-import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 import useTokensBalance from '@/hooks/useTokensBalance';
+import useDappConfig from '@/views/Pool/hooks/useDappConfig';
+
 import { StyledContent, StyledSearch, StyledTokens } from './styles';
+import TokenRow from './TokenRow';
 
 const SelectTokens = ({ open, selectedToken, onClose, onSelectToken }: any) => {
   const [searchVal, setSearchVal] = useState('');

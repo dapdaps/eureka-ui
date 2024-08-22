@@ -1,7 +1,9 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import QuestItem from '@/views/Quest/components/QuestItem';
-import { StyledContainer, StyledTitle, StyledAction, StyledList } from './styles';
+
+import { StyledAction, StyledContainer, StyledList,StyledTitle } from './styles';
 
 const Quests = ({ quests }: any) => {
   const router = useRouter();

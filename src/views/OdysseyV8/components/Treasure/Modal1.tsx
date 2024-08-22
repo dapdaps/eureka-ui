@@ -1,9 +1,11 @@
 import Image from 'next/image';
+
+import { StyledFlex } from '@/styled/styles';
+import CoinGroup from '@/views/OdysseyV4/components/Treasure/CoinGroup';
+
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
-import CoinGroup from '@/views/OdysseyV4/components/Treasure/CoinGroup';
-import { StyledFlex } from '@/styled/styles';
 import { ModalBody, ModalDesc, ModalTitle, TrapLayout } from './styles';
 
 export default function Modal1({ setShowModal1, setSelectedPool, openLink }: any) {

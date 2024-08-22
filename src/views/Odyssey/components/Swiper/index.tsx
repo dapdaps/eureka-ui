@@ -1,47 +1,46 @@
+import IconArrow from '@public/images/home/arrow-right.svg';
+import IconClickArrow from '@public/images/home/click-arrow.svg';
 import { useSize } from 'ahooks';
 import { useRouter } from 'next/router';
 import { memo, useMemo, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import Loading from '@/components/Icons/Loading';
+import ChainMap from '@/config/chains';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
-import ChainMap from '@/config/chains';
-import Skeleton from 'react-loading-skeleton';
-
-import IconArrow from '@public/images/home/arrow-right.svg';
-import IconClickArrow from '@public/images/home/click-arrow.svg';
 import OdysseyVideo from '@/views/Dapp/components/DappDetail/RelativeOdyssey/Video';
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
+import { StyledComingSoon } from '@/views/Home/components/Compass/styles';
 
+import MedalList from '../Medal';
+import RewardList from '../Reward';
+import Tag, { StatusType } from '../Tag';
 import {
-  StyledCard,
+  StyleChainIconImg,   StyledCard,
   StyledCardBackgroundImage,
   StyledCardMainContent,
+  StyledCardTitle,
+  StyledCompassButton,
   StyledContainer,
   StyledContent,
   StyledInner,
+  StyledOdysseyHead,
+  StyledOdysseyIcon,
+  StyledOdysseyIconTitle,
+  StyledOdysseyInfo,
   StyledSwiperNextButton,
+StyledSwiperPagination,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
-  StyledCardTitle,
-  StyledCompassButton,
-  StyledOdysseyIconTitle,
-  StyledOdysseyHead,
-  StyledOdysseyInfo,
-  StyledOdysseyIcon,
-  StyleList,
   StyledVideo,
   StyledVideoIcon,
-  StyleChainIconImg, StyledSwiperPagination,
+  StyleList,
 } from './styles';
-
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import Tag, { StatusType } from '../Tag';
-import RewardList from '../Reward';
-import MedalList from '../Medal';
-import { StyledComingSoon } from '@/views/Home/components/Compass/styles';
 
 export const formatCompassName = (name: string) => {
   if (!name) return '';
@@ -105,8 +104,8 @@ const CompassCard = function ({ compass }: any) {
               <StyledOdysseyIcon />
               <StyledOdysseyIconTitle>Vol.{renderVolNo({ name: compass.name, id: compass.id })}</StyledOdysseyIconTitle>
               <div className="chainList">
-                {parseChainsId(compass.chains_id).map((chain: any) => (
-                  <StyleChainIconImg src={ChainMap[chain].icon} alt="" />
+                {parseChainsId(compass.chains_id).map((chain: any, index) => (
+                  <StyleChainIconImg key={index} src={ChainMap[chain].icon} alt="" />
                 ))}
               </div>
             </StyledOdysseyInfo>

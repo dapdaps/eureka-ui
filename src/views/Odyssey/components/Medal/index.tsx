@@ -1,6 +1,7 @@
-import styled from "styled-components"
 import IconMedal from '@public/images/odyssey/medal.svg'
-import { MedalType } from "@/views/Profile/types"
+import styled from "styled-components"
+
+import type { MedalType } from "@/views/Profile/types"
 const Wrapper = styled.div`
     background: linear-gradient(90deg, #898E46 0%, #EBF479 100%);
     position: relative;
@@ -61,8 +62,8 @@ const MedalList = ({
         <Wrapper>
             <div className="label">
                 {
-                    medals.map((item) => (
-                        <WrapperImg>
+                    medals.map((item, index) => (
+                        <WrapperImg key={index}>
                             <img src={item.logo} alt={item.medal_name} />
                         </WrapperImg>
                     ))

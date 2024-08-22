@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import V3 from './V3';
+
 import V2 from './V2';
+import V3 from './V3';
 
 export default function AddLiquidity({ type = 'V3', ...rest }: any) {
   const [version, setVersion] = useState(type);

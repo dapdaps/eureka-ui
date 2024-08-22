@@ -1,11 +1,13 @@
-import styled from 'styled-components';
-import Link from 'next/link';
 import IconLink from '@public/images/header/link.svg';
-import { Dapp, Network } from './hooks/useDefaultSearch';
-import useDappOpen from '@/hooks/useDappOpen';
-import { IdToPath } from '@/config/all-in-one/chains';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
+
+import { IdToPath } from '@/config/all-in-one/chains';
+import useDappOpen from '@/hooks/useDappOpen';
+
+import type { Dapp, Network } from './hooks/useDefaultSearch';
 
 const StyleTitle = styled.div`
   font-size: 14px;
@@ -98,8 +100,8 @@ type PopularItem = Network | Dapp;
 
 
 const LoadingCard = () => {
-  return Array.from({ length: 3 }).map((_) => (
-    <StyleList>
+  return Array.from({ length: 3 }).map((_, index) => (
+    <StyleList key={index}>
       <div className="label">
         <Skeleton width="30px" height="30px"  borderRadius={'6px'}/>
         <Skeleton width="350px" height="16px" />

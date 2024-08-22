@@ -1,6 +1,6 @@
 import { linea } from '@/config/tokens/linea';
-import { zkSync } from '@/config/tokens/zkSync';
 import { scroll } from '@/config/tokens/scroll';
+import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'SyncSwap',

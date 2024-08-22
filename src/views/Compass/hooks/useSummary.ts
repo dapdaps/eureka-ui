@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
 import { useDebounceFn } from 'ahooks';
+import { useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+
 import { getCompassDetail } from '../http/index';
 
 export interface SummaryData {

@@ -1,7 +1,8 @@
-import { StyledContainer, StyledFlex } from "@/styled/styles";
 import { memo } from "react";
 import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
+
+import { StyledContainer, StyledFlex } from "@/styled/styles";
 const StyledMedal = styled.div`
   display: flex;
   flex-direction: column;

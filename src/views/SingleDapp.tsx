@@ -1,8 +1,8 @@
 import { useDebounceFn } from 'ahooks';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import dappConfig from '@/config/dapp';
 import useAccount from '@/hooks/useAccount';
-
 import useDappInfo from '@/hooks/useDappInfo';
 import { useChainsStore } from '@/stores/chains';
 import DappView from '@/views/Dapp';

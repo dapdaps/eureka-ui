@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { StyledMoreButton, StyledArrowIcon } from './styles';
+
+import { StyledArrowIcon,StyledMoreButton } from './styles';
 
 const MoreButton = ({ isMore, onClick, bp }: any) => {
   return (

@@ -1,9 +1,10 @@
-import { useDefaultLayout } from '@/hooks/useLayout';
 import { useRouter } from 'next/router';
+
+import { PathToId } from '@/config/all-in-one/chains';
+import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 // import ChainDetail from '@/views/ChainDetail';
 import ChainDetail from '@/views/networks/detail';
-import { PathToId } from '@/config/all-in-one/chains';
 
 const DetailPage: NextPageWithLayout = () => {
   const router = useRouter();

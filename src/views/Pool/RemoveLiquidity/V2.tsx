@@ -1,13 +1,15 @@
-import { memo, useState, useMemo } from 'react';
+import Big from 'big.js';
+import { memo, useMemo,useState } from 'react';
+
 import Modal from '@/components/Modal';
+
 import Tokens from '../Detail/components/Tokens';
+import useDappConfig from '../hooks/useDappConfig';
 import Amount from './components/Amount';
+import RemoveButton from './components/Button';
 import Token from './components/Token';
 import useRemove from './hooks/useRemoveV2';
-import useDappConfig from '../hooks/useDappConfig';
-import RemoveButton from './components/Button';
 import { StyledContent } from './styles';
-import Big from 'big.js';
 
 const Remove = ({ amount0, amount1, open, onClose, onSuccess, detail }: any) => {
   const { token0, token1, fee, address, liquidity } = detail;

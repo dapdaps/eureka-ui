@@ -1,14 +1,16 @@
 import { memo } from 'react';
+
 import useAccount from '@/hooks/useAccount';
+import useUserInfo from '@/hooks/useUserInfo';
 import { ellipsAccount } from '@/utils/account';
+
+import Beta from '../Beta';
 import {
-  StyledContainer,
   StyledAccount,
   StyledAvatar,
+  StyledContainer,
   StyledTitle,
 } from './styles';
-import useUserInfo from '@/hooks/useUserInfo';
-import Beta from '../Beta';
 
 const Top = () => {
   const { account } = useAccount();

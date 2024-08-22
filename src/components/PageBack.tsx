@@ -1,6 +1,6 @@
+import { useRouter } from 'next/router';
 import React, { memo } from 'react';
 import styled from 'styled-components';
-import { useRouter } from 'next/router';
 
 const PageBack = (props: Props) => {
   const { defaultPath = '/', style } = props;

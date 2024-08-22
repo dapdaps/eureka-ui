@@ -1,3 +1,7 @@
+import { useConnectWallet } from '@web3-onboard/react';
+import { useRouter } from 'next/router';
+import { memo, useEffect, useState } from 'react';
+
 import { getAccessToken } from '@/apis';
 import { QUEST_PATH } from '@/config/quest';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
@@ -11,24 +15,22 @@ import {
   StyledDesc,
   StyledHead,
   StyledInner,
-  StyledLRect,
   StyledLeftMouseImage,
   StyledLogo,
   StyledLogoContainer,
   StyledLogoText,
+  StyledLRect,
   StyledMedal,
   StyledMedals,
   StyledName,
-  StyledRRect,
   StyledRadialGradient,
   StyledRect,
   StyledRightMouseImage,
+  StyledRRect,
   StyledX,
   StyledXContainer
 } from '@/views/marketing/invite/styles';
-import { useConnectWallet } from '@web3-onboard/react';
-import { useRouter } from 'next/router';
-import { memo, useEffect, useState } from 'react';
+
 import { InviteModal, KolUserInfo } from '../components';
 
 

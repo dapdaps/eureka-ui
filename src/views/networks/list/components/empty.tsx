@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import { StyledEmptyText } from '@/views/AllDapps/components/DappList/styles';
+
 import Empty from '@/components/Empty';
+import { StyledEmptyText } from '@/views/AllDapps/components/DappList/styles';
 
 const NetworkEmpty = () => {
   return (

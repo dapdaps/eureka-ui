@@ -2,12 +2,12 @@ import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { useCallback, useEffect, useState } from 'react';
 
+import ChainsData from '@/config/all-in-one/chains';
+import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 import { getDappLogo, getTokenLogo } from '@/views/Portfolio/helpers';
-import ChainsData from '@/config/all-in-one/chains';
-import chainCofig from '@/config/chains';
 
 export default function useDapps() {
   const { account } = useAccount();

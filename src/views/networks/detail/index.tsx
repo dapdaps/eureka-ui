@@ -1,28 +1,28 @@
-import { memo, useMemo, useEffect, useState } from 'react';
-import chainsConfig, { PathToId } from '@/config/all-in-one/chains';
-import useReport from '@/views/Landing/hooks/useReport';
-import useDetail from './hooks/useDetail';
+import { memo, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
 
-import Top from './components/Top';
-import QuickOnboarding from './components/QuickOnboarding';
+import chainsConfig, { PathToId } from '@/config/all-in-one/chains';
+import { Category } from '@/hooks/useAirdrop';
 import DappList from '@/views/AllDapps/components/DappList';
+import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
 import { CategoryList } from '@/views/AllDapps/config';
+import DetailTabs from '@/views/Dapp/components/DappDetail/DetailTabs/index';
+import Medal from '@/views/Dapp/components/DappDetail/Medal/index';
+import RelativeOdyssey from '@/views/Dapp/components/DappDetail/RelativeOdyssey';
+import useReport from '@/views/Landing/hooks/useReport';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
+import QuickOnboarding from './components/QuickOnboarding';
+import Top from './components/Top';
+import { useChainDapps } from './hooks/useChainDapps';
+import useDetail from './hooks/useDetail';
 import {
-  StyledContainer,
   DappTitle,
+  StyledContainer,
   StyledDetail,
   StyledRecordContainer,
   StyledRelatedOdyssey,
 } from './styles';
-import DetailTabs from '@/views/Dapp/components/DappDetail/DetailTabs/index';
-import RelativeOdyssey from '@/views/Dapp/components/DappDetail/RelativeOdyssey';
-import Medal from '@/views/Dapp/components/DappDetail/Medal/index';
-import { useChainDapps } from './hooks/useChainDapps';
-import { Category } from '@/hooks/useAirdrop';
-import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
-import styled from 'styled-components';
 
 
 const StyleImageMedals = styled.img`

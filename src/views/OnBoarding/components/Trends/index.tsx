@@ -1,8 +1,10 @@
 import { memo } from 'react';
+
 import GoMore from '@/components/GoMore';
+
 import useTrends from '../../hooks/useTrends';
 import Item from './Item';
-import { StyledContainer, StyledHeader, StyledTitle, StyledTitleImg, StyledList } from './styles';
+import { StyledContainer, StyledHeader, StyledList,StyledTitle, StyledTitleImg } from './styles';
 
 const Trends = ({ chain }: any) => {
   const { loading, list } = useTrends(chain.chainId, 4);

@@ -1,14 +1,16 @@
 import { memo, useRef } from 'react';
-import { StyledContainer, StyledFooter, StyledMask, StyledSwiperWrapper, StyledWrapper } from './styles';
-import AllDappsTitle from '@/views/AllDapps/components/Title';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import DappCard from '@/views/AllDapps/components/DappCard';
-import useDapps from '@/views/Home/hooks/useDapps';
+
 import Empty from '@/components/Empty';
-import DappLoading from '@/views/AllDapps/Loading/Dapp';
-import { StyledFlex } from '@/styled/styles';
 import useDappOpen from '@/hooks/useDappOpen';
+import { StyledFlex } from '@/styled/styles';
+import DappCard from '@/views/AllDapps/components/DappCard';
+import AllDappsTitle from '@/views/AllDapps/components/Title';
+import DappLoading from '@/views/AllDapps/Loading/Dapp';
 import ViewAll from '@/views/Home/components/ViewAll';
+import useDapps from '@/views/Home/hooks/useDapps';
+
+import { StyledContainer, StyledFooter, StyledMask, StyledSwiperWrapper, StyledWrapper } from './styles';
 
 const DiscoveryDapps = () => {
   const swiperRef = useRef<any>(null);

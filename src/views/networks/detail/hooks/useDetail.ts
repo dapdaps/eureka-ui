@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
-import { get } from '@/utils/http';
+import { useCallback,useEffect, useState } from 'react';
+
 import { QUEST_PATH } from '@/config/quest';
+import { get } from '@/utils/http';
 
 const useDetail = (id?: number) => {
   const [detail, setDetail] = useState<any>();

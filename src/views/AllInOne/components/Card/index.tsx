@@ -1,4 +1,5 @@
 import React, { memo, useMemo } from 'react';
+
 import networks from '@/config/swap/networks';
 import { StyledFlex } from '@/styled/styles';
 import {
@@ -8,8 +9,9 @@ import {
   StyledPointer,
   StyledTitle,
 } from '@/views/AllInOne/components/Card/styles';
-import { StyledIcons, StyledIcon } from './styles';
 import { renderTitle } from '@/views/AllInOne/utils';
+
+import { StyledIcon,StyledIcons } from './styles';
 
 const AllInOneCardView: React.FC<Props> = (props) => {
   const { children, title, bgColor, subTitle, style, chainId, type = 'normal', onSelect = () => {} } = props;

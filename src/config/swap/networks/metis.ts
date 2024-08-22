@@ -1,7 +1,8 @@
+import { metis } from '@/config/tokens/metis';
+
+import { basic as hummusBasic, networks as hummusNetworks } from '../dapps/hummus';
 import { basic as maiaBasic, networks as maiaNetworks } from '../dapps/maia-v3';
 import { basic as netSwap3Basic, networks as netSwapNetworks } from '../dapps/net-swap';
-import { basic as hummusBasic, networks as hummusNetworks } from '../dapps/hummus';
-import { metis } from '@/config/tokens/metis';
 
 const CHAIN_ID = 1088;
 

@@ -1,4 +1,5 @@
 import { memo, useEffect } from 'react';
+
 import {
   StyledNetworkDelay,
   StyledRpcContainer,
@@ -7,11 +8,11 @@ import {
   StyledRpcListDesc,
   StyledRpcRadio,
 } from '@/components/Rpc/styles';
-import { RPC_LIST, RpcList as ERpcList } from '@/utils/config';
-import { StyledFlex } from '@/styled/styles';
-import { useRpcStore } from '@/stores/rpc';
-import { useRpc } from '@/hooks/useRpc';
 import { renderPing, renderPingConfig } from '@/components/Rpc/utils';
+import { useRpc } from '@/hooks/useRpc';
+import { useRpcStore } from '@/stores/rpc';
+import { StyledFlex } from '@/styled/styles';
+import { RPC_LIST, type RpcList as ERpcList } from '@/utils/config';
 
 const RpcList = (props: Props) => {
   const list = Object.values(RPC_LIST);

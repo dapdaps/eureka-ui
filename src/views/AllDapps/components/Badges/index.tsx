@@ -1,14 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
-import odyssey from '@/config/odyssey';
-import { useRouter } from 'next/router';
-import { StyledBadge, StyledBadgeImage, StyledBadgeItem, StyledBadgeTooltip, StyledContainer } from './styles';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { cloneDeep } from 'lodash';
+import { useRouter } from 'next/router';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+
+import odyssey from '@/config/odyssey';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
+import type { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
+import type { StatusType } from '@/views/Odyssey/components/Tag';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
-import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
-import { StatusType } from '@/views/Odyssey/components/Tag';
+
+import { StyledBadge, StyledBadgeImage, StyledBadgeItem, StyledBadgeTooltip, StyledContainer } from './styles';
 import TooltipSimple from './Tooltip';
 
 const Badges = (props: Props) => {
@@ -121,8 +123,9 @@ const Badges = (props: Props) => {
           tooltip={badge.odyssey && (
             <StyledBadgeTooltip>
               {
-                badge.odyssey.map((ody) => (
+                badge.odyssey.map((ody, index) => (
                   <OdysseyCard
+                    key={index}
                     status={ody.status}
                     title={ody.name}
                     subtitle={ody.description}

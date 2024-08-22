@@ -1,13 +1,15 @@
-import { StyledFlex } from '@/styled/styles';
-import styled from 'styled-components';
-import { balanceFormated } from '@/utils/balance';
-import Big from 'big.js';
-import { StyledBestPrice } from '../styles';
 import IconArrow from '@public/images/chains/arrorw-top.svg';
 import IconAlertTriangle from '@public/images/chains/waring.svg';
-import { useEffect, useMemo, useState } from 'react';
-import { useSettingsStore } from '@/stores/settings';
 import IconRefresh from '@public/images/refresh.svg';
+import Big from 'big.js';
+import { useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
+
+import { useSettingsStore } from '@/stores/settings';
+import { StyledFlex } from '@/styled/styles';
+import { balanceFormated } from '@/utils/balance';
+
+import { StyledBestPrice } from '../styles';
 
 type PriceImpactLevel = 'low' | 'medium' | 'high';
 

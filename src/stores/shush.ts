@@ -1,6 +1,6 @@
+import { cloneDeep } from 'lodash';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { cloneDeep } from 'lodash';
 
 export const useShushTokensStore = create(
   persist(

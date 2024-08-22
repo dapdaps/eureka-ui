@@ -1,10 +1,11 @@
+import { useRouter } from 'next/router';
+import { type Dispatch, type SetStateAction,useMemo } from 'react';
+import styled from "styled-components";
+
 import useAuth from '@/hooks/useAuth';
 import { useUserStore } from '@/stores/user';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 import { ellipsAccount } from '@/utils/account';
-import { useRouter } from 'next/router';
-import { useMemo, Dispatch, SetStateAction } from 'react';
-import styled from "styled-components";
 const StyledUserInfoPopUp = styled.div`
   width: 294px;
   /* height: 398px; */
@@ -257,9 +258,9 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
       </StyledUserInfoContainer>
       <StyledFeatures>
         {
-          features.map(feature => {
+          features.map((feature, index) => {
             return (
-              <StyledFeature data-bp={feature?.bp} onClick={() => {
+              <StyledFeature key={index} data-bp={feature?.bp} onClick={() => {
                 if (feature.label === "Logout") {
                   logout()
                 } else {

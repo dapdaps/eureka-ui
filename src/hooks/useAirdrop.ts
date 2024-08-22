@@ -1,10 +1,12 @@
-import { useEffect, useState } from 'react';
-import { get, post } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
-import { AirdropList, Potential } from '@/views/Dapp/components/DappDetail/config';
-import { StatusType } from '@/views/Odyssey/components/Tag';
+import { useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import { get, post } from '@/utils/http';
+import type { Potential } from '@/views/Dapp/components/DappDetail/config';
+import { AirdropList } from '@/views/Dapp/components/DappDetail/config';
+import type { StatusType } from '@/views/Odyssey/components/Tag';
 
 export function useAirdrop(props: Props) {
   const {

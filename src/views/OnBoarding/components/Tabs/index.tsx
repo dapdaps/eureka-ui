@@ -1,6 +1,7 @@
-import { memo } from 'react';
 import { motion } from 'framer-motion';
-import { StyledContainer, StyledTabWrap, StyledTab, StyledTabActiveBg } from './styles';
+import { memo } from 'react';
+
+import { StyledContainer, StyledTab, StyledTabActiveBg,StyledTabWrap } from './styles';
 
 const TABS = [
   {

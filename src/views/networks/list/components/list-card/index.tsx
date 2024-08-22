@@ -1,18 +1,20 @@
+import React, { type FC } from 'react';
+
+import popupsData from '@/config/all-in-one/chains';
+import { type IProps } from '@/views/networks/list/components/list-item';
+import Reward from '@/views/networks/list/components/reward';
+import { CardHead, DataListShown, FooterButton } from '@/views/networks/list/components/utils';
+
 import {
+  StyledBtnGroup,
   StyledCardContainer,
   StyledCardHead,
   StyledData,
   StyledDataItem,
   StyledItemLabel,
   StyledItemValue,
-  StyledBtnGroup,
   StyledReward
 } from '../styles';
-import React, { FC } from 'react';
-import { IProps } from '@/views/networks/list/components/list-item';
-import { CardHead, DataListShown, FooterButton } from '@/views/networks/list/components/utils';
-import Reward from '@/views/networks/list/components/reward';
-import popupsData from '@/config/all-in-one/chains';
 
 export const ListCard: FC<IProps> = ({ dataSource }) => {
   const {

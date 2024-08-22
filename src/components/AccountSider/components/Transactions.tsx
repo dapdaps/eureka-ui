@@ -1,12 +1,12 @@
+import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { useRouter } from 'next/router';
-import useAccount from '@/hooks/useAccount';
-import { balanceFormated, percentFormated, addressFormated, timeDurationFormated } from '@/utils/balance';
-import useToast from '@/hooks/useToast';
 import { getTransaction, saveAllTransaction } from '@/components/BridgeX/Utils'
 import Loading from '@/components/Icons/Loading';
+import useAccount from '@/hooks/useAccount';
+import useToast from '@/hooks/useToast';
+import { addressFormated, balanceFormated, percentFormated, timeDurationFormated } from '@/utils/balance';
 
 const Container = styled.div`
   padding: 16px;

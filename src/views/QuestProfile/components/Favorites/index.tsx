@@ -2,8 +2,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { memo } from 'react';
 
 import { container } from '@/components/animation';
-import Loading from '@/components/Icons/Loading';
 import Dapps from '@/components/Dapps';
+import Loading from '@/components/Icons/Loading';
+
 import useFavoriteDapps from '../../hooks/useFavoriteDapps';
 import useFavorites from '../../hooks/useFavorites';
 import { QuestPanel } from '../Quests';

@@ -1,16 +1,15 @@
-import { useState, useRef, useCallback, useEffect, forwardRef, useMemo, memo } from "react";
-import styled from 'styled-components';
 import { useDebounce } from 'ahooks';
+import { forwardRef, memo,useCallback, useEffect, useMemo, useRef, useState } from "react";
+import styled from 'styled-components';
 
-import { usePriceStore } from '@/stores/price';
 import useTokensBalance from "@/components/BridgeX/hooks/useTokensBalance";
-import { ArrowDown } from '../Arrow'
-import Image from './Image'
-
-import Modal from "../Modal";
-import TokenRow from './Token'
-
+import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
+
+import { ArrowDown } from '../Arrow'
+import Modal from "../Modal";
+import Image from './Image'
+import TokenRow from './Token'
 
 
 const Container = styled.div`

@@ -1,12 +1,14 @@
-import { useEffect, useState } from 'react';
-import chainsConfig from '@/config/chains';
-import { styled } from 'styled-components';
-import useDappsByNetwork from '@/hooks/useDappsByNetwork';
-import useAccount from '@/hooks/useAccount';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import { styled } from 'styled-components';
+
+import chainsConfig from '@/config/chains';
+import useAccount from '@/hooks/useAccount';
+import useDappsByNetwork from '@/hooks/useDappsByNetwork';
 import { get } from '@/utils/http';
-import { formatTitle } from '../helpers';
+
 import { DAPP_LOGO } from '../config';
+import { formatTitle } from '../helpers';
 const Container = styled.div`
   padding-top: 20px;
   padding-bottom: 65px;

@@ -1,10 +1,14 @@
 import Big from 'big.js';
+import { useEffect } from 'react';
+
 import ArrowIcon from '@/components/Icons/ArrowIcon';
-import CurrencyInput from '@/views/AllInOne/components/Trade/CurrencyInput';
-import { balanceFormated, valueFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
+import type { Token } from '@/types';
+import { balanceFormated, valueFormated } from '@/utils/balance';
+import CurrencyInput from '@/views/AllInOne/components/Trade/CurrencyInput';
+
 import {
   CurrencyIcon,
   CurrencyTitle,
@@ -14,8 +18,6 @@ import {
   StyledTradeInputContainer,
   StyledTradeTitle,
 } from './styles';
-import type { Token } from '@/types';
-import { useEffect } from 'react';
 
 type Props = {
   title: string;

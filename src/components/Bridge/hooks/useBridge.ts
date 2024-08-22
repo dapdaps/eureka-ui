@@ -1,7 +1,9 @@
 import { useCallback, useState } from 'react';
-import type { Chain, Token } from '../types';
+
 import useAccount from '@/hooks/useAccount';
+
 import { excludeChain } from '../config/chain'
+import type { Chain, Token } from '../types';
 
 export default ({
   chains,

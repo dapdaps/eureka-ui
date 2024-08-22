@@ -1,10 +1,9 @@
 import React from "react";
 
-import useAccount from '@/hooks/useAccount';
 import type { Token } from "@/components/Bridge/types";
+import useAccount from '@/hooks/useAccount';
 import { StyledFlex } from "@/styled/styles";
 import { ellipsAccount, ellipsAll } from '@/utils/account';
-
 import {
   StyledCard,
   StyledCardBody,

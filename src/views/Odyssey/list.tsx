@@ -1,13 +1,15 @@
-import styled from 'styled-components';
-import ToggleTab, { Tab } from './components/Tabs';
-import useCompassList from '../Home/components/Compass/hooks/useCompassList';
-import { useMemo, useState } from 'react';
-import { StatusType } from './components/Tag';
-import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
-import OdysseyChroma from './components/OdysseyChroma'
-import RecentRewards from '@/views/Home/components/Rewards';
+import { useMemo, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
+
 import Tooltip from '@/components/TitleTooltip';
+import RecentRewards from '@/views/Home/components/Rewards';
+
+import useCompassList from '../Home/components/Compass/hooks/useCompassList';
+import OdysseyChroma from './components/OdysseyChroma'
+import ToggleTab, { Tab } from './components/Tabs';
+import { StatusType } from './components/Tag';
 
 const StyledWrapper = styled.div`
   --var-container-width: 1244px;

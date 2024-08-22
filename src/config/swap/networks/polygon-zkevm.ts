@@ -1,9 +1,10 @@
-import { basic as quickSwapBasic, networks as quickSwapNetworks } from '../dapps/quick-swap';
+import { polygonZkevm } from '@/config/tokens/polygonZkevm';
+
+import chains from '../../chains';
 import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
 import { basic as pancakeSwapBasic, networks as pancakeSwapNetworks } from '../dapps/pancake-swap';
+import { basic as quickSwapBasic, networks as quickSwapNetworks } from '../dapps/quick-swap';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
-import chains from '../../chains';
-import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 
 const CHAIN_ID = 1101;
 

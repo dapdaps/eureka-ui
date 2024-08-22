@@ -1,5 +1,6 @@
 import { memo } from 'react';
-import { StyledContainer, StyledTitle, StyledSubtitle, StyledLearnMore, StyledImg } from './styles';
+
+import { StyledContainer, StyledImg,StyledLearnMore, StyledSubtitle, StyledTitle } from './styles';
 
 const Decentralised = () => {
   return (

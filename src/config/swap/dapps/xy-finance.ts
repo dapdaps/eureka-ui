@@ -1,5 +1,5 @@
-import { scroll } from '@/config/tokens/scroll';
 import { linea } from '@/config/tokens/linea';
+import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'XY Finance',

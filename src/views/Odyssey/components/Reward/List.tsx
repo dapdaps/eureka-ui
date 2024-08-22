@@ -1,13 +1,16 @@
-import React, { useMemo, useState } from 'react';
-import styled, { CSSProperties } from 'styled-components';
 import { AnimatePresence, useMotionValue } from 'framer-motion';
-import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
-import RewardIconsMap from '@/views/OdysseyV8/RewardIcons';
 import { motion } from 'framer-motion';
+import React, { useMemo, useState } from 'react';
+import type { CSSProperties } from 'styled-components';
+import styled from 'styled-components';
+
+import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import Tooltip from '@/views/Home/components/Tooltip';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
+import RewardIconsMap from '@/views/OdysseyV8/RewardIcons';
+
+import type { StatusType } from '../Tag';
 import { parseReward } from '.';
-import { StatusType } from '../Tag';
 
 const ToolList = styled.div`
   display: flex;

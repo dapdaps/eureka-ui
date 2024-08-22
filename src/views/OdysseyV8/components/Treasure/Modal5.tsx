@@ -1,8 +1,9 @@
 import Image from 'next/image';
+
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
-import { ModalBody, ModalDesc, ModalSub, ModalTitle, TrapLayout, Badge, ModalStep } from './styles';
+import { Badge, ModalBody, ModalDesc, ModalStep,ModalSub, ModalTitle, TrapLayout } from './styles';
 
 export default function Modal5({ setShowModal5, openLink, reportLoading }: any) {
   return (

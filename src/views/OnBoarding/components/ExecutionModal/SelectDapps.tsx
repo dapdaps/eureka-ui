@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
+
 import SelectPanel from './SelectPanel';
-import { StyledSelect, StyledDapp, StyledDappIcon, StyledDappName, Overlay } from './styles';
+import { Overlay,StyledDapp, StyledDappIcon, StyledDappName, StyledSelect } from './styles';
 
 const SelectDapps = ({ currentDapp, dapps, onSelect }: any) => {
   const [open, setOpen] = useState(false);

@@ -1,6 +1,5 @@
+import { useCallback, useEffect, useRef,useState } from 'react';
 import styled from 'styled-components';
-
-import { useCallback, useEffect, useState, useRef } from 'react';
 
 const ScrollLineWapper = styled.div`
   width: 140px;

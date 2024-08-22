@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
-import usePoolInfo from './usePoolInfoV2';
+
 import useDappConfig from '../../hooks/useDappConfig';
 import { sortTokens } from '../../utils/token';
+import usePoolInfo from './usePoolInfoV2';
 
 export default function useData() {
   const { defaultTokens = [] } = useDappConfig();

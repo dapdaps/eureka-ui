@@ -1,6 +1,7 @@
-import styled from 'styled-components';
-import { Network } from './hooks/useDefaultSearch';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
+
+import { type Network } from './hooks/useDefaultSearch';
 
 const StyleChain = styled.div`
   padding: 0 20px;

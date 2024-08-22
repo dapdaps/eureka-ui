@@ -1,3 +1,9 @@
+import Image from 'next/image';
+import React from 'react';
+
+import { IdToPath } from '@/config/all-in-one/chains';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 import {
   Btn,
   ChainDesc,
@@ -7,12 +13,7 @@ import {
   StyledChainTagIcon,
   StyledChainTagText,
 } from '@/views/networks/list/components/styles';
-import React from 'react';
 import ValuePercent from '@/views/networks/list/components/value-percent';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import Image from 'next/image';
-import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
-import { IdToPath } from '@/config/all-in-one/chains';
 
 export const TagList = [
   {

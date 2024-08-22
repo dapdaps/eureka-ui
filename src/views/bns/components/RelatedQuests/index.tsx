@@ -1,6 +1,8 @@
+import { memo } from 'react';
+
 import Loading from '@/components/Icons/Loading';
 import QuestItem from '@/views/Quest/components/QuestItem';
-import { memo } from 'react';
+
 import { StyledContainer, StyledHead, StyledLoadingWrapper, StyledQuestList } from './styles';
 
 const RelatedQuests = ({ loading, questList = [], bp }: any) => {

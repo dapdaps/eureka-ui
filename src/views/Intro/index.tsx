@@ -1,32 +1,32 @@
-import { StyledContainer, StyledFlex, StyledFont } from "@/styled/styles";
-import BridgeSvg from "@public/images/intro/bridge.svg";
-import SwapSvg from "@public/images/intro/swap.svg";
 import ArrowSvg from "@public/images/intro/arrow.svg";
 import ArrowRightSvg from "@public/images/intro/arrow-right.svg";
-import PoundSignSvg from "@public/images/intro/pound-sign.svg";
+import BridgeSvg from "@public/images/intro/bridge.svg";
 import DavinciSvg from "@public/images/intro/davinci.svg";
+import PoundSignSvg from "@public/images/intro/pound-sign.svg";
+import SwapSvg from "@public/images/intro/swap.svg";
 import { memo } from "react";
 
-import {
-  StyledHeader,
-  StyledLogo,
-  StyledMenuList,
-  StyledMenu,
-  StyledBanner,
-  StyledSuperButton,
-  StyledExporeButton,
-  StyledMainHeading,
-  StyledMainTips,
-  StyledFist,
-} from './styles'
-import { MenuType } from "./types";
-import RotateNetworks from "./components/RotateNetworks";
-import Into from "./components/Into";
-import MiniCard from "./components/MiniCard";
+import { StyledContainer, StyledFlex, StyledFont } from "@/styled/styles";
 import Statistics from "./components/Statistics";
 import Partners from "./components/Partners";
 import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
+import Into from "./components/Into";
+import MiniCard from "./components/MiniCard";
+import RotateNetworks from "./components/RotateNetworks";
+import {
+  StyledBanner,
+  StyledExporeButton,
+  StyledHeader,
+  StyledLogo,
+  StyledMainHeading,
+  StyledMainTips,
+  StyledMenu,
+  StyledMenuList,
+  StyledFist,
+  StyledSuperButton} from './styles'
+import type { MenuType } from "./types";
+
 const MENU_LIST: MenuType[] = [{
   path: "",
   label: "Product",

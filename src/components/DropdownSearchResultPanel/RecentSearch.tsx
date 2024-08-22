@@ -1,6 +1,7 @@
+import { AnimatePresence,motion } from 'framer-motion';
 import styled from "styled-components";
+
 import { useRecentStore } from "./hooks/useRecentStore";
-import { motion, AnimatePresence } from 'framer-motion';
 
 const StyleRecent = styled.div`
   margin-top: 20px;

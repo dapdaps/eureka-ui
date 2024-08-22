@@ -1,30 +1,27 @@
-import { useDebounce } from 'ahooks';
-import { createPortal } from 'react-dom'
-
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { useSetChain } from '@web3-onboard/react';
+import { useDebounce } from 'ahooks';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { createPortal } from 'react-dom'
+import styled from 'styled-components';
+
+import Loading from '@/components/Icons/Loading';
+import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useConnectWallet from '@/hooks/useConnectWallet';
-
-import useAccount from '@/hooks/useAccount';
-import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated } from '@/utils/balance';
-import useRenzoDetail from './hooks/useRenzoDetail'
-import useTrade from './hooks/useRenzoTrade'
-import useValue from './hooks/useValue';
-import { usePriceStore } from '@/stores/price';
 import { useChainsStore } from '@/stores/chains';
+import { usePriceStore } from '@/stores/price';
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
-
-
+import { chains, tokens } from './chain';
+import { ArrowDown, ArrowUp } from './componments/Arrows'
 import ChainTokens from './componments/ChainTokens';
 import Header from './componments/Header';
 import Msg from './componments/Msg';
 import TokenAction from './componments/TokenAction';
-import { ArrowDown, ArrowUp } from './componments/Arrows'
-import { chains, tokens } from './chain';
+import useRenzoDetail from './hooks/useRenzoDetail'
+import useTrade from './hooks/useRenzoTrade'
+import useValue from './hooks/useValue';
 
 const Container = styled.div`
    

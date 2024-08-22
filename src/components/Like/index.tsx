@@ -1,5 +1,6 @@
-import useLike from '@/views/Quest/hooks/useLike';
 import styled from 'styled-components';
+
+import useLike from '@/views/Quest/hooks/useLike';
 
 export const StyledFavoriteTag = styled.div<{ $isFavorite: boolean }>`
   width: 38px;

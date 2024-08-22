@@ -1,4 +1,4 @@
-import { MedalType } from "@/views/Profile/types";
+import type { MedalType } from "@/views/Profile/types";
 
 export enum CheckInStatus {
     claim = 'claim',

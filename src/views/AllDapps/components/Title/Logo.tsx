@@ -1,6 +1,7 @@
-import React, { memo } from 'react';
-import { StyledTopDappLogo, StyledTopDappLogoWrapper } from '@/views/AllDapps/components/Title/styles';
 import { AnimatePresence } from 'framer-motion';
+import React, { memo } from 'react';
+
+import { StyledTopDappLogo, StyledTopDappLogoWrapper } from '@/views/AllDapps/components/Title/styles';
 
 const Logo = (props: Props) => {
   const { dappList, position } = props;

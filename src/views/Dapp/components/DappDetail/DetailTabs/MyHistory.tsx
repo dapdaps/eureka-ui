@@ -1,32 +1,34 @@
-import FlexTable from '../../FlexTable';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useMemo, useRef } from 'react';
+
+import Empty from '@/components/Empty';
+import Pagination from '@/components/pagination';
 import useAccount from '@/hooks/useAccount';
+import type { Category } from '@/hooks/useAirdrop';
 import { useUserStore } from '@/stores/user';
+import { copyText } from '@/utils/copy';
+import { formatUSDate } from '@/utils/date';
+import { formateAddress } from '@/utils/formate';
+import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/config';
+import { formatTitle } from '@/views/OnBoarding/helpers';
+
+import FlexTable from '../../FlexTable';
+import type { Column } from '../../FlexTable/styles';
 import {
+  StyledDateText,
+  StyledEmptyTxt,
   StyledHead,
-  StyledMyAvatar,
   StyledHeadInfo,
   StyledHeadOther,
-  StyledMyAddress,
-  StyledDateText,
-  StyledTitleText,
-  StyledEmptyTxt,
   StyledHistoryDapp,
   StyledHistoryDappLogo,
   StyledHistoryDappName,
+  StyledMyAddress,
+  StyledMyAvatar,
+  StyledTitleText,
 } from './styles';
-import { Column } from '../../FlexTable/styles';
-import { formatTitle } from '@/views/OnBoarding/helpers';
-import Empty from '@/components/Empty';
-import Pagination from '@/components/pagination';
-import { formateAddress } from '@/utils/formate';
-import { formatUSDate } from '@/utils/date';
-import { useMemo, useRef } from 'react';
-import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/config';
-import { Category } from '@/hooks/useAirdrop';
-import { useRouter } from 'next/router';
-import { copyText } from '@/utils/copy';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 
 const Types: any = {
   network: 'chain',

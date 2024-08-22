@@ -1,23 +1,20 @@
-import { Suspense } from 'react'
 import { useSetChain } from '@web3-onboard/react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import Skeleton from 'react-loading-skeleton';
+import { Suspense } from 'react'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
-import dynamic from 'next/dynamic';
 
+import chainCofig from '@/config/chains'
+import { useDefaultLayout } from '@/hooks/useLayout';
+import type { Chain } from '@/types';
+import type { NextPageWithLayout } from '@/utils/types';
 // import BridgeAction from '@/views/SuperBridge/BridgeAction';
 // import Transaction from '@/views/SuperBridge/Transaction';
 import Medal from '@/views/SuperBridge/Medal';
 
-
-import chainCofig from '@/config/chains'
-
-import { useDefaultLayout } from '@/hooks/useLayout';
-
-import type { NextPageWithLayout } from '@/utils/types';
-import type { Chain } from '@/types';
 
 
 const Container = styled.div`

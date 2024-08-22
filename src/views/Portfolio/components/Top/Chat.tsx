@@ -1,8 +1,10 @@
 import { memo } from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, YAxis } from 'recharts';
+
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import { ChartContainer, ChartDataWrapper, TotalBalanceWrapper, DiffWrapper } from './styles';
+
 import useNetCurve24h from '../../hooks/useNetCurve24h';
+import { ChartContainer, ChartDataWrapper, DiffWrapper,TotalBalanceWrapper } from './styles';
 
 const Chat = ({ totalBalance }: any) => {
   const { netCurve24h, diff } = useNetCurve24h();

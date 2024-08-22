@@ -1,8 +1,9 @@
-import { memo } from 'react';
-import Modal from '@/components/Modal';
-import styled from 'styled-components';
-import { MedalType } from '@/views/Profile/types';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+import styled from 'styled-components';
+
+import Modal from '@/components/Modal';
+import type { MedalType } from '@/views/Profile/types';
 const StyledMedal = styled.div`
   padding: 0 36px;
 `;

@@ -1,4 +1,5 @@
 import { StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
+
 import {
   StyledAchieved,
   StyledAchievedContainer,

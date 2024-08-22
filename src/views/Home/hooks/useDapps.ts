@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
-import { get } from '@/utils/http';
-import { QUEST_PATH } from '@/config/quest';
-import { CategoryList } from '@/views/AllDapps/config';
+import { useCallback,useEffect, useState } from 'react';
+
 import chainCofig from '@/config/chains';
+import { QUEST_PATH } from '@/config/quest';
+import { get } from '@/utils/http';
+import { CategoryList } from '@/views/AllDapps/config';
 
 const useDapps = () => {
   const [featuredDapps, setFeaturedDapps] = useState<any>();

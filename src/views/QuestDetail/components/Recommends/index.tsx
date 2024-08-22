@@ -1,13 +1,15 @@
 import { memo, useState } from 'react';
+
 import QuestItem from '@/views/Quest/components/QuestItem';
+
 import {
   StyledButtons,
   StyledContainer,
   StyledHeader,
   StyledLeftButton,
   StyledRecommendList,
-  StyledTitle,
   StyledRecommendListWrapper,
+  StyledTitle,
 } from './styles';
 
 const Recommends = ({ recommends }: { recommends: any }) => {

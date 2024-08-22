@@ -1,18 +1,16 @@
-import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import ReactDOM from 'react-dom'
-import { AnimatePresence } from 'framer-motion';
-import { useChainsStore } from '@/stores/chains';
-import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
-import useTokens from '@/views/Portfolio/hooks/useTokens';
-import { Network } from '@/hooks/useNetworks';
 import Big from 'big.js';
+import { AnimatePresence } from 'framer-motion';
 import { orderBy } from 'lodash';
-import ChainsDockList from '@/components/ChainsDock/List';
 import dynamic from 'next/dynamic';
-import Skeleton from 'react-loading-skeleton';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-// @ts-ignore
+import ChainsDockList from '@/components/ChainsDock/List';
+import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
+import { SupportedChains } from '@/config/all-in-one/chains';
+import type { Network } from '@/hooks/useNetworks';
+import { useChainsStore } from '@/stores/chains';
+import useTokens from '@/views/Portfolio/hooks/useTokens';
+// @ts-expect-error For some reason
 const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
   ssr: false,
   // loading: () => <div style={{ width: 400 }}>
@@ -24,7 +22,6 @@ const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'
 
 
 // The portfolio chains have been integrated
-// sorted by A-Z
 const ChainsFixed = SupportedChains.map((support) => support.chainId);
 
 const ChainsDock = () => {

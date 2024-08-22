@@ -1,5 +1,6 @@
 import { useSetChain } from '@web3-onboard/react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
 
 import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
@@ -25,7 +26,6 @@ import LendingDialog from './LendingDialog';
 import LendingSpinner from './LendingSpinner'
 import LendingMarket from './Market'
 import LendingYours from './Yours'
-import styled from 'styled-components';
 
 const Container = styled.div`
   width: 100%;

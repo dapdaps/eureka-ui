@@ -1,15 +1,17 @@
 import { memo } from 'react';
+
 import Breadcrumb from '@/components/Breadcrumb';
+
 import QA from './components/QA';
 import {
+  StyledBg1,
+  StyledBg2,
   StyledContainer,
   StyledContent,
   StyledGirl,
   StyledMain,
-  StyledTitle,
   StyledSubtitle,
-  StyledBg1,
-  StyledBg2,
+  StyledTitle,
 } from './styles';
 
 const Common = ({ anonymous, from, children }: any) => {

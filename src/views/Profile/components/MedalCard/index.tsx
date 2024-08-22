@@ -1,6 +1,8 @@
-import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import React, { useMemo } from 'react';
-import { MedalType } from '../../types';
+
+import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+
+import type { MedalType } from '../../types';
 import ProgressBar from '../ProgressBar';
 import {
   StyledMark,

@@ -1,10 +1,12 @@
-import React, { useCallback, useEffect, memo, useState } from 'react';
-import * as d3 from 'd3';
 import Big from 'big.js';
-import TokenSwitcher from '@/views/Pool/components/TokenSwitcher';
-import { StyledContainer, StyledTop, StyledSubtitle } from './styles';
+import * as d3 from 'd3';
 import _ from 'lodash';
+import React, { memo, useCallback, useEffect, useState } from 'react';
+
+import TokenSwitcher from '@/views/Pool/components/TokenSwitcher';
+
 import FEES from './config';
+import { StyledContainer, StyledSubtitle,StyledTop } from './styles';
 
 /**
  * params: current, lowerTick, highTick, fee, pairs

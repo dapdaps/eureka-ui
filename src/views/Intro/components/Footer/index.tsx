@@ -1,6 +1,7 @@
-import { StyledFlex, StyledFont } from "@/styled/styles";
 import { memo } from "react";
 import styled from "styled-components";
+
+import { StyledFlex, StyledFont } from "@/styled/styles";
 const StyledFooterContainer = styled.div`
   padding: 0 20px 30px;
 `

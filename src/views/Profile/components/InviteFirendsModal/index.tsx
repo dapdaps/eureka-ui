@@ -1,12 +1,14 @@
-import Modal from '@/components/Modal';
-import useCopy from '@/hooks/useCopy';
-import { ellipsAccount } from '@/utils/account';
 import Image from 'next/image';
 import { memo, useMemo, useState } from 'react';
 
+import Modal from '@/components/Modal';
+import useCopy from '@/hooks/useCopy';
 import { useUserStore } from '@/stores/user';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+import { ellipsAccount } from '@/utils/account';
+
 import type { Column, InviteListType } from '../../types';
+import Copy from '../Copy';
 import MedalCard from '../MedalCard';
 import UserAvatar from '../UserAvatar';
 import {
@@ -24,7 +26,6 @@ import {
   StyledUserAddress,
   StyledUserName
 } from './styles';
-import Copy from '../Copy';
 
 export const COLUMNS: Column[] = [
   {
@@ -255,7 +256,7 @@ const InviteFirendsModal = ({
             {
               pendingBoundingClientRect && (
                 <StyledPendingTips style={{ left: pendingBoundingClientRect.x, top: pendingBoundingClientRect.y }}>
-                  This user hasn't generated any on-chain actions by DapDap yet.
+                  This user hasn&apos;t generated any on-chain actions by DapDap yet.
                 </StyledPendingTips>
               )
             }

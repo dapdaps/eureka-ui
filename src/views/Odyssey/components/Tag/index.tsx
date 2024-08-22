@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import cls from 'classnames';
+import styled from 'styled-components';
 
 export enum StatusType {
   ongoing = 'ongoing',

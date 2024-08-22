@@ -1,8 +1,20 @@
+import { useDebounceFn } from 'ahooks';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
+
+import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
+import odysseyConfig from '@/config/odyssey';
+import odyssey from '@/config/odyssey';
+import useToast from '@/hooks/useToast';
+import { StyledFlex } from '@/styled/styles';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
 import {
   StyledOdysseyBanner,
+StyledOdysseyBannerMask,
   StyledOdysseyBody,
-  StyledOdysseyContainer,
+  StyledOdysseyButton,   StyledOdysseyContainer,
   StyledOdysseyHead,
   StyledOdysseyIcon,
   StyledOdysseyIconTitle,
@@ -18,22 +30,12 @@ import {
   StyledTagList,
   StyledVideo,
   StyledVideoIcon,
-  StyledOdysseyButton, StyledOdysseyBannerMask,
 } from '@/views/Dapp/components/DappDetail/RelativeOdyssey/styles';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
-import OdysseyVideo from './Video';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import Image from 'next/image';
-import { StyledFlex } from '@/styled/styles';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
-import odysseyConfig from '@/config/odyssey';
-import { useRouter } from 'next/router';
-import odyssey from '@/config/odyssey';
-import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
-import useToast from '@/hooks/useToast';
-import { useDebounceFn } from 'ahooks';
-import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
+
+import OdysseyVideo from './Video';
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 

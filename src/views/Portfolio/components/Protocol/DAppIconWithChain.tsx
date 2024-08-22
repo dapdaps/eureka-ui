@@ -1,8 +1,8 @@
+import React from 'react';
 import { styled } from 'styled-components';
 
-import { DefaultIcon } from '@/views/Portfolio/config';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
-import React from 'react';
+import { DefaultIcon } from '@/views/Portfolio/config';
 
 export const StyledContainer = styled.div<{ size: string | number }>`
   width: ${({ size }) => `${size}px`};

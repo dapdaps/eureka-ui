@@ -1,5 +1,6 @@
-import Button from './Button';
 import useConnectWallet from '@/hooks/useConnectWallet';
+
+import Button from './Button';
 
 export default function ConnectWalletButton({ style }: any) {
   const { onConnect } = useConnectWallet();

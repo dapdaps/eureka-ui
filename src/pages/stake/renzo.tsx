@@ -1,16 +1,16 @@
-import { useDefaultLayout } from '@/hooks/useLayout';
+import { useRouter } from 'next/router';
+import { Suspense } from 'react';
 import styled from 'styled-components';
 
-import type { NextPageWithLayout } from '@/utils/types';
-import Renzo from '@/components/Stake/Renzo'
-import renzoImg from '@/views/StakeModal/renzo.svg'
 import DappBack from '@/components/PageBack';
-import { useRouter } from 'next/router';
+import Renzo from '@/components/Stake/Renzo'
 import useDappInfo from '@/hooks/useDappInfo';
-import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
-import { Suspense } from 'react';
-import DappFallback from '@/views/Dapp/components/Fallback';
+import { useDefaultLayout } from '@/hooks/useLayout';
+import type { NextPageWithLayout } from '@/utils/types';
 import DappDetail from '@/views/Dapp/components/DappDetail';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
+import renzoImg from '@/views/StakeModal/renzo.svg'
 
 const Container = styled.div`
   margin: 0 8%;

@@ -1,20 +1,22 @@
-import { memo, useState, useMemo } from 'react';
 import Big from 'big.js';
-import Loading from '@/components/Icons/Loading';
 import { useRouter } from 'next/router';
-import usePools from './hooks/usePools';
-import useDappConfig from '../hooks/useDappConfig';
+import { memo, useMemo,useState } from 'react';
+
+import Loading from '@/components/Icons/Loading';
+
 import Button from '../components/Button';
+import useDappConfig from '../hooks/useDappConfig';
 import Empty from './components/Empty';
 import Pool from './components/Pool';
 import VersionTabs from './components/VersionTabs';
+import usePools from './hooks/usePools';
 import {
+  LoadingWrapper,
   StyledContainer,
+  StyledContent,
+  StyledContentTop,
   StyledHeader,
   StyledTitle,
-  StyledContent,
-  LoadingWrapper,
-  StyledContentTop,
   StyledTogglePositions,
   StyledTopActions,
 } from './styles';

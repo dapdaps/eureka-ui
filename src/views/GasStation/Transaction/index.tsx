@@ -1,13 +1,12 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect,useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
+import useCopy from '@/hooks/useCopy'
+import type { Chain, Token } from '@/types';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
 import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
-import useCopy from '@/hooks/useCopy'
-
-import type { Chain, Token } from '@/types';
 
 const Container = styled.div`
     width: 1104px;

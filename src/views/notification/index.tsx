@@ -1,20 +1,18 @@
-import { useState, useEffect } from 'react';
-
-import Notification from '@/components/notification';
-import Pagination from '@/components/pagination';
-
-import styles from './notification.module.css';
-import { get } from '@/utils/http';
-
-import { INotification } from '@/components/navigation/desktop/Notification';
+import { useDebounceFn } from 'ahooks';
+import { useEffect,useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
-import Skeleton from 'react-loading-skeleton';
 import Empty from '@/components/Empty';
-import useAuthCheck from '@/hooks/useAuthCheck';
+import type { INotification } from '@/components/navigation/desktop/Notification';
+import Notification from '@/components/notification';
+import Pagination from '@/components/pagination';
 import useAccount from '@/hooks/useAccount';
-import { useDebounceFn } from 'ahooks';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { useNeedRefreshStore } from '@/stores/useNeedRefreshStore';
+import { get } from '@/utils/http';
+
+import styles from './notification.module.css';
 
 const WrapperList = styled.div`
   margin-top: 22px;
@@ -82,8 +80,8 @@ const StyleNotification = styled.div`
 
 const LoadingList = () => (
   <>
-    {Array.from({ length: 5 }).map(() => (
-      <Skeleton height={84} borderRadius={'12px'} style={{ marginBottom: '20px' }} />
+    {Array.from({ length: 5 }).map((_, index) => (
+      <Skeleton key={index} height={84} borderRadius={'12px'} style={{ marginBottom: '20px' }} />
     ))}
   </>
 );

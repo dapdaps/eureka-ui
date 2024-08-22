@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/views/Dapp/styles';
 

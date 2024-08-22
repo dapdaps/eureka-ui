@@ -1,10 +1,10 @@
 import { memo } from 'react';
+
 import {
   StyledContainer,
-  StyledLabel,
+  StyledInput,
   StyledInputBox,
-  StyledInput
-} from './styles';
+  StyledLabel} from './styles';
 
 const StartingPrice = ({ price, setPrice, token0, token1 }: any) => {
   return (

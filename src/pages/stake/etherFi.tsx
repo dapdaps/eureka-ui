@@ -1,15 +1,15 @@
-import { useDefaultLayout } from '@/hooks/useLayout';
+import { useRouter } from 'next/router';
+import { Suspense } from 'react';
 import styled from 'styled-components';
 
-import type { NextPageWithLayout } from '@/utils/types';
-import EtherFi from '@/components/Stake/EtherFi'
 import DappBack from '@/components/PageBack';
+import EtherFi from '@/components/Stake/EtherFi'
 import useDappInfo from '@/hooks/useDappInfo';
-import { useRouter } from 'next/router';
-import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
-import { Suspense } from 'react';
-import DappFallback from '@/views/Dapp/components/Fallback';
+import { useDefaultLayout } from '@/hooks/useLayout';
+import type { NextPageWithLayout } from '@/utils/types';
 import DappDetail from '@/views/Dapp/components/DappDetail';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
 
 const Container = styled.div`
   margin: 0 8%;

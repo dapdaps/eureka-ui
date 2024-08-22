@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
 import _ from 'lodash'
+import { useEffect, useState } from 'react';
 
 import { chains as configChains, tokens as configTokens } from '@/config/bridge';
-import { getLifiChains, getLifiTokens } from './useLifi'
 
 import type { Chain, Token } from '../types';
+import { getLifiChains, getLifiTokens } from './useLifi'
 
 const nativeToken = _.groupBy(Object.values(configTokens), chain => chain.chainId)
 

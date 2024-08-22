@@ -1,9 +1,10 @@
 import Loading from '@/components/Icons/Loading';
-import Button from '../../components/Button';
-import ConnectWalletButton from '@/views/Pool/components/ConnectWalletButton';
-import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
 import useAccount from '@/hooks/useAccount';
 import useApprove from '@/hooks/useApprove';
+import ConnectWalletButton from '@/views/Pool/components/ConnectWalletButton';
+import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
+
+import Button from '../../components/Button';
 import useDappConfig from '../../hooks/useDappConfig';
 import { StyledButtons } from './styles';
 

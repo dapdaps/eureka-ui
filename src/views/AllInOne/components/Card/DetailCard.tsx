@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 
+import Like from '@/components/Like/index';
 import { StyledFlex } from '@/styled/styles';
 import { StyledContent, StyledDetailCard, StyledPointer, StyledTitle } from '@/views/AllInOne/components/Card/styles';
-import Like from '@/components/Like/index';
 import { renderTitle } from '@/views/AllInOne/utils';
 
 const AllInOneDetailCardView: React.FC<Props> = (props) => {

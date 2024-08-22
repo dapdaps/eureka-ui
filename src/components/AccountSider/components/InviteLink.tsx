@@ -1,7 +1,8 @@
-import { useUserStore } from '@/stores/user';
 import { memo, useMemo } from 'react';
 import styled from 'styled-components';
+
 import useCopy from '@/hooks/useCopy';
+import { useUserStore } from '@/stores/user';
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 const StyledLink = styled.div`
   position: relative;

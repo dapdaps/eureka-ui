@@ -1,5 +1,5 @@
-import { scroll } from '@/config/tokens/scroll';
 import weth from '@/config/contract/weth';
+import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Uniswap V3',

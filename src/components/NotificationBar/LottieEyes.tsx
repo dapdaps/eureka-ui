@@ -1,7 +1,7 @@
+import { memo } from 'react';
 import Lottie from 'react-lottie';
 
 import LottieJSON from './eyes.json';
-import { memo } from 'react';
 
 const LottieControl = () => {
   const defaultOptions = {

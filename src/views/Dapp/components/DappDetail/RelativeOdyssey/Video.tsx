@@ -1,5 +1,7 @@
 import { memo } from 'react';
+
 import Modal from '@/components/Modal';
+
 import { StyledVideoContent } from './styles';
 
 const OdysseyVideo = (props: Props) => {

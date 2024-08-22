@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router';
+
 import { useAllInOneTabStore } from '@/stores/all-in-one';
 
 export default function useAllInOneOpen() {

@@ -1,5 +1,7 @@
 import { memo, useMemo } from 'react';
+
 import useAllInOneOpen from '@/hooks/useAllInOneOpen';
+
 import { StyledContainer, StyledItem } from './styles';
 
 const MENUS = [

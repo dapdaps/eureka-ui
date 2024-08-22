@@ -1,8 +1,9 @@
-import React, { useState, useImperativeHandle, forwardRef } from 'react';
-import styled, { css } from 'styled-components';
-import IconFistUnActive from '@public/images/header/fist-unactive.svg'
 import IconCheckIn from '@public/images/header/checkIn.svg'
-import { CheckInStatus, IDayStatus } from './types';
+import IconFistUnActive from '@public/images/header/fist-unactive.svg'
+import React, { forwardRef,useImperativeHandle, useState } from 'react';
+import styled, { css } from 'styled-components';
+
+import { CheckInStatus, type IDayStatus } from './types';
 
 
 const Container = styled.div`

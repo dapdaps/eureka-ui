@@ -1,9 +1,10 @@
+import { useMemo } from 'react';
 import styled from 'styled-components';
+
 import Airdrops from '../Airdrops';
 import Empty from '../Empty';
 import Medals from '../Medals';
 import Odyssey from '../Odyssey';
-import { useMemo } from 'react';
 const StyledContainer = styled.div`
   
 `

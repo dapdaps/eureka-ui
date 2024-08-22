@@ -1,11 +1,10 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect,useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { balanceFormated, percentFormated } from '@/utils/balance';
 import useCopy from '@/hooks/useCopy'
-import Modal from '@/views/SuperBridge/Modal'
-
 import type { Chain, Token } from '@/types';
+import { balanceFormated, percentFormated } from '@/utils/balance';
+import Modal from '@/views/SuperBridge/Modal'
 
 const Container = styled.div`
     

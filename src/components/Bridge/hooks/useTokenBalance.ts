@@ -3,9 +3,9 @@ import { useEffect, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 
+import { excludeChain } from '../config/chain'
 import type { Token } from '../types';
 import { getLifiTokens, lifi } from './useLifi';
-import { excludeChain } from '../config/chain'
 
 export default function useTokenBalance({ tokensByChain }: { tokensByChain?: Token }) {
   const [loading, setLoading] = useState<boolean>(false);

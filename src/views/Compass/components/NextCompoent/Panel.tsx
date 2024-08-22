@@ -1,10 +1,10 @@
-import styled from 'styled-components';
-import { useRouter } from 'next/router';
-import odyssey from '@/config/odyssey';
 import LineImg from '@public/images/others/odyssey/v1/components/NextCompoent/line.svg?url';
-import g2Img from '@public/images/others/odyssey/v1/g1.svg?url';
 import compassImg from '@public/images/others/odyssey/v1/components/NextCompoent/odyssey.svg?url';
+import g2Img from '@public/images/others/odyssey/v1/g1.svg?url';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
+import odyssey from '@/config/odyssey';
 import { StyledCardButton } from '@/views/Home/components/Compass/styles';
 
 const ProjectLine = styled.div`

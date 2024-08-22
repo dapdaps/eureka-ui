@@ -1,22 +1,24 @@
-import { memo, useMemo } from 'react';
 import Big from 'big.js';
+import { memo, useMemo } from 'react';
+
 import { usePriceStore } from '@/stores/price';
 import { balanceFormated } from '@/utils/balance';
-import { StyledContainer, StyledLabelValue, StyledValueRow } from './styles';
+
 import {
-  StyledContainer as StyledContent,
-  StyledTitle,
-  StyledValue,
   StyledAmount,
-  StyledInt,
+  StyledBox,
+  StyledContainer as StyledContent,
   StyledFloat,
+  StyledHeader,
+  StyledInt,
   StyledPanel,
   StyledPanelRow,
-  StyledBox,
+  StyledTitle,
   StyledTokenIcon,
   StyledTokenValue,
-  StyledHeader,
+  StyledValue,
 } from '../Panel/styles';
+import { StyledContainer, StyledLabelValue, StyledValueRow } from './styles';
 
 const LiquidityPanel = ({ amount0, amount1, share, token0, token1 }: any) => {
   const prices = usePriceStore((store) => store.price);

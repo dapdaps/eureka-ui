@@ -1,5 +1,6 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
+
 import { overlay } from '@/components/animation';
 
 export const StyledContainer = styled(motion.div)`

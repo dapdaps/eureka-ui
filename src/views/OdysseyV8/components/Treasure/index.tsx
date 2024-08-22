@@ -1,11 +1,13 @@
+import { AnimatePresence } from 'framer-motion';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+
 import { container } from '@/components/animation';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { StyledFlex } from '@/styled/styles';
 import CoinGroup from '@/views/OdysseyV4/components/Treasure/CoinGroup';
+import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
 import SkakeModel from '@/views/StakeModal/index';
 
 import useParticleReport from '../../hooks/useParticleReport';
@@ -13,8 +15,11 @@ import Line from '../Line';
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
-import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
 import ThrusterCoinListStep1 from './1-1';
+import Modal1 from './Modal1';
+import Modal3 from './Modal3';
+import Modal5 from './Modal5';
+import Spins from './Spins';
 import {
   Badge,
   IconGroup,
@@ -25,19 +30,14 @@ import {
   StyledContainer,
   StyledContent,
   Title,
+  ToDappButton,
   Treasure1,
   Treasure2,
   Treasure3,
   Treasure4,
   Treasure5,
   Treasure6,
-  ToDappButton,
 } from './styles';
-
-import Modal1 from './Modal1';
-import Modal5 from './Modal5';
-import Modal3 from './Modal3';
-import Spins from './Spins';
 
 const ThrusterCoinListStep2 = [
   {

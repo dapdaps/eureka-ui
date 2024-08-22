@@ -1,18 +1,17 @@
+import { useDebounceFn, useLockFn } from 'ahooks';
+import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
-import NotificationItem from '@/components/notification';
-import { useEffect, useRef, useState } from 'react';
-import { get } from '@/utils/http';
-import { useRouter } from 'next/router';
-import Skeleton from 'react-loading-skeleton';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import useAccount from '@/hooks/useAccount';
 import Empty from '@/components/Empty';
-import { useDebounceFn, useLockFn } from 'ahooks';
+import NotificationItem from '@/components/notification';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import { useNeedRefreshStore } from '@/stores/useNeedRefreshStore';
 import { StyledContainer } from '@/styled/styles';
-
-import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
+import { get } from '@/utils/http';
 
 const Wrapper = styled.div`
   position: relative;

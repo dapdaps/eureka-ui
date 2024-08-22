@@ -1,6 +1,8 @@
 import { memo } from 'react';
-import RpcList, { Props as RpcListProps } from './rpc';
+
 import Modal from '@/components/Modal';
+
+import RpcList, { type Props as RpcListProps } from './rpc';
 
 const RpcSelector = (props: Props) => {
   const { visible, onClose } = props;

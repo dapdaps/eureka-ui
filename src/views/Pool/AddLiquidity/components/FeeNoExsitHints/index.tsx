@@ -1,5 +1,7 @@
 import { memo } from 'react';
+
 import WarningIcon from '@/components/Icons/WarningIcon';
+
 import { StyledContainer } from './styles';
 
 const FeeNoExsitHints = () => {

@@ -1,7 +1,7 @@
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 import { memo } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
-import { motion } from 'framer-motion';
 
 const ViewAll = (props: Props) => {
   const { href, bp } = props;

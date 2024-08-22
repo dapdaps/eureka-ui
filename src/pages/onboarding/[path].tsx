@@ -1,8 +1,9 @@
-import { useDefaultLayout } from '@/hooks/useLayout';
 import { useRouter } from 'next/router';
+
+import { PathToId } from '@/config/all-in-one/chains';
+import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 import OnBoarding from '@/views/OnBoarding';
-import { PathToId } from '@/config/all-in-one/chains';
 
 const OnBoardingPage: NextPageWithLayout = () => {
   const router = useRouter();

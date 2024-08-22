@@ -1,14 +1,14 @@
+import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
 import { useSetChain } from '@web3-onboard/react';
 import { motion } from 'framer-motion';
 import { memo, useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { overlay } from '@/components/animation';
-import { chains } from '@/config/bridge';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
+import { chains } from '@/config/bridge';
 import useSortChains from '@/hooks/useSortChains';
-import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '56px')};

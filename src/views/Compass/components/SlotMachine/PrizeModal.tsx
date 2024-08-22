@@ -1,11 +1,10 @@
+import ccmg from '@public/images/others/odyssey/v1/components/SlotMachine/cc.svg?url'
+import lbImg from '@public/images/others/odyssey/v1/components/SlotMachine/Congrates.gif'
+import smImg from '@public/images/others/odyssey/v1/components/SlotMachine/sm.svg?url'
+import { useState } from 'react';
 import styled from 'styled-components';
 
 import Modal from '../Modal'
-
-import lbImg from '@public/images/others/odyssey/v1/components/SlotMachine/Congrates.gif'
-import smImg from '@public/images/others/odyssey/v1/components/SlotMachine/sm.svg?url'
-import ccmg from '@public/images/others/odyssey/v1/components/SlotMachine/cc.svg?url'
-import { useState } from 'react';
 
 const Iocn = styled.img`
     position: absolute;

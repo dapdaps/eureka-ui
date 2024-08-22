@@ -1,20 +1,22 @@
 import { memo } from 'react';
+
 import AddMetaMask from '@/views/ChainDetail/components/AddMetaMask';
+
 import ColorBg from './ColorBg';
 import {
+  StyledBg,
+  StyledButton,
+  StyledChainLogo,
+  StyledChainLogoWrapper,
+  StyledChainName,
+  StyledColorBg,
   StyledContainer,
   StyledContent,
-  StyledBg,
-  StyledColorBg,
-  StyledTitleWrapper,
-  StyledChainLogoWrapper,
-  StyledChainLogo,
-  StyledChainName,
+  StyledInput,
+  StyledInputWrapper,
   StyledMetaMaskWrapper,
   StyledSearchWrapper,
-  StyledInputWrapper,
-  StyledInput,
-  StyledButton,
+  StyledTitleWrapper,
 } from './styles';
 
 const Top = ({ chain }: any) => {

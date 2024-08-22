@@ -18,9 +18,9 @@ import {
   StyledPopupText,
   StyledTitle,
 } from '@/views/AllInOne/components/Header/styles';
+import SelectedCheck from '@/views/AllInOne/components/SelectedCheck';
 import { useChainSelect } from '@/views/AllInOne/hooks/useChainSelect';
 import useReport from '@/views/Landing/hooks/useReport';
-import SelectedCheck from '@/views/AllInOne/components/SelectedCheck';
 
 const AllInOneHeaderView = (props: Props) => {
   const { chain, currentChain, handleShowComponent } = props;

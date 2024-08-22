@@ -1,10 +1,11 @@
-import { styled } from 'styled-components';
 import Image from 'next/image';
-import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
-import React, { useRef } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Pagination } from 'swiper/modules';
 import { useRouter } from 'next/router';
+import React, { useRef } from 'react';
+import { styled } from 'styled-components';
+import { Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
 
 const Card = (
   {

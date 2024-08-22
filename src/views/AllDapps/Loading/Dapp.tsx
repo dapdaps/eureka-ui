@@ -1,5 +1,5 @@
-import Skeleton from 'react-loading-skeleton';
 import React, { memo } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
 const StyledDapps = styled.div`

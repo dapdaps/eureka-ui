@@ -1,8 +1,8 @@
 import Image from 'next/image';
+import { useState } from "react";
 
 import LottieEyes from '../LottieEyes';
 import { StyledContainer, StyledContent } from './styles';
-import { useState } from "react";
 
 export default function Noti() {
   const [visible, setVisible] = useState(true);

@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { memo, useMemo } from 'react';
+
 import useDappOpen from '@/hooks/useDappOpen';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
@@ -11,11 +12,11 @@ import {
   StyledDappDesc,
   StyledDappIcon,
   StyledDappInfo,
+  StyledDappInner,
   StyledDappTag,
   StyledDappTags,
   StyledDappTitle,
   StyledHeader,
-  StyledDappInner,
 } from './styles';
 
 const DappCard = (props: any) => {

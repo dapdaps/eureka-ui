@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import { upperFirst } from 'lodash';
 import { styled } from 'styled-components';
 
@@ -5,7 +6,6 @@ import {
   formateValue,
   formateValueWithThousandSeparatorAndFont,
 } from '@/utils/formate';
-import Big from 'big.js';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 const StyledRecord = styled.div`
@@ -74,7 +74,7 @@ export const formatExecution = (record: any) => {
     amount = (
       <>
         {record[key].map((it: any, idx: number) => (
-          <div className="token-amount">
+          <div className="token-amount" key={idx}>
             <ImageFallback
               className="token-icon"
               src={getTokenLogo(it.symbol)}

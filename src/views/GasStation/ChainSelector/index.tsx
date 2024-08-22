@@ -1,10 +1,10 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect,useRef, useState } from 'react';
 import styled from 'styled-components';
+
+import type { Chain } from '@/types';
 
 import leftImg from './left.svg'
 import rightImg from './right.svg'
-
-import type { Chain } from '@/types';
 
 const Container = styled.div`
     display: flex;

@@ -1,6 +1,8 @@
-import { useEffect } from 'react';
-import { initReactTrack, report } from '@/utils/burying-point';
 import { useDebounceFn } from 'ahooks';
+import { useEffect } from 'react';
+
+import { initReactTrack, report } from '@/utils/burying-point';
+
 import useAccount from './useAccount';
 
 export default function useClickTracking() {

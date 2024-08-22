@@ -1,7 +1,9 @@
-import * as http from '@/utils/http';
-import useConnectWallet from './useConnectWallet';
-import useAccount from './useAccount';
 import { useRef } from 'react';
+
+import * as http from '@/utils/http';
+
+import useAccount from './useAccount';
+import useConnectWallet from './useConnectWallet';
 
 export default function useAuthCheck({ isNeedAk, isQuiet }: { isNeedAk?: boolean; isQuiet?: boolean }) {
   const { account } = useAccount();

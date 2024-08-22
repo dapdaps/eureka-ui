@@ -1,19 +1,21 @@
 import { memo, useState } from 'react';
-import chainsConfig from '@/config/all-in-one/chains';
+
 import GoMore from '@/components/GoMore';
+import chainsConfig from '@/config/all-in-one/chains';
 import useAllInOneOpen from '@/hooks/useAllInOneOpen';
+
 import ItemColorBg from './ItemBg';
 import {
   StyledContainer,
-  StyledTitle,
-  StyledSubtitle,
-  StyledList,
   StyledItem,
   StyledItemBg,
-  StyledItemContent,
-  StyledItemTitle,
   StyledItemColorBg,
   StyledItemComing,
+  StyledItemContent,
+  StyledItemTitle,
+  StyledList,
+  StyledSubtitle,
+  StyledTitle,
 } from './styles';
 
 const MENUS = [

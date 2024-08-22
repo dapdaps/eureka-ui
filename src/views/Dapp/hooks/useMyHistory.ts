@@ -1,10 +1,11 @@
+import { useDebounceFn } from "ahooks";
 import { useEffect, useState } from "react";
-import { get } from '@/utils/http';
+
 import { QUEST_PATH } from '@/config/quest';
 import useAccount from "@/hooks/useAccount";
-import useAuthCheck from "@/hooks/useAuthCheck";
-import { useDebounceFn } from "ahooks";
 import { Category } from '@/hooks/useAirdrop';
+import useAuthCheck from "@/hooks/useAuthCheck";
+import { get } from '@/utils/http';
 
 export default function useMyHistory(props: { chainId?: number; id: number; category: Category }) {
   const {

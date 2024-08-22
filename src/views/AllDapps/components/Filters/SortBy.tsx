@@ -1,8 +1,10 @@
-import { SortList } from '@/views/AllDapps/config';
-import Selector, { Item, Value } from '@/components/Dropdown/Selector';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+
+import type { Item, Value } from '@/components/Dropdown/Selector';
+import Selector from '@/components/Dropdown/Selector';
+import { SortList } from '@/views/AllDapps/config';
 
 const SortBy = (
   { value = SortList[0].value,

@@ -1,14 +1,16 @@
-import { memo, useState } from 'react';
-import usePoolV2Detail from './hooks/usePoolV2Detail';
-import useToken from '@/views/Pool/hooks/useToken';
-import Header from './components/Header';
-import Loading from '@/components/Icons/Loading';
-import Tokens from './components/Tokens';
-import Actions from './components/Actions';
-import RemoveLiquidity from '../RemoveLiquidity/V2';
-import LiquidityPanel from './components/LiquidityPanel/V2';
-import IncreaseLiquidity from '../IncreaseLiquidity/V2';
 import { useRouter } from 'next/router';
+import { memo, useState } from 'react';
+
+import Loading from '@/components/Icons/Loading';
+import useToken from '@/views/Pool/hooks/useToken';
+
+import IncreaseLiquidity from '../IncreaseLiquidity/V2';
+import RemoveLiquidity from '../RemoveLiquidity/V2';
+import Actions from './components/Actions';
+import Header from './components/Header';
+import LiquidityPanel from './components/LiquidityPanel/V2';
+import Tokens from './components/Tokens';
+import usePoolV2Detail from './hooks/usePoolV2Detail';
 import { StyledLoadingWrapper, StyledPanels } from './styles';
 
 const Detail = ({ id, fee, chainId }: any) => {

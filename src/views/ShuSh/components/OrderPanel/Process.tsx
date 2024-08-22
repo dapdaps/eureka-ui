@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import ProcessIcon from './ProcessIcon';
+
 import { STEPS } from '../../config';
+import ProcessIcon from './ProcessIcon';
 
 const StyledContainer = styled.div`
   display: flex;

@@ -1,20 +1,20 @@
+import Big from 'big.js';
+
 import Modal from '@/components/Modal';
+import { useSettingsStore } from '@/stores/settings';
 import { StyledFlex } from '@/styled/styles';
+import { balanceFormated } from '@/utils/balance';
+
+import { StyledBestPrice } from '../../styles';
 import {
   StyledContainer,
-  StyledItem,
-  StyledIcon,
-  StyledTitle,
   StyledDesc,
-  StyledTokenIcon,
+  StyledIcon,
+  StyledItem,
   StyledLine,
+  StyledTitle,
+  StyledTokenIcon,
 } from './styles';
-import { StyledBestPrice } from '../../styles';
-
-import { useSettingsStore } from '@/stores/settings';
-
-import { balanceFormated } from '@/utils/balance';
-import Big from 'big.js';
 
 const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrency, onSelectMarket, trade }: any) => {
   const slippage: any = useSettingsStore((store: any) => store.slippage);

@@ -1,15 +1,17 @@
-import { memo, Suspense, lazy } from 'react';
-import DappCom from './DappCom';
-import {
-  StyledPage,
-  DappName,
-  StyledPowerHints,
-  StyledDappWrapper,
-  StyledDAppContent,
-} from './styles';
-import DappDetailScroll from './components/DappDetail/Scroll';
+import { lazy,memo, Suspense } from 'react';
+
 import DappBack from '@/components/PageBack';
 import DappFallback from '@/views/Dapp/components/Fallback';
+
+import DappDetailScroll from './components/DappDetail/Scroll';
+import DappCom from './DappCom';
+import {
+  DappName,
+  StyledDAppContent,
+  StyledDappWrapper,
+  StyledPage,
+  StyledPowerHints,
+} from './styles';
 export { default as Empty } from './Empty';
 
 const DappDetail = lazy(() => import('./components/DappDetail'));

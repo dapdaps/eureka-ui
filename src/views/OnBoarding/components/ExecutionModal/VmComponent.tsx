@@ -1,7 +1,7 @@
+import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { useBosLoaderStore } from '@/stores/bos-loader';
 import { useVmStore } from '@/stores/vm';
-import useAddAction from '@/hooks/useAddAction';
 
 type Props = {
   src: string;

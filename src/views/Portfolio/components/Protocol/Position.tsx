@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+
 import { getTokenLogo } from '../../helpers';
 
 const StyledContainer = styled.div`

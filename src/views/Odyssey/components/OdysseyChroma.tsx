@@ -1,5 +1,5 @@
+import { addPropertyControls, ControlType,RenderTarget } from 'framer';
 import { useEffect, useRef } from 'react';
-import { RenderTarget, addPropertyControls, ControlType } from 'framer';
 
 
 declare global {

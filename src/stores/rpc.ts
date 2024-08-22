@@ -1,6 +1,7 @@
 import { create } from 'zustand';
-import { RpcList } from '@/utils/config';
 import { createJSONStorage, persist } from 'zustand/middleware';
+
+import { RpcList } from '@/utils/config';
 
 type RpcState = {
   visible: boolean;

@@ -1,10 +1,11 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { useCallback, useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import type { Network } from '@/hooks/useNetworks';
 import { get } from '@/utils/http';
-import { Network } from '@/hooks/useNetworks';
 
 export default function useTokens(props: { networkList: Network[]; }) {
   const { networkList } = props;

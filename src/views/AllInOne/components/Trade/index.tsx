@@ -1,8 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import { balanceFormated } from '@/utils/balance';
+import React, { useCallback, useEffect, useState } from 'react';
+
 import ArrowIcon from '@/components/Icons/ArrowIcon';
+import networks from '@/config/swap/networks';
 import { StyledFlex } from '@/styled/styles';
+import type { Token } from '@/types';
+import { balanceFormated } from '@/utils/balance';
+import Arrow2Down from '@/views/AllInOne/components/Arrow2Down';
 import Currency from '@/views/AllInOne/components/Trade/Currency/index';
 import {
   ArrowWrap,
@@ -16,14 +21,11 @@ import {
   StyledTradeFooter,
   StyledTradeIcon,
 } from '@/views/AllInOne/components/Trade/styles';
-import Arrow2Down from '@/views/AllInOne/components/Arrow2Down';
-import CurrencySelectPopup from './CurrencySelectPopup';
-import Button from './Button';
-import Markets from './Markets';
-import { useDebounceFn } from 'ahooks';
-import networks from '@/config/swap/networks';
+
 import useTrade from '../../hooks/useTrade';
-import type { Token } from '@/types';
+import Button from './Button';
+import CurrencySelectPopup from './CurrencySelectPopup';
+import Markets from './Markets';
 
 const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
   const { chain, disabled } = props;

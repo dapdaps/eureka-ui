@@ -1,6 +1,6 @@
-import { styled } from 'styled-components';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { styled } from 'styled-components';
 
 export const StyledDappCard = styled.div`
   font-family: Montserrat;

@@ -1,9 +1,11 @@
+import { useDebounceFn } from 'ahooks';
+import { useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-import { useDebounceFn } from 'ahooks';
-import { useEffect, useState } from 'react';
-import { Tab } from '../types';
+
+import type { Tab } from '../types';
 type CompassType = any
 export default function useCompassList(tab: Tab) {
   const { account } = useAccount()

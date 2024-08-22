@@ -1,12 +1,14 @@
-import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import { useMemo } from 'react';
+
+import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+import ProgressBar from '@/views/Profile/components/ProgressBar';
+import type { MedalType } from '@/views/Profile/types';
+
 import {
   StyledMark,
   StyledMedalCard,
   StyledMedalImage
 } from './styles';
-import { MedalType } from '@/views/Profile/types';
-import ProgressBar from '@/views/Profile/components/ProgressBar';
 
 
 type PropsType = {

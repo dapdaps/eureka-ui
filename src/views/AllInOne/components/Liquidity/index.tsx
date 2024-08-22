@@ -1,18 +1,17 @@
+import { useSetChain } from '@web3-onboard/react';
 import { memo, useEffect, useMemo, useState } from 'react';
 
+import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import multicallConfig from '@/config/contract/multicall';
+import liquidityDapp from '@/config/dapp/liquidity'
+import stakingDapp from '@/config/dapp/staking'
 import liquidityConfig from '@/config/liquidity/networks';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
-import { useSetChain } from '@web3-onboard/react';
-import liquidityDapp from '@/config/dapp/liquidity'
-import stakingDapp from '@/config/dapp/staking'
-
-import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import {
   StyledAccountContainer,
   StyledAccountTip,

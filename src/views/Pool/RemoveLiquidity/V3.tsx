@@ -1,15 +1,17 @@
 import { memo, useState } from 'react';
-import Modal from '@/components/Modal';
+
 import Loading from '@/components/Icons/Loading';
-import Tokens from '../Detail/components/Tokens';
-import Amount from './components/Amount';
-import Token from './components/Token';
-import Button from '../components/Button';
+import Modal from '@/components/Modal';
+import useAccount from '@/hooks/useAccount';
 import ConnectWalletButton from '@/views/Pool/components/ConnectWalletButton';
 import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
-import useRemove from './hooks/useRemove';
+
+import Button from '../components/Button';
+import Tokens from '../Detail/components/Tokens';
 import useDappConfig from '../hooks/useDappConfig';
-import useAccount from '@/hooks/useAccount';
+import Amount from './components/Amount';
+import Token from './components/Token';
+import useRemove from './hooks/useRemove';
 import { StyledContent } from './styles';
 
 const Remove = ({ amount0, amount1, feeAmount0, feeAmount1, open, onClose, onSuccess, detail }: any) => {

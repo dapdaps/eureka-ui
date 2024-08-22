@@ -1,11 +1,12 @@
 import { memo } from 'react';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 import {
   StyledArrowDown,
   StyledArrowDownWrapper,
   StyledMoreContainer,
   StyledMoreText,
 } from '@/views/Dapp/components/DappDetail/styles';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 
 const Scroll = (props: Props) => {
   const { onArrowClick = () => {} } = props;

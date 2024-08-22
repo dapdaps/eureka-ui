@@ -1,7 +1,9 @@
+import { motion } from 'framer-motion';
 import { memo, useEffect } from 'react';
 import styled from 'styled-components';
+
 import { modal, overlay } from '@/components/animation';
-import { motion } from 'framer-motion';
+
 import { StyledContainer } from './Start';
 
 const StyledBox = styled(motion.div)`

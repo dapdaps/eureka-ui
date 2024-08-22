@@ -1,11 +1,13 @@
-import bnsAvatar from '@public/images/others/bns/bns_avatar.svg?url';
-import useAccount from '@/hooks/useAccount';
 import { formatsByName } from '@ensdomains/address-encoder';
 import namehash from '@ensdomains/eth-ens-namehash';
+import bnsAvatar from '@public/images/others/bns/bns_avatar.svg?url';
 import { ethers } from 'ethers';
 import _ from 'lodash';
 import Image from 'next/image';
 import { memo, useMemo, useState } from 'react';
+
+import useAccount from '@/hooks/useAccount';
+
 import { COIN_TYLE_LIST, COIN_TYLE_MAP } from '../../constants';
 import useBnsContract from '../../hooks/useBnsContract';
 import type { SaveNetworkStatusType } from '../../types';

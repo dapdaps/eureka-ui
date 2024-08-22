@@ -1,8 +1,8 @@
 import { linea } from '@/config/tokens/linea';
-import { mantle } from '@/config/tokens/mantle';
 import { manta } from '@/config/tokens/manta';
-import { scroll } from '@/config/tokens/scroll';
+import { mantle } from '@/config/tokens/mantle';
 import { mode } from '@/config/tokens/mode';
+import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'iZiSwap',

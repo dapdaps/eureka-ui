@@ -1,8 +1,9 @@
 import { StyledContainer } from "@/styled/styles";
+
+import type { FavoriteType } from "../../types";
 import Dapps from "../Dapps";
-import Features from "../Features";
-import { FavoriteType } from "../../types";
 import Empty from "../Empty";
+import Features from "../Features";
 
 type PropsType = {
   loaded: boolean;

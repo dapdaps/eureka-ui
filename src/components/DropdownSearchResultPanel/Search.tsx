@@ -1,10 +1,9 @@
+import IconClear from '@public/images/header/input-clear.svg';
+import IconSearch from '@public/images/header/input-prefix.svg';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
-import IconSearch from '@public/images/header/input-prefix.svg';
-import IconClear from '@public/images/header/input-clear.svg';
-
 import { useRecentStore } from './hooks/useRecentStore';
-import { useEffect } from 'react';
 
 const StyleSearch = styled.div`
   display: flex;

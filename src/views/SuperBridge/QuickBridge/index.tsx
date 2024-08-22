@@ -1,33 +1,22 @@
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
-import ReactDOM from 'react-dom'
-import { useDebounce } from 'ahooks';
-import Big from 'big.js';
 
 import allTokens from '@/config/bridge/allTokens';
-import chainCofig from '@/config/chains'
+import chainCofig from '@/config/chains';
+import useAccount from '@/hooks/useAccount';
+import { usePriceStore } from '@/stores/price';
+import type { Chain } from "@/types";
+import { balanceFormated } from '@/utils/balance';
 
-import Modal from '../Modal'
-import TokenAmount from './TokenAmount'
+import { ArrowDown } from '../Arrow';
+import useBridge from '../hooks/useBridge';
+import Modal from '../Modal';
 import SubmitBtn from '../SubmitBtn';
 import ConfirmModal from '../SubmitBtn/ConfirmModal';
-import { ArrowDown } from '../Arrow'
 import ConfirmSuccessModal from '../SubmitBtn/ConfirmSuccess2Modal';
-
-import useToast from '@/hooks/useToast';
-import useAddAction from '@/hooks/useAddAction';
-import useTokenBalance from '@/hooks/useCurrencyBalance';
-import useQuote from '../hooks/useQuote';
-import useAccount from '@/hooks/useAccount';
-import useBridge from '../hooks/useBridge'
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
-
-import type { Chain, Token } from "@/types";
-import Link from "next/link";
-
-
-
+import TokenAmount from './TokenAmount';
 const Title = styled.div`
     display: flex;
     align-items: center;

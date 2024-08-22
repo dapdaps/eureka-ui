@@ -1,19 +1,20 @@
+import { motion } from 'framer-motion';
+
+import Empty from '@/components/Empty';
 import Loading from '@/components/Icons/Loading';
+import type { Category } from '@/hooks/useAirdrop';
+import useChainDappMedal from '@/views/Dapp/hooks/useChainDappMedal';
+
 import {
   StyledContainer,
-  StyledTitle,
+  StyledLoading,
   StyledMedalContainer,
-  StyledMedalLogo,
   StyledMedalInner,
-  StyledMedalTag,
+  StyledMedalLogo,
   StyledMedalName,
   StyledMedals,
-  StyledLoading
-} from './styles';
-import { motion } from 'framer-motion';
-import Empty from '@/components/Empty';
-import useChainDappMedal from '@/views/Dapp/hooks/useChainDappMedal';
-import { Category } from '@/hooks/useAirdrop';
+  StyledMedalTag,
+  StyledTitle} from './styles';
 
 const Medal = ({ id, type }: Props) => {
 

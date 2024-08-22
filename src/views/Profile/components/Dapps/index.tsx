@@ -1,8 +1,9 @@
 import useDappOpen from '@/hooks/useDappOpen';
 import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
-import DappLoading from '@/views/AllDapps/Loading/Dapp';
 import DappCard from '@/views/AllDapps/components/DappCard';
-import { DappType } from '../../types';
+import DappLoading from '@/views/AllDapps/Loading/Dapp';
+
+import type { DappType } from '../../types';
 import RectangleNumber from '../RectangleNumber';
 export default function Dapps({ loaded, dapps }: any) {
   const { open } = useDappOpen();

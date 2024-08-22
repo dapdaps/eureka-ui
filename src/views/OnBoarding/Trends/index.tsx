@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import { cloneDeep } from 'lodash';
 import { useRouter } from 'next/router';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { useDefaultLayout } from '@/hooks/useLayout';
+
 import useDappOpen from '@/hooks/useDappOpen';
+import { useDefaultLayout } from '@/hooks/useLayout';
+import type { NextPageWithLayout } from '@/utils/types';
+
+import { DAPP_LOGO } from '../config';
 import { formatTitle } from '../helpers';
 import useTrends from '../hooks/useTrends';
-import type { NextPageWithLayout } from '@/utils/types';
-import { cloneDeep } from 'lodash';
-import { DAPP_LOGO } from '../config';
 
 const Container = styled.div`
   margin: 0 8%;

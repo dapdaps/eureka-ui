@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import React, { useEffect, useState, forwardRef } from 'react';
+import React, { forwardRef,useEffect, useState } from 'react';
 
 import { Wrapper } from './style.modal';
 

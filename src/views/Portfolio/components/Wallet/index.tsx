@@ -7,6 +7,7 @@ import {
   formateValue,
   formateValueWithThousandSeparatorAndFont,
 } from '@/utils/formate';
+import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 import { NoDataLayout } from '@/views/Portfolio/components/NoDataLayout';
 import { getTokenLogo } from '@/views/Portfolio/helpers';
 
@@ -19,7 +20,6 @@ import {
   StyledWalletTable,
   StyledWalletTableItem,
 } from './styles';
-import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 const TABLE_HEAD = [
   {
