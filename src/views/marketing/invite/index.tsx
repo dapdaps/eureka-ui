@@ -1,6 +1,7 @@
 import { getAccessToken } from '@/apis';
 import { QUEST_PATH } from '@/config/quest';
-import { get, getWithoutActive, post } from '@/utils/http';
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
+import { getWithoutActive } from '@/utils/http';
 import {
   StyledBg,
   StyledBgImage,
@@ -26,7 +27,6 @@ import {
   StyledXContainer
 } from '@/views/marketing/invite/styles';
 import { useConnectWallet } from '@web3-onboard/react';
-import { setCookie } from 'cookies-next';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
 import { InviteModal, KolUserInfo } from '../components';
@@ -45,15 +45,14 @@ const Invite = (props: Props) => {
     isMobile
   } = props;
   const router = useRouter()
+  const { queryUserInfo } = useInititalDataWithAuth();
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [address, setAddress] = useState('');
   const [isShowModal, setIsShowModal] = useState(false);
   const [userStatus, setUserStatus] = useState<'uncheck' | 'new' | 'old'>('uncheck');
   const [modalType, setModalType] = useState<'success' | 'fail'>('success');
   const [fresh, setFresh] = useState(0);
-  const [updater, setUpdater] = useState(0);
   async function checkAddress() {
-    console.log('====wallet', wallet)
     const isBitget = wallet?.label.toLowerCase().includes('bitget');
     const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
     const isOkx = wallet?.label.toLowerCase().includes('okx');
@@ -68,6 +67,9 @@ const Invite = (props: Props) => {
       setModalType("fail")
     }
     setIsShowModal(true)
+
+    await getAccessToken(address);
+    queryUserInfo();
   }
   const onConnectWallet = () => {
     connect();
@@ -80,7 +82,6 @@ const Invite = (props: Props) => {
 
   useEffect(() => {
     if (address) {
-      setUpdater(Date.now());
       checkAddress()
     }
   }, [address]);
