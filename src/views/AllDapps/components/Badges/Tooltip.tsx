@@ -1,8 +1,9 @@
-import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { createPortal } from 'react-dom';
-import { AnimatePresence, motion, MotionValue, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useDebounceFn } from 'ahooks';
+import type { MotionValue} from 'framer-motion';
+import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
+import styled from 'styled-components';
 
 // a simple tooltip component that supports rendering content to the root node (document.body)
 const Tooltip = forwardRef<Refs, Props>((props, ref) => {
@@ -26,8 +27,8 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
 
   const springX = useMotionValue(0);
   const springConfig = { stiffness: 100, damping: 5 };
-  const rotate = useSpring(useTransform(springX || useMotionValue(0), [-100, 100], [-45, 45]), springConfig);
-  const translateX = useSpring(useTransform(springX || useMotionValue(0), [-100, 100], [-50, 50]), springConfig);
+  const rotate = useSpring(useTransform(springX, [-100, 100], [-45, 45]), springConfig);
+  const translateX = useSpring(useTransform(springX, [-100, 100], [-50, 50]), springConfig);
 
   const { run: closeTooltip, cancel: cancelCloseTooltip } = useDebounceFn(() => {
     setVisible(false);

@@ -1,6 +1,6 @@
+import { AnimatePresence, motion, useInView } from 'framer-motion';
 import React, { useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { AnimatePresence, motion, useInView } from 'framer-motion';
 
 const LazyImage = (props: Props) => {
   const {

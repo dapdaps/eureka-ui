@@ -1,16 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
-import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import IconSwap from '@public/images/refresh.svg';
-import IconMore from '@public/images/tokens/more.svg';
-import TokenDetailPopup from './TokenDetailPopup';
-import { get } from '@/utils/http';
-import { useDebounceFn } from 'ahooks';
-import { StyledFlex } from '@/styled/styles';
-import Loading from '@/components/Icons/Loading';
-import { format } from 'date-fns';
 import IconArrowUp from '@public/images/tokens/arrow-up.svg';
+import IconMore from '@public/images/tokens/more.svg';
+import { useDebounceFn } from 'ahooks';
+import { format } from 'date-fns';
+import React, { useEffect, useMemo, useState } from 'react';
+import { Line, LineChart, ResponsiveContainer,Tooltip, XAxis, YAxis } from 'recharts';
+import styled from 'styled-components';
+
+import Loading from '@/components/Icons/Loading';
 import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
+import { StyledFlex } from '@/styled/styles';
+import { get } from '@/utils/http';
+
+import TokenDetailPopup from './TokenDetailPopup';
 
 const ChartContainer = styled.div`
   color: white;

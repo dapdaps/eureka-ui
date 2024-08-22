@@ -1,6 +1,6 @@
+import { manta } from '@/config/tokens/manta';
 import { polygon } from '@/config/tokens/polygon';
 import { polygonZkevm } from '@/config/tokens/polygonZkevm';
-import { manta } from '@/config/tokens/manta';
 
 const basic = {
   name: 'QuickSwap',

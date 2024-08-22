@@ -1,6 +1,7 @@
-import { post } from '@/utils/http';
 import { useCallback, useState } from 'react';
+
 import useToast from '@/hooks/useToast';
+import { post } from '@/utils/http';
 
 export default function useSynthesis(onSuccess: VoidFunction) {
   const [loading, setLoading] = useState(false);

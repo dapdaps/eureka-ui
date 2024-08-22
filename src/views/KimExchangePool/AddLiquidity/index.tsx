@@ -1,32 +1,34 @@
-import { useState, useRef, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import useAddLiquidityData from '../hooks/useAddLiquidityData';
-import useAdd from '../hooks/useAdd';
+import { useMemo,useRef, useState } from 'react';
+
+import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
+import { balanceFormated } from '@/utils/balance';
+import Empty from '@/views/Pool/AddLiquidity/components/Empty';
 import Header from '@/views/Pool/AddLiquidity/components/Header';
-import SelectPair from './SelectPair';
-import PoolNoExsitHints from '@/views/Pool/AddLiquidity/components/PoolNoExsitHints';
-import SelectPriceRange from './SelectPriceRange';
 import OutRangeHints from '@/views/Pool/AddLiquidity/components/OutRangeHints';
 import PoolHints from '@/views/Pool/AddLiquidity/components/PoolHints';
-import StartingPrice from '@/views/Pool/AddLiquidity/components/StartingPrice';
-import Chart from './Chart';
-import Empty from '@/views/Pool/AddLiquidity/components/Empty';
-import SelectTokens from './SelectTokens';
+import PoolNoExsitHints from '@/views/Pool/AddLiquidity/components/PoolNoExsitHints';
 import PreviewModal from '@/views/Pool/AddLiquidity/components/PreviewModal';
+import StartingPrice from '@/views/Pool/AddLiquidity/components/StartingPrice';
 import Setting from '@/views/Pool/components/Setting';
-import DepositAmounts from './DepositAmounts';
-import Loading from '@/components/Icons/Loading';
+import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 import AddButton from '@/views/Pool/IncreaseLiquidity/components/Button';
-import { balanceFormated } from '@/utils/balance';
+
+import useAdd from '../hooks/useAdd';
+import useAddLiquidityData from '../hooks/useAddLiquidityData';
+import Chart from './Chart';
+import DepositAmounts from './DepositAmounts';
+import SelectPair from './SelectPair';
+import SelectPriceRange from './SelectPriceRange';
+import SelectTokens from './SelectTokens';
 import {
   StyledContainer,
-  StyledLoadingWrapper,
   StyledContent,
   StyledCurrentPrice,
-  StyledLabels,
   StyledLabel,
+  StyledLabels,
+  StyledLoadingWrapper,
 } from './styles';
 
 const AddLiquidity = () => {

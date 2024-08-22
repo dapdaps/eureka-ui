@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
-import styled from 'styled-components';
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
+import React, { useEffect, useState } from "react";
+import styled from 'styled-components';
 
 import allTokens from '@/config/bridge/allTokens';
 import chainCofig from '@/config/chains'
-
-import Modal from '../Modal'
-import TokenAmount from './TokenAmount'
-import SubmitBtn from '../SubmitBtn';
-import ConfirmModal from '../SubmitBtn/ConfirmModal';
-import { ArrowDown } from '../Arrow'
-import ConfirmSuccessModal from '../SubmitBtn/ConfirmSuccess2Modal';
-
-import useToast from '@/hooks/useToast';
+import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import useQuote from '../hooks/useQuote';
-import useAccount from '@/hooks/useAccount';
-import useBridge from '../hooks/useBridge'
+import useToast from '@/hooks/useToast';
 import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
-
 import type { Chain, Token } from "@/types";
+import { addressFormated, balanceFormated, errorFormated, getFullNum,percentFormated } from '@/utils/balance';
+
+import { ArrowDown } from '../Arrow'
+import useBridge from '../hooks/useBridge'
+import useQuote from '../hooks/useQuote';
+import Modal from '../Modal'
+import SubmitBtn from '../SubmitBtn';
+import ConfirmModal from '../SubmitBtn/ConfirmModal';
+import ConfirmSuccessModal from '../SubmitBtn/ConfirmSuccess2Modal';
+import TokenAmount from './TokenAmount'
 
 
 

@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+
 import Loading from '@/components/Icons/Loading';
-import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
+import { balanceFormated, valueFormated } from '@/utils/balance';
 import TokenIcon from '@/views/Pool/components/TokenIcon';
 
 export const StyledRow = styled.div`

@@ -1,6 +1,6 @@
+import { motion } from 'framer-motion';
 import { memo } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
 
 const StyledContainer = styled.div`
   width: 140px;

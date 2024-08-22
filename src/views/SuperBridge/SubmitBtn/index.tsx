@@ -1,10 +1,9 @@
+import { useSetChain } from '@web3-onboard/react';
 import styled from 'styled-components';
 
-import useConnectWallet from '@/hooks/useConnectWallet';
-import useAccount from '@/hooks/useAccount';
 import Loading from '@/components/Icons/Loading';
-import { useSetChain } from '@web3-onboard/react';
-
+import useAccount from '@/hooks/useAccount';
+import useConnectWallet from '@/hooks/useConnectWallet';
 import type { Chain, Token } from '@/types';
 
 const Container = styled.div<{ disabled?: boolean }>`

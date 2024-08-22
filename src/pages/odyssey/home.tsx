@@ -1,7 +1,8 @@
-import { useRouter } from 'next/router';
-import { useDefaultLayout } from '@/hooks/useLayout';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+
 import Spinner from '@/components/Spinner';
+import { useDefaultLayout } from '@/hooks/useLayout';
 
 const CompassApp = dynamic(() => import('@/views/Compass/home'), { loading: () => <Spinner /> });
 const OdysseyThruster = dynamic(() => import('@/views/OdysseyThruster'), { loading: () => <Spinner /> });

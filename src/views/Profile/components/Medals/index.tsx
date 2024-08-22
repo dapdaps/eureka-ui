@@ -1,15 +1,17 @@
+import { useRouter } from 'next/router';
+
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+
+import MedalLoading from '../../Loading/MedalLoading';
+import type { MedalType } from '../../types';
+import MedalCard from '../MedalCard';
+import ProgressBar from '../ProgressBar';
+import RectangleNumber from '../RectangleNumber'
 import {
   StyledContainer,
   StyledMedalCard,
   StyledViewMore
 } from './styles';
-import ProgressBar from '../ProgressBar';
-import RectangleNumber from '../RectangleNumber'
-import MedalCard from '../MedalCard';
-import MedalLoading from '../../Loading/MedalLoading';
-import { MedalType } from '../../types';
-import { useRouter } from 'next/router';
 
 
 export default function Medals({
@@ -64,9 +66,9 @@ export default function Medals({
 
       <StyledFlex gap='20px' flexWrap='wrap'>
         {
-          medalList.map((medal: MedalType) => {
+          medalList.map((medal: MedalType, index) => {
             return (
-              <MedalCard medal={medal} />
+              <MedalCard medal={medal} key={index} />
             )
           })
         }

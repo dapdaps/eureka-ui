@@ -1,4 +1,5 @@
 import { useConnectWallet } from '@web3-onboard/react';
+import { cloneDeep } from 'lodash';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -9,12 +10,11 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
+import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import Tag from '@/views/Odyssey/components/Tag';
 
 import useClaim from './hooks/useClaim';
-import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
 import useDetail from './hooks/useDetail';
-import { cloneDeep } from 'lodash';
 
 const StyledLogo = styled.img`
   width: 340px;

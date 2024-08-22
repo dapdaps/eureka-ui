@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { RANK_COLORS } from './config';
 
 const StyledRank = styled.div`

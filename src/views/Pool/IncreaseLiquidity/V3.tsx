@@ -1,14 +1,16 @@
 import { memo, useMemo, useState } from 'react';
+
 import Modal from '@/components/Modal';
-import Tokens from '../Detail/components/Tokens';
+
+import DepositAmounts from '../components/DepositAmounts/V3';
 import AmountPanel from '../Detail/components/AmountPanel';
 import Range from '../Detail/components/Range';
-import DepositAmounts from '../components/DepositAmounts/V3';
-import IncreaseButton from './components/Button';
-import { StyledContent } from './styles';
-import { tickToPrice, checkIsFullRange } from '../utils/tickMath';
+import Tokens from '../Detail/components/Tokens';
 import useDappConfig from '../hooks/useDappConfig';
+import { checkIsFullRange,tickToPrice } from '../utils/tickMath';
+import IncreaseButton from './components/Button';
 import useIncrease from './hooks/useIncrease';
+import { StyledContent } from './styles';
 
 const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1 }: any) => {
   const { token0, token1, tickLower, tickUpper, currentTick } = detail;

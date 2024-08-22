@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
-import { StyledContainer, StyledItem, StyledLeft, StyledStar, StyledRight, StyledTitle, StyledDesc } from './styles';
+
+import { StyledContainer, StyledDesc,StyledItem, StyledLeft, StyledRight, StyledStar, StyledTitle } from './styles';
 
 const Milestones = ({ milestones }: any) => {
   const mergedMilestones = useMemo<any>(() => {

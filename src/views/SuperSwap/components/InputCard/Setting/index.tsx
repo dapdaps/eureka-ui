@@ -1,16 +1,18 @@
-import { memo, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { memo, useEffect, useState } from 'react';
+
 import { container, overlay } from '@/components/animation';
 import { useSettingsStore } from '@/stores/settings';
+
 import {
+  Input,
+  Inputs,
+  InputWrapper,
   MaskLayer,
+  SlippageAction,
+  SlippageActions,
   StyledContainer,
   StyledContent,
-  Inputs,
-  SlippageActions,
-  SlippageAction,
-  InputWrapper,
-  Input,
 } from './styles';
 
 const TYPES = ['Auto', 'Custom'];

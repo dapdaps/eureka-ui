@@ -1,5 +1,6 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
 import steakhut from '../dapps/steakhut';
 const CHAIN_ID = 43114;
 const CHAIN_NAME = 'Avalanche';

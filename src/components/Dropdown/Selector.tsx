@@ -1,11 +1,13 @@
-import Dropdown, { DropdownProps } from './index';
 import React, { useEffect, useState } from 'react';
+
 import {
   StyledPopupItem,
   StyledPopupItemCheck,
   StyledPopupItemInner,
   StyledPopupList,
 } from '@/components/Dropdown/styles';
+
+import Dropdown, { type DropdownProps } from './index';
 
 // a simple dropdown selector for common
 const Selector = (props: SelectorProps) => {

@@ -1,7 +1,9 @@
 import loginLogo from '@public/images/others/bns/login_logo.svg?url';
-import useAuth from '@/hooks/useAuth';
 import Image from 'next/image';
 import { memo } from 'react';
+
+import useAuth from '@/hooks/useAuth';
+
 import {
   StyledFlex,
   StyledImage,

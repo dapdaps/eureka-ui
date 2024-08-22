@@ -1,7 +1,8 @@
-import { StyledContainer, StyledFlex } from "@/styled/styles";
 import { memo } from "react";
 import Skeleton from "react-loading-skeleton";
 import styled from "styled-components";
+
+import { StyledContainer, StyledFlex } from "@/styled/styles";
 const StyledOdyssy = styled.div`
   font-size: 0;
   width: 612px;
@@ -45,7 +46,7 @@ export default memo(function OdysseyLoading() {
   return (
     <StyledOdyssyLoading>
       {
-        new Array(2).fill(0).map(() => <Odyssey />)
+        new Array(2).fill(0).map((_, index) => <Odyssey key={index} />)
       }
     </StyledOdyssyLoading>
   )

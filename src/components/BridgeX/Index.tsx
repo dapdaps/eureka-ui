@@ -1,27 +1,26 @@
+import { useDebounce } from 'ahooks';
+import Big from 'big.js'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Big from 'big.js'
-import { useDebounce } from 'ahooks';
 
-import allTokens from '@/config/bridge/allTokens';
-import useToast from '@/hooks/useToast';
 import Loading from '@/components/Icons/Loading';
+import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
+import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
 
-import ChainSelector from './components/ChainSelector'
-import FeeMsg from './components/FeeMsg';
 import Alert from './components/Alert';
-import Transaction from './components/Transaction';
+import ChainSelector from './components/ChainSelector'
 import Confirm from './components/Confirm'
+import FeeMsg from './components/FeeMsg';
 import Token from './components/Token'
-
+import Transaction from './components/Transaction';
 import {
     addressFormated,
-    saveTransaction,
     isNumeric,
+    saveTransaction,
 } from './Utils'
 
 const BridgePanel = styled.div`

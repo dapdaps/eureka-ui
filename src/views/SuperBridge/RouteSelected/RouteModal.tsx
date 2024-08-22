@@ -1,12 +1,13 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect,useRef, useState } from "react";
 import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+
+import type { Chain, Token } from "@/types";
 
 import { ArrowDown } from '../Arrow'
+import DotFlashing from '../DotFlashing/'
 import Modal from "../Modal";
 import Route from "../Route";
-import DotFlashing from '../DotFlashing/'
-import type { Chain, Token } from "@/types";
 
 const ListWapper = styled.div`
     &>:not(:first-child) {

@@ -1,6 +1,7 @@
-import { StyledExtraReward, StyledExtraRewardContent, StyledCoin, StyledTitle, StyledLinkButton } from './styles';
-import RankModal from '../RankModal';
 import { useState } from 'react';
+
+import RankModal from '../RankModal';
+import { StyledCoin, StyledExtraReward, StyledExtraRewardContent, StyledLinkButton,StyledTitle } from './styles';
 
 export default function ExtraWard({ dapp }: any) {
   const [showModal, setShowModal] = useState(false);

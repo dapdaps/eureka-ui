@@ -1,18 +1,19 @@
-import styled from 'styled-components';
-import CheckInGrid, { CheckInGridRef } from './CheckInGrid';
-import { useState, useRef, useEffect, useMemo } from 'react';
-import MedalCard from './MedalCard';
 import { useDebounceFn, useLockFn } from 'ahooks';
-import { get, post } from '@/utils/http';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import useAccount from '@/hooks/useAccount';
-import { ICheckInData } from './types';
-import Loading from '@/components/Icons/Loading';
+import { useEffect, useMemo,useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import MedalPopup from './MedalPopup';
-import { MedalType } from "@/views/Profile/types";
+import styled from 'styled-components';
 
+import Loading from '@/components/Icons/Loading';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
+import { get, post } from '@/utils/http';
+import type { MedalType } from "@/views/Profile/types";
+
+import CheckInGrid, { type CheckInGridRef } from './CheckInGrid';
+import MedalCard from './MedalCard';
+import MedalPopup from './MedalPopup';
+import type { ICheckInData } from './types';
 
 const StyleCheckIn = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
-import { scroll, CHAIN_ID as scrollId } from '@/config/tokens/scroll';
 import weth from '@/config/contract/weth';
+import { CHAIN_ID as scrollId,scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Compound V3',

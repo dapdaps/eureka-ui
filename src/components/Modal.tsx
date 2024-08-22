@@ -1,8 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import React, { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { memo } from 'react';
-import styled from 'styled-components';
 import ReactDOM from 'react-dom';
+import styled from 'styled-components';
 
 import { modal, overlay } from '@/components/animation';
 

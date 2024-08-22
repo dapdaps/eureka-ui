@@ -1,6 +1,7 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import styled from 'styled-components';
+
 import { StatusType } from '@/views/Odyssey/components/Tag';
 
 export const StyledContainer = styled.div`

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import TooltipList from '../Tooltip/List';
+
 import useDappReward from '@/views/AllDapps/hooks/useDappReward';
+
+import TooltipList from '../Tooltip/List';
 
 const StyledRecentRewards = styled.div`
   height: 646px;
@@ -55,7 +57,7 @@ const RecentRewards = (props: Props) => {
       </div>
       {
         isSubTitle && (
-          <div className="words">Participate in DapDap's Odyssey or mission with partners to earn multiple rewards.</div>
+          <div className="words">Participate in DapDap&apos;s Odyssey or mission with partners to earn multiple rewards.</div>
         )
       }
       <TooltipList data={data} />

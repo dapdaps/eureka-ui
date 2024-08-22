@@ -1,8 +1,7 @@
+import Image from 'next/image';
 import type { CSSProperties, FC, ReactNode } from 'react';
 import React, { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
-
-import Image from 'next/image';
 
 interface IProps {
   status: 'Acheived' | 'Process';

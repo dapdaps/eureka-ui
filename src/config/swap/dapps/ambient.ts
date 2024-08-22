@@ -1,5 +1,5 @@
-import { scroll } from '@/config/tokens/scroll';
 import { blast } from '@/config/tokens/blast';
+import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Ambient',

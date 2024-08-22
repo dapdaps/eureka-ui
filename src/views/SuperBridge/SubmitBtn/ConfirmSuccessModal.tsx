@@ -1,12 +1,13 @@
-import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
 import { useRouter } from 'next/router';
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
+import styled from 'styled-components';
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+
 import Loading from '@/components/Icons/Loading';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 
 import Modal from "../Modal";
-import type { Chain, Token } from '@/types';
 
 const Title = styled.div`
     font-size: 20px;

@@ -1,6 +1,7 @@
-import { StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 import { memo } from "react";
 import styled from "styled-components";
+
+import { StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 
 const StyledInto = styled.div`
   position: relative;

@@ -1,10 +1,10 @@
+import Big from 'big.js';
+import Image from 'next/image';
 import React, { memo } from 'react';
 import styled from 'styled-components';
 
-import Image from 'next/image';
+import type { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
-import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
-import Big from 'big.js';
 
 export const formatValue = (value: string): string => {
   if (!value) return ''

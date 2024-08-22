@@ -1,7 +1,8 @@
-import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
-import { copyText } from "@/utils/copy";
 import { memo, useState } from "react";
 import styled from "styled-components";
+
+import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
+import { copyText } from "@/utils/copy";
 
 const StyledCopyTips = styled.div`
   position: absolute;

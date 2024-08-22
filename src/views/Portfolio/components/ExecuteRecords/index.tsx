@@ -3,6 +3,7 @@ import { orderBy, uniqBy, upperFirst } from 'lodash';
 import React, { useMemo } from 'react';
 
 import { container } from '@/components/animation';
+import Selector from '@/components/Dropdown/Selector';
 import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
 import { StyledFlex, StyledLoadingWrapper } from '@/styled/styles';
@@ -13,7 +14,6 @@ import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWit
 
 import { getTime } from '../../helpers';
 import { StyledContainer, StyledContent, StyledHead, StyledPagination } from './styles';
-import Selector from '@/components/Dropdown/Selector';
 
 const ExecuteRecords = ({ hasMore, records, loading, pageIndex, dapps, dapp, chain, handlePrev, handleNext, handleDapp, handleChain }: any) => {
   const chainList = useMemo<any[]>(() => {

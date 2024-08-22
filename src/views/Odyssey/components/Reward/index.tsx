@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
+
+import { formatValue } from '@/views/Home/components/Tooltip/Odyssey';
+
 import { StatusType } from '../Tag';
 import TooltipList from './List';
 import { StyledTagItem, StyledTagItemInner } from './styles';
-import { formatValue } from '@/views/Home/components/Tooltip/Odyssey';
 
 export const parseReward = (reward: string) => {
     if (!reward) return [];

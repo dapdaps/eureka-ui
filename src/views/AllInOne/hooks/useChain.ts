@@ -76,7 +76,7 @@ export function useChain(props: Props) {
     () => {
       const _currentChain = popupsData[chain] || popupsData['arbitrum'];
       if (_currentChain.menuConfig) {
-        for (let key in _currentChain.menuConfig) {
+        for (const key in _currentChain.menuConfig) {
           const curr = _currentChain.menuConfig[key].tab;
           _currentChain.menuConfig[key].id = MenuConfig[curr]?.id;
         }

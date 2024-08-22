@@ -1,6 +1,12 @@
+import IconALl from '@public/images/networks/icon-all.svg';
+import type Big from 'big.js';
+import { orderBy } from 'lodash';
 import { memo, useEffect, useRef, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
+import { SupportedChains } from '@/config/all-in-one/chains';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+import type { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
 
 import Item from './Item';
 import {
@@ -12,12 +18,6 @@ import {
   StyledNetworkTabWrapper,
   StyledTabItem,
 } from './styles';
-import IconALl from '@public/images/networks/icon-all.svg';
-import { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
-import Big from 'big.js';
-import Skeleton from 'react-loading-skeleton';
-import { SupportedChains } from '@/config/all-in-one/chains';
-import { orderBy } from 'lodash';
 
 const ALL = {
   key: -1,

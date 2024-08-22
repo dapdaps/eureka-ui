@@ -1,12 +1,13 @@
-import { basic as thrusterBasic, networks as thrusterNetworks } from '../dapps/thruster-finance';
-import { basic as mimswapBasic, networks as mimswapNetworks } from '../dapps/mimswap';
-import { basic as monoswapV3Basic, networks as monoswapV3Networks } from '../dapps/monoswap-v3';
-import { basic as monoswapV2Basic, networks as monoswapV2Networks } from '../dapps/monoswap-v2';
-import { basic as ringBasic, networks as ringNetworks } from '../dapps/ring-protocol';
-import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
-import { basic as fenixFinanceBasic, networks as fenixFinanceNetworks } from '../dapps/fenix-finance';
-import { basic as bladeBasic, networks as bladeNetworks } from '../dapps/blade-swap';
 import { blast } from '@/config/tokens/blast';
+
+import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
+import { basic as bladeBasic, networks as bladeNetworks } from '../dapps/blade-swap';
+import { basic as fenixFinanceBasic, networks as fenixFinanceNetworks } from '../dapps/fenix-finance';
+import { basic as mimswapBasic, networks as mimswapNetworks } from '../dapps/mimswap';
+import { basic as monoswapV2Basic, networks as monoswapV2Networks } from '../dapps/monoswap-v2';
+import { basic as monoswapV3Basic, networks as monoswapV3Networks } from '../dapps/monoswap-v3';
+import { basic as ringBasic, networks as ringNetworks } from '../dapps/ring-protocol';
+import { basic as thrusterBasic, networks as thrusterNetworks } from '../dapps/thruster-finance';
 
 const CHAIN_ID = 81457;
 

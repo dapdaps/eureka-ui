@@ -1,6 +1,7 @@
-import { StyledContainer, StyledTitle } from './styles';
-import ChainSelector from './ChainSelector';
 import Tooltip from '@/components/TitleTooltip';
+
+import ChainSelector from './ChainSelector';
+import { StyledContainer, StyledTitle } from './styles';
 
 export default function Header() {
   return (

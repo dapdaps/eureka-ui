@@ -1,12 +1,12 @@
 import { memo, useMemo } from 'react';
+
 import {
-  PortfolioTabs,
   PortfolioTabContent,
-  StyledTabItem,
+  PortfolioTabs,
+  StyledPortfolioTabBorder,
   StyledPortfolioTabCursor,
   StyledPortfolioTabHead,
-  StyledPortfolioTabBorder
-} from './styles';
+  StyledTabItem} from './styles';
 
 const Tab = ({ tab, setTab, children, tabs, tabsExtra }: any) => {
 

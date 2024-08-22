@@ -1,17 +1,19 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { intersection } from 'lodash';
 import Big from 'big.js';
-import useAccount from '@/hooks/useAccount';
-import useToast from '@/hooks/useToast';
-import useAddAction from '@/hooks/useAddAction';
-import { useSettingsStore } from '@/stores/settings';
-import { usePriceStore } from '@/stores/price';
-import networks from '@/config/swap/networks';
+import { intersection } from 'lodash';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
 import weth from '@/config/contract/weth';
-import getWrapOrUnwrapTx from '../components/Trade/getWrapOrUnwrapTx';
+import networks from '@/config/swap/networks';
+import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
+import useToast from '@/hooks/useToast';
+import { usePriceStore } from '@/stores/price';
+import { useSettingsStore } from '@/stores/settings';
+import type { Token } from '@/types';
+
 import checkGas from '../components/Trade/checkGas';
 import formatTrade from '../components/Trade/formatTrade';
-import type { Token } from '@/types';
+import getWrapOrUnwrapTx from '../components/Trade/getWrapOrUnwrapTx';
 
 export default function useTrade({ chainId }: any) {
   const slippage: any = useSettingsStore((store: any) => store.slippage);

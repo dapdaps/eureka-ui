@@ -1,9 +1,9 @@
+import Big from 'big.js'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Big from 'big.js'
 
-import useTokenBalance from '@/hooks/useCurrencyBalance';
 import Loading from '@/components/Icons/Loading';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 
 const CurrencyRowWapper = styled.div`

@@ -1,7 +1,9 @@
+import { useRouter } from 'next/router';
+
 import { IdToPath } from '@/config/all-in-one/chains';
 import useDappOpen from '@/hooks/useDappOpen';
 import { StyledFlex, StyledFont } from '@/styled/styles';
-import { useRouter } from 'next/router';
+
 import AirdropLoading from '../../Loading/AirdropLoading';
 import ProgressBar from '../ProgressBar';
 import RectangleNumber from '../RectangleNumber';

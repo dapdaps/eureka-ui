@@ -1,4 +1,4 @@
-import { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
+import type { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 export type Tab = 'InProgress' | 'FavoriteApps' | 'RewardHistory';
 export type Column = {
   label: string;

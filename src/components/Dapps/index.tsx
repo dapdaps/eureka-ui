@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import DappCard from './DappCard';
 import { StyledDapps } from './styles';
 

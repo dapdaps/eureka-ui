@@ -1,7 +1,9 @@
 import { memo } from 'react';
+
 import TokenSwitcher from '@/views/Pool/components/TokenSwitcher';
+
 import Input from './Input';
-import { StyledContainer, StyledHeader, StyledSubtitle, StyledHeaderActions, StyledFullRange } from './styles';
+import { StyledContainer, StyledFullRange,StyledHeader, StyledHeaderActions, StyledSubtitle } from './styles';
 
 const SelectPriceRange = ({
   lowerPrice,

@@ -1,7 +1,7 @@
 import Big from 'big.js'
 import { SuperBridgeStore } from 'super-bridge-sdk'
 
-import { post, get, AUTH_TOKENS } from '@/utils/http';
+import { AUTH_TOKENS,get, post } from '@/utils/http';
 
 let gloabalSbs: SuperBridgeStore
 async function initDb() {

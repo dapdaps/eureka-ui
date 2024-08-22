@@ -1,4 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { memo } from 'react';
 
 import { container } from '@/components/animation';
@@ -6,7 +7,6 @@ import Campaign from '@/views/Quest/components/Campaign';
 import QuestLists from '@/views/Quest/components/QuestLists';
 
 import { StyledContainer } from './styles';
-import { useRouter } from 'next/router';
 const Quests = ({
   onLoad,
   id,

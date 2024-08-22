@@ -1,13 +1,13 @@
-import styled from "styled-components"
-import Skeleton from 'react-loading-skeleton';
 import IconOdyssey from '@public/images/header/odyssey-new.svg';
-
-import Tag, { StatusType } from "@/views/Odyssey/components/Tag";
-import { Odyssey } from "@/components/DropdownSearchResultPanel/hooks/useDefaultSearch";
 import { useRouter } from "next/router";
+import Skeleton from 'react-loading-skeleton';
+import styled from "styled-components"
+
+import type { Odyssey } from "@/components/DropdownSearchResultPanel/hooks/useDefaultSearch";
+import LazyImage from '@/components/LazyImage';
 import odyssey from "@/config/odyssey";
 import useToast from "@/hooks/useToast";
-import LazyImage from '@/components/LazyImage';
+import Tag, { StatusType } from "@/views/Odyssey/components/Tag";
 
 const Flex = styled.div`
   display: flex;

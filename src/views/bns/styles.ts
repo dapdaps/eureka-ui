@@ -1,5 +1,6 @@
 import styled, { keyframes } from 'styled-components';
-import type { StyledFlexType, StyledButtonType } from './types';
+
+import type { StyledButtonType,StyledFlexType } from './types';
 // login
 export const StyledLogin = styled.div`
   height: 100vh;

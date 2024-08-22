@@ -1,7 +1,8 @@
 import React, { memo } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
-import { ModeKey } from '@/views/networks/list';
+import styled from 'styled-components';
+
+import { type ModeKey } from '@/views/networks/list';
 import {
   ChainDesc,
   ChainInfo,

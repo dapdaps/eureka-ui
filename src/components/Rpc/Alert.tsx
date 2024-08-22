@@ -1,8 +1,9 @@
 import { memo } from 'react';
+
 import Modal from '@/components/Modal';
-import { StyledFlex } from '@/styled/styles';
 import { StyledAlertButton, StyledAlertText } from '@/components/Rpc/styles';
 import { useRpcStore } from '@/stores/rpc';
+import { StyledFlex } from '@/styled/styles';
 
 const RpcAlert = (props: Props) => {
   const { visible } = props;

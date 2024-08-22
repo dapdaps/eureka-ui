@@ -1,6 +1,6 @@
-import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 import { base } from '@/config/tokens/base';
 import { gnosis } from '@/config/tokens/gnosis';
+import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 
 const basic = {
   name: 'Balancer',

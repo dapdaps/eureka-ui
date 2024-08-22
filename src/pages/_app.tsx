@@ -8,11 +8,10 @@ import 'nprogress/nprogress.css';
 import { useDebounceFn } from 'ahooks';
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
-import NProgress from 'nprogress';
-
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
+import NProgress from 'nprogress';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { SkeletonTheme } from 'react-loading-skeleton';

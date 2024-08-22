@@ -1,12 +1,14 @@
-import Modal from '@/components/Modal';
-import { memo, useEffect, useState } from 'react';
-import CloseIcon from '@/components/Icons/Close';
-import useTokenBalance from '@/hooks/useTokenBalance';
-import useWrapAndUnwrap from './useWrapAndUnWrap';
-import Input from './Input';
-import Button from './Button';
-import { StyledHeader, StyledTab, StyledCloseIcon, StyledContent } from './styles';
 import Big from 'big.js';
+import { memo, useEffect, useState } from 'react';
+
+import CloseIcon from '@/components/Icons/Close';
+import Modal from '@/components/Modal';
+import useTokenBalance from '@/hooks/useTokenBalance';
+
+import Button from './Button';
+import Input from './Input';
+import { StyledCloseIcon, StyledContent,StyledHeader, StyledTab } from './styles';
+import useWrapAndUnwrap from './useWrapAndUnWrap';
 
 const TABS = ['Wrap', 'Unwrap'];
 

@@ -1,25 +1,27 @@
-import { memo, useEffect, useState } from 'react';
 import Big from 'big.js';
 import { format } from 'date-fns';
 import { AnimatePresence } from 'framer-motion';
+import { memo, useEffect, useState } from 'react';
+
 import CopyButton from '@/components/CopyButton';
 import { ellipsAccount } from '@/utils/account';
-import Process from './Process';
+
 import Expired from './Expired';
-import Timer from './Timer';
 import OpenInWallet from './OpenInWallet';
+import Process from './Process';
 import {
   StyledContainer,
-  StyledTop,
-  StyledTopLeft,
-  StyledTokenIcon,
   StyledExpand,
   StyledExpandContainer,
   StyledExpandContent,
   StyledItem,
-  StyledMainItems,
   StyledMainItem,
+  StyledMainItems,
+  StyledTokenIcon,
+  StyledTop,
+  StyledTopLeft,
 } from './styles';
+import Timer from './Timer';
 
 const OrderPanel = ({ order, tokens, defaultExpand, onSuccess }: any) => {
   const [expand, setExpand] = useState(defaultExpand);

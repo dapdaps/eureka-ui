@@ -1,9 +1,11 @@
-import { memo } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { memo } from 'react';
+
 import { container } from '@/components/animation';
-import Total from './Total';
+
 import Actions from './Actions';
 import { StyledContainer } from './styles';
+import Total from './Total';
 
 const OnBoardingActions = ({ chain, openModal }: any) => {
   return (

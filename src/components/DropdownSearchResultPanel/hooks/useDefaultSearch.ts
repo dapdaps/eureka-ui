@@ -1,7 +1,8 @@
-import { useState, useEffect } from 'react';
-import { get } from '@/utils/http';
+import { useEffect,useState } from 'react';
+
 import { QUEST_PATH } from '@/config/quest';
-import { StatusType } from '@/views/Odyssey/components/Tag';
+import { get } from '@/utils/http';
+import type { StatusType } from '@/views/Odyssey/components/Tag';
 
 export interface Network {
   id: number;

@@ -1,23 +1,24 @@
+import Image from 'next/image';
 import { memo } from 'react';
-import {
-  StyledHeaderWrapper,
-  StyledTitleWrapper,
-  StyledChainName,
-  StyledStat,
-  StyledStatItem,
-  StyledInfo,
-} from './styles';
+import Skeleton from 'react-loading-skeleton';
 
-import ValuePercent from '@/views/networks/list/components/value-percent';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import AddMetaMask from '@/views/ChainDetail/components/AddMetaMask';
-import Image from 'next/image';
-import Skeleton from 'react-loading-skeleton';
+import ValuePercent from '@/views/networks/list/components/value-percent';
+
+import {
+  StyledChainName,
+  StyledHeaderWrapper,
+  StyledInfo,
+  StyledStat,
+  StyledStatItem,
+  StyledTitleWrapper,
+} from './styles';
 
 const Header = (props: { chain: any; loading?: boolean; }) => {
   const { chain, loading } = props;
 
-  let {
+  const {
     logo,
     name,
     trading_volume,

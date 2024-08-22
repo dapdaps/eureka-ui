@@ -1,13 +1,12 @@
-import styled from 'styled-components';
 import { useDebounce } from 'ahooks';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 import useToast from '@/hooks/useToast';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
 
-
 import { ArrowRight } from '../Arrow'
-import { useEffect, useState } from 'react';
 
 const Container = styled.div`
     background-color: rgba(38, 40, 54, 1);

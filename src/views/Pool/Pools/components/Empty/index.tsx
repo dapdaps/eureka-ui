@@ -1,8 +1,9 @@
 import useAccount from '@/hooks/useAccount';
-import EmptyIcon from '../../../components/EmptyIcon';
-import useDappConfig from '../../../hooks/useDappConfig';
 import ConnectWalletButton from '@/views/Pool/components/ConnectWalletButton';
 import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
+
+import EmptyIcon from '../../../components/EmptyIcon';
+import useDappConfig from '../../../hooks/useDappConfig';
 import { StyledContainer, StyledText } from './style';
 
 export default function Empty() {

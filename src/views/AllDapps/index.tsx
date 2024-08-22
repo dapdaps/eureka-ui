@@ -1,3 +1,16 @@
+import Image from 'next/image';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import type { ChangeEvent} from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+
+import Selector from '@/components/Dropdown/Selector';
+import Loading from '@/components/Icons/Loading';
+import Radio from '@/components/Radio';
+import { NetworkAll, useNetworks } from '@/hooks/useNetworks';
+import SortBy from '@/views/AllDapps/components/Filters/SortBy';
+import AllDappsTitle from '@/views/AllDapps/components/Title';
+import { SortList, TrueString } from '@/views/AllDapps/config';
 import {
   StyledBody,
   StyledContainer,
@@ -8,20 +21,10 @@ import {
   StyledSearchInput,
   StyledSelectorLoading
 } from '@/views/AllDapps/styles';
-import AllDappsTitle from '@/views/AllDapps/components/Title';
-import Selector from '@/components/Dropdown/Selector';
-import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import { SortList, TrueString } from '@/views/AllDapps/config';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { useRouter } from 'next/router';
-import Loading from '@/components/Icons/Loading';
-import DappList from './components/DappList';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
+
+import DappList from './components/DappList';
 import useList from './hooks/useList';
-import { NetworkAll, useNetworks } from '@/hooks/useNetworks';
-import SortBy from '@/views/AllDapps/components/Filters/SortBy';
-import Radio from '@/components/Radio';
 
 const categoryAnimation = (_scrolled: boolean, visible = {}, hidden = {}) => ({
   variants:{

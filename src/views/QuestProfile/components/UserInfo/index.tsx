@@ -1,6 +1,7 @@
 import { memo } from 'react';
 
 import { ellipsAccount } from '@/utils/account';
+
 import {
   StyledAddress,
   StyledAvatar,

@@ -1,20 +1,20 @@
 import { useRouter } from 'next/router';
 import { memo, useMemo, useState } from 'react';
 
+import PageBack from '@/components/PageBack';
+import chainCofig from '@/config/chains';
 import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
-import chainCofig from '@/config/chains';
-import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent';
 import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
 import { useChain } from '@/views/AllInOne/hooks/useChain';
 import { StyledBg, StyledContainer, StyledContent, StyledNavList } from '@/views/AllInOne/styles';
+import SuperBridge from '@/views/SuperBridge/BridgeAction/BridgeContent';
 
 import Settings from './components/Setting/index';
-import PageBack from '@/components/PageBack';
 
 const AllInOneDetailView = (props: Props) => {
   const { chain, menu } = props;

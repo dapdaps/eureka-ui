@@ -1,12 +1,14 @@
+import { useDebounceFn } from 'ahooks';
+import { useEffect, useState } from 'react';
+
 import popupsData, { IdToPath } from '@/config/all-in-one/chains';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 import { CategoryList } from '@/views/AllDapps/config';
-import { useDebounceFn } from 'ahooks';
-import { useEffect, useState } from 'react';
-import { Tab } from '../types';
+
+import type { Tab } from '../types';
 
 type AirdropType = any
 type NetworkType = any

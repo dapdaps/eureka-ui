@@ -1,11 +1,11 @@
+import { providers,utils } from 'ethers';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import useAccount from '@/hooks/useAccount';
-import { utils, providers } from 'ethers';
 
 import chains from '@/config/chains';
-import { multicall } from '@/utils/multicall';
 import multicallAddresses from '@/config/contract/multicall';
-import { Token } from '@/types';
+import useAccount from '@/hooks/useAccount';
+import type { Token } from '@/types';
+import { multicall } from '@/utils/multicall';
 
 const rpcs: any = {
   11155111: 'https://rpc2.sepolia.org',

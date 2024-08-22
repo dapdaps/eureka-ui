@@ -1,6 +1,8 @@
 import { memo } from 'react';
-import GoMore from '@/components/GoMore';
+
 import Dapps from '@/components/Dapps';
+import GoMore from '@/components/GoMore';
+
 import { StyledContainer, StyledHeader, StyledTitle, StyledTitleImg } from './styles';
 
 const HotDapps = ({ dapps }: any) => {

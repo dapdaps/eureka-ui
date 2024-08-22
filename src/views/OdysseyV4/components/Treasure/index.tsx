@@ -5,6 +5,7 @@ import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { StyledFlex } from '@/styled/styles';
 import CoinGroup from '@/views/OdysseyV4/components/Treasure/CoinGroup';
+import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
 import SkakeModel from '@/views/StakeModal/index';
 
 import useParticleReport from '../../hooks/useParticleReport';
@@ -12,7 +13,6 @@ import Line from '../Line';
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
-import AddLiquidityModal from '@/views/Pool/AddLiquidityModal';
 import {
   Badge,
   IconGroup,

@@ -1,8 +1,9 @@
 import { useRouter } from 'next/router';
-import { LiquidityContext } from '@/views/Pool/context';
-import Pools from '@/views/Pool/Pools';
-import Detail from '@/views/Pool/Detail';
+
 import AddLiquidity from '@/views/Pool/AddLiquidity';
+import { LiquidityContext } from '@/views/Pool/context';
+import Detail from '@/views/Pool/Detail';
+import Pools from '@/views/Pool/Pools';
 
 export default function PoolDapp({ dapp, chainId, currentChain, localConfig, chains }: any) {
   const router = useRouter();

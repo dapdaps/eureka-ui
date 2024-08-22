@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
-import { RPC_LIST, RpcList as ERpcList } from '@/utils/config';
-import { useRpcStore } from '@/stores/rpc';
+
 import { getRpcPing } from '@/components/Rpc/utils';
+import { useRpcStore } from '@/stores/rpc';
+import type { RpcList as ERpcList } from '@/utils/config';
+import { RPC_LIST } from '@/utils/config';
 
 const list = Object.values(RPC_LIST);
 const keys = Object.keys(RPC_LIST) as ERpcList[];

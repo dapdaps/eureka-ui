@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { StyledContainer } from './styles';
 
 const Button = ({ children, ...rest }: any) => {

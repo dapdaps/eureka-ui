@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
-import { useTokenPriceListStore } from '@/stores/tokenPrice';
+import { useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
+
+import { useTokenPriceListStore } from '@/stores/tokenPrice';
 
 const StyledWrapper = styled.div`
   display: flex;
@@ -87,8 +88,8 @@ interface Token {
 }
 
 const LoadingCard = () => {
-  return Array.from({ length: 8 }).map(() => (
-    <IndexList>
+  return Array.from({ length: 8 }).map((_, index) => (
+    <IndexList key={index}>
       <Skeleton width={20} height={20} />
       <Skeleton width={60} height={20} />
       <Skeleton width={40} height={20} />

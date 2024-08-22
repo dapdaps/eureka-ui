@@ -1,17 +1,19 @@
-import { memo, useMemo } from 'react';
 import Big from 'big.js';
-import Loading from '@/components/Icons/Loading';
-import Header from '@/views/Pool/Detail/components/Header';
-import Tokens from '@/views/Pool/Detail/components/Tokens';
-import Actions from '@/views/Pool/Detail/components/Actions';
-import LiquidityPanel from '@/views/Pool/Detail/components/LiquidityPanel/V3';
-import FeesPanel from '@/views/Pool/Detail/components/FeesPanel';
-import Range from '@/views/Pool/Detail/components/Range';
-import { getTokenAmounts } from '@/views/Pool/Detail/helpers';
 import { useRouter } from 'next/router';
-import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import usePoolDetail from '../hooks/usePoolDetail';
+import { memo, useMemo } from 'react';
+
+import Loading from '@/components/Icons/Loading';
+import Actions from '@/views/Pool/Detail/components/Actions';
+import FeesPanel from '@/views/Pool/Detail/components/FeesPanel';
+import Header from '@/views/Pool/Detail/components/Header';
+import LiquidityPanel from '@/views/Pool/Detail/components/LiquidityPanel/V3';
+import Range from '@/views/Pool/Detail/components/Range';
+import Tokens from '@/views/Pool/Detail/components/Tokens';
+import { getTokenAmounts } from '@/views/Pool/Detail/helpers';
 import useCollectInfo from '@/views/Pool/Detail/hooks/useCollectInfo';
+import useDappConfig from '@/views/Pool/hooks/useDappConfig';
+
+import usePoolDetail from '../hooks/usePoolDetail';
 import { StyledContainer, StyledLoadingWrapper, StyledPanels } from './styles';
 
 const Detail = () => {

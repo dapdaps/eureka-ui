@@ -1,7 +1,8 @@
-import { basic as joeTraderBasic, networks as joeTraderNetworks } from '../dapps/trader-joe';
+import { avalanche } from '@/config/tokens/avalanche';
+
 import { basic as pangolinBasic, networks as pangolinNetworks } from '../dapps/pangolin';
 import { basic as pharaohBasic, networks as pharaohNetworks } from '../dapps/pharaoh';
-import { avalanche } from '@/config/tokens/avalanche';
+import { basic as joeTraderBasic, networks as joeTraderNetworks } from '../dapps/trader-joe';
 
 const CHAIN_ID = 43114;
 

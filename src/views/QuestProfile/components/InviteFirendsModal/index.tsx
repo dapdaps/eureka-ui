@@ -1,15 +1,15 @@
+import linkModalBg from '@public/images/others/bns/link_modal_bg.svg?url';
+import Image from 'next/image';
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import Modal from '@/components/Modal';
 import useCopy from '@/hooks/useCopy';
+import useUserReward from '@/hooks/useUserReward';
+import { useUserStore } from '@/stores/user';
+import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
 import { ellipsAccount } from '@/utils/account';
 
-import linkModalBg from '@public/images/others/bns/link_modal_bg.svg?url';
-import { useUserStore } from '@/stores/user';
-import useUserReward from '@/hooks/useUserReward';
-import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import Image from 'next/image';
 import useRewardsClaim from '../../hooks/useRewardsClaim';
 import type { Column } from '../Pts/types';
 import PendingHints from './PendingHints';

@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { ModeKey } from '@/views/networks/list';
+
+import type { ModeKey } from '@/views/networks/list';
 
 export const useNetworkStore = create(
   persist(

@@ -1,6 +1,8 @@
 import { memo, useMemo } from 'react';
-import chains from '@/config/chains';
 import styled from 'styled-components';
+
+import chains from '@/config/chains';
+
 import { getChainLogo } from '../../helpers';
 
 const StyledContainer = styled.div`

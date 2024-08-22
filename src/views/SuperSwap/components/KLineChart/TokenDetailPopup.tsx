@@ -1,17 +1,18 @@
-import { memo, useEffect, useMemo, useState } from 'react';
-import Modal from '@/components/Modal';
-import styled from 'styled-components';
 import IconAdd from '@public/images/tokens/add.svg';
-import IconLink from '@public/images/tokens/link.svg';
 import IconCopy from '@public/images/tokens/copy.svg';
-import { get } from '@/utils/http'
-import useToast from '@/hooks/useToast';
-import { copyText } from '@/utils/copy';
+import IconLink from '@public/images/tokens/link.svg';
+import Big from 'big.js';
+import { memo, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
+
+import Modal from '@/components/Modal';
 import chainCofig from '@/config/chains';
+import useToast from '@/hooks/useToast';
+import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
+import { copyText } from '@/utils/copy';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { formateValueWithThousandSeparator } from '@/utils/formate';
-import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
-import Big from 'big.js';
+import { get } from '@/utils/http'
 
 const StyledToken = styled.div`
   padding: 0 24px;

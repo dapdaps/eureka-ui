@@ -1,9 +1,15 @@
 "use client"
+import Big from 'big.js';
+import { format } from 'date-fns';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import styled from 'styled-components';
+
 import Breadcrumb from '@/components/Breadcrumb';
-import Loading from '@/components/Icons/Loading';
 import FjordModal from '@/components/fjord-modal';
 import tokenConfig from '@/components/fjord-modal/hooks/tokenConfig';
 import { useRedeem } from '@/components/fjord-modal/hooks/useFjordTrade';
+import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { useUserStore } from '@/stores/user';
 import {
@@ -13,16 +19,11 @@ import {
   StyledLoadingWrapper,
   StyledSvg
 } from '@/styled/styles';
+import type { Token } from '@/types';
 import { formatThousandsSeparator } from '@/utils/format-number';
-import Big from 'big.js';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import styled from 'styled-components';
+
 import useUser from './hooks/useUser';
 import useUserPools from './hooks/useUserPools';
-
-import type { Token } from '@/types';
-import { format } from 'date-fns';
 
 const StyledFjordSvgContainer = styled.div`
   position: absolute;

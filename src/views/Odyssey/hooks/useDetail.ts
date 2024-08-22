@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import { get } from '@/utils/http';
 import { useDebounceFn } from 'ahooks';
+import { useCallback, useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import { get } from '@/utils/http';
 
 export default function useDetail() {
   const [detail, setDetail] = useState<any>();

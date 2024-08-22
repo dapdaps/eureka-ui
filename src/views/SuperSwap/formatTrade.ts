@@ -1,5 +1,7 @@
 import Big from 'big.js';
+
 import chains from '@/config/chains';
+
 import checkGas from './checkGas';
 
 const formatTrade = ({

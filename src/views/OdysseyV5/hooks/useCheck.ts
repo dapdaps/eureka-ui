@@ -1,8 +1,9 @@
 import { useCallback, useState } from 'react';
-import useToast from '@/hooks/useToast';
-import { get } from '@/utils/http';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useToast from '@/hooks/useToast';
+import { get } from '@/utils/http';
 
 export default function useCheck(quest: any, cb: any, detailLoading: boolean, setDetailLoading: any) {
   const [loading, setLoading] = useState(false);

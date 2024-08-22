@@ -1,20 +1,18 @@
-import type { Chain, Token } from '@/types'
-import { useEffect, useState } from 'react';
-import { Contract, providers, utils } from 'ethers';
-import { getQuote, getStatus, execute, approve } from 'super-bridge-sdk'
 import { useSetChain } from '@web3-onboard/react';
+import Big from 'big.js';
+import type { Signer } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
+import { useEffect, useState } from 'react';
+import type { QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+import { approve,execute, getQuote, getStatus } from 'super-bridge-sdk'
+
+import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
-
-import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
-import chainCofig from '@/config/chains';
-
-import type { QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
-import type { Signer } from 'ethers';
-
+import type { Chain, Token } from '@/types'
+import { addressFormated, balanceFormated, errorFormated, getFullNum,percentFormated } from '@/utils/balance';
 
 import tokenConfig from './tokenConfig'
-import Big from 'big.js';
 
 export interface QuoteProps {
     fromChain: Chain;

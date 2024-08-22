@@ -1,18 +1,20 @@
-import { memo, useEffect, useMemo } from 'react';
 import Big from 'big.js';
-import { balanceFormated, valueFormated } from '@/utils/balance';
+import { memo, useEffect, useMemo } from 'react';
+
 import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useTokenBalance';
+import { balanceFormated, valueFormated } from '@/utils/balance';
+
 import {
-  StyledInput,
-  StyledInputTokenBox,
-  StyledInputInner,
-  StyledToken,
-  StyledIcon,
-  StyledSymbol,
-  StyledDesc,
   StyledBalance,
+  StyledDesc,
   StyledEmptyToken,
+  StyledIcon,
+  StyledInput,
+  StyledInputInner,
+  StyledInputTokenBox,
+  StyledSymbol,
+  StyledToken,
 } from './styles';
 
 const Input = ({ value, token, setValue, prices, disabled, onLoad }: any) => {

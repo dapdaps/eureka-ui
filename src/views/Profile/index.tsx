@@ -1,13 +1,16 @@
-import useUserInfo from '@/hooks/useUserInfo';
-import useUserReward from '@/hooks/useUserReward';
+import { random } from 'lodash';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
 
-import BouncingMedal, { BouncingMedalItem } from '@/components/bouncing-medal';
+import type { BouncingMedalItem } from '@/components/bouncing-medal';
+import BouncingMedal from '@/components/bouncing-medal';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useUserInfo from '@/hooks/useUserInfo';
+import useUserReward from '@/hooks/useUserReward';
 import useReport from '@/views/Landing/hooks/useReport';
-import styled from 'styled-components';
+
 import FavoriteApps from './components/FavoriteApps';
 import InProgress from './components/InProgress';
 import InviteFirendsModal from './components/InviteFirendsModal';
@@ -21,8 +24,7 @@ import useInviteList from './hooks/useInviteList';
 import useUserFavorites from './hooks/useUserFavorites';
 import useMedalList from './hooks/useUserMedalList';
 import useUserRewardRecords from './hooks/useUserRewardRecords';
-import { MedalType, Tab } from './types';
-import { random } from 'lodash';
+import type { MedalType, Tab } from './types';
 
 const StyledContainer = styled.div`
   background-image: url(/images/profile/top_bg.png);

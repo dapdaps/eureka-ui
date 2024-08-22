@@ -1,5 +1,5 @@
-import Title from '../Title';
 import DappCard from '../DappCard';
+import Title from '../Title';
 import { StyledContainer, StyledContent } from './styles';
 
 export default function Swap({ list, onRefreshDetail }: any) {

@@ -1,11 +1,11 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
+import { useTokensBalance } from '@/components/Bridge/hooks/useTokenBalance';
 import CurrencyIcon from '@/components/CurrencyIcon';
 import Loading from '@/components/Icons/Loading';
 import useChain from '@/hooks/useChain';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { useTokensBalance } from '@/components/Bridge/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
 import { Token } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';

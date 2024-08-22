@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import type { FlexProps, FontProps } from './types';
 
 export const StyledContainer = styled.div``;

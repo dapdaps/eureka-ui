@@ -1,27 +1,29 @@
 import Big from 'big.js';
 import { useEffect, useState } from 'react';
+
 import ArrowIcon from '@/components/Icons/ArrowIcon';
-import CurrencyInput from '../Input';
-import { balanceFormated, valueFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
 import Refresh from '@/components/Icons/Refresh';
-import Slippage from './Slippage';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
+import type { Token } from '@/types';
+import { balanceFormated, valueFormated } from '@/utils/balance';
+
+import { useUpdateBalanceStore } from '../../hooks/useUpdateBalanceStore';
+import CurrencyInput from '../Input';
+import Slippage from './Slippage';
 import {
   CurrencyIcon,
   CurrencyTitle,
+  StyledActionButton,
+  StyledActions,
+  StyledHeader,
   StyledSelectToken,
   StyledTradeBalance,
   StyledTradeBlock,
-  StyledTradeInputContainer,
-  StyledHeader,
-  StyledActions,
-  StyledActionButton,
   StyledTradeContent,
+  StyledTradeInputContainer,
 } from './styles';
-import type { Token } from '@/types';
-import { useUpdateBalanceStore } from '../../hooks/useUpdateBalanceStore';
 
 type Props = {
   title: string;

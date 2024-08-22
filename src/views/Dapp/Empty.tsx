@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
 
 const StyledContainer = styled.div`
   color: #fff;

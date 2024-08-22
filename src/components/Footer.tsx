@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
+
 import Rpc from '@/components/Rpc';
+
 import InfiniteScrollChain from './InfiniteScrollChain';
 
 const StyledContainer = styled.div`

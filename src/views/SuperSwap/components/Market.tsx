@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+
 import { StyledFlex } from '@/styled/styles';
+
 import { StyledBestPrice } from '../styles';
 
 const StyledIcon = styled.img`

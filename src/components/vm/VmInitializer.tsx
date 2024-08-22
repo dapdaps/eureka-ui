@@ -1,8 +1,8 @@
 import { sanitizeUrl } from '@braintree/sanitize-url';
 import { setupKeypom } from '@keypom/selector';
+import { setupBitgetWallet } from '@near-wallet-selector/bitget-wallet';
 import { setupWalletSelector } from '@near-wallet-selector/core';
 import { setupHereWallet } from '@near-wallet-selector/here-wallet';
-import { setupBitgetWallet } from '@near-wallet-selector/bitget-wallet';
 import { setupMeteorWallet } from '@near-wallet-selector/meteor-wallet';
 import type { WalletSelectorModal } from '@near-wallet-selector/modal-ui';
 import { setupModal } from '@near-wallet-selector/modal-ui';
@@ -27,6 +27,7 @@ import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
 
 import { useEthersProviderContext } from '@/data/web3';
+import useMobile from '@/hooks/useMobile';
 import { useSignInRedirect } from '@/hooks/useSignInRedirect';
 import { setupFastAuth } from '@/lib/selector/setup';
 import { useAuthStore } from '@/stores/auth';
@@ -34,7 +35,6 @@ import { useVmStore } from '@/stores/vm';
 import { recordWalletConnect, reset as resetSegment } from '@/utils/analytics';
 import { network, networkId, signInContractId } from '@/utils/config';
 import { KEYPOM_OPTIONS } from '@/utils/keypom-options';
-import useMobile from '@/hooks/useMobile';
 
 export default function VmInitializer() {
   const [signedIn, setSignedIn] = useState(false);

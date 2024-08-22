@@ -1,11 +1,14 @@
+import Big from 'big.js';
 import React, { useEffect, useMemo, useState } from 'react';
-import Logo from './Logo';
 
-import { CategoryList, TitleDapp, TitleDappList } from '@/views/AllDapps/config';
-import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
+import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
+import type { TitleDapp} from '@/views/AllDapps/config';
+import { CategoryList, TitleDappList } from '@/views/AllDapps/config';
 import useDappCategoriesSum from '@/views/AllDapps/hooks/useDappCategoriesSum';
-import Counter from './Counter';
+import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
+import Counter from './Counter';
+import Logo from './Logo';
 import {
   StyledHead,
   StyledTitle,
@@ -13,8 +16,6 @@ import {
   StyledTitleSub,
   StyledTitleText,
 } from './styles';
-import Big from 'big.js';
-import CategoryFilter from '@/views/AllDapps/components/Title/CategoryFilter';
 
 const AllDappsTitle = (props: Props) => {
   const {

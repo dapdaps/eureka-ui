@@ -1,12 +1,14 @@
 import { memo } from 'react';
-import { StyledContainer, StyledDappList, StyledFoot, StyledEmptyContainer, StyledEmptyItem, StyledEmptyShadow, StyledEmptyInner, StyledEmptyText } from '@/views/AllDapps/components/DappList/styles';
-import DappLoading from '@/views/AllDapps/Loading/Dapp';
-import DappCard from '@/views/AllDapps/components/DappCard';
+
 import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
 import useDappOpen from '@/hooks/useDappOpen';
-import { PageSize } from '../../config';
+import DappCard from '@/views/AllDapps/components/DappCard';
+import { StyledContainer, StyledDappList, StyledEmptyContainer, StyledEmptyInner, StyledEmptyItem, StyledEmptyShadow, StyledEmptyText,StyledFoot } from '@/views/AllDapps/components/DappList/styles';
+import DappLoading from '@/views/AllDapps/Loading/Dapp';
+
 import AdvertiseCardList from '../../../AdvertiseCardList';
+import { PageSize } from '../../config';
 
 const DappList = (props: Props) => {
   const { open } = useDappOpen();
@@ -38,6 +40,7 @@ const DappList = (props: Props) => {
                   dappList.map((dapp: any, idx: number) => dapp.isAdvertise
                     ? (
                         <AdvertiseCardList
+                          key={idx}
                           classname='advertise'
                           adList={dapp.advertise}
                         />

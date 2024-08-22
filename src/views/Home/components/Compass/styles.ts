@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import LazyImage from '@/components/LazyImage';
 
 export const StyledContainer = styled.div`

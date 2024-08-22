@@ -1,13 +1,14 @@
-import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
 import {
-  StyledItemContainer,
-  StyledItemTop,
-  StyledItemLeft,
-  StyledItemIcon,
-  StyledIconBox,
   StyledExpandContainer,
   StyledExpandContent,
+  StyledIconBox,
+  StyledItemContainer,
+  StyledItemIcon,
+  StyledItemLeft,
+  StyledItemTop,
 } from './styles';
 
 export default function Item({ title, icon, content }: any) {

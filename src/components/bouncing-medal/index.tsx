@@ -1,13 +1,13 @@
 import {
-  Engine,
-  Render,
   Bodies,
+  type Body,
   Composite,
-  Runner,
+  Engine,
+  Events,
   Mouse,
   MouseConstraint,
-  Events,
-  Body,
+  Render,
+  Runner,
   World,
 } from 'matter-js';
 import React, { useEffect, useRef } from 'react';

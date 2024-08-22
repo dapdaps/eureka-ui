@@ -1,24 +1,26 @@
-import { memo, useState } from 'react';
 import Big from 'big.js';
-import { balanceFormated } from '@/utils/balance';
-import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
+import { memo, useState } from 'react';
+
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { useSettingsStore } from '@/stores/settings';
+import { balanceFormated } from '@/utils/balance';
+import CloseIcon from '@/views/AllInOne/components/Trade/CloseIcon';
+
 import {
-  StyledMarketItemContent,
-  StyledMarketItemDetail,
-  StyledMarketItemText,
-  StyledMarketItemTextLeft,
-  StyledMarketItemTextRight,
-  StyledMarketsContainer,
   StyledMarketArrow,
   StyledMarketItem,
   StyledMarketItemBalance,
-  StyledMarketItemRight,
-  StyledMarketItemToken,
+  StyledMarketItemContent,
+  StyledMarketItemDetail,
   StyledMarketItemIcon,
   StyledMarketItemLeft,
   StyledMarketItemName,
+  StyledMarketItemRight,
+  StyledMarketItemText,
+  StyledMarketItemTextLeft,
+  StyledMarketItemTextRight,
+  StyledMarketItemToken,
+  StyledMarketsContainer,
   StyledMarketTag,
 } from '../styles';
 

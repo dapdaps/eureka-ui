@@ -1,8 +1,9 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
+import teahouseFinance from '../../staking/dapps/teahouse-finance';
 import gamma from '../dapps/gamma';
 import metavault from '../dapps/metavault';
-import teahouseFinance from '../../staking/dapps/teahouse-finance';
 
 const CHAIN_ID = 59144;
 const CHAIN_NAME = 'Linea';

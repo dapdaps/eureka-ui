@@ -1,6 +1,6 @@
-import { memo, useEffect, useRef } from 'react';
-import { animate } from 'framer-motion';
 import Big from 'big.js';
+import { animate } from 'framer-motion';
+import { memo, useEffect, useRef } from 'react';
 
 const Counter = (props: { from: number; to: number; duration?: number; formatter?(value: number): any }) => {
   const { from, to, duration = 2, formatter } = props;

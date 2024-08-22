@@ -1,20 +1,21 @@
-import { FeatureType } from '../../types'
+import { useRouter } from 'next/router';
+import { useMemo } from 'react';
+import Skeleton from 'react-loading-skeleton';
+
+import Empty from '@/components/Empty';
+import popupsData from '@/config/all-in-one/chains';
+import chainCofig from '@/config/chains';
+import { StyledFlex, StyledFont } from '@/styled/styles';
+import AllInOneCardView from '@/views/AllInOne/components/Card';
+import {MenuConfig} from '@/views/AllInOne/hooks/useChain';
+
+import type { FeatureType } from '../../types'
 import RectangleNumber from '../RectangleNumber';
 import {
-  StyledContainer,
   StyledCard,
-  StyledFeature,
-  StyledEmpty
-} from './styles';
-import { useMemo } from 'react';
-import popupsData from '@/config/all-in-one/chains';
-import {MenuConfig} from '@/views/AllInOne/hooks/useChain';
-import chainCofig from '@/config/chains';
-import AllInOneCardView from '@/views/AllInOne/components/Card';
-import { StyledFlex, StyledFont } from '@/styled/styles';
-import { useRouter } from 'next/router';
-import Skeleton from 'react-loading-skeleton';
-import Empty from '@/components/Empty';
+  StyledContainer,
+  StyledEmpty,
+  StyledFeature} from './styles';
 
 type PropsType = {
   features: FeatureType[],

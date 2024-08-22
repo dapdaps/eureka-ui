@@ -1,19 +1,21 @@
-import { memo, useState, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { memo, useRef,useState } from 'react';
+
 import Loading from '@/components/Icons/Loading';
-import Header from './components/Header';
-import SelectPair from './components/SelectPair';
-import SelectFee from './components/SelectFeeV2';
-import PoolNoExsitHints from './components/PoolNoExsitHints';
-import DepositAmounts from '../components/DepositAmounts/V2';
 import AddButton, { CreateButton } from '@/views/Pool/IncreaseLiquidity/components/Button';
+
+import DepositAmounts from '../components/DepositAmounts/V2';
 import Setting from '../components/Setting';
-import SelectTokens from './components/SelectTokens';
-import useData from './hooks/useDataV2';
 import useDappConfig from '../hooks/useDappConfig';
 import useIncrease from '../IncreaseLiquidity/hooks/useIncreaseV2';
+import Header from './components/Header';
+import PoolNoExsitHints from './components/PoolNoExsitHints';
+import SelectFee from './components/SelectFeeV2';
+import SelectPair from './components/SelectPair';
+import SelectTokens from './components/SelectTokens';
 import useCreatePair from './hooks/useCreatePair';
-import { StyledContainer, StyledContent, LoadingWrapper } from './styles';
+import useData from './hooks/useDataV2';
+import { LoadingWrapper,StyledContainer, StyledContent } from './styles';
 
 const Add = ({ from, onClose, setVersion }: any) => {
   const [showSettings, setShowSettings] = useState(false);

@@ -1,8 +1,9 @@
 import { memo, useEffect, useState } from 'react';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import styled from 'styled-components';
-import { get } from '@/utils/http';
+
 import { QUEST_PATH } from '@/config/quest';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { get } from '@/utils/http';
 
 const PlatformStats = () => {
   const [statData, setStatData] = useState<IData>({});

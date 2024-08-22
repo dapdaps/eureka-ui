@@ -1,6 +1,6 @@
 import { useDefaultLayout } from '@/hooks/useLayout';
-import OdysseyHomepageView from '@/views/Odyssey/homepage';
 import type { NextPageWithLayout } from '@/utils/types';
+import OdysseyHomepageView from '@/views/Odyssey/homepage';
 
 const OdysseyHomepagePage: NextPageWithLayout = () => {
   return <OdysseyHomepageView />;

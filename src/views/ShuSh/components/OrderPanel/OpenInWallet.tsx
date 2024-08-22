@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import useOpenInWallet from '../../hooks/useOpenInWallet';
 import { StyledOpenInWallet } from './styles';
 

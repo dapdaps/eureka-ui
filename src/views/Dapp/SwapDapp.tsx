@@ -1,5 +1,6 @@
-import BosDapp from './BosDapp';
 import { useImportTokensStore } from '@/stores/import-tokens';
+
+import BosDapp from './BosDapp';
 
 export default function SwapDapp(props: any) {
   const { currentChain, localConfig } = props;

@@ -1,13 +1,13 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect,useRef, useState } from "react";
 import styled from 'styled-components';
 
-import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated } from '@/utils/balance';
-import { usePriceStore } from '@/stores/price';
 import Loading from '@/components/Icons/Loading';
-import Image from './Image'
-
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
+import { balanceFormated, percentFormated } from '@/utils/balance';
+
+import Image from './Image'
 
 const Container = styled.div`
     display: flex;

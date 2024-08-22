@@ -1,35 +1,32 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
-import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk';
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect,useRef, useState } from 'react';
+import styled from 'styled-components';
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
+import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus,init } from 'super-bridge-sdk';
 
-import allTokens from '@/config/bridge/allTokens';
+import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance'
 import { saveTransaction } from '@/components/BridgeX/Utils';
-import useTokenBalance from '@/hooks/useCurrencyBalance';
+import Tooltip from '@/components/TitleTooltip';
+import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
-import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
-import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import useToast from '@/hooks/useToast';
+import type { Chain, Token } from '@/types';
+import { addressFormated, balanceFormated, errorFormated, getFullNum,percentFormated } from '@/utils/balance';
 
 import ChainTokenAmount from '../ChainTokenAmount';
+import GasModal from '../ChainTokenAmount/GasModal';
+import { useGasTokenHooks } from '../hooks/useGasTokenHooks';
+import useQuote from '../hooks/useQuote';
 import PublicTitle from '../PublicTitle';
 import RouteSelected from '../RouteSelected';
 import SubmitBtn from '../SubmitBtn';
-import SettingModal from './SettingModal';
 import ConfirmModal from '../SubmitBtn/ConfirmModal';
 import ConfirmSuccessModal from '../SubmitBtn/ConfirmSuccessModal';
-import GasModal from '../ChainTokenAmount/GasModal';
-
-import useQuote from '../hooks/useQuote';
-import { useGasTokenHooks } from '../hooks/useGasTokenHooks';
-import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance'
-
-import type { Chain, Token } from '@/types';
-
-import Tooltip from '@/components/TitleTooltip';
+import SettingModal from './SettingModal';
 
 const Container = styled.div`
   color: #ffffff;

@@ -1,5 +1,6 @@
-import hexToRgba from '@/utils/hexToRgba';
 import styled from 'styled-components';
+
+import hexToRgba from '@/utils/hexToRgba';
 
 export const StyledContainer = styled.div`
   position: relative;

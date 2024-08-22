@@ -1,7 +1,8 @@
-import { styled } from 'styled-components';
-import { AllDappsWrapper } from '@/views/AllDapps/styles';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { styled } from 'styled-components';
+
+import { AllDappsWrapper } from '@/views/AllDapps/styles';
 
 export const StyledHead = styled(AllDappsWrapper)`
   padding: 0;

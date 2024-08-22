@@ -1,6 +1,14 @@
+import Big from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
 
+import NotificationBar from '@/components/NotificationBar';
+import { SupportedChains } from '@/config/all-in-one/chains';
+import useAccount from '@/hooks/useAccount';
+import { useNetworks } from '@/hooks/useNetworks';
+import { usePortfolioStore } from '@/stores/portfolio';
 import Tab from '@/views/Portfolio/components/Tab';
+import useTvls from '@/views/Portfolio/hooks/useTvls';
+import { useWorth } from '@/views/Portfolio/hooks/useWorth';
 
 import ExecuteRecords from './components/ExecuteRecords';
 import Networks from './components/Networks';
@@ -14,17 +22,8 @@ import {
   StyledContainer,
   StyledContent,
   StyledFeedbackContainer,
-  StyledLink,
-  StyledFeedbackText
-} from './styles';
-import NotificationBar from '@/components/NotificationBar';
-import { useNetworks } from '@/hooks/useNetworks';
-import Big from 'big.js';
-import { usePortfolioStore } from '@/stores/portfolio';
-import { useWorth } from '@/views/Portfolio/hooks/useWorth';
-import useTvls from '@/views/Portfolio/hooks/useTvls';
-import useAccount from '@/hooks/useAccount';
-import { SupportedChains } from '@/config/all-in-one/chains';
+  StyledFeedbackText,
+  StyledLink} from './styles';
 
 const TABS = [
   {

@@ -1,9 +1,11 @@
 import { Contract } from 'ethers';
 import { useCallback, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useToast from '@/hooks/useToast';
-import useDappConfig from '../../hooks/useDappConfig';
+
 import positionAbi from '../../abi/position';
+import useDappConfig from '../../hooks/useDappConfig';
 
 export default function useCollectFee(tokenId: string, onSuccess: VoidFunction) {
   const { contracts } = useDappConfig();

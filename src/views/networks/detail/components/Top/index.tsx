@@ -1,12 +1,14 @@
 import { memo, useState } from 'react';
+
+import PageBack from '@/components/PageBack';
+
 import Header from './Header';
 import {
-  StyledContainer,
-  StyledBox,
   StyledBgWrapper,
+  StyledBox,
+  StyledContainer,
   StyledContent,
 } from './styles';
-import PageBack from '@/components/PageBack';
 
 const Top = (props: { chain: any; loading?: boolean; }) => {
   const { chain, loading } = props;

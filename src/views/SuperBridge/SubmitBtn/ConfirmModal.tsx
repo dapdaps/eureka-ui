@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
 
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 
 import Modal from "../Modal";
-import type { Chain, Token } from '@/types';
 
 const Box = styled.div`
     background-color: rgba(55, 58, 83, 0.5);

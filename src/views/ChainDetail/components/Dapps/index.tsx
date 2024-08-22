@@ -1,5 +1,7 @@
 import { memo } from 'react';
+
 import Dapps from '@/components/Dapps';
+
 import { StyledContainer, StyledTitle } from './styles';
 
 const DappsCom = ({ dapps, chainName }: any) => {

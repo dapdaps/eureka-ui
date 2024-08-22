@@ -1,9 +1,25 @@
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import Loading from '@/components/Icons/Loading';
+import chainCofig from '@/config/chains';
+import tokens, { NativeTokenAddressMap } from '@/config/tokens';
+import type { Quest, QuestDapp} from '@/hooks/useAirdrop';
+import { QuestCategory, useAirdrop } from '@/hooks/useAirdrop';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import useToast from '@/hooks/useToast';
+import { usePriceStore } from '@/stores/price';
+import { StyledFlex } from '@/styled/styles';
+import { copyText } from '@/utils/copy';
+import { formatThousandsSeparator } from '@/utils/format-number';
+import hexToRgba from '@/utils/hexToRgba';
+import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 
 import AddMetaMaskModal from './AddMetaMaskModal';
 import InteractDAppsModal from './InteractDAppsModal';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
-
 import {
   StyledAddText,
   StyledAirdrop,
@@ -37,21 +53,6 @@ import {
   StyledTokenPrice,
   StyledTokenValue,
 } from './styles';
-import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
-import useAuthCheck from '@/hooks/useAuthCheck';
-import hexToRgba from '@/utils/hexToRgba';
-import { Quest, QuestCategory, QuestDapp, useAirdrop } from '@/hooks/useAirdrop';
-import Loading from '@/components/Icons/Loading';
-import useToast from '@/hooks/useToast';
-import { useRouter } from 'next/router';
-import { StyledFlex } from '@/styled/styles';
-import { usePathname } from 'next/navigation';
-import tokens, { NativeTokenAddressMap } from '@/config/tokens';
-import { usePriceStore } from '@/stores/price';
-import chainCofig from '@/config/chains';
-import { formatThousandsSeparator } from '@/utils/format-number';
-import { copyText } from '@/utils/copy';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 
 const Overview = (props: any) => {
   const prices = usePriceStore((store) => store.price);
@@ -440,8 +441,9 @@ const Overview = (props: any) => {
                         The following actions are for reference only, and there is no guarantee that official airdrops can be obtained
                       </StyledAirdropActionsSub>
                       {
-                        airdropData.quests?.map((item) => (
+                        airdropData.quests?.map((item, index) => (
                           <StyledAirdropBodyItem
+                            key={index}
                             $finished={item.completed} onClick={() => {
                             check(() => {
                               onAction(item);

@@ -1,5 +1,3 @@
-import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
-import { ellipsAccount } from '@/utils/account';
 import loginLogo from '@public/images/others/bns/login_logo.svg?url';
 import { useConnectWallet } from '@web3-onboard/react';
 import { setCookie } from 'cookies-next';
@@ -7,6 +5,13 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import { getAccessToken } from '@/apis';
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
+import useToast from '@/hooks/useToast';
+import { ellipsAccount } from '@/utils/account';
+import { get, post } from '@/utils/http';
+
 import useGetInviter from './hooks/useGetInviter';
 import {
   StyledFlex,
@@ -17,10 +22,6 @@ import {
   StyledSvg,
   StyledText
 } from './styles';
-
-import { getAccessToken } from '@/apis';
-import useToast from '@/hooks/useToast';
-import { get, post } from '@/utils/http';
 
 
 const StyledUserContainer = styled.div`

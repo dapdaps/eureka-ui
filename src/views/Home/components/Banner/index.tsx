@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import Bg from './Bg';
 import { StyledContainer, StyledContent, StyledSubTitleWrapper } from './styles';
 

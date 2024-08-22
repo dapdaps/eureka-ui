@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import { get, AUTH_TOKENS } from '@/utils/http';
+import { AUTH_TOKENS,get } from '@/utils/http';
 
 export default function useUser() {
   const [user, setUser] = useState<any>(null);

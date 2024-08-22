@@ -1,12 +1,13 @@
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
-import Pools from './Pools';
-import YourPositions from './YourPositions';
+
+import useDappConfig from '../Pool/hooks/useDappConfig';
 import usePools from './hooks/usePools';
 import useYourPositions from './hooks/useYourPositions';
-import useDappConfig from '../Pool/hooks/useDappConfig';
-import { useRouter } from 'next/router';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { StyledContainer, StyledTabs, StyledTab } from './styles';
+import Pools from './Pools';
+import { StyledContainer, StyledTab,StyledTabs } from './styles';
+import YourPositions from './YourPositions';
 
 const TABS = ['All pools', 'Your position'];
 

@@ -1,7 +1,7 @@
+import ChainsDockDetail from '@/components/ChainsDock/Detail';
+import type { NetworkBalance } from '@/components/ChainsDock/index';
 import LazyImage from '@/components/LazyImage';
 import { StyledFlex } from '@/styled/styles';
-import { NetworkBalance } from '@/components/ChainsDock/index';
-import ChainsDockDetail from '@/components/ChainsDock/Detail';
 
 const ChainsDockList = (props: Props) => {
   const { list } = props;

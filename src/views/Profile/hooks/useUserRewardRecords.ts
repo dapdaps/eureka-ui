@@ -1,9 +1,11 @@
+import { useDebounceFn } from 'ahooks';
+import { useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
-import { useDebounceFn } from 'ahooks';
-import { useEffect, useState } from 'react';
-import { PagerType, RewardRecordsType, Tab } from '../types';
+
+import type { PagerType, RewardRecordsType, Tab } from '../types';
 
 
 export default function useUserRewardRecords(tab: Tab) {

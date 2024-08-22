@@ -1,4 +1,4 @@
-import { StyledTabsContainer, StyledTabItem } from './styles';
+import { StyledTabItem,StyledTabsContainer } from './styles';
 
 type Props = {
   tabs: {

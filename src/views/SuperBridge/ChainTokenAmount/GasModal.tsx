@@ -1,18 +1,18 @@
-import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
-
 import { useDebounce } from 'ahooks';
+import Big from 'big.js';
+import { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+
+import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
-import Loading from '@/components/Icons/Loading';
-import { useGasAmount } from '../hooks/useGasTokenHooks';
-import SubmitBtn from '../SubmitBtn';
-
-import Modal from "../Modal";
 import type { Chain, Token } from '@/types';
-import { useCallback, useEffect, useState } from 'react';
-import Big from 'big.js';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
+
+import { useGasAmount } from '../hooks/useGasTokenHooks';
+import Modal from "../Modal";
+import SubmitBtn from '../SubmitBtn';
 
 const Tip = styled.div`
     font-size: 16px;

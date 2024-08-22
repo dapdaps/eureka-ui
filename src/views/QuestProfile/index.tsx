@@ -1,11 +1,14 @@
-import { useRouter } from 'next/router';
-import { memo, useEffect, useState, useRef } from 'react';
-import useReport from '@/views/Landing/hooks/useReport';
 import { useDebounceFn } from 'ahooks';
+import { useRouter } from 'next/router';
+import { memo, useEffect, useRef,useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import useInviteList from '@/hooks/useInviteList';
 import useUserInfo from '@/hooks/useUserInfo';
 import useUserReward from '@/hooks/useUserReward';
-import useAuthCheck from '@/hooks/useAuthCheck';
+import useReport from '@/views/Landing/hooks/useReport';
+
 import DailyTask from './components/DailyTask';
 import Favorites from './components/Favorites';
 import InviteCodePanel from './components/InviteCode';
@@ -14,7 +17,6 @@ import Pts from './components/Pts';
 import Quests from './components/Quests';
 import Tabs from './components/Tabs';
 import UserInfo from './components/UserInfo';
-import useInviteList from '@/hooks/useInviteList';
 import { StyledBgImg, StyledContainer, StyledPanelWrapper, StyledTabsBox } from './styles';
 import type { Tab } from './types';
 

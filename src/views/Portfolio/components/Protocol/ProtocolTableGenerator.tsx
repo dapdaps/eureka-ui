@@ -1,5 +1,6 @@
-import { memo } from 'react';
 import { upperFirst } from 'lodash';
+import { memo } from 'react';
+
 import { ProtocolTable, ProtocolTableHeader } from './styles';
 
 const colorConfig: { [key: string]: any } = {

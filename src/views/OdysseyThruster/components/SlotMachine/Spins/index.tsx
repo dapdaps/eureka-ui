@@ -1,12 +1,14 @@
-import { useState } from 'react';
-import Loading from '@/components/Icons/Loading';
 import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
 import { container } from '@/components/animation';
-import Quest from './quest';
+import Loading from '@/components/Icons/Loading';
+
 import useSwitcher from '../../../hooks/useSwitcher';
+import RankModal from '../RankModal';
+import Quest from './quest';
 import { LoadingWrap, StyledContainer, StyledContent } from './styles';
 import UnStart from './unStart';
-import RankModal from '../RankModal';
 
 export default function Spins({ loading, list, onRefreshDetail, authConfig, userInfo }: any) {
   const { isStart, secondsRemaining } = useSwitcher();

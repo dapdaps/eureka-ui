@@ -1,19 +1,21 @@
+import { useDebounceFn } from 'ahooks';
+import { useAnimate, useInView } from 'framer-motion';
+import { useEffect } from 'react';
+import styled from 'styled-components';
+
+import { Category } from '@/hooks/useAirdrop';
+import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import {
   StyledContainer,
-  StyledRelatedContainer,
+StyledContainerInner,
   StyledRecordContainer,
-  StyledRelatedOdyssey, StyledContainerInner,
-} from '@/views/Dapp/components/DappDetail/styles';
-import DappSummary from './Summary';
+  StyledRelatedContainer,
+  StyledRelatedOdyssey, } from '@/views/Dapp/components/DappDetail/styles';
+
 import DetailTabs from './DetailTabs/index';
-import RelativeOdyssey from './RelativeOdyssey';
 import Medal from './Medal';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import { Category } from '@/hooks/useAirdrop';
-import { useEffect } from 'react';
-import { useAnimate, useInView } from 'framer-motion';
-import { useDebounceFn } from 'ahooks';
-import styled from 'styled-components';
+import RelativeOdyssey from './RelativeOdyssey';
+import DappSummary from './Summary';
 
 
 const StyleImageMedals = styled.img`

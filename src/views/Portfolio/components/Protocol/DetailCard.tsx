@@ -1,17 +1,17 @@
+import Big from 'big.js';
+import React, { useMemo } from 'react';
 import { styled } from 'styled-components';
 
-import { StyledFlex } from '@/styled/styles';
-import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import FlexTable from '@/views/Portfolio/components/FlexTable';
-import type { Column } from '@/views/Portfolio/components/FlexTable/styles';
-import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
-import React, { useMemo } from 'react';
-import { getTokenLogo } from '@/views/Portfolio/helpers';
-import Big from 'big.js';
-import { get } from '@/utils/http';
 import Loading from '@/components/Icons/Loading';
 import useDappOpen from '@/hooks/useDappOpen';
+import { StyledFlex } from '@/styled/styles';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+import { get } from '@/utils/http';
+import FlexTable from '@/views/Portfolio/components/FlexTable';
+import type { Column } from '@/views/Portfolio/components/FlexTable/styles';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
+import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
+import { getTokenLogo } from '@/views/Portfolio/helpers';
 
 export const StyledContainer = styled.div`
   border-radius: 12px;

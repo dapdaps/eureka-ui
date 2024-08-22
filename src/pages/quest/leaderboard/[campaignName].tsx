@@ -1,8 +1,9 @@
+import { useRouter } from 'next/router';
+
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import QuestLeaderboardView from '@/views/QuestLeaderboard';
 import BnsCompaignView from '@/views/bns/compaign';
-import { useRouter } from 'next/router';
+import QuestLeaderboardView from '@/views/QuestLeaderboard';
 
 const BnsLeaderboardPage: NextPageWithLayout = () => {
   const router = useRouter();

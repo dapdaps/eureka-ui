@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
+import Loading from '@/components/Icons/Loading';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 
-import Loading from '@/components/Icons/Loading';
 import { ArrowDown, ArrowUp } from './Arrows'
 
 const InputAction = styled.div`

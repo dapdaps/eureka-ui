@@ -1,13 +1,14 @@
 import { useDebounceFn } from 'ahooks';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import dappConfig from '@/config/dapp';
 import useAccount from '@/hooks/useAccount';
-import { useDefaultLayout } from '@/hooks/useLayout';
 import useDappInfo from '@/hooks/useDappInfo';
+import { useDefaultLayout } from '@/hooks/useLayout';
 import { useChainsStore } from '@/stores/chains';
-import DappView, { Empty } from '@/views/Dapp';
 import type { NextPageWithLayout } from '@/utils/types';
+import DappView, { Empty } from '@/views/Dapp';
 
 // set dynamic routes for dapps in config file
 

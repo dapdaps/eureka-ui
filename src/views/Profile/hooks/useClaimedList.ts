@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useUserStore } from '@/stores/user';
+
 import { QUEST_PATH } from '@/config/quest';
+import { useUserStore } from '@/stores/user';
 import { get } from '@/utils/http';
 
 export default function useClaimedList() {

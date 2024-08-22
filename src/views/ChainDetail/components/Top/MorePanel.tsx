@@ -1,6 +1,7 @@
 import { memo } from 'react';
+
 import Milestones from '../Milestones';
-import { StyledMorePanel, StyledChainDesc } from './styles';
+import { StyledChainDesc,StyledMorePanel } from './styles';
 
 const MorePanel = ({ milestones, subname }: any) => {
   return (

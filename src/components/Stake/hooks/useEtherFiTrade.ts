@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
-import { Contract, providers, utils } from 'ethers';
 import Big from 'big.js';
-
 import type { Signer } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
+import { useEffect, useState } from 'react';
 
 import useToast from '@/hooks/useToast';
 import type { Chain } from '@/types';

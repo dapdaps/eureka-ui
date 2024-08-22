@@ -1,23 +1,25 @@
+import Big from 'big.js';
 import { memo, useMemo } from 'react';
+
+import { usePriceStore } from '@/stores/price';
 import { balanceFormated } from '@/utils/balance';
 import Button from '@/views/Pool/components/Button';
+
 import {
-  StyledContainer,
-  StyledTitle,
-  StyledValue,
   StyledAmount,
-  StyledInt,
+  StyledBox,
+  StyledContainer,
   StyledFloat,
+  StyledHeader,
+  StyledInt,
   StyledPanel,
   StyledPanelRow,
-  StyledBox,
+  StyledTitle,
   StyledTokenIcon,
-  StyledTokenValue,
   StyledTokenPercent,
-  StyledHeader,
+  StyledTokenValue,
+  StyledValue,
 } from './styles';
-import Big from 'big.js';
-import { usePriceStore } from '@/stores/price';
 
 // type 1 for Liquidity, 2 for Unclaimed fees
 const Panel = ({ type, token0, token1, amount0, amount1, currentPrice, style = {}, onCollect }: any) => {

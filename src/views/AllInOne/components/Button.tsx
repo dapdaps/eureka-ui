@@ -1,8 +1,8 @@
 import React from 'react';
 
+import Loading from '@/components/Icons/Loading';
 import { StyledButton } from '@/views/bns/styles';
 import type { StyledButtonType } from '@/views/bns/types';
-import Loading from '@/components/Icons/Loading';
 
 const AllInOneButton = (props: Props) => {
   const { children, color, styles, loading, ...restProps } = props;

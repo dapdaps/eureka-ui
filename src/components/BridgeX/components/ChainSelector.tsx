@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState, useRef } from  'react'
-import styled from 'styled-components';
 import Big from 'big.js'
+import { useCallback, useEffect, useRef,useState } from  'react'
+import styled from 'styled-components';
 
 import { ArrowDown, ArrowUp } from './Arrows'
 

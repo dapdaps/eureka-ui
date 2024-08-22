@@ -1,10 +1,10 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
 import { useSetChain } from '@web3-onboard/react';
+import { useCallback, useEffect,useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import useConnectWallet from '@/hooks/useConnectWallet';
-import useAccount from '@/hooks/useAccount';
 import Loading from '@/components/Icons/Loading';
+import useAccount from '@/hooks/useAccount';
+import useConnectWallet from '@/hooks/useConnectWallet';
 import type { Chain } from '@/types';
 
 const Container = styled.div`

@@ -1,19 +1,20 @@
-import styled from 'styled-components';
+import { useDebounceFn } from 'ahooks';
 import { AnimatePresence, motion } from 'framer-motion';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import { useDebounceFn } from 'ahooks';
-import useAccount from '@/hooks/useAccount';
-import { NetworkBalance } from '@/components/ChainsDock/index';
-import useDetail from '@/views/networks/detail/hooks/useDetail';
-import { useRouter } from 'next/router';
-import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
-import LazyImage from '@/components/LazyImage';
-import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
-import Link from 'next/link';
-import { StyledFlex } from '@/styled/styles';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
+
+import type { NetworkBalance } from '@/components/ChainsDock/index';
+import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
+import LazyImage from '@/components/LazyImage';
+import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
+import useAccount from '@/hooks/useAccount';
+import { StyledFlex } from '@/styled/styles';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+import useDetail from '@/views/networks/detail/hooks/useDetail';
 
 const OffsetLeft = 17;
 

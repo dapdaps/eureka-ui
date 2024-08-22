@@ -1,6 +1,5 @@
-import type { NextApiHandler } from 'next';
- 
 import fs from 'fs'
+import type { NextApiHandler } from 'next';
 import path from 'path'
 
 const tokens = fs.readFileSync(path.resolve(process.cwd(), './src/pages/api/allTokens2.json'), 'utf8')

@@ -1,9 +1,11 @@
-import { useCallback, useEffect, useState } from 'react';
 import { cloneDeep } from 'lodash';
-import { post } from '@/utils/http';
-import useToast from '@/hooks/useToast';
+import { useCallback, useEffect, useState } from 'react';
+
 import useAudioPlay from '@/hooks/useAudioPlay';
+import useToast from '@/hooks/useToast';
+import { post } from '@/utils/http';
 import { getSignature } from '@/utils/signature';
+
 import { AUDIO } from '../config';
 
 const LIST = [...Array(18).keys()];

@@ -1,7 +1,7 @@
-import { Desc, StyledContainer, Title, CtrolImg, UnionImg } from './styles';
-
 import ctrolImg from '@public/images/others/odyssey/thruster/components/SlotMachine/ctrol-Img.svg?url'
 import unionImg from '@public/images/others/odyssey/thruster/components/SlotMachine/union.svg?url'
+
+import { CtrolImg, Desc, StyledContainer, Title, UnionImg } from './styles';
 
 export default function Pilcrow({ title, desc }: any) {
   return (

@@ -1,13 +1,14 @@
-import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
-import { useChainsStore } from '@/stores/chains';
-import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
-import useTokens from '@/views/Portfolio/hooks/useTokens';
-import { Network } from '@/hooks/useNetworks';
 import Big from 'big.js';
+import { AnimatePresence } from 'framer-motion';
 import { orderBy } from 'lodash';
+import { useEffect, useMemo, useRef, useState } from 'react';
+
 import ChainsDockList from '@/components/ChainsDock/List';
+import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
+import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
+import type { Network } from '@/hooks/useNetworks';
+import { useChainsStore } from '@/stores/chains';
+import useTokens from '@/views/Portfolio/hooks/useTokens';
 
 // The portfolio chains have been integrated
 // sorted by A-Z

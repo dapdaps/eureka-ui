@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
-import useAuthCheck from '@/hooks/useAuthCheck';
+
 import { QUEST_PATH } from '@/config/quest';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { get, post } from '@/utils/http';
-import useAccount from '@/hooks/useAccount';
 
 export default function useLike(id: string | number, category: string) {
   const { account } = useAccount();

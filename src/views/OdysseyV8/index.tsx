@@ -1,25 +1,25 @@
 import { useRouter } from 'next/router';
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback,useEffect, useState } from 'react';
 
 import useUserInfo from '@/hooks/useUserInfo';
 import useAuthBind from '@/views/QuestProfile/hooks/useAuthBind';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
+
 import Banner from './components/Banner';
 import Bridge from './components/Bridge';
 import Explores from './components/Explores';
 import FootClaim from './components/FootClaim';
-
 import Lending from './components/Lending';
 import Noti from './components/Noti';
-import Summary from './components/Summary';
-import Trade from './components/Trade';
-import SlotMachine from './components/SlotMachine';
-import Tabs from './components/Tabs';
 import ParterModal from './components/ParterModal';
+import SlotMachine from './components/SlotMachine';
+import Summary from './components/Summary';
+import Tabs from './components/Tabs';
+import Trade from './components/Trade';
 import useDetail from './hooks/useDetail';
 import useQuests from './hooks/useQuests';
-import useSpin from './hooks/useSpin';
 import useRewards from './hooks/useRewards';
+import useSpin from './hooks/useSpin';
 import { StyledContainer, StyledContent } from './styles';
 
 export default function OdysseyV8() {

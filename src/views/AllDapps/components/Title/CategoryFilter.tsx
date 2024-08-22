@@ -1,6 +1,7 @@
-import { StyledCategory, StyledCategoryItem } from '@/views/AllDapps/components/Title/styles';
-import Skeleton from 'react-loading-skeleton';
 import React from 'react';
+import Skeleton from 'react-loading-skeleton';
+
+import { StyledCategory, StyledCategoryItem } from '@/views/AllDapps/components/Title/styles';
 
 const CategoryFilter = React.forwardRef((props: Props, ref: any) => {
   const {

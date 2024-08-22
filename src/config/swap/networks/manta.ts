@@ -1,7 +1,8 @@
-import { basic as apertureBasic, networks as apertureNetworks } from '../dapps/aperture-swap';
-import { basic as quickSwapBasic, networks as quickSwapNetworks } from '../dapps/quick-swap';
-import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
 import { manta } from '@/config/tokens/manta';
+
+import { basic as apertureBasic, networks as apertureNetworks } from '../dapps/aperture-swap';
+import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
+import { basic as quickSwapBasic, networks as quickSwapNetworks } from '../dapps/quick-swap';
 
 const CHAIN_ID = 169;
 

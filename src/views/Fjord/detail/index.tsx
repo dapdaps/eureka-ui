@@ -1,8 +1,8 @@
 import { useState } from 'react';
 
-import Loading from '@/components/Icons/Loading';
 import Tabs from '@/components/fjord-modal/tabs';
 import Timer from '@/components/fjord-modal/timer';
+import Loading from '@/components/Icons/Loading';
 
 import SocialButton from '../components/SocialButton';
 import ProjectDetail from './project';

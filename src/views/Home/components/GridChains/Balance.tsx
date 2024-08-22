@@ -1,11 +1,12 @@
-import styled from 'styled-components';
+import { useDebounceFn } from 'ahooks';
+import type Big from 'big.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import Big from 'big.js';
-import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import { useDebounceFn } from 'ahooks';
+import styled from 'styled-components';
+
 import useAccount from '@/hooks/useAccount';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 const OffsetTop = 150;
 

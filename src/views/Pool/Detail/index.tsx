@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import useDappConfig from '../hooks/useDappConfig';
 import DetailV2 from './DetailV2';
 import DetailV3 from './DetailV3';

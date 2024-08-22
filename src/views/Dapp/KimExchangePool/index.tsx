@@ -1,10 +1,11 @@
 import { useRouter } from 'next/router';
-import { LiquidityContext } from '@/views/Pool/context';
+
 import KimExchangePool from '@/views/KimExchangePool';
-import Detail from '@/views/KimExchangePool/Detail';
-import RemoveLiquidity from '@/views/KimExchangePool/RemoveLiquidity';
 import AddLiquidity from '@/views/KimExchangePool/AddLiquidity';
+import Detail from '@/views/KimExchangePool/Detail';
 import IncreaseLiquidity from '@/views/KimExchangePool/IncreaseLiquidity';
+import RemoveLiquidity from '@/views/KimExchangePool/RemoveLiquidity';
+import { LiquidityContext } from '@/views/Pool/context';
 
 export default function KimExchangePoolDapp({ dapp, chainId, currentChain, localConfig, chains }: any) {
   const router = useRouter();

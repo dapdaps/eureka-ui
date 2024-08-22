@@ -1,6 +1,6 @@
-import {get} from '@/utils/http';
+import type { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 import { QUEST_PATH } from '@/config/quest';
-import { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
+import {get} from '@/utils/http';
 
 interface Reward {
   name: string;

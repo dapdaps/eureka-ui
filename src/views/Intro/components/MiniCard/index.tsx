@@ -1,6 +1,7 @@
-import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 import { memo } from "react";
 import styled from "styled-components";
+
+import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 
 const StyledMiniCardContainer = styled.div`
   width: 100%;

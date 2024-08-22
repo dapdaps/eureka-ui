@@ -1,9 +1,17 @@
 "use client";
 
-import Loading from '@/components/Icons/Loading';
+import Big from 'big.js';
+import { format } from 'date-fns';
+import { useRouter } from 'next/router';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
+
 import FjordModal from '@/components/fjord-modal';
 import tokenConfig from '@/components/fjord-modal/hooks/tokenConfig';
+import Loading from '@/components/Icons/Loading';
+import DappBack from '@/components/PageBack';
 import chainCofig from '@/config/chains';
+import useDappInfo from '@/hooks/useDappInfo';
 import { useUserStore } from '@/stores/user';
 import {
   StyledContainer,
@@ -13,19 +21,13 @@ import {
   StyledSvg
 } from '@/styled/styles';
 import type { Token } from '@/types';
-import Big from 'big.js';
-import { format } from 'date-fns';
-import { useRouter } from 'next/router';
-import { Suspense, useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
+import DappDetail from '@/views/Dapp/components/DappDetail';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
+
 import Timer from './components/Timer';
 import usePools from './hooks/usePools';
 import useUser from './hooks/useUser';
-import DappBack from '@/components/PageBack';
-import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
-import DappFallback from '@/views/Dapp/components/Fallback';
-import DappDetail from '@/views/Dapp/components/DappDetail';
-import useDappInfo from '@/hooks/useDappInfo';
 
 const StyledFjordSvgContainer = styled.div`
   position: absolute;

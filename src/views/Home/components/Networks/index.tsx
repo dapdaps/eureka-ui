@@ -1,18 +1,19 @@
-import chainCofig from '@/config/chains';
-import Badges from '@/views/AllDapps/components/Badges';
 import NetworksBg from '@public/images/home/networks_bg.svg';
 import Image from 'next/image';
-import { useState, type CSSProperties, type FC, type ReactNode } from 'react';
+import { useRouter } from 'next/router';
+import { type CSSProperties, type FC, type ReactNode,useState } from 'react';
 import styled from 'styled-components';
-import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 
 import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
+import chainCofig from '@/config/chains';
 import useDappOpen from '@/hooks/useDappOpen';
 import { StyledContainer } from '@/styled/styles';
 import hexToRgba from '@/utils/hexToRgba';
-import { useRouter } from 'next/router';
-import ViewAll from '@/views/Home/components/ViewAll';
+import Badges from '@/views/AllDapps/components/Badges';
 import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import ViewAll from '@/views/Home/components/ViewAll';
+
+import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 
 interface IProps {
   children?: ReactNode;

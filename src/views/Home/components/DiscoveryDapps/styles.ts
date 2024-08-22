@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import Link from 'next/link';
+import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
   width: 1244px;

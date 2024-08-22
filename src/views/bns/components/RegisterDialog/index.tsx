@@ -1,18 +1,20 @@
-import bnsAvatar from '@public/images/others/bns/bns_avatar.svg?url';
-import useAccount from '@/hooks/useAccount';
-import useToast from '@/hooks/useToast';
-import { balanceFormated } from '@/utils/balance';
-import * as http from '@/utils/http';
-import useReport from '@/views/Landing/hooks/useReport';
 import namehash from '@ensdomains/eth-ens-namehash';
+import bnsAvatar from '@public/images/others/bns/bns_avatar.svg?url';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useMemo, useState } from 'react';
+
+import useAccount from '@/hooks/useAccount';
+import useToast from '@/hooks/useToast';
+import { usePriceStore } from '@/stores/price';
+import { balanceFormated } from '@/utils/balance';
+import * as http from '@/utils/http';
+import useReport from '@/views/Landing/hooks/useReport';
+
 import useBnsContract from '../../hooks/useBnsContract';
 import type { RegisterStatusType } from '../../types';
-import { usePriceStore } from '@/stores/price';
 import {
   StyledButton,
   StyledDialog,

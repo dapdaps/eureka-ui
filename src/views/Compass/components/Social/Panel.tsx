@@ -1,11 +1,11 @@
+import FollowImg from '@public/images/others/odyssey/v1/components/Social/follow.svg?url';
+import ShareImg from '@public/images/others/odyssey/v1/components/Social/share.svg?url';
 import styled from 'styled-components';
 
-import ShareImg from '@public/images/others/odyssey/v1/components/Social/share.svg?url';
-import FollowImg from '@public/images/others/odyssey/v1/components/Social/follow.svg?url';
-import Spin from '../Spin';
-import Fresh from '../Fresh';
-import Complete from '../Complate';
 import useQuestStatus from '../../hooks/useQuestStatus';
+import Complete from '../Complate';
+import Fresh from '../Fresh';
+import Spin from '../Spin';
 
 const Panel = styled.div`
   flex: 1;

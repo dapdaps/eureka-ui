@@ -1,8 +1,10 @@
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+
 import odyssey from '@/config/odyssey';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont } from '@/styled/styles';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+
 import OdysseyLoading from '../../Loading/OdysseyLoading';
 import RectangleNumber from '../RectangleNumber';
 import {

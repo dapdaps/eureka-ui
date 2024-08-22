@@ -3,12 +3,12 @@ import Skeleton from 'react-loading-skeleton';
 
 import {
   LoadingWrapper,
-  StyledResultItemContainer,
-  StyledResultTitle,
-  StyledResultItem,
-  StyledResultItemTitle,
-  StyledResultItemImg,
   StyledMore,
+  StyledResultItem,
+  StyledResultItemContainer,
+  StyledResultItemImg,
+  StyledResultItemTitle,
+  StyledResultTitle,
   StyleView,
 } from './styles';
 

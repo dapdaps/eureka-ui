@@ -1,8 +1,8 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
+import { useCallback, useEffect,useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import { balanceFormated, percentFormated } from '@/utils/balance';
 import type { Token } from '@/types';
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import bg from './bg.svg'
 

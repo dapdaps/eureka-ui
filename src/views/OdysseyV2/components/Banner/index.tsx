@@ -1,4 +1,4 @@
-import { StyledContainer, StyledContent, StyledTitle, StyledDesc } from './styles';
+import { StyledContainer, StyledContent, StyledDesc,StyledTitle } from './styles';
 
 export default function Banner() {
   return (

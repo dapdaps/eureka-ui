@@ -1,8 +1,10 @@
-import { StyledContainer, StyledFlex, StyledFont } from "@/styled/styles";
 import { memo, useMemo } from "react";
 import styled from "styled-components";
-import useMedalList from "./hooks/useMedalList";
+
+import { StyledContainer, StyledFlex, StyledFont } from "@/styled/styles";
+
 import MedalCard from "./components/MedalCard";
+import useMedalList from "./hooks/useMedalList";
 
 const StyledLineGradientFont = styled(StyledFont)`
   text-align: center;

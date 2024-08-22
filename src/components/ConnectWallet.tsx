@@ -1,5 +1,6 @@
-import useConnectWallet from '@/hooks/useConnectWallet';
 import styled from 'styled-components';
+
+import useConnectWallet from '@/hooks/useConnectWallet';
 
 const StyledConnectWallet = styled.button`
   width: 164px;

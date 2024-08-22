@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   margin-top: 16px;

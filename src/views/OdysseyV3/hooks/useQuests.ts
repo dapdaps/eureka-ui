@@ -1,9 +1,10 @@
-import { get } from '@/utils/http';
+import { useDebounceFn } from 'ahooks';
 import { cloneDeep } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
-import { useDebounceFn } from 'ahooks';
+
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import { get } from '@/utils/http';
 
 const defaultQuests: any = { social: [], bridge: [], swap: [], lending: [] };
 

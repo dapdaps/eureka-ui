@@ -1,7 +1,8 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
-import gamma from '../dapps/gamma';
+
 import arrakis from '../dapps/arrakis';
+import gamma from '../dapps/gamma';
 const CHAIN_ID = 10;
 const CHAIN_NAME = 'Optimism';
 

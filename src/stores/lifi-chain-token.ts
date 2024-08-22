@@ -1,5 +1,6 @@
-import type { Chain, LifiChainToken } from "../components/Bridge/types";
 import {create} from "zustand";
+
+import type { Chain, LifiChainToken } from "../components/Bridge/types";
 
 export type LifiChainAndTokenState = {
   chains: Chain[];

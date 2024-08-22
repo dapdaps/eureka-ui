@@ -4,11 +4,11 @@ import { useMemo, useState } from 'react';
 import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
 import styled from 'styled-components';
 
-import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import { formatPercentNumber } from '@/views/Portfolio/helpers';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import ChartEmpty from '@/views/Portfolio/components/Protocol/ChartEmpty';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
+import ChartEmpty from '@/views/Portfolio/components/Protocol/ChartEmpty';
+import { formatPercentNumber } from '@/views/Portfolio/helpers';
 
 export const StyledContainer = styled.div`
   width: 410px;

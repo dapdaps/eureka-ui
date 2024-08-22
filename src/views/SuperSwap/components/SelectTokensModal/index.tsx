@@ -1,9 +1,12 @@
 import { useMemo, useState } from 'react';
-import Modal from '@/components/Modal';
+
 import Loading from '@/components/Icons/Loading';
+import Modal from '@/components/Modal';
 import useTokensBalance from '@/hooks/useTokensBalance';
 import { usePriceStore } from '@/stores/price';
+import type { Token } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';
+
 import {
   Content,
   CurrencyAmount,
@@ -20,7 +23,6 @@ import {
   StyledRowR,
   StyledTokenNameWrapper,
 } from './styles';
-import type { Token } from '@/types';
 
 type Props = {
   tokens: Token[];

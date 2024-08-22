@@ -1,10 +1,10 @@
 import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import useInviteList from '@/hooks/useInviteList';
 import { useLayoutStore } from '@/stores/layout';
 import { useUserStore } from '@/stores/user';
 import InviteFirendsModal from '@/views/QuestProfile/components/InviteFirendsModal';
-import useInviteList from '@/hooks/useInviteList';
 
 import Footer from './components/Footer';
 import Header from './components/Header';

@@ -1,13 +1,13 @@
-import { memo, useMemo, useEffect } from 'react';
+import { memo, useEffect,useMemo } from 'react';
 
 import chainsConfig, { PathToId } from '@/config/all-in-one/chains';
 import useReport from '@/views/Landing/hooks/useReport';
-import useDetail from './hooks/useDetail';
 
-import Top from './components/Top';
-import QuickOnboarding from './components/QuickOnboarding';
 import Dapps from './components/Dapps';
 import Quests from './components/Quests';
+import QuickOnboarding from './components/QuickOnboarding';
+import Top from './components/Top';
+import useDetail from './hooks/useDetail';
 import { StyledContainer } from './styles';
 
 const ChainDetail = ({ path }: any) => {

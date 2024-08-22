@@ -1,23 +1,25 @@
+import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
+import IconChainArrowDown from '@public/images/tokens/chainArrowDown.svg';
+import Big from 'big.js';
+import { useEffect, useMemo, useState } from 'react';
+
 import useChain from '@/hooks/useChain';
-import { useChainsStore } from '@/stores/chains';
 import useSwitchChain from '@/hooks/useSwitchChain';
+import { useChainsStore } from '@/stores/chains';
+import { StyledFlex } from '@/styled/styles';
+import { get } from '@/utils/http';
+
 import {
+  StyleChainItem,
   StyleChainWrapper,
   StyledChain,
-  StyledChainListWrapper,
-  StyledChainList,
   StyledChainItem,
+  StyledChainList,
+  StyledChainListWrapper,
+  StyledChainName,
   StyledChainTokenIcon,
   StyledChainTokenSymbol,
-  StyleChainItem,
-  StyledChainName,
 } from './styles';
-import { useEffect, useMemo, useState } from 'react';
-import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
-import { StyledFlex } from '@/styled/styles';
-import IconChainArrowDown from '@public/images/tokens/chainArrowDown.svg';
-import { get } from '@/utils/http';
-import Big from 'big.js';
 
 export default function ChainSelector() {
   const chain = useChain();

@@ -1,9 +1,10 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect,useRef, useState } from "react";
 import styled from 'styled-components';
+
+import { StyledContainer } from "@/styled/styles";
 
 import { ArrowDown } from '../Arrow'
 import Modal from "../Modal";
-import { StyledContainer } from "@/styled/styles";
 
 const ItemWapper = styled.div`
     display: flex;

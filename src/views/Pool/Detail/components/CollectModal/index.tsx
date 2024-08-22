@@ -1,13 +1,15 @@
 import { memo } from 'react';
-import Modal from '@/components/Modal';
-import Button from '@/views/Pool/components/Button';
+
 import Loading from '@/components/Icons/Loading';
+import Modal from '@/components/Modal';
 import useAccount from '@/hooks/useAccount';
-import useDappConfig from '../../../hooks/useDappConfig';
+import Button from '@/views/Pool/components/Button';
 import ConnectWalletButton from '@/views/Pool/components/ConnectWalletButton';
 import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
-import AmountPanel from '../AmountPanel';
+
+import useDappConfig from '../../../hooks/useDappConfig';
 import useCollectFee from '../../hooks/useCollectFee';
+import AmountPanel from '../AmountPanel';
 import { StyledContainer, StyledDesc } from './styles';
 
 const CollectModal = ({ id, open, token0, token1, amount0, amount1, onClose, onSuccess }: any) => {

@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { memo } from 'react';
+
 import useAuthCheck from '@/hooks/useAuthCheck';
 
 import { StyledBox, StyledCoin, StyledContainer, StyledLabel, StyledLine, StyledValue } from './styles';

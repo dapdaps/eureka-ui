@@ -1,6 +1,7 @@
+import { StyledBtnNext, StyledBtnPrevious, StyledContainer } from '@/components/pagination/styles';
+
 import { PageButton } from './page-button';
 import { renderPageMiddle } from './render-page-middle';
-import { StyledBtnNext, StyledBtnPrevious, StyledContainer } from '@/components/pagination/styles';
 
 const Pagination = (props: PaginationProps) => {
   const {

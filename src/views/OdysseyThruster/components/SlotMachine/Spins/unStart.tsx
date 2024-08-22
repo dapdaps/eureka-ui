@@ -1,7 +1,9 @@
-import styled from 'styled-components';
 import Image from 'next/image';
-import Trapeziform from '../Trapeziform';
+import styled from 'styled-components';
+
 import { getTimePeriods } from '@/views/Quest/helpers';
+
+import Trapeziform from '../Trapeziform';
 import { Head, HeadLeft, QuestBg } from './styles';
 
 const LIST = [

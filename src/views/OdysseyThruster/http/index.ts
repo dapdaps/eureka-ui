@@ -1,4 +1,5 @@
 import _ from 'lodash';
+
 import { get, post } from '@/utils/http';
 
 const COMPASS_SPIN_URL = '/api/compass/spin';

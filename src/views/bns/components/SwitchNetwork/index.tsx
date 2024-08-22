@@ -1,7 +1,9 @@
-import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
 import { useSetChain } from '@web3-onboard/react';
 import Image from 'next/image';
 import { memo, useEffect, useMemo } from 'react';
+
+import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
+
 import {
   StyledButton,
   StyledDialog,

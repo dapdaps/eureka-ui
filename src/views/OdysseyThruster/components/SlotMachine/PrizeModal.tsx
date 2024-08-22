@@ -1,10 +1,11 @@
-import styled from 'styled-components';
-import Image from 'next/image';
-import Modal from '../Modal';
 import lbImg from '@public/images/others/odyssey/thruster/components/SlotMachine/Congrates.gif';
 import smImg from '@public/images/others/odyssey/thruster/components/SlotMachine/sm.svg?url';
-import RewardIcons from '../../RewardIcons'
+import Image from 'next/image';
 import { useState } from 'react';
+import styled from 'styled-components';
+
+import RewardIcons from '../../RewardIcons'
+import Modal from '../Modal';
 
 const Iocn = styled.img`
   position: absolute;

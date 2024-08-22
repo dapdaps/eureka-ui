@@ -1,7 +1,8 @@
 import { memo, useMemo } from 'react';
-import PoolDapp from './PoolDapp';
+
 import BosDapp from './BosDapp';
 import KimExchangePoolDapp from './KimExchangePool';
+import PoolDapp from './PoolDapp';
 import SwapDapp from './SwapDapp';
 
 const DappCom = (props: any) => {

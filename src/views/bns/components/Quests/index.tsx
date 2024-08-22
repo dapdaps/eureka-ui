@@ -1,10 +1,11 @@
-import Loading from '@/components/Icons/Loading';
-import { container } from '@/components/animation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { memo } from 'react';
+
+import { container } from '@/components/animation';
+import Loading from '@/components/Icons/Loading';
+
 import Narratives from '../Narratives';
 import QuestCampaign from '../QuestCampaign';
-
 import { StyledLoadingWrapper } from './styles';
 const Quests = ({
   onLoad,

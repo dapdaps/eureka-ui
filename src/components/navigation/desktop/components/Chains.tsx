@@ -1,10 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import Skeleton from 'react-loading-skeleton';
 import { useRouter } from 'next/router';
-import { IdToPath } from '@/config/all-in-one/chains';
-import { Network } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
+import React from 'react';
+import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
+
+import { type Network } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 import LazyImage from '@/components/LazyImage';
+import { IdToPath } from '@/config/all-in-one/chains';
 
 const GridContainer = styled.div`
   padding: 16px 12px;
@@ -56,8 +57,8 @@ const GridItemContainer = styled.div`
 `;
 
 const LoadingCard = () => {
-  return Array.from({ length: 16 }).map((_) => (
-    <GridItemContainer>
+  return Array.from({ length: 16 }).map((_, index) => (
+    <GridItemContainer key={index}>
       <Skeleton width="60px" height="60px" borderRadius="12px" />
       <Skeleton width="86px" height="16px" borderRadius="6px" />
     </GridItemContainer>

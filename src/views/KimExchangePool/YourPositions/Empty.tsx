@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
 
 const StyledContainer = styled.div`

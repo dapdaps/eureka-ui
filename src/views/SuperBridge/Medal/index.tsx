@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import PublicTitle from '../PublicTitle';
 import { ArrowRight } from '../Arrow'
+import PublicTitle from '../PublicTitle';
 
 const Container = styled.div`
     background: radial-gradient(108.37% 99.81% at 2.05% 4.07%, #5929A7 0%, #1E1B33 100%), radial-gradient(39.17% 39.17% at 29.3% 60.83%, #FFF500 0%, rgba(255, 245, 0, 0) 100%) ;

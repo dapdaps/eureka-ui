@@ -1,3 +1,4 @@
+import IconSearch from '@public/images/header/search.svg'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
@@ -12,12 +13,12 @@ import useAccount from '@/hooks/useAccount';
 import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
-import IconSearch from '@public/images/header/search.svg'
+
+import AccountLogo from './components/AccountLogo';
+import CheckIn from './components/CheckIn';
+import CheckInGrid from './components/CheckInGrid';
 import { NavMainV2 } from './NavMainV2';
 import Notification from './Notification';
-import CheckInGrid from './components/CheckInGrid';
-import CheckIn from './components/CheckIn';
-import AccountLogo from './components/AccountLogo';
 
 
 const Flex = styled.div`

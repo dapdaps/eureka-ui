@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import styled from 'styled-components';
 
-import { usePriceStore } from '@/stores/price';
-import { ArrowDown } from '../Arrow'
-import usePriceValue from '../hooks/usePriceValue';
-import useTokenBalance from '@/hooks/useCurrencyBalance';
 import Loading from '@/components/Icons/Loading';
-import TokenSelectModal from '../ChainTokenAmount/TokenSelectModal';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from "@/types";
 import { balanceFormated, percentFormated } from '@/utils/balance';
 
-import type { Chain, Token } from "@/types";
+import { ArrowDown } from '../Arrow'
+import TokenSelectModal from '../ChainTokenAmount/TokenSelectModal';
+import usePriceValue from '../hooks/usePriceValue';
 
 
 const Wrapper = styled.div`

@@ -1,9 +1,10 @@
-import styled from 'styled-components';
-import Modal from '@/components/Modal';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
-import { QuestDapp } from '@/hooks/useAirdrop';
-import { useRouter } from 'next/router';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
+import Modal from '@/components/Modal';
+import type { QuestDapp } from '@/hooks/useAirdrop';
 
 const StyledModalTitle = styled.div`
   font-weight: 700;

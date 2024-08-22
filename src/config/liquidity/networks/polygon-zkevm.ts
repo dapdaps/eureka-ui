@@ -1,6 +1,7 @@
-import gamma from '../dapps/gamma';
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
+import gamma from '../dapps/gamma';
 const CHAIN_ID = 1101;
 const CHAIN_NAME = 'Polygon zkEVM';
 export default {

@@ -1,5 +1,6 @@
-import { memo } from 'react';
 import Big from 'big.js';
+import { memo } from 'react';
+
 import Input from './Input';
 import { StyledContainer } from './styles';
 

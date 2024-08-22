@@ -1,19 +1,18 @@
+import Big from 'big.js'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Big from 'big.js'
 
 import Loading from '@/components/Icons/Loading';
+import useAccount from '@/hooks/useAccount';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
-import useAccount from '@/hooks/useAccount';
-
-import { ArrowDown, ArrowUp } from './Arrows'
 
 import { 
     getTransaction,
     saveTransaction,
     updateTransaction,
  } from '../Utils'
+import { ArrowDown, ArrowUp } from './Arrows'
 
 const TransactionWapper = styled.div`
     width: 478px;

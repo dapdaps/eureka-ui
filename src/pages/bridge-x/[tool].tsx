@@ -1,27 +1,25 @@
 import { useSetChain } from '@web3-onboard/react';
+import { useDebounceFn } from 'ahooks';
 import Link from 'next/link';
-import useConnectWallet from '@/hooks/useConnectWallet';
 import { useRouter } from 'next/router';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus, getBridgeTokens } from 'super-bridge-sdk';
-
-import { get } from '@/utils/http'
-import chainCofig from '@/config/chains'
-import useAccount from '@/hooks/useAccount';
-import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
-import useAddAction from '@/hooks/useAddAction';
-import { useDefaultLayout } from '@/hooks/useLayout';
-import { usePriceStore } from '@/stores/price';
-import { useDebounceFn } from 'ahooks';
+import { execute, getAllToken, getBridgeMsg, getBridgeTokens,getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
 import BridgeX from '@/components/BridgeX/Index';
-
-import type { NextPageWithLayout } from '@/utils/types';
-import type { Chain } from '@/types';
+import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import DappBack from '@/components/PageBack';
-import DappFallback from '@/views/Dapp/components/Fallback';
+import chainCofig from '@/config/chains'
+import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
+import useConnectWallet from '@/hooks/useConnectWallet';
+import { useDefaultLayout } from '@/hooks/useLayout';
+import { usePriceStore } from '@/stores/price';
+import type { Chain } from '@/types';
+import { get } from '@/utils/http'
+import type { NextPageWithLayout } from '@/utils/types';
 import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
 
 const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 

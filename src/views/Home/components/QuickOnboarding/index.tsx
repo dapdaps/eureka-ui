@@ -1,20 +1,21 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import {
-  StyledContainer,
-  StyledTitle,
-  StyledSubtitle,
-  StyledImageWrapper,
-  StyledImage,
-  StyledCards,
   StyledCard,
-  StyledCardIcon,
+  StyledCardArrow,
   StyledCardBg,
   StyledCardContent,
   StyledCardHeader,
-  StyledCardTitle,
+  StyledCardIcon,
   StyledCardName,
-  StyledCardArrow,
+  StyledCards,
+  StyledCardTitle,
+  StyledContainer,
+  StyledImage,
+  StyledImageWrapper,
+  StyledSubtitle,
+  StyledTitle,
 } from './styles';
 
 const CARDS = [

@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-
-import { useDefaultLayout } from '@/hooks/useLayout';
 import styled from 'styled-components';
 
-import StakeModalDapp from '@/views/StakeModal/index';
+import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
+import StakeModalDapp from '@/views/StakeModal/index';
 
 
 export const Page: NextPageWithLayout = () => {

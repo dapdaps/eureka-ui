@@ -1,13 +1,13 @@
+import Big from 'big.js';
+import { max, min } from 'lodash';
 import { useMemo, useState } from 'react';
 import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
 import styled from 'styled-components';
 
-import { formatDateTime } from '@/utils/date';
-import { formateValueWithThousandSeparator, formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import Big from 'big.js';
 import Loading from '@/components/Icons/Loading';
 import { StyledFlex } from '@/styled/styles';
-import { max, min } from 'lodash';
+import { formatDateTime } from '@/utils/date';
+import { formateValueWithThousandSeparator, formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 export const StyledContainer = styled.div`
   width: 574px;
