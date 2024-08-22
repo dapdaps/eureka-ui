@@ -1,7 +1,8 @@
 import Big from 'big.js';
 import { AnimatePresence } from 'framer-motion';
 import { orderBy } from 'lodash';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import ChainsDockList from '@/components/ChainsDock/List';
 import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
@@ -9,9 +10,18 @@ import { SupportedChains } from '@/config/all-in-one/chains';
 import type { Network } from '@/hooks/useNetworks';
 import { useChainsStore } from '@/stores/chains';
 import useTokens from '@/views/Portfolio/hooks/useTokens';
+// @ts-expect-error For some reason
+const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
+  ssr: false,
+  // loading: () => <div style={{ width: 400 }}>
+  //   <Skeleton width="400px" height="72px" borderRadius="16px" containerClassName="skeleton" />
+  //   <Skeleton style={{ marginTop: 20 }} width="400px" height="150px" borderRadius="6px" containerClassName="skeleton" />
+  //   <Skeleton style={{ marginTop: 20 }} width="400px" height="150px" borderRadius="6px" containerClassName="skeleton" />
+  // </div>
+});
+
 
 // The portfolio chains have been integrated
-// sorted by A-Z
 const ChainsFixed = SupportedChains.map((support) => support.chainId);
 
 const ChainsDock = () => {

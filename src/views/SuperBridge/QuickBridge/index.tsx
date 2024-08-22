@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { useEffect, useState } from "react";
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import allTokens from '@/config/bridge/allTokens';
@@ -15,9 +17,6 @@ import SubmitBtn from '../SubmitBtn';
 import ConfirmModal from '../SubmitBtn/ConfirmModal';
 import ConfirmSuccessModal from '../SubmitBtn/ConfirmSuccess2Modal';
 import TokenAmount from './TokenAmount';
-
-
-
 const Title = styled.div`
     display: flex;
     align-items: center;
