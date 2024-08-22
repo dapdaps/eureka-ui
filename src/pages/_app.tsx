@@ -77,11 +77,16 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     // Displays the Zendesk widget only if user is signed in and on the home page
     if (!window.zE) return;
     if (!authStore.signedIn || Boolean(componentSrc?.componentAccountId && componentSrc?.componentName)) {
-      window.zE('webWidget', 'hide');
+      window.zE(function() {
+        window.zE.hide();
+      });
+    
       return;
     }
     localStorage.setItem('accountId', authStore.accountId);
-    window.zE('webWidget', 'show');
+    window.zE(function() {
+      window.zE.show();
+    });
   }, [authStore.accountId, authStore.signedIn, componentSrc]);
 
   const { run: updateAccount } = useDebounceFn(
