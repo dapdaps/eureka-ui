@@ -16,12 +16,16 @@ import {
   StyledSuperButton,
   StyledExporeButton,
   StyledMainHeading,
-  StyledMainTips
+  StyledMainTips,
+  StyledFist,
 } from './styles'
 import { MenuType } from "./types";
 import RotateNetworks from "./components/RotateNetworks";
 import Into from "./components/Into";
 import MiniCard from "./components/MiniCard";
+import Statistics from "./components/Statistics";
+import Partners from "./components/Partners";
+import Slogan from "./components/Slogan";
 import Footer from "./components/Footer";
 const MENU_LIST: MenuType[] = [{
   path: "",
@@ -82,6 +86,12 @@ export default memo(function HomePage() {
       <RotateNetworks />
       <Into />
       <MiniCard />
+
+      <Statistics />
+      <Partners />   
+      <StyledFist src="/images/intro/twoFist.png"/>
+      <Slogan />
+
       <Footer />
     </StyledContainer>
   )
