@@ -7,8 +7,8 @@
     "npm": ">=0.39.0"
   },
   "scripts": {
-    "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
-    "dev-win": "set NEXT_PUBLIC_API=https://test-api.dapdap.net& call next dev",
+    "dev": "NEXT_PUBLIC_API=https://dapdap-api.bobdev.link next dev",
+    "dev-win": "set NEXT_PUBLIC_API=https://dapdap-api.bobdev.link& call next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
