@@ -5,7 +5,7 @@ import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import DAppIconWithChain from '@/views/Portfolio/components/Protocol/DAppIconWithChain';
 
 export const StyledContainer = styled(motion.div)`
-  width: 158px;
+  min-width: 158px;
   height: 60px;
   flex-shrink: 0;
   flex-grow: 0;
@@ -70,7 +70,7 @@ const DAppCard = (props: any) => {
       <StyledContent>
         <div className="name">{dapp.show_name}</div>
         <div className="usd">
-          {formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, true, { prefix: '$' })}
+          {formateValueWithThousandSeparatorAndFont(dapp.totalUsd, 2, true, { prefix: '$'})}
         </div>
       </StyledContent>
     </StyledContainer>

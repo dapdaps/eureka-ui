@@ -177,4 +177,5 @@ export const L1ChainIds = [
   56,
   // Polygon
   137,
+  43114
 ];

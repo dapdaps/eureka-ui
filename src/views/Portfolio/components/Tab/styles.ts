@@ -20,7 +20,6 @@ export const StyledPortfolioTabHead = styled.div`
   font-size: 20px;
   position: relative;
   padding: 0 0 11px;
-  background: #101115;
   overflow-x: hidden;
 `;
 
