@@ -107,7 +107,7 @@ const List = () => {
         page_size,
       });
       setData(result?.data?.data || []);
-      setTotal(result?.data?.total_page || 0);
+      setTotal(result?.data?.total || 0);
       setRefresh(new Date().getTime());
     } catch (err) {
       console.log(err, 'err');

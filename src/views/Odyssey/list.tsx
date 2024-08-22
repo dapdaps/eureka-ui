@@ -7,6 +7,7 @@ import Skeleton from 'react-loading-skeleton';
 import dynamic from 'next/dynamic';
 import OdysseyChroma from './components/OdysseyChroma'
 import RecentRewards from '@/views/Home/components/Rewards';
+import Tooltip from '@/components/TitleTooltip';
 
 const StyledWrapper = styled.div`
   --var-container-width: 1244px;
@@ -135,7 +136,10 @@ const OdysseyList = () => {
         <StyledContent>
         <div className="section">
           <div className="head">
-            <img className="slogen" src="/images/odyssey/welcome/logo.png" alt="logo"></img>
+            <>
+              <img className="slogen" src="/images/odyssey/welcome/logo.png" alt="logo"></img>
+              <Tooltip sx={{ top: '-28px', left: '10px', zIndex: 11}} content="Embark on your Web3 Odyssey – where every action brings a chance to earn new rewards! Discover exciting missions across multiple networks, while exploring new dApps along the way. Farm optimised airdrop opportunities and earn a wide range of rewards as you navigate the ever-evolving DeFi landscape." />
+            </>
             <div className="title">Exclusive Seasonal Lootbox Experiences</div>
           </div>
           <div className="compass">

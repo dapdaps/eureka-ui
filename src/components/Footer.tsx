@@ -22,6 +22,9 @@ const StyledContainer = styled.div`
     bottom: 0;
     height: 50px;
     border-top: 1px solid #21232A;
+    position: fixed;
+    background: #101115;
+    z-index: 999;
   }
 `;
 const StyledContainerInner = styled.div`
