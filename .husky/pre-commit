@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-npx eslint . --fix
+npx eslint . --fix && npm run build
