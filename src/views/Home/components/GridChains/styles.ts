@@ -84,7 +84,7 @@ export const StyledTitle = styled.h2`
   font-weight: bolder;
   position: absolute;
   left: 75px;
-  top: 214px;
+  top: 258px;
   z-index: 1;
   pointer-events: none;
 `;
@@ -97,7 +97,7 @@ export const StyledTitleSub = styled.h5`
   line-height: normal;
   position: absolute;
   left: 82px;
-  top: 400px;
+  top: 424px;
   z-index: 1;
   transform: rotate(2deg);
   transform-origin: right center;
