@@ -22,6 +22,7 @@ import { MenuType } from "./types";
 import RotateNetworks from "./components/RotateNetworks";
 import Into from "./components/Into";
 import MiniCard from "./components/MiniCard";
+import Footer from "./components/Footer";
 const MENU_LIST: MenuType[] = [{
   path: "",
   label: "Product",
@@ -81,6 +82,7 @@ export default memo(function HomePage() {
       <RotateNetworks />
       <Into />
       <MiniCard />
+      <Footer />
     </StyledContainer>
   )
 })
