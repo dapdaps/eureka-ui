@@ -95,7 +95,7 @@ const formateValueWithThousandSeparatorAndFont = (
     if (isZeroPrecision) {
       return `${prefix}${finalValue.split('.')[0]}.${finalValue.split('.')[1]}`;
     }
-    return `${prefix}${finalValue.split('.')[0]}${('.' + finalValue.split('.')[1]).replace(/.?0+$/, '')}`;
+    return `${prefix}${finalValue.split('.')[0]}${('.' + finalValue.split('.')[1]).replace(/[.]?0+$/, '')}`;
   }
   if (isZeroPrecision) {
     return {
@@ -105,7 +105,7 @@ const formateValueWithThousandSeparatorAndFont = (
   }
   return {
     integer: `${prefix}${finalValue.split('.')[0]}`,
-    decimal: ('.' + finalValue.split('.')[1]).replace(/.?0+$/, ''),
+    decimal: ('.' + finalValue.split('.')[1]).replace(/[.]?0+$/, ''),
   };
 };
 

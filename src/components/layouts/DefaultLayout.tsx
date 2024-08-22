@@ -41,6 +41,7 @@ const BLACK_PATH = [
   '/all-in-one/[chain]',
   '/all-in-one/[chain]/[menu]',
   '/bridge-chain/[chain]',
+  '/portfolio'
 ];
 
 const HideFooterRoutes = [

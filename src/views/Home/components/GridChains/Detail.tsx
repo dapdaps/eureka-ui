@@ -108,6 +108,8 @@ const Detail = (props: DetailProps) => {
     handleNetworkDetailPre();
   }, []);
 
+  console.log(icon);
+
   return (
     <StyledDetail>
       <StyledDetailHead $icon={icon}>
@@ -118,7 +120,7 @@ const Detail = (props: DetailProps) => {
               width={84}
               style={{
                 position: 'absolute',
-                zIndex: 2,
+                zIndex: 3,
                 top: -42,
                 left: '50%',
                 transform: 'translateX(-50%)',
@@ -219,17 +221,29 @@ const StyledDetailHead = styled.div<{ $icon?: string; }>`
   height: 216px;
   position: relative;
   background: ${({ $icon }) => `#000 url("${$icon}") no-repeat center 50px / 350px auto`};
-  border-radius: 20px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  
+  &::before {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    content: '';
+    width: 100%;
+    height: 216px;
+    top: 0;
+    left: 0;
+    position: absolute;
+    z-index: 1;
+    background: rgba(0,0,0,0.5);
+  }
+  
 `;
 const StyledDetailBgMask = styled.div`
   width: 100%;
   height: 100%;
-  fill: #222329;
-  stroke-width: 1px;
-  stroke: #202329;
   backdrop-filter: blur(10px);
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   top: 0;
   border-top-left-radius: 20px;
@@ -238,7 +252,7 @@ const StyledDetailBgMask = styled.div`
 `;
 const StyledLogo = styled.div<{ $src?: string; }>`
   position: absolute;
-  z-index: 2;
+  z-index: 3;
   top: -42px;
   left: 50%;
   transform: translateX(-50%);

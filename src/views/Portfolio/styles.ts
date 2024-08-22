@@ -6,7 +6,6 @@ export const StyledContainer = styled.div`
   --switch-color: #ebf479;
   font-family: Montserrat;
   padding: 60px 0 60px;
-  background: #101115;
   min-height: 100vh;
   position: relative;
 
