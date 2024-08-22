@@ -66,7 +66,7 @@ export default function Medals({
 
       <StyledFlex gap='20px' flexWrap='wrap'>
         {
-          medalList.map((medal: MedalType, index) => {
+          medalList.map((medal: MedalType, index: number) => {
             return (
               <MedalCard medal={medal} key={index} />
             )

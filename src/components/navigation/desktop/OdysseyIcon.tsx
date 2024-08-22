@@ -70,7 +70,7 @@ if (process.env.NEXT_PUBLIC_API !== 'https://api.dapdap.net') {
 export default function OdysseyIcon() {
   const { check } = useAuthCheck({ isNeedAk: true });
   const router = useRouter();
-  const odysseyId = process.env.NEXT_PUBLIC_API === 'https://dapdap-api.bobdev.link' ? '9' : '6';
+  const odysseyId = process.env.NEXT_PUBLIC_API === 'https://test-api.dapdap.net' ? '9' : '6';
 
   return (
     <StyledContainer className="swiper-no-swiping" width={MaxWidth} top={EntryTop}>
