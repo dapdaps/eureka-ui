@@ -53,8 +53,13 @@ const Invite = (props: Props) => {
   const [fresh, setFresh] = useState(0);
   const [updater, setUpdater] = useState(0);
   async function checkAddress() {
+    console.log('====wallet', wallet)
+    const isBitget = wallet?.label.toLowerCase().includes('bitget');
+    const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
+    const isOkx = wallet?.label.toLowerCase().includes('okx');
     const res: any = await getWithoutActive(`${QUEST_PATH}/api/invite/check-address/${address}`, platform, {
-      name: router?.query?.kolName
+      name: router?.query?.kolName,
+      wallet: isBitget ? 'bitget' : isCoin98 ? 'coin98' : isOkx ? 'okx' : ''
     });
     if ((res.code as number) !== 0) return;
     if (res?.data?.is_new_activity_user) {
@@ -153,7 +158,7 @@ export default memo(Invite);
 interface Props {
   logo: string;
   name: string;
-  platform: "okx" | "coin68" | "bitget" | "namlongdao" | "kol";
+  platform: "okx" | "coin68" | "bitget" | "namlongdao" | "kol" | "coin98";
   isMobile?: boolean;
   logoSize?: {
     width: number;

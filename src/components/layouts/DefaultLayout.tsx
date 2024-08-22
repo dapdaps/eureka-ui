@@ -8,6 +8,7 @@ import useAccount from '@/hooks/useAccount';
 import AccountSider from '../AccountSider';
 import Footer from '../Footer';
 import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
+import ChainsDock from '@/components/ChainsDock';
 
 interface Props {
   children: ReactNode;
@@ -86,6 +87,7 @@ export function DefaultLayout({ children }: Props) {
         />
       )}
       <AccountSider />
+      <ChainsDock />
     </Layout>
   );
 }

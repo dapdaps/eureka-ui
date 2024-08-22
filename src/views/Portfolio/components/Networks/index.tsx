@@ -16,6 +16,8 @@ import IconALl from '@public/images/networks/icon-all.svg';
 import { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
 import Big from 'big.js';
 import Skeleton from 'react-loading-skeleton';
+import { SupportedChains } from '@/config/all-in-one/chains';
+import { orderBy } from 'lodash';
 
 const ALL = {
   key: -1,
@@ -45,20 +47,34 @@ const Networks = (props: {
   useEffect(() => {
     const itemWidth = 158;
     const itemGap = 10;
+    const networkSorted: [NetworkItem[], NetworkItem[]] = [[], []];
+    if (networks) {
+      networks.forEach((n) => {
+        if (SupportedChains.some((support) => support.chainId === n.id)) {
+          networkSorted[0].push(n);
+          return;
+        }
+        networkSorted[1].push(n);
+      });
+    }
+    networkSorted[0] = orderBy(networkSorted[0], 'name');
+    networkSorted[1] = orderBy(networkSorted[1], 'name');
+    const networkSortedMerge: NetworkItem[] = [...networkSorted[0], ...networkSorted[1]];
+
     const handleChainNav = () => {
-      if (!wrapperRef.current || !networks) return;
+      if (!wrapperRef.current || !networkSortedMerge) return;
       const wrapperWidth = parseFloat(getComputedStyle(wrapperRef.current).width);
-      const contentLength = networks.length + 1;
+      const contentLength = networkSortedMerge.length + 1;
       const _cols = Math.floor((wrapperWidth + itemGap) / (itemWidth + itemGap));
       const _rows = Math.ceil(contentLength / _cols);
       setCols(_cols);
       if (_rows > 2) {
         setFoldVisible(true);
-        setDisplayNetworks(networks.slice(0, _cols * 2 - 2));
-        setHiddenNetworks(networks.slice(_cols * 2 - 2));
+        setDisplayNetworks(networkSortedMerge.slice(0, _cols * 2 - 2));
+        setHiddenNetworks(networkSortedMerge.slice(_cols * 2 - 2));
       } else {
         setFoldVisible(false);
-        setDisplayNetworks(networks);
+        setDisplayNetworks(networkSortedMerge);
         setHiddenNetworks([]);
         setFold(true);
       }

@@ -14,4 +14,5 @@ export interface FontProps {
   lineHeight?: string;
   whiteSpace?: string;
   lineClamp?: string;
+  textAlign?: "left" | "center" | "right";
 }

@@ -175,7 +175,7 @@ const LoginView = () => {
       </StyledImage>
       <StyledFlex $direction="column">
         <StyledImage style={{ marginBottom: 24 }}>
-          <Image style={{ width: 409 }} src={loginLogo.src} alt="loginLogo" />
+          <Image width={409} src={loginLogo} alt="loginLogo" />
         </StyledImage>
         {/* <StyledInvitedUsers>Invited users only</StyledInvitedUsers> */}
 

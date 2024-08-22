@@ -13,9 +13,13 @@ import {
 } from './styles';
 import Image from 'next/image';
 import { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
+import { SupportedChains } from '@/config/all-in-one/chains';
 
 const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: number, setNetwork: any }) => {
   const { chain, totalBalance, network, setNetwork } = props;
+
+  const isSupported = SupportedChains.some((it) => it.chainId === chain.id);
+
   const percentage = useMemo(() => {
     if (!totalBalance || !chain.usd || Big(totalBalance).eq(0)) return '0';
     return new Big(chain.usd).div(totalBalance).mul(100).toFixed(2);
@@ -36,9 +40,9 @@ const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: numb
       </StyledItemIcon>
       <StyledItemContent>
         <StyledItemName title={chain.name}>{chain.name}</StyledItemName>
-        <StyledItemNum>
+        <StyledItemNum $blur={!isSupported}>
           <StyledItemUSD>${formateValueWithThousandSeparator(chain.usd, 2)}</StyledItemUSD>
-          {percentage && <StyledItemName>{percentage}%</StyledItemName>}
+          {percentage && isSupported && <StyledItemName>{percentage}%</StyledItemName>}
         </StyledItemNum>
       </StyledItemContent>
     </StyledTabItem>
