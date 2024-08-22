@@ -31,19 +31,21 @@ export default function useInititalDataWithAuth() {
 
   const getInitialDataWithAuth = async (address?: string) => {
     window.sessionStorage.setItem(AUTH_TOKENS, '{}');
+    if (["/okx", "/coin68", "/coin98", "/bitget", "/namlongdao", "/invite/[kolName]"]
+      .includes(router.pathname)) {
+      return
+    }
     if (address) {
-      if (["/okx", "/coin68", "/coin98", "/bitget", "/namlongdao", "/invite/[kolName]"].indexOf(router.pathname) === -1) {
-        const checked = await checkAddressIsInvited(address);
-        if (!checked) {
-          const isBitget = wallet?.label.toLowerCase().includes('bitget');
-          const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
-          const isOkx = wallet?.label.toLowerCase().includes('okx');
-          await inviteCodeActivate(
-            address,
-            '',
-            isBitget ? 'bitget_wallet' : isCoin98 ? 'coin98_wallet' : isOkx ? 'okx_wallet' : '',
-          );
-        }
+      const checked = await checkAddressIsInvited(address);
+      if (!checked) {
+        const isBitget = wallet?.label.toLowerCase().includes('bitget');
+        const isCoin98 = wallet?.label.toLowerCase().includes('coin98');
+        const isOkx = wallet?.label.toLowerCase().includes('okx');
+        await inviteCodeActivate(
+          address,
+          '',
+          isBitget ? 'bitget_wallet' : isCoin98 ? 'coin98_wallet' : isOkx ? 'okx_wallet' : '',
+        );
       }
       await getAccessToken(address);
       queryUserInfo();
