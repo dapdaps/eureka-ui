@@ -50,6 +50,24 @@ const PriceBox = styled.div<{ row: number; col: number; isBest?: boolean; isLowe
   text-align: center;
   color: white;
   position: relative;
+  cursor: pointer;
+
+  &:hover {
+    .stick {
+      color: white;
+      .isBest {
+        background: rgba(113, 176, 252, 1);
+        color: white;
+      }
+      .isLowest {
+        color: white;
+        background: rgba(255, 121, 194, 1);
+      }
+    }
+    img {
+      opacity: 1;
+    }
+  }
   .stick {
     position: absolute;
     top: ${({ isBest, isLowest }) => (isBest || isLowest ? '-46px' : '-18px')};
@@ -64,30 +82,33 @@ const PriceBox = styled.div<{ row: number; col: number; isBest?: boolean; isLowe
     font-size: 14px;
     font-weight: 500;
     line-height: 14px;
-    color: #53577B;
+    color: #53577b;
+    transition: color 0.3s ease;
     .isBest {
-        background: rgba(113, 176, 252, 0.1);
-        font-family: Montserrat;
-        font-size: 10px;
-        font-weight: 400;
-        line-height: 10px;
-        text-align: center;
-        padding: 5px 7px;
-        color: #71B0FC;
-        border-radius: 4px;
-        margin-bottom: 8px;
+      background: rgba(113, 176, 252, 0.1);
+      font-family: Montserrat;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 10px;
+      text-align: center;
+      padding: 5px 7px;
+      color: #71b0fc;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      transition: background 0.3s ease;
     }
     .isLowest {
-        background: rgba(255, 121, 194, 0.1);
-        font-family: Montserrat;
-        font-size: 10px;
-        font-weight: 400;
-        line-height: 10px;
-        text-align: center;
-        padding: 5px 7px;
-        color: #FF79C2;
-        border-radius: 4px;
-        margin-bottom: 8px;
+      background: rgba(255, 121, 194, 0.1);
+      font-family: Montserrat;
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 10px;
+      text-align: center;
+      padding: 5px 7px;
+      color: #ff79c2;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      transition: background 0.3s ease;
     }
   }
 `;
@@ -95,7 +116,8 @@ const PriceBox = styled.div<{ row: number; col: number; isBest?: boolean; isLowe
 const Icon = styled.img`
   width: 56px;
   height: 56px;
-  opacity: .3;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
 `;
 
 interface PriceData {
@@ -107,14 +129,13 @@ interface PriceData {
 
 const priceData = [
   { price: 3473.02671, icon: 'https://s3.amazonaws.com/dapdap.prod/images/bsc.png', isBest: true },
-  { price: 3473.20261, icon: 'https://s3.amazonaws.com/dapdap.prod/images/zksync.png',isLowest: true  },
-  { price: 3471.50723, icon: 'https://s3.amazonaws.com/dapdap.prod/images/mode.png', },
+  { price: 3473.20261, icon: 'https://s3.amazonaws.com/dapdap.prod/images/zksync.png', isLowest: true },
+  { price: 3471.50723, icon: 'https://s3.amazonaws.com/dapdap.prod/images/mode.png' },
   { price: 3471.30676, icon: 'https://s3.amazonaws.com/dapdap.prod/images/blastchain.png' },
   { price: 3473.72026, icon: 'https://s3.amazonaws.com/dapdap.prod/images/optimism.png' },
 ];
 
 const PriceBoard = () => {
-
   const gridIndexMap = [
     { row: 2, col: 13 }, // Best price position
     { row: 5, col: 5 }, // Lowest price position
@@ -137,8 +158,8 @@ const PriceBoard = () => {
               isLowest={data.isLowest}
             >
               <div className="stick">
-                { data.isBest && <div className='isBest'>Best price</div> }
-                { data.isLowest && <div className='isLowest'>Lowest price</div> }
+                {data.isBest && <div className="isBest">Best price</div>}
+                {data.isLowest && <div className="isLowest">Lowest price</div>}
                 <div>{data.price}</div>
               </div>
               <Icon src={data.icon} alt="Token Icon" />

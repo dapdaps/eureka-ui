@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import IconWarning from '@public/images/utils/warning.svg'
 
 interface TooltipProps {
   content: string;
+  sx?: CSSProperties;
 }
 
 const TooltipContainer = styled.div`
@@ -37,13 +38,14 @@ const TooltipContent = styled(motion.div)`
   text-align: left;
 `;
 
-const Tooltip: React.FC<TooltipProps> = ({ content }) => {
+const Tooltip: React.FC<TooltipProps> = ({ content, sx }) => {
   const [isVisible, setIsVisible] = useState(false);
 
   return (
     <TooltipContainer
       onMouseEnter={() => setIsVisible(true)}
       onMouseLeave={() => setIsVisible(false)}
+      style={sx}
     >
       <TooltipIcon />
       <AnimatePresence>

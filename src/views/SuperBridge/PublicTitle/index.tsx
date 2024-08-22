@@ -26,7 +26,7 @@ const SubTitle = styled.div`
 `
 
 interface Props {
-    title: string;
+    title: string | ReactElement;
     subTitle: string;
     renderAction?: () => ReactElement | null
 }

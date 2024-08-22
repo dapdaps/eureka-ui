@@ -29,6 +29,8 @@ import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance'
 
 import type { Chain, Token } from '@/types';
 
+import Tooltip from '@/components/TitleTooltip';
+
 const Container = styled.div`
   color: #ffffff;
   width: 800px;
@@ -246,7 +248,12 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
   return (
     <Container>
       <PublicTitle
-        title="Super Bridge"
+        title={
+          <>
+            Super Bridge
+            <Tooltip content='Super Bridge aggregates top-tier bridges in one intuitive interface, offering smart-routing for optimal fees and speed. Each bridge transaction on DapDap helps earn you medals, rewarding your cross-chain activity! Seamlessly transfer your assets across 17+ networks with real-time tracking and data support.' />
+          </>
+        }
         subTitle="Transfer assets between Ethereum and EVM L2s."
         renderAction={() => (
           <Setting
