@@ -120,7 +120,7 @@ export default function BirdgeAction(
   const { fail, success } = useToast()
   const [quoteReques, setQuoteRequest] = useState<QuoteRequest | null>(null)
 
-  const { routes, loading } = useQuote(quoteReques, identification)
+  const { routes, loading, quoteLoading } = useQuote(quoteReques, identification)
 
   const { balance } = useTokenBalance({
     currency: fromToken,
@@ -323,6 +323,7 @@ export default function BirdgeAction(
       toToken && routes?.length && <RouteSelected
         fromChain={fromChain}
         routeSortType={routeSortType}
+        quoteLoading={quoteLoading}
         onRouteSelected={(route: QuoteResponse | null) => {
           setSelectedRoute(route)
         }} toToken={toToken} routes={routes} />
