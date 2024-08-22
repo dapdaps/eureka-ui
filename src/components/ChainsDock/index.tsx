@@ -1,5 +1,6 @@
 import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import ReactDOM from 'react-dom'
 import { AnimatePresence } from 'framer-motion';
 import { useChainsStore } from '@/stores/chains';
 import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
@@ -8,6 +9,19 @@ import { Network } from '@/hooks/useNetworks';
 import Big from 'big.js';
 import { orderBy } from 'lodash';
 import ChainsDockList from '@/components/ChainsDock/List';
+import dynamic from 'next/dynamic';
+import Skeleton from 'react-loading-skeleton';
+
+// @ts-ignore
+const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
+  ssr: false,
+  // loading: () => <div style={{ width: 400 }}>
+  //   <Skeleton width="400px" height="72px" borderRadius="16px" containerClassName="skeleton" />
+  //   <Skeleton style={{ marginTop: 20 }} width="400px" height="150px" borderRadius="6px" containerClassName="skeleton" />
+  //   <Skeleton style={{ marginTop: 20 }} width="400px" height="150px" borderRadius="6px" containerClassName="skeleton" />
+  // </div>
+});
+
 
 // The portfolio chains have been integrated
 // sorted by A-Z
@@ -44,6 +58,10 @@ const ChainsDock = () => {
 
   const containerRef = useRef<any>(null);
   const [maskVisible, setMaskVisible] = useState<boolean>(true);
+  const [ quickBridgeShow, setQuickBridgeShow ] = useState(false)
+  const [ fromChainId, setFromChainId ] = useState<number>(0)
+  const [ toChainId, setToChainId ] = useState<number>(0)
+  const [direction, setDirection] = useState('in')
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -60,14 +78,21 @@ const ChainsDock = () => {
     };
   }, []);
 
+  const onBridgeShow = useCallback((fromChainId: number, toChainId: number, direction: string) => {
+    setFromChainId(fromChainId)
+    setToChainId(toChainId)
+    setDirection(direction)
+    setQuickBridgeShow(true)
+  }, [])
+
   return (
     <StyledContainer
       ref={containerRef}
     >
       <StyledInner>
-        <ChainsDockList list={chainList[0]} />
+        <ChainsDockList list={chainList[0]} onBridgeShow={onBridgeShow}/>
         <StyledLine />
-        <ChainsDockList list={chainList[1]} />
+        <ChainsDockList list={chainList[1]} onBridgeShow={onBridgeShow}/>
       </StyledInner>
       <AnimatePresence mode="wait">
         {
@@ -86,6 +111,9 @@ const ChainsDock = () => {
           )
         }
       </AnimatePresence>
+      {
+         quickBridgeShow && <QuickBridge direction={direction} fromChainId={fromChainId} toChainId={toChainId} onClose={() => { setQuickBridgeShow(false) }}/>
+      }
     </StyledContainer>
   );
 };

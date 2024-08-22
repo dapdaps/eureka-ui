@@ -17,8 +17,11 @@ import Skeleton from 'react-loading-skeleton';
 
 const OffsetLeft = 17;
 
+
+
+
 const ChainsDockDetail = (props: Props) => {
-  const { children, network } = props;
+  const { children, network, onBridgeShow } = props;
 
   const { account } = useAccount();
 
@@ -40,6 +43,7 @@ const ChainsDockDetail = (props: Props) => {
     <>
       <StyledTrigger
         ref={triggerRef}
+        
         onHoverStart={() => {
           setVisible(true);
           cancelCloseDetail();
@@ -57,6 +61,7 @@ const ChainsDockDetail = (props: Props) => {
             y={y}
             network={network}
             setVisible={setVisible}
+            onBridgeShow={onBridgeShow}
             cancelCloseDetail={cancelCloseDetail}
             closeDetail={closeDetail}
             onLoaded={(elTooltip) => {
@@ -91,6 +96,7 @@ const Detail = (props: DetailProps) => {
   const router = useRouter();
 
   const isSupported = SupportedChains.some((support) => support.chainId === chain_id);
+  
 
   const balanceRef = useRef<any>(null);
 
@@ -112,7 +118,14 @@ const Detail = (props: DetailProps) => {
   };
 
   const handleSuperBridge = (direction: 'in' | 'out') => {
-    console.log(direction);
+    const { onBridgeShow } = props
+    console.log(4444, onBridgeShow)
+    // console.log(direction);
+    if (onBridgeShow) {
+      // const fromChainId = direction === 'in' ? 1 : chain_id
+      // const toChainId = direction === 'in' ? chain_id : 1
+      onBridgeShow(chain_id, 1, direction)
+    }
   };
 
   useEffect(() => {
@@ -212,6 +225,7 @@ const Detail = (props: DetailProps) => {
           )
         }
       </StyledDetail>
+      
     </AnimatePresence>
   );
 };
@@ -221,6 +235,7 @@ export default ChainsDockDetail;
 interface Props {
   children: any;
   network: NetworkBalance;
+  onBridgeShow?(fromChainId: number, toChainId: number, direction: string): void;
 }
 
 interface DetailProps {
@@ -235,6 +250,7 @@ interface DetailProps {
   cancelCloseDetail(): void;
 
   closeDetail(): void;
+  onBridgeShow?(fromChainId: number, toChainId: number, direction: string): void;
 }
 
 const StyledDetail = styled(motion.div)`

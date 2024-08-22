@@ -1,4 +1,5 @@
 import { forwardRef } from 'react'
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 const Layer = styled.div`
@@ -72,6 +73,8 @@ interface Props {
 function Modal({
     width = 468, height, onClose, title, children, paddingSize = 20, top = '50%', position = 'mid', showLayer = true
 }: Props, ref: any) {
+
+    
     return <div>
         {
             showLayer && <Layer onClick={() => {
