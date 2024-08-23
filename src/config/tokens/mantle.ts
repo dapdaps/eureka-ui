@@ -134,4 +134,12 @@ export const mantle: { [key: string]: Token } = {
     icon: 'https://ipfs.near.social/ipfs/bafkreiaahg3aulwqaclg55k2ntikfbwztholbjz6vuewpph67ou6uyw2ty',
     decimals: 18,
   },
+  ausd: {
+    chainId: CHAIN_ID,
+    address: '0xd2b4c9b0d70e3da1fbdd98f469bd02e77e12fc79',
+    name: 'Aurelius USD',
+    symbol: 'aUSD',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibsxpywcpyv7d3wtx6zikotsgyuchvxj6jaqn22rcefxqsemk75wy',
+    decimals: 18,
+  },
 };
