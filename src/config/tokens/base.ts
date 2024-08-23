@@ -363,4 +363,12 @@ export const base: { [key: string]: Token } = {
     name: 'Mai Stablecoin',
     icon: 'https://ipfs.near.social/ipfs/bafkreicgly7mfpvv4o32u6hpcei7z4le7a67gtfbdvhi5avf5dkpddy5pu',
   },
+  bsx: {
+    chainId: CHAIN_ID,
+    address: '0xd5046B976188EB40f6DE40fB527F89c05b323385',
+    decimals: 18,
+    symbol: 'BSX',
+    name: 'BaseX',
+    icon: 'https://ipfs.near.social/ipfs/bafkreida3dyyxbh7u4iqzf32p4heiyjfk4yw6nfuod5zrrkgrra23idyre',
+  },
 };
