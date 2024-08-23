@@ -107,14 +107,14 @@ export const polygonZkevm: { [key: string]: Token } = {
     symbol: 'AURA',
     icon: 'https://ipfs.near.social/ipfs/bafkreibwfcm5emsmg7ilhyiq7ugy2bxpjyfdkdi37cvnftkktqoal7soyq',
   },
-  wsteth: {
-    chainId: CHAIN_ID,
-    address: '0x5d8cff95d7a57c0bf50b30b43c7cc0d52825d4a9',
-    name: 'Wrapped liquid staked Ether 2.0',
-    decimals: 18,
-    symbol: 'wstETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie5mwrdg7fgm3hhkx5kj5esozzklvaofwjkx6uf3rii54c3j5jrci',
-  },
+  // wsteth: {
+  //   chainId: CHAIN_ID,
+  //   address: '0x5d8cff95d7a57c0bf50b30b43c7cc0d52825d4a9',
+  //   name: 'Wrapped liquid staked Ether 2.0',
+  //   decimals: 18,
+  //   symbol: 'wstETH',
+  //   icon: 'https://ipfs.near.social/ipfs/bafkreie5mwrdg7fgm3hhkx5kj5esozzklvaofwjkx6uf3rii54c3j5jrci',
+  // },
   rseth: {
     chainId: CHAIN_ID,
     address: '0x8c7d118b5c47a5bcbd47cc51789558b98dad17c5',
@@ -138,5 +138,50 @@ export const polygonZkevm: { [key: string]: Token } = {
     symbol: 'ankrETH',
     name: 'Ankr Staked ETH',
     icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0x12d8ce035c5de3ce39b1fdd4c1d5a745eaba3b8c.png',
+  },
+
+  cake: {
+    chainId: CHAIN_ID,
+    address: '0x0D1E753a25eBda689453309112904807625bEFBe',
+    decimals: 18,
+    symbol: 'Cake',
+    name: 'PancakeSwap Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreih5mdsh7mwu7c33l5fqxh2osd7zea2ws3vph57fz7jd6avvxtpyzi',
+  },
+
+  wsteth: {
+    chainId: CHAIN_ID,
+    address: '0xbf6De60Ccd9D22a5820A658fbE9fc87975EA204f',
+    decimals: 18,
+    symbol: 'wstETH',
+    name: 'Wrapped liquid staked Ether 2.0',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihrladbme6m2xfrocln2q5gqkayd5ddgkfgxllyq3ug5qgqtwfxl4',
+  },
+
+  link: {
+    chainId: CHAIN_ID,
+    address: '0x4B16e4752711A7ABEc32799C976F3CeFc0111f2B',
+    decimals: 18,
+    symbol: 'LINK',
+    name: 'ChainLink Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifkuio3jgj6ru44i2yxyakipoadhsoawd7tkyjofbxw22bnw6udpq',
+  },
+
+  quick: {
+    chainId: CHAIN_ID,
+    address: '0x68286607A1d43602d880D349187c3c48c0fD05E6',
+    decimals: 18,
+    symbol: 'QUICK',
+    name: 'QuickSwap',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifc6e5cu3hn24epyteuxbtvyyuaav7bp7t2mixjo36jyivt3fqlem',
+  },
+
+  grai: {
+    chainId: CHAIN_ID,
+    address: '0xCA68ad4EE5c96871EC6C6dac2F714a8437A3Fe66',
+    decimals: 18,
+    symbol: 'GRAI',
+    name: 'Gravita Debt Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigit5rttp3zhie5iq5jgre3hxu7vkfpuul4g366hlvmb2oxbbsu4i',
   },
 };

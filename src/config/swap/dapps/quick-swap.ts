@@ -13,7 +13,19 @@ const networks = {
       input: polygon['eth'],
       output: polygon['usdc'],
     },
-    tokens: [polygon['eth'], polygon['usdc'], polygon['wbtc'], polygon['wmatic'], polygon['dai'], polygon['usdt']],
+    tokens: [
+      polygon['eth'], 
+      polygon['usdc'], 
+      polygon['wbtc'], 
+      polygon['wmatic'], 
+      polygon['dai'], 
+      polygon['usdt'],
+      polygon['usdc.e'],
+      polygon['ghst'],
+      polygon['usdt'],
+      polygon['usdc'],
+      polygon['quick'],
+    ],
   },
   1101: {
     defaultCurrencies: {
@@ -28,6 +40,9 @@ const networks = {
       polygonZkevm['matic'],
       polygonZkevm['usdt'],
       polygonZkevm['dai'],
+      polygonZkevm['link'],
+      polygonZkevm['usdc.e'],
+      polygonZkevm['quick'],
     ],
   },
   169: {

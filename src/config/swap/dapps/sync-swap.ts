@@ -44,6 +44,11 @@ const networks = {
       zkSync['dvf'],
       zkSync['lusd'],
       zkSync['reth'],
+      zkSync['usdc.e'],
+      zkSync['zk'],
+      zkSync['wsteth'],
+      zkSync['wrseth'],
+      zkSync['dai'],
     ],
   },
   534352: {
