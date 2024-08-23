@@ -15,20 +15,7 @@ import polygonZkevm from './chains/polygon-zkevm';
 import scroll from './chains/scroll';
 import zksync from './chains/zksync';
 
-const popupsData: {
-  [key: string]: {
-    title: string;
-    path: string;
-    icon: string;
-    bgColor: string;
-    selectBgColor: string;
-    chainId: number;
-    rpcUrls: string[];
-    menuConfig: any;
-    defaultTab?: any;
-    bgIcon?: string;
-  };
-} = {
+const popupsData: { [key: string]: AllInOneChain; } = {
   arbitrum,
   avalanche,
   base,
@@ -86,3 +73,46 @@ export const IdToPath: { [key: string]: string } = {
 };
 
 export default popupsData;
+
+export interface AllInOneChain {
+  title: string;
+  path: string;
+  icon: string;
+  bgColor: string;
+  bgIcon?: string;
+  selectBgColor: string;
+  chainId: number;
+  rpcUrls: string[];
+  defaultTab?: string;
+  theme: {
+    button: {
+      bg: string;
+      text: string;
+    };
+  };
+  menuConfig: {[tab: string]: { tab: string; path: string; id?: number }};
+}
+
+// Polygon zkEVM, zkSync, Linea, Scroll, Blast
+export const SupportedChains = [
+  {
+    name: popupsData['polygon-zkevm'].title,
+    chainId: popupsData['polygon-zkevm'].chainId,
+  },
+  {
+    name: popupsData.zksync.title,
+    chainId: popupsData.zksync.chainId,
+  },
+  {
+    name: popupsData.linea.title,
+    chainId: popupsData.linea.chainId,
+  },
+  {
+    name: popupsData.scroll.title,
+    chainId: popupsData.scroll.chainId,
+  },
+  {
+    name: popupsData.blast.title,
+    chainId: popupsData.blast.chainId,
+  },
+];
