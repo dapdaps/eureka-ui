@@ -39,6 +39,13 @@ const networks = {
       manta['dai'],
       manta['wsteth'],
       manta['tia'],
+      manta['wusdm'],
+      manta['stone'],
+      manta['lab'],
+      manta['kuma'],
+      manta['mante'],
+      manta['webmi'],
+      manta['manta'],
     ],
   },
   534352: {
