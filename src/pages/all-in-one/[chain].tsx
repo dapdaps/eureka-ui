@@ -225,7 +225,7 @@ const AllInOne: NextPageWithLayout = () => {
       } else if (cachedTab) {
         setTab(cachedTab);
       } else {
-        setTab(_currentChain.defaultTab);
+        setTab(_currentChain?.defaultTab ?? '');
       }
     },
     { wait: 500 },
