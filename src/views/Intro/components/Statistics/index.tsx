@@ -1,6 +1,7 @@
 import { QUEST_PATH } from "@/config/quest";
-import { get } from '@/utils/http';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { get } from '@/utils/http';
+import Counter from "@/views/AllDapps/components/Title/Counter";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
@@ -36,22 +37,22 @@ const Amount = styled.div`
 `
 
 const Sep = () => <div>
-    <svg width="118" height="2" viewBox="0 0 118 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0.947144 1H117.358" stroke="black" stroke-width="2" stroke-dasharray="2 6"/>
-            </svg>
+  <svg width="118" height="2" viewBox="0 0 118 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0.947144 1H117.358" stroke="black" stroke-width="2" stroke-dasharray="2 6" />
+  </svg>
 </div>
 
 interface IData {
-    total_users?: number;
-    total_transactions?: number;
-    total_trading_volume?: number;
-  }
+  total_users?: number;
+  total_transactions?: number;
+  total_trading_volume?: number;
+}
 
 
-  
+
 
 export default function Statistics() {
-    const [statData, setStatData] = useState<IData>({});
+  const [statData, setStatData] = useState<IData>({});
 
   const fetchStatData = () => {
     get(`${QUEST_PATH}/api/stats`).then((res) => {
@@ -65,23 +66,43 @@ export default function Statistics() {
     fetchStatData();
   }, []);
 
-    return <Wrapper>
-        <Item>
-            <ItemTitle>Participants</ItemTitle>
-            <Sep />
-            <Amount>{formatIntegerThousandsSeparator(statData.total_users)}</Amount>
-        </Item>
-        <Item>
-            <ItemTitle>Transactions</ItemTitle>
-            <Sep />
-            <Amount>{formatIntegerThousandsSeparator(statData.total_transactions)}</Amount>
-        </Item>
-        <Item>
-            <ItemTitle>Trading Volume</ItemTitle>
-            <Sep />
-            <Amount>{formatIntegerThousandsSeparator(statData.total_trading_volume)}</Amount>
-        </Item>
+  return (
+    <Wrapper>
+      <Item>
+        <ItemTitle>Participants</ItemTitle>
+        <Sep />
+        <Amount>
+          <Counter
+            from={1}
+            to={statData?.total_users ?? 0}
+            formatter={formatIntegerThousandsSeparator}
+          />
+        </Amount>
+      </Item>
+      <Item>
+        <ItemTitle>Transactions</ItemTitle>
+        <Sep />
+        <Amount>
+          <Counter
+            from={1}
+            to={statData?.total_transactions ?? 0}
+            formatter={formatIntegerThousandsSeparator}
+          />
+        </Amount>
+      </Item>
+      <Item>
+        <ItemTitle>Trading Volume</ItemTitle>
+        <Sep />
+        <Amount>
+          <Counter
+            from={1}
+            to={statData?.total_trading_volume ?? 0}
+            formatter={formatIntegerThousandsSeparator}
+          />
+        </Amount>
+      </Item>
     </Wrapper>
+  )
 }
 
 

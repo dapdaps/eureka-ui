@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 import styled from "styled-components";
 
 import chainCofig from "@/config/chains";
@@ -20,6 +20,9 @@ const StyledRotateNetworks = styled.div`
   transform-origin: center;
   transform: rotate(0deg);
   animation: RotateAnimation 50s linear infinite;
+  /* &:hover {
+    animation-play-state: paused;
+  } */
   @keyframes RotateAnimation {
     0% {
       transform: rotate(0deg);
@@ -37,25 +40,34 @@ const StyledRotateNetwork = styled.div`
   width: 72px;
   height: 780px;
   transform-origin: center bottom;
+  
 `
 const StyledRotateNetworkImage = styled.img`
+  cursor: pointer;
   width: 72px;
   height: 72px;
-
 `
 const chains = Object.values(chainCofig);
 
 export default memo(function RotateNetworks() {
-
+  const [isMouseEnter, setIsMouseEnter] = useState(false)
   const len = chains.length
   const fillChains = new Array(45).fill(true).map((_, index) => chains[index % len])
   return (
     <StyledRotateNetworksContainer>
-      <StyledRotateNetworks>
+      <StyledRotateNetworks style={{ animationPlayState: isMouseEnter ? 'paused' : 'running' }}>
         {
           fillChains.map((chain, index) => (
             <StyledRotateNetwork key={chain?.chainId} style={{ transform: `rotate(${index * 8}deg)` }}>
-              <StyledRotateNetworkImage src={chain?.icon} />
+              <StyledRotateNetworkImage
+                src={chain?.icon}
+                onMouseEnter={() => {
+                  setIsMouseEnter(true)
+                }}
+                onMouseLeave={() => {
+                  setIsMouseEnter(false)
+                }}
+              />
             </StyledRotateNetwork>
           ))
         }

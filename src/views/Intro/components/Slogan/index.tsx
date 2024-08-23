@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+    margin: 0 20px;
     color: #EBF479;
     font-size: 160px;
     font-weight: 600;

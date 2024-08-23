@@ -1,11 +1,62 @@
-import { memo } from "react";
+import { memo, useEffect, useRef } from "react";
 import styled from "styled-components";
 
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
+import { useRouter } from "next/router";
 
 const StyledMiniCardContainer = styled.div`
   width: 100%;
   padding: 90px 14px 14px;
+
+  @keyframes SwayAnimation {
+    0% {
+      transform: rotate(0deg);
+    }
+    25% {
+      transform: rotate(-15deg);
+    }
+    50% {
+      transform: rotate(0deg);
+    }
+    75% {
+      transform: rotate(15deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
+  @keyframes ShakeAnimation {
+    0% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(-15px, 15px);
+    }
+    50% {
+      transform: translate(0, 0);
+    }
+    75% {
+      transform: translate(15px, -15px);
+    }
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+  .SuperBridgeSvg {
+    transform-origin: bottom center;
+    &.AnimateRunning {
+      animation: SwayAnimation 2s linear 1;
+    }
+  }
+  
+  .SuperSwapSvg {
+    &.AnimateRunning {
+      animation: ShakeAnimation 2s linear 1;
+    }
+  }
+
+  .SuperBridgeMiniCard {
+  }
 `
 const StyledMiniCard = styled.div`
   position: relative;
@@ -13,7 +64,11 @@ const StyledMiniCard = styled.div`
   border-radius: 30px;
   height: 300px;
   background-color: red;
+  cursor: pointer;
 `
+// const StyledSuperBridgeMiniCard = styled(StyledMiniCard)`
+
+// `
 const StyledMiniCardImage = styled.img``
 
 const StyledRightSvg = styled.div`
@@ -43,6 +98,42 @@ const StyledPortfolioButton = styled.div`
   background: #5B56F3;
 
 `
+const StyledEyesImage = styled.img`
+  position: absolute;
+  width: 44px;
+  left: 23px;
+  top: 59px;
+`
+const StyledOdysseyVideoContainer = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 427px;
+  height: 260px;
+  border-radius: 20px;
+  background-color: #ecec84;
+  overflow: hidden;
+`
+const StyledOdysseyVideo = styled.video`
+  /* width: 100%; */
+  height: 100%;
+`
+const StyledChainList = styled.div`
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`
+const StyledChainImage = styled.img`
+  width: 56px;
+`
+const StyledOdysseyFontImage = styled.img`
+  width: 306px;
+`
 const WhiteRightSvg = (
   <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
     <circle cx="26" cy="26" r="26" fill="white" />
@@ -61,9 +152,46 @@ const RoundedSvg = (
   </svg>
 )
 
+const CHAINS = [{
+  icon: '/images/intro/chains/linea.svg',
+  label: "linea"
+}, {
+  icon: '/images/intro/chains/scroll.svg',
+  label: "scroll"
+}, {
+  icon: '/images/intro/chains/manta.svg',
+  label: "manta"
+}, {
+  icon: '/images/intro/chains/blast.svg',
+  label: "blast"
+}, {
+  icon: '/images/intro/chains/thruster.svg',
+  label: "thruster"
+}, {
+  icon: '/images/intro/chains/mode.svg',
+  label: "mode"
+},]
+
 export default memo(function MiniCard() {
+  const router = useRouter()
+  const miniCardContainerRef = useRef(null)
+  const handleMouseEnterAnimateRunning = function (card: any, svg: any) {
+    card?.addEventListener("mouseenter", function () {
+      svg?.classList.add('AnimateRunning');
+    })
+    svg?.addEventListener("animationend", function () {
+      svg?.classList.remove('AnimateRunning');
+    })
+  }
+  useEffect(() => {
+    const target: any = miniCardContainerRef?.current
+    if (target) {
+      handleMouseEnterAnimateRunning(target?.querySelector(".SuperBridgeMiniCard"), target?.querySelector(".SuperBridgeSvg"))
+      handleMouseEnterAnimateRunning(target?.querySelector(".SuperSwapMiniCard"), target?.querySelector(".SuperSwapSvg"))
+    }
+  }, [])
   return (
-    <StyledMiniCardContainer>
+    <StyledMiniCardContainer ref={miniCardContainerRef}>
       <StyledFlex gap="14px" style={{ marginBottom: 14 }}>
         <StyledMiniCard style={{ backgroundColor: "#5B56F3", height: 614 }}>
           <StyledRightSvg style={{ right: 10, top: 10 }}>
@@ -78,7 +206,13 @@ export default memo(function MiniCard() {
         </StyledMiniCard>
         <StyledFlex flexDirection="column" gap="14px" style={{ flex: 1 }}>
           <StyledFlex gap="14px" style={{ width: "100%" }}>
-            <StyledMiniCard style={{ backgroundColor: "#F2F2F2" }}>
+            <StyledMiniCard
+              className="SuperBridgeMiniCard"
+              style={{ backgroundColor: "#F2F2F2" }}
+              onClick={() => {
+                router.push("/super-bridge")
+              }}
+            >
               <StyledBlackRoundedSvg style={{ top: 12, left: 12 }}>
                 {RoundedSvg}
               </StyledBlackRoundedSvg>
@@ -88,7 +222,7 @@ export default memo(function MiniCard() {
               <StyledBlackRoundedSvg style={{ bottom: 12, left: 12, transform: 'rotate(270deg)' }}>
                 {RoundedSvg}
               </StyledBlackRoundedSvg>
-              <StyledSvg style={{ position: 'absolute', right: 25, top: -31 }}>
+              <StyledSvg className="SuperBridgeSvg" style={{ position: 'absolute', right: 25, top: -31 }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="110" viewBox="0 0 80 110" fill="none">
                   <path d="M5.89809 94.0532C6.31682 90.2847 9.21297 87.5979 10.6087 86.7256L57.4531 88.0341C57.4531 88.0341 61.6403 90.3894 61.6403 95.8851C61.6403 97.9787 63.734 109.232 35.4703 109.232C7.2066 109.232 5.37469 98.7638 5.89809 94.0532Z" fill="white" stroke="black" />
                   <path d="M5.898 84.1083C-0.906734 75.2092 -2.21369 55.8983 12.4416 45.6396C17.5841 38.8236 21.9107 34.34 30.5064 25.1513C27.3743 15.9917 27.9922 3.95369 37.5807 1.33636C43.3381 -0.235221 48.2987 3.95227 48.2987 8.66414C51.6333 6.22996 54.676 4.54443 57.2082 3.95356C66.3678 1.81633 70.8167 10.4947 63.4891 18.8691C59.177 23.7972 53.7039 29.5464 48.2987 35.7837C51.9583 33.0766 60.1971 30.2159 66.0901 35.7837C68.1046 37.687 69.1273 39.8809 69.1273 42.7595C74.134 43.2829 81.1117 48.831 78.39 57.4148C76.7478 62.5942 73.0322 65.5565 69.1273 66.8873C70.2904 74.8085 66.7578 91.3313 52.7434 91.9594C35.2253 92.7445 14.902 95.8836 5.898 84.1083Z" fill="#EBF479" />
@@ -98,7 +232,6 @@ export default memo(function MiniCard() {
               <StyledRightSvg style={{ right: 10, bottom: 10 }}>
                 {BlackRightSvg}
               </StyledRightSvg>
-
               <StyledContainer style={{ paddingTop: 67 }}>
                 <StyledFlex gap="6px" style={{ paddingLeft: 24, marginBottom: 14 }}>
                   <StyledSvg>
@@ -112,9 +245,14 @@ export default memo(function MiniCard() {
                   One UI to rule them all: Super Bridge aggregates routes from 18+ top bridges, ensuring you always receive optimal returns!
                 </StyledFont>
               </StyledContainer>
-
             </StyledMiniCard>
-            <StyledMiniCard style={{ backgroundColor: "#5B56F3" }}>
+            <StyledMiniCard
+              className="SuperSwapMiniCard"
+              style={{ backgroundColor: "#5B56F3" }}
+              onClick={() => {
+                router.push("/super-swap")
+              }}
+            >
               <StyledWhiteRoundedSvg style={{ top: 12, left: 12 }}>
                 {RoundedSvg}
               </StyledWhiteRoundedSvg>
@@ -124,7 +262,7 @@ export default memo(function MiniCard() {
               <StyledWhiteRoundedSvg style={{ bottom: 12, left: 12, transform: 'rotate(270deg)' }}>
                 {RoundedSvg}
               </StyledWhiteRoundedSvg>
-              <StyledSvg style={{ position: 'absolute', right: 25, top: -26 }}>
+              <StyledSvg className="SuperSwapSvg" style={{ position: 'absolute', right: 25, top: -26 }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="95" height="110" viewBox="0 0 95 110" fill="none">
                   <path d="M92.1591 67.4732C88.4381 60.373 81.0567 61.0722 76.3052 63.7275L55.3417 96.0099C52.1274 102.439 56.3095 108.109 65.7459 108.98C83.8518 110.65 98.1063 78.8209 92.1591 67.4732Z" fill="white" stroke="black" />
                   <path d="M71.3814 33.5304C74.5167 48.0447 80.2946 53.4851 80.0013 66.5276C79.6503 82.1317 66.8886 96.7246 54.0356 99.5356C41.1825 102.347 23.7889 99.2413 18.1544 92.9194C14.7052 92.3943 10.4625 90.6416 9.04668 89.3921C6.42808 87.0811 5.0789 81.3662 10.1414 79.3895C7.36458 78.1196 5.5753 76.2533 4.60432 74.1441C2.5598 69.7029 3.47798 65.164 7.12458 62.6739C5.31744 60.9217 4.53522 59.3751 4.43699 56.412C4.24774 50.7034 9.51608 48.5327 9.51608 48.5327C6.3688 44.458 6.17523 38.6165 10.1661 34.8823C17.2146 28.2871 38.422 33.1005 49.3948 37.8721C49.3948 37.8721 47.8411 21.2537 52.1314 12.8659C57.3251 2.71206 66.9071 5.04579 69.7851 9.57831C72.6632 14.1109 68.6318 20.8016 71.3814 33.5304Z" fill="#EBF479" />
@@ -150,8 +288,24 @@ export default memo(function MiniCard() {
             </StyledMiniCard>
           </StyledFlex>
           <StyledContainer style={{ width: "100%" }}>
-            <StyledMiniCard style={{ background: `#EBF479 url(/images/intro/portfolio-bg.svg) no-repeat center`, backgroundSize: '100%' }}>
+            <StyledMiniCard
+              style={{ background: `#EBF479 url(/images/intro/portfolio-bg.svg) no-repeat center`, backgroundSize: '100%' }}
+              onClick={() => {
+                router.push("/portfolio")
+              }}
+            >
               <StyledContainer style={{ paddingTop: 48, paddingLeft: 32, paddingRight: 25 }}>
+                <StyledRightSvg style={{ right: 10, top: 10 }}>
+                  {BlackRightSvg}
+                </StyledRightSvg>
+                <StyledSvg style={{ position: 'absolute', right: 73, top: -46 }}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="125" height="148" viewBox="0 0 125 148" fill="none">
+                    <path d="M123.912 103.516C122.782 84.6775 107.283 81.5349 99.4339 84.3607L60.8156 125.806C60.3446 132.243 63.3588 145.493 79.1833 147C98.964 148.884 125.325 127.065 123.912 103.516Z" fill="white" stroke="black" />
+                    <path d="M75.884 128.633C69.2714 129.883 48.5381 131.433 34.4388 120.626C28.0757 115.749 20.1899 105.299 13.4525 99.2961C6.71505 93.2936 16.4484 85.7905 23.9344 88.0415C31.4204 90.2924 38.1578 97.7955 46.0166 99.2961C53.8754 100.797 66.259 95.8717 63.6389 78.6146C61.2631 62.967 47.4425 61.462 39.6535 65.4842C27.3031 71.8618 14.5298 87.6899 3.73462 78.6146C-7.86795 68.8606 19.8454 50.8531 41.9157 38.8482C49.4017 34.7762 66.6046 43.2383 66.6046 43.2383C61.9881 32.271 55.3003 8.61057 65.4813 1.70771C70.3748 -1.61014 75.1015 7.13069 79.0751 19.7153C80.4079 13.9629 84.9449 2.68322 92.4309 3.58359C96.9499 4.12711 97.0198 13.8853 96.3654 28.7872C97.3878 29.2581 99.9035 31.9297 101.787 38.8482C103.671 45.7666 98.1766 58.258 95.1938 63.6388C98.9368 67.3904 101.787 81.8717 101.787 94.2518C101.787 116.889 89.0913 124.881 75.884 128.633Z" fill="#EBF479" />
+                    <path d="M66.6046 43.2383C66.6046 43.2383 49.4017 34.7762 41.9157 38.8482C19.8454 50.8531 -7.86795 68.8606 3.73462 78.6146C14.5298 87.6899 27.3031 71.8618 39.6535 65.4842C47.4425 61.462 61.2631 62.967 63.6389 78.6146C66.259 95.8717 53.8754 100.797 46.0166 99.2961C38.1578 97.7955 31.4204 90.2924 23.9344 88.0415C16.4484 85.7905 6.71505 93.2936 13.4525 99.2961C20.1899 105.299 28.0757 115.749 34.4388 120.626C48.5381 131.433 69.2714 129.883 75.8841 128.633C89.0913 124.881 101.787 116.889 101.787 94.2518C101.787 81.8717 98.9368 67.3904 95.1938 63.6388M66.6046 43.2383C61.9881 32.271 55.3003 8.61057 65.4813 1.70771C70.3748 -1.61014 75.1015 7.13069 79.0751 19.7153M66.6046 43.2383C75.9427 47.3232 89.8827 54.4329 95.1938 63.6388M95.1938 63.6388C95.1938 63.6388 83.3687 33.3131 79.0751 19.7153M95.1938 63.6388C98.1766 58.258 103.671 45.7666 101.787 38.8482C99.9035 31.9297 97.3878 29.2581 96.3654 28.7872M95.1938 63.6388C95.1938 50.5724 95.9357 38.5711 96.3654 28.7872M79.0751 19.7153C80.4079 13.9629 84.9449 2.68322 92.4309 3.58359C96.9499 4.12711 97.0198 13.8853 96.3654 28.7872" stroke="black" />
+                  </svg>
+                  <StyledEyesImage src="/images/intro/eyes.gif" />
+                </StyledSvg>
                 <StyledFont color="#000" fontSize="36px" fontWeight="700">Portfolio Analytics</StyledFont>
                 <StyledFont color="#000" fontSize="18px" fontWeight="500" lineHeight="150%" style={{ marginTop: 31, marginBottom: 22 }}>Effortlessly view and manage your assets across networks. Track your bridging, swapping, liquidity, and lending activities in real-time with our comprehensive data support.</StyledFont>
                 <StyledFlex gap="10px">
@@ -196,7 +350,29 @@ export default memo(function MiniCard() {
         </StyledFlex>
       </StyledFlex>
       <StyledFlex gap="14px">
-        <StyledMiniCard style={{ flex: 2 }}></StyledMiniCard>
+        <StyledMiniCard style={{ display: "flex", flex: 2, backgroundColor: "#EBF479", padding: 20 }}>
+          <StyledOdysseyVideoContainer>
+            <StyledOdysseyVideo src="/videos/introOdyssey.webm" controls={false} muted autoPlay loop />
+            <StyledChainList>
+              {
+                CHAINS.map((chain, index) => (
+                  <StyledChainImage key={index} src={chain?.icon} />
+                ))
+              }
+            </StyledChainList>
+          </StyledOdysseyVideoContainer>
+          <StyledContainer style={{ width: 482, marginLeft: 5, paddingTop: 19 }}>
+            <StyledOdysseyFontImage src="/images/intro/odyssey-title.png" />
+            <StyledFlex flexDirection="column" style={{ marginLeft: 7, marginTop: 53 }}>
+              <StyledFont fontSize="18px" fontWeight="500" lineHeight="150%" style={{ opacity: 0.8 }}>
+                Embark on your Web3 Odyssey – where every action brings a chance to earn new rewards!
+              </StyledFont>
+              <StyledFont fontSize="18px" fontWeight="500" lineHeight="150%" style={{ opacity: 0.8 }}>
+                Discover exciting missions across multiple networks, while exploring new dApps along the way.
+              </StyledFont>
+            </StyledFlex>
+          </StyledContainer>
+        </StyledMiniCard>
         <StyledMiniCard style={{ backgroundColor: "#5B56F3" }}>
           <StyledMiniCardImage src="/images/intro/rewards-bg.png" style={{ position: 'absolute', width: 405, right: 0, top: 0 }} />
           <StyledContainer style={{ paddingTop: 94, paddingLeft: 35 }}>
