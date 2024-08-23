@@ -239,7 +239,7 @@ export const base: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     address: '0x47b464eDB8Dc9BC67b5CD4C9310BB87b773845bD',
     name: 'Normie',
-    decimals: 18,
+    decimals: 9,
     symbol: 'NORMIE',
     icon: 'https://ipfs.near.social/ipfs/bafkreie6pgqlh7kqcwx64nxmqqoee4pdvh4abqtofa3ybvm6zjcms4uqli',
   },

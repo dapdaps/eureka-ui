@@ -17,7 +17,7 @@ const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['magic'],
+      output: arbitrum['arb'],
     },
     tokens: [
       arbitrum['eth'],
@@ -30,7 +30,11 @@ const networks = {
       arbitrum['usdc.e'],
       arbitrum['wst-eth'],
       arbitrum['usde'],
-      arbitrum['wbtc'],
+
+      arbitrum['weth'],
+      arbitrum['dai'],
+      arbitrum['arb'],
+      arbitrum['sushi'],
     ],
   },
   100: {

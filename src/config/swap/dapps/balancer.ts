@@ -26,6 +26,11 @@ const networks = {
       polygonZkevm['bal'],
       polygonZkevm['ankreth'],
       polygonZkevm['matic'],
+
+      polygonZkevm['eth'],
+      polygonZkevm['usdc'],
+      polygonZkevm['wbtc'],
+      polygonZkevm['dai'],
     ],
   },
   8453: {
@@ -46,6 +51,9 @@ const networks = {
       base['tbtc'],
       base['tag'],
       base['usdbc'],
+
+      base['eth'],
+      base['dai'],
     ],
   },
   100: {
@@ -65,6 +73,12 @@ const networks = {
       gnosis['OLAS'],
       gnosis['wxdai'],
       gnosis['COW'],
+
+      gnosis['xdai'],
+      gnosis['BAL'],
+      gnosis['usdc'],
+      gnosis['usdt'],
+      gnosis['dai'],
     ],
   },
 };
