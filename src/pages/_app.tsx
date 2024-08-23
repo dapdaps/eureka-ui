@@ -117,11 +117,11 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           gtag('config', 'G-PR996H5E9T');`}
       </Script>
 
-      <Script
+      {/* <Script
         src="https://static.zdassets.com/ekr/snippet.js?key=1736c8d0-1d86-4080-b622-12accfdb74ca"
         id="ze-snippet"
         async
-      />
+      /> */}
 
       <Script id="zendesk-config">
         {`

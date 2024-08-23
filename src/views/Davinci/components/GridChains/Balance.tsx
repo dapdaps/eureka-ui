@@ -8,12 +8,10 @@ import styled from 'styled-components';
 import useAccount from '@/hooks/useAccount';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
-const OffsetTop = 150;
+const OffsetTop = 100;
 
 const GridChainBalance = (props: Props) => {
   const { children, chain } = props;
-
-  console.log('=====chain', chain)
   const { account } = useAccount();
 
   const triggerRef = useRef<any>();
