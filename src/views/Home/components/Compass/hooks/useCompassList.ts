@@ -24,10 +24,10 @@ export default function useCompassList() {
   }, []);
 
   useEffect(() => {
-    if (odysseyStore.odyssey.length) {
-      setCompassList(odysseyStore.odyssey);
-      return;
-    }
+    // if (odysseyStore.odyssey.length) {
+    //   setCompassList(odysseyStore.odyssey);
+    //   return;
+    // }
     queryCompassList();
   }, []);
 

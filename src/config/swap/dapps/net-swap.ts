@@ -20,6 +20,8 @@ const networks = {
       metis['nett'],
       metis['peak'],
       metis['byte'],
+      metis['m.usdt'],
+      metis['weth'],
     ],
   },
 };

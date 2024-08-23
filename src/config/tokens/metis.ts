@@ -116,4 +116,12 @@ export const metis: { [key: string]: Token } = {
     name: 'Hermes',
     icon: 'https://ipfs.near.social/ipfs/bafybeiamt2iuucwebbklhvmq5dz3hir63u3ovkvusbuz3k2wpsiwhulnzy',
   },
+  sfrxETH: {
+    chainId: CHAIN_ID,
+    address: '0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A',
+    decimals: 18,
+    symbol: 'sfrxETH',
+    name: 'Staked rax Ether',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiayh7m5knlt7olpwrnnltbd4ykszyzbca5gdpnj4mkqbrvknihcvi',
+  },
 };

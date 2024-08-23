@@ -41,6 +41,7 @@ const networks = {
       scroll['aave'],
       scroll['crv'],
       scroll['wbtc'],
+      scroll['rock'],
     ],
   },
 };
