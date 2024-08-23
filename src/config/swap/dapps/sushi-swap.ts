@@ -111,7 +111,20 @@ const networks = {
       input: scroll['eth'],
       output: scroll['usdc'],
     },
-    tokens: [scroll['eth'], scroll['weth'], scroll['usdc'], scroll['dai'], scroll['wbtc'], scroll['wsteth']],
+    tokens: [
+      scroll['eth'],
+      scroll['weth'],
+      scroll['usdc'],
+      scroll['dai'],
+      scroll['wbtc'],
+      scroll['wsteth'],
+      scroll['axlusdc'],
+      scroll['axlfrax'],
+      scroll['usdt'],
+      scroll['frxeth'],
+      scroll['rlc'],
+      scroll['toazu'],
+    ],
   },
   8453: {
     defaultCurrencies: {

@@ -773,7 +773,7 @@ export const blast: { [key: string]: Token } = {
     symbol: 'KALA',
     decimals: 18,
     name: 'Kalax',
-    icon: '/images/tokens/default_icon.png',
+    icon: '/images/tokens/kala.png',
   },
   tok: {
     address: '0x232009a705c382046f9ee8c05558d3fbc249949a',

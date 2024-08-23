@@ -61,6 +61,13 @@ const networks = {
       scroll['wsteth'],
       scroll['lusd'],
       scroll['reth'],
+      scroll['wrseth'],
+      scroll['stone'],
+      scroll['we-eth'],
+      scroll['pufETH'],
+      scroll['reth'],
+      scroll['sis'],
+      scroll['itp'],
     ],
   },
 };
