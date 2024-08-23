@@ -16,18 +16,20 @@ const basic = {
 const networks = {
   42161: {
     defaultCurrencies: {
-      input: arbitrum['weth'],
-      output: arbitrum['usdt'],
+      input: arbitrum['eth'],
+      output: arbitrum['magic'],
     },
     tokens: [
       arbitrum['eth'],
-      arbitrum['weth'],
+      arbitrum['magic'],
       arbitrum['usdc'],
-      arbitrum['usdc.e'],
       arbitrum['usdt'],
-      arbitrum['dai'],
-      arbitrum['arb'],
-      arbitrum['sushi'],
+      arbitrum['wbtc'],
+      arbitrum['solv-btc'],
+      arbitrum['tbtc'],
+      arbitrum['usdc.e'],
+      arbitrum['wst-eth'],
+      arbitrum['usde'],
       arbitrum['wbtc'],
     ],
   },

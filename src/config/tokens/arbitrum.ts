@@ -371,4 +371,28 @@ export const arbitrum: { [key: string]: Token } = {
     name: 'Renzo Restaked ETH',
     icon: 'https://ipfs.near.social/ipfs/bafkreiee5yhfnbsjedzqj2p4uaeko327ooenqptplslol2pxwir463z7ii',
   },
+  'solv-btc': {
+    address: '0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0',
+    chainId: CHAIN_ID,
+    symbol: 'SolvBTC',
+    decimals: 18,
+    name: 'Solv BTC',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifiiyr3pn7bnrixrydppkxzvvbdt2vv375ve4hdcqzdzqljjkbfuq',
+  },
+  tbtc: {
+    chainId: CHAIN_ID,
+    address: '0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40',
+    name: 'Arbitrum tBTC v2',
+    decimals: 18,
+    symbol: 'tBTC',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifjganma5l5mvy5kbixwg5kvkr3a7uqzbarsxwgkzgxcjs4az433y',
+  },
+  usde: {
+    chainId: CHAIN_ID,
+    address: '0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34',
+    decimals: 18,
+    symbol: 'USDe',
+    name: 'USDe',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiajqdsi6gpuagir7qhmuijojujf56atbiqw3ftmcjp6w4yz5l2nd4',
+  },
 };
