@@ -29,6 +29,8 @@ const networks = {
       linea['dai'],
       linea['usdt'],
       linea['axlusdc'],
+      linea['ezeth'],
+      linea['foxy'],
     ],
   },
 };
