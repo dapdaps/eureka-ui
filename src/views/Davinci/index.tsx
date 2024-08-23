@@ -131,7 +131,7 @@ export default memo(function Davinci() {
       }, 820)
     }
   }
-  return inStatus === 0 ? (
+  return inStatus === 1 ? (
     <StyledChainsContainer>
       <StyledLogo>
         <StyledLogoImage src="/images/davinci/oblique-logo.png" />
