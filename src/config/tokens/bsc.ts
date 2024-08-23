@@ -400,4 +400,28 @@ export const bsc: { [key: string]: Token } = {
     name: 'FLOKI',
     icon: 'https://ipfs.near.social/ipfs/bafkreibgtfs6snnxbxox5qlf2xaa3yp7mhsmzgux7w2zw4q4sblc3bitxe',
   },
+  btc: {
+    chainId: CHAIN_ID,
+    address: '0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
+    decimals: 18,
+    symbol: 'BTC',
+    name: 'Bitcoin',
+    icon: 'https://ipfs.near.social/ipfs/bafkreih4pf5limotwzzfnp6lqn6dfpnofa7ujqnvj3h52bz3f7x4fxdnjm',
+  },
+  coti: {
+    chainId: CHAIN_ID,
+    address: '0xAdBAF88B39D37Dc68775eD1541F1bf83A5A45feB',
+    decimals: 18,
+    symbol: 'COTI',
+    name: 'COTI',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibkmf65vcg35f6quxs6irpekycvx6nfb7to5szf4sm3q5xmggjyoe',
+  },
+  egld: {
+    chainId: CHAIN_ID,
+    address: '0xbF7c81FFF98BbE61B40Ed186e4AfD6DDd01337fe',
+    decimals: 18,
+    symbol: 'EGLD',
+    name: 'Elrond',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicp35o4s373anhoavryqvcm4zad7umjsby5alb767wgsdg4rbjegi',
+  },
 };
