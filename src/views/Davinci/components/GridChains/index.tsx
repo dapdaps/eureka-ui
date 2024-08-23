@@ -30,7 +30,6 @@ const GridHeight = 1500;
 const GridWidth = 2000;
 const Rows = Math.floor(GridHeight / CellSize);
 const Cols = Math.floor(GridWidth / CellSize);
-console.log('===popupsData', popupsData)
 const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
   {
     chainId: popupsData.metis.chainId,
