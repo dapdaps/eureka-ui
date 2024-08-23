@@ -187,4 +187,28 @@ export const avalanche: { [key: string]: Token } = {
     name: 'LayerZero',
     icon: 'https://ipfs.near.social/ipfs/bafkreiexfhn5fiqmvhvhb7ooduyu5ra5ufnx32sv5o74vobboap37thi2u',
   },
+  png: {
+    chainId: CHAIN_ID,
+    address: '0x60781C2586D68229fde47564546784ab3fACA982',
+    decimals: 18,
+    symbol: 'PNG',
+    name: 'Pangolin',
+    icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x60781C2586D68229fde47564546784ab3fACA982/logo_24.png',
+  },
+  yak: {
+    chainId: CHAIN_ID,
+    address: '0x59414b3089ce2AF0010e7523Dea7E2b35d776ec7',
+    decimals: 18,
+    symbol: 'YAK',
+    name: 'Yak Token',
+    icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x59414b3089ce2AF0010e7523Dea7E2b35d776ec7/logo_24.png',
+  },
+  qi: {
+    chainId: CHAIN_ID,
+    address: '0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5',
+    decimals: 18,
+    symbol: 'QI',
+    name: 'BENQI',
+    icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5/logo_24.png',
+  },
 };

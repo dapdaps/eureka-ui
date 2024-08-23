@@ -8,17 +8,26 @@ const basic = {
 const networks = {
   43114: {
     defaultCurrencies: {
-      input: avalanche['eth'],
-      output: avalanche['usdc.e'],
+      input: avalanche['usdc'],
+      output: avalanche['avax'],
     },
     tokens: [
+      avalanche['usdc'],
       avalanche['avax'],
-      avalanche['usdc.e'],
-      avalanche['dai.e'],
-      avalanche['usdt.e'],
+      avalanche['png'],
+      avalanche['xava'],
       avalanche['eth'],
-      avalanche['wavax'],
+      avalanche['yak'],
+      avalanche['qi'],
+      avalanche['usdc.e'],
+      avalanche['usdt'],
+      avalanche['link.e'],
+      avalanche['usdt.e'],
       avalanche['wbtc.e'],
+      avalanche['savax'],
+
+      avalanche['dai.e'],
+      avalanche['wavax'],
     ],
   },
 };
