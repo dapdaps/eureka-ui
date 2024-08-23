@@ -116,9 +116,27 @@ const networks = {
   8453: {
     defaultCurrencies: {
       input: base['eth'],
-      output: base['dai'],
+      output: base['axlusdc'],
     },
-    tokens: [base['eth'], base['weth'], base['dai'], base['usdc'], base['usdbc'], base['axlusdc']],
+    tokens: [
+      base['weth'],
+      base['brett'],
+      base['krav'],
+      base['normie'],
+      base['andy'],
+      base['eth'],
+      base['tybg'],
+      base['usdc'],
+      base['kibble'],
+      base['toby'],
+      base['coin'],
+      base['ayb'],
+      base['gmr'],
+      base['fella'],
+      base['dai'],
+      base['usdbc'],
+      base['axlusdc'],
+    ],
   },
 };
 
