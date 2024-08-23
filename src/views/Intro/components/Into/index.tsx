@@ -2,7 +2,10 @@ import { memo } from "react";
 import styled from "styled-components";
 
 import { StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
-
+import Counter from "@/views/AllDapps/components/Title/Counter";
+import Big from "big.js";
+import { useRouter } from "next/router";
+import useStats from "../../hooks/useStats";
 const StyledInto = styled.div`
   position: relative;
   margin-top: -148px;
@@ -38,6 +41,9 @@ const StyledDapps = styled.div`
   gap: 17px;
 `
 export default memo(function Into() {
+  const { stats } = useStats()
+  const router = useRouter()
+  console.log('====stats', stats)
   return (
     <StyledInto>
       <StyledIntoTitle>
@@ -46,10 +52,23 @@ export default memo(function Into() {
       <StyledNetworksAndDapps>
         <StyledNetworks>
           <StyledFlex flexDirection="column" alignItems="flex-start">
-            <StyledFont color="#000" fontSize="56px" fontWeight="800" lineHeight="100%">15+</StyledFont>
+            <StyledFont color="#000" fontSize="56px" fontWeight="800" lineHeight="100%">
+              <Counter
+                from={1}
+                to={stats?.total_l2_network || 0}
+                formatter={(value) => {
+                  return Big(value).gt(10) ? `${Big(value).div(10).toFixed(0, 0)}0+` : Big(value).toFixed(0, 0);
+                }}
+              />
+            </StyledFont>
             <StyledFont color="#000" fontSize="26px" fontWeight="800" lineHeight="100%">L2 Networks</StyledFont>
           </StyledFlex>
-          <StyledSvg>
+          <StyledSvg
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              router.push("/networks")
+            }}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none">
               <circle cx="34" cy="34" r="34" fill="black" />
               <path d="M24.9397 43.2473L43.4332 24.7538M43.4332 24.7538L24.9387 24.7536M43.4332 24.7538L43.4331 43.2474" stroke="white" stroke-width="2" stroke-linecap="round" />
@@ -58,10 +77,23 @@ export default memo(function Into() {
         </StyledNetworks>
         <StyledDapps>
           <StyledFlex flexDirection="column" alignItems="flex-start">
-            <StyledFont color="#000" fontSize="56px" fontWeight="800" lineHeight="100%">200+ </StyledFont>
-            <StyledFont color="#000" fontSize="26px" fontWeight="800" lineHeight="100%">L2 Networks</StyledFont>
+            <StyledFont color="#000" fontSize="56px" fontWeight="800" lineHeight="100%">
+              <Counter
+                from={1}
+                to={stats?.total_dapp || 0}
+                formatter={(value) => {
+                  return Big(value).gt(10) ? `${Big(value).div(10).toFixed(0, 0)}0+` : Big(value).toFixed(0, 0);
+                }}
+              />
+            </StyledFont>
+            <StyledFont color="#000" fontSize="26px" fontWeight="800" lineHeight="100%">Popular dApps</StyledFont>
           </StyledFlex>
-          <StyledSvg>
+          <StyledSvg
+            style={{ cursor: 'pointer' }}
+            onClick={() => {
+              router.push("/alldapps")
+            }}
+          >
             <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none">
               <circle cx="34" cy="34" r="34" fill="black" />
               <path d="M24.9397 43.2473L43.4332 24.7538M43.4332 24.7538L24.9387 24.7536M43.4332 24.7538L43.4331 43.2474" stroke="white" stroke-width="2" stroke-linecap="round" />

@@ -64,3 +64,9 @@ export const StyledMainTips = styled.div`
   width: 731px;
   margin: 0 auto 30px;
 `
+
+export const StyledFist = styled.img`
+  width: 272px;
+  margin: 84px auto 20px;
+  display: block;
+`

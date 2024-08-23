@@ -12,7 +12,7 @@
     "build": "NEXT_PUBLIC_API=https://dapdap-api.bobdev.link next build",
     "start": "next start",
     "lint": "next lint",
-    "prepare": "npx husky init"
+    "prepare": "husky"
   },
   "dependencies": {
     "@braintree/sanitize-url": "6.0.4",
