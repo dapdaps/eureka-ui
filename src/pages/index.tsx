@@ -1,11 +1,11 @@
-import { useSimpleLayout } from '@/hooks/useLayout';
+import { useDefaultLayout } from '@/hooks/useLayout';
+import HomeView from '@/views/Home';
 import type { NextPageWithLayout } from '@/utils/types';
-import HomeView from '@/views/Davinci';
 
 const HomePage: NextPageWithLayout = () => {
   return <HomeView />;
 };
 
-HomePage.getLayout = useSimpleLayout;
+HomePage.getLayout = useDefaultLayout;
 
 export default HomePage;
