@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
-
+import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
@@ -13,7 +13,6 @@ const OffsetTop = 100;
 const GridChainBalance = (props: Props) => {
   const { children, chain } = props;
   const { account } = useAccount();
-
   const triggerRef = useRef<any>();
 
   const [visible, setVisible] = useState(false);
@@ -68,7 +67,7 @@ const GridChainBalance = (props: Props) => {
             visible={realVisible}
           >
             {/* {formateValueWithThousandSeparatorAndFont(balance, 2, true, { prefix: '$', isZeroPrecision: true })} */}
-            {chain?.path}
+            {chainCofig[chain?.chainId]?.chainName}
             <StyledUnconnected>
               Coming soon
             </StyledUnconnected>
@@ -175,7 +174,6 @@ const StyledBalance = styled(motion.div)`
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  text-transform: capitalize;
 `;
 const StyledTrigger = styled(motion.div)`
   cursor: pointer;
