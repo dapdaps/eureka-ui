@@ -128,6 +128,7 @@ function QuickBridge({
 
     const { account, chainId, provider } = useAccount();
     const [derection, setDerection] = useState(1)
+    const [btnText, setBtnText] = useState('Bridge in')
     const [confirmModalShow, setConfirmModalShow] = useState<boolean>(false);
     const [fromChainModalShow, setFromChainModalShow] = useState<boolean>(false);
     const [confirmSuccessModalShow, setConfirmSuccessModalShow] = useState<boolean>(false);
@@ -142,6 +143,7 @@ function QuickBridge({
         }
     }, [direction])
 
+    
     const {
         fromChain,
         setFromChain,
@@ -168,7 +170,17 @@ function QuickBridge({
         originToChain,
         derection,
         account,
+        defaultBridgeText: btnText,
     })
+
+    useEffect(() => {
+        if (derection === 1) {
+            setBtnText('Bridge in')
+        } else {
+            setBtnText('Bridge out')
+        }
+    }, [derection])
+
 
     return <div><Modal width={492} title={<Title>
         <img className="chain-icon" src={originFromChain.icon} />
@@ -258,6 +270,7 @@ function QuickBridge({
         <SubmitBtn
             isLoading={loading}
             text={disableText}
+            defaultText={btnText}
             fromChain={fromChain}
             onClick={() => {
                 // console.log('selectedRoute:', selectedRoute)
@@ -295,6 +308,7 @@ function QuickBridge({
                     await executeRoute()
                     setConfirmSuccessModalShow(true);
                     setConfirmModalShow(false);
+                    onClose && onClose()
                 }}
             />
         )}
