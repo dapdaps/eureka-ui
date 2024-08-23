@@ -102,8 +102,11 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
   }, [trade]);
 
   const calculateRate = (input: string, output: string) => {
-    const inputBig = Big(input || '1');
-    const outputBig = Big(output || '1');
+    if (!input || !output || Big(input).eq(0) || Big(output).eq(0)) {
+      return null; 
+    }
+    const inputBig = Big(input);
+    const outputBig = Big(output);
     return inputBig.div(outputBig);
   };
 
@@ -111,9 +114,9 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
     const rate = isRateReversed
       ? calculateRate(trade.inputCurrencyAmount, trade.outputCurrencyAmount)
       : calculateRate(trade.outputCurrencyAmount, trade.inputCurrencyAmount);
-    return balanceFormated(rate.toString(), 4);
+    return rate ? balanceFormated(rate.toString(), 4) : 'N/A';
   }, [trade.inputCurrencyAmount, trade.outputCurrencyAmount, isRateReversed]);
-
+  
   return (
     <Wrapper>
       <StyledFlex justifyContent="space-between" style={{ paddingTop: 13 }}>
