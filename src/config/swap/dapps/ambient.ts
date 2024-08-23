@@ -27,6 +27,8 @@ const networks = {
       blast['wrseth'],
       blast['juice'],
       blast['mim'],
+      blast['blast'],
+      blast['we-eth'],
     ],
   },
 };
