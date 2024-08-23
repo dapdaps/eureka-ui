@@ -64,6 +64,7 @@ const networks = {
       optimism['lusd'],
       optimism['snx'],
       optimism['mai'],
+      optimism['nsfw'],
     ],
   },
   137: {
@@ -80,6 +81,11 @@ const networks = {
       polygon['dai'],
       polygon['usdt'],
       polygon['sushi'],
+      polygon['usdc.e'],
+      polygon['stg'],
+      polygon['klima'],
+      polygon['tut'],
+      polygon['aave'],
     ],
   },
   1101: {

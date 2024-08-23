@@ -145,6 +145,15 @@ export const polygon: { [key: string]: Token } = {
 
   usdc: {
     chainId: CHAIN_ID,
+    address: '0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359',
+    decimals: 6,
+    symbol: 'USDC',
+    name: 'USD Coin (PoS)',
+    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+  },
+
+  'usdc.e': {
+    chainId: CHAIN_ID,
     address: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
     decimals: 6,
     symbol: 'USDC.e',
@@ -169,14 +178,14 @@ export const polygon: { [key: string]: Token } = {
     name: 'Aave (PoS)',
     icon: 'https://ipfs.near.social/ipfs/bafkreicmsnivbvp2xd3ewcjb5kybgnbnevbcojhn4mgub7rregnbtqcige',
   },
-  quick: {
-    chainId: CHAIN_ID,
-    address: '0x831753dd7087cac61ab5644b308642cc1c33dc13',
-    decimals: 18,
-    symbol: 'QUICK',
-    name: 'Quickswap',
-    icon: 'https://ipfs.near.social/ipfs/bafkreic7svq723bgukivtik7lb3xujjq24s7wsxto4bfzlh235k2ejzjme',
-  },
+  // quick: {
+  //   chainId: CHAIN_ID,
+  //   address: '0x831753dd7087cac61ab5644b308642cc1c33dc13',
+  //   decimals: 18,
+  //   symbol: 'QUICK',
+  //   name: 'Quickswap',
+  //   icon: 'https://ipfs.near.social/ipfs/bafkreic7svq723bgukivtik7lb3xujjq24s7wsxto4bfzlh235k2ejzjme',
+  // },
   link: {
     chainId: CHAIN_ID,
     address: '0x53E0bca35eC356BD5ddDFebbD1Fc0fD03FaBad39',
@@ -209,4 +218,66 @@ export const polygon: { [key: string]: Token } = {
     name: 'Staked MATIC (PoS) ',
     icon: 'https://raw.githubusercontent.com/SphereDeFi/TokenBook-public/main/tokens/images/STMATIC.svg',
   },
+
+  stg: {
+    chainId: CHAIN_ID,
+    address: '0x2F6F07CDcf3588944Bf4C42aC74ff24bF56e7590',
+    decimals: 18,
+    symbol: 'STG',
+    name: 'StargateToken',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihpf2eec4iyaamiiycrivl2p2hg6igqnc4v3n7hgriegjcw2ixwq4',
+  },
+  klima: {
+    chainId: CHAIN_ID,
+    address: '0x4e78011Ce80ee02d2c3e649Fb657E45898257815',
+    decimals: 9,
+    symbol: 'KLIMA',
+    name: 'Klima DAO',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihh466aygxxwesk3kvuhbuzmx6v2wepl7bbjaxpnzycrdvu4pkxmy',
+  },
+
+  tut: {
+    chainId: CHAIN_ID,
+    address: '0x12a34A6759c871C4C1E8A0A42CFc97e4D7Aaf68d',
+    decimals: 18,
+    symbol: 'TUT',
+    name: 'Tutellus token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiamqc2y2ow3r4pshkxt5wtxd7alegbbm2llw2vlo3wezrlqdwjur4',
+  },
+
+  ghst: {
+    chainId: CHAIN_ID,
+    address: '0x385Eeac5cB85A38A9a07A70c73e0a3271CfB54A7',
+    decimals: 18,
+    symbol: 'GHST',
+    name: 'Aavegotchi GHST Token (PoS)',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiezuzoxasezth2ldns5ykobmvcdxqtatrxazjnhza2pe5firlpfza',
+  },
+
+  quick: {
+    chainId: CHAIN_ID,
+    address: '0xB5C064F955D8e7F38fE0460C556a72987494eE17',
+    decimals: 18,
+    symbol: 'QUICK',
+    name: 'QuickSwap',
+    icon: 'https://ipfs.near.social/ipfs/bafkreic7svq723bgukivtik7lb3xujjq24s7wsxto4bfzlh235k2ejzjme',
+  },
+  maticx: {
+    chainId: CHAIN_ID,
+    address: '0xfa68FB4628DFF1028CFEc22b4162FCcd0d45efb6',
+    decimals: 18,
+    symbol: 'MaticX',
+    name: 'Liquid Staking Matic (PoS)',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiaeo5xyipnmmkkbkzwiptcehog52yczsm2vdehca4vgjlepmjsvce',
+  },
+
+  ichi: {
+    chainId: CHAIN_ID,
+    address: '0x111111517e4929D3dcbdfa7CCe55d30d4B6BC4d6',
+    decimals: 18,
+    symbol: 'ICHI',
+    name: 'ICHI',
+    icon: 'https://ipfs.near.social/ipfs/bafkreighebzdujyypybl5okn4kab5a65bscjfcdfipaqd2bi4y6pj46tpi',
+  },
+
 };
