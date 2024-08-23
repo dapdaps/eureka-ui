@@ -184,7 +184,7 @@ export const scroll: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     address: '0xc4d46E8402F476F269c379677C99F18E22Ea030e',
     decimals: 18,
-    symbol: 'PufETH',
+    symbol: 'pufETH',
     name: 'PufferVault',
     icon: '/images/tokens/puf-eth.svg',
   },
@@ -241,7 +241,7 @@ export const scroll: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     symbol: 'iUSD',
     decimals: 18,
-    name: 'Ironclad USD',
+    name: 'iZUMi Bond USD',
     icon: 'https://ipfs.near.social/ipfs/bafkreidovwcjy5o3ti4g5d4b3g5ki6ww2zr4br4dyv3vrygxl7dsqdfxva',
   },
   kala: {
