@@ -4,9 +4,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { useDebounceFn } from 'ahooks';
-import useAccount from '@/hooks/useAccount';
 import { NetworkBalance } from '@/components/ChainsDock/index';
-import useDetail from '@/views/networks/detail/hooks/useDetail';
 import { useRouter } from 'next/router';
 import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
 import LazyImage from '@/components/LazyImage';
@@ -18,9 +16,7 @@ import Skeleton from 'react-loading-skeleton';
 const OffsetLeft = 17;
 
 const ChainsDockDetail = (props: Props) => {
-  const { children, network } = props;
-
-  const { account } = useAccount();
+  const { children, network, loading } = props;
 
   const triggerRef = useRef<any>();
 
@@ -56,6 +52,7 @@ const ChainsDockDetail = (props: Props) => {
             x={x}
             y={y}
             network={network}
+            loading={loading}
             setVisible={setVisible}
             cancelCloseDetail={cancelCloseDetail}
             closeDetail={closeDetail}
@@ -84,10 +81,9 @@ const ChainsDockDetail = (props: Props) => {
 };
 
 const Detail = (props: DetailProps) => {
-  const { onLoaded, x, y, visible, network, setVisible, cancelCloseDetail, closeDetail } = props;
+  const { onLoaded, x, y, visible, network, setVisible, cancelCloseDetail, closeDetail, loading } = props;
 
   const { id, logo, name, chain_id } = network;
-  const { loading, detail = {} } = useDetail(id);
   const router = useRouter();
 
   const isSupported = SupportedChains.some((support) => support.chainId === chain_id);
@@ -96,11 +92,11 @@ const Detail = (props: DetailProps) => {
 
   const nativeCurrency = useMemo(() => {
     try {
-      return JSON.parse(detail.native_currency);
+      return JSON.parse(network.native_currency);
     } catch (err) {
       return {};
     }
-  }, [detail]);
+  }, [network]);
 
   const handleNetworkDetailPre = () => {
     if (!id) return;
@@ -188,7 +184,7 @@ const Detail = (props: DetailProps) => {
                 <Skeleton height={30} width={100} />
               ) : (
                 <StyledSummaryValue $blur={!isSupported}>
-                  {formateValueWithThousandSeparatorAndFont(isSupported ? detail?.trading_volume : 0, 2, true, {
+                  {formateValueWithThousandSeparatorAndFont(isSupported ? network?.trading_volume : 0, 2, true, {
                     prefix: '$',
                     isZeroPrecision: true,
                   })}
@@ -221,12 +217,14 @@ export default ChainsDockDetail;
 interface Props {
   children: any;
   network: NetworkBalance;
+  loading: boolean;
 }
 
 interface DetailProps {
   x: number;
   y: number;
   visible: boolean;
+  loading: boolean;
   network: NetworkBalance;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 

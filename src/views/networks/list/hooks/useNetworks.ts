@@ -55,7 +55,6 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
      const _advertise = await fetchAdvertise();
      setAdvertise(_advertise);
     }
-
   }
 
   useEffect(() => {

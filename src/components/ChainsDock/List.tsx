@@ -4,13 +4,13 @@ import { NetworkBalance } from '@/components/ChainsDock/index';
 import ChainsDockDetail from '@/components/ChainsDock/Detail';
 
 const ChainsDockList = (props: Props) => {
-  const { list } = props;
+  const { list, loading } = props;
 
   return (
     <StyledFlex flexDirection="column" alignItems="end" gap="10px" style={{ flexShrink: 0 }}>
       {
         list.map((chain, index) => (
-          <ChainsDockDetail key={chain.chain_id} network={chain}>
+          <ChainsDockDetail key={chain.chain_id} network={chain} loading={loading}>
             <LazyImage
               key={chain.chain_id}
               containerClassName="chain-dock-img"
@@ -46,4 +46,5 @@ export default ChainsDockList;
 
 interface Props {
   list: NetworkBalance[];
+  loading: boolean;
 }
