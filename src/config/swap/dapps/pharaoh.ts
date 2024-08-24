@@ -18,7 +18,7 @@ const networks = {
       avalanche['savax'],
       avalanche['btc.b'],
       avalanche['usdc'],
-      // avalanche['phar'],
+      avalanche['phar'],
       avalanche['usdc.e'],
       avalanche['frax'],
       avalanche['usdt'],
