@@ -40,7 +40,6 @@ const StyledRotateNetwork = styled.div`
   width: 72px;
   height: 780px;
   transform-origin: center bottom;
-  
 `
 const StyledRotateNetworkImage = styled.img`
   cursor: pointer;

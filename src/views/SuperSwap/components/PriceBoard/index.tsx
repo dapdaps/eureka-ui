@@ -2,6 +2,10 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import chainCofig from '@/config/chains'
+import { get } from '@/utils/http';
+
+
 const StyledWrapper = styled.div`
   background: url('/images/home/price-board-bg.png') no-repeat;
   background-size: cover;
@@ -135,15 +139,89 @@ const priceData = [
   { price: 3473.72026, icon: 'https://s3.amazonaws.com/dapdap.prod/images/optimism.png' },
 ];
 
-const PriceBoard = () => {
-  const gridIndexMap = [
-    { row: 2, col: 13 }, // Best price position
-    { row: 5, col: 5 }, // Lowest price position
-    { row: 3, col: 4 },
-    { row: 4, col: 7 },
-    { row: 3, col: 9 },
-  ];
+interface IPriceData {
+  price: number;
+  icon: string;
+  isBest?: boolean;
+  isLowest?: boolean;
+  chain_id: number;
+}
 
+const PriceBoard = () => {
+  const [priceData, setPriceData] = useState<IPriceData[]>([]);
+  const [_, setLoading] = useState(false);
+
+  const fetchPriceData = async () => {
+    try {
+      setLoading(true);
+      const { data } = await get('/api/token/price/chain', {
+        symbol: 'ETH',
+      });
+
+      const bestPriceItem = data.reduce((max: any, item: any) =>
+        item.price > max.price ? item : max
+      , data[0]);
+      const lowestPriceItem = data.reduce((min: any, item: any) =>
+        item.price < min.price ? item : min
+      , data[0]);
+
+      const bestChainId = bestPriceItem.chain_id;
+      const lowestChainId = lowestPriceItem.chain_id;
+
+      const priceData = data.map((item: IPriceData, index: number) => ({
+        price: item.price,
+        icon: chainCofig[item.chain_id].icon,
+        isBest: item.chain_id === bestChainId,
+        isLowest: item.chain_id === lowestChainId,
+      }));
+      setPriceData(priceData);
+    } catch (error) {
+      console.log(error);
+      
+    } finally {
+      setLoading(false);
+    }
+  }
+
+
+  
+  useEffect(() => {
+    fetchPriceData();
+  }, []);
+
+
+  
+  const generateGridIndexMap = (priceData: IPriceData[]) => {
+    const bestIndex = priceData.findIndex((data) => data.isBest);
+    const lowestIndex = priceData.findIndex((data) => data.isLowest);
+
+    const gridIndexMap = Array(priceData.length).fill({ row: 0, col: 0 });
+
+    gridIndexMap[bestIndex] = { row: 2, col: 13 }; 
+    gridIndexMap[lowestIndex] = { row: 6, col: 5 };
+
+    const middlePositions = [
+      ...([3, 5, 7, 9, 11].map(col => ({ row: 3, col }))),
+      ...([4, 6, 8, 10, 12].map(col => ({ row: 4, col }))),
+      ...([3, 7, 9, 11, 13].map(col => ({ row: 5, col })))
+    ];
+  
+    let middlePriceIndex = 0;
+    
+    for (let i = 0; i < priceData.length; i++) {
+      if (i !== bestIndex && i !== lowestIndex) {
+        if (middlePriceIndex < middlePositions.length) {
+          gridIndexMap[i] = middlePositions[middlePriceIndex];
+          middlePriceIndex++;
+        }
+
+      }
+    }
+    return gridIndexMap;
+  };
+
+  const gridIndexMap = generateGridIndexMap(priceData);
+  
   return (
     <StyledWrapper>
       <StyledTitle>1 ETH Price Board</StyledTitle>

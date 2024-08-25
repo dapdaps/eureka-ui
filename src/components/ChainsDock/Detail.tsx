@@ -14,7 +14,6 @@ import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
 import useAccount from '@/hooks/useAccount';
 import { StyledFlex } from '@/styled/styles';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import useDetail from '@/views/networks/detail/hooks/useDetail';
 
 const OffsetLeft = 17;
 
@@ -22,7 +21,7 @@ const OffsetLeft = 17;
 
 
 const ChainsDockDetail = (props: Props) => {
-  const { children, network, onBridgeShow } = props;
+  const { children, network, onBridgeShow, loading } = props;
 
   const { account } = useAccount();
 
@@ -61,6 +60,7 @@ const ChainsDockDetail = (props: Props) => {
             x={x}
             y={y}
             network={network}
+            loading={loading}
             setVisible={setVisible}
             onBridgeShow={onBridgeShow}
             cancelCloseDetail={cancelCloseDetail}
@@ -90,10 +90,9 @@ const ChainsDockDetail = (props: Props) => {
 };
 
 const Detail = (props: DetailProps) => {
-  const { onLoaded, x, y, visible, network, setVisible, cancelCloseDetail, closeDetail } = props;
+  const { onLoaded, x, y, visible, network, setVisible, cancelCloseDetail, closeDetail, loading } = props;
 
   const { id, logo, name, chain_id } = network;
-  const { loading, detail = {} } = useDetail(id);
   const router = useRouter();
 
   const isSupported = SupportedChains.some((support) => support.chainId === chain_id);
@@ -103,11 +102,11 @@ const Detail = (props: DetailProps) => {
 
   const nativeCurrency = useMemo(() => {
     try {
-      return JSON.parse(detail.native_currency);
+      return JSON.parse(network.native_currency);
     } catch (err) {
       return {};
     }
-  }, [detail]);
+  }, [network]);
 
   const handleNetworkDetailPre = () => {
     if (!id) return;
@@ -202,7 +201,7 @@ const Detail = (props: DetailProps) => {
                 <Skeleton height={30} width={100} />
               ) : (
                 <StyledSummaryValue $blur={!isSupported}>
-                  {formateValueWithThousandSeparatorAndFont(isSupported ? detail?.trading_volume : 0, 2, true, {
+                  {formateValueWithThousandSeparatorAndFont(isSupported ? network?.trading_volume : 0, 2, true, {
                     prefix: '$',
                     isZeroPrecision: true,
                   })}
@@ -237,12 +236,14 @@ interface Props {
   children: any;
   network: NetworkBalance;
   onBridgeShow?(fromChainId: number, toChainId: number, direction: string): void;
+  loading: boolean;
 }
 
 interface DetailProps {
   x: number;
   y: number;
   visible: boolean;
+  loading: boolean;
   network: NetworkBalance;
   setVisible: React.Dispatch<React.SetStateAction<boolean>>;
 

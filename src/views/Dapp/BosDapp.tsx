@@ -79,7 +79,7 @@ export default function BosDapp({
         },
         ...props,
       }}
-      src={network.dapp_src}
+      src={network?.dapp_src}
     />
   );
 }

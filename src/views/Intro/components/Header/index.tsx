@@ -1,6 +1,8 @@
-import { StyledFont, StyledSvg } from "@/styled/styles"
 import { memo } from "react"
 import styled from "styled-components"
+
+import { StyledFont, StyledSvg } from "@/styled/styles"
+
 import type { NavigationType } from "../../types"
 const StyledHeader = styled.div`
   position: relative;

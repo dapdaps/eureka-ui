@@ -11,7 +11,15 @@ const networks = {
       input: scroll['weth'],
       output: scroll['usdt'],
     },
-    tokens: [scroll['usdt'], scroll['weth'], scroll['usdc'], scroll['wbtc'], scroll['sky']],
+    tokens: [
+      scroll['usdt'],
+      scroll['weth'],
+      scroll['usdc'],
+      scroll['wbtc'],
+      scroll['sky'],
+      scroll['IZI'],
+      scroll['soi'],
+    ],
   },
 };
 

@@ -19,6 +19,12 @@ const networks = {
       polygon['cash'],
       polygon['usdt'],
       polygon['retro'],
+      polygon['wbtc'],
+      polygon['weth'],
+      polygon['maticx'],
+      polygon['usdc.e'],
+      polygon['ichi'],
+      polygon['cash']
     ],
   },
 };

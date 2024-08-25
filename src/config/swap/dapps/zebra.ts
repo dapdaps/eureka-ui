@@ -20,6 +20,12 @@ const networks = {
       scroll['aave'],
       scroll['crv'],
       scroll['lusd'],
+      scroll['wsteth'],
+      scroll['usdt'],
+      scroll['wbtc'],
+      scroll['wrseth'],
+      scroll['stone'],
+      scroll['we-eth'],
     ],
   },
 };

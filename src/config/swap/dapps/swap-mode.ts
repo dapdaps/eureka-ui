@@ -25,6 +25,7 @@ const networks = {
       mode['we-eth'],
       mode['m-btc'],
       mode['stone'],
+      mode['we-eth.mode'],
     ],
   },
 };

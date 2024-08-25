@@ -1,3 +1,6 @@
+import { useVersion } from '@/hooks/useVersion';
+import DAvinciModal from '@/views/Home/components/DAvinci/Modal';
+
 import Compass from './components/Compass';
 import DiscoveryDapps from './components/DiscoveryDapps';
 import GridChains from './components/GridChains';
@@ -6,6 +9,11 @@ import RecentRewards from './components/Rewards';
 import { StyledContainer } from './styles';
 
 const Home = () => {
+  const {
+    visible: versionVisible,
+    handleClosed: handleVersionClosed,
+  } = useVersion();
+
   return (
     <StyledContainer>
       <GridChains />
@@ -15,10 +23,11 @@ const Home = () => {
       <RecentRewards />
 
       {/* <TrendingEthereum chains={chains} />
-      <QuickOnboarding />
-      <SeamlessNavigation chains={chains} />
-      <Decentralised /> */}
+       <QuickOnboarding />
+       <SeamlessNavigation chains={chains} />
+       <Decentralised /> */}
       {/* <Learn /> */}
+      <DAvinciModal visible={versionVisible} onClose={handleVersionClosed} />
     </StyledContainer>
   );
 };

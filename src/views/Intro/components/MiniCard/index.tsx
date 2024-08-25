@@ -1,8 +1,8 @@
-import { memo, useEffect, useRef } from "react";
+import { useRouter } from "next/router";
+import { memo, useEffect, useMemo, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
-import { useRouter } from "next/router";
 
 const StyledMiniCardContainer = styled.div`
   width: 100%;
@@ -66,9 +66,74 @@ const StyledMiniCard = styled.div`
   background-color: red;
   cursor: pointer;
 `
-// const StyledSuperBridgeMiniCard = styled(StyledMiniCard)`
-
-// `
+const StyledAllInOneBg = styled.div`
+  position: absolute;
+  left: 0;
+  top: -14px;
+  width: 415px;
+  height: 505px;
+`
+const StyledTiltChainsContainer = styled.div`
+  position: absolute;
+  width: 433px;
+  height: 300px;
+  overflow: hidden;
+  left: 0;
+  top: -42px;
+`
+const StyledTiltChains = styled.div`
+  position: absolute;
+  left: 52px;
+  top: 42px;
+  transition-property: transform;
+  transition-timing-function: initial;
+`
+const StyledTiltChain = styled.img`
+  position: absolute;
+  width: 216px;
+  height: 216px;
+  transition-duration: 1s;
+  transition-property: width, height, transform;
+  &.current {
+    transform: translate(-42px, -38px);
+    width: 300px;
+    height: 300px;
+  }
+`
+const StyledKeyboardImage = styled.img`
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 415px;
+`
+const StyledRockerContainer = styled.div`
+  position: absolute;
+  top: 173px;
+  left: 236px;
+`
+const StyledRockerImage = styled.img`
+  width: 82px;
+  transform-origin: center bottom;
+  transition: all 0.5s;
+  &.running {
+    transform: rotate(42deg);
+  }
+`
+const StyledTryClickContainer = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  position: absolute;
+  right: 0;
+  top: -14px;
+  transform: translate(100%, 0);
+`
+const StyledTryClickArrowImage = styled.img`
+  width: 48px;
+`
+const StyledTryClickFontImage = styled.img`
+  width: 78px;
+`
 const StyledMiniCardImage = styled.img``
 
 const StyledRightSvg = styled.div`
@@ -134,6 +199,7 @@ const StyledChainImage = styled.img`
 const StyledOdysseyFontImage = styled.img`
   width: 306px;
 `
+const StyledRockerRunningAudio = styled.audio``
 const WhiteRightSvg = (
   <svg xmlns="http://www.w3.org/2000/svg" width="52" height="52" viewBox="0 0 52 52" fill="none">
     <circle cx="26" cy="26" r="26" fill="white" />
@@ -172,9 +238,56 @@ const CHAINS = [{
   label: "mode"
 },]
 
+const TILT_CHAINS = [{
+  icon: '/images/intro/allinone/chains/polygon zkevm.png',
+}, {
+  icon: '/images/intro/allinone/chains/ZKsync.png',
+}, {
+  icon: '/images/intro/allinone/chains/scroll.png',
+}, {
+  icon: '/images/intro/allinone/chains/OP.png',
+}, {
+  icon: '/images/intro/allinone/chains/Linea.png',
+}, {
+  icon: '/images/intro/allinone/chains/arbitrum.png',
+}, {
+  icon: '/images/intro/allinone/chains/Avalanche.png',
+}, {
+  icon: '/images/intro/allinone/chains/base.png',
+}, {
+  icon: '/images/intro/allinone/chains/gnosis.png',
+}, {
+  icon: '/images/intro/allinone/chains/manta.png',
+}, {
+  icon: '/images/intro/allinone/chains/blast.png',
+}, {
+  icon: '/images/intro/allinone/chains/mantle.png',
+}, {
+  icon: '/images/intro/allinone/chains/metis.png',
+}, {
+  icon: '/images/intro/allinone/chains/mode.png',
+},]
+// const TILT_CHAINS = [{
+//   icon: '/images/intro/allinone/chains/polygon zkevm.png',
+// }, {
+//   icon: '/images/intro/allinone/chains/ZKsync.png',
+// }, {
+//   icon: '/images/intro/allinone/chains/scroll.png',
+// }, {
+//   icon: '/images/intro/allinone/chains/OP.png',
+// }]
+const POSITIONS = [168, 70]
 export default memo(function MiniCard() {
   const router = useRouter()
+
+  const [rockerRunning, setRockerRunning] = useState(false)
+  const [chainsRunning, setChainsRunning] = useState(false)
+
+  const [currentIndex, setCurrentIndex] = useState(1)
+
   const miniCardContainerRef = useRef(null)
+  const rockerRunningAudioRef = useRef<any>(null)
+
   const handleMouseEnterAnimateRunning = function (card: any, svg: any) {
     card?.addEventListener("mouseenter", function () {
       svg?.classList.add('AnimateRunning');
@@ -183,6 +296,18 @@ export default memo(function MiniCard() {
       svg?.classList.remove('AnimateRunning');
     })
   }
+  const handleClickRocker = function () {
+    if (chainsRunning) {
+      return
+    }
+    setRockerRunning(true)
+    setChainsRunning(true)
+    setCurrentIndex((prevIndex) => prevIndex + 1);
+    rockerRunningAudioRef?.current && rockerRunningAudioRef?.current?.play()
+    setTimeout(() => {
+      setRockerRunning(false)
+    }, 300)
+  }
   useEffect(() => {
     const target: any = miniCardContainerRef?.current
     if (target) {
@@ -190,6 +315,30 @@ export default memo(function MiniCard() {
       handleMouseEnterAnimateRunning(target?.querySelector(".SuperSwapMiniCard"), target?.querySelector(".SuperSwapSvg"))
     }
   }, [])
+  useEffect(() => {
+    const swiperSlide: HTMLElement | null = document.querySelector('.swiper-slide');
+    const sliders: NodeListOf<HTMLElement> | undefined = swiperSlide?.querySelectorAll('.swiper-item')
+    const handleTransitionEnd = () => {
+      const remainderIndex = currentIndex % TILT_CHAINS.length
+      if (sliders && sliders.length > 0) {
+        const last = sliders[sliders.length - 1]
+        const nextIndex = remainderIndex - 2 < 0 ? (TILT_CHAINS.length + remainderIndex - 2) : remainderIndex - 2
+        const nextDom = Array.from(sliders).find(slider => Number(slider?.getAttribute("data-index") ?? -1) === nextIndex)
+        if (nextDom) {
+          nextDom.style.left = parseInt(last.style.left) + POSITIONS[0] + 'px'
+          nextDom.style.top = parseInt(last.style.top) - POSITIONS[1] + 'px'
+          swiperSlide?.append(nextDom)
+        }
+      }
+      setChainsRunning(false)
+    };
+
+    swiperSlide && swiperSlide.addEventListener('transitionend', handleTransitionEnd);
+    return () => {
+      swiperSlide?.removeEventListener('transitionend', handleTransitionEnd);
+    };
+  }, [currentIndex]);
+
   return (
     <StyledMiniCardContainer ref={miniCardContainerRef}>
       <StyledFlex gap="14px" style={{ marginBottom: 14 }}>
@@ -197,7 +346,30 @@ export default memo(function MiniCard() {
           <StyledRightSvg style={{ right: 10, top: 10 }}>
             {WhiteRightSvg}
           </StyledRightSvg>
-          <StyledMiniCardImage src="/images/intro/allinone-bg.png" style={{ width: 415, position: 'absolute', left: 0, top: -14 }} />
+          <StyledAllInOneBg>
+            <StyledTiltChainsContainer>
+              <StyledTiltChains className="swiper-slide" style={{ transitionDuration: chainsRunning ? "1s" : "0s", transform: `translate(${-POSITIONS[0] * currentIndex}px, ${POSITIONS[1] * currentIndex}px)` }}>
+                {
+                  TILT_CHAINS.map((chain, index) => (
+                    <StyledTiltChain key={index} data-index={index} className={["swiper-item", index === (currentIndex % TILT_CHAINS.length) ? "current" : ""].join(" ")} src={chain.icon} style={{ left: POSITIONS[0] * index, top: -POSITIONS[1] * index }} />
+                  ))
+                }
+              </StyledTiltChains>
+            </StyledTiltChainsContainer>
+            <StyledKeyboardImage src="/images/intro/allinone/keyboard.png" />
+            <StyledRockerContainer>
+              <StyledRockerImage src="/images/intro/allinone/rocker.png" className={rockerRunning ? "running" : ""} onClick={handleClickRocker} />
+              {
+                !rockerRunning && (
+                  <StyledTryClickContainer>
+                    <StyledTryClickArrowImage src="/images/intro/allinone/try-click-arrow.svg" />
+                    <StyledTryClickFontImage src="/images/intro/allinone/try-click-font.svg" />
+                  </StyledTryClickContainer>
+                )
+              }
+            </StyledRockerContainer>
+          </StyledAllInOneBg>
+          {/* <StyledMiniCardImage src="/images/intro/allinone-bg.png" style={{ width: 415, position: 'absolute', left: 0, top: -14 }} /> */}
           <StyledContainer style={{ position: 'absolute', width: 302, right: 33, bottom: 59 }}>
             <StyledFont color="#FFF" fontSize="56px" fontWeight="700" lineHeight="100%">All-In-One</StyledFont>
             <StyledFont color="#FFF" fontSize="32px" fontWeight="700" lineHeight="100%" style={{ marginTop: 13, marginBottom: 27 }}>for 15+ L2s</StyledFont>
@@ -381,6 +553,7 @@ export default memo(function MiniCard() {
           </StyledContainer>
         </StyledMiniCard>
       </StyledFlex>
+      <StyledRockerRunningAudio ref={rockerRunningAudioRef} src="/images/intro/allinone/click-rocker.mp3" />
     </StyledMiniCardContainer>
   )
 })

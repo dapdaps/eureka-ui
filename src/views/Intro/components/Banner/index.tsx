@@ -1,14 +1,15 @@
-import { StyledFlex, StyledFont } from "@/styled/styles";
-import ArrowRightSvg from "@public/images/intro/arrow-right.svg";
 import ArrowSvg from "@public/images/intro/arrow.svg";
+import ArrowRightSvg from "@public/images/intro/arrow-right.svg";
 import BridgeSvg from "@public/images/intro/bridge.svg";
 import DavinciSvg from "@public/images/intro/davinci.svg";
 import PoundSignSvg from "@public/images/intro/pound-sign.svg";
-import SwapSvg from "@public/images/intro/swap.svg";
 import StarSvg from "@public/images/intro/star.svg";
+import SwapSvg from "@public/images/intro/swap.svg";
 import { useRouter } from "next/router";
 import { memo } from "react";
 import styled from "styled-components";
+
+import { StyledFlex, StyledFont } from "@/styled/styles";
 const StyledBanner = styled.div`
   margin: 0 auto;
   padding-top: 72px;
