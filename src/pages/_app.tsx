@@ -22,10 +22,8 @@ import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
 import useClickTracking from '@/hooks/useClickTracking';
 import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
 import useTokenPrice from '@/hooks/useTokenPrice';
-import { useAuthStore } from '@/stores/auth';
 import { report } from '@/utils/burying-point';
 import type { NextPageWithLayout } from '@/utils/types';
-import { styleZendesk } from '@/utils/zendesk';
 
 const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
   ssr: false,
@@ -46,9 +44,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const { initializePrice } = useTokenPrice();
   const getLayout = Component.getLayout ?? ((page) => page);
   const router = useRouter();
-  const authStore = useAuthStore();
-
-  const componentSrc = router.query;
 
   const handleRouteChangeStart = () => {
     NProgress.start();
@@ -72,17 +67,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     };
   }, [router.events]);
 
-  useEffect(() => {
-    // Displays the Zendesk widget only if user is signed in and on the home page
-    if (!window.zE) return;
-    if (!authStore.signedIn || Boolean(componentSrc?.componentAccountId && componentSrc?.componentName)) {
-      window.zE('webWidget', 'hide');
-      return;
-    }
-    localStorage.setItem('accountId', authStore.accountId);
-    window.zE('webWidget', 'show');
-  }, [authStore.accountId, authStore.signedIn, componentSrc]);
-
   const { run: updateAccount } = useDebounceFn(
     () => {
       if (account) report({ code: '1001-005', address: account });
@@ -97,31 +81,8 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   useEffect(() => {
     initializePrice();
     getInitialDataWithoutAuth();
-    const interval = setInterval(zendeskCheck, 20);
-
-    function zendeskCheck() {
-      // once the zendesk widget comes online, style it
-      const zwFrame = document.getElementById('launcher') as HTMLIFrameElement | null;
-      const zwEmbed = zwFrame?.contentDocument?.getElementById('Embed');
-      const zwButton = zwEmbed?.querySelector('[data-testid="launcher"]');
-      if (zwButton) {
-        styleZendesk();
-        clearInterval(interval);
-      }
-    }
     setReady(true);
-
-    return () => {
-      clearInterval(interval);
-    };
   }, []);
-
-  // useEffect(() => {
-  //   const x = import('@/views/SuperBridge/BridgeAction')
-  //   x.then(res => {
-  //     // console.log(res)
-  //   })
-  // }, [])
 
   return (
     <>
@@ -147,37 +108,6 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-PR996H5E9T');`}
-      </Script>
-
-      <Script
-        src="https://static.zdassets.com/ekr/snippet.js?key=1736c8d0-1d86-4080-b622-12accfdb74ca"
-        id="ze-snippet"
-        async
-      />
-
-      <Script id="zendesk-config">
-        {`
-          window.zESettings = {
-            webWidget: {
-              color: { theme: '#2b2f31' },
-              offset: {
-                horizontal: '10px',
-                vertical: '10px',
-                mobile: { horizontal: '2px', vertical: '65px', from: 'right' },
-              },
-              contactForm: {
-                attachments: true,
-                title: { '*': 'Feedback and Support' },
-                fields: [
-                  {
-                    id: 13149356989591,
-                    prefill: { '*': localStorage.getItem('accountId') },
-                  },
-                ],
-              },
-            },
-          };
-        `}
       </Script>
 
       <VmInitializer />

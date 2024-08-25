@@ -9,10 +9,28 @@ const basic = {
 const networks = {
   8453: {
     defaultCurrencies: {
-      input: base['weth'],
-      output: base['usdc'],
+      input: base['eth'],
+      output: base['aero'],
     },
-    tokens: [base['weth'], base['cbeth'], base['aero'], base['usdc'], base['dai']],
+    tokens: [
+      base['eth'],
+      base['aero'],
+      base['usdc'],
+      base['weth'],
+      base['dola'],
+      base['usd-z'],
+      base['ovn'],
+      base['usd+'],
+      base['usdbc'],
+      base['usdc+'],
+      base['cbeth'],
+      base['wsteth'],
+      base['usdt'],
+      base['mai'],
+      base['weeth'],
+
+      base['dai'],
+    ],
   },
 };
 

@@ -20,6 +20,11 @@ const networks = {
       zkSync['zf'],
       zkSync['usdt'],
       zkSync['velocore'],
+      zkSync['zk'],
+      zkSync['long'],
+      zkSync['wsteth'],
+      zkSync['leth'],
+      zkSync['reth']
     ],
   },
 };

@@ -20,6 +20,11 @@ const networks = {
       zkSync['cebnb'],
       zkSync['usdt'],
       zkSync['cebusd'],
+      zkSync['usdc.e'],
+      zkSync['weth'],
+      zkSync['zk'],
+      zkSync['star'],
+      zkSync['onez'],
     ],
   },
   534352: {
@@ -36,6 +41,7 @@ const networks = {
       scroll['aave'],
       scroll['crv'],
       scroll['wbtc'],
+      scroll['rock'],
     ],
   },
 };

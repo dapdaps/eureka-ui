@@ -1,15 +1,14 @@
-import Big from 'big.js';
-import { AnimatePresence } from 'framer-motion';
-import { orderBy } from 'lodash';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ChainsDockList from '@/components/ChainsDock/List';
 import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
+import { AnimatePresence } from 'framer-motion';
 import { SupportedChains } from '@/config/all-in-one/chains';
-import type { Network } from '@/hooks/useNetworks';
-import { useChainsStore } from '@/stores/chains';
 import useTokens from '@/views/Portfolio/hooks/useTokens';
+import Big from 'big.js';
+import { orderBy } from 'lodash';
+import ChainsDockList from '@/components/ChainsDock/List';
+import useNetworks, { Network } from '@/views/networks/list/hooks/useNetworks';
 // @ts-expect-error For some reason
 const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
   ssr: false,
@@ -25,13 +24,15 @@ const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'
 const ChainsFixed = SupportedChains.map((support) => support.chainId);
 
 const ChainsDock = () => {
-  const chains = useChainsStore((store: any) => store.chains);
-  const { loading, networks } = useTokens({ networkList: chains });
+  const { loading: networkLoading, networkList } = useNetworks({
+    mode: 'list',
+  });
+  const { loading, networks } = useTokens({ networkList: networkList });
 
   const chainList = useMemo(() => {
     let _chainListFixed: NetworkBalance[] = [];
     let _chainList: NetworkBalance[] = [];
-    chains.forEach((chain: any) => {
+    networkList.forEach((chain: any) => {
       const obj = {
         ...chain,
         balance: Big(0),
@@ -49,9 +50,7 @@ const ChainsDock = () => {
     _chainListFixed = orderBy(_chainListFixed, 'name');
     _chainList = orderBy(_chainList, 'name');
     return [_chainListFixed, _chainList];
-  }, [chains, networks]);
-
-  console.log(chainList);
+  }, [networkList, networks]);
 
   const containerRef = useRef<any>(null);
   const [maskVisible, setMaskVisible] = useState<boolean>(true);
@@ -87,9 +86,9 @@ const ChainsDock = () => {
       ref={containerRef}
     >
       <StyledInner>
-        <ChainsDockList list={chainList[0]} onBridgeShow={onBridgeShow}/>
+        <ChainsDockList list={chainList[0]} onBridgeShow={onBridgeShow} loading={loading || networkLoading}/>
         <StyledLine />
-        <ChainsDockList list={chainList[1]} onBridgeShow={onBridgeShow}/>
+        <ChainsDockList list={chainList[1]} onBridgeShow={onBridgeShow} loading={loading || networkLoading}/>
       </StyledInner>
       <AnimatePresence mode="wait">
         {

@@ -1,6 +1,5 @@
 import { scroll } from '@/config/tokens/scroll';
 
-import weths from '../../contract/weth';
 import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
 import { basic as dodoBasic, networks as dodoNetworks } from '../dapps/dodo';
 import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
