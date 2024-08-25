@@ -1,11 +1,14 @@
 import FilterIconCard from '@public/images/networks/icon-card.svg';
 import FilterIconList from '@public/images/networks/icon-list.svg';
+import Big from 'big.js';
 import React, { memo, useEffect, useMemo, useState } from 'react';
 
 import { useNetworkStore } from '@/stores/network';
 import SortBy from '@/views/AllDapps/components/Filters/SortBy';
+import Counter from '@/views/AllDapps/components/Title/Counter';
 import { SortList } from '@/views/AllDapps/config';
 import { checkQueryEmpty } from '@/views/AllDapps/utils';
+import useStats from '@/views/Intro/hooks/useStats';
 import Empty from '@/views/networks/list/components/empty';
 import { ListContainer } from '@/views/networks/list/components/styles';
 
@@ -40,7 +43,7 @@ const ModeList: Mode[] = [
 ];
 
 const List = () => {
-
+  const { stats } = useStats()
   const mode = useNetworkStore((store: any) => store.mode);
   const setMode = useNetworkStore((store: any) => store.setMode);
 
@@ -79,7 +82,13 @@ const List = () => {
     <StyledContainer>
       <StyledBanner>
         <StyledTitle>
-          Explore <span className="highlight">15+ L2</span> Networks
+          Explore <span className="highlight"><Counter
+            from={1}
+            to={stats?.total_l2_network || 0}
+            formatter={(value) => {
+              return Big(value).gt(10) ? `${Big(value).div(10).toFixed(0, 0)}0+` : Big(value).toFixed(0, 0);
+            }}
+          /> L2</span> Networks
         </StyledTitle>
         <StyledDesc>
           Discover the most popular Ethereum roll-ups and EVMs across the market. Also, <br />
@@ -115,10 +124,10 @@ const List = () => {
                     : (
                       item.isAdvertise
                         ? (<AdvertiseCardList
-                            classname='advertise'
-                            adList={item.advertise}
-                          />)
-                        : (<ListCard dataSource={item} key={item.id}/>))
+                          classname='advertise'
+                          adList={item.advertise}
+                        />)
+                        : (<ListCard dataSource={item} key={item.id} />))
                 })
                 : <Empty />
             )

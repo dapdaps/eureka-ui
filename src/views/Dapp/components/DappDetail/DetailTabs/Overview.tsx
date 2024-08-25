@@ -186,6 +186,7 @@ const Overview = (props: any) => {
   const handleAddWallet = async () => {
     if (!window.ethereum || window.ethereum === void 0 || typeof window.ethereum === 'undefined') return;
     await window.ethereum.request({ method: 'eth_requestAccounts', params: [] });
+    console.log('===nativeCurrency', nativeCurrency)
     try {
       await window.ethereum.request({
         method: 'wallet_watchAsset',

@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useMemo } from 'react';
 import styled from 'styled-components';
 
@@ -16,6 +17,7 @@ export default function InProgress({
   medalLoaded,
   userMedalList
 }: any) {
+  const router = useRouter()
   const isHave = useMemo(() => {
     return compassList?.length + airdropList?.length + userMedalList?.length > 0 || !(compassLoaded && airdropLoaded && medalLoaded)
   }, [compassLoaded, compassList, airdropLoaded, airdropList, medalLoaded, userMedalList])
@@ -32,7 +34,7 @@ export default function InProgress({
       tips='All the Odyssey, airdrop actions, bridging trasactions, and medals which you are in progress will be displayed here'
       btnTxt='Start your journey'
       onClick={() => {
-        console.log('111')
+        router.push("/")
       }}
     />
   )

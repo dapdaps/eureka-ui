@@ -46,7 +46,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsTy
         </StyledSvg>
       </StyledMark>
 
-      <ProgressBar quantity={+quantity} total={total} showAchieved={true} showPercent={true} barWidth={barWidth} />
+      <ProgressBar quantity={+quantity} total={total} showAchieved={true} showPercent={medal?.threshold > 0 ? false : true} barWidth={barWidth} />
     </StyledMedalCard>
   )
 }
