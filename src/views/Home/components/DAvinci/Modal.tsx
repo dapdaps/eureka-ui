@@ -1,5 +1,7 @@
-import Index, { DAvinciProps } from './index';
 import Modal from '@/components/Modal';
+
+import type { DAvinciProps } from './index';
+import Index from './index';
 
 const DAvinciModal = (props: Props) => {
   const { visible, onClose } = props;

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import TooltipList from './Tooltip/List';
+
 import useDappReward from '@/views/AllDapps/hooks/useDappReward';
+
+import TooltipList from './Tooltip/List';
 
 const StyledRecentRewards = styled.div`
   display: flex;

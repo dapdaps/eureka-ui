@@ -1,13 +1,15 @@
+import { AnimatePresence, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { AnimatePresence, useMotionValue } from 'framer-motion';
-import Tooltip from './';
-import { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
-import { motion } from 'framer-motion';
-import { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
+
+import type { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 import odyssey from '@/config/odyssey';
-import { useRouter } from 'next/router';
 import useToast from '@/hooks/useToast';
+import type { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
+
+import Tooltip from './';
 
 const ToolList = styled.div`
   display: flex;

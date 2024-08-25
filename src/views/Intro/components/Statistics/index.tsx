@@ -1,9 +1,10 @@
+import { useEffect, useState } from "react";
+import styled from "styled-components";
+
 import { QUEST_PATH } from "@/config/quest";
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import { get } from '@/utils/http';
 import Counter from "@/views/AllDapps/components/Title/Counter";
-import { useEffect, useState } from "react";
-import styled from "styled-components";
 
 const Wrapper = styled.div`
     display: flex;

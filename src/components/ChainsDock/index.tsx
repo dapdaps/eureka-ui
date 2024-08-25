@@ -1,14 +1,15 @@
+import Big from 'big.js';
+import { AnimatePresence } from 'framer-motion';
+import { orderBy } from 'lodash';
 import dynamic from 'next/dynamic';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
-import { AnimatePresence } from 'framer-motion';
-import { SupportedChains } from '@/config/all-in-one/chains';
-import useTokens from '@/views/Portfolio/hooks/useTokens';
-import Big from 'big.js';
-import { orderBy } from 'lodash';
 import ChainsDockList from '@/components/ChainsDock/List';
-import useNetworks, { Network } from '@/views/networks/list/hooks/useNetworks';
+import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
+import { SupportedChains } from '@/config/all-in-one/chains';
+import type { Network } from '@/views/networks/list/hooks/useNetworks';
+import useNetworks from '@/views/networks/list/hooks/useNetworks';
+import useTokens from '@/views/Portfolio/hooks/useTokens';
 // @ts-expect-error For some reason
 const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
   ssr: false,

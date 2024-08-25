@@ -1,6 +1,6 @@
+import { orderBy } from 'lodash';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { orderBy } from 'lodash';
 
 type Version = {
   key: number,

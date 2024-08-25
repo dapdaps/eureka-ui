@@ -1,11 +1,11 @@
+import LazyImage from '@/components/LazyImage';
+import type { SwiperItem } from '@/views/Home/components/DAvinci/config';
 import {
   StyledCard,
   StyledCardArticle,
   StyledCardTitle,
   StyledContent,
 } from '@/views/Home/components/DAvinci/styles';
-import LazyImage from '@/components/LazyImage';
-import { SwiperItem } from '@/views/Home/components/DAvinci/config';
 
 const DAvinciCard = (props: Props) => {
   const { img, title, article, background } = props.swiperItem;

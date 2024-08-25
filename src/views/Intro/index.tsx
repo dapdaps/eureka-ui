@@ -1,6 +1,7 @@
 import { memo } from "react";
 
 import { StyledContainer } from "@/styled/styles";
+
 import Banner from "./components/Banner";
 import Footer from "./components/Footer";
 import Header from "./components/Header";

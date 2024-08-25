@@ -1,5 +1,6 @@
-import { useVersionStore } from '@/stores/version';
 import { useEffect, useState } from 'react';
+
+import { useVersionStore } from '@/stores/version';
 
 export function useVersion() {
   const version = useVersionStore();

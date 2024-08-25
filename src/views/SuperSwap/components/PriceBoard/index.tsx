@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { get } from '@/utils/http';
+
 import chainCofig from '@/config/chains'
+import { get } from '@/utils/http';
 
 
 const StyledWrapper = styled.div`
@@ -194,7 +195,7 @@ const PriceBoard = () => {
     const bestIndex = priceData.findIndex((data) => data.isBest);
     const lowestIndex = priceData.findIndex((data) => data.isLowest);
 
-    let gridIndexMap = Array(priceData.length).fill({ row: 0, col: 0 });
+    const gridIndexMap = Array(priceData.length).fill({ row: 0, col: 0 });
 
     gridIndexMap[bestIndex] = { row: 2, col: 13 }; 
     gridIndexMap[lowestIndex] = { row: 6, col: 5 };

@@ -1,8 +1,9 @@
-import { StyledButton, StyledPagination } from '@/views/Home/components/DAvinci/styles';
-import { StyledFlex } from '@/styled/styles';
-import { SwiperItem } from '@/views/Home/components/DAvinci/config';
-import React from 'react';
 import { motion } from 'framer-motion';
+import React from 'react';
+
+import { StyledFlex } from '@/styled/styles';
+import type { SwiperItem } from '@/views/Home/components/DAvinci/config';
+import { StyledButton, StyledPagination } from '@/views/Home/components/DAvinci/styles';
 
 export const PageButton = (props: ButtonProps) => {
   const { direction, onClick, style, ...rest } = props;
