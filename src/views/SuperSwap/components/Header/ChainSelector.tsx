@@ -24,63 +24,75 @@ export default function ChainSelector() {
   const chains = useChainsStore((store: any) => store.chains);
   const [showChains, setShowChains] = useState(false);
   const { switchChain } = useSwitchChain();
-  const [filterTopTVL, setFilterTopTVL] = useState([]);
+  const [displayedChains, setDisplayedChains] = useState<any[]>([]);
   const [tvlLoading, setTvlLoading] = useState(false);
 
   const sortChains = useMemo(() => {
-    return chains.sort((a: any, b: any) => {
-      return a.name.localeCompare(b.name);
-    });
+    return chains.sort((a: any, b: any) => a.name.localeCompare(b.name));
   }, [chains]);
 
   useEffect(() => {
     fetchNetworkData();
-    const close = () => {
-      setShowChains(false);
-    };
+    const close = () => setShowChains(false);
     document.addEventListener('click', close);
+    return () => document.removeEventListener('click', close);
+  }, []);
 
-    return () => {
-      document.removeEventListener('click', close);
-    };
+  useEffect(() => {
+    const cachedChains = localStorage.getItem('swap-selectedChains');
+    if (cachedChains) {      
+      setDisplayedChains(JSON.parse(cachedChains));
+    }
   }, []);
 
   const fetchNetworkData = async () => {
     setTvlLoading(true);
     try {
       const resultNetwork = await get(`/api/network/all`);
-
-      const data = resultNetwork.data
-        .sort((a: any, b: any) => {
-          return Big(b.trading_volume).cmp(Big(a.trading_volume));
-        })
+      const topChains = resultNetwork.data
+        .sort((a, b) => Big(b.trading_volume).cmp(Big(a.trading_volume)))
         .slice(0, 3);
-      setFilterTopTVL(data);
+      const cachedChains = localStorage.getItem('swap-selectedChains');
+      if (cachedChains) {
+        setDisplayedChains(JSON.parse(cachedChains));
+      } else {
+        setDisplayedChains(topChains);
+      }
     } catch (error) {
-      console.error('Error fetching resultNetwork data:', error);
-      return [];
+      console.error('Error fetching network data:', error);
     } finally {
       setTvlLoading(false);
     }
   };
 
+  const handleChainSelect = (selectedChain: any) => {
+    if (!chain?.chainId) {
+      switchChain({ chainId: selectedChain.chain_id });
+      return;
+    }
+    const updatedChains = [
+      selectedChain,
+      ...displayedChains.filter((c: any) => c.chain_id !== selectedChain.chain_id)
+    ].slice(0, 3);
+    
+    setDisplayedChains(updatedChains);
+    localStorage.setItem('swap-selectedChains', JSON.stringify(updatedChains));
+    switchChain({ chainId: selectedChain.chain_id });
+  };
+
   const restChains = useMemo(() => {
-    return sortChains.filter((chain: any) => {
-      return !filterTopTVL.some((item: any) => item.chain_id === chain.chain_id);
-    });
-  }, [sortChains, filterTopTVL]);
+    return sortChains.filter((chain: any) => 
+      !displayedChains.some((item: any) => item.chain_id === chain.chain_id)
+    );
+  }, [sortChains, displayedChains]);
 
   return (
     <StyledFlex gap="10px" justifyContent="space-between" style={{ marginBottom: '20px' }}>
       <StyledFlex gap="8px">
-        {filterTopTVL.map((item: any) => (
+        {displayedChains.map((item: any, index: number) => (
           <StyleChainItem
-            isActive={chain?.chainId === item.chain_id}
-            onClick={() => {
-              switchChain({
-                chainId: item.chain_id,
-              });
-            }}
+            isActive={index === 0}
+            onClick={() => handleChainSelect(item)}
             key={item.chain_id}
           >
             <img className="chain-img" src={item?.logo} alt="" />
@@ -95,19 +107,17 @@ export default function ChainSelector() {
             setShowChains(!showChains);
           }}
         >
-          {
-            chain?.chainId ? (
-              <>
+          {chain?.chainId ? (
+            <>
               <StyledChainName>{restChains.length} chains</StyledChainName>
               <IconChainArrowDown />
-              </>
-            ) : (
-              <>
-                <IconEmptyNetwork />
-                <IconChainArrowDown />
-              </>
-            )
-          }
+            </>
+          ) : (
+            <>
+              <IconEmptyNetwork />
+              <IconChainArrowDown />
+            </>
+          )}
         </StyledChain>
         {showChains && (
           <StyledChainListWrapper>
@@ -115,11 +125,7 @@ export default function ChainSelector() {
               {restChains.map((chain: any) => (
                 <StyledChainItem
                   key={chain.chain_id}
-                  onClick={() => {
-                    switchChain({
-                      chainId: chain.chain_id,
-                    });
-                  }}
+                  onClick={() => handleChainSelect(chain)}
                 >
                   <StyledChainTokenIcon src={chain.logo} />
                   <StyledChainTokenSymbol>{chain.name}</StyledChainTokenSymbol>
