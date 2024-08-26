@@ -65,12 +65,12 @@ export default function useBridge({
   })
 
   useEffect(() => {
-    const [_fromChain, _toChain] = [toChain, fromChain]
-    const [_fromToken, _toToken] = [toToken, fromToken]
-    setFromChain(_fromChain)
-    setToChain(_toChain)
-    setFromToken(_fromToken)
-    setToToken(_toToken)
+    // const [_fromChain, _toChain] = [toChain, fromChain]
+    // const [_fromToken, _toToken] = [toToken, fromToken]
+    // setFromChain(_fromChain)
+    // setToChain(_toChain)
+    // setFromToken(_fromToken)
+    // setToToken(_toToken)
   }, [derection])
 
   useEffect(() => {

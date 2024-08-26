@@ -139,8 +139,10 @@ function QuickBridge({
     useEffect(() => {
         if (direction === 'in') {
             setDerection(1)
+            
         } else {
             setDerection(2)
+            
         }
     }, [direction])
 
@@ -175,15 +177,21 @@ function QuickBridge({
     })
 
     useEffect(() => {
-        console.log('allTokens:', allTokens)
-        if (originFromChain && originFromChain) {
+        if (fromChainId && toChainId) {
             const fromTokens = allTokens[fromChainId]
             const toTokens = allTokens[toChainId]
 
-            console.log('fromTokens', fromTokens, toTokens)
+            let _fromTokens, _toTokens
+            if (direction === 'in') {
+                _fromTokens = toTokens
+                _toTokens = fromTokens
+            } else {
+                _fromTokens = fromTokens
+                _toTokens = toTokens
+            }
 
             let fromEthToken, toEthToken, fromWethToken, toWethToken
-            fromTokens.some(token => {
+            _fromTokens.some(token => {
                 if (token.symbol.toUpperCase() === 'ETH') {
                     fromEthToken = token
                     return true
@@ -193,7 +201,7 @@ function QuickBridge({
                 }
             })
 
-            toTokens.some(token => {
+            _toTokens.some(token => {
                 if (token.symbol.toUpperCase() === 'ETH') {
                     toEthToken = token
                     return true
@@ -207,15 +215,28 @@ function QuickBridge({
             setFromToken(fromEthToken || fromWethToken)
             setToToken(toEthToken || toWethToken)
         }
-    }, [fromChainId, toChainId])
+    }, [fromChainId, toChainId, direction])
 
     useEffect(() => {
         if (derection === 1) {
             setBtnText('Bridge in')
+            setFromChain(originToChain)
+            setToChain(originFromChain)
         } else {
             setBtnText('Bridge out')
+            setFromChain(originFromChain)
+            setToChain(originToChain)
         }
     }, [derection])
+
+    function swapToken() {
+        // const [_fromChain, _toChain] = [toChain, fromChain]
+        const [_fromToken, _toToken] = [toToken, fromToken]
+        // setFromChain(_fromChain)
+        // setToChain(_toChain)
+        setFromToken(_fromToken)
+        setToToken(_toToken)
+    }
 
     return <div> {
         mainModalShow &&
@@ -227,8 +248,8 @@ function QuickBridge({
             onClose && onClose()
         }}>
             <Tabs>
-                <Tab className={derection === 1 ? 'active' : ''} onClick={() => { setDerection(1) }}>Bridge in</Tab>
-                <Tab className={derection === 2 ? 'active' : ''} onClick={() => { setDerection(2) }}>Bridge out</Tab>
+                <Tab className={derection === 1 ? 'active' : ''} onClick={() => { setDerection(1); swapToken() }}>Bridge in</Tab>
+                <Tab className={derection === 2 ? 'active' : ''} onClick={() => { setDerection(2); swapToken() }}>Bridge out</Tab>
             </Tabs>
             <ChainSelector>
                 <div className="quick-chain" onClick={() => {
