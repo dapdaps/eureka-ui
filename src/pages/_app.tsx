@@ -24,6 +24,7 @@ import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
 import useTokenPrice from '@/hooks/useTokenPrice';
 import { report } from '@/utils/burying-point';
 import type { NextPageWithLayout } from '@/utils/types';
+import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 
 const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
   ssr: false,
@@ -42,6 +43,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const [ready, setReady] = useState(false);
 
   const { initializePrice } = useTokenPrice();
+  const { initializePriceLatest } = useTokenPriceLatestList();
   const getLayout = Component.getLayout ?? ((page) => page);
   const router = useRouter();
 
@@ -80,6 +82,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
 
   useEffect(() => {
     initializePrice();
+    initializePriceLatest();
     getInitialDataWithoutAuth();
     setReady(true);
   }, []);
