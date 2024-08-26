@@ -7,6 +7,7 @@ import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { getAccessToken } from '@/apis';
+import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import useToast from '@/hooks/useToast';
 import { ellipsAccount } from '@/utils/account';
@@ -21,7 +22,6 @@ import {
   StyledLoginVideo,
   StyledText,
 } from './styles';
-import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
 
 const StyledUserContainer = styled.div`
   margin-bottom: 26px;

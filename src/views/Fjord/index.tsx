@@ -13,7 +13,6 @@ import DappBack from '@/components/PageBack';
 import chainCofig from '@/config/chains';
 import useDappInfo from '@/hooks/useDappInfo';
 import { useUserStore } from '@/stores/user';
-
 import {
   StyledContainer,
   StyledFlex,

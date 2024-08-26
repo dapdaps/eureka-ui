@@ -1,24 +1,26 @@
+import { format } from 'date-fns';
+import { ethers } from 'ethers';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo, useState } from 'react';
+
 import Breadcrumb from '@/components/Breadcrumb';
-import Loading from '@/components/Icons/Loading';
 import FjordModal from '@/components/fjord-modal';
 import tokenConfig from '@/components/fjord-modal/hooks/tokenConfig';
 import Tabs from '@/components/fjord-modal/tabs';
 import Timer from '@/components/fjord-modal/timer';
+import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 import { StyledContainer, StyledFlex, StyledFont, StyledLoadingWrapper } from '@/styled/styles';
 import type { Token } from '@/types';
 import { formatValueDecimal } from '@/utils/formate';
-import { ethers } from 'ethers';
-import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+
 import SocialButton from '../components/SocialButton';
 import usePool from '../hooks/usePool';
 import useShares from '../hooks/useShares';
 import ProjectDetail from './project';
 import SaleDetail from './sale';
-import { format } from 'date-fns';
 import {
   Banner,
   BannerBody,

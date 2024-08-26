@@ -2,9 +2,8 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect,useRef, useState } from 'react';
 import styled from 'styled-components';
 
-import useCopy from '@/hooks/useCopy'
 import useAccount from '@/hooks/useAccount';
-
+import useCopy from '@/hooks/useCopy'
 import type { Chain, Token } from '@/types';
 import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';

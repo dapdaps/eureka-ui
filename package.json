@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "NEXT_PUBLIC_API=https://dapdap-api.bobdev.link next dev",
     "dev-win": "set NEXT_PUBLIC_API=https://dapdap-api.bobdev.link& call next dev",
-    "build": "NEXT_PUBLIC_API=https://dapdap-api.bobdev.link next build",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky"

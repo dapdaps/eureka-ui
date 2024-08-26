@@ -4,11 +4,10 @@ import { Contract } from "ethers";
 import { useEffect, useState } from "react";
 import { approve, SuperBridgeStore } from 'super-bridge-sdk'
 
+import allTokens from '@/config/bridge/allTokens';
+import chainCofig from '@/config/chains';
 import useToast from '@/hooks/useToast';
 import type { Chain, Token } from "@/types";
-
-import chainCofig from '@/config/chains';
-import allTokens from '@/config/bridge/allTokens';
 import { errorFormated } from '@/utils/balance'
 
 import { abi } from '../ChainTokenAmount/abi'

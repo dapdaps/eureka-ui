@@ -5,11 +5,11 @@ import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, ge
 
 import { getTransaction, saveTransaction, updateTransaction } from '@/components/BridgeX/Utils';
 import useAccount from '@/hooks/useAccount';
+import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
 
 import { ArrowRight } from '../Arrow';
 import PublicTitle from '../PublicTitle';
 import TransactionPanel from './TransactionPanel';
-import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
 
 const Container = styled.div`
   background-color: rgba(38, 40, 54, 1);

@@ -3,10 +3,9 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import useAccount from '@/hooks/useAccount';
-import { balanceFormated, addressFormated } from '@/utils/balance';
 import useToast from '@/hooks/useToast';
+import { addressFormated,balanceFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
-
 import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
 
 const Container = styled.div`

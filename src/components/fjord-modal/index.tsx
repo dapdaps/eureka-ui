@@ -1,14 +1,13 @@
+import { useDebounce } from 'ahooks';
+import Big from 'big.js';
 import type { FC } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
-import Big from 'big.js';
-import { useDebounce } from 'ahooks';
 
 import allTokens from '@/config/bridge/allTokens';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
-
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
@@ -33,10 +32,9 @@ import {
   Logo,
   Panel,
   Status,
+  StyledRelativeModal,
   TabBody,
-  TimerEnd,
-  StyledRelativeModal
-} from './style.index';
+  TimerEnd} from './style.index';
 import SubmitBtn from './SubmitBtn';
 import Tabs from './tabs';
 import Timer from './timer';

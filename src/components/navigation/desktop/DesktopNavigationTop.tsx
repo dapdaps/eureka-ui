@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
 import Chain from '@/components/AccountSider/components/Chain';
+import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
+import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
 import ConnectWallet from '@/components/ConnectWallet';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
@@ -14,14 +16,12 @@ import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
 
-import OdysseyIcon from './OdysseyIcon';
-import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
-import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
 import AccountLogo from './components/AccountLogo';
 import CheckIn from './components/CheckIn';
 import CheckInGrid from './components/CheckInGrid';
 import { NavMainV2 } from './NavMainV2';
 import Notification from './Notification';
+import OdysseyIcon from './OdysseyIcon';
 
 
 const Flex = styled.div`

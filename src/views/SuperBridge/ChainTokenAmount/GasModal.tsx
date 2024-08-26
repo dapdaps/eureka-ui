@@ -8,7 +8,7 @@ import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
-import { addressFormated,balanceFormated, percentFormated, balanceFormatedFloor } from '@/utils/balance';
+import { addressFormated,balanceFormated, balanceFormatedFloor,percentFormated } from '@/utils/balance';
 
 import { useGasAmount } from '../hooks/useGasTokenHooks';
 import Modal from "../Modal";
