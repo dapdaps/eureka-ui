@@ -71,7 +71,7 @@ export const avalanche: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     address: '0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB',
     name: 'Wrapped Ether',
-    symbol: 'WETH.e',
+    symbol: 'WETH',
     icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
     decimals: 18,
   },
