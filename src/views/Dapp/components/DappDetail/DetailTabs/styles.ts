@@ -429,17 +429,18 @@ export const StyledSummaryAdd = styled.div`
   transform: translateY(-2px);
 `;
 
-export const StyledSummaryAddIcon = styled.div`
+export const StyledSummaryAddIcon = styled.div<{ $direction: 'up' | 'down'; }>`
   width: 10px;
   height: 8px;
-  color: #06C17E;
+  color: ${({ $direction }) => $direction === 'up' ? '#06C17E' : '#FF3D83' };
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: ${({ $direction }) => `transform: rotate(${$direction === 'up' ? '0deg' : '180deg'})` };
 `;
 
-export const StyledAddText = styled.div`
-  color: #06C17E;
+export const StyledAddText = styled.div<{ $direction: 'up' | 'down'; }>`
+  color: ${({ $direction }) => $direction === 'up' ? '#06C17E' : '#FF3D83' };
   font-family: Montserrat;
   font-size: 12px;
   font-weight: 500;

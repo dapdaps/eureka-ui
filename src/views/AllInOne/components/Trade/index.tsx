@@ -91,7 +91,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
       setErrorTips('Enter an amount');
       return;
     }
-    if (Big(inputCurrencyAmount).gt(inputBlance)) {
+    if (Big(inputCurrencyAmount).gt(inputBlance || 0)) {
       setErrorTips(`Insufficient ${inputCurrency?.symbol} Balance`);
       return;
     }
@@ -102,14 +102,13 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
   const changeTokenType = useCallback(() => {
-    if (!trade || !outputCurrency) return
+    if (!trade || !outputCurrency) return;
     setInputCurrency(outputCurrency);
     setOutputCurrency(inputCurrency);
-    setSelectType('in')
+    setSelectType('in');
     setInputCurrencyAmount(trade?.outputCurrencyAmount);
     runQuoter();
   }, [outputCurrency, outputCurrency, trade]);
-  
 
   return (
     <>

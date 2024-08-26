@@ -185,7 +185,7 @@ export default function TokenAmount({
                         : <span className='num'
                             onClick={() => {
                                 onAmountChange && !inputDisabled && balance && onAmountChange(balance)
-                            }}>{balanceFormated(balance)}</span>
+                            }}>{currentToken ? balanceFormated(balance) : '~'}</span>
                 }
             </BalanceWapper>
         </TokenWapper>

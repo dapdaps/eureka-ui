@@ -10,6 +10,8 @@ import useCompassList from '../Home/components/Compass/hooks/useCompassList';
 import OdysseyChroma from './components/OdysseyChroma'
 import ToggleTab, { Tab } from './components/Tabs';
 import { StatusType } from './components/Tag';
+import Empty from '@/components/Empty';
+import { StyledFlex } from '@/styled/styles';
 
 const StyledWrapper = styled.div`
   --var-container-width: 1244px;
@@ -164,26 +166,35 @@ const OdysseyList = () => {
             <img className="all-odyssey-text" src="/images/odyssey/all-odyssey-text.png" alt="text" />
             <ToggleTab onClick={(tab) => setTab(tab)} />
           </div>
-          <div className="odyssey-list">
-            {filteredCompassList?.map((compass: any) => (
-              <OdysseyCard
-                className="odyssey-card"
-                key={compass.id}
-                id={compass.id}
-                bp='1004-001'
-                name={compass.name}
-                banner={compass.banner}
-                status={compass.status}
-                rewards={compass.reward}
-                volume={compass.trading_volume}
-                users={compass.total_users}
-                // {/* Todo: hide Medal  */}
-                // medals={[
-                //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
-                // ]}
-              />
-            ))}
-          </div>
+          {
+            filteredCompassList?.length > 0 ? (
+              <div className="odyssey-list">
+                {filteredCompassList?.map((compass: any) => (
+                  <OdysseyCard
+                    className="odyssey-card"
+                    key={compass.id}
+                    id={compass.id}
+                    bp='1004-001'
+                    name={compass.name}
+                    banner={compass.banner}
+                    status={compass.status}
+                    rewards={compass.reward}
+                    volume={compass.trading_volume}
+                    users={compass.total_users}
+                    // {/* Todo: hide Medal  */}
+                    // medals={[
+                    //   { icon: '/images/medals/medal-mode-bow.svg', id: 1 },
+                    // ]}
+                  />
+                ))}
+              </div>
+            ) :
+            (
+              <StyledFlex justifyContent="center" alignItems="center" style={{ width: '100%' }}>
+                <Empty size={64} tips="No Data" />
+              </StyledFlex>
+            )
+          }
         </div>
         </StyledContent>
         <OdysseyChromaWrapper>

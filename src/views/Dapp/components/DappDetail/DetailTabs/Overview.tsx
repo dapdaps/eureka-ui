@@ -54,9 +54,11 @@ import {
   StyledTokenValue,
 } from './styles';
 
-const Overview = (props: any) => {
-  const prices = usePriceStore((store) => store.price);
+import LazyImage from '@/components/LazyImage';
+import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
+import Big from 'big.js';
 
+const Overview = (props: any) => {
   const {
     description,
     title,
@@ -68,6 +70,7 @@ const Overview = (props: any) => {
     rpc,
     loading,
     chain_id,
+    block_explorer,
   } = props;
 
   const router = useRouter();
@@ -79,6 +82,7 @@ const Overview = (props: any) => {
     loading: airdropLoading,
     reportAdditionResult,
   } = useAirdrop({ category, id });
+  const tokenPriceLatest = useTokenPriceLatestStore(store => store.list);
 
   const copyTooltipRef = useRef<any>(null);
 
@@ -101,15 +105,23 @@ const Overview = (props: any) => {
             json.address = currToken?.address;
           }
         }
-        json.price = prices[json.symbol.toUpperCase()];
-        json.price = formatThousandsSeparator(json.price, 2);
+        const _price = tokenPriceLatest[json.symbol.toUpperCase()];
+        json.price = formatThousandsSeparator(_price.price, 5);
+        json.changePercent = Big(_price.change_percent || 0);
         return json;
       }
     } catch (err) {
       console.log('%cerror: %o', 'background:#f00;', err);
     }
     return undefined;
-  }, [native_currency, chain_id, prices]);
+  }, [native_currency, chain_id, tokenPriceLatest]);
+
+  const blockExplorer = useMemo(() => {
+    if (block_explorer) return block_explorer;
+    const currChain = chainCofig[chain_id];
+    if (!currChain) return 'https://etherscan.io';
+    return currChain.blockExplorers;
+  }, [block_explorer, chain_id]);
 
   const defaultRpc = useMemo(() => {
     if (!rpc) return '';
@@ -186,14 +198,13 @@ const Overview = (props: any) => {
   const handleAddWallet = async () => {
     if (!window.ethereum || window.ethereum === void 0 || typeof window.ethereum === 'undefined') return;
     await window.ethereum.request({ method: 'eth_requestAccounts', params: [] });
-    console.log('===nativeCurrency', nativeCurrency)
     try {
       await window.ethereum.request({
         method: 'wallet_watchAsset',
         params: {
           type: 'ERC20',
           options: {
-            address: NativeTokenAddressMap[nativeCurrency?.symbol?.toUpperCase()],
+            address: nativeCurrency?.address,
             symbol: nativeCurrency?.symbol,
             decimals: nativeCurrency?.decimals,
             image: nativeCurrency?.logo,
@@ -249,7 +260,7 @@ const Overview = (props: any) => {
   };
 
   const onBrowser = () => {
-    window.open(`https://etherscan.io/token/${nativeCurrency?.address}`);
+    window.open(`${blockExplorer}/token/${nativeCurrency?.address}`);
   };
 
   return (
@@ -263,7 +274,7 @@ const Overview = (props: any) => {
                 overviewShadow?.color ?
                   {
                     filter: `drop-shadow(${hexToRgba(overviewShadow?.color, 0.03)} 100vw 0)`,
-                    transform: 'translateX(-100vw)'
+                    transform: 'translateX(-100vw)',
                   } :
                   {}
               }
@@ -292,30 +303,7 @@ const Overview = (props: any) => {
                       <StyledTokenLabel>Token Price</StyledTokenLabel>
                       <StyledTokenPrice>
                         ${nativeCurrency?.price || '-'}
-                        {/*<StyledSummaryAdd>
-                         <StyledSummaryAddIcon>
-                         <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                         <path
-                         d="M4.56699 0.75C4.75944 0.416667 5.24056 0.416667 5.43301 0.75L8.89711 6.75C9.08956 7.08333 8.849 7.5 8.4641 7.5H1.5359C1.151 7.5 0.910436 7.08333 1.10289 6.75L4.56699 0.75Z"
-                         fill="currentColor" stroke="url(#paint0_linear_16163_4093)"
-                         />
-                         <defs>
-                         <linearGradient
-                         id="paint0_linear_16163_4093"
-                         x1="10.9668"
-                         y1="1.71698"
-                         x2="-1"
-                         y2="1.71698"
-                         gradientUnits="userSpaceOnUse"
-                         >
-                         <stop stopColor="currentColor" />
-                         <stop offset="1" stopColor="currentColor" stopOpacity="0.1" />
-                         </linearGradient>
-                         </defs>
-                         </svg>
-                         </StyledSummaryAddIcon>
-                         <StyledAddText>1.7%</StyledAddText>
-                         </StyledSummaryAdd>*/}
+                        {ChangePercent(nativeCurrency?.changePercent)}
                       </StyledTokenPrice>
                     </StyledTokenItem>
                   )
@@ -327,7 +315,19 @@ const Overview = (props: any) => {
                     <StyledTokenItem>
                       <StyledTokenLabel>Token Address</StyledTokenLabel>
                       <StyledTokenInfo>
-                        { nativeCurrency?.logo && (<StyledTokenLogo url={nativeCurrency?.logo} />)}
+                        {nativeCurrency?.logo && (
+                          <LazyImage
+                            src={nativeCurrency?.logo}
+                            width={20}
+                            height={20}
+                            containerStyle={{
+                              borderRadius: 4,
+                              display: 'flex',
+                              alignItems: 'center',
+                              overflow: 'hidden',
+                            }}
+                          />
+                        )}
                         <StyledTokenAddress>
                           {nativeCurrency?.address ? nativeCurrency?.address.substring(0, 5) + '...' + nativeCurrency?.address.substring(nativeCurrency?.address.length - 6) : '-'}
                         </StyledTokenAddress>
@@ -509,3 +509,33 @@ const Overview = (props: any) => {
 };
 
 export default Overview;
+
+function ChangePercent(value: any) {
+  if (!value || Big(value).eq(0)) return null;
+  return (
+    <StyledSummaryAdd>
+      <StyledSummaryAddIcon $direction={Big(value).gte(0) ? 'up' : 'down'}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+          <path
+            d="M4.56699 0.75C4.75944 0.416667 5.24056 0.416667 5.43301 0.75L8.89711 6.75C9.08956 7.08333 8.849 7.5 8.4641 7.5H1.5359C1.151 7.5 0.910436 7.08333 1.10289 6.75L4.56699 0.75Z"
+            fill="currentColor" stroke="url(#paint0_linear_16163_4093)"
+          />
+          <defs>
+            <linearGradient
+              id="paint0_linear_16163_4093"
+              x1="10.9668"
+              y1="1.71698"
+              x2="-1"
+              y2="1.71698"
+              gradientUnits="userSpaceOnUse"
+            >
+              <stop stopColor="currentColor" />
+              <stop offset="1" stopColor="currentColor" stopOpacity="0.1" />
+            </linearGradient>
+          </defs>
+        </svg>
+      </StyledSummaryAddIcon>
+      <StyledAddText $direction={Big(value).gte(0) ? 'up' : 'down'}>{Big(value).toFixed(1)}%</StyledAddText>
+    </StyledSummaryAdd>
+  );
+}
