@@ -127,7 +127,7 @@ export default function BirdgeAction(
     isPure: false,
   })
 
-  const { isSupported } = useGasTokenHooks({
+  const { isSupported, price } = useGasTokenHooks({
     fromChain,
     fromToken,
     toChain,
@@ -457,6 +457,7 @@ export default function BirdgeAction(
 
     {
       gasModalShow && <GasModal
+        price={price}
         fromChain={fromChain}
         fromToken={fromToken}
         toChain={toChain}
@@ -464,7 +465,7 @@ export default function BirdgeAction(
         maxBalance={balance}
         theme={theme}
         onClick={() => {
-          console.log(11)
+          setUpdateBanlance(updateBanlance + 1)
         }}
         onClose={() => { setGasModalShow(false) }}
       />

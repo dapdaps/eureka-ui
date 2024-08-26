@@ -12,6 +12,7 @@ import { useChainsStore } from '@/stores/chains';
 import useDapps from '@/views/Portfolio/hooks/useDapps';
 import useTokens from '@/views/Portfolio/hooks/useTokens';
 
+// @ts-expect-error For some reason
 const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
   ssr: false,
   // loading: () => <div style={{ width: 400 }}>
