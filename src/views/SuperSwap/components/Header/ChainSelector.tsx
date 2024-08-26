@@ -40,7 +40,7 @@ export default function ChainSelector() {
 
   useEffect(() => {
     const cachedChains = localStorage.getItem('swap-selectedChains');
-    if (cachedChains) {      
+    if (cachedChains) {
       setDisplayedChains(JSON.parse(cachedChains));
     }
   }, []);
@@ -50,7 +50,7 @@ export default function ChainSelector() {
     try {
       const resultNetwork = await get(`/api/network/all`);
       const topChains = resultNetwork.data
-        .sort((a, b) => Big(b.trading_volume).cmp(Big(a.trading_volume)))
+        .sort((a: any, b: any) => Big(b.trading_volume).cmp(Big(a.trading_volume)))
         .slice(0, 3);
       const cachedChains = localStorage.getItem('swap-selectedChains');
       if (cachedChains) {
@@ -72,29 +72,23 @@ export default function ChainSelector() {
     }
     const updatedChains = [
       selectedChain,
-      ...displayedChains.filter((c: any) => c.chain_id !== selectedChain.chain_id)
+      ...displayedChains.filter((c: any) => c.chain_id !== selectedChain.chain_id),
     ].slice(0, 3);
-    
+
     setDisplayedChains(updatedChains);
     localStorage.setItem('swap-selectedChains', JSON.stringify(updatedChains));
     switchChain({ chainId: selectedChain.chain_id });
   };
 
   const restChains = useMemo(() => {
-    return sortChains.filter((chain: any) => 
-      !displayedChains.some((item: any) => item.chain_id === chain.chain_id)
-    );
+    return sortChains.filter((chain: any) => !displayedChains.some((item: any) => item.chain_id === chain.chain_id));
   }, [sortChains, displayedChains]);
 
   return (
     <StyledFlex gap="10px" justifyContent="space-between" style={{ marginBottom: '20px' }}>
       <StyledFlex gap="8px">
         {displayedChains.map((item: any, index: number) => (
-          <StyleChainItem
-            isActive={index === 0}
-            onClick={() => handleChainSelect(item)}
-            key={item.chain_id}
-          >
+          <StyleChainItem isActive={index === 0} onClick={() => handleChainSelect(item)} key={item.chain_id}>
             <img className="chain-img" src={item?.logo} alt="" />
             <div className="chain-name">{item.name}</div>
           </StyleChainItem>
@@ -123,10 +117,7 @@ export default function ChainSelector() {
           <StyledChainListWrapper>
             <StyledChainList>
               {restChains.map((chain: any) => (
-                <StyledChainItem
-                  key={chain.chain_id}
-                  onClick={() => handleChainSelect(chain)}
-                >
+                <StyledChainItem key={chain.chain_id} onClick={() => handleChainSelect(chain)}>
                   <StyledChainTokenIcon src={chain.logo} />
                   <StyledChainTokenSymbol>{chain.name}</StyledChainTokenSymbol>
                 </StyledChainItem>
