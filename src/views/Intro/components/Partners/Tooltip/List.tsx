@@ -43,7 +43,7 @@ const StyledTooltipList = styled.div`
         width: 0;
         height: 0;
         border: 18px solid transparent;
-        border-top-color: #EBF479;
+        /* border-top-color: #EBF479; */
     }
   }
 `;
@@ -66,11 +66,24 @@ const StyledTipWrapper = styled(motion.div)`
 const StyledTipTitle = styled(motion.div)`
   font-size: 22px;
   font-weight: 600;
+  line-height: 100%;
 `
 
+const StyledTipTips = styled(motion.div)`
+  margin: 4px 0 12px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 100%;
+`
+const StyledTipQuota = styled(motion.div)`
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 100%;
+`
 const StyledTipDesc = styled(motion.div)`
   font-size: 16px;
   font-weight: 500;
+  line-height: 100%;
 `
 
 const StyledTagChain = styled(motion.div)`
@@ -132,17 +145,19 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
             <AnimatePresence>
               <Tooltip
                 x={x}
-                customStyle={{ background: '#EBF479' }}
+                customStyle={{ background: item.bg }}
                 showAnimateTooltip={true}
                 animationProps={{ type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }}
               >
-                <StyledTooltipList>
+                <StyledTooltipList style={{ background: item.bg, color: item.color }}>
                   <StyledTipWrapper>
                     <StyledTipTitle>{item.name}</StyledTipTitle>
+                    <StyledTipTips>{item.tips}</StyledTipTips>
+                    <StyledTipQuota>“</StyledTipQuota>
                     <StyledTipDesc>{item.desc}</StyledTipDesc>
                   </StyledTipWrapper>
                   <section className="corn-outer">
-                    <em className="corn-inner"></em>
+                    <em className="corn-inner" style={{ borderTopColor: item.bg }}></em>
                   </section>
                 </StyledTooltipList>
               </Tooltip>

@@ -45,32 +45,47 @@ const RecentRewards = (props: Props) => {
   const { fetchRewardData, formatRewardList } = useDappReward()
   const [data, setData] = useState<any>([
     {
+      bg: '#5B56F3',
+      color: '#FFF',
       name: '0xSocratic',
-      desc: 'Chief Chess Player Building for product market fit',
+      tips: 'Chief Chess Player',
+      desc: 'Building for product market fit',
       link: 'https://x.com/0x_socratic',
-      icon: '/images/intro/partner/p1.png'
+      icon: '/images/intro/partner/p1.png',
     },
     {
-      name: 'DapDap Intern: Research Intern',
+      bg: '#EBF479',
+      color: '#000',
+      name: 'DapDap Intern',
+      tips: 'Research Intern',
       desc: 'Pronouns: Dap/Dap 🤜🤛',
       link: 'https://x.com/dapdap_intern',
       icon: '/images/intro/partner/p2.png'
     },
     {
+      bg: '#5B56F3',
+      color: '#FFF',
       name: 'Nikwadz',
-      desc: 'Business Development LeadReach out to @nikwadz on Twitter or TG for integration / business inquiries',
+      tips: 'Business Development Lead',
+      desc: 'Reach out to @nikwadz on Twitter or TG for integration / business inquiries.',
       link: 'https://x.com/NikWadz',
       icon: '/images/intro/partner/p3.png'
     },
     {
+      bg: '#EBF479',
+      color: '#000',
       name: 'Hero',
-      desc: 'Technical Marketing LeadReimagining the Open Web',
+      tips: 'Technical Marketing Lead',
+      desc: 'Reimagining the Open Web',
       link: 'https://x.com/chrestomanzi',
       icon: '/images/intro/partner/p4.png'
     },
     {
-      name: 'Cudam321',
-      desc: 'Chief Schizoposting Officer When in doubt, zoom out',
+      bg: '#5B56F3',
+      color: '#FFF',
+      name: 'Cudam',
+      tips: 'Chief Schizoposting Officer',
+      desc: 'When in doubt, zoom out',
       link: 'https://x.com/0x_socratic',
       icon: '/images/intro/partner/p5.png'
     }
@@ -86,7 +101,7 @@ const RecentRewards = (props: Props) => {
   return (
     <StyledRecentRewards style={style}>
       <div className="title" style={titleStyle}>
-      Created by DapDap Team with ❤️ 
+        Created by DapDap Team with ❤️
       </div>
       <TooltipList data={data} />
     </StyledRecentRewards>
