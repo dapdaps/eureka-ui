@@ -148,7 +148,7 @@ const Detail = (props: DetailProps) => {
         }}
       >
         <StyledHead onClick={handleNetworkDetail}>
-          <LazyImage src={logo} containerClassName="chain-logo" width={50} height={50} />
+          <img src={logo} alt="" className="chain-logo" width={50} height={50} />
           <StyledChainInfo>
             <StyledSub>Assets on</StyledSub>
             <StyledChainName title={name}>{name}</StyledChainName>
