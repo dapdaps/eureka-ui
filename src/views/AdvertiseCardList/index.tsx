@@ -13,6 +13,7 @@ const Card = (
     image,
     buttonText,
     link,
+    type,
   }: Card) => {
 
   const router = useRouter();
@@ -44,12 +45,19 @@ const Card = (
       />
       {
         buttonText ? (
-          <StyledCardBottom className={`${classname}-card-bottom`}>
-            <StyledCardButton className={`${classname}-card-button`} onClick={onLink}>
-              <span>{buttonText}</span>
-              <ArrowLineIcon />
-            </StyledCardButton>
-          </StyledCardBottom>
+          <>
+            {
+              type === 'dapp' && (
+                <StyledLinear />
+              )
+            }
+            <StyledCardBottom className={`${classname}-card-bottom`} $type={type}>
+              <StyledCardButton className={`${classname}-card-button`} onClick={onLink}>
+                <span>{buttonText}</span>
+                <ArrowLineIcon />
+              </StyledCardButton>
+            </StyledCardBottom>
+          </>
         ) : null
       }
     </StyledCardContainer>
@@ -60,6 +68,7 @@ const AdvertiseCard = (
   {
     classname = '',
     adList = [],
+    type = 'dapp',
   }: Props) => {
 
   const swiperRef = useRef<any>(null);
@@ -88,6 +97,7 @@ const AdvertiseCard = (
                 image={item.ad_images ?? ''}
                 link={item.ad_link ?? ''}
                 buttonText={item.btn ?? ''}
+                type={type}
               />
             </SwiperSlide>
           ))
@@ -104,6 +114,7 @@ const AdvertiseCard = (
         link={item.ad_link ?? ''}
         key={idx}
         buttonText={item.btn ?? ''}
+        type={type}
       />
     ),
   );
@@ -121,11 +132,13 @@ interface Card {
   ad_link?: string;
   btn?: string;
   classname?: string;
+  type?: 'network' | 'dapp';
 }
 
 interface Props {
   adList: Partial<Card>[];
   classname?: string;
+  type?: 'network' | 'dapp';
 }
 
 const StyledSwiper = styled.div`
@@ -147,13 +160,38 @@ const StyledCardContainer = styled.div`
   height: 100%;
 `;
 
-const StyledCardBottom = styled.div`
-  padding: 20px 16px;
+const StyledLinear = styled.div`
+  height: 76px;
+  width: 100%;
+  position: absolute;
+  left: 0;
+  bottom: 90px;
+  background: linear-gradient(180deg, rgba(24, 25, 30, 0.00) 0%, #18191E 100%);
+`;
+
+const StyledCardBottom = styled.div<{ $type?: 'network' | 'dapp'; }>`
+  height: 90px;
   flex-shrink: 0;
-  background: #18191E;
+  padding: 0 31px;
   border-bottom-right-radius: 20px;
   border-bottom-left-radius: 20px;
-  height: 90px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: #18191E;
+  
+  ${({ $type }) => {
+    const result: any = {};
+    if ($type == 'network') {
+      result.background = 'linear-gradient(180deg, rgba(24, 25, 30, 0.00) 0%, rgba(24, 25, 30, 0.1) 100%)';
+      result.height = '102px';
+      result.position = 'absolute';
+    }
+    return result;
+  }};
 `;
 
 const StyledCardButton = styled.div`
