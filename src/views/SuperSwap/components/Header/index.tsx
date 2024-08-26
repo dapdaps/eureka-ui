@@ -20,7 +20,7 @@ export default function Header() {
             />
           </svg>
           <div>Swap</div>
-          <Tooltip content="Super Swap aggregates 75+ DEXes for best-in-class rates, providing one-click access to deep liquidity pools. Each swap on DapDap helps to earn you medals, turning your trades into achievements! Enjoy smart pathfinding for complex token pairs and gas-optimized transactions across chains. wap smarter, not harder." />
+          <Tooltip content="Super Swap aggregates 75+ DEXes for best-in-class rates, providing one-click access to deep liquidity pools. Each swap on DapDap helps to earn you medals, turning your trades into achievements! Enjoy smart pathfinding for complex token pairs and gas-optimized transactions across chains. Wap smarter, not harder." />
         </StyledTitle>
       </StyledContainer>
       <ChainSelector />
