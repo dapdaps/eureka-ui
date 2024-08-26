@@ -1,19 +1,18 @@
-import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
-
 import { useDebounce } from 'ahooks';
+import Big from 'big.js';
+import { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+
+import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated, balanceFormatedFloor } from '@/utils/balance';
-import Loading from '@/components/Icons/Loading';
-import { useGasAmount } from '../hooks/useGasTokenHooks';
-import SubmitBtn from '../SubmitBtn';
-
-import Modal from "../Modal";
 import type { Chain, Token } from '@/types';
-import { useCallback, useEffect, useState } from 'react';
-import Big from 'big.js';
+import { addressFormated,balanceFormated, percentFormated, balanceFormatedFloor } from '@/utils/balance';
 
+import { useGasAmount } from '../hooks/useGasTokenHooks';
+import Modal from "../Modal";
+import SubmitBtn from '../SubmitBtn';
 
 const Tip = styled.div`
     font-size: 16px;
@@ -92,6 +91,7 @@ interface Props {
     toAddress: string;
     maxBalance: string | undefined;
     price: string;
+    theme?: any;
     onClick: () => void;
     onClose: () => void;
 }
@@ -100,7 +100,7 @@ const max$ = 200
 const maxGas = 0.001
 
 export default function GasModal({
-    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, price
+    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, price, theme
 } : Props) {
     const { account, chainId, provider } = useAccount();
     // const prices = usePriceStore((store) => store.price);
@@ -154,7 +154,7 @@ export default function GasModal({
     }, [receive, maxBalance, inputValue])
 
     useEffect(() => {
-        
+
         getGas()
 
         async function getGas() {
@@ -168,7 +168,7 @@ export default function GasModal({
                 }
             }
         }
-        
+
     }, [inputValue, fromToken, account])
 
     return <Modal title="Refuel Gas Token" onClose={() => {
@@ -200,7 +200,7 @@ export default function GasModal({
                                 setRangeVal(value)
                             }
                         }
-                    } 
+                    }
                 }} />{fromToken?.symbol}
                 {/* <div>{balanceFormated(rangeVal)} {fromToken?.symbol}</div> */}
                     <svg width="8" height="10" viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -248,6 +248,7 @@ export default function GasModal({
             isLoading={isLoading}
             disabled={disabled}
             text="Confirm"
+            theme={theme}
             fromChain={fromChain as Chain}
             onClick={async () => {
                 await sendGas()

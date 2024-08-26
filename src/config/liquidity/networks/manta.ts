@@ -1,5 +1,8 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
+import rangeprotocol from '../dapps/rangeprotocol';
+import steer from '../dapps/steer';
 const CHAIN_ID = 169;
 const CHAIN_NAME = 'Manta';
 
@@ -14,8 +17,15 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defaultDapp: '',
+  defaultDapp: 'rangeprotocol',
   dapps: {
-
+    rangeprotocol: {
+      ...rangeprotocol.basic,
+      ...rangeprotocol.networks[CHAIN_ID]
+    },
+    steer: {
+      ...steer.basic,
+      ...steer.networks[CHAIN_ID]
+    }
   },
 };

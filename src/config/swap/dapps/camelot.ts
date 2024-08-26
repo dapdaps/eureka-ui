@@ -10,21 +10,28 @@ const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['usdt'],
+      output: arbitrum['grail'],
     },
     tokens: [
       arbitrum['eth'],
-      arbitrum['grail'],
+      arbitrum['pendle'],
+      arbitrum['wstLINK'],
+      arbitrum['link'],
+      arbitrum['jones dao'],
+      arbitrum['sfund'],
+      arbitrum['syk'],
       arbitrum['arb'],
       arbitrum['usdc.e'],
-      arbitrum['usdc'],
+      arbitrum['mim'],
+      arbitrum['grail'],
       arbitrum['usdt'],
+      arbitrum['wst-eth'],
+      arbitrum['usdc'],
+
       arbitrum['fctr'],
       arbitrum['winr'],
-      arbitrum['pendle'],
       arbitrum['gmx'],
       arbitrum['trove'],
-      arbitrum['jones dao'],
     ],
   },
 };

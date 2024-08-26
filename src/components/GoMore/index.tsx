@@ -1,5 +1,6 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import { StyledMore } from './styles';
 
 const GoMore = ({ label, path, bp }: any) => {

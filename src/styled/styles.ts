@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import type { FlexProps, FontProps } from './types';
 
 export const StyledContainer = styled.div``;
@@ -11,6 +12,7 @@ export const StyledFont = styled.div<FontProps>`
   font-weight: ${(props) => props.fontWeight || '400'};
   line-height: ${(props) => props.lineHeight || 'normal'};
   white-space: ${(props) => props.whiteSpace || 'normal'};
+  text-align: ${(props) => props.textAlign || 'left'};
   &.ellipsis {
     display: -webkit-box;
     -webkit-line-clamp: ${(props) => props.lineClamp || 1};
@@ -25,6 +27,7 @@ export const StyledFlex = styled.div<FlexProps>`
   align-items: ${(props) => props.alignItems || 'center'};
   justify-content: ${(props) => props.justifyContent || 'flex-start'};
   gap: ${(props) => props.gap || '0px'};
+  flex-wrap: ${(props) => props.flexWrap || 'nowrap'};
 `;
 export const StyledSvg = styled.div`
   display: flex;

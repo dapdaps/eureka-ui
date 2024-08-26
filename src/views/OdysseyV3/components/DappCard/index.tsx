@@ -1,21 +1,23 @@
 import { useEffect, useState } from 'react';
-import useCheck from '../../hooks/useCheck';
-import { useLayoutStore } from '@/stores/layout';
-import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
+
 import useDappOpen from '@/hooks/useDappOpen';
-import Card from '../Card';
+import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
+import { useLayoutStore } from '@/stores/layout';
+
+import useCheck from '../../hooks/useCheck';
 import ArrowIcon from '../ArrowIcon';
-import RefreshButton from '../RefreshButton';
+import Card from '../Card';
 import Fragments from '../Fragments';
+import RefreshButton from '../RefreshButton';
 import {
-  StyledTop,
-  StyledDappWrapper,
-  StyledDappIcon,
-  StyledDappTitleWrapper,
-  StyledDappTitle,
   StyledDappDesc,
+  StyledDappIcon,
+  StyledDappTitle,
+  StyledDappTitleWrapper,
+  StyledDappWrapper,
   StyledFooter,
   StyledFooterActions,
+  StyledTop,
 } from './styles';
 
 const ICON_MAP: any = {

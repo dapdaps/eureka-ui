@@ -1,9 +1,11 @@
 import { memo, useEffect, useState } from 'react';
+
 import { useOdysseyV3Store } from '@/stores/odyssey';
+
 import Card from './Card';
 import ProcessBar from './ProcessBar';
+import { StyledCards,StyledContainer } from './styles';
 import Total from './Total';
-import { StyledContainer, StyledCards } from './styles';
 
 const Game = ({ detail, onRefreshDetail }: any) => {
   const [step, setStep] = useState(0);

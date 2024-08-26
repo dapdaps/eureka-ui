@@ -1,21 +1,23 @@
-import { memo, useEffect, useMemo, useState } from 'react';
 import Big from 'big.js';
-import Loading from '@/components/Icons/Loading';
-import Header from './components/Header';
-import Tokens from './components/Tokens';
-import Actions from './components/Actions';
-import LiquidityPanel from './components/LiquidityPanel/V3';
-import FeesPanel from './components/FeesPanel';
-import Range from './components/Range';
-import RemoveLiquidity from '../RemoveLiquidity/V3';
-import IncreaseLiquidity from '../IncreaseLiquidity/V3';
-import { getTokenAmounts } from './helpers';
 import { useRouter } from 'next/router';
+import { memo, useEffect, useMemo, useState } from 'react';
+
+import Loading from '@/components/Icons/Loading';
 import useToken from '@/views/Pool/hooks/useToken';
-import usePoolDetail from './hooks/usePoolDetail';
-import useCollectInfo from './hooks/useCollectInfo';
-import { StyledLoadingWrapper, StyledPanels } from './styles';
+
 import useDappConfig from '../hooks/useDappConfig';
+import IncreaseLiquidity from '../IncreaseLiquidity/V3';
+import RemoveLiquidity from '../RemoveLiquidity/V3';
+import Actions from './components/Actions';
+import FeesPanel from './components/FeesPanel';
+import Header from './components/Header';
+import LiquidityPanel from './components/LiquidityPanel/V3';
+import Range from './components/Range';
+import Tokens from './components/Tokens';
+import { getTokenAmounts } from './helpers';
+import useCollectInfo from './hooks/useCollectInfo';
+import usePoolDetail from './hooks/usePoolDetail';
+import { StyledLoadingWrapper, StyledPanels } from './styles';
 
 const Detail = ({ tokenId }: any) => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);

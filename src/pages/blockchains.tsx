@@ -2,6 +2,7 @@ import { ethers } from 'ethers';
 import Link from 'next/link';
 import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import popupsData, { IdToPath } from '@/config/all-in-one/chains';
 import chains from '@/config/chains';
 import { QUEST_PATH } from '@/config/quest';

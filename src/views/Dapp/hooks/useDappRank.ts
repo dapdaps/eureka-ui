@@ -1,5 +1,6 @@
-import { get } from '@/utils/http';
 import { useState } from 'react';
+
+import { get } from '@/utils/http';
 
 export default function useDappRank() {
   const [ranks, setRanks] = useState<any>([]);

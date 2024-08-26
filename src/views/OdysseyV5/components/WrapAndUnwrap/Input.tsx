@@ -1,9 +1,10 @@
-import { memo } from 'react';
 import Big from 'big.js';
+import { memo } from 'react';
 import styled from 'styled-components';
+
 import Loading from '@/components/Icons/Loading';
-import { balanceFormated, valueFormated } from '@/utils/balance';
 import { usePriceStore } from '@/stores/price';
+import { balanceFormated, valueFormated } from '@/utils/balance';
 
 const StyledContainer = styled.div`
   width: 380px;

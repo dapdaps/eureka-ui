@@ -1,19 +1,20 @@
-import { memo, useState } from 'react';
 import { useRouter } from 'next/router';
+import { memo, useState } from 'react';
+
 import GoMore from '@/components/GoMore';
 import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
-import ChainBg from './ChainBg';
 
+import ChainBg from './ChainBg';
 import {
+  StyledChain,
+  StyledChainColorBg,
+  StyledChainDesc,
+  StyledChainIcon,
+  StyledChainTitle,
+  StyledChians,
   StyledContainer,
   StyledHeader,
   StyledTitle,
-  StyledChians,
-  StyledChain,
-  StyledChainIcon,
-  StyledChainTitle,
-  StyledChainDesc,
-  StyledChainColorBg,
 } from './styles';
 
 const TrendingEthereum = ({ chains }: any) => {

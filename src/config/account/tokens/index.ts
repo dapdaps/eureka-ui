@@ -3,19 +3,19 @@ import type { Token } from '@/types';
 import { arbitrumTokens } from './arbitrum';
 import { avalancheTokens } from './avalanche';
 import { baseTokens } from './base';
+import { blastTokens } from './blast';
 import { bscTokens } from './bsc';
 import { ethereumTokens } from './ethereum';
 import { gnosisTokens } from './gnosis';
 import { lineaTokens } from './linea';
+import { mantaTokens } from './manta';
 import { mantleTokens } from './mantle';
 import { metisTokens } from './metis';
 import { optimismTokens } from './optimism';
 import { polygonTokens } from './polygon';
 import { polygonZkevmTokens } from './polygonZkevm';
-import { zkSyncTokens } from './zkSync';
 import { scrollTokens } from './scroll';
-import { mantaTokens } from './manta';
-import { blastTokens } from './blast';
+import { zkSyncTokens } from './zkSync';
 
 export default {
   42161: arbitrumTokens,

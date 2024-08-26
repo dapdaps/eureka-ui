@@ -1,16 +1,18 @@
-import { useState } from 'react';
-import useAccount from '@/hooks/useAccount';
-import { utils } from 'ethers';
 import Big from 'big.js';
-import useToast from '@/hooks/useToast';
-import useDappConfig from '../../hooks/useDappConfig';
-import { sortTokens } from '../../utils/token';
-import { priceToUsableTick, nearestUsableTick } from '../../utils/tickMath';
-import positionAbi from '../../abi/position';
-import { wrapNativeToken } from '@/views/Pool/utils/token';
-import { useSettingsStore } from '@/stores/settings';
+import { utils } from 'ethers';
+import { useState } from 'react';
+
 import { MAX_TICK, MIN_TICK } from '@/config/pool/index';
+import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
+import useToast from '@/hooks/useToast';
+import { useSettingsStore } from '@/stores/settings';
+import { wrapNativeToken } from '@/views/Pool/utils/token';
+
+import positionAbi from '../../abi/position';
+import useDappConfig from '../../hooks/useDappConfig';
+import { nearestUsableTick,priceToUsableTick } from '../../utils/tickMath';
+import { sortTokens } from '../../utils/token';
 
 export default function useIncrease({
   token0,

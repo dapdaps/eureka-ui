@@ -1,7 +1,9 @@
-import { memo, useEffect, useState } from 'react';
 import Big from 'big.js';
+import { memo, useEffect, useState } from 'react';
+
 import { usePriceStore } from '@/stores/price';
 import { getAnotherAmountOut } from '@/views/Pool/AddLiquidity/helpers';
+
 import Input from './Input';
 import { StyledContainer, StyledSubtitle } from './styles';
 

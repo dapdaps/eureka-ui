@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import styled from 'styled-components';
-import ScrollIcon from './ScrollIcon';
+
 import { SCROLL_COLOR } from './config';
+import ScrollIcon from './ScrollIcon';
 
 const StyledContainer = styled.div`
   padding-top: 16px;

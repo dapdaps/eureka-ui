@@ -1,9 +1,11 @@
+import { useRouter } from 'next/router';
 import { memo } from 'react';
 import Skeleton from 'react-loading-skeleton';
-import { useRouter } from 'next/router';
+
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+
 import useMySummary from '../../hooks/useMySummary';
-import { StyledTotal, StyledTotalItem, StyledTotalLabel, StyledTotalValue, StyledTotalButton } from './styles';
+import { StyledTotal, StyledTotalButton,StyledTotalItem, StyledTotalLabel, StyledTotalValue } from './styles';
 
 const Total = ({ chainId }: any) => {
   const router = useRouter();

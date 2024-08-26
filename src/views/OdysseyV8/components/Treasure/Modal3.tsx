@@ -1,8 +1,10 @@
 import Image from 'next/image';
+
+import { StyledFlex } from '@/styled/styles';
+
 import Modal from '../Modal';
 import Trapeziform from '../Trapeziform';
 import TrapeziformBtn from '../TrapeziformBtn';
-import { StyledFlex } from '@/styled/styles';
 import { ModalBody, ModalDesc, ModalTitle, TrapLayout } from './styles';
 
 export default function Modal3({ setShowModal3, openLink }: any) {

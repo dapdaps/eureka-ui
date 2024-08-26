@@ -164,3 +164,11 @@
   color: #9972ee;
   border: 1px solid #9972ee;
 }
+
+#nprogress .bar {
+  background: #EBF479 !important;
+}
+
+#nprogress .spinner {
+  display: none !important;
+}

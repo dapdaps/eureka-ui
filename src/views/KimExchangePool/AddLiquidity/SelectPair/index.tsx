@@ -1,13 +1,15 @@
 import { memo } from 'react';
+
 import ArrowDownIcon from '@/components/Icons/ArrowIcon';
 import TokenIcon from '@/views/Pool/components/TokenIcon';
+
 import {
   StyledContainer,
   StyledSubtitle,
-  StyledTokensSelector,
-  StyledTokenSelector,
-  StyledToken,
   StyledSymbol,
+  StyledToken,
+  StyledTokenSelector,
+  StyledTokensSelector,
 } from './styles';
 
 const SelectPair = ({ token0, token1, onSelectToken }: any) => {

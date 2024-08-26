@@ -8,6 +8,7 @@ import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 import ActionItem from './Item';
 import {
+  StyledAward,
   StyledButton,
   StyledCoin,
   StyledContainer,
@@ -15,7 +16,6 @@ import {
   StyledLabel,
   StyledProcessBars,
   StyledTimerBox,
-  StyledAward,
 } from './styles';
 
 const Actions = ({

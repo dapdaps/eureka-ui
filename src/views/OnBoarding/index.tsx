@@ -1,14 +1,16 @@
 import { memo, useCallback, useMemo, useState } from 'react';
+
 import Breadcrumb from '@/components/Breadcrumb';
 import chainsConfig, { PathToId } from '@/config/all-in-one/chains';
-import useDetail from './hooks/useDetail';
-import Top from './components/Top';
-import Tabs from './components/Tabs';
-import OnBoardingActions from './components/OnBoardingActions';
-import MyActions from './components/MyActions';
-import Trends from './components/Trends';
-import HotDapps from './components/HotDapps';
+
 import ExecutionModal from './components/ExecutionModal';
+import HotDapps from './components/HotDapps';
+import MyActions from './components/MyActions';
+import OnBoardingActions from './components/OnBoardingActions';
+import Tabs from './components/Tabs';
+import Top from './components/Top';
+import Trends from './components/Trends';
+import useDetail from './hooks/useDetail';
 import { StyledContainer } from './styles';
 
 const OnBoarding = ({ path }: any) => {

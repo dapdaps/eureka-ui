@@ -1,11 +1,13 @@
 import { memo } from 'react';
+
 import Loading from '@/components/Icons/Loading';
 import { StyledLoadingWrapper } from '@/styled/styles';
+
 import useMyActions from '../../hooks/useMyActions';
-import Total from './Total';
 import Empty from './Empty';
-import Table from './Table';
 import { StyledContainer } from './styles';
+import Table from './Table';
+import Total from './Total';
 
 const MyActions = ({ chain, openModal }: any) => {
   const { loading, list, deleting, handleDelete } = useMyActions(chain?.chainId, 20);

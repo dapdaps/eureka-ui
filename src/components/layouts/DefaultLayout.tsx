@@ -1,10 +1,13 @@
+import { useDebounceFn } from 'ahooks';
 import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
-import { useDebounceFn } from 'ahooks';
+
+import ChainsDock from '@/components/ChainsDock';
 import useAccount from '@/hooks/useAccount';
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
+
 import AccountSider from '../AccountSider';
 import Footer from '../Footer';
 import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
@@ -27,6 +30,28 @@ const Layout = styled.div`
   }
 `;
 
+const BLACK_PATH = [
+  '/odyssey/[version]',
+  '/',
+  '/odyssey',
+  '/dapp/[dappRoute]',
+  '/alldapps',
+  '/networks',
+  '/networks/[path]',
+  '/bridge-x/[tool]',
+  '/notification',
+  '/all-in-one/[chain]',
+  '/all-in-one/[chain]/[menu]',
+  '/bridge-chain/[chain]',
+  '/portfolio',
+  '/profile/medals'
+];
+
+const HideFooterRoutes = [
+  '/uniswap',
+  '/coin68'
+]
+
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();
   const pathName = router.pathname;
@@ -47,7 +72,7 @@ export function DefaultLayout({ children }: Props) {
   return (
     <Layout
       style={{
-        background: router.pathname === '/odyssey/[version]' ? '#000' : '#16181d',
+        background: BLACK_PATH.includes(router.pathname) ? '#000' : '#101115',
       }}
     >
       {pathName !== '/uniswap' && <DesktopNavigationTop />}
@@ -58,8 +83,15 @@ export function DefaultLayout({ children }: Props) {
         </div> */}
         {children}
       </div>
-      {pathName !== '/uniswap' && <Footer />}
+      {!HideFooterRoutes.includes(router.pathname) && (
+        <Footer
+          isHideLeft={pathName !== '/'}
+          isHideRight={['/all-in-one/[chain]/[menu]'].includes(pathName)}
+          isSuperSwapScrollFooter={pathName === '/super-swap'}
+        />
+      )}
       <AccountSider />
+      <ChainsDock />
     </Layout>
   );
 }

@@ -1,8 +1,9 @@
+import Big from 'big.js'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Big from 'big.js'
 
 import Loading from '@/components/Icons/Loading';
+
 import { ArrowDown, ArrowUp } from '../Arrows'
 import CloseIcon from './CloseIcon';
 import CurrencyRow from './CurrencyRow';

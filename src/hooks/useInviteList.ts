@@ -1,4 +1,5 @@
 import { useUserStore } from '@/stores/user';
+
 import useInititalDataWithAuth from './useInititalDataWithAuth';
 
 export default function useInviteList() {

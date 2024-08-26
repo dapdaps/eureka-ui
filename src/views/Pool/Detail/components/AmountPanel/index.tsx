@@ -1,6 +1,8 @@
 import { memo } from 'react';
+
 import { balanceFormated } from '@/utils/balance';
-import { StyledPanel, StyledPanelItem, StyledPanelValue, StyledTokenWrapper, StyledTokenIcon } from './styles';
+
+import { StyledPanel, StyledPanelItem, StyledPanelValue, StyledTokenIcon,StyledTokenWrapper } from './styles';
 
 const AmountPanel = ({ token0, token1, amount0, amount1 }: any) => {
   return (

@@ -1,10 +1,13 @@
 import { useCallback, useEffect, useState } from 'react';
-import useAuthCheck from '@/hooks/useAuthCheck';
+
 import { QUEST_PATH } from '@/config/quest';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { get, post } from '@/utils/http';
 
-export default function useLike(id: string, category: string) {
+export default function useLike(id: string | number, category: string) {
+  const { account } = useAccount();
   const [like, setLike] = useState(false);
   const [loading, setLoading] = useState(false);
   const toast = useToast();
@@ -50,7 +53,7 @@ export default function useLike(id: string, category: string) {
         });
       }
     },
-    [id, category],
+    [id, category, loading],
   );
 
   const onLike = (favorite: boolean) => {
@@ -60,11 +63,12 @@ export default function useLike(id: string, category: string) {
   };
 
   useEffect(() => {
-    if (id && category)
+    if (id && category) {
       check(() => {
         queryLike();
       });
-  }, [id, category]);
+    }
+  }, [id, category, account]);
 
   return { like, loading, handleLike: onLike };
 }

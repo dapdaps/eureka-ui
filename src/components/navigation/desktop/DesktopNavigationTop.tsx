@@ -1,6 +1,7 @@
+import IconSearch from '@public/images/header/search.svg'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
@@ -16,12 +17,23 @@ import { goHomeWithFresh } from '@/utils/activity-utils';
 import OdysseyIcon from './OdysseyIcon';
 import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
 import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
+import AccountLogo from './components/AccountLogo';
+import CheckIn from './components/CheckIn';
+import CheckInGrid from './components/CheckInGrid';
+import { NavMainV2 } from './NavMainV2';
+import Notification from './Notification';
+
+
+const Flex = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 const LoginContainer = styled.div`
   width: auto;
   align-items: center;
   display: flex;
-  gap: 10px;
+  gap: 15px;
 `;
 const AccountWrapper = styled.div<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
@@ -30,14 +42,13 @@ const AccountWrapper = styled.div<{ disabled?: boolean }>`
 const Container = styled.div<{ $expand: boolean, $top?: string }>`
   position: relative;
   color: #979abe;
-  padding: 20px 36px;
+  padding: 14px 36px;
   position: sticky;
   top: ${( { $top } ) => ($top ? $top : '0')};
   width: 100%;
-  z-index: 50;
-  background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(22, 24, 29, 0.9)')};
+  z-index: 90;
+  background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(0, 0, 0, 1)')};
   backdrop-filter: ${({ $expand }) => ($expand ? 'none' : 'blur(5px)')};
-  border-bottom: 1px solid #21232a;
 
   .container-nav {
     display: flex;
@@ -47,7 +58,6 @@ const Container = styled.div<{ $expand: boolean, $top?: string }>`
     position: relative;
   }
 `;
-
 const LogoContainer = styled.div`
   width: auto;
   align-items: center;
@@ -56,99 +66,7 @@ const LogoContainer = styled.div`
     height: 32px;
   }
 `;
-
-const MenuContainer = styled.div`
-  width: 40%;
-  position: absolute;
-  top: 50%;
-  left: 44%;
-  transform: translate(-50%, -50%);
-  z-index: 30;
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  font-family: Gantari;
-  font-size: 18px;
-  font-weight: 500;
-
-  gap: 50px;
-  /* margin: 0 24% 0 14%; */
-  align-items: center;
-`;
-
-const Search = styled.div`
-  width: 100%;
-  position: relative;
-  .top-nav-input {
-    width: 100%;
-    height: 48px;
-    line-height: 48px;
-    background: transparent;
-    border: 1px solid #343743;
-    padding-right: 24px;
-    border-radius: 50px;
-    padding: 16px 16px 16px 50px;
-    color: #ffffff;
-    background: linear-gradient(0deg, #282a33, #282a33), linear-gradient(0deg, #343743, #343743);
-
-    &::placeholder {
-      color: #5e617e;
-    }
-  }
-  .top-nav-input:focus {
-    outline: none;
-    color: #ffffff;
-    border: 1px solid #343743;
-    background: linear-gradient(0deg, #282a33, #282a33), linear-gradient(0deg, #343743, #343743);
-    box-shadow: none;
-  }
-  .switch-icon-img {
-    position: absolute;
-    left: 14px;
-    top: 14px;
-    margin-left: 0;
-    cursor: pointer;
-    transition: 0.3s;
-    opacity: 0;
-  }
-  .switch-icon {
-    position: absolute;
-    right: -40px;
-    top: 6px;
-    cursor: pointer;
-    padding: 20px;
-    width: 12px;
-    height: 12px;
-  }
-
-  .switch-icon-img.show {
-    opacity: 1;
-  }
-  .search-icon {
-    position: absolute;
-    left: 18px;
-    top: 16px;
-  }
-`;
-
-const InputWrapper = styled.div`
-  position: relative;
-`;
-
-const InputCloseIcon = styled.div`
-  position: absolute;
-  cursor: pointer;
-  right: 12px;
-  top: 10px;
-  &:hover {
-    opacity: 0.9;
-  }
-  &:active {
-    opacity: 0.8;
-  }
-`;
-
-const BridgeWapper = styled.div`
+const ChainAndAccountWrapper = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -157,6 +75,26 @@ const BridgeWapper = styled.div`
   }
 `;
 
+const StyledNav = styled(NavMainV2)`
+  margin-left: 36px;
+`
+
+const StyledSearch = styled.div`
+  width: 40px;
+  height: 40px;
+  margin-left: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  &:hover {
+      border-radius: 12px;
+      background-color: #1F2229;
+      box-sizing: border-box;
+  }
+`
+
+
 const StyledConfirmOfficialUrl = styled(ConfirmOfficialUrl)`
   position: sticky;
   width: 100vw;
@@ -164,127 +102,75 @@ const StyledConfirmOfficialUrl = styled(ConfirmOfficialUrl)`
 
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
-const ExpandIcon = 'https://assets.dapdap.net/images/bafkreiam7p4ewrfedupruquxtsgrj7x2m425tky6htqdalbxa6l74hstpi.svg';
-
-const CloseIcon = 'https://assets.dapdap.net/images/bafkreier3j4otvsg2hp6bwgqsenjkecslv4vsn6mdjhyskdgfn5uqilkyu.svg';
-
 export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolean }) => {
   const router = useRouter();
-  const setLayoutStore = useLayoutStore((store) => store.set);
+  // const setLayoutStore = useLayoutStore((store) => store.set);
   const { account } = useAccount();
 
-  const [searchContent, setSearchContent] = useState<string>();
+  // const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
   const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl)
 
+  const [showSearch, setShowSearch] = useState(false);
+
   const isFromActivity = router.pathname.match(activityReg);
 
   const isHomePage = router.pathname === '/';
+  // Listen for ESC key press to close search
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setShowSearch(false);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   return (
     <>
       {
         isHomePage && <StyledConfirmOfficialUrl/>
       }
-      <Container $expand={showMenuContent} $top={showConfirmOfficialUrl && isHomePage ? '54px' : '0px' }>
-        <div className="container-nav">
-          {isFromActivity ? (
-            <LogoContainer onClick={goHomeWithFresh}>
-              <img src={logoUrl} alt="" />
-            </LogoContainer>
-          ) : (
+    <Container $expand={showMenuContent} $top={showConfirmOfficialUrl && isHomePage ? '54px' : '0px' }>
+      <div className="container-nav">
+        <Flex>
+        {isFromActivity ? (
+          <LogoContainer onClick={goHomeWithFresh}>
+            <img src={logoUrl} alt="" style={{ width: 120, height: 32 }} />
+          </LogoContainer>
+        ) : (
+          <LogoContainer>
             <Link href="/">
-              <LogoContainer>
-                <img src={logoUrl} alt="" />
-              </LogoContainer>
+              <img src={logoUrl} alt="" style={{ width: 120, height: 32 }} />
             </Link>
+          </LogoContainer>
+        )}
+          <StyledNav />
+          <StyledSearch data-bp="1001-004" onClick={() => setShowSearch(true)}><IconSearch /></StyledSearch>
+        </Flex>
+        <ChainAndAccountWrapper>
+          {isHideAccount ? (
+            <div />
+          ) : account ? (
+            <LoginContainer>
+              <CheckIn />
+              <Notification />
+              <Chain showName={false} bp="3001-003" />
+              <AccountLogo logoSize={28} />
+            </LoginContainer>
+          ) : (
+            <ConnectWallet />
           )}
-
-          <MenuContainer>
-            <Search>
-              <InputWrapper>
-                <input
-                  type="text"
-                  placeholder="search dApps, chains..."
-                  value={searchContent}
-                  onChange={(e) => setSearchContent(e.target.value)}
-                  autoFocus
-                  id="nav-top-search"
-                  className="top-nav-input"
-                />
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="21"
-                  height="15"
-                  viewBox="0 0 21 15"
-                  fill="none"
-                  className="search-icon"
-                >
-                  <circle cx="7.01829" cy="7.01829" r="6.01829" stroke="#EBF479" strokeWidth="2" />
-                  <rect
-                    x="14.9138"
-                    y="9.64978"
-                    width="6.141"
-                    height="2.63186"
-                    rx="1.31593"
-                    transform="rotate(30 14.9138 9.64978)"
-                    fill="#EBF479"
-                  />
-                </svg>
-                {searchContent && (
-                  <InputCloseIcon
-                    onClick={() => {
-                      setSearchContent('');
-                    }}
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                      <circle cx="12" cy="12" r="12" fill="#303142" />
-                      <path
-                        d="M13.444 12L16.7799 8.66415C17.0307 8.41332 17.0735 8.0494 16.8756 7.85157L16.1482 7.12424C15.9503 6.92632 15.5869 6.96974 15.3356 7.22041L12.0001 10.5561L8.66433 7.22049C8.41349 6.96941 8.04957 6.92632 7.85165 7.12449L7.12431 7.8519C6.92648 8.04949 6.96931 8.4134 7.22048 8.66423L10.5563 12L7.22048 15.336C6.96973 15.5866 6.92631 15.9503 7.12431 16.1482L7.85165 16.8756C8.04957 17.0735 8.41349 17.0306 8.66433 16.7799L12.0003 13.4439L15.3357 16.7794C15.587 17.0307 15.9504 17.0735 16.1483 16.8756L16.8757 16.1482C17.0735 15.9503 17.0307 15.5866 16.78 15.3356L13.444 12Z"
-                        fill="#979ABE"
-                      />
-                    </svg>
-                  </InputCloseIcon>
-                )}
-              </InputWrapper>
-              <div className="switch-icon" onClick={() => setShowMenuContent(!showMenuContent)} data-bp="3001-001">
-                <img src={CloseIcon} alt="" className={`switch-icon-img ${showMenuContent && 'show'}`} />
-                <img src={ExpandIcon} alt="" className={`switch-icon-img ${!showMenuContent && 'show'}`} />
-              </div>
-              <OdysseyIcon />
-            </Search>
-          </MenuContainer>
-          {/* Page don't need account section */}
-
-          <BridgeWapper>
-            <img
-              src="/images/dashboard/bridge.svg"
-              onClick={() => {
-                router.push('/super-bridge');
-              }}
-              className="bridge-icon"
-            />
-            {isHideAccount ? (
-              <div />
-            ) : account ? (
-              <LoginContainer>
-                <Chain showName={false} bp="3001-003" />
-                <AccountWrapper
-                  onClick={() => {
-                    setLayoutStore({ showAccountSider: true });
-                  }}
-                >
-                  <AccountItem showCopy={false} logoSize={28} bp="3001-004" />
-                </AccountWrapper>
-              </LoginContainer>
-            ) : (
-              <ConnectWallet />
-            )}
-          </BridgeWapper>
-        </div>
-        <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
-        <DropdownSearchResultPanel searchText={searchContent} setSearchContent={setSearchContent} show={searchContent} />
-      </Container>
+        </ChainAndAccountWrapper>
+      </div>
+      <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
+      { showSearch && (<DropdownSearchResultPanel setShowSearch={setShowSearch} />)}
+    </Container>
     </>
   );
 };

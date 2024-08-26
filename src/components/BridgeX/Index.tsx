@@ -1,31 +1,26 @@
+import { useDebounce } from 'ahooks';
+import Big from 'big.js'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Big from 'big.js'
-import { useDebounce } from 'ahooks';
 
-import allTokens from '@/config/bridge/allTokens';
-import useToast from '@/hooks/useToast';
 import Loading from '@/components/Icons/Loading';
+import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
-import { useSetChain } from '@web3-onboard/react';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
-import { balanceFormated, percentFormated, errorFormated, getFullNum } from '@/utils/balance';
+import useToast from '@/hooks/useToast';
+import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
 
-import ChainSelector from './components/ChainSelector'
-import FeeMsg from './components/FeeMsg';
 import Alert from './components/Alert';
-import Transaction from './components/Transaction';
+import ChainSelector from './components/ChainSelector'
 import Confirm from './components/Confirm'
+import FeeMsg from './components/FeeMsg';
 import Token from './components/Token'
-
-import usePriceValue from './hooks/usePriceValue';
-
+import Transaction from './components/Transaction';
 import {
     addressFormated,
-    getTransaction,
-    saveTransaction,
     isNumeric,
+    saveTransaction,
 } from './Utils'
 
 const BridgePanel = styled.div`
@@ -139,7 +134,8 @@ export default function BridgeX({
     toChainId,
     execute,
     getChainScan,
-    addAction
+    addAction,
+    onSuccess,
 }: any) {
     const { fail, success } = useToast()
     const [updater, setUpdater] = useState(1)
@@ -634,6 +630,10 @@ export default function BridgeX({
                             title: 'Transaction success',
                             text: '',
                         })
+
+                        if (typeof onSuccess === 'function') {
+                            onSuccess();
+                        }
 
                         setUpdater(updater + 1)
 

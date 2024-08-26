@@ -1,6 +1,8 @@
 import Big from 'big.js';
-import { sortTokens } from './token';
+
 import { FEES, MAX_TICK, MIN_TICK } from '@/config/pool/index';
+
+import { sortTokens } from './token';
 
 export function tickToPrice({ tick, token0, token1 }: any) {
   const [_token0, _token1] = sortTokens(token0, token1);

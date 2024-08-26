@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import chainsConfig from '@/config/chains';
 import GAS_LIMIT_RECOMMENDATIONS from '@/config/contract/gas-limit';
@@ -6,11 +7,11 @@ import multicallConfig from '@/config/contract/multicall';
 import wethConfig from '@/config/contract/weth';
 import { bridge as dappBridgeTheme } from '@/config/theme/dapp';
 import useAddAction from '@/hooks/useAddAction';
+import useSwitchChain from '@/hooks/useSwitchChain';
+import { useLayoutStore } from '@/stores/layout';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
 import refresh from '@/utils/refresh';
-import useSwitchChain from '@/hooks/useSwitchChain';
-import { useLayoutStore } from '@/stores/layout';
 export default function BosDapp({
   dapp,
   chainId,
@@ -78,7 +79,7 @@ export default function BosDapp({
         },
         ...props,
       }}
-      src={network.dapp_src}
+      src={network?.dapp_src}
     />
   );
 }

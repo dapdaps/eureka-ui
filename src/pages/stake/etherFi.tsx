@@ -1,33 +1,21 @@
-import { useDefaultLayout } from '@/hooks/useLayout';
+import { useRouter } from 'next/router';
+import { Suspense } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 
-import type { NextPageWithLayout } from '@/utils/types';
+import DappBack from '@/components/PageBack';
 import EtherFi from '@/components/Stake/EtherFi'
+import useDappInfo from '@/hooks/useDappInfo';
+import { useDefaultLayout } from '@/hooks/useLayout';
+import type { NextPageWithLayout } from '@/utils/types';
+import DappDetail from '@/views/Dapp/components/DappDetail';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
 
 const Container = styled.div`
   margin: 0 8%;
   color: #ffffff;
   padding-top: 50px;
 `
-
-const BreadCrumbs = styled.div`
-  color: #979abe;
-  font-size: 14px;
-  margin-bottom: 32px;
-  a {
-    text-decoration: none;
-    color: #979abe;
-    display: inline-block;
-    cursor: pointer;
-  }
-  svg {
-    margin: 0 8px;
-  }
-  span {
-    color: #ffffff;
-  }
-`;
 
 const TitleWapper = styled.div`
 text-align: center;
@@ -43,18 +31,28 @@ const arrow = (
 );
 
 export const Page: NextPageWithLayout = () => {
+  const router = useRouter();
+  const dappPathname = router.query.dappRoute as string;
+  const { dapp } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
+
   return <Container>
-      <BreadCrumbs>
-        <Link href="/">Home</Link>
-        {arrow}
-        <Link href="/alldapps">dApps</Link>
-        {arrow}
-        <span>ether.fi</span>
-      </BreadCrumbs>
+      <DappBack
+        defaultPath="/alldapps"
+        style={{
+          maxWidth: 1260,
+          minWidth: 1060,
+          margin: '0 auto',
+        }}
+      />
       <TitleWapper>
         <img className="icon" src="/images/apps/etherfi.png" />
       </TitleWapper>
       <EtherFi chainIndex={4}/>
+
+      <DappDetailScroll />
+      <Suspense fallback={<DappFallback />}>
+        <DappDetail {...dapp}/>
+      </Suspense>
     </Container>
 };
 

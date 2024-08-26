@@ -1,5 +1,7 @@
 import { memo } from 'react';
+
 import { formateValueWithThousandSeparator } from '@/utils/formate';
+
 import useSummary from '../../hooks/useSummary';
 import { StyledTotal, StyledTotalItem, StyledTotalLabel, StyledTotalValue } from './styles';
 

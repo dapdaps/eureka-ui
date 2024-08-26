@@ -1,20 +1,22 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useMemo,useState } from 'react';
+
 import Breadcrumb from '@/components/Breadcrumb';
+
+import MoreButton from '../MoreButton';
 import Bg from './Bg';
 import Header from './Header';
 import MorePanel from './MorePanel';
-import MoreButton from '../MoreButton';
 import {
-  StyledContainer,
-  StyledBox,
-  StyledBgWrapper,
   StyledBg,
   StyledBgImg,
+  StyledBgWrapper,
+  StyledBox,
+  StyledContainer,
   StyledContent,
   StyledMoreButton,
-  StyledTags,
   StyledTag,
   StyledTagLabel,
+  StyledTags,
   StyledTagValue,
 } from './styles';
 

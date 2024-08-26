@@ -1,6 +1,6 @@
 import { arbitrum } from '@/config/tokens/arbitrum';
-import { polygon } from '@/config/tokens/polygon';
 import { bsc } from '@/config/tokens/bsc';
+import { polygon } from '@/config/tokens/polygon';
 
 const basic = {
   name: 'FilDA',

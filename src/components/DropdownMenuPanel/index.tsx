@@ -1,9 +1,11 @@
-import { memo } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import Odyssey from './Odyssey';
+import { memo } from 'react';
+
+import { container, overlay } from '@/components/animation';
+
 import Explores from './Explores';
 import Menu from './Menu';
-import { container, overlay } from '@/components/animation';
+import Odyssey from './Odyssey';
 import { MaskLayer, MenuContainer, MenuContent } from './styles';
 import { useShowTipsStore } from '../ConfirmOfficialUrl/hooks/useShowTipsStore';
 import { useRouter } from 'next/router';

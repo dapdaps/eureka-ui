@@ -1,6 +1,8 @@
 import { memo, useState } from 'react';
 import styled from 'styled-components';
+
 import Loading from '@/components/Icons/Loading';
+
 import usePasswordAction from '../../hooks/usePasswordAction';
 import { StyledExpandButton } from './styles';
 

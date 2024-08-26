@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from 'react';
-import { StyledInput, StyledInputButton, StyledInputLabel, StyledInputInner, StyledInputContent } from './styles';
+
+import { StyledInput, StyledInputButton, StyledInputContent,StyledInputInner, StyledInputLabel } from './styles';
 
 const Input = ({ label, value, setValue, onButtonClick, desc, disabled, rangeType }: any) => {
   const [price, setPrice] = useState('');

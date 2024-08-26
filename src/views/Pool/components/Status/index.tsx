@@ -1,6 +1,8 @@
-import { memo, useMemo } from 'react';
 import Big from 'big.js';
+import { memo, useMemo } from 'react';
+
 import Loading from '@/components/Icons/Loading';
+
 import { StyledStatus } from './styles';
 
 const Status = ({ tickLower, tickUpper, liquidity, currentTick, loading, type }: any) => {

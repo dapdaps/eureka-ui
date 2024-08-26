@@ -2,6 +2,8 @@ import { linea } from '@/config/tokens/linea';
 
 const basic = {
   name: 'Teahouse',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/teahouse.png',
+  dappSrc: 'bluebiu.near/widget/Staking.Teahouse.Index',
   //   data: 'bluebiu.near/widget/Staking.Teahouse.Data',
   ICON_VAULT_MAP: {
     USDC: linea['usdc'].icon,

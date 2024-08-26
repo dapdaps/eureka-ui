@@ -1,22 +1,24 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import Trapeziform from '../Trapeziform';
+
 import { openLink, openXShareLink } from '@/utils/links';
+
 import useReport from '../../hooks/useReport';
+import Trapeziform from '../Trapeziform';
 import {
   Body,
-  QuestGoldHints,
-  Head,
-  HeadLeft,
-  HeadRight,
-  QuestGold,
-  QuestBg,
-  Spins,
   Desc,
   Gold,
   GoldWapper,
+  Head,
+  HeadLeft,
+  HeadRight,
+  QuestBg,
+  QuestGold,
+  QuestGoldHints,
   QuestTitle,
   SpinLine,
+  Spins,
 } from './styles';
 
 export default function Quest({ data, bgClass, userInfo, authConfig, onGoldClick }: any) {

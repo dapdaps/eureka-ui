@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import EneryLabel from './EnergyLabel';
-import ClaimButton from './ClaimButton';
-import useClaim from '../../hooks/useClaim';
+
 import { StyledCoin } from '@/views/Quest/styles';
+
+import useClaim from '../../hooks/useClaim';
+import ClaimButton from './ClaimButton';
+import EneryLabel from './EnergyLabel';
 
 const StyledContainer = styled.div`
   position: relative;

@@ -1,9 +1,11 @@
 import { memo, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
+
 import Modal from '@/components/Modal';
 import dappConfig from '@/config/dapp';
-import AddLiquidity from '../AddLiquidity/V3';
 import { LiquidityContext } from '@/views/Pool/context';
+
+import AddLiquidity from '../AddLiquidity/V3';
 
 const StyledContainer = styled.div`
   max-height: 80vh;

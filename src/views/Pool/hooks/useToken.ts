@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import multicallAddresses from '@/config/contract/multicall';
-import { multicall } from '@/utils/multicall';
 import useAccount from '@/hooks/useAccount';
+import { multicall } from '@/utils/multicall';
+
 import useDappConfig from './useDappConfig';
 
 export default function useToken(address: any, chainId: any) {

@@ -2,14 +2,14 @@ import Image from 'next/image';
 
 import {
   Rush,
+  StyledBottomBg,
   StyledContainer,
   StyledContent,
   StyledFrame,
-  StyledLeftDoor,
-  StyledRightDoor,
   StyledLeftBg,
+  StyledLeftDoor,
   StyledRightBg,
-  StyledBottomBg,
+  StyledRightDoor,
 } from './styles';
 
 export default function Banner() {

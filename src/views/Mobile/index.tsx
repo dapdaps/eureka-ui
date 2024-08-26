@@ -1,3 +1,5 @@
+import styled from 'styled-components';
+
 import chainCofig from '@/config/all-in-one/chains';
 import {
   StyledContainer,
@@ -5,7 +7,6 @@ import {
   StyledFont,
   StyledSvg
 } from "@/styled/styles";
-import styled from 'styled-components';
 const StyledSubTitle = styled.div`
 `
 const StyledSquareButton = styled.div`

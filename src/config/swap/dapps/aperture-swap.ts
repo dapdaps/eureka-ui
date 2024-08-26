@@ -22,6 +22,7 @@ const networks = {
       manta['wusdm'],
       manta['tia'],
       manta['wsteth'],
+      manta['lab'],
     ],
   },
 };

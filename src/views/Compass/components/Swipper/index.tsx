@@ -1,12 +1,11 @@
-import { useEffect, useState, useRef } from 'react'
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay, Pagination, Navigation } from 'swiper/modules';
-
-import styled from 'styled-components';
-
 import 'swiper/css'
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+
+import { useEffect, useRef,useState } from 'react'
+import styled from 'styled-components';
+import { Autoplay, Navigation,Pagination } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 
 const SwiperWapper = styled.div`
     margin: 0 auto;

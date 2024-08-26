@@ -1,8 +1,10 @@
 import { memo } from 'react';
-import useAccount from '@/hooks/useAccount';
+
 import Loading from '@/components/Icons/Loading';
-import useSwitchChain from '@/hooks/useSwitchChain';
+import useAccount from '@/hooks/useAccount';
 import useConnectWallet from '@/hooks/useConnectWallet';
+import useSwitchChain from '@/hooks/useSwitchChain';
+
 import { StyledButton } from './styles';
 
 const Button = ({ text, errorTips, loading, onClick }: any) => {

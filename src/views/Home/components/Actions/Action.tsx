@@ -1,6 +1,7 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
-import { StyledActionContainer, StyledActionTitle, StyledActionDesc } from './styles';
+import { memo } from 'react';
+
+import { StyledActionContainer, StyledActionDesc,StyledActionTitle } from './styles';
 
 const Action = ({ title, desc, icon, path, bg, bp }: any) => {
   const router = useRouter();

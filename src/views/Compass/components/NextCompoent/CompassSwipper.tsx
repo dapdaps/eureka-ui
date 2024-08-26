@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import Swipper from '../Swipper'
 
+import Swipper from '../Swipper'
 import Panel from './Panel'
 
 const Content = styled.div`

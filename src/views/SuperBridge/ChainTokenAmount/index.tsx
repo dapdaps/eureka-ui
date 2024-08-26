@@ -1,17 +1,15 @@
+import { useCallback, useEffect,useRef, useState } from "react";
 import styled from 'styled-components';
-import { useState, useRef, useCallback, useEffect } from "react";
 
-import useTokenBalance from '@/hooks/useCurrencyBalance';
-import usePriceValue from '../hooks/usePriceValue';
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import { ArrowDown } from '../Arrow'
+import usePriceValue from '../hooks/usePriceValue';
 import TokenSelectModal from './TokenSelectModal';
-
-
-import type { Chain, Token } from '@/types';
 
 const Wapper = styled.div`
     min-height: 145px;
@@ -79,6 +77,8 @@ const Content = styled.div`
     justify-content: space-between;
     gap: 10px;
     padding: 12px 16px;
+    border-radius: 0 0 12px 12px;
+    overflow: hidden;
 `
 
 const AmountWapper = styled.div`
@@ -230,7 +230,7 @@ export default function ChainTokenAmount({
         symbol: currentToken?.symbol
     })
 
-    return <Wapper style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
+    return <Wapper style={{ background: 'rgba(46, 49, 66, 1)' }}>
         <Header>
             <ChainWapper>
                 <ChainName>{title}</ChainName>
@@ -244,7 +244,7 @@ export default function ChainTokenAmount({
             </ChainWapper>
             <AddressWapper>{address}</AddressWapper>
         </Header>
-        <Content>
+        <Content style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
             <AmountWapper>
                 <AmountInput value={amount} onFocus={() => {
                     setFocus(true)

@@ -1,16 +1,17 @@
-import { useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { useState } from 'react';
+
 import useGame from '../../hooks/useGame';
 import useStart from '../../hooks/useStart';
-import GameLabel from './Label';
-import Header from './Header';
 import Card from './Card';
-import Footer from './Footer';
-import Start from './Start';
-import NoEnergy from './NoEnergy';
 import Complete from './Complete';
+import Footer from './Footer';
+import Header from './Header';
+import GameLabel from './Label';
+import NoEnergy from './NoEnergy';
 import Rules from './Rules';
-import { StyledContainer, StyledCardList } from './styles';
+import Start from './Start';
+import { StyledCardList,StyledContainer } from './styles';
 
 export default function Game({ availableSpins, unclaimedReward, onRefreshDetail }: any) {
   const [modalType, setModalType] = useState(0);

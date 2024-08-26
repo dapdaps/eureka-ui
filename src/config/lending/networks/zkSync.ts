@@ -1,5 +1,6 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
 import reactorFusion from '../dapps/reactor-fusion';
 
 const CHAIN_ID = 324;

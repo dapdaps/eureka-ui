@@ -1,5 +1,6 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import { StyledContainer } from './styles';
 
 const Header = ({ tab }: any) => {

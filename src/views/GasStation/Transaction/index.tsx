@@ -1,14 +1,14 @@
-import { useState, useRef, useCallback, useEffect } from 'react';
-import styled from 'styled-components';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect,useRef, useState } from 'react';
+import styled from 'styled-components';
 
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
-import { formateTxDate } from '@/utils/date';
-import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
 import useCopy from '@/hooks/useCopy'
 import useAccount from '@/hooks/useAccount';
 
 import type { Chain, Token } from '@/types';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
+import { formateTxDate } from '@/utils/date';
+import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
 
 const Container = styled.div`
     width: 1104px;
@@ -152,29 +152,29 @@ export default function Transaction({
                                 
                                 <td>
                                     <div className="mul-ele">
-                                        <img className="chain-icon" src={item.fromChainLogo} /> 
+                                        <img className="chain-icon" src={item.fromChainLogo} />
                                         <div>{ item.src_chain_name } </div>
                                         <div className="mul-ele">
-                                            { addressFormated(item.src_address) } 
-                                            <Copy onClick={() => { copy(item.src_address) }}/> 
+                                            { addressFormated(item.src_address) }
+                                            <Copy onClick={() => { copy(item.src_address) }}/>
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="mul-ele">
-                                        <img className="chain-icon"  src={item.toChainLogo} /> 
+                                        <img className="chain-icon"  src={item.toChainLogo} />
                                         <div>{ item.dst_chain_name } </div>
                                         <div className="mul-ele">
-                                            { addressFormated(item.dst_address) } 
-                                            <Copy onClick={() => { copy(item.dst_address) }}/> 
+                                            { addressFormated(item.dst_address) }
+                                            <Copy onClick={() => { copy(item.dst_address) }}/>
                                         </div>
                                     </div>
                                 </td>
                                 <td>{ balanceFormated(item.src_amount) } { item.fromTokenSymbol }</td>
                                 <td>
                                     <div className="mul-ele">
-                                        { addressFormated(item.order_hash) } 
-                                        <Copy onClick={() => { copy(item.order_hash) }}/> 
+                                        { addressFormated(item.order_hash) }
+                                        <Copy onClick={() => { copy(item.order_hash) }}/>
                                     </div></td>
                                 <td>{ formateTxDate(item.time) }</td>
                             </tr>

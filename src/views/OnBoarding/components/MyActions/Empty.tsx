@@ -1,11 +1,12 @@
 import { memo } from 'react';
+
 import {
   StyledEmpty,
-  StyledEmptyTitle,
-  StyledEmptyImg,
   StyledEmptyDesc,
-  StyledEmptyItems,
+  StyledEmptyImg,
   StyledEmptyItem,
+  StyledEmptyItems,
+  StyledEmptyTitle,
 } from './styles';
 
 const Empty = () => {

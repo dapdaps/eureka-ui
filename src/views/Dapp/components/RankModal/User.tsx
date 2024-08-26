@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { ellipsAccount } from '@/utils/account';
 
 const Wrapper = styled.div`

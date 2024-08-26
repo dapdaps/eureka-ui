@@ -1,12 +1,14 @@
-import { useCallback, useState, useEffect } from 'react';
 import { Contract } from 'ethers';
+import { useCallback, useEffect,useState } from 'react';
+
 import multicallAddresses from '@/config/contract/multicall';
-import { multicall } from '@/utils/multicall';
 import useAccount from '@/hooks/useAccount';
-import useDappConfig from '../../hooks/useDappConfig';
-import { wrapNativeToken } from '../../utils/token';
+import { multicall } from '@/utils/multicall';
+
 import factoryAbi from '../../abi/factory';
 import poolAbi from '../../abi/pool';
+import useDappConfig from '../../hooks/useDappConfig';
+import { wrapNativeToken } from '../../utils/token';
 
 export default function usePoolInfo({ token0, token1, fee }: any) {
   const [info, setInfo] = useState<any>();

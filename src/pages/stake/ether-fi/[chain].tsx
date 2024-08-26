@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
 
+import EtherFi from '@/components/Stake/EtherFi'
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import EtherFi from '@/components/Stake/EtherFi'
 
 const Container = styled.div`
   margin: 0 8%;

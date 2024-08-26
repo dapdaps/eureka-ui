@@ -1,12 +1,13 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
-import radiant from '../dapps/radiant';
-import granaryFinance from '../dapps/granary-finance';
+
 import cream from '../dapps/cream';
-import tenderFinance from '../dapps/tender-finance';
 import filda from '../dapps/filda';
-import wePiggy from '../dapps/we-piggy';
+import granaryFinance from '../dapps/granary-finance';
 import loadestar from '../dapps/lodestar-v1';
+import radiant from '../dapps/radiant';
+import tenderFinance from '../dapps/tender-finance';
+import wePiggy from '../dapps/we-piggy';
 
 const CHAIN_ID = 42161;
 const CHAIN_NAME = 'Arbitrum';

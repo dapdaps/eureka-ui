@@ -1,6 +1,8 @@
+import compassImg from '@public/images/others/odyssey/thruster/components/SlotMachine/gold-rush.svg?url';
 import styled from 'styled-components';
+
 import StyledRefresh from '@/components/Icons/Refresh';
-import compassImg from './img/gold-rush.svg';
+
 import Spin from './Spin';
 
 const Wrapper = styled.div`

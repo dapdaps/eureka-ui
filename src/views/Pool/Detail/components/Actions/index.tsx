@@ -1,7 +1,9 @@
-import { memo } from 'react';
-import Button from '@/views/Pool/components/Button';
-import { StyledContainer } from './styles';
 import Big from 'big.js';
+import { memo } from 'react';
+
+import Button from '@/views/Pool/components/Button';
+
+import { StyledContainer } from './styles';
 
 const Actions = ({ onIncrease, onRemove, liquidity }: any) => {
   return (

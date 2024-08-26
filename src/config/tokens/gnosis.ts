@@ -195,4 +195,28 @@ export const gnosis: { [key: string]: Token } = {
     decimals: 18,
     icon: 'https://ipfs.near.social/ipfs/bafkreifyb5gn2wd3yxun73277zdhzqdshvy63iexqcucgcnze3elroyczy',
   },
+  rETH: {
+    chainId: CHAIN_ID,
+    address: '0xc791240d1f2def5938e2031364ff4ed887133c3d',
+    name: 'Rocket Pool ETH from Mainnet',
+    symbol: 'rETH',
+    decimals: 18,
+    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0xc791240d1f2def5938e2031364ff4ed887133c3d.png',
+  },
+  osGNO: {
+    chainId: CHAIN_ID,
+    address: '0xf490c80aae5f2616d3e3bda2483e30c4cb21d1a0',
+    name: 'Staked GNO',
+    symbol: 'osGNO',
+    decimals: 18,
+    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0xf490c80aae5f2616d3e3bda2483e30c4cb21d1a0.png',
+  },
+  OLAS: {
+    chainId: CHAIN_ID,
+    address: '0xce11e14225575945b8e6dc0d4f2dd4c570f79d9f',
+    name: 'Autonolas from Mainnet',
+    symbol: 'OLAS',
+    decimals: 18,
+    icon: 'https://raw.githubusercontent.com/balancer/tokenlists/main/src/assets/images/tokens/0xce11e14225575945b8e6dc0d4f2dd4c570f79d9f.png',
+  },
 };

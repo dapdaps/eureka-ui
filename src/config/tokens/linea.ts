@@ -211,4 +211,20 @@ export const linea: { [key: string]: Token } = {
     name: 'Wrapped eETH',
     icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
   },
+  stone: {
+    address: '0x93f4d0ab6a8b4271f4a28db399b5e30612d21116',
+    chainId: CHAIN_ID,
+    symbol: 'STONE',
+    decimals: 18,
+    name: 'StakeStone Ether',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihot3ixjf6rahvsi7tpnxrz2nhjfij6nn26oq7rpggyofyvqdvd4q',
+  },
+  foxy: {
+    address: '0x5fbdf89403270a1846f5ae7d113a989f850d1566',
+    chainId: CHAIN_ID,
+    symbol: 'FOXY',
+    decimals: 18,
+    name: 'Foxy',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiaomsy4sjntn3ovfdgp4fdj75rwpplheiyuorc22fzc26p23coh3a',
+  }
 };

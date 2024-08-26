@@ -1,13 +1,13 @@
+import Big from 'big.js'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Big from 'big.js'
-import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import Loading from '@/components/Icons/Loading';
-import { ArrowDown, ArrowUp } from './Arrows'
-import CurrencySelectCom from './Select/CurrencySelect'
+import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import usePriceValue from '../hooks/usePriceValue';
+import { ArrowDown, ArrowUp } from './Arrows'
+import CurrencySelectCom from './Select/CurrencySelect'
 
 const Wrapper = styled.div`
     background: #2E3142;

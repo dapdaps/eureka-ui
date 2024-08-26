@@ -1,6 +1,8 @@
 
 const basic = {
   name: 'Rangeprotocol',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/090-rageprotocal.png',
+  dappSrc: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
   amountOutFn: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
   ICON_VAULT_MAP: {
     USDT: 'https://app.rangeprotocol.com/images/coins/56/0x55d398326f99059fF775485246999027B3197955.png',
@@ -19,9 +21,9 @@ const basic = {
 const networks = {
   // bsc
   56: {
-    ALL_DATA_URL: 'https://rangeprotocol-public.s3.ap-southeast-1.amazonaws.com/data/RangeAPY.json',
+    ALL_DATA_URL: 'https://skate-fi.s3.ap-northeast-1.amazonaws.com/data/RangeAPY.json',
     FEES_URL: 'https://rangeprotocol-public.s3.ap-southeast-1.amazonaws.com/data/fees-bsc-pancakeswap.json',
-    RANGE_URL: 'https://api.thegraph.com/subgraphs/name/0xbateman/range-bsc-pancakeswap',
+    RANGE_URL: 'https://api.goldsky.com/api/public/project_clm97huay3j9y2nw04d8nhmrt/subgraphs/pancakeswap-bsc/0.2/gn',
     ammName: 'Pancake',
     ammImage: 'https://app.rangeprotocol.com/images/exchanges/icon-cake-token.svg',
     defaultPair: 'P USDT-USDC',
@@ -95,9 +97,9 @@ const networks = {
   },
   // manta
   169: {
-    ALL_DATA_URL: 'https://rangeprotocol-public.s3.ap-southeast-1.amazonaws.com/data/RangeAPY.json',
+    ALL_DATA_URL: 'https://skate-fi.s3.ap-northeast-1.amazonaws.com/data/RangeAPY.json',
     FEES_URL: 'https://rangeprotocol-public.s3.ap-southeast-1.amazonaws.com/data/fees-manta-izumi.json',
-    RANGE_URL: 'https://api.thegraph.com/subgraphs/name/0xbateman/range-bsc-pancakeswap',
+    RANGE_URL: 'https://api.goldsky.com/api/public/project_clm97huay3j9y2nw04d8nhmrt/subgraphs/pancakeswap-bsc/0.2/gn',
     ammName: 'iZUMi',
     ammImage: 'https://app.rangeprotocol.com/images/exchanges/icon-izumi.svg',
     defaultPair: 'P WETH-STONE',

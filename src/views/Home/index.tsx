@@ -1,29 +1,33 @@
-import { useChainsStore } from '@/stores/chains';
+import { useVersion } from '@/hooks/useVersion';
+import DAvinciModal from '@/views/Home/components/DAvinci/Modal';
 
-import Banner from './components/Banner';
-import Actions from './components/Actions';
 import Compass from './components/Compass';
-import Decentralised from './components/Decentralised';
 import DiscoveryDapps from './components/DiscoveryDapps';
-import QuickOnboarding from './components/️QuickOnboarding ';
-import SeamlessNavigation from './components/SeamlessNavigation';
-import TrendingEthereum from './components/TrendingEthereum';
-import Learn from './components/Learn';
+import GridChains from './components/GridChains';
+import Networks from './components/Networks';
+import RecentRewards from './components/Rewards';
 import { StyledContainer } from './styles';
 
 const Home = () => {
-  const chains = useChainsStore((store: any) => store.chains);
+  const {
+    visible: versionVisible,
+    handleClosed: handleVersionClosed,
+  } = useVersion();
+
   return (
     <StyledContainer>
-      <Banner />
-      <Actions />
+      <GridChains />
       <Compass />
+      <Networks />
       <DiscoveryDapps />
-      <TrendingEthereum chains={chains} />
-      <QuickOnboarding />
-      <SeamlessNavigation chains={chains} />
-      <Decentralised />
+      <RecentRewards />
+
+      {/* <TrendingEthereum chains={chains} />
+       <QuickOnboarding />
+       <SeamlessNavigation chains={chains} />
+       <Decentralised /> */}
       {/* <Learn /> */}
+      <DAvinciModal visible={versionVisible} onClose={handleVersionClosed} />
     </StyledContainer>
   );
 };

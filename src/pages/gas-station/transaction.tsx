@@ -5,11 +5,9 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useDefaultLayout } from '@/hooks/useLayout';
-
-import Transaction from '@/views/GasStation/Transaction';
-
-import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
+import type { NextPageWithLayout } from '@/utils/types';
+import Transaction from '@/views/GasStation/Transaction';
 
 const Container = styled.div`
   padding-top: 80px;

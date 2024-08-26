@@ -1,11 +1,14 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect,useRef, useState } from "react";
 import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+
+import type { Chain, Token } from "@/types";
 
 import { ArrowRight } from '../Arrow'
+import DotFlashing from '../DotFlashing/'
+import useRouteSorted from '../hooks/useRouteSorted'
 import Route from '../Route'
 import RouteModal from './RouteModal';
-import type { Chain, Token } from "@/types";
 
 const Container = styled.div`
     margin-top: 20px;
@@ -45,68 +48,32 @@ interface Props {
     routes: QuoteResponse[] | null;
     toToken: Token;
     routeSortType: number;
+    quoteLoading: boolean;
     onRouteSelected: (route: QuoteResponse | null) => void;
 }
 
 export default function RouteSelected(
-    { routes, toToken, routeSortType, fromChain, onRouteSelected }: Props
+    { routes, toToken, routeSortType, fromChain, quoteLoading, onRouteSelected }: Props
 ) {
     const [routeModalShow, setRouteModalShow] = useState<boolean>(false)
-    const [routeSelected, setRouteSelected] = useState<QuoteResponse | null>(null)
-    const [best, setBest] = useState<QuoteResponse | null>(null)
-    const [fast, setFast] = useState<QuoteResponse | null>(null)
-    const [sortedRoutes, setSortedRoutes] = useState<QuoteResponse[] | null>([])
 
-    useEffect(() => {
-        let bestRoute: QuoteResponse | null = null
-        let fastRoute: QuoteResponse | null = null
-        if (routes && routes.length) {
-            bestRoute = routes[0]
-            fastRoute = routes[0]
-            routes.forEach(route => {
-                if (Number(route.receiveAmount) > Number(bestRoute?.receiveAmount)) {
-                    bestRoute = route
-                }
+    const {
+        routeSelected,
+        best,
+        fast,
+        sortedRoutes,
+        setRouteSelected,
+    } = useRouteSorted(routes, routeSortType, onRouteSelected)
 
-                if (Number(route.duration) < Number(fastRoute?.duration)) {
-                    fastRoute = route
-                }
-            })
-        }
-        setBest(bestRoute)
-        setFast(fastRoute)
-        if (routeSortType === 1) {
-            setRouteSelected(bestRoute)
-            onRouteSelected(bestRoute)
-        } else if (routeSortType === 2) {
-            setRouteSelected(fastRoute)
-            onRouteSelected(fastRoute)
-        }
-
-        if (!routes || routes.length === 0) {
-            setRouteSelected(null)
-            onRouteSelected(null)
-        }
-        
-    }, [routes, routeSortType])
-
-    useEffect(() => {
-        if (routes) {
-            if (routeSortType === 1) {
-                routes.sort((a, b) => Number(b.receiveAmount) - Number(a.receiveAmount))
-            } else {
-                routes.sort((a, b) => Number(a.duration) - Number(b.duration))
-            }
-            setSortedRoutes(routes)
-        } else {
-            setSortedRoutes(null)
-        }
-    }, [routes, routeSortType])
+    console.log(quoteLoading)
 
     return <Container>
         <TitleWapper>
             <div className="title">Select Bridge Route</div>
             <div className="arrow" onClick={() => { setRouteModalShow(true) }}>
+                {
+                    quoteLoading && <DotFlashing />
+                }
                 <span className="route-num">{routes?.length} Routes</span>
                 <ArrowRight />
             </div>
@@ -125,6 +92,7 @@ export default function RouteSelected(
             routeSelected={routeSelected} 
             routes={sortedRoutes} 
             fromChain={fromChain}
+            quoteLoading={quoteLoading}
             onClose={() => { setRouteModalShow(false) }} 
             onRouteSelected={(route) => { 
                 setRouteSelected(route)

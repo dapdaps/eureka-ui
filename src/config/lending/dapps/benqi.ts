@@ -14,24 +14,26 @@ const networks = {
     oracleAddress: '0x316ae55ec59e0beb2121c0e41d4bdef8bf66b32b',
     lensAddress: '0x87457bF0451914bF62C6c1bC2dc9eB1A8076Eb8E',
     markets: {
-      '0xe194c4c5aC32a3C9ffDb358d9Bfd523a0B6d1568': {
-        decimals: 8,
-        symbol: 'qiBTC',
-        address: '0xe194c4c5aC32a3C9ffDb358d9Bfd523a0B6d1568',
-        underlyingToken: avalanche['wbtc.e'],
-      },
+      // fix#DAP-630
+      // '0xe194c4c5aC32a3C9ffDb358d9Bfd523a0B6d1568': {
+      //   decimals: 8,
+      //   symbol: 'qiBTC',
+      //   address: '0xe194c4c5aC32a3C9ffDb358d9Bfd523a0B6d1568',
+      //   underlyingToken: avalanche['wbtc.e'],
+      // },
       '0x334AD834Cd4481BB02d09615E7c11a00579A7909': {
         decimals: 8,
         symbol: 'qiETH',
         address: '0x334AD834Cd4481BB02d09615E7c11a00579A7909',
         underlyingToken: avalanche['eth'],
       },
-      '0xc9e5999b8e75C3fEB117F6f73E664b9f3C8ca65C': {
-        decimals: 8,
-        symbol: 'qiUSDT',
-        address: '0xc9e5999b8e75C3fEB117F6f73E664b9f3C8ca65C',
-        underlyingToken: avalanche['usdt.e'],
-      },
+      // fix#DAP-630
+      // '0xc9e5999b8e75C3fEB117F6f73E664b9f3C8ca65C': {
+      //   decimals: 8,
+      //   symbol: 'qiUSDT',
+      //   address: '0xc9e5999b8e75C3fEB117F6f73E664b9f3C8ca65C',
+      //   underlyingToken: avalanche['usdt.e'],
+      // },
       '0x4e9f683A27a6BdAD3FC2764003759277e93696e6': {
         decimals: 8,
         symbol: 'qiLINK',
@@ -44,12 +46,13 @@ const networks = {
         address: '0x835866d37AFB8CB8F8334dCCdaf66cf01832Ff5D',
         underlyingToken: avalanche['dai.e'],
       },
-      '0xBEb5d47A3f720Ec0a390d04b4d41ED7d9688bC7F': {
-        decimals: 8,
-        symbol: 'qiUSDC',
-        address: '0xBEb5d47A3f720Ec0a390d04b4d41ED7d9688bC7F',
-        underlyingToken: avalanche['usdc.e'],
-      },
+      // fix#DAP-630
+      // '0xBEb5d47A3f720Ec0a390d04b4d41ED7d9688bC7F': {
+      //   decimals: 8,
+      //   symbol: 'qiUSDC',
+      //   address: '0xBEb5d47A3f720Ec0a390d04b4d41ED7d9688bC7F',
+      //   underlyingToken: avalanche['usdc.e'],
+      // },
       '0xB715808a78F6041E46d61Cb123C9B4A27056AE9C': {
         decimals: 8,
         symbol: 'qiUSDCn',

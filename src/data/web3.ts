@@ -1,12 +1,12 @@
+import icon from '@public/images/others/near_social_icon.svg?url';
+import bitgetWalletModule from '@web3-onboard/bitget';
 import { type EIP1193Provider } from '@web3-onboard/core';
 import injectedModule, { ProviderLabel } from '@web3-onboard/injected-wallets';
-import bitgetWalletModule from '@web3-onboard/bitget';
 import { init, useConnectWallet } from '@web3-onboard/react';
 import walletConnectModule from '@web3-onboard/walletconnect';
 import { useEffect, useState } from 'react';
 import { singletonHook } from 'react-singleton-hook';
 
-import icon from '@/assets/images/near_social_icon.svg';
 import chains from '@/config/chains';
 
 const web3onboardKey = 'web3-onboard:connectedWallets';
@@ -323,7 +323,7 @@ export const onboard = init({
   ],
   appMetadata: {
     name: 'NEAR',
-    icon: icon.content,
+    icon: icon.src,
     description: 'NEAR - BOS',
   },
   theme: 'dark',

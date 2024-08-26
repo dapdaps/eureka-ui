@@ -1,4 +1,5 @@
 import { memo } from 'react';
+
 import { StyledContainer, StyledItem } from './style';
 
 const VersionTypes = ({ version, onChange }: any) => {

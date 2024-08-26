@@ -10,7 +10,8 @@ declare module '@ensdomains/eth-ens-namehash';
 
 declare module 'react-lottie';
 interface Window {
-  zE: (name: string, method: string) => void | undefined;
+  // zE: (name: string, method: string) => void | undefined;
+  zE: any;
   Telegram: {
     Login: {
       auth: any;

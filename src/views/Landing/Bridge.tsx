@@ -2,9 +2,10 @@ import { memo, useMemo } from 'react';
 
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import { LANDING_CHAINS } from '@/config/bridge/chains';
+import configChains from '@/config/chains';
 import useAddAction from '@/hooks/useAddAction';
 import { useChainsStore } from '@/stores/chains';
-import configChains from '@/config/chains';
+
 import { CHAIN_ID, FROM_CHAIN_ID } from './config';
 
 const Bridge = ({ onSuccess }: { onSuccess: VoidFunction }) => {

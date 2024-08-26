@@ -1,6 +1,8 @@
 
 const basic = {
   name: 'SteakHut',
+  icon: "https://s3.amazonaws.com/dapdap.prod/images/087-steakhut.png",
+  dappSrc: 'bluebiu.near/widget/Liquidity.STEAKHUT',
   amountOutFn: 'bluebiu.near/widget/Liquidity.STEAKHUT',
   ICON_VAULT_MAP: {
     CAI: 'https://raw.githubusercontent.com/traderjoe-xyz/joe-tokenlists/main/logos/0x48f88A3fE843ccb0b5003e70B4192c1d7448bEf0/logo.png',

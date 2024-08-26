@@ -1,9 +1,11 @@
+import { motion } from 'framer-motion';
 import { memo } from 'react';
 import styled from 'styled-components';
-import { motion } from 'framer-motion';
+
 import useAccount from '@/hooks/useAccount';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import { useLayoutStore } from '@/stores/layout';
+
 import AccountItem from './AccountItem';
 import SubtractItem from './SubtractItem';
 

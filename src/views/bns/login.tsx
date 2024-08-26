@@ -1,7 +1,9 @@
-import loginLogo from '@/assets/images/login_logo.svg';
-import useAuth from '@/hooks/useAuth';
+import loginLogo from '@public/images/others/bns/login_logo.svg?url';
 import Image from 'next/image';
 import { memo } from 'react';
+
+import useAuth from '@/hooks/useAuth';
+
 import {
   StyledFlex,
   StyledImage,
@@ -25,7 +27,7 @@ const LoginView = () => {
       </StyledImage>
       <StyledFlex $direction="column">
         <StyledImage style={{ marginBottom: 89 }}>
-          <Image style={{ width: 409 }} src={loginLogo} alt="loginLogo" />
+          <Image width={409} src={loginLogo} alt="loginLogo" />
         </StyledImage>
         <StyledInvitedUsers>Invited users only</StyledInvitedUsers>
         <StyledLoginConnectWalletButton
@@ -33,7 +35,7 @@ const LoginView = () => {
             connect();
           }}
           disabled={connecting}
-          data-bp="2001-001"
+          data-bp="1001-005"
         >
           Connect Wallet
         </StyledLoginConnectWalletButton>

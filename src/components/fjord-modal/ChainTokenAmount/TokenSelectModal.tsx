@@ -1,17 +1,16 @@
-import { useState, useRef, useCallback, useEffect, forwardRef, useMemo, memo } from 'react';
-import styled from 'styled-components';
 import { useDebounce } from 'ahooks';
-
-import { usePriceStore } from '@/stores/price';
-import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance';
-import { ArrowDown } from '../Arrow';
-import Image from './Image';
-
-import Modal from '../launch-modal';
-import TokenRow from './Token';
-
-import type { Chain, Token } from '@/types';
 import { chain } from 'lodash';
+import { forwardRef, memo,useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import styled from 'styled-components';
+
+import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+
+import { ArrowDown } from '../Arrow';
+import Modal from '../launch-modal';
+import Image from './Image';
+import TokenRow from './Token';
 
 const Container = styled.div`
   display: flex;

@@ -1,20 +1,22 @@
-import { memo, useState, useMemo } from 'react';
 import Big from 'big.js';
+import { useRouter } from 'next/router';
+import { memo, useMemo,useState } from 'react';
+
 import Loading from '@/components/Icons/Loading';
-import Tokens from '@/views/Pool/Detail/components/Tokens';
-import Amount from '@/views/Pool/RemoveLiquidity/components/Amount';
-import Token from '@/views/Pool/RemoveLiquidity/components/Token';
+import useAccount from '@/hooks/useAccount';
 import Button from '@/views/Pool/components/Button';
 import ConnectWalletButton from '@/views/Pool/components/ConnectWalletButton';
 import SwitchNetworkButton from '@/views/Pool/components/SwitchNetworkButton';
+import Tokens from '@/views/Pool/Detail/components/Tokens';
 import { getTokenAmounts } from '@/views/Pool/Detail/helpers';
-import { useRouter } from 'next/router';
-import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import usePoolDetail from '../hooks/usePoolDetail';
 import useCollectInfo from '@/views/Pool/Detail/hooks/useCollectInfo';
+import useDappConfig from '@/views/Pool/hooks/useDappConfig';
+import Amount from '@/views/Pool/RemoveLiquidity/components/Amount';
+import Token from '@/views/Pool/RemoveLiquidity/components/Token';
+
+import usePoolDetail from '../hooks/usePoolDetail';
 import useRemove from '../hooks/useRemove';
-import useAccount from '@/hooks/useAccount';
-import { StyledContainer, StyledLoadingWrapper, StyledHeader, StyledContent } from './styles';
+import { StyledContainer, StyledContent,StyledHeader, StyledLoadingWrapper } from './styles';
 
 const RemoveLiquidity = () => {
   const [percent, setPercent] = useState(0);

@@ -1,44 +1,102 @@
+import IconArrow from '@public/images/home/arrow-right.svg';
+import IconClickArrow from '@public/images/home/click-arrow.svg';
 import { useSize } from 'ahooks';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useRef } from 'react';
-import { Autoplay } from 'swiper/modules';
+import Skeleton from 'react-loading-skeleton';
+import { Autoplay, Pagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
+
 import CompassIcon from '@/components/Icons/Compass';
 import Loading from '@/components/Icons/Loading';
 import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+import { extractPathFromUrl } from '@/utils/formate';
 import Tag from '@/views/Odyssey/components/Tag';
-import useCompassList from './hooks/useCompassList';
+
+import useCompassCombineAd from './hooks/useCompassCombineAd';
 import {
+  StyleAdTitle,
   StyledCard,
   StyledCardBackgroundImage,
-  StyledCardButton,
   StyledCardDesc,
   StyledCardMainContent,
   StyledCardTitle,
-  StyledChainsImg,
-  StyledCominsoon,
+  StyledComingSoon,
+  StyledCompassButton,
   StyledCompassIcon,
   StyledContainer,
   StyledContent,
   StyledInner,
-  StyledLoadingWrapper,
-  StyledRadialBg,
-  StyledRadialBg2,
   StyledSwiperNextButton,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
 } from './styles';
 
-const iconRight = (
-  <svg xmlns="http://www.w3.org/2000/svg" width="13" height="38" viewBox="0 0 13 38" fill="none">
-    <path d="M1 1L11 19L1 37" stroke="#979ABE" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
-const Card = function ({ compass }: any) {
+const AdCard = function ({ ad }: any) {
+  const router = useRouter();
+  return (
+    <StyledCard>
+      <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
+        <StyledCardBackgroundImage
+          src={ad.ad_images}
+          alt={ad.title}
+          width={720}
+          height={400}
+        />
+        <StyledCardMainContent>
+          <div className="title">Featured</div>
+          <div className="card_section">
+            {ad.title.indexOf('Super') > -1 ? (
+              <StyledFlex gap={ad.title.indexOf('Bridge') ? '2px' : '10px'}>
+                {
+                  ad.title.indexOf('Bridge') > -1 ? (
+                    <StyledSvg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="52" viewBox="0 0 34 52" fill="none">
+                        <path d="M0.774696 23.7007L25.3431 0.601338C26.2923 -0.291079 27.7804 0.767292 27.2489 1.95676L19.4189 19.4798C19.0884 20.2195 19.5758 21.0664 20.3814 21.1523L32.8501 22.4806C33.8808 22.5904 34.2905 23.872 33.5146 24.5592L3.97155 50.7269C2.97277 51.6115 1.49646 50.4387 2.13232 49.2657L13.2326 28.7893C13.6344 28.0481 13.1611 27.1353 12.3238 27.0365L1.4519 25.754C0.445479 25.6353 0.0363794 24.3949 0.774696 23.7007Z" fill="#EBF479" />
+                      </svg>
+                    </StyledSvg>
+                  ) : (
+                    <StyledSvg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="36" height="31" viewBox="0 0 36 31" fill="none">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M14.0329 0C13.6829 0 13.3472 0.139032 13.0997 0.386518L0.389346 13.0944C-0.442312 13.9259 0.146589 15.3478 1.32262 15.3478L21.0889 15.3478C21.789 15.3478 22.4604 15.0697 22.9555 14.5747L35.2792 2.25341C36.1109 1.42192 35.522 0 34.3459 0H14.0329ZM0.389361 28.3892L11.7479 17.0328H21.7629C22.4629 17.0328 23.1343 16.7548 23.6294 16.2598L24.5946 15.2948H34.3459C35.522 15.2948 36.1109 16.7167 35.2792 17.5482L22.9555 29.8695C22.4604 30.3645 21.789 30.6426 21.089 30.6426L1.32263 30.6426C0.146604 30.6426 -0.442297 29.2207 0.389361 28.3892Z" fill="#EBF479" />
+                      </svg>
+                    </StyledSvg>
+                  )
+                }
+                <StyleAdTitle>{ad.title}</StyleAdTitle>
+              </StyledFlex>
+            ) : (
+              <StyleAdTitle>{ad.title}</StyleAdTitle>
+            )}
+            <div className="card-tips">{ad.description}</div>
+          </div>
+          <div className='btns'>
+            <StyledCompassButton
+              onClick={() => {
+                const route = extractPathFromUrl(ad.ad_link);
+                if (route) {
+                  router.push(route);
+                }
+              }}
+              data-bp="1001-003"
+            >
+              <div>{ad.btn}</div>
+              <IconClickArrow />
+            </StyledCompassButton>
+
+          </div>
+        </StyledCardMainContent>
+      </StyledFlex>
+    </StyledCard>
+  );
+};
+
+
+const CompassCard = function ({ compass }: any) {
   const toast = useToast();
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true });
@@ -55,117 +113,118 @@ const Card = function ({ compass }: any) {
 
   return (
     <StyledCard>
-      <StyledCardBackgroundImage
-        width={646}
-        height={323}
-        src={compass.banner}
-        alt={compass.name}
-        style={{
-          filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
-        }}
-      />
-      <StyledCardMainContent>
-        <StyledFlex alignItems="center" gap="12px">
-          {odyssey[compass.id]?.chainsImg && (
-            <StyledChainsImg
-              src={odyssey[compass.id]?.chainsImg}
-              style={{ height: odyssey[compass.id]?.chainsHeight }}
-            />
-          )}
-          <Tag status={compass.status} />
-        </StyledFlex>
-        <StyledCardTitle>{compass.name}</StyledCardTitle>
-        <StyledCardDesc>{compass.description}</StyledCardDesc>
-      </StyledCardMainContent>
-      {compass.status === 'un_start' ? (
-        <StyledCominsoon>Coming soon...</StyledCominsoon>
-      ) : (
-        <StyledCardButton
-          onClick={() => {
-            check(handleExplore);
+      <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
+        <StyledCardBackgroundImage
+          src={compass.banner || '/images/odyssey/v2/default.jpg'}
+          alt={compass.name}
+          width={720}
+          height={400}
+          style={{
+            filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
           }}
-          data-bp="1001-003"
-        >
-          <div>Explore now</div>
-          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
-            <path
-              d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
-              fill="black"
-            />
-          </svg>
-        </StyledCardButton>
-      )}
+        />
+        <StyledCardMainContent>
+          <div className="title">Odyssey</div>
+          {/* <StyledOdysseyHead>
+            <StyledOdysseyInfo>
+              <StyledOdysseyIcon />
+              <StyledOdysseyIconTitle>Vol.{renderVolNo({ name: compass.name, id: compass.id })}</StyledOdysseyIconTitle>
+              {odyssey[compass.id]?.chainsImg && (
+                <StyledChainsImg
+                  src={odyssey[compass.id]?.chainsImg}
+                  style={{ height: odyssey[compass.id]?.chainsHeight }}
+                />
+              )}
+            </StyledOdysseyInfo>
+            <Tag status={compass.status} />
+          </StyledOdysseyHead> */}
+          <StyledCardTitle>{compass.name}</StyledCardTitle>
+          <StyledCardDesc>{compass.description}</StyledCardDesc>
+          {compass.status === 'un_start' ? (
+            <StyledComingSoon className="btns">Coming soon...</StyledComingSoon>
+          ) : (
+            <div className="btns">
+              <StyledCompassButton
+                onClick={() => {
+                  check(handleExplore);
+                }}
+                data-bp="1001-003"
+              >
+                <div>Start now</div>
+                <IconClickArrow />
+              </StyledCompassButton>
+              <StyledCompassButton
+                className="plain"
+                onClick={() => {
+                  router.push('/odyssey')
+                }}
+              >
+                <div>Explore All</div>
+                <IconClickArrow />
+              </StyledCompassButton>
+            </div>
+          )}
+        </StyledCardMainContent>
+      </StyledFlex>
     </StyledCard>
   );
 };
+
 const Compass = () => {
   const router = useRouter();
   const { check } = useAuthCheck({ isNeedAk: true });
   const size: any = useSize(window.document.getElementsByTagName('body')[0]);
-  const { loading, compassList } = useCompassList();
+
+  const { loading, adList, compassList } = useCompassCombineAd();
+
   const swiperRef = useRef<any>();
 
   return loading ? (
-    <StyledLoadingWrapper>
-      <Loading size={60} />
-    </StyledLoadingWrapper>
+    <StyledContent>
+      <Skeleton height={500} borderRadius={12} />
+    </StyledContent>
   ) : (
     <StyledContainer>
       <StyledContent>
-        <StyledRadialBg />
-        <StyledRadialBg2 />
-
         <StyledInner>
-          <StyledFlex justifyContent="space-between" style={{ padding: '41px 0 30px' }}>
-            <StyledFont color="#FFF" fontSize="36px" fontWeight="700" lineHeight="165%">
-              Odyssey
-            </StyledFont>
-            <StyledFlex
-              gap="8px"
-              style={{ cursor: 'pointer' }}
-              onClick={() => {
-                router.push('/odyssey/homepage');
-              }}
-            >
-              <StyledFont color="#EBF479">Explore all</StyledFont>
-              <StyledSvg>
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
-                  <path
-                    d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
-                    fill="#EBF479"
-                  />
-                </svg>
-              </StyledSvg>
-            </StyledFlex>
-          </StyledFlex>
           <StyledSwiperWrapper>
             <Swiper
               width={1244}
-              modules={[Autoplay]}
+              modules={[Autoplay, Pagination]}
               slidesPerView={1}
-              autoplay={{ delay: 113000 }}
+              autoplay={{ delay: 3000 }}
               speed={1000}
               spaceBetween={(size?.width - 1244) / 2 + 100}
               updateOnWindowResize={true}
               onSwiper={(swiper) => {
                 swiperRef.current = swiper;
               }}
+              pagination={{
+                el: '.swiper-pagination',
+                clickable: true,
+                renderBullet: (index, className) => {
+                  return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
+                },
+              }}
               loop={true}
             >
+              {adList.map((ad: any, index: number) => (
+                <SwiperSlide key={index}>
+                  <AdCard ad={ad} />
+                </SwiperSlide>
+              ))}
+
               {compassList.map((compass: any, index: number) => (
                 <SwiperSlide key={index}>
-                  <Card compass={compass} />
+                  <CompassCard compass={compass} />
+                  <StyledCompassIcon>
+                    <CompassIcon />
+                  </StyledCompassIcon>
                   {compass.name === 'THRUSTER TURBO SPIN' ? null : (
                     <StyledCompassIcon>
                       <CompassIcon />
                     </StyledCompassIcon>
                   )}
-
-                  {/* {odyssey[compass.id]?.reward && (
-                    <StyledWinPtsIcon>
-                      <WinPtsIcon num={odyssey[compass.id].reward} />
-                    </StyledWinPtsIcon>
-                  )} */}
                   {odyssey[compass.id]?.reward && (
                     <div
                       style={
@@ -210,20 +269,28 @@ const Compass = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <StyledSwiperPrevButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slidePrev();
-              }}
-            >
-              {iconRight}
-            </StyledSwiperPrevButton>
-            <StyledSwiperNextButton
-              onClick={() => {
-                swiperRef.current && swiperRef.current.slideNext();
-              }}
-            >
-              {iconRight}
-            </StyledSwiperNextButton>
+            {
+              (adList?.length + compassList?.length) > 0 && (
+                <>
+                  <StyledSwiperPrevButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slidePrev();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperPrevButton>
+                  <StyledSwiperNextButton
+                    onClick={() => {
+                      swiperRef.current && swiperRef.current.slideNext();
+                    }}
+                  >
+                    <IconArrow />
+                  </StyledSwiperNextButton>
+                  <div className="swiper-pagination"></div>
+                </>
+              )
+            }
+
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>

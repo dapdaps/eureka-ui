@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback, useEffect, forwardRef, useMemo, memo } from "react";
+import { forwardRef, memo,useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export default function ImageCom({ src, cls }: {src: string, cls?: string}) {
     const imgRef = useRef<any>()

@@ -1,5 +1,7 @@
-import { useState, useRef, useCallback, useEffect } from "react";
+import { useCallback, useEffect,useRef, useState } from "react";
 import styled from 'styled-components';
+
+import { StyledContainer } from "@/styled/styles";
 
 import { ArrowDown } from '../Arrow'
 import Modal from "../Modal";
@@ -113,7 +115,7 @@ export default function SettingModal({ onClose, routeSortType, onSortTypeChange 
                     layerShow && <div className="layer">
                         {
                             sortList.map(item => {
-                                return <div key={item.key} onClick={() => {
+                                return <StyledContainer key={item.key} data-bp="1005-001" onClick={() => {
                                     onSortTypeChange(item.key)
                                     setLayerShow(false)
                                 }} className="layer-item">
@@ -126,7 +128,7 @@ export default function SettingModal({ onClose, routeSortType, onSortTypeChange 
 
                                         </div>
                                     }
-                                </div>
+                                </StyledContainer>
                             })
                         }
                     </div>

@@ -1,8 +1,8 @@
 import { memo, useEffect, useState } from 'react';
 
 import useCountdown from '@/hooks/useCountdown';
-
 import { getTimePeriods, toTwo } from '@/views/Quest/helpers';
+
 import { StyledContainer, StyledDesc,StyledItem, StyledValue } from './styles';
 
 const Timer = ({ endTime }: { endTime: number }) => {

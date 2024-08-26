@@ -1,23 +1,35 @@
-import { memo } from 'react';
-import Breadcrumb from '@/components/Breadcrumb';
-import DappCom from './DappCom';
-import ExtraWard from './components/ExtraReward';
-import { StyledPage, DappName, StyledPowerHints, StyledDappWrapper } from './styles';
+import { lazy,memo, Suspense } from 'react';
 
+import DappBack from '@/components/PageBack';
+import DappFallback from '@/views/Dapp/components/Fallback';
+
+import DappDetailScroll from './components/DappDetail/Scroll';
+import DappCom from './DappCom';
+import {
+  DappName,
+  StyledDAppContent,
+  StyledDappWrapper,
+  StyledPage,
+  StyledPowerHints,
+} from './styles';
 export { default as Empty } from './Empty';
+
+const DappDetail = lazy(() => import('./components/DappDetail'));
 
 const Dapp = (props: any) => {
   const { dapp } = props;
+
   return (
     <StyledPage>
-      <Breadcrumb
-        navs={[
-          { name: 'Home', path: '/' },
-          { name: 'dApps', path: '/alldapps' },
-          { name: dapp.name, path: '' },
-        ]}
+      <DappBack
+        defaultPath="/alldapps"
+        style={{
+          maxWidth: 1260,
+          minWidth: 1060,
+          margin: '0 auto',
+        }}
       />
-      <div style={{ margin: '0 auto', padding: '20px 0px' }}>
+      <StyledDAppContent>
         <div style={{ display: 'flex', alignItems: 'center', gap: '11px', justifyContent: 'center' }}>
           <img src={dapp.logo} style={{ width: '32px', height: '31px' }} />
           <DappName>{dapp.name}</DappName>
@@ -32,7 +44,11 @@ const Dapp = (props: any) => {
         <StyledDappWrapper>
           <DappCom {...props} />
         </StyledDappWrapper>
-      </div>
+      </StyledDAppContent>
+      <DappDetailScroll />
+      <Suspense fallback={<DappFallback />}>
+        <DappDetail {...dapp}/>
+      </Suspense>
     </StyledPage>
   );
 };

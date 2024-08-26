@@ -1,11 +1,11 @@
-import ChainTokenAmount from '../ChainTokenAmount';
 import type { Chain, Token } from '@/types'
 import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
 
+import ChainTokenAmount from '../ChainTokenAmount';
+import SellTokenAmount from '../SellTokenAmount';
 import {
   ArrowSwap,
 } from '../style.index';
-import SellTokenAmount from '../SellTokenAmount';
 
 interface Props {
   setFromChain: (chain: Chain) => void;

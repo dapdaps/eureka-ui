@@ -1,26 +1,28 @@
-import { memo } from 'react';
-import { COLUMNS } from './config';
-import Status from '@/views/Pool/components/Status';
-import Loading from '@/components/Icons/Loading';
-import Empty from './Empty';
 import { useRouter } from 'next/router';
-import usePoolInfo from '../hooks/usePoolInfo';
+import { memo } from 'react';
+
+import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { formateValue } from '@/utils/formate';
+import Status from '@/views/Pool/components/Status';
 import { checkIsFullRange, tickToPrice } from '@/views/Pool/utils/tickMath';
+
+import usePoolInfo from '../hooks/usePoolInfo';
+import { COLUMNS } from './config';
+import Empty from './Empty';
 import {
+  LoadingWrapper,
   StyledContainer,
-  StyledHeader,
-  StyledRow,
-  StyledPool,
-  StyledIcons,
-  StyledIcon,
-  StyledTitle,
-  StyledRange,
-  StyledPrimaryButton,
   StyledGhostButton,
   StyledHandler,
-  LoadingWrapper,
+  StyledHeader,
+  StyledIcon,
+  StyledIcons,
+  StyledPool,
+  StyledPrimaryButton,
+  StyledRange,
+  StyledRow,
+  StyledTitle,
 } from './styles';
 
 const Position = ({ token0, token1, tickLower, tickUpper, liquidity, address, onClick, onRemove, onAdd }: any) => {

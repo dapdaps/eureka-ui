@@ -1,41 +1,62 @@
-import { useState, useEffect, useCallback } from 'react';
-import { get } from '@/utils/http';
+import { useCallback,useEffect, useState } from 'react';
+
+import chainCofig from '@/config/chains';
 import { QUEST_PATH } from '@/config/quest';
+import { get } from '@/utils/http';
+import { CategoryList } from '@/views/AllDapps/config';
 
 const useDapps = () => {
   const [featuredDapps, setFeaturedDapps] = useState<any>();
-  const [upcomingDapps, setUpcomingDapps] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [category, setCategory] = useState<any>();
 
-  const queryDapps = useCallback(async (type: any) => {
-    const response = await get(`${QUEST_PATH}/api/dapp/list?tbd_token=${type}`);
-    const data = response.data?.data.slice(0, 9) || [];
-    const result = data.map((item: any) => ({
-      ...item,
-      category_ids: item.dapp_category?.map((_category: any) => _category.category_id),
-    }));
-    if (type === 'Y') {
-      setFeaturedDapps(result);
-    } else {
-      setUpcomingDapps(result);
-    }
-  }, []);
-
-  const init = useCallback(async () => {
+  const queryDapps = useCallback(async (_category?: any) => {
+    setLoading(true);
     try {
-      setLoading(true);
-      await Promise.all([queryDapps('Y'), queryDapps('')]);
-      setLoading(false);
+      setFeaturedDapps({ titleDapps: [] });
+      const params: any = {};
+      if (_category) {
+        const currCategory = CategoryList.find((it) => it.key == _category);
+        if (currCategory) {
+          params.category = currCategory.name;
+        }
+      }
+      const response = await get(`${QUEST_PATH}/api/dapp/recommend`, params);
+      const data = response?.data?.data ?? [];
+      data.forEach((dapp: any) => {
+        //#region format categories
+        dapp.categories = [];
+        dapp.dapp_category && dapp.dapp_category.forEach((it: any) => {
+          const curr = CategoryList.find((_it) => _it.key === it.category_id);
+          curr && dapp.categories.push(curr);
+        });
+        //#endregion
+        //#region format networks
+        dapp.networks = [];
+        dapp.dapp_network && dapp.dapp_network.forEach((it: any) => {
+          const curr = chainCofig[it.chain_id];
+          curr && dapp.networks.push({ ...curr });
+        });
+        //#endregion
+      });
+      const topDapps = (response?.data?.top_dapps ?? []).map((item: any) => ({ logo: item }));
+      setFeaturedDapps({ dapps: data, titleDapps: topDapps });
     } catch (err) {
-      setLoading(false);
+      console.log(err);
     }
-  }, []);
+    setLoading(false);
+  }, [category, loading]);
+
+  const onSelectCategory = (_category: any) => {
+    setCategory(_category);
+    queryDapps(_category);
+  };
 
   useEffect(() => {
-    init();
+    queryDapps();
   }, []);
 
-  return { loading, featuredDapps, upcomingDapps };
+  return { loading, featuredDapps, category, onSelectCategory };
 };
 
 export default useDapps;

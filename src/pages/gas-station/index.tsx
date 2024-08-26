@@ -6,11 +6,9 @@ import styled from 'styled-components';
 
 import chainCofig from '@/config/chains'
 import { useDefaultLayout } from '@/hooks/useLayout';
-
-import GasStation from '@/views/GasStation';
-
-import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
+import type { NextPageWithLayout } from '@/utils/types';
+import GasStation from '@/views/GasStation';
 
 const Container = styled.div`
   padding-top: 80px;

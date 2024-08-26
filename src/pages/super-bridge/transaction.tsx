@@ -1,22 +1,20 @@
 import { useSetChain } from '@web3-onboard/react';
+import { useDebounceFn } from 'ahooks';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
-
-import BridgeAction from '@/views/SuperBridge/BridgeAction';
-import Transaction from '@/views/SuperBridge/Transaction';
-import Medal from '@/views/SuperBridge/Medal';
 
 import chainCofig from '@/config/chains'
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import { useDefaultLayout } from '@/hooks/useLayout';
 import { usePriceStore } from '@/stores/price';
-import { useDebounceFn } from 'ahooks';
-
-import type { NextPageWithLayout } from '@/utils/types';
 import type { Chain } from '@/types';
+import type { NextPageWithLayout } from '@/utils/types';
+import BridgeAction from '@/views/SuperBridge/BridgeAction';
+import Medal from '@/views/SuperBridge/Medal';
+import Transaction from '@/views/SuperBridge/Transaction';
 
 const Container = styled.div`
   display: flex;

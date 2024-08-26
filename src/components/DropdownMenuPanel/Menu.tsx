@@ -1,14 +1,16 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import useAuthCheck from '@/hooks/useAuthCheck';
+
 import {
-  StyledMenu,
-  StyledMenuItem,
-  StyledMenuTitle,
-  StyledMenuIconWrapper,
-  StyledExploreTitle,
   StyledExploreDesc,
+  StyledExploreTitle,
+  StyledMenu,
+  StyledMenuIconWrapper,
+  StyledMenuItem,
   StyledMenuLock,
+  StyledMenuTitle,
 } from './styles';
 
 const MenuItem = ({ title, desc, icon, extra, disabled, onClick }: any) => {

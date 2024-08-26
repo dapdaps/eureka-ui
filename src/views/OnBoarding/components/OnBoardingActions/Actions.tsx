@@ -1,18 +1,20 @@
 import { memo, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
 import useConnectWallet from '@/hooks/useConnectWallet';
+
 import useTradeSummary from '../../hooks/useTradeSummary';
 import ActionColorBg from './ActionColorBg';
 import {
-  StyledActions,
   StyledAction,
-  StyledActionContent,
   StyledActionBg,
-  StyledActionColorBg,
-  StyledActionTitle,
-  StyledActionSubTitle,
-  StyledActionDesc,
   StyledActionButton,
+  StyledActionColorBg,
+  StyledActionContent,
+  StyledActionDesc,
+  StyledActions,
+  StyledActionSubTitle,
+  StyledActionTitle,
 } from './styles';
 
 const ACTIONS = [

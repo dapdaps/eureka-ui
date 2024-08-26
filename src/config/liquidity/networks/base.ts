@@ -1,5 +1,6 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
 import gamma from '../dapps/gamma';
 const CHAIN_ID = 8453;
 const CHAIN_NAME = 'Base';
@@ -15,9 +16,9 @@ export default {
     chainId: CHAIN_ID,
     chainName: CHAIN_NAME,
   },
-  defalutDex: 'Gamma',
+  defalutDex: 'gamma',
   dapps: {
-    Gamma: {
+    gamma: {
       ...gamma.basic,
       ...gamma.networks[CHAIN_ID],
     },

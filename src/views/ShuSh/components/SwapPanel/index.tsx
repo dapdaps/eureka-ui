@@ -1,10 +1,11 @@
 import { memo, useMemo, useState } from 'react';
-import Header from './Header';
-import Input from './Input';
-import Exchange from './Exchange';
+
 import Address from './Address';
 import Button from './Button';
-import { StyledContainer, StyledInputsWrapper, StyledTips, StyledDesc } from './styles';
+import Exchange from './Exchange';
+import Header from './Header';
+import Input from './Input';
+import { StyledContainer, StyledDesc,StyledInputsWrapper, StyledTips } from './styles';
 
 const SwapPanel = ({
   from,
