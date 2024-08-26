@@ -11,6 +11,8 @@ import type { Network } from '@/hooks/useNetworks';
 import { useChainsStore } from '@/stores/chains';
 import useDapps from '@/views/Portfolio/hooks/useDapps';
 import useTokens from '@/views/Portfolio/hooks/useTokens';
+import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
+import { useRouter } from 'next/router';
 
 // @ts-expect-error For some reason
 const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
@@ -30,6 +32,10 @@ const ChainsDock = () => {
   const chains = useChainsStore((store: any) => store.chains);
   const { loading, networks } = useTokens({ networkList: chains });
   const { loading: dappsLoading, dappsByChain } = useDapps();
+  const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl);
+  const router = useRouter();
+
+  const isHomePage = router.pathname === '/';
 
   const chainList = useMemo(() => {
     let _chainListFixed: NetworkBalance[] = [];
@@ -90,6 +96,7 @@ const ChainsDock = () => {
   return (
     <StyledContainer
       ref={containerRef}
+      $top={showConfirmOfficialUrl && isHomePage ? 54 : 0}
     >
       <StyledInner>
         <ChainsDockList list={chainList[0]} onBridgeShow={onBridgeShow} loading={loading || dappsLoading}/>

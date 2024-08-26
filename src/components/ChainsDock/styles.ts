@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from "styled-components";
 
-export const StyledContainer = styled(motion.div)`
+export const StyledContainer = styled(motion.div)<{ $top: number; }>`
   position: fixed;
   z-index: 1;
   right: 0;
@@ -9,6 +9,7 @@ export const StyledContainer = styled(motion.div)`
   width: 66px;
   height: calc(100vh);
   padding: 74px 0 0;
+  padding-top: ${({ $top }) => `${74 + ($top || 0)}px`};;
   display: flex;
   justify-content: center;
   align-items: center;
