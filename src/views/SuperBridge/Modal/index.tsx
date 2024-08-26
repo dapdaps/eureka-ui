@@ -19,6 +19,7 @@ const Container = styled.div<{ size?: number | string }>`
     border-radius: 16px;
     background-color: rgba(38, 40, 54, 1);
     padding: ${({ size = 20 }) => `${size}px`};
+    z-index: 51;
     &.mid {
         left: 50%;
         top: 30%;
