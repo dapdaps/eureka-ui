@@ -67,6 +67,7 @@ const Overview = (props: any) => {
     rpc,
     loading,
     chain_id,
+    block_explorer,
   } = props;
 
   const router = useRouter();
@@ -109,6 +110,13 @@ const Overview = (props: any) => {
     }
     return undefined;
   }, [native_currency, chain_id, prices]);
+
+  const blockExplorer = useMemo(() => {
+    if (block_explorer) return block_explorer;
+    const currChain = chainCofig[chain_id];
+    if (!currChain) return 'https://etherscan.io';
+    return currChain.blockExplorers;
+  }, [block_explorer, chain_id]);
 
   const defaultRpc = useMemo(() => {
     if (!rpc) return '';
@@ -191,7 +199,7 @@ const Overview = (props: any) => {
         params: {
           type: 'ERC20',
           options: {
-            address: NativeTokenAddressMap[nativeCurrency?.symbol?.toUpperCase()],
+            address: nativeCurrency?.address,
             symbol: nativeCurrency?.symbol,
             decimals: nativeCurrency?.decimals,
             image: nativeCurrency?.logo,
@@ -247,7 +255,7 @@ const Overview = (props: any) => {
   };
 
   const onBrowser = () => {
-    window.open(`https://etherscan.io/token/${nativeCurrency?.address}`);
+    window.open(`${blockExplorer}/token/${nativeCurrency?.address}`);
   };
 
   return (
@@ -261,7 +269,7 @@ const Overview = (props: any) => {
                 overviewShadow?.color ?
                   {
                     filter: `drop-shadow(${hexToRgba(overviewShadow?.color, 0.03)} 100vw 0)`,
-                    transform: 'translateX(-100vw)'
+                    transform: 'translateX(-100vw)',
                   } :
                   {}
               }
@@ -325,7 +333,7 @@ const Overview = (props: any) => {
                     <StyledTokenItem>
                       <StyledTokenLabel>Token Address</StyledTokenLabel>
                       <StyledTokenInfo>
-                        { nativeCurrency?.logo && (<StyledTokenLogo url={nativeCurrency?.logo} />)}
+                        {nativeCurrency?.logo && (<StyledTokenLogo url={nativeCurrency?.logo} />)}
                         <StyledTokenAddress>
                           {nativeCurrency?.address ? nativeCurrency?.address.substring(0, 5) + '...' + nativeCurrency?.address.substring(nativeCurrency?.address.length - 6) : '-'}
                         </StyledTokenAddress>

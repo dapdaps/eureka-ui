@@ -6,9 +6,12 @@ import Card from './Card';
 import { PageButton, PageButtonDirection, Pagination } from '@/views/Home/components/DAvinci/Page';
 import { AnimatePresence } from 'framer-motion';
 import { Parallax } from 'swiper/modules';
+import { useRouter } from 'next/router';
 
 const DAvinci = (props: DAvinciProps) => {
   const { onClose } = props;
+
+  const router = useRouter();
 
   const swiperRef = useRef<any>(null);
 
@@ -28,6 +31,7 @@ const DAvinci = (props: DAvinciProps) => {
   };
 
   const handleExplore = () => {
+    router.push('/profile/medals');
     onClose();
   };
 
