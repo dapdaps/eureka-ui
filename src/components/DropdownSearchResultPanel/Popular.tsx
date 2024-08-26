@@ -134,7 +134,7 @@ const Popular = ({
   const handleClick = (item: PopularItem) => {
     if (title === PopularType.dApps) {
       const dapp = item as Dapp;
-      return onDappCardClick(dapp.id);
+      return onDappCardClick(dapp);
     } else {
       const network = item as Network;
       router.push(`/networks/${IdToPath[network.id]}`);
