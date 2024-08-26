@@ -11,7 +11,7 @@ import {
   StyledTitle,
   StyledTitleSub,
 } from '@/views/Home/components/GridChains/styles';
-import popupsData from '@/config/all-in-one/chains';
+import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
 import Big from 'big.js';
 import LazyImage from '@/components/LazyImage';
 import { useChainsStore } from '@/stores/chains';
@@ -29,6 +29,15 @@ const Rows = Math.floor(GridHeight / CellSize);
 const Cols = Math.floor(GridWidth / CellSize);
 
 const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
+  {
+    chainId: popupsData['polygon-zkevm'].chainId,
+    icon: popupsData['polygon-zkevm'].icon,
+    path: popupsData['polygon-zkevm'].path,
+    bg: popupsData['polygon-zkevm'].theme.button.bg,
+    text: popupsData['polygon-zkevm'].theme.button.text,
+    position: [4, 14],
+    balance: Big(0),
+  },
   {
     chainId: popupsData.metis.chainId,
     icon: popupsData.metis.icon,
@@ -234,7 +243,7 @@ const GridChains = () => {
                       {
                         chainList.map((chain) => {
                           if (chain.position[0] - 1 === row && chain.position[1] - 1 === col) {
-                            return (
+                            return SupportedChains.some((support) => support.chainId === chain.chainId) ? (
                               <GridChainBalance balance={chain.balance}>
                                 <LazyImage
                                   containerClassName="cell-image"
@@ -246,9 +255,16 @@ const GridChains = () => {
                                   variants={{
                                     hover: {
                                       opacity: 1,
+                                      y: -10,
+                                      x: -5,
+                                      filter: 'drop-shadow(0 10px 30px rgba(4, 105, 255, 0.50))',
+                                      transition: { type: 'spring', stiffness: 200, damping: 15, duration: 1 },
                                     },
                                     default: {
                                       opacity: 0.5,
+                                      y: 0,
+                                      x: 0,
+                                      filter: 'unset',
                                     },
                                   }}
                                   whileHover="hover"
@@ -256,6 +272,26 @@ const GridChains = () => {
                                   onClick={() => handleNetwork(chain)}
                                 />
                               </GridChainBalance>
+                            ) : (
+                              <LazyImage
+                                containerClassName="cell-image"
+                                key={chain.chainId}
+                                src={chain.logo}
+                                alt=""
+                                width={CellSize}
+                                height={CellSize}
+                                variants={{
+                                  hover: {
+                                    opacity: 1,
+                                  },
+                                  default: {
+                                    opacity: 0.5,
+                                  },
+                                }}
+                                whileHover="hover"
+                                initial="default"
+                                onClick={() => handleNetwork(chain)}
+                              />
                             );
                           }
                           return null;

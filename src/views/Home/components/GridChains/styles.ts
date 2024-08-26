@@ -68,7 +68,7 @@ export const StyledGridCell = styled(motion.div)<{ $size: number; $row: number; 
   height: ${({ $size }) => `${$size}px`};
   border-left: 1px solid #202329;
   border-top: ${({ $row }) => $row === 0 ? 0 : '1px solid #202329'};
-  overflow: hidden;
+  // overflow: hidden;
 
   &:first-child {
     border-left: 0;
