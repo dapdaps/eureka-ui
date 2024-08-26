@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -201,9 +200,9 @@ const PriceBoard = () => {
     gridIndexMap[lowestIndex] = { row: 6, col: 5 };
 
     const middlePositions = [
-      ...([3, 5, 7, 9, 11].map(col => ({ row: 3, col }))),
-      ...([4, 6, 8, 10, 12].map(col => ({ row: 4, col }))),
-      ...([3, 7, 9, 11, 13].map(col => ({ row: 5, col })))
+      ...([4, 6, 8, 10, 12].map(col => ({ row: 3, col }))),
+      ...([5, 7, 9, 11, 13].map(col => ({ row: 4, col }))),
+      ...([4, 6, 8, 10, 12].map(col => ({ row: 5, col })))
     ];
   
     let middlePriceIndex = 0;

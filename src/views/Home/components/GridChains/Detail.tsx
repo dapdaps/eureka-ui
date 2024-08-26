@@ -1,16 +1,15 @@
-import type Big from 'big.js';
-import { useRouter } from 'next/router';
-import { useEffect, useMemo } from 'react';
-import Skeleton from 'react-loading-skeleton';
-import styled from 'styled-components';
-
-import LazyImage from '@/components/LazyImage';
+import useDetail from '@/views/networks/detail/hooks/useDetail';
 import Modal from '@/components/Modal';
-import { IdToPath } from '@/config/all-in-one/chains';
+import styled from 'styled-components';
+import LazyImage from '@/components/LazyImage';
+import { GridChain } from '@/views/Home/components/GridChains/index';
+import Skeleton from 'react-loading-skeleton';
 import { StyledFlex } from '@/styled/styles';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import type { GridChain } from '@/views/Home/components/GridChains/index';
-import useDetail from '@/views/networks/detail/hooks/useDetail';
+import Big from 'big.js';
+import { useRouter } from 'next/router';
+import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
+import { useEffect, useMemo } from 'react';
 
 const GridChainDetail = (props: Props) => {
   const { network, visible, onClose, loading } = props;
@@ -29,12 +28,17 @@ const GridChainDetail = (props: Props) => {
       content={(
         <Detail
           networkId={network?.id}
+          chainId={network?.chainId}
+          name={network?.name}
           icon={network?.icon}
+          logo={network?.logo}
           walletLoading={loading}
           balance={network?.balance}
           bg={network?.bg}
           text={network?.text}
           path={network?.path}
+          native_currency={network?.native_currency}
+          totalUsd={network?.totalUsd}
         />
       )}
       showHeader={false}
@@ -64,19 +68,37 @@ interface Props {
 }
 
 const Detail = (props: DetailProps) => {
-  const { networkId, icon, walletLoading, balance, bg, text, path } = props;
+  const {
+    name,
+    totalUsd,
+    networkId,
+    chainId,
+    native_currency,
+    icon,
+    logo,
+    walletLoading,
+    balance,
+    bg,
+    text,
+    path,
+  } = props;
 
   const router = useRouter();
 
-  const { loading, detail } = useDetail(networkId);
+  const isSupported = useMemo(() => {
+    return SupportedChains.some((support) => support.chainId === chainId);
+  }, [chainId]);
 
   const nativeCurrency = useMemo(() => {
     try {
-      return JSON.parse(detail.native_currency);
+      if (native_currency) {
+        return JSON.parse(native_currency);
+      }
+      return {};
     } catch (err) {
       return {};
     }
-  }, [detail]);
+  }, [native_currency]);
 
   const handleNetworkDetailPre = () => {
     if (!networkId) return;
@@ -93,10 +115,10 @@ const Detail = (props: DetailProps) => {
     router.push(`/all-in-one/${path}`);
   };
   const handleSuperBridgePre = () => {
-    router.prefetch(`/super-bridge?fromChainId=1&toChainId=${detail?.chain_id}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
+    router.prefetch(`/super-bridge?fromChainId=1&toChainId=${chainId}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
   };
   const handleSuperBridge = () => {
-    router.push(`/super-bridge?fromChainId=1&toChainId=${detail?.chain_id}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
+    router.push(`/super-bridge?fromChainId=1&toChainId=${chainId}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
   };
   const handlePortfolioPre = () => {
     router.prefetch('/portfolio');
@@ -109,69 +131,42 @@ const Detail = (props: DetailProps) => {
     handleNetworkDetailPre();
   }, []);
 
-  console.log(icon);
-
   return (
     <StyledDetail>
       <StyledDetailHead $icon={icon}>
-        {
-          loading ? (
-            <Skeleton
-              height={84}
-              width={84}
-              style={{
-                position: 'absolute',
-                zIndex: 3,
-                top: -42,
-                left: '50%',
-                transform: 'translateX(-50%)',
-              }}
-            />
-          ) : (
-            <StyledLogo $src={detail?.logo} />
-          )
-        }
+        <StyledLogo $src={logo} />
         <StyledDetailBgMask>
           <StyledTitle>
-            {
-              loading ? (
-                <Skeleton width={120} height={26} style={{ flexGrow: 0 }} />
-              ) : detail?.name
-            }
+            {name}
             <StyledTitleLink $bg="/images/home/btn-arrow-right.png" onClick={handleNetworkDetail} />
           </StyledTitle>
-          <StyledFlex justifyContent="space-between" alignItems="end" gap="20px" style={{ marginTop: 40 }}>
+          <StyledFlex justifyContent="space-between" alignItems="end" gap="20px" style={{ marginTop: 40, position: 'relative' }}>
             <StyledFlex flexDirection="column" alignItems="center" gap="10px">
               <StyledSummaryTitle>
                 In Wallet
               </StyledSummaryTitle>
-              {
-                walletLoading || loading ? (
-                  <Skeleton height={37} width={130} />
-                ) : (
-                  <StyledSummaryValue>
-                    {formateValueWithThousandSeparatorAndFont(balance, 2, true, { prefix: '$', isZeroPrecision: true })}
-                  </StyledSummaryValue>
-                )
-              }
+              <StyledSummaryValue $blur={!isSupported}>
+                {formateValueWithThousandSeparatorAndFont(balance, 2, true, { prefix: '$', isZeroPrecision: true })}
+              </StyledSummaryValue>
             </StyledFlex>
             <StyledFlex flexDirection="column" alignItems="center" gap="10px">
               <StyledSummaryTitle>
                 DeFi
               </StyledSummaryTitle>
-              {
-                loading ? (
-                  <Skeleton height={37} width={130} />
-                ) : (
-                  <StyledSummaryValue>
-                    {formateValueWithThousandSeparatorAndFont(detail?.trading_volume, 2, true, {
-                      prefix: '$',
-                      isZeroPrecision: true,
-                    })}
-                  </StyledSummaryValue>
-                )
-              }
+              <StyledSummaryValue $blur={!isSupported}>
+                {formateValueWithThousandSeparatorAndFont(totalUsd, 2, true, {
+                  prefix: '$',
+                  isZeroPrecision: true,
+                })}
+              </StyledSummaryValue>
             </StyledFlex>
+            {
+              !isSupported && (
+                <StyledComingSoon>
+                  Coming soon...
+                </StyledComingSoon>
+              )
+            }
           </StyledFlex>
         </StyledDetailBgMask>
       </StyledDetailHead>
@@ -189,15 +184,19 @@ const Detail = (props: DetailProps) => {
           <StyledButton onMouseEnter={handleSuperBridgePre} onClick={handleSuperBridge}>
             Bridge Now
           </StyledButton>
-          <StyledButton onMouseEnter={handlePortfolioPre} onClick={handlePortfolio}>
-            Manage Assets
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
-              <path
-                d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
-                fill="white"
-              />
-            </svg>
-          </StyledButton>
+          {
+            isSupported && (
+              <StyledButton onMouseEnter={handlePortfolioPre} onClick={handlePortfolio}>
+                Manage Assets
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
+                  <path
+                    d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
+                    fill="white"
+                  />
+                </svg>
+              </StyledButton>
+            )
+          }
         </StyledFlex>
       </StyledBody>
     </StyledDetail>
@@ -206,12 +205,17 @@ const Detail = (props: DetailProps) => {
 
 interface DetailProps {
   networkId?: number;
+  chainId?: number;
+  name?: string;
   icon?: string;
+  logo?: string;
   walletLoading?: boolean;
   balance?: Big.Big;
   bg?: string;
   text?: string;
   path?: string;
+  native_currency?: string;
+  totalUsd?: Big.Big;
 }
 
 const StyledDetail = styled.div`
@@ -224,7 +228,7 @@ const StyledDetailHead = styled.div<{ $icon?: string; }>`
   background: ${({ $icon }) => `#000 url("${$icon}") no-repeat center 50px / 350px auto`};
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  
+
   &::before {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -235,9 +239,9 @@ const StyledDetailHead = styled.div<{ $icon?: string; }>`
     left: 0;
     position: absolute;
     z-index: 1;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
   }
-  
+
 `;
 const StyledDetailBgMask = styled.div`
   width: 100%;
@@ -297,13 +301,16 @@ const StyledSummaryTitle = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
-const StyledSummaryValue = styled.div`
+const StyledSummaryValue = styled.div<{ $blur?: boolean; }>`
   color: #FFF;
   text-align: center;
   font-size: 30px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+
+  filter: ${({ $blur }) => $blur ? 'blur(5px)' : 'unset'};
+  opacity: ${({ $blur }) => $blur ? 0.5 : 1};
 `;
 const StyledBody = styled.div`
   padding: 40px 30px 30px;
@@ -339,4 +346,17 @@ const StyledButton = styled.button<{ $bg?: string; $text?: string; $primary?: bo
   &:hover {
     opacity: 1;
   }
+`;
+const StyledComingSoon = styled.div`
+  color: #979ABE;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 `;

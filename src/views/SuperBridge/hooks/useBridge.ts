@@ -65,12 +65,12 @@ export default function useBridge({
   })
 
   useEffect(() => {
-    const [_fromChain, _toChain] = [toChain, fromChain]
-    const [_fromToken, _toToken] = [toToken, fromToken]
-    setFromChain(_fromChain)
-    setToChain(_toChain)
-    setFromToken(_fromToken)
-    setToToken(_toToken)
+    // const [_fromChain, _toChain] = [toChain, fromChain]
+    // const [_fromToken, _toToken] = [toToken, fromToken]
+    // setFromChain(_fromChain)
+    // setToChain(_toChain)
+    // setFromToken(_fromToken)
+    // setToToken(_toToken)
   }, [derection])
 
   useEffect(() => {
@@ -210,6 +210,8 @@ export default function useBridge({
 
         //   setUpdateBanlance(updateBanlance + 1);
         //   onTransactionUpdate && onTransactionUpdate();
+        setIsSending(false);
+        return true
       } catch (err: any) {
         console.log(err.title, err.message, err);
         fail({
@@ -218,6 +220,7 @@ export default function useBridge({
         });
       }
       setIsSending(false);
+      return false
     }
   }
 

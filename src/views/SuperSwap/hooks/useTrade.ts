@@ -110,7 +110,7 @@ export default function useTrade({ chainId }: any) {
           setLoading(false);
           return { noPair: true, txn: null, outputCurrencyAmount: '', routerAddress: '' };
         }
-        const response = await fetch('https://api.dapdap.net/quoter', {
+        const response = await fetch(process.env.NEXT_PUBLIC_API + '/quoter', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

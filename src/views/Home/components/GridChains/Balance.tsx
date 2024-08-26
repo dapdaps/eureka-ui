@@ -123,7 +123,7 @@ const Balance = (props: BalanceProps) => {
               x1="0"
               y1="0"
               x2="0"
-              y2={OffsetTop}
+              y2={OffsetTop - 5}
               stroke="white"
               strokeWidth="1"
               animate={{
