@@ -1,6 +1,7 @@
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { useMemo } from 'react';
 import styled from 'styled-components';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 import LazyImage from '@/components/LazyImage';
 
 const StyledNativeCurrency = styled.div`

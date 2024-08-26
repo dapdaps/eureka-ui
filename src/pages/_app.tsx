@@ -22,9 +22,9 @@ import { useBosLoaderInitializer } from '@/hooks/useBosLoaderInitializer';
 import useClickTracking from '@/hooks/useClickTracking';
 import useInitialDataWithoutAuth from '@/hooks/useInitialDataWithoutAuth';
 import useTokenPrice from '@/hooks/useTokenPrice';
+import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 import { report } from '@/utils/burying-point';
 import type { NextPageWithLayout } from '@/utils/types';
-import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
 
 const VmInitializer = dynamic(() => import('../components/vm/VmInitializer'), {
   ssr: false,

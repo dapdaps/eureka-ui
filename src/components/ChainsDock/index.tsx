@@ -8,9 +8,9 @@ import ChainsDockList from '@/components/ChainsDock/List';
 import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
 import { SupportedChains } from '@/config/all-in-one/chains';
 import type { Network } from '@/hooks/useNetworks';
-import useTokens from '@/views/Portfolio/hooks/useTokens';
-import useDapps from '@/views/Portfolio/hooks/useDapps';
 import { useChainsStore } from '@/stores/chains';
+import useDapps from '@/views/Portfolio/hooks/useDapps';
+import useTokens from '@/views/Portfolio/hooks/useTokens';
 
 // @ts-expect-error For some reason
 const QuickBridge = dynamic(() => import('@/views/SuperBridge/QuickBridge/index'), {
