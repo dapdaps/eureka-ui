@@ -8,11 +8,12 @@ import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
-import { addressFormated,balanceFormated, balanceFormatedFloor,percentFormated } from '@/utils/balance';
+import { addressFormated, balanceFormated, balanceFormatedFloor,percentFormated } from '@/utils/balance';
 
 import { useGasAmount } from '../hooks/useGasTokenHooks';
 import Modal from "../Modal";
 import SubmitBtn from '../SubmitBtn';
+
 
 const Tip = styled.div`
     font-size: 16px;
@@ -90,7 +91,7 @@ interface Props {
     toChain: Chain | undefined;
     toAddress: string;
     maxBalance: string | undefined;
-    price: string;
+    price?: string;
     theme?: any;
     onClick: () => void;
     onClose: () => void;
@@ -154,7 +155,7 @@ export default function GasModal({
     }, [receive, maxBalance, inputValue])
 
     useEffect(() => {
-
+        
         getGas()
 
         async function getGas() {
@@ -168,7 +169,7 @@ export default function GasModal({
                 }
             }
         }
-
+        
     }, [inputValue, fromToken, account])
 
     return <Modal title="Refuel Gas Token" onClose={() => {
@@ -200,7 +201,7 @@ export default function GasModal({
                                 setRangeVal(value)
                             }
                         }
-                    }
+                    } 
                 }} />{fromToken?.symbol}
                 {/* <div>{balanceFormated(rangeVal)} {fromToken?.symbol}</div> */}
                     <svg width="8" height="10" viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
