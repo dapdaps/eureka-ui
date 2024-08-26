@@ -93,7 +93,7 @@ const List = () => {
   const [pageNum, setPageNum] = useState(1);
   const [page_size, _] = useState(10);
   const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { account } = useAccount();
   const setRefresh = useNeedRefreshStore((state) => state.setRefresh);
@@ -103,11 +103,14 @@ const List = () => {
     try {
       setLoading(true);
       const result = await get(`/api/notification/list`, {
-        page: pageNum,
+        page: page,
         page_size,
       });
       setData(result?.data?.data || []);
-      setTotal(result?.data?.total || 0);
+      // FIXME Issue with the API: When the request is not for the first page, it returns total_page as 0
+      if (page === 1) {
+        setTotal(result?.data?.total || 0);
+      }
       setRefresh(new Date().getTime());
     } catch (err) {
       console.log(err, 'err');
@@ -135,21 +138,23 @@ const List = () => {
           <div className={styles.headerAmount}>{total}</div>
         </div>
         <WrapperList>
-          {loading && !data ? (
-            <LoadingList />
-          ) : data?.length === 0 ? (
-            <Empty size={64} tips="No Data" />
-          ) : (
-            data?.map((item) => (
-              <StyleNotification key={item.id}>
-                <Notification variant="list" className="list-notice" data={item} />
-              </StyleNotification>
-            ))
-          )}
+          {
+            loading ? (
+              <LoadingList />
+            ) : (
+              !data || data?.length === 0 ? (
+                <Empty size={64} tips="No Data" />
+              ) : data?.map((item) => (
+                <StyleNotification key={item.id}>
+                  <Notification variant="list" className="list-notice" data={item} />
+                </StyleNotification>
+              ))
+            )
+          }
         </WrapperList>
         <div className={styles.page}>
           <Pagination
-            pageTotal={total}
+            pageTotal={Math.ceil(total / page_size)}
             pageIndex={pageNum}
             onPage={(page) => {
               fetchNotification(page);
