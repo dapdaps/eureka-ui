@@ -42,6 +42,4 @@ export default tokens;
 
 export const NativeTokenAddressMap: Record<string, string> = {
   ETH: '0x0000000000000000000000000000000000000000',
-  MATIC: '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
-  BNB: '0xB8c77482e45F1F44dE1745F52C74426C631bDD52',
 };

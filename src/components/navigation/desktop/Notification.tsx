@@ -31,6 +31,16 @@ const Wrapper = styled.div`
     top: 10%;
     left: 50%;
   }
+  .noti-content {
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .main-nav-bar-notification-item {
+    .main-nav-bar-notification-item-sub-title {
+      height: unset;
+    }
+  }
 `;
 
 const Trigger = styled.div`
@@ -117,7 +127,7 @@ export default function Notification() {
   const [data, setData] = useState<INotificationsResponse>();
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter()
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { account } = useAccount();
   const refresh = useNeedRefreshStore((state) => state.refresh);
@@ -202,10 +212,17 @@ export default function Notification() {
               loading ? <LoadingList /> : data?.data.length === 0 ? 
               <Empty size={48} tips="Waiting New Notifications" />:
               data?.data.map((item) => {
-                return <NotificationItem key={item.id} data={item} onClick={() => {
-                  router.push('/notification')
-                  setIsHovered(false)
-                }}/>;
+                return (
+                  <NotificationItem
+                    className="main-nav-bar-notification-item"
+                    key={item.id}
+                    data={item}
+                    onClick={() => {
+                      router.push('/notification')
+                      setIsHovered(false)
+                    }}
+                  />
+                );
               })
             }
           </div>
