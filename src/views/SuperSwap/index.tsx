@@ -5,7 +5,15 @@ import Result from './components/Result';
 import Button from './components/Button';
 import SelectTokensModal from './components/SelectTokensModal';
 import MarketsModal from './components/MarketsModal';
-import { StyledContainer, StyledContent, StyledTradeIcon, StyledInputs, StyledTradeFooter, StyledAmount, StyleProviderHeader } from './styles';
+import {
+  StyledContainer,
+  StyledContent,
+  StyledTradeIcon,
+  StyledInputs,
+  StyledTradeFooter,
+  StyledAmount,
+  StyleProviderHeader,
+} from './styles';
 
 import Big from 'big.js';
 
@@ -40,7 +48,6 @@ export default function SuperSwap() {
 
   const { run: runQuoter } = useDebounceFn(
     () => {
-      if (loading) return;
       onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
     },
     {
@@ -88,23 +95,22 @@ export default function SuperSwap() {
     runQuoter();
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
-
   useEffect(() => {
-    setInputCurrencyAmount('')
-    setTrade(null as any)
-    setInputCurrency(null as any)
-    setOutputCurrency(null as any)
+    setInputCurrencyAmount('');
+    setTrade(null as any);
+    setInputCurrency(null as any);
+    setOutputCurrency(null as any);
   }, [chainId]);
 
   const changeTokenType = useCallback(() => {
-    if (!trade || !outputCurrency) return
+    if (!trade || !outputCurrency) return;
     setInputCurrency(outputCurrency);
     setOutputCurrency(inputCurrency);
-    setSelectType('in')
+    setSelectType('in');
     setInputCurrencyAmount(trade?.outputCurrencyAmount);
     runQuoter();
   }, [outputCurrency, outputCurrency, trade]);
-  
+
   return (
     <StyledContainer>
       <StyledContent>
@@ -153,32 +159,30 @@ export default function SuperSwap() {
           {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}></Result>}
         </StyledTradeFooter>
 
-        <Button 
+        <Button
           amount={inputCurrencyAmount}
-          errorTips={errorTips} 
-          trade={trade} 
-          token={inputCurrency} 
-          loading={loading} 
-          onClick={onSwap} 
-          disabled={!trade?.txn} />
+          errorTips={errorTips}
+          trade={trade}
+          token={inputCurrency}
+          loading={loading}
+          onClick={onSwap}
+          disabled={!trade?.txn}
+        />
 
-        {
-          trade && (
-            <StyleProviderHeader>
-              <StyledAmount
-                onClick={() => {
-                  if (!markets?.length) return;
-                  setShowMarkets(true);
-                }}
-              >
-                {markets?.length || 0} Providers
-              </StyledAmount>
-            </StyleProviderHeader>
-          )
-        }
+        {trade && (
+          <StyleProviderHeader>
+            <StyledAmount
+              onClick={() => {
+                if (!markets?.length) return;
+                setShowMarkets(true);
+              }}
+            >
+              {markets?.length || 0} Providers
+            </StyledAmount>
+          </StyleProviderHeader>
+        )}
 
-      {/* { trade && showChart && <KLineChart trade={trade} /> } */}
-
+        {/* { trade && showChart && <KLineChart trade={trade} /> } */}
       </StyledContent>
       <PriceBoard />
       <SelectTokensModal
@@ -188,21 +192,19 @@ export default function SuperSwap() {
         currency={selectType === 'in' ? inputCurrency : outputCurrency}
         onSelect={onSelectToken}
       />
-      {
-        showMarkets && outputCurrency && (
-          <MarketsModal
-            display={showMarkets}
-            onClose={() => {
-              setShowMarkets(false);
-            }}
-            markets={markets}
-            trade={trade} 
-            bestTrade={bestTrade}
-            outputCurrency={outputCurrency}
-            onSelectMarket={onSelectMarket}
-          />
-        )
-      }
+      {showMarkets && outputCurrency && (
+        <MarketsModal
+          display={showMarkets}
+          onClose={() => {
+            setShowMarkets(false);
+          }}
+          markets={markets}
+          trade={trade}
+          bestTrade={bestTrade}
+          outputCurrency={outputCurrency}
+          onSelectMarket={onSelectMarket}
+        />
+      )}
     </StyledContainer>
   );
 }
