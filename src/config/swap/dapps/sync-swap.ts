@@ -1,6 +1,6 @@
 import { linea } from '@/config/tokens/linea';
-import { zkSync } from '@/config/tokens/zkSync';
 import { scroll } from '@/config/tokens/scroll';
+import { zkSync } from '@/config/tokens/zkSync';
 
 const basic = {
   name: 'SyncSwap',
@@ -19,7 +19,7 @@ const networks = {
       linea['usdt'],
       linea['wbtc'],
       linea['busd'],
-      linea['ceMATIC'],
+      linea['matic'],
       linea['dai'],
       linea['bnb'],
       linea['ezeth'],

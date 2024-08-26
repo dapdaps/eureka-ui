@@ -1,11 +1,11 @@
 import { arbitrum } from '@/config/tokens/arbitrum';
+import { base } from '@/config/tokens/base';
 import { gnosis } from '@/config/tokens/gnosis';
+import { linea } from '@/config/tokens/linea';
 import { optimism } from '@/config/tokens/optimism';
 import { polygon } from '@/config/tokens/polygon';
 import { polygonZkevm } from '@/config/tokens/polygonZkevm';
-import { linea } from '@/config/tokens/linea';
 import { scroll } from '@/config/tokens/scroll';
-import { base } from '@/config/tokens/base';
 
 const basic = {
   name: 'SushiSwap',
@@ -50,6 +50,7 @@ const networks = {
       gnosis['wbtc'],
       gnosis['usdt'],
       gnosis['sushi'],
+      gnosis['xdai'],
     ],
   },
   10: {

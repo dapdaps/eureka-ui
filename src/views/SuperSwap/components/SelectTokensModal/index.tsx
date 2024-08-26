@@ -1,9 +1,12 @@
-import { useMemo, useState } from 'react';
-import Modal from '@/components/Modal';
+import { useEffect, useMemo, useState } from 'react';
+
 import Loading from '@/components/Icons/Loading';
+import Modal from '@/components/Modal';
 import useTokensBalance from '@/hooks/useTokensBalance';
 import { usePriceStore } from '@/stores/price';
+import type { Token } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';
+
 import {
   Content,
   CurrencyAmount,
@@ -20,7 +23,6 @@ import {
   StyledRowR,
   StyledTokenNameWrapper,
 } from './styles';
-import type { Token } from '@/types';
 
 type Props = {
   tokens: Token[];
@@ -45,6 +47,13 @@ const SelectTokensModal = ({ tokens, display, currency, onClose, onSelect }: Pro
       );
     });
   }, [tokens, searchVal]);
+
+  useEffect(() => {
+    if (display) {
+      setSearchVal('');
+    }
+  }, [display]);
+
 
   return (
     <Modal

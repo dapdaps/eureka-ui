@@ -1,11 +1,13 @@
 import { memo } from 'react';
 import styled from 'styled-components';
+
+import Loading from '@/components/Icons/Loading';
+import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
 import useApprove from '@/hooks/useApprove';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import useSwitchChain from '@/hooks/useSwitchChain';
-import networks from '@/config/swap/networks';
-import Loading from '@/components/Icons/Loading';
+
 import { PriceImpactTypeColorMap } from './Result';
 
 const StyledButton = styled.button<{ color?: string }>`
@@ -92,10 +94,6 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     );
   }
 
-  if (errorTips) {
-    return <BaseButton disabled>{errorTips}</BaseButton>;
-  }
-
   if (checking || approving || loading) {
     return (
       <BaseButton color={color} disabled>
@@ -103,6 +101,11 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
       </BaseButton>
     );
   }
+
+  if (errorTips) {
+    return <BaseButton disabled>{errorTips}</BaseButton>;
+  }
+
   if (!approved) {
     return <BaseButton onClick={approve}>Approve {token?.symbol}</BaseButton>;
   }
