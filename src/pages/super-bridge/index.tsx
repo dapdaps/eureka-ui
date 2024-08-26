@@ -60,6 +60,7 @@ chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexO
 // chainList.unshift(TestChains[1])
 // chainList.unshift(TestChains[0])
 
+// @ts-ignore
 const BridgeAction = dynamic(() => import('@/views/SuperBridge/BridgeAction'), {
   ssr: false,
   loading: () => <div style={{ width: 800 }}>
