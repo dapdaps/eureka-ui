@@ -29,12 +29,16 @@ const GridChainDetail = (props: Props) => {
         <Detail
           networkId={network?.id}
           chainId={network?.chainId}
+          name={network?.name}
           icon={network?.icon}
+          logo={network?.logo}
           walletLoading={loading}
           balance={network?.balance}
           bg={network?.bg}
           text={network?.text}
           path={network?.path}
+          native_currency={network?.native_currency}
+          totalUsd={network?.totalUsd}
         />
       )}
       showHeader={false}
@@ -64,11 +68,22 @@ interface Props {
 }
 
 const Detail = (props: DetailProps) => {
-  const { networkId, chainId, icon, walletLoading, balance, bg, text, path } = props;
+  const {
+    name,
+    totalUsd,
+    networkId,
+    chainId,
+    native_currency,
+    icon,
+    logo,
+    walletLoading,
+    balance,
+    bg,
+    text,
+    path,
+  } = props;
 
   const router = useRouter();
-
-  const { loading, detail } = useDetail(networkId);
 
   const isSupported = useMemo(() => {
     return SupportedChains.some((support) => support.chainId === chainId);
@@ -76,11 +91,14 @@ const Detail = (props: DetailProps) => {
 
   const nativeCurrency = useMemo(() => {
     try {
-      return JSON.parse(detail.native_currency);
+      if (native_currency) {
+        return JSON.parse(native_currency);
+      }
+      return {};
     } catch (err) {
       return {};
     }
-  }, [detail]);
+  }, [native_currency]);
 
   const handleNetworkDetailPre = () => {
     if (!networkId) return;
@@ -97,10 +115,10 @@ const Detail = (props: DetailProps) => {
     router.push(`/all-in-one/${path}`);
   };
   const handleSuperBridgePre = () => {
-    router.prefetch(`/super-bridge?fromChainId=1&toChainId=${detail?.chain_id}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
+    router.prefetch(`/super-bridge?fromChainId=1&toChainId=${chainId}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
   };
   const handleSuperBridge = () => {
-    router.push(`/super-bridge?fromChainId=1&toChainId=${detail?.chain_id}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
+    router.push(`/super-bridge?fromChainId=1&toChainId=${chainId}&fromToken=ETH&toToken=${nativeCurrency.symbol}`);
   };
   const handlePortfolioPre = () => {
     router.prefetch('/portfolio');
@@ -116,64 +134,39 @@ const Detail = (props: DetailProps) => {
   return (
     <StyledDetail>
       <StyledDetailHead $icon={icon}>
-        {
-          loading ? (
-            <Skeleton
-              height={84}
-              width={84}
-              style={{
-                position: 'absolute',
-                zIndex: 3,
-                top: -42,
-                left: '50%',
-                transform: 'translateX(-50%)',
-              }}
-            />
-          ) : (
-            <StyledLogo $src={detail?.logo} />
-          )
-        }
+        <StyledLogo $src={logo} />
         <StyledDetailBgMask>
           <StyledTitle>
-            {
-              loading ? (
-                <Skeleton width={120} height={26} style={{ flexGrow: 0 }} />
-              ) : detail?.name
-            }
+            {name}
             <StyledTitleLink $bg="/images/home/btn-arrow-right.png" onClick={handleNetworkDetail} />
           </StyledTitle>
-          <StyledFlex justifyContent="space-between" alignItems="end" gap="20px" style={{ marginTop: 40 }}>
+          <StyledFlex justifyContent="space-between" alignItems="end" gap="20px" style={{ marginTop: 40, position: 'relative' }}>
             <StyledFlex flexDirection="column" alignItems="center" gap="10px">
               <StyledSummaryTitle>
                 In Wallet
               </StyledSummaryTitle>
-              {
-                walletLoading || loading ? (
-                  <Skeleton height={37} width={130} />
-                ) : (
-                  <StyledSummaryValue>
-                    {formateValueWithThousandSeparatorAndFont(balance, 2, true, { prefix: '$', isZeroPrecision: true })}
-                  </StyledSummaryValue>
-                )
-              }
+              <StyledSummaryValue $blur={!isSupported}>
+                {formateValueWithThousandSeparatorAndFont(balance, 2, true, { prefix: '$', isZeroPrecision: true })}
+              </StyledSummaryValue>
             </StyledFlex>
             <StyledFlex flexDirection="column" alignItems="center" gap="10px">
               <StyledSummaryTitle>
                 DeFi
               </StyledSummaryTitle>
-              {
-                loading ? (
-                  <Skeleton height={37} width={130} />
-                ) : (
-                  <StyledSummaryValue>
-                    {formateValueWithThousandSeparatorAndFont(detail?.trading_volume, 2, true, {
-                      prefix: '$',
-                      isZeroPrecision: true,
-                    })}
-                  </StyledSummaryValue>
-                )
-              }
+              <StyledSummaryValue $blur={!isSupported}>
+                {formateValueWithThousandSeparatorAndFont(totalUsd, 2, true, {
+                  prefix: '$',
+                  isZeroPrecision: true,
+                })}
+              </StyledSummaryValue>
             </StyledFlex>
+            {
+              !isSupported && (
+                <StyledComingSoon>
+                  Coming soon...
+                </StyledComingSoon>
+              )
+            }
           </StyledFlex>
         </StyledDetailBgMask>
       </StyledDetailHead>
@@ -213,12 +206,16 @@ const Detail = (props: DetailProps) => {
 interface DetailProps {
   networkId?: number;
   chainId?: number;
+  name?: string;
   icon?: string;
+  logo?: string;
   walletLoading?: boolean;
   balance?: Big.Big;
   bg?: string;
   text?: string;
   path?: string;
+  native_currency?: string;
+  totalUsd?: Big.Big;
 }
 
 const StyledDetail = styled.div`
@@ -304,13 +301,16 @@ const StyledSummaryTitle = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
-const StyledSummaryValue = styled.div`
+const StyledSummaryValue = styled.div<{ $blur?: boolean; }>`
   color: #FFF;
   text-align: center;
   font-size: 30px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+
+  filter: ${({ $blur }) => $blur ? 'blur(5px)' : 'unset'};
+  opacity: ${({ $blur }) => $blur ? 0.5 : 1};
 `;
 const StyledBody = styled.div`
   padding: 40px 30px 30px;
@@ -346,4 +346,17 @@ const StyledButton = styled.button<{ $bg?: string; $text?: string; $primary?: bo
   &:hover {
     opacity: 1;
   }
+`;
+const StyledComingSoon = styled.div`
+  color: #979ABE;
+  text-align: center;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 `;

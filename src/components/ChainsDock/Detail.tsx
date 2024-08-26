@@ -65,8 +65,8 @@ const ChainsDockDetail = (props: Props) => {
               if (targetY < 0) {
                 targetY = 10;
               }
-              if (targetY + h > window.innerHeight - 90) {
-                targetY = window.innerHeight - h - 90;
+              if (targetY + h > window.innerHeight - 70) {
+                targetY = window.innerHeight - h - 70;
               }
               setY(targetY);
               setX(triggerX - w - OffsetLeft);
@@ -147,17 +147,17 @@ const Detail = (props: DetailProps) => {
           closeDetail();
         }}
       >
-        <StyledHead>
+        <StyledHead onClick={handleNetworkDetail}>
           <LazyImage src={logo} containerClassName="chain-logo" width={50} height={50} />
           <StyledChainInfo>
             <StyledSub>Assets on</StyledSub>
             <StyledChainName title={name}>{name}</StyledChainName>
           </StyledChainInfo>
-          <StyledArrow onClick={handleNetworkDetail}>
+          <StyledArrow>
             <ArrowLineIcon classname="arrow-icon" />
           </StyledArrow>
         </StyledHead>
-        <StyledFlex justifyContent="space-between" gap="10px" style={{ marginBottom: '20px', position: 'relative' }}>
+        <StyledFlex justifyContent="space-between" gap="10px" style={{ marginBottom: '20px', position: 'relative', padding: '0 20px' }}>
           <StyledFlex flexDirection="column" alignItems="center">
             <StyledSummaryTitle>
               In Wallet
@@ -184,7 +184,7 @@ const Detail = (props: DetailProps) => {
                 <Skeleton height={30} width={100} />
               ) : (
                 <StyledSummaryValue $blur={!isSupported}>
-                  {formateValueWithThousandSeparatorAndFont(isSupported ? network?.trading_volume : 0, 2, true, {
+                  {formateValueWithThousandSeparatorAndFont(isSupported ? network?.totalUsd : 0, 2, true, {
                     prefix: '$',
                     isZeroPrecision: true,
                   })}
@@ -200,13 +200,15 @@ const Detail = (props: DetailProps) => {
             )
           }
         </StyledFlex>
-        <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
-        <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>
-        {
-          isSupported && (
-            <StyledLink href="/portfolio">Manage Assets</StyledLink>
-          )
-        }
+        <StyledFoot>
+          <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
+          <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>
+          {
+            isSupported && (
+              <StyledLink href="/portfolio">Manage Assets</StyledLink>
+            )
+          }
+        </StyledFoot>
       </StyledDetail>
     </AnimatePresence>
   );
@@ -243,11 +245,11 @@ const StyledDetail = styled(motion.div)`
   width: 282px;
   //height: 305px;
   flex-shrink: 0;
-  border-radius: 8px;
-  border: 1px solid #333648;
+  border-radius: 12px;
+  border: 1px #333648;
   background: #1F2229;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  padding: 20px 14px 20px;
+  padding: 3px 3px 20px 3px;
   color: #FFF;
 `;
 const StyledTrigger = styled(motion.div)`
@@ -256,15 +258,29 @@ const StyledTrigger = styled(motion.div)`
 
 const StyledHead = styled.div`
   display: flex;
+  align-items: center;
   column-gap: 12px;
-  margin-bottom: 21px;
+  margin-bottom: 14px;
   overflow: hidden;
+  border-radius: 10px;
+  padding: 12px 13px 12px 18px;
+  transition: all 0.2s ease-in-out;
+  border: 1px solid #1F2229;
+  cursor: pointer;
+  
+  &:hover {
+    border-color: #333648;
+    background: #18191E;
+  }
 
   .chain-logo {
     object-fit: contain;
     border-radius: 8px;
     flex-shrink: 0;
   }
+`;
+const StyledFoot = styled.div`
+  padding: 0 17px 0 17px;
 `;
 const StyledChainInfo = styled.div`
   flex-grow: 1;
@@ -294,10 +310,11 @@ const StyledButton = styled.button`
   display: block;
   color: #fff;
   width: 100%;
-  transition: opacity 0.2s ease;
+  transition: all 0.2s ease-in-out;
 
   &:hover {
-    opacity: 0.8;
+    border-color: #333648;
+    background: #18191E;
   }
 
 `;
@@ -318,9 +335,6 @@ const StyledLink = styled(Link)`
   }
 `;
 const StyledArrow = styled.div`
-  border-radius: 6px;
-  border: 1px solid #333648;
-  background: #2B2F38;
   width: 26px;
   height: 26px;
   flex-shrink: 0;
@@ -332,10 +346,6 @@ const StyledArrow = styled.div`
 
   &:hover {
     opacity: 0.8;
-  }
-
-  .arrow-icon {
-    transform: scale(0.6);
   }
 `;
 const StyledSummaryTitle = styled.div`
