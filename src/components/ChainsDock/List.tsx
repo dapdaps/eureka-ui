@@ -4,13 +4,13 @@ import LazyImage from '@/components/LazyImage';
 import { StyledFlex } from '@/styled/styles';
 
 const ChainsDockList = (props: Props) => {
-  const { list, onBridgeShow } = props;
+  const { list, onBridgeShow, loading } = props;
 
   return (
     <StyledFlex flexDirection="column" alignItems="end" gap="10px" style={{ flexShrink: 0 }}>
       {
         list.map((chain, index) => (
-          <ChainsDockDetail key={chain.chain_id} network={chain} onBridgeShow={onBridgeShow}>
+          <ChainsDockDetail key={chain.chain_id} network={chain} onBridgeShow={onBridgeShow} loading={loading}>
             <LazyImage
               key={chain.chain_id}
               containerClassName="chain-dock-img"
@@ -47,4 +47,5 @@ export default ChainsDockList;
 interface Props {
   list: NetworkBalance[];
   onBridgeShow?(fromChainId: number, toChainId: number, direction: string): void;
+  loading: boolean;
 }

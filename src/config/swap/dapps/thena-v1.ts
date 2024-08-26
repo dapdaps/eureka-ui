@@ -7,20 +7,26 @@ const basic = {
 const networks = {
   56: {
     defaultCurrencies: {
-      input: bsc['eth'],
-      output: bsc['usdc'],
+      input: bsc['bnb'],
+      output: bsc['the'],
     },
     tokens: [
       bsc['bnb'],
       bsc['the'],
+      bsc['eth'],
+      bsc['wsteth'],
+      bsc['btcb'],
+      bsc['bnbx'],
+      bsc['ankrbnb'],
+      bsc['usdt'],
+      bsc['ftm'],
+      bsc['usdc'],
+      bsc['weeth'],
+      bsc['ankr-eth'],
+
       bsc['bscusd'],
       bsc['livethe'],
-      bsc['ankrbnb'],
-      bsc['eth'],
-      bsc['usdc'],
       bsc['frxeth'],
-      bsc['bnbx'],
-      bsc['btcb'],
       bsc['stkbnb'],
     ],
   },

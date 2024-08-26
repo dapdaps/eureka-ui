@@ -1,3 +1,5 @@
+import { useRouter } from "next/router";
+
 import { StyledContainer } from "@/styled/styles";
 
 import type { FavoriteType } from "../../types";
@@ -13,9 +15,10 @@ export default function FavoriteApps({
   loaded,
   userFavorites
 }: PropsType) {
+  const router = useRouter()
   return (!loaded || (userFavorites?.total ?? 0) > 0) ? (
     <StyledContainer>
-      <Features features={userFavorites?.features ?? []} loaded={loaded}/>
+      <Features features={userFavorites?.features ?? []} loaded={loaded} />
       <Dapps loaded={loaded} dapps={userFavorites?.dapps ?? []} />
     </StyledContainer>
   ) : (
@@ -24,6 +27,9 @@ export default function FavoriteApps({
       title="You don’t have any favorites"
       tips="Your favorite features, dApps will be displayed here"
       btnTxt="Explore now"
+      onClick={() => {
+        router.push("/")
+      }}
     />
   )
 }

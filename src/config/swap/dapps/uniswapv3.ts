@@ -1,4 +1,3 @@
-import weth from '@/config/contract/weth';
 import { scroll } from '@/config/tokens/scroll';
 
 const basic = {

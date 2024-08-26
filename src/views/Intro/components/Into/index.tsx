@@ -1,10 +1,11 @@
+import Big from "big.js";
+import { useRouter } from "next/router";
 import { memo } from "react";
 import styled from "styled-components";
 
 import { StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 import Counter from "@/views/AllDapps/components/Title/Counter";
-import Big from "big.js";
-import { useRouter } from "next/router";
+
 import useStats from "../../hooks/useStats";
 const StyledInto = styled.div`
   position: relative;

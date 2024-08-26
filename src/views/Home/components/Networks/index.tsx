@@ -1,7 +1,8 @@
 import NetworksBg from '@public/images/home/networks_bg.svg';
+import Big from 'big.js';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { type CSSProperties, type FC, type ReactNode,useState } from 'react';
+import { type CSSProperties, type FC, type ReactNode, useState } from 'react';
 import styled from 'styled-components';
 
 import chainsConfig, { IdToPath } from '@/config/all-in-one/chains';
@@ -11,7 +12,9 @@ import { StyledContainer } from '@/styled/styles';
 import hexToRgba from '@/utils/hexToRgba';
 import Badges from '@/views/AllDapps/components/Badges';
 import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import Counter from '@/views/AllDapps/components/Title/Counter';
 import ViewAll from '@/views/Home/components/ViewAll';
+import useStats from '@/views/Intro/hooks/useStats';
 
 import useRecommendNetwork from '../../hooks/useRecommendNetwork';
 
@@ -497,6 +500,7 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
 const Networks: FC<IProps> = (props) => {
   const router = useRouter()
   const { open } = useDappOpen();
+  const { stats } = useStats()
   const { recommendNetwork } = useRecommendNetwork()
   const onDappCardClick = function (dapp: any) {
     open({
@@ -516,7 +520,13 @@ const Networks: FC<IProps> = (props) => {
         <Title>
           <span>
             EXPLORE
-            <span className="highlight"> 15+ L2</span> NETWORKS
+            <span className="highlight"> <Counter
+              from={1}
+              to={stats?.total_l2_network || 0}
+              formatter={(value) => {
+                return Big(value).gt(10) ? `${Big(value).div(10).toFixed(0, 0)}0+` : Big(value).toFixed(0, 0);
+              }}
+            /> L2</span> NETWORKS
           </span>
 
           <ViewAll href="/networks" bp="1003-002" />

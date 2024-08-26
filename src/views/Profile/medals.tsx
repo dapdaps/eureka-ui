@@ -7,10 +7,13 @@ import MedalCard from "./components/MedalCard";
 import useMedalList from "./hooks/useMedalList";
 
 const StyledLineGradientFont = styled(StyledFont)`
+  position: relative;
+  margin-top: -50px;
+  z-index: 10;
   text-align: center;
   font-size: 46px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 700;
   line-height: 100%; /* 46px */
   text-transform: uppercase;
   background: linear-gradient(90deg, #FFF 0%, #979ABE 100%);
@@ -30,6 +33,12 @@ const StyledMedalsContainer = styled.div`
   flex-direction: column;
   gap: 13px;
 `
+const StyledMedalsVideo = styled.video`
+  margin: -12px auto 0;
+  display: block;
+  width: 324px;
+  height: 324px;
+`
 export default memo(function MedalsView() {
   const { loading, medalList } = useMedalList()
 
@@ -43,9 +52,11 @@ export default memo(function MedalsView() {
   }, [medalList])
 
   return (
-    <StyledContainer style={{ paddingTop: 85 }}>
+    <StyledContainer style={{ backgroundColor: "#000" }}>
       <StyledInnerContainer>
+        <StyledMedalsVideo src="/videos/MedalDashboard.webm" controls={false} muted autoPlay loop />
         <StyledLineGradientFont>Medal Dashboard</StyledLineGradientFont>
+        <StyledFont color="#979ABE" fontSize="20px" lineHeight="160%" textAlign="center" style={{ width: 665, margin: '12px auto 54px' }}>Track your progress and earn recognition, as you explore, trade, and contribute across multiple Ethereum L2 & EVM networks.</StyledFont>
         {
           Object.keys(medalMapping).map(key => {
             return (

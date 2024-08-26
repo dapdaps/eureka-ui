@@ -89,6 +89,7 @@ export const StyledPopupItemInner = styled.div`
   width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 export const StyledPopupItemCheck = styled.div`
   margin-left: auto;

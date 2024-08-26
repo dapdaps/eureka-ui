@@ -12,7 +12,7 @@ const networks = {
       input: scroll['weth'],
       output: scroll['usdt'],
     },
-    tokens: [scroll['usdt'], scroll['weth'], scroll['usdc'], scroll['lusd'], scroll['wbtc']],
+    tokens: [scroll['usdt'], scroll['weth'], scroll['usdc'], scroll['lusd'], scroll['wbtc'], scroll['mvx']],
   },
   59144: {
     defaultCurrencies: {

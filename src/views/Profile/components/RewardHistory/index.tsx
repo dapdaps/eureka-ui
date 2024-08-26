@@ -19,7 +19,8 @@ import {
   StyledRewardListPopUpContainer,
   StyledSource,
   StyledSourceImage,
-  StyledSourceMessage} from './styles';
+  StyledSourceMessage
+} from './styles';
 type PropsType = {
   loaded: boolean;
   userRewardRecords: RewardRecordsType | null;
@@ -223,6 +224,9 @@ export default function RewardHistory({
       title="You don’t have any rewards record"
       tips="The reward from odyessey participation, medals, daily dap me up will be displayed here"
       btnTxt="Start your journey"
+      onClick={() => {
+        router.push("/")
+      }}
     />
   )
 }
