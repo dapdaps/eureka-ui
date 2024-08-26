@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import useAccount from '@/hooks/useAccount';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
-const OffsetTop = 150;
+const OffsetTop = 100;
 
 const GridChainBalance = (props: Props) => {
   const { children, balance } = props;
@@ -118,7 +118,7 @@ const Balance = (props: BalanceProps) => {
       >
         {children}
         <StyledLine>
-          <svg width="1" height="150" xmlns="http://www.w3.org/2000/svg">
+          <svg width="1" height="100" xmlns="http://www.w3.org/2000/svg">
             <motion.line
               x1="0"
               y1="0"

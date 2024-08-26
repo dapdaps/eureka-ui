@@ -1,30 +1,29 @@
+import { useDebounceFn } from 'ahooks';
+import Big from 'big.js';
+import { useCallback, useEffect,useState } from 'react';
+
+import useAccount from '@/hooks/useAccount';
+import type { Token } from '@/types';
+
+import Arrow2Down from './components/Arrow2Down';
+import Button from './components/Button';
 import Header from './components/Header';
 import InputCard from './components/InputCard';
-import Arrow2Down from './components/Arrow2Down';
-import Result from './components/Result';
-import Button from './components/Button';
-import SelectTokensModal from './components/SelectTokensModal';
 import MarketsModal from './components/MarketsModal';
-import {
-  StyledContainer,
-  StyledContent,
-  StyledTradeIcon,
-  StyledInputs,
-  StyledTradeFooter,
-  StyledAmount,
-  StyleProviderHeader,
-} from './styles';
-
-import Big from 'big.js';
-
-import { useState, useCallback, useEffect } from 'react';
-import useAccount from '@/hooks/useAccount';
-import useTrade from './hooks/useTrade';
-import { useDebounceFn } from 'ahooks';
-
-import type { Token } from '@/types';
 // import KLineChart from './components/KLineChart';
 import PriceBoard from './components/PriceBoard';
+import Result from './components/Result';
+import SelectTokensModal from './components/SelectTokensModal';
+import useTrade from './hooks/useTrade';
+import {
+  StyledAmount,
+  StyledContainer,
+  StyledContent,
+  StyledInputs,
+  StyledTradeFooter,
+  StyledTradeIcon,
+  StyleProviderHeader,
+} from './styles';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
