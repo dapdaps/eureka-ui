@@ -8,7 +8,7 @@ import { StyledFlex } from '@/styled/styles';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import Big from 'big.js';
 import { useRouter } from 'next/router';
-import { IdToPath } from '@/config/all-in-one/chains';
+import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
 import { useEffect, useMemo } from 'react';
 
 const GridChainDetail = (props: Props) => {
@@ -28,6 +28,7 @@ const GridChainDetail = (props: Props) => {
       content={(
         <Detail
           networkId={network?.id}
+          chainId={network?.chainId}
           icon={network?.icon}
           walletLoading={loading}
           balance={network?.balance}
@@ -63,11 +64,15 @@ interface Props {
 }
 
 const Detail = (props: DetailProps) => {
-  const { networkId, icon, walletLoading, balance, bg, text, path } = props;
+  const { networkId, chainId, icon, walletLoading, balance, bg, text, path } = props;
 
   const router = useRouter();
 
   const { loading, detail } = useDetail(networkId);
+
+  const isSupported = useMemo(() => {
+    return SupportedChains.some((support) => support.chainId === chainId);
+  }, [chainId]);
 
   const nativeCurrency = useMemo(() => {
     try {
@@ -107,8 +112,6 @@ const Detail = (props: DetailProps) => {
   useEffect(() => {
     handleNetworkDetailPre();
   }, []);
-
-  console.log(icon);
 
   return (
     <StyledDetail>
@@ -188,15 +191,19 @@ const Detail = (props: DetailProps) => {
           <StyledButton onMouseEnter={handleSuperBridgePre} onClick={handleSuperBridge}>
             Bridge Now
           </StyledButton>
-          <StyledButton onMouseEnter={handlePortfolioPre} onClick={handlePortfolio}>
-            Manage Assets
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
-              <path
-                d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
-                fill="white"
-              />
-            </svg>
-          </StyledButton>
+          {
+            isSupported && (
+              <StyledButton onMouseEnter={handlePortfolioPre} onClick={handlePortfolio}>
+                Manage Assets
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="12" viewBox="0 0 18 12" fill="none">
+                  <path
+                    d="M1 5.2C0.558172 5.2 0.2 5.55817 0.2 6C0.2 6.44183 0.558172 6.8 1 6.8L1 5.2ZM17.5657 6.56569C17.8781 6.25327 17.8781 5.74674 17.5657 5.43432L12.4745 0.343147C12.1621 0.0307274 11.6556 0.0307274 11.3431 0.343147C11.0307 0.655566 11.0307 1.1621 11.3431 1.47452L15.8686 6L11.3431 10.5255C11.0307 10.8379 11.0307 11.3444 11.3431 11.6569C11.6556 11.9693 12.1621 11.9693 12.4745 11.6569L17.5657 6.56569ZM1 6.8L17 6.8L17 5.2L1 5.2L1 6.8Z"
+                    fill="white"
+                  />
+                </svg>
+              </StyledButton>
+            )
+          }
         </StyledFlex>
       </StyledBody>
     </StyledDetail>
@@ -205,6 +212,7 @@ const Detail = (props: DetailProps) => {
 
 interface DetailProps {
   networkId?: number;
+  chainId?: number;
   icon?: string;
   walletLoading?: boolean;
   balance?: Big.Big;
@@ -223,7 +231,7 @@ const StyledDetailHead = styled.div<{ $icon?: string; }>`
   background: ${({ $icon }) => `#000 url("${$icon}") no-repeat center 50px / 350px auto`};
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
-  
+
   &::before {
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
@@ -234,9 +242,9 @@ const StyledDetailHead = styled.div<{ $icon?: string; }>`
     left: 0;
     position: absolute;
     z-index: 1;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
   }
-  
+
 `;
 const StyledDetailBgMask = styled.div`
   width: 100%;
