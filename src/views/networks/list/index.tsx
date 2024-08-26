@@ -115,6 +115,7 @@ const List = () => {
                         ? (<AdvertiseCardList
                             classname='advertise'
                             adList={item.advertise}
+                            type="network"
                           />)
                         : (<ListCard dataSource={item} key={item.id}/>))
                 })
