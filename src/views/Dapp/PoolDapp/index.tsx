@@ -8,6 +8,8 @@ import Pools from '@/views/Pool/Pools';
 export default function PoolDapp({ dapp, chainId, currentChain, localConfig, chains }: any) {
   const router = useRouter();
 
+  console.log(router.query);
+
   return (
     <LiquidityContext.Provider
       value={{
