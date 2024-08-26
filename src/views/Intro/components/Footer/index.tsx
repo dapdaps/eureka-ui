@@ -49,6 +49,7 @@ const StyledSocialButton = styled.div`
   height: 46px;
   border-radius: 12px;
   background: #5B56F3;
+  cursor: pointer;
 `
 
 const ABOUT_LIST = [{
