@@ -9,7 +9,7 @@ const UpgradeView = () => {
 
   useEffect(() => {
     const timer = setInterval(async () => {
-      const result = await get(`/api/token/price/latest`);
+      const result = await get(`/get-token-price-by-dapdap`);
       if (result && result.code !== 9000) {
         clearInterval(timer);
         router.replace('/');
