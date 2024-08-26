@@ -1,10 +1,9 @@
 import { AnimatePresence } from 'framer-motion';
-import { useRouter } from 'next/router';
 import { useRef, useState } from 'react';
 import { Parallax } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import type { PageButtonDirection} from '@/views/Home/components/DAvinci/Page';
+import type { PageButtonDirection } from '@/views/Home/components/DAvinci/Page';
 import { PageButton, Pagination } from '@/views/Home/components/DAvinci/Page';
 import { StyledButton, StyledClose, StyledContainer, StyledFoot } from '@/views/Home/components/DAvinci/styles';
 
@@ -13,8 +12,6 @@ import { SwiperList } from './config';
 
 const DAvinci = (props: DAvinciProps) => {
   const { onClose } = props;
-
-  const router = useRouter();
 
   const swiperRef = useRef<any>(null);
 
@@ -34,7 +31,6 @@ const DAvinci = (props: DAvinciProps) => {
   };
 
   const handleExplore = () => {
-    router.push('/profile/medals');
     onClose();
   };
 
