@@ -523,9 +523,6 @@ const Networks: FC<IProps> = (props) => {
             <span className="highlight"> <Counter
               from={1}
               to={stats?.total_l2_network || 0}
-              formatter={(value) => {
-                return Big(value).gt(10) ? `${Big(value).div(10).toFixed(0, 0)}0+` : Big(value).toFixed(0, 0);
-              }}
             /> L2</span> NETWORKS
           </span>
 
