@@ -94,10 +94,6 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     );
   }
 
-  if (errorTips) {
-    return <BaseButton disabled>{errorTips}</BaseButton>;
-  }
-
   if (checking || approving || loading) {
     return (
       <BaseButton color={color} disabled>
@@ -105,6 +101,11 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
       </BaseButton>
     );
   }
+
+  if (errorTips) {
+    return <BaseButton disabled>{errorTips}</BaseButton>;
+  }
+
   if (!approved) {
     return <BaseButton onClick={approve}>Approve {token?.symbol}</BaseButton>;
   }

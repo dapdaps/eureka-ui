@@ -19,7 +19,7 @@ const networks = {
       linea['usdt'],
       linea['wbtc'],
       linea['busd'],
-      linea['ceMATIC'],
+      linea['matic'],
       linea['dai'],
       linea['bnb'],
       linea['ezeth'],

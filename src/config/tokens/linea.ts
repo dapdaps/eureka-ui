@@ -211,14 +211,6 @@ export const linea: { [key: string]: Token } = {
     name: 'Wrapped eETH',
     icon: 'https://etherscan.io/token/images/etherfiweeth_32.png',
   },
-  ceMATIC: {
-    address: '0x265b25e22bcd7f10a5bd6e6410f10537cc7567e8',
-    chainId: CHAIN_ID,
-    symbol: 'ceMATIC',
-    decimals: 18,
-    name: 'Celer Network MATIC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiboxp3hdttm76zbj7snikikvbgfffcekqwksucxld7vbaoejms73u',
-  },
   stone: {
     address: '0x93f4d0ab6a8b4271f4a28db399b5e30612d21116',
     chainId: CHAIN_ID,

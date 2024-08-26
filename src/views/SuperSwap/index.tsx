@@ -36,7 +36,7 @@ export default function SuperSwap() {
   const [showMarkets, setShowMarkets] = useState<boolean>(false);
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
-  const [showChart, setShowChart] = useState(false);
+  // const [showChart, setShowChart] = useState(false);
 
   const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
     chainId,
@@ -133,7 +133,7 @@ export default function SuperSwap() {
             }}
             loading={loading}
             onRefresh={() => {
-              if (loading || errorTips) return;
+              if (loading) return;
               onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
             }}
           />

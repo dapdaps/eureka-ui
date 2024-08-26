@@ -50,6 +50,7 @@ const networks = {
       gnosis['wbtc'],
       gnosis['usdt'],
       gnosis['sushi'],
+      gnosis['xdai'],
     ],
   },
   10: {
