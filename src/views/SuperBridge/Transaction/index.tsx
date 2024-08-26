@@ -150,7 +150,7 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
         refreshTransactionList();
     }, [account, updater]);
 
-    return <Container>
+    return (<Container>
         <PublicTitle title="My transactions" subTitle='Check real time transaction status and claim your tokens.' />
         <StatusWapper>
             <SingleStatus>
