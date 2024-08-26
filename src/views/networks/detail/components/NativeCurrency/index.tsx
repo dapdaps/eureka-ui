@@ -1,7 +1,7 @@
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import { useMemo } from 'react';
 import styled from 'styled-components';
-import Image from 'next/image';
+import LazyImage from '@/components/LazyImage';
 
 const StyledNativeCurrency = styled.div`
   display: flex;
@@ -46,14 +46,6 @@ const StyledNativeCurrency = styled.div`
   }
 `;
 
-const StyledNativeCurrencyLogo = styled(Image)`
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  background: #414461;
-  object-fit: contain;
-`;
-
 const StyledArrow = styled.div`
   transform: rotate(-90deg);
   color: #979ABE;
@@ -91,13 +83,20 @@ const NativeCurrency = (
           isTag || (
             !isTag && mergedCurrency?.logo
           )
-        ) && <StyledNativeCurrencyLogo
-          src={mergedCurrency?.logo}
-          alt='native-logo'
-          className={`native-logo ${isTag ? `small-logo` : ''} ${isTBD ? 'empty-logo' : ''}`}
-          width={26}
-          height={26}
-        />
+        ) && (
+          <LazyImage
+            src={mergedCurrency?.logo}
+            className={`native-logo ${isTag ? `small-logo` : ''} ${isTBD ? 'empty-logo' : ''}`}
+            width={26}
+            height={26}
+            containerStyle={{
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              overflow: 'hidden',
+            }}
+          />
+        )
       }
       <div className={isTag ? 'currency-name-small' : 'currency-name'}>{currencyName.toUpperCase()}</div>
       {

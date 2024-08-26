@@ -10,7 +10,7 @@ import { StyledFlex } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
 import { format } from 'date-fns';
 import IconArrowUp from '@public/images/tokens/arrow-up.svg';
-import useTokenPriceLatestList from '@/hooks/useTokenPriceLatestList';
+import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
 
 const ChartContainer = styled.div`
   color: white;
@@ -154,7 +154,7 @@ const KLineChart = ({ trade }: { trade: any }) => {
   const [isTokenDetailPopupVisible, setIsTokenDetailPopupVisible] = useState(false);
   const [chartData, setChartData] = useState<IChartData[]>([]);
   const [loading, setLoading] = useState(false);
-  const { tokenPriceLatest } = useTokenPriceLatestList();
+  const tokenPriceLatest = useTokenPriceLatestStore(store => store.list);
 
   const [isReversed, setIsReversed] = useState(false);
 
