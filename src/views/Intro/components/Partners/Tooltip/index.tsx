@@ -4,20 +4,23 @@ import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
-const StyledTooltip = styled.div<{ tooltipWidth: number }>`
+const StyledTooltipContainer = styled.div<{ tooltipWidth: number }>`
+  position: absolute;
+  top: 0;
+  left: ${({ tooltipWidth }) => `calc(50% - ${tooltipWidth / 2}px)`};
+  transform: translateY(-100%);
+  
+  z-index: 10;
+`
+const StyledTooltip = styled.div`
   border: 1px solid;
   border-image-source: linear-gradient(180deg, #464b56 0%, rgba(0, 0, 0, 0) 100%);
   background: #21232a;
   box-shadow: 0px 10px 20px 0px #00000040;
   width: max-content;
-  height: 205px;
-  position: absolute;
-  top: -205px;
-  left: ${({ tooltipWidth }) => `calc(50% - ${tooltipWidth / 2}px)`};
   border-radius: 12px;
-  padding: 26px 11px 13px 11px;
+  padding: 16px 16px 20px;
   box-sizing: border-box;
-  z-index: 10;
 `;
 
 interface AnimationProps {
@@ -97,29 +100,31 @@ const Tooltip: React.FC<TooltipProps> = ({
   }, [children]);
 
   return showAnimateTooltip && x ? (
-    <StyledTooltip
-      as={motion.div}
-      initial={{ opacity: 0, y: 20, scale: 0.6 }}
-      animate={{
-        opacity: 1,
-        y: -10,
-        scale: 1,
-        transition: { type, stiffness, damping, duration },
-      }}
-      exit={{ opacity: 0, y: 20, scale: 0.6 }}
-      ref={tooltipRef}
-      tooltipWidth={tooltipWidth}
-      {...commonProps}
-    >
-      {children}
-    </StyledTooltip>
+    <StyledTooltipContainer tooltipWidth={tooltipWidth}>
+      <StyledTooltip
+        as={motion.div}
+        initial={{ opacity: 0, y: 20, scale: 0.6 }}
+        animate={{
+          opacity: 1,
+          y: -10,
+          scale: 1,
+          transition: { type, stiffness, damping, duration },
+        }}
+        exit={{ opacity: 0, y: 20, scale: 0.6 }}
+        ref={tooltipRef}
+        {...commonProps}
+      >
+        {children}
+      </StyledTooltip>
+    </StyledTooltipContainer>
   ) : (
-    <StyledTooltip
-      ref={tooltipRef}
-      tooltipWidth={tooltipWidth}
-      {...commonProps}>
-      {children}
-    </StyledTooltip>
+    <StyledTooltipContainer tooltipWidth={tooltipWidth}>
+      <StyledTooltip
+        ref={tooltipRef}
+        {...commonProps}>
+        {children}
+      </StyledTooltip>
+    </StyledTooltipContainer>
   );
 };
 

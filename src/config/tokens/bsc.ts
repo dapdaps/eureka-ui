@@ -356,7 +356,7 @@ export const bsc: { [key: string]: Token } = {
     chainId: CHAIN_ID,
     address: '0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A',
     decimals: 18,
-    symbol: 'WEETH',
+    symbol: 'weETH',
     name: 'Wrapped eETH',
     icon: 'https://ipfs.near.social/ipfs/bafkreibtkqtmrcwuqnnyimojsk3jekwomtxpvbarwh7fbaz4kvvhzhzh3q',
   },

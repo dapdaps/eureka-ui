@@ -61,6 +61,9 @@ const StyleMain = styled.div`
     }
   }
 `;
+const StyledVideo = styled.video`
+  width: 202px;
+`
 export interface Props {
   visible?: boolean;
   data: MedalType;
@@ -90,7 +93,13 @@ const MedalPopup = (props: Props) => {
       content={
         <StyledMedal>
           <StyleMain>
-            <img className="medal-logo" src={data.logo} alt="medal" />
+            {
+              data?.animation_url ? (
+                <StyledVideo src={data?.animation_url} controls={false} muted autoPlay loop />
+              ) : (
+                <img className="medal-logo" src={data.logo} alt="medal" />
+              )
+            }
             <div className="header">Congrats!</div>
             <div className="title">
               You’ve got the <span>{data.level_name}</span> medal
