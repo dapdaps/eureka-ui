@@ -7,12 +7,13 @@ const StyledFooterContainer = styled.div`
   padding: 0 20px 30px;
 `
 const StyledFooter = styled.div`
+  position: relative;
   display: flex;
   justify-content: space-between;
   height: 292px;
   border-radius: 30px;
   background: #EBF479 url('/images/intro/footer-bg.svg') no-repeat center;
-  background-size: 100%;
+  background-size: cover;
 `
 const StyledCopyright = styled.div`
   position: absolute;
@@ -30,9 +31,10 @@ const StyledFooterL = styled.div`
   padding-left: 37px;
 `
 const StyledFooterR = styled.div`
+  padding-top: 42px;
   padding-right: 84px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 140px;
 `
 const StyledLogoImage = styled.img`
@@ -51,35 +53,41 @@ const StyledSocialButton = styled.div`
 
 const ABOUT_LIST = [{
   label: "Documentation",
-  path: "",
+  path: "https://docs.dapdap.net",
+  target: "_blank"
 }, {
   label: "Blog",
-  path: "",
+  path: "https://dapdap.mirror.xyz",
+  target: "_blank"
 }, {
   label: "FAQ",
-  path: "",
-}, {
-  label: "Mediakit",
-  path: "",
+  path: "https://docs.dapdap.net/user-support/general-faq",
+  target: "_blank"
 },]
 const PRODUCT_LIST = [{
   label: "Super Bridge",
-  path: "",
+  path: "/super-bridge",
+  target: "_self"
 }, {
   label: "Super Swap",
-  path: "",
+  path: "/super-swap",
+  target: "_self"
 }, {
   label: "Chains",
-  path: "",
+  path: "/networks",
+  target: "_self"
 }, {
   label: "dApps",
-  path: "",
+  path: "/alldapps",
+  target: "_self"
 }, {
   label: "Odyssey",
-  path: "",
+  path: "/odyssey",
+  target: "_self"
 }, {
   label: "Portfolio",
-  path: "",
+  path: "/portfolio",
+  target: "_self"
 },]
 const SOCIAL_LIST = [{
   icon: (
@@ -146,7 +154,16 @@ export default memo(function Footer() {
             <StyledFont fontSize="18px" fontWeight="700">ABOUT</StyledFont>
             {
               ABOUT_LIST.map(about => (
-                <StyledFont fontWeight="500" key={about.label}>{about.label}</StyledFont>
+                <StyledFont
+                  key={about.label}
+                  fontWeight="500"
+                  style={{ cursor: 'pointer' }}
+                  onClick={() => {
+                    about?.path && window.open(about?.path, about?.target)
+                  }}
+                >
+                  {about.label}
+                </StyledFont>
               ))
             }
           </StyledFlex>
@@ -155,7 +172,16 @@ export default memo(function Footer() {
             <StyledFlex flexDirection="column" flexWrap="wrap" alignItems="flex-start" gap="14px 50px" style={{ height: 120 }}>
               {
                 PRODUCT_LIST.map(product => (
-                  <StyledFont fontWeight="500" key={product.label}>{product.label}</StyledFont>
+                  <StyledFont
+                    key={product.label}
+                    fontWeight="500"
+                    style={{ cursor: 'pointer' }}
+                    onClick={() => {
+                      product?.path && window.open(product?.path, product?.target)
+                    }}
+                  >
+                    {product.label}
+                  </StyledFont>
                 ))
               }
             </StyledFlex>
