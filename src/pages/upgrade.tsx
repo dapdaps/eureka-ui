@@ -1,7 +1,6 @@
-import UpgradeView from '@/views/Upgrade';
 import { useSimpleLayout } from '@/hooks/useLayout';
-
 import type { NextPageWithLayout } from '@/utils/types';
+import UpgradeView from '@/views/Upgrade';
 
 const Upgrade: NextPageWithLayout = () => {
   return (
