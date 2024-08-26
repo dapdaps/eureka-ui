@@ -522,8 +522,8 @@ const Networks: FC<IProps> = (props) => {
             EXPLORE
             <span className="highlight"> <Counter
               from={1}
-              to={stats?.total_l2_network || 0}
-            /> L2</span> NETWORKS
+              to={15}
+            />+</span> NETWORKS
           </span>
 
           <ViewAll href="/networks" bp="1003-002" />

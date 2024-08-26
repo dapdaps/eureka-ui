@@ -84,8 +84,8 @@ const List = () => {
         <StyledTitle>
           Explore <span className="highlight"><Counter
             from={1}
-            to={stats?.total_l2_network || 0}
-          /> L2</span> Networks
+            to={15}
+          />+</span> Networks
         </StyledTitle>
         <StyledDesc>
           Discover the most popular Ethereum roll-ups and EVMs across the market. Also, <br />
