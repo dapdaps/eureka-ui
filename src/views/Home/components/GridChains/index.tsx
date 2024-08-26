@@ -1,11 +1,3 @@
-import Title from '@public/images/home/next-gen-defi.svg';
-import Big from 'big.js';
-import { random } from 'lodash';
-import { useCallback, useMemo, useState } from 'react';
-
-import LazyImage from '@/components/LazyImage';
-import popupsData from '@/config/all-in-one/chains';
-import { useChainsStore } from '@/stores/chains';
 import {
   StyledContainer,
   StyledGrid,
@@ -19,10 +11,17 @@ import {
   StyledTitle,
   StyledTitleSub,
 } from '@/views/Home/components/GridChains/styles';
-import useTokens from '@/views/Portfolio/hooks/useTokens';
-
+import popupsData, { SupportedChains } from '@/config/all-in-one/chains';
+import Big from 'big.js';
+import LazyImage from '@/components/LazyImage';
+import { useChainsStore } from '@/stores/chains';
+import { useCallback, useMemo, useState } from 'react';
+import Title from '@public/images/home/next-gen-defi.svg';
+import { random } from 'lodash';
 import GridChainBalance from './Balance';
 import GridChainDetail from './Detail';
+import useTokens from '@/views/Portfolio/hooks/useTokens';
+import useDapps from '@/views/Portfolio/hooks/useDapps';
 
 const CellSize = 100;
 const GridHeight = 1500;
@@ -30,7 +29,17 @@ const GridWidth = 2000;
 const Rows = Math.floor(GridHeight / CellSize);
 const Cols = Math.floor(GridWidth / CellSize);
 
-const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
+const ChainList: Omit<GridChain, 'id' | 'logo' | 'native_currency' | 'name'>[] = [
+  {
+    chainId: popupsData['polygon-zkevm'].chainId,
+    icon: popupsData['polygon-zkevm'].icon,
+    path: popupsData['polygon-zkevm'].path,
+    bg: popupsData['polygon-zkevm'].theme.button.bg,
+    text: popupsData['polygon-zkevm'].theme.button.text,
+    position: [4, 14],
+    balance: Big(0),
+    totalUsd: Big(0),
+  },
   {
     chainId: popupsData.metis.chainId,
     icon: popupsData.metis.icon,
@@ -39,6 +48,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.metis.theme.button.text,
     position: [5, 11],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.mode.chainId,
@@ -48,6 +58,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.mode.theme.button.text,
     position: [6, 13],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.scroll.chainId,
@@ -57,6 +68,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.scroll.theme.button.text,
     position: [6, 15],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.blast.chainId,
@@ -66,6 +78,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.blast.theme.button.text,
     position: [8, 12],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.zksync.chainId,
@@ -75,6 +88,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.zksync.theme.button.text,
     position: [8, 14],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.mantle.chainId,
@@ -84,6 +98,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.mantle.theme.button.text,
     position: [8, 17],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.arbitrum.chainId,
@@ -93,6 +108,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.arbitrum.theme.button.text,
     position: [9, 11],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.gnosis.chainId,
@@ -102,6 +118,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.gnosis.theme.button.text,
     position: [10, 9],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.polygon.chainId,
@@ -111,6 +128,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.polygon.theme.button.text,
     position: [10, 15],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.base.chainId,
@@ -120,6 +138,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.base.theme.button.text,
     position: [11, 7],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.manta.chainId,
@@ -129,6 +148,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.manta.theme.button.text,
     position: [11, 13],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.linea.chainId,
@@ -138,6 +158,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.linea.theme.button.text,
     position: [12, 9],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.avalanche.chainId,
@@ -147,6 +168,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.avalanche.theme.button.text,
     position: [12, 12],
     balance: Big(0),
+    totalUsd: Big(0),
   },
   {
     chainId: popupsData.optimism.chainId,
@@ -156,6 +178,7 @@ const ChainList: Omit<GridChain, 'id' | 'logo'>[] = [
     text: popupsData.optimism.theme.button.text,
     position: [12, 17],
     balance: Big(0),
+    totalUsd: Big(0),
   },
 ];
 
@@ -163,6 +186,7 @@ const GridChains = () => {
   const chains = useChainsStore((store: any) => store.chains);
 
   const { loading, networks } = useTokens({ networkList: chains });
+  const { loading: dappsLoading, dappsByChain } = useDapps();
 
   const [visible, setVisible] = useState(false);
   const [network, setNetwork] = useState<GridChain | undefined>();
@@ -179,12 +203,18 @@ const GridChains = () => {
         if (item.chainId === chain.chain_id) {
           const obj = {
             ...item,
+            name: chain.name,
             logo: chain.logo,
             id: chain.id,
+            native_currency: chain.native_currency,
           };
           const walletNetwork = networks.find((it: any) => it.id === item.chainId);
           if (walletNetwork) {
             obj.balance = walletNetwork.usd;
+          }
+          const walletDappNetwork = dappsByChain.find((it: any) => it.chainId === chain.chain_id);
+          if (walletDappNetwork) {
+            obj.totalUsd = walletDappNetwork.totalUsdValue;
           }
           _chainList.push(obj);
           break;
@@ -192,7 +222,7 @@ const GridChains = () => {
       }
     });
     return _chainList;
-  }, [chains, networks]);
+  }, [chains, networks, dappsByChain]);
 
   const checkImage = useCallback((row: number, col: number) => {
     return chainList.some((it) => it.position[0] - 1 === row && it.position[1] - 1 === col);
@@ -234,10 +264,10 @@ const GridChains = () => {
                       }}
                     >
                       {
-                        chainList.map((chain, index) => {
+                        chainList.map((chain) => {
                           if (chain.position[0] - 1 === row && chain.position[1] - 1 === col) {
-                            return (
-                              <GridChainBalance key={index} balance={chain.balance}>
+                            return SupportedChains.some((support) => support.chainId === chain.chainId) ? (
+                              <GridChainBalance balance={chain.balance}>
                                 <LazyImage
                                   containerClassName="cell-image"
                                   key={chain.chainId}
@@ -248,9 +278,16 @@ const GridChains = () => {
                                   variants={{
                                     hover: {
                                       opacity: 1,
+                                      y: -10,
+                                      x: -5,
+                                      filter: 'drop-shadow(0 10px 30px rgba(4, 105, 255, 0.50))',
+                                      transition: { type: 'spring', stiffness: 200, damping: 15, duration: 1 },
                                     },
                                     default: {
                                       opacity: 0.5,
+                                      y: 0,
+                                      x: 0,
+                                      filter: 'unset',
                                     },
                                   }}
                                   whileHover="hover"
@@ -258,6 +295,26 @@ const GridChains = () => {
                                   onClick={() => handleNetwork(chain)}
                                 />
                               </GridChainBalance>
+                            ) : (
+                              <LazyImage
+                                containerClassName="cell-image"
+                                key={chain.chainId}
+                                src={chain.logo}
+                                alt=""
+                                width={CellSize}
+                                height={CellSize}
+                                variants={{
+                                  hover: {
+                                    opacity: 1,
+                                  },
+                                  default: {
+                                    opacity: 0.5,
+                                  },
+                                }}
+                                whileHover="hover"
+                                initial="default"
+                                onClick={() => handleNetwork(chain)}
+                              />
                             );
                           }
                           return null;
@@ -295,12 +352,15 @@ export default GridChains;
 export interface GridChain {
   id: number;
   chainId: number;
+  name: string;
   icon: string;
   logo: string;
   // [row, col]
   position: [number, number];
   balance: Big.Big;
+  totalUsd: Big.Big;
   bg: string;
   text: string;
   path: string;
+  native_currency: string;
 }
