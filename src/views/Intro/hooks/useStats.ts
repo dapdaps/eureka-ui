@@ -5,7 +5,6 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
 import type { StatsType } from '../types';
-type CompassType = any
 export default function useStats() {
   const [stats, setStats] = useState<null | StatsType>(null);
   const [loading, setLoading] = useState(false);
@@ -22,12 +21,6 @@ export default function useStats() {
       setLoading(false);
     }
   };
-  // const { run } = useDebounceFn(
-  //   () => {
-  //     queryStats()
-  //   },
-  //   { wait: stats ? 800 : 3000 },
-  // );
   useEffect(() => {
     queryStats()
   }, []);

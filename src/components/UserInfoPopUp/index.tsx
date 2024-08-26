@@ -174,7 +174,7 @@ export default function UserInfoPopUp({ setShow }: PropsType) {
         </g>
       </svg>
     ),
-    label: "Achievements",
+    label: "Medal Dashboard",
     path: '/profile/medals',
     bp: "1001-010-003",
   }, {
