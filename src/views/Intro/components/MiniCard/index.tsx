@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { memo, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
@@ -179,10 +179,10 @@ const StyledOdysseyVideoContainer = styled.div`
   border-radius: 20px;
   background-color: #ecec84;
   overflow: hidden;
+  background-blend-mode: luminosity;
 `
 const StyledOdysseyVideo = styled.video`
-  /* width: 100%; */
-  height: 100%;
+  width: 100%;
 `
 const StyledChainList = styled.div`
   position: absolute;
@@ -237,45 +237,49 @@ const CHAINS = [{
   icon: '/images/intro/chains/mode.svg',
   label: "mode"
 },]
-
 const TILT_CHAINS = [{
+  path: 'polygon-zkevm',
   icon: '/images/intro/allinone/chains/polygon zkevm.png',
 }, {
+  path: 'zksync',
   icon: '/images/intro/allinone/chains/ZKsync.png',
 }, {
+  path: 'scroll',
   icon: '/images/intro/allinone/chains/scroll.png',
 }, {
+  path: 'optimism',
   icon: '/images/intro/allinone/chains/OP.png',
 }, {
+  path: 'linea',
   icon: '/images/intro/allinone/chains/Linea.png',
 }, {
+  path: 'arbitrum',
   icon: '/images/intro/allinone/chains/arbitrum.png',
 }, {
+  path: 'avalanche',
   icon: '/images/intro/allinone/chains/Avalanche.png',
 }, {
+  path: 'base',
   icon: '/images/intro/allinone/chains/base.png',
 }, {
+  path: 'gnosis',
   icon: '/images/intro/allinone/chains/gnosis.png',
 }, {
+  path: 'manta',
   icon: '/images/intro/allinone/chains/manta.png',
 }, {
+  path: 'blast',
   icon: '/images/intro/allinone/chains/blast.png',
 }, {
+  path: 'mantle',
   icon: '/images/intro/allinone/chains/mantle.png',
 }, {
+  path: 'metis',
   icon: '/images/intro/allinone/chains/metis.png',
 }, {
+  path: 'mode',
   icon: '/images/intro/allinone/chains/mode.png',
 },]
-// const TILT_CHAINS = [{
-//   icon: '/images/intro/allinone/chains/polygon zkevm.png',
-// }, {
-//   icon: '/images/intro/allinone/chains/ZKsync.png',
-// }, {
-//   icon: '/images/intro/allinone/chains/scroll.png',
-// }, {
-//   icon: '/images/intro/allinone/chains/OP.png',
-// }]
 const POSITIONS = [168, 70]
 export default memo(function MiniCard() {
   const router = useRouter()
@@ -296,7 +300,8 @@ export default memo(function MiniCard() {
       svg?.classList.remove('AnimateRunning');
     })
   }
-  const handleClickRocker = function () {
+  const handleClickRocker = function (event: any) {
+    event.stopPropagation()
     if (chainsRunning) {
       return
     }
@@ -342,7 +347,13 @@ export default memo(function MiniCard() {
   return (
     <StyledMiniCardContainer ref={miniCardContainerRef}>
       <StyledFlex gap="14px" style={{ marginBottom: 14 }}>
-        <StyledMiniCard style={{ backgroundColor: "#5B56F3", height: 614 }}>
+        <StyledMiniCard
+          style={{ backgroundColor: "#5B56F3", height: 614 }}
+          onClick={() => {
+            const path = TILT_CHAINS[currentIndex % TILT_CHAINS.length]?.path
+            router.push(`/all-in-one/${path}`)
+          }}
+        >
           <StyledRightSvg style={{ right: 10, top: 10 }}>
             {WhiteRightSvg}
           </StyledRightSvg>
@@ -522,7 +533,12 @@ export default memo(function MiniCard() {
         </StyledFlex>
       </StyledFlex>
       <StyledFlex gap="14px">
-        <StyledMiniCard style={{ display: "flex", flex: 2, backgroundColor: "#EBF479", padding: 20 }}>
+        <StyledMiniCard
+          style={{ display: "flex", flex: 2, backgroundColor: "#EBF479", padding: 20 }}
+          onClick={() => {
+            router.push("/odyssey")
+          }}
+        >
           <StyledOdysseyVideoContainer>
             <StyledOdysseyVideo src="/videos/introOdyssey.webm" controls={false} muted autoPlay loop />
             <StyledChainList>
@@ -533,7 +549,7 @@ export default memo(function MiniCard() {
               }
             </StyledChainList>
           </StyledOdysseyVideoContainer>
-          <StyledContainer style={{ width: 482, marginLeft: 5, paddingTop: 19 }}>
+          <StyledContainer style={{ flex: 1, paddingLeft: 5, paddingRight: 35, paddingTop: 19 }}>
             <StyledOdysseyFontImage src="/images/intro/odyssey-title.png" />
             <StyledFlex flexDirection="column" style={{ marginLeft: 7, marginTop: 53 }}>
               <StyledFont fontSize="18px" fontWeight="500" lineHeight="150%" style={{ opacity: 0.8 }}>

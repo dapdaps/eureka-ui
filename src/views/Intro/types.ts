@@ -2,6 +2,7 @@ export type NavigationType = {
   path: string;
   label: string;
   icon?: JSX.Element;
+  target?: "_self" | "_blank"
 }
 export type StatsType = {
   total_users: number;

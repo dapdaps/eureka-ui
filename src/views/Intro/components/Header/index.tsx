@@ -1,3 +1,4 @@
+import { useRouter } from "next/router"
 import { memo } from "react"
 import styled from "styled-components"
 
@@ -16,6 +17,7 @@ const StyledHeader = styled.div`
 `
 const StyledLogo = styled.img`
   height: 32px;
+  cursor: pointer;
 `
 const StyledMenuList = styled.div`
   display: flex;
@@ -73,17 +75,20 @@ const StyledCommunity = styled.div`
 `
 
 const MENU_LIST: NavigationType[] = [{
-  path: "",
+  path: "/",
   label: "Product",
+  target: "_self"
 }, {
   path: "",
   label: "Community",
 }, {
   path: "https://dapdap.mirror.xyz/",
   label: "Blog",
+  target: "_blank"
 }, {
   path: "https://docs.dapdap.net/",
   label: "Documentation",
+  target: "_blank"
 }]
 const COMMUNITY_LIST: NavigationType[] = [{
   label: "X / Twitter",
@@ -112,9 +117,15 @@ const COMMUNITY_LIST: NavigationType[] = [{
 },]
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 export default memo(function Header() {
+  const router = useRouter()
   return (
     <StyledHeader>
-      <StyledLogo src={logoUrl} />
+      <StyledLogo
+        src={logoUrl}
+        onClick={() => {
+          router.push("/")
+        }}
+      />
       <StyledMenuList>
         {
           MENU_LIST.map((menu: NavigationType) => {
@@ -143,7 +154,7 @@ export default memo(function Header() {
               </StyledMenuContainer>
             ) : (
               <StyledMenu key={menu.label} onClick={() => {
-                menu?.path && window.open(menu?.path, "_blank")
+                menu?.path && window.open(menu?.path, menu?.target)
               }}>{menu.label}</StyledMenu>
             )
           })
