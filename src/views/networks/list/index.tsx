@@ -121,10 +121,11 @@ const List = () => {
                     : (
                       item.isAdvertise
                         ? (<AdvertiseCardList
-                          classname='advertise'
-                          adList={item.advertise}
-                        />)
-                        : (<ListCard dataSource={item} key={item.id} />))
+                            classname='advertise'
+                            adList={item.advertise}
+                            type="network"
+                          />)
+                        : (<ListCard dataSource={item} key={item.id}/>))
                 })
                 : <Empty />
             )

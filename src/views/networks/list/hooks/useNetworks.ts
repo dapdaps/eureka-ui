@@ -58,15 +58,12 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
   }
 
   useEffect(() => {
-   fetchNetworkData();
-  }, [mode]);
-
-  useEffect(() => {
+    fetchNetworkData();
     fetchAdvertiseData();
     return () => {
       setAdvertise([]);
     }
-  }, []);
+  }, [mode]);
 
   const { run } = useDebounceFn(() => {
     setLoading(false);
