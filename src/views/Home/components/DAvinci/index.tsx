@@ -1,11 +1,14 @@
-import { StyledButton, StyledClose, StyledContainer, StyledFoot } from '@/views/Home/components/DAvinci/styles';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { useRef, useState } from 'react';
-import { SwiperList } from './config';
-import Card from './Card';
-import { PageButton, PageButtonDirection, Pagination } from '@/views/Home/components/DAvinci/Page';
 import { AnimatePresence } from 'framer-motion';
+import { useRef, useState } from 'react';
 import { Parallax } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import type { PageButtonDirection } from '@/views/Home/components/DAvinci/Page';
+import { PageButton, Pagination } from '@/views/Home/components/DAvinci/Page';
+import { StyledButton, StyledClose, StyledContainer, StyledFoot } from '@/views/Home/components/DAvinci/styles';
+
+import Card from './Card';
+import { SwiperList } from './config';
 
 const DAvinci = (props: DAvinciProps) => {
   const { onClose } = props;
