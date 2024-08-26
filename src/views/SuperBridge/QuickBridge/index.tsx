@@ -193,7 +193,7 @@ function QuickBridge({
                 }
             })
 
-            fromTokens.some(token => {
+            toTokens.some(token => {
                 if (token.symbol.toUpperCase() === 'ETH') {
                     toEthToken = token
                     return true
@@ -384,7 +384,7 @@ function QuickBridge({
                 onClick={async () => {
                     setConfirmSuccessModalShow(false);
                     setMainModalShow(true)
-                    onClose && onClose()
+                    // onClose && onClose()
                 }}
             />
         )}
