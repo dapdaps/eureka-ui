@@ -539,6 +539,9 @@ export default memo(function MiniCard() {
             router.push("/odyssey")
           }}
         >
+          <StyledRightSvg style={{ right: 10, top: 10 }}>
+            {BlackRightSvg}
+          </StyledRightSvg>
           <StyledOdysseyVideoContainer>
             <StyledOdysseyVideo src="/videos/introOdyssey.webm" controls={false} muted autoPlay loop />
             <StyledChainList>
