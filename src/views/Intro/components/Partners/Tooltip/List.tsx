@@ -183,16 +183,6 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
               },
             }}
           >
-            <StyledTagChainMask
-              variants={{
-                hover: {
-                  opacity: 0,
-                },
-                default: {
-                  opacity: 1,
-                },
-              }}
-            />
             <img
               src={item.icon}
             />

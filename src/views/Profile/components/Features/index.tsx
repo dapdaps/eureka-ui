@@ -7,7 +7,7 @@ import popupsData from '@/config/all-in-one/chains';
 import chainCofig from '@/config/chains';
 import { StyledFlex, StyledFont } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
-import {MenuConfig} from '@/views/AllInOne/hooks/useChain';
+import { MenuConfig } from '@/views/AllInOne/hooks/useChain';
 
 import type { FeatureType } from '../../types'
 import RectangleNumber from '../RectangleNumber';
@@ -15,7 +15,8 @@ import {
   StyledCard,
   StyledContainer,
   StyledEmpty,
-  StyledFeature} from './styles';
+  StyledFeature
+} from './styles';
 
 type PropsType = {
   features: FeatureType[],
@@ -45,8 +46,8 @@ export default function Features({
   const featuresList = useMemo(() => {
 
     return features.map(item => {
-      const _item: any = {...item};
-      const { menuId= 0, chainId = 0 } = formatIds(item.relate_id);
+      const _item: any = { ...item };
+      const { menuId = 0, chainId = 0 } = formatIds(item.relate_id);
       _item.chainId = chainId;
       const currentChain = chainData.find(chain => chain.chainId === chainId);
       const chainName: string = chainCofig[chainId]?.chainName;
@@ -73,46 +74,52 @@ export default function Features({
   }
 
 
-  return (
+  return !loaded ? (
     <StyledContainer style={{ marginTop: 30 }}>
       <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
         <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Features</StyledFont>
         <RectangleNumber quantity={features?.length} />
       </StyledFlex>
       <StyledFeature>
-      {
-        loaded ? (<>
-          {
-            featuresList?.length > 0 ? (featuresList.map((item, index) => (
-              <StyledCard key={item.relate_id}>
-                <AllInOneCardView
-                  style={{ height: '308px' }}
-                  title={item.title}
-                  subTitle={item.menuConfig?.description}
-                  bgColor={item.config?.selectBgColor}
-                  path={item.config?.path}
-                  chainId={item.chainId}
-                  onSelect={() => {
-                    handleMenuSelect(item.config?.path, item.menuConfig?.tab.toLowerCase());
-                  }}
-                >
-                  {
-                    item.component && (<item.component chain={item} disabled />)
-                  }
-
-                </AllInOneCardView>
-              </StyledCard>
-            ))) : <StyledEmpty><Empty size={42} tips='No features yet.' /></StyledEmpty>
-          }
-        </>) : (
+        {
           new Array(2).fill('').map((_, idx) => (
             <StyledCard key={idx}>
               <Skeleton height={308} />
             </StyledCard>
           ))
-        )
-      }
+        }
       </StyledFeature>
     </StyledContainer>
-  )
+  ) : loaded && featuresList?.length > 0 ? (
+    <StyledContainer style={{ marginTop: 30 }}>
+      <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
+        <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Features</StyledFont>
+        <RectangleNumber quantity={features?.length} />
+      </StyledFlex>
+      <StyledFeature>
+        {
+          featuresList.map((item, index) => (
+            <StyledCard key={item.relate_id}>
+              <AllInOneCardView
+                style={{ height: '308px' }}
+                title={item.title}
+                subTitle={item.menuConfig?.description}
+                bgColor={item.config?.selectBgColor}
+                path={item.config?.path}
+                chainId={item.chainId}
+                onSelect={() => {
+                  handleMenuSelect(item.config?.path, item.menuConfig?.tab.toLowerCase());
+                }}
+              >
+                {
+                  item.component && (<item.component chain={item} disabled />)
+                }
+
+              </AllInOneCardView>
+            </StyledCard>
+          ))
+        }
+      </StyledFeature>
+    </StyledContainer>
+  ) : <></>
 }

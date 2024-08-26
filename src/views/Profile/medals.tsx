@@ -28,7 +28,7 @@ const StyledInnerContainer = styled.div`
   z-index: 5;
 `
 const StyledMedalsContainer = styled.div`
-  margin-bottom: 100px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 13px;
@@ -57,35 +57,37 @@ export default memo(function MedalsView() {
         <StyledMedalsVideo src="/videos/MedalDashboard.webm" controls={false} muted autoPlay loop />
         <StyledLineGradientFont>Medal Dashboard</StyledLineGradientFont>
         <StyledFont color="#979ABE" fontSize="20px" lineHeight="160%" textAlign="center" style={{ width: 665, margin: '12px auto 54px' }}>Track your progress and earn recognition, as you explore, trade, and contribute across multiple Ethereum L2 & EVM networks.</StyledFont>
-        {
-          Object.keys(medalMapping).map(key => {
-            return (
-              <StyledMedalsContainer key={key}>
-                <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
-                  <StyledFont color='#FFF' fontSize='20px' fontWeight='600' style={{ textTransform: 'capitalize' }}>{key.split("_").join(" ")}</StyledFont>
-                </StyledFlex>
-                <StyledFlex gap="30px 14px" flexWrap="wrap" style={{ width: '100%' }}>
-                  {
-                    medalMapping[key]?.map((medal: any, index: number) => {
-                      return (
-                        <MedalCard
-                          key={key + '|' + index} medal={medal}
-                          style={{
-                            width: 311,
-                            height: 150,
-                          }}
-                          nameStyle={{
-                            fontSize: 16,
-                          }}
-                        />
-                      )
-                    })
-                  }
-                </StyledFlex>
-              </StyledMedalsContainer>
-            )
-          })
-        }
+        <StyledFlex flexDirection="column" gap="100px">
+          {
+            Object.keys(medalMapping).map(key => {
+              return (
+                <StyledMedalsContainer key={key}>
+                  <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
+                    <StyledFont color='#FFF' fontSize='20px' fontWeight='600' style={{ textTransform: 'capitalize' }}>{key.split("_").join(" ")}</StyledFont>
+                  </StyledFlex>
+                  <StyledFlex gap="30px 14px" flexWrap="wrap" style={{ width: '100%' }}>
+                    {
+                      medalMapping[key]?.map((medal: any, index: number) => {
+                        return (
+                          <MedalCard
+                            key={key + '|' + index} medal={medal}
+                            style={{
+                              width: 311,
+                              height: 150,
+                            }}
+                            nameStyle={{
+                              fontSize: 16,
+                            }}
+                          />
+                        )
+                      })
+                    }
+                  </StyledFlex>
+                </StyledMedalsContainer>
+              )
+            })
+          }
+        </StyledFlex>
       </StyledInnerContainer>
     </StyledContainer>
   )

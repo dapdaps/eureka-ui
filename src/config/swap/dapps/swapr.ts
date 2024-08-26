@@ -19,6 +19,7 @@ const networks = {
       gnosis['weth'],
       gnosis['wbtc'],
       gnosis['swpr'],
+      gnosis['xdai'],
     ],
   },
 };

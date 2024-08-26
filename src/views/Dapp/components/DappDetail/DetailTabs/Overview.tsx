@@ -1,9 +1,11 @@
+import Big from 'big.js';
 import { usePathname } from 'next/navigation';
 import { useRouter } from 'next/router';
 import { useMemo, useRef, useState } from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
+import LazyImage from '@/components/LazyImage';
 import chainCofig from '@/config/chains';
 import tokens, { NativeTokenAddressMap } from '@/config/tokens';
 import type { Quest, QuestDapp} from '@/hooks/useAirdrop';
@@ -11,6 +13,7 @@ import { QuestCategory, useAirdrop } from '@/hooks/useAirdrop';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { usePriceStore } from '@/stores/price';
+import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
 import { StyledFlex } from '@/styled/styles';
 import { copyText } from '@/utils/copy';
 import { formatThousandsSeparator } from '@/utils/format-number';
@@ -53,10 +56,6 @@ import {
   StyledTokenPrice,
   StyledTokenValue,
 } from './styles';
-
-import LazyImage from '@/components/LazyImage';
-import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
-import Big from 'big.js';
 
 const Overview = (props: any) => {
   const {

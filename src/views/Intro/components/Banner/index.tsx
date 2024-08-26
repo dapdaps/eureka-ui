@@ -84,7 +84,7 @@ export default memo(function Banner() {
   return (
     <StyledBanner>
       <StyledFlex justifyContent="center" gap="10px">
-        <StyledFont color="#FFF" fontSize="18px" lineHeight="150%">Quick start DeFi  journey from</StyledFont>
+        <StyledFont color="#FFF" fontSize="18px" lineHeight="150%">Quick start your Web3 journey with</StyledFont>
         <StyledSuperButton style={{ width: 152 }} onClick={() => router.push("/super-bridge")}>
           <BridgeSvg />
           <StyledFont color="#FFF" fontWeight="600" lineHeight="100%">Super Bridge</StyledFont>

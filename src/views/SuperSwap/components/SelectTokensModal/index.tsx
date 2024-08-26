@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import Modal from '@/components/Modal';
@@ -47,6 +47,13 @@ const SelectTokensModal = ({ tokens, display, currency, onClose, onSelect }: Pro
       );
     });
   }, [tokens, searchVal]);
+
+  useEffect(() => {
+    if (display) {
+      setSearchVal('');
+    }
+  }, [display]);
+
 
   return (
     <Modal

@@ -56,13 +56,10 @@ export default memo(function Into() {
             <StyledFont color="#000" fontSize="56px" fontWeight="800" lineHeight="100%">
               <Counter
                 from={1}
-                to={stats?.total_l2_network || 0}
-                formatter={(value) => {
-                  return Big(value).gt(10) ? `${Big(value).div(10).toFixed(0, 0)}0+` : Big(value).toFixed(0, 0);
-                }}
-              />
+                to={15}
+              />+
             </StyledFont>
-            <StyledFont color="#000" fontSize="26px" fontWeight="800" lineHeight="100%">L2 Networks</StyledFont>
+            <StyledFont color="#000" fontSize="26px" fontWeight="800" lineHeight="100%">Networks</StyledFont>
           </StyledFlex>
           <StyledSvg
             style={{ cursor: 'pointer' }}

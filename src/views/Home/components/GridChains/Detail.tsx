@@ -1,15 +1,16 @@
-import useDetail from '@/views/networks/detail/hooks/useDetail';
-import Modal from '@/components/Modal';
-import styled from 'styled-components';
-import LazyImage from '@/components/LazyImage';
-import { GridChain } from '@/views/Home/components/GridChains/index';
+import type Big from 'big.js';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo } from 'react';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
+
+import LazyImage from '@/components/LazyImage';
+import Modal from '@/components/Modal';
+import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
 import { StyledFlex } from '@/styled/styles';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
-import Big from 'big.js';
-import { useRouter } from 'next/router';
-import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
-import { useEffect, useMemo } from 'react';
+import type { GridChain } from '@/views/Home/components/GridChains/index';
+import useDetail from '@/views/networks/detail/hooks/useDetail';
 
 const GridChainDetail = (props: Props) => {
   const { network, visible, onClose, loading } = props;

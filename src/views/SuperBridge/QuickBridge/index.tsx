@@ -99,6 +99,10 @@ const SuperTip = styled.div`
     font-size: 14px;
     margin-top: 20px;
     cursor: pointer;
+    transition: all .3s;
+    &:hover {
+        color: #fff;
+    }
 `
 
 const TokenSep = styled.div`
@@ -106,6 +110,14 @@ const TokenSep = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+`
+
+const Styledlink = styled(Link)`
+    &:hover {
+        text-decoration: none;
+        color: #fff;
+    }
+    
 `
 
 interface Props {
@@ -342,14 +354,14 @@ function QuickBridge({
                 disabled={sendDisabled}
             />
 
-            <Link href={'/super-bridge'}>
+            <Styledlink href={'/super-bridge'}>
                 <SuperTip>
                     <span>Use the</span>&nbsp;&nbsp;<svg width="11" height="15" viewBox="0 0 11 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0.400981 6.33975L6.84571 0.280371C7.35087 -0.19458 8.14285 0.368692 7.85998 1.00174L6.04747 5.05803C5.87157 5.4517 6.13097 5.90244 6.55973 5.94811L9.57712 6.26956C10.1256 6.32799 10.3437 7.01009 9.93073 7.37584L2.10237 14.3098C1.57082 14.7806 0.78511 14.1564 1.12352 13.5322L3.76338 8.66244C3.97724 8.26795 3.72538 7.78217 3.27974 7.7296L0.761396 7.43252C0.22577 7.36933 0.00804376 6.70919 0.400981 6.33975Z" fill="#EBF479" />
                     </svg>
                     <span>Super Bridge for more route options.</span>
                 </SuperTip>
-            </Link>
+            </Styledlink>
 
             {confirmModalShow && (
                 <ConfirmModal

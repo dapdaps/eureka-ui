@@ -3,15 +3,15 @@ import { useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
+import Empty from '@/components/Empty';
 import Tooltip from '@/components/TitleTooltip';
+import { StyledFlex } from '@/styled/styles';
 import RecentRewards from '@/views/Home/components/Rewards';
 
 import useCompassList from '../Home/components/Compass/hooks/useCompassList';
 import OdysseyChroma from './components/OdysseyChroma'
 import ToggleTab, { Tab } from './components/Tabs';
 import { StatusType } from './components/Tag';
-import Empty from '@/components/Empty';
-import { StyledFlex } from '@/styled/styles';
 
 const StyledWrapper = styled.div`
   --var-container-width: 1244px;
