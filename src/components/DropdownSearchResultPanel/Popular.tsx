@@ -129,6 +129,7 @@ const Popular = ({
   const router = useRouter();
   const onDappCardClick = (dapp: any) => {
     open({ dapp, from: 'alldapps' });
+    onClick?.()
   };
 
   const handleClick = (item: PopularItem) => {
@@ -137,9 +138,9 @@ const Popular = ({
       return onDappCardClick(dapp);
     } else {
       const network = item as Network;
+      onClick?.()
       router.push(`/networks/${IdToPath[network.id]}`);
     }
-    onClick?.()
   }
 
   const handleGotoAll = () => {
