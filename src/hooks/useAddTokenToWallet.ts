@@ -1,6 +1,6 @@
 export default function useAddTokenToWallet() {
   const add = async (token: any) => {
-    if (!window.ethereum) return;
+    if (!window.ethereum) return { success: false, error: null };
     try {
       // wasAdded is a boolean. Like any RPC method, an error may be thrown.
       await window.ethereum.request({
@@ -15,8 +15,10 @@ export default function useAddTokenToWallet() {
           },
         },
       });
+      return { success: true, error: null };
     } catch (error) {
       console.log(error);
+      return { success: false, error };
     }
   };
   return { add };
