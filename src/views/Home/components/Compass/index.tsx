@@ -74,21 +74,24 @@ const AdCard = function ({ ad }: any) {
             )}
             <div className="card-tips">{ad.description}</div>
           </div>
-          <div className='btns'>
-            <StyledCompassButton
-              onClick={() => {
-                const route = extractPathFromUrl(ad.ad_link);
-                if (route) {
-                  router.push(route);
-                }
-              }}
-              data-bp="1001-003"
-            >
-              <div>{ad.btn}</div>
-              <IconClickArrow />
-            </StyledCompassButton>
-
-          </div>
+          {
+            ad.btn && (
+              <div className='btns'>
+                <StyledCompassButton
+                  onClick={() => {
+                    const route = extractPathFromUrl(ad.ad_link);
+                    if (route) {
+                      router.push(route);
+                    }
+                  }}
+                  data-bp="1001-003"
+                >
+                  <div>{ad.btn}</div>
+                  <IconClickArrow />
+                </StyledCompassButton>
+              </div>
+            )
+          }
         </StyledCardMainContent>
       </StyledFlex>
     </StyledCard>
