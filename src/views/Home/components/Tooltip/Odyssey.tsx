@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import type { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 
-export const formatValue = (value: string): string => {
+export const formatValue = (value?: string): string => {
   if (!value) return ''
   const unitsConfig = [
     { unit: 'B', threshold: 1e9 },
@@ -17,12 +17,12 @@ export const formatValue = (value: string): string => {
   // ⚠️ the value may not always be a number
   // it could be signed($123.45) or represent a range(15-25K),
   // so it cannot be calculated this way
-  if (!/^\d+(.\d+)?$/.test(value) && !unitsConfig.some((it) => new RegExp(`^\d+(.\d+)?${it.unit}$`).test(value))) {
+  if (!/^\d+(.\d+)?$/.test(value) && !unitsConfig.some((it) => new RegExp(`^\d+(.\d+)?${it.unit}$`).test(value as string))) {
     return value;
   }
 
   value = value.toUpperCase();
-  if (unitsConfig.some(config => value.endsWith(config.unit))) {
+  if (unitsConfig.some(config => (value as string).endsWith(config.unit))) {
     return `${value}`;
   }
   for (const config of unitsConfig) {
@@ -43,6 +43,7 @@ const OdysseyCard = (props: Props) => {
     imageUrl,
     withoutCardStyle,
     reward,
+    rewardValue,
     onClick = () => {},
   } = props;
 
@@ -52,7 +53,7 @@ const OdysseyCard = (props: Props) => {
       <StyledContent>
         <StyleHead>
           {
-            reward?.value && <StyledValue>{formatValue(reward.value)} <span>{reward?.name}</span></StyledValue>
+            (rewardValue || reward?.value) && <StyledValue>{formatValue(rewardValue || reward?.value)} <span>{reward?.name}</span></StyledValue>
           }
         </StyleHead>
         <StyledTitle>{title}</StyledTitle>
@@ -72,6 +73,7 @@ export interface Props {
   imageUrl: string;
   withoutCardStyle?: boolean;
   reward?: Partial<FormattedRewardList>;
+  rewardValue?: string;
 
   onClick?(e: React.MouseEvent<HTMLElement, MouseEvent>): void;
 }

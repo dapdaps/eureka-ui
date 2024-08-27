@@ -12,7 +12,7 @@ export default {
     label: 'Gold',
   },
   particle_points: {
-    icon: '/images/odyssey/v8/particle-reward.svg',
+    icon: '/images/odyssey/v8/particle-reward.png',
     label: 'Particle Points',
   },
   ring_points: {
