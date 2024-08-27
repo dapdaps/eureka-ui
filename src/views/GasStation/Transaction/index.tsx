@@ -1,12 +1,14 @@
-import { useRouter } from 'next/router';
-import { useCallback, useEffect,useRef, useState } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
-import useCopy from '@/hooks/useCopy'
-import type { Chain, Token } from '@/types';
-import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
+import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
 import { useTransction } from '@/views/SuperBridge/hooks/useGasTokenHooks'
+import useCopy from '@/hooks/useCopy'
+import useAccount from '@/hooks/useAccount';
+
+import type { Chain, Token } from '@/types';
 
 const Container = styled.div`
     width: 1104px;
@@ -105,7 +107,8 @@ interface Props {
 export default function Transaction({
 
 }: Props) {
-    const { transactionList } = useTransction()
+    const { account, chainId, provider } = useAccount();
+    const { transactionList } = useTransction(account as string)
     const { copy } = useCopy()
     const router = useRouter()
 
@@ -139,39 +142,39 @@ export default function Transaction({
                 <tbody>
                     {
                         transactionList.map(item => {
-                            return <tr key={item.hash}>
+                            return <tr key={item.order_hash}>
                                 {
-                                    item.status === 3 && <td className="pending">Pending</td>
+                                    item.order_status !== 'finished' && <td className="pending">Pending</td>
                                 }
                                 {
-                                    item.status === 2 && <td className="success">Success</td>
+                                    item.order_status === 'finished' && <td className="success">Success</td>
                                 }
                                 
                                 <td>
                                     <div className="mul-ele">
-                                        <img className="chain-icon" src={item.fromChainIcon} /> 
-                                        <div>{ item.fromChainName } </div>
+                                        <img className="chain-icon" src={item.fromChainLogo} /> 
+                                        <div>{ item.src_chain_name } </div>
                                         <div className="mul-ele">
-                                            { addressFormated(item.fromAddress) } 
-                                            <Copy onClick={() => { copy(item.toAddress) }}/> 
+                                            { addressFormated(item.src_address) } 
+                                            <Copy onClick={() => { copy(item.src_address) }}/> 
                                         </div>
                                     </div>
                                 </td>
                                 <td>
                                     <div className="mul-ele">
-                                        <img className="chain-icon"  src={item.toChainIcon} /> 
-                                        <div>{ item.toChainName } </div>
+                                        <img className="chain-icon"  src={item.toChainLogo} /> 
+                                        <div>{ item.dst_chain_name } </div>
                                         <div className="mul-ele">
-                                            { addressFormated(item.toAddress) } 
-                                            <Copy onClick={() => { copy(item.toAddress) }}/> 
+                                            { addressFormated(item.dst_address) } 
+                                            <Copy onClick={() => { copy(item.dst_address) }}/> 
                                         </div>
                                     </div>
                                 </td>
-                                <td>{ balanceFormated(item.amount, 4) } { item.fromTokenSymbol }</td>
+                                <td>{ balanceFormated(item.src_amount) } { item.fromTokenSymbol }</td>
                                 <td>
                                     <div className="mul-ele">
-                                        { addressFormated(item.hash) } 
-                                        <Copy onClick={() => { copy(item.hash) }}/> 
+                                        { addressFormated(item.order_hash) } 
+                                        <Copy onClick={() => { copy(item.order_hash) }}/> 
                                     </div></td>
                                 <td>{ formateTxDate(item.time) }</td>
                             </tr>

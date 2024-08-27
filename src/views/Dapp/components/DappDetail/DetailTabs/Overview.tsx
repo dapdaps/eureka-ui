@@ -123,10 +123,10 @@ const Overview = (props: any) => {
 
   const blockExplorer = useMemo(() => {
     if (block_explorer) return block_explorer;
-    const currChain = chainCofig[chain_id];
+    const currChain = chainCofig[nativeCurrency?.chain_id || chain_id];
     if (!currChain) return 'https://etherscan.io';
     return currChain.blockExplorers;
-  }, [block_explorer, chain_id]);
+  }, [block_explorer, chain_id, nativeCurrency]);
 
   const defaultRpc = useMemo(() => {
     if (!rpc) return '';
@@ -201,7 +201,7 @@ const Overview = (props: any) => {
   };
 
   const handleAddWallet = async () => {
-    switchChain({ chainId: chain_id }, async () => {
+    switchChain({ chainId: nativeCurrency?.chain_id || chain_id }, async () => {
       const addRes = await add({
         address: nativeCurrency?.address?.trim(),
         symbol: nativeCurrency?.symbol?.trim(),
