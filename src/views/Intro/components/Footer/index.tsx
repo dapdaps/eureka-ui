@@ -67,27 +67,27 @@ const ABOUT_LIST = [{
 },]
 const PRODUCT_LIST = [{
   label: "Super Bridge",
-  path: "/super-bridge",
+  path: "https://app.dapdap.net/super-bridge",
   target: "_self"
 }, {
   label: "Super Swap",
-  path: "/super-swap",
+  path: "https://app.dapdap.net/super-swap",
   target: "_self"
 }, {
   label: "Chains",
-  path: "/networks",
+  path: "https://app.dapdap.net/networks",
   target: "_self"
 }, {
   label: "dApps",
-  path: "/alldapps",
+  path: "https://app.dapdap.net/alldapps",
   target: "_self"
 }, {
   label: "Odyssey",
-  path: "/odyssey",
+  path: "https://app.dapdap.net/odyssey",
   target: "_self"
 }, {
   label: "Portfolio",
-  path: "/portfolio",
+  path: "https://app.dapdap.net/portfolio",
   target: "_self"
 },]
 const SOCIAL_LIST = [{

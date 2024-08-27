@@ -64,7 +64,7 @@ export default memo(function Into() {
           <StyledSvg
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              router.push("/networks")
+              router.push("https://app.dapdap.net/networks")
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none">
@@ -89,7 +89,7 @@ export default memo(function Into() {
           <StyledSvg
             style={{ cursor: 'pointer' }}
             onClick={() => {
-              router.push("/alldapps")
+              router.push("https://app.dapdap.net/alldapps")
             }}
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="68" height="68" viewBox="0 0 68 68" fill="none">

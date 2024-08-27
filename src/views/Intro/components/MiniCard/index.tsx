@@ -351,7 +351,7 @@ export default memo(function MiniCard() {
           style={{ backgroundColor: "#5B56F3", height: 614 }}
           onClick={() => {
             const path = TILT_CHAINS[currentIndex % TILT_CHAINS.length]?.path
-            router.push(`/all-in-one/${path}`)
+            router.push(`https://app.dapdap.net/all-in-one/${path}`)
           }}
         >
           <StyledRightSvg style={{ right: 10, top: 10 }}>
@@ -393,7 +393,7 @@ export default memo(function MiniCard() {
               className="SuperBridgeMiniCard"
               style={{ backgroundColor: "#F2F2F2" }}
               onClick={() => {
-                router.push("/super-bridge")
+                router.push("https://app.dapdap.net/super-bridge")
               }}
             >
               <StyledBlackRoundedSvg style={{ top: 12, left: 12 }}>
@@ -433,7 +433,7 @@ export default memo(function MiniCard() {
               className="SuperSwapMiniCard"
               style={{ backgroundColor: "#5B56F3" }}
               onClick={() => {
-                router.push("/super-swap")
+                router.push("https://app.dapdap.net/super-swap")
               }}
             >
               <StyledWhiteRoundedSvg style={{ top: 12, left: 12 }}>
@@ -474,7 +474,7 @@ export default memo(function MiniCard() {
             <StyledMiniCard
               style={{ background: `#EBF479 url(/images/intro/portfolio-bg.svg) no-repeat center`, backgroundSize: '100%' }}
               onClick={() => {
-                router.push("/portfolio")
+                router.push("https://app.dapdap.net/portfolio")
               }}
             >
               <StyledContainer style={{ paddingTop: 48, paddingLeft: 32, paddingRight: 25 }}>
@@ -536,7 +536,7 @@ export default memo(function MiniCard() {
         <StyledMiniCard
           style={{ display: "flex", flex: 2, backgroundColor: "#EBF479", padding: 20 }}
           onClick={() => {
-            router.push("/odyssey")
+            router.push("https://app.dapdap.net/odyssey")
           }}
         >
           <StyledRightSvg style={{ right: 10, top: 10 }}>

@@ -86,11 +86,11 @@ export default memo(function Banner() {
     <StyledBanner>
       <StyledFlex justifyContent="center" gap="10px">
         <StyledFont color="#FFF" fontSize="18px" lineHeight="150%">Quick start your Web3 journey with</StyledFont>
-        <StyledSuperButton style={{ width: 152 }} onClick={() => router.push("/super-bridge")}>
+        <StyledSuperButton style={{ width: 152 }} onClick={() => router.push("https://app.dapdap.net/super-bridge")}>
           <BridgeSvg />
           <StyledFont color="#FFF" fontWeight="600" lineHeight="100%">Super Bridge</StyledFont>
         </StyledSuperButton>
-        <StyledSuperButton style={{ width: 145 }} onClick={() => router.push("/super-swap")}>
+        <StyledSuperButton style={{ width: 145 }} onClick={() => router.push("https://app.dapdap.net/super-swap")}>
           <SwapSvg />
           <StyledFont color="#FFF" fontWeight="600" lineHeight="100%">SuperSwap</StyledFont>
         </StyledSuperButton>
