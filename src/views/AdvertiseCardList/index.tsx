@@ -14,6 +14,8 @@ const Card = (
     buttonText,
     link,
     type,
+    width = 405,
+    height = 312,
   }: Card) => {
 
   const router = useRouter();
@@ -39,8 +41,8 @@ const Card = (
       <StyledCardImage
         src={image}
         className={`${classname}-card-img ${buttonText ? 'min-height' : ''}`}
-        width={100}
-        height={100}
+        width={width}
+        height={height}
         alt=""
       />
       {
@@ -98,6 +100,8 @@ const AdvertiseCard = (
                 link={item.ad_link ?? ''}
                 buttonText={item.btn ?? ''}
                 type={type}
+                width={403}
+                height={473}
               />
             </SwiperSlide>
           ))
@@ -115,6 +119,8 @@ const AdvertiseCard = (
         key={idx}
         buttonText={item.btn ?? ''}
         type={type}
+        width={403}
+        height={473}
       />
     ),
   );
@@ -133,6 +139,8 @@ interface Card {
   btn?: string;
   classname?: string;
   type?: 'network' | 'dapp';
+  width?: number;
+  height?: number;
 }
 
 interface Props {
