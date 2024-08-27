@@ -35,6 +35,7 @@ export interface Odyssey {
   trading_volume: string;
   total_transactions: number;
   total_users: number;
+  reward_value?: string;
 }
 
 interface SearchData {

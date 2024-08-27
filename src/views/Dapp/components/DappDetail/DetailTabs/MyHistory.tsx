@@ -56,9 +56,6 @@ const MyHistory = (
     router.push('/portfolio');
   };
 
-  const onShareClick = () => {
-  };
-
   const historyDappColumns: Column[] = [
     {
       dataIndex: 'actions',
@@ -128,14 +125,6 @@ const MyHistory = (
                   }}
                 />
               </TooltipSimple>
-                <Image
-                  className="head-icon"
-                  src="/images/alldapps/icon-share.svg"
-                  width={12}
-                  height={12}
-                  alt="share"
-                  onClick={onShareClick}
-                />
               </>
             )
           }
