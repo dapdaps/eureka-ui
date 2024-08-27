@@ -35,7 +35,7 @@ const SelectTokensModal = ({ tokens, display, currency, onClose, onSelect }: Pro
   const prices = usePriceStore((store) => store.price);
   const [searchVal, setSearchVal] = useState('');
   const { loading, balances = {} } = useTokensBalance(tokens);
-
+  
   const filterTokens = useMemo(() => {
     return tokens.filter((token: any) => {
       if (!searchVal) {
@@ -43,7 +43,8 @@ const SelectTokensModal = ({ tokens, display, currency, onClose, onSelect }: Pro
       }
       return (
         token.address.toLowerCase() === searchVal?.toLowerCase() ||
-        token.name.toLowerCase().includes(searchVal?.toLowerCase())
+        token.name.toLowerCase().includes(searchVal?.toLowerCase()) ||
+        token.symbol.toLowerCase().includes(searchVal?.toLowerCase()) 
       );
     });
   }, [tokens, searchVal]);
