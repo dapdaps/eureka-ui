@@ -7,7 +7,7 @@ import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { getAccessToken } from '@/apis';
-import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
+// import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 import useToast from '@/hooks/useToast';
 import { ellipsAccount } from '@/utils/account';
@@ -123,7 +123,7 @@ const LoginView = () => {
   }, [address]);
   return (
     <StyledFlex style={{ height: '100vh' }} $gap="82px">
-      <ConfirmOfficialUrl />
+      {/* <ConfirmOfficialUrl /> */}
       <StyledImage>
         <StyledLoginVideo width={824} height={636} autoPlay muted playsInline loop>
           <source src="https://s3.amazonaws.com/dapdap.prod/images/login_background.mp4" type="video/mp4" />
