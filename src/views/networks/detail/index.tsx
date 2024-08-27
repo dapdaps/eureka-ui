@@ -27,6 +27,8 @@ import {
 
 const StyleImageMedals = styled.img`
   margin-top: 51px;
+  width: 500px;
+  height: 220px;
 `
 
 const ChainDetail = ({ path }: any) => {

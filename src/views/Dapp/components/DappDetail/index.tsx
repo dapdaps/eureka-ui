@@ -20,6 +20,8 @@ import DappSummary from './Summary';
 
 const StyleImageMedals = styled.img`
   margin-top: 51px;
+  width: 500px;
+  height: 220px;
 `
 const DappDetail = (props: Props) => {
   const {
