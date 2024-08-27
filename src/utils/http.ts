@@ -32,6 +32,15 @@ const getUrl = (url: string) => {
   return url.startsWith('http') ? url : `${BASE_URL}${url}`;
 };
 
+const handleUpgrade = (result: any) => {
+  if (window.location.pathname === '/upgrade') {
+    return;
+  }
+  if (result && result.code === 9000) {
+    window.location.replace('/upgrade');
+  }
+};
+
 const get = async (url: string, query?: Record<string, any>) => {
   const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const options = {
@@ -43,13 +52,17 @@ const get = async (url: string, query?: Record<string, any>) => {
   };
   if (!query) {
     const res = await fetch(getUrl(url), options);
-    return res.json() as any;
+    const result = await res.json() as any;
+    handleUpgrade(result);
+    return result;
   }
 
   query = removeEmptyKeys(query);
   const queryStr = objectToQueryString(query);
   const res = await fetch(`${getUrl(url)}?${queryStr}`, options);
-  return res.json() as any;
+  const result = await res.json() as any;
+  handleUpgrade(result);
+  return result;
 };
 
 const getWithoutActive = async (
@@ -87,7 +100,9 @@ const post = async (url: string, data: object) => {
     },
     body: JSON.stringify(data),
   });
-  return (await res.json()) as any;
+  const result = await res.json() as any;
+  handleUpgrade(result);
+  return result;
 };
 
 const deleteRequest = async (url: string, data: object) => {
