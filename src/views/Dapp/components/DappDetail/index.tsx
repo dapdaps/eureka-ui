@@ -20,7 +20,9 @@ import DappSummary from './Summary';
 
 const StyleImageMedals = styled.img`
   margin-top: 51px;
-`
+  width: 100%;
+`;
+
 const DappDetail = (props: Props) => {
   const {
     trading_volume,
