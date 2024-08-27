@@ -73,9 +73,15 @@ export default function useAirdropList(tab: Tab) {
     { wait: airdropList ? 800 : 3000 },
   );
 
+  // useEffect(() => {
+  //   (tab === 'InProgress' || !loaded) && run();
+  // }, [account, tab]);
   useEffect(() => {
-    (tab === 'InProgress' || !loaded) && run();
-  }, [account, tab]);
+    run()
+  }, [account])
+  useEffect(() => {
+    (tab === 'InProgress') && run();
+  }, [tab]);
 
   return { loading, loaded, airdropList, queryAirdropListByAccount };
 }

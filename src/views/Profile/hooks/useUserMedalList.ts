@@ -48,10 +48,12 @@ export default function useMedalList(tab: Tab) {
     },
     { wait: userMedalList ? 800 : 3000 },
   );
-
   useEffect(() => {
-    (tab === 'InProgress' || !loaded) && run();
-  }, [account, tab]);
+    run()
+  }, [account])
+  useEffect(() => {
+    (tab === 'InProgress') && run();
+  }, [tab]);
 
   return { loading, loaded, userMedalList, queryUserMedalList };
 }

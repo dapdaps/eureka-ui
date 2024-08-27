@@ -8,9 +8,11 @@ import Loading from '@/components/Icons/Loading';
 import LazyImage from '@/components/LazyImage';
 import chainCofig from '@/config/chains';
 import tokens, { NativeTokenAddressMap } from '@/config/tokens';
+import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 import type { Quest, QuestDapp} from '@/hooks/useAirdrop';
 import { QuestCategory, useAirdrop } from '@/hooks/useAirdrop';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import { usePriceStore } from '@/stores/price';
 import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
@@ -56,8 +58,6 @@ import {
   StyledTokenPrice,
   StyledTokenValue,
 } from './styles';
-import useSwitchChain from '@/hooks/useSwitchChain';
-import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 
 const Overview = (props: any) => {
   const {
