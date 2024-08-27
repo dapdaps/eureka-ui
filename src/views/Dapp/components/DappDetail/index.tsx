@@ -39,7 +39,7 @@ const DappDetail = (props: Props) => {
     {
       key: 'volume',
       label: 'Trading Volume on DapDap',
-      value: `$${formatIntegerThousandsSeparator(trading_volume, 1)}`,
+      value: `$${formatIntegerThousandsSeparator(trading_volume, 2)}`,
       increaseValue: trading_volume_change_percent || '',
     },
     {
