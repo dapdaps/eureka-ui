@@ -5,32 +5,24 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 
 import { StyledAddMeta } from './styles';
+import useAddChain from '@/hooks/useAddChain';
 
 const AddMetaMask = ({ chainId, bp }: any) => {
   const { check } = useAuthCheck({ isNeedAk: false });
   const toast = useToast();
+  const { add: addChain } = useAddChain();
 
   const addNetwork = async () => {
-    const currChain = chainCofig[chainId];
-    if (typeof window.ethereum === 'undefined' || !currChain) {
+    const addRes = await addChain({
+      chainId: chainId,
+    });
+    if (!addRes.success) {
+      toast.fail('Failed to add network!');
       return;
     }
-
-    try {
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: `0x${chainId.toString(16)}`,
-          rpcUrls: currChain.rpcUrls,
-          chainName: currChain.chainName,
-          nativeCurrency: currChain.nativeCurrency,
-          blockExplorerUrls: [currChain.blockExplorers],
-        }],
-      });
-    } catch (err) {
-      console.log('add metamask failed: %o', err);
-      toast.fail('Failed to add network!');
-    }
+    toast.success({
+      title: 'Add successfully!',
+    });
   };
 
   return (

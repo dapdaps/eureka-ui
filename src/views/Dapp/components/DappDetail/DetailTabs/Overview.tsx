@@ -8,13 +8,12 @@ import Loading from '@/components/Icons/Loading';
 import LazyImage from '@/components/LazyImage';
 import chainCofig from '@/config/chains';
 import tokens, { NativeTokenAddressMap } from '@/config/tokens';
+import useAddChain from '@/hooks/useAddChain';
 import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 import type { Quest, QuestDapp} from '@/hooks/useAirdrop';
 import { QuestCategory, useAirdrop } from '@/hooks/useAirdrop';
 import useAuthCheck from '@/hooks/useAuthCheck';
-import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
-import { usePriceStore } from '@/stores/price';
 import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
 import { StyledFlex } from '@/styled/styles';
 import { copyText } from '@/utils/copy';
@@ -54,7 +53,6 @@ import {
   StyledTokenInfo,
   StyledTokenItem,
   StyledTokenLabel,
-  StyledTokenLogo,
   StyledTokenPrice,
   StyledTokenValue,
 } from './styles';
@@ -84,8 +82,8 @@ const Overview = (props: any) => {
     reportAdditionResult,
   } = useAirdrop({ category, id });
   const tokenPriceLatest = useTokenPriceLatestStore(store => store.list);
-  const { switchChain } = useSwitchChain();
   const { add } = useAddTokenToWallet();
+  const { add: addChain } = useAddChain();
 
   const copyTooltipRef = useRef<any>(null);
 
@@ -201,54 +199,47 @@ const Overview = (props: any) => {
   };
 
   const handleAddWallet = async () => {
-    switchChain({ chainId: nativeCurrency?.chain_id || chain_id }, async () => {
-      const addRes = await add({
-        address: nativeCurrency?.address?.trim(),
-        symbol: nativeCurrency?.symbol?.trim(),
-        decimals: nativeCurrency?.decimals,
-        icon: nativeCurrency?.logo,
-      });
-      if (addRes.success) {
-        toast.success({
-          title: 'Add successfully!',
-        });
-      } else if (addRes.error) {
-        const err: any = addRes.error;
-        let msg = '';
-        if (err?.message?.includes('User rejected')) {
-          msg = 'User rejected';
-        }
-        toast.fail({
-          title: 'Add failure!',
-          text: msg,
-        });
-      }
+    const addChainRes = await addChain({
+      chainId: nativeCurrency?.chain_id || chain_id,
     });
+    if (!addChainRes.success) {
+      toast.fail({
+        title: 'Add failure!',
+      });
+      return;
+    }
+    const addRes = await add({
+      address: nativeCurrency?.address?.trim(),
+      symbol: nativeCurrency?.symbol?.trim(),
+      decimals: nativeCurrency?.decimals,
+      icon: nativeCurrency?.logo,
+    });
+    if (addRes.success) {
+      toast.success({
+        title: 'Add successfully!',
+      });
+    } else if (addRes.error) {
+      const err: any = addRes.error;
+      let msg = '';
+      if (err?.message?.includes('User rejected')) {
+        msg = 'User rejected';
+      }
+      toast.fail({
+        title: 'Add failure!',
+        text: msg,
+      });
+    }
   };
 
   const onAddMetaMask = async () => {
-    const currChain = chainCofig[chain_id];
-    if (typeof window.ethereum === 'undefined' || !currChain) {
-      return false;
-    }
-
-    try {
-      await window.ethereum.request({
-        method: 'wallet_addEthereumChain',
-        params: [{
-          chainId: `0x${chain_id.toString(16)}`,
-          rpcUrls: currChain.rpcUrls,
-          chainName: currChain.chainName,
-          nativeCurrency: currChain.nativeCurrency,
-          blockExplorerUrls: [currChain.blockExplorers],
-        }],
-      });
-      return true;
-    } catch (err) {
-      console.log('add metamask failed: %o', err);
+    const addRes = await addChain({
+      chainId: chain_id,
+    });
+    if (!addRes.success) {
+      console.log(addRes.error);
       toast.fail('Failed to add network!');
-      return false;
     }
+    return addRes.success;
   };
 
   const onCopyCurrency = () => {
