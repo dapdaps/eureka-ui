@@ -322,8 +322,11 @@ export default function BirdgeAction(
         fromChain={fromChain}
         routeSortType={routeSortType}
         quoteLoading={quoteLoading}
+        stopSelected={confirmModalShow}
         onRouteSelected={(route: QuoteResponse | null) => {
-          setSelectedRoute(route)
+          if (!confirmModalShow) {
+            setSelectedRoute(route)
+          }
         }} toToken={toToken} routes={routes} />
     }
     <Sep height={20} />
