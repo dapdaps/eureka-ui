@@ -223,7 +223,7 @@ const PriceBoard = () => {
   
   return (
     <StyledWrapper>
-      <StyledTitle>1 ETH Price Board</StyledTitle>
+      <StyledTitle>ETH Price Board</StyledTitle>
       <StyledContainer>
         <Container>
           {priceData.map((data, index) => (
