@@ -8,6 +8,14 @@ export function balanceFormated(balance?: string | number, digits = 4) {
   return _balance.toFixed(digits).replace(/\.?0+$/, '');
 }
 
+export function balanceFormatedFloor(balance?: string | number, digits = 4) {
+  if (!balance) return '0';
+  const _balance = new Big(balance);
+  if (_balance.eq(0)) return '0';
+  if (_balance.lt(1 / 10 ** digits)) return `<${1 / 10 ** digits}`;
+  return _balance.toFixed(digits, 0);
+}
+
 export function valueFormated(balance?: string, price?: string, digits = 2) {
   if (!balance || !price) return '0';
   const _balance = new Big(balance);

@@ -8,11 +8,12 @@ import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
-import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
+import { addressFormated, balanceFormated, balanceFormatedFloor,percentFormated } from '@/utils/balance';
 
 import { useGasAmount } from '../hooks/useGasTokenHooks';
 import Modal from "../Modal";
 import SubmitBtn from '../SubmitBtn';
+
 
 const Tip = styled.div`
     font-size: 16px;
@@ -39,7 +40,7 @@ const RefuelAmount = styled.div`
 
 const Range = styled.input<{ max: any, value: any }>`
     width: 100%;
-    -webkit-appearance: none; 
+    -webkit-appearance: none;
     background: transparent; 
     &::-webkit-slider-thumb {
         /* -webkit-appearance: none; */
@@ -70,23 +71,6 @@ const Range = styled.input<{ max: any, value: any }>`
     
 `
 
-const Container = styled.div<{ disabled?: boolean }>`
-    height: 60px;
-    line-height: 60px;
-    background-color: rgba(235, 244, 121, 1);
-    border-radius: 10px;
-    text-align: center;
-    color: rgba(55, 58, 83, 1);
-    cursor: pointer;
-    font-weight: 600;
-    font-size: 18px;
-    margin-top: 10px;
-    &.disbaled {
-        opacity: .3;
-        cursor: default;
-    }
-`
-
 const Sep = styled.div`
     height: 20px;
 `
@@ -107,34 +91,37 @@ interface Props {
     toChain: Chain | undefined;
     toAddress: string;
     maxBalance: string | undefined;
+    price?: string;
     theme?: any;
     onClick: () => void;
     onClose: () => void;
 }
 
 const max$ = 200
+const maxGas = 0.001
 
 export default function GasModal({
-    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, theme
+    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, price, theme
 } : Props) {
     const { account, chainId, provider } = useAccount();
-    const prices = usePriceStore((store) => store.price);
+    // const prices = usePriceStore((store) => store.price);
     const [rangeVal, setRangeVal] = useState<string>('0')
     const [min, setMin] = useState(0)
     const [step, setStep] = useState(1)
     const [max, setMax] = useState(200)
     const [disabled, setDisabled] = useState(false)
+    const [gas, setGas] = useState(maxGas)
 
     const inputValue = useDebounce(rangeVal, { wait: 100 });
 
-    const { receive, deposit, isLoading } = useGasAmount({
+    const { receive, deposit, estimateGas, isLoading } = useGasAmount({
         fromChain,
         toChain,
         fromToken,
         value: inputValue
     })
 
-    const senGas = useCallback(async () => {
+    const sendGas = useCallback(async () => {
         if (fromToken) {
             const _value = new Big(inputValue).mul(10 ** fromToken?.decimals).toString()
             await deposit(fromToken.address, account as string, _value, provider?.getSigner())
@@ -143,15 +130,15 @@ export default function GasModal({
     }, [fromToken, fromChain, inputValue])
 
     useEffect(() => {
-        if (prices && fromToken && prices[fromToken.symbol]) {
-            const max = max$ / Number(prices[fromToken.symbol])
+        if (price && fromToken) {
+            const max = max$ / Number(price)
             const step = max / 200
             const min = step
             setMax(max)
             setMin(min)
             setStep(step)
         }
-    }, [prices, fromToken])
+    }, [price, fromToken])
 
     useEffect(() => {
         if (receive === '0') {
@@ -159,7 +146,7 @@ export default function GasModal({
             return
         }
 
-        if (!maxBalance || Number(inputValue) >= Number(maxBalance)) {
+        if (!maxBalance || Number(inputValue) > Number(maxBalance)) {
             setDisabled(true)
             return
         }
@@ -167,26 +154,60 @@ export default function GasModal({
         setDisabled(false)
     }, [receive, maxBalance, inputValue])
 
+    useEffect(() => {
+        
+        getGas()
+
+        async function getGas() {
+            if (fromToken && inputValue && account) {
+                const price = await provider?.getSigner().getGasPrice()
+                const gasLimit = await estimateGas(fromToken?.address, account, inputValue, provider?.getSigner())
+                if (gasLimit && price) {
+                    setGas((Number(gasLimit) * Number(price.toString())) / (10 ** fromToken.decimals) * 3)
+                } else {
+                    setGas(maxGas)
+                }
+            }
+        }
+        
+    }, [inputValue, fromToken, account])
+
     return <Modal title="Refuel Gas Token" onClose={() => {
         !isLoading && onClose()
     }}>
-        <Tip>Transfer {fromToken?.symbol} for {toChain?.nativeCurrency.symbol} to cover gas fee on Base.</Tip>
+        <Tip>Transfer {fromToken?.symbol} for {toChain?.nativeCurrency.symbol} to cover gas fee on { toChain?.chainName }.</Tip>
         <RefuelAmount>
             <div>Refuel Amount:</div>
             <div className="transter-detail">
                 <Input value={rangeVal} onChange={(e) => {
-                    if (Number(e.target.value)> Number(max)) {
-                        setRangeVal(max.toString())
-                    } else {
-                        setRangeVal(e.target.value)
-                    }
-                    
+                    const { value } = e.target
+                    if (maxBalance) {
+                        if (fromToken?.isNative) {
+                            const maxValue = (Number(maxBalance) - gas)
+                            const compareValue = Math.min(maxValue, max)
+                            if (Number(value) > compareValue) {
+                                setRangeVal(compareValue.toString())
+                            } else {
+                                if (!isNaN(parseFloat(value)))  {
+                                    setRangeVal(value)
+                                }
+                            }
+                        } else {
+                            if (Number(maxBalance) <= Number(value)) {
+                                setRangeVal((Number(maxBalance)).toString())
+                            } else if (Number(value)> Number(max)) {
+                                setRangeVal(max.toString())
+                            } else if (!isNaN(parseFloat(value)))  {
+                                setRangeVal(value)
+                            }
+                        }
+                    } 
                 }} />{fromToken?.symbol}
                 {/* <div>{balanceFormated(rangeVal)} {fromToken?.symbol}</div> */}
                     <svg width="8" height="10" viewBox="0 0 8 10" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M7.5 4.13397C8.16667 4.51887 8.16667 5.48113 7.5 5.86603L1.5 9.33013C0.833334 9.71503 -4.47338e-07 9.2339 -4.13689e-07 8.4641L-1.10848e-07 1.5359C-7.71986e-08 0.766098 0.833333 0.284973 1.5 0.669873L7.5 4.13397Z" fill="#979ABE"/>
                     </svg>
-                <div>{balanceFormated(receive)} {toChain?.nativeCurrency.symbol}</div>
+                <div>{balanceFormatedFloor(receive)} {toChain?.nativeCurrency.symbol}</div>
             </div>
         </RefuelAmount>
 
@@ -195,12 +216,30 @@ export default function GasModal({
         <Range
             type='range'
             onChange={(e: any) => {
-                setRangeVal(e.target.value)
+                const { value } = e.target
+                if (maxBalance) {
+                    if (fromToken?.isNative) {
+                        const maxValue = (Number(maxBalance) - gas)
+                        if (maxValue <= Number(value)) {
+                            setRangeVal((Number(maxBalance) - gas).toString())
+                        } else {
+                            setRangeVal(value)
+                        }
+                    } else {
+                        if (Number(maxBalance) <= Number(value)) {
+                            setRangeVal((Number(maxBalance)).toString())
+                        } else {
+                            setRangeVal(value)
+                        }
+                    }
+                } else {
+                    setRangeVal(value)
+                }
             }}
             min={min}
             max={max}
             step={step}
-            value={rangeVal}
+            value={parseFloat(rangeVal)}
             className='custom-slider'
         />
 
@@ -212,7 +251,10 @@ export default function GasModal({
             text="Confirm"
             theme={theme}
             fromChain={fromChain as Chain}
-            onClick={senGas}
+            onClick={async () => {
+                await sendGas()
+                onClick && onClick()
+            }}
             defaultText="Confirm"
         />
         
