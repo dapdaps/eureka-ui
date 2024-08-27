@@ -4,7 +4,7 @@ import styled from 'styled-components';
 export const StyledNetworkTabWrapper = styled.div<{fold: boolean}>`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   flex-wrap: wrap;
   margin-bottom: 38px;
   height: ${({ fold }) => fold ? '120px' : 'unset'};
@@ -20,7 +20,7 @@ export const StyledTabItem = styled(motion.div)`
   align-items: center;
   justify-content: flex-start;
   column-gap: 7px;
-  width: 158px;
+  width: 188px;
   cursor: pointer;
   transition: all 0.15s ease-in-out;
 

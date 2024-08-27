@@ -50,10 +50,11 @@ const formateValueWithThousandSeparatorAndFont = (
     isLTIntegerZero?: boolean;
     // should zeros be added at the end
     isZeroPrecision?: boolean;
+    isShort?: boolean;
   },
 ): any => {
 
-  const { prefix = '', isLTIntegerZero, isZeroPrecision } = options || {};
+  const { prefix = '', isLTIntegerZero, isZeroPrecision, isShort } = options || {};
 
   if (!value || Big(value).eq(0)) {
     if (isSimple) {
@@ -91,21 +92,43 @@ const formateValueWithThousandSeparatorAndFont = (
   }
 
   const finalValue = addThousandSeparator(Big(value).toFixed(precision));
+  const firstPart = finalValue.split('.')[0];
+  let secondPart = finalValue.split('.')[1] || '';
+  if (secondPart) {
+    secondPart = '.' + secondPart;
+  }
   if (isSimple) {
-    if (isZeroPrecision) {
-      return `${prefix}${finalValue.split('.')[0]}.${finalValue.split('.')[1]}`;
+    if (isShort) {
+      const formatter = (split: number, unit: string): string => {
+        const _num = Big(value).div(split).toFixed(precision, 0).replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
+        const inter = _num.split('.')?.[0]?.replace(/\d(?=(\d{3})+\b)/g, '$&,');
+        const decimal = _num.split('.')?.[1] ?? '';
+        return `${prefix}${inter}${decimal ? '.' + decimal : ''}${unit}`;
+      };
+      if (Big(value).gte(1e9)) {
+        return formatter(1e9, 'b');
+      }
+      if (Big(value).gte(1e6)) {
+        return formatter(1e6, 'm');
+      }
+      if (Big(value).gte(1e3)) {
+        return formatter(1e3, 'k');
+      }
     }
-    return `${prefix}${finalValue.split('.')[0]}${('.' + finalValue.split('.')[1]).replace(/[.]?0+$/, '')}`;
+    if (isZeroPrecision) {
+      return `${prefix}${firstPart}${secondPart}`;
+    }
+    return `${prefix}${firstPart}${secondPart.replace(/[.]?0*$/, '')}`;
   }
   if (isZeroPrecision) {
     return {
-      integer: `${prefix}${finalValue.split('.')[0]}`,
-      decimal: '.' + finalValue.split('.')[1],
+      integer: `${prefix}${firstPart}`,
+      decimal: secondPart,
     };
   }
   return {
-    integer: `${prefix}${finalValue.split('.')[0]}`,
-    decimal: ('.' + finalValue.split('.')[1]).replace(/[.]?0+$/, ''),
+    integer: `${prefix}${firstPart}`,
+    decimal: secondPart.replace(/[.]?0*$/, ''),
   };
 };
 
