@@ -64,7 +64,12 @@ export default function useUserFavorites(tab: Tab) {
     run()
   }, [account])
   useEffect(() => {
-    (tab === 'FavoriteApps') && run();
+    if (tab === 'FavoriteApps') {
+      run();
+    } else {
+      setLoaded(false)
+      setUserFavorites(null)
+    }
   }, [tab]);
 
   return { loading, loaded, userFavorites, queryUserFavorites };

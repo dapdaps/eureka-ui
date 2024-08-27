@@ -80,7 +80,12 @@ export default function useAirdropList(tab: Tab) {
     run()
   }, [account])
   useEffect(() => {
-    (tab === 'InProgress') && run();
+    if (tab === 'InProgress') {
+      run();
+    } else {
+      setLoaded(false)
+      setAirdropList([])
+    }
   }, [tab]);
 
   return { loading, loaded, airdropList, queryAirdropListByAccount };

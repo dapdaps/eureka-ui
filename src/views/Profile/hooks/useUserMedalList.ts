@@ -52,7 +52,12 @@ export default function useMedalList(tab: Tab) {
     run()
   }, [account])
   useEffect(() => {
-    (tab === 'InProgress') && run();
+    if (tab === 'InProgress') {
+      run();
+    } else {
+      setLoaded(false)
+      setUserMedalList([])
+    }
   }, [tab]);
 
   return { loading, loaded, userMedalList, queryUserMedalList };
