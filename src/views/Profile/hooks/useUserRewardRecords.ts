@@ -48,10 +48,13 @@ export default function useUserRewardRecords(tab: Tab) {
     },
     { wait: userRewardRecords ? 800 : 3000 },
   );
-
+  
   useEffect(() => {
-    (tab === "RewardHistory" || !loaded) && run();
-  }, [account, tab]);
+    run()
+  }, [account])
+  useEffect(() => {
+    (tab === 'RewardHistory') && run();
+  }, [tab]);
 
   return { loading, loaded, pager, setPager, userRewardRecords, queryUserRewardRecords };
 }

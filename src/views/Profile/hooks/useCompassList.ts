@@ -64,8 +64,11 @@ export default function useCompassList(tab: Tab) {
     { wait: compassList ? 800 : 3000 },
   );
   useEffect(() => {
-    (tab === 'InProgress' || !loaded) && run();
-  }, [account, tab]);
+    run()
+  }, [account])
+  useEffect(() => {
+    (tab === 'InProgress') && run();
+  }, [tab]);
 
   return { loading, loaded, compassList, queryCompassListByAccount };
 }

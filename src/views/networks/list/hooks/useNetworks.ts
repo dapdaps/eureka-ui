@@ -1,4 +1,3 @@
-import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { orderBy } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
@@ -28,7 +27,6 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
 
   const fetchNetworkData = async () => {
     if (loading) return [];
-    setLoading(true);
     try {
       const resultNetwork = await get(`${QUEST_PATH}/api/network/all`);
       let data: Network[] = resultNetwork.data || [];
@@ -45,32 +43,27 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
     } catch (error) {
       console.error('Error fetching resultNetwork data:', error);
       return [];
-    } finally {
-      // setLoading(false);
     }
   };
 
   const fetchAdvertiseData = async () => {
     if (mode === 'card') {
-     const _advertise = await fetchAdvertise();
-     setAdvertise(_advertise);
+      const _advertise = await fetchAdvertise();
+      setAdvertise(_advertise);
     }
   }
 
   useEffect(() => {
-    fetchNetworkData();
-    fetchAdvertiseData();
+    setLoading(true);
+    Promise.all([fetchNetworkData(), fetchAdvertiseData()]).then(() => {
+      setLoading(false);
+    });
     return () => {
       setAdvertise([]);
     }
   }, [mode]);
 
-  const { run } = useDebounceFn(() => {
-    setLoading(false);
-  }, { wait: 300 })
-
   const filterNetworkData = async () => {
-    setLoading(true);
     if (!networkList.length) {
       return;
     }
@@ -100,7 +93,6 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
 
     setL1NetworkList(_l1NetworkList);
     setL2NetworkList(_l2NetworkList);
-    run();
   }
 
   useEffect(() => {

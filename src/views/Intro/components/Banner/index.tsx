@@ -27,6 +27,7 @@ const StyledSuperButton = styled.div`
   border: 1px solid #202329;
   background: #18191E;
   backdrop-filter: blur(10px);
+  cursor: pointer;
 `
 const StyledExporeButton = styled.div`
   margin: 0 auto;
