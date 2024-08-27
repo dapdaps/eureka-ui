@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import styled from "styled-components";
 
-export const StyledContainer = styled(motion.div)<{ $top: number; }>`
+export const StyledContainer = styled(motion.div)<{ $top?: number; }>`
   position: fixed;
   z-index: 1;
   right: 0;

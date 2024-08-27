@@ -2,12 +2,10 @@ import Big from 'big.js';
 import { AnimatePresence } from 'framer-motion';
 import { orderBy } from 'lodash';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import ChainsDockList from '@/components/ChainsDock/List';
 import { StyledContainer, StyledInner, StyledLine, StyledMask } from '@/components/ChainsDock/styles';
-import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
 import { SupportedChains } from '@/config/all-in-one/chains';
 import type { Network } from '@/hooks/useNetworks';
 import { useChainsStore } from '@/stores/chains';
@@ -32,10 +30,6 @@ const ChainsDock = () => {
   const chains = useChainsStore((store: any) => store.chains);
   const { loading, networks } = useTokens({ networkList: chains });
   const { loading: dappsLoading, dappsByChain } = useDapps();
-  const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl);
-  const router = useRouter();
-
-  const isHomePage = router.pathname === '/';
 
   const chainList = useMemo(() => {
     let _chainListFixed: NetworkBalance[] = [];
@@ -96,7 +90,6 @@ const ChainsDock = () => {
   return (
     <StyledContainer
       ref={containerRef}
-      $top={showConfirmOfficialUrl && isHomePage ? 54 : 0}
     >
       <StyledInner>
         <ChainsDockList list={chainList[0]} onBridgeShow={onBridgeShow} loading={loading || dappsLoading}/>

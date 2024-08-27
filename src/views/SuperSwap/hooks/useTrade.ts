@@ -25,7 +25,7 @@ export default function useTrade({ chainId }: any) {
   const [bestTrade, setBestTrade] = useState<any>();
   const { provider, account } = useAccount();
   const toast = useToast();
-  const { addAction } = useAddAction('all-in-one');
+  const { addAction } = useAddAction('superswap');
   const lastestCachedKey = useRef('');
   const cachedTokens = useRef<any>();
   const prices = usePriceStore((store) => store.price);

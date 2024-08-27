@@ -132,6 +132,7 @@ const PrimaryPanels = styled.div`
 
   }
   .panel-bottom-content {
+    position: relative;
     height: 83px;
     overflow: hidden;
     padding-top: 14px;
@@ -140,24 +141,7 @@ const PrimaryPanels = styled.div`
       padding-top: 94px;
     }
   }
-  .dapp-list-container {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    animation: translateLeft 5s linear infinite;
-    animation-play-state: paused;
-    &.start {
-      animation-play-state: running;
-    }
-    @keyframes translateLeft {
-      0% {
-        transform: translate(0);
-      }
-      100% {
-        transform: translateX(-50%);
-      }
-    }
-  }
+  
   .dapp-list {
     display: flex;
     align-items: center;
@@ -215,6 +199,29 @@ const PrimaryPanels = styled.div`
     }
   }
 `;
+const StyledDappListContainer = styled.div<{ $length: number }>`
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  animation-name: translateLeft;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: ${({ $length }) => $length * 0.8 + 's'};
+  /* animation: translateLeft attr(data-length)s linear infinite; */
+  animation-play-state: paused;
+  &.start {
+    animation-play-state: running;
+  }
+  @keyframes translateLeft {
+    0% {
+      transform: translate(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+`
 const StyledDappCategory = styled.div`
 
   
@@ -432,8 +439,9 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
         </div>
         <div className='panel-bottom'>
           <div className='panel-bottom-content'>
-            <div
-              className={['dapp-list-container', running ? 'start' : ''].join(' ')}
+            <StyledDappListContainer
+              $length={network?.dapps?.length}
+              className={running ? 'start' : ''}
               onMouseEnter={(event) => {
                 setRunning(false)
               }}
@@ -463,7 +471,7 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
                   ))
                 }
               </div>
-            </div>
+            </StyledDappListContainer>
           </div>
         </div>
       </StyledContainer>

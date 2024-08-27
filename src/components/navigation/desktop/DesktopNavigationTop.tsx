@@ -1,27 +1,21 @@
 import IconSearch from '@public/images/header/search.svg'
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import AccountItem from '@/components/AccountSider/components/AccountItem';
 import Chain from '@/components/AccountSider/components/Chain';
-import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
-import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
 import ConnectWallet from '@/components/ConnectWallet';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
 import useAccount from '@/hooks/useAccount';
-import { useLayoutStore } from '@/stores/layout';
 import { activityReg } from '@/utils/activity-reg';
 import { goHomeWithFresh } from '@/utils/activity-utils';
 
 import AccountLogo from './components/AccountLogo';
 import CheckIn from './components/CheckIn';
-import CheckInGrid from './components/CheckInGrid';
 import { NavMainV2 } from './NavMainV2';
 import Notification from './Notification';
-import OdysseyIcon from './OdysseyIcon';
 
 
 const Flex = styled.div`
@@ -95,10 +89,6 @@ const StyledSearch = styled.div`
 `
 
 
-const StyledConfirmOfficialUrl = styled(ConfirmOfficialUrl)`
-  position: sticky;
-  width: 100vw;
-`
 
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
@@ -110,13 +100,10 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   // const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
-  const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl)
-
   const [showSearch, setShowSearch] = useState(false);
 
   const isFromActivity = router.pathname.match(activityReg);
 
-  const isHomePage = router.pathname === '/';
   // Listen for ESC key press to close search
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -133,10 +120,7 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
 
   return (
     <>
-      {
-        isHomePage && <StyledConfirmOfficialUrl/>
-      }
-    <Container $expand={showMenuContent} $top={showConfirmOfficialUrl && isHomePage ? '54px' : '0px' }>
+    <Container $expand={showMenuContent}>
       <div className="container-nav">
         <Flex>
         {isFromActivity ? (
