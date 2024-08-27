@@ -75,7 +75,7 @@ const StyledCommunity = styled.div`
 `
 
 const MENU_LIST: NavigationType[] = [{
-  path: "/",
+  path: "https://app.dapdap.net/",
   label: "Product",
   target: "_self"
 }, {

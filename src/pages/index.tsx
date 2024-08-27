@@ -1,11 +1,12 @@
-import { useDefaultLayout } from '@/hooks/useLayout';
+import { useSimpleLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
-import HomeView from '@/views/Home';
+import IntroPageView from '@/views/Intro';
 
 const HomePage: NextPageWithLayout = () => {
-  return <HomeView />;
+  return <IntroPageView/>;
 };
 
-HomePage.getLayout = useDefaultLayout;
+
+HomePage.getLayout = useSimpleLayout;
 
 export default HomePage;

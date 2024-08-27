@@ -107,7 +107,7 @@ export default memo(function Banner() {
       </StyledMainTips>
       <StyledExporeButton
         onClick={() => {
-          router.push('/')
+          router.push('https://app.dapdap.net/')
         }}
       >
         <StyledFont color="#000" fontSize="18px" fontWeight="600">Explore now</StyledFont>
