@@ -6,7 +6,7 @@ import type { ModeKey } from '@/views/networks/list';
 export const useNetworkStore = create(
   persist(
     (set, get: any) => ({
-      mode: 'list',
+      mode: 'card',
       setMode: (_mode: ModeKey) => set({ mode: _mode })
     }),
     {

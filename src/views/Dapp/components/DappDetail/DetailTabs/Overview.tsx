@@ -8,9 +8,11 @@ import Loading from '@/components/Icons/Loading';
 import LazyImage from '@/components/LazyImage';
 import chainCofig from '@/config/chains';
 import tokens, { NativeTokenAddressMap } from '@/config/tokens';
+import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
 import type { Quest, QuestDapp} from '@/hooks/useAirdrop';
 import { QuestCategory, useAirdrop } from '@/hooks/useAirdrop';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import { usePriceStore } from '@/stores/price';
 import { useTokenPriceLatestStore } from '@/stores/tokenPrice';
@@ -82,6 +84,8 @@ const Overview = (props: any) => {
     reportAdditionResult,
   } = useAirdrop({ category, id });
   const tokenPriceLatest = useTokenPriceLatestStore(store => store.list);
+  const { switchChain } = useSwitchChain();
+  const { add } = useAddTokenToWallet();
 
   const copyTooltipRef = useRef<any>(null);
 
@@ -105,8 +109,10 @@ const Overview = (props: any) => {
           }
         }
         const _price = tokenPriceLatest[json.symbol.toUpperCase()];
-        json.price = formatThousandsSeparator(_price.price, 5);
-        json.changePercent = Big(_price.change_percent || 0);
+        if (_price) {
+          json.price = formatThousandsSeparator(_price.price, 5);
+          json.changePercent = Big(_price.change_percent || 0);
+        }
         return json;
       }
     } catch (err) {
@@ -195,35 +201,29 @@ const Overview = (props: any) => {
   };
 
   const handleAddWallet = async () => {
-    if (!window.ethereum || window.ethereum === void 0 || typeof window.ethereum === 'undefined') return;
-    await window.ethereum.request({ method: 'eth_requestAccounts', params: [] });
-    try {
-      await window.ethereum.request({
-        method: 'wallet_watchAsset',
-        params: {
-          type: 'ERC20',
-          options: {
-            address: nativeCurrency?.address,
-            symbol: nativeCurrency?.symbol,
-            decimals: nativeCurrency?.decimals,
-            image: nativeCurrency?.logo,
-          },
-        },
+    switchChain({ chainId: chain_id }, async () => {
+      const addRes = await add({
+        address: nativeCurrency?.address?.trim(),
+        symbol: nativeCurrency?.symbol?.trim(),
+        decimals: nativeCurrency?.decimals,
+        icon: nativeCurrency?.logo,
       });
-      toast.success({
-        title: 'Add successfully!',
-      });
-    } catch (err: any) {
-      let msg = '';
-      if (err?.message?.includes('User denied')) {
-        msg = 'User denied';
+      if (addRes.success) {
+        toast.success({
+          title: 'Add successfully!',
+        });
+      } else if (addRes.error) {
+        const err: any = addRes.error;
+        let msg = '';
+        if (err?.message?.includes('User rejected')) {
+          msg = 'User rejected';
+        }
+        toast.fail({
+          title: 'Add failure!',
+          text: msg,
+        });
       }
-      console.log(err);
-      toast.fail({
-        title: 'Add failure!',
-        text: msg,
-      });
-    }
+    });
   };
 
   const onAddMetaMask = async () => {

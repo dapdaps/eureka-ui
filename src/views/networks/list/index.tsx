@@ -31,14 +31,14 @@ import {
 
 const ModeList: Mode[] = [
   {
-    key: 'list',
-    icon: FilterIconList,
-    component: ListItem,
-  },
-  {
     key: 'card',
     icon: FilterIconCard,
     component: ListCard,
+  },
+  {
+    key: 'list',
+    icon: FilterIconList,
+    component: ListItem,
   },
 ];
 
@@ -121,11 +121,11 @@ const List = () => {
                     : (
                       item.isAdvertise
                         ? (<AdvertiseCardList
-                            classname='advertise'
-                            adList={item.advertise}
-                            type="network"
-                          />)
-                        : (<ListCard dataSource={item} key={item.id}/>))
+                          classname='advertise'
+                          adList={item.advertise}
+                          type="network"
+                        />)
+                        : (<ListCard dataSource={item} key={item.id} />))
                 })
                 : <Empty />
             )

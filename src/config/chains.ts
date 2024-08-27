@@ -145,7 +145,7 @@ const chainCofig = {
   81457: {
     chainId: 81457,
     chainName: 'Blast',
-    icon: 'https://s3.amazonaws.com/dapdap.prod/images/blast.png',
+    icon: 'https://s3.amazonaws.com/dapdap.prod/images/blastchain.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://rpc.blast.io', 'https://rpc.ankr.com/blast', 'https://blastl2-mainnet.public.blastapi.io'],
     blockExplorers: 'https://blastscan.io',
