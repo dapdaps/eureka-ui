@@ -116,6 +116,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
                       title={odyssey.name}
                       subtitle={odyssey.description}
                       imageUrl={odyssey.banner}
+                      rewardValue={odyssey.reward_value}
                       reward={item}
                       withoutCardStyle
                       onClick={() => onOdysseyClick(odyssey)}

@@ -26,13 +26,13 @@ export default function useDappReward() {
         const existingReward = result.find(r => r.logo_key === reward.logo_key);
   
         if (existingReward) {
-          existingReward.odysseys.push(item);
+          existingReward.odysseys.push({ ...item, reward_value: reward.value });
         } else {
           result.push({
             logo_key: reward.logo_key,
             value: reward.value,
             name: reward.name,
-            odysseys: [item],
+            odysseys: [{ ...item, reward_value: reward.value }],
           });
         }
       });
