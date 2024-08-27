@@ -105,14 +105,14 @@ export async function getTransaction(tool?: string) {
         return __list
     }
 
-    
-
     return __list.filter((item: any) => item.tool.toLowerCase() === tool.toLowerCase()) || []
 }
 
 export function isNumeric(value: any): boolean {
     return /^[0-9]+(\.)?([0-9]+)?$/.test(value);
 }
+
+
 
 export default {
     balanceFormated,

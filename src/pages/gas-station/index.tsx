@@ -39,27 +39,27 @@ const chainList = Object.values(chainCofig)
 
 chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId))
 
-const TestChains: Chain[] = [
-  {
-    chainId: 11155111,
-    chainName: 'Sepolia',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-    rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
-    blockExplorers: 'https://sepolia.etherscan.io',
-    icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
-  },
-  {
-    chainId: 421614,
-    chainName: 'Arbitrum Sepolia',
-    nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
-    rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
-    blockExplorers: 'https://basescan.org',
-    icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
-  },
-]
+// const TestChains: Chain[] = [
+//   {
+//     chainId: 11155111,
+//     chainName: 'Sepolia',
+//     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+//     rpcUrls: ['https://ethereum-sepolia-rpc.publicnode.com'],
+//     blockExplorers: 'https://sepolia.etherscan.io',
+//     icon: 'https://assets.dapdap.net/images/bafkreicjsbkvvcxahxjejkctwopcnmzbeskxhfrkg7lyawhkhzrxcmvgfy.svg',
+//   },
+//   {
+//     chainId: 421614,
+//     chainName: 'Arbitrum Sepolia',
+//     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+//     rpcUrls: ['https://endpoints.omniatech.io/v1/arbitrum/sepolia/public'],
+//     blockExplorers: 'https://basescan.org',
+//     icon: 'https://assets.dapdap.net/images/bafkreiajyg2iof2wygtgromy6a2yfl2fqavfy235k7afc4frr7xnljvu2a.svg',
+//   },
+// ]
 
-chainList.unshift(TestChains[1])
-chainList.unshift(TestChains[0])
+// chainList.unshift(TestChains[1])
+// chainList.unshift(TestChains[0])
 
 const Bridge: NextPageWithLayout = () => {
   const router = useRouter();

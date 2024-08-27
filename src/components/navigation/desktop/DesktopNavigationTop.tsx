@@ -6,6 +6,8 @@ import styled from 'styled-components';
 
 import AccountItem from '@/components/AccountSider/components/AccountItem';
 import Chain from '@/components/AccountSider/components/Chain';
+import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
+import { useShowTipsStore } from '@/components/ConfirmOfficialUrl/hooks/useShowTipsStore';
 import ConnectWallet from '@/components/ConnectWallet';
 import DropdownMenuPanel from '@/components/DropdownMenuPanel';
 import DropdownSearchResultPanel from '@/components/DropdownSearchResultPanel';
@@ -19,6 +21,7 @@ import CheckIn from './components/CheckIn';
 import CheckInGrid from './components/CheckInGrid';
 import { NavMainV2 } from './NavMainV2';
 import Notification from './Notification';
+import OdysseyIcon from './OdysseyIcon';
 
 
 const Flex = styled.div`
@@ -35,12 +38,13 @@ const LoginContainer = styled.div`
 const AccountWrapper = styled.div<{ disabled?: boolean }>`
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
 `;
-const Container = styled.div<{ $expand: boolean }>`
+
+const Container = styled.div<{ $expand: boolean, $top?: string }>`
   position: relative;
   color: #979abe;
   padding: 14px 36px;
   position: sticky;
-  top: 0;
+  top: ${( { $top } ) => ($top ? $top : '0')};
   width: 100%;
   z-index: 90;
   background: ${({ $expand }) => ($expand ? 'rgba(38, 40, 54, 1)' : 'rgba(0, 0, 0, 1)')};
@@ -91,6 +95,11 @@ const StyledSearch = styled.div`
 `
 
 
+const StyledConfirmOfficialUrl = styled(ConfirmOfficialUrl)`
+  position: sticky;
+  width: 100vw;
+`
+
 const logoUrl = 'https://assets.dapdap.net/images/logo.png';
 
 export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolean }) => {
@@ -101,11 +110,13 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   // const [searchContent, setSearchContent] = useState<string>();
 
   const [showMenuContent, setShowMenuContent] = useState(false);
+  const showConfirmOfficialUrl  = useShowTipsStore(store => store.showConfirmOfficialUrl)
 
   const [showSearch, setShowSearch] = useState(false);
 
   const isFromActivity = router.pathname.match(activityReg);
 
+  const isHomePage = router.pathname === '/';
   // Listen for ESC key press to close search
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -121,20 +132,24 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
   }, []);
 
   return (
-    <Container $expand={showMenuContent}>
+    <>
+      {
+        isHomePage && <StyledConfirmOfficialUrl/>
+      }
+    <Container $expand={showMenuContent} $top={showConfirmOfficialUrl && isHomePage ? '54px' : '0px' }>
       <div className="container-nav">
         <Flex>
-          {isFromActivity ? (
-            <LogoContainer onClick={goHomeWithFresh}>
+        {isFromActivity ? (
+          <LogoContainer onClick={goHomeWithFresh}>
+            <img src={logoUrl} alt="" style={{ width: 120, height: 32 }} />
+          </LogoContainer>
+        ) : (
+          <LogoContainer>
+            <Link href="/">
               <img src={logoUrl} alt="" style={{ width: 120, height: 32 }} />
-            </LogoContainer>
-          ) : (
-              <LogoContainer>
-                <Link href="/">
-                    <img src={logoUrl} alt="" style={{ width: 120, height: 32 }} />
-                </Link>
-              </LogoContainer>
-          )}
+            </Link>
+          </LogoContainer>
+        )}
           <StyledNav />
           <StyledSearch data-bp="1001-004" onClick={() => setShowSearch(true)}><IconSearch /></StyledSearch>
         </Flex>
@@ -156,5 +171,6 @@ export const DesktopNavigationTop = ({ isHideAccount }: { isHideAccount?: boolea
       <DropdownMenuPanel show={showMenuContent} setShow={setShowMenuContent} />
       { showSearch && (<DropdownSearchResultPanel setShowSearch={setShowSearch} />)}
     </Container>
+    </>
   );
 };

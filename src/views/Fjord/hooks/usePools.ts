@@ -161,5 +161,5 @@ export default function usePools(sender: any) {
   useEffect(() => {
     pools.length > 0 && queryContractDataMapping(pools)
   }, [pools, sender])
-  return { loading, pools, contractDataMapping, queryPools };
+  return { loading, setLoading, pools, contractDataMapping, queryPools };
 }

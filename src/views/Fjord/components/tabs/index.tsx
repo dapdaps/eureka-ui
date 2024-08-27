@@ -8,12 +8,13 @@ interface IProps {
     name: string;
     key: string;
   }[];
-  onTabsChange?: (key: string) => void;
+  loading?: boolean;
+  onTabsChange?: (key: "TradeHistory" | "YourTrades") => void;
   current?: string;
   style?: any;
 }
 
-const Tabbar: FC<IProps> = ({ tabData, current, onTabsChange, style }) => {
+const Tabbar: FC<IProps> = ({ tabData, current, loading, onTabsChange, style }) => {
   const [currentTab, setCurrentTab] = useState('test');
   const tabchange = (item: any) => {
     setCurrentTab(item.key);
@@ -32,7 +33,7 @@ const Tabbar: FC<IProps> = ({ tabData, current, onTabsChange, style }) => {
               color: item.key === currentTab ? 'white' : '#979ABE',
             }}
             key={item.key}
-            onClick={() => tabchange(item)}
+            onClick={() => !loading && tabchange(item)}
           >
             {item.name}
           </TabsItem>

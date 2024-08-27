@@ -1,13 +1,13 @@
-import { Contract, providers, utils } from 'ethers';
+import { utils } from 'ethers';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
 
-import chains from '@/config/chains';
-import { usePriceStore } from '@/stores/price';
 import { AUTH_TOKENS,get } from '@/utils/http';
+
+import useShares from './useShares';
 export default function useUserPools(sender: any) {
-  const prices = usePriceStore((store) => store.price);
   const [userPools, setUserPools] = useState<any[]>([]);
+  const { queryShares } = useShares(sender)
   const [contractDataMapping, setContractDataMapping] = useState<any>({
 
   })
@@ -32,6 +32,16 @@ export default function useUserPools(sender: any) {
     }
   }, [loading]);
 
+  const handleQueryShares = async function (pool?: any) {
+    const res = await queryShares(pool)
+    setContractDataMapping((prev: any) => {
+      const curr = _.cloneDeep(prev)
+      const _contractData = curr[pool?.pool] || {}
+      _contractData["purchased_shares"] = utils.formatUnits(res, 18)
+      curr[pool?.pool] = _contractData
+      return curr
+    })
+  }
   const queryContractDataMapping = function (data: any) {
     const abi = [{
       "inputs": [
@@ -127,40 +137,10 @@ export default function useUserPools(sender: any) {
       "type": "function"
     }]
     for (let i = 0; i < data.length; i++) {
-      const element = data[i];
-      const rpcUrl = chains[element?.launchpad_lbp?.chain_id]?.rpcUrls[0] ?? ''
-      if (rpcUrl) {
-        const provider = new providers.JsonRpcProvider(rpcUrl);
-        const contract = new Contract(
-          element.pool,
-          abi,
-          provider,
-        )
-        if (sender) {
-          contract.purchasedShares(sender).then((res: any) => {
-            setContractDataMapping((prev: any) => {
-              const curr = _.cloneDeep(prev)
-              const _contractData = curr[element.pool] || {}
-              _contractData["purchased_shares"] = utils.formatUnits(res, 18)
-              curr[element.pool] = _contractData
-              return curr
-            })
-          })
-        }
-        // console.log('=prices[element.asset_token_symbol]', prices[element.asset_token_symbol])
-        // contract.args().then((res: any) => {
-        //   setContractDataMapping((prev: any) => {
-        //     const curr = _.cloneDeep(prev)
-        //     const _contractData = curr[element.pool] || {}
-        //     _contractData["funds_raised"] = Big(utils.formatUnits(res[2], element.asset_token_decimal)).times(prices[element.asset_token_symbol])
-        //     curr[element.pool] = _contractData
-        //     return curr
-        //   })
-        // }).catch(error => console.log('=error', error))
-      }
-
+      handleQueryShares(data[i])
     }
   }
+
 
   useEffect(() => {
     userPools.length > 0 && queryContractDataMapping(userPools)

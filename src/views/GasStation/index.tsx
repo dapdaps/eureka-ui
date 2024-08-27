@@ -1,6 +1,6 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import useTokensBalance from '@/components/BridgeX/hooks/useTokensBalance'
@@ -8,7 +8,7 @@ import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
-import { useGasAmount,useGasTokenHooks } from '@/views/SuperBridge/hooks/useGasTokenHooks';
+import { useGasAmount, useGasTokenHooks, useSupportedSourceTokens } from '@/views/SuperBridge/hooks/useGasTokenHooks';
 
 import Amount from './Amount/index'
 import ChainSelector from './ChainSelector/index';
@@ -127,6 +127,8 @@ export default function GasStation({ chainList }: Props) {
     const [chainFromToken, setChainFromToken] = useState<Token | undefined>()
     const [submitProcessShow, setSubmitProcessShow] = useState(false)
     const [step, setStep] = useState(0)
+    const [gas, setGas] = useState<any>(0)
+    const fromChainRef = useRef<any>(null)
     const [gasAmountParam, setGasAmountParam] = useState<any>({
         fromChain,
         toChain,
@@ -141,17 +143,25 @@ export default function GasStation({ chainList }: Props) {
         fromToken: chainFromToken
     })
 
-    const { receive, isLoading, deposit } = useGasAmount(inputGasAmountParam)
+    const { supportedTokens } = useSupportedSourceTokens({
+        fromChain,
+        toChain,
+    })
+
+    const { receive, isLoading, deposit, estimateGas } = useGasAmount(inputGasAmountParam)
 
     const { balances } = useTokensBalance(tokenList)
 
     useEffect(() => {
-        if (fromChain) {
-            const _tokenList = allTokens[fromChain.chainId]
-            const tokenList = _tokenList.filter(token => symbols.indexOf(token.symbol) > -1)
+        if (supportedTokens && supportedTokens.length) {
+            const addresses = supportedTokens.map(item => item.token_address.toLowerCase())
+            const _tokenList = allTokens[fromChainRef.current.chainId]
+            const tokenList = _tokenList.filter(token => addresses.indexOf(token.address.toLowerCase()) > -1)
             setTokenList(tokenList)
+        } else {
+            setTokenList([])
         }
-    }, [fromChain])
+    }, [supportedTokens])
 
     useEffect(() => {
         if (tokenList && fromToken) {
@@ -187,16 +197,51 @@ export default function GasStation({ chainList }: Props) {
     }, [fromChain, toChain, chainFromToken, inputVal])
 
     useEffect(() => {
+        async function getGas() {
+            try {
+                if (fromChain && toChain && chainFromToken) {
+                    const price = await provider.getSigner().getGasPrice()
+                    const gasLimit = await estimateGas(
+                        chainFromToken?.address,
+                        account as string,
+                        new Big(inputVal).mul(10 ** chainFromToken?.decimals).toString(),
+                        provider.getSigner()
+                    )
+
+                    const gas = ((Number(gasLimit) * Number(price.toString())) / (10 ** chainFromToken?.decimals))
+
+                    return gas
+
+                }
+            } catch(e) {
+                return 0
+            }
+        }
+
         if (fromChain && toChain && chainFromToken && inputVal && receive && balances) {
-            setCanSend(true)
+            const address = chainFromToken.isNative ? 'native' : chainFromToken.address
+            if (balances[address] && Number(balances[address]) >  Number(receive)) {
+                setCanSend(true)
+
+                getGas().then(setGas)
+
+            } else {
+                setCanSend(false)
+            }
         } else {
             setCanSend(false)
         }
     }, [fromChain, toChain, chainFromToken, inputVal, receive, balances])
 
+    useEffect(() => {
+        fromChainRef.current = fromChain
+    }, [fromChain])
+
+
+
     return <Container>
         <Header>
-            <HeaderItems>
+            {/* <HeaderItems>
                 <div className="item active">
                     Login mode
                     <Ask />
@@ -205,7 +250,7 @@ export default function GasStation({ chainList }: Props) {
                     Login free mode
                     <Ask />
                 </div>
-            </HeaderItems>
+            </HeaderItems> */}
         </Header>
         <Content>
             <ChainSelector
@@ -221,8 +266,7 @@ export default function GasStation({ chainList }: Props) {
             <TokenSeletor
                 selectedToken={fromToken}
                 balances={balances}
-                tokenList={DefaultTokenList}
-                chainTokenList={tokenList}
+                tokenList={tokenList}
                 onTokenChoose={(token) => {
                     setFromToken(token)
                 }}
@@ -234,12 +278,14 @@ export default function GasStation({ chainList }: Props) {
             }} />
 
             <div style={{ marginTop: 20 }}></div>
-            <DestinationAddress />
+            {/* <DestinationAddress /> */}
 
             {
                 isSupported && receive && amount && toChain && <div>
                     <div style={{ marginTop: 20 }}></div>
                     <ReceiveDesc
+                        gas={gas}
+                        gasPrice={Number(gas) * Number(prices[toChain?.nativeCurrency.symbol])}
                         receivePrice={Number(receive) * Number(prices[toChain?.nativeCurrency.symbol])}
                         receive={receive}
                         loading={isLoading}

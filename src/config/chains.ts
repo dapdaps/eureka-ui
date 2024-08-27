@@ -158,6 +158,14 @@ const chainCofig = {
     rpcUrls: ['https://mainnet.mode.network', 'https://mode.drpc.org', 'https://1rpc.io/mode'],
     blockExplorers: 'https://modescan.io',
   },
+  // 84532: {
+  //   chainId: 84532,
+  //   chainName: 'Base Sepolia',
+  //   icon: 'https://assets.dapdap.net/images/bafkreif24bmxzparik2t2nkog6km5diuwcysvxdv2j5ygzkzwm3pxs573a.svg',
+  //   nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
+  //   rpcUrls: ['https://base-sepolia.blockpi.network/v1/rpc/public', 'https://base-sepolia.blockpi.network/v1/rpc/public', 'https://base-sepolia.blockpi.network/v1/rpc/public'],
+  //   blockExplorers: 'https://basescan.org',
+  // },
   // 3776: {
   //   chainId: 3776,
   //   chainName: 'Astar zkEVM',

@@ -1,30 +1,30 @@
 import { arbitrum } from '@/config/tokens/arbitrum' 
 import { avalanche } from '@/config/tokens/avalanche' 
 import { base } from '@/config/tokens/base' 
-import { blast } from '@/config/tokens/blast' 
-import { bsc } from '@/config/tokens/bsc' 
-import { ethereum } from '@/config/tokens/ethereum' 
-import { gnosis } from '@/config/tokens/gnosis' 
-import { linea } from '@/config/tokens/linea' 
-import { manta } from '@/config/tokens/manta' 
-import { mantle } from '@/config/tokens/mantle' 
-import { metis } from '@/config/tokens/metis' 
-import { mode } from '@/config/tokens/mode' 
-import { optimism } from '@/config/tokens/optimism' 
-import { polygon } from '@/config/tokens/polygon' 
-import { polygonZkevm } from '@/config/tokens/polygonZkevm' 
-import { scroll } from '@/config/tokens/scroll' 
-import { zkSync } from '@/config/tokens/zkSync' 
+import { blast } from '@/config/tokens/blast'
+import { bsc } from '@/config/tokens/bsc'
+import { ethereum } from '@/config/tokens/ethereum'
+import { gnosis } from '@/config/tokens/gnosis'
+import { linea } from '@/config/tokens/linea'
+import { manta } from '@/config/tokens/manta'
+import { mantle } from '@/config/tokens/mantle'
+import { metis } from '@/config/tokens/metis'
+import { mode } from '@/config/tokens/mode'
+import { optimism } from '@/config/tokens/optimism'
+import { polygon } from '@/config/tokens/polygon'
+import { polygonZkevm } from '@/config/tokens/polygonZkevm'
+import { scroll } from '@/config/tokens/scroll'
+import { zkSync } from '@/config/tokens/zkSync'
 import type { Token } from '@/types';
 
 const mapFn = (item: Token) => {
-    if (item.address === 'native') {
-        return {
-            ...item,
-            address: '0x0000000000000000000000000000000000000000'
-        }
+  if (item.address === 'native') {
+    return {
+      ...item,
+      address: '0x0000000000000000000000000000000000000000'
     }
-    return item
+  }
+  return item
 }
 
 const allTokens: { [key: number]: Token[] } = {
@@ -62,16 +62,57 @@ const allTokens: { [key: number]: Token[] } = {
         symbol: 'USDT',
         name: 'Tether USD',
         icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i',
-      }],
-      421614: [{
-        address: '0x0000000000000000000000000000000000000000',
-        isNative: true,
-        chainId: 421614,
-        symbol: 'ETH',
-        decimals: 18,
-        name: 'Ether',
-        icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
-      }]
+      }, {
+      chainId: 11155111,
+      address: '0x193859664CF07E331e1cE3FAe623e7E499F2a200',
+      decimals: 18,
+      symbol: 'WETH',
+      name: 'Wrapped Ether',
+      icon: 'https://ipfs.near.social/ipfs/bafkreihyzmiuawyekwiyofkzm25xzrrfenhvadi6lb42juvq7tah2u7ha4',
+    }, {
+      chainId: 11155111,
+      address: '0x93690818A89cCbcf4565CF36BCC72eBb0CC0db5F',
+      name: 'USDC',
+      symbol: 'USDC',
+      icon: 'https://assets.coingecko.com/coins/images/6319/standard/usdc.png?1696506694',
+      decimals: 6,
+    }],
+    421614: [{
+      address: '0x0000000000000000000000000000000000000000',
+      isNative: true,
+      chainId: 421614,
+      symbol: 'ETH',
+      decimals: 18,
+      name: 'Ether',
+      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    },],
+    300: [{
+      address: '0x0000000000000000000000000000000000000000',
+      isNative: true,
+      chainId: 300,
+      symbol: 'ETH',
+      decimals: 18,
+      name: 'Ether',
+      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    },],
+    84532: [{
+      address: '0x0000000000000000000000000000000000000000',
+      isNative: true,
+      chainId: 84532,
+      symbol: 'ETH',
+      decimals: 18,
+      name: 'Ether',
+      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    },],
+    5003: [{
+      address: '0x193859664CF07E331e1cE3FAe623e7E499F2a200',
+      isNative: false,
+      chainId: 5003,
+      symbol: 'ETH',
+      decimals: 18,
+      name: 'Ether',
+      icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    },],
 }
 
 export default allTokens

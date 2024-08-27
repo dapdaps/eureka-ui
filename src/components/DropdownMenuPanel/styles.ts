@@ -25,9 +25,9 @@ export const MenuContent = styled.div`
   margin: 0 auto;
 `;
 
-export const MaskLayer = styled(motion.div)`
+export const MaskLayer = styled(motion.div)<{ $top?: string }>`
   position: fixed;
-  top: 80px;
+  top: ${({ $top }) => ($top ? $top : '80px')};
   right: 0;
   bottom: 0;
   left: 0;

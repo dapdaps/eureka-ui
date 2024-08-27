@@ -252,8 +252,8 @@ export default function LaunchpadYoursPage() {
         address: data.asset_token_address,
         name: data.asset_token_symbol,
         symbol: data.asset_token_symbol,
-        icon: tokenConfig[data.asset_token_symbol].icon,
-        logoURI: tokenConfig[data.asset_token_symbol].icon,
+        icon: data.asset_token_logo,
+        logoURI: data.asset_token_logo,
         decimals: data.asset_token_decimal,
         isNative: false,
       })

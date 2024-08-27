@@ -171,6 +171,8 @@ const CompassCard = function ({ compass }: any) {
 };
 
 const Compass = () => {
+  const router = useRouter();
+  const { check } = useAuthCheck({ isNeedAk: true });
   const size: any = useSize(window.document.getElementsByTagName('body')[0]);
 
   const { loading, adList, compassList } = useCompassCombineAd();

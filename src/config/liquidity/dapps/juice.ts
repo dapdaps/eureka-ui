@@ -8,12 +8,12 @@ const basic = {
   ICON_MAP: {
     HYPLP: "https://ipfs.near.social/ipfs/bafkreicmoqlzhbbtohr7hv7kaudff3x6igg6qr2kf3soal64tadk5zlgy4",
     WETH: "https://ipfs.near.social/ipfs/bafkreif5jqf6onhhj6aqfjt6zq2lqanw6o3kzmb7exnqjw42p4hpwrojmu",
-    wJUICE: "https://app.juice.finance/images/logos/juice.svg",
-    USDB: "https://app.juice.finance/images/logos/tokens/usdb.svg",
-    wUSDB: "https://app.juice.finance/images/logos/protocols/wasabi.svg",
-    DUSD: "https://app.juice.finance/images/logos/tokens/dusd.svg",
-    DETH: "https://app.juice.finance/images/logos/tokens/deth.svg",
-    BLAST: "https://app.juice.finance/_next/image?url=%2Fimages%2Flogos%2Ftokens%2Fblast.webp&w=64&q=75"
+    wJUICE: "/images/juice/juice.svg",
+    USDB: "/images/juice/usdb.svg",
+    wUSDB: "/images/juice/wasabi.svg",
+    DUSD: "/images/juice/dusd.svg",
+    DETH: "/images/juice/deth.svg",
+    BLAST: "/images/juice/blast.webp"
   }
 };
 const WETH_WETH_POOLS = {
@@ -21,7 +21,7 @@ const WETH_WETH_POOLS = {
   LENDING_POOL_ADDRESS: "0x44f33bC796f7d3df55040cd3C631628B560715C2",
   SYMBOL_ADDRESS: "0x4300000000000000000000000000000000000004",
   vaults: [{
-    icon: "https://app.juice.finance/_next/image?url=%2Fimages%2Flogos%2Ftokens%2Fblast.webp&w=2048&q=75",
+    icon: "/images/juice/blast.webp",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "Blast WETH V3 LP",
@@ -42,7 +42,7 @@ const WETH_WETH_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/_next/image?url=%2Fimages%2Flogos%2Ftokens%2Fblast.webp&w=2048&q=75",
+    icon: "/images/juice/blast.webp",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "Blast Spot",
@@ -60,7 +60,7 @@ const WETH_WETH_POOLS = {
       label: "Thruster Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/particle.svg",
+    icon: "/images/juice/particle.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "WETH Boosted Points",
@@ -81,7 +81,7 @@ const WETH_WETH_POOLS = {
       label: "Particle Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/etherfi.svg",
+    icon: "/images/juice/etherfi.svg",
     iconBgColor: "#FFF",
     name: "EtherFi V3 LP",
     type: "Liquidity Pools",
@@ -107,7 +107,7 @@ const WETH_WETH_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/kelp.svg",
+    icon: "/images/juice/kelp.svg",
     iconBgColor: "#000",
     name: "Kelp V3 LP V2",
     type: "Liquidity Pools",
@@ -133,7 +133,7 @@ const WETH_WETH_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/renzo.svg",
+    icon: "/images/juice/renzo.svg",
     iconBgColor: "#000",
     name: "Renzo V3 LP",
     type: "Liquidity Pools",
@@ -159,7 +159,7 @@ const WETH_WETH_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/renzo.svg",
+    icon: "/images/juice/renzo.svg",
     iconBgColor: "#000",
     name: "Renzo Spot Long",
     type: "Spot",
@@ -182,7 +182,7 @@ const WETH_WETH_POOLS = {
       label: "Thruster Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/juice.svg",
+    icon: "/images/juice/juice.svg",
     iconBgColor: "#000",
     name: "JUICE/WETH LP",
     type: "Liquidity Pools",
@@ -202,7 +202,7 @@ const WETH_WETH_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/juice.svg",
+    icon: "/images/juice/juice.svg",
     iconBgColor: "#000",
     name: "JUICE Spot Long",
     type: "Spot",
@@ -222,7 +222,7 @@ const WETH_WETH_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/wasabi.svg",
+    icon: "/images/juice/wasabi.svg",
     iconBgColor: "#000",
     name: "wETH Vault",
     type: "Perps",
@@ -241,7 +241,7 @@ const WETH_WETH_POOLS = {
       label: "Variable APY",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/thruster.svg",
+    icon: "/images/juice/thruster.svg",
     iconBgColor: "#000",
     name: "WETH Short Spot",
     type: "Short Spot",
@@ -264,7 +264,7 @@ const WETH_USDB_POOLS = {
   LENDING_POOL_ADDRESS: "0x4A1d9220e11a47d8Ab22Ccd82DA616740CF0920a",
   SYMBOL_ADDRESS: ["0x4300000000000000000000000000000000000004", "0x4300000000000000000000000000000000000003"],
   vaults: [{
-    icon: "https://app.juice.finance/images/logos/tokens/usde.svg",
+    icon: "/images/juice/usde.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "Ethena USDE V3 LP",
@@ -288,7 +288,7 @@ const WETH_USDB_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/particle.svg",
+    icon: "/images/juice/particle.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "USDB Boosted Points",
@@ -309,7 +309,7 @@ const WETH_USDB_POOLS = {
       label: "Particle Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/thruster.svg",
+    icon: "/images/juice/thruster.svg",
     iconBgColor: "#000000",
     borderColor: "#000000",
     name: "WETH Spot Long",
@@ -333,7 +333,7 @@ const USDB_USDB_POOLS = {
   LENDING_POOL_ADDRESS: "0x4A1d9220e11a47d8Ab22Ccd82DA616740CF0920a",
   SYMBOL_ADDRESS: "0x4300000000000000000000000000000000000003",
   vaults: [{
-    icon: "https://app.juice.finance/images/logos/tokens/usde.svg",
+    icon: "/images/juice/usde.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "Ethena USDE V3 LP",
@@ -357,7 +357,7 @@ const USDB_USDB_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "	https://app.juice.finance/images/logos/protocols/hyperlock.svg",
+    icon: "/images/juice/hyperlock.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "USDB/WETH 0.05% LP",
@@ -378,7 +378,7 @@ const USDB_USDB_POOLS = {
       label: "Hyperlock Points",
     }]
   }, {
-    icon: "https://app.juice.finance/images/logos/protocols/particle.svg",
+    icon: "/images/juice/particle.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "USDB Boosted Points",
@@ -399,7 +399,7 @@ const USDB_USDB_POOLS = {
       label: "Particle Points",
     }]
   }, {
-    icon: "	https://app.juice.finance/images/logos/protocols/wasabi.svg",
+    icon: "/images/juice/wasabi.svg",
     iconBgColor: "transparent",
     borderColor: "transparent",
     name: "wUSDB Vault",

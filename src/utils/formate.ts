@@ -113,6 +113,32 @@ function getRandomInt(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+const simplifyNumber = function (number: number, decimal: number) {
+  if (typeof Number(number) !== 'number') return 0;
+  if (isNaN(Number(number))) return 0;
+  if (number >= 1E3 && number < 1E6) {
+    return Math.round(number / 1E3) + 'K';
+  } else if (number >= 1E6) {
+    return Math.round(number / 1E6) + 'M';
+  } else {
+    return Big(number).toFixed(decimal);
+  }
+}
+const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
+  const target = Big(1).div(Math.pow(10, decimal))
+  if (Big(value).eq(0)) {
+    return '-'
+  } else if (Big(value).gt(0)) {
+    if (Big(value).lt(target)) {
+      return `<${unit}${target}`
+    } else {
+      return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
+    }
+  } else {
+    return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
+  }
+}
+
 
 /**
  * Extracts the path from a given URL.
@@ -135,5 +161,6 @@ export {
   formateValueWithThousandSeparator,
   formateValueWithThousandSeparatorAndFont,
   getRandomInt,
+  formatValueDecimal,
   extractPathFromUrl,
 };
