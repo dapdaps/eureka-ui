@@ -1,16 +1,17 @@
-import { memo, useRef, useState, useEffect } from 'react';
+import { memo, useEffect,useRef, useState } from 'react';
+
 import {
   StyledContainer,
-  StyledTitle,
   StyledContent,
-  StyledList,
-  StyledItem,
-  StyledItemImg,
-  StyledItemTitle,
-  StyledItemDesc,
-  StyledItemRead,
-  StyledIcons,
   StyledIcon,
+  StyledIcons,
+  StyledItem,
+  StyledItemDesc,
+  StyledItemImg,
+  StyledItemRead,
+  StyledItemTitle,
+  StyledList,
+  StyledTitle,
 } from './styles';
 
 const ITEMS = [

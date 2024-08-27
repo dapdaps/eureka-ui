@@ -1,44 +1,40 @@
+import actionBg from '@public/images/others/odyssey/thruster/components/SlotMachine/action-bg.svg?url';
+import bgImg from '@public/images/others/odyssey/thruster/components/SlotMachine/bg.svg?url';
+import btnImg from '@public/images/others/odyssey/thruster/components/SlotMachine/btn.svg?url';
+import btnActiveImg from '@public/images/others/odyssey/thruster/components/SlotMachine/btn-active.svg?url';
+import btnBgImg from '@public/images/others/odyssey/thruster/components/SlotMachine/btn-bg.svg?url';
+import clamImg from '@public/images/others/odyssey/thruster/components/SlotMachine/clam.svg?url';
+import clamPressImg from '@public/images/others/odyssey/thruster/components/SlotMachine/clam-press.svg?url';
+import coverTopImg from '@public/images/others/odyssey/thruster/components/SlotMachine/cover-top.png';
+import controllerImg from '@public/images/others/odyssey/thruster/components/SlotMachine/ctr.svg?url';
+import controllerActiveImg from '@public/images/others/odyssey/thruster/components/SlotMachine/ctr-active.svg?url';
+import ruleImg from '@public/images/others/odyssey/thruster/components/SlotMachine/rule.svg?url';
+import rulePressImg from '@public/images/others/odyssey/thruster/components/SlotMachine/rule-press.svg?url';
+import yellowLeftImg from '@public/images/others/odyssey/thruster/components/SlotMachine/yellow-left.svg?url';
+import yellowMidImg from '@public/images/others/odyssey/thruster/components/SlotMachine/yellow-mid.svg?url';
+import yellowRightImg from '@public/images/others/odyssey/thruster/components/SlotMachine/yellow-right.svg?url';
+import { useCallback, useEffect,useRef, useState } from 'react';
 import styled from 'styled-components';
-import { useCallback, useState, useRef, useEffect } from 'react';
-import useConnectWallet from '@/hooks/useConnectWallet';
-import useAccount from '@/hooks/useAccount';
 
 import Timer from '@/components/Timer';
+import useAccount from '@/hooks/useAccount';
+import useConnectWallet from '@/hooks/useConnectWallet';
 
-import ScrollLine from './ScrollLine';
-import RuleModal from './RuleModal';
-import PrizeModal from './PrizeModal';
-import Spin from './Spin';
-import Summary from './Summary';
-
-import controllerImg from './img/ctr.svg';
-import controllerActiveImg from './img/ctr-active.svg';
-import actionBg from './img/action-bg.svg';
-
-import ruleImg from './img/rule.svg';
-import clamImg from './img/clam.svg';
-import rulePressImg from './img/rule-press.svg';
-import clamPressImg from './img/clam-press.svg';
-import btnBgImg from './img/btn-bg.svg';
-import btnImg from './img/btn.svg';
-import btnActiveImg from './img/btn-active.svg';
-import coverTopImg from './img/cover-top.png';
-
-import yellowLeftImg from './img/yellow-left.svg';
-import yellowMidImg from './img/yellow-mid.svg';
-import yellowRightImg from './img/yellow-right.svg';
-import bgImg from './img/bg.svg';
-
-import DisabledMark from './DisabledMark';
-import Pilcrow from './Pilcrow';
-import PrizePoolModal from './PrizePoolModal';
-import RewardsModal from './RewardsModal';
-import { BgFoot } from './Spins/styles';
-import Title from './Title';
-import SubTitle from './SubTitle';
-import Rewards from './Rewards';
 import useSwitcher from '../../hooks/useSwitcher';
 import { DAPPS } from './config';
+import DisabledMark from './DisabledMark';
+import Pilcrow from './Pilcrow';
+import PrizeModal from './PrizeModal';
+import PrizePoolModal from './PrizePoolModal';
+import Rewards from './Rewards';
+import RewardsModal from './RewardsModal';
+import RuleModal from './RuleModal';
+import ScrollLine from './ScrollLine';
+import Spin from './Spin';
+import { BgFoot } from './Spins/styles';
+import SubTitle from './SubTitle';
+import Summary from './Summary';
+import Title from './Title';
 
 const Wapper = styled.div`
   width: var(--main-width);
@@ -296,7 +292,7 @@ function SlotMachine({
   useEffect(() => {
     rewardRef.current = reward;
   }, [reward]);
-
+  
   useEffect(() => {
     // const randomList = [...Array(15).keys()].sort(() => 0.5 - Math.random());
     // const tempList = randomList.filter((item, i) => i < 5).map((item) => DAPPS[item]);

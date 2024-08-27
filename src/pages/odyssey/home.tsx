@@ -1,7 +1,8 @@
-import { useRouter } from 'next/router';
-import { useDefaultLayout } from '@/hooks/useLayout';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
+
 import Spinner from '@/components/Spinner';
+import { useDefaultLayout } from '@/hooks/useLayout';
 
 const CompassApp = dynamic(() => import('@/views/Compass/home'), { loading: () => <Spinner /> });
 const OdysseyThruster = dynamic(() => import('@/views/OdysseyThruster'), { loading: () => <Spinner /> });
@@ -15,7 +16,7 @@ function Compass() {
   const router = useRouter();
   // console.log('NEXT_PUBLIC_API--', process.env.NEXT_PUBLIC_API);
 
-  if (process.env.NEXT_PUBLIC_API === 'https://api.dapdap.net') {
+  if (process.env.NEXT_PUBLIC_API && ['https://api.dapdap.net', 'https://dapdap-api.bobdev.link'].includes(process.env.NEXT_PUBLIC_API)) {
     if (router.query.id === '7') return <OdysseyV5 />;
     if (router.query.id === '6') return <OdysseyThruster />;
     if (router.query.id === '5') return <OdysseyV8 />;

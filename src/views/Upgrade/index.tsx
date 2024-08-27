@@ -1,7 +1,8 @@
-import { StyledContainer, StyledImg } from '@/views/Upgrade/styles';
-import { useEffect } from 'react';
-import { get } from '@/utils/http';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+
+import { get } from '@/utils/http';
+import { StyledContainer, StyledImg } from '@/views/Upgrade/styles';
 
 const UpgradeView = () => {
   const router = useRouter();

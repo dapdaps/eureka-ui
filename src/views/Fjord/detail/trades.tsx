@@ -1,14 +1,16 @@
+import { format } from 'date-fns';
+import _ from 'lodash';
+import { useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
+
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { StyledFlex, StyledLoadingWrapper, StyledSvg } from '@/styled/styles';
 import { ellipsAccount } from '@/utils/account';
 import { formatValueDecimal } from '@/utils/formate';
-import { format } from 'date-fns';
-import { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
+
 import Tabs from '../components/tabs';
 import useTrades from '../hooks/useTrades';
-import _ from 'lodash';
 const Th = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 2fr 1fr;

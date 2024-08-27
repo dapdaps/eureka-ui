@@ -1,18 +1,18 @@
-import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
-
 import { useDebounce } from 'ahooks';
+import Big from 'big.js';
+import { useCallback, useEffect, useState } from 'react';
+import styled from 'styled-components';
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+
+import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
 import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated, balanceFormatedFloor } from '@/utils/balance';
-import Loading from '@/components/Icons/Loading';
-import { useGasAmount } from '../hooks/useGasTokenHooks';
-import SubmitBtn from '../SubmitBtn';
-
-import Modal from "../Modal";
 import type { Chain, Token } from '@/types';
-import { useCallback, useEffect, useState } from 'react';
-import Big from 'big.js';
+import { addressFormated, balanceFormated, balanceFormatedFloor,percentFormated } from '@/utils/balance';
+
+import { useGasAmount } from '../hooks/useGasTokenHooks';
+import Modal from "../Modal";
+import SubmitBtn from '../SubmitBtn';
 
 
 const Tip = styled.div`
@@ -91,7 +91,8 @@ interface Props {
     toChain: Chain | undefined;
     toAddress: string;
     maxBalance: string | undefined;
-    price: string;
+    price?: string;
+    theme?: any;
     onClick: () => void;
     onClose: () => void;
 }
@@ -100,7 +101,7 @@ const max$ = 200
 const maxGas = 0.001
 
 export default function GasModal({
-    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, price
+    onClick, onClose, fromChain, fromToken, toAddress, toChain, maxBalance, price, theme
 } : Props) {
     const { account, chainId, provider } = useAccount();
     // const prices = usePriceStore((store) => store.price);
@@ -248,6 +249,7 @@ export default function GasModal({
             isLoading={isLoading}
             disabled={disabled}
             text="Confirm"
+            theme={theme}
             fromChain={fromChain as Chain}
             onClick={async () => {
                 await sendGas()

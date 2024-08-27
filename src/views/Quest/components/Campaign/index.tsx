@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { memo, useEffect } from 'react';
 
 import Loading from '@/components/Icons/Loading';
@@ -11,20 +12,19 @@ import {
   JoinedAccountsBox,
   LoadingWrapper,
   StyledBox,
+  StyledCampaign,
   StyledCampaignContainer,
   StyledCampaignsContainer,
-  StyledCampaign,
-  StyledWrapper,
   StyledCoin,
   StyledDesc,
   StyledHeader,
   StyledHeartBox,
   StyledTag,
   StyledTags,
-  StyledTitle,
   StyledTimerBox,
+  StyledTitle,
+  StyledWrapper,
 } from './styles';
-import { useRouter } from 'next/router';
 
 const Campaign = ({
   campaign,

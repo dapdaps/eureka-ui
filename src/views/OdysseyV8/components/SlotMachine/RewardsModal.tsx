@@ -1,7 +1,9 @@
 import Image from 'next/image';
+
 import Loading from '@/components/Icons/Loading';
-import Modal from '../Modal';
+
 import RewardIcons from '../../RewardIcons';
+import Modal from '../Modal';
 
 export default function RewardsModal({ loading, rewards = {}, onClose }: any) {
   return (

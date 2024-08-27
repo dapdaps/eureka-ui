@@ -1,20 +1,22 @@
-import { memo, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import Header from '@/views/Pool/AddLiquidity/components/Header';
-import Tokens from '@/views/Pool/Detail/components/Tokens';
+import { memo, useMemo, useState } from 'react';
+
 import Loading from '@/components/Icons/Loading';
-import Range from './Range';
-import CurrentAmount from './CurrentAmount';
-import DepositAmounts from '../AddLiquidity/DepositAmounts';
-import IncreaseButton from '@/views/Pool/IncreaseLiquidity/components/Button';
+import Header from '@/views/Pool/AddLiquidity/components/Header';
 import PreviewModal from '@/views/Pool/AddLiquidity/components/PreviewModal';
-import { getTokenAmounts } from '@/views/Pool/Detail/helpers';
 import Setting from '@/views/Pool/components/Setting';
+import Tokens from '@/views/Pool/Detail/components/Tokens';
+import { getTokenAmounts } from '@/views/Pool/Detail/helpers';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import usePoolDetail from '../hooks/usePoolDetail';
+import IncreaseButton from '@/views/Pool/IncreaseLiquidity/components/Button';
+import { checkIsFullRange,tickToPrice } from '@/views/Pool/utils/tickMath';
+
+import DepositAmounts from '../AddLiquidity/DepositAmounts';
 import useAdd from '../hooks/useAdd';
-import { tickToPrice, checkIsFullRange } from '@/views/Pool/utils/tickMath';
-import { StyledContainer, StyledLoadingWrapper, StyledContent } from './styles';
+import usePoolDetail from '../hooks/usePoolDetail';
+import CurrentAmount from './CurrentAmount';
+import Range from './Range';
+import { StyledContainer, StyledContent,StyledLoadingWrapper } from './styles';
 
 const IncreaseLiquidity = () => {
   const { theme = {}, tokenId, contracts, currentChain } = useDappConfig();

@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import type { Chain, Token } from '@/types'
 
 import Loading from '@/components/Icons/Loading';
 import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types'
 import { balanceFormated, percentFormated } from '@/utils/balance';
 
 import usePriceValue from '../hooks/usePriceValue';

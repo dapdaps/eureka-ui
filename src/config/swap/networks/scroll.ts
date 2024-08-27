@@ -1,28 +1,22 @@
-import weths from '../../contract/weth';
+import { scroll } from '@/config/tokens/scroll';
+
+import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
+import { basic as dodoBasic, networks as dodoNetworks } from '../dapps/dodo';
+import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
 import { basic as metavaultV3Basic, networks as metavaultV3Networks } from '../dapps/metavault-v3';
 import { basic as skydromeBasic, networks as skydromeNetworks } from '../dapps/skydrome';
 import { basic as spaceFiBasic, networks as spaceFiNetworks } from '../dapps/space-fi';
-import { basic as ambientBasic, networks as ambientNetworks } from '../dapps/ambient';
-import { basic as SyncSwapBasic, networks as SyncSwapNetworks } from '../dapps/sync-swap';
-import { basic as zebraBasic, networks as zebraNetworks } from '../dapps/zebra';
-import { basic as IziSwapBasic, networks as IziSwapNetworks } from '../dapps/izi-swap';
-import { basic as dodoBasic, networks as dodoNetworks } from '../dapps/dodo';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
-import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
+import { basic as SyncSwapBasic, networks as SyncSwapNetworks } from '../dapps/sync-swap';
 import { basic as univ3Basic, networks as univ3Networks } from '../dapps/uniswapv3';
+import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
+import { basic as zebraBasic, networks as zebraNetworks } from '../dapps/zebra';
 
 const CHAIN_ID = 534352;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Scroll',
-  displayChainName: 'Scroll',
-  wethAddress: weths[CHAIN_ID],
-  connectProps: {
-    noAccountTips: 'Scroll Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Scroll Chain.',
-  },
-  defalutDex: 'Ambient',
+  defalutInputCurrency: scroll['eth'],
   dexs: {
     Ambient: {
       ...ambientBasic,

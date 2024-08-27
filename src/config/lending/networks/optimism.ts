@@ -1,8 +1,9 @@
 import multicall from '@/config/contract/multicall';
 import weth from '@/config/contract/weth';
+
+import granary from '../dapps/granary-finance';
 // import sonne from '../dapps/sonne';
 import ironBank from '../dapps/iron-bank';
-import granary from '../dapps/granary-finance';
 
 const CHAIN_ID = 10;
 const CHAIN_NAME = 'Optimism';

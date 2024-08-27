@@ -1,6 +1,6 @@
 import { useSimpleLayout } from '@/hooks/useLayout';
-import MobileHomeView from '@/views/Mobile/index';
 import type { NextPageWithLayout } from '@/utils/types';
+import MobileHomeView from '@/views/Mobile/index';
 
 const MobileHomePage: NextPageWithLayout = () => {
   return <MobileHomeView />;

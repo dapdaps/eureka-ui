@@ -2,8 +2,8 @@ import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
-import { useLayoutStore } from '@/stores/layout';
 import useUserReward from '@/hooks/useUserReward'
+import { useLayoutStore } from '@/stores/layout';
 
 const StyledContainer = styled.div`
   padding: 16px;

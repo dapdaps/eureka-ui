@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
+import { openXShareLink } from '@/utils/links';
 
 import useCheck from '../../hooks/useCheck';
 import useReport from '../../hooks/useReport';
@@ -9,7 +10,6 @@ import LockStatus from '../LockStatus';
 import RefreshIcon from '../RefreshButton';
 import CardInput from './CardInput';
 import { ArrowContainer, StyledItem, StyledItemLeft, StyledItemRight, StyledItemShadow,StyledItemTitle, Unexplored } from './styles';
-import { openXShareLink } from '@/utils/links';
 
 const ExploreItem = ({
   userInfo,

@@ -1,12 +1,13 @@
-import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
 import { useRouter } from 'next/router';
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
+import styled from 'styled-components';
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+
 import Loading from '@/components/Icons/Loading';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 
 import Modal from "../Modal";
-import type { Chain, Token } from '@/types';
 
 const Title = styled.div`
     font-size: 20px;
@@ -68,6 +69,7 @@ interface Props {
     fromToken: Token | undefined;
     toToken: Token | undefined;
     amount: string;
+    theme?: any;
     reciveAmount: string | null;
     toAddress: string;
     route: QuoteResponse | null;
@@ -77,10 +79,12 @@ interface Props {
 }
 
 export default function ConfirmModal({
-    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, toAddress, route, reciveAmount, isLoading, onTransactionClick
+    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, theme, toAddress, route, reciveAmount, isLoading, onTransactionClick
 } : Props) {
     const prices = usePriceStore((store) => store.price);
     const router = useRouter();
+
+    const styles = { backgroundColor: theme?.selectBgColor, color: theme?.textColor }
 
     return <Modal onClose={() => {
         onClose()
@@ -96,14 +100,11 @@ export default function ConfirmModal({
 
         <Desc>
             Transaction completed. You can view it on <span className="transactions" onClick={() => {
-                // onTransactionClick && onTransactionClick()
                 router.push('/super-bridge/transaction')
             }}>My Transactions </span>page.
         </Desc>
        
-        <Container onClick={onClick}>+ New Transfer</Container>
+        <Container style={styles} onClick={onClick}>+ New Transfer</Container>
         
     </Modal>
-
-    
 }

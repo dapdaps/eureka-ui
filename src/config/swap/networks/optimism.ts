@@ -1,21 +1,16 @@
-import { basic as velodromeV1Basic, networks as velodromeV1Networks } from '../dapps/velodrome-v1';
-import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { optimism } from '@/config/tokens/optimism';
+
 import { basic as beethovenBasic, networks as beethovenNetworks } from '../dapps/beethoven-x';
 import { basic as fraxBasic, networks as fraxNetworks } from '../dapps/frax-swap';
+import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
+import { basic as velodromeV1Basic, networks as velodromeV1Networks } from '../dapps/velodrome-v1';
 import { basic as velodromeBasic, networks as velodromeNetworks } from '../dapps/velodrome-v2';
 
 const CHAIN_ID = 10;
 
 export default {
   chainId: CHAIN_ID,
-  chainName: 'Optimism',
-  displayChainName: 'Optimism',
-  wethAddress: '0x4200000000000000000000000000000000000006',
-  connectProps: {
-    noAccountTips: 'Optimism Dex Collection',
-    wrongNetworkTips: 'To proceed, kindly switch to Optimism Chain.',
-  },
-  defalutDex: 'Velodrome V2',
+  defalutInputCurrency: optimism['eth'],
   dexs: {
     'Velodrome V2': {
       ...velodromeBasic,

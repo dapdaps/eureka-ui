@@ -1,11 +1,11 @@
-import particleImg from '../../img/g-new/particle.svg';
-import hyperlockImg from '../../img/g-new/hyperlock.svg';
-import ringImg from '../../img/g-new/ring.svg';
-import juiceImg from '../../img/g-new/juice.svg';
-import andyImg from '../../img/g-new/andy.svg';
-import bajaImg from '../../img/g-new/baja.svg';
-import ambientImg from '../../img/g-new/ambient.svg';
-import dapdapImg from '@/views/Compass/img/g-new/g6.svg';
+import dapdapImg from '@public/images/others/odyssey/v1/g-new/g6.svg?url';
+import ambientImg from '@public/images/others/odyssey/v8/g-new/ambient.svg?url';
+import andyImg from '@public/images/others/odyssey/v8/g-new/andy.svg?url';
+import bajaImg from '@public/images/others/odyssey/v8/g-new/baja.svg?url';
+import hyperlockImg from '@public/images/others/odyssey/v8/g-new/hyperlock.svg?url';
+import juiceImg from '@public/images/others/odyssey/v8/g-new/juice.svg?url';
+import particleImg from '@public/images/others/odyssey/v8/g-new/particle.svg?url';
+import ringImg from '@public/images/others/odyssey/v8/g-new/ring.svg?url';
 
 export const DAPPS = [
   '/images/odyssey/v8/logo-thruster.svg',

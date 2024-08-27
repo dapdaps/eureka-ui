@@ -1,9 +1,11 @@
-import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
-import { formatValueDecimal } from '@/utils/formate';
 import Big from 'big.js';
 import { format } from 'date-fns';
 import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
+
+import { StyledContainer, StyledFlex, StyledFont } from '@/styled/styles';
+import { formatValueDecimal } from '@/utils/formate';
+
 import AreaChart from '../components/AreaChart';
 import Ring from '../components/Ring';
 import usePrice from '../hooks/usePrice';

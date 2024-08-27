@@ -1,5 +1,6 @@
-import { memo } from 'react';
 import { useRouter } from 'next/navigation';
+import { memo } from 'react';
+
 import VersionSelector from '@/views/Pool/components/VersionSelector';
 
 import { StyledActions, StyledClearAll, StyledContainer, StyledIconButton, StyledTitle } from './styles';

@@ -1,7 +1,8 @@
+import Loading from '@/components/Icons/Loading';
+import { StyledLoadingWrapper } from '@/styled/styles';
+
 import Title from '../Title';
 import ExporeItem from './ExporeItem';
-import { StyledLoadingWrapper } from '@/styled/styles';
-import Loading from '@/components/Icons/Loading';
 import { StyledContainer, StyledContent } from './styles';
 
 export default function Explore({ list, userInfo, authConfig, onRefreshDetail }: any) {

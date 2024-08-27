@@ -1,19 +1,19 @@
 import arbitrum from './arbitrum';
 import avalanche from './avalanche';
 import base from './base';
+import blast from './blast';
 import bsc from './bsc';
 import gnosis from './gnosis';
 import linea from './linea';
+import manta from './manta';
 import mantle from './mantle';
 import metis from './metis';
+import mode from './mode';
 import optimism from './optimism';
 import polygon from './polygon';
-import zkSync from './zkSync';
 import polygonZkevm from './polygon-zkevm';
-import manta from './manta';
 import scroll from './scroll';
-import blast from './blast';
-import mode from './mode';
+import zkSync from './zkSync';
 
 export default {
   42161: arbitrum,

@@ -1,7 +1,9 @@
-import { memo, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { memo, useState } from 'react';
+
 import { select } from '@/components/animation';
-import { StyledContainer, StyledMenuWrapper, StyledMenu, StyledItem, StyledContent } from './styles';
+
+import { StyledContainer, StyledContent,StyledItem, StyledMenu, StyledMenuWrapper } from './styles';
 
 const VersionSelector = ({ version, setVersion }: any) => {
   const [show, setShow] = useState(false);

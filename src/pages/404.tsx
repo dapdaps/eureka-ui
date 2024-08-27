@@ -1,6 +1,7 @@
-import styled from 'styled-components';
-import { useSimpleLayout } from '@/hooks/useLayout';
 import { useRouter } from 'next/router';
+import styled from 'styled-components';
+
+import { useSimpleLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 
 const StyledContainer = styled.div`

@@ -1,4 +1,5 @@
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useRouter,useSearchParams } from 'next/navigation'
+
 import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 import QuestDetailView from '@/views/QuestDetail';

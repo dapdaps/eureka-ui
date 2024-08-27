@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
+
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';

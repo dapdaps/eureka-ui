@@ -1,6 +1,6 @@
+import { manta } from '@/config/tokens/manta';
 import { polygon } from '@/config/tokens/polygon';
 import { polygonZkevm } from '@/config/tokens/polygonZkevm';
-import { manta } from '@/config/tokens/manta';
 
 const basic = {
   name: 'QuickSwap',
@@ -13,7 +13,19 @@ const networks = {
       input: polygon['eth'],
       output: polygon['usdc'],
     },
-    tokens: [polygon['eth'], polygon['usdc'], polygon['wbtc'], polygon['wmatic'], polygon['dai'], polygon['usdt']],
+    tokens: [
+      polygon['eth'], 
+      polygon['usdc'], 
+      polygon['wbtc'], 
+      polygon['wmatic'], 
+      polygon['dai'], 
+      polygon['usdt'],
+      polygon['usdc.e'],
+      polygon['ghst'],
+      polygon['usdt'],
+      polygon['usdc'],
+      polygon['quick'],
+    ],
   },
   1101: {
     defaultCurrencies: {
@@ -28,6 +40,9 @@ const networks = {
       polygonZkevm['matic'],
       polygonZkevm['usdt'],
       polygonZkevm['dai'],
+      polygonZkevm['link'],
+      polygonZkevm['usdc.e'],
+      polygonZkevm['quick'],
     ],
   },
   169: {
@@ -45,6 +60,16 @@ const networks = {
       manta['quick'],
       manta['wsteth'],
       manta['wusdm'],
+      manta['mbtc'],
+      manta['stone'],
+      manta['manta'],
+      manta['vmanta'],
+      manta['meth'],
+      manta['mUSD'],
+      manta['gai'],
+      manta['matic'],
+      manta['pape'],
+      manta['manta-ray'],
     ],
   },
 };

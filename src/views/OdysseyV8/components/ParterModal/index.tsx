@@ -1,7 +1,8 @@
 import styled from 'styled-components';
+
 import Modal from '../Modal';
-import successImg from './success.png';
 import failImg from './fail.png';
+import successImg from './success.png';
 
 const Iocn = styled.img`
   position: absolute;

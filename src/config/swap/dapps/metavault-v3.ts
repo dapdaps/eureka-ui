@@ -1,5 +1,5 @@
-import { scroll } from '@/config/tokens/scroll';
 import { linea } from '@/config/tokens/linea';
+import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Metavault V3',
@@ -12,7 +12,7 @@ const networks = {
       input: scroll['weth'],
       output: scroll['usdt'],
     },
-    tokens: [scroll['usdt'], scroll['weth'], scroll['usdc'], scroll['lusd'], scroll['wbtc']],
+    tokens: [scroll['usdt'], scroll['weth'], scroll['usdc'], scroll['lusd'], scroll['wbtc'], scroll['mvx']],
   },
   59144: {
     defaultCurrencies: {

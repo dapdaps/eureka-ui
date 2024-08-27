@@ -1,9 +1,11 @@
 import { memo } from 'react';
+
+import Fee from '@/views/Pool/components/Fee';
 import Status from '@/views/Pool/components/Status';
 import TokenIcon from '@/views/Pool/components/TokenIcon';
-import Fee from '@/views/Pool/components/Fee';
 import VersionTag from '@/views/Pool/Pools/components/VersionTag';
-import { StyledContainer, StyledLeft, StyledTokens, StyledSymbol } from './styles';
+
+import { StyledContainer, StyledLeft, StyledSymbol,StyledTokens } from './styles';
 
 const Tokens = ({
   from = 'add',

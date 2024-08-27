@@ -1,11 +1,11 @@
 import { arbitrum } from '@/config/tokens/arbitrum';
+import { base } from '@/config/tokens/base';
 import { gnosis } from '@/config/tokens/gnosis';
+import { linea } from '@/config/tokens/linea';
 import { optimism } from '@/config/tokens/optimism';
 import { polygon } from '@/config/tokens/polygon';
 import { polygonZkevm } from '@/config/tokens/polygonZkevm';
-import { linea } from '@/config/tokens/linea';
 import { scroll } from '@/config/tokens/scroll';
-import { base } from '@/config/tokens/base';
 
 const basic = {
   name: 'SushiSwap',
@@ -16,19 +16,25 @@ const basic = {
 const networks = {
   42161: {
     defaultCurrencies: {
-      input: arbitrum['weth'],
-      output: arbitrum['usdt'],
+      input: arbitrum['eth'],
+      output: arbitrum['arb'],
     },
     tokens: [
       arbitrum['eth'],
-      arbitrum['weth'],
+      arbitrum['magic'],
       arbitrum['usdc'],
-      arbitrum['usdc.e'],
       arbitrum['usdt'],
+      arbitrum['wbtc'],
+      arbitrum['solv-btc'],
+      arbitrum['tbtc'],
+      arbitrum['usdc.e'],
+      arbitrum['wst-eth'],
+      arbitrum['usde'],
+
+      arbitrum['weth'],
       arbitrum['dai'],
       arbitrum['arb'],
       arbitrum['sushi'],
-      arbitrum['wbtc'],
     ],
   },
   100: {
@@ -44,6 +50,7 @@ const networks = {
       gnosis['wbtc'],
       gnosis['usdt'],
       gnosis['sushi'],
+      gnosis['xdai'],
     ],
   },
   10: {
@@ -64,6 +71,7 @@ const networks = {
       optimism['lusd'],
       optimism['snx'],
       optimism['mai'],
+      optimism['nsfw'],
     ],
   },
   137: {
@@ -80,6 +88,11 @@ const networks = {
       polygon['dai'],
       polygon['usdt'],
       polygon['sushi'],
+      polygon['usdc.e'],
+      polygon['stg'],
+      polygon['klima'],
+      polygon['tut'],
+      polygon['aave'],
     ],
   },
   1101: {
@@ -109,14 +122,45 @@ const networks = {
       input: scroll['eth'],
       output: scroll['usdc'],
     },
-    tokens: [scroll['eth'], scroll['weth'], scroll['usdc'], scroll['dai'], scroll['wbtc'], scroll['wsteth']],
+    tokens: [
+      scroll['eth'],
+      scroll['weth'],
+      scroll['usdc'],
+      scroll['dai'],
+      scroll['wbtc'],
+      scroll['wsteth'],
+      scroll['axlusdc'],
+      scroll['axlfrax'],
+      scroll['usdt'],
+      scroll['frxeth'],
+      scroll['rlc'],
+      scroll['toazu'],
+    ],
   },
   8453: {
     defaultCurrencies: {
       input: base['eth'],
-      output: base['dai'],
+      output: base['axlusdc'],
     },
-    tokens: [base['eth'], base['weth'], base['dai'], base['usdc'], base['usdbc'], base['axlusdc']],
+    tokens: [
+      base['weth'],
+      base['brett'],
+      base['krav'],
+      base['normie'],
+      base['andy'],
+      base['eth'],
+      base['tybg'],
+      base['usdc'],
+      base['kibble'],
+      base['toby'],
+      base['coin'],
+      base['ayb'],
+      base['gmr'],
+      base['fella'],
+      base['dai'],
+      base['usdbc'],
+      base['axlusdc'],
+    ],
   },
 };
 

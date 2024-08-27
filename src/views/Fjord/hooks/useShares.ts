@@ -1,6 +1,7 @@
-import chains from '@/config/chains';
 import { Contract, providers } from 'ethers';
 import { useState } from 'react';
+
+import chains from '@/config/chains';
 export default function useShares(sender: any) {
 
   const [shares, setShares] = useState(0)

@@ -1,19 +1,21 @@
-import { memo, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { memo, useRef, useState } from 'react';
+
 import Loading from '@/components/Icons/Loading';
+
 import Common from '../common';
 import OrderPanel from '../components/OrderPanel';
 import useChechStatus from '../hooks/useChechStatus';
 import useNetworksAndTokens from '../hooks/useNetworksAndTokens';
 import {
-  StyledSearch,
-  StyledInputBox,
-  StyledInputWrapper,
-  StyledInput,
-  StyledInputIcon,
+  LoadingWrapper,
   StyledBack,
   StyledEmpty,
-  LoadingWrapper,
+  StyledInput,
+  StyledInputBox,
+  StyledInputIcon,
+  StyledInputWrapper,
+  StyledSearch,
 } from './styles';
 
 const ShuShSearchView = () => {

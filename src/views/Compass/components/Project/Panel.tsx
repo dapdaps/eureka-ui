@@ -1,12 +1,13 @@
+import maskImg from '@public/images/others/odyssey/v1/mask.svg?url';
 import styled from 'styled-components';
+
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useChainsStore } from '@/stores/chains';
-import useQuestStatus from '../../hooks/useQuestStatus';
-import Spin from '../Spin';
-import Fresh from '../Fresh';
-import Complete from '../Complate';
 
-import maskImg from '../../img/mask.svg';
+import useQuestStatus from '../../hooks/useQuestStatus';
+import Complete from '../Complate';
+import Fresh from '../Fresh';
+import Spin from '../Spin';
 
 const PanelWapper = styled.div<{ color: string }>`
     width: 25%;

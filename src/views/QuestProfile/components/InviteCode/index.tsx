@@ -1,6 +1,7 @@
 import { memo } from 'react';
+
 import InviteCode from './InviteCode';
-import { StyledPanel, StyledPanelWrapper, StyledPanelHeader } from './styles';
+import { StyledPanel, StyledPanelHeader,StyledPanelWrapper } from './styles';
 
 const InviteCodePanel = ({ onInviteCodeClick, total }: any) => {
   return (

@@ -1,12 +1,14 @@
-import { memo, useState, useMemo } from 'react';
+import { memo, useMemo,useState } from 'react';
+
 import Modal from '@/components/Modal';
-import Tokens from '../Detail/components/Tokens';
-import AmountPanel from '../Detail/components/AmountPanel';
+
 import DepositAmounts from '../components/DepositAmounts/V2';
-import IncreaseButton from './components/Button';
-import { StyledContent } from './styles';
-import useIncrease from './hooks/useIncreaseV2';
+import AmountPanel from '../Detail/components/AmountPanel';
+import Tokens from '../Detail/components/Tokens';
 import useDappConfig from '../hooks/useDappConfig';
+import IncreaseButton from './components/Button';
+import useIncrease from './hooks/useIncreaseV2';
+import { StyledContent } from './styles';
 
 const Increase = ({ open, onClose, onSuccess, detail, amount0, amount1, chainId }: any) => {
   const { token0, token1, fee, liquidity, reserve0, reserve1 } = detail;

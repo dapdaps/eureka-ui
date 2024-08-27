@@ -1,9 +1,11 @@
 import { memo, useState } from 'react';
+
 import Modal from '@/components/Modal';
-import SwapPanel from './SwapPanel';
+
 import BridgePanel from './BridgePanel';
 import LendingPanel from './LendingPanel';
 import LiquidityPanel from './LiquidityPanel';
+import SwapPanel from './SwapPanel';
 
 const Panel = ({ type, chainId, setTitle, ...restProps }: any) => {
   if (type === 'swap') {

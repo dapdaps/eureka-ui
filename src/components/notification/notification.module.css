@@ -1,0 +1,102 @@
+.NotificationComWrapper {
+    display: flex;
+    /* align-items: center; */
+    gap: 10px;
+    padding: 20px 16px;
+    .content {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        .descContent {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+        .title {
+            font-family: Montserrat;
+            font-size: 16px;
+            font-weight: 600;
+            line-height: 19px;
+            text-align: left;
+            color: #fff;
+            max-width: 248px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+    }
+
+    .subTtitle {
+        width: 100%;
+        height: 34px;
+        text-align: left;
+        font-family: Montserrat;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 17px;
+        color: rgba(255, 255, 255, .6);
+    }
+
+    .icon {
+        width: 60px;
+        height: 60px;
+    }
+
+    .time {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 4px;
+
+        .dot {
+            width: 7px;
+            height: 7px;
+            background-color: rgba(255, 0, 138, 1);
+            border-radius: 7px;
+        }
+
+        .timeText {
+            color: rgba(151, 154, 190, 1);
+            font-family: Montserrat;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 14px;
+            text-align: right;
+        }
+    }
+
+    .notificationList {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        .descContent {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+            .title {
+                margin-top: 8px;
+            }
+        }
+        .time {
+            width: 110px;
+        }
+    }
+}
+
+.NotificationComWrapper:hover {
+    cursor: pointer;
+    background-color: rgba(16, 17, 21, 1);
+
+    .subTtitle {
+        color: #fff;
+    }
+}
+
+.NotificationComWrapper:last-child:hover {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+

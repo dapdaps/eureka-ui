@@ -1,8 +1,7 @@
+import { memo } from 'react';
 import styled from 'styled-components';
 
 import Modal from '../Modal';
-
-import { memo } from 'react';
 
 const Title = styled.div`
   font-size: 26px;

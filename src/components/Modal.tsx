@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import type { ReactNode } from 'react';
+import React, { type ReactNode } from 'react';
 import { memo } from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
 import { modal, overlay } from '@/components/animation';
@@ -28,10 +29,10 @@ const Overlay = styled(motion.div)`
     align-items: flex-end;
   }
 `;
-const Main = styled(motion.div) <{ $width: number, $hidden: boolean }>`
+const Main = styled(motion.div)<{ $width: number; $hidden: boolean }>`
   position: relative;
   width: ${({ $width }) => $width + 'px'};
-  overflow: ${($hidden) => $hidden ? 'hidden' : 'normal'};
+  overflow: ${($hidden) => ($hidden ? 'hidden' : 'normal')};
   border-radius: 20px;
   border: 1px solid #373a53;
   background: #262836;
@@ -69,22 +70,22 @@ const Modal = ({
   hidden = false,
   content,
   showHeader = true,
-  onClose = () => { },
-}: {
-  display: boolean;
-  title?: string | ReactNode;
-  width?: number;
-  hidden?: boolean;
-  showHeader?: boolean;
-  content: ReactNode;
-  onClose?: () => void;
-}) => {
-  return (
+  onClose = () => {},
+  overlayClassName = '',
+  overlayStyle,
+  headerStyle,
+  className = '',
+  style,
+  portal = false
+}: any): React.ReactPortal | ReactNode => {
+  const renderModal = (): ReactNode => (
     <AnimatePresence mode="wait">
       {display && (
         <Dialog>
-          <Overlay onClick={onClose} {...overlay}>
+          <Overlay onClick={onClose} {...overlay} className={overlayClassName} style={overlayStyle}>
             <Main
+              className={className}
+              style={style}
               {...modal}
               $width={width}
               $hidden={hidden}
@@ -93,7 +94,7 @@ const Modal = ({
               }}
             >
               {showHeader && (
-                <Header>
+                <Header style={headerStyle}>
                   <Title>{title}</Title>
                   <StyledCloseIcon>
                     <CloseIcon onClose={onClose} />
@@ -107,6 +108,10 @@ const Modal = ({
       )}
     </AnimatePresence>
   );
+
+  if (!portal) return renderModal();
+
+  return ReactDOM.createPortal(renderModal() as any, document.body) as unknown as React.ReactPortal;
 };
 
-export default memo(Modal);
+export default Modal;

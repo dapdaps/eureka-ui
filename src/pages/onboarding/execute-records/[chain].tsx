@@ -1,5 +1,6 @@
-import { useDefaultLayout } from '@/hooks/useLayout';
 import { useRouter } from 'next/router';
+
+import { useDefaultLayout } from '@/hooks/useLayout';
 import type { NextPageWithLayout } from '@/utils/types';
 import ExecuteRecords from '@/views/OnBoarding/ExecuteRecords';
 

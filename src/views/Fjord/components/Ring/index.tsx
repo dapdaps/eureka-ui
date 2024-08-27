@@ -1,5 +1,6 @@
-import { StyledSvg } from "@/styled/styles"
 import styled from "styled-components"
+
+import { StyledSvg } from "@/styled/styles"
 
 const StyledRing = styled.div`
   position: relative;

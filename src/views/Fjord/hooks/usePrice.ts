@@ -1,5 +1,6 @@
-import { get } from '@/utils/http';
 import { useCallback, useState } from 'react';
+
+import { get } from '@/utils/http';
 export default function usePrice() {
   const [priceData, setPriceData] = useState<any>([]);
   const [loading, setLoading] = useState(false);

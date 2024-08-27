@@ -1,6 +1,8 @@
-import PriceRange from '../PriceRange';
 import { memo, useMemo } from 'react';
+
 import { checkIsFullRange, tickToPrice } from '@/views/Pool/utils/tickMath';
+
+import PriceRange from '../PriceRange';
 
 const Range = ({ token0, token1, tickLower, tickUpper, currentTick, from }: any) => {
   const lowerPrice = useMemo(

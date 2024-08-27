@@ -1,6 +1,7 @@
 import { memo } from 'react';
-import PoolV3 from './V3';
+
 import PoolV2 from './V2';
+import PoolV3 from './V3';
 
 const Pool = ({ poolVersion, ...rest }: any) => {
   return poolVersion === 'V3' ? (

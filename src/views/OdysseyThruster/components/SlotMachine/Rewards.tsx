@@ -1,6 +1,7 @@
 import styled from 'styled-components';
-import { Score } from './SubTitle';
+
 import RewardIcons from '../../RewardIcons';
+import { Score } from './SubTitle';
 
 const Wrapper = styled.div`
   color: #00ffd1;

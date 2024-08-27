@@ -1,12 +1,13 @@
 import { memo } from 'react';
+
 import AddMetaMask from '../AddMetaMask';
 import Actions from './Actions';
 import {
+  StyledChainLogo,
+  StyledChainLogoWrapper,
+  StyledChainName,
   StyledHeaderWrapper,
   StyledTitleWrapper,
-  StyledChainLogoWrapper,
-  StyledChainLogo,
-  StyledChainName,
 } from './styles';
 
 const Header = ({ logo, name, chainId, bgColor, path, id, deepdive }: any) => {

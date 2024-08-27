@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
-import PublicTitle from '../PublicTitle';
 import { ArrowRight } from '../Arrow'
+import PublicTitle from '../PublicTitle';
 
 const Container = styled.div`
     background: radial-gradient(108.37% 99.81% at 2.05% 4.07%, #5929A7 0%, #1E1B33 100%), radial-gradient(39.17% 39.17% at 29.3% 60.83%, #FFF500 0%, rgba(255, 245, 0, 0) 100%) ;
@@ -21,8 +21,9 @@ const JuniorWapper = styled.div`
     align-items: center;
     padding: 0 10px;
     cursor: pointer;
+    position: relative;
     .img {
-        width: 60px;
+        width: 45px;
         height: 45px;
     }
     .title-wapper {
@@ -54,7 +55,7 @@ const Layer = styled.div`
     top:0;
     bottom: 0;
     background-color: rgba(0, 0, 0, .2);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(3px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -66,11 +67,11 @@ export default function Transaction() {
     return <Container>
         <PublicTitle
             title="Medal"
-            subTitle='You might be interested colecting the medals.'
+            subTitle='You might be interested collecting the medals.'
         />
      
         <JuniorWapper>
-            <img className="img" src="https://ipfs.near.social/ipfs/bafkreiashn3iawpvw66ejmyo3asdn4m5x25haijwyhubxjuzw7g7c7qq7a" />
+            <img className="img" src="https://s3.amazonaws.com/db3.app/medal/medal_checkin_1.png" />
             <div className="title-wapper">
                 <div className="title">Bridger Junior Medal</div>
                 <div className="sub-title">Bridge $10.23 valued assets to get.</div>
@@ -78,10 +79,11 @@ export default function Transaction() {
             <div className="arrow">
                 <ArrowRight />
             </div>
+            <Layer></Layer>
         </JuniorWapper>
 
-        <Layer>
+        {/* <Layer>
             New function coming soon...
-        </Layer>
+        </Layer> */}
     </Container>
 }

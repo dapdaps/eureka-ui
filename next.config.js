@@ -3,6 +3,9 @@
 const api_url = process.env.NEXT_PUBLIC_API ? process.env.NEXT_PUBLIC_API : 'https://api.dapdap.net';
 
 const nextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   compiler: { styledComponents: true },
   reactStrictMode: false,
   redirects: async () => {
@@ -151,6 +154,35 @@ const nextConfig = {
     esmExternals: 'loose',
   },
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    config.resolve.alias.stream = 'stream-browserify'
+
+    const fileLoaderRule = config.module.rules.find((rule) =>
+      rule.test?.test?.('.svg'),
+    )
+    config.module.rules.push(
+      {
+        ...fileLoaderRule,
+        test: /\.svg$/i,
+        resourceQuery: /url/, // *.svg?url
+      },
+      {
+        test: /\.svg$/i,
+        issuer: fileLoaderRule.issuer,
+        resourceQuery: { not: [...fileLoaderRule.resourceQuery.not, /url/] }, // exclude if *.svg?url
+        use: ['@svgr/webpack'],
+      },
+    )
+    fileLoaderRule.exclude = /\.svg$/i
+    if (!isServer) {
+      config.optimization.splitChunks.cacheGroups = {
+        VmInitializer: {
+          test: /[\\/]src[\\/]components[\\/]vm[\\/]VmInitializer\.tsx$/,
+          name: 'VmInitializer',
+          chunks: 'initial',
+          enforce: true,
+        },
+      };
+    }
     return config;
   },
 };

@@ -1,12 +1,18 @@
-import loginLogo from '@/assets/images/login_logo.svg';
-import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
-import { ellipsAccount } from '@/utils/account';
+import loginLogo from '@public/images/others/bns/login_logo.svg?url';
 import { useConnectWallet } from '@web3-onboard/react';
 import { setCookie } from 'cookies-next';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
+
+import { getAccessToken } from '@/apis';
+// import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
+import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
+import useToast from '@/hooks/useToast';
+import { ellipsAccount } from '@/utils/account';
+import { get, post } from '@/utils/http';
+
 import useGetInviter from './hooks/useGetInviter';
 import {
   StyledFlex,
@@ -17,18 +23,15 @@ import {
   StyledText,
 } from './styles';
 
-import { getAccessToken } from '@/apis';
-import { get, post } from '@/utils/http';
-import useToast from '@/hooks/useToast';
-import ConfirmOfficialUrl from '@/components/ConfirmOfficialUrl';
-
-
 const StyledUserContainer = styled.div`
   margin-bottom: 26px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  font-size: 18px;
+  font-weight: 400;
+  color: #979ABE;
 `
 const StyledUser = styled.div`
   min-width: 169px;
@@ -100,9 +103,6 @@ const LoginView = () => {
   async function activeWithCode() {
     const res: any = await post(`/api/invite/activate`, { address, code: router?.query?.inviteCode });
     if (res.data.is_success) {
-      toast.success({
-        title: '100PTS rewarded!'
-      })
       fetchAccessToken();
     }
   }
@@ -120,7 +120,7 @@ const LoginView = () => {
   }, [address]);
   return (
     <StyledFlex style={{ height: '100vh' }} $gap="82px">
-      <ConfirmOfficialUrl />
+      {/* <ConfirmOfficialUrl /> */}
       <StyledImage>
         <StyledLoginVideo width={824} height={636} autoPlay muted playsInline loop>
           <source src="https://s3.amazonaws.com/dapdap.prod/images/login_background.mp4" type="video/mp4" />
@@ -130,7 +130,7 @@ const LoginView = () => {
       </StyledImage>
       <StyledFlex $direction="column">
         <StyledImage style={{ marginBottom: 24 }}>
-          <Image style={{ width: 409 }} src={loginLogo} alt="loginLogo" />
+          <Image width={409} src={loginLogo} alt="loginLogo" />
         </StyledImage>
         {/* <StyledInvitedUsers>Invited users only</StyledInvitedUsers> */}
 
@@ -158,13 +158,15 @@ const LoginView = () => {
             </StyledUserContainer>
           )
         }
-        <StyledInvitedAward>💡 Sign up through this invite link, you and the inviter will earn 100 PTS for each.</StyledInvitedAward>
+        <StyledInvitedAward>
+          💡You’ve been invited to join DapDap! By joining through this referral link and completing a valid transaction, you’ll help your friend progress toward earning the Promotional Maestro Medal.
+        </StyledInvitedAward>
         <StyledLoginConnectWalletButton
           onClick={() => {
             connect();
           }}
           disabled={connecting}
-          data-bp="2001-001"
+          data-bp="1001-005"
         >
           Connect Wallet
         </StyledLoginConnectWalletButton>

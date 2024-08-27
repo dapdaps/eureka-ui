@@ -67,7 +67,7 @@ const get = async (url: string, query?: Record<string, any>) => {
 
 const getWithoutActive = async (
   url: string,
-  activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx',
+  activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx' | 'coin98',
   query?: Record<string, any>,
 ) => {
   const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
@@ -90,7 +90,7 @@ const getWithoutActive = async (
   return res.json() as any;
 };
 
-const post = async (url: string, data: object) => {
+const post = async (url: string, data?: object) => {
   const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const res = await fetch(getUrl(url), {
     method: 'POST',
@@ -98,7 +98,7 @@ const post = async (url: string, data: object) => {
       Authorization: `Bearer ${tokens.access_token || ''}`,
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: data ? JSON.stringify(data) : undefined,
   });
   const result = await res.json() as any;
   handleUpgrade(result);

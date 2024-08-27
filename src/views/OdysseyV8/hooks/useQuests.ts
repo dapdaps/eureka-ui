@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react';
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
+
 import DappsConfig from '../DappsConfig';
 
 const defaultQuests: any = {

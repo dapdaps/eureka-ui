@@ -1,24 +1,23 @@
+import { useDebounce } from 'ahooks';
+import Big from 'big.js';
 import type { FC } from 'react';
 import React, { useEffect, useMemo, useState } from 'react';
-import Big from 'big.js';
-import { useDebounce } from 'ahooks';
 
-import useAddAction from '@/hooks/useAddAction';
 import allTokens from '@/config/bridge/allTokens';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
-import { usePriceStore } from '@/stores/price';
-import useTokenBalance from '@/hooks/useCurrencyBalance';
+import useAddAction from '@/hooks/useAddAction';
 import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
-import { FIXED_PRICE_RATIO } from '@/config/fjoid';
-
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import { usePriceStore } from '@/stores/price';
 import type { Chain, Token } from '@/types';
 import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
 
+import type { QuoteProps } from './hooks/useFjordTrade'
+import { useBuyQuote, useBuyTrade, useDetail,useSellQuote, useSellTrade } from './hooks/useFjordTrade'
 import Modal from './launch-modal';
 import SellTokenAmount from './SellTokenAmount';
 import Settings from './settings';
-import Buy from './Trade/Buy'
 import {
   ArrowSwap,
   Body,
@@ -33,16 +32,13 @@ import {
   Logo,
   Panel,
   Status,
+  StyledRelativeModal,
   TabBody,
-  TimerEnd,
-  StyledRelativeModal
-} from './style.index';
+  TimerEnd} from './style.index';
 import SubmitBtn from './SubmitBtn';
 import Tabs from './tabs';
 import Timer from './timer';
-import { useBuyQuote, useSellQuote, useBuyTrade, useSellTrade, useDetail } from './hooks/useFjordTrade'
-
-import type { QuoteProps } from './hooks/useFjordTrade'
+import Buy from './Trade/Buy'
 
 interface IProps {
   onClose?: () => void;

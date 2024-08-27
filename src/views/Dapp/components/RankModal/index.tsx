@@ -1,26 +1,28 @@
-import Modal from '@/components/Modal';
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom';
+
 import Close from '@/components/Icons/Close';
-import { balanceShortFormated } from '@/utils/balance';
-import { columns } from './config';
-import Rank from './Rank';
-import User from './User';
-import Loading from './Loading';
-import useDappRank from '../../hooks/useDappRank';
+import Modal from '@/components/Modal';
 import useUserInfo from '@/hooks/useUserInfo';
+import { balanceShortFormated } from '@/utils/balance';
+
+import useDappRank from '../../hooks/useDappRank';
+import { columns } from './config';
+import Loading from './Loading';
+import Rank from './Rank';
 import {
-  StyledHeader,
-  StyledLogoWrapper,
-  StyledLogo,
-  StyledHeaderRight,
   StyledContent,
+  StyledCurrentRank,
   StyledDesc,
+  StyledHeader,
+  StyledHeaderRight,
+  StyledLogo,
+  StyledLogoWrapper,
   StyledTable,
   StyledTableHeader,
   StyledTableRow,
-  StyledCurrentRank,
 } from './styles';
+import User from './User';
 
 export default function RankModal({ dapp, show, onClose }: any) {
   const { loading, ranks, user, queryRank } = useDappRank();

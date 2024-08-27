@@ -1,7 +1,9 @@
 import { memo, useRef, useState } from "react";
 import styled from "styled-components";
-import GridChains from "./components/GridChains";
+
 import { StyledSvg } from "@/styled/styles";
+
+import GridChains from "./components/GridChains";
 
 const StyledDavinciContainer = styled.div`
   position: relative;

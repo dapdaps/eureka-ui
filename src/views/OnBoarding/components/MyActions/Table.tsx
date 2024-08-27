@@ -1,19 +1,21 @@
 import { memo, useRef } from 'react';
+
 import Loading from '@/components/Icons/Loading';
-import { formatTitle } from '../../helpers';
+
 import { DAPP_LOGO } from '../../config';
+import { formatTitle } from '../../helpers';
 import {
+  StyledClean,
+  StyledExecutionButton,
   StyledTable,
-  StyledTableHeader,
-  StyledTableBody,
-  StyledTableRow,
   StyledTableAction,
+  StyledTableBody,
   StyledTableDapp,
   StyledTableDappImg,
   StyledTableDappName,
   StyledTableExecution,
-  StyledExecutionButton,
-  StyledClean,
+  StyledTableHeader,
+  StyledTableRow,
 } from './styles';
 
 const COLUMNS = [

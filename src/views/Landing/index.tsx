@@ -4,8 +4,8 @@ import { memo, useEffect, useRef, useState } from 'react';
 import Loading from '@/components/Icons/Loading';
 import Spinner from '@/components/Spinner';
 import useRewardsClaim from '@/hooks/useRewardsClaim';
-import useQuestInfo from '@/views/QuestDetail/hooks/useQuestInfo';
 import ProcessBar from '@/views/Quest/components/ProcessBar';
+import useQuestInfo from '@/views/QuestDetail/hooks/useQuestInfo';
 
 import Bridge from './Bridge';
 import { bgs, steps } from './config';
@@ -13,9 +13,11 @@ import useReport from './hooks/useReport';
 import {
   StyledButtons,
   StyledClaimButton,
+  StyledCoin,
   StyledContainer,
   StyledDesc,
   StyledLeftPanel,
+  StyledProcessBars,
   StyledRightImg,
   StyledRightPanel,
   StyledSkipButton,
@@ -25,8 +27,6 @@ import {
   StyledStepHeader,
   StyledStepTitle,
   StyledTitle,
-  StyledCoin,
-  StyledProcessBars,
 } from './styles';
 import SuccessModal from './SuccessModal';
 

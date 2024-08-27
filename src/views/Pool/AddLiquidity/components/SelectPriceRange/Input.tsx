@@ -1,12 +1,13 @@
 import { memo, useEffect, useState } from 'react';
+
 import {
   StyledInput,
+  StyledInputButton,
+  StyledInputDesc,
+  StyledInputInner,
+  StyledInputLabel,
   StyledInputLeft,
   StyledInputRight,
-  StyledInputButton,
-  StyledInputLabel,
-  StyledInputInner,
-  StyledInputDesc,
 } from './styles';
 
 const Input = ({ label, value, setValue, onButtonClick, desc, disabled, rangeType }: any) => {

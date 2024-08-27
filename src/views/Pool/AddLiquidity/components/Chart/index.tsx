@@ -1,11 +1,12 @@
-import React, { useCallback, useEffect, memo, useState, useMemo } from 'react';
-import * as d3 from 'd3';
 import Big from 'big.js';
-import { StyledContainer, StyledTop } from './styles';
+import * as d3 from 'd3';
 import _ from 'lodash';
-import FEES from './config';
+import React, { memo, useCallback, useEffect, useMemo,useState } from 'react';
+
 import useChartData from '../../hooks/useChartData';
 import type { ChartEntry } from '../../types';
+import FEES from './config';
+import { StyledContainer, StyledTop } from './styles';
 
 const xAccessor = (d: ChartEntry) => d.price;
 const yAccessor = (d: ChartEntry) => d.liquidityNet;

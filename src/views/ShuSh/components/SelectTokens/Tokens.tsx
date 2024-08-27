@@ -1,5 +1,6 @@
 import { memo, useMemo, useState } from 'react';
 import styled from 'styled-components';
+
 import Header from './Header';
 import SearchInput from './SearchInput';
 import TokenRow from './TokenRow';

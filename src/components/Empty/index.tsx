@@ -1,5 +1,6 @@
-import { memo } from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
+
 import EmptyIcon from '../Icons/Empty';
 
 const StyledContainer = styled.div`
@@ -17,7 +18,7 @@ const StyledContainer = styled.div`
   gap: 14px;
 `;
 
-const Empty = ({ size, tips }: { size?: number; tips?: string }) => {
+const Empty = ({ size, tips }: { size?: number; tips?: string | React.ReactNode }) => {
   return (
     <StyledContainer>
       <EmptyIcon size={size} />

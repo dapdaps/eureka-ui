@@ -1,20 +1,16 @@
-import useAccount from '@/hooks/useAccount';
-import useToast from '@/hooks/useToast';
-import type { Chain, Token } from '@/types';
 import { useSetChain } from '@web3-onboard/react';
+import Big from 'big.js';
+import type { Signer } from 'ethers';
 import { Contract, providers, utils } from 'ethers';
 import { useEffect, useState } from 'react';
-import { approve, execute, getQuote, getStatus } from 'super-bridge-sdk';
+import type { QuoteResponse } from 'super-bridge-sdk'
+import { approve,execute, getQuote, getStatus } from 'super-bridge-sdk'
 
 import chainCofig from '@/config/chains';
+import useAccount from '@/hooks/useAccount';
+import useToast from '@/hooks/useToast';
+import type { Chain, Token } from '@/types'
 import { errorFormated, getFullNum } from '@/utils/balance';
-
-import type { Signer } from 'ethers';
-import type { QuoteResponse } from 'super-bridge-sdk';
-
-
-import { FIXED_PRICE_RATIO } from '@/config/fjoid';
-import Big from 'big.js';
 
 export interface QuoteProps {
     fromChain: Chain;
@@ -585,7 +581,7 @@ export function useBuyTrade({
             success({
                 title: 'Transaction success',
                 text: 'Buy success',
-                token: quote.toToken
+                // token: quote.toToken
             })
 
             return tx.hash

@@ -1,6 +1,7 @@
+import { useEffect } from 'react';
+
 import useCountdown from '@/hooks/useCountdown';
 import { getTimePeriods, toTwo } from '@/views/Quest/helpers';
-import { useEffect } from 'react';
 
 export default function Timer({ endTime, onEnd }: any) {
   const { secondsRemaining } = useCountdown(endTime / 1000);

@@ -1,19 +1,21 @@
 import { useState } from 'react';
+
 import CloseIcon from '@/components/Icons/Close';
-import { StyledCoin } from '@/views/Quest/styles';
 import Modal from '@/views/Landing/Modal';
 import QuestItem from '@/views/Quest/components/QuestItem';
+import { StyledCoin } from '@/views/Quest/styles';
+
 import {
-  StyledContent,
-  StyledIcon,
-  StyledTitle,
-  StyledDesc,
-  StyledCloseIcon,
-  StyledMoreHints,
   StyledButtons,
+  StyledCloseIcon,
+  StyledContent,
+  StyledDesc,
+  StyledIcon,
   StyledLeftButton,
+  StyledMoreHints,
   StyledRecommendList,
   StyledRecommendListWrapper,
+  StyledTitle,
 } from './styles';
 
 export default function ClaimedSuccessModal({

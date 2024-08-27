@@ -1,24 +1,33 @@
-import { getBnsDiscount } from '@/apis';
-import DapXBNS from '@/assets/images/DapXBNS.svg';
-import desktop from '@/assets/images/desktop.png';
-import discountMark from '@/assets/images/discount_mark.svg';
-import iconAchieved from '@/assets/images/icon_achieved.svg';
-import Breadcrumb from '@/components/Breadcrumb';
-import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
-import useAccount from '@/hooks/useAccount';
-import * as http from '@/utils/http';
-import QuestItem from '@/views/Quest/components/QuestItem';
+import namehash from '@ensdomains/eth-ens-namehash';
+import DapXBNS from '@public/images/others/bns/DapXBNS.svg?url';
+import desktop from '@public/images/others/bns/desktop.png';
+import discountMark from '@public/images/others/bns/discount_mark.svg?url';
+import iconAchieved from '@public/images/others/bns/icon_achieved.svg?url';
 import { useSetChain } from '@web3-onboard/react';
-import useAuthCheck from '@/hooks/useAuthCheck';
 import { ethers } from 'ethers';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
+
+import { getBnsDiscount } from '@/apis';
+import Breadcrumb from '@/components/Breadcrumb';
+import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
+import useAccount from '@/hooks/useAccount';
+import useAuthCheck from '@/hooks/useAuthCheck';
+import { useRewardStore } from '@/stores/reward';
+import * as http from '@/utils/http';
+import useReport from '@/views/Landing/hooks/useReport';
+import QuestItem from '@/views/Quest/components/QuestItem';
+
 import InputWithEmoji from './components/InputWithEmoji';
+import NetworkDialog from './components/NetworkDialog';
 import QA from './components/QA';
 import QueryResult from './components/QueryResult';
+import RegisterDialog from './components/RegisterDialog';
 import RelatedQuests from './components/RelatedQuests';
+import SwitchNetwork from './components/SwitchNetwork';
 import YourBnsNames from './components/YourBnsNames';
+import Yours from './components/Yours';
 import useBnsContract from './hooks/useBnsContract';
 import useQuestList from './hooks/useQuestList';
 import {
@@ -32,13 +41,6 @@ import {
   StyledWrapper,
 } from './styles';
 import type { QueryNameStatusType } from './types';
-import { useRewardStore } from '@/stores/reward';
-import useReport from '@/views/Landing/hooks/useReport';
-import namehash from '@ensdomains/eth-ens-namehash';
-import NetworkDialog from './components/NetworkDialog';
-import RegisterDialog from './components/RegisterDialog';
-import SwitchNetwork from './components/SwitchNetwork';
-import Yours from './components/Yours';
 
 const CampaignView = () => {
   const router = useRouter();

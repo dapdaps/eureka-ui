@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { postSpin, postClaim } from '../http';
+
 import useToast from '@/hooks/useToast';
 import { getRandomInt } from '@/utils/formate';
+
+import { postClaim,postSpin } from '../http';
 
 function getRandomSpin() {
   return Array.from({ length: 5 }, () => getRandomInt(1, 6));

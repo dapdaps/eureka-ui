@@ -6,6 +6,9 @@ import { useCallback, useMemo, useState } from 'react';
 import LazyImage from '@/components/LazyImage';
 import popupsData from '@/config/all-in-one/chains';
 import { useChainsStore } from '@/stores/chains';
+
+import useTokens from '../../hooks/useTokens';
+import GridChainBalance from './Balance';
 import {
   StyledContainer,
   StyledGrid,
@@ -20,9 +23,6 @@ import {
   StyledTitleImage,
   StyledTitleSub,
 } from './styles';
-import useTokens from '../../hooks/useTokens';
-
-import GridChainBalance from './Balance';
 // import GridChainDetail from './Detail';
 
 const CellSize = 100;

@@ -1,9 +1,10 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
-import Treasure from '../Treasure';
+import styled from 'styled-components';
+
 import Spins from '../Spins';
 import { BgFoot } from '../Spins/styles';
+import Treasure from '../Treasure';
 
 const Wrapper = styled.div`
   display: flex;

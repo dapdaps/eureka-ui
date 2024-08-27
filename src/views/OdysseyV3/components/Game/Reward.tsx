@@ -1,6 +1,6 @@
 import { memo } from 'react';
-import styled from 'styled-components';
 import Skeleton from 'react-loading-skeleton';
+import styled from 'styled-components';
 
 const StyledContainer = styled.div`
   width: 115px;

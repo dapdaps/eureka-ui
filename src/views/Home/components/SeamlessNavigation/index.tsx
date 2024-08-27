@@ -1,16 +1,18 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import { IdToPath } from '@/config/all-in-one/chains';
+
 import {
-  StyledContainer,
-  StyledTitle,
-  StyledSubtitle,
-  StyledImageWrapper,
-  StyledImage,
-  StyledChains,
   StyledChain,
   StyledChainLogo,
   StyledChainName,
+  StyledChains,
+  StyledContainer,
+  StyledImage,
+  StyledImageWrapper,
+  StyledSubtitle,
+  StyledTitle,
 } from './styles';
 
 const SeamlessNavigation = ({ chains }: any) => {

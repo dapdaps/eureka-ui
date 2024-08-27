@@ -1,18 +1,20 @@
-import { memo, useEffect, useState } from 'react';
 import { AnimatePresence } from 'framer-motion';
-import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import FeeNoExsitHints from '../FeeNoExsitHints';
+import { memo, useEffect, useState } from 'react';
+
 import { FEES } from '@/config/pool';
+import useDappConfig from '@/views/Pool/hooks/useDappConfig';
+
+import FeeNoExsitHints from '../FeeNoExsitHints';
 import {
   StyledContainer,
+  StyledFee,
+  StyledFeeDesc,
+  StyledFees,
+  StyledFeeTitle,
   StyledHeader,
   StyledHeaderLeft,
   StyledSelectedFee,
   StyledToggleButton,
-  StyledFees,
-  StyledFee,
-  StyledFeeTitle,
-  StyledFeeDesc,
 } from './styles';
 
 const SelectFee = ({ fee, disabled, onSelectFee }: any) => {

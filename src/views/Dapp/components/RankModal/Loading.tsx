@@ -1,4 +1,5 @@
 import Skeleton from 'react-loading-skeleton';
+
 import { columns } from './config';
 import { StyledTableRow } from './styles';
 

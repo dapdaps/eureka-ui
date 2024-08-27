@@ -1,7 +1,8 @@
-import Title from '../Title';
-import DappCard from '../DappCard';
-import { StyledLoadingWrapper } from '@/styled/styles';
 import Loading from '@/components/Icons/Loading';
+import { StyledLoadingWrapper } from '@/styled/styles';
+
+import DappCard from '../DappCard';
+import Title from '../Title';
 import { StyledContainer, StyledContent } from './styles';
 
 export default function Lending({ list, onRefreshDetail }: any) {

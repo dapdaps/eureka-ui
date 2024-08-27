@@ -1,6 +1,7 @@
-import styled from 'styled-components';
-import PriceRange from '@/views/Pool/components/PriceRange';
 import { memo, useMemo } from 'react';
+import styled from 'styled-components';
+
+import PriceRange from '@/views/Pool/components/PriceRange';
 import { checkIsFullRange, tickToPrice } from '@/views/Pool/utils/tickMath';
 
 const StyledContainer = styled.div``;

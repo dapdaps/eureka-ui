@@ -1,15 +1,15 @@
-import { useEffect, useState, useRef } from "react";
-import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
-
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
+import { useEffect, useRef,useState } from "react";
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus,init } from 'super-bridge-sdk';
 
 import useAccount from '@/hooks/useAccount';
 
-const timeout = 1000 * 30
+const timeout = 1000 * 10
 
-export default function useQuote(quoteRequest: QuoteRequest | null, identification: string | number) {
+export default function useQuote(quoteRequest: QuoteRequest | null, identification: string | number, quickLoading: boolean = true) {
     const [routes, setRoutes] = useState<QuoteResponse[] | null>(null)
     const [loading, setLoading] = useState(false)
+    const [quoteLoading, setQuoteLoading] = useState(false)
     const {chainId, provider} = useAccount()
     const newestIdentification = useRef(identification)
 
@@ -19,6 +19,7 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
             return 
         }
         setLoading(true)
+        setQuoteLoading(true)
         setRoutes(null)
         const routes: QuoteResponse[] = []
         let stop = false
@@ -38,19 +39,24 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
 
             if (val.identification === newestIdentification.current) {
                 routes.push(val)
+                if (quickLoading) {
+                    setLoading(false)
+                } 
                 // console.log('routes.length: ', routes.length)
                 setRoutes([
                     ...routes
                 ])
             }
-           
         })
         // console.log('routes:', routes)
         if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {
+            setLoading(false)
+            setQuoteLoading(false)
             setRoutes(_routes)
         }
         
         setLoading(false)
+        setQuoteLoading(false)
     } 
 
     useEffect(() => {
@@ -64,6 +70,7 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
     return {
         routes,
         loading,
+        quoteLoading,
     }
     
 }

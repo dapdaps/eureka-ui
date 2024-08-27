@@ -1,7 +1,6 @@
 import { useDefaultLayout } from '@/hooks/useLayout';
-
-import SingleDapp from '@/views/SingleDapp';
 import type { NextPageWithLayout } from '@/utils/types';
+import SingleDapp from '@/views/SingleDapp';
 
 // set dynamic routes for dapps in config file
 

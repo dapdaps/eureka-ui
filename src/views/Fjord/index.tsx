@@ -1,12 +1,18 @@
+"use client";
 
-"use client"
-import Breadcrumb from '@/components/Breadcrumb';
-import Loading from '@/components/Icons/Loading';
+import Big from 'big.js';
+import { format } from 'date-fns';
+import { useRouter } from 'next/router';
+import { Suspense, useEffect, useMemo, useState } from 'react';
+import styled from 'styled-components';
+
 import FjordModal from '@/components/fjord-modal';
 import tokenConfig from '@/components/fjord-modal/hooks/tokenConfig';
+import Loading from '@/components/Icons/Loading';
+import DappBack from '@/components/PageBack';
 import chainCofig from '@/config/chains';
+import useDappInfo from '@/hooks/useDappInfo';
 import { useUserStore } from '@/stores/user';
-
 import {
   StyledContainer,
   StyledFlex,
@@ -16,11 +22,10 @@ import {
 } from '@/styled/styles';
 import type { Token } from '@/types';
 import { formatValueDecimal } from '@/utils/formate';
-import Big from 'big.js';
-import { format } from 'date-fns';
-import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
-import styled from 'styled-components';
+import DappDetail from '@/views/Dapp/components/DappDetail';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
+
 import Timer from './components/Timer';
 import usePool from './hooks/usePool';
 import usePools from './hooks/usePools';
@@ -552,6 +557,9 @@ export default function LaunchpadHomePage() {
   const { loading, setLoading, pools, queryPools, contractDataMapping } = usePools(userStore.address)
   const { loading: poolLoading, queryPool } = usePool()
   const { user, queryUser } = useUser()
+  const dappPathname = router.pathname ?? '';
+  const { dapp } = useDappInfo(dappPathname.slice(1));
+
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
   const [midToken, setMidToken] = useState<Token>()
@@ -659,13 +667,8 @@ export default function LaunchpadHomePage() {
   }, [userStore.address])
   return (
     <StyledContainer style={{ width: 1124, margin: '0 auto', paddingTop: 138, position: 'relative' }}>
-      <StyledContainer style={{ position: 'absolute', left: -60, top: 30 }}>
-        <Breadcrumb
-          navs={[
-            { name: 'Home', path: '/' },
-            { name: 'Fjord', path: '/stake/fjord' },
-          ]}
-        />
+      <StyledContainer style={{ position: 'absolute', left: 0, top: 30 }}>
+        <DappBack defaultPath="/alldapps" />
       </StyledContainer>
       <StyledFjordSvgContainer>
         {FjordSvg}
@@ -964,6 +967,12 @@ export default function LaunchpadHomePage() {
           />
         )
       }
+
+      <DappDetailScroll />
+      <Suspense fallback={<DappFallback />}>
+        <DappDetail {...dapp}/>
+      </Suspense>
+
     </StyledContainer >
   )
 }

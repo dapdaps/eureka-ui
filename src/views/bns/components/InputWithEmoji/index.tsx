@@ -1,5 +1,10 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import data from '@emoji-mart/data';
+import Picker from '@emoji-mart/react';
 import emojiRegex from 'emoji-regex';
+import _ from 'lodash';
+import { useRouter } from 'next/router';
+import { memo, useEffect, useRef, useState } from 'react';
+
 import {
   StyledEmojiWrapper,
   StyledFlex,
@@ -12,11 +17,6 @@ import {
   StyledInputWrapper,
   StyledSvg,
 } from './styles';
-
-import data from '@emoji-mart/data';
-import Picker from '@emoji-mart/react';
-import _ from 'lodash';
-import { useRouter } from 'next/router';
 const iconSearch = (
   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="13" viewBox="0 0 14 13" fill="none">
     <path

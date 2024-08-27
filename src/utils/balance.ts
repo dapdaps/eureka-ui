@@ -5,7 +5,7 @@ export function balanceFormated(balance?: string | number, digits = 4) {
   const _balance = new Big(balance);
   if (_balance.eq(0)) return '0';
   if (_balance.lt(1 / 10 ** digits)) return `<${1 / 10 ** digits}`;
-  return _balance.toFixed(digits);
+  return _balance.toFixed(digits).replace(/\.?0+$/, '');
 }
 
 export function balanceFormatedFloor(balance?: string | number, digits = 4) {
@@ -23,7 +23,7 @@ export function valueFormated(balance?: string, price?: string, digits = 2) {
   if (_balance.eq(0) || _price.eq(0)) return '0';
   const total = _balance.mul(_price);
   if (total.lt(1 / 10 ** digits)) return `<${1 / 10 ** digits}`;
-  return total.toFixed(digits);
+  return total.toFixed(digits).replace(/\.?0+$/, '');
 }
 
 export function balanceShortFormated(balance?: string | number, digits = 1) {
@@ -37,7 +37,7 @@ export function balanceShortFormated(balance?: string | number, digits = 1) {
 }
 
 export function percentFormated(value: string | number, needMul = false): string {
-  return (Number(value) * (needMul ? 100 : 1)).toFixed(2) + "%"
+  return (Number(value) * (needMul ? 100 : 1)).toFixed(2) + '%';
 }
 
 const addressReg = /(\w{6})(.*)(\w{4})/

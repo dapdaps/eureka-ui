@@ -1,4 +1,6 @@
-export function formatThousandsSeparator(n: number | string): string {
+import Big from 'big.js';
+
+export function formatThousandsSeparator(n: number | string, precision?: number): string {
   if (isNaN(Number(n))) return '';
   const strSplit = n.toString().split('.');
   const integer = strSplit[0].split('');
@@ -14,6 +16,10 @@ export function formatThousandsSeparator(n: number | string): string {
   newInteger.reverse();
   let s = newInteger.join('');
   if (decimal) {
+    if (typeof precision === 'number') {
+      const fixedDecimal = Big(`0.${decimal}`).toFixed(precision, 0).replace(/^\d/, '');
+      return s + fixedDecimal;
+    }
     s += `.${decimal}`;
   }
   return s;
@@ -34,3 +40,48 @@ export const simplifyNum = (number: number) => {
     return Number(number).toFixed(2);
   }
 };
+
+interface Options {
+  type?: 'simplify' | 'thousand';
+  isFullDecimal?: boolean;
+}
+
+export const formatIntegerThousandsSeparator = (integer?: number | string, precision: number = 2, options?: Options): string => {
+  options = options || {};
+  const zero = options.isFullDecimal ? Big(0).toFixed(precision) : '0';
+  if (!integer) {
+    return zero;
+  }
+  if (typeof Number(integer) !== 'number') {
+    return zero;
+  }
+  if (isNaN(Number(integer))) {
+    return zero;
+  }
+  const _type = options.type ?? 'simplify';
+  if (_type === 'thousand') {
+    return formatThousandsSeparator(integer, precision);
+  }
+  if (_type === 'simplify') {
+    const formatter = (split: number, unit: string): string => {
+      const _num = Big(integer).div(split).toFixed(precision, 0).replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
+      const inter = _num.split('.')?.[0]?.replace(/\d(?=(\d{3})+\b)/g, '$&,');
+      const decimal = _num.split('.')?.[1] ?? '';
+      return `${inter}${decimal ? '.' + decimal : ''}${unit}`;
+    };
+    if (Big(integer).gte(1e9)) {
+      return formatter(1e9, 'b');
+    }
+    if (Big(integer).gte(1e6)) {
+      return formatter(1e6, 'm');
+    }
+    if (Big(integer).gte(1e3)) {
+      return formatter(1e3, 'k');
+    }
+    if (options.isFullDecimal) {
+      return Big(integer).toFixed(precision, 0);
+    }
+    return Big(Big(integer).toFixed(precision, 0)).toString();
+  }
+  return '';
+}

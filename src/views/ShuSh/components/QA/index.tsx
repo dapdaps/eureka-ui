@@ -1,6 +1,7 @@
 import { memo } from 'react';
+
 import Item from './Item';
-import { StyledContainer, StyledTitle, StyledList } from './styles';
+import { StyledContainer, StyledList,StyledTitle } from './styles';
 
 const QA = () => {
   return (

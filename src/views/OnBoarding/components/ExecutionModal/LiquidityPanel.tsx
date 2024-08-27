@@ -2,8 +2,6 @@ import { useSetChain } from '@web3-onboard/react';
 import { useDebounceFn } from 'ahooks';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import chains from '@/config/chains';
-import multicall from '@/config/contract/multicall';
 import networks from '@/config/liquidity/networks';
 import useAddAction from '@/hooks/useAddAction';
 import useTokenBalance from '@/hooks/useCurrencyBalance';

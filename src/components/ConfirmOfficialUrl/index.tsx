@@ -1,6 +1,8 @@
-import { StyledFlex, StyledText, StyledSvg } from '@/views/bns/styles';
 import { useState } from 'react';
 import styled from 'styled-components';
+
+import { StyledFlex, StyledSvg,StyledText } from '@/views/bns/styles';
+
 import { useShowTipsStore } from './hooks/useShowTipsStore';
 
 const StyledTips = styled.div`

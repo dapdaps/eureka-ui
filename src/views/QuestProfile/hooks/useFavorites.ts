@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import useAuthCheck from '@/hooks/useAuthCheck';
+
 import { QUEST_PATH } from '@/config/quest';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
 export default function useFavorites() {

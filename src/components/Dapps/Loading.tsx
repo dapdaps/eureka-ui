@@ -1,6 +1,7 @@
-import Skeleton from 'react-loading-skeleton';
-import { StyledDapps, StyledDapp, StyledDappInner } from './styles';
 import { memo } from 'react';
+import Skeleton from 'react-loading-skeleton';
+
+import { StyledDapp, StyledDappInner,StyledDapps } from './styles';
 
 const LoadingCard = () => {
   return (

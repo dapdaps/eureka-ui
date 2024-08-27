@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import { get } from '@/utils/http';
 
 export default function useRewards(id: string) {

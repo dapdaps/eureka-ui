@@ -3,10 +3,10 @@ import { memo, useEffect, useState } from 'react';
 import useCheck from '../../hooks/useCheck';
 import useReport from '../../hooks/useReport';
 import ArrowIcon from '../ArrowIcon';
-import Fragments from '../Fragments';
 import CheckIcon from '../CheckIcon';
+import Fragments from '../Fragments';
 import RefreshIcon from '../RefreshButton';
-import { StyledItemTitle, StyledItem, StyledItemLeft, StyledItemRight } from './styles';
+import { StyledItem, StyledItemLeft, StyledItemRight,StyledItemTitle } from './styles';
 
 const ExporeItem = ({
   userInfo,

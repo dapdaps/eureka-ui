@@ -1,17 +1,19 @@
-import { memo } from 'react';
 import { useRouter } from 'next/router';
+import { memo } from 'react';
+
 import Loading from '@/components/Icons/Loading';
-import OrderPanel from '../OrderPanel';
+
 import usePreviousOrders from '../../hooks/usePreviousOrders';
+import OrderPanel from '../OrderPanel';
 import {
-  StyledContainer,
-  StyledHeader,
-  StyledTitle,
-  StyledSubtitle,
-  StyledList,
-  StyledEmpty,
   LoadingWrapper,
+  StyledContainer,
+  StyledEmpty,
+  StyledHeader,
+  StyledList,
   StyledSearchBtn,
+  StyledSubtitle,
+  StyledTitle,
 } from './styles';
 
 const PreviousOrders = ({ tokens }: any) => {

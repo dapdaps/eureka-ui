@@ -1,11 +1,10 @@
-import styled from 'styled-components';
 import Big from 'big.js';
+import styled from 'styled-components';
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
 
 import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
-
-import type { Token, Chain } from '@/types';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
+import type { Chain,Token } from '@/types';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 
 const Contanier = styled.div<{active: boolean, canClick: any}>`
     /* background-color: rgba(55, 58, 83, 1); */

@@ -1,16 +1,18 @@
 import { memo, useMemo, useState } from 'react';
-import TokenSwitcher from '@/views/Pool/components/TokenSwitcher';
+
 import { balanceFormated } from '@/utils/balance';
+import TokenSwitcher from '@/views/Pool/components/TokenSwitcher';
 import { sortTokens } from '@/views/Pool/utils/token';
+
 import {
-  StyledContainer,
-  StyledHeader,
-  StyledTop,
   StyledCard,
+  StyledCardDesc,
   StyledCardTitle,
   StyledCardValue,
-  StyledCardDesc,
+  StyledContainer,
+  StyledHeader,
   StyledSubtitle,
+  StyledTop,
 } from './styles';
 
 const PriceRange = ({ from = 'detail', token0, token1, lowerPrice, upperPrice, currentPrice, isFullRange }: any) => {

@@ -1,8 +1,8 @@
 import { linea } from '@/config/tokens/linea';
-import { mantle } from '@/config/tokens/mantle';
 import { manta } from '@/config/tokens/manta';
-import { scroll } from '@/config/tokens/scroll';
+import { mantle } from '@/config/tokens/mantle';
 import { mode } from '@/config/tokens/mode';
+import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'iZiSwap',
@@ -39,6 +39,13 @@ const networks = {
       manta['dai'],
       manta['wsteth'],
       manta['tia'],
+      manta['wusdm'],
+      manta['stone'],
+      manta['lab'],
+      manta['kuma'],
+      manta['mante'],
+      manta['webmi'],
+      manta['manta'],
     ],
   },
   534352: {
@@ -46,7 +53,25 @@ const networks = {
       input: scroll['weth'],
       output: scroll['usdc'],
     },
-    tokens: [scroll['weth'], scroll['usdc'], scroll['dai'], scroll['wbtc'], scroll['izi'], scroll['wsteth']],
+    tokens: [
+      scroll['weth'],
+      scroll['usdc'],
+      scroll['dai'],
+      scroll['wbtc'],
+      scroll['izi'],
+      scroll['wsteth'],
+      scroll['stone'],
+      scroll['usdt'],
+      scroll['scrolly'],
+      scroll['we-eth'],
+      scroll['pufETH'],
+      scroll['cat'],
+      scroll['wrseth'],
+      scroll['iusd'],
+      scroll['kala'],
+      scroll['panda'],
+      scroll['bald'],
+    ],
   },
   34443: {
     defaultCurrencies: {

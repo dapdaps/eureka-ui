@@ -1,7 +1,9 @@
-import { memo } from 'react';
 import { AnimatePresence } from 'framer-motion';
+import { memo } from 'react';
+
 import { container } from '@/components/animation';
-import { StyledSelectPanel, StyledSelectPanelItem, StyledDapp, StyledDappIcon, StyledDappName } from './styles';
+
+import { StyledDapp, StyledDappIcon, StyledDappName,StyledSelectPanel, StyledSelectPanelItem } from './styles';
 
 const SelectPanel = ({ dapps, open, currentDapp, onSelect }: any) => {
   return (

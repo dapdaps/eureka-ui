@@ -1,24 +1,27 @@
 import { useSetChain } from '@web3-onboard/react';
-import Link from 'next/link';
-import useConnectWallet from '@/hooks/useConnectWallet';
-import { useRouter } from 'next/router';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import styled from 'styled-components';
-import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus, getBridgeTokens } from 'super-bridge-sdk';
-
-import { get } from '@/utils/http'
-import chainCofig from '@/config/chains'
-import useAccount from '@/hooks/useAccount';
-import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
-import useAddAction from '@/hooks/useAddAction';
-import { useDefaultLayout } from '@/hooks/useLayout';
-import { usePriceStore } from '@/stores/price';
 import { useDebounceFn } from 'ahooks';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import styled from 'styled-components';
+import { execute, getAllToken, getBridgeMsg, getBridgeTokens,getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
 import BridgeX from '@/components/BridgeX/Index';
-
-import type { NextPageWithLayout } from '@/utils/types';
+import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
+import DappBack from '@/components/PageBack';
+import chainCofig from '@/config/chains'
+import useAccount from '@/hooks/useAccount';
+import useAddAction from '@/hooks/useAddAction';
+import useConnectWallet from '@/hooks/useConnectWallet';
+import { useDefaultLayout } from '@/hooks/useLayout';
+import { usePriceStore } from '@/stores/price';
 import type { Chain } from '@/types';
+import { get } from '@/utils/http'
+import type { NextPageWithLayout } from '@/utils/types';
+import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
+import DappFallback from '@/views/Dapp/components/Fallback';
+
+const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 
 const arrow = (
     <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -72,6 +75,8 @@ const Bridge: NextPageWithLayout = () => {
     const [name, setName] = useState('')
     const [color, setColor] = useState('')
     const [template, setTemplate] = useState('')
+    const [dappDetail, setDappDetail] = useState<any>({})
+    const [updateDetail, setUpdateDetail] = useState<boolean>(false);
 
     // const { icon, name, color } = getBridgeMsg(tool)
 
@@ -89,6 +94,8 @@ const Bridge: NextPageWithLayout = () => {
                         setName(res.data.name)
                         setIcon(res.data.logo)
                         // setChainConfig(res.data)
+                        // 🔔 for use in the new dApp detail page
+                        setDappDetail(res.data || {});
                     }
                 })
         }
@@ -96,13 +103,7 @@ const Bridge: NextPageWithLayout = () => {
 
     return (
         <Container>
-            <BreadCrumbs>
-                <Link href="/">Home</Link>
-                {arrow}
-                <Link href="/alldapps">dApp</Link>
-                {arrow}
-                <span>{name}</span>
-            </BreadCrumbs>
+            <DappBack defaultPath="/alldapps" />
 
             <BridgeX
                 addAction={addAction}
@@ -124,7 +125,22 @@ const Bridge: NextPageWithLayout = () => {
                 toChainId={router.query.toChainId as string}
                 fromChainId={router.query.fromChainId as string}
                 setChain={setChain}
+                onSuccess={() => {
+                  setUpdateDetail(true);
+                  const timer = setTimeout(() => {
+                    clearTimeout(timer);
+                    setUpdateDetail(false);
+                  }, 0);
+                }}
             />
+          {
+            updateDetail ? null : (<>
+            <DappDetailScroll />
+            <Suspense fallback={<DappFallback />}>
+              <DappDetail {...dappDetail} />
+            </Suspense>
+            </>)
+          }
         </Container>
     )
 };

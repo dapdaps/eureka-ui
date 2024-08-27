@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+
 import { useDappStore } from '@/stores/dapp';
 import { get } from '@/utils/http';
 
@@ -28,4 +29,8 @@ export default function useDappInfo(pathname?: string) {
   }, [pathname]);
 
   return { dapp: dappStore.dapp || {}, loading };
+}
+
+export function useDappsInfo() {
+
 }

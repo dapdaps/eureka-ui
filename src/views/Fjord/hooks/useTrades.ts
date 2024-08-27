@@ -1,9 +1,10 @@
-import chains from '@/config/chains';
-import { usePriceStore } from '@/stores/price';
-import { get } from '@/utils/http';
 import { Contract, providers, utils } from 'ethers';
 import _ from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
+
+import chains from '@/config/chains';
+import { usePriceStore } from '@/stores/price';
+import { get } from '@/utils/http';
 export default function useTrades() {
   const [trades, setTrades] = useState<any[]>([]);
   const [historyTotal, setHistoryTotal] = useState<number>(0);

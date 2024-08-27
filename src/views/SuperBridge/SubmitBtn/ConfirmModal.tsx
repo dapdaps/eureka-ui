@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
+import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
 
-import { usePriceStore } from '@/stores/price';
-import { balanceFormated, percentFormated, addressFormated } from '@/utils/balance';
 import Loading from '@/components/Icons/Loading';
+import { usePriceStore } from '@/stores/price';
+import type { Chain, Token } from '@/types';
+import { addressFormated,balanceFormated, percentFormated } from '@/utils/balance';
 
 import Modal from "../Modal";
-import type { Chain, Token } from '@/types';
 
 const Box = styled.div`
     background-color: rgba(55, 58, 83, 0.5);
@@ -115,15 +115,18 @@ interface Props {
     amount: string;
     reciveAmount: string | null;
     toAddress: string;
+    theme?: any;
     route: QuoteResponse | null;
     onClick: () => void;
     onClose: () => void;
 }
 
 export default function ConfirmModal({
-    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, toAddress, route, reciveAmount, isLoading
+    onClick, onClose, fromChain, toChain, fromToken, toToken, amount, theme, toAddress, route, reciveAmount, isLoading
 } : Props) {
     const prices = usePriceStore((store) => store.price);
+
+    const styles = { backgroundColor: theme?.selectBgColor, color: theme?.textColor }
 
     return <Modal title="Confirm Transaction" onClose={() => {
         !isLoading && onClose()
@@ -181,8 +184,8 @@ export default function ConfirmModal({
         </Box>
         {
             isLoading 
-            ? <Container disabled> <Loading size={20}/> Sending</Container>
-            : <Container onClick={onClick}>Confirm</Container>
+            ? <Container style={styles} disabled> <Loading size={20}/> Sending</Container>
+            : <Container style={styles} onClick={onClick}>Confirm</Container>
         }
         
     </Modal>

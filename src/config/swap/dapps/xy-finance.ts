@@ -1,10 +1,10 @@
-import { scroll } from '@/config/tokens/scroll';
 import { linea } from '@/config/tokens/linea';
+import { scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'XY Finance',
   logo: '/images/apps/xy-finance.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.XYFinance',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
 };
 const networks = {
   534352: {

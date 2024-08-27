@@ -1,15 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import usePoolInfo from './usePoolInfo';
+
+import { FEES, MAX_TICK,MIN_TICK } from '@/config/pool/index';
+
 import useDappConfig from '../../hooks/useDappConfig';
 import {
-  tickToPrice,
+  nearestUsableTick,
+  priceToTick,
   priceToUsablePrice,
   priceToUsableTick,
-  priceToTick,
-  nearestUsableTick,
+  tickToPrice,
 } from '../../utils/tickMath';
 import { sortTokens } from '../../utils/token';
-import { FEES, MIN_TICK, MAX_TICK } from '@/config/pool/index';
+import usePoolInfo from './usePoolInfo';
 
 export default function useData() {
   const { defaultFee, defaultTokens = [] } = useDappConfig();

@@ -1,14 +1,16 @@
 import { memo } from 'react';
+
+import { balanceFormated } from '@/utils/balance';
+
 import {
   StyledContainer,
   StyledSubtitle,
-  StyledTokens,
   StyledToken,
-  StyledTokenIcon,
-  StyledTokenTitle,
   StyledTokenAmount,
+  StyledTokenIcon,
+  StyledTokens,
+  StyledTokenTitle,
 } from './styles';
-import { balanceFormated } from '@/utils/balance';
 
 const CurrentAmount = ({ token0, token1, amount0, amount1 }: any) => {
   return (

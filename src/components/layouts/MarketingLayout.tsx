@@ -47,7 +47,6 @@ const StyledUser = styled.div`
 export function MarketingLayout({ children }: Props) {
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
-  console.log('userInfo', userInfo);
 
   return (
     <StyledWrap>

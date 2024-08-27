@@ -5,6 +5,7 @@ import ProcessBar from '../ProcessBar';
 import Steps, { STEPS_MAP } from './step-icon';
 import {
   StyledCalimable,
+  StyledCategoryName,
   StyledCoin,
   StyledContainer,
   StyledFooter,
@@ -17,7 +18,6 @@ import {
   StyledTask,
   StyledTaskDesc,
   StyledTaskName,
-  StyledCategoryName,
 } from './styles';
 
 const QuestItem = ({

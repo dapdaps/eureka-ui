@@ -1,32 +1,32 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import styled from 'styled-components';
-import { init, getQuote, execute, getIcon, getBridgeMsg, getAllToken, getChainScan, getStatus } from 'super-bridge-sdk';
-import type { QuoteRequest, QuoteResponse, ExecuteRequest } from 'super-bridge-sdk'
 import { useDebounce } from 'ahooks';
 import Big from 'big.js'
 import { useRouter } from 'next/router';
+import { useCallback, useEffect, useRef, useState } from "react";
+import styled from 'styled-components';
+import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
-import allTokens from '@/config/bridge/allTokens';
+import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance'
 import { saveTransaction } from '@/components/BridgeX/Utils'
-import useTokenBalance from '@/hooks/useCurrencyBalance';
+import Tooltip from '@/components/TitleTooltip';
+import allTokens from '@/config/bridge/allTokens';
 import useAccount from '@/hooks/useAccount';
-import useToast from '@/hooks/useToast';
 import useAddAction from '@/hooks/useAddAction';
-import { balanceFormated, percentFormated, addressFormated, errorFormated, getFullNum } from '@/utils/balance';
+import useTokenBalance from '@/hooks/useCurrencyBalance';
+import useToast from '@/hooks/useToast';
+import type { Chain, Token } from '@/types';
+import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
 
 import ChainTokenAmount from '../ChainTokenAmount';
+import GasModal from '../ChainTokenAmount/GasModal';
+import { useGasTokenHooks } from '../hooks/useGasTokenHooks'
+import useQuote from "../hooks/useQuote";
 import PublicTitle from '../PublicTitle';
 import RouteSelected from '../RouteSelected';
 import SubmitBtn from '../SubmitBtn'
-import SettingModal from './SettingModal';
 import ConfirmModal from "../SubmitBtn/ConfirmModal";
 import ConfirmSuccessModal from "../SubmitBtn/ConfirmSuccessModal";
-import GasModal from '../ChainTokenAmount/GasModal';
-
-import useQuote from "../hooks/useQuote";
-import { useGasTokenHooks } from '../hooks/useGasTokenHooks'
-
-import type { Chain, Token } from '@/types';
+import SettingModal from './SettingModal';
 
 const Container = styled.div`
   color: #ffffff;
@@ -108,14 +108,14 @@ export default function BirdgeAction(
   const [gasModalShow, setGasModalShow] = useState<boolean>(false)
   const [isSending, setIsSending] = useState<boolean>(false)
   const router = useRouter()
+  usePreloadBalance(allTokens, account)
 
   const inputValue = useDebounce(sendAmount, { wait: 500 });
 
   const { addAction } = useAddAction('dapp');
   const { fail, success } = useToast()
   const [quoteReques, setQuoteRequest] = useState<QuoteRequest | null>(null)
-
-  const { routes, loading } = useQuote(quoteReques, identification)
+  const { routes, loading, quoteLoading } = useQuote(quoteReques, identification)
 
   // console.log('routes:', routes)
 
@@ -249,7 +249,13 @@ export default function BirdgeAction(
 
   return <Container>
     <PublicTitle
-      title="Super Bridge"
+      title={
+        <>
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="23" fill="none"><path fill="#EBF479" d="M.855 9.962 11.009.415c.795-.748 2.043.14 1.598 1.137L9.75 7.942a1 1 0 0 0 .807 1.403l4.754.506c.864.092 1.208 1.167.557 1.743L3.535 22.52c-.837.741-2.075-.242-1.542-1.226l4.16-7.672a1 1 0 0 0-.763-1.47l-3.967-.468a1 1 0 0 1-.568-1.721"></path></svg>
+          Super Bridge
+          <Tooltip content='Super Bridge aggregates top-tier bridges in one intuitive interface, offering smart-routing for optimal fees and speed. Each bridge transaction on DapDap helps earn you medals, rewarding your cross-chain activity! Seamlessly transfer your assets across 17+ networks with real-time tracking and data support.' />
+        </>
+      }
       subTitle='Transfer assets between Ethereum and EVM L2s.'
       renderAction={() => <Setting onClick={() => {
         setSettingModalShow(true)
@@ -317,11 +323,17 @@ export default function BirdgeAction(
     />
     {
       toToken && routes?.length && <RouteSelected
+        quoteLoading={quoteLoading}
         fromChain={fromChain}
         routeSortType={routeSortType}
         onRouteSelected={(route: QuoteResponse | null) => {
-          setSelectedRoute(route)
-        }} toToken={toToken} routes={routes} />
+          if (!confirmModalShow) {
+            setSelectedRoute(route)
+          }
+        }}
+        stopSelected={confirmModalShow}
+        toToken={toToken} routes={routes}
+      />
     }
     <Sep height={20} />
     <SubmitBtn

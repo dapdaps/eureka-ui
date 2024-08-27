@@ -2,6 +2,7 @@ import { Contract, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
+import { useUpdateBalanceStore } from '@/views/SuperSwap/hooks/useUpdateBalanceStore';
 const TOKEN_ABI = [
   {
     constant: true,
@@ -31,7 +32,8 @@ export default function useTokenBalance(address: string | 'native', decimals: nu
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [fresh, setFresh] = useState(0);
-
+  const { updater } = useUpdateBalanceStore()
+  
   const getBalance = async () => {
     if (!account || !address) return;
     setIsLoading(true);
@@ -58,7 +60,7 @@ export default function useTokenBalance(address: string | 'native', decimals: nu
   };
   useEffect(() => {
     getBalance();
-  }, [account, address, decimals, fresh, chainId]);
+  }, [account, address, decimals, fresh, chainId, updater]);
 
   return { tokenBalance, isError, isLoading, update };
 }

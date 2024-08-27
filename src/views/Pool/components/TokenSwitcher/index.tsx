@@ -1,5 +1,7 @@
 import { memo } from 'react';
+
 import { sortTokens } from '@/views/Pool/utils/token';
+
 import { StyledContainer, StyledItem } from './styles';
 
 const TokenSwitcher = ({ token0, token1, reverse, onExchangeTokens }: any) => {

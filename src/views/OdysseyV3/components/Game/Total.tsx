@@ -1,11 +1,13 @@
 import { memo } from 'react';
+import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
+
 import Loading from '@/components/Icons/Loading';
 import { StyledCoin } from '@/views/Quest/styles';
-import { STEPS } from './config';
-import Skeleton from 'react-loading-skeleton';
+
 import useClaim from '../../hooks/useClaim';
 import useSynthesis from '../../hooks/useSynthesis';
+import { STEPS } from './config';
 
 const StyledContainer = styled.div`
   display: flex;

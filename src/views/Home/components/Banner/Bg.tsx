@@ -1,5 +1,6 @@
 import chainCofig from '@/config/all-in-one/chains';
-import { StyledBgContainer, StyledBgBox, StyledBgBoxWrapper, StyledBgBoxList, StyledBgIcon } from './styles';
+
+import { StyledBgBox, StyledBgBoxList, StyledBgBoxWrapper, StyledBgContainer, StyledBgIcon } from './styles';
 
 const chains = Object.values(chainCofig);
 

@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+
 import { post } from '@/utils/http';
 
 export default function useReport(isV2?: boolean) {

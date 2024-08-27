@@ -1,6 +1,7 @@
 import Big from 'big.js';
 import { memo, useMemo } from 'react';
 import styled from 'styled-components';
+
 import { formateValueWithThousandSeparator } from '@/utils/formate';
 
 const StyledContainer = styled.div`

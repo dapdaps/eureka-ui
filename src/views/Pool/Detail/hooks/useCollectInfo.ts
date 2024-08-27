@@ -1,6 +1,8 @@
 import { Contract } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
+
 import useAccount from '@/hooks/useAccount';
+
 import positionAbi from '../../abi/position';
 
 export default function useCollectInfo(tokenId: string, contracts: any) {

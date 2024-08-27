@@ -1,13 +1,15 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useRouter } from 'next/router';
-import { usePathname, useSearchParams } from 'next/navigation';
-import usePoolInfo from './usePoolInfo';
-import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import { tickToPrice, priceToUsablePrice, priceToUsableTick } from '@/views/Pool/utils/tickMath';
-import { sortTokens } from '@/views/Pool/utils/token';
-import { getPairByTokens, revertTokenAddress } from '../token';
 import Big from 'big.js';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+
 import type { Token } from '@/types';
+import useDappConfig from '@/views/Pool/hooks/useDappConfig';
+import { priceToUsablePrice, priceToUsableTick,tickToPrice } from '@/views/Pool/utils/tickMath';
+import { sortTokens } from '@/views/Pool/utils/token';
+
+import { getPairByTokens, revertTokenAddress } from '../token';
+import usePoolInfo from './usePoolInfo';
 
 export default function useAddLiquidityData() {
   const { token0: _token0, token1: _token1, tokens: _tokens, pairs, currentChain } = useDappConfig();

@@ -1,9 +1,10 @@
 import { useSearchParams } from 'next/navigation';
 import { useCallback, useEffect, useState } from 'react';
-import useToast from '@/hooks/useToast';
+
 import { QUEST_PATH } from '@/config/quest';
-import { post } from '@/utils/http';
+import useToast from '@/hooks/useToast';
 import { useUserStore } from '@/stores/user';
+import { post } from '@/utils/http';
 import useAuthConfig from '@/views/QuestProfile/hooks/useAuthConfig';
 
 const MAPS = {

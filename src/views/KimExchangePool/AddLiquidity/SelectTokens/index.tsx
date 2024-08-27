@@ -1,8 +1,10 @@
 import { memo, useMemo, useState } from 'react';
+
 import Modal from '@/components/Modal';
+import useTokensBalance from '@/hooks/useTokensBalance';
 import TokenRow from '@/views/Pool/AddLiquidity/components/SelectTokens/TokenRow';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
-import useTokensBalance from '@/hooks/useTokensBalance';
+
 import { StyledContent, StyledSearch, StyledTokens } from './styles';
 
 const SelectTokens = ({ open, token, selectedToken, onClose, onSelectToken }: any) => {

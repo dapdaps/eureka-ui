@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledPage = styled.div`
-  padding: 50px 80px 0px;
+  padding: 42px 80px 0;
 `;
 
 export const DappName = styled.div`
@@ -30,4 +30,22 @@ export const StyledPowerHints = styled.div`
 export const StyledDappWrapper = styled.div`
   position: relative;
   padding-top: 18px;
+`;
+
+export const StyledLoadingWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+`;
+
+export const StyledDAppContent = styled.div`
+  margin: 0 auto;
+  padding: 20px 0;
+  // fix#DAP-799
+  position: relative;
+  z-index: 2;
+  // fix#DAP-804
+  max-width: 1260px;
+  min-width: 1060px;
 `;

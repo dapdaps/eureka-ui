@@ -10,7 +10,7 @@ export const StyledContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
+  padding-top: 80px;
 `;
 
 export const StyledBgContainer = styled.div`
@@ -26,10 +26,11 @@ export const StyledBgContainer = styled.div`
 export const StyledBgBoxWrapper = styled.div`
   display: flex;
   width: 100%;
+  margin-bottom: 90px;
 `;
 
 export const StyledBgBox = styled.div`
-  padding-top: 114px;
+  /* padding-top: 114px; */
 
   &.animation {
     display: flex;
@@ -86,35 +87,37 @@ export const StyledSubTitleWrapper = styled.div`
   color: #fff;
   text-align: center;
   font-family: Montserrat;
-  font-size: 60px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 150%; /* 90px */
-  text-transform: capitalize;
-`;
-
-export const StyledSubTitleBg = styled.div`
-  background-image: url(/images/home/subtitle_bg.webp);
-  background-repeat: no-repeat;
-  background-size: 100%;
-  width: 707px;
-  height: 124px;
-  flex-shrink: 0;
-  color: #000;
-  margin: -20px auto 0px;
-  line-height: 200%;
-`;
-
-export const StyledPower = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  color: #fff;
-  text-align: center;
-  font-family: Montserrat;
-  font-size: 24px;
-  font-style: normal;
+  font-size: 42px;
   font-weight: 500;
-  line-height: 161.2%; /* 38.688px */
+  line-height: 63px; /* 90px */
+  text-transform: capitalize;
+  span {
+    color: #EBF479;
+  }
 `;
+
+// export const StyledSubTitleBg = styled.div`
+//   background-image: url(/images/home/subtitle_bg.webp);
+//   background-repeat: no-repeat;
+//   background-size: 100%;
+//   width: 707px;
+//   height: 124px;
+//   flex-shrink: 0;
+//   color: #000;
+//   margin: -20px auto 0px;
+//   line-height: 200%;
+// `;
+
+// export const StyledPower = styled.div`
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   gap: 10px;
+//   color: #fff;
+//   text-align: center;
+//   font-family: Montserrat;
+//   font-size: 24px;
+//   font-style: normal;
+//   font-weight: 500;
+//   line-height: 161.2%; /* 38.688px */
+// `;

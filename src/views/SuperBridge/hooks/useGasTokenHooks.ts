@@ -1,16 +1,16 @@
-import { useEffect, useState, useRef } from "react";
 import Big from 'big.js'
-import { ethers, Contract, providers, utils } from "ethers";
+import type { Signer } from 'ethers'
+import { Contract } from "ethers";
+import { useEffect, useState } from "react";
 import { approve, SuperBridgeStore } from 'super-bridge-sdk'
 
-import type { Signer } from 'ethers'
-import chainCofig from '@/config/chains'
-import allTokens from '@/config/bridge/allTokens'
-import { balanceFormated, percentFormated, addressFormated, errorFormated } from '@/utils/balance'
+import allTokens from '@/config/bridge/allTokens';
+import chainCofig from '@/config/chains';
 import useToast from '@/hooks/useToast';
-import { abi } from '../ChainTokenAmount/abi'
-
 import type { Chain, Token } from "@/types";
+import { errorFormated } from '@/utils/balance'
+
+import { abi } from '../ChainTokenAmount/abi'
 
 const _chainConfig: any = {
     ...chainCofig,
@@ -277,7 +277,7 @@ export function useSupportedSourceTokens({
         } else {
             setSupportedTokens([])
         }
-        
+
     }, [fromChain, toChain])
 
     return {
@@ -382,7 +382,7 @@ export function useGasAmount({
             abi,
             signer,
         )
-        
+
         if (isEstimateGas) {
             return tokenContract.estimateGas.depositEth(toChain?.chainId, account, {
                 value
@@ -512,7 +512,7 @@ export function useTransction(address: string) {
             } else {
                 setTransactionList([])
             }
-            
+
         })
     }
 

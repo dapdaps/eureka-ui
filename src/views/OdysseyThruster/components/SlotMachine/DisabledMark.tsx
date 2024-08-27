@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+
 import { getTimePeriods } from '@/views/Quest/helpers';
 
 const StyledContainer = styled.div`

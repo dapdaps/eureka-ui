@@ -1,35 +1,36 @@
-import { useEffect, useState } from 'react';
 import type { MouseEvent } from 'react';
+import { useEffect, useState } from 'react';
+
+import ArrowIcon from '@/components/Icons/ArrowIcon';
 import useDappOpen from '@/hooks/useDappOpen';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { useLayoutStore } from '@/stores/layout';
+import { ACTIVITY_PTS, PTS_MAP } from '@/views/OdysseyV5/const';
 
 import useCheck from '../../hooks/useCheck';
-import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Card from '../Card';
 import LockStatus from '../LockStatus';
 import RefreshButton from '../RefreshButton';
 import {
+  StyledCardContainer,
+  StyledCardTag,
+  StyledCardTagContainer,
+  StyledCardTagTip,
   StyledDappDesc,
   StyledDappIcon,
+  StyledDappName,
   StyledDappTitle,
   StyledDappTitleWrapper,
   StyledDappWrapper,
   StyledFooter,
   StyledFooterActions,
-  StyledTop,
-  StyledCardTagContainer,
-  StyledCardTag,
-  StyledTagIcon,
-  StyledTagText,
   StyledFooterLeft,
   StyledFooterRight,
-  StyledDappName,
-  StyledCardTagTip,
-  StyledCardContainer,
+  StyledTagIcon,
   StyledTagIconDefault,
+  StyledTagText,
+  StyledTop,
 } from './styles';
-import { ACTIVITY_PTS, PTS_MAP } from '@/views/OdysseyV5/const';
 
 const ICON_MAP: any = {
   'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',

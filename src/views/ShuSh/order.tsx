@@ -1,6 +1,8 @@
-import { memo, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { memo, useEffect } from 'react';
+
 import Spinner from '@/components/Spinner';
+
 import Common from './common';
 import OrderPanel from './components/OrderPanel';
 import useChechStatus from './hooks/useChechStatus';
