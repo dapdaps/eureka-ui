@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react"
 import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 
-export default function useRouteSorted(routes: any, routeSortType: number, onRouteSelected: (v: QuoteResponse | null) => void) {
+export default function useRouteSorted(routes: any, routeSortType: number, onRouteSelected: (v: QuoteResponse | null) => void, stopSelected = false) {
     const [routeSelected, setRouteSelected] = useState<QuoteResponse | null>(null)
     const [best, setBest] = useState<QuoteResponse | null>(null)
     const [fast, setFast] = useState<QuoteResponse | null>(null)
     const [sortedRoutes, setSortedRoutes] = useState<QuoteResponse[] | null>([])
     
     useEffect(() => {
+        if (stopSelected) {
+            return
+        }
         let bestRoute: QuoteResponse | null = null
         let fastRoute: QuoteResponse | null = null
         if (routes && routes.length) {
@@ -38,7 +41,7 @@ export default function useRouteSorted(routes: any, routeSortType: number, onRou
             onRouteSelected(null)
         }
         
-    }, [routes, routeSortType])
+    }, [routes, routeSortType, stopSelected])
 
     useEffect(() => {
         if (routes) {

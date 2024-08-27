@@ -67,7 +67,7 @@ export default function Transaction() {
     return <Container>
         <PublicTitle
             title="Medal"
-            subTitle='You might be interested colecting the medals.'
+            subTitle='You might be interested collecting the medals.'
         />
      
         <JuniorWapper>

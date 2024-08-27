@@ -86,7 +86,7 @@ export default function ConfirmModal({
 
     const styles = { backgroundColor: theme?.selectBgColor, color: theme?.textColor }
 
-    return <Modal showLayer={false} width={370} top="auto" position='right-bottom' onClose={() => {
+    return <Modal showLayer={false} width={370} top="auto" fixed position='right-bottom' onClose={() => {
         onClose()
     }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

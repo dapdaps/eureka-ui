@@ -252,7 +252,7 @@ function QuickBridge({
 
     return <div> {
         mainModalShow &&
-        <Modal width={492} title={<Title>
+        <Modal width={492} fixed title={<Title>
             <img className="chain-icon" src={originFromChain.icon} />
             <div className="chain-name">{originFromChain.chainName} Quick Bridge</div>
         </Title>} onClose={() => {

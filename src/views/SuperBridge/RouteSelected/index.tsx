@@ -50,10 +50,11 @@ interface Props {
     routeSortType: number;
     quoteLoading: boolean;
     onRouteSelected: (route: QuoteResponse | null) => void;
+    stopSelected: boolean;
 }
 
 export default function RouteSelected(
-    { routes, toToken, routeSortType, fromChain, quoteLoading, onRouteSelected }: Props
+    { routes, toToken, routeSortType, fromChain, quoteLoading, onRouteSelected, stopSelected }: Props
 ) {
     const [routeModalShow, setRouteModalShow] = useState<boolean>(false)
 
@@ -63,7 +64,7 @@ export default function RouteSelected(
         fast,
         sortedRoutes,
         setRouteSelected,
-    } = useRouteSorted(routes, routeSortType, onRouteSelected)
+    } = useRouteSorted(routes, routeSortType, onRouteSelected, stopSelected)
 
     console.log(quoteLoading)
 

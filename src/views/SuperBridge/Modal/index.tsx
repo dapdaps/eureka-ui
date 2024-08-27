@@ -69,10 +69,11 @@ interface Props {
     paddingSize?: number | string;
     showLayer?: boolean;
     position?: string;
+    fixed?: boolean;
 }
 
 function Modal({
-    width = 468, height, onClose, title, children, paddingSize = 20, top = '50%', position = 'mid', showLayer = true
+    width = 468, height, onClose, title, children, paddingSize = 20, top = '50%', position = 'mid', showLayer = true, fixed = false
 }: Props, ref: any) {
 
     
@@ -83,7 +84,11 @@ function Modal({
             }}/>
         }
         
-        <Container className={ position } ref={ref} size={paddingSize} style={{ top, width }}>
+        <Container className={ position } ref={ref} size={paddingSize} style={{ 
+            top, 
+            width, 
+            position: fixed ? 'fixed' : 'absolute' 
+            }}>
             <CloseWapper onClick={() => {
                 onClose && onClose()
             }}>

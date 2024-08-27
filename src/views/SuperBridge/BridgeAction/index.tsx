@@ -1,10 +1,10 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js'
 import { useRouter } from 'next/router';
-import { useCallback, useEffect,useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
-import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
-import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus,init } from 'super-bridge-sdk';
+import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
 
 import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance'
 import { saveTransaction } from '@/components/BridgeX/Utils'
@@ -15,7 +15,7 @@ import useAddAction from '@/hooks/useAddAction';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import type { Chain, Token } from '@/types';
-import { addressFormated, balanceFormated, errorFormated, getFullNum,percentFormated } from '@/utils/balance';
+import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
 
 import ChainTokenAmount from '../ChainTokenAmount';
 import GasModal from '../ChainTokenAmount/GasModal';
@@ -251,10 +251,11 @@ export default function BirdgeAction(
     <PublicTitle
       title={
         <>
+          <svg xmlns="http://www.w3.org/2000/svg" width="17" height="23" fill="none"><path fill="#EBF479" d="M.855 9.962 11.009.415c.795-.748 2.043.14 1.598 1.137L9.75 7.942a1 1 0 0 0 .807 1.403l4.754.506c.864.092 1.208 1.167.557 1.743L3.535 22.52c-.837.741-2.075-.242-1.542-1.226l4.16-7.672a1 1 0 0 0-.763-1.47l-3.967-.468a1 1 0 0 1-.568-1.721"></path></svg>
           Super Bridge
           <Tooltip content='Super Bridge aggregates top-tier bridges in one intuitive interface, offering smart-routing for optimal fees and speed. Each bridge transaction on DapDap helps earn you medals, rewarding your cross-chain activity! Seamlessly transfer your assets across 17+ networks with real-time tracking and data support.' />
         </>
-      }     
+      }
       subTitle='Transfer assets between Ethereum and EVM L2s.'
       renderAction={() => <Setting onClick={() => {
         setSettingModalShow(true)
@@ -326,8 +327,13 @@ export default function BirdgeAction(
         fromChain={fromChain}
         routeSortType={routeSortType}
         onRouteSelected={(route: QuoteResponse | null) => {
-          setSelectedRoute(route)
-        }} toToken={toToken} routes={routes} />
+          if (!confirmModalShow) {
+            setSelectedRoute(route)
+          }
+        }}
+        stopSelected={confirmModalShow}
+        toToken={toToken} routes={routes}
+      />
     }
     <Sep height={20} />
     <SubmitBtn
