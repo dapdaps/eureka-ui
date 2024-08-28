@@ -3,12 +3,16 @@ import React, { memo } from 'react';
 import styled from 'styled-components';
 
 const PageBack = (props: Props) => {
-  const { defaultPath = '/', style } = props;
+  const { defaultPath = '/', style, onBack } = props;
 
   const router = useRouter();
 
   const onClick = () => {
     const prevOrigin = /^https?:\/\/[\w-.]+(:\d+)?/i.exec(document.referrer);
+    if (onBack) {
+      onBack(prevOrigin ? prevOrigin[0] : '');
+      return;
+    }
     if (prevOrigin && prevOrigin[0] !== window.location.origin) {
       router.replace(defaultPath);
       return;
@@ -39,6 +43,8 @@ export default memo(PageBack);
 export interface Props {
   defaultPath?: string;
   style?: React.CSSProperties;
+
+  onBack?(prevOrigin: string): void;
 }
 
 const StyledContainer = styled.div`

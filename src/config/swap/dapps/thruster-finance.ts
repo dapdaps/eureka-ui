@@ -1,4 +1,6 @@
+import ThrusterLiquidity from '@/config/pool/dapps/thruster-liquidity';
 import { blast } from '@/config/tokens/blast';
+
 const basic = {
   name: 'Thruster Finance',
   logo: '/images/apps/thruster-finance.png',
@@ -69,5 +71,14 @@ const networks = {
     ],
   },
 };
+// fix#DAP-862 merge the Dex and Pool for Thruster
+const { contracts, tokens, fees, defaultFee } = ThrusterLiquidity;
 
-export { basic, networks };
+export {
+  basic,
+  networks,
+  contracts,
+  tokens,
+  fees,
+  defaultFee,
+};

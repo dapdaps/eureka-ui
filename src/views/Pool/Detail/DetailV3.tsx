@@ -19,7 +19,7 @@ import useCollectInfo from './hooks/useCollectInfo';
 import usePoolDetail from './hooks/usePoolDetail';
 import { StyledLoadingWrapper, StyledPanels } from './styles';
 
-const Detail = ({ tokenId }: any) => {
+const Detail = ({ tokenId, isHideBack, onClose }: DetailProps) => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showIncreaseModal, setShowIncreaseModal] = useState(false);
   const { contracts, chainId } = useDappConfig();
@@ -55,13 +55,21 @@ const Detail = ({ tokenId }: any) => {
 
   useEffect(() => {
     if (!contracts[chainId]) {
+      if (onClose) {
+        onClose();
+        return;
+      }
       router.push(`/dapp/${router.query.dappRoute}`);
     }
   }, [chainId]);
 
   return (
     <>
-      <Header />
+      {
+        !isHideBack && (
+          <Header />
+        )
+      }
       {loading || !_token0 || !_token1 ? (
         <StyledLoadingWrapper>
           <Loading size={36} />
@@ -147,3 +155,11 @@ const Detail = ({ tokenId }: any) => {
 };
 
 export default memo(Detail);
+
+interface DetailProps {
+  tokenId: string;
+
+  // fix#DAP-862
+  isHideBack?: boolean;
+  onClose?(): void;
+}

@@ -11,8 +11,8 @@ export default function usePools() {
   const [loading, setLoading] = useState(false);
   const { pairs, tokens, currentChain } = useDappConfig();
   const queryPools = useCallback(async () => {
-    const pools = Object.keys(pairs);
     try {
+      const pools = Object.keys(pairs);
       setLoading(true);
       const [tvl, apr, campaigns] = await Promise.all([fetchTvl(pools), fetchApr(), fetchCampaigns()]);
 
