@@ -13,6 +13,7 @@ const LazyImage = (props: Props) => {
     containerClassName,
     style,
     className,
+    delay = 0,
     ...restProps
   } = props;
 
@@ -67,7 +68,7 @@ const LazyImage = (props: Props) => {
               animate={isLoaded ? 'visible' : 'hidden'}
               exit="hidden"
               initial="hidden"
-              transition={{ duration: 1, ease: 'easeInOut', delay: 0.3 }}
+              transition={{ duration: 0.3, ease: 'easeInOut', delay: delay }}
               onLoad={() => {
                 setLoaded(true);
               }}
@@ -121,6 +122,7 @@ export interface Props {
   containerClassName?: string;
   style?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
+  delay?: number;
   [k: string]: any;
 }
 
