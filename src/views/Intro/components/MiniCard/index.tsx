@@ -566,8 +566,8 @@ export default memo(function MiniCard() {
         </StyledMiniCard>
         <StyledMiniCard style={{ backgroundColor: "#5B56F3" }}>
           <StyledMiniCardImage src="/images/intro/rewards-bg.png" style={{ position: 'absolute', width: 405, right: 0, top: 0 }} />
-          <StyledContainer style={{ paddingTop: 94, paddingLeft: 35 }}>
-            <StyledFont color="#FFF" fontSize="36px" fontWeight="700" lineHeight="150%">Earnig Rewards</StyledFont>
+          <StyledContainer style={{ paddingTop: 94, paddingLeft: 35, position: 'relative', zIndex: 5 }}>
+            <StyledFont color="#FFF" fontSize="36px" fontWeight="700" lineHeight="150%">Earning Rewards</StyledFont>
             <StyledFont color="#FFF" fontSize="26px" fontWeight="700" lineHeight="150%">While Exploring</StyledFont>
           </StyledContainer>
         </StyledMiniCard>

@@ -83,10 +83,10 @@ const RecentRewards = (props: Props) => {
     {
       bg: '#5B56F3',
       color: '#FFF',
-      name: 'Cudam',
+      name: 'Cudam321',
       tips: 'Chief Schizoposting Officer',
       desc: 'When in doubt, zoom out',
-      link: 'https://x.com/0x_socratic',
+      link: 'https://x.com/cudam321',
       icon: '/images/intro/partner/p5.png'
     }
   ])

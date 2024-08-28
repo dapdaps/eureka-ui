@@ -103,7 +103,7 @@ export default memo(function Banner() {
         <StarSvg className="StarSvg" style={{ position: "absolute", left: -18, bottom: -37 }} />
       </StyledMainHeading>
       <StyledMainTips>
-        <StyledFont color="#FFF" fontSize="20px" lineHeight="150%" textAlign="center">DapDap offers the first one-of-a-kind Web3 experience.For network and infrastructure over-saturation, we are providing a simple, unified entry point into Ethereum L2s and their apps.</StyledFont>
+        <StyledFont color="#FFF" fontSize="20px" lineHeight="150%" textAlign="center">DapDap offers a first-of-its-kind DeFi experience. We simplify the complex landscape of Ethereum L2s and EVMs, providing a single, unified gateway to explore and interact with multiple networks and their apps.</StyledFont>
       </StyledMainTips>
       <StyledExporeButton
         onClick={() => {
