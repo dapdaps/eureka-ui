@@ -26,6 +26,7 @@ const Header = ({
       >
         <StyledIconButton
           onClick={() => {
+            onCleanAll && onCleanAll();
             from === 'modal' ? onClose() : router.back();
           }}
         >
