@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const createBundleStatsPlugin = require('next-plugin-bundle-stats');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
@@ -182,6 +184,9 @@ const nextConfig = {
     )
     fileLoaderRule.exclude = /\.svg$/i;
     if (!isServer) {
+      if (!config.optimization.splitChunks) {
+        config.optimization.splitChunks = { cacheGroups: {} };
+      }
       config.optimization.splitChunks.cacheGroups.srcConfig = {
         test: /[\\/]src[\\/]config[\\/]/,
         name: 'src-config',
