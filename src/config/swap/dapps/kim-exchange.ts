@@ -1,3 +1,4 @@
+import KimExchangeLiquidity from '@/config/pool/dapps/kim-exchange-liquidity';
 import { mode } from '@/config/tokens/mode';
 
 const basic = {
@@ -33,5 +34,13 @@ const networks = {
     ],
   },
 };
+// fix#DAP-862 merge the Dex and Pool for Kim
+const { contracts, tokens, pairs } = KimExchangeLiquidity;
 
-export { basic, networks };
+export {
+  basic,
+  networks,
+  contracts,
+  tokens,
+  pairs,
+};

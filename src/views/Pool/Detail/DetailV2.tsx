@@ -13,7 +13,7 @@ import Tokens from './components/Tokens';
 import usePoolV2Detail from './hooks/usePoolV2Detail';
 import { StyledLoadingWrapper, StyledPanels } from './styles';
 
-const Detail = ({ id, fee, chainId }: any) => {
+const Detail = ({ id, fee, chainId, isHideBack, onClose }: DetailProps) => {
   const { loading, detail, queryDetail } = usePoolV2Detail(chainId, id);
   const _token0 = useToken(detail?.token0, chainId);
   const _token1 = useToken(detail?.token1, chainId);
@@ -21,9 +21,26 @@ const Detail = ({ id, fee, chainId }: any) => {
   const [showRemoveModal, setShowRemoveModal] = useState(false);
   const [showIncreaseModal, setShowIncreaseModal] = useState(false);
 
+  const handleSuccess = (percent: number) => {
+    if (percent === 100) {
+      if (onClose) {
+        onClose();
+        return;
+      }
+      router.push(`/dapp/${router.query.dappRoute}`);
+      return;
+    }
+    setShowRemoveModal(false);
+    queryDetail();
+  };
+
   return (
     <>
-      <Header />
+      {
+        !isHideBack && (
+          <Header />
+        )
+      }
       {loading || !_token0 || !_token1 ? (
         <StyledLoadingWrapper>
           <Loading size={36} />
@@ -69,14 +86,7 @@ const Detail = ({ id, fee, chainId }: any) => {
             onClose={() => {
               setShowRemoveModal(false);
             }}
-            onSuccess={(percent: number) => {
-              if (percent === 100) {
-                router.push(`/dapp/${router.query.dappRoute}`);
-                return;
-              }
-              setShowRemoveModal(false);
-              queryDetail();
-            }}
+            onSuccess={handleSuccess}
           />
           <IncreaseLiquidity
             text="Increase Liquidity"
@@ -107,3 +117,13 @@ const Detail = ({ id, fee, chainId }: any) => {
 };
 
 export default memo(Detail);
+
+interface DetailProps {
+  id: string;
+  fee: number;
+  chainId: number;
+
+  // fix#DAP-862
+  isHideBack?: boolean;
+  onClose?(): void;
+}

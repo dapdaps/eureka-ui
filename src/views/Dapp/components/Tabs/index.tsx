@@ -7,11 +7,11 @@ import {
   StyledTabsHeadItem,
 } from './styles';
 import { AnimatePresence } from 'framer-motion';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { StyledFlex } from '@/styled/styles';
 
 const DAppTabs = (props: Props) => {
-  const { tabs = [], ...restProps } = props;
+  const { tabs = [] } = props;
   const [currentTab, setCurrentTab] = useState<Tab>(tabs[0]);
 
   const handleTab = (tab: Tab) => {
@@ -58,7 +58,9 @@ const DAppTabs = (props: Props) => {
                   initial="hidden"
                   exit="hidden"
                 >
-                  <tab.content {...restProps} />
+                  <Suspense fallback={<div />}>
+                    {tab.content}
+                  </Suspense>
                 </StyledTabsContentItem>
               ))
             }
@@ -73,8 +75,6 @@ export default DAppTabs;
 
 interface Props {
   tabs: Tab[];
-
-  [k: string]: any;
 }
 
 export interface Tab {

@@ -14,7 +14,10 @@ export const StyledTabsHead = styled.div`
   background: rgba(33, 35, 48, 0.5);
   width: auto;
 `;
-export const StyledTabsContent = styled.div``;
+export const StyledTabsContent = styled.div`
+  position: relative;
+  padding: 20px 0;
+`;
 export const StyledTabsHeadItem = styled.div`
   border-radius: 8px;
   height: 32px;
@@ -36,6 +39,7 @@ export const StyledTabsHeadItem = styled.div`
 `;
 export const StyledTabsContentItem = styled(motion.div)`
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
 `;
