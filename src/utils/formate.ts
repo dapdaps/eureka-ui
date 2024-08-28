@@ -178,6 +178,15 @@ const extractPathFromUrl = (url: string): string => {
   }
 };
 
+export const isExternalUrl = (url: string): boolean => {
+  try {
+    const urlObject = new URL(url);
+    return urlObject.origin !== window.location.origin;
+  } catch (error) {
+    return false;
+  }
+};
+
 export {
   formateAddress,
   formateValue,

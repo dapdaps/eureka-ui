@@ -93,7 +93,7 @@ export default function Rewards({ onInviteCodeClick, medals, gems, referrals }: 
             <StyledSvg>{GemSvg}</StyledSvg>
             <StyledFont color='#FFF' fontWeight='500'><span style={{ fontWeight: 700 }}>{gems}</span> Gems</StyledFont>
           </StyledReward>
-          <StyledRewardTips style={{ bottom: -10, transform: 'translate(-50%, 100%)' }}>New Motivational Features, unlock medals by reaching specific milestones on DapDap</StyledRewardTips>
+          <StyledRewardTips style={{ bottom: -10, transform: 'translate(-50%, 100%)' }}>Accumulate Gems by earning Medals and participating in DapDap activities!</StyledRewardTips>
         </StyledRewardContainer>
         <StyledReward style={{ width: 178 }} onClick={onInviteCodeClick} data-bp="1009-001">
           <StyledSvg>{ReferralSvg}</StyledSvg>
