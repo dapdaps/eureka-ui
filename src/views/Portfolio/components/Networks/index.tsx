@@ -35,7 +35,7 @@ const Networks = (props: {
 
   const wrapperRef = useRef(null);
   const [foldVisible, setFoldVisible] = useState(false);
-  const [cols, setCols] = useState(6);
+  const [cols, setCols] = useState(5);
   const [fold, setFold] = useState(true);
   const [displayNetworks, setDisplayNetworks] = useState<NetworkItem[]>([]);
   const [hiddenNetworks, setHiddenNetworks] = useState<NetworkItem[]>([]);
@@ -45,8 +45,8 @@ const Networks = (props: {
   };
 
   useEffect(() => {
-    const itemWidth = 158;
-    const itemGap = 10;
+    const itemWidth = 188;
+    const itemGap = 15;
     const networkSorted: [NetworkItem[], NetworkItem[]] = [[], []];
     if (networks) {
       networks.forEach((n) => {
@@ -90,10 +90,10 @@ const Networks = (props: {
     <StyledNetworkTabWrapper ref={wrapperRef} fold={fold}>
       {
         loading ? (
-          [...new Array(12).keys()].map((i) => (
+          [...new Array(10).keys()].map((i) => (
             <Skeleton
               key={i}
-              width="158px"
+              width="188px"
               height="50px"
               borderRadius="10px"
               containerClassName="skeleton"
@@ -113,7 +113,7 @@ const Networks = (props: {
               <StyledItemContent>
                 <StyledItemName>{ALL.chainName}</StyledItemName>
                 <StyledItemNum>
-                  <StyledItemUSD>{formateValueWithThousandSeparatorAndFont(totalBalance, 4, true, { prefix: '$' })}</StyledItemUSD>
+                  <StyledItemUSD>{formateValueWithThousandSeparatorAndFont(totalBalance, 0, true, { prefix: '$', isShort: false })}</StyledItemUSD>
                 </StyledItemNum>
               </StyledItemContent>
             </StyledTabItem>
