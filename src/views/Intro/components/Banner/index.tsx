@@ -77,7 +77,7 @@ const StyledMainHeading = styled.div`
   }
 `
 const StyledMainTips = styled.div`
-  width: 731px;
+  width: 736px;
   margin: 0 auto 30px;
 `
 export default memo(function Banner() {
