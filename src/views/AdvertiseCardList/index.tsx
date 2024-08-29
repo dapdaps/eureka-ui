@@ -26,7 +26,7 @@ const Card = (
     if (!link) {
       return;
     }
-    router.push(link);
+    window.open(link);
   };
 
   const onHover = () => {
