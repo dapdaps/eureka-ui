@@ -9,12 +9,12 @@ import LendingLoadingIcon from '../../LendingLoadingIcon';
 import { ERC20_ABI } from './abi';
 
 const Button = styled.button`
-  background: var(--agg-primary-color, var(--button-color));
+  background: #ffff;
   height: 46px;
   border-radius: 10px;
-  color: var(--agg-secondary-color, var(--button-text-color));
+  color: #000;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   border: none;
   width: 100%;
   transition: 0.5s;
@@ -24,14 +24,14 @@ const Button = styled.button`
   &:disabled {
     opacity: 0.5;
   }
-  &.borrow {
-    background-color: var(--agg-primary-color, var(--repay-border-color));
-    border: 1px solid var(--repay-border-color);
-  }
-  &.repay {
-    background-color: var(--agg-pink-color, var(--repay-bg-hover-color));
-    border: 1px solid var(--repay-border-color);
-  }
+  //&.borrow {
+  //  background-color: var(--agg-primary-color, var(--repay-border-color));
+  //  border: 1px solid var(--repay-border-color);
+  //}
+  //&.repay {
+  //  background-color: var(--agg-pink-color, var(--repay-bg-hover-color));
+  //  border: 1px solid var(--repay-border-color);
+  //}
 `;
 
 interface IProps {
@@ -67,6 +67,9 @@ const LendingDialogButton = (props: IProps) => {
     account,
   } = props;
 
+
+  console.log('button', props);
+
   const tokenSymbol = data.underlyingToken.symbol;
   const { provider } = useAccount();
 
@@ -99,6 +102,8 @@ const LendingDialogButton = (props: IProps) => {
       
       const gasBalance = rawBalance.toString();
       console.log(!Big(gasBalance).lt(gas.toString()), '!Big(gasBalance).lt(gas.toString())');
+
+      console.log(ethers.utils.formatUnits(gas, 18), gasBalance);
       
       setState((prevState) => ({
         ...prevState,

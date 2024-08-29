@@ -1,20 +1,22 @@
 import Big from 'big.js';
 import { memo, useCallback, useEffect, useState } from 'react';
 
+import LendingAction from '@/views/AllInOne/components/Lending/LendingDialog/Action';
+
 import LendingArrowIcon from '../LendingArrowIcon'
 import LendingAsset from '../LendingAsset'
 import LendingTotal from '../LendingTotal';
 import {
-    ArrowIconWrapper,
-    Item,
-    Market,
-    MarketTableHeader,
-    MergeItems,
-    RewardApy,
-    RewardApyItem,
-    RewardIcon,
-    Row,
-} from './styles'
+  ArrowIconWrapper,
+  Item,
+  Items,
+  Market,
+  MarketTableHeader,
+  MergeItems,
+  RewardApy,
+  RewardApyItem,
+  RewardIcon,
+  Row} from './styles';
 
 interface IProps {
     currentDapp: string;
@@ -22,22 +24,36 @@ interface IProps {
     markets: any;
     dapps: any;
     onButtonClick: (address: string, action: string) => void;
+    tabConfig: any;
 }
 
 
-const LendingMarket = (props: IProps) => {
 
-    const { currentDapp, markets, dapps, timestamp, onButtonClick } = props;
+
+const LendingMarket = (props: any) => {
+
+    const {
+      currentDapp,
+      markets,
+      dapps,
+      timestamp,
+      tabConfig,
+      chainId,
+      account,
+      addAction,
+      onSuccess = () => {},
+      toast
+    } = props;
 
     const [sortKey, setSortKey] = useState('supplyApy');
+    const [openKey, setOpenKey] = useState<number | undefined>(undefined);
     const [marketInfo, setMarketInfo] = useState<any[]>();
+    const [params, setParams] = useState<any>();
 
     const initialTimestamp = localStorage.getItem("prevMarketTimestampMarket") || "";
     const [prevMarketTimestamp, setPrevMarketTimestamp] = useState(initialTimestamp);
 
-
     const formateData = useCallback((key: string) => {
-        console.log('formateData');
         
         const marketsToList = Object.values(markets);
     
@@ -79,77 +95,110 @@ const LendingMarket = (props: IProps) => {
       }
     }, [sortKey, formateData, markets, timestamp, prevMarketTimestamp]);
 
+    const onExpand = (idx: number, addr: string) => {
+      setOpenKey(idx === openKey ? undefined : idx);
+      const market = markets[addr];
+      const dapp = dapps[market.dapp];
+      const dappConfig = tabConfig.dapps[market.dapp];
+      setParams({
+        data: {
+          ...dapp,
+          ...market,
+          config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
+          addAction,
+          toast
+        },
+        account,
+        chainId,
+        addAction,
+        toast
+      });
+    }
+
+  useEffect(() => {
+    setOpenKey(undefined);
+  }, [currentDapp]);
+
     return (
         <Market>
             <MarketTableHeader>
-            <Item className="asset">Asset</Item>
-            <MergeItems className="supply header-supply">
-                <Item className="w_60">Deposit</Item>
-                <Item className="w_40 head_apy">
+              <MergeItems className="merge-asset">
+                <Item className="asset w_40">Asset</Item>
+                <Item className="asset w_60">Market</Item>
+              </MergeItems>
+            <MergeItems className="supply">
+                <Item className="head_apy w_50">Deposit</Item>
+                <Item className="head_apy w_50">
                 Deposit APY
-                <ArrowIconWrapper
-                    className={sortKey === "supplyApy" ? "active" : ""}
-                    onClick={() => {
-                        setSortKey('supplyApy')
-                        formateData("supplyApy");
-                    }}
-                >
-                    <LendingArrowIcon color='#fff' />
-                </ArrowIconWrapper>
+                {/*<ArrowIconWrapper*/}
+                {/*    className={sortKey === "supplyApy" ? "active" : ""}*/}
+                {/*    onClick={() => {*/}
+                {/*        setSortKey('supplyApy')*/}
+                {/*        formateData("supplyApy");*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <LendingArrowIcon color='#fff' />*/}
+                {/*</ArrowIconWrapper>*/}
                 </Item>
             </MergeItems>
-            <MergeItems className="borrow header-borrow">
-                <Item className="w_33">Borrowed</Item>
+            <MergeItems className="borrow">
+                <Item className="w_33 head_apy">Borrowed</Item>
                 <Item className="w_33 head_apy">
                 Borrow APY
-                <ArrowIconWrapper
-                    className={sortKey === "borrowApy" ? "active" : ""}
-                    onClick={() => {
-                        setSortKey('borrowApy')
-                        formateData("borrowApy");
-                    }}
-                >
-                    <LendingArrowIcon color='#fff' />
-                </ArrowIconWrapper>
+                {/*<ArrowIconWrapper*/}
+                {/*    className={sortKey === "borrowApy" ? "active" : ""}*/}
+                {/*    onClick={() => {*/}
+                {/*        setSortKey('borrowApy')*/}
+                {/*        formateData("borrowApy");*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <LendingArrowIcon color='#fff' />*/}
+                {/*</ArrowIconWrapper>*/}
                 </Item>
                 <Item className="w_33">
-                Market Size
-                <ArrowIconWrapper
-                    className={sortKey === "liquidity" ? "active" : ""}
-                    onClick={() => {
-                        setSortKey("liquidity");
-                        formateData("liquidity");
-                    }}
-                >
-                    <LendingArrowIcon color='#fff' />
-                </ArrowIconWrapper>
+                  Liquidity
+                {/*<ArrowIconWrapper*/}
+                {/*    className={sortKey === "liquidity" ? "active" : ""}*/}
+                {/*    onClick={() => {*/}
+                {/*        setSortKey("liquidity");*/}
+                {/*        formateData("liquidity");*/}
+                {/*    }}*/}
+                {/*>*/}
+                {/*    <LendingArrowIcon color='#fff' />*/}
+                {/*</ArrowIconWrapper>*/}
                 </Item>
+              <Item className="w_15"></Item>
             </MergeItems>
             </MarketTableHeader>
-            {(marketInfo || []).map((market: any) => (
+            {(marketInfo || []).map((market: any, index: number) => (
             <Row key={market.address}>
-                <Item className="td asset">
-                <LendingAsset 
-                    icon={market.icon}
-                    symbol={market.symbol}
-                    dappIcon={market.dappIcon}
-                    dappName={market.dappName}
-                />
-                </Item>
+              <Items onClick={() => onExpand(index, market.address)}>
+                <MergeItems className="merge-asset">
+                  <Item className="td asset w_40">
+                    <LendingAsset
+                      icon={market.icon}
+                      symbol={market.symbol}
+                    />
+                  </Item>
+                  <Item className="td asset w_60">
+                    <LendingAsset
+                      icon={market.dappIcon}
+                      symbol={market.dappName}
+                      size='small'
+                    />
+                  </Item>
+                </MergeItems>
                 <MergeItems
-                className="supply body-supply"
-                onClick={() => {
-                    onButtonClick(market.address, "Deposit");
-                }}
+                className="supply"
                 >
-                <Item className="td w_60">
+                <Item className="td head_apy">
                     <LendingTotal 
                         total={market.totalSupply}
                         digit={2}
                         unit={"$"}
                     />
                 </Item>
-                <Item className="td w_40 apy">
+                <Item className="td apy">
                     <div>{market.supplyApy}</div>
                     {market.distributionApy &&
                     market.distributionApy
@@ -159,19 +208,20 @@ const LendingMarket = (props: IProps) => {
                         })
                         .map((reward: any) => (
                         <RewardApyItem key={reward.symbol}>
-                            <RewardIcon src={reward.icon} />
-                            <RewardApy>{reward.supply}</RewardApy>
+                          <RewardApy>{reward.supply}</RewardApy>
+                          <RewardIcon src={reward.icon} />
                         </RewardApyItem>
                         ))}
                 </Item>
                 </MergeItems>
                 <MergeItems
-                className="borrow body-borrow"
-                onClick={() => {
-                    onButtonClick(market.address, "Borrow");
-                }}
+                className="borrow"
+                // onClick={() => {
+                //   console.log('spdop');
+                //     onButtonClick(market.address, "Borrow");
+                // }}
                 >
-                <Item className="td w_33">
+                <Item className="td w_33 head_apy">
                     <LendingTotal 
                             total={market.totalBorrows}
                             digit={2}
@@ -188,8 +238,8 @@ const LendingMarket = (props: IProps) => {
                         })
                         .map((reward: any) => (
                         <RewardApyItem key={reward.symbol}>
-                            <RewardIcon src={reward.icon} />
                             <RewardApy>{reward.borrow}</RewardApy>
+                            <RewardIcon src={reward.icon} />
                         </RewardApyItem>
                         ))}
                 </Item>
@@ -200,9 +250,21 @@ const LendingMarket = (props: IProps) => {
                             unit={"$"}
                     />
                 </Item>
+                  <Item className="td w_15">
+                    <ArrowIconWrapper
+                      className={`open ${openKey === index ? 'open-active' : ''}`}
+                    >
+                      <LendingArrowIcon color='#979ABE' />
+                    </ArrowIconWrapper>
+                  </Item>
                 </MergeItems>
+              </Items>
+              {
+                index === openKey ? <LendingAction {...params} onSuccess={onSuccess} /> : null
+              }
             </Row>
             ))}
+
         </Market>
     );
 }

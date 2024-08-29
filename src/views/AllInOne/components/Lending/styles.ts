@@ -27,7 +27,7 @@ export const StyledSupplied = styled.div<{ sub?: boolean }>`
   ${({ sub }) => sub ? 'font-size: 12px;color: #6c6e87;' : ''}
 `;
 export const StyledContent = styled.div`
-  margin-top: 12px;
+  margin-top: 30px;
 `;
 
 export const StyledConnectButton = styled.button<{ bg: string, color?: string }>`

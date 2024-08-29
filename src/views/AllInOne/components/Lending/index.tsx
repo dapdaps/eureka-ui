@@ -22,7 +22,7 @@ import {
 import MarketItems from '@/views/AllInOne/components/MarketItems/index';
 import Tabs from '@/views/AllInOne/components/Tabs/index';
 
-import LendingDialog from './LendingDialog';
+import LendingDialog from './LendingDialog/index';
 import LendingSpinner from './LendingSpinner'
 import LendingMarket from './Market'
 import LendingYours from './Yours'
@@ -168,25 +168,34 @@ const Lending = (props: Props) => {
         />
       </StyledFlex>
       <StyledContent>
-        <RestTheme>
+        {/*<RestTheme>*/}
           {currTab === 'Market' ? (
             <LendingMarket 
               currentDapp={currMarket}
               dapps={dappsInfo}
               markets={marketsInfo}
               timestamp={timestamp}
-              onButtonClick={(address: string, action: string) => {
-                const market = marketsInfo[address];
-                const dapp = dappsInfo[market.dapp];
-                const dappConfig = tabConfig.dapps[market.dapp];
-                setTableButtonClickData({
-                  ...dapp,
-                  ...market,
-                  config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
-                  actionText: action,
-                });
-                setShowDialog(true);
+              tabConfig={tabConfig}
+              chainId={chainId}
+              addAction={addAction}
+              toast={toast}
+              account={account}
+              onSuccess={(_dapp: any) => {
+                triggerDataRefetch();
+                setCurrMarket(_dapp?.dappName);
               }}
+              // onButtonClick={(address: string, action: string) => {
+              //   const market = marketsInfo[address];
+              //   const dapp = dappsInfo[market.dapp];
+              //   const dappConfig = tabConfig.dapps[market.dapp];
+              //   setTableButtonClickData({
+              //     ...dapp,
+              //     ...market,
+              //     config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
+              //     actionText: action,
+              //   });
+              //   setShowDialog(true);
+              // }}
             />
             // <ComponentWrapperPage
             //   src="bluebiu.near/widget/Avalanche.Lending.Market"
@@ -237,13 +246,13 @@ const Lending = (props: Props) => {
               }}
             />
           )}
-          <LendingDialog 
-            display={showDialog} 
-            data={tableButtonClickData} 
-            chainId={chainId} 
-            addAction={addAction} 
-            toast={toast} 
-            account={account} 
+          <LendingDialog
+            display={showDialog}
+            data={tableButtonClickData}
+            chainId={chainId}
+            addAction={addAction}
+            toast={toast}
+            account={account}
             onClose={() => {
               setShowDialog(false);
             }}
@@ -269,7 +278,7 @@ const Lending = (props: Props) => {
               },
             }}
           /> */}
-        </RestTheme>
+        {/*</RestTheme>*/}
       </StyledContent>
     </Container>
   );

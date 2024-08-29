@@ -7,13 +7,15 @@ const MarketItems = (props: Props) => {
   const { list, currMarket, onMarketChange } = props;
 
   const markets = [
-    // {
-    //   name: 'All',
-    // },
+    {
+      name: 'All',
+    },
     ...list
   ];
 
-  const market = props.currMarket ?? list?.[0]?.name ?? '';
+  const market = props.currMarket ?? markets?.[0]?.name ?? '';
+
+  console.log(props.currMarket, market);
 
   const onChange = (currMarket: string) => {
     onMarketChange(currMarket);

@@ -77,18 +77,34 @@ const TokenLogo = styled.img`
   margin-right: 4px;
 `;
 const TokenSymbol = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
-  font-weight: 400;
 `;
-const InputWrapper = styled.div`
-  height: 55px;
+export const BoxItem = styled.div`
   border-radius: 10px;
-  background-color: rgba(22, 24, 38, 0.5);
+  background-color: #1B1E27;
+  border: 1px solid #33364B;
+  padding: 12px;
+  margin-bottom: 12px;
+  
+  &.no-bg {
+    background-color: transparent;
+    border: 1px solid #373A53;
+  }
+`;
+
+
+export const InputFoot = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 20px;
-  padding: 0px 10px;
+  justify-content: space-between;
+  column-gap: 20px;
+  font-size: 12px;
+  color: #979ABE;
+`;
+
+export const InputMain = styled(InputFoot)`
+  margin-bottom: 8px;
 `;
 const Input = styled.input`
   font-size: 18px;
@@ -115,27 +131,33 @@ const InputBalance = styled.div`
   margin-top: 4px;
   margin-bottom: 10px;
 `;
-const BalanceValue = styled.div``;
+const BalanceValue = styled.div`
+  
+`;
 const BalanceWrapper = styled.div`
   text-align: right;
   cursor: pointer;
 `;
+
 const Balance = styled.span`
   font-weight: 400;
   text-decoration: underline;
+  color: #fff;
 `;
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px 0px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   &.justfiy-start {
     justify-content: flex-start;
     gap: 10px;
   }
+  &:not(&:last-child) {
+    margin-bottom: 8px;
+  }
 `;
-const Label = styled.div`
+const Label = styled.span`
   color: #979abe;
 `;
 const Value = styled.div`
@@ -143,6 +165,7 @@ const Value = styled.div`
   text-align: right;
   &.range {
     text-decoration: line-through;
+    color: #979ABE;
   }
 `;
 const Tips = styled.div`
@@ -164,7 +187,7 @@ const ValuesWrapper = styled.div`
   display: flex;
   align-items: center;
   .mx_5 {
-    margin: 0px 5px;
+    margin: 0 12px;
   }
 `;
 const CollateralToken = styled.div`
@@ -207,15 +230,9 @@ const TokenSelect = styled.div`
   color: #fff;
 `;
 const TopBox = styled.div`
-  padding: 30px 20px 10px;
-  border-bottom: 1px dashed #454967;
-
-  &.none-border {
-    border-bottom: none;
-  }
+  margin-bottom: 10px;
 `;
 const BottomBox = styled.div`
-  padding: 10px 20px 20px;
 `;
 const RewardApyItem = styled.div`
   display: flex;
@@ -247,7 +264,6 @@ export {
   Token,
   TokenLogo,
   TokenSymbol,
-  InputWrapper,
   Input,
   InputBalance,
   BalanceValue,
