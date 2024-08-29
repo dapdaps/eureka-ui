@@ -436,7 +436,7 @@ export const StyledSummaryAddIcon = styled.div<{ $direction: 'up' | 'down'; }>`
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: ${({ $direction }) => `transform: rotate(${$direction === 'up' ? '0deg' : '180deg'})` };
+  transform: ${({ $direction }) => `rotate(${$direction === 'up' ? '0deg' : '180deg'})` };
 `;
 
 export const StyledAddText = styled.div<{ $direction: 'up' | 'down'; }>`
