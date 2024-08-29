@@ -13,7 +13,7 @@ import odyssey from '@/config/odyssey';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import useToast from '@/hooks/useToast';
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
-import { extractPathFromUrl } from '@/utils/formate';
+import { isExternalUrl } from '@/utils/formate';
 
 import useCompassCombineAd from './hooks/useCompassCombineAd';
 import {
@@ -77,9 +77,10 @@ const AdCard = function ({ ad }: any) {
             <div className="btns">
               <StyledCompassButton
                 onClick={() => {
-                  const route = extractPathFromUrl(ad.ad_link);
-                  if (route) {
-                    router.push(route);
+                  if (isExternalUrl(ad.ad_link)) {
+                    window.open(ad.ad_link, '_blank', 'noopener,noreferrer');
+                  } else {
+                    router.push(ad.ad_link);
                   }
                 }}
                 data-bp="1001-003"

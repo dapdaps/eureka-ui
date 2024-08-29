@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { memo, useMemo } from 'react';
 
 import { SupportedChains } from '@/config/all-in-one/chains';
-import { formateValueWithThousandSeparator } from '@/utils/formate';
+import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import type { NetworkItem } from '@/views/Portfolio/hooks/useTokens';
 
 import {
@@ -12,10 +12,10 @@ import {
   StyledItemName,
   StyledItemNum,
   StyledItemUSD,
-  StyledTabItem,
+  StyledTabItem
 } from './styles';
 
-const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: number, setNetwork: any }) => {
+const Item = (props: { chain: NetworkItem; totalBalance?: Big.Big; network: number; setNetwork: any }) => {
   const { chain, totalBalance, network, setNetwork } = props;
 
   const isSupported = SupportedChains.some((it) => it.chainId === chain.id);
@@ -41,7 +41,9 @@ const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: numb
       <StyledItemContent>
         <StyledItemName title={chain.name}>{chain.name}</StyledItemName>
         <StyledItemNum $blur={!isSupported}>
-          <StyledItemUSD>${formateValueWithThousandSeparator(chain.usd, 2)}</StyledItemUSD>
+          <StyledItemUSD>
+            {formateValueWithThousandSeparatorAndFont(chain.usd, 0, true, { prefix: '$', isShort: false })}
+          </StyledItemUSD>
           {percentage && isSupported && <StyledItemName>{percentage}%</StyledItemName>}
         </StyledItemNum>
       </StyledItemContent>

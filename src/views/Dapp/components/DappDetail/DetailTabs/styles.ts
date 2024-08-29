@@ -26,8 +26,7 @@ export const StyledContainer = styled.div`
   }
 `;
 
-export const StyledTabContainer = styled.div`
-`;
+export const StyledTabContainer = styled.div``;
 
 export const StyledTabs = styled.div`
   display: flex;
@@ -41,7 +40,7 @@ export const StyledTab = styled.div`
   position: relative;
   font-size: 20px;
   font-weight: 600;
-  background: linear-gradient(90deg, #FFF 0%, #979ABE 100%);
+  background: linear-gradient(90deg, #fff 0%, #979abe 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -54,11 +53,11 @@ export const StyledTab = styled.div`
 
   &:not(:last-child) {
     &::after {
-      content: "";
+      content: '';
       display: block;
       width: 1px;
       height: 21px;
-      background: #979ABE;
+      background: #979abe;
       position: absolute;
       right: 0;
       transform: translateY(5px);
@@ -66,16 +65,16 @@ export const StyledTab = styled.div`
   }
 `;
 
-export const StyledTabText = styled.div<{active: boolean}>`
+export const StyledTabText = styled.div<{ active: boolean }>`
   padding-bottom: 17px;
-  border-bottom: ${props => props.active ? '4px solid #EBF479' : '4px solid transparent'};
+  border-bottom: ${(props) => (props.active ? '4px solid #EBF479' : '4px solid transparent')};
   white-space: nowrap;
 `;
 
 export const StyledTabsContent = styled.div`
   border-radius: 20px;
   border: 1px solid #202329;
-  background-color: #18191E;
+  background-color: #18191e;
   width: 100%;
   .history-table {
     .history-table-body {
@@ -93,7 +92,7 @@ export const StyledTabsContent = styled.div`
       .history-table-col {
         padding-top: 0;
         padding-bottom: 10px;
-        color: #979ABE;
+        color: #979abe;
         font-family: Montserrat;
       }
     }
@@ -112,17 +111,16 @@ export const StyledHead = styled.div`
   row-gap: 10px;
 `;
 
-
 export const StyledHeadText = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-family: Montserrat;
   font-size: 14px;
   font-weight: 500;
-  line-height: 1; 
+  line-height: 1;
   margin-right: 60px;
   .light {
     font-size: 20px;
-    color: #EBF479;
+    color: #ebf479;
     margin-right: 8px;
   }
 `;
@@ -142,17 +140,20 @@ export const StyledAvatar = styled.div`
   flex-shrink: 0;
 `;
 
-export const StyledMyAvatar = styled.div<{url: string}>`
+export const StyledMyAvatar = styled.div<{ url: string }>`
   width: 28px;
   height: 28px;
   margin-right: 11px;
   border-radius: 50%;
   background-size: contain;
-  background: ${props => props.url ? `url(${props.url }) center no-repeat` : 'conic-gradient(from 180deg at 50% 50%, #00D1FF 0deg, #FF008A 360deg)'};
+  background: ${(props) =>
+    props.url
+      ? `url(${props.url}) center no-repeat`
+      : 'conic-gradient(from 180deg at 50% 50%, #00D1FF 0deg, #FF008A 360deg)'};
 `;
 
 export const StyledHeadOther = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-size: 14px;
   font-weight: 500;
   line-height: 1;
@@ -173,7 +174,7 @@ export const StyledHeadInfo = styled.div`
 `;
 
 export const StyledMyAddress = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 20px;
   font-weight: 600;
@@ -182,7 +183,7 @@ export const StyledMyAddress = styled.div`
 `;
 
 export const StyledDateText = styled.div`
-  color: #979ABE;
+  color: #979abe;
 `;
 
 export const StyledTitleText = styled.div`
@@ -206,14 +207,14 @@ export const StyledOverview = styled.div`
 `;
 
 export const StyledOverviewTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 18px;
   font-weight: 600;
-  margin-bottom: 8px;;
+  margin-bottom: 8px;
 `;
 
 export const StyledOverviewDesc = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 16px;
   font-weight: 400;
 `;
@@ -230,14 +231,14 @@ export const StyledTokenItem = styled.div`
 `;
 
 export const StyledTokenLabel = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   font-weight: 400;
   margin-bottom: 8px;
 `;
 
 export const StyledTokenValue = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 16px;
   font-weight: 500;
 `;
@@ -251,7 +252,7 @@ export const StyledAirdrop = styled.div`
 `;
 
 export const StyledAirdropMainTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -264,7 +265,7 @@ export const StyledAirdropHead = styled.div`
   padding-bottom: 30px;
   column-gap: 92px;
   margin-top: 14px;
-  
+
   .airdrop-item {
     flex: 1;
   }
@@ -277,18 +278,17 @@ export const StyledAirdropLabel = styled.div`
 `;
 
 export const StyledAirdropValue = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 16px;
   font-weight: 600;
 `;
-
 
 export const StyledAirdropBody = styled.div`
   padding-top: 22px;
 `;
 
 export const StyledAirdropActions = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -298,7 +298,7 @@ export const StyledAirdropActions = styled.div`
 `;
 
 export const StyledAirdropActionsSub = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -315,35 +315,35 @@ export const StyledAirdropActionsText = styled.div`
 `;
 
 export const StyledAirdropActionsTextPrimary = styled.span`
-  color: #EBF479;
+  color: #ebf479;
 `;
 
-export const StyledAirdropBodyItem = styled.div<{ $finished?: boolean; }>`
+export const StyledAirdropBodyItem = styled.div<{ $finished?: boolean }>`
   margin-bottom: 16px;
   border-radius: 12px;
-  background: rgba(0 ,0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.2);
   padding: 23px 20px;
   position: relative;
   display: flex;
   justify-content: space-between;
-  cursor: ${({ $finished }) => $finished ? 'not-allowed' : 'pointer'};
+  cursor: ${({ $finished }) => ($finished ? 'not-allowed' : 'pointer')};
 `;
 
 export const StyledAirdropShadow = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  color: #979ABE;
+  color: #979abe;
 
   &.finished {
-    color: #EBF479;
+    color: #ebf479;
   }
 `;
 
-export const StyledAirdropIcon = styled.div<{url: string}>`
+export const StyledAirdropIcon = styled.div<{ url: string }>`
   width: 12px;
   height: 9px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center`: ''};
+  background: ${(props) => (props.url ? `url(${props.url}) no-repeat center` : '')};
   background-size: contain;
   position: absolute;
   top: 6px;
@@ -355,19 +355,17 @@ export const StyledAirdropTitle = styled.div`
   flex-shrink: 0;
 `;
 
-
 export const StyledAirdropArrow = styled.div`
   color: #ffffff;
   opacity: 0.8;
   transform: rotate(-90deg);
 `;
 
-
-export const StyledTabIcon = styled.div<{url?: string}>`
+export const StyledTabIcon = styled.div<{ url?: string }>`
   width: 22px;
   height: 22px;
   border-radius: 6px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center`: ''};
+  background: ${(props) => (props.url ? `url(${props.url}) no-repeat center` : '')};
   background-size: contain;
   display: inline-block;
   vertical-align: middle;
@@ -375,7 +373,7 @@ export const StyledTabIcon = styled.div<{url?: string}>`
 `;
 
 export const StyledEmptyText = styled.div`
-  background: linear-gradient(90deg, #FFF 0%, #979ABE 100%);
+  background: linear-gradient(90deg, #fff 0%, #979abe 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -386,7 +384,7 @@ export const StyledEmptyText = styled.div`
 `;
 
 export const StyledEmptyTxt = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-family: Montserrat;
   font-weight: 400;
 `;
@@ -397,21 +395,20 @@ export const StyledHistoryDapp = styled.div`
   column-gap: 8px;
 `;
 
-export const StyledHistoryDappLogo = styled.div<{url: string}>`
+export const StyledHistoryDappLogo = styled.div<{ url: string }>`
   border-radius: 6px;
   width: 20px;
   height: 20px;
-  background: ${props => props.url ? `url(${props.url}) no-repeat center` : 'unset'};
+  background: ${(props) => (props.url ? `url(${props.url}) no-repeat center` : 'unset')};
   background-size: contain;
 `;
 
-export const  StyledHistoryDappName = styled.div`
-  color: #FFF;
+export const StyledHistoryDappName = styled.div`
+  color: #fff;
   font-family: Montserrat;
   font-size: 14px;
   font-weight: 400;
 `;
-
 
 export const StyledTokenPrice = styled.div`
   color: #ffffff;
@@ -429,18 +426,18 @@ export const StyledSummaryAdd = styled.div`
   transform: translateY(-2px);
 `;
 
-export const StyledSummaryAddIcon = styled.div<{ $direction: 'up' | 'down'; }>`
+export const StyledSummaryAddIcon = styled.div<{ $direction: 'up' | 'down' }>`
   width: 10px;
   height: 8px;
-  color: ${({ $direction }) => $direction === 'up' ? '#06C17E' : '#FF3D83' };
+  color: ${({ $direction }) => ($direction === 'up' ? '#06C17E' : '#FF3D83')};
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: ${({ $direction }) => `transform: rotate(${$direction === 'up' ? '0deg' : '180deg'})` };
+  transform: ${({ $direction }) => `rotate(${$direction === 'up' ? '0deg' : '180deg'})`};
 `;
 
-export const StyledAddText = styled.div<{ $direction: 'up' | 'down'; }>`
-  color: ${({ $direction }) => $direction === 'up' ? '#06C17E' : '#FF3D83' };
+export const StyledAddText = styled.div<{ $direction: 'up' | 'down' }>`
+  color: ${({ $direction }) => ($direction === 'up' ? '#06C17E' : '#FF3D83')};
   font-family: Montserrat;
   font-size: 12px;
   font-weight: 500;
@@ -453,8 +450,8 @@ export const StyledTokenInfo = styled.div`
   color: #ffffff;
 `;
 
-export const StyledTokenLogo = styled.div<{url?: string}>`
-  background: ${props => props.url ? `url("${props.url}") no-repeat center`: 'unset'};
+export const StyledTokenLogo = styled.div<{ url?: string }>`
+  background: ${(props) => (props.url ? `url("${props.url}") no-repeat center` : 'unset')};
   background-size: contain;
   width: 20px;
   height: 20px;
@@ -462,7 +459,7 @@ export const StyledTokenLogo = styled.div<{url?: string}>`
 `;
 
 export const StyledTokenAddress = styled.div`
-  color: #FFF;
+  color: #fff;
   font-family: Montserrat;
   font-size: 16px;
 `;

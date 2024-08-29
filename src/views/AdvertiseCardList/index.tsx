@@ -7,17 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
 
-const Card = (
-  {
-    classname = 'advertise',
-    image,
-    buttonText,
-    link,
-    type,
-    width = 405,
-    height = 312,
-  }: Card) => {
-
+const Card = ({ classname = 'advertise', image, buttonText, link, type, width = 405, height = 312 }: Card) => {
   const router = useRouter();
 
   const onLink = (e: React.MouseEvent) => {
@@ -26,7 +16,7 @@ const Card = (
     if (!link) {
       return;
     }
-    router.push(link);
+    window.open(link);
   };
 
   const onHover = () => {
@@ -45,34 +35,22 @@ const Card = (
         height={height}
         alt=""
       />
-      {
-        buttonText ? (
-          <>
-            {
-              type === 'dapp' && (
-                <StyledLinear />
-              )
-            }
-            <StyledCardBottom className={`${classname}-card-bottom`} $type={type}>
-              <StyledCardButton className={`${classname}-card-button`} onClick={onLink}>
-                <span>{buttonText}</span>
-                <ArrowLineIcon />
-              </StyledCardButton>
-            </StyledCardBottom>
-          </>
-        ) : null
-      }
+      {buttonText ? (
+        <>
+          {type === 'dapp' && <StyledLinear />}
+          <StyledCardBottom className={`${classname}-card-bottom`} $type={type}>
+            <StyledCardButton className={`${classname}-card-button`} onClick={onLink}>
+              <span>{buttonText}</span>
+              <ArrowLineIcon />
+            </StyledCardButton>
+          </StyledCardBottom>
+        </>
+      ) : null}
     </StyledCardContainer>
   );
 };
 
-const AdvertiseCard = (
-  {
-    classname = '',
-    adList = [],
-    type = 'dapp',
-  }: Props) => {
-
+const AdvertiseCard = ({ classname = '', adList = [], type = 'dapp' }: Props) => {
   const swiperRef = useRef<any>(null);
 
   return adList.length > 1 ? (
@@ -91,27 +69,25 @@ const AdvertiseCard = (
         }}
         pagination={false}
       >
-        {
-          adList.map((item) => (
-            <SwiperSlide key={item.id}>
-              <Card
-                classname={classname}
-                image={item.ad_images ?? ''}
-                link={item.ad_link ?? ''}
-                buttonText={item.btn ?? ''}
-                type={type}
-                width={403}
-                height={473}
-              />
-            </SwiperSlide>
-          ))
-        }
-
+        {adList.map((item) => (
+          <SwiperSlide key={item.id}>
+            <Card
+              classname={classname}
+              image={item.ad_images ?? ''}
+              link={item.ad_link ?? ''}
+              buttonText={item.btn ?? ''}
+              type={type}
+              width={403}
+              height={473}
+            />
+          </SwiperSlide>
+        ))}
       </Swiper>
 
       <div className="swiper-pagination"></div>
     </StyledSwiper>
-  ) : adList.map((item: Partial<Card>, idx: number) => (
+  ) : (
+    adList.map((item: Partial<Card>, idx: number) => (
       <Card
         classname={classname}
         image={item.ad_images ?? ''}
@@ -122,10 +98,9 @@ const AdvertiseCard = (
         width={403}
         height={473}
       />
-    ),
+    ))
   );
 };
-
 
 export default AdvertiseCard;
 
@@ -150,7 +125,6 @@ interface Props {
 }
 
 const StyledSwiper = styled.div`
-
   .advertise-swiper {
     overflow: hidden;
     height: 100%;
@@ -164,7 +138,7 @@ const StyledCardContainer = styled.div`
   position: relative;
   border-radius: 20px;
   border: 1px solid #202329;
-  background: #18191E;
+  background: #18191e;
   height: 100%;
 `;
 
@@ -174,10 +148,10 @@ const StyledLinear = styled.div`
   position: absolute;
   left: 0;
   bottom: 90px;
-  background: linear-gradient(180deg, rgba(24, 25, 30, 0.00) 0%, #18191E 100%);
+  background: linear-gradient(180deg, rgba(24, 25, 30, 0) 0%, #18191e 100%);
 `;
 
-const StyledCardBottom = styled.div<{ $type?: 'network' | 'dapp'; }>`
+const StyledCardBottom = styled.div<{ $type?: 'network' | 'dapp' }>`
   height: 90px;
   flex-shrink: 0;
   padding: 0 31px;
@@ -189,8 +163,8 @@ const StyledCardBottom = styled.div<{ $type?: 'network' | 'dapp'; }>`
   left: 0;
   bottom: 0;
   width: 100%;
-  background: #18191E;
-  
+  background: #18191e;
+
   ${({ $type }) => {
     const result: any = {};
     if ($type == 'network') {
@@ -204,7 +178,7 @@ const StyledCardBottom = styled.div<{ $type?: 'network' | 'dapp'; }>`
 
 const StyledCardButton = styled.div`
   border-radius: 10px;
-  background: #EBF479;
+  background: #ebf479;
   width: 100%;
   line-height: 1;
   padding-top: 17px;
@@ -215,7 +189,7 @@ const StyledCardButton = styled.div`
   justify-content: center;
   column-gap: 10px;
   opacity: 0.8;
-  transition: opacity .2s ease;
+  transition: opacity 0.2s ease;
   cursor: pointer;
   font-weight: 600;
 
