@@ -55,7 +55,7 @@ export const Page: NextPageWithLayout = () => {
         }}
       />
       <TitleWapper>
-        <img className="icon" src={renzoImg.src} />
+        <img className="icon" src="/images/apps/renzo.svg" />
       </TitleWapper>
       <Bg>
         <Renzo />
