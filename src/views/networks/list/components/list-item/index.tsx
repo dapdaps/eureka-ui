@@ -49,7 +49,7 @@ const ListItem: FC<IProps> = ({ dataSource }) => {
           ))
         }
         <div className="item rewards">
-          <span className="key">Campaign Reward</span>
+          <span className="key">DapDap Exclusive Rewards</span>
           {
             odyssey && odyssey.length > 0 ? (
               <Reward odyssey={odyssey} />
