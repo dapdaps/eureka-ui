@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Dialog = styled.div`
   position: fixed;
@@ -69,6 +69,7 @@ const AssetWrapper = styled.div`
 const Token = styled.div`
   display: flex;
   flex-shrink: 0;
+  align-items: center;
 `;
 const TokenLogo = styled.img`
   width: 22px;
@@ -80,19 +81,27 @@ const TokenSymbol = styled.div`
   font-size: 14px;
   color: #fff;
 `;
+const InputWrapper = styled.div`
+  height: 55px;
+  border-radius: 10px;
+  background-color: rgba(22, 24, 38, 0.5);
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+  padding: 0px 10px;
+`;
 export const BoxItem = styled.div`
   border-radius: 10px;
-  background-color: #1B1E27;
-  border: 1px solid #33364B;
+  background-color: #1b1e27;
+  border: 1px solid #33364b;
   padding: 12px;
   margin-bottom: 12px;
-  
+
   &.no-bg {
     background-color: transparent;
-    border: 1px solid #373A53;
+    border: 1px solid #373a53;
   }
 `;
-
 
 export const InputFoot = styled.div`
   display: flex;
@@ -100,7 +109,7 @@ export const InputFoot = styled.div`
   justify-content: space-between;
   column-gap: 20px;
   font-size: 12px;
-  color: #979ABE;
+  color: #979abe;
 `;
 
 export const InputMain = styled(InputFoot)`
@@ -131,9 +140,7 @@ const InputBalance = styled.div`
   margin-top: 4px;
   margin-bottom: 10px;
 `;
-const BalanceValue = styled.div`
-  
-`;
+const BalanceValue = styled.div``;
 const BalanceWrapper = styled.div`
   text-align: right;
   cursor: pointer;
@@ -165,7 +172,7 @@ const Value = styled.div`
   text-align: right;
   &.range {
     text-decoration: line-through;
-    color: #979ABE;
+    color: #979abe;
   }
 `;
 const Tips = styled.div`
@@ -197,6 +204,7 @@ const CollateralToken = styled.div`
   display: flex;
   gap: 4px;
   padding-top: 20px;
+  align-items: center;
 `;
 const AssetLabel = styled.div`
   font-size: 16px;
@@ -232,8 +240,7 @@ const TokenSelect = styled.div`
 const TopBox = styled.div`
   margin-bottom: 10px;
 `;
-const BottomBox = styled.div`
-`;
+const BottomBox = styled.div``;
 const RewardApyItem = styled.div`
   display: flex;
   align-items: center;
@@ -251,6 +258,9 @@ const RewardApy = styled.div`
   font-size: 12px;
 `;
 
+const CollateralContent = styled.div`
+  padding: 0 30px 30px;
+`;
 
 export {
   Dialog,
@@ -264,6 +274,7 @@ export {
   Token,
   TokenLogo,
   TokenSymbol,
+  InputWrapper,
   Input,
   InputBalance,
   BalanceValue,
@@ -285,4 +296,5 @@ export {
   RewardApyItem,
   RewardIcon,
   RewardApy,
+  CollateralContent
 };

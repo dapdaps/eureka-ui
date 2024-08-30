@@ -15,7 +15,7 @@ export const MarketTableHeader = styled.div`
   gap: 4px;
   padding-left: 20px;
   padding-bottom: 12px;
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
 `;
 export const Item = styled.div`
@@ -52,7 +52,7 @@ export const Item = styled.div`
   &.w_33 {
     width: 33.33333333%;
   }
-  
+
   &.w_50 {
     width: 50%;
   }
@@ -90,7 +90,7 @@ export const ArrowIconWrapper = styled.div`
   opacity: 0.3;
   cursor: pointer;
   transform: rotate(90deg);
-  transition: transform .2s ease;
+  transition: transform 0.2s ease;
 
   &.active {
     opacity: 1;
@@ -107,7 +107,7 @@ export const Row = styled.div`
   font-size: 14px;
   border-radius: 16px;
   background: #262836;
-  border: 1px solid #373A53;
+  border: 1px solid #373a53;
 `;
 
 export const Items = styled.div`
@@ -121,8 +121,7 @@ export const StyledExtraInfo = styled(motion.div)`
   background: #2e3142;
   border-bottom-right-radius: 16px;
   border-bottom-left-radius: 16px;
-  padding-left: 20px;
-  padding-bottom: 20px;
+  padding: 0 20px 20px;
 `;
 
 export const StyledExtraInfoItem = styled.div`
@@ -131,18 +130,18 @@ export const StyledExtraInfoItem = styled.div`
   justify-content: flex-start;
 
   &:first-child {
-    border-top: 1px solid #373A53;
-    border-bottom: 1px solid #373A53;
+    border-top: 1px solid #373a53;
+    border-bottom: 1px solid #373a53;
     margin-bottom: 16px;
   }
 `;
 
 export const StyledExtraInfoTab = styled.div`
   padding: 15px 0;
-  border-right: 1px solid #373A53;
+  border-right: 1px solid #373a53;
   width: 250px;
   text-align: center;
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
   font-size: 16px;
   font-weight: 400;
@@ -150,14 +149,14 @@ export const StyledExtraInfoTab = styled.div`
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     position: absolute;
     left: 0;
     bottom: -2px;
     flex-shrink: 0;
     width: 0;
     height: 0;
-    transition: background .2s ease;
+    transition: background 0.2s ease;
   }
 
   &.active {
@@ -174,7 +173,7 @@ export const StyledListBlock = styled.div`
   padding-right: 6%;
 `;
 export const StyledListTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   font-weight: 400;
   font-family: Gantari;
   font-size: 16px;
@@ -189,11 +188,11 @@ export const StyledListItem = styled.div`
 `;
 
 export const StyledListLabel = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
   font-size: 14px;
   font-weight: 400;
-  
+
   .value {
     color: #ffffff;
   }
@@ -204,13 +203,12 @@ export const StyledInfoTip = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   column-gap: 10px;
-  color: #EBF479;
+  color: #ebf479;
   background-color: rgba(235, 244, 121, 0.1);
   padding: 8px 12px;
   border-radius: 8px;
   margin-top: 22px;
-  
-  
+
   .tip-icon {
     flex-shrink: 0;
     margin-top: 5px;

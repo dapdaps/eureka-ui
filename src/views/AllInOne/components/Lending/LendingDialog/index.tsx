@@ -1,10 +1,11 @@
-import {useDebounceFn } from 'ahooks';
+import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { VmComponent } from '@/components/vm/VmComponent';
 import useAccount from '@/hooks/useAccount';
+import { formatBorrowLimit } from '@/views/AllInOne/components/Lending/LendingDialog/utils';
 
 import LendingArrowIcon from '../LendingArrowIcon';
 import LendingProcess from '../LendingProcess';
@@ -44,7 +45,7 @@ import {
   TokenSymbol,
   TopBox,
   Value,
-  ValuesWrapper,
+  ValuesWrapper
 } from './styles';
 
 interface IProps {
@@ -93,7 +94,7 @@ const LendingDialog = (props: IProps) => {
     isBigerThanBalance: false,
     loading: false,
     debouncedGetTrade: null,
-    getTrade: null,
+    getTrade: null
   });
   const [trade, setTrade] = useState<any>({});
   const [updateHandler, setUpdateHandler] = useState<any>(Date.now());
@@ -104,31 +105,32 @@ const LendingDialog = (props: IProps) => {
   const isForCollateral = useMemo(() => !isSupply && !isBorrow, [isSupply, isBorrow]);
   const tokenSymbol = useMemo(() => data?.underlyingToken?.symbol, [data]);
 
-  const getAvailable = useCallback((_balance: any) => {
-    if (!_balance) return '-';
-    if (actionText !== 'Repay') return _balance;
-    if (Big(_balance).lt(data.userBorrow || 0)) return _balance;
-    if (Big(_balance).gt(data.userBorrow || 0)) return data.userBorrow;
-  }, [data, actionText])
+  const getAvailable = useCallback(
+    (_balance: any) => {
+      if (!_balance) return '-';
+      if (actionText !== 'Repay') return _balance;
+      if (Big(_balance).lt(data.userBorrow || 0)) return _balance;
+      if (Big(_balance).gt(data.userBorrow || 0)) return data.userBorrow;
+    },
+    [data, actionText]
+  );
 
   const getBalance = useCallback(() => {
     console.log(actionText, 'actionText');
-    
+
     const isUnderlying = ['Deposit', 'Repay'].includes(actionText);
     setState((prevState) => ({
       ...prevState,
-      balanceLoading: true,
+      balanceLoading: true
     }));
     if (isUnderlying && data.underlyingToken.isNative) {
-      provider
-        .getBalance(account)
-        .then((rawBalance: ethers.BigNumber) => {
-          setState((prevState) => ({
-            ...prevState,
-            balance: getAvailable(ethers.utils.formatUnits(rawBalance._hex, 18)),
-            balanceLoading: false,
-          }));
-        });
+      provider.getBalance(account).then((rawBalance: ethers.BigNumber) => {
+        setState((prevState) => ({
+          ...prevState,
+          balance: getAvailable(ethers.utils.formatUnits(rawBalance._hex, 18)),
+          balanceLoading: false
+        }));
+      });
       return;
     }
     if (isUnderlying && data.underlyingToken.address) {
@@ -138,49 +140,50 @@ const LendingDialog = (props: IProps) => {
         setState((prevState) => ({
           ...prevState,
           balance: getAvailable(_rawBalance),
-          balanceLoading: false,
-        }))
-        return;
-      })
-    }
-      if (actionText === 'Withdraw') {
-        setState((prevState) => ({
-          ...prevState,
-          balance: Big(data.userSupply).toFixed(6, 0),
-          balanceLoading: false,
+          balanceLoading: false
         }));
         return;
-      }
-      if (actionText === 'Borrow') {
-        const borrowAvailable = Big(data.totalCollateralUsd)
-          .minus(data.userTotalBorrowUsd)
-          .div(data.underlyingPrice || 1);
-          setState((prevState) => ({
-            ...prevState,
-            balance: borrowAvailable.gt(0) ? Big(borrowAvailable).toString() : '0.00',
-            balanceLoading: false,
-          }));
-        return;
-      }
+      });
+    }
+    if (actionText === 'Withdraw') {
+      setState((prevState) => ({
+        ...prevState,
+        balance: Big(data.userSupply).toFixed(6, 0),
+        balanceLoading: false
+      }));
+      return;
+    }
+    if (actionText === 'Borrow') {
+      const borrowAvailable = Big(data.totalCollateralUsd)
+        .minus(data.userTotalBorrowUsd)
+        .div(data.underlyingPrice || 1);
+      setState((prevState) => ({
+        ...prevState,
+        balance: borrowAvailable.gt(0) ? Big(borrowAvailable).toString() : '0.00',
+        balanceLoading: false
+      }));
+      return;
+    }
   }, [actionText, account, data, getAvailable, provider]);
 
-
-  const { run: debouncedGetTrade } = useDebounceFn(() => {
-    setState((prevState) => ({
-      ...prevState,
-      loading: true,
-    }));
-  },  {
-    wait: 500,
-  });
+  const { run: debouncedGetTrade } = useDebounceFn(
+    () => {
+      setState((prevState) => ({
+        ...prevState,
+        loading: true
+      }));
+    },
+    {
+      wait: 500
+    }
+  );
 
   const getTrade = () => {
     setState((prevState) => ({
       ...prevState,
-      loading: true,
+      loading: true
     }));
   };
-
 
   useEffect(() => {
     if (data && localStorage.getItem('prevAddress') !== data.address && display) {
@@ -191,7 +194,7 @@ const LendingDialog = (props: IProps) => {
         borrowLimit = _borrowLimit.add(
           Big(data.loanToValue / 100)
             .mul(data.userSupply || 0)
-            .mul(data.underlyingPrice),
+            .mul(data.underlyingPrice)
         );
         buttonClickable = true;
       }
@@ -199,7 +202,7 @@ const LendingDialog = (props: IProps) => {
         borrowLimit = _borrowLimit.minus(
           Big(data.loanToValue / 100)
             .mul(data.userSupply || 0)
-            .mul(data.underlyingPrice),
+            .mul(data.underlyingPrice)
         );
         buttonClickable = Big(data.userTotalBorrowUsd).eq(0) ? true : !borrowLimit.lt(0);
       }
@@ -209,13 +212,12 @@ const LendingDialog = (props: IProps) => {
         amount: '',
         buttonClickable,
         processValue: 0,
-        borrowBalance: '',
+        borrowBalance: ''
       }));
       getBalance();
       localStorage.setItem('prevAddress', data.address);
     }
   }, [display, data, actionText, provider, account, getBalance]);
-
 
   // useEffect(() => {
   //   setState((prevState) => ({
@@ -228,25 +230,6 @@ const LendingDialog = (props: IProps) => {
   useEffect(() => {
     setUpdateHandler(Date.now());
   }, [data, state.amount, account]);
-
-  const formatBorrowLimit = (digits: any, round: any) => {
-    if (data.config.name === 'Ionic') {
-      const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(Big(data.COLLATERAL_FACTOR));
-
-      const _borrowLimit = Big(data.totalCollateralUsd)
-        .minus(currentTokenCollateralUSD)
-        .div(1.07)
-        .minus(Big(data.userTotalBorrowUsd));
-      return _borrowLimit.lte(0) ? 0 : _borrowLimit.toFixed(6);
-    } else {
-      if (Big(data.totalCollateralUsd).gt(data.userTotalBorrowUsd)) {
-        return Big(data.totalCollateralUsd)
-          .minus(data.userTotalBorrowUsd)
-          .toFixed(digits || 2, round || 1);
-      }
-      return '0.00';
-    }
-  };
 
   const formatBalance = () => {
     if (state.balanceLoading) return 'Loading';
@@ -269,7 +252,7 @@ const LendingDialog = (props: IProps) => {
         borrowBalance: '',
         isEmpty: Number(amount) === 0 && amount !== '',
         isOverSize: false,
-        isBigerThanBalance: false,
+        isBigerThanBalance: false
       }));
       return;
     }
@@ -278,7 +261,7 @@ const LendingDialog = (props: IProps) => {
 
     const params = {
       amount: amount,
-      processValue: precent.gt(100) ? 100 : precent.toNumber(),
+      processValue: precent.gt(100) ? 100 : precent.toNumber()
     } as any;
 
     let isOverSize = false;
@@ -327,25 +310,18 @@ const LendingDialog = (props: IProps) => {
     params.isEmpty = false;
     setState((prevState) => ({
       ...prevState,
-      ...params,
+      ...params
     }));
 
     state.debouncedGetTrade?.run();
   };
-
 
   const handleClose = () => {
     onClose?.();
     localStorage.setItem('prevAddress', '');
   };
 
-
-
-
-
   if (!data) return '';
-
-
 
   return (
     <Dialog className={display ? 'display' : ''}>
@@ -415,7 +391,7 @@ const LendingDialog = (props: IProps) => {
                       handleAmountChange(ev.target.value.replace(/\s+/g, ''));
                       setState((prevState) => ({
                         ...prevState,
-                        isMax: Big(ev.target.value.replace(/\s+/g, '') || 0).eq(state.balance || 0),
+                        isMax: Big(ev.target.value.replace(/\s+/g, '') || 0).eq(state.balance || 0)
                       }));
                     }}
                     placeholder="0.0"
@@ -437,7 +413,7 @@ const LendingDialog = (props: IProps) => {
                       setState((prevState) => ({
                         ...prevState,
                         amount: Big(balanceStr).eq(0) ? '0' : balanceStr.replace(/0+$/, '').replace(/\.$/, ''),
-                        isMax: true,
+                        isMax: true
                       }));
                     }}
                   >
@@ -456,7 +432,7 @@ const LendingDialog = (props: IProps) => {
                         setState((prevState) => ({
                           ...prevState,
                           processValue: value,
-                          amount: _amount,
+                          amount: _amount
                         }));
                         handleAmountChange(_amount);
                         return;
@@ -464,11 +440,11 @@ const LendingDialog = (props: IProps) => {
                       const amount = Big(state.balance)
                         .mul(value / 100)
                         .toFixed(4, 0);
-                        setState((prevState) => ({
-                          ...prevState,
-                          processValue: value,
-                          amount,
-                        }));
+                      setState((prevState) => ({
+                        ...prevState,
+                        processValue: value,
+                        amount
+                      }));
                       handleAmountChange(amount);
                     }}
                   />
@@ -485,10 +461,10 @@ const LendingDialog = (props: IProps) => {
                 </Row>
               </>
             )}
-            <Row className={isForCollateral ? 'justfiy-start':''}>
+            <Row className={isForCollateral ? 'justfiy-start' : ''}>
               <Label>Borrow Limit</Label>
               <ValuesWrapper>
-                <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2, '')}</Value>
+                <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2, '', data)}</Value>
                 {!!state.borrowLimit && (
                   <>
                     <div className="mx_5">
@@ -503,7 +479,9 @@ const LendingDialog = (props: IProps) => {
               <Row>
                 <Label>Remaining Debt</Label>
                 <ValuesWrapper>
-                  <Value className={!!state.borrowBalance ? 'range' : ''}>${Big(data.userTotalBorrowUsd).toFixed(2)}</Value>
+                  <Value className={!!state.borrowBalance ? 'range' : ''}>
+                    ${Big(data.userTotalBorrowUsd).toFixed(2)}
+                  </Value>
                   {!!(isBorrow && state.borrowBalance) && (
                     <>
                       <div className="mx_5">
@@ -547,14 +525,14 @@ const LendingDialog = (props: IProps) => {
             amount: state.amount,
             account,
             onLoad: (_data: any) => {
-              console.log("%cDialog-handler-onLoad--", 'background:red;color:white;', _data);
-              setTrade(_data)
+              console.log('%cDialog-handler-onLoad--', 'background:red;color:white;', _data);
+              setTrade(_data);
               setState((prevState) => ({
                 ...prevState,
                 ..._data,
-                loading: false,
+                loading: false
               }));
-            },
+            }
           }}
         />
       )}

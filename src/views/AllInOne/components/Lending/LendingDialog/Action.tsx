@@ -1,44 +1,27 @@
-import {useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import LazyImage from '@/components/LazyImage';
 import { VmComponent } from '@/components/vm/VmComponent';
 import useAccount from '@/hooks/useAccount';
+import { formatBorrowLimit } from '@/views/AllInOne/components/Lending/LendingDialog/utils';
 import Expand from '@/views/AllInOne/components/Lending/Market/Expand';
 
 import LendingArrowIcon from '../LendingArrowIcon';
 import LendingProcess from '../LendingProcess';
 import { ERC20_ABI } from './abi';
-import LendingCloseIcon from './CloseIcon';
 import LendingDialogButton from './DialogButton';
 import {
-  Apy,
-  AssetLabel,
-  AssetWrapper,
   Balance,
   BalanceValue,
   BalanceWrapper,
   BottomBox,
   BoxItem,
-  CloseIcon,
-  CollateralToken,
-  Content,
-  Dapp,
-  DappIcon,
-  DappName,
-  Dialog,
-  Header,
   Input,
-  InputBalance,
   InputFoot,
   InputMain,
   Label,
-  Overlay,
-  RewardApy,
-  RewardApyItem,
-  RewardIcon,
   Row,
   TokenSelect,
   TokenSymbol,
@@ -56,31 +39,51 @@ interface IProps {
   account: any;
   addAction: any;
   toast: any;
+  isHideInfo?: boolean;
+  updateBalance?: number;
+  tabs: ActionType[];
 }
 
 type DebouncedGetTradeType = {
   run: () => void;
 };
 
+export enum ActionType {
+  Supply = 'Deposit',
+  Withdraw = 'Withdraw',
+  Borrow = 'Borrow',
+  Repay = 'Repay'
+}
+
 const TabList = [
   {
-    key: 'Deposit',
+    key: ActionType.Supply,
     label: 'Supply'
   },
   {
-    key: 'Borrow',
+    key: ActionType.Borrow,
     label: 'Borrow'
+  },
+  {
+    key: ActionType.Withdraw,
+    label: 'Withdraw'
+  },
+  {
+    key: ActionType.Repay,
+    label: 'Repay'
   }
 ];
 
 const LendingAction = (props: IProps) => {
-  const { data, chainId, onSuccess, source } = props;
+  const { data, chainId, onSuccess, updateBalance, isHideInfo, tabs } = props;
   const { provider, account } = useAccount();
   const [state, setState] = useState<{
     amount: string;
     processValue: number;
     balanceLoading: boolean;
     balance: string;
+    userSupplyBalance: string;
+    userAvailableBorrow: string;
     borrowLimit: string;
     buttonClickable: boolean;
     borrowBalance: string;
@@ -95,6 +98,8 @@ const LendingAction = (props: IProps) => {
     processValue: 0,
     balanceLoading: false,
     balance: '',
+    userSupplyBalance: '',
+    userAvailableBorrow: '',
     borrowLimit: '',
     buttonClickable: false,
     borrowBalance: '',
@@ -103,154 +108,118 @@ const LendingAction = (props: IProps) => {
     isBigerThanBalance: false,
     loading: false,
     debouncedGetTrade: null,
-    getTrade: null,
+    getTrade: null
   });
-
 
   const [trade, setTrade] = useState<any>({});
   const [updateHandler, setUpdateHandler] = useState<any>(Date.now());
 
+  const tabList = useMemo(() => {
+    return TabList.filter((tab) => tabs.includes(tab.key));
+  }, [TabList, tabs]);
 
-  const [actionText, setActionText] = useState<string>(TabList[0].key);
+  const [actionText, setActionText] = useState<ActionType>(tabList[0].key);
 
   const params = useMemo(() => {
-    return { ...data, actionText }
-  }, [data]);
+    return { ...data, actionText };
+  }, [data, actionText]);
 
-  const isSupply = useMemo(() => ['Deposit', 'Withdraw'].includes(actionText), [actionText]);
-  const isBorrow = useMemo(() => ['Repay', 'Borrow'].includes(actionText), [actionText]);
+  const isSupply = useMemo(() => [ActionType.Supply, ActionType.Withdraw].includes(actionText), [actionText]);
+  const isBorrow = useMemo(() => [ActionType.Repay, ActionType.Borrow].includes(actionText), [actionText]);
   const isForCollateral = useMemo(() => !isSupply && !isBorrow, [isSupply, isBorrow]);
   const tokenSymbol = useMemo(() => data?.underlyingToken?.symbol, [data]);
   const tokenIcon = useMemo(() => data?.underlyingToken?.icon, [data]);
+  const isUnderlying = [ActionType.Supply, ActionType.Repay].includes(actionText);
 
-  const getAvailable = useCallback((_balance: any) => {
-    if (!_balance) return '-';
-    if (actionText !== 'Repay') return _balance;
-    if (Big(_balance).lt(data.userBorrow || 0)) return _balance;
-    if (Big(_balance).gt(data.userBorrow || 0)) return data.userBorrow;
-  }, [data, actionText])
+  //#region Query Balance
+  const getAvailable = useCallback(
+    (_balance: any) => {
+      if (!_balance) return '-';
+      if (actionText !== ActionType.Repay) return _balance;
+      if (Big(_balance).lt(data.userBorrow || 0)) return _balance;
+      if (Big(_balance).gt(data.userBorrow || 0)) return data.userBorrow;
+    },
+    [data, actionText]
+  );
 
-  const getBalance = useCallback(async () => {
+  const getBalance = useCallback(
+    async (_actionType: ActionType) => {
+      setState((prevState) => ({
+        ...prevState,
+        balanceLoading: true
+      }));
 
-    const isUnderlying = ['Deposit', 'Repay'].includes(actionText);
-
-    setState((prevState) => ({
-      ...prevState,
-      balanceLoading: true,
-    }));
-
-    if (isUnderlying && data.underlyingToken.isNative) {
-      const rawBalance: ethers.BigNumber = await provider.getBalance(account);
-      console.log(rawBalance);
-      provider
-        .getBalance(account)
-        .then((rawBalance: ethers.BigNumber) => {
+      if (isUnderlying && data.underlyingToken.isNative) {
+        provider.getBalance(account).then((rawBalance: ethers.BigNumber) => {
           setState((prevState) => ({
             ...prevState,
             balance: getAvailable(ethers.utils.formatUnits(rawBalance._hex, 18)),
-            balanceLoading: false,
+            balanceLoading: false
           }));
         });
-      return;
-    }
-    if (isUnderlying && data.underlyingToken.address) {
-      const TokenContract = new ethers.Contract(data.underlyingToken.address, ERC20_ABI, provider.getSigner());
-      TokenContract.balanceOf(account).then((rawBalance: ethers.BigNumber) => {
-        const _rawBalance = ethers.utils.formatUnits(rawBalance._hex, data.underlyingToken.decimals);
+        return;
+      }
+      if (isUnderlying && data.underlyingToken.address) {
+        const TokenContract = new ethers.Contract(data.underlyingToken.address, ERC20_ABI, provider.getSigner());
+        TokenContract.balanceOf(account).then((rawBalance: ethers.BigNumber) => {
+          const _rawBalance = ethers.utils.formatUnits(rawBalance._hex, data.underlyingToken.decimals);
+          setState((prevState) => ({
+            ...prevState,
+            balance: getAvailable(_rawBalance),
+            balanceLoading: false
+          }));
+          return;
+        });
+      }
+      // query deposit balance
+      if (_actionType === ActionType.Withdraw) {
         setState((prevState) => ({
           ...prevState,
-          balance: getAvailable(_rawBalance),
-          balanceLoading: false,
-        }))
+          userSupplyBalance: Big(data.userSupply).toFixed(data.underlyingToken?.decimals || data.decimals, 0),
+          balanceLoading: false
+        }));
         return;
-      })
-    }
-    if (actionText === 'Withdraw') {
-      setState((prevState) => ({
-        ...prevState,
-        balance: Big(data.userSupply).toFixed(6, 0),
-        balanceLoading: false,
-      }));
-      return;
-    }
-    if (actionText === 'Borrow') {
-      const borrowAvailable = Big(data.totalCollateralUsd)
-        .minus(data.userTotalBorrowUsd)
-        .div(data.underlyingPrice || 1);
-      setState((prevState) => ({
-        ...prevState,
-        balance: borrowAvailable.gt(0) ? Big(borrowAvailable).toString() : '0.00',
-        balanceLoading: false,
-      }));
-      return;
-    }
-  }, [account, params, getAvailable, provider]);
-
-
-  useEffect(() => {
-    console.log('-------------------获取余额');
-    // if (params && account !== params.address || actionText !== actionTextRef.current) {
-      let borrowLimit = '' as any;
-      const _borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd);
-      let buttonClickable = false;
-      if (actionText === 'Enable as Collateral') {
-        borrowLimit = _borrowLimit.add(
-          Big(data.loanToValue / 100)
-            .mul(data.userSupply || 0)
-            .mul(data.underlyingPrice),
-        );
-        buttonClickable = true;
       }
-      if (actionText === 'Disable as Collateral') {
-        borrowLimit = _borrowLimit.minus(
-          Big(data.loanToValue / 100)
-            .mul(data.userSupply || 0)
-            .mul(data.underlyingPrice),
-        );
-        buttonClickable = Big(data.userTotalBorrowUsd).eq(0) ? true : !borrowLimit.lt(0);
-      }
-      setState((prevState) => ({
-        ...prevState,
-        borrowLimit: borrowLimit ? (!borrowLimit.gt(0) ? '0.00' : borrowLimit.toFixed(2)) : '',
-        amount: '',
-        buttonClickable,
-        processValue: 0,
-        borrowBalance: '',
-      }));
-      getBalance();
-    // }
-  }, [params, actionText, provider, account, getBalance]);
-
-  useEffect(() => {
-    setUpdateHandler(Date.now());
-  }, [params, state.amount, account]);
-
-  const formatBorrowLimit = (digits: any, round: any) => {
-    if (data.config.name === 'Ionic') {
-      const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(Big(data.COLLATERAL_FACTOR));
-
-      const _borrowLimit = Big(data.totalCollateralUsd)
-        .minus(currentTokenCollateralUSD)
-        .div(1.07)
-        .minus(Big(data.userTotalBorrowUsd));
-      return _borrowLimit.lte(0) ? 0 : _borrowLimit.toFixed(6);
-    } else {
-      if (Big(data.totalCollateralUsd).gt(data.userTotalBorrowUsd)) {
-        return Big(data.totalCollateralUsd)
+      // query borrow available
+      if (_actionType === ActionType.Borrow) {
+        const borrowAvailable = Big(data.totalCollateralUsd)
           .minus(data.userTotalBorrowUsd)
-          .toFixed(digits || 2, round || 1);
+          .div(data.underlyingPrice || 1);
+        setState((prevState) => ({
+          ...prevState,
+          userAvailableBorrow: borrowAvailable.gt(0) ? Big(borrowAvailable).toString() : '0.00',
+          balanceLoading: false
+        }));
+        return;
       }
-      return '0.00';
+    },
+    [account, params, getAvailable, provider, isUnderlying, data]
+  );
+
+  const currentBalance = useMemo(() => {
+    let _balance = state.balance;
+    if (actionText === ActionType.Borrow) {
+      _balance = state.userAvailableBorrow;
     }
+    if (actionText === ActionType.Withdraw) {
+      _balance = state.userSupplyBalance;
+    }
+    return _balance;
+  }, [state.balance, state.userAvailableBorrow, state.userSupplyBalance, actionText]);
+  //#endregion
+
+  const balanceFormatter = (_balance?: string) => {
+    if (!_balance) return '-';
+    if (Big(_balance).eq(0)) return '0';
+    if (Big(_balance).lt(0.0001)) return '<0.0001';
+    return Big(_balance).toFixed(4, 0);
   };
 
   const formatBalance = () => {
     if (state.balanceLoading) return 'Loading';
-    if (!state.balance) return '-';
-    if (Big(state.balance).eq(0)) return '0';
-    if (Big(state.balance).lt(0.0001)) return '<0.0001';
-    return Big(state.balance).toFixed(4, 0);
+    return balanceFormatter(currentBalance);
   };
+
   const handleAmountChange = (_amount: any) => {
     const amount = _amount.replace(/\s+/g, '');
     if (isNaN(Number(amount))) return;
@@ -258,112 +227,150 @@ const LendingAction = (props: IProps) => {
     if (isZero) {
       setState((prevState) => ({
         ...prevState,
-        amount,
-        buttonClickable: false,
-        borrowLimit: '',
-        borrowLimitUsed: '',
-        borrowBalance: '',
-        isEmpty: Number(amount) === 0 && amount !== '',
-        isOverSize: false,
-        isBigerThanBalance: false,
+        amount
       }));
       return;
     }
 
-    const precent = !Big(state.balance || 0).eq(0) ? Big(amount).div(state.balance).mul(100) : Big(0);
+    const precent = !Big(currentBalance || 0).eq(0) ? Big(amount).div(currentBalance).mul(100) : Big(0);
 
-    const params = {
+    const states: any = {
       amount: amount,
       processValue: precent.gt(100) ? 100 : precent.toNumber(),
-    } as any;
-
-    let isOverSize = false;
-    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20, 0));
-    if (isSupply) {
-      if (actionText === 'Withdraw' && data.userMerberShip) {
-        params.borrowLimit = Big(data.totalCollateralUsd)
-          .minus(data.userTotalBorrowUsd)
-          .minus(value.mul(data.loanToValue / 100));
-        isOverSize = Big(data.userTotalBorrowUsd).eq(0)
-          ? false
-          : Big(data.totalCollateralUsd || 0)
-            .minus(value.mul(data.loanToValue / 100) || 0)
-            .lt(data.userTotalBorrowUsd || 0);
-      }
-      if (actionText === 'Deposit') {
-        params.borrowLimit = Big(data.totalCollateralUsd)
-          .minus(data.userTotalBorrowUsd)
-          .plus(value.mul(data.loanToValue / 100));
-      }
-    }
-    if (isBorrow) {
-      if (actionText === 'Borrow') {
-        params.borrowBalance = value.plus(data.userTotalBorrowUsd).toFixed(2);
-        isOverSize = value.gt(Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd));
-        params.borrowLimit = Big(data.totalCollateralUsd || 0)
-          .minus(data.userTotalBorrowUsd || 0)
-          .minus(value || 0);
-      }
-      if (actionText === 'Repay') {
-        params.borrowBalance = Big(data.userTotalBorrowUsd).minus(value);
-        params.borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd).add(value);
-        isOverSize = value.gt(data.userTotalBorrowUsd);
-      }
-    }
-    if (params.borrowLimit) {
-      if (params.borrowLimit.lt(0)) {
-        params.borrowLimit = '0.00';
-      } else {
-        params.borrowLimit = params.borrowLimit.toFixed();
-      }
-    }
-    params.isBigerThanBalance = Big(amount).gt(state.balance);
-    params.buttonClickable = !isOverSize && !params.isBigerThanBalance;
-    params.isOverSize = isOverSize;
-    params.isEmpty = false;
+      isEmpty: false
+    };
     setState((prevState) => ({
       ...prevState,
-      ...params,
+      ...states
     }));
 
     state.debouncedGetTrade?.run();
   };
 
-
-  if (!data) return '';
-
-  const onTabChange = (_key: string) => {
+  const onTabChange = (_key: ActionType) => {
     if (_key === actionText) {
       return;
     }
     setActionText(_key);
-  }
+  };
+
+  useEffect(() => {
+    const isZero = Big(state.amount || 0).eq(0);
+    if (isZero) {
+      setState((prevState) => ({
+        ...prevState,
+        buttonClickable: false,
+        borrowLimit: '',
+        borrowLimitUsed: '',
+        borrowBalance: '',
+        isEmpty: Number(state.amount) === 0 && state.amount !== '',
+        isOverSize: false,
+        isBigerThanBalance: false
+      }));
+      return;
+    }
+
+    const states: any = {};
+    let isOverSize = false;
+    const value = Big(
+      Big(state.amount || 0)
+        .mul(data.underlyingPrice)
+        .toFixed(20, 0)
+    );
+    if (isSupply) {
+      if (actionText === ActionType.Withdraw && data.userMerberShip) {
+        states.borrowLimit = Big(data.totalCollateralUsd)
+          .minus(data.userTotalBorrowUsd)
+          .minus(value.mul(data.loanToValue / 100));
+        isOverSize = Big(data.userTotalBorrowUsd).eq(0)
+          ? false
+          : Big(data.totalCollateralUsd || 0)
+              .minus(value.mul(data.loanToValue / 100) || 0)
+              .lt(data.userTotalBorrowUsd || 0);
+      }
+      if (actionText === ActionType.Supply) {
+        states.borrowLimit = Big(data.totalCollateralUsd)
+          .minus(data.userTotalBorrowUsd)
+          .plus(value.mul(data.loanToValue / 100));
+      }
+    }
+    if (isBorrow) {
+      if (actionText === ActionType.Borrow) {
+        states.borrowBalance = value.plus(data.userTotalBorrowUsd).toFixed(2);
+        isOverSize = value.gt(Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd));
+        states.borrowLimit = Big(data.totalCollateralUsd || 0)
+          .minus(data.userTotalBorrowUsd || 0)
+          .minus(value || 0);
+      }
+      if (actionText === ActionType.Repay) {
+        states.borrowBalance = Big(data.userTotalBorrowUsd).minus(value);
+        states.borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd).add(value);
+        isOverSize = value.gt(data.userTotalBorrowUsd);
+      }
+    }
+    if (states.borrowLimit) {
+      if (states.borrowLimit.lt(0)) {
+        states.borrowLimit = '0.00';
+      } else {
+        states.borrowLimit = states.borrowLimit.toFixed();
+      }
+    }
+    states.isBigerThanBalance = Big(state.amount || 0).gt(currentBalance);
+    states.buttonClickable = !isOverSize && !states.isBigerThanBalance;
+    states.isOverSize = isOverSize;
+    setState((prevState) => ({
+      ...prevState,
+      ...states
+    }));
+  }, [state.amount, isSupply, isBorrow, data, actionText, currentBalance]);
+
+  useEffect(() => {
+    setState((prevState) => ({
+      ...prevState,
+      borrowLimit: '',
+      amount: '',
+      buttonClickable: false,
+      processValue: 0,
+      borrowBalance: ''
+    }));
+  }, [actionText]);
+
+  useEffect(() => {
+    setUpdateHandler(Date.now());
+  }, [params, state.amount, account]);
+
+  useEffect(() => {
+    tabList.forEach((tab) => {
+      getBalance(tab.key);
+    });
+  }, [tabList, account, getBalance, params, provider, isUnderlying, data, updateBalance]);
+
+  useEffect(() => {
+    setActionText(tabList[0].key);
+  }, [tabList]);
+
+  if (!data) return '';
 
   return (
     <>
       <Expand
         currentTab={actionText}
-        tabList={TabList}
+        tabList={tabList}
         onTabChange={onTabChange}
-        info={{
-          limit: `$${Big(state.borrowLimit || 0).toFixed(2)}`,
-          supply: `${formatBalance()} ${tokenSymbol}`,
-          borrow: `${formatBalance()} ${tokenSymbol}`,
-        }}
+        info={
+          isHideInfo
+            ? false
+            : {
+                limit: `$${formatBorrowLimit(2, '', data)}`,
+                supply: `${balanceFormatter(state.balance)} ${tokenSymbol}`,
+                borrow: `${balanceFormatter(state.userAvailableBorrow)} ${tokenSymbol}`
+              }
+        }
       >
         <div style={{ width: '500px' }}>
           <TopBox className={isForCollateral ? 'none-border' : ''}>
             {!isForCollateral && (
               <>
-                {/*{source !== 'dapp' && (*/}
-                {/*  <AssetWrapper>*/}
-                {/*    <AssetLabel>Asset from</AssetLabel>*/}
-                {/*    <Dapp>*/}
-                {/*      <DappIcon src={data.dappIcon} />*/}
-                {/*      <DappName>{data.dappName}</DappName>*/}
-                {/*    </Dapp>*/}
-                {/*  </AssetWrapper>*/}
-                {/*)}*/}
                 <BoxItem>
                   <InputMain>
                     <Input
@@ -373,7 +380,7 @@ const LendingAction = (props: IProps) => {
                         handleAmountChange(ev.target.value.replace(/\s+/g, ''));
                         setState((prevState) => ({
                           ...prevState,
-                          isMax: Big(ev.target.value.replace(/\s+/g, '') || 0).eq(state.balance || 0),
+                          isMax: Big(ev.target.value.replace(/\s+/g, '') || 0).eq(currentBalance || 0)
                         }));
                       }}
                       placeholder="0.0"
@@ -389,14 +396,14 @@ const LendingAction = (props: IProps) => {
                     </BalanceValue>
                     <BalanceWrapper
                       onClick={() => {
-                        if (state.balanceLoading || isNaN(Number(state.balance))) return;
-                        handleAmountChange(state.balance);
-                        const balanceNumber = Big(state.balance || 0);
+                        if (state.balanceLoading || isNaN(Number(currentBalance))) return;
+                        handleAmountChange(currentBalance);
+                        const balanceNumber = Big(currentBalance || 0);
                         const balanceStr = Big(balanceNumber).toFixed(18, 0);
                         setState((prevState) => ({
                           ...prevState,
                           amount: Big(balanceStr).eq(0) ? '0' : balanceStr.replace(/0+$/, '').replace(/\.$/, ''),
-                          isMax: true,
+                          isMax: true
                         }));
                       }}
                     >
@@ -409,26 +416,36 @@ const LendingAction = (props: IProps) => {
                   <LendingProcess
                     value={state.processValue}
                     onChange={(value) => {
+                      let currencyDecimals = data.decimals;
+                      if (isUnderlying && data.underlyingToken) {
+                        currencyDecimals = data.underlyingToken.decimals;
+                      }
+                      const _amountFormatter = (_amount: string) => {
+                        return _amount.replace(/[.]?0*$/, '');
+                      };
                       // 100% use balance directly
                       if (value === 100) {
-                        const balanceNumber = Big(state.balance || 0);
+                        const balanceNumber = Big(currentBalance || 0);
                         const balanceStr = Big(balanceNumber).toFixed(12);
-                        const _amount = Big(balanceStr).eq(0) ? '0' : Big(balanceStr).toString();
+                        const _amount = Big(balanceStr).eq(0)
+                          ? '0'
+                          : _amountFormatter(Big(balanceStr).toFixed(currencyDecimals));
                         setState((prevState) => ({
                           ...prevState,
                           processValue: value,
-                          amount: _amount,
+                          amount: _amount
                         }));
                         handleAmountChange(_amount);
                         return;
                       }
-                      const amount = Big(state.balance)
+                      let amount = Big(currentBalance)
                         .mul(value / 100)
-                        .toFixed(4, 0);
+                        .toFixed(currencyDecimals, 0);
+                      amount = _amountFormatter(amount);
                       setState((prevState) => ({
                         ...prevState,
                         processValue: value,
-                        amount,
+                        amount
                       }));
                       handleAmountChange(amount);
                     }}
@@ -438,8 +455,8 @@ const LendingAction = (props: IProps) => {
             )}
           </TopBox>
           <BottomBox>
-            <BoxItem className='no-bg'>
-              {actionText === 'Deposit' && (
+            <BoxItem className="no-bg">
+              {actionText === ActionType.Supply && (
                 <>
                   <Row>
                     <Label>Collateral factor</Label>
@@ -450,7 +467,7 @@ const LendingAction = (props: IProps) => {
               <Row className={isForCollateral ? 'justfiy-start' : ''}>
                 <Label>Borrow Limit</Label>
                 <ValuesWrapper>
-                  <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2, '')}</Value>
+                  <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2, '', data)}</Value>
                   {!!state.borrowLimit && (
                     <>
                       <LendingArrowIcon color={'#979ABE'} className="mx_5" />
@@ -459,12 +476,13 @@ const LendingAction = (props: IProps) => {
                   )}
                 </ValuesWrapper>
               </Row>
-              {actionText === 'Repay' && (
+              {actionText === ActionType.Repay && (
                 <Row>
                   <Label>Remaining Debt</Label>
                   <ValuesWrapper>
-                    <Value
-                      className={!!state.borrowBalance ? 'range' : ''}>${Big(data.userTotalBorrowUsd).toFixed(2)}</Value>
+                    <Value className={!!state.borrowBalance ? 'range' : ''}>
+                      ${Big(data.userTotalBorrowUsd).toFixed(2)}
+                    </Value>
                     {!!(isBorrow && state.borrowBalance) && (
                       <>
                         <LendingArrowIcon color={'#979ABE'} className="mx_5" />
@@ -478,7 +496,7 @@ const LendingAction = (props: IProps) => {
             <LendingDialogButton
               disabled={!state.buttonClickable}
               actionText={actionText}
-              amount={state.isMax ? state.balance : state.amount}
+              amount={state.isMax ? currentBalance : state.amount}
               data={data}
               addAction={props.addAction}
               toast={props.toast}
@@ -491,7 +509,7 @@ const LendingAction = (props: IProps) => {
                 if (!trade.gas) state.getTrade?.();
               }}
               onSuccess={() => {
-                onSuccess?.();
+                onSuccess?.(data);
               }}
             />
           </BottomBox>
@@ -507,14 +525,14 @@ const LendingAction = (props: IProps) => {
             amount: state.amount,
             account,
             onLoad: (_data: any) => {
-              console.log("%cDialog-handler-onLoad--", 'background:red;color:white;', _data);
-              setTrade(_data)
+              console.log('%cDialog-handler-onLoad--', 'background:red;color:white;', _data);
+              setTrade(_data);
               setState((prevState) => ({
                 ...prevState,
                 ..._data,
-                loading: false,
+                loading: false
               }));
-            },
+            }
           }}
         />
       )}

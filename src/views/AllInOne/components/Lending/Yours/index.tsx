@@ -1,124 +1,159 @@
+import { ActionType } from '@/views/AllInOne/components/Lending/LendingDialog/Action';
+
 import LendingRewardsTable from '../LendingRewardsTable';
 import LendingTable from '../LendingTable';
 import LendingTotal from '../LendingTotal';
 import useYoursData from './hooks/useYoursData';
-import { Label, Right, Title, Value, Yours, YoursTableWrapper } from './styles';
+import { Label, Title, TitleItem, Value, Yours, YoursTableWrapper } from './styles';
 
 interface IProps {
   markets: any;
   dapps: any;
   toast: any;
   currentDapp: string;
-  onButtonClick: any;
   dappsConfig: any;
   onSuccess: any;
-  account: any
+  account: any;
+  tabConfig: any;
+  addAction: any;
+  chainId: any;
+  updateBalance?: number;
+
+  onButtonClick?(row: any, button?: string): void;
 }
 
 const YoursComponents = (props: IProps) => {
-  const { markets, dapps, toast, currentDapp, account } = props;
-  const { 
-    userTotalSupplyUsd,
-    userTotalBorrowUsd,
-    userBorrowLimit,
-    supplies,
-    borrows,
-    rewards,
-    netApy,
-  } = useYoursData(currentDapp, dapps, markets);
+  const {
+    markets,
+    dapps,
+    toast,
+    currentDapp,
+    account,
+    tabConfig,
+    addAction,
+    chainId,
+    onSuccess,
+    updateBalance,
+    onButtonClick
+  } = props;
+
+  const { userTotalSupplyUsd, userTotalBorrowUsd, userBorrowLimit, supplies, borrows, rewards, netApy } = useYoursData(
+    currentDapp,
+    dapps,
+    markets
+  );
 
   return (
     <>
       <Yours>
         <YoursTableWrapper>
           <Title>
-            <div>
-              <Label className="yours-table-title">You Deposit</Label>
+            <TitleItem>
+              <Label className="yours-table-title">Supply</Label>
               <Value className="supply-color">
                 <LendingTotal total={userTotalSupplyUsd} digit={2} unit={'$'} />
               </Value>
-            </div>
-            <Right>
+            </TitleItem>
+            <TitleItem>
               <Label>Net APY</Label>
               <Value>{currentDapp === 'All' ? '-' : netApy}%</Value>
-            </Right>
+            </TitleItem>
           </Title>
           <LendingTable
             columns={[
               {
                 type: 'name',
-                width: '27%',
-                name: 'Deposit Asset',
+                width: '20%',
+                name: 'Asset'
               },
-              { type: 'apy', width: '23%', name: 'APY' },
+              {
+                type: 'market',
+                width: '20%',
+                name: 'Market'
+              },
+              { type: 'apy', width: '15%', name: 'APY' },
               { type: 'collateral', width: '15%', name: 'Collateral' },
               {
                 type: 'total',
                 key: 'balance',
                 width: '20%',
-                name: 'Balance',
+                name: 'Balance'
               },
-              { type: 'button', width: '15%' },
-            ]}
-            buttons={[
-              {
-                text: 'Withdraw',
-              },
+              { type: 'arrow', width: '10%' }
             ]}
             type={'deposit'}
-            onButtonClick={props.onButtonClick}
             data={supplies || []}
             emptyTips={'You supplied assets will appear here'}
+            markets={markets}
+            dapps={dapps}
+            tabConfig={tabConfig}
+            addAction={addAction}
+            onButtonClick={onButtonClick}
+            toast={toast}
+            account={account}
+            chainId={chainId}
+            onSuccess={onSuccess}
+            tabs={[ActionType.Withdraw]}
+            updateBalance={updateBalance}
           />
         </YoursTableWrapper>
         <YoursTableWrapper>
           <Title>
-            <div>
+            <TitleItem>
               <Label className="yours-table-title">Borrow</Label>
               <Value className="borrow-color">
                 <LendingTotal total={userTotalBorrowUsd} digit={2} unit={'$'} />
               </Value>
-            </div>
-            <Right>
+            </TitleItem>
+            <TitleItem>
               <Label>Your Borrow Limit</Label>
               <Value>{userBorrowLimit}%</Value>
-            </Right>
+            </TitleItem>
           </Title>
           <LendingTable
             columns={[
-                {
-                    type: "name",
-                    width: "30%",
-                    name: "Borrowed Asset",
-                  },
-                  { type: "apy", width: "30%", name: "APY/Accrued" },
-                  {
-                    type: "total",
-                    key: "borrowed",
-                    width: "20%",
-                    name: "Borrowed",
-                  },
-                  { type: "button", width: "20%" },
-            ]}
-            buttons={[
               {
-                text: 'Repay',
+                type: 'name',
+                width: '20%',
+                name: 'Asset'
               },
+              {
+                type: 'market',
+                width: '20%',
+                name: 'Market'
+              },
+              { type: 'apy', width: '15%', name: 'APY' },
+              {
+                type: 'total',
+                key: 'borrowed',
+                width: '20%',
+                name: 'Borrowed'
+              },
+              { type: 'arrow', width: '10%' }
             ]}
             type={'borrow'}
-            onButtonClick={props.onButtonClick}
             data={borrows || []}
             emptyTips={'You borrowed assets will appear here'}
+            markets={markets}
+            dapps={dapps}
+            tabConfig={tabConfig}
+            addAction={addAction}
+            toast={toast}
+            account={account}
+            chainId={chainId}
+            onSuccess={onSuccess}
+            tabs={[ActionType.Repay]}
+            updateBalance={updateBalance}
           />
         </YoursTableWrapper>
       </Yours>
-      <LendingRewardsTable 
+      <LendingRewardsTable
         data={rewards || []}
         dapps={props.dappsConfig}
         onSuccess={props.onSuccess}
         supplies={supplies}
-        toast={toast}   
-        account={account}   
+        toast={toast}
+        account={account}
       />
     </>
   );

@@ -64,11 +64,8 @@ const LendingDialogButton = (props: IProps) => {
     loading: estimating,
     gas,
     onApprovedSuccess,
-    account,
+    account
   } = props;
-
-
-  console.log('button', props);
 
   const tokenSymbol = data.underlyingToken.symbol;
   const { provider } = useAccount();
@@ -81,7 +78,7 @@ const LendingDialogButton = (props: IProps) => {
     checking: true,
     loading: false,
     gasBalance: '',
-    gas: '',
+    gas: ''
   });
 
   useEffect(() => {
@@ -91,25 +88,19 @@ const LendingDialogButton = (props: IProps) => {
       isApproved: false,
       isGasEnough: true,
       pending: false,
-      checking: true,
+      checking: true
     }));
   }, [amount]);
 
   useEffect(() => {
     if (!account || !gas) return;
     provider.getBalance(account).then((rawBalance: any) => {
-      console.log('rawBalance: ', rawBalance);
-      
       const gasBalance = rawBalance.toString();
-      console.log(!Big(gasBalance).lt(gas.toString()), '!Big(gasBalance).lt(gas.toString())');
-
-      console.log(ethers.utils.formatUnits(gas, 18), gasBalance);
-      
       setState((prevState) => ({
         ...prevState,
         gasBalance,
         isGasEnough: !Big(gasBalance).lt(gas.toString()),
-        gas: ethers.utils.formatUnits(gas, 18),
+        gas: ethers.utils.formatUnits(gas, 18)
       }));
     });
   }, [account, gas]);
@@ -117,11 +108,11 @@ const LendingDialogButton = (props: IProps) => {
   const handleButtonClick = () => {
     const isEnter = actionText === 'Enable as Collateral';
     const toastId = toast?.loading({
-      title: `Submitting ${tokenSymbol} ${isEnter ? 'enable' : 'disable'} as collateral request...`,
+      title: `Submitting ${tokenSymbol} ${isEnter ? 'enable' : 'disable'} as collateral request...`
     });
     setState((prevState) => ({
       ...prevState,
-      loading: true,
+      loading: true
     }));
 
     provider
@@ -134,27 +125,27 @@ const LendingDialogButton = (props: IProps) => {
             toast?.dismiss(toastId);
             setState((prevState) => ({
               ...prevState,
-              loading: false,
+              loading: false
             }));
             if (status !== 1) throw new Error('');
             toast?.success({
               title: `${tokenSymbol} ${isEnter ? 'enable' : 'disable'} as collateral request successed!`,
               tx: transactionHash,
-              chainId,
+              chainId
             });
             onSuccess?.(data.dapp);
           })
           .catch(() => {
             setState((prevState) => ({
               ...prevState,
-              loading: false,
+              loading: false
             }));
           });
       })
       .catch((err: any) => {
         setState((prevState) => ({
           ...prevState,
-          loading: false,
+          loading: false
         }));
         toast?.dismiss(toastId);
         toast?.fail({
@@ -162,7 +153,7 @@ const LendingDialogButton = (props: IProps) => {
             ? 'User rejected transaction'
             : `${tokenSymbol} ${isEnter ? 'enable' : 'disable'} as collateral request failed!`,
           tx: err ? err.hash : '',
-          chainId,
+          chainId
         });
       });
   };
@@ -184,7 +175,7 @@ const LendingDialogButton = (props: IProps) => {
       setState((prevState) => ({
         ...prevState,
         isApproved: !Big(ethers.utils.formatUnits(allowanceRaw._hex, data.underlyingToken.decimals)).lt(amount || '0'),
-        checking: false,
+        checking: false
       }));
     });
   };
@@ -230,11 +221,11 @@ const LendingDialogButton = (props: IProps) => {
   if (!state.isApproved) {
     const handleApprove = () => {
       const toastId = toast?.loading({
-        title: `Approve ${tokenSymbol}`,
+        title: `Approve ${tokenSymbol}`
       });
       setState((prevState) => ({
         ...prevState,
-        approving: true,
+        approving: true
       }));
       const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
       TokenContract.approve(spender, ethers.utils.parseUnits(amount, data.underlyingToken.decimals))
@@ -247,13 +238,13 @@ const LendingDialogButton = (props: IProps) => {
               setState((prevState) => ({
                 ...prevState,
                 isApproved: true,
-                approving: false,
+                approving: false
               }));
               toast?.success({
                 title: 'Approve Successfully!',
                 // text: `Approve ${Big(amount).toFixed(2)} ${tokenSymbol}`,
                 tx: transactionHash,
-                chainId,
+                chainId
               });
               onApprovedSuccess?.();
             })
@@ -261,7 +252,7 @@ const LendingDialogButton = (props: IProps) => {
               setState((prevState) => ({
                 ...prevState,
                 isApproved: false,
-                approving: false,
+                approving: false
               }));
             });
         })
@@ -269,12 +260,12 @@ const LendingDialogButton = (props: IProps) => {
           setState((prevState) => ({
             ...prevState,
             isApproved: false,
-            approving: false,
+            approving: false
           }));
           toast?.dismiss(toastId);
           toast?.fail({
             title: 'Approve Failed!',
-            text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null,
+            text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
           });
         });
     };
@@ -287,11 +278,11 @@ const LendingDialogButton = (props: IProps) => {
 
   const handleSubmit = () => {
     const toastId = toast?.loading({
-      title: `Submitting ${tokenSymbol} ${actionText.toLowerCase()} request...`,
+      title: `Submitting ${tokenSymbol} ${actionText.toLowerCase()} request...`
     });
     setState((prevState) => ({
       ...prevState,
-      pending: true,
+      pending: true
     }));
 
     provider
@@ -304,7 +295,7 @@ const LendingDialogButton = (props: IProps) => {
             toast?.dismiss(toastId);
             setState((prevState) => ({
               ...prevState,
-              pending: false,
+              pending: false
             }));
             addAction?.({
               type: 'Lending',
@@ -314,34 +305,34 @@ const LendingDialogButton = (props: IProps) => {
               template: data.dappName || data.dapp,
               add: false,
               status,
-              transactionHash,
+              transactionHash
             });
             if (status === 1) {
               onSuccess?.(data.dapp);
               toast?.success({
                 title: `${tokenSymbol} ${actionText.toLowerCase()} request successed!`,
                 tx: transactionHash,
-                chainId,
+                chainId
               });
             } else {
               toast?.fail({
                 title: `${tokenSymbol} ${actionText.toLowerCase()} request failed!`,
                 tx: transactionHash,
-                chainId,
+                chainId
               });
             }
           })
           .catch(() => {
             setState((prevState) => ({
               ...prevState,
-              pending: false,
+              pending: false
             }));
           });
       })
       .catch((err: any) => {
         setState((prevState) => ({
           ...prevState,
-          pending: false,
+          pending: false
         }));
         console.log('err', err);
         toast?.dismiss(toastId);
@@ -350,13 +341,11 @@ const LendingDialogButton = (props: IProps) => {
             ? 'User rejected transaction'
             : `${tokenSymbol} ${actionText.toLowerCase()} request failed!`,
           tx: err ? err.hash : '',
-          chainId,
+          chainId
         });
       });
   };
-  console.log(state.pending, 'state.pending');
-  console.log(estimating, 'estimating');
-  
+
   return (
     <>
       <Button
@@ -368,6 +357,8 @@ const LendingDialogButton = (props: IProps) => {
           <LendingLoadingIcon size={16} />
         ) : !state.isGasEnough ? (
           `Not enough gas(${Big(state.gas || 0).toFixed(2)}) needed`
+        ) : actionText === 'Deposit' ? (
+          'Supply'
         ) : (
           actionText
         )}
