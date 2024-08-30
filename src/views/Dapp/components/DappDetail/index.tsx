@@ -1,16 +1,18 @@
 import { useDebounceFn } from 'ahooks';
 import { useAnimate, useInView } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import {
   StyledContainer,
-StyledContainerInner,
+  StyledContainerInner,
   StyledRecordContainer,
   StyledRelatedContainer,
-  StyledRelatedOdyssey, } from '@/views/Dapp/components/DappDetail/styles';
+  StyledRelatedOdyssey,
+} from '@/views/Dapp/components/DappDetail/styles';
+import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
 import DetailTabs from './DetailTabs/index';
 import Medal from './Medal';
@@ -30,10 +32,14 @@ const DappDetail = (props: Props) => {
     total_execution,
     participants,
     participants_change_percent,
+    route,
+    dapp_category,
+    id,
   } = props;
 
   const [ref, animate] = useAnimate();
   const isInView = useInView(ref, { once: true });
+  const { categories: allCaregories } = useCategoryDappList();
 
   const summaryList = [
     {
@@ -65,6 +71,20 @@ const DappDetail = (props: Props) => {
     });
   }, { wait: 300 });
 
+  const categories = useMemo(() => {
+    const _categories = dapp_category || [];
+    // fix#DAP-862
+    if (['dapp/kim-exchange', 'dapp/thruster-finance'].includes(route) && allCaregories) {
+      const liquidity = allCaregories[4];
+      liquidity && _categories.push({
+        category_id: liquidity.id,
+        category_name: liquidity.name,
+        dapp_id: id,
+      });
+    }
+    return _categories;
+  }, [dapp_category, route, allCaregories, id]);
+
   useEffect(() => {
     if (!ref.current) return;
     if (!isInView) {
@@ -87,7 +107,7 @@ const DappDetail = (props: Props) => {
           name={props?.name ?? ''}
           logo={props?.logo ?? ''}
           networks={props?.dapp_network ?? []}
-          categories={props?.dapp_category ?? []}
+          categories={categories}
           summaries={summaryList}
         />
         <StyledRelatedContainer>
@@ -122,6 +142,7 @@ export interface Props {
   participants_change_percent: string;
   name: string;
   logo: string;
+  route: string;
   id: number;
   dapp_network: any;
   dapp_category: any;
