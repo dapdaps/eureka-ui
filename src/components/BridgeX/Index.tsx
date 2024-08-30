@@ -136,6 +136,7 @@ export default function BridgeX({
     getChainScan,
     addAction,
     onSuccess,
+    style,
 }: any) {
     const { fail, success } = useToast()
     const [updater, setUpdater] = useState(1)
@@ -405,7 +406,7 @@ export default function BridgeX({
         }
     }
 
-    return <BridgePanel>
+    return <BridgePanel style={style}>
         <Header>
             <BridgeIcon>
                 <img src={icon} />

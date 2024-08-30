@@ -1,6 +1,7 @@
 import { lazy,memo, Suspense } from 'react';
 
 import DappBack from '@/components/PageBack';
+import useScrollMore from '@/hooks/useScrollMore';
 import DappFallback from '@/views/Dapp/components/Fallback';
 
 import DappDetailScroll from './components/DappDetail/Scroll';
@@ -19,6 +20,8 @@ const DappDetail = lazy(() => import('./components/DappDetail'));
 const Dapp = (props: any) => {
   const { dapp } = props;
 
+  const { viewHeight } = useScrollMore({ gap: 42 });
+
   return (
     <StyledPage>
       <DappBack
@@ -29,7 +32,7 @@ const Dapp = (props: any) => {
           margin: '0 auto',
         }}
       />
-      <StyledDAppContent>
+      <StyledDAppContent style={{ minHeight: viewHeight }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '11px', justifyContent: 'center' }}>
           <img src={dapp.logo} style={{ width: '32px', height: '31px' }} />
           <DappName>{dapp.name}</DappName>
