@@ -361,6 +361,15 @@ export const StyledAirdropArrow = styled.div`
   opacity: 0.8;
   transform: rotate(-90deg);
 `;
+export const StyledAirdropReload = styled.div`
+  color: #ffffff;
+  opacity: 0.8;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+`;
 
 
 export const StyledTabIcon = styled.div<{url?: string}>`

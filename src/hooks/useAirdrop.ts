@@ -89,6 +89,7 @@ export function useAirdrop(props: Props) {
     data,
     loading,
     reportAdditionResult,
+    getData,
   };
 }
 
