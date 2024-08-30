@@ -12,6 +12,7 @@ import Loading from '@/components/Icons/Loading';
 import DappBack from '@/components/PageBack';
 import chainCofig from '@/config/chains';
 import useDappInfo from '@/hooks/useDappInfo';
+import useScrollMore from '@/hooks/useScrollMore';
 import { useUserStore } from '@/stores/user';
 import {
   StyledContainer,
@@ -559,6 +560,7 @@ export default function LaunchpadHomePage() {
   const { user, queryUser } = useUser()
   const dappPathname = router.pathname ?? '';
   const { dapp } = useDappInfo(dappPathname.slice(1));
+  const { viewHeight } = useScrollMore({ gap: 0 });
 
   const [checkedPoolAddress, setCheckedPoolAddress] = useState('')
   const [poolToken, setPoolToken] = useState<Token>()
@@ -666,313 +668,314 @@ export default function LaunchpadHomePage() {
     userStore.address && queryUser()
   }, [userStore.address])
   return (
-    <StyledContainer style={{ width: 1124, margin: '0 auto', paddingTop: 138, position: 'relative' }}>
-      <StyledContainer style={{ position: 'absolute', left: 0, top: 30 }}>
-        <DappBack defaultPath="/alldapps" />
-      </StyledContainer>
-      <StyledFjordSvgContainer>
-        {FjordSvg}
-      </StyledFjordSvgContainer>
-      <StyledYoursContainer>
-        <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>You  Participated</StyledFont>
-        <StyledYours onClick={() => {
-          router.push("/stake/fjord/yours")
-        }}>
-          <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
-            <StyledFont color='#979ABE' fontSize='18px' fontWeight='500'>Your Total Cost</StyledFont>
-            <StyledFont color='#FFF' fontSize='26px' fontWeight='500'>{formatValueDecimal(user?.total_cost ?? 0, '$', 4)}</StyledFont>
-          </StyledFlex>
-          <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
-            <StyledFont color='#979ABE' fontSize='18px' fontWeight='500'>Your Avg. Rate of Return</StyledFont>
-            <StyledFont color='#FFF' fontSize='26px' fontWeight='500'>{Big(user?.rate_return_avg ?? 0).toFixed(0)}%</StyledFont>
-          </StyledFlex>
-          {
-            user?.lbps?.length > 0 && (
-              <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
-                <StyledFont color='#979ABE' fontSize='18px' fontWeight='500'>In Progress</StyledFont>
-                <StyledFlex>
-                  {
-                    user?.lbps?.map((lbp: any, index: number) => (
-                      <StyledLogoContainer key={index} style={{ marginLeft: index > 0 ? -9 : 0 }}>
-                        <StyledLogo src={lbp.logo} />
-                      </StyledLogoContainer>
-                    )) ?? (<></>)
-                  }
-                </StyledFlex>
-              </StyledFlex>
-            )
-          }
-          <StyledFlex>
-            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
-              <path d="M6.52391 4.21913C7.02432 4.61945 7.02432 5.38054 6.52391 5.78087L1.6247 9.70024C0.969933 10.2241 -4.70242e-07 9.75788 -4.3359e-07 8.91937L-9.0947e-08 1.08062C-5.42947e-08 0.242118 0.969932 -0.224055 1.62469 0.299755L6.52391 4.21913Z" fill="#979ABE" />
-            </svg>
-          </StyledFlex>
-        </StyledYours>
-      </StyledYoursContainer>
-      <StyledProjectContainer>
-        <StyledFlex justifyContent='space-between'>
-          <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Upcoming & Ongoing</StyledFont>
-          <StyledFlex gap='15px'>
-            <ChainList
-              chainId={upcomingAndOngoingChainId}
-              setChainId={setUpcomingAndOngoingChainId}
-              poolsMapping={upcomingAndOngoingPoolsMapping}
-            />
-            <StyledPoolStatusContainer>
-              <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(0)}>Live</StyledPoolStatus>
-              <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(1)}>Upcoming</StyledPoolStatus>
-              <StyledPoolStatus className={poolStatusIndex === 2 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(2)}>All</StyledPoolStatus>
-            </StyledPoolStatusContainer>
-          </StyledFlex>
-        </StyledFlex>
-        <StyledFlex flexDirection='column' gap='30px'>
-          {loading ? (
-            <StyledLoadingWrapper $h="100px">
-              <Loading size={60} />
-            </StyledLoadingWrapper>
-          ) : (
-            upcomingAndOngoingPools && upcomingAndOngoingPools.length > 0 ? upcomingAndOngoingPools.map((pool: any, index: number) => (
-              <StyledProject key={index}>
-                <StyledProjectImageContainer>
-                  <StyledProjectSupportChain>
-                    <StyledChainImage src={chainCofig[pool?.chain_id]?.icon} />
-                    <span>{chainCofig[pool?.chain_id]?.chainName}</span>
-                  </StyledProjectSupportChain>
-                  <StyledProjectImage src={pool?.banner} />
-                </StyledProjectImageContainer>
-                <StyledContainer style={{ flex: 1, paddingTop: 16 }}>
-                  <StyledFlex alignItems='flex-start' gap='16px'>
-                    <StyledTokenImageContainer style={{ width: 60, height: 60 }}>
-                      <StyledTokenImage src={pool.logo} />
-                    </StyledTokenImageContainer>
-                    <StyledFlex flexDirection='column' alignItems='flex-start' gap='9px'>
-                      <StyledFont color='#FFF' fontSize='32px' fontWeight='600'>{pool.share_token_symbol}</StyledFont>
-                      <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{pool.share_token_name}</StyledFont>
-                    </StyledFlex>
-                  </StyledFlex>
-                  <StyledFlex justifyContent='space-between' style={{ marginTop: 106, marginBottom: 30 }}>
-                    <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
-                      <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Participants</StyledFont>
-                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.total_participants)}</StyledFont>
-                    </StyledFlex>
-                    <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
-                      <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
-                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</StyledFont>
-                    </StyledFlex>
-                    <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
-                      <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Price</StyledFont>
-                      <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</StyledFont>
-                    </StyledFlex>
-                    {
-                      pool?.share_token_name === 'RAGE' && (
-                        <StyledFlex flexDirection='column' alignItems='flex-start'>
-                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
-                          <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
-                        </StyledFlex>
-                      )
-                    }
-                  </StyledFlex>
+    <>
+      <StyledContainer style={{ width: 1124, margin: '0 auto', paddingTop: 138, position: 'relative', minHeight: viewHeight }}>
+        <StyledContainer style={{ position: 'absolute', left: 0, top: 30 }}>
+          <DappBack defaultPath="/alldapps" />
+        </StyledContainer>
+        <StyledFjordSvgContainer>
+          {FjordSvg}
+        </StyledFjordSvgContainer>
+        <StyledYoursContainer>
+          <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>You  Participated</StyledFont>
+          <StyledYours onClick={() => {
+            router.push("/stake/fjord/yours")
+          }}>
+            <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
+              <StyledFont color='#979ABE' fontSize='18px' fontWeight='500'>Your Total Cost</StyledFont>
+              <StyledFont color='#FFF' fontSize='26px' fontWeight='500'>{formatValueDecimal(user?.total_cost ?? 0, '$', 4)}</StyledFont>
+            </StyledFlex>
+            <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
+              <StyledFont color='#979ABE' fontSize='18px' fontWeight='500'>Your Avg. Rate of Return</StyledFont>
+              <StyledFont color='#FFF' fontSize='26px' fontWeight='500'>{Big(user?.rate_return_avg ?? 0).toFixed(0)}%</StyledFont>
+            </StyledFlex>
+            {
+              user?.lbps?.length > 0 && (
+                <StyledFlex flexDirection='column' alignItems='flex-start' gap="13px" style={{ flex: 1 }}>
+                  <StyledFont color='#979ABE' fontSize='18px' fontWeight='500'>In Progress</StyledFont>
                   <StyledFlex>
                     {
-                      pool?.share_token_name === 'RAGE' ? (
-                        <StyledFlex flexDirection='column' alignItems='flex-start'>
-                          <StyledSpecitalReward>
-                            <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Special Reward 🎁</StyledFont>
-                            <StyledSpecitalRewardTips>The first 100 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
-                          </StyledSpecitalReward>
-
-                          <StyledFlex gap='9px'>
-                            <StyledSpecitalReward>
-                              <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{Math.min(pool?.buy_part ?? 0, 100)}/100</StyledFont>
-                              <StyledSpecitalRewardTips style={{ bottom: -6, top: 'unset', right: '50%', transform: 'translate(50%, 100%)' }}>There are {Math.min(pool?.buy_part ?? 0, 100)} users got spcial reward currently</StyledSpecitalRewardTips>
-                            </StyledSpecitalReward>
-
-                            <StyledCircleSvg
-                              className={poolLoading ? 'loading' : ''}
-                              onClick={() => {
-                                !poolLoading && queryPool({
-                                  id: pool?.id
-                                })
-                              }}
-                            >
-                              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6.5712C2 4.05076 4.05347 2 6.59586 2C7.86245 2 9.00705 2.50825 9.8388 3.33211C9.85304 3.34622 9.8676 3.35981 9.88246 3.37289L8.95291 4.00183C8.7765 4.12118 8.68642 4.33284 8.7227 4.54271C8.75898 4.75258 8.91489 4.92171 9.12112 4.97492L11.9203 5.69712C12.0698 5.73569 12.2287 5.70864 12.3569 5.62277C12.4852 5.5369 12.5708 5.40038 12.5921 5.24748L12.9951 2.35867C13.0246 2.14675 12.9267 1.9373 12.7451 1.82413C12.5635 1.71097 12.3323 1.71532 12.1551 1.83522L11.4856 2.28823C11.4369 2.15032 11.3571 2.02099 11.2463 1.91117C10.0543 0.730553 8.40941 0 6.59586 0C2.95723 0 0 2.93787 0 6.5712C0 10.2045 2.95723 13.1424 6.59586 13.1424C9.29961 13.1424 11.6238 11.5213 12.6418 9.20154C12.7745 8.89923 12.885 8.58498 12.9714 8.26086C13.1136 7.72719 12.7962 7.17931 12.2625 7.03712C11.7289 6.89494 11.181 7.2123 11.0388 7.74597C10.979 7.97046 10.9024 8.1882 10.8104 8.39783C10.1014 10.0134 8.48142 11.1424 6.59586 11.1424C4.05347 11.1424 2 9.09165 2 6.5712Z" fill="#979ABE" />
-                              </svg>
-                            </StyledCircleSvg>
-                          </StyledFlex>
-                        </StyledFlex>
-                      ) : (
-                        <StyledFlex flexDirection='column' alignItems='flex-start'>
-                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
-                          <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
-                        </StyledFlex>
-                      )
+                      user?.lbps?.map((lbp: any, index: number) => (
+                        <StyledLogoContainer key={index} style={{ marginLeft: index > 0 ? -9 : 0 }}>
+                          <StyledLogo src={lbp.logo} />
+                        </StyledLogoContainer>
+                      )) ?? (<></>)
                     }
-                    <StyledProjectButtonContainer>
-                      <StyledProjectButton
-                        style={{
-                          opacity: pool.status === "upcoming" ? "0.3" : "1",
-                          cursor: pool.status === "upcoming" ? "not-allowed" : "pointer"
-                        }}
-                        onClick={() => handleBuyOrSell(pool)}
-                      >{pool.status === "upcoming" ? "Coming Soon" : "Buy Now"}</StyledProjectButton>
-                      <StyledProjectButton
-                        onClick={() => {
-                          router.push('/stake/fjord/detail?id=' + pool?.id)
-                        }}
-                      >View More</StyledProjectButton>
-                    </StyledProjectButtonContainer>
                   </StyledFlex>
-                </StyledContainer>
-                <StyledTimerContainer>
-                  {/* {pool.start_time * 1000 > Date.now() && <div>Upcoming</div>} */}
-                  <StyledProjectStatus className={pool.status}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
-                      <circle cx="5.04456" cy="5.04456" r="5.04456" fill={pool.status === "ongoing" ? "#61FD53" : "#FFAE63"} />
-                    </svg>
-                    <span>{STATUS_TXT_MAPPING[pool.status]}</span>
-                  </StyledProjectStatus>
-                  {pool.start_time * 1000 > Date.now() ? (
-                    <Timer endTime={Number(pool.start_time * 1000)} />
-                  ) : (
-                    <Timer endTime={Number(pool.end_time * 1000)} />
-                  )}
-                </StyledTimerContainer>
-              </StyledProject>
-            )) : (
-              <StyledFlex justifyContent='center' style={{ paddingTop: 60 }}>
-                <StyledFont color='#979ABE' fontSize='16px'>Empty</StyledFont>
-              </StyledFlex>
-            )
-          )}
-        </StyledFlex>
-      </StyledProjectContainer>
-      <StyledCompletedSalesContainer>
-
-        <StyledFlex justifyContent='space-between'>
-          <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Completed Token Sales</StyledFont>
-          <ChainList
-            chainId={completedPoolsChainId}
-            setChainId={setCompletedPoolsChainId}
-            poolsMapping={completedPoolsMapping}
-          />
-        </StyledFlex>
-        <StyledCompletedSalesTable>
-          <StyledCompletedSalesTHeader>
-            {
-              COLUMN_LIST.map((column, index) => (
-                <StyledCompletedSalesTh
-                  key={index}
-                  style={{
-                    cursor: column.sortable ? 'pointer' : 'unset',
-                    flex: column.key === 'chain_id' ? 0.5 : 1
-                  }}
-                  onClick={() => column.sortable && handleSort(column.key)}
-                >
-                  <StyledFont
-                    color="#979ABE"
-                    fontSize="16px"
-                    fontWeight="400"
-                    style={{
-                      paddingLeft: index === 0 ? 26 : 0,
-                    }}
-                  >{column.label}</StyledFont>
-                  {
-                    column?.sortable && (
-                      <StyledSvg>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
-                          <path d="M5.78087 7.02391C5.38055 7.52432 4.61946 7.52432 4.21913 7.02391L0.299758 2.1247C-0.224053 1.46993 0.242119 0.499999 1.08063 0.499999L8.91938 0.5C9.75788 0.5 10.2241 1.46993 9.70024 2.12469L5.78087 7.02391Z" fill={sortKey === column.key ? "#FFF" : "#979ABE"} />
-                        </svg>
-                      </StyledSvg>
-                    )
-                  }
-                </StyledCompletedSalesTh>
-              ))
+                </StyledFlex>
+              )
             }
-          </StyledCompletedSalesTHeader>
-          <StyledCompletedSalesTBody>
+            <StyledFlex>
+              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
+                <path d="M6.52391 4.21913C7.02432 4.61945 7.02432 5.38054 6.52391 5.78087L1.6247 9.70024C0.969933 10.2241 -4.70242e-07 9.75788 -4.3359e-07 8.91937L-9.0947e-08 1.08062C-5.42947e-08 0.242118 0.969932 -0.224055 1.62469 0.299755L6.52391 4.21913Z" fill="#979ABE" />
+              </svg>
+            </StyledFlex>
+          </StyledYours>
+        </StyledYoursContainer>
+        <StyledProjectContainer>
+          <StyledFlex justifyContent='space-between'>
+            <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Upcoming & Ongoing</StyledFont>
+            <StyledFlex gap='15px'>
+              <ChainList
+                chainId={upcomingAndOngoingChainId}
+                setChainId={setUpcomingAndOngoingChainId}
+                poolsMapping={upcomingAndOngoingPoolsMapping}
+              />
+              <StyledPoolStatusContainer>
+                <StyledPoolStatus className={poolStatusIndex === 0 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(0)}>Live</StyledPoolStatus>
+                <StyledPoolStatus className={poolStatusIndex === 1 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(1)}>Upcoming</StyledPoolStatus>
+                <StyledPoolStatus className={poolStatusIndex === 2 ? 'active' : ''} onClick={() => handlePoolStatusIndexChange(2)}>All</StyledPoolStatus>
+              </StyledPoolStatusContainer>
+            </StyledFlex>
+          </StyledFlex>
+          <StyledFlex flexDirection='column' gap='30px'>
             {loading ? (
               <StyledLoadingWrapper $h="100px">
                 <Loading size={60} />
               </StyledLoadingWrapper>
             ) : (
-              completedPools && completedPools.length > 0 ? completedPools.map((pool: any, index: number) => (
-                <StyledCompletedSalesTr
-                  key={index}
-                  onClick={() => {
-                    router.push('/stake/fjord/detail?id=' + pool?.id)
-                  }}
-                >
-                  <StyledCompletedSalesTd>
-                    <StyledFlex gap='10px' style={{ paddingLeft: 20 }}>
-                      <StyledTokenImageContainer style={{ width: 36, height: 36 }}>
+              upcomingAndOngoingPools && upcomingAndOngoingPools.length > 0 ? upcomingAndOngoingPools.map((pool: any, index: number) => (
+                <StyledProject key={index}>
+                  <StyledProjectImageContainer>
+                    <StyledProjectSupportChain>
+                      <StyledChainImage src={chainCofig[pool?.chain_id]?.icon} />
+                      <span>{chainCofig[pool?.chain_id]?.chainName}</span>
+                    </StyledProjectSupportChain>
+                    <StyledProjectImage src={pool?.banner} />
+                  </StyledProjectImageContainer>
+                  <StyledContainer style={{ flex: 1, paddingTop: 16 }}>
+                    <StyledFlex alignItems='flex-start' gap='16px'>
+                      <StyledTokenImageContainer style={{ width: 60, height: 60 }}>
                         <StyledTokenImage src={pool.logo} />
                       </StyledTokenImageContainer>
-                      <StyledFlex flexDirection='column' alignItems='flex-start' gap='4px'>
-                        <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool.share_token_symbol}</StyledFont>
-                        <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{pool.share_token_symbol} Exchange</StyledFont>
+                      <StyledFlex flexDirection='column' alignItems='flex-start' gap='9px'>
+                        <StyledFont color='#FFF' fontSize='32px' fontWeight='600'>{pool.share_token_symbol}</StyledFont>
+                        <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{pool.share_token_name}</StyledFont>
                       </StyledFlex>
                     </StyledFlex>
-                  </StyledCompletedSalesTd>
-                  <StyledCompletedSalesTd>
-                    <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.rate_return_usd ?? 0)}%</StyledFont>
-                  </StyledCompletedSalesTd>
-                  <StyledCompletedSalesTd>
-                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2)}</StyledFont>
-                  </StyledCompletedSalesTd>
-                  <StyledCompletedSalesTd>
-                    <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.participants ?? 0)}</StyledFont>
-                  </StyledCompletedSalesTd>
-                  <StyledCompletedSalesTd style={{ flex: 0.5 }}>
-                    <StyledChainImage src={chainCofig[pool?.chain_id]?.icon} />
-                  </StyledCompletedSalesTd>
-                  <StyledCompletedSalesTd>
-                    <StyledFlex style={{ width: '100%', paddingRight: 23 }}>
-                      <StyledFlex flexDirection='column' gap='4px'>
-                        <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{format(new Date(pool.start_time * 1000), 'do LLL yyyy')}</StyledFont>
-                        <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{format(new Date(pool.start_time * 1000), 'HH:mm aa')} - UTC</StyledFont>
+                    <StyledFlex justifyContent='space-between' style={{ marginTop: 106, marginBottom: 30 }}>
+                      <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
+                        <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Participants</StyledFont>
+                        <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.total_participants)}</StyledFont>
                       </StyledFlex>
-                      <StyledContainer style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
-                        <StyledSvg>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
-                            <path d="M6.52391 4.21913C7.02432 4.61945 7.02432 5.38054 6.52391 5.78087L1.6247 9.70024C0.969933 10.2241 -4.70242e-07 9.75788 -4.3359e-07 8.91937L-9.0947e-08 1.08062C-5.42947e-08 0.242118 0.969932 -0.224055 1.62469 0.299755L6.52391 4.21913Z" fill="#979ABE" />
-                          </svg>
-                        </StyledSvg>
-                      </StyledContainer>
+                      <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
+                        <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Funds Raised</StyledFont>
+                        <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2, true)}</StyledFont>
+                      </StyledFlex>
+                      <StyledFlex flexDirection='column' alignItems='flex-start' gap='10px'>
+                        <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Price</StyledFont>
+                        <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(pool?.price_usd ?? 0, '$', 3)}</StyledFont>
+                      </StyledFlex>
+                      {
+                        pool?.share_token_name === 'RAGE' && (
+                          <StyledFlex flexDirection='column' alignItems='flex-start'>
+                            <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
+                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
+                          </StyledFlex>
+                        )
+                      }
                     </StyledFlex>
-                  </StyledCompletedSalesTd>
-                </StyledCompletedSalesTr>
+                    <StyledFlex>
+                      {
+                        pool?.share_token_name === 'RAGE' ? (
+                          <StyledFlex flexDirection='column' alignItems='flex-start'>
+                            <StyledSpecitalReward>
+                              <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Special Reward 🎁</StyledFont>
+                              <StyledSpecitalRewardTips>The first 100 buyers will get 500 PTS for each</StyledSpecitalRewardTips>
+                            </StyledSpecitalReward>
+
+                            <StyledFlex gap='9px'>
+                              <StyledSpecitalReward>
+                                <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{Math.min(pool?.buy_part ?? 0, 100)}/100</StyledFont>
+                                <StyledSpecitalRewardTips style={{ bottom: -6, top: 'unset', right: '50%', transform: 'translate(50%, 100%)' }}>There are {Math.min(pool?.buy_part ?? 0, 100)} users got spcial reward currently</StyledSpecitalRewardTips>
+                              </StyledSpecitalReward>
+
+                              <StyledCircleSvg
+                                className={poolLoading ? 'loading' : ''}
+                                onClick={() => {
+                                  !poolLoading && queryPool({
+                                    id: pool?.id
+                                  })
+                                }}
+                              >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="14" viewBox="0 0 13 14" fill="none">
+                                  <path fill-rule="evenodd" clip-rule="evenodd" d="M2 6.5712C2 4.05076 4.05347 2 6.59586 2C7.86245 2 9.00705 2.50825 9.8388 3.33211C9.85304 3.34622 9.8676 3.35981 9.88246 3.37289L8.95291 4.00183C8.7765 4.12118 8.68642 4.33284 8.7227 4.54271C8.75898 4.75258 8.91489 4.92171 9.12112 4.97492L11.9203 5.69712C12.0698 5.73569 12.2287 5.70864 12.3569 5.62277C12.4852 5.5369 12.5708 5.40038 12.5921 5.24748L12.9951 2.35867C13.0246 2.14675 12.9267 1.9373 12.7451 1.82413C12.5635 1.71097 12.3323 1.71532 12.1551 1.83522L11.4856 2.28823C11.4369 2.15032 11.3571 2.02099 11.2463 1.91117C10.0543 0.730553 8.40941 0 6.59586 0C2.95723 0 0 2.93787 0 6.5712C0 10.2045 2.95723 13.1424 6.59586 13.1424C9.29961 13.1424 11.6238 11.5213 12.6418 9.20154C12.7745 8.89923 12.885 8.58498 12.9714 8.26086C13.1136 7.72719 12.7962 7.17931 12.2625 7.03712C11.7289 6.89494 11.181 7.2123 11.0388 7.74597C10.979 7.97046 10.9024 8.1882 10.8104 8.39783C10.1014 10.0134 8.48142 11.1424 6.59586 11.1424C4.05347 11.1424 2 9.09165 2 6.5712Z" fill="#979ABE" />
+                                </svg>
+                              </StyledCircleSvg>
+                            </StyledFlex>
+                          </StyledFlex>
+                        ) : (
+                          <StyledFlex flexDirection='column' alignItems='flex-start'>
+                            <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>Purchased Shares</StyledFont>
+                            <StyledFont color='#FFF' fontSize='20px' fontWeight='700'>{formatValueDecimal(contractDataMapping[pool?.pool]?.purchased_shares ?? 0, '', 3)}</StyledFont>
+                          </StyledFlex>
+                        )
+                      }
+                      <StyledProjectButtonContainer>
+                        <StyledProjectButton
+                          style={{
+                            opacity: pool.status === "upcoming" ? "0.3" : "1",
+                            cursor: pool.status === "upcoming" ? "not-allowed" : "pointer"
+                          }}
+                          onClick={() => handleBuyOrSell(pool)}
+                        >{pool.status === "upcoming" ? "Coming Soon" : "Buy Now"}</StyledProjectButton>
+                        <StyledProjectButton
+                          onClick={() => {
+                            router.push('/stake/fjord/detail?id=' + pool?.id)
+                          }}
+                        >View More</StyledProjectButton>
+                      </StyledProjectButtonContainer>
+                    </StyledFlex>
+                  </StyledContainer>
+                  <StyledTimerContainer>
+                    {/* {pool.start_time * 1000 > Date.now() && <div>Upcoming</div>} */}
+                    <StyledProjectStatus className={pool.status}>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
+                        <circle cx="5.04456" cy="5.04456" r="5.04456" fill={pool.status === "ongoing" ? "#61FD53" : "#FFAE63"} />
+                      </svg>
+                      <span>{STATUS_TXT_MAPPING[pool.status]}</span>
+                    </StyledProjectStatus>
+                    {pool.start_time * 1000 > Date.now() ? (
+                      <Timer endTime={Number(pool.start_time * 1000)} />
+                    ) : (
+                      <Timer endTime={Number(pool.end_time * 1000)} />
+                    )}
+                  </StyledTimerContainer>
+                </StyledProject>
               )) : (
                 <StyledFlex justifyContent='center' style={{ paddingTop: 60 }}>
                   <StyledFont color='#979ABE' fontSize='16px'>Empty</StyledFont>
                 </StyledFlex>
               )
             )}
-          </StyledCompletedSalesTBody>
-        </StyledCompletedSalesTable>
-      </StyledCompletedSalesContainer>
-      {
-        fjordModalShow && checkedPoolAddress && (
-          <FjordModal
-            isFixedPriceSale={isFixedPriceSale}
-            pool={checkedPoolAddress}
-            token={poolToken as Token}
-            midToken={midToken as Token}
-            chainId={chainId}
-            price={price}
-            onClose={() => {
-              setCheckedPoolAddress('')
-              setFjordModalShow(false)
-            }}
-          />
-        )
-      }
+          </StyledFlex>
+        </StyledProjectContainer>
+        <StyledCompletedSalesContainer>
+
+          <StyledFlex justifyContent='space-between'>
+            <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>Completed Token Sales</StyledFont>
+            <ChainList
+              chainId={completedPoolsChainId}
+              setChainId={setCompletedPoolsChainId}
+              poolsMapping={completedPoolsMapping}
+            />
+          </StyledFlex>
+          <StyledCompletedSalesTable>
+            <StyledCompletedSalesTHeader>
+              {
+                COLUMN_LIST.map((column, index) => (
+                  <StyledCompletedSalesTh
+                    key={index}
+                    style={{
+                      cursor: column.sortable ? 'pointer' : 'unset',
+                      flex: column.key === 'chain_id' ? 0.5 : 1
+                    }}
+                    onClick={() => column.sortable && handleSort(column.key)}
+                  >
+                    <StyledFont
+                      color="#979ABE"
+                      fontSize="16px"
+                      fontWeight="400"
+                      style={{
+                        paddingLeft: index === 0 ? 26 : 0,
+                      }}
+                    >{column.label}</StyledFont>
+                    {
+                      column?.sortable && (
+                        <StyledSvg>
+                          <svg xmlns="http://www.w3.org/2000/svg" width="10" height="8" viewBox="0 0 10 8" fill="none">
+                            <path d="M5.78087 7.02391C5.38055 7.52432 4.61946 7.52432 4.21913 7.02391L0.299758 2.1247C-0.224053 1.46993 0.242119 0.499999 1.08063 0.499999L8.91938 0.5C9.75788 0.5 10.2241 1.46993 9.70024 2.12469L5.78087 7.02391Z" fill={sortKey === column.key ? "#FFF" : "#979ABE"} />
+                          </svg>
+                        </StyledSvg>
+                      )
+                    }
+                  </StyledCompletedSalesTh>
+                ))
+              }
+            </StyledCompletedSalesTHeader>
+            <StyledCompletedSalesTBody>
+              {loading ? (
+                <StyledLoadingWrapper $h="100px">
+                  <Loading size={60} />
+                </StyledLoadingWrapper>
+              ) : (
+                completedPools && completedPools.length > 0 ? completedPools.map((pool: any, index: number) => (
+                  <StyledCompletedSalesTr
+                    key={index}
+                    onClick={() => {
+                      router.push('/stake/fjord/detail?id=' + pool?.id)
+                    }}
+                  >
+                    <StyledCompletedSalesTd>
+                      <StyledFlex gap='10px' style={{ paddingLeft: 20 }}>
+                        <StyledTokenImageContainer style={{ width: 36, height: 36 }}>
+                          <StyledTokenImage src={pool.logo} />
+                        </StyledTokenImageContainer>
+                        <StyledFlex flexDirection='column' alignItems='flex-start' gap='4px'>
+                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{pool.share_token_symbol}</StyledFont>
+                          <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{pool.share_token_symbol} Exchange</StyledFont>
+                        </StyledFlex>
+                      </StyledFlex>
+                    </StyledCompletedSalesTd>
+                    <StyledCompletedSalesTd>
+                      <StyledFont color='#47C33C' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.rate_return_usd ?? 0)}%</StyledFont>
+                    </StyledCompletedSalesTd>
+                    <StyledCompletedSalesTd>
+                      <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.funds_raised_usd ?? 0, '$', 2)}</StyledFont>
+                    </StyledCompletedSalesTd>
+                    <StyledCompletedSalesTd>
+                      <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{formatValueDecimal(pool?.participants ?? 0)}</StyledFont>
+                    </StyledCompletedSalesTd>
+                    <StyledCompletedSalesTd style={{ flex: 0.5 }}>
+                      <StyledChainImage src={chainCofig[pool?.chain_id]?.icon} />
+                    </StyledCompletedSalesTd>
+                    <StyledCompletedSalesTd>
+                      <StyledFlex style={{ width: '100%', paddingRight: 23 }}>
+                        <StyledFlex flexDirection='column' gap='4px'>
+                          <StyledFont color='#FFF' fontSize='16px' fontWeight='500'>{format(new Date(pool.start_time * 1000), 'do LLL yyyy')}</StyledFont>
+                          <StyledFont color='#979ABE' fontSize='14px' fontWeight='500'>{format(new Date(pool.start_time * 1000), 'HH:mm aa')} - UTC</StyledFont>
+                        </StyledFlex>
+                        <StyledContainer style={{ flex: 1, display: 'flex', justifyContent: 'flex-end' }}>
+                          <StyledSvg>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="10" viewBox="0 0 7 10" fill="none">
+                              <path d="M6.52391 4.21913C7.02432 4.61945 7.02432 5.38054 6.52391 5.78087L1.6247 9.70024C0.969933 10.2241 -4.70242e-07 9.75788 -4.3359e-07 8.91937L-9.0947e-08 1.08062C-5.42947e-08 0.242118 0.969932 -0.224055 1.62469 0.299755L6.52391 4.21913Z" fill="#979ABE" />
+                            </svg>
+                          </StyledSvg>
+                        </StyledContainer>
+                      </StyledFlex>
+                    </StyledCompletedSalesTd>
+                  </StyledCompletedSalesTr>
+                )) : (
+                  <StyledFlex justifyContent='center' style={{ paddingTop: 60 }}>
+                    <StyledFont color='#979ABE' fontSize='16px'>Empty</StyledFont>
+                  </StyledFlex>
+                )
+              )}
+            </StyledCompletedSalesTBody>
+          </StyledCompletedSalesTable>
+        </StyledCompletedSalesContainer>
+        {
+          fjordModalShow && checkedPoolAddress && (
+            <FjordModal
+              isFixedPriceSale={isFixedPriceSale}
+              pool={checkedPoolAddress}
+              token={poolToken as Token}
+              midToken={midToken as Token}
+              chainId={chainId}
+              price={price}
+              onClose={() => {
+                setCheckedPoolAddress('')
+                setFjordModalShow(false)
+              }}
+            />
+          )
+        }
+      </StyledContainer >
 
       <DappDetailScroll />
       <Suspense fallback={<DappFallback />}>
         <DappDetail {...dapp}/>
       </Suspense>
-
-    </StyledContainer >
+    </>
   )
 }

@@ -10,6 +10,7 @@ import popupsData from '@/config/all-in-one/chains';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import useScrollMore from '@/hooks/useScrollMore';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { usePriceStore } from '@/stores/price';
 import { get } from '@/utils/http'
@@ -156,6 +157,8 @@ function toChecksumAddress (address: string): string {
 
 const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
+  const { viewHeight } = useScrollMore({ gap: 96 });
+
   const chain = router.query.chain as string;
   const [currentChain, setCurrentChain] = useState<any>();
   const [chainConfig, setChainConfig] = useState<any>(null)
@@ -206,7 +209,7 @@ const AllInOne: NextPageWithLayout = () => {
       <div className='page-back'>
         <DappBack defaultPath="/alldapps"/>
       </div>
-      <>
+      <div style={{ minHeight: viewHeight }}>
         <div className="select-bg-icon">
           <div className="select-bg-content">
             <img src={chainConfig?.logo} alt="" />
@@ -234,7 +237,7 @@ const AllInOne: NextPageWithLayout = () => {
             }}
           />
         </div>
-      </>
+      </div>
       {
         chainConfig ? (<>
             <DappDetailScroll />
