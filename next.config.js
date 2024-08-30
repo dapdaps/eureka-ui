@@ -130,6 +130,10 @@ const nextConfig = {
       source: '/api/app/agentfi/:path*',
       destination: 'https://app.agentfi.io/api/:path*',
     },
+    {
+      source: '/api/sma-steth-apr',
+      destination: 'https://stake.lido.fi/api/sma-steth-apr',
+    },
   ],
   images: {
     remotePatterns: [

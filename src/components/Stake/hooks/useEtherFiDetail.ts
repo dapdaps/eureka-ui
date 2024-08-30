@@ -5,11 +5,11 @@ interface Result {
 }
 
 async function getApr(chainId: string) {
-    const res = await fetch(`https://api.allorigins.win/get?url=https://stake.lido.fi/api/sma-steth-apr`, {
+    const res = await fetch(`/api/sma-steth-apr`, {
     }).then(res => res.json())
 
-    if (res?.contents) {
-        return Number(res.contents.replaceAll('"', ''))
+    if (res?.data) {
+        return Number(res.data.smaApr)
     }
 
     return 0
