@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
@@ -17,23 +17,23 @@ const TokenList = styled.div`
   height: 100%;
 `;
 
-const TokenContent = styled(motion.div)<{ isHovered: boolean }>`
+const TokenContent = styled(motion.div)<{ isHovered: boolean; contentWidth: number }>`
   display: flex;
   align-items: center;
   gap: 60px;
   height: 100%;
-  width: 200%;
-  animation: translateLeft 25s linear infinite;
+  width: ${({ contentWidth }) => contentWidth + 500}px;
+  animation: translateLeft 50s linear 0s infinite normal none running;
   animation-play-state: ${({ isHovered }) => (isHovered ? 'paused' : 'running')};
 
   @keyframes translateLeft {
-  0% {
-    transform: translate3d(0, 0, 0);
+    0% {
+      transform: translateZ(0);
+    }
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
   }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
 `;
 
 const IndexList = styled.div`
@@ -102,22 +102,33 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
 
   const { list, loading } = useTokenPriceListStore();
 
+  const [contentWidth, setContentWidth] = useState(0);
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const tokenList = useMemo(() => {
     if (!list) return [];
     return list.map((token: Token) => {
       return {
         ...token,
         change_percent: Math.abs(parseFloat(token?.change_percent)) || 0,
-        isPositive: parseFloat(token.change_percent) > 0,
+        isPositive: parseFloat(token.change_percent) > 0
       };
     });
-    
   }, [list]);
+
+  useEffect(() => {
+    if (contentRef.current) {
+      const width = contentRef.current.scrollWidth / 2;
+      setContentWidth(width);
+    }
+  }, [tokenList]);
 
   return (
     <StyledWrapper className={className}>
       <TokenList>
         <TokenContent
+          ref={contentRef}
+          contentWidth={contentWidth}
           isHovered={isHovered}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -125,18 +136,20 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
           {loading ? (
             <LoadingCard />
           ) : (
-            tokenList.concat(tokenList).map((token: Token, index: number) => (
-              <IndexList key={index}>
-                <ChainIcon src={token.logo} alt="" />
-                <ChainText>
-                  {token.symbol} {parseFloat(token.price).toFixed(2)}
-                </ChainText>
-                <ChainIndex isPositive={token.isPositive}>
-                  <div className="token-isPositive">{token.isPositive ? '+' : '-'}</div>
-                  <div className="token-percent">{parseFloat(token.change_percent).toFixed(2)}%</div>
-                </ChainIndex>
-              </IndexList>
-            ))
+            <>
+              {[...tokenList, ...tokenList].map((token: Token, index: number) => (
+                <IndexList key={`duplicate-${index}`}>
+                  <ChainIcon src={token.logo} alt="" />
+                  <ChainText>
+                    {token.symbol} {parseFloat(token.price).toFixed(2)}
+                  </ChainText>
+                  <ChainIndex isPositive={token.isPositive}>
+                    <div className="token-isPositive">{token.isPositive ? '+' : '-'}</div>
+                    <div className="token-percent">{parseFloat(token.change_percent).toFixed(2)}%</div>
+                  </ChainIndex>
+                </IndexList>
+              ))}
+            </>
           )}
         </TokenContent>
       </TokenList>
