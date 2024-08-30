@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
@@ -17,13 +17,13 @@ const TokenList = styled.div`
   height: 100%;
 `;
 
-const TokenContent = styled(motion.div)<{ isHovered: boolean; contentWidth: number }>`
+const TokenContent = styled(motion.div)<{ isHovered: boolean }>`
   display: flex;
   align-items: center;
   gap: 60px;
   height: 100%;
-  width: ${({ contentWidth }) => contentWidth + 500}px;
-  animation: translateLeft 50s linear 0s infinite normal none running;
+  width: 330%;
+  animation: translateLeft 30s linear 0s infinite normal none running;
   animation-play-state: ${({ isHovered }) => (isHovered ? 'paused' : 'running')};
 
   @keyframes translateLeft {
@@ -102,9 +102,6 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
 
   const { list, loading } = useTokenPriceListStore();
 
-  const [contentWidth, setContentWidth] = useState(0);
-  const contentRef = useRef<HTMLDivElement>(null);
-
   const tokenList = useMemo(() => {
     if (!list) return [];
     return list.map((token: Token) => {
@@ -116,19 +113,10 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
     });
   }, [list]);
 
-  useEffect(() => {
-    if (contentRef.current) {
-      const width = contentRef.current.scrollWidth / 2;
-      setContentWidth(width);
-    }
-  }, [tokenList]);
-
   return (
     <StyledWrapper className={className}>
       <TokenList>
         <TokenContent
-          ref={contentRef}
-          contentWidth={contentWidth}
           isHovered={isHovered}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
