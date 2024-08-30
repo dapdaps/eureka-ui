@@ -47,7 +47,7 @@ export const ListCard: FC<IProps> = ({ dataSource }) => {
         }
       </StyledData>
       <StyledReward>
-        <StyledItemLabel>Campaign Reward</StyledItemLabel>
+        <StyledItemLabel>DapDap Exclusive Rewards</StyledItemLabel>
         {
           odyssey && odyssey.length > 0 ? (
             <Reward odyssey={odyssey} />
