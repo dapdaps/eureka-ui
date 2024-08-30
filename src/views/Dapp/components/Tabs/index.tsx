@@ -1,3 +1,8 @@
+import { AnimatePresence } from 'framer-motion';
+import { Suspense, useState } from 'react';
+
+import { StyledFlex } from '@/styled/styles';
+
 import {
   StyledContainer,
   StyledTabs,
@@ -6,9 +11,6 @@ import {
   StyledTabsHead,
   StyledTabsHeadItem,
 } from './styles';
-import { AnimatePresence } from 'framer-motion';
-import { Suspense, useState } from 'react';
-import { StyledFlex } from '@/styled/styles';
 
 const DAppTabs = (props: Props) => {
   const { tabs = [] } = props;

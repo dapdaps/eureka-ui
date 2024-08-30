@@ -96,22 +96,22 @@ export default function useYourPositions() {
 
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      console.log('Query Your Positions failure: %o', err);
       setLoading(false);
     }
-  }, [provider, account, chainId]);
+  }, [provider, account, chainId, contracts, pairs, tokens]);
 
   useEffect(() => {
     clearTimeout(timer.current);
     timer.current = setTimeout(() => {
-      if (!account || !chainId || !contracts || !contracts[chainId]) {
+      if (!account || !chainId || !contracts || !contracts[chainId] || !pairs || !tokens) {
         setPools([]);
         setLoading(false);
         return;
       }
       if (provider) queryList();
     }, 500);
-  }, [provider, account, chainId, contracts]);
+  }, [provider, account, chainId, contracts, pairs, tokens]);
 
   return { pools, loading };
 }
