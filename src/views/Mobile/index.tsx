@@ -321,7 +321,7 @@ const Index = function () {
             </StyledSquareButton>
           </StyledFlex>
           <StyledIntroduction onClick={() => {
-            window.open("https://dapdap.mirror.xyz/ZN-TDF-7MeU3q7WVrpMqZE5Ais8IUmVPTJm63SiuvUs ", '_self');
+            window.open("https://dapdap.mirror.xyz/ZN-TDF-7MeU3q7WVrpMqZE5Ais8IUmVPTJm63SiuvUs", '_self');
           }}>
             <StyledFooterLogo src="/images/mobile/footer_logo.png" alt="footer_logo" />
             <StyledFlex flexDirection="column" alignItems="flex-start" gap="7px">
