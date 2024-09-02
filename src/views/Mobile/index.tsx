@@ -290,7 +290,7 @@ const Index = function () {
               </svg>
             </StyledSquareButton>
             <StyledSquareButton onClick={() => {
-              window.open("https://dapdap.mirror.xyz/-_KglFeVLqHvP6uDS-HeR59WuYGbjB2j8VrYBWnEyf0", '_self');
+              window.open("https://dapdap.mirror.xyz", '_self');
             }}>
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="23" viewBox="0 0 18 23" fill="none">
                 <path d="M1 9C1 4.58172 4.58172 1 9 1C13.4183 1 17 4.58172 17 9V21C17 21.5523 16.5523 22 16 22H2C1.44772 22 1 21.5523 1 21V9Z" fill="url(#paint0_linear_11730_1674)" stroke="url(#paint1_linear_11730_1674)" stroke-width="1.5" />
@@ -321,7 +321,7 @@ const Index = function () {
             </StyledSquareButton>
           </StyledFlex>
           <StyledIntroduction onClick={() => {
-            window.open("https://docs.dapdap.net", '_self');
+            window.open("https://dapdap.mirror.xyz/ZN-TDF-7MeU3q7WVrpMqZE5Ais8IUmVPTJm63SiuvUs ", '_self');
           }}>
             <StyledFooterLogo src="/images/mobile/footer_logo.png" alt="footer_logo" />
             <StyledFlex flexDirection="column" alignItems="flex-start" gap="7px">
