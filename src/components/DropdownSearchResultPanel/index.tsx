@@ -160,8 +160,8 @@ const DropdownSearchResultPanel = ({ setShowSearch }: { setShowSearch: (show: bo
             loading={loading}
             data={searchResult?.networks}
             onClick={(item: any) => {
-              router.prefetch(`/network/${IdToPath[item.id]}`);
-              router.push(`/network/${IdToPath[item.id]}`);
+              router.prefetch(`/networks/${IdToPath[item.id]}`);
+              router.push(`/networks/${IdToPath[item.id]}`);
               setSearchResult('');
               setShowSearch(false)
             }}
