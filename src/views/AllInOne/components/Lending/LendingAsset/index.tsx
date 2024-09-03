@@ -22,33 +22,61 @@ const Icon = styled.img`
   height: 26px;
   object-fit: contain;
   flex-shrink: 0;
-  //border-radius: 50%;
 `;
 const Symbol = styled.div`
-  width: 0;
-  flex: 1;
-  font-size: 16px;
   font-weight: 400;
   color: #fff;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: calc(100% - 30px);
+  font-size: 14px;
+
+  &.large {
+    font-size: 16px;
+  }
+`;
+
+const Dapp = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  margin-top: 4px;
+`;
+const DappIcon = styled.img`
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+`;
+const DappName = styled.div`
+  font-size: 12px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.5);
+`;
+
+const Block = styled.div`
+  width: 100%;
 `;
 
 interface IProps {
   icon: string;
   symbol: string;
-  size?: 'small' | 'medium';
+  dappIcon?: string;
+  dappName?: string;
 }
 
 const LendingAsset = (props: IProps) => {
-  const { icon, symbol, size = 'medium' } = props;
+  const { icon, symbol, dappIcon, dappName } = props;
 
   return (
-    <Asset className={`asset-${size}`}>
-      {icon ? <Icon src={icon} className={`asset-${size}-icon`} /> : null}
-      <Symbol className={`asset-${size}-symbol`} title={symbol}>
-        {symbol}
-      </Symbol>
+    <Asset>
+      {icon ? <Icon src={icon} /> : null}
+      <Block>
+        <Symbol className={dappIcon || dappName ? 'large' : ''}>{symbol}</Symbol>
+        <Dapp>
+          {dappIcon ? <DappIcon src={dappIcon} /> : null}
+          <DappName>{dappName}</DappName>
+        </Dapp>
+      </Block>
     </Asset>
   );
 };

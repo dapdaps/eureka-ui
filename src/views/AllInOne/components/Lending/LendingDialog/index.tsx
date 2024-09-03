@@ -1,7 +1,8 @@
+import IconTip from '@public/images/alldapps/icon-tip.svg';
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { VmComponent } from '@/components/vm/VmComponent';
 import useAccount from '@/hooks/useAccount';
@@ -13,29 +14,20 @@ import { ERC20_ABI } from './abi';
 import LendingCloseIcon from './CloseIcon';
 import LendingDialogButton from './DialogButton';
 import {
-  Apy,
-  AssetLabel,
-  AssetWrapper,
   Balance,
   BalanceValue,
   BalanceWrapper,
-  BottomBox,
   CloseIcon,
   CollateralToken,
   Content,
-  Dapp,
-  DappIcon,
-  DappName,
   Dialog,
   Header,
   Input,
   InputBalance,
   InputWrapper,
   Label,
+  LendingButton,
   Overlay,
-  RewardApy,
-  RewardApyItem,
-  RewardIcon,
   Row,
   Tips,
   Title,
@@ -43,9 +35,10 @@ import {
   TokenLogo,
   TokenSelect,
   TokenSymbol,
-  TopBox,
   Value,
-  ValuesWrapper
+  ValuesWrapper,
+  YourBottomBox,
+  YourTopBox
 } from './styles';
 
 interface IProps {
@@ -103,6 +96,8 @@ const LendingDialog = (props: IProps) => {
   const isSupply = useMemo(() => ['Deposit', 'Withdraw'].includes(actionText), [actionText]);
   const isBorrow = useMemo(() => ['Repay', 'Borrow'].includes(actionText), [actionText]);
   const isForCollateral = useMemo(() => !isSupply && !isBorrow, [isSupply, isBorrow]);
+
+  const isCollateral = useMemo(() => actionText === 'Enable as Collateral', [actionText]);
   const tokenSymbol = useMemo(() => data?.underlyingToken?.symbol, [data]);
 
   const getAvailable = useCallback(
@@ -116,8 +111,6 @@ const LendingDialog = (props: IProps) => {
   );
 
   const getBalance = useCallback(() => {
-    console.log(actionText, 'actionText');
-
     const isUnderlying = ['Deposit', 'Repay'].includes(actionText);
     setState((prevState) => ({
       ...prevState,
@@ -335,54 +328,66 @@ const LendingDialog = (props: IProps) => {
             ev.stopPropagation();
           }}
         >
-          <TopBox className={isForCollateral ? 'none-border' : ''}>
+          <YourTopBox className={isForCollateral ? 'none-border' : ''}>
             <Header>
               <Title>
-                <span>
-                  {isForCollateral ? 'Collateral' : actionText} {!isForCollateral && tokenSymbol}
-                </span>
-                {!isForCollateral && source !== 'dapp' && (
-                  <>
-                    <Apy className={isSupply ? 'supply-color' : 'borrow-color'}>
-                      APY {isSupply ? data.supplyApy : data.borrowApy}
-                    </Apy>
-                    {data.distributionApy &&
-                      data.distributionApy
-                        .filter((reward: any) => reward.supply !== '0.00%')
-                        .map((reward: any) => (
-                          <RewardApyItem key={reward.symbol}>
-                            <RewardIcon src={reward.icon} />
-                            <RewardApy>{reward.supply}</RewardApy>
-                          </RewardApyItem>
-                        ))}
-                  </>
-                )}
+                {/*<span>*/}
+                {isCollateral ? 'Collateral' : actionText} {!isForCollateral && tokenSymbol}
+                {/*</span>*/}
+                {/*{!isForCollateral && source !== 'dapp' && (*/}
+                {/*  <>*/}
+                {/*    <Apy className={isSupply ? 'supply-color' : 'borrow-color'}>*/}
+                {/*      APY {isSupply ? data.supplyApy : data.borrowApy}*/}
+                {/*    </Apy>*/}
+                {/*    {data.distributionApy &&*/}
+                {/*      data.distributionApy*/}
+                {/*        .filter((reward: any) => reward.supply !== '0.00%')*/}
+                {/*        .map((reward: any) => (*/}
+                {/*          <RewardApyItem key={reward.symbol}>*/}
+                {/*            <RewardIcon src={reward.icon} />*/}
+                {/*            <RewardApy>{reward.supply}</RewardApy>*/}
+                {/*          </RewardApyItem>*/}
+                {/*        ))}*/}
+                {/*  </>*/}
+                {/*)}*/}
               </Title>
               <CloseIcon>
                 <LendingCloseIcon onClose={handleClose} size={18} />
               </CloseIcon>
             </Header>
-            {isForCollateral && (
-              <CollateralToken>
-                {actionText === 'Disable as Collateral' ? 'Disabling' : 'Enabling'}
-                <Token>
-                  <TokenLogo src={data.underlyingToken.icon} />
-                  <TokenSymbol>{tokenSymbol}</TokenSymbol>
-                </Token>
-                as Collateral
-              </CollateralToken>
+            {isForCollateral && !isCollateral && (
+              <Tips>
+                <IconTip className="icon" />
+                <div className="tip-text">
+                  This assets is required to support your borrowed assets. Either repay borrowed assets, or supply
+                  another asset as collateral.
+                </div>
+              </Tips>
             )}
+            {isCollateral && (
+              <Row>
+                <Label>Enabling</Label>
+                <CollateralToken>
+                  <Token>
+                    <TokenLogo src={data.underlyingToken.icon} />
+                    <TokenSymbol>{tokenSymbol}</TokenSymbol>
+                  </Token>
+                  <span>as Collateral</span>
+                </CollateralToken>
+              </Row>
+            )}
+
             {!isForCollateral && (
               <>
-                {source !== 'dapp' && (
-                  <AssetWrapper>
-                    <AssetLabel>Asset from</AssetLabel>
-                    <Dapp>
-                      <DappIcon src={data.dappIcon} />
-                      <DappName>{data.dappName}</DappName>
-                    </Dapp>
-                  </AssetWrapper>
-                )}
+                {/*{source !== 'dapp' && (*/}
+                {/*  <AssetWrapper>*/}
+                {/*    <AssetLabel>Asset from</AssetLabel>*/}
+                {/*    <Dapp>*/}
+                {/*      <DappIcon src={data.dappIcon} />*/}
+                {/*      <DappName>{data.dappName}</DappName>*/}
+                {/*    </Dapp>*/}
+                {/*  </AssetWrapper>*/}
+                {/*)}*/}
                 <InputWrapper>
                   <Input
                     value={state.amount}
@@ -417,7 +422,7 @@ const LendingDialog = (props: IProps) => {
                       }));
                     }}
                   >
-                    &nbsp;Available&nbsp;<Balance>{formatBalance()}</Balance>
+                    &nbsp;Available:&nbsp;<Balance>{formatBalance()}</Balance>
                   </BalanceWrapper>
                 </InputBalance>
                 {isSupply && (
@@ -451,8 +456,8 @@ const LendingDialog = (props: IProps) => {
                 )}
               </>
             )}
-          </TopBox>
-          <BottomBox>
+          </YourTopBox>
+          <YourBottomBox>
             {actionText === 'Deposit' && (
               <>
                 <Row>
@@ -461,7 +466,7 @@ const LendingDialog = (props: IProps) => {
                 </Row>
               </>
             )}
-            <Row className={isForCollateral ? 'justfiy-start' : ''}>
+            <Row>
               <Label>Borrow Limit</Label>
               <ValuesWrapper>
                 <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2, '', data)}</Value>
@@ -493,27 +498,29 @@ const LendingDialog = (props: IProps) => {
                 </ValuesWrapper>
               </Row>
             )}
-            <LendingDialogButton
-              disabled={!state.buttonClickable}
-              actionText={actionText}
-              amount={state.isMax ? state.balance : state.amount}
-              data={data}
-              addAction={props.addAction}
-              toast={props.toast}
-              chainId={chainId}
-              unsignedTx={trade.unsignedTx}
-              loading={state.loading}
-              gas={trade.gas}
-              account={account}
-              onApprovedSuccess={() => {
-                if (!trade.gas) state.getTrade?.();
-              }}
-              onSuccess={() => {
-                handleClose();
-                onSuccess?.();
-              }}
-            />
-          </BottomBox>
+            <LendingButton>
+              <LendingDialogButton
+                disabled={!state.buttonClickable}
+                actionText={actionText}
+                amount={state.isMax ? state.balance : state.amount}
+                data={data}
+                addAction={props.addAction}
+                toast={props.toast}
+                chainId={chainId}
+                unsignedTx={trade.unsignedTx}
+                loading={state.loading}
+                gas={trade.gas}
+                account={account}
+                onApprovedSuccess={() => {
+                  if (!trade.gas) state.getTrade?.();
+                }}
+                onSuccess={() => {
+                  handleClose();
+                  onSuccess?.();
+                }}
+              />
+            </LendingButton>
+          </YourBottomBox>
         </Content>
       </Overlay>
       {data.config.handler && (

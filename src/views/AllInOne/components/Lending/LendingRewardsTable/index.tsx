@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import { VmComponent } from '@/components/vm/VmComponent';
@@ -6,19 +6,23 @@ import { VmComponent } from '@/components/vm/VmComponent';
 import LendingTable from '../LendingTable';
 
 const RewardsTable = styled.div`
-  background-color: var(--agg-secondary-color, rgba(53, 55, 73, 0.2));
-  border: 1px solid var(--agg-border-color);
+  border-radius: 16px;
+  border: 1px #373a53;
+  background: #262836;
   margin-top: 20px;
-  border-radius: 6px;
+  padding-bottom: 16px;
+
+  .rewards-table {
+    .table-head {
+      border-bottom: 1px solid #373a53;
+    }
+  }
 `;
 const Title = styled.div`
-  padding: 12px 20px;
-  color: #979abe;
+  padding: 20px 20px 0 20px;
+  color: #ffffff;
   font-size: 16px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
-  border-bottom: 1px solid var(--agg-border-color, #292c42);
 `;
 
 const NoReward = styled.div`
@@ -49,19 +53,15 @@ const LendingRewardsTable = (props: IProps) => {
     toastId: null
   });
 
-  const columns =
-    Object.keys(dapps)[0] === 'Valas Finance'
+  const columns = useMemo(() => {
+    return Object.keys(dapps)[0] === 'Valas Finance'
       ? [
           {
             type: 'name',
-            width: '25%',
+            width: '40%',
             name: 'Asset'
           },
-          {
-            type: 'market',
-            width: '25%',
-            name: 'Market'
-          },
+
           {
             type: 'total',
             key: 'unclaimed',
@@ -73,14 +73,10 @@ const LendingRewardsTable = (props: IProps) => {
       : [
           {
             type: 'name',
-            width: '20%',
+            width: '40%',
             name: 'Asset'
           },
-          {
-            type: 'market',
-            width: '25%',
-            name: 'Market'
-          },
+
           {
             type: 'total',
             key: 'dailyReward',
@@ -95,8 +91,10 @@ const LendingRewardsTable = (props: IProps) => {
           },
           { type: 'button', width: '10%' }
         ];
+  }, [dapps]);
 
   const handleButtonClick = (record: any) => {
+    console.log(record, dapps[record.dappName]);
     const toastId = toast?.loading({
       title: `Claiming rewards...`
     });
@@ -112,7 +110,7 @@ const LendingRewardsTable = (props: IProps) => {
   return (
     <>
       <RewardsTable>
-        <Title>Your Earns</Title>
+        <Title>Your Rewards</Title>
         <LendingTable
           totalReverse={true}
           columns={columns}
@@ -130,7 +128,8 @@ const LendingRewardsTable = (props: IProps) => {
             }
           ]}
           onButtonClick={handleButtonClick}
-          rowExpanded={false}
+          type="reward"
+          classname="rewards-table"
         />
       </RewardsTable>
       {state.dapp && state.market && (

@@ -67,7 +67,7 @@ const Lending = (props: Props) => {
   const { addAction } = useAddAction('all-in-one');
   const prices = usePriceStore((store) => store.price);
 
-  const [currTab, setCurrTab] = useState<string>(tabsList[0].key);
+  const [currTab, setCurrTab] = useState<string>(tabsList[1].key);
   const [tabConfig, setTabConfig] = useState<any>({ dapps: {} });
   const [currMarket, setCurrMarket] = useState<string>('');
   const [showDialog, setShowDialog] = useState(false);
@@ -118,6 +118,7 @@ const Lending = (props: Props) => {
   }, [chain]);
 
   const RestTheme = chain.menuConfig.Lending?.Theme ?? styled.div``;
+
   const [forceUpdate, setForceUpdate] = useState(0);
 
   const triggerDataRefetch = useCallback(() => {
@@ -219,23 +220,23 @@ const Lending = (props: Props) => {
               }}
             />
           )}
-          <Collateral
-            visible={showDialog}
-            data={tableButtonClickData}
-            chainId={chainId}
-            addAction={addAction}
-            toast={toast}
-            account={account}
-            onClose={() => {
-              setShowDialog(false);
-            }}
-            onSuccess={() => {
-              console.log('Collateral onSuccess tableButtonClickData: %o', tableButtonClickData);
-              triggerDataRefetch();
-              setCurrMarket(tableButtonClickData?.dappName);
-              setUpdateBalance(Date.now());
-            }}
-          />
+          {/*<Collateral*/}
+          {/*  visible={showDialog}*/}
+          {/*  data={tableButtonClickData}*/}
+          {/*  chainId={chainId}*/}
+          {/*  addAction={addAction}*/}
+          {/*  toast={toast}*/}
+          {/*  account={account}*/}
+          {/*  onClose={() => {*/}
+          {/*    setShowDialog(false);*/}
+          {/*  }}*/}
+          {/*  onSuccess={() => {*/}
+          {/*    console.log('Collateral onSuccess tableButtonClickData: %o', tableButtonClickData);*/}
+          {/*    triggerDataRefetch();*/}
+          {/*    setCurrMarket(tableButtonClickData?.dappName);*/}
+          {/*    setUpdateBalance(Date.now());*/}
+          {/*  }}*/}
+          {/*/>*/}
         </RestTheme>
       </StyledContent>
     </Container>

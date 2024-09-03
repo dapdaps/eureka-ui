@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import LendingDialog from '@/views/AllInOne/components/Lending/LendingDialog';
 import { ActionType } from '@/views/AllInOne/components/Lending/LendingDialog/Action';
 
 import LendingRewardsTable from '../LendingRewardsTable';
@@ -23,25 +26,29 @@ interface IProps {
 }
 
 const YoursComponents = (props: IProps) => {
-  const {
-    markets,
-    dapps,
-    toast,
-    currentDapp,
-    account,
-    tabConfig,
-    addAction,
-    chainId,
-    onSuccess,
-    updateBalance,
-    onButtonClick
-  } = props;
+  const { markets, dapps, toast, currentDapp, account, tabConfig, addAction, chainId, onSuccess } = props;
 
   const { userTotalSupplyUsd, userTotalBorrowUsd, userBorrowLimit, supplies, borrows, rewards, netApy } = useYoursData(
     currentDapp,
     dapps,
     markets
   );
+
+  const [showDialog, setShowDialog] = useState(false);
+  const [tableButtonClickData, setTableButtonClickData] = useState<any>(null);
+
+  const onButtonClick = (address: string, actionText: string) => {
+    const market = markets[address];
+    const dapp = dapps[market.dapp];
+    const dappConfig = tabConfig.dapps[market.dapp];
+    setTableButtonClickData({
+      ...dapp,
+      ...market,
+      config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
+      actionText
+    });
+    setShowDialog(true);
+  };
 
   return (
     <>
@@ -63,38 +70,28 @@ const YoursComponents = (props: IProps) => {
             columns={[
               {
                 type: 'name',
-                width: '20%',
+                width: '28%',
                 name: 'Asset'
               },
-              {
-                type: 'market',
-                width: '20%',
-                name: 'Market'
-              },
-              { type: 'apy', width: '15%', name: 'APY' },
+              { type: 'apy', width: '18%', name: 'APY' },
               { type: 'collateral', width: '15%', name: 'Collateral' },
               {
                 type: 'total',
                 key: 'balance',
-                width: '20%',
+                width: '18%',
                 name: 'Balance'
               },
-              { type: 'arrow', width: '10%' }
+              { type: 'button', width: '15%' }
+            ]}
+            buttons={[
+              {
+                text: 'Withdraw'
+              }
             ]}
             type={'deposit'}
             data={supplies || []}
             emptyTips={'You supplied assets will appear here'}
-            markets={markets}
-            dapps={dapps}
-            tabConfig={tabConfig}
-            addAction={addAction}
             onButtonClick={onButtonClick}
-            toast={toast}
-            account={account}
-            chainId={chainId}
-            onSuccess={onSuccess}
-            tabs={[ActionType.Withdraw]}
-            updateBalance={updateBalance}
           />
         </YoursTableWrapper>
         <YoursTableWrapper>
@@ -114,36 +111,34 @@ const YoursComponents = (props: IProps) => {
             columns={[
               {
                 type: 'name',
-                width: '20%',
+                width: '30%',
                 name: 'Asset'
               },
               {
-                type: 'market',
-                width: '20%',
-                name: 'Market'
+                type: 'apy',
+                width: '15%',
+                name: 'APY'
               },
-              { type: 'apy', width: '15%', name: 'APY' },
               {
                 type: 'total',
                 key: 'borrowed',
                 width: '20%',
                 name: 'Borrowed'
               },
-              { type: 'arrow', width: '10%' }
+              {
+                type: 'button',
+                width: '15%'
+              }
+            ]}
+            buttons={[
+              {
+                text: 'Repay'
+              }
             ]}
             type={'borrow'}
             data={borrows || []}
             emptyTips={'You borrowed assets will appear here'}
-            markets={markets}
-            dapps={dapps}
-            tabConfig={tabConfig}
-            addAction={addAction}
-            toast={toast}
-            account={account}
-            chainId={chainId}
-            onSuccess={onSuccess}
-            tabs={[ActionType.Repay]}
-            updateBalance={updateBalance}
+            onButtonClick={onButtonClick}
           />
         </YoursTableWrapper>
       </Yours>
@@ -154,6 +149,16 @@ const YoursComponents = (props: IProps) => {
         supplies={supplies}
         toast={toast}
         account={account}
+      />
+      <LendingDialog
+        display={showDialog}
+        data={tableButtonClickData}
+        chainId={chainId}
+        onClose={() => setShowDialog(false)}
+        onSuccess={onSuccess}
+        account={account}
+        addAction={addAction}
+        toast={toast}
       />
     </>
   );
