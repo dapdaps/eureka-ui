@@ -208,6 +208,9 @@ export const StyledDesc = styled.div`
   margin-bottom: 55px;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   p {
     margin: 0;
   }
@@ -231,17 +234,27 @@ export const StyledMedals = styled.div`
   position: relative;
   z-index: 1;
 `;
-export const StyledMedal = styled.div<{ $url: string }>`
+export const StyledMedal = styled.div<{ $url: string, $disabled: boolean }>`
   filter: drop-shadow(0px 0px 20px #FFF);
   width: 136px;
   height: 136px;
   background-color: #fff;
   border-radius: 50%;
-  background-image: ${({ $url }) => 'url(' + $url + ')'};
-  background-size: 100px 100px;
-  background-position: center;
-  background-repeat: no-repeat;
-  
+
+  &:after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 86px;
+    height: 86px;
+    background-image: ${({ $url }) => 'url(' + $url + ')'};
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: ${({ $disabled }) => $disabled ? "sepia(1) hue-rotate(210deg) saturate(0.5)" : ""}
+  }
 `;
 
 export const StyledLogoContainer = styled.div`
