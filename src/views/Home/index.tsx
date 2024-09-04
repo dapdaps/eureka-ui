@@ -6,8 +6,6 @@ import MedalRewardModal from '@/components/Modal/MedalReward';
 
 import Compass from './components/Compass';
 import GridChains from './components/GridChains';
-import Networks from './components/Networks';
-import RecentRewards from './components/Rewards';
 import useConvertTip from './hooks/useConvertTip';
 import { StyledContainer } from './styles';
 
