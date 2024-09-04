@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import CheckConvertingModal from '@/components/Modal/CheckConverting';
+import MedalRewardModal from '@/components/Modal/MedalReward';
 import { useVersion } from '@/hooks/useVersion';
 import DAvinciModal from '@/views/Home/components/DAvinci/Modal';
 
@@ -17,6 +21,9 @@ const Home = () => {
     handleClosed: handleVersionClosed,
   } = useVersion();
 
+  const [checkConvertingVisible, setCheckConvertingVisible] = useState(false)
+  const [medalRewardVisible, setMedalRewardVisibleVisible] = useState(false)
+
   return (
     <StyledContainer>
       <GridChains />
@@ -31,6 +38,19 @@ const Home = () => {
        <Decentralised /> */}
       {/* <Learn /> */}
       <DAvinciModal visible={versionVisible} onClose={handleVersionClosed} />
+
+      <CheckConvertingModal
+        visible={checkConvertingVisible}
+        onClose={() => {
+          setCheckConvertingVisible(false)
+        }}
+      />
+      <MedalRewardModal
+        visible={medalRewardVisible}
+        onClose={() => {
+          setMedalRewardVisibleVisible(false)
+        }}
+      />
     </StyledContainer>
   );
 };

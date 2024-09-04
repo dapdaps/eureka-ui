@@ -3,9 +3,10 @@ import { useRouter } from 'next/router';
 import { memo, useEffect, useState } from 'react';
 
 import { getAccessToken } from '@/apis';
+import MedalPopup from '@/components/navigation/desktop/components/MedalPopup';
 import { QUEST_PATH } from '@/config/quest';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
-import { getWithoutActive } from '@/utils/http';
+import { get, getWithoutActive } from '@/utils/http';
 import {
   StyledBg,
   StyledBgImage,
@@ -30,6 +31,7 @@ import {
   StyledX,
   StyledXContainer
 } from '@/views/marketing/invite/styles';
+import type { MedalType } from "@/views/Profile/types";
 
 import { InviteModal, KolUserInfo } from '../components';
 
@@ -39,6 +41,7 @@ const Invite = (props: Props) => {
     logo,
     name,
     platform,
+    tips,
     logoSize = {
       width: 60,
       height: 60,
@@ -50,6 +53,8 @@ const Invite = (props: Props) => {
   const { queryUserInfo } = useInititalDataWithAuth();
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const [address, setAddress] = useState('');
+  const [medalData, setMedalData] = useState<MedalType>();
+  const [medalVisible, setMedalVisible] = useState(false);
   const [isShowModal, setIsShowModal] = useState(false);
   const [userStatus, setUserStatus] = useState<'uncheck' | 'new' | 'old'>('uncheck');
   const [modalType, setModalType] = useState<'success' | 'fail'>('success');
@@ -64,18 +69,34 @@ const Invite = (props: Props) => {
     });
     if ((res.code as number) !== 0) return;
     if (res?.data?.is_new_activity_user) {
-      setModalType("success")
+      // setModalType("success")
+      // setIsShowModal(true)
+      setMedalVisible(true)
+      setMedalData(res?.data?.medal)
+      await getAccessToken(address);
     } else {
-      setModalType("fail")
+      await getAccessToken(address);
+      checkAccount()
     }
-    setIsShowModal(true)
-
-    await getAccessToken(address);
     queryUserInfo();
+  }
+  async function checkAccount() {
+    const res = await get(`${QUEST_PATH}/api/activity/check_account?category=${platform}`);
+    if ((res.code as number) !== 0) return;
+    const status = res.data.is_activity ? 'new' : 'old';
+    setUserStatus(status);
   }
   const onConnectWallet = () => {
     connect();
   }
+
+  useEffect(() => {
+    if (userStatus === 'old') {
+      setModalType("fail")
+      setIsShowModal(true)
+    }
+  }, [userStatus])
+
   useEffect(() => {
     if (wallet) {
       setAddress((wallet as any)['accounts'][0]?.address);
@@ -87,6 +108,7 @@ const Invite = (props: Props) => {
       checkAddress()
     }
   }, [address]);
+
 
   return (
     <StyledContainer className={isMobile ? 'mobile-invite' : 'invite'}>
@@ -100,14 +122,17 @@ const Invite = (props: Props) => {
             <StyledX>X</StyledX>
             <StyledContent>
               <StyledDesc>
-                <p>You are visiting a invitation link from DadDap partener {name}. </p>
-                <p>Connect your wallet to keep visiting.</p>
+                {
+                  tips.map((words, index) => (
+                    <p key={index}>{words}</p>
+                  ))
+                }
               </StyledDesc>
               {
                 medals?.length > 0 && (
                   <StyledMedals>
                     {
-                      medals.map((medal, index) => (<StyledMedal $url={medal} key={index} />))
+                      medals.map((medal, index) => (<StyledMedal $disabled={modalType !== "success"} $url={medal} key={index} />))
                     }
                   </StyledMedals>
                 )
@@ -152,6 +177,9 @@ const Invite = (props: Props) => {
         </StyledHead>
       </StyledInner>
       <InviteModal type={modalType} open={isShowModal} onClose={() => setIsShowModal(false)}></InviteModal>
+      {
+        medalData && <MedalPopup visible={medalVisible} data={medalData} close={() => setMedalVisible(false)}></MedalPopup>
+      }
     </StyledContainer>
   );
 };
@@ -161,6 +189,7 @@ export default memo(Invite);
 interface Props {
   logo: string;
   name: string;
+  tips: string[];
   platform: "okx" | "coin68" | "bitget" | "namlongdao" | "kol" | "coin98";
   isMobile?: boolean;
   logoSize?: {

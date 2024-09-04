@@ -14,6 +14,7 @@ export type Wallet = {
   platform: keyof InviteConfigType;
   tips: string[];
   logoSize?: LogoSize;
+  medals?: string[];
 }
 
 export type LogoSize = {
@@ -27,43 +28,49 @@ export const InviteConfig: InviteConfigType = {
     name: 'OKX Wallet',
     platform: "okx",
     tips: [
-      "You are visiting a invitation link from DadDap partener OKX Wallet.",
-      "Connect your wallet to keep visiting.",
+      "Unlock the exclusive OKX Wallet Pioneer Medal by connecting your wallet through this page!",
+      "Welcome Bonus: If you connect with OKX Wallet for the first time, you'll receive a one-time reward of 10 Gems as a special welcome gift.",
+      "Don't miss out on maximizing your rewards!",
     ],
+    medals: ["/images/marketing/okx-wallet-pioneer.png"]
   },
   coin68: {
     logo: '/images/marketing/coin68.svg',
     name: 'Coin68',
     platform: "coin68",
     tips: [
-      "You are visiting a invitation link from DadDap partener Coin68 Wallet.",
-      "Connect your wallet to keep visiting.",
+      "Unlock the exclusive Coin 68 Pioneer Medal by connecting your wallet through this page!",
+      "Don't miss out on maximizing your rewards!",
     ],
     logoSize: {
       width: 90,
       height: 47,
-    }
+    },
+    medals: ["/images/marketing/coin68-wallet-pioneer.png"]
   },
   bitget: {
     logo: '/images/marketing/bitget.png',
     name: 'Bitget Wallet',
     platform: "bitget",
     tips: [
-      "You are visiting a invitation link from DadDap partener Bitget Wallet.",
-      "Connect your wallet to keep visiting.",
+      "Unlock the exclusive Bitget Wallet Pioneer Medal by connecting your wallet through this page!",
+      "Welcome Bonus: If you connect with Bitget Wallet for the first time, you'll receive a one-time reward of 10 Gems as a special welcome gift.",
+      "Don't miss out on maximizing your rewards!",
     ],
     logoSize: {
       width: 52,
       height: 52,
     },
+    medals: ["/images/marketing/bitget-wallet-pioneer.png"]
   },
   namlongdao: {
     logo: '/images/marketing/namlong-logo-2.png',
     name: 'NamLongDAO',
     platform: "namlongdao",
     tips: [
-      "You are visiting a invitation link from DadDap partener NamLongDAO.",
-      "Connect your wallet to keep visiting.",
+      "You have been invited by [NamLondDAO] to join DapDap! ",
+      "Connect your wallet and receive 10 Gems reward.",
+      "To claim this reward, you need to complete an on-chain transaction within DapDap. Please note that this excludes wrap transactions like wETH-ETH, ETH-wETH, and stablecoin swaps.",
     ],
     logoSize: {
       width: 80,
@@ -75,21 +82,24 @@ export const InviteConfig: InviteConfigType = {
     name: 'Coin98 Wallet',
     platform: "coin98",
     tips: [
-      "You are visiting a invitation link from DadDap partener Coin98 Wallet. ",
-      "Connect your wallet to keep visiting.",
+      "Unlock the exclusive Coin98 Wallet Pioneer Medal by connecting your wallet through this page!",
+      "Welcome Bonus: If you connect with Coin98 Wallet for the first time, you'll receive a one-time reward of 10 Gems as a special welcome gift.",
+      "Don't miss out on maximizing your rewards!",
     ],
     logoSize: {
       width: 60,
       height: 60,
     },
+    medals: ["/images/marketing/coin98-wallet-pioneer.png"]
   },
   kol: {
     logo: '',
     name: 'Kol',
     platform: "kol",
     tips: [
-      "You are visiting a invitation link from DadDap Kol Stardapps.",
-      "Connect your wallet to keep visiting.",
+      "You have been invited by [Stardapps] to join DapDap! ",
+      "Connect your wallet and receive 10 Gems reward.",
+      "To claim this reward, you need to complete an on-chain transaction within DapDap. Please note that this excludes wrap transactions like wETH-ETH, ETH-wETH, and stablecoin swaps.",
     ],
     logoSize: {
       width: 80,
