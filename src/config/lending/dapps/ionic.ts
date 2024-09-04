@@ -80,6 +80,22 @@ const networks = {
         COLLATERAL_FACTOR: 0.7,
         underlyingToken: mode['stone'],
       },
+      '0x9a9072302B775FfBd3Db79a7766E75Cf82bcaC0A': {
+        decimals: 18,
+        symbol: 'ionweETH (OLD)',
+        address: '0x9a9072302B775FfBd3Db79a7766E75Cf82bcaC0A', // cToken
+        loanToValue: 63,
+        COLLATERAL_FACTOR: 0.7,
+        underlyingToken: mode['we-eth'],
+      },
+      '0x19F245782b1258cf3e11Eda25784A378cC18c108': {
+        decimals: 18,
+        symbol: 'ionM-BTC',
+        address: '0x19F245782b1258cf3e11Eda25784A378cC18c108', // cToken
+        loanToValue: 74,
+        COLLATERAL_FACTOR: 0.64,
+        underlyingToken: mode['m-btc'],
+      },
     },
     // rewardToken: mode['lab'],
   },

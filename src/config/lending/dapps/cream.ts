@@ -82,6 +82,30 @@ const networks = {
       //   address: '0x81C15D3E956e55e77E1f3F257f0A65Bd2725fC55',
       //   underlyingToken: bsc['ada'],
       // },
+      '0x11883Cdea6bAb720092791cc89affa54428Ce069': {
+        decimals: 18,
+        symbol: 'crBTCB',
+        address: '0x11883Cdea6bAb720092791cc89affa54428Ce069',
+        underlyingToken: bsc['btcb'],
+      },
+      '0x426D6D53187be3288fe37f214e3F6901D8145b62': {
+        decimals: 18,
+        symbol: 'crCREAM',
+        address: '0x426D6D53187be3288fe37f214e3F6901D8145b62',
+        underlyingToken: bsc['cream'],
+      },
+      '0x9095e8d707E40982aFFce41C61c10895157A1B22': {
+        decimals: 18,
+        symbol: 'crDAI',
+        address: '0x9095e8d707E40982aFFce41C61c10895157A1B22',
+        underlyingToken: bsc['dai'],
+      },
+      '0xbf9b95b78bc42f6cf53ff2a0ce19d607cfe1ff82': {
+        decimals: 18,
+        symbol: 'crCAKE',
+        address: '0xbf9b95b78bc42f6cf53ff2a0ce19d607cfe1ff82',
+        underlyingToken: bsc['cake'],
+      },
     },
   },
   137: {

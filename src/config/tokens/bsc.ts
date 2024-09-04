@@ -424,4 +424,12 @@ export const bsc: { [key: string]: Token } = {
     name: 'Elrond',
     icon: 'https://ipfs.near.social/ipfs/bafkreicp35o4s373anhoavryqvcm4zad7umjsby5alb767wgsdg4rbjegi',
   },
+  cream: {
+    chainId: CHAIN_ID,
+    address: '0xd4CB328A82bDf5f03eB737f37Fa6B370aef3e888',
+    decimals: 18,
+    symbol: 'CREAM',
+    name: 'Cream',
+    icon: 'https://bscscan.com/token/images/creamfinance_32.png',
+  },
 };
