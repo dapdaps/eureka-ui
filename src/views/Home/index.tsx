@@ -1,22 +1,21 @@
-import { useVersion } from '@/hooks/useVersion';
-import DAvinciModal from '@/views/Home/components/DAvinci/Modal';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+
+import CheckConvertingModal from '@/components/Modal/CheckConverting';
+import MedalRewardModal from '@/components/Modal/MedalReward';
 
 import Compass from './components/Compass';
 import GridChains from './components/GridChains';
-
+import useConvertTip from './hooks/useConvertTip';
 import { StyledContainer } from './styles';
-import dynamic from 'next/dynamic';
 
 const Networks = dynamic(() => import('./components/Networks'));
 const DiscoveryDapps = dynamic(() => import('./components/DiscoveryDapps'));
 const RecentRewards = dynamic(() => import('./components/Rewards'));
 
 const Home = () => {
-  const {
-    visible: versionVisible,
-    handleClosed: handleVersionClosed,
-  } = useVersion();
-
+  const { checkConvertingVisible, setCheckConvertingVisible } = useConvertTip();
+  const [medalRewardVisible, setMedalRewardVisible] = useState<boolean>(false);
   return (
     <StyledContainer>
       <GridChains />
@@ -25,12 +24,23 @@ const Home = () => {
       <DiscoveryDapps />
       <RecentRewards />
 
-      {/* <TrendingEthereum chains={chains} />
-       <QuickOnboarding />
-       <SeamlessNavigation chains={chains} />
-       <Decentralised /> */}
-      {/* <Learn /> */}
-      <DAvinciModal visible={versionVisible} onClose={handleVersionClosed} />
+      {/* <DAvinciModal visible={versionVisible} onClose={handleVersionClosed} /> */}
+      <CheckConvertingModal
+        visible={checkConvertingVisible}
+        onClose={() => {
+          setCheckConvertingVisible(false);
+        }}
+        onCheck={() => {
+          setCheckConvertingVisible(false);
+          setMedalRewardVisible(true);
+        }}
+      />
+      <MedalRewardModal
+        visible={medalRewardVisible}
+        onClose={() => {
+          setMedalRewardVisible(false);
+        }}
+      />
     </StyledContainer>
   );
 };
