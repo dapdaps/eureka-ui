@@ -132,7 +132,7 @@ const Invite = (props: Props) => {
                 medals?.length > 0 && (
                   <StyledMedals>
                     {
-                      medals.map((medal, index) => (<StyledMedal $disabled={modalType !== "success"} $url={medal} key={index} />))
+                      medals.map((medal, index) => (<StyledMedal $disabled={!(modalType === "success" && address)} $url={medal} key={index} />))
                     }
                   </StyledMedals>
                 )
