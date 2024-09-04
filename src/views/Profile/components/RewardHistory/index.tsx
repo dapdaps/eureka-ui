@@ -1,6 +1,6 @@
 import { format } from "date-fns";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 
@@ -21,6 +21,7 @@ import {
   StyledSourceImage,
   StyledSourceMessage
 } from './styles';
+import MedalRewardModal from "@/components/Modal/MedalReward";
 type PropsType = {
   loaded: boolean;
   userRewardRecords: RewardRecordsType | null;
@@ -159,10 +160,13 @@ export default function RewardHistory({
   onPageChange
 }: PropsType) {
 
+  const [medalRewardModalVisible, setMedalRewardModalVisible] = useState(false)
   const router = useRouter()
   const handleClickSource = function (record: RewardType) {
     if (record?.source === "Medals") {
       router.push("/profile/medals")
+    } else if (record?.source === "LearnMore") {
+      setMedalRewardModalVisible(true)
     } else {
       router.push("/odyssey/home?id=" + record?.relate_id)
     }
@@ -217,6 +221,7 @@ export default function RewardHistory({
         }
       </StyledFlex>
       <Pager maxPage={maxPage} pager={pager} onPageChange={onPageChange} />
+      <MedalRewardModal visible={medalRewardModalVisible} onClose={() => setMedalRewardModalVisible(false)} />
     </StyledContainer>
   ) : (
     <Empty
