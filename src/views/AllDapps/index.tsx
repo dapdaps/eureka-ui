@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
-import type { ChangeEvent} from 'react';
+import type { ChangeEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import Selector from '@/components/Dropdown/Selector';
@@ -27,16 +27,16 @@ import DappList from './components/DappList';
 import useList from './hooks/useList';
 
 const categoryAnimation = (_scrolled: boolean, visible = {}, hidden = {}) => ({
-  variants:{
+  variants: {
     visible,
-    hidden,
+    hidden
   },
-  initial:"hidden",
+  initial: 'hidden',
   animate: _scrolled ? 'visible' : 'hidden',
-  transition:{
-    duration: 0.6,
+  transition: {
+    duration: 0.6
   }
-})
+});
 
 const AllDapps = (props: Props) => {
   const {} = props;
@@ -52,19 +52,12 @@ const AllDapps = (props: Props) => {
   const [sort, setSort] = useState<any>(SortList[0].value);
   const [rewardNow, setRewardNow] = useState<boolean>(false);
   const [airdrop, setAirdrop] = useState<boolean>(false);
-  const [category, setCategory] = useState<number| string | undefined>(undefined);
+  const [category, setCategory] = useState<number | string | undefined>(undefined);
   const [searchWord, setSearchWord] = useState<string | undefined>(undefined);
   const [scrolled, setScrolled] = useState<boolean>(false);
   const categoryRef = useRef<any>(null);
 
-  const {
-    loading,
-    dappList,
-    pageTotal,
-    pageIndex,
-    fetchDappList,
-    titleDappList
-  } = useList({
+  const { loading, dappList, pageTotal, pageIndex, fetchDappList, titleDappList } = useList({
     network,
     sort,
     rewardNow,
@@ -73,9 +66,12 @@ const AllDapps = (props: Props) => {
     category
   });
 
-  const setQueryParams = useCallback((params: any) => {
-    router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
-  }, [router, pathname]);
+  const setQueryParams = useCallback(
+    (params: any) => {
+      router.replace(`${pathname}${!params.toString() ? '' : '?' + params.toString()}`, undefined, { scroll: false });
+    },
+    [router, pathname]
+  );
 
   const onSelectNetwork = (_network: number) => {
     if (_network === -1) {
@@ -85,7 +81,7 @@ const AllDapps = (props: Props) => {
     }
     setQueryParams(params);
     setNetwork(_network);
-  }
+  };
 
   const onSortSelect = (_sort: string) => {
     if (_sort === SortList[0].value) {
@@ -95,7 +91,7 @@ const AllDapps = (props: Props) => {
     }
     setQueryParams(params);
     setSort(_sort);
-  }
+  };
 
   const onSelectCategory = (_category: any) => {
     if (!_category) {
@@ -105,7 +101,7 @@ const AllDapps = (props: Props) => {
     }
     setQueryParams(params);
     setCategory(_category);
-  }
+  };
 
   const onSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
     const _searchWord = e.target.value.trim();
@@ -117,7 +113,7 @@ const AllDapps = (props: Props) => {
     }
     setQueryParams(params);
     setSearchWord(_searchWord);
-  }
+  };
 
   const onRewardToggle = () => {
     const _rewardNow = !rewardNow;
@@ -139,7 +135,7 @@ const AllDapps = (props: Props) => {
     }
     setQueryParams(params);
     setAirdrop(_airdrop);
-  }
+  };
 
   useEffect(() => {
     const navbarTop = categoryRef?.current?.offsetTop ?? 278;
@@ -155,16 +151,19 @@ const AllDapps = (props: Props) => {
 
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
-    const _network  = searchParams.get('network');
-    const _reward  = searchParams.get('reward');
-    const _sort  = searchParams.get('sort');
-    const _category  = searchParams.get('category');
-    const _searchWord  = searchParams.get('searchword');
-    const _airdrop  = searchParams.get('airdrop');
+    const _network = searchParams.get('network');
+    const _reward = searchParams.get('reward');
+    const _sort = searchParams.get('sort');
+    const _category = searchParams.get('category');
+    const _searchWord = searchParams.get('searchword');
+    const _airdrop = searchParams.get('airdrop');
 
-    if (networkList.length && checkQueryEmpty(_network as string, () => {
-      return networkList.some((it: any) => it.chain_id === Number(_network));
-    })) {
+    if (
+      networkList.length &&
+      checkQueryEmpty(_network as string, () => {
+        return networkList.some((it: any) => it.chain_id === Number(_network));
+      })
+    ) {
       setNetwork(Number(_network));
     }
 
@@ -196,9 +195,9 @@ const AllDapps = (props: Props) => {
   return (
     <StyledContainer>
       <AllDappsTitle
-        bp='1007-001'
+        bp="1007-001"
         categoryRef={categoryRef}
-        animation={categoryAnimation(scrolled, {zIndex: 49, top: 70 }, { zIndex: 0, top: 0 })}
+        animation={categoryAnimation(scrolled, { zIndex: 49, top: 70 }, { zIndex: 0, top: 0 })}
         onCategory={onSelectCategory}
         activeCategory={category}
         dappList={titleDappList ?? []}
@@ -207,53 +206,40 @@ const AllDapps = (props: Props) => {
       <StyledBody>
         <StyledFilters
           $fixed={scrolled}
-          {
-            ...categoryAnimation(scrolled, {zIndex: 49, top: 104 }, { zIndex: 2, top: 0 })
-          }
+          {...categoryAnimation(scrolled, { zIndex: 49, top: 104 }, { zIndex: 2, top: 0 })}
         >
-          {
-            networkLoading ? (
-              <StyledSelectorLoading>
-                <Loading />
-              </StyledSelectorLoading>
-              ) : (
-              <Selector
-                list={networkList.map((n) => ({ ...n, key: n.id, label: n.name, value: n.chain_id }))}
-                value={network}
-                onSelect={onSelectNetwork}
-                itemValueKey="chain_id"
-                itemLabelKey="name"
-                popupStyle={{
-                  width: 196,
-                  maxHeight: 300,
-                }}
-                renderItem={(item) => (
-                  <StyledNetworkDropdownItem>
-                    {
-                      item.logo && (
-                        <Image src={item.logo} alt="" width={22} height={22} />
-                      )
-                    }
-                    {item.name}
-                  </StyledNetworkDropdownItem>
-                )}
-                isArrowRotate={false}
-              />
-            )
-          }
-          <SortBy value={sort} onSelect={onSortSelect}/>
-          <Radio selected={airdrop} onChange={onAirdropToggle} label='Potential Airdrop' />
-          <Radio colorful selected={rewardNow} onChange={onRewardToggle} label='Reward now' />
+          {networkLoading ? (
+            <StyledSelectorLoading>
+              <Loading />
+            </StyledSelectorLoading>
+          ) : (
+            <Selector
+              list={networkList.map((n) => ({ ...n, key: n.id, label: n.name, value: n.chain_id }))}
+              value={network}
+              onSelect={onSelectNetwork}
+              itemValueKey="chain_id"
+              itemLabelKey="name"
+              popupStyle={{
+                width: 196,
+                maxHeight: 300
+              }}
+              renderItem={(item) => (
+                <StyledNetworkDropdownItem>
+                  {item.logo && <Image src={item.logo} alt="" width={22} height={22} />}
+                  {item.name}
+                </StyledNetworkDropdownItem>
+              )}
+              isArrowRotate={false}
+            />
+          )}
+          <SortBy value={sort} onSelect={onSortSelect} />
+          <Radio selected={airdrop} onChange={onAirdropToggle} label="Potential Airdrop" />
+          {/* <Radio colorful selected={rewardNow} onChange={onRewardToggle} label='Reward now' /> */}
           <StyledSearch>
             <StyledSearchIcon>
               <Image src="/images/alldapps/icon-search.svg" alt="" width={18} height={14} />
             </StyledSearchIcon>
-            <StyledSearchInput
-              type="text"
-              placeholder="search dApp"
-              value={searchWord}
-              onChange={onSearchChange}
-            />
+            <StyledSearchInput type="text" placeholder="search dApp" value={searchWord} onChange={onSearchChange} />
           </StyledSearch>
         </StyledFilters>
         <DappList
@@ -271,6 +257,4 @@ const AllDapps = (props: Props) => {
 
 export default AllDapps;
 
-interface Props {
-
-}
+interface Props {}
