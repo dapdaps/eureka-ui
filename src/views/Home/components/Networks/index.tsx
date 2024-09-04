@@ -426,11 +426,10 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
               <div className="intro-title">{network?.name}</div>
               <div className="intro-detail">
                 <Badges
+                  tvl={network?.tvl}
                   users={network?.participants}
                   rewards={network?.odyssey}
-                  tradingVolume={network?.trading_volume}
-                  tradingVolumeTooltip="Total trading volume on DapDap"
-                  usersTooltip="User amount of this chain on DapDap"
+                  tradingVolume={network?.trading_volume_general}
                 />
               </div>
             </div>
@@ -496,9 +495,10 @@ const SubNetwork = ({ network, handleClickNetwork }: any) => {
       <div className="title">{network?.name}</div>
       <BadgesContainer>
         <Badges
+          tvl={network?.tvl}
           users={network?.participants}
           rewards={network?.odyssey}
-          tradingVolume={network?.trading_volume}
+          tradingVolume={network?.trading_volume_general}
           isCenter
         />
       </BadgesContainer>

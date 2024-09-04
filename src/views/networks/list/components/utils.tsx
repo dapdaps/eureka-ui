@@ -32,36 +32,34 @@ export const TagList = [
 
 export const DataListShown = (
   {
-    trading_volume_change_percent,
-    trading_volume,
-    participants_change_percent,
-    participants,
+    tvl,
+    trading_volume_general,
     total_integrated_dapp,
     total_medal,
     classname,
   }: any,
 ) => {
   const list = [{
-    key: 'Volume',
-    label: 'Trading Volume',
+    key: 'TVL',
+    label: 'TVL',
     percent: true,
-    value: <ValuePercent percent={trading_volume_change_percent} className={classname}>
-      ${formatIntegerThousandsSeparator(trading_volume, 1)}
+    value: <ValuePercent className={classname}>
+      ${formatIntegerThousandsSeparator(tvl, 1)}
     </ValuePercent>,
   },
-    {
-      key: 'Users',
-      label: 'Users',
-      value: <ValuePercent percent={participants_change_percent} className={classname}>
-        {formatIntegerThousandsSeparator(participants, 0)}
-      </ValuePercent>,
-    },
-    {
-      key: 'dApps',
-      label: 'Integrated dApps',
-      value: formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' }),
-      underline: true,
-    },
+  {
+    key: 'Volume (24h)',
+    label: 'Volume (24h)',
+    value: <ValuePercent className={classname}>
+      ${formatIntegerThousandsSeparator(trading_volume_general, 0)}
+    </ValuePercent>,
+  },
+  {
+    key: 'dApps',
+    label: 'Integrated dApps',
+    value: formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' }),
+    underline: true,
+  },
   ];
   if (total_medal !== undefined) {
     return list.concat({

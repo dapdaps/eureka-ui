@@ -25,11 +25,8 @@ const StyleImageMedals = styled.img`
 `
 const DappDetail = (props: Props) => {
   const {
-    trading_volume,
-    trading_volume_change_percent,
-    total_execution,
-    participants,
-    participants_change_percent,
+    tvl,
+    trading_volume_general,
   } = props;
 
   const [ref, animate] = useAnimate();
@@ -37,22 +34,16 @@ const DappDetail = (props: Props) => {
 
   const summaryList = [
     {
-      key: 'volume',
-      label: 'Trading Volume on DapDap',
-      value: `$${formatIntegerThousandsSeparator(trading_volume, 2)}`,
-      increaseValue: trading_volume_change_percent || '',
+      key: 'tvl',
+      label: 'TVL',
+      value: `$${formatIntegerThousandsSeparator(tvl, 2)}`,
+      increaseValue:  '',
     },
     {
       key: 'txns',
-      label: 'Total txns',
-      value: `${formatIntegerThousandsSeparator(total_execution, 0)}`,
+      label: 'Volume (24h)',
+      value: `$${formatIntegerThousandsSeparator(trading_volume_general, 2)}`,
       increaseValue: '',
-    },
-    {
-      key: 'user',
-      label: 'User',
-      value: `${formatIntegerThousandsSeparator(participants, 0)}`,
-      increaseValue: participants_change_percent || '',
     },
   ];
 
@@ -115,6 +106,8 @@ const DappDetail = (props: Props) => {
 export default DappDetail;
 
 export interface Props {
+  tvl: number;
+  trading_volume_general: number;
   trading_volume: string;
   trading_volume_change_percent: string;
   total_execution: string;

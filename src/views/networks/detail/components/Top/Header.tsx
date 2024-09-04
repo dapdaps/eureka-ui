@@ -21,11 +21,8 @@ const Header = (props: { chain: any; loading?: boolean; }) => {
   const {
     logo,
     name,
-    trading_volume,
-    trading_volume_change_percent,
-    total_execution,
-    participants,
-    participants_change_percent,
+    tvl,
+    trading_volume_general,
     chainId,
   } = chain;
 
@@ -83,21 +80,15 @@ const Header = (props: { chain: any; loading?: boolean; }) => {
           )) : (
             <>
               <StyledStatItem>
-                <span className="key">Trading Volume on DapDap</span>
-                <ValuePercent percent={trading_volume_change_percent} className="tvl-value">
-                  ${formatIntegerThousandsSeparator(trading_volume, 1)}
-                </ValuePercent>
-              </StyledStatItem>
-              <StyledStatItem>
-                <span className="key">Total txns</span>
+                <span className="key">TVL</span>
                 <ValuePercent className="tvl-value">
-                  {formatIntegerThousandsSeparator(total_execution, 0)}
+                  ${formatIntegerThousandsSeparator(tvl, 1)}
                 </ValuePercent>
               </StyledStatItem>
               <StyledStatItem>
-                <span className="key">User</span>
-                <ValuePercent percent={participants_change_percent} className="tvl-value">
-                  {formatIntegerThousandsSeparator(participants, 0)}
+                <span className="key">Volume (24h)</span>
+                <ValuePercent className="tvl-value">
+                  {formatIntegerThousandsSeparator(trading_volume_general, 0)}
                 </ValuePercent>
               </StyledStatItem>
             </>

@@ -43,6 +43,7 @@ const DappCard = (props: Props) => {
     bp = {},
     onClick = () => {
     },
+    tvl = 0,
     users = 0,
     tradingVolume = 0,
     route,
@@ -104,6 +105,7 @@ const DappCard = (props: Props) => {
         </StyledDappCardDescription>
         <Badges
           customBadges={rewardList}
+          tvl={tvl}
           users={users}
           tradingVolume={tradingVolume}
         />
@@ -119,6 +121,7 @@ export interface Props {
   logo: string;
   description?: string;
   tradingVolume: number | string;
+  tvl: number | string;
   users: number | string;
   categories?: Category[];
   networks?: Network[];

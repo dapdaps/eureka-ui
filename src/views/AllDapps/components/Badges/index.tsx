@@ -17,6 +17,7 @@ const Badges = (props: Props) => {
   const {
     rewards,
     tradingVolume,
+    tvl,
     users,
     tradingVolumeTooltip,
     usersTooltip,
@@ -29,20 +30,21 @@ const Badges = (props: Props) => {
 
   const [containerStyle, setContainerStyle] = useState<React.CSSProperties>();
 
+
   const initBadges: Badge[] = [
     {
-      name: 'Trading Volume',
+      name: 'TVL',
+      icon: '/images/alldapps/icon-tvl.svg',
+      value: '$' + formatIntegerThousandsSeparator(tvl, 2),
+      iconSize: 17,
+      tooltip: 'TVL',
+    },
+    {
+      name: 'Volume (24h)',
       icon: '/images/alldapps/icon-exchange.svg',
       value: '$' + formatIntegerThousandsSeparator(tradingVolume, 2),
       iconSize: 17,
-      tooltip: tradingVolumeTooltip || 'Trading Volume',
-    },
-    {
-      name: 'User Amount',
-      icon: '/images/alldapps/icon-fire.svg',
-      value: formatIntegerThousandsSeparator(users, 0),
-      iconSize: 17,
-      tooltip: usersTooltip || 'User Amount',
+      tooltip: tradingVolumeTooltip || 'Volume (24h)',
     },
     ...customBadges,
   ];
@@ -297,6 +299,7 @@ export default Badges;
 export interface Props {
   rewards?: Partial<NetworkOdyssey>[];
   tradingVolume: string | number;
+  tvl: string | number;
   users: string | number;
   tradingVolumeTooltip?: string;
   usersTooltip?: string;

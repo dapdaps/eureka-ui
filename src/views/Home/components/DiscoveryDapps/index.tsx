@@ -67,7 +67,8 @@ const DiscoveryDapps = () => {
                         categories={dapp.categories}
                         networks={dapp.networks}
                         onClick={() => onDappCardClick(dapp)}
-                        tradingVolume={dapp.trading_volume}
+                        tradingVolume={dapp?.trading_volume_general}
+                        tvl={dapp.tvl}
                         users={dapp.participants}
                         route={dapp.route}
                       />
