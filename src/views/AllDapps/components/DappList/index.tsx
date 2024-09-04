@@ -4,7 +4,16 @@ import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
 import useDappOpen from '@/hooks/useDappOpen';
 import DappCard from '@/views/AllDapps/components/DappCard';
-import { StyledContainer, StyledDappList, StyledEmptyContainer, StyledEmptyInner, StyledEmptyItem, StyledEmptyShadow, StyledEmptyText,StyledFoot } from '@/views/AllDapps/components/DappList/styles';
+import {
+  StyledContainer,
+  StyledDappList,
+  StyledEmptyContainer,
+  StyledEmptyInner,
+  StyledEmptyItem,
+  StyledEmptyShadow,
+  StyledEmptyText,
+  StyledFoot
+} from '@/views/AllDapps/components/DappList/styles';
 import DappLoading from '@/views/AllDapps/Loading/Dapp';
 
 import AdvertiseCardList from '../../../AdvertiseCardList';
@@ -22,7 +31,7 @@ const DappList = (props: Props) => {
     from = 'alldapps',
     loadingLength = PageSize,
     loadFromApi = true
-  } = props
+  } = props;
 
   const onDappCardClick = (dapp: any) => {
     open({ dapp, from });
@@ -30,54 +39,42 @@ const DappList = (props: Props) => {
 
   return (
     <StyledContainer style={props?.style}>
-      {
-        loading ? (
-          <DappLoading length={loadingLength}/>
-        ) : (
-            dappList.length ? (
-              <StyledDappList>
-                {
-                  dappList.map((dapp: any, idx: number) => dapp.isAdvertise
-                    ? (
-                        <AdvertiseCardList
-                          key={idx}
-                          classname='advertise'
-                          adList={dapp.advertise}
-                        />
-                      )
-                    :(
-                    <DappCard
-                      bp={props.bp}
-                      key={idx}
-                      name={dapp.name}
-                      logo={dapp.logo}
-                      description={dapp.description}
-                      categories={dapp.categories}
-                      networks={dapp.networks}
-                      onClick={() => onDappCardClick(dapp)}
-                      tradingVolume={dapp?.trading_volume}
-                      users={dapp?.participants}
-                      route={dapp?.route}
-                    />
-                  ))
-                }
-              </StyledDappList>
+      {loading ? (
+        <DappLoading length={loadingLength} />
+      ) : dappList.length ? (
+        <StyledDappList>
+          {dappList.map((dapp: any, idx: number) =>
+            dapp.isAdvertise ? (
+              <AdvertiseCardList key={idx} classname="advertise" adList={dapp.advertise} />
+            ) : (
+              <DappCard
+                bp={props.bp}
+                key={idx}
+                name={dapp.name}
+                logo={dapp.logo}
+                description={dapp.description}
+                categories={dapp.categories}
+                networks={dapp.networks}
+                onClick={() => onDappCardClick(dapp)}
+                tradingVolume={dapp?.trading_volume_general}
+                users={dapp?.participants}
+                tvl={dapp?.tvl}
+                route={dapp?.route}
+              />
             )
-            : (
-              <StyledEmptyContainer>
-                {
-                  new Array(3).fill('').map((item, index) => (
-                    <StyledEmptyItem key={`empty_${index}`}/>
-                  ))
-                }
-                <StyledEmptyShadow />
-                <StyledEmptyInner>
-                  <Empty size={42} tips={<StyledEmptyText>No dApp found</StyledEmptyText>}/>
-                </StyledEmptyInner>
-              </StyledEmptyContainer>
-            )
-        )
-      }
+          )}
+        </StyledDappList>
+      ) : (
+        <StyledEmptyContainer>
+          {new Array(3).fill('').map((item, index) => (
+            <StyledEmptyItem key={`empty_${index}`} />
+          ))}
+          <StyledEmptyShadow />
+          <StyledEmptyInner>
+            <Empty size={42} tips={<StyledEmptyText>No dApp found</StyledEmptyText>} />
+          </StyledEmptyInner>
+        </StyledEmptyContainer>
+      )}
       <StyledFoot>
         <Pagination
           pageTotal={pageTotal}
@@ -97,14 +94,14 @@ export default memo(DappList);
 interface Props {
   onPage?(page: number): void;
   // data anchor
-  bp?: { detail: string; dapp: string; };
+  bp?: { detail: string; dapp: string };
   loading: boolean;
   dappList: Record<string, any>[];
   pageTotal: number;
   pageIndex: number;
   fetchDappList: (page: number) => void;
   style?: React.CSSProperties;
-  from?:  'home' | 'quest' | 'alldapps'
+  from?: 'home' | 'quest' | 'alldapps';
   loadingLength?: number;
   loadFromApi?: boolean;
 }
