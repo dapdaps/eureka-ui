@@ -1,15 +1,20 @@
 import { AnimatePresence } from 'framer-motion';
-import { useState } from "react";
+import { router } from 'next/client';
+import { useMemo, useState } from 'react';
 
+import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
+import { SupportedChains } from '@/config/all-in-one/chains';
+import useAccount from '@/hooks/useAccount';
 import type { Category } from '@/hooks/useAirdrop';
 import useMyHistory from "@/views/Dapp/hooks/useMyHistory";
 
-import {TABS } from "../config";
+import { TABS } from '../config';
 import Animate from './Animate';
 import MyHistory from "./MyHistory";
 import Overview from "./Overview";
 import {
   StyledContainer,
+  StyledPortfolioButton,
   StyledTab,
   StyledTabContainer,
   StyledTabIcon,
@@ -20,6 +25,8 @@ import {
 const DetailTabs = (props: Props) => {
 
   const [currTab, setCurrTab] = useState<string>(TABS[0].key);
+
+  const { account } = useAccount();
 
   const {
     logo,
@@ -43,6 +50,14 @@ const DetailTabs = (props: Props) => {
     return tab === TABS[1].key;
   }
 
+  const isShowPortfolio = useMemo(() => {
+    return !!chain_id && SupportedChains.map(item => item.chainId).includes(chain_id);
+  }, [chain_id]);
+
+  const onPortfolio = () => {
+    router.push("/portfolio");
+  }
+
   return (
     <StyledContainer>
       <StyledTabContainer>
@@ -64,6 +79,12 @@ const DetailTabs = (props: Props) => {
             ))
           }
         </StyledTabs>
+        {
+          account && isShowPortfolio && (<StyledPortfolioButton onClick={onPortfolio}>
+            Portfolio
+            <ArrowLineIcon />
+          </StyledPortfolioButton>)
+        }
       </StyledTabContainer>
       <StyledTabsContent>
         <AnimatePresence mode="wait">

@@ -1,17 +1,16 @@
 import { useDebounceFn } from 'ahooks';
+import Big from 'big.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
 import type { NetworkBalance } from '@/components/ChainsDock/index';
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
-import LazyImage from '@/components/LazyImage';
 import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
-import useAccount from '@/hooks/useAccount';
 import { StyledFlex } from '@/styled/styles';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
@@ -22,8 +21,6 @@ const OffsetLeft = 17;
 
 const ChainsDockDetail = (props: Props) => {
   const { children, network, onBridgeShow, loading } = props;
-
-  const { account } = useAccount();
 
   const triggerRef = useRef<any>();
 
@@ -100,14 +97,6 @@ const Detail = (props: DetailProps) => {
 
   const balanceRef = useRef<any>(null);
 
-  const nativeCurrency = useMemo(() => {
-    try {
-      return JSON.parse(network.native_currency);
-    } catch (err) {
-      return {};
-    }
-  }, [network]);
-
   const handleNetworkDetailPre = () => {
     if (!id) return;
     router.prefetch(`/networks/${IdToPath[id]}`);
@@ -176,14 +165,17 @@ const Detail = (props: DetailProps) => {
         </StyledHead>
         <StyledFlex justifyContent="space-between" gap="10px" style={{ marginBottom: '20px', position: 'relative', padding: '0 20px' }}>
           <StyledFlex flexDirection="column" alignItems="center">
-            <StyledSummaryTitle>
+            <StyledSummaryTitle
+              className={ !loading ? 'show-dot' : '' }
+              $isUsd={!loading && network?.balance && Big(network.balance).toNumber() > 0}
+            >
               In Wallet
             </StyledSummaryTitle>
             {
-              loading && isSupported ? (
+              loading ? (
                 <Skeleton height={30} width={100} />
               ) : (
-                <StyledSummaryValue $blur={!isSupported}>
+                <StyledSummaryValue>
                   {formateValueWithThousandSeparatorAndFont(network?.balance, 2, true, {
                     prefix: '$',
                     isZeroPrecision: true,
@@ -197,25 +189,18 @@ const Detail = (props: DetailProps) => {
               DeFi
             </StyledSummaryTitle>
             {
-              loading && isSupported ? (
-                <Skeleton height={30} width={100} />
-              ) : (
-                <StyledSummaryValue $blur={!isSupported}>
-                  {formateValueWithThousandSeparatorAndFont(isSupported ? network?.totalUsd : 0, 2, true, {
-                    prefix: '$',
-                    isZeroPrecision: true,
-                  })}
-                </StyledSummaryValue>
-              )
-            }
-          </StyledFlex>
-          {
-            !isSupported && (
-              <StyledComingSoon>
+              isSupported ? (
+                loading ?
+                  (<Skeleton height={30} width={100} />)
+                  : formateValueWithThousandSeparatorAndFont(network?.totalUsd ?? 0, 2, true, {
+              prefix: '$',
+              isZeroPrecision: true,
+            })) : (<StyledComingSoon>
                 Coming soon...
-              </StyledComingSoon>
-            )
-          }
+              </StyledComingSoon>)
+            }
+
+          </StyledFlex>
         </StyledFlex>
         <StyledFoot>
           <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
@@ -368,11 +353,24 @@ const StyledArrow = styled.div`
     opacity: 0.8;
   }
 `;
-const StyledSummaryTitle = styled.div`
+const StyledSummaryTitle = styled.div<{ $isUsd?: boolean }>`
   color: #979ABE;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+  
+  &.show-dot::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    background-color: ${({$isUsd}) => $isUsd ? '#68CF56' : '#4C506B'};
+    border-radius: 50%;
+  }
 `;
 const StyledSummaryValue = styled.div<{ $blur?: boolean; }>`
   text-align: center;
@@ -386,12 +384,5 @@ const StyledComingSoon = styled.div`
   color: #979ABE;
   text-align: center;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
-  position: absolute;
-  z-index: 1;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
 `;

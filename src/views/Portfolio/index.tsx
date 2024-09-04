@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 
 import NotificationBar from '@/components/NotificationBar';
@@ -23,7 +24,8 @@ import {
   StyledContent,
   StyledFeedbackContainer,
   StyledFeedbackText,
-  StyledLink} from './styles';
+  StyledLink
+} from './styles';
 
 const TABS = [
   {
@@ -45,7 +47,9 @@ const TABS = [
 
 export default function Portfolio() {
   const { account } = useAccount();
-  const [tab, setTab] = useState(TABS[0].key);
+
+  const router = useRouter();
+  const [tab, setTab] = useState<string>(TABS[0].key);
   const [network, setNetwork] = useState<number>(-1);
 
   const { networkList } = useNetworks();
@@ -95,6 +99,13 @@ export default function Portfolio() {
   const link = (
     <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">feedback here</a>
   );
+
+  useEffect(() => {
+    const routerTab: any = router.query?.tab ?? '';
+    if (routerTab && !!(TABS.find(tab => tab.key === routerTab))) {
+      setTab(routerTab);
+    }
+  }, [router.query?.tab]);
   
   return (
     <StyledContainer>

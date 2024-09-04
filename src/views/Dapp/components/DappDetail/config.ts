@@ -36,6 +36,3 @@ export const TABS = [
     bp: "1006-002-007"
   },
 ];
-
-// Polygon zkEVM, zkSync, Linea, Scroll, Blast
-export const chainPortfolioShowConfig = [1101, 324, 59144, 534352, 81457];

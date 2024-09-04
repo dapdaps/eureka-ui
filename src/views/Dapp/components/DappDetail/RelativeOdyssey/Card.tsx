@@ -12,9 +12,10 @@ import { formatIntegerThousandsSeparator } from '@/utils/format-number';
 import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
 import {
   StyledOdysseyBanner,
-StyledOdysseyBannerMask,
+  StyledOdysseyBannerMask,
   StyledOdysseyBody,
-  StyledOdysseyButton,   StyledOdysseyContainer,
+  StyledOdysseyButton,
+  StyledOdysseyContainer,
   StyledOdysseyHead,
   StyledOdysseyIcon,
   StyledOdysseyIconTitle,

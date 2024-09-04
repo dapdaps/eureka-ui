@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export const StyledContainer = styled(motion.div)<{ $top?: number; }>`
   position: fixed;
-  z-index: 1;
+  z-index: 60;
   right: 0;
   top: 0;
   width: 66px;
@@ -46,4 +46,22 @@ export const StyledLine = styled.div`
   height: 1px;
   background: #333740;
   flex-shrink: 0;
+`;
+
+export const StyledDot = styled.div<{ $isUsd: boolean }>`
+  
+  &.show-dot {
+    .chain-dock-img::before {
+      content: '';
+      display: block;
+      background-color: #68CF56;
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      }
+  }
 `;

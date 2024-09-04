@@ -27,6 +27,9 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledTabContainer = styled.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;  
 `;
 
 export const StyledTabs = styled.div`
@@ -479,4 +482,22 @@ export const StyledOverviewShadow = styled.img`
 
 export const StyledImageButton = styled(Image)`
   cursor: pointer;
+`;
+
+export const StyledPortfolioButton = styled.button`
+  background-color: #18191E;
+  border: 1px solid #333648;
+  color: #979ABE;
+  font-family: Montserrat;
+  font-size: 14px;
+  padding: 9px 12px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  column-gap: 9px;
+  transition: opacity .2s ease;
+  
+  &:hover {
+    opacity: 0.8;
+  }
 `;
