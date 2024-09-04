@@ -1,5 +1,5 @@
 import { AnimatePresence } from 'framer-motion';
-import { router } from 'next/client';
+import { useRouter } from 'next/router';
 import { useMemo, useState } from 'react';
 
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
@@ -28,6 +28,8 @@ const DetailTabs = (props: Props) => {
 
   const { account } = useAccount();
 
+  const router = useRouter();
+
   const {
     logo,
     category,
@@ -50,9 +52,12 @@ const DetailTabs = (props: Props) => {
     return tab === TABS[1].key;
   }
 
+
+  const chainIds = category === 'network' ? [chain_id] : dapp_network.map(item => item.chain_id);
+
   const isShowPortfolio = useMemo(() => {
-    return !!chain_id && SupportedChains.map(item => item.chainId).includes(chain_id);
-  }, [chain_id]);
+    return chainIds.some((chain: number) => SupportedChains.map(item => item.chainId).includes(chain));
+  }, [chainIds]);
 
   const onPortfolio = () => {
     router.push("/portfolio");
@@ -109,7 +114,7 @@ const DetailTabs = (props: Props) => {
                   pageTotal={pageTotal}
                   pageIndex={pageIndex}
                   fetchHistoryList={fetchHistoryList}
-                  chainIds={category === 'network' ? [chain_id] : dapp_network.map(item => item.chain_id)}
+                  chainIds={chainIds}
                 />
               </Animate>
             )
