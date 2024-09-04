@@ -124,6 +124,8 @@ export default memo(function ProfileView() {
     if (target) {
       if (target === "favorite") {
         setTab("FavoriteApps")
+      } else if (target === "reward") {
+        setTab("RewardHistory")
       } else {
         setOpenInviteFirendsModal(true)
       }

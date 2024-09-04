@@ -1,7 +1,15 @@
+import { useRouter } from 'next/router';
+import { useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Modal from '@/components/Modal';
+import { useUserStore } from '@/stores/user';
 import { StyledFlex, StyledFont, StyledSvg } from '@/styled/styles';
+import { ellipsAccount } from '@/utils/account';
+import { formatValueDecimal } from '@/utils/formate';
+import Counter from '@/views/AllDapps/components/Title/Counter';
+import useConvert from '@/views/Home/hooks/useConvert';
+import type { ConvertType } from '@/views/Home/types';
 const StyledMedalReward = styled.div`
   
 `
@@ -23,6 +31,8 @@ const StyledUserAvatar = styled.img`
 `
 const StyledMedalRewardMiddle = styled.div`
   padding: 0 24px;
+  height: 600px;
+  overflow: auto;
 `
 const StyledLegacyWrapper = styled.div`
   padding: 0 4px;
@@ -83,10 +93,26 @@ const StyledMedalsTop = styled.div`
   justify-content: space-between;
 `
 const StyledMedalsBottom = styled.div`
+  margin-top: 28px;
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 9px 12px;
+  gap: 12px 8px;
+`
+const StyledMedal = styled.div`
+  padding-top: 9px;
+  width: 112px;
+  height: 120px;
+  border-radius: 12px;
+  border: 1px solid #202329;
+  background: #101115;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+`
+const StyledMedalImage = styled.img`
+  width: 65px;
 `
 
 const StyledMedalRewardBottom = styled.div`
@@ -117,6 +143,26 @@ const StyledMedalRewardButton = styled.div`
 `
 const StyledMedalRewardConfirmButton = styled.div`
   flex: 1;
+`
+
+const StyledTipsContainer = styled.div`
+  position: relative;
+`
+const StyledTips = styled.div`
+  /* display: none; */
+  transform: translate(calc(-50% + 6px), calc(-100% - 8px));
+  position: fixed;
+  padding: 12px 18px;
+  border-radius: 8px;
+  border: 1px solid #333648;
+  background: #1F2229;
+  box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
+  color: #979ABE;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%; /* 21px */
 `
 const TipsSvg = (
   <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -149,36 +195,83 @@ const ArrowSvg = (
     <path d="M7.76795 16C8.53775 17.3333 10.4623 17.3333 11.2321 16L18.5933 3.25C19.3631 1.91667 18.4008 0.25 16.8612 0.25H2.13878C0.599184 0.25 -0.363067 1.91667 0.406733 3.25L7.76795 16Z" fill="#EBF479" />
   </svg>
 )
-
-const LegacyList = [{
-  key: 'earned',
+type LegacyType = {
+  key: keyof ConvertType,
+  label: string;
+  tips: string;
+  unit?: string;
+  decimal?: number;
+}
+const LegacyList: LegacyType[] = [{
+  key: 'pts',
   label: 'You earned',
-  tips: '',
+  tips: 'The total PTS you earned',
 }, {
-  key: 'earned',
+  key: 'trading_volume',
+  unit: '$',
   label: 'Your transctions',
-  tips: '',
+  decimal: 2,
+  tips: 'The trading volume you generated on DapDap',
 }, {
-  key: 'earned',
+  key: 'total_invite',
   label: 'Refferrals',
-  tips: '',
+  tips: `The friends you've referred to join`,
 }, {
-  key: 'earned',
-  label: 'Activity',
-  tips: '',
+  key: 'total_checkin',
+  label: 'Check-In',
+  tips: 'The days you have cumulatively checked in',
 },]
+
+const Tips = function ({ tips }: { tips: string }) {
+  const [boundingClientRect, setBoundingClientRect] = useState<any>(null);
+  return (
+    <StyledTipsContainer
+      onMouseEnter={(event: any) => {
+        setBoundingClientRect(event?.target?.getBoundingClientRect())
+      }}
+      onMouseLeave={(event) => {
+        setBoundingClientRect(null)
+      }}
+    >
+      <StyledSvg style={{ cursor: 'pointer' }}>
+        {TipsSvg}
+      </StyledSvg>
+      {
+        boundingClientRect && (
+          <StyledTips style={{ left: boundingClientRect.x, top: boundingClientRect.y }}>{tips}</StyledTips>
+        )
+      }
+    </StyledTipsContainer>
+  )
+}
 const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }) {
+  const router = useRouter()
+  const userInfo = useUserStore((store: any) => store.user);
+  const { convert } = useConvert()
+
+  const twitterUsername = useMemo(() => {
+    return userInfo?.twitter?.twitter_username
+  }, [userInfo])
+
   return (
     <StyledMedalReward>
       <StyledMedalRewardTop>
         <StyledUser>
-          <StyledUserAvatar />
+          <StyledUserAvatar src={userInfo?.avatar} />
           <StyledFlex flexDirection='column' alignItems='flex-start' gap='9px'>
-            <StyledFont color='#FFF' fontSize='20px' fontWeight='500'>@dappmeup</StyledFont>
-            <StyledFont color='#FFF' fontSize='14px'>0x3bcb...b717</StyledFont>
+            {
+              twitterUsername ? (
+                <>
+                  <StyledFont color="#FFF" fontSize="18px" fontWeight="600">{twitterUsername}</StyledFont>
+                  <StyledFont color="#FFF" fontSize="12px">{ellipsAccount(userInfo?.address)}</StyledFont>
+                </>
+              ) : (
+                <StyledFont color="#FFF" fontSize="18px" fontWeight="600">{ellipsAccount(userInfo?.address)}</StyledFont>
+              )
+            }
           </StyledFlex>
         </StyledUser>
-        <StyledSvg>
+        <StyledSvg style={{ cursor: 'pointer' }} onClick={onClose}>
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
             <path d="M7.73284 6.00004L11.7359 1.99701C12.0368 1.696 12.0882 1.2593 11.8507 1.0219L10.9779 0.14909C10.7404 -0.0884124 10.3043 -0.0363122 10.0028 0.264491L6.00013 4.26743L1.99719 0.264591C1.69619 -0.036712 1.25948 -0.0884125 1.02198 0.14939L0.149174 1.0223C-0.0882277 1.2594 -0.0368271 1.6961 0.264576 1.99711L4.26761 6.00004L0.264576 10.0033C-0.0363271 10.3041 -0.0884277 10.7405 0.149174 10.978L1.02198 11.8509C1.25948 12.0884 1.69619 12.0369 1.99719 11.736L6.00033 7.73276L10.0029 11.7354C10.3044 12.037 10.7405 12.0884 10.978 11.8509L11.8508 10.978C12.0882 10.7405 12.0368 10.3041 11.736 10.0029L7.73284 6.00004Z" fill="#979ABE" />
           </svg>
@@ -195,11 +288,9 @@ const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }
                 <StyledLegacy key={legacy.label}>
                   <StyledLegacyLabel>
                     <StyledFont color='#979ABE' fontSize='14px'>{legacy.label}</StyledFont>
-                    <StyledSvg>
-                      {TipsSvg}
-                    </StyledSvg>
+                    <Tips key={legacy?.label} tips={legacy?.tips} />
                   </StyledLegacyLabel>
-                  <StyledLegacyValue>20,000 PTS</StyledLegacyValue>
+                  <StyledLegacyValue>{formatValueDecimal(convert ? convert[legacy?.key] : 0, legacy?.unit ?? '', legacy?.decimal ?? 0)} {legacy?.key === 'pts' ? 'PTS' : ''}</StyledLegacyValue>
                 </StyledLegacy>
               ))
             }
@@ -220,7 +311,10 @@ const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }
                 <StyledSvg>{GemSvg}</StyledSvg>
                 <StyledSvg className='star'>{StarSvg}</StyledSvg>
               </StyledGemSvg>
-              <StyledFont color='#FFF' fontWeight='600'>x 125</StyledFont>
+              <StyledFont color='#FFF' fontWeight='600'>x <Counter
+                from={1}
+                to={convert?.gem ?? 0}
+              /></StyledFont>
             </StyledFlex>
 
           </StyledGems>
@@ -230,17 +324,36 @@ const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }
                 <StyledFont color='#FFF' fontWeight='600'>Medals</StyledFont>
                 <StyledSvg>{TipsSvg}</StyledSvg>
               </StyledFlex>
-              <StyledFont color='#FFF' fontWeight='600'>x 12</StyledFont>
+              <StyledFont color='#FFF' fontWeight='600'>x <Counter
+                from={1}
+                to={convert?.medals?.length ?? 0}
+              /></StyledFont>
             </StyledMedalsTop>
             <StyledMedalsBottom>
-
+              {
+                convert?.medals?.map(medal => (
+                  <StyledMedal key={medal?.id}>
+                    <StyledMedalImage src={medal?.logo} />
+                    <StyledFont className='ellipsis' color='#FFF' fontSize='12px' fontWeight='500' lineClamp="2" style={{ width: 100 }}>{medal?.level_name}</StyledFont>
+                  </StyledMedal>
+                ))
+              }
             </StyledMedalsBottom>
           </StyledMedals>
         </StyledGemsAndMedals>
       </StyledMedalRewardMiddle>
       <StyledMedalRewardBottom>
-        <StyledMedalRewardButton>Medal Dashboard</StyledMedalRewardButton>
-        <StyledMedalRewardButton className='confirm'>My Reward History</StyledMedalRewardButton>
+        <StyledMedalRewardButton
+          onClick={() => {
+            router.push("/profile/medals")
+          }}
+        >Medal Dashboard</StyledMedalRewardButton>
+        <StyledMedalRewardButton
+          className='confirm'
+          onClick={() => {
+            router.push("/profile?target=reward")
+          }}
+        >My Reward History</StyledMedalRewardButton>
       </StyledMedalRewardBottom>
     </StyledMedalReward>
   )

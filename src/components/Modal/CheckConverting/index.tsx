@@ -42,8 +42,9 @@ const StyledCheckConvertingButton = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 150%; /* 24px */
+  cursor: pointer;
 `
-const CheckConvertingContent = function ({ onClose }: { onClose: VoidFunction }) {
+const CheckConvertingContent = function ({ onClose, onCheck }: { onClose: VoidFunction; onCheck: VoidFunction }) {
   return (
     <StyledCheckConverting>
       <StyledCheckConvertingTop>
@@ -60,13 +61,13 @@ const CheckConvertingContent = function ({ onClose }: { onClose: VoidFunction })
         <StyledFont color='#979ABE' lineHeight='150%'>
           Your transaction volume, engagement, referrals, and PTS have been converted into medals. Activate them now to earn gem rewards, which determine your airdrop amount. You have one month to manually convert your PTS before automatic conversion.
         </StyledFont>
-        <StyledCheckConvertingButton>Check My PTS Converting</StyledCheckConvertingButton>
+        <StyledCheckConvertingButton onClick={onCheck}>Check My PTS Converting</StyledCheckConvertingButton>
       </StyledCheckConvertingBottom>
     </StyledCheckConverting>
   )
 }
 const CheckConvertingModal = (props: Props) => {
-  const { visible, onClose } = props;
+  const { visible, onClose, onCheck } = props;
   return (
     <Modal
       display={visible}
@@ -74,7 +75,7 @@ const CheckConvertingModal = (props: Props) => {
       portal={true}
       width={680}
       content={
-        <CheckConvertingContent onClose={onClose} />
+        <CheckConvertingContent onClose={onClose} onCheck={onCheck} />
       }
     />
   );
@@ -85,4 +86,5 @@ export default CheckConvertingModal;
 interface Props {
   visible: boolean;
   onClose(): void;
+  onCheck: VoidFunction
 }
