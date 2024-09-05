@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
+
 import Rank from '@/views/Dapp/components/RankModal'
 
 const Wrapper = styled.div`
