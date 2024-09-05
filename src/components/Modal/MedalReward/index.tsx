@@ -42,13 +42,15 @@ const StyledLegacyContainer = styled.div`
   background: rgba(16, 17, 21, 0.5);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   padding: 0 20px;
 `;
 const StyledLegacy = styled.div`
-  flex: 1;
+  /* flex: 1; */
   display: flex;
   flex-direction: column;
   gap: 10px;
+  align-items: center;
 `;
 const StyledLegacyLabel = styled.div`
   display: flex;
@@ -131,6 +133,7 @@ const StyledMedalRewardButton = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 150%; /* 24px */
+  cursor: pointer;
   &.confirm {
     border: none;
     background-color: #ebf479;
@@ -307,9 +310,14 @@ const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }
 
       <StyledMedalRewardMiddle>
         <StyledLegacyWrapper>
-          <StyledFont color="#FFF" fontWeight="600" style={{ paddingLeft: 20 }}>
-            Your Legacy PTS
-          </StyledFont>
+          <StyledFlex justifyContent="space-between" style={{ paddingLeft: 20, paddingRight: 20 }}>
+            <StyledFont color="#FFF" fontWeight="600">
+              Your Legacy PTS
+            </StyledFont>
+            <StyledFont color="#979ABE" fontSize="14px">
+              Data as of [8/28/2024]
+            </StyledFont>
+          </StyledFlex>
           <StyledLegacyContainer>
             {LegacyList.map((legacy) => (
               <StyledLegacy key={legacy.label}>
@@ -336,7 +344,7 @@ const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }
               <StyledFont color="#FFF" fontWeight="600">
                 Gems
               </StyledFont>
-              <StyledSvg>{TipsSvg}</StyledSvg>
+              <Tips tips="Gems earned through your PTS and interactions on DapDap" />
             </StyledFlex>
             <StyledFlex gap="13px">
               <StyledGemSvg>
@@ -354,7 +362,7 @@ const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }
                 <StyledFont color="#FFF" fontWeight="600">
                   Medals
                 </StyledFont>
-                <StyledSvg>{TipsSvg}</StyledSvg>
+                <Tips tips="Medals unlocked based on your interactions" />
               </StyledFlex>
               <StyledFont color="#FFF" fontWeight="600">
                 x <Counter from={1} to={convert?.medals?.length ?? 0} />
@@ -370,7 +378,7 @@ const MedalRewardModalContent = function ({ onClose }: { onClose: VoidFunction }
                     fontSize="12px"
                     fontWeight="500"
                     lineClamp="2"
-                    style={{ width: 100 }}
+                    style={{ width: 96 }}
                   >
                     {medal?.level_name}
                   </StyledFont>
