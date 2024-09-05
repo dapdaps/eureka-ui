@@ -7,11 +7,11 @@ export const StyledContainer = styled.div`
   background: #000;
   margin-top: 60px;
   @media (max-width: 1440px) {
-      transform: scale(.88);
-      transform-origin: center; 
-      transition: all 0.5s ease 0s;
-      position: relative;
-      z-index: 10;
+    transform: scale(0.88);
+    transform-origin: center;
+    transition: all 0.5s ease 0s;
+    position: relative;
+    z-index: 10;
   }
 `;
 
@@ -29,7 +29,6 @@ export const StyledInner = styled.div`
   position: relative;
   z-index: 10;
 `;
-
 
 export const StyledTitle = styled.div`
   color: #fff;
@@ -54,7 +53,7 @@ export const StyledCard = styled.div`
   border-radius: 20px;
   border: 1px solid #202329;
   border-image-source: linear-gradient(180deg, #202329 0%, #101115 100%);
-  background: #18191E;
+  background: #18191e;
 `;
 
 export const StyledCardBackgroundImage = styled(LazyImage)`
@@ -71,12 +70,16 @@ export const StyledCardMainContent = styled.div`
   align-self: stretch;
   position: relative;
   .title {
-    color: #979ABE;
-    font-size: 20px;
+    color: #979abe;
+    font-size: 16px;
     font-family: Montserrat;
-    line-height: 24px;
+    line-height: 20px;
     font-weight: 500;
     margin-bottom: 62px;
+    padding: 6px 15px;
+    border-radius: 8px;
+    background: #202329;
+    display: inline-block;
   }
   .card_section {
     .logo {
@@ -97,7 +100,7 @@ export const StyledCardMainContent = styled.div`
       font-family: Montserrat;
       line-height: 24px;
       font-weight: 400;
-      color: #979ABE;
+      color: #979abe;
     }
   }
   .btns {
@@ -151,12 +154,12 @@ export const StyledCardDesc = styled.div`
 `;
 
 export const StyledComingSoon = styled.div`
-  color: #00E2FF;
+  color: #00e2ff;
   font-size: 18px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  
+
   &.btns {
     bottom: 50px;
   }
@@ -167,7 +170,7 @@ export const StyledCompassButton = styled.div`
   height: 50px;
   flex-shrink: 0;
   border-radius: 12px;
-  background: #EBF479;
+  background: #ebf479;
   color: rgb(2, 5, 30);
   text-align: center;
   font-family: Montserrat;
@@ -182,8 +185,8 @@ export const StyledCompassButton = styled.div`
   transition: all 0.5s ease 0s;
   &.plain {
     background: transparent;
-    color: #EBF479;
-    border: 1px solid #EBF479;
+    color: #ebf479;
+    border: 1px solid #ebf479;
   }
   &:hover {
     opacity: 0.9;
@@ -191,7 +194,7 @@ export const StyledCompassButton = styled.div`
   &:active {
     opacity: 0.8;
   }
-`
+`;
 
 export const StyledCardButton = styled.div`
   position: absolute;
@@ -204,7 +207,7 @@ export const StyledCardButton = styled.div`
   background: linear-gradient(rgb(238, 243, 191) 0%, rgb(233, 244, 86) 100%);
   color: rgb(2, 5, 30);
   text-align: center;
-font-family: Montserrat;
+  font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
@@ -264,7 +267,7 @@ export const StyledSwiperWrapper = styled.div`
 
   .swiper-pagination-bullet-active {
     width: 150px;
-    background: #575A77;
+    background: #575a77;
   }
 `;
 export const StyledSwiperNextButton = styled.button`
@@ -279,13 +282,13 @@ export const StyledSwiperNextButton = styled.button`
   justify-content: center;
   border-radius: 10px;
   border: 1px solid #333648;
-  background: #18191E;
+  background: #18191e;
   transition: all 0.2s linear;
   z-index: 6;
-  
+
   &:hover,
   &:focus {
-    background: #1F2229;
+    background: #1f2229;
   }
 `;
 export const StyledSwiperPrevButton = styled(StyledSwiperNextButton)`
@@ -312,7 +315,6 @@ export const StyledCominsoon = styled.div`
   height: 50px;
 `;
 
-
 export const StyleAdTitle = styled.div`
   font-family: Montserrat;
   font-size: 32px;
@@ -320,8 +322,7 @@ export const StyleAdTitle = styled.div`
   line-height: 39px;
   text-align: left;
   color: #fff;
-`
-
+`;
 
 export const StyledOdysseyHead = styled.div`
   display: flex;
@@ -343,7 +344,7 @@ export const StyledOdysseyIcon = styled.div`
 
 export const StyledOdysseyIconTitle = styled.div`
   height: 17px;
-  background: linear-gradient(180deg, #FFF 0%, #999 100%);
+  background: linear-gradient(180deg, #fff 0%, #999 100%);
   border-radius: 3px;
   transform: skewX(-20deg);
   padding: 2px 5px;
