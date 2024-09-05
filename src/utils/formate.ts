@@ -153,7 +153,7 @@ const simplifyNumber = function (number: number, decimal: number) {
 };
 const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
   const target = Big(1).div(Math.pow(10, decimal));
-  if (Big(value).eq(0)) {
+  if (Big(value ?? 0).eq(0)) {
     return '-';
   } else if (Big(value).gt(0)) {
     if (Big(value).lt(target)) {
