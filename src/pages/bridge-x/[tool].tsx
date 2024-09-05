@@ -38,7 +38,7 @@ const Container = styled.div`
   margin: 0 8%;
   color: #ffffff;
   position: relative;
-  padding-top: 50px;
+  padding-top: 42px;
 `;
 const BreadCrumbs = styled.div`
   color: #979abe;
@@ -73,7 +73,7 @@ const Bridge: NextPageWithLayout = () => {
 
   const prices = usePriceStore((store) => store.price);
   const { addAction } = useAddAction('dapp');
-  const { viewHeight } = useScrollMore({ gap: 50 });
+  const { viewHeight } = useScrollMore();
 
   const [{ settingChain, connectedChain }, setChain] = useSetChain();
   const [icon, setIcon] = useState('');

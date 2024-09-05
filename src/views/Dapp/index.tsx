@@ -20,7 +20,7 @@ const DappDetail = lazy(() => import('./components/DappDetail'));
 const Dapp = (props: any) => {
   const { dapp } = props;
 
-  const { viewHeight } = useScrollMore({ gap: 42 });
+  const { viewHeight } = useScrollMore();
 
   return (
     <StyledPage>

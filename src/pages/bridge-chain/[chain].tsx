@@ -23,9 +23,9 @@ const Container = styled.div`
   margin: 0 8%;
   color: #ffffff;
   position: relative;
-  padding-top: 50px;
+  padding-top: 42px;
   .page-back {
-    margin-bottom: 32px;
+    margin-bottom: 16px;
   }
   .top-login-select {
     margin-right: 16px;
@@ -114,20 +114,21 @@ const Container = styled.div`
     z-index: 1;
     width: 100%;
     position: relative;
-    padding-top: 50px;
-    min-height: 575px;
+    padding-top: 20px;
+    //min-height: 575px;
     /* position: absolute; */
   }
   .select-bg-icon {
     z-index: 0;
-    position: absolute;
-    top: 60px;
-    left: 50%;
-    transform: translate(-50%);
+    margin: 0 auto;
+    //position: absolute;
+    //top: 60px;
+    //left: 50%;
+    //transform: translate(-50%);
     font-size: 20px;
     font-weight: 700;
     .select-bg-content {
-      padding-top: 40px;
+      //padding-top: 40px;
       display: flex;
       justify-content: center;
       align-items: flex-end;
@@ -157,7 +158,7 @@ function toChecksumAddress (address: string): string {
 
 const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
-  const { viewHeight } = useScrollMore({ gap: 96 });
+  const { viewHeight } = useScrollMore();
 
   const chain = router.query.chain as string;
   const [currentChain, setCurrentChain] = useState<any>();

@@ -1,14 +1,14 @@
 import { useLayoutEffect, useState } from 'react';
 
 export default function useScrollMore (props?: Props) {
-  const { gap = 50 } = props || {};
+  const { gap = 0 } = props || {};
 
   const [viewHeight, setViewHeight] = useState<number>(650);
 
   useLayoutEffect(() => {
     const headerHeight = 70;
-    const backHeight = 14;
-    const scrollHeight = 126;
+    const backHeight = 14 + 16 + 42;
+    const scrollHeight = 126 + 20;
     const onResize = () => {
       const _viewHeight = window.innerHeight - headerHeight - gap - backHeight - scrollHeight;
       setViewHeight(_viewHeight <= 0 ? 650 : _viewHeight);

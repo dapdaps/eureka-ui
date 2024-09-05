@@ -22,7 +22,7 @@ import { addressFormated, isNumeric, saveTransaction } from './Utils';
 
 const BridgePanel = styled.div`
   width: 478px;
-  margin: 80px auto;
+  margin: 16px auto 0 auto;
 `;
 
 const Header = styled.div`
