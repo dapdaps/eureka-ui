@@ -9,6 +9,9 @@ import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import { chains } from '@/config/bridge';
 import useSortChains from '@/hooks/useSortChains';
+import useAddChain from '@/hooks/useAddChain';
+import useToast from '@/hooks/useToast';
+
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '56px')};
@@ -128,7 +131,9 @@ const Chain = ({
 }) => {
 
   const { sortedChains } = useSortChains();
-  const [{ connectedChain, settingChain }, setChain] = useSetChain();
+  const [{ connectedChain, settingChain }] = useSetChain();
+  const { add: addChain } = useAddChain();
+  const toast = useToast();
   const currentChain: any = useMemo(
     () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
     [connectedChain?.id],
@@ -145,7 +150,19 @@ const Chain = ({
       document.removeEventListener('click', hideList);
     };
   }, []);
-
+  
+  const addNetwork = async (chainId: number) => {
+    const addRes = await addChain({
+      chainId,
+    });
+    if (!addRes.success) {
+      toast.fail('Failed to add network!');
+      return;
+    }
+    toast.success({
+      title: 'Add successfully!',
+    });
+  };
   return (
     <StyledContainer
       $mt={mt}
@@ -202,7 +219,7 @@ const Chain = ({
           <ChainItem
             key={chain.chainId}
             onClick={() => {
-              setChain({ chainId: `0x${chain.chainId.toString(16)}` });
+              addNetwork(chain.chainId);
             }}
             active={chain.chainId === currentChain?.chainId ? 1 : 0}
             data-bp={bp}
