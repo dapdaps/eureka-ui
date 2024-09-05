@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledRecord = styled.div`
   display: flex;
@@ -11,25 +11,24 @@ export const StyledRecord = styled.div`
   background: #101115;
   cursor: pointer;
   &:hover {
-    background-color: #18191E;
+    background-color: #18191e;
     backdrop-filter: blur(10px);
   }
-`
+`;
 export const StyledSource = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-`
+`;
 export const StyledSourceImage = styled.img`
   width: 60px;
   height: 60px;
-`
+`;
 export const StyledSourceMessage = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-`
+`;
 export const StyledFilterOptionsWrap = styled.div`
   padding-top: 8px;
   display: none;
@@ -37,22 +36,22 @@ export const StyledFilterOptionsWrap = styled.div`
   bottom: 0;
   left: 0;
   transform: translateY(100%);
-`
+`;
 export const StyledFilterOptions = styled.div`
   width: 169px;
   border-radius: 10px;
   border: 1px solid #333648;
-  background: #1F2229;
+  background: #1f2229;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
   z-index: 50;
-`
+`;
 
 export const StyledFilterOption = styled.div`
   padding: 16px 14px 16px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #FFF;
+  color: #fff;
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
@@ -60,20 +59,18 @@ export const StyledFilterOption = styled.div`
   line-height: 100%; /* 16px */
   cursor: pointer;
   &:after {
-    content: "";
+    content: '';
     width: 6px;
     height: 6px;
     border-radius: 50%;
   }
   &.active:after {
-    background-color: #EBF479;
+    background-color: #ebf479;
   }
   &:hover {
     background: rgba(0, 0, 0, 0.2);
   }
-
-
-`
+`;
 export const StyledFilter = styled.div`
   position: relative;
   &:hover {
@@ -81,31 +78,30 @@ export const StyledFilter = styled.div`
       display: block;
     }
   }
-`
+`;
 export const StyledFilterCurrent = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
-
-`
+`;
 export const StyledRecordHeader = styled.div`
   padding: 32px 28px 18px 12px;
   display: flex;
   align-items: center;
-`
+`;
 
 export const StyledReward = styled.div`
   position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
-`
+`;
 export const StyledRewardImage = styled.img`
   width: 26px;
   height: 26px;
   border-radius: 50%;
-`
+`;
 export const StyledRewardListPopUpContainer = styled.div`
   display: none;
   position: absolute;
@@ -113,16 +109,18 @@ export const StyledRewardListPopUpContainer = styled.div`
   top: 0;
   transform: translate(-50%, -100%);
   padding-bottom: 10px;
-`
+`;
 export const StyledRewardListPopUp = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 15px;
-  width: 271px;
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #333648;
-  background: #1F2229;
+  background: #1f2229;
   box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.25);
-`
+`;
 
 export const StyledRewardList = styled.div`
   position: relative;
@@ -134,11 +132,11 @@ export const StyledRewardList = styled.div`
       display: block;
     }
   }
-`
+`;
 export const StyledPageNumberContainer = styled.div`
   position: relative;
   cursor: pointer;
-`
+`;
 export const StyledPageNumber = styled.div`
   position: absolute;
   left: 0;
@@ -149,10 +147,10 @@ export const StyledPageNumber = styled.div`
   align-items: center;
   justify-content: center;
 
-  color: #979ABE;
+  color: #979abe;
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: 100%; /* 16px */
-`
+`;

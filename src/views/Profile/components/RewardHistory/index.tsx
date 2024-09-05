@@ -45,11 +45,11 @@ const Rewards = function ({ rewards }: RewardsType) {
     return _rewardList;
   }, [rewards]);
   return (
-    <StyledFlex style={{ flex: 1 }}>
+    <StyledFlex style={{ flex: 1.5 }}>
       <StyledRewardList>
         {rewardList.map((reward: any, index: number) => {
           return (
-            <StyledReward style={{ marginLeft: -7 * index }} key={index}>
+            <StyledReward style={{ marginLeft: -7 }} key={index}>
               <StyledRewardImage src={reward?.logo} />
               {rewardList.length === target && (
                 <StyledFont color="#FFF" fontSize="18px" fontWeight="700">
@@ -67,7 +67,7 @@ const Rewards = function ({ rewards }: RewardsType) {
                   <StyledFlex justifyContent="space-between" key={index}>
                     <StyledReward>
                       <StyledRewardImage src={reward?.logo} />
-                      <StyledFont color="#979ABE" fontWeight="500">
+                      <StyledFont className="ellipsis" color="#979ABE" fontWeight="500" style={{ width: 212 }}>
                         {reward?.name}
                       </StyledFont>
                     </StyledReward>
@@ -189,10 +189,10 @@ export default function RewardHistory({ loaded, userRewardRecords, pager, maxPag
   return !loaded ? (
     <StyledContainer>
       <StyledRecordHeader>
-        <StyledFont color="#FFF" style={{ flex: 3 }}>
+        <StyledFont color="#FFF" style={{ flex: 2.5 }}>
           All Sources
         </StyledFont>
-        <StyledFont color="#FFF" style={{ flex: 1 }}>
+        <StyledFont color="#FFF" style={{ flex: 1.5 }}>
           All Rewards
         </StyledFont>
         <StyledFont color="#FFF" style={{ flex: 1 }}>
@@ -205,10 +205,10 @@ export default function RewardHistory({ loaded, userRewardRecords, pager, maxPag
   ) : loaded && (userRewardRecords?.total ?? 0) > 0 ? (
     <StyledContainer>
       <StyledRecordHeader>
-        <StyledFont color="#FFF" style={{ flex: 3 }}>
+        <StyledFont color="#FFF" style={{ flex: 2.5 }}>
           All Sources
         </StyledFont>
-        <StyledFont color="#FFF" style={{ flex: 1 }}>
+        <StyledFont color="#FFF" style={{ flex: 1.5 }}>
           All Rewards
         </StyledFont>
         <StyledFont color="#FFF" style={{ flex: 1 }}>
@@ -219,7 +219,7 @@ export default function RewardHistory({ loaded, userRewardRecords, pager, maxPag
         {userRewardRecords?.data?.map((record: RewardType, index: number) => {
           return (
             <StyledRecord key={index}>
-              <StyledSource style={{ flex: 3 }}>
+              <StyledSource style={{ flex: 2.5 }}>
                 <StyledSourceImage src={record?.logo} />
                 <StyledSourceMessage>
                   <StyledFont color="#FFF" fontWeight="600" lineHeight="120%" style={{ textTransform: 'capitalize' }}>
