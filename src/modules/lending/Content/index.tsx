@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 
-import Loading from '@/components/Icons/Loading';
+import Loading from '@/modules/components/Loading';
 import { StyledContainer } from '@/modules/lending/Content/styles';
-import LayerBankData from '@/modules/lending/datas/LayerBank';
 import LendingDialog from '@/modules/lending/Dialog';
-import { useMultiState } from '@/modules/lending/hooks';
+import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import LendingMarkets from '@/modules/lending/Markets';
 import type { DexProps } from '@/modules/lending/models';
 import { TabKey } from '@/modules/lending/models';
 import LendingMarketYours from '@/modules/lending/Yours';
+import useAccount from '@/hooks/useAccount';
 
 const LendingContent = (props: Props) => {
   const {
@@ -22,10 +22,14 @@ const LendingContent = (props: Props) => {
     addAction,
     toast,
     chainId,
+    curChain,
     nativeCurrency,
     tab,
     from
   } = props;
+
+  const { provider } = useAccount();
+  const [Data] = useDynamicLoader({ path: '/lending/datas', name: dexConfig.loaderName });
 
   const [state, updateState] = useMultiState<any>({
     loading: false
@@ -92,7 +96,9 @@ const LendingContent = (props: Props) => {
           }}
           toast={toast}
           account={account}
+          curChain={curChain}
           chainId={chainId}
+          dexConfig={dexConfig}
           onButtonClick={handleTableButtonClick}
           onSuccess={() => {
             updateState({
@@ -104,28 +110,34 @@ const LendingContent = (props: Props) => {
       {state.loading && (
         <Loading size={16} />
       )}
-      <LayerBankData
-        update={state.loading}
-        account={account}
-        wethAddress={wethAddress}
-        multicallAddress={multicallAddress}
-        multicall={multicall}
-        prices={prices}
-        chainId={chainId}
-        {...dexConfig}
-        onLoad={(data: any) => {
-          console.log('DATA_onLoad:', data);
-          updateState({
-            loading: false,
-            timestamp: Date.now(),
-            ...data
-          });
-        }}
-      />
+      {
+        Data && (
+          <Data
+            provider={provider}
+            update={state.loading}
+            account={account}
+            wethAddress={wethAddress}
+            multicallAddress={multicallAddress}
+            multicall={multicall}
+            prices={prices}
+            chainId={chainId}
+            {...dexConfig}
+            onLoad={(data: any) => {
+              console.log('DATA_onLoad:', data);
+              updateState({
+                loading: false,
+                timestamp: Date.now(),
+                ...data
+              });
+            }}
+          />
+        )
+      }
       <LendingDialog
         display={state.showDialog}
         data={state.tableButtonClickData}
         chainId={chainId}
+        dexConfig={dexConfig}
         addAction={addAction}
         toast={toast}
         source="dapp"

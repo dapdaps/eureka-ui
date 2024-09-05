@@ -2,8 +2,8 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
 
-import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
+import Loading from '@/modules/components/Loading';
 import { useMultiState } from '@/modules/lending/hooks';
 
 import { StyledButton } from './styles';
@@ -82,7 +82,46 @@ const LendingDialogButton = (props: Props) => {
 
   const [state, updateState] = useMultiState<any>({});
 
+  const getAAVE2TokenAddress = () => {
+    return data.underlyingToken.address === 'native'
+      ? data.address
+      : data.underlyingToken.address;
+  };
+
+  const getAAVE2ApproveAddress = () => {
+    return data.underlyingToken.address === 'native'
+      ? data.config.wethGateway
+      : data.config.lendingPoolAddress;
+  };
+
+  const tokenAddr =
+    data.config.type === 'aave2'
+      ? getAAVE2TokenAddress()
+      : data.underlyingToken.address;
+  const spender =
+    data.config.type == 'aave2' ? getAAVE2ApproveAddress() : data.address;
+
+  const getAllowance = () => {
+    const TokenContract = new ethers.Contract(
+      tokenAddr,
+      ERC20_ABI,
+      provider.getSigner()
+    );
+    TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
+      updateState({
+        isApproved: !Big(
+          ethers.utils.formatUnits(
+            allowanceRaw._hex,
+            data.underlyingToken.decimals
+          )
+        ).lt(amount || '0'),
+        checking: false
+      });
+    });
+  };
+
   useEffect(() => {
+    if (!actionText || !account) return;
     updateState({
       approving: false,
       isApproved: false,
@@ -90,10 +129,10 @@ const LendingDialogButton = (props: Props) => {
       pending: false,
       checking: true
     });
-  }, [amount]);
+  }, [amount, actionText, account]);
 
   useEffect(() => {
-    if (!account || !gas) return;
+    if (!actionText || !account || !gas) return;
     provider.getBalance(account).then((rawBalance: any) => {
       updateState({
         gasBalance: rawBalance.toString(),
@@ -101,7 +140,24 @@ const LendingDialogButton = (props: Props) => {
         gas: ethers.utils.formatUnits(gas, 18)
       });
     });
-  }, [account, gas]);
+  }, [account, gas, actionText]);
+
+  useEffect(() => {
+    if (!actionText || !account || !amount || actionText.includes('Collateral')) return;
+
+    if (data.underlyingToken.isNative) {
+      updateState({ isApproved: true, checking: false });
+      onLoad?.(true);
+    } else {
+      if (['Deposit', 'Repay'].includes(actionText)) {
+        getAllowance();
+      }
+      if (['Withdraw', 'Borrow'].includes(actionText)) {
+        updateState({ isApproved: true, checking: false });
+        onLoad?.(true);
+      }
+    }
+  }, [account, amount, actionText]);
 
   if (!actionText || !account) return;
 
@@ -176,63 +232,13 @@ const LendingDialogButton = (props: Props) => {
       </>
     );
   }
+
   if (!amount) {
     return (
       <StyledButton disabled={true} className={actionText.toLowerCase()}>
         Enter An Amount
       </StyledButton>
     );
-  }
-
-  const getAAVE2TokenAddress = () => {
-    return data.underlyingToken.address === 'native'
-      ? data.address
-      : data.underlyingToken.address;
-  };
-
-  const getAAVE2ApproveAddress = () => {
-    return data.underlyingToken.address === 'native'
-      ? data.config.wethGateway
-      : data.config.lendingPoolAddress;
-  };
-
-  const tokenAddr =
-    data.config.type === 'aave2'
-      ? getAAVE2TokenAddress()
-      : data.underlyingToken.address;
-  const spender =
-    data.config.type == 'aave2' ? getAAVE2ApproveAddress() : data.address;
-
-  const getAllowance = () => {
-    const TokenContract = new ethers.Contract(
-      tokenAddr,
-      ERC20_ABI,
-      provider.getSigner()
-    );
-    TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
-      updateState({
-        isApproved: !Big(
-          ethers.utils.formatUnits(
-            allowanceRaw._hex,
-            data.underlyingToken.decimals
-          )
-        ).lt(amount || '0'),
-        checking: false
-      });
-    });
-  };
-
-  if (data.underlyingToken.isNative) {
-    updateState({ isApproved: true, checking: false });
-    onLoad?.(true);
-  } else {
-    if (['Deposit', 'Repay'].includes(actionText)) {
-      getAllowance();
-    }
-    if (['Withdraw', 'Borrow'].includes(actionText)) {
-      updateState({ isApproved: true, checking: false });
-      onLoad?.(true);
-    }
   }
 
   if (!state.isApproved) {

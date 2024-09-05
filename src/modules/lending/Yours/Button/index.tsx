@@ -1,4 +1,4 @@
-import Loading from '@/components/Icons/Loading';
+import Loading from '@/modules/components/Loading';
 
 import { Button } from './styles';
 
@@ -6,7 +6,10 @@ const LendingYoursButton = (props: Props) => {
   const { text, loading, onClick } = props;
 
   return (
-    <Button className={text.toLowerCase()} onClick={onClick}>
+    <Button className={text.toLowerCase()} onClick={(e) => {
+      e.stopPropagation();
+      onClick?.(e);
+    }}>
       {loading && (
         <Loading size={16} />
       )}
@@ -21,5 +24,5 @@ export interface Props {
   text: string;
   loading?: boolean;
 
-  onClick?(): void;
+  onClick?(e: any): void;
 }

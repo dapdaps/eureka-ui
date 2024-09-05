@@ -84,4 +84,18 @@ export const formatIntegerThousandsSeparator = (integer?: number | string, preci
     return Big(Big(integer).toFixed(precision, 0)).toString();
   }
   return '';
+};
+
+export function formatAmount(props: { amount?: string | number | Big.Big; digits?: number; prev?: string; }) {
+  const { amount } = props;
+  const digits = props.digits || 2;
+  const prev = props.prev || '';
+  if (!amount) return '-';
+  const total = Big(amount);
+  if (total.eq(0)) return prev + '0';
+  const digitSplit = 1 / Math.pow(10, digits);
+
+  if (total.lt(digitSplit)) return '<' + prev + digitSplit;
+
+  return prev + Number(total.toFixed(digits)).toLocaleString('en-US');
 }

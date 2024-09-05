@@ -2,8 +2,6 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
 
-import useAccount from '@/hooks/useAccount';
-
 const CTOKEN_ABI = [
   {
     inputs: [
@@ -77,9 +75,7 @@ const UNITROLLER_ABI = [
 ];
 
 const LayerBankHandler = (props: Props) => {
-  const { update, data, amount, onLoad } = props;
-
-  const { account, provider } = useAccount();
+  const { update, data, amount, onLoad, provider } = props;
 
   useEffect(() => {
     const isCollateral = data.actionText.includes('Collateral');
@@ -196,6 +192,7 @@ export interface Props {
   update?: boolean | number;
   data: any;
   amount: string;
+  provider: any;
 
   onLoad(data: Record<any, any>): void;
 }

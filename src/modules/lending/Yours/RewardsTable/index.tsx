@@ -1,10 +1,13 @@
-import LayerBankHandlerClaim from '@/modules/lending/claims/linea/LayerBank';
-import { useMultiState } from '@/modules/lending/hooks';
+import useAccount from '@/hooks/useAccount';
+import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import { NoReward, RewardsTable, Title } from '@/modules/lending/Yours/RewardsTable/styles';
 import LendingYoursTable from '@/modules/lending/Yours/Table';
 
 const LendingRewardsTable = (props: Props) => {
-  const { dapps, toast, account, onSuccess, supplies, chainId } = props;
+  const { dapps, toast, account, onSuccess, supplies, chainId, dexConfig, curChain } = props;
+
+  const { provider } = useAccount();
+  const [Claim] = useDynamicLoader({ path: `/lending/claims`, name: dexConfig.loaderName });
 
   const [state, updateState] = useMultiState<any>({
     loading: false,
@@ -72,7 +75,9 @@ const LendingRewardsTable = (props: Props) => {
           buttons={[
             {
               text: 'Claim',
-              loading: (record: any) => record.symbol === state.record.symbol && state.loading
+              loading: (record: any) => {
+                return record.symbol === state.market?.symbol && state.loading;
+              }
             }
           ]}
           onButtonClick={(record: any) => {
@@ -88,14 +93,16 @@ const LendingRewardsTable = (props: Props) => {
           }}
         />
       </RewardsTable>
-      {state.dapp && (
-        <LayerBankHandlerClaim
+      {state.dapp && Claim && (
+        <Claim
+          provider={provider}
           supplies={supplies}
           loading={state.loading}
           market={state.market}
           dapp={state.dapp}
           record={state.market}
           account={account}
+          chainId={chainId}
           onSuccess={(res: any) => {
             toast?.dismiss(state.toastId);
             updateState({ loading: false });
@@ -129,6 +136,8 @@ export interface Props {
   account: string;
   loading?: boolean;
   chainId: number;
+  dexConfig: any;
+  curChain: any;
 
   onButtonClick?(address: string, text?: string): void;
 }

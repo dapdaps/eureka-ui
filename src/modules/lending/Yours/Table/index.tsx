@@ -138,6 +138,7 @@ const LendingYoursTable = (props: Props) => {
                   <Buttons>
                     {buttons?.map((button: any, j: number) => (
                       <LendingYoursButton
+                        key={j}
                         onClick={() => {
                           if (button.text === 'Claim') {
                             onButtonClick?.(record);

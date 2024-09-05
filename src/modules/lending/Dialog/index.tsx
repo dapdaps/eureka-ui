@@ -1,13 +1,13 @@
+import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import LendingDialogButton from '@/modules/lending/Button';
 import ArrowIcon from '@/modules/lending/Dialog/ArrowIcon';
 import CloseIcon from '@/modules/lending/Dialog/CloseIcon';
-import LayerBankHandler from '@/modules/lending/handlers/LayerBank';
-import { useMultiState } from '@/modules/lending/hooks';
+import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import LendingProcess from '@/modules/lending/Process';
 
 import {
@@ -67,7 +67,7 @@ const ERC20_ABI = [
   }
 ];
 
-const LendingDialog = (props: any) => {
+const LendingDialog = (props: Props) => {
   const {
     display,
     data,
@@ -76,47 +76,148 @@ const LendingDialog = (props: any) => {
     onSuccess,
     source,
     account,
-    from
+    from,
+    dexConfig
   } = props;
 
   const { provider } = useAccount();
+  const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig.loaderName });
 
   const [state, updateState] = useMultiState<any>({
     amount: '',
-    processValue: 0
+    processValue: 0,
+    updateHandler: Date.now()
   });
 
-  useEffect(() => {
-    const debounce = (fn: any, wait: any) => {
-      let timer: any;
-      return () => {
-        clearTimeout(timer);
-        timer = setTimeout(fn, wait);
-      };
-    };
+  const actionText = useMemo(() => data?.actionText, [data]);
+  const isSupply = useMemo(() => ['Deposit', 'Withdraw'].includes(actionText), [actionText]);
+  const isBorrow = useMemo(() => ['Repay', 'Borrow'].includes(actionText), [actionText]);
+  const isForCollateral = useMemo(() => !isSupply && !isBorrow, [isSupply, isBorrow]);
 
-    const getTrade = () => {
-      updateState({
-        loading: true
-      });
-    };
+  const tokenSymbol = useMemo(() => data?.underlyingToken?.symbol, [data]);
 
-    const debouncedGetTrade = debounce(getTrade, 500);
+  const getAvailable = (_balance: any) => {
+    if (!_balance) return '-';
+    if (actionText !== 'Repay') return _balance;
+    if (Big(_balance).lt(data?.userBorrow || 0)) return _balance;
+    if (Big(_balance).gt(data?.userBorrow || 0)) return data.userBorrow;
+  };
 
+  const getBalance = () => {
+    const isUnderlying = ['Deposit', 'Repay'].includes(actionText);
     updateState({
-      debouncedGetTrade,
-      getTrade
+      balanceLoading: true
     });
-  }, []);
+    if (isUnderlying && data.underlyingToken.isNative) {
+      provider
+        .getBalance(account)
+        .then((rawBalance: any) => {
+          updateState({
+            balance: getAvailable(ethers.utils.formatUnits(rawBalance._hex, 18)),
+            balanceLoading: false
+          });
+        });
+      return;
+    }
+    if (isUnderlying && data?.underlyingToken?.address) {
+      const TokenContract = new ethers.Contract(
+        data.underlyingToken.address,
+        ERC20_ABI,
+        provider.getSigner()
+      );
+      TokenContract.balanceOf(account).then((rawBalance: any) => {
+        const _rawBalance = ethers.utils.formatUnits(
+          rawBalance._hex,
+          data.underlyingToken.decimals
+        );
+        updateState({
+          balance: getAvailable(_rawBalance),
+          balanceLoading: false
+        });
+      });
+      return;
+    }
 
-  if (!data) return null;
+    if (actionText === 'Withdraw') {
+      updateState({
+        balance: Big(data.userSupply).toFixed(6, 0),
+        balanceLoading: false
+      });
+      return;
+    }
+    if (actionText === 'Borrow') {
+      const borrowAvailable = Big(data?.totalCollateralUsd)
+        .minus(data?.userTotalBorrowUsd)
+        .div(data?.underlyingPrice || 1);
+      updateState({
+        balance: borrowAvailable.gt(0) ? Big(borrowAvailable).toString() : '0.00',
+        balanceLoading: false
+      });
+      return;
+    }
+  };
 
-  const actionText = data.actionText;
-  const isSupply = ['Deposit', 'Withdraw'].includes(actionText);
-  const isBorrow = ['Repay', 'Borrow'].includes(actionText);
-  const isForCollateral = !isSupply && !isBorrow;
+  const getTrade = () => {
+    updateState({
+      loading: true
+    });
+  };
 
-  const tokenSymbol = data.underlyingToken.symbol;
+  const { run: debouncedGetTrade } = useDebounceFn(
+    () => {
+      getTrade();
+    },
+    {
+      wait: 500
+    }
+  );
+
+  useEffect(() => {
+    updateState({ updateHandler: Date.now() });
+  }, [data, state.amount, account]);
+
+  useEffect(() => {
+    if (data && display) {
+      let borromLimit: any = '';
+      const _borrowLimit = Big(data.totalCollateralUsd).minus(
+        data.userTotalBorrowUsd
+      );
+      let buttonClickable = false;
+      if (actionText === 'Enable as Collateral') {
+        borromLimit = _borrowLimit.add(
+          Big(data.loanToValue / 100)
+            .mul(data.userSupply || 0)
+            .mul(data.underlyingPrice)
+        );
+        buttonClickable = true;
+      }
+      if (actionText === 'Disable as Collateral') {
+        borromLimit = _borrowLimit.minus(
+          Big(data.loanToValue / 100)
+            .mul(data.userSupply || 0)
+            .mul(data.underlyingPrice)
+        );
+
+        buttonClickable = Big(data.userTotalBorrowUsd).eq(0)
+          ? true
+          : !borromLimit.lt(0);
+      }
+      updateState({
+        borrowLimit: borromLimit
+          ? !borromLimit.gt(0)
+            ? '0.00'
+            : borromLimit.toFixed(2)
+          : '',
+        amount: '',
+        buttonClickable,
+        processValue: 0,
+        borrowBalance: ''
+      });
+      getBalance();
+      localStorage.setItem('prevAddress', data.address);
+    }
+  }, [display, data, actionText, provider, account]);
+
   const formatBorrowLimit = (digits: any, round?: any) => {
     if (data.config.name === 'Ionic') {
       const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(
@@ -145,6 +246,7 @@ const LendingDialog = (props: any) => {
     if (Big(state.balance).lt(0.0001)) return '<0.0001';
     return Big(state.balance).toFixed(4, 0);
   };
+
   const handleAmountChange = (_amount: any) => {
     const amount = _amount.replace(/\s+/g, '');
     if (isNaN(Number(amount))) return;
@@ -219,112 +321,14 @@ const LendingDialog = (props: any) => {
     params.isOverSize = isOverSize;
     params.isEmpty = false;
     updateState(params);
-
-    state.debouncedGetTrade();
   };
 
-  const getAvailable = (_balance: any) => {
-    if (!_balance) return '-';
-    if (actionText !== 'Repay') return _balance;
-    if (Big(_balance).lt(data.userBorrow || 0)) return _balance;
-    if (Big(_balance).gt(data.userBorrow || 0)) return data.userBorrow;
-  };
-
-  const getBalance = () => {
-    const isUnderlying = ['Deposit', 'Repay'].includes(actionText);
-    updateState({
-      balanceLoading: true
-    });
-    if (isUnderlying && data.underlyingToken.isNative) {
-      provider
-        .getBalance(account)
-        .then((rawBalance: any) => {
-          updateState({
-            balance: getAvailable(ethers.utils.formatUnits(rawBalance._hex, 18)),
-            balanceLoading: false
-          });
-        });
-      return;
-    }
-    if (isUnderlying && data.underlyingToken.address) {
-      const TokenContract = new ethers.Contract(
-        data.underlyingToken.address,
-        ERC20_ABI,
-        provider.getSigner()
-      );
-      TokenContract.balanceOf(account).then((rawBalance: any) => {
-        const _rawBalance = ethers.utils.formatUnits(
-          rawBalance._hex,
-          data.underlyingToken.decimals
-        );
-        updateState({
-          balance: getAvailable(_rawBalance),
-          balanceLoading: false
-        });
-      });
-      return;
-    }
-    if (actionText === 'Withdraw') {
-      updateState({
-        balance: Big(data.userSupply).toFixed(6, 0),
-        balanceLoading: false
-      });
-      return;
-    }
-    if (actionText === 'Borrow') {
-      const borrowAvailable = Big(data.totalCollateralUsd)
-        .minus(data.userTotalBorrowUsd)
-        .div(data.underlyingPrice || 1);
-      updateState({
-        balance: borrowAvailable.gt(0) ? Big(borrowAvailable).toString() : '0.00',
-        balanceLoading: false
-      });
-      return;
-    }
-  };
   const handleClose = () => {
     onClose?.();
     localStorage.setItem('prevAddress', '');
   };
-  if (localStorage.getItem('prevAddress') !== data.address && display) {
-    let borromLimit: any = '';
-    const _borrowLimit = Big(data.totalCollateralUsd).minus(
-      data.userTotalBorrowUsd
-    );
-    let buttonClickable = false;
-    if (actionText === 'Enable as Collateral') {
-      borromLimit = _borrowLimit.add(
-        Big(data.loanToValue / 100)
-          .mul(data.userSupply || 0)
-          .mul(data.underlyingPrice)
-      );
-      buttonClickable = true;
-    }
-    if (actionText === 'Disable as Collateral') {
-      borromLimit = _borrowLimit.minus(
-        Big(data.loanToValue / 100)
-          .mul(data.userSupply || 0)
-          .mul(data.underlyingPrice)
-      );
 
-      buttonClickable = Big(data.userTotalBorrowUsd).eq(0)
-        ? true
-        : !borromLimit.lt(0);
-    }
-    updateState({
-      borrowLimit: borromLimit
-        ? !borromLimit.gt(0)
-          ? '0.00'
-          : borromLimit.toFixed(2)
-        : '',
-      amount: '',
-      buttonClickable,
-      processValue: 0,
-      borrowBalance: ''
-    });
-    getBalance();
-    localStorage.setItem('prevAddress', data.address);
-  }
+  if (!data) return null;
 
   return (
     <Dialog className={display ? 'display' : ''}>
@@ -452,7 +456,7 @@ const LendingDialog = (props: any) => {
                   <LendingProcess
                     value={state.processValue}
                     onChange={(value) => {
-                      const amount = Big(state.balance)
+                      const amount = Big(state.balance || 0)
                         .mul(+value / 100)
                         .toFixed(4, 0);
                       updateState({
@@ -565,9 +569,7 @@ const LendingDialog = (props: any) => {
               loading={state.loading}
               gas={state.gas}
               account={account}
-              onApprovedSuccess={() => {
-                if (!state.gas) state.getTrade();
-              }}
+              onApprovedSuccess={() => {}}
               onSuccess={() => {
                 handleClose();
                 onSuccess?.();
@@ -576,13 +578,15 @@ const LendingDialog = (props: any) => {
           </BottomBox>
         </Content>
       </Overlay>
-      {data.config.handler && (
-        <LayerBankHandler
-          update={new Date().getTime()}
+      {data.config.handler && Handler && (
+        <Handler
+          provider={provider}
+          update={state.updateHandler}
+          chainId={chainId}
           data={data}
           amount={state.amount}
-          onLoad={(_data) => {
-            // console.log("Dialog-handler-onLoad--", _data);
+          onLoad={(_data: any) => {
+            console.log('Dialog-handler-onLoad--', _data);
             updateState({
               ..._data,
               loading: false
@@ -597,4 +601,17 @@ const LendingDialog = (props: any) => {
 export default LendingDialog;
 
 export interface Props {
+  display: boolean;
+  data: any;
+  chainId: number;
+  source: string;
+  account: string;
+  from: string;
+  dexConfig: any;
+  addAction: any;
+  toast: any;
+
+  onClose(): void;
+
+  onSuccess(): void;
 }

@@ -1,9 +1,9 @@
 import Big from 'big.js';
 import { useEffect } from 'react';
 
+import useAccount from '@/hooks/useAccount';
 import LendingDialogButton from '@/modules/lending/Button';
-import LayerBankHandler from '@/modules/lending/handlers/LayerBank';
-import { useMultiState } from '@/modules/lending/hooks';
+import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import LendingMarketInput from '@/modules/lending/Markets/Input';
 import type { DexProps } from '@/modules/lending/models';
 import LendingTotal from '@/modules/lending/Total';
@@ -45,6 +45,9 @@ const LendingMarketExpand = (props: Props) => {
     data = {}
   } = props;
 
+  const { provider } = useAccount();
+  const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig.loaderName });
+
   const [state, updateState] = useMultiState<any>({
     tab: TABS[0],
     loading: false
@@ -75,7 +78,7 @@ const LendingMarketExpand = (props: Props) => {
 
   const onAmountChange = (amount: string) => {
     if (isNaN(Number(amount))) return;
-    if (amount.split('.')[1].length > 18) return;
+    if (amount.split('.')[1]?.length > 18) return;
     const isZero = Big(amount || 0).eq(0);
     if (isZero) {
       updateState({
@@ -347,22 +350,25 @@ const LendingMarketExpand = (props: Props) => {
                   }}
                   onSuccess={() => {
                     onSuccess?.();
+                    updateState({ amount: '' });
                   }}
                 />
               </div>
             </StyledButtonWrapper>
           </div>
         </StyledContent>
-        {dexConfig?.handler && (
-          <LayerBankHandler
+        {dexConfig?.handler && Handler && (
+          <Handler
+            provider={provider}
             update={state.loading}
+            chainId={chainId}
             data={{
               actionText: state.tab === 'Supply' ? 'Deposit' : 'Borrow',
               ...data,
               config: dexConfig
             }}
             amount={state.amount}
-            onLoad={(_data) => {
+            onLoad={(_data: any) => {
               console.log('handler_onLoad:', _data);
               updateState({
                 ..._data,

@@ -1,3 +1,7 @@
+import { useEffect } from 'react';
+
+import useToast from '@/hooks/useToast';
+import ChainWarningBox from '@/modules/components/ChainWarningBox';
 import LendingCardTabs from '@/modules/lending/CardTabs';
 import LendingChains from '@/modules/lending/Chains';
 import LendingCompoundV3 from '@/modules/lending/CompoundV3';
@@ -17,32 +21,38 @@ const LendingDex = (props: DexProps) => {
   const {
     CHAIN_LIST,
     curChain,
+    chainId,
+    account,
     dexConfig,
-    wethAddress,
-    multicallAddress,
-    multicall,
-    prices,
     onSwitchChain,
     switchingChain,
-    addAction,
-    toast,
-    chainId,
-    nativeCurrency,
     isChainSupported,
-    account,
     from
   } = props;
+
+  const toast = useToast();
+
   const { type } = dexConfig;
 
-  console.log('%cWelcome to the new Lending Dex! props: %o', 'background: #185519;color: #fff;', props);
-
   const [state, updateState] = useMultiState<any>({
-    tab: TabsArray[0].key
+    tab: TabsArray[0].key,
+    refreshKey: 1
   });
 
   const handleTabChange = (tab: Tab) => {
     updateState({ tab: tab.key });
   };
+
+  // FIXME There might be a better refresh way
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      updateState({ refreshKey: state.refreshKey + 1 });
+    }, 600);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [chainId, account]);
 
   return (
     <StyledContainer style={dexConfig.theme}>
@@ -70,28 +80,26 @@ const LendingDex = (props: DexProps) => {
       </StyledHeader>
       {type === DexType.CompoundV3 ? (
         <LendingCompoundV3
-          src="bluebiu.near/widget/Lending.CompoundV3.index"
-          props={{
-            dexConfig,
-            wethAddress,
-            multicallAddress,
-            multicall,
-            prices,
-            chainIdNotSupport: !isChainSupported,
-            account,
-            addAction,
-            toast,
-            chainId,
-            curChain,
-            nativeCurrency,
-            tab: state.tab
-          }}
+          key={state.refreshKey}
+          {...props}
+          chainIdNotSupport={!isChainSupported}
+          toast={toast}
         />
       ) : (
         <LendingContent
+          key={state.refreshKey}
           {...props}
           chainIdNotSupport={!isChainSupported}
           tab={state.tab}
+          toast={toast}
+        />
+      )}
+      {!isChainSupported && (
+        <ChainWarningBox
+          chain={curChain}
+          onSwitchChain={onSwitchChain}
+          switchingChain={switchingChain}
+          theme={dexConfig.theme?.button}
         />
       )}
     </StyledContainer>

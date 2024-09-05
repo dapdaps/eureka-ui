@@ -10,7 +10,7 @@ import LendingRewardsTable from '@/modules/lending/Yours/RewardsTable';
 import { Label, Right, Title, Value, Yours, YoursTableWrapper } from './styles';
 
 const LendingMarketYours = (props: Props) => {
-  const { markets, dapps, toast, currentDapp, dappsConfig, onSuccess, account, chainId } = props;
+  const { markets, dapps, toast, currentDapp, dappsConfig, onSuccess, account, chainId, dexConfig, curChain } = props;
 
   const [state, updateState] = useMultiState<any>({});
 
@@ -206,6 +206,8 @@ const LendingMarketYours = (props: Props) => {
         toast={toast}
         account={account}
         chainId={chainId}
+        curChain={curChain}
+        dexConfig={dexConfig}
       />
     </>
   );
@@ -223,6 +225,8 @@ export interface Props {
   account: string;
   chainId: number;
   timestamp: number;
+  dexConfig: any;
+  curChain: any;
 
   onButtonClick?(address: string, text?: string): void;
 }

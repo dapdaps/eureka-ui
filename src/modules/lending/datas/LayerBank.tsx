@@ -2,8 +2,6 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
 
-import useAccount from '@/hooks/useAccount';
-
 const OTOKEN_ABI = [
   {
     inputs: [],
@@ -273,10 +271,10 @@ const LayerBankData = (props: any) => {
     markets,
     multicall,
     prices,
-    rewardToken
+    rewardToken,
+    chainId,
+    provider,
   } = props;
-
-  const { provider } = useAccount();
 
   useEffect(() => {
     if (!multicallAddress || !unitrollerAddress || !update || !account) return;
@@ -797,7 +795,7 @@ const LayerBankData = (props: any) => {
     getUnitrollerData();
     getWalletBalance();
     getCTokensData();
-  }, [update, account]);
+  }, [update, account, chainId, provider]);
 
   return null;
 };
