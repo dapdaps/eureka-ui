@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { memo } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import AddMetaMask from '@/views/ChainDetail/components/AddMetaMask';
 import ValuePercent from '@/views/networks/list/components/value-percent';
 
@@ -59,12 +59,16 @@ const Header = (props: { chain: any; loading?: boolean }) => {
           <>
             <StyledStatItem>
               <span className="key">TVL</span>
-              <ValuePercent className="tvl-value">${formatIntegerThousandsSeparator(tvl, 1)}</ValuePercent>
+              <ValuePercent className="tvl-value">
+                {/* ${formatIntegerThousandsSeparator(tvl, 1)} */}
+                {formatValueDecimal(tvl, '$', 2, true)}
+              </ValuePercent>
             </StyledStatItem>
             <StyledStatItem>
               <span className="key">Volume (24h)</span>
               <ValuePercent className="tvl-value">
-                {formatIntegerThousandsSeparator(trading_volume_general, 0)}
+                {/* {formatIntegerThousandsSeparator(trading_volume_general, 0)} */}
+                {formatValueDecimal(trading_volume_general, '$', 2, true)}
               </ValuePercent>
             </StyledStatItem>
           </>
