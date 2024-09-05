@@ -46,7 +46,7 @@ const DAppRewardList: { [k: string]: Badge[] } = {
           end_time: 1719244800000,
           status: 'ongoing',
           link: '/bridge-x/rango',
-          banner: 'https://s3.amazonaws.com/dapdap.prod/images/blastv2banner.png',
+          banner: '/images/odyssey/rango-banner-round.png',
           badgeValue: '1000'
         }
       ]

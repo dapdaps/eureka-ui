@@ -36,6 +36,7 @@ export default function useDappReward() {
               odysseys: [
                 {
                   ...item,
+                  banner: '/images/odyssey/rango-banner-round.png',
                   link: '/bridge-x/rango',
                   status: StatusType.ongoing,
                   name: 'Rango Bridge Volume-based competiton',

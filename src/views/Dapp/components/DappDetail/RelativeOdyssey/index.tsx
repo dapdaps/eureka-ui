@@ -54,7 +54,7 @@ const RelativeOdyssey = (props: Props) => {
           start_time: 1717948800000,
           end_time: 2719244800000,
           status: 'ongoing',
-          banner: 'https://s3.amazonaws.com/dapdap.prod/images/blastv2banner.png',
+          banner: '/images/odyssey/rango-banner-round.png',
           link: '',
           category: 'spinblast',
           chains_id: '81457',
