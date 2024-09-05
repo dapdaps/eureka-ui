@@ -82,6 +82,10 @@ const OdysseyCardComponent = (props: Props) => {
   const onCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
+    if (id === 0) {
+      window.scrollTo({ top: 0 })
+      return
+    }
 
     if (isDevelopment) {
       toast.fail('This Odyssey ID is not available in the current FE version');

@@ -36,7 +36,10 @@ export default function useDappReward() {
               logo_key: reward.logo_key,
               value: reward.value,
               name: reward.name,
-              odysseys: [{ ...item, link: '/bridge-x/rango', status: StatusType.ongoing, name: 'Rango Bridge Volume-based competiton', reward_value: '1000' }],
+              odysseys: [
+                { ...item, link: '/bridge-x/rango', status: StatusType.ongoing, name: 'Rango Bridge Volume-based competiton', reward_value: '1000' },
+                { ...item, reward_value: reward.value }
+              ],
             });
           } else {
             result.push({
@@ -46,6 +49,8 @@ export default function useDappReward() {
               odysseys: [{ ...item, reward_value: reward.value }],
             });
           }
+
+          
         }
       });
       return result;
