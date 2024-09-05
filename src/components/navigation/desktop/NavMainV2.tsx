@@ -80,6 +80,11 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       <NavigationMenu.Root className="NavigationMenuRoot">
         <NavigationMenu.List className="NavigationMenuList">
           <NavigationMenu.Item>
+            <Link href="/">
+              <NavigationMenu.Trigger className="NavigationMenuTrigger">Home</NavigationMenu.Trigger>
+            </Link>
+          </NavigationMenu.Item>
+          <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={OdysseyRef}>
               Odyssey
               {hasNewOdyssey && <RotatingIcon staticIcon={<IconNewText />} rotatingIcon={<IconCircle />} />}
