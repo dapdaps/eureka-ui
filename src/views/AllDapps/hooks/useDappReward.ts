@@ -28,8 +28,6 @@ export default function useDappReward() {
         if (existingReward) {
           existingReward.odysseys.push({ ...item, reward_value: reward.value });
         } else {
-          console.log('reward:', reward, item);
-
           if (reward.name === 'USDC') {
             result.push({
               logo_key: reward.logo_key,
@@ -42,7 +40,8 @@ export default function useDappReward() {
                   status: StatusType.ongoing,
                   name: 'Rango Bridge Volume-based competiton',
                   reward_value: '1000'
-                }
+                },
+                { ...item, reward_value: reward.value }
               ]
             });
           } else {
