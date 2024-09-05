@@ -6,7 +6,7 @@ export const StyledMedalCard = styled.div`
   position: relative;
   width: 401px;
   height: 150px;
-  padding: 20px 12px;
+  padding: 26px 12px 20px;
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #202329;
@@ -23,7 +23,8 @@ export const StyledMark = styled.div`
   position: absolute;
   right: 20px;
   top: 0;
-  width: 52px;
+  /* width: 52px; */
+  padding: 0 8.2px 0 11px;
   height: 26px;
   flex-shrink: 0;
   background-color: #222430;

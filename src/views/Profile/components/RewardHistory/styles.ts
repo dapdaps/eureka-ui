@@ -115,8 +115,10 @@ export const StyledRewardListPopUpContainer = styled.div`
   padding-bottom: 10px;
 `
 export const StyledRewardListPopUp = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   padding: 15px;
-  width: 271px;
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #333648;

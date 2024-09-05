@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { useRouter } from "next/router";
 import { useMemo, useState } from "react";
 
+import MedalRewardModal from "@/components/Modal/MedalReward";
 import { StyledContainer, StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 
 import RewardHistoryLoading from "../../Loading/RewardHistoryLoading";
@@ -21,7 +22,6 @@ import {
   StyledSourceImage,
   StyledSourceMessage
 } from './styles';
-import MedalRewardModal from "@/components/Modal/MedalReward";
 type PropsType = {
   loaded: boolean;
   userRewardRecords: RewardRecordsType | null;
@@ -45,12 +45,12 @@ const Rewards = function ({ rewards }: RewardsType) {
     return _rewardList
   }, [rewards])
   return (
-    <StyledFlex style={{ flex: 1 }}>
+    <StyledFlex style={{ flex: 1.5 }}>
       <StyledRewardList>
         {
           rewardList.map((reward: any, index: number) => {
             return (
-              <StyledReward style={{ marginLeft: -7 * index }} key={index}>
+              <StyledReward style={{ marginLeft: -7 }} key={index}>
                 <StyledRewardImage src={reward?.logo} />
                 {
                   rewardList.length === target && (
@@ -71,7 +71,7 @@ const Rewards = function ({ rewards }: RewardsType) {
                       <StyledFlex justifyContent="space-between" key={index}>
                         <StyledReward>
                           <StyledRewardImage src={reward?.logo} />
-                          <StyledFont color="#979ABE" fontWeight="500">{reward?.name}</StyledFont>
+                          <StyledFont className="ellipsis" color="#979ABE" fontWeight="500" style={{ width: 212 }}>{reward?.name}</StyledFont>
                         </StyledReward>
                         <StyledFont color="#FFF" fontWeight="500">{reward.amount}</StyledFont>
                       </StyledFlex>
@@ -174,8 +174,8 @@ export default function RewardHistory({
   return !loaded ? (
     <StyledContainer>
       <StyledRecordHeader>
-        <StyledFont color="#FFF" style={{ flex: 3 }}>All Sources</StyledFont>
-        <StyledFont color="#FFF" style={{ flex: 1 }}>All Rewards</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 2.5 }}>All Sources</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 1.5 }}>All Rewards</StyledFont>
         <StyledFont color="#FFF" style={{ flex: 1 }}>Time</StyledFont>
       </StyledRecordHeader>
       <RewardHistoryLoading />
@@ -184,8 +184,8 @@ export default function RewardHistory({
   ) : (loaded && (userRewardRecords?.total ?? 0) > 0) ? (
     <StyledContainer>
       <StyledRecordHeader>
-        <StyledFont color="#FFF" style={{ flex: 3 }}>All Sources</StyledFont>
-        <StyledFont color="#FFF" style={{ flex: 1 }}>All Rewards</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 2.5 }}>All Sources</StyledFont>
+        <StyledFont color="#FFF" style={{ flex: 1.5 }}>All Rewards</StyledFont>
         <StyledFont color="#FFF" style={{ flex: 1 }}>Time</StyledFont>
       </StyledRecordHeader>
       <StyledFlex flexDirection="column" gap="20px">
@@ -193,7 +193,7 @@ export default function RewardHistory({
           userRewardRecords?.data?.map((record: RewardType, index: number) => {
             return (
               <StyledRecord key={index}>
-                <StyledSource style={{ flex: 3 }}>
+                <StyledSource style={{ flex: 2.5 }}>
                   <StyledSourceImage src={record?.logo} />
                   <StyledSourceMessage>
                     <StyledFont color="#FFF" fontWeight="600" lineHeight="120%" style={{ textTransform: 'capitalize' }}>{record?.title}</StyledFont>
