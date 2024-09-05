@@ -1,4 +1,4 @@
-import {
+import Matter, {
   Bodies,
   type Body,
   Composite,
@@ -35,6 +35,7 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
       },
     });
 
+    let beatTimer: any = null;
     const create = async () => {
       const medalImages = medals.map((it) => loadMedal(it.icon));
       const images: any = await Promise.all(medalImages);
@@ -55,6 +56,7 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
               yScale: (images[idx].height * widthScale) / images[idx].height,
             },
           },
+          angle: Math.random() * (Math.PI * 2),
         });
       });
       const borders = [
@@ -67,49 +69,53 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         // right
         Bodies.rectangle(width, height / 2, 2, height, { isStatic: true, render: { visible: false } }),
       ];
-      // const mouse = Mouse.create(render.canvas);
-      // const mouseConstraint = MouseConstraint.create(engine, {
-      //   mouse: mouse,
-      //   constraint: {
-      //     stiffness: 0.2,
-      //     render: {
-      //       visible: false,
-      //     },
-      //   },
-      // });
+      const mouse = Mouse.create(render.canvas);
+      const mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: 0.2,
+          render: {
+            visible: false,
+          },
+        },
+      });
       Composite.add(engine.world, [
         ...medalList.filter((m) => !!m) as Body[],
         ...borders,
-        // mouseConstraint
+        mouseConstraint
       ]);
 
-      // const offset = 20;
-      // Events.on(mouseConstraint, 'mousemove', function(event) {
-      //   for (const medal of medalList) {
-      //     console.log(medal);
-      //     if (medal.position.x < offset) {
-      //       Body.setPosition(medal, { x: offset, y: medal.position.y });
-      //     }
-      //     if (medal.position.x > width - offset) {
-      //       Body.setPosition(medal, { x: width - offset, y: medal.position.y });
-      //     }
-      //     if (medal.position.y < offset) {
-      //       Body.setPosition(medal, { y: offset, x: medal.position.x });
-      //     }
-      //     if (medal.position.y > height - offset) {
-      //       Body.setPosition(medal, { y: height, x: medal.position.x });
-      //     }
-      //   }
-      // });
+      Events.on(mouseConstraint, 'mousedown', (event) => {
+        const mousePosition = event.mouse.position;
+        const realMousePosition = {
+          x: mousePosition.x / DPR,
+          y: mousePosition.y / DPR,
+        }
+        const bodies = Matter.Composite.allBodies(engine.world).filter(item => !item.isStatic);
+        bodies.forEach(body => {
+          if (Matter.Bounds.contains(body.bounds, realMousePosition)) {
+            const forceMagnitude = 0.08 * body.mass;
+            Matter.Body.applyForce(body, body.position, {
+              x: (Math.random() - 0.5) * forceMagnitude,
+              y: (Math.random() - 0.5) * forceMagnitude
+            });
 
+            beatTimer = setTimeout(() => {
+              Matter.Body.setPosition(body, { x: body.position.x, y: body.position.y });
+            }, 100)
+          }
+        });
+      });
       Render.run(render);
       const runner = Runner.create();
       Runner.run(runner, engine);
     };
+
     const timer = setTimeout(create, delay);
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(beatTimer);
       Render.stop(render);
       World.clear(engine.world, true);
       Engine.clear(engine);
