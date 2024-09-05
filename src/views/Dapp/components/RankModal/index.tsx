@@ -53,8 +53,8 @@ export default function RankModal({ dapp, show, onClose }: any) {
           </StyledHeader>
           <StyledContent>
             <StyledDesc>
-              The Swing X Ring Exchange X DapDap Galxe campaign is underway! Stay updated with your real-time ranking
-              every 15 minutes and enhance your trading volume to achieve more rewards.
+            The a volume based campaign with Rango is underway! Stay updated with your real-time ranking every 15
+            minutes and enhance your trading volume to achieve more rewards.
             </StyledDesc>
             <StyledTable>
               <StyledTableHeader>

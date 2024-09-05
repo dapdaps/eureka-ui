@@ -4,7 +4,7 @@ import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, ge
 
 import useAccount from '@/hooks/useAccount';
 
-const timeout = 1000 * 10
+const timeout = 1000 * 40
 
 export default function useQuote(quoteRequest: QuoteRequest | null, identification: string | number, quickLoading: boolean = true) {
     const [routes, setRoutes] = useState<QuoteResponse[] | null>(null)
@@ -27,6 +27,7 @@ export default function useQuote(quoteRequest: QuoteRequest | null, identificati
         setTimeout(() => {
             if (!stop) {
                 stop = true
+                setQuoteLoading(false)
                 setLoading(false)
             }
         }, timeout)

@@ -11,6 +11,7 @@ import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
 
+import activity from './activity';
 import Alert from './components/Alert';
 import ChainSelector from './components/ChainSelector'
 import Confirm from './components/Confirm'
@@ -56,6 +57,7 @@ const Content = styled.div`
     background: #262836;
     margin-top: 30px;
     padding: 16px;
+    position: relative;
 `
 
 const MainTitle = styled.div`
@@ -136,6 +138,7 @@ export default function BridgeX({
     getChainScan,
     addAction,
     onSuccess,
+    dapp,
 }: any) {
     const { fail, success } = useToast()
     const [updater, setUpdater] = useState(1)
@@ -405,6 +408,8 @@ export default function BridgeX({
         }
     }
 
+    const CurrentActivityCom = activity[tool];
+
     return <BridgePanel>
         <Header>
             <BridgeIcon>
@@ -412,6 +417,7 @@ export default function BridgeX({
             </BridgeIcon>
             <BridgeName>{name}</BridgeName>
         </Header>
+        {CurrentActivityCom && <CurrentActivityCom dapp={dapp} />}
         <Content>
             <MainTitle>Bridge</MainTitle>
             <ChainPairs>

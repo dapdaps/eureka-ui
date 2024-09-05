@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from "react";
 import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
-import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
+import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init, preloadResource } from 'super-bridge-sdk';
 
 import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance'
 import { saveTransaction } from '@/components/BridgeX/Utils'
@@ -246,6 +246,11 @@ export default function BirdgeAction(
 
     }
   }, [chainList, router])
+
+  useEffect(() => {
+    preloadResource();
+  }, []);
+
 
   return <Container>
     <PublicTitle

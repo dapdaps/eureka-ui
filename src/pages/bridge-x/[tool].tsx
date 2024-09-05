@@ -111,6 +111,7 @@ const Bridge: NextPageWithLayout = () => {
                 account={account}
                 icon={icon}
                 name={name}
+                dapp={dappDetail}
                 color={color}
                 tool={tool}
                 template={template}
