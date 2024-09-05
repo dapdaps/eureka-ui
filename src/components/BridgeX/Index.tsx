@@ -22,7 +22,7 @@ import { addressFormated, isNumeric, saveTransaction } from './Utils';
 
 const BridgePanel = styled.div`
   width: 478px;
-  margin: 16px auto 0;
+  margin: 80px auto;
 `;
 
 const Header = styled.div`
@@ -508,32 +508,6 @@ export default function BridgeX({
             setReceiveAmount('');
           }}
         />
-
-        {/* <Widget
-                src="dapdapbos.near/widget/Bridge.AddressInput"
-                props={{
-                    checked: state.otherAddressChecked,
-                    address: state.toAddress,
-                    isValidAddress: state.isValidAddress,
-                    onCheck: () => {
-                        State.update({
-                            otherAddressChecked: !state.otherAddressChecked
-                        })
-                    },
-                    onChange: (value) => {
-                        State.update({
-                            toAddress: value,
-                        })
-    
-                        const isValidAddress = ethers.utils.isAddress(value)
-    
-                        State.update({
-                            isValidAddress
-                        })
-    
-                    }
-                }}
-            /> */}
 
         <FeeMsg
           duration={duration}
