@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import {
   StyledContainer,
   StyledContainerInner,
@@ -15,7 +15,6 @@ import {
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
 import DetailTabs from './DetailTabs/index';
-import Medal from './Medal';
 import RelativeOdyssey from './RelativeOdyssey';
 import DappSummary from './Summary';
 
@@ -35,13 +34,13 @@ const DappDetail = (props: Props) => {
     {
       key: 'tvl',
       label: 'TVL',
-      value: `$${formatIntegerThousandsSeparator(tvl, 2)}`,
+      value: `${formatValueDecimal(tvl, '$', 2, true)}`,
       increaseValue: ''
     },
     {
       key: 'txns',
       label: 'Volume (24h)',
-      value: `$${formatIntegerThousandsSeparator(trading_volume_general, 2)}`,
+      value: `${formatValueDecimal(trading_volume_general, '$', 2, true)}`,
       increaseValue: ''
     }
   ];
