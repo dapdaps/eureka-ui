@@ -36,7 +36,6 @@ export const DataListShown = (
     tvl,
     trading_volume_general,
     total_integrated_dapp,
-    total_medal,
     classname,
   }: any,
 ) => {
@@ -62,14 +61,6 @@ export const DataListShown = (
     underline: true,
   },
   ];
-  if (total_medal !== undefined) {
-    return list.concat({
-      key: 'Medals',
-      label: 'Medals',
-      value: total_medal,
-      underline: true,
-    });
-  }
   return list;
 };
 
