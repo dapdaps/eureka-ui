@@ -3,6 +3,7 @@ import React from 'react';
 
 import { IdToPath } from '@/config/all-in-one/chains';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 import {
   Btn,
@@ -35,16 +36,16 @@ export const TagList = [
 export const DataListShown = ({ tvl, trading_volume_general, total_integrated_dapp, total_medal, classname }: any) => {
   const list = [
     {
-      key: 'TVL',
+      key: 'tvl',
       label: 'TVL',
       percent: true,
-      value: <ValuePercent className={classname}>${formatIntegerThousandsSeparator(tvl, 1)}</ValuePercent>
+      value: <ValuePercent className={classname}>{formatValueDecimal(tvl, '$', 2, true)}</ValuePercent>
     },
     {
-      key: 'Volume (24h)',
+      key: 'trading_volume_general',
       label: 'Volume (24h)',
       value: (
-        <ValuePercent className={classname}>${formatIntegerThousandsSeparator(trading_volume_general, 0)}</ValuePercent>
+        <ValuePercent className={classname}>{formatValueDecimal(trading_volume_general, '$', 2, true)}</ValuePercent>
       )
     },
     {

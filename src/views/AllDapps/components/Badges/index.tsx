@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import TooltipSimple from '@/components/Tooltip';
 import odyssey from '@/config/odyssey';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import type { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 import type { StatusType } from '@/views/Odyssey/components/Tag';
@@ -25,14 +25,14 @@ const Badges = (props: Props) => {
     {
       name: 'TVL',
       icon: '/images/alldapps/icon-tvl.svg',
-      value: '$' + formatIntegerThousandsSeparator(tvl, 2),
+      value: formatValueDecimal(tvl, '$', 2, true),
       iconSize: 17,
       tooltip: 'TVL'
     },
     {
       name: 'Volume (24h)',
       icon: '/images/alldapps/icon-exchange.svg',
-      value: '$' + formatIntegerThousandsSeparator(tradingVolume, 2),
+      value: formatValueDecimal(tradingVolume, '$', 2, true),
       iconSize: 17,
       tooltip: tradingVolumeTooltip || 'Volume (24h)'
     },
