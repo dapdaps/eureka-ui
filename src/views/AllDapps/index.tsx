@@ -243,7 +243,7 @@ const AllDapps = (props: Props) => {
           }
           <SortBy value={sort} onSelect={onSortSelect}/>
           <Radio selected={airdrop} onChange={onAirdropToggle} label='Potential Airdrop' />
-          <Radio colorful selected={rewardNow} onChange={onRewardToggle} label='Reward now' />
+          {/* <Radio colorful selected={rewardNow} onChange={onRewardToggle} label='Reward now' /> */}
           <StyledSearch>
             <StyledSearchIcon>
               <Image src="/images/alldapps/icon-search.svg" alt="" width={18} height={14} />

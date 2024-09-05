@@ -13,29 +13,80 @@ const basic = {
 
 const networks = {
   59144: {
-    unitrollerAddress: '0x009a0b7C38B542208936F1179151CD08E2943833',
-    oracleAddress: '0x4F5F443fEC450fD64Dce57CCacE8f5ad10b4028f',
-    rateModelSlopeAddress: '0xC690549E0215192D1fFB527BB3ca4D4Ba638Cad2',
+    unitrollerAddress: '0x43Eac5BFEa14531B8DE0B334E123eA98325de866',
+    oracleAddress: '0x35A8C6050591C2f65B3e926B4b2eF825E3766bd6',
+    // Upgrade to v2, and get the rateModelAddress from the cToken contract
+    // rateModelSlopeAddress: '0xC690549E0215192D1fFB527BB3ca4D4Ba638Cad2',
     distributionAddress: '0x5D06067f86946620C326713b846DdC8B97470957',
-    defaultMarket: '0x2aD69A0Cf272B9941c7dDcaDa7B0273E9046C4B0',
+    defaultMarket: '0x9E9aec6a296f94C8530e2dD01FF3E9c61555D39a',
     markets: {
-      '0xEa0F73296a6147FB56bAE29306Aae0FFAfF9De5F': {
-        decimals: 18,
-        symbol: 'lWBTC',
-        address: '0xEa0F73296a6147FB56bAE29306Aae0FFAfF9De5F',
-        underlyingToken: linea['wbtc'],
-      },
-      '0xc7D8489DaE3D2EbEF075b1dB2257E2c231C9D231': {
+      '0x9E9aec6a296f94C8530e2dD01FF3E9c61555D39a': {
         decimals: 18,
         symbol: 'lETH',
-        address: '0xc7D8489DaE3D2EbEF075b1dB2257E2c231C9D231',
+        address: '0x9E9aec6a296f94C8530e2dD01FF3E9c61555D39a',
         underlyingToken: linea['eth'],
       },
-      '0x2aD69A0Cf272B9941c7dDcaDa7B0273E9046C4B0': {
+      '0x5924117c4a5e000312684A5e76E90cC93AdDdE6b': {
         decimals: 18,
         symbol: 'lUSDC',
-        address: '0x2aD69A0Cf272B9941c7dDcaDa7B0273E9046C4B0',
+        address: '0x5924117c4a5e000312684A5e76E90cC93AdDdE6b',
         underlyingToken: linea['usdc'],
+      },
+      '0xCCba9Ac94531E15aA55D9065e398812F06B84F14': {
+        decimals: 18,
+        symbol: 'lWBTC',
+        address: '0xCCba9Ac94531E15aA55D9065e398812F06B84F14',
+        underlyingToken: linea['wbtc'],
+      },
+      '0x8FeFABe1b9A530D9d0f0Ef25e84a9D8B56aB2053': {
+        decimals: 18,
+        symbol: 'lwstETH',
+        address: '0x8FeFABe1b9A530D9d0f0Ef25e84a9D8B56aB2053',
+        underlyingToken: linea['wsteth'],
+      },
+      '0x2c88A441418E06b9F3e565c2f866Fcb03c9409E2': {
+        decimals: 18,
+        symbol: 'lezETH',
+        address: '0x2c88A441418E06b9F3e565c2f866Fcb03c9409E2',
+        underlyingToken: linea['ezeth'],
+      },
+      '0x9F8B5dE4191DB60e7b1d2Ed448084657C0B46c19': {
+        decimals: 18,
+        symbol: 'lwrsETH',
+        address: '0x9F8B5dE4191DB60e7b1d2Ed448084657C0B46c19',
+        underlyingToken: linea['wrseth'],
+      },
+      // This asset cannot be used as collateral at this time
+      '0x67492784Ec588681e55b2BFC0118d882a8F23E48': {
+        decimals: 18,
+        symbol: 'lSTONE',
+        address: '0x67492784Ec588681e55b2BFC0118d882a8F23E48',
+        underlyingToken: linea['stone'],
+      },
+      '0xB01F9DE93374a6b287372008AB8739C7dDB7Ce28': {
+        decimals: 18,
+        symbol: 'lSolvBTC',
+        address: '0xB01F9DE93374a6b287372008AB8739C7dDB7Ce28',
+        underlyingToken: linea['solv-btc'],
+      },
+      '0xb81b1E2EE4C867c95eC7041f6c22E0e89328D890': {
+        decimals: 18,
+        symbol: 'lMBTC',
+        address: '0xb81b1E2EE4C867c95eC7041f6c22E0e89328D890',
+        underlyingToken: linea['m-btc'],
+      },
+      // This asset cannot be used as collateral at this time
+      '0xF46680E9987f334041656AbEb83B87c2494dc751': {
+        decimals: 18,
+        symbol: 'luniETH',
+        address: '0xF46680E9987f334041656AbEb83B87c2494dc751',
+        underlyingToken: linea['uni-eth'],
+      },
+      '0x14ABc603b6471aAe51f92e6f7cC5bE7cc6EEFD14': {
+        decimals: 18,
+        symbol: 'lweETH',
+        address: '0x14ABc603b6471aAe51f92e6f7cC5bE7cc6EEFD14',
+        underlyingToken: linea['weeth'],
       },
     },
     rewardToken: linea['lab'],
