@@ -140,11 +140,11 @@ const simplifyNumber = function (number: number, decimal: number) {
   if (typeof Number(number) !== 'number') return 0;
   if (isNaN(Number(number))) return 0;
   if (number >= 1E3 && number < 1E6) {
-    return Big((number / 1E3)).toFixed(decimal) + 'K';
+    return Big((number / 1E3)).toFixed(decimal) + 'k';
   } else if (number >= 1E6 && number < 1E9) {
-    return Big((number / 1E6)).toFixed(decimal) + 'M';
+    return Big((number / 1E6)).toFixed(decimal) + 'm';
   } else if (number >= 1E9) {
-    return Big((number / 1E9)).toFixed(decimal) + 'B';
+    return Big((number / 1E9)).toFixed(decimal) + 'b';
   } else {
     return Big(number).toFixed(decimal);
   }

@@ -5,12 +5,14 @@ import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import {
   StyledContainer,
-StyledContainerInner,
+  StyledContainerInner,
   StyledRecordContainer,
   StyledRelatedContainer,
-  StyledRelatedOdyssey, } from '@/views/Dapp/components/DappDetail/styles';
+  StyledRelatedOdyssey,
+} from '@/views/Dapp/components/DappDetail/styles';
 
 import DetailTabs from './DetailTabs/index';
 import Medal from './Medal';
@@ -36,13 +38,13 @@ const DappDetail = (props: Props) => {
     {
       key: 'tvl',
       label: 'TVL',
-      value: `$${formatIntegerThousandsSeparator(tvl, 2)}`,
-      increaseValue:  '',
+      value: `${formatValueDecimal(tvl, '$', 2, true)}`,
+      increaseValue: '',
     },
     {
       key: 'txns',
       label: 'Volume (24h)',
-      value: `$${formatIntegerThousandsSeparator(trading_volume_general, 2)}`,
+      value: `${formatValueDecimal(trading_volume_general, '$', 2, true)}`,
       increaseValue: '',
     },
   ];
@@ -99,7 +101,7 @@ const DappDetail = (props: Props) => {
           </StyledRelatedOdyssey>
         </StyledRelatedContainer>
       </StyledContainerInner>
-  </StyledContainer>
+    </StyledContainer>
   );
 }
 
