@@ -68,6 +68,8 @@ export type DappType = {
   recommend_priority: number;
   dapp_category: DappCategoryType[];
   trading_volume: string;
+  trading_volume_general: string;
+  tvl: string;
   total_execution: number;
   participants: number;
   trading_volume_change_percent: string;

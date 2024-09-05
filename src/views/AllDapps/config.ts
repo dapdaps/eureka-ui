@@ -36,8 +36,8 @@ export const SortList: {
   label: string,
   variable: any
 }[] = [
-  { key: 1, value: 'volume', label: 'Sort by Volume', variable: 'trading_volume' },
-  { key: 2, value: 'users', label: 'Sort by users', variable: 'participants' },
+  { key: 1, value: 'volume', label: 'Sort by Volume', variable: 'trading_volume_general' },
+  { key: 2, value: 'tvl', label: 'Sort by TVL', variable: 'tvl' },
   { key: 3, value: 'a-z', label: 'A-Z', variable: 'name' },
   { key: 4, value: 'z-a', label: 'Z-A', variable: 'name' },
   { key: 5, value: 'create_time', label: 'New launched', variable: 'id' },

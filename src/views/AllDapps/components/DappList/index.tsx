@@ -55,8 +55,9 @@ const DappList = (props: Props) => {
                       categories={dapp.categories}
                       networks={dapp.networks}
                       onClick={() => onDappCardClick(dapp)}
-                      tradingVolume={dapp?.trading_volume}
+                      tradingVolume={dapp?.trading_volume_general}
                       users={dapp?.participants}
+                      tvl={dapp?.tvl}
                       route={dapp?.route}
                     />
                   ))

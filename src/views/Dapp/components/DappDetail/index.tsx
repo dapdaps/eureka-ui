@@ -5,12 +5,14 @@ import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import {
   StyledContainer,
-StyledContainerInner,
+  StyledContainerInner,
   StyledRecordContainer,
   StyledRelatedContainer,
-  StyledRelatedOdyssey, } from '@/views/Dapp/components/DappDetail/styles';
+  StyledRelatedOdyssey,
+} from '@/views/Dapp/components/DappDetail/styles';
 
 import DetailTabs from './DetailTabs/index';
 import Medal from './Medal';
@@ -25,11 +27,8 @@ const StyleImageMedals = styled.img`
 `
 const DappDetail = (props: Props) => {
   const {
-    trading_volume,
-    trading_volume_change_percent,
-    total_execution,
-    participants,
-    participants_change_percent,
+    tvl,
+    trading_volume_general,
   } = props;
 
   const [ref, animate] = useAnimate();
@@ -37,22 +36,16 @@ const DappDetail = (props: Props) => {
 
   const summaryList = [
     {
-      key: 'volume',
-      label: 'Trading Volume on DapDap',
-      value: `$${formatIntegerThousandsSeparator(trading_volume, 2)}`,
-      increaseValue: trading_volume_change_percent || '',
-    },
-    {
-      key: 'txns',
-      label: 'Total txns',
-      value: `${formatIntegerThousandsSeparator(total_execution, 0)}`,
+      key: 'tvl',
+      label: 'TVL',
+      value: `${formatValueDecimal(tvl, '$', 2, true)}`,
       increaseValue: '',
     },
     {
-      key: 'user',
-      label: 'User',
-      value: `${formatIntegerThousandsSeparator(participants, 0)}`,
-      increaseValue: participants_change_percent || '',
+      key: 'txns',
+      label: 'Volume (24h)',
+      value: `${formatValueDecimal(trading_volume_general, '$', 2, true)}`,
+      increaseValue: '',
     },
   ];
 
@@ -108,13 +101,15 @@ const DappDetail = (props: Props) => {
           </StyledRelatedOdyssey>
         </StyledRelatedContainer>
       </StyledContainerInner>
-  </StyledContainer>
+    </StyledContainer>
   );
 }
 
 export default DappDetail;
 
 export interface Props {
+  tvl: number;
+  trading_volume_general: number;
   trading_volume: string;
   trading_volume_change_percent: string;
   total_execution: string;

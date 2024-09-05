@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 
 import odyssey from '@/config/odyssey';
-import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import type { NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 import type { StatusType } from '@/views/Odyssey/components/Tag';
@@ -17,6 +17,7 @@ const Badges = (props: Props) => {
   const {
     rewards,
     tradingVolume,
+    tvl,
     users,
     tradingVolumeTooltip,
     usersTooltip,
@@ -29,20 +30,21 @@ const Badges = (props: Props) => {
 
   const [containerStyle, setContainerStyle] = useState<React.CSSProperties>();
 
+
   const initBadges: Badge[] = [
     {
-      name: 'Trading Volume',
-      icon: '/images/alldapps/icon-exchange.svg',
-      value: '$' + formatIntegerThousandsSeparator(tradingVolume, 2),
+      name: 'TVL',
+      icon: '/images/alldapps/icon-tvl.svg',
+      value: formatValueDecimal(tvl, '$', 2, true),
       iconSize: 17,
-      tooltip: tradingVolumeTooltip || 'Trading Volume',
+      tooltip: 'TVL',
     },
     {
-      name: 'User Amount',
-      icon: '/images/alldapps/icon-fire.svg',
-      value: formatIntegerThousandsSeparator(users, 0),
+      name: 'Volume (24h)',
+      icon: '/images/alldapps/icon-exchange.svg',
+      value: formatValueDecimal(tradingVolume, '$', 2, true),
       iconSize: 17,
-      tooltip: usersTooltip || 'User Amount',
+      tooltip: tradingVolumeTooltip || 'Volume (24h)',
     },
     ...customBadges,
   ];
@@ -297,6 +299,7 @@ export default Badges;
 export interface Props {
   rewards?: Partial<NetworkOdyssey>[];
   tradingVolume: string | number;
+  tvl: string | number;
   users: string | number;
   tradingVolumeTooltip?: string;
   usersTooltip?: string;

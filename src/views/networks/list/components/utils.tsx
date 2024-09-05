@@ -3,6 +3,7 @@ import React from 'react';
 
 import { IdToPath } from '@/config/all-in-one/chains';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 import {
   Btn,
@@ -32,36 +33,34 @@ export const TagList = [
 
 export const DataListShown = (
   {
-    trading_volume_change_percent,
-    trading_volume,
-    participants_change_percent,
-    participants,
+    tvl,
+    trading_volume_general,
     total_integrated_dapp,
     total_medal,
     classname,
   }: any,
 ) => {
   const list = [{
-    key: 'Volume',
-    label: 'Trading Volume',
+    key: 'tvl',
+    label: 'TVL',
     percent: true,
-    value: <ValuePercent percent={trading_volume_change_percent} className={classname}>
-      ${formatIntegerThousandsSeparator(trading_volume, 1)}
+    value: <ValuePercent className={classname}>
+      {formatValueDecimal(tvl, '$', 2, true)}
     </ValuePercent>,
   },
-    {
-      key: 'Users',
-      label: 'Users',
-      value: <ValuePercent percent={participants_change_percent} className={classname}>
-        {formatIntegerThousandsSeparator(participants, 0)}
-      </ValuePercent>,
-    },
-    {
-      key: 'dApps',
-      label: 'Integrated dApps',
-      value: formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' }),
-      underline: true,
-    },
+  {
+    key: 'trading_volume_general',
+    label: 'Volume (24h)',
+    value: <ValuePercent className={classname}>
+      {formatValueDecimal(trading_volume_general, '$', 2, true)}
+    </ValuePercent>,
+  },
+  {
+    key: 'dApps',
+    label: 'Integrated dApps',
+    value: formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' }),
+    underline: true,
+  },
   ];
   if (total_medal !== undefined) {
     return list.concat({

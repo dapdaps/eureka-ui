@@ -70,8 +70,8 @@ export const StyledBadgeItem = styled(motion.div)`
   }
 `;
 export const StyledBadgeImage = styled(motion(Image))`
-  border-radius: 50%;
-  border: 2px solid #292B33;
+  /* border-radius: 50%; */
+  /* border: 2px solid #292B33; */
   position: relative;
 `;
 export const StyledBadgeTooltip = styled(motion.div)`

@@ -26,7 +26,7 @@ export const StyledSummaryContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  flex-grow: 1;
+  flex-grow: 0.6;
   flex-shrink: 0;
   column-gap: 16px;
 `;
