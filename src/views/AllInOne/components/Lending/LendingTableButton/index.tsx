@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import LendingLoadingIcon from '../LendingLoadingIcon';
 
 const Button = styled.button`
-  height: 33px;
+  height: 32px;
+  min-width: 85px;
   text-align: center;
   border-radius: 6px;
   font-size: 14px;
@@ -14,38 +15,25 @@ const Button = styled.button`
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 0px 10px;
+  padding: 0 10px;
   opacity: 1;
+  transition: opacity 0.2s;
 
   &:hover {
     opacity: 0.8;
   }
 
   &.withdraw {
-    background: var(--agg-primary-color, var(--withdraw-bg-color));
-    border: 1px solid var(--withdraw-border-color);
-    color: var(--agg-secondary-color, var(--withdraw-color));
-
-    &:hover {
-      background: var(--agg-primary-color, var(--withdraw-bg-hover-color));
-    }
+    background: var(--withdraw-bg-hover-color);
+    color: var(--withdraw-color);
   }
   &.claim {
-    background: var(--claim-bg-color);
-    border: 1px solid var(--claim-border-color);
+    background: var(--claim-bg-hover-color);
     color: var(--claim-color);
-
-    &:hover {
-      background: var(--claim-bg-hover-color);
-    }
   }
   &.repay {
-    background: var(--agg-pink-color, var(--repay-bg-color));
-    border: 1px solid var(--repay-border-color);
-    color: var(--agg-secondary-color, var(--replay-color));
-    &:hover {
-      background: var(--agg-pink-color, var(--repay-bg-hover-color));
-    }
+    background: var(--repay-bg-hover-color);
+    color: var(--replay-color);
   }
 
   @media (max-width: 640px) {
@@ -53,11 +41,10 @@ const Button = styled.button`
   }
 `;
 
-
 interface IProps {
-    text: string;
-    loading: boolean;
-    onClick: any;
+  text: string;
+  loading: boolean;
+  onClick: any;
 }
 
 const LendingTableButton = (props: IProps) => {
@@ -65,10 +52,7 @@ const LendingTableButton = (props: IProps) => {
 
   return (
     <Button className={text.toLowerCase()} onClick={onClick}>
-        
-      {loading && (
-        <LendingLoadingIcon size={16}/>
-      )}
+      {loading && <LendingLoadingIcon size={16} />}
       {text}
     </Button>
   );

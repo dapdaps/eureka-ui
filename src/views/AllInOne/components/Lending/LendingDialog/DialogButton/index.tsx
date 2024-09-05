@@ -12,7 +12,7 @@ const Button = styled.button`
   background: #ffff;
   height: 46px;
   border-radius: 10px;
-  color: #000;
+  color: #1e2028;
   font-size: 18px;
   font-weight: 400;
   border: none;
@@ -22,7 +22,8 @@ const Button = styled.button`
     opacity: 0.8;
   }
   &:disabled {
-    opacity: 0.5;
+    opacity: 0.3;
+    cursor: not-allowed;
   }
   //&.borrow {
   //  background-color: var(--agg-primary-color, var(--repay-border-color));

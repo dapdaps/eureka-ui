@@ -1,6 +1,7 @@
 import Big from 'big.js';
 import { memo, useCallback, useEffect, useState } from 'react';
 
+import LendingDialog from '@/views/AllInOne/components/Lending/LendingDialog';
 import LendingAction, { ActionType } from '@/views/AllInOne/components/Lending/LendingDialog/Action';
 
 import LendingArrowIcon from '../LendingArrowIcon';
@@ -110,8 +111,10 @@ const LendingMarket = (props: IProps) => {
         ...market,
         config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
         addAction,
-        toast
+        toast,
+        actionText: 'Deposit'
       },
+      actionText: 'Deposit',
       account,
       chainId,
       addAction,
@@ -149,7 +152,7 @@ const LendingMarket = (props: IProps) => {
                 <LendingAsset icon={market.icon} symbol={market.symbol} />
               </Item>
               <Item className="td asset w_60">
-                <LendingAsset icon={market.dappIcon} symbol={market.dappName} size="small" />
+                <LendingAsset icon={market.dappIcon} symbol={market.dappName} />
               </Item>
             </MergeItems>
             <MergeItems className="supply">

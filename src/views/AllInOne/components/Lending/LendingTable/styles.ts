@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const Table = styled.div`
   font-family: Gantari;
+  font-size: 14px;
 `;
 const Header = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ const Header = styled.div`
   align-items: center;
   font-weight: 400;
   gap: 4px;
-  padding: 12px 20px;
+  padding: 16px 20px 10px 20px;
   color: #979abe;
 `;
 const Body = styled.div``;
@@ -21,18 +22,17 @@ const Column = styled.div`
   align-items: center;
 `;
 const Row = styled.div`
-  background: #2e3142;
-  border: 1px solid #373a53;
-  border-radius: 16px;
-  margin-bottom: 10px;
+  padding: 13px 16px;
+  transition: background-color 0.2s ease;
+  &:hover {
+    background-color: #2e3142;
+  }
 `;
 const RowCols = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 4px;
-  padding: 12px 20px;
-  height: 84px;
 `;
 const RowHeader = styled.div`
   width: 100%;
@@ -72,9 +72,23 @@ const Empty = styled.div`
   font-weight: 400;
   line-height: normal;
 `;
-const RewardApyItem = styled.div``;
-const RewardIcon = styled.img``;
-const RewardApy = styled.div``;
+const RewardApyItem = styled.div`
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  margin-top: 4px;
+  column-gap: 2px;
+  color: #979abe;
+  font-size: 12px;
+`;
+const RewardIcon = styled.img`
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+`;
+const RewardApy = styled.div`
+  white-space: nowrap;
+`;
 const ArrowIconWrapper = styled.div`
   width: 17px;
   height: 17px;

@@ -1,15 +1,9 @@
-import { useState } from 'react';
-
-import LendingArrowIcon from '@/views/AllInOne/components/Lending/LendingArrowIcon';
-import type { ActionType } from '@/views/AllInOne/components/Lending/LendingDialog/Action';
-import LendingAction from '@/views/AllInOne/components/Lending/LendingDialog/Action';
 import LendingTableButton from '@/views/AllInOne/components/Lending/LendingTableButton';
 
 import LendingAsset from '../LendingAsset';
 import LendingSwitch from '../LendingSwitch';
 import LendingTotal from '../LendingTotal';
 import {
-  ArrowIconWrapper,
   Body,
   Buttons,
   Cell,
@@ -42,48 +36,13 @@ interface IProps {
   totalReverse: any;
   emptyTips: any;
   type: any;
-  tabConfig: any;
-  chainId: any;
-  account: any;
-  addAction: any;
-  onSuccess: any;
-  toast: any;
-  markets: any;
-  dapps: any;
-  tabs: ActionType[];
-  rowExpanded?: boolean;
-  updateBalance?: number;
-
-  onRowClick?(row: any, index: number): void;
+  classname?: string;
 
   onButtonClick?(row: any, button?: string): void;
 }
 
 const LendingDepositTable = (props: Partial<IProps>) => {
-  const {
-    columns,
-    data,
-    buttons,
-    totalReverse,
-    emptyTips,
-    type,
-    markets,
-    dapps,
-    tabConfig,
-    addAction,
-    toast,
-    account,
-    chainId,
-    tabs,
-    updateBalance,
-    rowExpanded = true,
-    onRowClick,
-    onButtonClick,
-    onSuccess
-  } = props;
-
-  const [openKey, setOpenKey] = useState<number | undefined>(undefined);
-  const [params, setParams] = useState<any>();
+  const { columns = [], data, buttons, totalReverse, emptyTips, type, onButtonClick, classname = '' } = props;
 
   const renderTotal = (record: any, key: any, isSpecialKey?: any) => {
     return (
@@ -108,7 +67,7 @@ const LendingDepositTable = (props: Partial<IProps>) => {
   const renderAssetName = (market: any) => {
     return (
       <RowHeader>
-        <LendingAsset icon={market.icon} symbol={market.symbol} />
+        <LendingAsset icon={market.icon} symbol={market.symbol} dappIcon={market.dappIcon} dappName={market.dappName} />
       </RowHeader>
     );
   };
@@ -153,116 +112,65 @@ const LendingDepositTable = (props: Partial<IProps>) => {
     );
   };
 
-  const handleRowClick = (row: any, index: number) => {
-    onRowClick && onRowClick(row, index);
-
-    if (!rowExpanded) return;
-
-    setOpenKey(index === openKey ? undefined : index);
-    const market = markets[row.address];
-    const dapp = dapps[market.dapp];
-    const dappConfig = tabConfig.dapps[market.dapp];
-    setParams({
-      data: {
-        ...dapp,
-        ...market,
-        config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
-        addAction,
-        toast
-      },
-      account,
-      chainId,
-      addAction,
-      toast
-    });
-  };
-
   return (
-    <Table>
-      <Header>
+    <Table className={classname}>
+      <Header className="table-head">
         {columns?.map((column) => (
-          <Column key={column.key || column.type} style={{ width: column.width }}>
+          <Column key={'column' + (column.key || column.type)} style={{ width: column.width }}>
             {column.name}
           </Column>
         ))}
       </Header>
       <Body>
         {data?.map((record: any, idx: number) => {
-          const market = markets[record.address];
-          const dapp = dapps[market.dapp];
-          const dappConfig = tabConfig.dapps[market.dapp];
-
           return (
-            <>
-              <Row key={record.address || Date.now() + Math.random()}>
-                <RowCols onClick={() => handleRowClick(record, idx)}>
-                  {columns?.map((column: any) => (
-                    <Cell
-                      key={column.key || column.type}
-                      style={{
-                        width: column.width,
-                        justifyContent: column.type === 'button' ? 'center' : 'left'
-                      }}
-                    >
-                      {column.type === 'name' && renderAssetName(record)}
-                      {column.type === 'market' && renderMarketName(record)}
-                      {column.type === 'button' && (
-                        <Buttons>
-                          {buttons?.map((button: any, j: number) => (
-                            <LendingTableButton
-                              key={j}
-                              text={button.text}
-                              loading={typeof button.loading === 'function' ? button.loading(record) : button.loading}
-                              onClick={() => {
-                                const _loading =
-                                  typeof button.loading === 'function' ? button.loading(record) : button.loading;
-                                if (_loading) return;
-                                if (button.text === 'Claim') {
-                                  onButtonClick?.(record);
-                                } else {
-                                  onButtonClick?.(record.address, button.text);
-                                }
-                              }}
-                            />
-                          ))}
-                        </Buttons>
-                      )}
-                      {column.type === 'arrow' && (
-                        <ArrowIconWrapper className={`open ${idx === openKey ? 'open-active' : ''}`}>
-                          <LendingArrowIcon color="#979ABE" />
-                        </ArrowIconWrapper>
-                      )}
-                      {!['name', 'market', 'button'].includes(column.type) && (
-                        <NormalCell>
-                          <div className="row-value">
-                            {column.type === 'total' && renderTotal(record, column.key)}
-                            {column.type === 'apy' && renderApy(record)}
-                            {column.type === 'collateral' && renderCollateral(record)}
-                            {!['total', 'apy', 'collateral'].includes(column.type) && record[column.key]}
-                          </div>
-                        </NormalCell>
-                      )}
-                    </Cell>
-                  ))}
-                </RowCols>
-                {idx === openKey ? (
-                  <LendingAction
-                    {...params}
-                    data={{
-                      ...dapp,
-                      ...market,
-                      config: { ...dappConfig, wethAddress: tabConfig?.wethAddress },
-                      addAction,
-                      toast
+            <Row key={`${type}${idx}`}>
+              <RowCols>
+                {columns?.map((column: any) => (
+                  <Cell
+                    key={column.key || column.type}
+                    style={{
+                      width: column.width,
+                      justifyContent: column.type === 'button' ? 'center' : 'left'
                     }}
-                    onSuccess={onSuccess}
-                    isHideInfo={true}
-                    tabs={tabs}
-                    updateBalance={updateBalance}
-                  />
-                ) : null}
-              </Row>
-            </>
+                  >
+                    {column.type === 'name' && renderAssetName(record)}
+                    {column.type === 'market' && renderMarketName(record)}
+                    {column.type === 'button' && (
+                      <Buttons>
+                        {buttons?.map((button: any, idx: number) => (
+                          <LendingTableButton
+                            key={idx}
+                            text={button.text}
+                            loading={typeof button.loading === 'function' ? button.loading(record) : button.loading}
+                            onClick={() => {
+                              const _loading =
+                                typeof button.loading === 'function' ? button.loading(record) : button.loading;
+                              if (_loading) return;
+                              if (button.text === 'Claim') {
+                                onButtonClick?.(record);
+                              } else {
+                                onButtonClick?.(record.address, button.text);
+                              }
+                            }}
+                          />
+                        ))}
+                      </Buttons>
+                    )}
+                    {!['name', 'market', 'button'].includes(column.type) && (
+                      <NormalCell>
+                        <div className="row-value">
+                          {column.type === 'total' && renderTotal(record, column.key)}
+                          {column.type === 'apy' && renderApy(record)}
+                          {column.type === 'collateral' && renderCollateral(record)}
+                          {!['total', 'apy', 'collateral'].includes(column.type) && record[column.key]}
+                        </div>
+                      </NormalCell>
+                    )}
+                  </Cell>
+                ))}
+              </RowCols>
+            </Row>
           );
         })}
         {(data?.length === 0 || !data) && <Empty>{emptyTips}</Empty>}

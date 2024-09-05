@@ -261,7 +261,7 @@ export const StyledAirdropMainTitle = styled.div`
 
 export const StyledAirdropHead = styled.div`
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding-bottom: 30px;
   column-gap: 92px;
   margin-top: 14px;
