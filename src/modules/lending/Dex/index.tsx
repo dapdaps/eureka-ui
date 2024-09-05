@@ -1,15 +1,16 @@
-import {  useState } from 'react';
-
 import LendingCardTabs from '@/modules/lending/CardTabs';
 import LendingChains from '@/modules/lending/Chains';
+import LendingCompoundV3 from '@/modules/lending/CompoundV3';
+import LendingContent from '@/modules/lending/Content';
 import { StyledContainer, StyledHeader } from '@/modules/lending/Dex/styles';
+import { useMultiState } from '@/modules/lending/hooks';
 import type { DexProps, Tab } from '@/modules/lending/models';
 import { TabKey } from '@/modules/lending/models';
 import { DexType } from '@/modules/lending/models';
 
 const TabsArray: Tab[] = [
-  { key: TabKey.Market, label: "Market" },
-  { key: TabKey.Yours, label: "Yours" },
+  { key: TabKey.Market, label: 'Market' },
+  { key: TabKey.Yours, label: 'Yours' }
 ];
 
 const LendingDex = (props: DexProps) => {
@@ -29,14 +30,18 @@ const LendingDex = (props: DexProps) => {
     nativeCurrency,
     isChainSupported,
     account,
-    from,
+    from
   } = props;
   const { type } = dexConfig;
 
-  const [tab, setTab] = useState<TabKey>(TabsArray[0].key);
+  console.log('%cWelcome to the new Lending Dex! props: %o', 'background: #185519;color: #fff;', props);
+
+  const [state, updateState] = useMultiState<any>({
+    tab: TabsArray[0].key
+  });
 
   const handleTabChange = (tab: Tab) => {
-    setTab(tab.key);
+    updateState({ tab: tab.key });
   };
 
   return (
@@ -51,7 +56,7 @@ const LendingDex = (props: DexProps) => {
         ) : (
           <LendingCardTabs
             tabs={TabsArray}
-            active={tab}
+            active={state.tab}
             onChange={handleTabChange}
           />
         )}
@@ -64,7 +69,7 @@ const LendingDex = (props: DexProps) => {
         />
       </StyledHeader>
       {type === DexType.CompoundV3 ? (
-        <Widget
+        <LendingCompoundV3
           src="bluebiu.near/widget/Lending.CompoundV3.index"
           props={{
             dexConfig,
@@ -79,26 +84,14 @@ const LendingDex = (props: DexProps) => {
             chainId,
             curChain,
             nativeCurrency,
-            tab: state.tab,
+            tab: state.tab
           }}
         />
       ) : (
-        <Widget
-          src="bluebiu.near/widget/Lending.Content"
-          props={{
-            dexConfig,
-            wethAddress,
-            multicallAddress,
-            multicall,
-            prices,
-            chainIdNotSupport: !isChainSupported,
-            account,
-            addAction,
-            toast,
-            chainId,
-            nativeCurrency,
-            tab: state.tab,
-          }}
+        <LendingContent
+          {...props}
+          chainIdNotSupport={!isChainSupported}
+          tab={state.tab}
         />
       )}
     </StyledContainer>

@@ -1,9 +1,14 @@
 import { useEffect } from 'react';
 
+import Loading from '@/components/Icons/Loading';
 import { StyledContainer } from '@/modules/lending/Content/styles';
+import LayerBankData from '@/modules/lending/datas/LayerBank';
+import LendingDialog from '@/modules/lending/Dialog';
 import { useMultiState } from '@/modules/lending/hooks';
-import type { DexProps, Tab } from '@/modules/lending/models';
+import LendingMarkets from '@/modules/lending/Markets';
+import type { DexProps } from '@/modules/lending/models';
 import { TabKey } from '@/modules/lending/models';
+import LendingMarketYours from '@/modules/lending/Yours';
 
 const LendingContent = (props: Props) => {
   const {
@@ -19,11 +24,11 @@ const LendingContent = (props: Props) => {
     chainId,
     nativeCurrency,
     tab,
-    from,
+    from
   } = props;
 
-  const [state, updateState] = useMultiState<State>({
-    loading: false,
+  const [state, updateState] = useMultiState<any>({
+    loading: false
   });
 
   useEffect(() => {
@@ -38,7 +43,7 @@ const LendingContent = (props: Props) => {
       totalCollateralUsd: state.totalCollateralUsd,
       rewards: state.rewards,
       dappIcon: dexConfig.icon,
-      dappName: dexConfig.name,
+      dappName: dexConfig.name
     };
 
     updateState({
@@ -46,111 +51,95 @@ const LendingContent = (props: Props) => {
         ...dapp,
         ...market,
         config: { ...dexConfig, wethAddress },
-        actionText,
+        actionText
       },
-      showDialog: true,
+      showDialog: true
     });
   };
 
   return (
     <StyledContainer>
       {tab === TabKey.Market && (
-        <Widget
-          src="bluebiu.near/widget/Lending.Markets"
-          props={{
-            markets: state.markets,
-            totalCollateralUsd: state.totalCollateralUsd,
-            userTotalBorrowUsd: state.userTotalBorrowUsd,
-            addAction,
-            toast,
-            chainId,
-            nativeCurrency,
-            dexConfig,
-            account,
-            prices,
-            from,
-            onSuccess: () => {
-              State.update({
-                loading: true,
-              });
-            },
+        <LendingMarkets
+          markets={state.markets}
+          totalCollateralUsd={state.totalCollateralUsd}
+          userTotalBorrowUsd={state.userTotalBorrowUsd}
+          {...props}
+          onSuccess={() => {
+            updateState({
+              loading: true
+            });
           }}
         />
       )}
       {tab === TabKey.Yours && (
-        <Widget
-          src="bluebiu.near/widget/Avalanche.Lending.Yours"
-          props={{
-            currentDapp: dexConfig.name,
-            markets: state.markets,
-            timestamp: state.timestamp,
-            dapps: {
-              [dexConfig.name]: {
-                userTotalSupplyUsd: state.userTotalSupplyUsd,
-                userTotalBorrowUsd: state.userTotalBorrowUsd,
-                totalCollateralUsd: state.totalCollateralUsd,
-                rewards: state.rewards,
-                dappIcon: dexConfig.icon,
-                dappName: dexConfig.name,
-              },
-            },
-            dappsConfig: {
-              [dexConfig.name]: dexConfig,
-            },
-            toast,
-            account,
-            onButtonClick: handleTableButtonClick,
-            onSuccess: () => {
-              State.update({
-                loading: true,
-              });
-            },
+        <LendingMarketYours
+          currentDapp={dexConfig.name}
+          markets={state.markets}
+          timestamp={state.timestamp}
+          dapps={{
+            [dexConfig.name]: {
+              userTotalSupplyUsd: state.userTotalSupplyUsd,
+              userTotalBorrowUsd: state.userTotalBorrowUsd,
+              totalCollateralUsd: state.totalCollateralUsd,
+              rewards: state.rewards,
+              dappIcon: dexConfig.icon,
+              dappName: dexConfig.name
+            }
+          }}
+          dappsConfig={{
+            [dexConfig.name]: dexConfig
+          }}
+          toast={toast}
+          account={account}
+          chainId={chainId}
+          onButtonClick={handleTableButtonClick}
+          onSuccess={() => {
+            updateState({
+              loading: true
+            });
           }}
         />
       )}
-      {state.loading && <Widget src="bluebiu.near/widget/Lending.Spinner" />}
-      <Widget
-        src={dexConfig.data}
-        props={{
-          update: state.loading,
-          account,
-          wethAddress,
-          multicallAddress,
-          multicall,
-          prices,
-          chainId,
-          ...dexConfig,
-          onLoad: (data) => {
-            console.log("DATA_onLoad:", data);
-            State.update({
-              loading: false,
-              timestamp: Date.now(),
-              ...data,
-            });
-          },
+      {state.loading && (
+        <Loading size={16} />
+      )}
+      <LayerBankData
+        update={state.loading}
+        account={account}
+        wethAddress={wethAddress}
+        multicallAddress={multicallAddress}
+        multicall={multicall}
+        prices={prices}
+        chainId={chainId}
+        {...dexConfig}
+        onLoad={(data: any) => {
+          console.log('DATA_onLoad:', data);
+          updateState({
+            loading: false,
+            timestamp: Date.now(),
+            ...data
+          });
         }}
       />
-      <Widget
-        src="bluebiu.near/widget/Avalanche.Lending.Dialog"
-        props={{
-          display: state.showDialog,
-          data: state.tableButtonClickData,
-          chainId,
-          addAction,
-          toast,
-          source: "dapp",
-          account,
-          from,
-          onClose: () => {
-            State.update({
-              showDialog: false,
-            });
-          },
-          onSuccess: () => {
-            State.update({
-              loading: true,
-            });
-          },
+      <LendingDialog
+        display={state.showDialog}
+        data={state.tableButtonClickData}
+        chainId={chainId}
+        addAction={addAction}
+        toast={toast}
+        source="dapp"
+        account={account}
+        from={from}
+        onClose={() => {
+          updateState({
+            showDialog: false
+          });
+        }}
+        onSuccess={() => {
+          updateState({
+            loading: true
+          });
         }}
       />
     </StyledContainer>
@@ -161,9 +150,5 @@ export default LendingContent;
 
 export interface Props extends DexProps {
   chainIdNotSupport: boolean;
-  tab: Tab;
-}
-
-export interface State {
-  loading: boolean;
+  tab: TabKey;
 }

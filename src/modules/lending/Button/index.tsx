@@ -395,6 +395,7 @@ export default LendingDialogButton;
 export interface Props {
   disabled?: boolean;
   loading?: boolean;
+  isError?: boolean;
   actionText: string;
   amount: string;
   data: any;
@@ -406,5 +407,5 @@ export interface Props {
   gas: string;
   onApprovedSuccess: any;
   account: string;
-  onLoad: any;
+  onLoad?: any;
 }

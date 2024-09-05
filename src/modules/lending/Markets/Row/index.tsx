@@ -1,12 +1,13 @@
 import Big from 'big.js';
 
 import { useMultiState } from '@/modules/lending/hooks';
+import LendingMarketAmount from '@/modules/lending/Markets/Amount';
+import LendingMarketApy from '@/modules/lending/Markets/Apy';
+import LendingMarketAsset from '@/modules/lending/Markets/Asset';
+import LendingMarketExpand from '@/modules/lending/Markets/Expand';
 import type { Column, DexProps } from '@/modules/lending/models';
 
 import { StyledExpand, StyledRow, StyledRowHeader, StyledRowItem } from './styles';
-import LendingMarketAsset from '@/modules/lending/Markets/Asset';
-import LendingMarketAmount from '@/modules/lending/Markets/Amount';
-import LendingMarketApy from '@/modules/lending/Markets/Apy';
 
 const LendingMarketRow = (props: Props) => {
 
@@ -25,17 +26,17 @@ const LendingMarketRow = (props: Props) => {
     totalCollateralUsd,
     userTotalBorrowUsd,
     userTotalCollateralUsd,
-    from,
+    from
   } = props;
 
   const [state, updateState] = useMultiState({
-    expand: false,
+    expand: false
   });
 
   let _borrowLimit;
 
   // for Ionic
-  if (dexConfig.name === "Ionic") {
+  if (dexConfig.name === 'Ionic') {
     const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(
       Big(data.COLLATERAL_FACTOR)
     );
@@ -54,41 +55,41 @@ const LendingMarketRow = (props: Props) => {
     <StyledRow>
       <StyledRowHeader
         style={{
-          borderRadius: state.expand ? "16px 16px 0px 0px" : "16px",
+          borderRadius: state.expand ? '16px 16px 0px 0px' : '16px',
           background:
-            from === "layer" && state.expand
-              ? "#f2f2f2"
-              : "var(--agg-secondary-color, #262836)",
+            from === 'layer' && state.expand
+              ? '#f2f2f2'
+              : 'var(--agg-secondary-color, #262836)'
         }}
         onClick={() => {
           updateState({
-            expand: !state.expand,
+            expand: !state.expand
           });
         }}
       >
         {columns.map((column) => (
           <StyledRowItem key={column.key} style={{ width: column.width }}>
-            {column.key === "asset" && (
+            {column.key === 'asset' && (
               <LendingMarketAsset
                 icon={data?.underlyingToken.icon}
                 symbol={data?.underlyingToken.symbol}
               />
             )}
-            {column.type === "amount" && (
+            {column.type === 'amount' && (
               <LendingMarketAmount
                 amount={data[column.key]}
                 price={data?.underlyingPrice}
               />
             )}
-            {column.type === "apy" && (
+            {column.type === 'apy' && (
               <LendingMarketApy
                 apy={data[column.key]}
                 distributionApy={data?.distributionApy}
-                key={column.key === "supplyApy" ? "supply" : "borrow"}
+                key={column.key === 'supplyApy' ? 'supply' : 'borrow'}
               />
             )}
-            {column.key === "handler" && (
-              <StyledExpand className={state.expand ? "expand" : ""}>
+            {column.key === 'handler' && (
+              <StyledExpand className={state.expand ? 'expand' : ''}>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="11"
@@ -106,13 +107,10 @@ const LendingMarketRow = (props: Props) => {
           </StyledRowItem>
         ))}
       </StyledRowHeader>
-      <Widget
-        src="bluebiu.near/widget/Lending.MarketExpand"
-        props={{
-          expand: state.expand,
-          borrowLimit: _borrowLimit,
-          ...props,
-        }}
+      <LendingMarketExpand
+        {...props}
+        expand={state.expand}
+        borrowLimit={_borrowLimit}
       />
     </StyledRow>
   );
@@ -126,5 +124,5 @@ export interface Props extends DexProps {
   borrowLimit: any;
   totalCollateralUsd: any;
   userTotalBorrowUsd: any;
-  userTotalCollateralUsd: any;
+  userTotalCollateralUsd?: any;
 }

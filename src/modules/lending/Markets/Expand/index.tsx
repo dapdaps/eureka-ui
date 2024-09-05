@@ -1,8 +1,12 @@
 import Big from 'big.js';
 import { useEffect } from 'react';
 
+import LendingDialogButton from '@/modules/lending/Button';
+import LayerBankHandler from '@/modules/lending/handlers/LayerBank';
 import { useMultiState } from '@/modules/lending/hooks';
+import LendingMarketInput from '@/modules/lending/Markets/Input';
 import type { DexProps } from '@/modules/lending/models';
+import LendingTotal from '@/modules/lending/Total';
 
 import {
   StyledBorrowLimit,
@@ -22,8 +26,6 @@ import {
   StyledTabs,
   StyledWrapper
 } from './styles';
-import LendingTotal from '@/modules/lending/Total';
-import LendingMarketInput from '@/modules/lending/Markets/Input';
 
 const TABS = ['Supply', 'Borrow'];
 
@@ -177,9 +179,7 @@ const LendingMarketExpand = (props: Props) => {
                 <div>
                 <span className="white">
                   <LendingTotal
-                    total={Big(borrowLimit)
-                      .div(data.underlyingPrice || 1)
-                      .toString()}
+                    total={Big(borrowLimit || 0).div(data.underlyingPrice || 1).toString()}
                     digit={2}
                     unit=""
                   />
@@ -326,30 +326,27 @@ const LendingMarketExpand = (props: Props) => {
                 </div>
               </StyledGasBox>
               <div style={{ flexGrow: 1 }}>
-                <Widget
-                  src="bluebiu.near/widget/Avalanche.Lending.DialogButton"
-                  props={{
-                    disabled: !state.buttonClickable,
-                    actionText: state.tab === 'Supply' ? 'Deposit' : 'Borrow',
-                    amount: state.amount,
-                    data: {
-                      ...data,
-                      config: dexConfig
-                    },
-                    addAction,
-                    toast,
-                    chainId,
-                    unsignedTx: state.unsignedTx,
-                    isError: state.isError,
-                    loading: state.loading,
-                    gas: state.gas,
-                    account,
-                    onApprovedSuccess: () => {
-                      if (!state.gas) state.getTrade();
-                    },
-                    onSuccess: () => {
-                      onSuccess?.();
-                    }
+                <LendingDialogButton
+                  disabled={!state.buttonClickable}
+                  actionText={state.tab === 'Supply' ? 'Deposit' : 'Borrow'}
+                  amount={state.amount}
+                  data={{
+                    ...data,
+                    config: dexConfig,
+                  }}
+                  addAction={addAction}
+                  toast={toast}
+                  chainId={chainId}
+                  unsignedTx={state.unsignedTx}
+                  isError={state.isError}
+                  loading={state.loading}
+                  gas={state.gas}
+                  account={account}
+                  onApprovedSuccess={() => {
+                    if (!state.gas) state.getTrade();
+                  }}
+                  onSuccess={() => {
+                    onSuccess?.();
                   }}
                 />
               </div>
@@ -357,24 +354,20 @@ const LendingMarketExpand = (props: Props) => {
           </div>
         </StyledContent>
         {dexConfig?.handler && (
-          <Widget
-            src={dexConfig.handler}
-            props={{
-              update: state.loading,
-              data: {
-                actionText: state.tab === 'Supply' ? 'Deposit' : 'Borrow',
-                ...data,
-                config: dexConfig
-              },
-              amount: state.amount,
-              account,
-              onLoad: (_data) => {
-                console.log('handler_onLoad:', _data);
-                State.update({
-                  ..._data,
-                  loading: false
-                });
-              }
+          <LayerBankHandler
+            update={state.loading}
+            data={{
+              actionText: state.tab === 'Supply' ? 'Deposit' : 'Borrow',
+              ...data,
+              config: dexConfig
+            }}
+            amount={state.amount}
+            onLoad={(_data) => {
+              console.log('handler_onLoad:', _data);
+              updateState({
+                ..._data,
+                loading: false
+              });
             }}
           />
         )}

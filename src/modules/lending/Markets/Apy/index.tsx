@@ -9,7 +9,7 @@ const LendingMarketApy = (props: Props) => {
       {distributionApy &&
         distributionApy
           .filter((reward) => {
-            const apy = reward[key].slice(0, -1);
+            const apy = reward[key]?.slice(0, -1);
             return !!Number(apy);
           })
           .map((reward) => (
