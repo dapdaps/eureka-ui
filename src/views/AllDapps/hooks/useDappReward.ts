@@ -29,7 +29,6 @@ export default function useDappReward() {
         if (existingReward) {
           existingReward.odysseys.push({ ...item, reward_value: reward.value });
         } else {
-          console.log('reward:', reward, item)
 
           if (reward.name === 'USDC') {
             result.push({
@@ -37,7 +36,7 @@ export default function useDappReward() {
               value: reward.value,
               name: reward.name,
               odysseys: [
-                { ...item, link: '/bridge-x/rango', status: StatusType.ongoing, name: 'Rango Bridge Volume-based competiton', reward_value: '1000' },
+                { ...item, banner: '/images/odyssey/rango-banner-round.png', link: '/bridge-x/rango', status: StatusType.ongoing, name: 'Rango Bridge Volume-based competiton', reward_value: '1000' },
                 { ...item, reward_value: reward.value }
               ],
             });
