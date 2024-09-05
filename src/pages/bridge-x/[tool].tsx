@@ -24,7 +24,6 @@ import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import { useDefaultLayout } from '@/hooks/useLayout';
-import useScrollMore from '@/hooks/useScrollMore';
 import { usePriceStore } from '@/stores/price';
 import type { Chain } from '@/types';
 import { get } from '@/utils/http';
@@ -34,11 +33,17 @@ import DappFallback from '@/views/Dapp/components/Fallback';
 
 const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 
+const arrow = (
+  <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M1 1L4 4L1 7" stroke="#979ABE" strokeLinecap="round" />
+  </svg>
+);
+
 const Container = styled.div`
   margin: 0 8%;
   color: #ffffff;
   position: relative;
-  padding-top: 42px;
+  padding-top: 50px;
 `;
 const BreadCrumbs = styled.div`
   color: #979abe;
@@ -67,13 +72,15 @@ const chainList = Object.values(chainCofig);
 chainList.sort((a, b) => chainListSort.indexOf(a.chainId) - chainListSort.indexOf(b.chainId));
 
 const Bridge: NextPageWithLayout = () => {
+  const handlerList = useRef<any[]>([]);
+  const { onConnect } = useConnectWallet();
+  // const [toChainId, setToChain] = useState<number>(chainList[1].chainId)
   const router = useRouter();
   const tool = router.query.tool as string;
   const { account, chainId } = useAccount();
 
   const prices = usePriceStore((store) => store.price);
   const { addAction } = useAddAction('dapp');
-  const { viewHeight } = useScrollMore();
 
   const [{ settingChain, connectedChain }, setChain] = useSetChain();
   const [icon, setIcon] = useState('');
@@ -110,7 +117,6 @@ const Bridge: NextPageWithLayout = () => {
       <DappBack defaultPath="/alldapps" />
 
       <BridgeX
-        style={{ minHeight: viewHeight }}
         addAction={addAction}
         prices={prices}
         account={account}

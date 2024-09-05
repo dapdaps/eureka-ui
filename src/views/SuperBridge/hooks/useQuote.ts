@@ -46,9 +46,11 @@ export default function useQuote(
         if (quickLoading) {
           setLoading(false);
         }
+        // console.log('routes.length: ', routes.length)
         setRoutes([...routes]);
       }
     });
+    // console.log('routes:', routes)
     if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {
       setLoading(false);
       setQuoteLoading(false);

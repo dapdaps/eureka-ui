@@ -22,7 +22,7 @@ import { addressFormated, isNumeric, saveTransaction } from './Utils';
 
 const BridgePanel = styled.div`
   width: 478px;
-  margin: 16px auto 0 auto;
+  margin: 16px auto 0;
 `;
 
 const Header = styled.div`
@@ -134,7 +134,6 @@ export default function BridgeX({
   getChainScan,
   addAction,
   onSuccess,
-  style,
   dapp
 }: any) {
   const { fail, success } = useToast();
@@ -383,6 +382,8 @@ export default function BridgeX({
               }
             });
 
+            console.log('maxRoute: ', maxRoute);
+
             if (maxRoute) {
               setDuration(maxRoute.duration);
               setGasCostUSD(maxRoute.gasType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas);
@@ -410,7 +411,7 @@ export default function BridgeX({
   const CurrentActivityCom = activity[tool];
 
   return (
-    <BridgePanel style={style}>
+    <BridgePanel>
       <Header>
         <BridgeIcon>
           <img src={icon} />
@@ -470,6 +471,7 @@ export default function BridgeX({
           amountUSD={fromUSD}
           onTokenChange={(token: any) => {
             setSelectInputToken(token);
+            // setSendAmount('')
             setReceiveAmount('');
           }}
           onInputChange={(val: any) => {
@@ -506,6 +508,32 @@ export default function BridgeX({
             setReceiveAmount('');
           }}
         />
+
+        {/* <Widget
+                src="dapdapbos.near/widget/Bridge.AddressInput"
+                props={{
+                    checked: state.otherAddressChecked,
+                    address: state.toAddress,
+                    isValidAddress: state.isValidAddress,
+                    onCheck: () => {
+                        State.update({
+                            otherAddressChecked: !state.otherAddressChecked
+                        })
+                    },
+                    onChange: (value) => {
+                        State.update({
+                            toAddress: value,
+                        })
+    
+                        const isValidAddress = ethers.utils.isAddress(value)
+    
+                        State.update({
+                            isValidAddress
+                        })
+    
+                    }
+                }}
+            /> */}
 
         <FeeMsg
           duration={duration}

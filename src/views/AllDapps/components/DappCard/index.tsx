@@ -30,6 +30,27 @@ const DAppRewardList: { [k: string]: Badge[] } = {
       tooltip: '$20-25k $SMD',
       iconSize: 20
     }
+  ],
+  ['Rango Bridge']: [
+    {
+      name: RewardIcons['USDC']?.label || '',
+      value: '$1000',
+      icon: RewardIcons['USDC']?.icon || '',
+      status: StatusType.ended,
+      tooltip: 'Related reward on DapDap',
+      iconSize: 20,
+      odyssey: [
+        {
+          name: 'Rango Bridge Volume-based competiton',
+          start_time: 1717948800000,
+          end_time: 1719244800000,
+          status: 'ongoing',
+          link: '/bridge-x/rango',
+          banner: 'https://s3.amazonaws.com/dapdap.prod/images/blastv2banner.png',
+          badgeValue: '1000'
+        }
+      ]
+    }
   ]
 };
 
