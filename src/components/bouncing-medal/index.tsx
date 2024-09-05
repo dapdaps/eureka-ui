@@ -94,11 +94,14 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         const bodies = Matter.Composite.allBodies(engine.world).filter(item => !item.isStatic);
         bodies.forEach(body => {
           if (Matter.Bounds.contains(body.bounds, realMousePosition)) {
-            const forceMagnitude = 0.08 * body.mass;
-            Matter.Body.applyForce(body, body.position, {
-              x: (Math.random() - 0.5) * forceMagnitude,
-              y: (Math.random() - 0.5) * forceMagnitude
-            });
+            const forceMagnitude = 0.1 * body.mass;
+            const randomX = Math.random() * forceMagnitude;
+            const randomY = Math.random() * forceMagnitude;
+            const op = {
+              x: randomX,
+              y: randomY < randomX ? randomX : randomY,
+            }
+            Matter.Body.applyForce(body, body.position, op);
 
             beatTimer = setTimeout(() => {
               Matter.Body.setPosition(body, { x: body.position.x, y: body.position.y });
