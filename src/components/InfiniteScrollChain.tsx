@@ -22,7 +22,6 @@ const TokenContent = styled(motion.div)<{ isHovered: boolean }>`
   align-items: center;
   gap: 60px;
   height: 100%;
-  width: 330%;
   animation: translateLeft 30s linear 0s infinite normal none running;
   animation-play-state: ${({ isHovered }) => (isHovered ? 'paused' : 'running')};
 
@@ -88,7 +87,7 @@ interface Token {
 }
 
 const LoadingCard = () => {
-  return Array.from({ length: 8 }).map((_, index) => (
+  return Array.from({ length: 16 }).map((_, index) => (
     <IndexList key={index}>
       <Skeleton width={20} height={20} />
       <Skeleton width={60} height={20} />
@@ -98,7 +97,7 @@ const LoadingCard = () => {
 };
 
 const InfiniteScrollChain = ({ className }: { className?: string }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState<any>(false);
 
   const { list, loading } = useTokenPriceListStore();
 
@@ -117,7 +116,7 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
     <StyledWrapper className={className}>
       <TokenList>
         <TokenContent
-          isHovered={isHovered}
+          isHovered={isHovered || loading}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
