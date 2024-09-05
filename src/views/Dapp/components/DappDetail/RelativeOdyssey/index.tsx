@@ -21,6 +21,7 @@ const RelativeOdyssey = (props: Props) => {
     dappId,
     networkId,
     chainId,
+    dappName,
   } = props;
 
   const swiperRef = useRef<any>();
@@ -54,6 +55,26 @@ const RelativeOdyssey = (props: Props) => {
     try {
       const result = await get(url, params);
       const data = result.data || [];
+     
+      if (dappName === 'Rango Bridge') {
+        const zero = {
+            "id": 0,
+            "name": "Rango Bridge Volume-based competiton",
+            "description": "Explore, Trade, Earn - Go for Gold!",
+            "start_time": 1717948800000,
+            "end_time": 2719244800000,
+            "status": "ongoing",
+            "banner": "https://s3.amazonaws.com/dapdap.prod/images/blastv2banner.png",
+            "link": "",
+            "category": "spinblast",
+            "chains_id": "81457",
+            "networks_id": "18",
+            showSummary: false,
+            "reward": "[{\"name\":\"USDC\",\"value\":\"1000\",\"logo_key\":\"USDC\"}]",
+        }
+        data.unshift(zero)
+      }
+
       setOdysseyList(data.sort((a: any, b: any) => b.end_time - a.end_time));
     } catch (err) {
       console.log(err, 'err');
@@ -117,6 +138,7 @@ const RelativeOdyssey = (props: Props) => {
                         name={compass.name}
                         banner={compass.banner}
                         status={compass.status}
+                        showSummary={compass.showSummary}
                         rewards={compass.reward}
                         volume={compass.trading_volume}
                         users={compass.total_users}
@@ -165,6 +187,7 @@ export default memo(RelativeOdyssey);
 export interface Props {
   title: string;
   dappId?: number;
+  dappName?: string;
   networkId?: number;
   chainId?: number;
 }

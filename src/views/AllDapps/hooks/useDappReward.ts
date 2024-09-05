@@ -1,6 +1,7 @@
 import type { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 import { QUEST_PATH } from '@/config/quest';
 import {get} from '@/utils/http';
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 interface Reward {
   name: string;
@@ -28,12 +29,23 @@ export default function useDappReward() {
         if (existingReward) {
           existingReward.odysseys.push({ ...item, reward_value: reward.value });
         } else {
-          result.push({
-            logo_key: reward.logo_key,
-            value: reward.value,
-            name: reward.name,
-            odysseys: [{ ...item, reward_value: reward.value }],
-          });
+          console.log('reward:', reward, item)
+
+          if (reward.name === 'USDC') {
+            result.push({
+              logo_key: reward.logo_key,
+              value: reward.value,
+              name: reward.name,
+              odysseys: [{ ...item, link: '/bridge-x/rango', status: StatusType.ongoing, name: 'Rango Bridge Volume-based competiton', reward_value: '1000' }],
+            });
+          } else {
+            result.push({
+              logo_key: reward.logo_key,
+              value: reward.value,
+              name: reward.name,
+              odysseys: [{ ...item, reward_value: reward.value }],
+            });
+          }
         }
       });
       return result;

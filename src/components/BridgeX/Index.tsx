@@ -498,32 +498,6 @@ export default function BridgeX({
                 }}
             />
 
-            {/* <Widget
-                src="dapdapbos.near/widget/Bridge.AddressInput"
-                props={{
-                    checked: state.otherAddressChecked,
-                    address: state.toAddress,
-                    isValidAddress: state.isValidAddress,
-                    onCheck: () => {
-                        State.update({
-                            otherAddressChecked: !state.otherAddressChecked
-                        })
-                    },
-                    onChange: (value) => {
-                        State.update({
-                            toAddress: value,
-                        })
-    
-                        const isValidAddress = ethers.utils.isAddress(value)
-    
-                        State.update({
-                            isValidAddress
-                        })
-    
-                    }
-                }}
-            /> */}
-
             <FeeMsg
                 duration={duration}
                 feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}

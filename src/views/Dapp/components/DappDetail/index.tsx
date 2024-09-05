@@ -103,6 +103,7 @@ const DappDetail = (props: Props) => {
             {/* <Medal id={props?.id} type={Category.dApp} /> */}
             <RelativeOdyssey
               title='Related Campaign'
+              dappName={props?.name}
               dappId={props?.id}
             />
           </StyledRelatedOdyssey>

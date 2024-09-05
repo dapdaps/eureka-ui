@@ -52,6 +52,7 @@ const OdysseyCardComponent = (props: Props) => {
     className,
     bp,
     isHoverButton,
+    showSummary = true,
   } = props;
 
   const tagListRef = useRef<any>();
@@ -260,7 +261,7 @@ const OdysseyCardComponent = (props: Props) => {
           </StyledOdysseyTitle>
           <StyledTagList ref={tagListRef}>
             {
-              summaryList.map((item: any, index: number) => (
+              showSummary && summaryList.map((item: any, index: number) => (
                 <SimpleTooltip
                   tooltip={item.tooltip}
                   key={item.key}
@@ -378,6 +379,7 @@ export interface Props {
   className?: string;
   bp?: string;
   isHoverButton?: boolean;
+  showSummary?: boolean
 }
 
 const odysseyIsLive = (status: StatusType) => {

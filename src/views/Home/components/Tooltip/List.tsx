@@ -86,7 +86,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
 
   const onOdysseyClick = (ody: Odyssey) => {
     if (odyssey[ody.id]) {
-      router.push(odyssey[ody.id].path);
+      router.push(ody.link || odyssey[ody.id].path);
       return;
     }
     toast.fail('Invalid odyssey id!');
