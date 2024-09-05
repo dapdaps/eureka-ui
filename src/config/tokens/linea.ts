@@ -226,5 +226,29 @@ export const linea: { [key: string]: Token } = {
     decimals: 18,
     name: 'Foxy',
     icon: 'https://ipfs.near.social/ipfs/bafkreiaomsy4sjntn3ovfdgp4fdj75rwpplheiyuorc22fzc26p23coh3a',
-  }
+  },
+  'solv-btc': {
+    address: '0x5FFcE65A40f6d3de5332766ffF6A28BF491C868c',
+    chainId: CHAIN_ID,
+    symbol: 'SolvBTC.m',
+    decimals: 18,
+    name: 'Free Bridged SolvBTC',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifiiyr3pn7bnrixrydppkxzvvbdt2vv375ve4hdcqzdzqljjkbfuq',
+  },
+  'm-btc': {
+    address: '0xe4D584ae9b753e549cAE66200A6475d2f00705f7',
+    chainId: CHAIN_ID,
+    symbol: 'M-BTC',
+    decimals: 18,
+    name: 'Merlin BTC',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiepihwrzkrc3z5d4brgjgh7i32vsvx7c5tn5sbb5tng55fh26qygq',
+  },
+  'uni-eth': {
+    chainId: CHAIN_ID,
+    address: '0x15EEfE5B297136b8712291B632404B66A8eF4D25',
+    decimals: 18,
+    symbol: 'uniETH',
+    name: 'Universal ETH',
+    icon: '/images/tokens/uni-eth.png',
+  },
 };
