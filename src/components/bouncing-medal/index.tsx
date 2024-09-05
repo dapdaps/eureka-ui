@@ -82,7 +82,7 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
       Composite.add(engine.world, [
         ...medalList.filter((m) => !!m) as Body[],
         ...borders,
-        mouseConstraint
+        // mouseConstraint
       ]);
 
       Events.on(mouseConstraint, 'mousedown', (event) => {
