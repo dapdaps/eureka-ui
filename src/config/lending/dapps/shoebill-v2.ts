@@ -5,6 +5,7 @@ const basic = {
   icon: '/images/apps/shoebill-v2.png',
   data: 'bluebiu.near/widget/Lending.Data.ShoeBillV2',
   handler: 'bluebiu.near/widget/Lending.Handler.ShoeBillV2',
+  loaderName: 'ShoebillV2',
 };
 
 const networks = {

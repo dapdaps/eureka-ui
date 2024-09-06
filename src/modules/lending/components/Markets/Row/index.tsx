@@ -85,7 +85,7 @@ const LendingMarketRow = (props: Props) => {
               <LendingMarketApy
                 apy={data[column.key]}
                 distributionApy={data?.distributionApy}
-                key={column.key === 'supplyApy' ? 'supply' : 'borrow'}
+                rewardKey={column.key === 'supplyApy' ? 'supply' : 'borrow'}
               />
             )}
             {column.key === 'handler' && (

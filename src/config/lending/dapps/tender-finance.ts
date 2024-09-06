@@ -5,6 +5,7 @@ const basic = {
   icon: '/images/apps/tender.png',
   data: 'bluebiu.near/widget/Lending.Data.TenderFinance',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  loaderName: 'TenderFinance',
 };
 
 const networks = {

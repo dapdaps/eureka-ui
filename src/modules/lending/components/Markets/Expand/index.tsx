@@ -183,7 +183,7 @@ const LendingMarketExpand = (props: Props) => {
                 <div>
                 <span className="white">
                   <LendingTotal
-                    total={Big(borrowLimit || 0).div(data.underlyingPrice || 1).toString()}
+                    total={Big(data.underlyingPrice || 0).eq(0) ? '0' : Big(borrowLimit || 0).div(data.underlyingPrice || 1).toString()}
                     digit={2}
                     unit=""
                   />

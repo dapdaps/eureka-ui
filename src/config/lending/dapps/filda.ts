@@ -7,6 +7,7 @@ const basic = {
   icon: '/images/apps/filda.png',
   data: 'bluebiu.near/widget/Lending.Data.Filda',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  loaderName: 'FilDA'
 };
 
 const networks = {

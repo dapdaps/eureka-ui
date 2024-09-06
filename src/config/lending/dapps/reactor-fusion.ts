@@ -5,6 +5,7 @@ const basic = {
   icon: '/images/apps/reactorfusion.png',
   data: 'bluebiu.near/widget/Lending.Data.Reactorfusion',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  loaderName: 'Reactorfusion'
 };
 
 const networks = {
