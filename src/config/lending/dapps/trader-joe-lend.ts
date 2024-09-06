@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.TraderJoe',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.TraderJoe',
+  loaderName: 'TraderJoeLend',
 };
 
 const networks = {
