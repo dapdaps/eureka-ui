@@ -81,10 +81,10 @@ export default function BosDapp({
   };
 
   const nativeComponents = [
-    'bluebiu.near/widget/Lending.Dex',
-    'bluebiu.near/widget/Lending.Orbit.Index',
+    'lending',
+    'compound v3',
   ];
-  if (nativeComponents.includes(network?.dapp_src)) {
+  if (nativeComponents.includes(localConfig.type)) {
     return (
       <LendingDex {...componentProps} />
     );
