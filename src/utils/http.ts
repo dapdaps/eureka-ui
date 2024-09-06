@@ -118,4 +118,9 @@ const deleteRequest = async (url: string, data: object) => {
   return (await res.json()) as any;
 };
 
-export { get, post, getWithoutActive, deleteRequest, AUTH_TOKENS };
+const asyncFetch = async (url: string, options?: object) => {
+  const response = await fetch(url, options)
+  return await response.json()
+}
+
+export { get, post, getWithoutActive, deleteRequest, AUTH_TOKENS, asyncFetch };

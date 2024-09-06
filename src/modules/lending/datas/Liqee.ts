@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useEffect } from 'react';
 
 const OTOKEN_ABI = [
   {
@@ -155,7 +155,7 @@ export default function LiqeeData (props: any) {
   useEffect(() => {
     if (!multicallAddress || !unitrollerAddress || !update || !account) return;
     console.log(`${name}-update`);
-    let _cTokensData: Record<string, Market> = {};
+    const _cTokensData: Record<string, Market> = {};
     let _loanToValue: any = null;
     let _underlyPrice: Record<string, any> = {};
     let _liquidity: any = null;

@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useEffect } from 'react';
 
 const OTOKEN_ABI = [
   {
@@ -184,14 +184,14 @@ export default function TenderFinanceData (props: any) {
   useEffect(() => {
     if (!multicallAddress || !unitrollerAddress || !update || !account) return;
 
-    let _cTokensData: any = {};
+    const _cTokensData: any = {};
     let _loanToValue: any = null;
     let _underlyPrice: any = {};
     let _liquidity: any = null;
     let _underlyingBalance: any = null;
     let _userMerberShip: any = null;
-    let _rewards: any = {};
-    let _accountRewards: any = {};
+    const _rewards: any = {};
+    const _accountRewards: any = {};
     let count = 0;
     let oTokensLength = Object.values(markets).length;
 

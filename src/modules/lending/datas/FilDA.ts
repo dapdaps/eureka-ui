@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useEffect } from 'react';
 
 const OTOKEN_ABI = [
   {
@@ -146,9 +146,9 @@ export default function FilDAData (props: any) {
 
   useEffect(() => {
     if (!multicallAddress || !unitrollerAddress || !update || !account) return;
-    let _cTokensData: any = {};
+    const _cTokensData: any = {};
     let _loanToValue: any = null;
-    let _underlyPrice: any = {};
+    const _underlyPrice: any = {};
     let _liquidity : any= null;
     let _underlyingBalance: any = null;
     let _userMerberShip: any = null;

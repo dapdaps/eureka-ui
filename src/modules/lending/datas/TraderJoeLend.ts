@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useEffect } from 'react';
 
 const OTOKEN_ABI = [
   {
@@ -245,14 +245,14 @@ export default function TraderJoeLendData (props: any) {
   useEffect(() => {
     if (!multicallAddress || !unitrollerAddress || !update || !account) return;
 
-    let _cTokensData:  Record<string, Market>  = {};
+    const _cTokensData:  Record<string, Market>  = {};
     let _loanToValue: any = null;
     let _underlyPrice: Record<string, any> = {};
     let _liquidity: any = null;
     let _underlyingBalance: any = null;
     let _userMerberShip: any = null;
-    let _accountRewards = {};
-    let _rewards = {};
+    const _accountRewards = {};
+    const _rewards = {};
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = [
@@ -276,7 +276,7 @@ export default function TraderJoeLendData (props: any) {
       let userTotalSupplyUsd = Big(0);
       let userTotalBorrowUsd = Big(0);
       let totalCollateralUsd = Big(0);
-      let totalAccountDistributionApy = Big(0);
+      const totalAccountDistributionApy = Big(0);
       Object.values(_cTokensData).forEach((market ) => {
         const underlyingPrice = _underlyPrice[market.address];
         const marketSupplyUsd = Big(market.totalSupply || 0).mul(underlyingPrice);
@@ -302,7 +302,7 @@ export default function TraderJoeLendData (props: any) {
         }
         const distributionApy:DistributionApy[] = [];
 
-        let rewards: any[] = [];
+        const rewards: any[] = [];
         // REWARD_TOKEN.forEach((reward) => {
         //   const _reward = _rewards[reward.symbol][market.address];
         //   const distributionSupplyApy = Big(_reward.supply)

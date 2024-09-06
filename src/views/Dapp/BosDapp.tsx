@@ -8,15 +8,18 @@ import wethConfig from '@/config/contract/weth';
 import { bridge as dappBridgeTheme } from '@/config/theme/dapp';
 import useAddAction from '@/hooks/useAddAction';
 import useSwitchChain from '@/hooks/useSwitchChain';
+import useToast from '@/hooks/useToast';
+import LendingDex from '@/modules/lending/Dex';
+import Gamma from '@/modules/liquidity/Gamma';
 import { useLayoutStore } from '@/stores/layout';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
 import refresh from '@/utils/refresh';
-import LendingDex from '@/modules/lending/Dex';
 export default function BosDapp({
   dapp,
   chainId,
   account,
+  provider,
   dappChains,
   currentChain,
   localConfig,
@@ -27,6 +30,7 @@ export default function BosDapp({
   chains,
   props = {},
 }: any) {
+  const toast = useToast()
   const prices = usePriceStore((store) => store.price);
   const { addAction } = useAddAction('dapp');
   const setLayoutStore = useLayoutStore((store) => store.set);
@@ -44,7 +48,9 @@ export default function BosDapp({
   const componentProps = {
     chainId,
     name: dapp.name,
+    toast,
     account,
+    provider,
     CHAIN_LIST: dappChains,
     curChain: currentChain,
     defaultDex: dapp.name,
@@ -89,6 +95,14 @@ export default function BosDapp({
       <LendingDex {...componentProps} />
     );
   }
+  if (network?.dapp_src === 'bluebiu.near/widget/Liquidity.GAMMA') {
+    return (
+      <Gamma {...componentProps} />
+    );
+  }
+
+  console.log('====componentProps', JSON.stringify(componentProps))
+
 
   return (
     <ComponentWrapperPage

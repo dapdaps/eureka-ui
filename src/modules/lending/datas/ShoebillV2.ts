@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useEffect } from 'react';
 
 const OTOKEN_ABI = [
   {
@@ -109,9 +109,9 @@ export default function ShoebillV2Data (props: any) {
 
   useEffect(() => {
     if (!multicallAddress || !update || !account) return;
-    let _cTokensData: any = {};
-    let _loanToValue: any = {};
-    let _underlyPrice: any = {};
+    const _cTokensData: any = {};
+    const _loanToValue: any = {};
+    const _underlyPrice: any = {};
     let _liquidity: any = null;
     let _underlyingBalance: any = null;
     let count = 0;

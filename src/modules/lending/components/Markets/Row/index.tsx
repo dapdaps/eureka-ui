@@ -1,10 +1,10 @@
 import Big from 'big.js';
 
-import { useMultiState } from '@/modules/lending/hooks';
 import LendingMarketAmount from '@/modules/lending/components/Markets/Amount';
 import LendingMarketApy from '@/modules/lending/components/Markets/Apy';
 import LendingMarketAsset from '@/modules/lending/components/Markets/Asset';
 import LendingMarketExpand from '@/modules/lending/components/Markets/Expand';
+import { useMultiState } from '@/modules/lending/hooks';
 import type { Column, DexProps } from '@/modules/lending/models';
 
 import { StyledExpand, StyledRow, StyledRowHeader, StyledRowItem } from './styles';

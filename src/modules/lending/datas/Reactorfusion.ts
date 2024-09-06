@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { useEffect } from 'react';
 
 const OTOKEN_ABI = [
   {
@@ -147,7 +147,7 @@ export default  function ReactorfusionData (props: any) {
   useEffect(() => {
     if (!multicallAddress || !unitrollerAddress || !update || !account) return;
 
-    let _cTokensData: any = {};
+    const _cTokensData: any = {};
     let _loanToValue: any = null;
     let _underlyPrice: any = {};
     let _liquidity: any = null;
