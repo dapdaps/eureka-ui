@@ -7,7 +7,7 @@ export const CategoryList = [
   { key: 4, label: 'Liquidity', name: 'Liquidity', colorRgb: '170,214,255' },
   { key: 5, label: 'Staking', name: 'Staking', colorRgb: '193,191,255' },
   { key: 6, label: 'Yield', name: 'Yield', colorRgb: '249,181,230' },
-  { key: 7, label: 'Launchpad', name: 'Launchpad', colorRgb: '153,114,238' },
+  { key: 7, label: 'Launchpad', name: 'Launchpad', colorRgb: '153,114,238' }
 ];
 
 export interface TitleDapp {
@@ -27,23 +27,22 @@ export const TitleDappList: Omit<TitleDapp, 'logo'>[] = [
   { key: '2', position: 'left', width: 72, height: 72, x: 19, y: 0, rotate: random(-45, 45) },
   { key: '5', position: 'right', width: 72, height: 72, x: -11, y: 116, rotate: random(-45, 45) },
   { key: '3', position: 'left', width: 72, height: 72, x: -19, y: 116, rotate: random(-45, 45) },
-  { key: '6', position: 'right', width: 72, height: 72, x: 30, y: 36, rotate: random(-45, 45) },
+  { key: '6', position: 'right', width: 72, height: 72, x: 30, y: 36, rotate: random(-45, 45) }
 ];
 
 export const SortList: {
-  key: number,
-  value: string,
-  label: string,
-  variable: any
+  key: number;
+  value: string;
+  label: string;
+  variable: any;
 }[] = [
-  { key: 1, value: 'volume', label: 'Sort by Volume', variable: 'trading_volume' },
-  { key: 2, value: 'users', label: 'Sort by users', variable: 'participants' },
+  { key: 1, value: 'volume', label: 'Sort by Volume', variable: 'trading_volume_general' },
+  { key: 2, value: 'tvl', label: 'Sort by TVL', variable: 'tvl' },
   { key: 3, value: 'a-z', label: 'A-Z', variable: 'name' },
   { key: 4, value: 'z-a', label: 'Z-A', variable: 'name' },
-  { key: 5, value: 'create_time', label: 'New launched', variable: 'id' },
+  { key: 5, value: 'create_time', label: 'New launched', variable: 'id' }
 ];
 
 export const PageSize = 18;
-
 
 export const TrueString = '1';

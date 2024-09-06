@@ -5,12 +5,13 @@ import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import {
   StyledContainer,
   StyledContainerInner,
   StyledRecordContainer,
   StyledRelatedContainer,
-  StyledRelatedOdyssey,
+  StyledRelatedOdyssey
 } from '@/views/Dapp/components/DappDetail/styles';
 import useCategoryDappList from '@/views/Quest/hooks/useCategoryDappList';
 
@@ -19,12 +20,11 @@ import Medal from './Medal';
 import RelativeOdyssey from './RelativeOdyssey';
 import DappSummary from './Summary';
 
-
 const StyleImageMedals = styled.img`
   margin-top: 51px;
   width: 500px;
   height: 220px;
-`
+`;
 const DappDetail = (props: Props) => {
   const {
     trading_volume,
@@ -35,6 +35,8 @@ const DappDetail = (props: Props) => {
     route,
     dapp_category,
     id,
+    tvl,
+    trading_volume_general
   } = props;
 
   const [ref, animate] = useAnimate();
@@ -43,44 +45,46 @@ const DappDetail = (props: Props) => {
 
   const summaryList = [
     {
-      key: 'volume',
-      label: 'Trading Volume on DapDap',
-      value: `$${formatIntegerThousandsSeparator(trading_volume, 2)}`,
-      increaseValue: trading_volume_change_percent || '',
+      key: 'tvl',
+      label: 'TVL',
+      value: `${formatValueDecimal(tvl, '$', 2, true)}`,
+      increaseValue: ''
     },
     {
       key: 'txns',
-      label: 'Total txns',
-      value: `${formatIntegerThousandsSeparator(total_execution, 0)}`,
-      increaseValue: '',
-    },
-    {
-      key: 'user',
-      label: 'User',
-      value: `${formatIntegerThousandsSeparator(participants, 0)}`,
-      increaseValue: participants_change_percent || '',
-    },
+      label: 'Volume (24h)',
+      value: `${formatValueDecimal(trading_volume_general, '$', 2, true)}`,
+      increaseValue: ''
+    }
   ];
 
-  const visible = useDebounceFn(() => {
-    animate(ref.current, {
-      opacity: 1,
-      y: 0,
-    }, {
-      duration: 1,
-    });
-  }, { wait: 300 });
+  const visible = useDebounceFn(
+    () => {
+      animate(
+        ref.current,
+        {
+          opacity: 1,
+          y: 0
+        },
+        {
+          duration: 1
+        }
+      );
+    },
+    { wait: 300 }
+  );
 
   const categories = useMemo(() => {
     const _categories = dapp_category || [];
     // fix#DAP-862
     if (['dapp/kim-exchange', 'dapp/thruster-finance'].includes(route) && allCaregories) {
       const liquidity = allCaregories[4];
-      liquidity && _categories.push({
-        category_id: liquidity.id,
-        category_name: liquidity.name,
-        dapp_id: id,
-      });
+      liquidity &&
+        _categories.push({
+          category_id: liquidity.id,
+          category_name: liquidity.name,
+          dapp_id: id
+        });
     }
     return _categories;
   }, [dapp_category, route, allCaregories, id]);
@@ -99,7 +103,7 @@ const DappDetail = (props: Props) => {
         ref={ref}
         initial={{
           opacity: 0,
-          y: 100,
+          y: 100
         }}
       >
         <DappSummary
@@ -112,29 +116,24 @@ const DappDetail = (props: Props) => {
         />
         <StyledRelatedContainer>
           <StyledRecordContainer>
-            <DetailTabs
-              {...props}
-              overviewTitle={props?.name && `What is ${props.name} ?`}
-              category={Category.dApp}
-            />
+            <DetailTabs {...props} overviewTitle={props?.name && `What is ${props.name} ?`} category={Category.dApp} />
           </StyledRecordContainer>
           <StyledRelatedOdyssey>
             <StyleImageMedals src="/images/medals/coming-soon-medal.png" alt="medals" />
             {/* <Medal id={props?.id} type={Category.dApp} /> */}
-            <RelativeOdyssey
-              title='Related Campaign'
-              dappId={props?.id}
-            />
+            <RelativeOdyssey title="Related Campaign" dappId={props?.id} />
           </StyledRelatedOdyssey>
         </StyledRelatedContainer>
       </StyledContainerInner>
-  </StyledContainer>
+    </StyledContainer>
   );
-}
+};
 
 export default DappDetail;
 
 export interface Props {
+  tvl: number;
+  trading_volume_general: number;
   trading_volume: string;
   trading_volume_change_percent: string;
   total_execution: string;

@@ -4,7 +4,7 @@ export const StyledContainer = styled.div`
   width: 100%;
   border-radius: 20px;
   border: 1px solid #202329;
-  background-color: #18191E;
+  background-color: #18191e;
   padding: 34px;
   backdrop-filter: blur(10px);
   display: flex;
@@ -13,7 +13,6 @@ export const StyledContainer = styled.div`
   gap: 30px 100px;
   flex-wrap: wrap;
 `;
-
 
 export const StyledDetailContainer = styled.div`
   display: flex;
@@ -26,12 +25,12 @@ export const StyledSummaryContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-around;
-  flex-grow: 1;
+  flex-grow: 0.6;
   flex-shrink: 0;
   column-gap: 16px;
 `;
 
-export const StyledDetailLogo = styled.div<{ $logo: string; }>`
+export const StyledDetailLogo = styled.div<{ $logo: string }>`
   border-radius: 22px;
   border: 3px solid #202329;
   width: 82px;
@@ -39,10 +38,9 @@ export const StyledDetailLogo = styled.div<{ $logo: string; }>`
   background: ${({ $logo }) => `url("${$logo}") no-repeat center`};
   background-size: contain;
 `;
-export const StyledDetailContent = styled.div`
-`;
+export const StyledDetailContent = styled.div``;
 export const StyledDetailName = styled.div`
-  color: #FFF;
+  color: #fff;
   font-family: Montserrat;
   font-size: 20px;
   font-weight: 700;
@@ -85,7 +83,7 @@ export const StyledNetworksContainer = styled.div`
   gap: 4px;
   flex-wrap: wrap;
 `;
-export const StyledNetworks = styled.div<{ $logo: string; }>`
+export const StyledNetworks = styled.div<{ $logo: string }>`
   width: 20px;
   height: 20px;
   background: ${({ $logo }) => `url("${$logo}") no-repeat center`};
@@ -101,10 +99,9 @@ export const StyledDetailDesc = styled.div`
 
 export const StyledSummary = styled.div`
   text-align: left;
-
 `;
 export const StyledSummaryValue = styled.div`
-  color: #FFF;
+  color: #fff;
   font-family: Montserrat;
   font-size: 26px;
   font-weight: 600;
@@ -115,7 +112,7 @@ export const StyledSummaryValue = styled.div`
   column-gap: 10px;
 `;
 export const StyledSummaryLabel = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-family: Montserrat;
   font-size: 16px;
   font-weight: 400;
@@ -124,7 +121,7 @@ export const StyledSummaryLabel = styled.div`
 `;
 export const StyledSummaryAdd = styled.div`
   display: flex;
-  color: #06C17E;
+  color: #06c17e;
   font-family: Montserrat;
   font-size: 12px;
   font-weight: 500;
