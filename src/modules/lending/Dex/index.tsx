@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 import useToast from '@/hooks/useToast';
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
-import LendingCardTabs from '@/modules/lending/CardTabs';
-import LendingChains from '@/modules/lending/Chains';
-import LendingCompoundV3 from '@/modules/lending/CompoundV3';
-import LendingContent from '@/modules/lending/Content';
+import LendingCardTabs from '@/modules/lending/components/CardTabs';
+import LendingChains from '@/modules/lending/components/Chains';
+import LendingCompoundV3 from '@/modules/lending/components/CompoundV3';
+import LendingContent from '@/modules/lending/components/Content';
 import { StyledContainer, StyledHeader } from '@/modules/lending/Dex/styles';
 import { useMultiState } from '@/modules/lending/hooks';
 import type { DexProps, Tab } from '@/modules/lending/models';
