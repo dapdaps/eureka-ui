@@ -8,8 +8,9 @@ import { overlay } from '@/components/animation';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
 import { chains } from '@/config/bridge';
-import useSortChains from '@/hooks/useSortChains';
 import useAddChain from '@/hooks/useAddChain';
+import useSortChains from '@/hooks/useSortChains';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 
 
@@ -132,8 +133,7 @@ const Chain = ({
 
   const { sortedChains } = useSortChains();
   const [{ connectedChain, settingChain }] = useSetChain();
-  const { add: addChain } = useAddChain();
-  const toast = useToast();
+  const { switchChain } = useSwitchChain()
   const currentChain: any = useMemo(
     () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
     [connectedChain?.id],
@@ -151,18 +151,7 @@ const Chain = ({
     };
   }, []);
   
-  const addNetwork = async (chainId: number) => {
-    const addRes = await addChain({
-      chainId,
-    });
-    if (!addRes.success) {
-      toast.fail('Failed to add network!');
-      return;
-    }
-    toast.success({
-      title: 'Add successfully!',
-    });
-  };
+
   return (
     <StyledContainer
       $mt={mt}
@@ -219,7 +208,7 @@ const Chain = ({
           <ChainItem
             key={chain.chainId}
             onClick={() => {
-              addNetwork(chain.chainId);
+              switchChain(chain.chainId);
             }}
             active={chain.chainId === currentChain?.chainId ? 1 : 0}
             data-bp={bp}

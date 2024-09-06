@@ -1,9 +1,13 @@
 import { useState } from 'react';
+
 import useAddChain from '@/hooks/useAddChain';
 import useToast from '@/hooks/useToast';
 
 import useAccount from './useAccount';
 import useConnectWallet from './useConnectWallet';
+
+type ChainParams = string | number | { chainId: string | number };
+
 
 export default function useSwitchChain() {
   const { account } = useAccount();
@@ -12,7 +16,7 @@ export default function useSwitchChain() {
   const { add: addChain } = useAddChain();
   const toast = useToast();
 
-  const switchChain = async (params: any, cb?: any) => {
+  const switchChain = async (params: ChainParams, cb?: any) => {
     setSwitching(true);
     if (!account) {
       const result = await onConnect();
@@ -22,7 +26,20 @@ export default function useSwitchChain() {
       }
     }
     try {
-      await addNetwork(params.chainId);
+      const rawChainId = typeof params === 'object' ? params.chainId : params;
+      let chainId: number;
+  
+      if (typeof rawChainId === 'string' && rawChainId.toLowerCase().startsWith('0x')) {
+        chainId = parseInt(rawChainId, 16); 
+      } else {
+        chainId = Number(rawChainId);
+      }
+  
+      if (isNaN(chainId) || chainId <= 0) {
+        throw new Error('Invalid chainId');
+      }
+  
+      await addNetwork(chainId);
     } catch (error) {
       console.log(error, 'addNetwork-error');
     } finally {
