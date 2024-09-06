@@ -37,6 +37,7 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
   }, {
     wait: isControlled ? controlledDuration : 150,
   });
+  
 
   const onMouseMove = (e: React.MouseEvent<any, MouseEvent>) => {
     if (isShake) {
