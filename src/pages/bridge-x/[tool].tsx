@@ -14,6 +14,7 @@ import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useConnectWallet from '@/hooks/useConnectWallet';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import useScrollMore from '@/hooks/useScrollMore';
 import { usePriceStore } from '@/stores/price';
 import type { Chain } from '@/types';
 import { get } from '@/utils/http'
@@ -69,6 +70,7 @@ const Bridge: NextPageWithLayout = () => {
 
     const prices = usePriceStore((store) => store.price);
     const { addAction } = useAddAction('dapp');
+    const { viewHeight } = useScrollMore({ gap: 50 });
 
     const [{ settingChain, connectedChain }, setChain] = useSetChain();
     const [icon, setIcon] = useState('')
@@ -106,6 +108,7 @@ const Bridge: NextPageWithLayout = () => {
             <DappBack defaultPath="/alldapps" />
 
             <BridgeX
+                style={{ minHeight: viewHeight }}
                 addAction={addAction}
                 prices={prices}
                 account={account}
@@ -134,12 +137,14 @@ const Bridge: NextPageWithLayout = () => {
                 }}
             />
           {
-            updateDetail ? null : (<>
-            <DappDetailScroll />
-            <Suspense fallback={<DappFallback />}>
-              <DappDetail {...dappDetail} />
-            </Suspense>
-            </>)
+            updateDetail ? null : (
+              <>
+                <DappDetailScroll />
+                <Suspense fallback={<DappFallback />}>
+                  <DappDetail {...dappDetail} />
+                </Suspense>
+              </>
+            )
           }
         </Container>
     )

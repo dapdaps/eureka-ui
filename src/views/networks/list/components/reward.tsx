@@ -6,7 +6,7 @@ import React, { memo, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import odysseies from '@/config/odyssey';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
+import TooltipSimple from '@/components/Tooltip';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import { type NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';

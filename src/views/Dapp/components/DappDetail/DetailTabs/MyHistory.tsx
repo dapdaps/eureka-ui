@@ -10,7 +10,6 @@ import { useUserStore } from '@/stores/user';
 import { copyText } from '@/utils/copy';
 import { formatUSDate } from '@/utils/date';
 import { formateAddress } from '@/utils/formate';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/config';
 import { formatTitle } from '@/views/OnBoarding/helpers';
 
@@ -29,6 +28,7 @@ import {
   StyledMyAvatar,
   StyledTitleText,
 } from './styles';
+import TooltipSimple from '@/components/Tooltip';
 
 const Types: any = {
   network: 'chain',

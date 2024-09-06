@@ -12,38 +12,42 @@ export default function Dapps({ loaded, dapps }: any) {
   };
   return !loaded ? (
     <StyledContainer style={{ marginTop: 80 }}>
-      <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
-        <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>dApps</StyledFont>
+      <StyledFlex gap="6px" style={{ paddingLeft: 16, marginBottom: 20 }}>
+        <StyledFont color="#FFF" fontSize="20px" fontWeight="600">
+          dApps
+        </StyledFont>
         <RectangleNumber quantity={dapps?.length ?? 0} />
       </StyledFlex>
       <DappLoading length={3} />
     </StyledContainer>
   ) : loaded && dapps.length > 0 ? (
     <StyledContainer style={{ marginTop: 80 }}>
-      <StyledFlex gap='6px' style={{ paddingLeft: 16, marginBottom: 20 }}>
-        <StyledFont color='#FFF' fontSize='20px' fontWeight='600'>dApps</StyledFont>
+      <StyledFlex gap="6px" style={{ paddingLeft: 16, marginBottom: 20 }}>
+        <StyledFont color="#FFF" fontSize="20px" fontWeight="600">
+          dApps
+        </StyledFont>
         <RectangleNumber quantity={dapps?.length ?? 0} />
       </StyledFlex>
       <StyledFlex gap="14px" style={{ flexWrap: 'wrap' }}>
-        {
-          dapps?.map((dapp: DappType, index: number) => {
-            return (
-              <DappCard
-                key={index}
-                name={dapp.name}
-                logo={dapp.logo}
-                description={dapp.description}
-                categories={dapp?.categories}
-                networks={dapp.networks}
-                onClick={() => onDappCardClick(dapp)}
-                tradingVolume={dapp.trading_volume_general}
-                tvl={dapp?.tvl}
-                users={dapp.participants}
-              />
-            )
-          })
-        }
+        {dapps?.map((dapp: DappType, index: number) => {
+          return (
+            <DappCard
+              key={index}
+              name={dapp.name}
+              logo={dapp.logo}
+              description={dapp.description}
+              categories={dapp?.categories}
+              networks={dapp.networks}
+              onClick={() => onDappCardClick(dapp)}
+              tradingVolume={dapp.trading_volume_general}
+              tvl={dapp?.tvl}
+              users={dapp.participants}
+            />
+          );
+        })}
       </StyledFlex>
     </StyledContainer>
-  ) : <></>
+  ) : (
+    <></>
+  );
 }

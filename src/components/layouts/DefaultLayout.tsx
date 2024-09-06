@@ -1,16 +1,18 @@
 import { useDebounceFn } from 'ahooks';
 import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import ChainsDock from '@/components/ChainsDock';
 import useAccount from '@/hooks/useAccount';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 
-import AccountSider from '../AccountSider';
-import Footer from '../Footer';
 import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
+import dynamic from 'next/dynamic';
+
+const AccountSider = dynamic(() => import('../AccountSider'));
+const Footer = dynamic(() => import('../Footer'));
 
 interface Props {
   children: ReactNode;

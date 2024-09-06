@@ -51,7 +51,7 @@ const SelectFee = ({ fee, disabled, onSelectFee }: any) => {
             }}
             transition={{ duration: 0.3 }}
           >
-            {fees.map((item: any, i: number) => (
+            {fees?.map((item: any, i: number) => (
               <StyledFee
                 key={item}
                 $active={item === fee}

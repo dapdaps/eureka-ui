@@ -3,7 +3,12 @@ import { useEthersProviderContext } from '@/data/web3';
 import * as http from '@/utils/http';
 
 const useConnectWallet = () => {
-  const { useConnectWallet } = useEthersProviderContext();
+  const context = useEthersProviderContext();
+  if (!context) {
+    console.log('useEthersProviderContext must be used within a EthersProvider');
+  }
+  const { useConnectWallet } = context;
+
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
 
   const onConnect = async () => {

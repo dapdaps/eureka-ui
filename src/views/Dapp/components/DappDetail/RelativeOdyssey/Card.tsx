@@ -4,17 +4,18 @@ import { useRouter } from 'next/router';
 import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
+import SimpleTooltip from '@/components/Tooltip';
 import odysseyConfig from '@/config/odyssey';
 import odyssey from '@/config/odyssey';
 import useToast from '@/hooks/useToast';
 import { StyledFlex } from '@/styled/styles';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
-import SimpleTooltip from '@/views/AllDapps/components/Badges/Tooltip';
 import {
   StyledOdysseyBanner,
-StyledOdysseyBannerMask,
+  StyledOdysseyBannerMask,
   StyledOdysseyBody,
-  StyledOdysseyButton,   StyledOdysseyContainer,
+  StyledOdysseyButton,
+  StyledOdysseyContainer,
   StyledOdysseyHead,
   StyledOdysseyIcon,
   StyledOdysseyIconTitle,

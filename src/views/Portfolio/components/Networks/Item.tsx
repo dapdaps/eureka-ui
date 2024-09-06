@@ -12,10 +12,10 @@ import {
   StyledItemName,
   StyledItemNum,
   StyledItemUSD,
-  StyledTabItem,
+  StyledTabItem
 } from './styles';
 
-const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: number, setNetwork: any }) => {
+const Item = (props: { chain: NetworkItem; totalBalance?: Big.Big; network: number; setNetwork: any }) => {
   const { chain, totalBalance, network, setNetwork } = props;
 
   const isSupported = SupportedChains.some((it) => it.chainId === chain.id);
@@ -41,7 +41,9 @@ const Item = (props: { chain: NetworkItem, totalBalance?: Big.Big, network: numb
       <StyledItemContent>
         <StyledItemName title={chain.name}>{chain.name}</StyledItemName>
         <StyledItemNum $blur={!isSupported}>
-          <StyledItemUSD>{formateValueWithThousandSeparatorAndFont(chain.usd, 0, true, { prefix: '$', isShort: false })}</StyledItemUSD>
+          <StyledItemUSD>
+            {formateValueWithThousandSeparatorAndFont(chain.usd, 0, true, { prefix: '$', isShort: false })}
+          </StyledItemUSD>
           {percentage && isSupported && <StyledItemName>{percentage}%</StyledItemName>}
         </StyledItemNum>
       </StyledItemContent>

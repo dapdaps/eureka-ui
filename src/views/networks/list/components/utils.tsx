@@ -8,11 +8,13 @@ import NativeCurrency from '@/views/networks/detail/components/NativeCurrency';
 import {
   Btn,
   ChainDesc,
-  ChainInfo, ChainName, ChainNameContainer,
+  ChainInfo,
+  ChainName,
+  ChainNameContainer,
   LogoGroup,
   StyledChainTag,
   StyledChainTagIcon,
-  StyledChainTagText,
+  StyledChainTagText
 } from '@/views/networks/list/components/styles';
 import ValuePercent from '@/views/networks/list/components/value-percent';
 
@@ -21,61 +23,50 @@ export const TagList = [
     label: 'Top Volume',
     bgColor: '#00D1FF',
     icon: '/images/networks/icon-top.gif',
-    classname: 'tag-top',
+    classname: 'tag-top'
   },
   {
     label: 'Hottest',
     bgColor: '#FF79C2',
     icon: '/images/networks/icon-hot.gif',
-    classname: 'tag-hot',
-  },
+    classname: 'tag-hot'
+  }
 ];
 
-export const DataListShown = (
-  {
-    tvl,
-    trading_volume_general,
-    total_integrated_dapp,
-    total_medal,
-    classname,
-  }: any,
-) => {
-  const list = [{
-    key: 'tvl',
-    label: 'TVL',
-    percent: true,
-    value: <ValuePercent className={classname}>
-      {formatValueDecimal(tvl, '$', 2, true)}
-    </ValuePercent>,
-  },
-  {
-    key: 'trading_volume_general',
-    label: 'Volume (24h)',
-    value: <ValuePercent className={classname}>
-      {formatValueDecimal(trading_volume_general, '$', 2, true)}
-    </ValuePercent>,
-  },
-  {
-    key: 'dApps',
-    label: 'Integrated dApps',
-    value: formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' }),
-    underline: true,
-  },
+export const DataListShown = ({ tvl, trading_volume_general, total_integrated_dapp, total_medal, classname }: any) => {
+  const list = [
+    {
+      key: 'tvl',
+      label: 'TVL',
+      percent: true,
+      value: <ValuePercent className={classname}>{formatValueDecimal(tvl, '$', 2, true)}</ValuePercent>
+    },
+    {
+      key: 'trading_volume_general',
+      label: 'Volume (24h)',
+      value: (
+        <ValuePercent className={classname}>{formatValueDecimal(trading_volume_general, '$', 2, true)}</ValuePercent>
+      )
+    },
+    {
+      key: 'dApps',
+      label: 'Integrated dApps',
+      value: formatIntegerThousandsSeparator(total_integrated_dapp, 0, { type: 'thousand' }),
+      underline: true
+    }
   ];
   if (total_medal !== undefined) {
     return list.concat({
       key: 'Medals',
       label: 'Medals',
       value: total_medal,
-      underline: true,
+      underline: true
     });
   }
   return list;
 };
 
-
 export const ChainTag = ({ idx }: { idx: number }) => {
-
   if (isNaN(idx) || idx > TagList.length) {
     return null;
   }
@@ -89,15 +80,14 @@ export const ChainTag = ({ idx }: { idx: number }) => {
 };
 
 export const CardHead = ({ classname = '', logo, name, isTop, isHot, tbd_token, native_currency }: any) => {
-
   return (
     <LogoGroup className={classname}>
       <Image src={logo} width={60} height={60} alt="network" className={`${classname}-image`} />
       <ChainInfo className={`${classname}-info`}>
         <ChainNameContainer className={`${classname}-name-container`}>
-          <ChainName className='chain-name'>{name}</ChainName>
-          {isTop ? (<ChainTag idx={0} />) : null}
-          {isHot ? (<ChainTag idx={1} />) : null}
+          <ChainName className="chain-name">{name}</ChainName>
+          {isTop ? <ChainTag idx={0} /> : null}
+          {isHot ? <ChainTag idx={1} /> : null}
         </ChainNameContainer>
         <ChainDesc>
           <NativeCurrency tbdToken={tbd_token} nativeCurrency={native_currency} className="network-native" />
@@ -108,13 +98,9 @@ export const CardHead = ({ classname = '', logo, name, isTop, isHot, tbd_token, 
 };
 
 export const FooterButton = ({ bgColor, textColor, id, path }: any) => {
-
   return (
     <>
-      <Btn
-        href={`/networks/${IdToPath[id]}`}
-        data-bp="1006-002"
-      >
+      <Btn href={`/networks/${IdToPath[id]}`} data-bp="1006-002">
         Details
       </Btn>
       <Btn

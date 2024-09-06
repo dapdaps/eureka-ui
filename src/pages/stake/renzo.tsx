@@ -6,6 +6,7 @@ import DappBack from '@/components/PageBack';
 import Renzo from '@/components/Stake/Renzo'
 import useDappInfo from '@/hooks/useDappInfo';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import useScrollMore from '@/hooks/useScrollMore';
 import type { NextPageWithLayout } from '@/utils/types';
 import DappDetail from '@/views/Dapp/components/DappDetail';
 import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
@@ -44,6 +45,7 @@ export const Page: NextPageWithLayout = () => {
   const router = useRouter();
   const dappPathname = router.query.dappRoute as string;
   const { dapp } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
+  const { viewHeight } = useScrollMore({ gap: 138 });
 
   return <Container>
       <DappBack
@@ -57,7 +59,7 @@ export const Page: NextPageWithLayout = () => {
       <TitleWapper>
         <img className="icon" src="/images/apps/renzo.svg" />
       </TitleWapper>
-      <Bg>
+      <Bg style={{ minHeight: viewHeight }}>
         <Renzo />
       </Bg>
 
