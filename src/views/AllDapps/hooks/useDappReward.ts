@@ -39,8 +39,8 @@ export default function useDappReward() {
                   banner: '/images/odyssey/rango-banner-round.png',
                   link: '/bridge-x/rango',
                   status: StatusType.ongoing,
-                  name: 'Rango Bridge Volume-based competiton',
-                  reward_value: '1000'
+                  name: 'Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!',
+                  reward_value: '$1000'
                 },
                 { ...item, reward_value: reward.value }
               ]

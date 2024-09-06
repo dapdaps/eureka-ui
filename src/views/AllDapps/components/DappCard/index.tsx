@@ -41,13 +41,13 @@ const DAppRewardList: { [k: string]: Badge[] } = {
       iconSize: 20,
       odyssey: [
         {
-          name: 'Rango Bridge Volume-based competiton',
+          name: 'Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!',
           start_time: 1717948800000,
           end_time: 1719244800000,
           status: 'ongoing',
           link: '/bridge-x/rango',
           banner: '/images/odyssey/rango-banner-round.png',
-          badgeValue: '1000'
+          badgeValue: '$1000'
         }
       ]
     }

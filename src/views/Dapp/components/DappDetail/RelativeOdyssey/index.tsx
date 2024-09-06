@@ -49,7 +49,7 @@ const RelativeOdyssey = (props: Props) => {
       if (dappName === 'Rango Bridge') {
         const zero = {
           id: 0,
-          name: 'Rango Bridge Volume-based competiton',
+          name: 'Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!',
           description: 'Explore, Trade, Earn - Go for Gold!',
           start_time: 1717948800000,
           end_time: 2719244800000,
@@ -60,7 +60,7 @@ const RelativeOdyssey = (props: Props) => {
           chains_id: '81457',
           networks_id: '18',
           showSummary: false,
-          reward: '[{"name":"USDC","value":"1000","logo_key":"USDC"}]'
+          reward: '[{"name":"USDC","value":"$1000","logo_key":"USDC"}]'
         };
         data.unshift(zero);
       }
