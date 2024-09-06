@@ -237,12 +237,14 @@ const OdysseyCardComponent = (props: Props) => {
             <ArrowLineIcon classname="arrow-right" />
           </StyledOdysseyButton>
           <StyledOdysseyHead>
-            <StyledOdysseyInfo>
+            {
+              id !== 0 ? <StyledOdysseyInfo>
               <StyledOdysseyIcon />
               <StyledOdysseyIconTitle>
                 Vol.{renderVolNo({ name, id })}
               </StyledOdysseyIconTitle>
-            </StyledOdysseyInfo>
+            </StyledOdysseyInfo> : <div />
+            }
             <Tag status={status} />
           </StyledOdysseyHead>
           {
