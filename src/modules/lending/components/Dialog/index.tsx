@@ -7,8 +7,8 @@ import useAccount from '@/hooks/useAccount';
 import LendingDialogButton from '@/modules/lending/components/Button';
 import ArrowIcon from '@/modules/lending/components/Dialog/ArrowIcon';
 import CloseIcon from '@/modules/lending/components/Dialog/CloseIcon';
-import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 import LendingProcess from '@/modules/lending/components/Process';
+import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 
 import {
   Apy,
@@ -77,7 +77,8 @@ const LendingDialog = (props: Props) => {
     source,
     account,
     from,
-    dexConfig
+    dexConfig,
+    curPool
   } = props;
 
   const { provider } = useAccount();
@@ -585,6 +586,7 @@ const LendingDialog = (props: Props) => {
           chainId={chainId}
           data={data}
           amount={state.amount}
+          curPool={curPool}
           onLoad={(_data: any) => {
             console.log('Dialog-handler-onLoad--', _data);
             updateState({
@@ -610,6 +612,7 @@ export interface Props {
   dexConfig: any;
   addAction: any;
   toast: any;
+  curPool?: any;
 
   onClose(): void;
 

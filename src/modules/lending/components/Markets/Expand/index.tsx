@@ -42,7 +42,8 @@ const LendingMarketExpand = (props: Props) => {
     account,
     prices,
     from,
-    data = {}
+    data = {},
+    curPool
   } = props;
 
   const { provider } = useAccount();
@@ -368,6 +369,7 @@ const LendingMarketExpand = (props: Props) => {
               config: dexConfig
             }}
             amount={state.amount}
+            curPool={curPool}
             onLoad={(_data: any) => {
               console.log('handler_onLoad:', _data);
               updateState({

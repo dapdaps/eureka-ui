@@ -26,7 +26,7 @@ const LendingMarketRow = (props: Props) => {
     totalCollateralUsd,
     userTotalBorrowUsd,
     userTotalCollateralUsd,
-    from
+    from,
   } = props;
 
   const [state, updateState] = useMultiState({

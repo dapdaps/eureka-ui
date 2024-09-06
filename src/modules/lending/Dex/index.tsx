@@ -6,15 +6,16 @@ import LendingCardTabs from '@/modules/lending/components/CardTabs';
 import LendingChains from '@/modules/lending/components/Chains';
 import LendingCompoundV3 from '@/modules/lending/components/CompoundV3';
 import LendingContent from '@/modules/lending/components/Content';
-import { StyledContainer, StyledHeader } from '@/modules/lending/Dex/styles';
+import LendingPools from '@/modules/lending/components/Pools';
+import { StyledContainer, StyledHeader, StyledHeaderRight } from '@/modules/lending/Dex/styles';
 import { useMultiState } from '@/modules/lending/hooks';
-import type { DexProps, Tab } from '@/modules/lending/models';
+import type { DexProps, Pool, Tab } from '@/modules/lending/models';
 import { TabKey } from '@/modules/lending/models';
 import { DexType } from '@/modules/lending/models';
 
 const TabsArray: Tab[] = [
   { key: TabKey.Market, label: 'Market' },
-  { key: TabKey.Yours, label: 'Yours' }
+  { key: TabKey.Yours, label: 'Yours' },
 ];
 
 const LendingDex = (props: DexProps) => {
@@ -27,20 +28,27 @@ const LendingDex = (props: DexProps) => {
     onSwitchChain,
     switchingChain,
     isChainSupported,
-    from
+    from,
   } = props;
+
+  console.log('%cLendingDex props: %o', 'background: #DC0083; color: #fff;', props);
 
   const toast = useToast();
 
-  const { type } = dexConfig;
+  const { type, pools = [] } = dexConfig;
 
   const [state, updateState] = useMultiState<any>({
     tab: TabsArray[0].key,
-    refreshKey: 1
+    refreshKey: 1,
+    curPool: pools[0]?.key,
   });
 
   const handleTabChange = (tab: Tab) => {
     updateState({ tab: tab.key });
+  };
+
+  const handlePoolChange = (pool: Pool) => {
+    updateState({ curPool: pool.key });
   };
 
   // FIXME There might be a better refresh way
@@ -52,7 +60,7 @@ const LendingDex = (props: DexProps) => {
     return () => {
       clearTimeout(timer);
     };
-  }, [chainId, account]);
+  }, [chainId, account, state.curPool]);
 
   return (
     <StyledContainer style={dexConfig.theme}>
@@ -71,12 +79,23 @@ const LendingDex = (props: DexProps) => {
           />
         )}
 
-        <LendingChains
-          chains={CHAIN_LIST}
-          curChain={curChain}
-          onSwitchChain={onSwitchChain}
-          from={from}
-        />
+        <StyledHeaderRight>
+          {
+            pools && pools.length > 0 && (
+              <LendingPools
+                pools={pools}
+                curPool={state.curPool}
+                onSwitchPool={handlePoolChange}
+              />
+            )
+          }
+          <LendingChains
+            chains={CHAIN_LIST}
+            curChain={curChain}
+            onSwitchChain={onSwitchChain}
+            from={from}
+          />
+        </StyledHeaderRight>
       </StyledHeader>
       {type === DexType.CompoundV3 ? (
         <LendingCompoundV3
@@ -84,6 +103,7 @@ const LendingDex = (props: DexProps) => {
           {...props}
           chainIdNotSupport={!isChainSupported}
           toast={toast}
+          curPool={state.curPool}
         />
       ) : (
         <LendingContent
@@ -92,6 +112,7 @@ const LendingDex = (props: DexProps) => {
           chainIdNotSupport={!isChainSupported}
           tab={state.tab}
           toast={toast}
+          curPool={state.curPool}
         />
       )}
       {!isChainSupported && (

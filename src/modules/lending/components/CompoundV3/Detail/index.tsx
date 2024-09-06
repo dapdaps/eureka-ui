@@ -33,7 +33,8 @@ const CompoundV3Detail = (props: any) => {
     wethAddress,
     multicall,
     addAction,
-    chainId
+    chainId,
+    curPool
   } = props;
 
   const { provider } = useAccount();
@@ -1003,6 +1004,7 @@ const CompoundV3Detail = (props: any) => {
             comet={data}
             wethAddress={wethAddress}
             account={account}
+            curPool={curPool}
             onCancel={() => {
               updateState({
                 loading: false

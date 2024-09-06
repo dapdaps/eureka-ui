@@ -25,7 +25,8 @@ const LendingContent = (props: Props) => {
     curChain,
     nativeCurrency,
     tab,
-    from
+    from,
+    curPool,
   } = props;
 
   const { provider } = useAccount();
@@ -121,9 +122,10 @@ const LendingContent = (props: Props) => {
             multicall={multicall}
             prices={prices}
             chainId={chainId}
+            curPool={curPool}
             {...dexConfig}
             onLoad={(data: any) => {
-              console.log('DATA_onLoad:', data);
+              console.log('%cLendingContent DATA onLoad: %o', 'background: #FF885B; color:#fff;', data);
               updateState({
                 loading: false,
                 timestamp: Date.now(),
@@ -143,6 +145,7 @@ const LendingContent = (props: Props) => {
         source="dapp"
         account={account}
         from={from}
+        curPool={curPool}
         onClose={() => {
           updateState({
             showDialog: false

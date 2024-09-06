@@ -5,6 +5,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Orbit.Data',
   handler: 'bluebiu.near/widget/Lending.Orbit.Handler',
   handlerClaim: 'bluebiu.near/widget/Lending.Orbit.RewardClaim',
+  loaderName: 'OrbitProtocol'
 };
 
 // reward 0x42e12d42b3d6c4a74a88a61063856756ea2db357
@@ -194,6 +195,12 @@ const networks = {
         canBorrow: false,
       },
     },
+    // for new ui
+    pools: [
+      { key: "ORBIT", label: "ORBIT" },
+      { key: "MOON", label: "MOON" },
+      { key: "RENZO", label: "RENZO" },
+    ],
   },
 };
 

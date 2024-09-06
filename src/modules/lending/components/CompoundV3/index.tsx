@@ -20,7 +20,8 @@ const LendingCompoundV3 = (props: Props) => {
     addAction,
     toast,
     chainId,
-    curChain
+    curChain,
+    curPool
   } = props;
 
   const { provider } = useAccount();
@@ -55,6 +56,7 @@ const LendingCompoundV3 = (props: Props) => {
           curChain={curChain}
           dexConfig={dexConfig}
           account={account}
+          curPool={curPool}
           onBack={() => {
             updateState({
               rowData: null
@@ -89,6 +91,7 @@ const LendingCompoundV3 = (props: Props) => {
             multicallAddress={multicallAddress}
             multicall={multicall}
             chainId={chainId}
+            curPool={curPool}
             {...dexConfig}
             onLoad={(data: any) => {
               console.log('DATA_onLoad:', data);

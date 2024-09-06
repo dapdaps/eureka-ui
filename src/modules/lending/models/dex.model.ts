@@ -18,4 +18,5 @@ export interface DexProps {
   account: string;
   from: string;
   onSuccess: any;
+  curPool?: any;
 }

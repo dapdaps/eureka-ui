@@ -10,3 +10,8 @@ export const StyledHeader = styled.div`
   align-items: center;
   justify-content: space-between;
 `;
+export const StyledHeaderRight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+`;
