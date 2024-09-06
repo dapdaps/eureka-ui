@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.Benqi',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Avalanche.Lending.BenqiClaimHandler',
+  loaderName: 'Benqi',
 };
 
 const networks = {
