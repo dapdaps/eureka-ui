@@ -80,6 +80,24 @@ const networks = {
         address: '0x79B6c5e1A7C0aD507E1dB81eC7cF269062BAb4Eb',
         underlyingToken: arbitrum['gmx'],
       },
+      '0x4C9aAed3b8c443b4b634D1A189a5e25C604768dE': {
+        decimals: 8,
+        symbol: 'v1lUSDC',
+        address: '0x4C9aAed3b8c443b4b634D1A189a5e25C604768dE',
+        underlyingToken: arbitrum['usdc'],
+      },
+      '0xeA0a73c17323d1a9457D722F10E7baB22dc0cB83': {
+        decimals: 8,
+        symbol: 'v1lPLVGLP',
+        address: '0xeA0a73c17323d1a9457D722F10E7baB22dc0cB83',
+        underlyingToken: arbitrum['plvglp'],
+      },
+      '0x39c27DfdC9364a976926a820c8CAA8Fd035D0727': {
+        decimals: 8,
+        symbol: 'PENDLE',
+        address: '0x39c27DfdC9364a976926a820c8CAA8Fd035D0727',
+        underlyingToken: arbitrum['pendle'],
+      },
     },
   },
 };

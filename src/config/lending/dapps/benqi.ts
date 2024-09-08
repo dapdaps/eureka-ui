@@ -77,6 +77,12 @@ const networks = {
         address: '0x89a415b3D20098E6A6C8f7a59001C67BD3129821',
         underlyingToken: avalanche['btc.b'],
       },
+      '0x5C0401e81Bc07Ca70fAD469b451682c0d747Ef1c': {
+        decimals: 8,
+        symbol: 'qiAVAX',
+        address: '0x5C0401e81Bc07Ca70fAD469b451682c0d747Ef1c',
+        underlyingToken: avalanche['avax'],
+      },
     },
   },
 };
