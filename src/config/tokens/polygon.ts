@@ -279,5 +279,28 @@ export const polygon: { [key: string]: Token } = {
     name: 'ICHI',
     icon: 'https://ipfs.near.social/ipfs/bafkreighebzdujyypybl5okn4kab5a65bscjfcdfipaqd2bi4y6pj46tpi',
   },
-
+  fxs: {
+    chainId: CHAIN_ID,
+    address: '0x1a3acf6D19267E2d3e7f898f42803e90C9219062',
+    decimals: 18,
+    symbol: 'FXS',
+    name: 'Frax Share',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigk6tgcodvis2vsjga3ecfs3fh3i3h7jvi4llftts5s2oo7byxm6e',
+  },
+  snx: {
+    chainId: CHAIN_ID,
+    address: '0x50B728D8D964fd00C2d0AAD81718b71311feF68a',
+    decimals: 18,
+    symbol: 'SNX',
+    name: 'Synthetix Network Token',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiblu4utwynt7ajvretbjzqtm2v7e7p2hkyyp7jamb742zkwpdzmu4',
+  },
+  uni: {
+    chainId: CHAIN_ID,
+    address: '0xb33EaAd8d922B1083446DC23f610c2567fB5180f',
+    decimals: 18,
+    symbol: 'UNI',
+    name: 'Uniswap',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihcntncnhk7xxmodpn5caplocnppdia2b4kafbxtvxtkewbveqate',
+  },
 };

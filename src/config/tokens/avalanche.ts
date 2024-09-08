@@ -211,4 +211,12 @@ export const avalanche: { [key: string]: Token } = {
     name: 'BENQI',
     icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5/logo_24.png',
   },
+  'alpha.e': {
+    chainId: CHAIN_ID,
+    address: '0x2147EFFF675e4A4eE1C2f918d181cDBd7a8E208f',
+    decimals: 18,
+    symbol: 'ALPHA.e',
+    name: 'AlphaToken',
+    icon: 'https://imgproxy-mainnet.avascan.com/s2sM2wZgORYIrYsILymEB4DgAP5ju0xobbSUyxWavjg/pr:thumb_32/aHR0cHM6Ly9jbXMtY2RuLmF2YXNjYW4uY29tL2NtczIvYWxwaGFfMzIuMmY5MzNiN2FmYmU5LnBuZw',
+  },
 };

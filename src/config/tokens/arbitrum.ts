@@ -395,4 +395,12 @@ export const arbitrum: { [key: string]: Token } = {
     name: 'USDe',
     icon: 'https://ipfs.near.social/ipfs/bafkreiajqdsi6gpuagir7qhmuijojujf56atbiqw3ftmcjp6w4yz5l2nd4',
   },
+  plvglp: {
+    chainId: CHAIN_ID,
+    address: '0x5326E71Ff593Ecc2CF7AcaE5Fe57582D6e74CFF1',
+    decimals: 18,
+    symbol: 'PLVGLP',
+    name: 'Plutus Vault GLP',
+    icon: 'https://arbiscan.io/token/images/plutusdao_32.png',
+  },
 };

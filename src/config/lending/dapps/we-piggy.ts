@@ -84,6 +84,12 @@ const networks = {
         address: '0xBc52BCE2C73Fec358ABBf047c50377183B9EAd0d',
         underlyingToken: bsc['ada'],
       },
+      '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32': {
+        decimals: 8,
+        symbol: 'pFIL',
+        address: '0xDF21D42a0fC6746718F2CFe2798F91C9d7277F32',
+        underlyingToken: bsc['fil'],
+      },
     },
   },
   42161: {
@@ -171,6 +177,12 @@ const networks = {
         symbol: 'pLINK',
         address: '0x8F00a5E13b3F2AaAddc9708AD5c77FbCc300b0EE',
         underlyingToken: optimism['link'],
+      },
+      '0xD6a78766514CdFC1a1fA188a7782b52313133705': {
+        decimals: 8,
+        symbol: 'pOP',
+        address: '0xD6a78766514CdFC1a1fA188a7782b52313133705',
+        underlyingToken: optimism['op'],
       },
     },
   },

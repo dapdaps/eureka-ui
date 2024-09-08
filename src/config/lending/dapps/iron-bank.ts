@@ -61,6 +61,18 @@ const networks = {
         address: '0x3Af7c11d112C1C730E5ceE339Ca5B48F9309aCbC',
         underlyingToken: avalanche['usdt'],
       },
+      '0x18931772Adb90e7f214B6CbC78DdD6E0F090D4B1': {
+        decimals: 8,
+        symbol: 'iLINK.E',
+        address: '0x18931772Adb90e7f214B6CbC78DdD6E0F090D4B1',
+        underlyingToken: avalanche['link.e'],
+      },
+      '0x02C9133627a14214879175a7A222d0a7f7404eFb': {
+        decimals: 8,
+        symbol: 'iALPHA.E',
+        address: '0x02C9133627a14214879175a7A222d0a7f7404eFb',
+        underlyingToken: avalanche['alpha.e'],
+      },
     },
   },
   10: {
@@ -109,12 +121,12 @@ const networks = {
         address: '0x17533a1bDe957979E3977EbbFBC31E6deeb25C7d',
         underlyingToken: optimism['weth'],
       },
-      '0x04F0fd3CD03B17a3E5921c0170ca6dD3952841cA': {
-        decimals: 8,
-        symbol: 'iSUSD',
-        address: '0x04F0fd3CD03B17a3E5921c0170ca6dD3952841cA',
-        underlyingToken: optimism['susd'],
-      },
+      // '0x04F0fd3CD03B17a3E5921c0170ca6dD3952841cA': {
+      //   decimals: 8,
+      //   symbol: 'iSUSD',
+      //   address: '0x04F0fd3CD03B17a3E5921c0170ca6dD3952841cA',
+      //   underlyingToken: optimism['susd'],
+      // },
     },
   },
 };

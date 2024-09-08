@@ -66,6 +66,36 @@ const networks = {
         address: '0x4E673bed356912077c718CBAB286BC135fAA5FB6',
         underlyingToken: bsc['ratom'],
       },
+      '0x89934cF95c8Ffa4D748B3a9963faD13dBA52C52F': {
+        decimals: 18,
+        symbol: 'qFIL',
+        address: '0x89934cF95c8Ffa4D748B3a9963faD13dBA52C52F',
+        underlyingToken: bsc['fil'],
+      },
+      '0x10937c33BB015Aa52EF39E2A5CAd0Da285bb39ab': {
+        decimals: 18,
+        symbol: 'qtFIL',
+        address: '0x10937c33BB015Aa52EF39E2A5CAd0Da285bb39ab',
+        underlyingToken: bsc['tfil'],
+      },
+      '0xcF6E61fE1cB37e83cB590eAeE57D660089748077': {
+        decimals: 18,
+        symbol: 'qtXTZ',
+        address: '0xcF6E61fE1cB37e83cB590eAeE57D660089748077',
+        underlyingToken: bsc['txtz'],
+      },
+      '0x7E3b8eB001396334DA14d4bb209b0dA77725939d': {
+        decimals: 18,
+        symbol: 'qrETH',
+        address: '0x7E3b8eB001396334DA14d4bb209b0dA77725939d',
+        underlyingToken: bsc['reth'],
+      },
+      '0x09d0D2C90d09dD817559425479a573faA354c9d2': {
+        decimals: 18,
+        symbol: 'qrDOT',
+        address: '0x09d0D2C90d09dD817559425479a573faA354c9d2',
+        underlyingToken: bsc['rdot'],
+      },
     },
   },
 };
