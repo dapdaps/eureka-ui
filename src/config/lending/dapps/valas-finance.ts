@@ -7,6 +7,7 @@ const basic = {
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Valas',
   type: 'aave2',
+  loaderName: 'ValasFinance',
 };
 
 const rewardIcon = 'https://ipfs.near.social/ipfs/bafkreihlb7bnkmkjil6syoiznhslzyvt5xpyn3ih54ywwvlvvxti7ywbiu';

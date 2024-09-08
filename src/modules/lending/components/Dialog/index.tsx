@@ -585,6 +585,7 @@ const LendingDialog = (props: Props) => {
           update={state.updateHandler}
           chainId={chainId}
           data={data}
+          account={account}
           amount={state.amount}
           curPool={curPool}
           onLoad={(_data: any) => {

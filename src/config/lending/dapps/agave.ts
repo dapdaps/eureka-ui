@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.Radiant',
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   type: 'aave2',
+  loaderName: 'Agave'
 };
 
 const networks = {

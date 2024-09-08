@@ -6,6 +6,7 @@ const basic = {
   handler: 'bluebiu.near/widget/Lending.Handler.IronClad',
   // handlerClaim: 'bluebiu.near/widget/Arbitrum.Lending.RadiantClaimHandler',
   type: 'aave2',
+  loaderName: 'IroncladFinance'
 };
 
 const networks = {
