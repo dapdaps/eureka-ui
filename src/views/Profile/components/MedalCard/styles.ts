@@ -34,3 +34,24 @@ export const StyledMark = styled.div`
   justify-content: center;
   gap: 5px;
 `;
+export const StyledSpecifiedContainer = styled.div`
+  border-radius: 16px;
+  border: 3px solid rgba(87, 219, 100, 0.2);
+`;
+export const StyledSpecified = styled.div`
+  width: 92px;
+  height: 27px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  border: 1px solid #6c00f6;
+  background: rgba(32, 34, 47, 0.8);
+
+  color: #fff;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+`;
