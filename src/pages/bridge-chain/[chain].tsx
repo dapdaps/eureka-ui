@@ -1,5 +1,5 @@
 import { useDebounceFn } from 'ahooks';
-import createKeccakHash from 'keccak'
+import createKeccakHash from 'keccak';
 import { useRouter } from 'next/router';
 import { lazy, Suspense, useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -10,9 +10,10 @@ import popupsData from '@/config/all-in-one/chains';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import { useDefaultLayout } from '@/hooks/useLayout';
+import useScrollMore from '@/hooks/useScrollMore';
 import { useAllInOneTabCachedStore } from '@/stores/all-in-one';
 import { usePriceStore } from '@/stores/price';
-import { get } from '@/utils/http'
+import { get } from '@/utils/http';
 import { multicall } from '@/utils/multicall';
 import type { NextPageWithLayout } from '@/utils/types';
 import DappDetailScroll from '@/views/Dapp/components/DappDetail/Scroll';
@@ -138,29 +139,31 @@ const Container = styled.div`
   }
 `;
 
-function toChecksumAddress (address: string): string {
-  address = address.toLowerCase().replace('0x', '')
-  const hash = createKeccakHash('keccak256').update(address).digest('hex')
-  let ret = '0x'
+function toChecksumAddress(address: string): string {
+  address = address.toLowerCase().replace('0x', '');
+  const hash = createKeccakHash('keccak256').update(address).digest('hex');
+  let ret = '0x';
 
   for (let i = 0; i < address.length; i++) {
     if (parseInt(hash[i], 16) >= 8) {
-      ret += address[i].toUpperCase()
+      ret += address[i].toUpperCase();
     } else {
-      ret += address[i]
+      ret += address[i];
     }
   }
 
-  return ret
+  return ret;
 }
 
 const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
+  const { viewHeight } = useScrollMore({ gap: 96 });
+
   const chain = router.query.chain as string;
   const [currentChain, setCurrentChain] = useState<any>();
-  const [chainConfig, setChainConfig] = useState<any>(null)
+  const [chainConfig, setChainConfig] = useState<any>(null);
   const { account, chainId } = useAccount();
-  const [ checkSumAccount, setCheckSumAccount ] = useState<string>()
+  const [checkSumAccount, setCheckSumAccount] = useState<string>();
   const prices = usePriceStore((store) => store.price);
   const [tab, setTab] = useState('');
   const cachedTabsStore: any = useAllInOneTabCachedStore();
@@ -174,43 +177,40 @@ const AllInOne: NextPageWithLayout = () => {
       if (chain) {
       }
     },
-    { wait: 500 },
+    { wait: 500 }
   );
 
   useEffect(() => {
     if (currentChain && !chainConfig) {
-      get(`/api/dapp?route=bridge-chain/${currentChain.path}`)
-      .then(res => {
+      get(`/api/dapp?route=bridge-chain/${currentChain.path}`).then((res) => {
         if (res.code === 0) {
-          setChainConfig(res.data)
+          setChainConfig(res.data);
         }
-      })
+      });
     }
-  }, [currentChain, chainConfig])
+  }, [currentChain, chainConfig]);
 
   useEffect(() => {
     run();
   }, [chain]);
 
-
   useEffect(() => {
     if (account) {
-      const checkSumAccount = toChecksumAddress(account as string)
-      setCheckSumAccount(checkSumAccount)
+      const checkSumAccount = toChecksumAddress(account as string);
+      setCheckSumAccount(checkSumAccount);
     }
-  }, [account])
+  }, [account]);
 
-  return (
-      currentChain ? (
+  return currentChain ? (
     <Container key={chain}>
-      <div className='page-back'>
-        <DappBack defaultPath="/alldapps"/>
+      <div className="page-back">
+        <DappBack defaultPath="/alldapps" />
       </div>
-      <>
+      <div style={{ minHeight: viewHeight }}>
         <div className="select-bg-icon">
           <div className="select-bg-content">
             <img src={chainConfig?.logo} alt="" />
-            <span>{ chainConfig?.name }</span>
+            <span>{chainConfig?.name}</span>
           </div>
         </div>
         <div className="content-page">
@@ -226,7 +226,7 @@ const AllInOne: NextPageWithLayout = () => {
               prices,
               tab,
               account: checkSumAccount,
-              onReset: () => { },
+              onReset: () => {},
               onChangeTab: (tab: string) => {
                 cachedTabsStore.setCachedTab(tab, currentChain.chainId);
                 setTab(tab);
@@ -234,20 +234,18 @@ const AllInOne: NextPageWithLayout = () => {
             }}
           />
         </div>
-      </>
-      {
-        chainConfig ? (<>
-            <DappDetailScroll />
-           <Suspense fallback={<DappFallback />}>
-             <DappDetail {...chainConfig} />
-           </Suspense>
-          </>)
-          : null
-      }
+      </div>
+      {chainConfig ? (
+        <>
+          <DappDetailScroll />
+          <Suspense fallback={<DappFallback />}>
+            <DappDetail {...chainConfig} />
+          </Suspense>
+        </>
+      ) : null}
     </Container>
   ) : (
     <div />
-  )
   );
 };
 

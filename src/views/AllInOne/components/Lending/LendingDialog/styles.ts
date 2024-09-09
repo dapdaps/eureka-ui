@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const Dialog = styled.div`
   position: fixed;
@@ -15,7 +15,7 @@ const Dialog = styled.div`
 const Overlay = styled.div`
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.5);
   position: absolute;
   z-index: 8000;
   display: flex;
@@ -26,9 +26,10 @@ const Overlay = styled.div`
   }
 `;
 const Content = styled.div`
-  background-color: #273046;
   border-radius: 16px;
-  width: 396px;
+  border: 1px #373a53;
+  background: #262836;
+  width: 420px;
   @media (max-width: 640px) {
     width: 100%;
     border-radius: 16px 16px 0px 0px;
@@ -37,13 +38,12 @@ const Content = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
+  margin-bottom: 20px;
 `;
 const Title = styled.div`
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 700;
   color: #fff;
-  display: flex;
-  align-items: center;
 `;
 const Apy = styled.span`
   margin-left: 8px;
@@ -69,6 +69,7 @@ const AssetWrapper = styled.div`
 const Token = styled.div`
   display: flex;
   flex-shrink: 0;
+  align-items: center;
 `;
 const TokenLogo = styled.img`
   width: 22px;
@@ -77,18 +78,43 @@ const TokenLogo = styled.img`
   margin-right: 4px;
 `;
 const TokenSymbol = styled.div`
-  font-size: 16px;
+  font-size: 14px;
   color: #fff;
-  font-weight: 400;
 `;
 const InputWrapper = styled.div`
-  height: 55px;
-  border-radius: 10px;
-  background-color: rgba(22, 24, 38, 0.5);
+  height: 50px;
+  border-radius: 8px;
+  border: 1px solid #33364b;
+  background: #1b1e27;
   display: flex;
   align-items: center;
+  padding: 0 10px;
   margin-top: 20px;
-  padding: 0px 10px;
+`;
+export const BoxItem = styled.div`
+  border-radius: 10px;
+  background-color: #1b1e27;
+  border: 1px solid #33364b;
+  padding: 12px;
+  margin-bottom: 12px;
+
+  &.no-bg {
+    background-color: transparent;
+    border: 1px solid #373a53;
+  }
+`;
+
+export const InputFoot = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  column-gap: 20px;
+  font-size: 12px;
+  color: #979abe;
+`;
+
+export const InputMain = styled(InputFoot)`
+  margin-bottom: 8px;
 `;
 const Input = styled.input`
   font-size: 18px;
@@ -112,14 +138,14 @@ const InputBalance = styled.div`
   font-size: 12px;
   font-weight: 400;
   color: #979abe;
-  margin-top: 4px;
-  margin-bottom: 10px;
+  padding: 6px 13px 10px 13px;
 `;
 const BalanceValue = styled.div``;
 const BalanceWrapper = styled.div`
   text-align: right;
   cursor: pointer;
 `;
+
 const Balance = styled.span`
   font-weight: 400;
   text-decoration: underline;
@@ -127,15 +153,17 @@ const Balance = styled.span`
 const Row = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 10px 0px;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   &.justfiy-start {
     justify-content: flex-start;
     gap: 10px;
   }
+  &:not(&:last-child) {
+    margin-bottom: 16px;
+  }
 `;
-const Label = styled.div`
+const Label = styled.span`
   color: #979abe;
 `;
 const Value = styled.div`
@@ -143,37 +171,38 @@ const Value = styled.div`
   text-align: right;
   &.range {
     text-decoration: line-through;
+    color: #979abe;
   }
 `;
 const Tips = styled.div`
-  height: 28px;
-  border-radius: 6px;
-  background-color: var(--switch-color);
+  border-radius: 8px;
+  background: rgba(235, 244, 121, 0.1);
+  color: #ebf479;
+  padding: 10px;
   display: flex;
-  align-items: center;
-  color: #fff;
-  padding: 0px 20px;
-  margin-top: 10px;
+  align-items: flex-start;
+  font-size: 14px;
+
   .icon {
-    margin-right: 4px;
+    margin-right: 6px;
     flex-shrink: 0;
-    margin-top: -1px;
+    margin-top: 4px;
   }
 `;
 const ValuesWrapper = styled.div`
   display: flex;
   align-items: center;
   .mx_5 {
-    margin: 0px 5px;
+    margin: 0 12px;
   }
 `;
 const CollateralToken = styled.div`
   font-size: 16px;
   font-weight: 400;
-  color: #fff;
   display: flex;
   gap: 4px;
-  padding-top: 20px;
+  align-items: center;
+  color: #979abe;
 `;
 const AssetLabel = styled.div`
   font-size: 16px;
@@ -181,7 +210,6 @@ const AssetLabel = styled.div`
   color: #979abe;
 `;
 const Dapp = styled.div`
-  padding: 0px 6px;
   height: 26px;
   border-radius: 6px;
   background-color: rgba(151, 154, 190, 0.2);
@@ -207,16 +235,24 @@ const TokenSelect = styled.div`
   color: #fff;
 `;
 const TopBox = styled.div`
-  padding: 30px 20px 10px;
+  margin-bottom: 10px;
+`;
+const BottomBox = styled.div``;
+
+const YourTopBox = styled.div`
   border-bottom: 1px dashed #454967;
+  padding: 23px 23px 20px 23px;
 
   &.none-border {
     border-bottom: none;
+    padding-bottom: 0;
   }
 `;
-const BottomBox = styled.div`
-  padding: 10px 20px 20px;
+
+const YourBottomBox = styled.div`
+  padding: 23px;
 `;
+
 const RewardApyItem = styled.div`
   display: flex;
   align-items: center;
@@ -234,6 +270,13 @@ const RewardApy = styled.div`
   font-size: 12px;
 `;
 
+const CollateralContent = styled.div`
+  padding: 0 30px 30px;
+`;
+
+const LendingButton = styled.div`
+  padding-top: 6px;
+`;
 
 export {
   Dialog,
@@ -266,7 +309,11 @@ export {
   TokenSelect,
   TopBox,
   BottomBox,
+  YourTopBox,
+  YourBottomBox,
   RewardApyItem,
   RewardIcon,
   RewardApy,
+  CollateralContent,
+  LendingButton
 };

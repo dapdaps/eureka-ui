@@ -3,6 +3,7 @@ import IconChainArrowDown from '@public/images/tokens/chainArrowDown.svg';
 import Big from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
 
+import useAccount from '@/hooks/useAccount';
 import useChain from '@/hooks/useChain';
 import useSwitchChain from '@/hooks/useSwitchChain';
 import { useChainsStore } from '@/stores/chains';
@@ -18,23 +19,21 @@ import {
   StyledChainListWrapper,
   StyledChainName,
   StyledChainTokenIcon,
-  StyledChainTokenSymbol,
+  StyledChainTokenSymbol
 } from './styles';
 
 export default function ChainSelector() {
   const chain = useChain();
+  const { chainId } = useAccount();
   const chains = useChainsStore((store: any) => store.chains);
   const [showChains, setShowChains] = useState(false);
   const { switchChain } = useSwitchChain();
   const [displayedChains, setDisplayedChains] = useState<any[]>([]);
-  const [tvlLoading, setTvlLoading] = useState(false);
+  const [_, setTvlLoading] = useState(false);
 
-  const sortChains = useMemo(() => {
-    return chains.sort((a: any, b: any) => a.name.localeCompare(b.name));
-  }, [chains]);
+  const sortChains = chains.sort((a: any, b: any) => a.name.localeCompare(b.name));
 
   useEffect(() => {
-    fetchNetworkData();
     const close = () => setShowChains(false);
     document.addEventListener('click', close);
     return () => document.removeEventListener('click', close);
@@ -43,23 +42,42 @@ export default function ChainSelector() {
   useEffect(() => {
     const cachedChains = localStorage.getItem('swap-selectedChains');
     if (cachedChains) {
-      setDisplayedChains(JSON.parse(cachedChains));
+      const parsedChains = JSON.parse(cachedChains);
+      updateDisplayedChains(parsedChains, chainId);
+    } else {
+      fetchNetworkData();
     }
-  }, []);
+  }, [chainId, chains]);
+
+  const updateDisplayedChains = (chainList: any[], currentChainId?: number) => {
+    let updatedChains = [...chainList];
+
+    if (currentChainId) {
+      const currentChain = chains.find((c: any) => c.chain_id === currentChainId);
+      if (currentChain) {
+        updatedChains = [currentChain, ...chainList.filter((c: any) => c.chain_id !== currentChainId)];
+      }
+    }
+
+    updatedChains = updatedChains.slice(0, 3);
+
+    while (updatedChains.length < 3 && updatedChains.length < chains.length) {
+      const nextChain = chains.find((c: any) => !updatedChains.some((uc: any) => uc.chain_id === c.chain_id));
+      if (nextChain) updatedChains.push(nextChain);
+    }
+    setDisplayedChains(updatedChains);
+    localStorage.setItem('swap-selectedChains', JSON.stringify(updatedChains));
+  };
 
   const fetchNetworkData = async () => {
     setTvlLoading(true);
     try {
       const resultNetwork = await get(`/api/network/all`);
       const topChains = resultNetwork.data
-        .sort((a: any, b: any) => Big(b.trading_volume).cmp(Big(a.trading_volume)))
-        .slice(0, 3);
-      const cachedChains = localStorage.getItem('swap-selectedChains');
-      if (cachedChains) {
-        setDisplayedChains(JSON.parse(cachedChains));
-      } else {
-        setDisplayedChains(topChains);
-      }
+        .slice(0, 3)
+        .sort((a: any, b: any) => Big(b.trading_volume).cmp(Big(a.trading_volume)));
+
+      updateDisplayedChains(topChains, chainId);
     } catch (error) {
       console.error('Error fetching network data:', error);
     } finally {
@@ -72,13 +90,7 @@ export default function ChainSelector() {
       switchChain({ chainId: selectedChain.chain_id });
       return;
     }
-    const updatedChains = [
-      selectedChain,
-      ...displayedChains.filter((c: any) => c.chain_id !== selectedChain.chain_id),
-    ].slice(0, 3);
-
-    setDisplayedChains(updatedChains);
-    localStorage.setItem('swap-selectedChains', JSON.stringify(updatedChains));
+    updateDisplayedChains([selectedChain, ...displayedChains], selectedChain.chain_id);
     switchChain({ chainId: selectedChain.chain_id });
   };
 

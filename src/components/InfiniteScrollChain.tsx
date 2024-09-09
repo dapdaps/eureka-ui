@@ -22,18 +22,17 @@ const TokenContent = styled(motion.div)<{ isHovered: boolean }>`
   align-items: center;
   gap: 60px;
   height: 100%;
-  width: 200%;
-  animation: translateLeft 25s linear infinite;
+  animation: translateLeft 30s linear 0s infinite normal none running;
   animation-play-state: ${({ isHovered }) => (isHovered ? 'paused' : 'running')};
 
   @keyframes translateLeft {
-  0% {
-    transform: translate3d(0, 0, 0);
+    0% {
+      transform: translateZ(0);
+    }
+    100% {
+      transform: translate3d(-100%, 0, 0);
+    }
   }
-  100% {
-    transform: translate3d(-50%, 0, 0);
-  }
-}
 `;
 
 const IndexList = styled.div`
@@ -88,7 +87,7 @@ interface Token {
 }
 
 const LoadingCard = () => {
-  return Array.from({ length: 8 }).map((_, index) => (
+  return Array.from({ length: 16 }).map((_, index) => (
     <IndexList key={index}>
       <Skeleton width={20} height={20} />
       <Skeleton width={60} height={20} />
@@ -98,7 +97,7 @@ const LoadingCard = () => {
 };
 
 const InfiniteScrollChain = ({ className }: { className?: string }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState<any>(false);
 
   const { list, loading } = useTokenPriceListStore();
 
@@ -108,35 +107,36 @@ const InfiniteScrollChain = ({ className }: { className?: string }) => {
       return {
         ...token,
         change_percent: Math.abs(parseFloat(token?.change_percent)) || 0,
-        isPositive: parseFloat(token.change_percent) > 0,
+        isPositive: parseFloat(token.change_percent) > 0
       };
     });
-    
   }, [list]);
 
   return (
     <StyledWrapper className={className}>
       <TokenList>
         <TokenContent
-          isHovered={isHovered}
+          isHovered={isHovered || loading}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           {loading ? (
             <LoadingCard />
           ) : (
-            tokenList.concat(tokenList).map((token: Token, index: number) => (
-              <IndexList key={index}>
-                <ChainIcon src={token.logo} alt="" />
-                <ChainText>
-                  {token.symbol} {parseFloat(token.price).toFixed(2)}
-                </ChainText>
-                <ChainIndex isPositive={token.isPositive}>
-                  <div className="token-isPositive">{token.isPositive ? '+' : '-'}</div>
-                  <div className="token-percent">{parseFloat(token.change_percent).toFixed(2)}%</div>
-                </ChainIndex>
-              </IndexList>
-            ))
+            <>
+              {[...tokenList, ...tokenList].map((token: Token, index: number) => (
+                <IndexList key={`duplicate-${index}`}>
+                  <ChainIcon src={token.logo} alt="" />
+                  <ChainText>
+                    {token.symbol} {parseFloat(token.price).toFixed(2)}
+                  </ChainText>
+                  <ChainIndex isPositive={token.isPositive}>
+                    <div className="token-isPositive">{token.isPositive ? '+' : '-'}</div>
+                    <div className="token-percent">{parseFloat(token.change_percent).toFixed(2)}%</div>
+                  </ChainIndex>
+                </IndexList>
+              ))}
+            </>
           )}
         </TokenContent>
       </TokenList>

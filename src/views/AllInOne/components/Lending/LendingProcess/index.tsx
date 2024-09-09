@@ -7,9 +7,9 @@ const Process = styled.div`
 const ActiveBar = styled.div`
   height: 5px;
   border-radius: 10px;
-  background-color: var(--supply-color);
+  background-color: #ffffff;
   position: absolute;
-  left: 0px;
+  left: 0;
   top: 12px;
 `;
 const Range = styled.input`

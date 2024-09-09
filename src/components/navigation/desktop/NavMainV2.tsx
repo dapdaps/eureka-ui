@@ -1,19 +1,21 @@
 import IconArrowDown from '@public/images/header/arrow-down.svg';
-import IconArrowRight from '@public/images/header/arrow-right.svg'
+import IconArrowRight from '@public/images/header/arrow-right.svg';
 import IconBridge from '@public/images/header/bridge.svg';
-import IconOdyssey from '@public/images/header/odyssey-new.svg';
 import IconSwap from '@public/images/header/swap.svg';
+import IconCircle from '@public/svg/odyssey/circle.svg';
+import IconNewText from '@public/svg/odyssey/new-text.svg';
 import * as NavigationMenu from '@radix-ui/react-navigation-menu';
-import Link from 'next/link'
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useMemo, useRef } from 'react';
 import styled from 'styled-components';
 
+import RotatingIcon from '@/components/RotatingIcon';
 import useCompassList from '@/views/Home/components/Compass/hooks/useCompassList';
-import { StatusType } from "@/views/Odyssey/components/Tag";
+import { StatusType } from '@/views/Odyssey/components/Tag';
 
 import { Wrapper } from '../styles/nav';
-import ListItem from './components/ListItem';
 
 const StyleView = styled.div`
   margin: 0 auto;
@@ -43,23 +45,22 @@ const StyleView = styled.div`
     margin-top: 0;
     margin-bottom: 30px;
   }
-`
+`;
 
-
-
+const ListItem = dynamic(() => import('./components/ListItem'));
 
 export const NavMainV2 = ({ className }: { className?: string }) => {
-  const { loading: compassListLoading, compassList } = useCompassList()
+  const { loading: compassListLoading, compassList } = useCompassList();
   const router = useRouter();
-  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_new), [compassList])
-  const OdysseyRef = useRef<any>()
-  const ChainRef = useRef<any>()
+  const hasNewOdyssey = useMemo(() => compassList.some((item: any) => item.is_new), [compassList]);
+  const OdysseyRef = useRef<any>();
+  const ChainRef = useRef<any>();
 
   const sortCompassList = useMemo(() => {
     const statusMap: any = {
       [StatusType.ongoing]: [],
       [StatusType.ended]: [],
-      [StatusType.un_start]: [],
+      [StatusType.un_start]: []
     };
     compassList.forEach((item: any) => {
       if (!item || !item.status) {
@@ -67,19 +68,26 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
       }
       statusMap[item.status].push(item);
     });
-  
-    return [...statusMap[StatusType.ongoing], ...statusMap[StatusType.un_start], ...statusMap[StatusType.ended]].slice(0, 4);
-  }, [compassList]);
 
+    return [...statusMap[StatusType.ongoing], ...statusMap[StatusType.un_start], ...statusMap[StatusType.ended]].slice(
+      0,
+      4
+    );
+  }, [compassList]);
 
   return (
     <Wrapper className={className}>
       <NavigationMenu.Root className="NavigationMenuRoot">
         <NavigationMenu.List className="NavigationMenuList">
           <NavigationMenu.Item>
+            <Link href="/">
+              <NavigationMenu.Trigger className="NavigationMenuTrigger">Home</NavigationMenu.Trigger>
+            </Link>
+          </NavigationMenu.Item>
+          <NavigationMenu.Item>
             <NavigationMenu.Trigger className="NavigationMenuTrigger" ref={OdysseyRef}>
               Odyssey
-              { hasNewOdyssey && <IconOdyssey />}
+              {hasNewOdyssey && <RotatingIcon staticIcon={<IconNewText />} rotatingIcon={<IconCircle />} />}
               <IconArrowDown className="CaretDown" aria-hidden />
             </NavigationMenu.Trigger>
             <NavigationMenu.Content className="NavigationMenuContentV2 bridge">
@@ -90,19 +98,25 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
                   onClick={() => OdysseyRef?.current?.click()}
                 />
               </div>
-              <StyleView data-bp="1001-008-001" onClick={() => {
-                OdysseyRef?.current?.click();
-                router.prefetch('/odyssey')
-                router.push('/odyssey')
-              }}><div>View all</div><IconArrowRight /></StyleView>
+              <StyleView
+                data-bp="1001-008-001"
+                onClick={() => {
+                  OdysseyRef?.current?.click();
+                  router.prefetch('/odyssey');
+                  router.push('/odyssey');
+                }}
+              >
+                <div>View all</div>
+                <IconArrowRight />
+              </StyleView>
             </NavigationMenu.Content>
           </NavigationMenu.Item>
 
-           <NavigationMenu.Item>
+          <NavigationMenu.Item>
             <Link href="/super-bridge" data-bp="1001-001">
               <NavigationMenu.Trigger className="NavigationMenuTrigger">
-                  <IconBridge />
-                  Bridge
+                <IconBridge />
+                Bridge
               </NavigationMenu.Trigger>
             </Link>
           </NavigationMenu.Item>
@@ -129,18 +143,16 @@ export const NavMainV2 = ({ className }: { className?: string }) => {
               </div>
               <StyleView className='chain-all' data-bp="1001-009-001" onClick={() => {
                 ChainRef?.current?.click()
-                router.prefetch('') 
+                router.prefetch('')
                 router.push('/networks')
               }}><div>View all</div><IconArrowRight /></StyleView>
             </NavigationMenu.Content> */}
           </NavigationMenu.Item>
 
           <NavigationMenu.Item>
-            <Link href='/alldapps' data-bp="1001-003">
-              <NavigationMenu.Trigger className="NavigationMenuTrigger">
-                DApps
-              </NavigationMenu.Trigger>
-              </Link>
+            <Link href="/alldapps" data-bp="1001-003">
+              <NavigationMenu.Trigger className="NavigationMenuTrigger">DApps</NavigationMenu.Trigger>
+            </Link>
           </NavigationMenu.Item>
         </NavigationMenu.List>
       </NavigationMenu.Root>

@@ -1,20 +1,20 @@
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const StyledNetworkTabWrapper = styled.div<{fold: boolean}>`
+export const StyledNetworkTabWrapper = styled.div<{ fold: boolean }>`
   display: flex;
   align-items: center;
   gap: 15px;
   flex-wrap: wrap;
   margin-bottom: 38px;
-  height: ${({ fold }) => fold ? '120px' : 'unset'};
+  height: ${({ fold }) => (fold ? '120px' : 'unset')};
   overflow: hidden;
 `;
 
 export const StyledTabItem = styled(motion.div)`
   border-radius: 8px;
-  border: 1px solid #282A3C;
-  background: #1B1D25;
+  border: 1px solid #282a3c;
+  background: #1b1d25;
   padding: 7px;
   display: flex;
   align-items: center;
@@ -27,15 +27,15 @@ export const StyledTabItem = styled(motion.div)`
   &:hover {
     &:not(.disabled) {
       background: #262836;
-      border-color: #373A53;
+      border-color: #373a53;
     }
   }
 
   &.active {
-    border: 1px solid #EBF479;
-    background: rgba(53, 55, 73, 0.50);
+    border: 1px solid #ebf479;
+    background: rgba(53, 55, 73, 0.5);
     .item-icon {
-      color: #EBF479;
+      color: #ebf479;
     }
   }
   &.disabled {
@@ -45,10 +45,10 @@ export const StyledTabItem = styled(motion.div)`
 `;
 
 export const StyledItemIcon = styled.div<{ url?: string }>`
-  color: #2D2F42;
+  color: #2d2f42;
   width: 36px;
   height: 36px;
-  background: ${props => props?.url ? `url("${props.url}") center no-repeat`: 'unset' };
+  background: ${(props) => (props?.url ? `url("${props.url}") center no-repeat` : 'unset')};
   background-size: contain;
   border-radius: 10px;
   display: flex;
@@ -58,13 +58,13 @@ export const StyledItemIcon = styled.div<{ url?: string }>`
 `;
 
 export const StyledItemContent = styled.div`
-  color: #2D2F42;
+  color: #2d2f42;
   width: 0;
   flex: 1;
 `;
 
 export const StyledItemName = styled.div`
-  color: #7C7F96;
+  color: #7c7f96;
   font-size: 13px;
   font-weight: 400;
   text-overflow: ellipsis;
@@ -73,7 +73,7 @@ export const StyledItemName = styled.div`
   white-space: nowrap;
 `;
 
-export const StyledItemNum = styled.div<{ $blur?: boolean; }>`
+export const StyledItemNum = styled.div<{ $blur?: boolean }>`
   display: flex;
   align-items: flex-end;
   text-overflow: ellipsis;
@@ -83,7 +83,7 @@ export const StyledItemNum = styled.div<{ $blur?: boolean; }>`
   column-gap: 5px;
   margin-top: 4px;
 
-  filter: ${({ $blur }) => $blur ? 'blur(5px)' : 'unset'};
+  filter: ${({ $blur }) => ($blur ? 'blur(5px)' : 'unset')};
 `;
 
 export const StyledItemUSD = styled.div`

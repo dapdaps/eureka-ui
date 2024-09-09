@@ -17,7 +17,7 @@ import {
   StyledDappCardLogo,
   StyledDappCardName,
   StyledDappCardNetworks,
-  StyledDappCardTitle,
+  StyledDappCardTitle
 } from './styles';
 
 const DAppRewardList: { [k: string]: Badge[] } = {
@@ -28,8 +28,8 @@ const DAppRewardList: { [k: string]: Badge[] } = {
       icon: RewardIcons['SMD']?.icon || '',
       status: StatusType.ended,
       tooltip: '$20-25k $SMD',
-      iconSize: 20,
-    },
+      iconSize: 20
+    }
   ],
   ['Rango Bridge']: [
     {
@@ -39,17 +39,19 @@ const DAppRewardList: { [k: string]: Badge[] } = {
       status: StatusType.ended,
       tooltip: 'Related reward on DapDap',
       iconSize: 20,
-      odyssey: [{
-        "name": "Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!",
-        "start_time": 1717948800000,
-        "end_time": 1719244800000,
-        "status": "ongoing",
-        link: '/bridge-x/rango',
-        "banner": "/images/odyssey/rango-banner-round.png",
-        "badgeValue": "$1000"
-      }]
-},
-  ],
+      odyssey: [
+        {
+          name: 'Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!',
+          start_time: 1717948800000,
+          end_time: 1719244800000,
+          status: 'ongoing',
+          link: '/bridge-x/rango',
+          banner: '/images/odyssey/rango-banner-round.png',
+          badgeValue: '$1000'
+        }
+      ]
+    }
+  ]
 };
 
 const DappCard = (props: Props) => {
@@ -60,13 +62,12 @@ const DappCard = (props: Props) => {
     categories,
     networks,
     bp = {},
-    onClick = () => {
-    },
+    onClick = () => {},
+    tvl = 0,
     users = 0,
     tradingVolume = 0,
-    route,
+    route
   } = props;
-
 
   const router = useRouter();
 
@@ -89,29 +90,18 @@ const DappCard = (props: Props) => {
     <StyledDappCard data-bp={bp?.dapp} onClick={onClick}>
       <StyledDappCardHead $logo={logo}>
         <StyledDappCardCategory>
-          {
-            categories && categories.map((cate, index) => (
-              <StyledDappCardCategoryItem
-                key={cate.key || index}
-                $colorRgb={cate.colorRgb}
-              >
+          {categories &&
+            categories.map((cate, index) => (
+              <StyledDappCardCategoryItem key={cate.key || index} $colorRgb={cate.colorRgb}>
                 {cate.label}
               </StyledDappCardCategoryItem>
-            ))
-          }
+            ))}
         </StyledDappCardCategory>
         <StyledDappCardNetworks>
-          {
-            networks && networks.map((network, index) => (
-              <Image
-                src={network.icon}
-                alt=""
-                width={20}
-                height={20}
-                key={network.chainId || index}
-              />
-            ))
-          }
+          {networks &&
+            networks.map((network, index) => (
+              <Image src={network.icon} alt="" width={20} height={20} key={network.chainId || index} />
+            ))}
         </StyledDappCardNetworks>
       </StyledDappCardHead>
       <StyledDappCardBody>
@@ -119,14 +109,8 @@ const DappCard = (props: Props) => {
           <StyledDappCardLogo $logo={logo} />
           <StyledDappCardName>{name}</StyledDappCardName>
         </StyledDappCardTitle>
-        <StyledDappCardDescription>
-          {description}
-        </StyledDappCardDescription>
-        <Badges
-          customBadges={rewardList}
-          users={users}
-          tradingVolume={tradingVolume}
-        />
+        <StyledDappCardDescription>{description}</StyledDappCardDescription>
+        <Badges customBadges={rewardList} tvl={tvl} users={users} tradingVolume={tradingVolume} />
       </StyledDappCardBody>
     </StyledDappCard>
   );
@@ -139,6 +123,7 @@ export interface Props {
   logo: string;
   description?: string;
   tradingVolume: number | string;
+  tvl: number | string;
   users: number | string;
   categories?: Category[];
   networks?: Network[];

@@ -4,15 +4,15 @@ import { useCallback, useEffect, useState } from 'react';
 import weth from '@/config/contract/weth';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 
-import { fetchApr, fetchCampaigns,fetchTvl } from '../fetch';
+import { fetchApr, fetchCampaigns, fetchTvl } from '../fetch';
 
 export default function usePools() {
   const [pools, setPools] = useState<any>([]);
   const [loading, setLoading] = useState(false);
   const { pairs, tokens, currentChain } = useDappConfig();
   const queryPools = useCallback(async () => {
-    const pools = Object.keys(pairs);
     try {
+      const pools = Object.keys(pairs);
       setLoading(true);
       const [tvl, apr, campaigns] = await Promise.all([fetchTvl(pools), fetchApr(), fetchCampaigns()]);
 
@@ -37,21 +37,22 @@ export default function usePools() {
           boost,
           event,
           kim,
-          xkim,
+          xkim
         };
       });
       setPools(_pools);
       setLoading(false);
     } catch (err) {
-      console.log(err);
+      console.log('Query Kim Pools failure: %o', err);
       setLoading(false);
       setPools([]);
     }
-  }, [pairs]);
+  }, [pairs, tokens, currentChain]);
 
   useEffect(() => {
+    if (!pairs || !tokens || !currentChain || !currentChain.chain_id || !tokens[currentChain.chain_id]) return;
     queryPools();
-  }, []);
+  }, [pairs, tokens, currentChain]);
 
   return { pools, loading };
 }

@@ -51,9 +51,8 @@ const formateValueWithThousandSeparatorAndFont = (
     // should zeros be added at the end
     isZeroPrecision?: boolean;
     isShort?: boolean;
-  },
+  }
 ): any => {
-
   const { prefix = '', isLTIntegerZero, isZeroPrecision, isShort } = options || {};
 
   if (!value || Big(value).eq(0)) {
@@ -66,12 +65,12 @@ const formateValueWithThousandSeparatorAndFont = (
     if (isZeroPrecision) {
       return {
         integer: `${prefix}0`,
-        decimal: Big(0).toFixed(precision).replace(/^\d/, ''),
+        decimal: Big(0).toFixed(precision).replace(/^\d/, '')
       };
     }
     return {
       integer: `${prefix}0`,
-      decimal: '',
+      decimal: ''
     };
   }
 
@@ -82,12 +81,12 @@ const formateValueWithThousandSeparatorAndFont = (
     if (isLTIntegerZero) {
       return {
         integer: `< ${prefix}0`,
-        decimal: Big(10).pow(-precision).toFixed(precision).replace(/^\d/, ''),
+        decimal: Big(10).pow(-precision).toFixed(precision).replace(/^\d/, '')
       };
     }
     return {
       integer: '',
-      decimal: `< ${prefix}${Big(10).pow(-precision).toFixed(precision)}`,
+      decimal: `< ${prefix}${Big(10).pow(-precision).toFixed(precision)}`
     };
   }
 
@@ -100,7 +99,10 @@ const formateValueWithThousandSeparatorAndFont = (
   if (isSimple) {
     if (isShort) {
       const formatter = (split: number, unit: string): string => {
-        const _num = Big(value).div(split).toFixed(precision, 0).replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
+        const _num = Big(value)
+          .div(split)
+          .toFixed(precision, 0)
+          .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
         const inter = _num.split('.')?.[0]?.replace(/\d(?=(\d{3})+\b)/g, '$&,');
         const decimal = _num.split('.')?.[1] ?? '';
         return `${prefix}${inter}${decimal ? '.' + decimal : ''}${unit}`;
@@ -123,12 +125,12 @@ const formateValueWithThousandSeparatorAndFont = (
   if (isZeroPrecision) {
     return {
       integer: `${prefix}${firstPart}`,
-      decimal: secondPart,
+      decimal: secondPart
     };
   }
   return {
     integer: `${prefix}${firstPart}`,
-    decimal: secondPart.replace(/[.]?0*$/, ''),
+    decimal: secondPart.replace(/[.]?0*$/, '')
   };
 };
 
@@ -139,29 +141,30 @@ function getRandomInt(min: number, max: number): number {
 const simplifyNumber = function (number: number, decimal: number) {
   if (typeof Number(number) !== 'number') return 0;
   if (isNaN(Number(number))) return 0;
-  if (number >= 1E3 && number < 1E6) {
-    return Math.round(number / 1E3) + 'K';
-  } else if (number >= 1E6) {
-    return Math.round(number / 1E6) + 'M';
+  if (number >= 1e3 && number < 1e6) {
+    return Big(number / 1e3).toFixed(decimal) + 'K';
+  } else if (number >= 1e6 && number < 1e9) {
+    return Big(number / 1e6).toFixed(decimal) + 'M';
+  } else if (number >= 1e9) {
+    return Big(number / 1e9).toFixed(decimal) + 'B';
   } else {
     return Big(number).toFixed(decimal);
   }
-}
+};
 const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
-  const target = Big(1).div(Math.pow(10, decimal))
-  if (Big(value).eq(0)) {
-    return '-'
+  const target = Big(1).div(Math.pow(10, decimal));
+  if (Big(value ?? 0).eq(0)) {
+    return '-';
   } else if (Big(value).gt(0)) {
     if (Big(value).lt(target)) {
-      return `<${unit}${target}`
+      return `<${unit}${target}`;
     } else {
-      return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
+      return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal));
     }
   } else {
-    return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal))
+    return unit + (simplify ? simplifyNumber(value, decimal) : Big(value).toFixed(decimal));
   }
-}
-
+};
 
 /**
  * Extracts the path from a given URL.
@@ -194,5 +197,5 @@ export {
   formateValueWithThousandSeparatorAndFont,
   getRandomInt,
   formatValueDecimal,
-  extractPathFromUrl,
+  extractPathFromUrl
 };

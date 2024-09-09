@@ -26,7 +26,7 @@ const DiscoveryDapps = () => {
     <StyledContainer>
       <StyledWrapper>
         <AllDappsTitle
-          bp='1003-006'
+          bp="1003-006"
           onCategory={onSelectCategory}
           activeCategory={category}
           dappList={featuredDapps?.titleDapps ?? []}
@@ -35,50 +35,49 @@ const DiscoveryDapps = () => {
       <StyledSwiperWrapper>
         <StyledMask className="left"></StyledMask>
         <StyledWrapper style={{ flexShrink: 0, position: 'relative', zIndex: 0 }}>
-          {
-            loading ? (
-              <StyledFlex gap="16px">
-                <DappLoading
-                  length={5}
-                  style={{
-                    flexWrap: 'nowrap',
-                    marginTop: 0,
-                  }}
-                />
-              </StyledFlex>
-            ) : (
-              <Swiper
-                modules={[]}
-                slidesPerView={3}
-                spaceBetween={16}
-                updateOnWindowResize={true}
-                onSwiper={(swiper) => {
-                  swiperRef.current = swiper;
+          {loading ? (
+            <StyledFlex gap="16px">
+              <DappLoading
+                length={5}
+                style={{
+                  flexWrap: 'nowrap',
+                  marginTop: 0
                 }}
-              >
-                {
-                  featuredDapps?.dapps ? featuredDapps.dapps.map((dapp: any, idx: number) => (
-                    <SwiperSlide key={idx}>
-                      <DappCard
-                        bp={{ detail: '', dapp: '1003-007' }}
-                        name={dapp.name}
-                        logo={dapp.logo}
-                        description={dapp.description}
-                        categories={dapp.categories}
-                        networks={dapp.networks}
-                        onClick={() => onDappCardClick(dapp)}
-                        tradingVolume={dapp.trading_volume}
-                        users={dapp.participants}
-                        route={dapp.route}
-                      />
-                    </SwiperSlide>
-                  )) : (
-                    <Empty size={42} tips="No dApps found" />
-                  )
-                }
-              </Swiper>
-            )
-          }
+              />
+            </StyledFlex>
+          ) : (
+            <Swiper
+              modules={[]}
+              slidesPerView={3}
+              spaceBetween={16}
+              updateOnWindowResize={true}
+              onSwiper={(swiper) => {
+                swiperRef.current = swiper;
+              }}
+            >
+              {featuredDapps?.dapps ? (
+                featuredDapps.dapps.map((dapp: any, idx: number) => (
+                  <SwiperSlide key={idx}>
+                    <DappCard
+                      bp={{ detail: '', dapp: '1003-007' }}
+                      name={dapp.name}
+                      logo={dapp.logo}
+                      description={dapp.description}
+                      categories={dapp.categories}
+                      networks={dapp.networks}
+                      onClick={() => onDappCardClick(dapp)}
+                      tradingVolume={dapp?.trading_volume_general}
+                      tvl={dapp.tvl}
+                      users={dapp.participants}
+                      route={dapp.route}
+                    />
+                  </SwiperSlide>
+                ))
+              ) : (
+                <Empty size={42} tips="No dApps found" />
+              )}
+            </Swiper>
+          )}
         </StyledWrapper>
         <StyledMask></StyledMask>
       </StyledSwiperWrapper>

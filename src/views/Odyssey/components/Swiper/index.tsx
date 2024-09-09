@@ -21,7 +21,8 @@ import MedalList from '../Medal';
 import RewardList from '../Reward';
 import Tag, { StatusType } from '../Tag';
 import {
-  StyleChainIconImg,   StyledCard,
+  StyleChainIconImg,
+  StyledCard,
   StyledCardBackgroundImage,
   StyledCardMainContent,
   StyledCardTitle,
@@ -34,12 +35,12 @@ import {
   StyledOdysseyIconTitle,
   StyledOdysseyInfo,
   StyledSwiperNextButton,
-StyledSwiperPagination,
+  StyledSwiperPagination,
   StyledSwiperPrevButton,
   StyledSwiperWrapper,
   StyledVideo,
   StyledVideoIcon,
-  StyleList,
+  StyleList
 } from './styles';
 
 export const formatCompassName = (name: string) => {
@@ -67,7 +68,7 @@ const CompassCard = function ({ compass }: any) {
   const handleExplore = async function () {
     if (compass.status === 'un_start') {
       toast.fail({
-        title: 'Odyssey is upcoming...',
+        title: 'Odyssey is upcoming...'
       });
       return;
     }
@@ -95,7 +96,7 @@ const CompassCard = function ({ compass }: any) {
           src={compass.banner || '/images/odyssey/v2/default.jpg'}
           alt={compass.name}
           style={{
-            filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)',
+            filter: compass.status === 'ended' ? 'grayscale(100%)' : 'grayscale(0%)'
           }}
         />
         <StyledCardMainContent>
@@ -169,13 +170,16 @@ const Compass = () => {
 
   const filterCompassList = useMemo(() => {
     // fix#DAP-785
-    const hasLive = compassList.some((compass: any) => [StatusType.ongoing, StatusType.un_start].includes(compass.status));
-    return hasLive ? compassList.filter((compass: any) => [StatusType.ongoing, StatusType.un_start].includes(compass.status)) : compassList;
-  }
-  , [compassList]);
+    const hasLive = compassList.some((compass: any) =>
+      [StatusType.ongoing, StatusType.un_start].includes(compass.status)
+    );
+    return hasLive
+      ? compassList.filter((compass: any) => [StatusType.ongoing, StatusType.un_start].includes(compass.status))
+      : compassList;
+  }, [compassList]);
 
   return loading ? (
-    <Skeleton height={405} borderRadius={12} />
+    <Skeleton width={1244} height={405} borderRadius={12} />
   ) : (
     <StyledContainer>
       <StyledContent>
@@ -197,7 +201,7 @@ const Compass = () => {
                 clickable: true,
                 renderBullet: (index, className) => {
                   return `<span class="${className} swiper-pagination-bullet-${index}"></span>`;
-                },
+                }
               }}
               loop={true}
             >
@@ -274,26 +278,24 @@ const Compass = () => {
                 setShow(false);
               }}
             />
-            {
-              filterCompassList?.length > 1 && (
-                <>
-                  <StyledSwiperPrevButton
-                    onClick={() => {
-                      swiperRef.current && swiperRef.current.slidePrev();
-                    }}
-                  >
-                    <IconArrow />
-                  </StyledSwiperPrevButton>
-                  <StyledSwiperNextButton
-                    onClick={() => {
-                      swiperRef.current && swiperRef.current.slideNext();
-                    }}
-                  >
-                    <IconArrow />
-                  </StyledSwiperNextButton>
-                </>
-              )
-            }
+            {filterCompassList?.length > 1 && (
+              <>
+                <StyledSwiperPrevButton
+                  onClick={() => {
+                    swiperRef.current && swiperRef.current.slidePrev();
+                  }}
+                >
+                  <IconArrow />
+                </StyledSwiperPrevButton>
+                <StyledSwiperNextButton
+                  onClick={() => {
+                    swiperRef.current && swiperRef.current.slideNext();
+                  }}
+                >
+                  <IconArrow />
+                </StyledSwiperNextButton>
+              </>
+            )}
           </StyledSwiperWrapper>
         </StyledInner>
       </StyledContent>
