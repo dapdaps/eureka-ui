@@ -16,7 +16,8 @@ export const StyledMedalImage = styled.img`
   width: 78px;
   &.disabled {
     /* transform: translateX(-100vw); */
-    filter: sepia(1) hue-rotate(210deg) saturate(0.5)
+    filter: sepia(1) hue-rotate(210deg) saturate(0.5);
+    opacity: 0.5;
   }
 `
 export const StyledMark = styled.div`

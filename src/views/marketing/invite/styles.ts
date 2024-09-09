@@ -253,7 +253,8 @@ export const StyledMedal = styled.div<{ $url: string, $disabled: boolean }>`
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    filter: ${({ $disabled }) => $disabled ? "sepia(1) hue-rotate(210deg) saturate(0.5)" : ""}
+    filter: ${({ $disabled }) => $disabled ? "sepia(1) hue-rotate(210deg) saturate(0.5)" : ""};
+    opacity: ${({ $disabled }) => $disabled ? ".5" : 1};
   }
 `;
 
