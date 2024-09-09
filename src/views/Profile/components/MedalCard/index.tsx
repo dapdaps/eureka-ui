@@ -21,7 +21,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsTy
   );
   const SPECIAL_LEVEL_NAME_MAPPING: any = {
     'Pioneer Leader': 'JanZ53390935',
-    'Pioneer Silver': 'cudam321',
+    'Pioneer Silver': 'vitalik.eth',
     'Pioneer Bronze': 'checkra1neth'
   };
   return (
