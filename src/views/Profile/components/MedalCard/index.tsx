@@ -19,7 +19,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsTy
     () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : medal?.completed_threshold),
     [medal]
   );
-  const SPECIAL_LEVEL_NAME_MAPPING = {
+  const SPECIAL_LEVEL_NAME_MAPPING: any = {
     'Pioneer Leader': 'JanZ53390935',
     'Pioneer Silver': 'cudam321',
     'Pioneer Bronze': 'checkra1neth'
