@@ -39,6 +39,7 @@ const AllInOneDetailView = (props: Props) => {
 
   const cardWidth = useMemo(() => {
     if (['liquidity', 'lending'].includes(menu)) return '1244px';
+    if (menu === 'bridge') return 'auto';
     return undefined;
   }, [menu]);
 
@@ -52,7 +53,7 @@ const AllInOneDetailView = (props: Props) => {
       return isNaN(Number(_id)) ? null : Number(_id);
     }
     return null;
-  }
+  };
 
   return (
     <>
@@ -68,46 +69,30 @@ const AllInOneDetailView = (props: Props) => {
           />
 
           <StyledContent className="detail">
-            {
-              showComponent && (
-                <AllInOneDetailCardView
-                  likeId={formatLikeId()}
-                  key={menu}
-                  title={currentMenu?.tab}
-                  subTitle={currentMenu.description}
-                  bgColor={currentChain.selectBgColor}
-                  style={{ width: cardWidth }}
-                  config={cardConfig}
-                  onShowSettings={() => setShowSettings(true)}
-                >
-                  {
-                    menu === 'bridge' && (
-                      // <Bridge chain={currentChain} />
-                      <SuperBridge
-                        theme={currentChain}
-                        showTitle={false}
-                        chainList={[chainCofig[1], chainCofig[currentChain.chainId]]}
-                      />
-                    )
-                  }
-                  {
-                    menu === 'lending' && (
-                      <Lending chain={currentChain} menu={currentMenu} />
-                    )
-                  }
-                  {
-                    menu === 'liquidity' && (
-                      <Liquidity chain={currentChain} menu={currentMenu} />
-                    )
-                  }
-                  {
-                    menu === 'swap' && (
-                      <Trade chain={currentChain} />
-                    )
-                  }
-                </AllInOneDetailCardView>
-              )
-            }
+            {showComponent && (
+              <AllInOneDetailCardView
+                likeId={formatLikeId()}
+                key={menu}
+                title={currentMenu?.tab}
+                subTitle={currentMenu.description}
+                bgColor={currentChain.selectBgColor}
+                style={{ width: cardWidth }}
+                config={cardConfig}
+                onShowSettings={() => setShowSettings(true)}
+              >
+                {menu === 'bridge' && (
+                  // <Bridge chain={currentChain} />
+                  <SuperBridge
+                    theme={currentChain}
+                    showTitle={false}
+                    chainList={[chainCofig[1], chainCofig[currentChain.chainId]]}
+                  />
+                )}
+                {menu === 'lending' && <Lending chain={currentChain} menu={currentMenu} />}
+                {menu === 'liquidity' && <Liquidity chain={currentChain} menu={currentMenu} />}
+                {menu === 'swap' && <Trade chain={currentChain} />}
+              </AllInOneDetailCardView>
+            )}
           </StyledContent>
           <StyledNavList>
             {currentChainMenuList.map((item: any) => {
@@ -126,7 +111,7 @@ const AllInOneDetailView = (props: Props) => {
                       setShowComponent(() => {
                         handleMenuSelect(_tab, true);
                         return false;
-                      })
+                      });
                       return;
                     }
                     handleMenuSelect(_tab);

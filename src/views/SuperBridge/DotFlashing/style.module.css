@@ -11,7 +11,7 @@
     width: 4px;
     height: 4px;
     border-radius: 5px;
-    background-color: rgba(41, 125, 209, 1);
+    background: #EBF479;
     animation: dotFlashing 1s infinite linear alternate;
     animation-delay: 0.5s;
 }
@@ -37,12 +37,13 @@
     width: 4px;
     height: 4px;
     border-radius: 5px;
-    background-color: rgba(41, 125, 209, 1);
+    background: #EBF479;
+
 }
 
 @keyframes dotFlashing {
     0% {
-      background-color: rgba(41, 125, 209, 1);
+      background: #EBF479;
     }
     100% {
       background-color: #ebe6ff;
