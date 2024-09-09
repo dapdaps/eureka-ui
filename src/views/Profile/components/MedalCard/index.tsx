@@ -8,8 +8,9 @@ import ProgressBar from '../ProgressBar';
 import {
   StyledMark,
   StyledMedalCard,
-  StyledMedalImage
-} from './styles';
+  StyledMedalImage,
+  StyledSpecified,
+  StyledSpecifiedContainer} from './styles';
 
 
 type PropsType = {
@@ -21,10 +22,15 @@ type PropsType = {
 export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsType) {
   const total = useMemo(() => medal?.trading_volume > 0 ? 100 : medal?.threshold, [medal])
   const quantity = useMemo(() => medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : medal?.completed_threshold, [medal])
+  const SPECIAL_LEVEL_NAME_MAPPING = {
+    "Pioneer Leader": "JanZ53390935",
+    "Pioneer Silver": "cudam321",
+    "Pioneer Bronze": "checkra1neth"
+  }
   return (
     <StyledMedalCard style={style}>
       <StyledFlex gap='15px'>
-        <StyledMedalImage className={Number(quantity) < total ? 'disabled' : ''} src={medal?.logo} />
+        <StyledMedalImage className={(Number(quantity) < total && !SPECIAL_LEVEL_NAME_MAPPING[medal?.level_name]) ? 'disabled' : ''} src={medal?.logo} />
         <StyledFlex flexDirection='column' alignItems='flex-start' gap='8px'>
           <StyledFont color='#FFF' fontSize='20px' fontWeight='700' lineClamp="2" className='ellipsis' style={nameStyle}>{medal?.level_name}</StyledFont>
           <StyledFont color='#979ABE' fontSize='14px' lineClamp="2" className='ellipsis'>{medal?.level_description}</StyledFont>
@@ -47,7 +53,19 @@ export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsTy
         </StyledSvg>
       </StyledMark>
 
-      <ProgressBar quantity={+quantity} total={total} showAchieved={true} showPercent={medal?.threshold > 0 ? false : true} barWidth={barWidth} />
+
+      {
+        SPECIAL_LEVEL_NAME_MAPPING[medal?.level_name] ? (
+          <StyledFlex justifyContent='space-between'>
+            <StyledSpecifiedContainer>
+              <StyledSpecified>Specified</StyledSpecified>
+            </StyledSpecifiedContainer>
+            <StyledFont color='#FFF' fontSize='14px'>Owner: {SPECIAL_LEVEL_NAME_MAPPING[medal?.level_name]}</StyledFont>
+          </StyledFlex>
+        ) : (
+          <ProgressBar quantity={+quantity} total={total} showAchieved={true} showPercent={medal?.threshold > 0 ? false : true} barWidth={barWidth} />
+        )
+      }
     </StyledMedalCard>
   )
 }
