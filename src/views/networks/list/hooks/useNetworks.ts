@@ -32,10 +32,10 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
       let data: Network[] = resultNetwork.data || [];
       data = data.filter((it) => InConfigNetworkIds.includes(it.id + ''));
       // find trading_volume and participants max
-      const maxVolume = Math.max(...data.map((item: Network) => Big(item.trading_volume || 0).toNumber()));
+      const maxVolume = Math.max(...data.map((item: Network) => Big(item.trading_volume_general || 0).toNumber()));
       const maxParticipants = Math.max(...data.map((item: Network) => item.participants));
       data.forEach(item => {
-        item.isTop = Big(item.trading_volume || 0).toNumber() === maxVolume;
+        item.isTop = Big(item.trading_volume_general || 0).toNumber() === maxVolume;
         item.isHot = maxParticipants === item.participants;
       })
       setNetworkList(data);
@@ -123,6 +123,7 @@ export interface Network {
   total_integrated_dapp: number;
   trading_volume: string;
   trading_volume_change_percent: string;
+  trading_volume_general: string;
   odyssey: NetworkOdyssey[];
   airdrop: NetworkAirdrop[];
   index?: number;
