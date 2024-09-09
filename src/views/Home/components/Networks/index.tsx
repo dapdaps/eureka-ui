@@ -414,12 +414,13 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
                     <Image src={'/images/networks/icon-top.gif'} width={47} height={47} alt="topVolume" />
                     TOP Volume
                   </TopTvl>
-                ) : (
-                  <Hottest>
-                    <Image src={'/images/networks/icon-hot.gif'} width={54} height={54} alt="hottest" />
-                    Hottest
-                  </Hottest>
-                )
+                ) : <></>
+                //   (
+                //   <Hottest>
+                //     <Image src={'/images/networks/icon-hot.gif'} width={54} height={54} alt="hottest" />
+                //     Hottest
+                //   </Hottest>
+                // )
               }
             </div>
             <div className="intro">
