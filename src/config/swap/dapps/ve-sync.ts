@@ -9,18 +9,9 @@ const networks = {
   324: {
     defaultCurrencies: {
       input: zkSync['eth'],
-      output: zkSync['usdt'],
+      output: zkSync['usdc.e'],
     },
-    tokens: [
-      zkSync['eth'],
-      zkSync['usdt'],
-      zkSync['usdc'],
-      zkSync['usx'],
-      zkSync['iusd'],
-      zkSync['slusdt'],
-      zkSync['lusd'],
-      zkSync['cebusd'],
-    ],
+    tokens: [zkSync['eth'], zkSync['usdc.e'], zkSync['vs']],
   },
 };
 

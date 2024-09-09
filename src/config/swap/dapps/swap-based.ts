@@ -10,9 +10,9 @@ const networks = {
   8453: {
     defaultCurrencies: {
       input: base['eth'],
-      output: base['axlusdc'],
+      output: base['base'],
     },
-    tokens: [base['eth'], base['axlusdc'], base['usdc'], base['weth'], base['bald'], base['base'], base['dai']],
+    tokens: [base['eth'], base['weth'], base['base']],
   },
 };
 

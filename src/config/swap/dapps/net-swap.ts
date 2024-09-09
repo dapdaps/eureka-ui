@@ -18,10 +18,11 @@ const networks = {
       metis['usdt'],
       metis['metis'],
       metis['nett'],
-      metis['peak'],
-      metis['byte'],
       metis['m.usdt'],
       metis['weth'],
+      metis['eMetis'],
+      metis['enki'],
+      metis['titans'],
     ],
   },
 };

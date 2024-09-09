@@ -3,7 +3,6 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 import { basic as apeBasic, networks as apeNetworks } from '../dapps/ape';
 import { basic as camelotBasic, networks as camelotNetworks } from '../dapps/camelot';
 import { basic as chronosV1Basic, networks as chronosV1Networks } from '../dapps/chronos-v2';
-import { basic as ramsesV1Basic, networks as ramsesV1Networks } from '../dapps/ramses-v1';
 import { basic as ramsesV2Basic, networks as ramsesV2Networks } from '../dapps/ramses-v2';
 import { basic as solidLizardBasic, networks as solidLizardNetworks } from '../dapps/solid-lizard';
 import { basic as spartaBasic, networks as spartaNetworks } from '../dapps/sparta';
@@ -26,10 +25,6 @@ export default {
     'Ramses V2': {
       ...ramsesV2Basic,
       ...ramsesV2Networks[CHAIN_ID],
-    },
-    'Ramses V1': {
-      ...ramsesV1Basic,
-      ...ramsesV1Networks[CHAIN_ID],
     },
     SushiSwap: {
       ...sushiBasic,

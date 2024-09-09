@@ -19,6 +19,8 @@ const networks = {
       arbitrum['wbtc'],
       arbitrum['usdt'],
       arbitrum['gswift'],
+      arbitrum['usdc'],
+      arbitrum['star'],
     ],
   },
 };

@@ -20,6 +20,8 @@ const networks = {
       mantle['usdc'],
       mantle['lend'],
       mantle['moe'],
+      mantle['meth'],
+      mantle['fbtc'],
     ],
   },
 };

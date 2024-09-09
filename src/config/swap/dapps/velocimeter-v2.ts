@@ -36,10 +36,9 @@ const networks = {
       base['bvm'],
       base['usdc'],
       base['bmx'],
-      base['axlusdc'],
-      base['usdbc'],
-      base['dai'],
       base['cbeth'],
+      base['wBLT'],
+      base['ftw'],
     ],
   },
 };

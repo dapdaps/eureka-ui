@@ -33,6 +33,12 @@ const networks = {
       avalanche['eth'],
       avalanche['btc.b'],
       avalanche['wbtc.e'],
+      avalanche['weth.e'],
+      avalanche['bnUSD'],
+      avalanche['kimbo'],
+      avalanche['coq'],
+      avalanche['sicko'],
+      avalanche['hefe'],
     ],
   },
 };

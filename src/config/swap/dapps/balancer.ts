@@ -24,9 +24,7 @@ const networks = {
       polygonZkevm['rseth'],
       polygonZkevm['usdt'],
       polygonZkevm['bal'],
-      polygonZkevm['ankreth'],
       polygonZkevm['matic'],
-
       polygonZkevm['eth'],
       polygonZkevm['usdc'],
       polygonZkevm['wbtc'],
@@ -39,6 +37,7 @@ const networks = {
       output: base['reth'],
     },
     tokens: [
+      base['eth'],
       base['weth'],
       base['reth'],
       base['aura'],
@@ -48,12 +47,11 @@ const networks = {
       base['cbeth'],
       base['axlbal'],
       base['bal'],
-      base['tbtc'],
-      base['tag'],
       base['usdbc'],
-
-      base['eth'],
       base['dai'],
+      base['gold'],
+      base['kabosu'],
+      base['dog'],
     ],
   },
   100: {
@@ -73,12 +71,12 @@ const networks = {
       gnosis['OLAS'],
       gnosis['wxdai'],
       gnosis['COW'],
-
       gnosis['xdai'],
       gnosis['BAL'],
       gnosis['usdc'],
       gnosis['usdt'],
       gnosis['dai'],
+      gnosis['wsteth'],
     ],
   },
 };

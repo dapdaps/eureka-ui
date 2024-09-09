@@ -12,33 +12,14 @@ const networks = {
       input: base['eth'],
       output: base['axlusdc'],
     },
-    tokens: [
-      base['hzn'],
-      base['weth'],
-      base['cbeth'],
-      base['eth'],
-      base['dai'],
-      base['axlusdc'],
-      base['usdbc'],
-      base['bswap'],
-      base['bald'],
-    ],
+    tokens: [base['eth'], base['weth'], base['axlusdc'], base['axlusdt']],
   },
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
       output: linea['usdc'],
     },
-    tokens: [
-      linea['eth'],
-      linea['usdc'],
-      linea['weth'],
-      linea['axlusdc'],
-      linea['axlusdt'],
-      linea['hzn'],
-      linea['busd'],
-      linea['bnb'],
-    ],
+    tokens: [linea['eth'], linea['usdc'], linea['weth'], linea['busd']],
   },
 };
 

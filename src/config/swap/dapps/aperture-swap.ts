@@ -9,11 +9,13 @@ const basic = {
 const networks = {
   169: {
     defaultCurrencies: {
-      input: manta['weth'],
+      input: manta['eth'],
       output: manta['usdc'],
     },
     tokens: [
+      manta['eth'],
       manta['weth'],
+      manta['manta'],
       manta['usdc'],
       manta['usdt'],
       manta['wbtc'],
@@ -23,6 +25,7 @@ const networks = {
       manta['tia'],
       manta['wsteth'],
       manta['lab'],
+      manta['reth'],
     ],
   },
 };

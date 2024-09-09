@@ -142,4 +142,28 @@ export const mantle: { [key: string]: Token } = {
     icon: 'https://ipfs.near.social/ipfs/bafkreibsxpywcpyv7d3wtx6zikotsgyuchvxj6jaqn22rcefxqsemk75wy',
     decimals: 18,
   },
+  izi: {
+    chainId: CHAIN_ID,
+    name: 'iZUMi Token',
+    symbol: 'iZi',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifsgwu2zd6y2n5alekr5qgdhzoivlkl5wujtq3z7gnm5pw4jy7sgi',
+    decimals: 18,
+    address: '0x60d01ec2d5e98ac51c8b4cf84dfcce98d527c747',
+  },
+  axlusdc: {
+    chainId: CHAIN_ID,
+    address: '0xEB466342C4d449BC9f53A865D5Cb90586f405215',
+    decimals: 6,
+    symbol: 'axlUSDC',
+    name: 'Axelar Wrapped USDC',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla',
+  },
+  minu: {
+    chainId: CHAIN_ID,
+    address: '0x51cfe5b1E764dC253F4c8C1f19a081fF4C3517eD',
+    decimals: 18,
+    symbol: 'MINU',
+    name: 'Mantle Inu Token',
+    icon: '/images/tokens/minu.png',
+  },
 };

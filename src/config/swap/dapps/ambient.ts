@@ -30,6 +30,7 @@ const networks = {
       scroll['reth'],
       scroll['scribes'],
       scroll['sol'],
+      scroll['axlusdc'],
     ],
   },
   81457: {
@@ -37,17 +38,7 @@ const networks = {
       input: blast['eth'],
       output: blast['usdb'],
     },
-    tokens: [
-      blast['eth'],
-      blast['usdb'],
-      blast['ezeth'],
-      blast['orbit'],
-      blast['wrseth'],
-      blast['juice'],
-      blast['mim'],
-      blast['blast'],
-      blast['we-eth'],
-    ],
+    tokens: [blast['eth'], blast['usdb'], blast['ezeth'], blast['blast'], blast['we-eth']],
   },
 };
 

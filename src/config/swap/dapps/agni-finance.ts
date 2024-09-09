@@ -21,6 +21,7 @@ const networks = {
       mantle['meth'],
       mantle['fbtc'],
       mantle['usdy'],
+      mantle['meth'],
     ],
   },
 };

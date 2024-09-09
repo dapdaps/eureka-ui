@@ -11,7 +11,7 @@ const networks = {
       input: metis['eth'],
       output: metis['m.usdc'],
     },
-    tokens: [metis['eth'], metis['m.usdc'], metis['metis'], metis['m.usdt'], metis['maia']],
+    tokens: [metis['eth'], metis['m.usdc'], metis['metis']],
   },
 };
 

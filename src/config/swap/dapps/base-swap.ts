@@ -23,6 +23,7 @@ const networks = {
       base['dai'],
       base['tbtc'],
       base['axlusdc'],
+      base['brett'],
     ],
   },
 };

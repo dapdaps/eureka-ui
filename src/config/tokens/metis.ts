@@ -124,4 +124,28 @@ export const metis: { [key: string]: Token } = {
     name: 'Staked rax Ether',
     icon: 'https://ipfs.near.social/ipfs/bafkreiayh7m5knlt7olpwrnnltbd4ykszyzbca5gdpnj4mkqbrvknihcvi',
   },
+  eMetis: {
+    chainId: CHAIN_ID,
+    address: '0x97a2de3A09F4A4229369ee82c7F76be1a5564661',
+    decimals: 18,
+    symbol: 'eMetis',
+    name: 'Enki Metis',
+    icon: '/images/tokens/eMetis.png',
+  },
+  enki: {
+    chainId: CHAIN_ID,
+    address: '0x096A84536ab84E68ee210561FFD3A038E79736F1',
+    decimals: 18,
+    symbol: 'ENKI',
+    name: 'ENKI Protocol',
+    icon: '/images/tokens/enki.png',
+  },
+  titans: {
+    chainId: CHAIN_ID,
+    address: '0xa11DD414Ad9b68cc1fe4d0a256f0F4413169Dd5E',
+    decimals: 18,
+    symbol: 'TITANS',
+    name: 'TitanBorn',
+    icon: '/images/tokens/titans.png',
+  },
 };

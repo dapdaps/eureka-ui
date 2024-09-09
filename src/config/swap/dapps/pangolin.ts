@@ -25,9 +25,10 @@ const networks = {
       avalanche['usdt.e'],
       avalanche['wbtc.e'],
       avalanche['savax'],
-
       avalanche['dai.e'],
       avalanche['wavax'],
+      avalanche['weth.e'],
+      avalanche['ampl'],
     ],
   },
 };

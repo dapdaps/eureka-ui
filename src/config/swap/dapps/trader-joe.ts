@@ -1,5 +1,5 @@
 import { avalanche } from '@/config/tokens/avalanche';
-import { bsc } from '@/config/tokens/bsc';
+
 const basic = {
   name: 'Trader Joe',
   logo: '/images/apps/trader-joe.png',
@@ -19,14 +19,23 @@ const networks = {
       avalanche['eth'],
       avalanche['wavax'],
       avalanche['wbtc.e'],
+      avalanche['gg-avax'],
+      avalanche['savax'],
+      avalanche['usdc'],
+      avalanche['a-usd'],
+      avalanche['weth.e'],
+      avalanche['btc.b'],
+      avalanche['qi'],
+      avalanche['joe'],
+      avalanche['zro'],
+      avalanche['coq'],
+      avalanche['shrap'],
+      avalanche['beam'],
+      avalanche['prime'],
+      avalanche['alot'],
+      avalanche['aleph'],
+      avalanche['yak'],
     ],
-  },
-  56: {
-    defaultCurrencies: {
-      input: bsc['bnb'],
-      output: bsc['usdc'],
-    },
-    tokens: [bsc['btcb'], bsc['bnb'], bsc['busd'], bsc['usdt'], bsc['eth'], bsc['usdc']],
   },
 };
 

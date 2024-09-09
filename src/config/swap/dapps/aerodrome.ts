@@ -14,9 +14,9 @@ const networks = {
     },
     tokens: [
       base['eth'],
+      base['weth'],
       base['aero'],
       base['usdc'],
-      base['weth'],
       base['dola'],
       base['usd-z'],
       base['ovn'],
@@ -28,8 +28,16 @@ const networks = {
       base['usdt'],
       base['mai'],
       base['weeth'],
-
       base['dai'],
+      base['eurc'],
+      base['fbomb'],
+      base['klima'],
+      base['rdnt'],
+      base['well'],
+      base['bsd-eth'],
+      base['e-usd'],
+      base['tarot'],
+      base['brett'],
     ],
   },
 };

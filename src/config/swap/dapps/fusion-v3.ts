@@ -11,7 +11,17 @@ const networks = {
       input: mantle['weth'],
       output: mantle['usdc'],
     },
-    tokens: [mantle['weth'], mantle['usdc'], mantle['mnt'], mantle['usdt'], mantle['wbtc'], mantle['wmnt']],
+    tokens: [
+      mantle['weth'],
+      mantle['usdc'],
+      mantle['mnt'],
+      mantle['usdt'],
+      mantle['wbtc'],
+      mantle['wmnt'],
+      mantle['meth'],
+      mantle['axlusdc'],
+      mantle['minu'],
+    ],
   },
 };
 

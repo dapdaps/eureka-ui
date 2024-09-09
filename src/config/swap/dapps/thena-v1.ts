@@ -28,6 +28,7 @@ const networks = {
       bsc['livethe'],
       bsc['frxeth'],
       bsc['stkbnb'],
+      bsc['slisBNB'],
     ],
   },
 };

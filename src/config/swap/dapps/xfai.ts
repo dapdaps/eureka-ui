@@ -20,6 +20,7 @@ const networks = {
       linea['usdt'],
       linea['dai'],
       linea['wsteth'],
+      linea['stone'],
     ],
   },
 };

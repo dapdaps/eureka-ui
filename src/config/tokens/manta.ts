@@ -222,4 +222,12 @@ export const manta: { [key: string]: Token } = {
     name: 'MINUtheManta',
     icon: '/images/tokens/mnu.png',
   },
+  reth: {
+    chainId: CHAIN_ID,
+    address: '0x6e9655611b42c10b9af25b6ca08be349df45c370',
+    decimals: 18,
+    symbol: 'rETH',
+    name: 'Rocket Pool ETH',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicgk4jnpvyfe7jqup46y5epyxoemounktft6yxtym7o7wcagiecpy',
+  },
 };

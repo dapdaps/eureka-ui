@@ -12,7 +12,7 @@ const networks = {
       input: base['eth'],
       output: base['usdbc'],
     },
-    tokens: [base['weth'], base['eth'], base['usdbc'], base['dai']],
+    tokens: [base['weth'], base['eth'], base['usdbc'], base['dai'], base['wDAI']],
   },
 };
 
