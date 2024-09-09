@@ -173,15 +173,19 @@ const Detail = (props: DetailProps) => {
             >
               In Wallet
             </StyledSummaryTitle>
-            {loading ? (
-              <Skeleton height={30} width={100} />
+            {isSupported ? (
+              loading ? (
+                <Skeleton height={30} width={100} />
+              ) : (
+                <StyledSummaryValue>
+                  {formateValueWithThousandSeparatorAndFont(network?.balance, 2, true, {
+                    prefix: '$',
+                    isZeroPrecision: true
+                  })}
+                </StyledSummaryValue>
+              )
             ) : (
-              <StyledSummaryValue>
-                {formateValueWithThousandSeparatorAndFont(network?.balance, 2, true, {
-                  prefix: '$',
-                  isZeroPrecision: true
-                })}
-              </StyledSummaryValue>
+              <StyledComingSoon>Coming soon...</StyledComingSoon>
             )}
           </StyledFlex>
           <StyledFlex flexDirection="column">
