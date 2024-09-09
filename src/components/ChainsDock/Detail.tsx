@@ -1,29 +1,23 @@
 import { useDebounceFn } from 'ahooks';
+import Big from 'big.js';
 import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
 import type { NetworkBalance } from '@/components/ChainsDock/index';
 import { ArrowLineIcon } from '@/components/Icons/ArrowLineIcon';
-import LazyImage from '@/components/LazyImage';
 import { IdToPath, SupportedChains } from '@/config/all-in-one/chains';
-import useAccount from '@/hooks/useAccount';
 import { StyledFlex } from '@/styled/styles';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
 const OffsetLeft = 17;
 
-
-
-
 const ChainsDockDetail = (props: Props) => {
   const { children, network, onBridgeShow, loading } = props;
-
-  const { account } = useAccount();
 
   const triggerRef = useRef<any>();
 
@@ -32,18 +26,20 @@ const ChainsDockDetail = (props: Props) => {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 
-  const { run: closeDetail, cancel: cancelCloseDetail } = useDebounceFn(() => {
-    setVisible(false);
-    setRealVisible(false);
-  }, {
-    wait: 150,
-  });
+  const { run: closeDetail, cancel: cancelCloseDetail } = useDebounceFn(
+    () => {
+      setVisible(false);
+      setRealVisible(false);
+    },
+    {
+      wait: 150
+    }
+  );
 
   return (
     <>
       <StyledTrigger
         ref={triggerRef}
-        
         onHoverStart={() => {
           setVisible(true);
           cancelCloseDetail();
@@ -54,8 +50,8 @@ const ChainsDockDetail = (props: Props) => {
       >
         {children}
       </StyledTrigger>
-      {
-        visible && createPortal((
+      {visible &&
+        createPortal(
           <Detail
             x={x}
             y={y}
@@ -82,9 +78,9 @@ const ChainsDockDetail = (props: Props) => {
               setRealVisible(true);
             }}
             visible={realVisible}
-          />
-        ), document.body)
-      }
+          />,
+          document.body
+        )}
     </>
   );
 };
@@ -96,17 +92,8 @@ const Detail = (props: DetailProps) => {
   const router = useRouter();
 
   const isSupported = SupportedChains.some((support) => support.chainId === chain_id);
-  
 
   const balanceRef = useRef<any>(null);
-
-  const nativeCurrency = useMemo(() => {
-    try {
-      return JSON.parse(network.native_currency);
-    } catch (err) {
-      return {};
-    }
-  }, [network]);
 
   const handleNetworkDetailPre = () => {
     if (!id) return;
@@ -118,13 +105,13 @@ const Detail = (props: DetailProps) => {
   };
 
   const handleSuperBridge = (direction: 'in' | 'out') => {
-    const { onBridgeShow } = props
-    console.log(4444, onBridgeShow)
+    const { onBridgeShow } = props;
+    console.log(4444, onBridgeShow);
     // console.log(direction);
     if (onBridgeShow) {
       // const fromChainId = direction === 'in' ? 1 : chain_id
       // const toChainId = direction === 'in' ? chain_id : 1
-      onBridgeShow(chain_id, 1, direction)
+      onBridgeShow(chain_id, 1, direction);
     }
   };
 
@@ -141,20 +128,20 @@ const Detail = (props: DetailProps) => {
         style={{
           left: x,
           top: y,
-          visibility: visible ? 'visible' : 'hidden',
+          visibility: visible ? 'visible' : 'hidden'
         }}
         animate={{
           opacity: 1,
           x: 0,
-          transition: { type: 'spring', stiffness: 200, damping: 15, duration: 1 },
+          transition: { type: 'spring', stiffness: 200, damping: 15, duration: 1 }
         }}
         exit={{
           opacity: 0,
-          x: OffsetLeft,
+          x: OffsetLeft
         }}
         initial={{
           opacity: 0,
-          x: OffsetLeft,
+          x: OffsetLeft
         }}
         onHoverStart={() => {
           setVisible(true);
@@ -174,60 +161,55 @@ const Detail = (props: DetailProps) => {
             <ArrowLineIcon classname="arrow-icon" />
           </StyledArrow>
         </StyledHead>
-        <StyledFlex justifyContent="space-between" gap="10px" style={{ marginBottom: '20px', position: 'relative', padding: '0 20px' }}>
+        <StyledFlex
+          justifyContent="space-between"
+          gap="10px"
+          style={{ marginBottom: '20px', position: 'relative', padding: '0 20px' }}
+        >
           <StyledFlex flexDirection="column" alignItems="center">
-            <StyledSummaryTitle>
+            <StyledSummaryTitle
+              className={!loading ? 'show-dot' : ''}
+              $isUsd={!loading && network?.balance && Big(network.balance).toNumber() > 0}
+            >
               In Wallet
             </StyledSummaryTitle>
-            {
-              loading && isSupported ? (
+            {isSupported ? (
+              loading ? (
                 <Skeleton height={30} width={100} />
               ) : (
-                <StyledSummaryValue $blur={!isSupported}>
+                <StyledSummaryValue>
                   {formateValueWithThousandSeparatorAndFont(network?.balance, 2, true, {
                     prefix: '$',
-                    isZeroPrecision: true,
+                    isZeroPrecision: true
                   })}
                 </StyledSummaryValue>
               )
-            }
+            ) : (
+              <StyledComingSoon>Coming soon...</StyledComingSoon>
+            )}
           </StyledFlex>
           <StyledFlex flexDirection="column">
-            <StyledSummaryTitle>
-              DeFi
-            </StyledSummaryTitle>
-            {
-              loading && isSupported ? (
+            <StyledSummaryTitle>DeFi</StyledSummaryTitle>
+            {isSupported ? (
+              loading ? (
                 <Skeleton height={30} width={100} />
               ) : (
-                <StyledSummaryValue $blur={!isSupported}>
-                  {formateValueWithThousandSeparatorAndFont(isSupported ? network?.totalUsd : 0, 2, true, {
-                    prefix: '$',
-                    isZeroPrecision: true,
-                  })}
-                </StyledSummaryValue>
+                formateValueWithThousandSeparatorAndFont(network?.totalUsd ?? 0, 2, true, {
+                  prefix: '$',
+                  isZeroPrecision: true
+                })
               )
-            }
+            ) : (
+              <StyledComingSoon>Coming soon...</StyledComingSoon>
+            )}
           </StyledFlex>
-          {
-            !isSupported && (
-              <StyledComingSoon>
-                Coming soon...
-              </StyledComingSoon>
-            )
-          }
         </StyledFlex>
         <StyledFoot>
           <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
           <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>
-          {
-            isSupported && (
-              <StyledLink href="/portfolio">Manage Assets</StyledLink>
-            )
-          }
+          {isSupported && <StyledLink href="/portfolio">Manage Assets</StyledLink>}
         </StyledFoot>
       </StyledDetail>
-      
     </AnimatePresence>
   );
 };
@@ -267,10 +249,10 @@ const StyledDetail = styled(motion.div)`
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px #333648;
-  background: #1F2229;
+  background: #1f2229;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
   padding: 3px 3px 20px 3px;
-  color: #FFF;
+  color: #fff;
 `;
 const StyledTrigger = styled(motion.div)`
   cursor: pointer;
@@ -285,12 +267,12 @@ const StyledHead = styled.div`
   border-radius: 10px;
   padding: 12px 13px 12px 18px;
   transition: all 0.2s ease-in-out;
-  border: 1px solid #1F2229;
+  border: 1px solid #1f2229;
   cursor: pointer;
-  
+
   &:hover {
     border-color: #333648;
-    background: #18191E;
+    background: #18191e;
   }
 
   .chain-logo {
@@ -326,7 +308,7 @@ const StyledButton = styled.button`
   padding: 6px;
   border-radius: 10px;
   border: 1px solid #333648;
-  background: #2B2F38;
+  background: #2b2f38;
   display: block;
   color: #fff;
   width: 100%;
@@ -334,12 +316,11 @@ const StyledButton = styled.button`
 
   &:hover {
     border-color: #333648;
-    background: #18191E;
+    background: #18191e;
   }
-
 `;
 const StyledLink = styled(Link)`
-  color: #25D8FF;
+  color: #25d8ff;
   text-align: center;
   font-size: 14px;
   display: block;
@@ -368,30 +349,36 @@ const StyledArrow = styled.div`
     opacity: 0.8;
   }
 `;
-const StyledSummaryTitle = styled.div`
-  color: #979ABE;
+const StyledSummaryTitle = styled.div<{ $isUsd?: boolean }>`
+  color: #979abe;
   text-align: center;
   font-size: 14px;
   font-weight: 400;
+  display: flex;
+  align-items: center;
+  column-gap: 6px;
+
+  &.show-dot::before {
+    content: '';
+    display: block;
+    width: 6px;
+    height: 6px;
+    flex-shrink: 0;
+    background-color: ${({ $isUsd }) => ($isUsd ? '#68CF56' : '#4C506B')};
+    border-radius: 50%;
+  }
 `;
-const StyledSummaryValue = styled.div<{ $blur?: boolean; }>`
+const StyledSummaryValue = styled.div<{ $blur?: boolean }>`
   text-align: center;
   font-size: 20px;
   font-weight: 600;
 
-  filter: ${({ $blur }) => $blur ? 'blur(5px)' : 'unset'};
-  opacity: ${({ $blur }) => $blur ? 0.5 : 1};
+  filter: ${({ $blur }) => ($blur ? 'blur(5px)' : 'unset')};
+  opacity: ${({ $blur }) => ($blur ? 0.5 : 1)};
 `;
 const StyledComingSoon = styled.div`
-  color: #979ABE;
+  color: #979abe;
   text-align: center;
   font-size: 14px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
-  position: absolute;
-  z-index: 1;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
 `;

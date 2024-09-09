@@ -5,13 +5,13 @@ import { useMemo, useRef } from 'react';
 import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
 import TooltipSimple from '@/components/Tooltip';
+import { SupportedChains } from '@/config/all-in-one/chains';
 import useAccount from '@/hooks/useAccount';
 import type { Category } from '@/hooks/useAirdrop';
 import { useUserStore } from '@/stores/user';
 import { copyText } from '@/utils/copy';
 import { formatUSDate } from '@/utils/date';
 import { formateAddress } from '@/utils/formate';
-import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/config';
 import { formatTitle } from '@/views/OnBoarding/helpers';
 
 import FlexTable from '../../FlexTable';
@@ -43,7 +43,7 @@ const MyHistory = ({ category, loading, historyList, pageTotal, pageIndex, fetch
   const copyTooltipRef = useRef<any>(null);
 
   const onPortfolioClick = () => {
-    router.push('/portfolio');
+    router.push({ pathname: '/portfolio', query: { tab: '3' } });
   };
 
   const historyDappColumns: Column[] = [
@@ -86,7 +86,7 @@ const MyHistory = ({ category, loading, historyList, pageTotal, pageIndex, fetch
   ];
 
   const isShowPortfolio = useMemo(() => {
-    return chainIds.some((chain: number) => chainPortfolioShowConfig.includes(chain));
+    return chainIds.some((chain: number) => SupportedChains.map((item) => item.chainId).includes(chain));
   }, [chainIds]);
 
   return (

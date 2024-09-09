@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 
 import NotificationBar from '@/components/NotificationBar';
@@ -18,53 +19,38 @@ import Wallet from './components/Wallet/index';
 import useDapps from './hooks/useDapps';
 import useExecuteRecords from './hooks/useExecuteRecords';
 import useTokens from './hooks/useTokens';
-import {
-  StyledContainer,
-  StyledContent,
-  StyledFeedbackContainer,
-  StyledFeedbackText,
-  StyledLink} from './styles';
+import { StyledContainer, StyledContent, StyledFeedbackContainer, StyledFeedbackText, StyledLink } from './styles';
 
 const TABS = [
   {
     key: '1',
     title: 'In Wallet',
-    bp: "1008-001"
+    bp: '1008-001'
   },
   {
     key: '2',
     title: 'DeFi Portfolio',
-    bp: "1008-002"
+    bp: '1008-002'
   },
   {
     key: '3',
     title: 'Execution Records',
-    bp: "1008-003"
-  },
+    bp: '1008-003'
+  }
 ];
 
 export default function Portfolio() {
   const { account } = useAccount();
-  const [tab, setTab] = useState(TABS[0].key);
+
+  const router = useRouter();
+  const [tab, setTab] = useState<string>(TABS[0].key);
   const [network, setNetwork] = useState<number>(-1);
 
   const { networkList } = useNetworks();
   const { loading: tokensLoading, tokens, networks, totalBalance } = useTokens({ networkList });
-  const {
-    loading: dappsLoading,
-    dapps,
-    dappsByChain,
-    totalBalance: totalBalanceByDapps,
-  } = useDapps();
-  const {
-    list: worthList,
-    loading: worthLoading,
-    increase: worthIncrease,
-  } = useWorth();
-  const {
-    tvls,
-    loading: tvlsLoading,
-  } = useTvls();
+  const { loading: dappsLoading, dapps, dappsByChain, totalBalance: totalBalanceByDapps } = useDapps();
+  const { list: worthList, loading: worthLoading, increase: worthIncrease } = useWorth();
+  const { tvls, loading: tvlsLoading } = useTvls();
 
   const show = usePortfolioStore((store: any) => store.show);
   const setShow = usePortfolioStore((store: any) => store.setShow);
@@ -81,7 +67,7 @@ export default function Portfolio() {
     handlePrev,
     handleNext,
     handleFirst,
-    handleLast,
+    handleLast
   } = useExecuteRecords();
 
   const filterFunc = (token: any) => {
@@ -93,86 +79,86 @@ export default function Portfolio() {
   }, [totalBalance, totalBalanceByDapps]);
 
   const link = (
-    <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">feedback here</a>
+    <a href="https://sfnhpsqzhck.typeform.com/to/dmL1kaVI" rel="nofollow" target="_blank">
+      feedback here
+    </a>
   );
-  
+
+  useEffect(() => {
+    const routerTab: any = router.query?.tab ?? '';
+    if (routerTab && !!TABS.find((tab) => tab.key === routerTab)) {
+      setTab(routerTab);
+    }
+  }, [router.query?.tab]);
+
   return (
     <StyledContainer>
-      {
-        show && (
-          <NotificationBar
-            styles={{
-              position: 'absolute',
-              left: 0,
-              top: 0,
-            }}
-            onClose={() => {
-              setShow(false)
-            }}
-          >
-            <StyledFeedbackContainer>
-              <StyledFeedbackText>
-              The Portfolio. beta on DapDap now supports 5 networks: {SupportedChains.map((it) => it.name).join(', ')}. If there is any issue, please
+      {show && (
+        <NotificationBar
+          styles={{
+            position: 'absolute',
+            left: 0,
+            top: 0
+          }}
+          onClose={() => {
+            setShow(false);
+          }}
+        >
+          <StyledFeedbackContainer>
+            <StyledFeedbackText>
+              The Portfolio. beta on DapDap now supports 5 networks: {SupportedChains.map((it) => it.name).join(', ')}.
+              If there is any issue, please
             </StyledFeedbackText>
-              <span>{link}.</span>
-            </StyledFeedbackContainer>
-          </NotificationBar>
-        )
-      }
+            <span>{link}.</span>
+          </StyledFeedbackContainer>
+        </NotificationBar>
+      )}
       <StyledContent>
         <Top />
-          <Tab
-            tab={tab}
-            setTab={setTab}
-            tabs={TABS}
-            tabsExtra={!show ? (<StyledLink>{link}</StyledLink>) : null}>
-            {tab === TABS[0].key && (
-              <>
-                <Networks
-                  networks={networks}
-                  totalBalance={totalBalance}
-                  network={network}
-                  setNetwork={setNetwork}
-                  loading={tokensLoading}
-                />
-                <Wallet
-                  loading={tokensLoading}
-                  filterFunc={filterFunc}
-                  tokens={tokens}
-                />
-              </>
-            )}
-            {tab === TABS[1].key && (
-              <Protocol
-                loading={dappsLoading}
-                dapps={dapps}
-                dappsByChain={dappsByChain}
-                totalWorth={totalWorth}
-                worthList={worthList}
-                worthLoading={worthLoading}
-                worthIncrease={worthIncrease}
-                tvls={tvls}
-                tvlsLoading={tvlsLoading}
+        <Tab tab={tab} setTab={setTab} tabs={TABS} tabsExtra={!show ? <StyledLink>{link}</StyledLink> : null}>
+          {tab === TABS[0].key && (
+            <>
+              <Networks
+                networks={networks}
+                totalBalance={totalBalance}
+                network={network}
+                setNetwork={setNetwork}
+                loading={tokensLoading}
               />
-            )}
-            {tab === TABS[2].key && (
-              <ExecuteRecords
-                loading={recordsLoading}
-                records={records}
-                hasMore={hasMore}
-                dapps={dapps}
-                chain={chain}
-                dapp={dapp}
-                handleChain={handleChain}
-                handleDapp={handleDapp}
-                pageIndex={pageIndex}
-                handlePrev={handlePrev}
-                handleNext={handleNext}
-                handleFirst={handleFirst}
-                handleLast={handleLast}
-              />
-            )}
-          </Tab>
+              <Wallet loading={tokensLoading} filterFunc={filterFunc} tokens={tokens} />
+            </>
+          )}
+          {tab === TABS[1].key && (
+            <Protocol
+              loading={dappsLoading}
+              dapps={dapps}
+              dappsByChain={dappsByChain}
+              totalWorth={totalWorth}
+              worthList={worthList}
+              worthLoading={worthLoading}
+              worthIncrease={worthIncrease}
+              tvls={tvls}
+              tvlsLoading={tvlsLoading}
+            />
+          )}
+          {tab === TABS[2].key && (
+            <ExecuteRecords
+              loading={recordsLoading}
+              records={records}
+              hasMore={hasMore}
+              dapps={dapps}
+              chain={chain}
+              dapp={dapp}
+              handleChain={handleChain}
+              handleDapp={handleDapp}
+              pageIndex={pageIndex}
+              handlePrev={handlePrev}
+              handleNext={handleNext}
+              handleFirst={handleFirst}
+              handleLast={handleLast}
+            />
+          )}
+        </Tab>
       </StyledContent>
     </StyledContainer>
   );
