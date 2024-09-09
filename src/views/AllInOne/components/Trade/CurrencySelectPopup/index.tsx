@@ -49,7 +49,7 @@ const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: P
   }, [tokens, searchVal]);
 
   useEffect(() => {
-    if (display) queryBalance();
+    if (display && !loading) queryBalance();
   }, [display]);
 
   return (
