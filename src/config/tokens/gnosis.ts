@@ -242,21 +242,5 @@ export const gnosis: { [key: string]: Token } = {
     symbol: 'LINK',
     name: 'ChainLink Token on xDai',
     icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u'
-  },
-  wBLT: {
-    address: '0x4E74D4Db6c0726ccded4656d0BCE448876BB4C7A',
-    chainId: CHAIN_ID,
-    symbol: 'wBLT',
-    decimals: 18,
-    name: 'Wrapped BMX Liquidity Token',
-    icon: '/images/tokens/wBLT.png'
-  },
-  ftw: {
-    address: '0x3347453Ced85bd288D783d85cDEC9b01Ab90f9D8',
-    chainId: CHAIN_ID,
-    symbol: 'FTW',
-    decimals: 18,
-    name: 'FriendTech33',
-    icon: '/images/tokens/ftw.png'
   }
 };

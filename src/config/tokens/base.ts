@@ -491,5 +491,21 @@ export const base: { [key: string]: Token } = {
     symbol: 'axlUSDT',
     name: 'Axelar Wrapped USDT',
     icon: 'https://assets.coingecko.com/coins/images/31002/small/uusdt_D_3x.png?1689648389'
+  },
+  wBLT: {
+    address: '0x4E74D4Db6c0726ccded4656d0BCE448876BB4C7A',
+    chainId: CHAIN_ID,
+    symbol: 'wBLT',
+    decimals: 18,
+    name: 'Wrapped BMX Liquidity Token',
+    icon: '/images/tokens/wBLT.png'
+  },
+  ftw: {
+    address: '0x3347453Ced85bd288D783d85cDEC9b01Ab90f9D8',
+    chainId: CHAIN_ID,
+    symbol: 'FTW',
+    decimals: 9,
+    name: 'FriendTech33',
+    icon: '/images/tokens/ftw.png'
   }
 };
