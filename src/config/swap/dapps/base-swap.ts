@@ -3,14 +3,14 @@ import { base } from '@/config/tokens/base';
 const basic = {
   name: 'BaseSwap',
   logo: '/images/apps/base-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 
 const networks = {
   8453: {
     defaultCurrencies: {
       input: base['eth'],
-      output: base['bswap'],
+      output: base['bswap']
     },
     tokens: [
       base['eth'],
@@ -23,8 +23,9 @@ const networks = {
       base['dai'],
       base['tbtc'],
       base['axlusdc'],
-    ],
-  },
+      base['brett']
+    ]
+  }
 };
 
 export { basic, networks };
