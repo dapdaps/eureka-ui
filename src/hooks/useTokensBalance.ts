@@ -1,6 +1,7 @@
-import { utils } from 'ethers';
+import { providers, utils } from 'ethers';
 import { useCallback, useEffect, useState } from 'react';
 
+import chains from '@/config/chains';
 import multicallAddresses from '@/config/contract/multicall';
 import useAccount from '@/hooks/useAccount';
 import { multicall } from '@/utils/multicall';
@@ -8,11 +9,13 @@ import { multicall } from '@/utils/multicall';
 export default function useTokensBalance(tokens: any) {
   const [loading, setLoading] = useState(false);
   const [balances, setBalances] = useState<any>({});
-  const { account, provider } = useAccount();
+  const { account, provider: walletProvider } = useAccount();
 
   const queryBalance = useCallback(async () => {
     if (!account || !tokens.length) return;
-
+    const chainId = tokens[0].chainId;
+    const _provider =
+      chainId && chains[chainId] ? new providers.JsonRpcProvider(chains[chainId].rpcUrls[0]) : walletProvider;
     try {
       setLoading(true);
       let hasNative = false;
@@ -23,10 +26,10 @@ export default function useTokensBalance(tokens: any) {
       const calls = tokensAddress.map((token: any) => ({
         address: token.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
 
-      const multicallAddress = multicallAddresses[tokens[0].chainId];
+      const multicallAddress = multicallAddresses[chainId];
       const requests = [
         multicall({
           abi: [
@@ -35,17 +38,17 @@ export default function useTokensBalance(tokens: any) {
               name: 'balanceOf',
               outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
               stateMutability: 'view',
-              type: 'function',
-            },
+              type: 'function'
+            }
           ],
           options: {},
           calls,
           multicallAddress,
-          provider,
-        }),
+          provider: _provider
+        })
       ];
 
-      if (hasNative) requests.push(provider.getBalance(account));
+      if (hasNative) requests.push(_provider.getBalance(account));
 
       const [results, nativeBalance] = await Promise.all(requests);
 
@@ -62,11 +65,11 @@ export default function useTokensBalance(tokens: any) {
       console.log(err);
       setLoading(false);
     }
-  }, [tokens, account, provider]);
+  }, [tokens, account]);
 
   useEffect(() => {
     queryBalance();
-  }, [tokens, account, provider]);
+  }, [tokens, account]);
 
   return { loading, balances, queryBalance };
 }
