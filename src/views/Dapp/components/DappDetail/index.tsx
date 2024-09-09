@@ -24,7 +24,18 @@ const StyleImageMedals = styled.img`
   height: 220px;
 `;
 const DappDetail = (props: Props) => {
-  const { tvl, trading_volume_general, route, dapp_category, id } = props;
+  const {
+    trading_volume,
+    trading_volume_change_percent,
+    total_execution,
+    participants,
+    participants_change_percent,
+    route,
+    dapp_category,
+    id,
+    tvl,
+    trading_volume_general
+  } = props;
 
   const [ref, animate] = useAnimate();
   const isInView = useInView(ref, { once: true });
