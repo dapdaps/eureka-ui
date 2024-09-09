@@ -80,7 +80,7 @@ const Currency = ({
                   onAmountChange(balanceFormated(new Big(balance).toFixed(18), 18));
                 }}
               >
-                {!balance ? '-' : balanceFormated(balance, 4)}
+                {!balance || !currency ? '-' : balanceFormated(balance, 4)}
               </span>
             )}
           </div>
