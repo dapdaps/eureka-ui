@@ -106,8 +106,6 @@ const Detail = (props: DetailProps) => {
 
   const handleSuperBridge = (direction: 'in' | 'out') => {
     const { onBridgeShow } = props;
-    console.log(4444, onBridgeShow);
-    // console.log(direction);
     if (onBridgeShow) {
       // const fromChainId = direction === 'in' ? 1 : chain_id
       // const toChainId = direction === 'in' ? chain_id : 1
@@ -168,40 +166,35 @@ const Detail = (props: DetailProps) => {
         >
           <StyledFlex flexDirection="column" alignItems="center">
             <StyledSummaryTitle
-              className={!loading ? 'show-dot' : ''}
+              className={!loading && isSupported ? 'show-dot' : ''}
               $isUsd={!loading && network?.balance && Big(network.balance).toNumber() > 0}
             >
               In Wallet
             </StyledSummaryTitle>
-            {isSupported ? (
-              loading ? (
-                <Skeleton height={30} width={100} />
-              ) : (
-                <StyledSummaryValue>
-                  {formateValueWithThousandSeparatorAndFont(network?.balance, 2, true, {
-                    prefix: '$',
-                    isZeroPrecision: true
-                  })}
-                </StyledSummaryValue>
-              )
+            {loading && isSupported ? (
+              <Skeleton height={30} width={100} />
             ) : (
-              <StyledComingSoon>Coming soon...</StyledComingSoon>
+              <StyledSummaryValue $blur={!isSupported}>
+                {formateValueWithThousandSeparatorAndFont(network?.balance, 2, true, {
+                  prefix: '$',
+                  isZeroPrecision: true
+                })}
+              </StyledSummaryValue>
             )}
           </StyledFlex>
           <StyledFlex flexDirection="column">
             <StyledSummaryTitle>DeFi</StyledSummaryTitle>
-            {isSupported ? (
-              loading ? (
-                <Skeleton height={30} width={100} />
-              ) : (
-                formateValueWithThousandSeparatorAndFont(network?.totalUsd ?? 0, 2, true, {
+            {loading && isSupported ? (
+              <Skeleton height={30} width={100} />
+            ) : (
+              <StyledSummaryValue $blur={!isSupported}>
+                {formateValueWithThousandSeparatorAndFont(isSupported ? network?.totalUsd : 0, 2, true, {
                   prefix: '$',
                   isZeroPrecision: true
-                })
-              )
-            ) : (
-              <StyledComingSoon>Coming soon...</StyledComingSoon>
+                })}
+              </StyledSummaryValue>
             )}
+            {!isSupported && <StyledComingSoon>Coming soon...</StyledComingSoon>}
           </StyledFlex>
         </StyledFlex>
         <StyledFoot>
@@ -376,9 +369,17 @@ const StyledSummaryValue = styled.div<{ $blur?: boolean }>`
   filter: ${({ $blur }) => ($blur ? 'blur(5px)' : 'unset')};
   opacity: ${({ $blur }) => ($blur ? 0.5 : 1)};
 `;
+
 const StyledComingSoon = styled.div`
   color: #979abe;
   text-align: center;
   font-size: 14px;
+  font-style: normal;
   font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  z-index: 1;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
 `;
