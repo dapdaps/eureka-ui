@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import Modal from '@/components/Modal';
@@ -34,7 +34,7 @@ type Props = {
 const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: Props) => {
   const prices = usePriceStore((store) => store.price);
   const [searchVal, setSearchVal] = useState('');
-  const { loading, balances = {} } = useTokensBalance(tokens);
+  const { loading, balances = {}, queryBalance } = useTokensBalance(tokens);
 
   const filterTokens = useMemo(() => {
     return tokens.filter((token: any) => {
@@ -47,6 +47,10 @@ const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: P
       );
     });
   }, [tokens, searchVal]);
+
+  useEffect(() => {
+    if (display) queryBalance();
+  }, [display]);
 
   return (
     <Modal
