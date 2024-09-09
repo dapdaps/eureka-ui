@@ -4,7 +4,17 @@ import { useRouter } from 'next/router';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
-import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
+import {
+  execute,
+  getAllToken,
+  getBridgeMsg,
+  getChainScan,
+  getIcon,
+  getQuote,
+  getStatus,
+  init,
+  preloadResource
+} from 'super-bridge-sdk';
 
 import { usePreloadBalance } from '@/components/BridgeX/hooks/useTokensBalance';
 import { saveTransaction } from '@/components/BridgeX/Utils';
@@ -97,6 +107,8 @@ interface Props {
   chainList: Chain[];
   onTransactionUpdate: () => void;
 }
+
+let preLoadRsource = false;
 
 export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) {
   const [settingModalShow, setSettingModalShow] = useState<boolean>(false);
@@ -256,6 +268,13 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
       }
     }
   }, [chainList, router]);
+
+  useEffect(() => {
+    if (!preLoadRsource) {
+      preloadResource();
+      preLoadRsource = true;
+    }
+  }, []);
 
   return (
     <Wrapper>
