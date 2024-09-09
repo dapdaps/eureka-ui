@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { Category } from '@/hooks/useAirdrop';
 import { formatIntegerThousandsSeparator } from '@/utils/format-number';
+import { formatValueDecimal } from '@/utils/formate';
 import {
   StyledContainer,
   StyledContainerInner,
@@ -25,7 +26,18 @@ const StyleImageMedals = styled.img`
   height: 220px;
 `;
 const DappDetail = (props: Props) => {
-  const { route, dapp_category, id, tvl, trading_volume_general } = props;
+  const {
+    trading_volume,
+    trading_volume_change_percent,
+    total_execution,
+    participants,
+    participants_change_percent,
+    route,
+    dapp_category,
+    id,
+    tvl,
+    trading_volume_general
+  } = props;
 
   const [ref, animate] = useAnimate();
   const isInView = useInView(ref, { once: true });
@@ -35,13 +47,13 @@ const DappDetail = (props: Props) => {
     {
       key: 'tvl',
       label: 'TVL',
-      value: `$${formatIntegerThousandsSeparator(tvl, 2)}`,
+      value: `${formatValueDecimal(tvl, '$', 2, true)}`,
       increaseValue: ''
     },
     {
       key: 'txns',
       label: 'Volume (24h)',
-      value: `$${formatIntegerThousandsSeparator(trading_volume_general, 2)}`,
+      value: `${formatValueDecimal(trading_volume_general, '$', 2, true)}`,
       increaseValue: ''
     }
   ];
