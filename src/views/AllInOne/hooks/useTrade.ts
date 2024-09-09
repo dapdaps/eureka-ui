@@ -15,7 +15,7 @@ import checkGas from '../components/Trade/checkGas';
 import formatTrade from '../components/Trade/formatTrade';
 import getWrapOrUnwrapTx from '../components/Trade/getWrapOrUnwrapTx';
 
-export default function useTrade({ chainId }: any) {
+export default function useTrade({ chainId, onSuccess }: any) {
   const slippage: any = useSettingsStore((store: any) => store.slippage);
   const [tokens, setTokens] = useState<Token[]>();
   const [loading, setLoading] = useState(false);
@@ -72,13 +72,13 @@ export default function useTrade({ chainId }: any) {
             signer,
             wethAddress,
             type: wrapType,
-            amount,
+            amount
           });
 
           const { isGasEnough, gas } = checkGas({
             rawBalance,
             gasPrice,
-            gasLimit,
+            gasLimit
           });
 
           setTrade({
@@ -90,7 +90,7 @@ export default function useTrade({ chainId }: any) {
             txn,
             routerAddress: wethAddress,
             gas,
-            isGasEnough,
+            isGasEnough
           });
           setLoading(false);
           setMarkets([]);
@@ -109,7 +109,7 @@ export default function useTrade({ chainId }: any) {
         const response = await fetch('https://api.dapdap.net/quoter', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             params: JSON.stringify({
@@ -118,9 +118,9 @@ export default function useTrade({ chainId }: any) {
               outputCurrency,
               inputAmount: inputCurrencyAmount,
               slippage: slippage / 100 || 0.005,
-              account,
-            }),
-          }),
+              account
+            })
+          })
         });
         const result = await response.json();
         const data = result.data;
@@ -140,7 +140,7 @@ export default function useTrade({ chainId }: any) {
               prices,
               inputCurrency,
               outputCurrency,
-              inputCurrencyAmount,
+              inputCurrencyAmount
             });
             return { ..._trade, name: item.template, logo: dexs[item.template].logo };
           });
@@ -158,13 +158,13 @@ export default function useTrade({ chainId }: any) {
           outputCurrencyAmount: '',
           noPair: true,
           txn: null,
-          routerAddress: '',
+          routerAddress: ''
         });
         setLoading(false);
         setMarkets([]);
       }
     },
-    [account, provider, slippage, prices, cachedTokens],
+    [account, provider, slippage, prices, cachedTokens]
   );
 
   const onSwap = useCallback(async () => {
@@ -183,6 +183,7 @@ export default function useTrade({ chainId }: any) {
 
       if (status === 1) {
         toast.success({ title: `Swap successfully!`, tx: transactionHash, chainId });
+        onSuccess?.();
       } else {
         toast.fail({ title: `Swap faily!` });
       }
@@ -197,13 +198,13 @@ export default function useTrade({ chainId }: any) {
         transactionHash,
         add: 0,
         token_in_currency: trade.inputCurrency,
-        token_out_currency: trade.outputCurrency,
+        token_out_currency: trade.outputCurrency
       });
       setLoading(false);
     } catch (err: any) {
       toast.dismiss(toastId);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap faily!`
       });
       console.log(err);
       setLoading(false);

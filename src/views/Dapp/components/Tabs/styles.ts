@@ -31,7 +31,7 @@ export const StyledTabsHeadItem = styled.div`
   -webkit-transition: 0.3s;
   transition: 0.3s;
   cursor: pointer;
-  
+
   &.active {
     color: #fff;
     background: rgb(50, 54, 75);

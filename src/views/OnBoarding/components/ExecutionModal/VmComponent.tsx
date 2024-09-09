@@ -1,11 +1,12 @@
+import dynamic from 'next/dynamic';
+
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
 import { useBosLoaderStore } from '@/stores/bos-loader';
 import { useVmStore } from '@/stores/vm';
-import dynamic from 'next/dynamic';
 
 const VmInitializer = dynamic(() => import('@/components/vm/VmInitializer'), {
-  ssr: false,
+  ssr: false
 });
 
 type Props = {
@@ -22,21 +23,19 @@ export function VmComponent(props: Props) {
   return (
     <>
       <VmInitializer />
-      {
-        !EthersProvider || !redirectMapStore.hasResolved ? (
-          <div />
-        ) : (
-          <EthersProvider value={ethersContext}>
-            <Widget
-              config={{
-                redirectMap: redirectMapStore.redirectMap,
-              }}
-              src={props.src}
-              props={{ toast, addAction, ...props.props }}
-            />
-          </EthersProvider>
-        )
-      }
+      {!EthersProvider || !redirectMapStore.hasResolved ? (
+        <div />
+      ) : (
+        <EthersProvider value={ethersContext}>
+          <Widget
+            config={{
+              redirectMap: redirectMapStore.redirectMap
+            }}
+            src={props.src}
+            props={{ toast, addAction, ...props.props }}
+          />
+        </EthersProvider>
+      )}
     </>
   );
 }

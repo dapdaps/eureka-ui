@@ -11,13 +11,11 @@ const Detail = (props: DetailProps) => {
   if (!id) return <div />;
   return (
     <StyledContainer style={{ ...theme }}>
-      {
-        id.startsWith('0x') ? (
-          <DetailV2 id={id} fee={fee} chainId={chainId} {...props} />
-        ) : (
-          <DetailV3 tokenId={id} {...props} />
-        )
-      }
+      {id.startsWith('0x') ? (
+        <DetailV2 id={id} fee={fee} chainId={chainId} {...props} />
+      ) : (
+        <DetailV3 tokenId={id} {...props} />
+      )}
     </StyledContainer>
   );
 };

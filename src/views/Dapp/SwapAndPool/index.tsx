@@ -13,18 +13,16 @@ const SwapAndPool = (props: Props) => {
     Dex: {
       key: 1,
       name: 'Dex',
-      content: <Dex {...restProps} />,
+      content: <Dex {...restProps} />
     },
     Pools: {
       key: 2,
       name: 'Pools',
-      content: <Pools  {...restProps} />,
-    },
+      content: <Pools {...restProps} />
+    }
   };
 
-  return (
-    <DAppTabs tabs={Object.values(Tabs)} />
-  );
+  return <DAppTabs tabs={Object.values(Tabs)} />;
 };
 
 export default SwapAndPool;

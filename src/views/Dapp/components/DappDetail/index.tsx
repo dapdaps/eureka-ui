@@ -121,7 +121,7 @@ const DappDetail = (props: Props) => {
           <StyledRelatedOdyssey>
             <StyleImageMedals src="/images/medals/coming-soon-medal.png" alt="medals" />
             {/* <Medal id={props?.id} type={Category.dApp} /> */}
-            <RelativeOdyssey title="Related Campaign" dappId={props?.id} />
+            <RelativeOdyssey title="Related Campaign" dappName={props?.name} dappId={props?.id} />
           </StyledRelatedOdyssey>
         </StyledRelatedContainer>
       </StyledContainerInner>

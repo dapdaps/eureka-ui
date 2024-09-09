@@ -1,9 +1,10 @@
 import { useDebounceFn } from 'ahooks';
-import type { MotionValue} from 'framer-motion';
+import type { MotionValue } from 'framer-motion';
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import React, { forwardRef, memo, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import styled from 'styled-components';
+
 import { StyledContainer, StyledTooltip, StyledTooltipTrigger } from '@/components/Tooltip/styles';
 
 // a simple tooltip component that supports rendering content to the root node (document.body)
@@ -15,7 +16,7 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
     isShake,
     isControlled,
     isControlledAutoClose = true,
-    controlledDuration = 2000,
+    controlledDuration = 2000
   } = props;
 
   const offset = 10;
@@ -31,12 +32,15 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
   const rotate = useSpring(useTransform(springX, [-100, 100], [-45, 45]), springConfig);
   const translateX = useSpring(useTransform(springX, [-100, 100], [-50, 50]), springConfig);
 
-  const { run: closeTooltip, cancel: cancelCloseTooltip } = useDebounceFn(() => {
-    setVisible(false);
-    setRealVisible(false);
-  }, {
-    wait: isControlled ? controlledDuration : 150,
-  });
+  const { run: closeTooltip, cancel: cancelCloseTooltip } = useDebounceFn(
+    () => {
+      setVisible(false);
+      setRealVisible(false);
+    },
+    {
+      wait: isControlled ? controlledDuration : 150
+    }
+  );
 
   const onMouseMove = (e: React.MouseEvent<any, MouseEvent>) => {
     if (isShake) {
@@ -67,7 +71,7 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
   useImperativeHandle(ref, () => ({
     open,
     close: closeTooltip,
-    cancelClose: cancelCloseTooltip,
+    cancelClose: cancelCloseTooltip
   }));
 
   if (!tooltip) return children;
@@ -93,39 +97,40 @@ const Tooltip = forwardRef<Refs, Props>((props, ref) => {
       >
         {children}
       </StyledTooltipTrigger>
-      {
-        visible ? createPortal((
-          <Popup
-            {...props}
-            x={x}
-            y={y}
-            translateX={translateX}
-            rotate={rotate}
-            realVisible={realVisible}
-            setVisible={setVisible}
-            cancelCloseTooltip={cancelCloseTooltip}
-            closeTooltip={closeTooltip}
-            onLoaded={(elTooltip) => {
-              const el = triggerRef.current;
-              const { width: elW, x: elX, y: elY } = el.getBoundingClientRect();
-              const middleWidth = elX + elW / 2;
+      {visible
+        ? (createPortal(
+            <Popup
+              {...props}
+              x={x}
+              y={y}
+              translateX={translateX}
+              rotate={rotate}
+              realVisible={realVisible}
+              setVisible={setVisible}
+              cancelCloseTooltip={cancelCloseTooltip}
+              closeTooltip={closeTooltip}
+              onLoaded={(elTooltip) => {
+                const el = triggerRef.current;
+                const { width: elW, x: elX, y: elY } = el.getBoundingClientRect();
+                const middleWidth = elX + elW / 2;
 
-              const { width: w, height: h } = elTooltip.getBoundingClientRect();
-              const targetMiddleWidth = elX + w / 2;
-              let targetX = elX - (targetMiddleWidth - middleWidth);
-              if (targetX < 0) {
-                targetX = 0;
-              }
-              if (targetX + w > window.innerWidth) {
-                targetX = window.innerWidth - w;
-              }
-              setY(elY - h - offset);
-              setX(targetX);
-              setRealVisible(true);
-            }}
-          />
-        ), document.body) as React.ReactNode : null
-      }
+                const { width: w, height: h } = elTooltip.getBoundingClientRect();
+                const targetMiddleWidth = elX + w / 2;
+                let targetX = elX - (targetMiddleWidth - middleWidth);
+                if (targetX < 0) {
+                  targetX = 0;
+                }
+                if (targetX + w > window.innerWidth) {
+                  targetX = window.innerWidth - w;
+                }
+                setY(elY - h - offset);
+                setX(targetX);
+                setRealVisible(true);
+              }}
+            />,
+            document.body
+          ) as React.ReactNode)
+        : null}
     </StyledContainer>
   );
 });
@@ -166,7 +171,7 @@ const Popup = (props: PopupProps) => {
     onLoaded,
     setVisible,
     cancelCloseTooltip,
-    closeTooltip,
+    closeTooltip
   } = props;
 
   const tooltipRef = useRef<any>(null);
@@ -186,20 +191,20 @@ const Popup = (props: PopupProps) => {
           top: y,
           translateX,
           rotate,
-          visibility: realVisible ? 'visible' : 'hidden',
+          visibility: realVisible ? 'visible' : 'hidden'
         }}
         animate={{
           opacity: 1,
           y: 0,
-          transition: { type: 'spring', stiffness: 200, damping: 15, duration: 0.5 },
+          transition: { type: 'spring', stiffness: 200, damping: 15, duration: 0.5 }
         }}
         exit={{
           opacity: 0,
-          y: 20,
+          y: 20
         }}
         initial={{
           opacity: 0,
-          y: 20,
+          y: 20
         }}
         onHoverStart={() => {
           if (isControlled) return;

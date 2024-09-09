@@ -36,11 +36,7 @@ const Detail = ({ id, fee, chainId, isHideBack, onClose }: DetailProps) => {
 
   return (
     <>
-      {
-        !isHideBack && (
-          <Header />
-        )
-      }
+      {!isHideBack && <Header />}
       {loading || !_token0 || !_token1 ? (
         <StyledLoadingWrapper>
           <Loading size={36} />
@@ -100,7 +96,7 @@ const Detail = ({ id, fee, chainId, isHideBack, onClose }: DetailProps) => {
               token1: _token1,
               liquidity: detail.liquidity,
               reserve0: detail.reserve0,
-              reserve1: detail.reserve1,
+              reserve1: detail.reserve1
             }}
             onClose={() => {
               setShowIncreaseModal(false);

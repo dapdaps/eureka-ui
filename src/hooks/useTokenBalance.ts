@@ -1,51 +1,56 @@
-import { Contract, utils } from 'ethers';
+import { Contract, providers, utils } from 'ethers';
 import { useEffect, useState } from 'react';
 
+import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import { useUpdateBalanceStore } from '@/views/SuperSwap/hooks/useUpdateBalanceStore';
+
 const TOKEN_ABI = [
   {
     constant: true,
     inputs: [
       {
         name: '_owner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'balanceOf',
     outputs: [
       {
         name: 'balance',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
-export default function useTokenBalance(address: string | 'native', decimals: number) {
+export default function useTokenBalance(address: string | 'native', decimals: number, chainId?: number) {
   // console.info('use-token-bal:', address, decimals);
-  const { account, provider, chainId } = useAccount();
+  const { account, provider: walletProvider, chainId: walletChainId } = useAccount();
   const [tokenBalance, setTokenBalance] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [fresh, setFresh] = useState(0);
-  const { updater } = useUpdateBalanceStore()
-  
+  const { updater } = useUpdateBalanceStore();
+
   const getBalance = async () => {
     if (!account || !address) return;
+
     setIsLoading(true);
     try {
+      const _provider =
+        chainId && chains[chainId] ? new providers.JsonRpcProvider(chains[chainId].rpcUrls[0]) : walletProvider;
       if (address === 'native') {
-        const rawBalance = await provider.getBalance(account);
+        const rawBalance = await _provider.getBalance(account);
         // console.info('get-native-bal', rawBalance);
         setTokenBalance(utils.formatEther(rawBalance));
       } else {
-        const TokenContract = new Contract(address, TOKEN_ABI, provider.getSigner());
+        const TokenContract = new Contract(address, TOKEN_ABI, _provider);
         const rawBalance = await TokenContract.balanceOf(account);
-        console.log('rawBalance: ', rawBalance)
+        console.log('rawBalance: ', rawBalance);
         setTokenBalance(utils.formatUnits(rawBalance, decimals));
       }
     } catch (error) {
@@ -60,7 +65,7 @@ export default function useTokenBalance(address: string | 'native', decimals: nu
   };
   useEffect(() => {
     getBalance();
-  }, [account, address, decimals, fresh, chainId, updater]);
+  }, [account, address, decimals, fresh, chainId, walletChainId, updater]);
 
   return { tokenBalance, isError, isLoading, update };
 }

@@ -157,5 +157,5 @@ const StyledImage = styled(Image)<{ $status?: StatusType }>`
   width: 235px;
   height: 116px;
   filter: ${({ $status }) => $status ? ($status === StatusType.ongoing ? 'unset' : 'grayscale(100%)') : 'unset'};
-  object-fit: cover;
+  object-fit: fill;
 `;

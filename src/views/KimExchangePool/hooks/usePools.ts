@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import weth from '@/config/contract/weth';
 import useDappConfig from '@/views/Pool/hooks/useDappConfig';
 
-import { fetchApr, fetchCampaigns,fetchTvl } from '../fetch';
+import { fetchApr, fetchCampaigns, fetchTvl } from '../fetch';
 
 export default function usePools() {
   const [pools, setPools] = useState<any>([]);
@@ -37,7 +37,7 @@ export default function usePools() {
           boost,
           event,
           kim,
-          xkim,
+          xkim
         };
       });
       setPools(_pools);

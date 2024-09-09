@@ -1,15 +1,15 @@
 import { motion } from 'framer-motion';
-import styled from "styled-components";
+import styled from 'styled-components';
 
-export const StyledContainer = styled(motion.div)<{ $top?: number; }>`
+export const StyledContainer = styled(motion.div)<{ $top?: number }>`
   position: fixed;
-  z-index: 1;
+  z-index: 60;
   right: 0;
   top: 0;
   width: 66px;
   height: calc(100vh);
   padding: 74px 0 0;
-  padding-top: ${({ $top }) => `${74 + ($top || 0)}px`};;
+  padding-top: ${({ $top }) => `${74 + ($top || 0)}px`};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +38,7 @@ export const StyledMask = styled(motion.div)`
   right: 0;
   width: 120px;
   height: 100%;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.00) 0%, #000 100%);
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #000 100%);
   pointer-events: none;
 `;
 export const StyledLine = styled.div`
@@ -46,4 +46,21 @@ export const StyledLine = styled.div`
   height: 1px;
   background: #333740;
   flex-shrink: 0;
+`;
+
+export const StyledDot = styled.div<{ $isUsd: boolean }>`
+  &.show-dot {
+    .chain-dock-img::before {
+      content: '';
+      display: block;
+      background-color: #68cf56;
+      position: absolute;
+      top: 50%;
+      left: -12px;
+      transform: translateY(-50%);
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+    }
+  }
 `;
