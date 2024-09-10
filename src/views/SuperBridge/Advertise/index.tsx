@@ -112,16 +112,15 @@ export default function Advertise() {
       });
 
       if (bridges && bridges.length) {
-        bridges.sort((a: any, b: any) => b.level - a.level);
-        let usedMedal = bridges[0];
+        bridges.sort((a: any, b: any) => a.level - b.level);
+        let usedMedal = bridges[bridges.length - 1];
         for (let i = 0; i < bridges.length; i++) {
-          if (!bridges[i].completed_status) {
+          console.log(bridges[i]);
+          if (bridges[i].completed_status !== 'completed') {
             return bridges[i];
           }
           usedMedal = bridges[i];
         }
-
-        // console.log('usedMedal:', usedMedal);
 
         return usedMedal;
       }
@@ -152,11 +151,11 @@ export default function Advertise() {
           <Rango />
         </SwiperSlide>
 
-        {superBridgeMedal && (
+        {/* {superBridgeMedal && (
           <SwiperSlide>
             <Medal medal={superBridgeMedal} />
           </SwiperSlide>
-        )}
+        )} */}
 
         <div id={id} className="swiper-bridge"></div>
       </Swiper>

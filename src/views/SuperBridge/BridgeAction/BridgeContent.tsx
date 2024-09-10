@@ -144,6 +144,16 @@ export default function BirdgeAction({
   });
 
   useEffect(() => {
+    if (fromChain === chainList[0]) {
+      setToChain(chainList[1]);
+      setToToken(undefined);
+    } else {
+      setToChain(chainList[0]);
+      setToToken(undefined);
+    }
+  }, [fromChain]);
+
+  useEffect(() => {
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
       return;
     }
@@ -332,6 +342,7 @@ export default function BirdgeAction({
           needGas={isSupported}
           currentChain={toChain}
           currentToken={toToken}
+          limitChain={fromChain}
           chainToken={allTokens}
           amount={reciveAmount}
           onGasTrigger={() => {
@@ -497,7 +508,7 @@ export default function BirdgeAction({
           />
         )}
       </Container>
-      {toToken && (
+      {(quoteLoading || (routes && routes.length)) && toToken && (
         <RightContainer>
           <RouteSelected
             fromChain={fromChain}
