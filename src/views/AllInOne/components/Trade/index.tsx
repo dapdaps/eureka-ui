@@ -194,7 +194,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
             </StyledFlex>
           )}
         </StyledTradeFooter>
-        {!!markets.length && (
+        {!!markets.length && !!inputCurrency && !!outputCurrency && (
           <Markets
             isDropdown={isDropdown}
             chain={chain}

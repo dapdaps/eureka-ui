@@ -46,20 +46,19 @@ export default function useTrade({ chainId, onSuccess }: any) {
 
   const onQuoter = useCallback(
     async ({ inputCurrency, outputCurrency, inputCurrencyAmount }: any) => {
-      const wethAddress = weth[inputCurrency.chainId];
-      const wrapType =
-        inputCurrency.isNative && outputCurrency.address === wethAddress
-          ? 1
-          : inputCurrency.address === wethAddress && outputCurrency.isNative
-            ? 2
-            : 0;
-
-      const amount = Big(inputCurrencyAmount)
-        .mul(10 ** inputCurrency.decimals)
-        .toString();
-      lastestCachedKey.current = `${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}`;
-
       try {
+        const wethAddress = weth[inputCurrency.chainId];
+        const wrapType =
+          inputCurrency.isNative && outputCurrency.address === wethAddress
+            ? 1
+            : inputCurrency.address === wethAddress && outputCurrency.isNative
+              ? 2
+              : 0;
+
+        const amount = Big(inputCurrencyAmount)
+          .mul(10 ** inputCurrency.decimals)
+          .toString();
+        lastestCachedKey.current = `${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}`;
         setLoading(true);
         setMarkets([]);
 
