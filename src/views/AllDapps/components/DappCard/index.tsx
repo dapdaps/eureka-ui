@@ -30,6 +30,27 @@ const DAppRewardList: { [k: string]: Badge[] } = {
       tooltip: '$20-25k $SMD',
       iconSize: 20
     }
+  ],
+  ['Rango Bridge']: [
+    {
+      name: RewardIcons['USDC']?.label || '',
+      value: '$1000',
+      icon: RewardIcons['USDC']?.icon || '',
+      status: StatusType.ended,
+      tooltip: 'Related reward on DapDap',
+      iconSize: 20,
+      odyssey: [
+        {
+          name: 'Rango Exchange X DapDap：Win USDC by Birdging via Rango on DapDap!',
+          start_time: 1717948800000,
+          end_time: 1719244800000,
+          status: 'ongoing',
+          link: '/bridge-x/rango',
+          banner: '/images/odyssey/rango-banner-round.png',
+          badgeValue: '$1000'
+        }
+      ]
+    }
   ]
 };
 

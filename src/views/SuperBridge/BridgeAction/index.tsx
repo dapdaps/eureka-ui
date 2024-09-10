@@ -274,7 +274,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
       preloadResource();
       preLoadRsource = true;
     }
-  }, []);
+  }, [chainList, router]);
 
   return (
     <Wrapper>

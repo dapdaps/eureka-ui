@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import type { FlexProps, FontProps } from './types';
 
@@ -14,11 +14,23 @@ export const StyledFont = styled.div<FontProps>`
   white-space: ${(props) => props.whiteSpace || 'normal'};
   text-align: ${(props) => props.textAlign || 'left'};
   &.ellipsis {
-    display: -webkit-box;
-    -webkit-line-clamp: ${(props) => props.lineClamp || 1};
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    ${(props) => {
+      if ((props.lineClamp || 1) === 1) {
+        return css`
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        `;
+      } else {
+        return css`
+          display: -webkit-box;
+          -webkit-line-clamp: ${props.lineClamp};
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        `;
+      }
+    }}
   }
 `;
 export const StyledFlex = styled.div<FlexProps>`

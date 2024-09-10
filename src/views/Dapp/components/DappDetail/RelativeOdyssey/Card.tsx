@@ -30,7 +30,7 @@ import {
   StyledTagLabel,
   StyledTagList,
   StyledVideo,
-  StyledVideoIcon,
+  StyledVideoIcon
 } from '@/views/Dapp/components/DappDetail/RelativeOdyssey/styles';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
@@ -53,6 +53,7 @@ const OdysseyCardComponent = (props: Props) => {
     className,
     bp,
     isHoverButton,
+    showSummary = true
   } = props;
 
   const tagListRef = useRef<any>();
@@ -62,16 +63,19 @@ const OdysseyCardComponent = (props: Props) => {
     onRewardLeaveCancel();
     tagListRef.current.scrollTo({
       left: tagListRef.current.scrollWidth,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
   };
-  const { run: onRewardLeave, cancel: onRewardLeaveCancel } = useDebounceFn(() => {
-    if (!tagListRef.current) return;
-    tagListRef.current.scrollTo({
-      left: 0,
-      behavior: 'smooth',
-    });
-  }, { wait: 300 });
+  const { run: onRewardLeave, cancel: onRewardLeaveCancel } = useDebounceFn(
+    () => {
+      if (!tagListRef.current) return;
+      tagListRef.current.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+      });
+    },
+    { wait: 300 }
+  );
 
   const router = useRouter();
 
@@ -82,6 +86,10 @@ const OdysseyCardComponent = (props: Props) => {
   const onCardClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
+    if (id === 0) {
+      window.scrollTo({ top: 0 });
+      return;
+    }
 
     if (isDevelopment) {
       toast.fail('This Odyssey ID is not available in the current FE version');
@@ -100,7 +108,7 @@ const OdysseyCardComponent = (props: Props) => {
     id,
     name,
     status,
-    banner,
+    banner
   };
 
   const Config = odysseyConfig[id] || {};
@@ -113,20 +121,23 @@ const OdysseyCardComponent = (props: Props) => {
     setShow(true);
   };
 
-  const summaryList = useMemo(() => ([
-    {
-      key: 'volume',
-      icon: 'icon-swap.png',
-      value: `$${formatIntegerThousandsSeparator(volume, 1)}`,
-      tooltip: 'Trading Volume',
-    },
-    {
-      key: 'users',
-      icon: 'icon-hot.svg',
-      value: formatIntegerThousandsSeparator(users, 1),
-      tooltip: 'User Amount',
-    },
-  ]), []);
+  const summaryList = useMemo(
+    () => [
+      {
+        key: 'volume',
+        icon: 'icon-swap.png',
+        value: `$${formatIntegerThousandsSeparator(volume, 1)}`,
+        tooltip: 'Trading Volume'
+      },
+      {
+        key: 'users',
+        icon: 'icon-hot.svg',
+        value: formatIntegerThousandsSeparator(users, 1),
+        tooltip: 'User Amount'
+      }
+    ],
+    []
+  );
 
   const badges = useMemo(() => {
     if (!rewards) return [];
@@ -145,16 +156,18 @@ const OdysseyCardComponent = (props: Props) => {
           icon: RewardIcons[reward.logo_key]?.icon ?? '',
           iconSize: 20,
           value: reward.value,
-          odyssey: [{
-            ...activity,
-            badgeValue: reward.value,
-          }],
+          odyssey: [
+            {
+              ...activity,
+              badgeValue: reward.value
+            }
+          ]
         });
       } else {
         if (!_badges[currIdx].odyssey.some((ody: any) => ody.id === id)) {
           _badges[currIdx].odyssey.push({
             ...activity,
-            badgeValue: reward.value,
+            badgeValue: reward.value
           });
         }
       }
@@ -170,7 +183,12 @@ const OdysseyCardComponent = (props: Props) => {
     }
     const reg = /\：|\:/;
     if (_name.includes('：') || _name.includes(':')) {
-      return <>{_name.split(reg)?.[0] ?? ''}: <br />{name?.split(reg)?.[1] ?? ''}</>;
+      return (
+        <>
+          {_name.split(reg)?.[0] ?? ''}: <br />
+          {name?.split(reg)?.[1] ?? ''}
+        </>
+      );
     }
     return _name;
   };
@@ -207,7 +225,7 @@ const OdysseyCardComponent = (props: Props) => {
                 width: '100%',
                 opacity: isLive ? 1 : 0.5,
                 filter: isLive ? 'unset' : 'grayscale(100%)',
-                objectFit: 'cover',
+                objectFit: 'cover'
               }}
             />
             <StyledOdysseyBannerMask />
@@ -219,13 +237,13 @@ const OdysseyCardComponent = (props: Props) => {
               visible: {
                 opacity: 1,
                 display: 'flex',
-                y: 0,
+                y: 0
               },
               hidden: {
                 opacity: 0.1,
                 display: 'none',
-                y: 20,
-              },
+                y: 20
+              }
             }}
             style={{ x: '-50%' }}
           >
@@ -233,116 +251,91 @@ const OdysseyCardComponent = (props: Props) => {
             <ArrowLineIcon classname="arrow-right" />
           </StyledOdysseyButton>
           <StyledOdysseyHead>
-            <StyledOdysseyInfo>
-              <StyledOdysseyIcon />
-              <StyledOdysseyIconTitle>
-                Vol.{renderVolNo({ name, id })}
-              </StyledOdysseyIconTitle>
-            </StyledOdysseyInfo>
+            {id !== 0 ? (
+              <StyledOdysseyInfo>
+                <StyledOdysseyIcon />
+                <StyledOdysseyIconTitle>Vol.{renderVolNo({ name, id })}</StyledOdysseyIconTitle>
+              </StyledOdysseyInfo>
+            ) : (
+              <div />
+            )}
             <Tag status={status} />
           </StyledOdysseyHead>
-          {
-            Config.video && (
-              <StyledVideo
-                url={banner}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  showVideo(Config.video);
-                }}
-              >
-                <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
-              </StyledVideo>
-            )
-          }
+          {Config.video && (
+            <StyledVideo
+              url={banner}
+              onClick={(e) => {
+                e.stopPropagation();
+                showVideo(Config.video);
+              }}
+            >
+              <StyledVideoIcon src="/images/alldapps/icon-play.svg" />
+            </StyledVideo>
+          )}
         </StyledOdysseyTop>
         <StyledOdysseyBody>
-          <StyledOdysseyTitle $isLive={isLive}>
-            {formatTitle(name)}
-          </StyledOdysseyTitle>
+          <StyledOdysseyTitle $isLive={isLive}>{formatTitle(name)}</StyledOdysseyTitle>
           <StyledTagList ref={tagListRef}>
-            {
+            {showSummary &&
               summaryList.map((item: any, index: number) => (
-                <SimpleTooltip
-                  tooltip={item.tooltip}
-                  key={item.key}
-                >
+                <SimpleTooltip tooltip={item.tooltip} key={item.key}>
                   <StyledTagItem onClick={(e) => onBadgeClick(e, item)}>
-                    {item.icon && (
-                      <StyledTagIcon src={`/images/alldapps/${item.icon}`} />
-                    )}
-                    <StyledTagLabel>
-                      {item.type === 'medal' ? `${item.value} Medal` : item.value}
-                    </StyledTagLabel>
+                    {item.icon && <StyledTagIcon src={`/images/alldapps/${item.icon}`} />}
+                    <StyledTagLabel>{item.type === 'medal' ? `${item.value} Medal` : item.value}</StyledTagLabel>
                   </StyledTagItem>
                 </SimpleTooltip>
-              ))
-            }
-            {
-              medals && medals?.length > 0 && (
-                <StyledTagItem key="medal">
-                  <StyledTagLabel>
-                    <StyledFlex justifyContent="center" alignItems="center" gap="5px">
-                      {
-                        medals.length === 1 && (
-                          <Image src={medals[0].icon} alt="" width={18} height={24} />
-                        )
-                      }
-                      {medals.length} Medal{medals.length > 1 ? 's' : ''}
-                    </StyledFlex>
-                  </StyledTagLabel>
-                </StyledTagItem>
-              )
-            }
-            {
-              badges && badges?.length > 0 && (
-                <StyledTagItem
-                  key="reward"
-                  className="reward"
-                  onHoverStart={onRewardHover}
-                  onHoverEnd={onRewardLeave}
-                >
-                  <StyledTagItemInner className={`reward ${isLive ? 'tag-active' : 'tag-default'}`}>
-                    <div
-                      className="reward-text"
-                      style={{
-                        opacity: isLive ? 1 : 0.5,
-                      }}
-                    >
-                      {badges[0].value} {badges[0].name.toUpperCase()}
-                    </div>
-                    <StyledTagChains>
-                      {
-                        badges.map((badge: any, idx: number) => (
-                          <StyledTagChain
-                            key={badge.name}
-                            initial={{
-                              zIndex: 1,
+              ))}
+            {medals && medals?.length > 0 && (
+              <StyledTagItem key="medal">
+                <StyledTagLabel>
+                  <StyledFlex justifyContent="center" alignItems="center" gap="5px">
+                    {medals.length === 1 && <Image src={medals[0].icon} alt="" width={18} height={24} />}
+                    {medals.length} Medal{medals.length > 1 ? 's' : ''}
+                  </StyledFlex>
+                </StyledTagLabel>
+              </StyledTagItem>
+            )}
+            {badges && badges?.length > 0 && (
+              <StyledTagItem key="reward" className="reward" onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
+                <StyledTagItemInner className={`reward ${isLive ? 'tag-active' : 'tag-default'}`}>
+                  <div
+                    className="reward-text"
+                    style={{
+                      opacity: isLive ? 1 : 0.5
+                    }}
+                  >
+                    {badges[0].value} {badges[0].name.toUpperCase()}
+                  </div>
+                  <StyledTagChains>
+                    {badges.map((badge: any, idx: number) => (
+                      <StyledTagChain
+                        key={badge.name}
+                        initial={{
+                          zIndex: 1
+                        }}
+                        whileHover={{
+                          scale: 1.2,
+                          zIndex: 2
+                        }}
+                        onClick={(e) => onBadgeClick(e, badge)}
+                      >
+                        <SimpleTooltip tooltip={badge.name}>
+                          <Image
+                            src={badge.icon}
+                            alt=""
+                            width={badge.iconSize}
+                            height={badge.iconSize}
+                            style={{
+                              opacity: isLive ? 1 : 0.5
                             }}
-                            whileHover={{
-                              scale: 1.2,
-                              zIndex: 2,
-                            }}
-                            onClick={(e) => onBadgeClick(e, badge)}
-                          >
-                            <SimpleTooltip tooltip={badge.name}>
-                              <Image
-                                src={badge.icon}
-                                alt=""
-                                width={badge.iconSize}
-                                height={badge.iconSize}
-                                style={{
-                                  opacity: isLive ? 1 : 0.5,
-                                }}
-                              />
-                            </SimpleTooltip>
-                          </StyledTagChain>
-                        ))
-                      }
-                    </StyledTagChains>
-                  </StyledTagItemInner>
-                </StyledTagItem>
-              )
-            }
+                          />
+                        </SimpleTooltip>
+                      </StyledTagChain>
+                    ))}
+                  </StyledTagChains>
+                </StyledTagItemInner>
+              </StyledTagItem>
+            )}
           </StyledTagList>
         </StyledOdysseyBody>
       </StyledOdysseyContainer>
@@ -374,22 +367,20 @@ export interface Props {
   users?: string;
   // if there are badges
   // please prop them as an array
-  medals?: { icon: string; id: number; }[];
+  medals?: { icon: string; id: number }[];
   // custom className
   className?: string;
   bp?: string;
   isHoverButton?: boolean;
+  showSummary?: boolean;
 }
 
 const odysseyIsLive = (status: StatusType) => {
   return status === StatusType.ongoing;
 };
 
-const renderVolNo = (options: { name: string; id: number; }) => {
-  const {
-    name,
-    id,
-  } = options;
+const renderVolNo = (options: { name: string; id: number }) => {
+  const { name, id } = options;
   if (!name) return null;
   if (name.indexOf('Vol.4+:') > -1) {
     return '4+';

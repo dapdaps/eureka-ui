@@ -55,14 +55,14 @@ export const DataListShown = ({ tvl, trading_volume_general, total_integrated_da
       underline: true
     }
   ];
-  if (total_medal !== undefined) {
-    return list.concat({
-      key: 'Medals',
-      label: 'Medals',
-      value: total_medal,
-      underline: true
-    });
-  }
+  // if (total_medal !== undefined) {
+  //   return list.concat({
+  //     key: 'Medals',
+  //     label: 'Medals',
+  //     value: total_medal,
+  //     underline: true
+  //   });
+  // }
   return list;
 };
 
@@ -87,7 +87,7 @@ export const CardHead = ({ classname = '', logo, name, isTop, isHot, tbd_token, 
         <ChainNameContainer className={`${classname}-name-container`}>
           <ChainName className="chain-name">{name}</ChainName>
           {isTop ? <ChainTag idx={0} /> : null}
-          {isHot ? <ChainTag idx={1} /> : null}
+          {/*{isHot ? <ChainTag idx={1} /> : null}*/}
         </ChainNameContainer>
         <ChainDesc>
           <NativeCurrency tbdToken={tbd_token} nativeCurrency={native_currency} className="network-native" />

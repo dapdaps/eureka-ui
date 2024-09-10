@@ -84,7 +84,7 @@ const Badges = (props: Props) => {
 
   const onOdysseyClick = (e: React.MouseEvent<HTMLElement, MouseEvent>, ody: any) => {
     e.stopPropagation();
-    router.push(odyssey[ody.id]?.path);
+    router.push(ody.link || odyssey[ody.id]?.path);
   };
 
   const onRewardHover = () => {

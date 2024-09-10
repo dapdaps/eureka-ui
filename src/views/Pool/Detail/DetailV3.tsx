@@ -37,7 +37,7 @@ const Detail = ({ tokenId, isHideBack, onClose }: DetailProps) => {
       tickUpper: detail?.tickUpper,
       currentTick: detail?.currentTick,
       token0: _token0,
-      token1: _token1,
+      token1: _token1
     });
   }, [detail, _token0, _token1]);
 
@@ -45,7 +45,7 @@ const Detail = ({ tokenId, isHideBack, onClose }: DetailProps) => {
     if (!_token0 || !_token1) return [0, 0];
     return [
       new Big(info.amount0 || 0).div(10 ** _token0.decimals),
-      new Big(info.amount1 || 0).div(10 ** _token1.decimals),
+      new Big(info.amount1 || 0).div(10 ** _token1.decimals)
     ];
   }, [_token0, _token1, info]);
 
@@ -65,11 +65,7 @@ const Detail = ({ tokenId, isHideBack, onClose }: DetailProps) => {
 
   return (
     <>
-      {
-        !isHideBack && (
-          <Header />
-        )
-      }
+      {!isHideBack && <Header />}
       {loading || !_token0 || !_token1 ? (
         <StyledLoadingWrapper>
           <Loading size={36} />

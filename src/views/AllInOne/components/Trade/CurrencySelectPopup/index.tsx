@@ -21,7 +21,7 @@ import {
   InputWarpper,
   StyledBalanceWrap,
   StyledRowR,
-  StyledTokenNameWrapper,
+  StyledTokenNameWrapper
 } from './styles';
 
 type Props = {
@@ -51,7 +51,10 @@ const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: P
   return (
     <Modal
       display={display}
-      onClose={onClose}
+      onClose={() => {
+        onClose();
+        setSearchVal('');
+      }}
       title="Select a token"
       width={462}
       content={
@@ -77,6 +80,7 @@ const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: P
                   key={token.address}
                   onClick={() => {
                     onSelect(token);
+                    setSearchVal('');
                   }}
                 >
                   <CurrencyLabel>

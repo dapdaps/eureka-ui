@@ -9,15 +9,12 @@ import { AirdropList } from '@/views/Dapp/components/DappDetail/config';
 import type { StatusType } from '@/views/Odyssey/components/Tag';
 
 export function useAirdrop(props: Props) {
-  const {
-    category,
-    id,
-  } = props;
+  const { category, id } = props;
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Partial<Airdrop>>({
     potential: AirdropList,
-    quests: [],
+    quests: []
   });
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
@@ -27,7 +24,7 @@ export function useAirdrop(props: Props) {
     try {
       const res = await get('/api/airdrop', {
         category,
-        id,
+        id
       });
       const _data = res.data || {};
       const potential: Potential[] = [];
@@ -35,7 +32,7 @@ export function useAirdrop(props: Props) {
       AirdropList.forEach((aridrop) => {
         potential.push({
           ...aridrop,
-          value: _data[aridrop.key] as string,
+          value: _data[aridrop.key] as string
         });
       });
       _data.potential = potential;
@@ -57,7 +54,7 @@ export function useAirdrop(props: Props) {
     () => {
       getData();
     },
-    { wait: 300 },
+    { wait: 300 }
   );
 
   const reportAdditionResult = async (id: number) => {
@@ -89,7 +86,7 @@ export function useAirdrop(props: Props) {
     data,
     loading,
     reportAdditionResult,
-    getData,
+    getData
   };
 }
 
@@ -153,16 +150,16 @@ export interface QuestDapp {
 export enum Category {
   network = 'network',
   dApp = 'dapp',
-  chain = 'chain',
+  chain = 'chain'
 }
 
 export enum QuestCategory {
   metamask = 'metamask',
-  dApp = 'dapp',
+  dApp = 'dapp'
 }
 
 export enum QuestStatus {
-  completed = 'completed',
+  completed = 'completed'
 }
 
 export interface Props {
@@ -171,4 +168,3 @@ export interface Props {
   // (DApp refers to the DApp ID, and network refers to the network ID)
   id: number;
 }
-

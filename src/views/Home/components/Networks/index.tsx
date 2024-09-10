@@ -402,17 +402,22 @@ const PrimaryNetwork = ({ network, onDappCardClick, handleClickNetwork, isTopVol
           <div className="head">
             <div style={{ position: 'relative' }}>
               <Image src={network?.logo} width={106} height={106} alt="" />
-              {isTopVolume ? (
-                <TopTvl>
-                  <Image src={'/images/networks/icon-top.gif'} width={47} height={47} alt="topVolume" />
-                  TOP Volume
-                </TopTvl>
-              ) : (
-                <Hottest>
-                  <Image src={'/images/networks/icon-hot.gif'} width={54} height={54} alt="hottest" />
-                  Hottest
-                </Hottest>
-              )}
+              {
+                isTopVolume ? (
+                  <TopTvl>
+                    <Image src={'/images/networks/icon-top.gif'} width={47} height={47} alt="topVolume" />
+                    TOP Volume
+                  </TopTvl>
+                ) : (
+                  <></>
+                )
+                //   (
+                //   <Hottest>
+                //     <Image src={'/images/networks/icon-hot.gif'} width={54} height={54} alt="hottest" />
+                //     Hottest
+                //   </Hottest>
+                // )
+              }
             </div>
             <div className="intro">
               <div className="intro-title">{network?.name}</div>

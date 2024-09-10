@@ -13,7 +13,7 @@ const Header = ({
   version,
   setVersion,
   isAlign,
-  title = 'Add Liquidity',
+  title = 'Add Liquidity'
 }: any) => {
   const router = useRouter();
   return (
@@ -21,7 +21,7 @@ const Header = ({
       <div
         style={{
           display: 'flex',
-          gap: '18px',
+          gap: '18px'
         }}
       >
         <StyledIconButton
@@ -39,7 +39,7 @@ const Header = ({
       {isAlign && (
         <StyledTitle
           style={{
-            paddingLeft: 0,
+            paddingLeft: 0
           }}
         >
           {title}

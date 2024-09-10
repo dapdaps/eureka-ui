@@ -20,10 +20,10 @@ const DappCom = (props: any) => {
 
   // fix#DAP-862
   if (dapp?.route === 'dapp/thruster-finance') {
-    return <SwapAndPool Pools={PoolDappSingle} {...props} />
+    return <SwapAndPool Pools={PoolDappSingle} {...props} />;
   }
   if (dapp?.route === 'dapp/kim-exchange') {
-    return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />
+    return <SwapAndPool Pools={KimExchangePoolDapp} {...props} />;
   }
 
   if (isPool) return <PoolDapp {...props} />;
