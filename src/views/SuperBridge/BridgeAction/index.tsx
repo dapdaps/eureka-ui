@@ -27,6 +27,7 @@ import useToast from '@/hooks/useToast';
 import type { Chain, Token } from '@/types';
 import { addressFormated, balanceFormated, errorFormated, getFullNum, percentFormated } from '@/utils/balance';
 
+import Advertise from '../Advertise';
 import ChainTokenAmount from '../ChainTokenAmount';
 import GasModal from '../ChainTokenAmount/GasModal';
 import { useGasTokenHooks } from '../hooks/useGasTokenHooks';
@@ -524,13 +525,12 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
         )}
       </Container>
       <RightContainer>
-        {toToken && routes?.length && (
+        {toToken && (
           <RouteSelected
             quoteLoading={quoteLoading}
             fromChain={fromChain}
             routeSortType={routeSortType}
             onRouteSelected={(route: QuoteResponse | null) => {
-              console.log(2222);
               if (!confirmModalShow) {
                 setSelectedRoute(route);
               }
@@ -541,7 +541,8 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
             routes={routes}
           />
         )}
-        <Medal />
+
+        <Advertise />
       </RightContainer>
     </Wrapper>
   );

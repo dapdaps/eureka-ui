@@ -34,6 +34,19 @@ const BridgeSummary = styled.div`
     .name {
       font-size: 16px;
       font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .activity-tag {
+      font-size: 10px;
+      font-weight: 400;
+      line-height: 17px;
+      color: rgba(235, 244, 121, 1);
+      background: rgba(235, 244, 121, 0.2);
+      height: 17px;
+      padding: 0 8px;
+      border-radius: 4px;
     }
   }
   .tags {
@@ -102,6 +115,10 @@ interface Props {
   onClick?: () => void;
 }
 
+const ActivityTags: any = {
+  Rango: 'Compaign'
+};
+
 export default function Route({
   showOutputTitle = true,
   active = false,
@@ -126,7 +143,10 @@ export default function Route({
         <div className="bridge-names">
           <img className="img" src={route.icon} key={route.icon} />
           <div className="name">
-            {route.bridgeType}: {route.bridgeName}
+            <div>{route.bridgeType}</div>
+            {ActivityTags[route.bridgeType] && <div className="activity-tag">{ActivityTags[route.bridgeType]}</div>}
+
+            {/* : {route.bridgeName} */}
           </div>
         </div>
         <div className="tags">

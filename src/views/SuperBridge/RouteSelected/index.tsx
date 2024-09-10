@@ -72,14 +72,18 @@ export default function RouteSelected({
 
   return (
     <Container>
-      <TitleWapper>
-        <div className="title">Bridge Routes:</div>
-        <div className="arrow">
-          {quoteLoading && <DotFlashing />}
-          <span className="route-num">{sortedRoutes?.length}</span>
-        </div>
-      </TitleWapper>
-      <Sep />
+      {(quoteLoading || (sortedRoutes && sortedRoutes.length)) && (
+        <>
+          <TitleWapper>
+            <div className="title">Bridge Routes:</div>
+            <div className="arrow">
+              {quoteLoading && <DotFlashing />}
+              <span className="route-num">{sortedRoutes?.length}</span>
+            </div>
+          </TitleWapper>
+          <Sep />
+        </>
+      )}
 
       {sortedRoutes && (
         <RouteModal

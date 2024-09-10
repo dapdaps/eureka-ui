@@ -12,43 +12,43 @@ export default function useRouteSorted(
   const [fast, setFast] = useState<QuoteResponse | null>(null);
   const [sortedRoutes, setSortedRoutes] = useState<QuoteResponse[] | null>([]);
 
-  useEffect(() => {
-    // if (stopSelected) {
-    //     return
-    // }
-    let bestRoute: QuoteResponse | null = null;
-    let fastRoute: QuoteResponse | null = null;
-    if (routes && routes.length) {
-      bestRoute = routes[0];
-      fastRoute = routes[0];
-      routes.forEach((route: QuoteResponse) => {
-        if (Number(route.receiveAmount) > Number(bestRoute?.receiveAmount)) {
-          bestRoute = route;
-        }
+  // useEffect(() => {
+  //   // if (stopSelected) {
+  //   //     return
+  //   // }
+  //   let bestRoute: QuoteResponse | null = null;
+  //   let fastRoute: QuoteResponse | null = null;
+  //   if (routes && routes.length) {
+  //     bestRoute = routes[0];
+  //     fastRoute = routes[0];
+  //     routes.forEach((route: QuoteResponse) => {
+  //       if (Number(route.receiveAmount) > Number(bestRoute?.receiveAmount)) {
+  //         bestRoute = route;
+  //       }
 
-        if (Number(route.duration) < Number(fastRoute?.duration)) {
-          fastRoute = route;
-        }
-      });
-    }
-    setBest(bestRoute);
-    setFast(fastRoute);
+  //       if (Number(route.duration) < Number(fastRoute?.duration)) {
+  //         fastRoute = route;
+  //       }
+  //     });
+  //   }
+  //   setBest(bestRoute);
+  //   setFast(fastRoute);
 
-    if (!stopSelected) {
-      if (routeSortType === 1) {
-        setRouteSelected(bestRoute);
-        onRouteSelected(bestRoute);
-      } else if (routeSortType === 2) {
-        setRouteSelected(fastRoute);
-        onRouteSelected(fastRoute);
-      }
-    }
+  //   if (!stopSelected) {
+  //     if (routeSortType === 1) {
+  //       setRouteSelected(bestRoute);
+  //       onRouteSelected(bestRoute);
+  //     } else if (routeSortType === 2) {
+  //       setRouteSelected(fastRoute);
+  //       onRouteSelected(fastRoute);
+  //     }
+  //   }
 
-    if (!routes || routes.length === 0) {
-      setRouteSelected(null);
-      onRouteSelected(null);
-    }
-  }, [routes, routeSortType, stopSelected]);
+  //   if (!routes || routes.length === 0) {
+  //     setRouteSelected(null);
+  //     onRouteSelected(null);
+  //   }
+  // }, [routes, routeSortType, stopSelected]);
 
   useEffect(() => {
     if (routes) {
@@ -82,6 +82,41 @@ export default function useRouteSorted(
     }
     return [];
   }, [sortedRoutes]);
+
+  useEffect(() => {
+    let bestRoute: QuoteResponse | null = null;
+    let fastRoute: QuoteResponse | null = null;
+    if (distinctRoutes && distinctRoutes.length) {
+      bestRoute = distinctRoutes[0];
+      fastRoute = distinctRoutes[0];
+      distinctRoutes.forEach((route: QuoteResponse) => {
+        if (Number(route.receiveAmount) > Number(bestRoute?.receiveAmount)) {
+          bestRoute = route;
+        }
+
+        if (Number(route.duration) < Number(fastRoute?.duration)) {
+          fastRoute = route;
+        }
+      });
+    }
+    setBest(bestRoute);
+    setFast(fastRoute);
+
+    if (!stopSelected) {
+      if (routeSortType === 1) {
+        setRouteSelected(bestRoute);
+        onRouteSelected(bestRoute);
+      } else if (routeSortType === 2) {
+        setRouteSelected(fastRoute);
+        onRouteSelected(fastRoute);
+      }
+    }
+
+    if (!distinctRoutes || distinctRoutes.length === 0) {
+      setRouteSelected(null);
+      onRouteSelected(null);
+    }
+  }, [distinctRoutes, routeSortType, stopSelected]);
 
   return {
     routeSelected,
