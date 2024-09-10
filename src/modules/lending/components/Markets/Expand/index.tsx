@@ -1,33 +1,28 @@
 import Big from 'big.js';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import LendingDialogButton from '@/modules/lending/components/Button';
-import LendingMarketInput from '@/modules/lending/components/Markets/Input';
-import LendingTotal from '@/modules/lending/components/Total';
+import LendingMarketExpandBorrowInput from '@/modules/lending/components/Markets/Expand/BorrowInput';
+import LendingMarketExpandInput from '@/modules/lending/components/Markets/Expand/Input';
+import LendingMarketInfo from '@/modules/lending/components/Markets/Info';
+import LendingMarketBorrowInfo from '@/modules/lending/components/Markets/Info/Borrow';
+import LendingMarketEarnInfo from '@/modules/lending/components/Markets/Info/Earn';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
-import type { DexProps } from '@/modules/lending/models';
+import type { DexProps} from '@/modules/lending/models';
+import { MarketsType } from '@/modules/lending/models';
+import { DexType } from '@/modules/lending/models';
 
 import {
-  StyledBorrowLimit,
   StyledBox,
   StyledButtonWrapper,
   StyledContent,
-  StyledDetailItem,
-  StyledDetailPanel,
   StyledGasBox,
   StyledHeader,
-  StyledInfo,
-  StyledInfoContent,
-  StyledInfoItem,
-  StyledInfoTips,
-  StyledInfoTitle,
   StyledTab,
   StyledTabs,
-  StyledWrapper
+  StyledWrapper,
 } from './styles';
-
-const TABS = ['Supply', 'Borrow'];
 
 const LendingMarketExpand = (props: Props) => {
   const {
@@ -43,15 +38,26 @@ const LendingMarketExpand = (props: Props) => {
     prices,
     from,
     data = {},
-    curPool
+    curPool,
+    marketsType,
   } = props;
+
+  const Tabs = useMemo(() => {
+    if (marketsType === MarketsType.Borrow) {
+      return ['Add Collateral', 'Remove Collateral', 'Borrow', 'Repay'];
+    }
+    if (marketsType === MarketsType.Earn) {
+      return ['Supply', 'Withdraw'];
+    }
+    return ['Supply', 'Borrow'];
+  }, [dexConfig.type]);
 
   const { provider } = useAccount();
   const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig.loaderName });
 
   const [state, updateState] = useMultiState<any>({
-    tab: TABS[0],
-    loading: false
+    tab: Tabs[0],
+    loading: false,
   });
 
   useEffect(() => {
@@ -65,7 +71,7 @@ const LendingMarketExpand = (props: Props) => {
 
     const getTrade = () => {
       updateState({
-        loading: true
+        loading: true,
       });
     };
 
@@ -73,68 +79,24 @@ const LendingMarketExpand = (props: Props) => {
 
     updateState({
       debouncedGetTrade,
-      getTrade
+      getTrade,
     });
   }, []);
-
-  const onAmountChange = (amount: string) => {
-    if (isNaN(Number(amount))) return;
-    if (amount.split('.')[1]?.length > 18) return;
-    const isZero = Big(amount || 0).eq(0);
-    if (isZero) {
-      updateState({
-        amount,
-        buttonClickable: false,
-        borrowLimit: '',
-        isEmpty: Number(amount) === 0 && amount !== '',
-        isOverSize: false,
-        isBigerThanBalance: false
-      });
-      return;
-    }
-    if (dexConfig.name === 'Ionic' && state.tab === 'Borrow') {
-      if (Big(amount).lt(data.minBorrowAmount)) {
-        updateState({
-          amount,
-          buttonClickable: false
-        });
-        return;
-      }
-    }
-    const params: any = { amount };
-    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20));
-    if (state.tab === 'Supply') {
-      params.borrowLimit = Big(borrowLimit || 0).plus(
-        value.mul(data.loanToValue / 100)
-      );
-      params.isBigerThanBalance = Big(amount).gt(data.userUnderlyingBalance || 0);
-      params.isOverSize = false;
-    }
-    if (state.tab === 'Borrow') {
-      params.borrowLimit = Big(borrowLimit || 0).minus(value || 0);
-      params.isBigerThanBalance = false;
-
-      params.isOverSize = value.gt(borrowLimit || 0);
-
-      if (dexConfig.name === 'Ionic') {
-        if (Big(data.totalBorrows).gt(Big(data.borrowCaps))) {
-          params.isBorrowCapsFull = true;
-        }
-      }
-    }
-    params.buttonClickable =
-      !params.isOverSize && !params.isBigerThanBalance && !params.isBorrowCapsFull;
-    updateState(params);
-
-    state.debouncedGetTrade();
-  };
 
   return (
     <StyledBox className={expand ? 'expand' : ''}>
       <StyledWrapper className={expand ? 'expand' : ''}>
-        <StyledHeader>
-          <StyledTabs>
-            {TABS.map((tab) => (
+        <StyledHeader
+          style={{
+            paddingLeft: Tabs.length > 2 ? 0 : 520,
+          }}
+        >
+          <StyledTabs
+            style={{
+              justifyContent: Tabs.length > 2 ? 'center' : 'left',
+            }}
+          >
+            {Tabs.map((tab) => (
               <StyledTab
                 key={tab}
                 className={tab === state.tab ? 'active' : ''}
@@ -148,164 +110,54 @@ const LendingMarketExpand = (props: Props) => {
           </StyledTabs>
         </StyledHeader>
         <StyledContent>
-          <StyledInfo>
-            <StyledInfoContent>
-              <StyledInfoTitle>Your info</StyledInfoTitle>
-              {/* <StyledInfoItem>
-               <div>Your borrow limit</div>
-               <div className="white">
-               {" "}
-               <Widget
-               src="bluebiu.near/widget/Avalanche.Lending.Total"
-               props={{
-               total: borrowLimit,
-               digit: 2,
-               unit: "$",
-               }}
-               />
-               </div>
-               </StyledInfoItem> */}
-              <StyledInfoItem>
-                <div>Available to Supply</div>
-                <div>
-                <span className="white">
-                  <LendingTotal
-                    total={data.userUnderlyingBalance}
-                    digit={2}
-                    unit=""
-                  />
-                </span>{' '}
-                  {data.underlyingToken?.symbol}
-                </div>
-              </StyledInfoItem>
-              <StyledInfoItem>
-                <div>Available to Borrow</div>
-                <div>
-                <span className="white">
-                  <LendingTotal
-                    total={Big(data.underlyingPrice || 0).eq(0) ? '0' : Big(borrowLimit || 0).div(data.underlyingPrice || 1).toString()}
-                    digit={2}
-                    unit=""
-                  />
-                </span>{' '}
-                  {data.underlyingToken?.symbol}
-                </div>
-              </StyledInfoItem>
-
-              {dexConfig.name === 'Ionic' && (
-                <StyledInfoItem>
-                  <div>Min Borrow</div>
-                  <div>
-                    <span className="white">{data.minBorrowAmount}</span>{' '}
-                    {data.underlyingToken?.symbol}
-                  </div>
-                </StyledInfoItem>
-              )}
-              <StyledInfoTips>
-                {from === 'layer' ? (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="15"
-                    height="15"
-                    viewBox="0 0 15 15"
-                    fill="none"
-                  >
-                    <circle cx="7.5" cy="7.5" r="7" stroke="#6F6F6F" />
-                    <path
-                      d="M7.5 7.5L7.5 11.25"
-                      stroke="#6F6F6F"
-                      stroke-width="1.4"
-                      stroke-linecap="round"
-                    />
-                    <circle cx="7.5" cy="4.6875" r="0.9375" fill="#6F6F6F" />
-                  </svg>
-                ) : (
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="12"
-                    height="12"
-                    viewBox="0 0 12 12"
-                    fill="none"
-                  >
-                    <circle cx="6" cy="6" r="5.5" stroke="#EBF479" />
-                    <path
-                      d="M6 6L6 9"
-                      stroke="#EBF479"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                    />
-                    <circle cx="6" cy="3.75" r="0.75" fill="#EBF479" />
-                  </svg>
-                )}
-
-                <div>
-                  To borrow you need to supply any asset to be used as collateral.
-                </div>
-              </StyledInfoTips>
-            </StyledInfoContent>
-          </StyledInfo>
+          {
+            marketsType === MarketsType.Borrow && (
+              <LendingMarketBorrowInfo
+                {...data}
+                prices={prices}
+              />
+            )
+          }
+          {
+            marketsType === MarketsType.Earn && (
+              <LendingMarketEarnInfo
+                {...data}
+                prices={prices}
+              />
+            )
+          }
+          {
+            marketsType === MarketsType.Market && (
+              <LendingMarketInfo
+                {...data}
+                borrowLimit={borrowLimit}
+                from={from}
+                dexConfig={dexConfig}
+              />
+            )
+          }
           <div>
-            <LendingMarketInput
-              icon={data.underlyingToken?.icon}
-              symbol={data.underlyingToken?.symbol}
-              decimals={data.underlyingToken?.decimals}
-              balance={state.tab === 'Supply'
-                ? data.userUnderlyingBalance
-                : Big(borrowLimit || 0)
-                  .div(data.underlyingPrice || 1)
-                  .toString()}
-              price={data.underlyingPrice}
-              amount={state.amount}
-              onChange={onAmountChange}
-            />
-            <StyledDetailPanel>
-              {state.tab === 'Supply' && dexConfig.name !== 'Ionic' && (
-                <StyledDetailItem>
-                  <div>Collateral factor</div>
-                  <div className="white">
-                    {data.collateralFactor ? 'Enable' : 'Disable'}
-                  </div>
-                </StyledDetailItem>
-              )}
-              <StyledDetailItem>
-                <div>Borrow limit</div>
-                <StyledBorrowLimit>
-                  <div>
-                    {' '}
-                    <LendingTotal
-                      total={borrowLimit}
-                      digit={2}
-                      unit="$"
-                    />
-                  </div>
-                  {!!state.borrowLimit && (
-                    <>
-                      {' '}
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="8"
-                        height="10"
-                        viewBox="0 0 8 10"
-                        fill="none"
-                      >
-                        <path
-                          d="M7.5 4.13397C8.16667 4.51887 8.16667 5.48113 7.5 5.86603L1.5 9.33013C0.833334 9.71503 -4.47338e-07 9.2339 -4.13689e-07 8.4641L-1.10848e-07 1.5359C-7.71986e-08 0.766098 0.833333 0.284973 1.5 0.669873L7.5 4.13397Z"
-                          fill="#979ABE"
-                        />
-                      </svg>
-                      <div className="white">
-                        {' '}
-                        <LendingTotal
-                          total={state.borrowLimit}
-                          digit={2}
-                          unit="$"
-                        />
-                      </div>
-                    </>
-                  )}
-                </StyledBorrowLimit>
-              </StyledDetailItem>
-            </StyledDetailPanel>
+            {
+              dexConfig.type === DexType.BorrowAndEarn && (
+                <LendingMarketExpandBorrowInput
+                  data={data}
+                  prices={prices}
+                  state={state}
+                  updateState={updateState}
+                />
+              )
+            }
+            {
+              ![DexType.BorrowAndEarn].includes(dexConfig.type) && (
+                <LendingMarketExpandInput
+                  {...data}
+                  borrowLimit={borrowLimit}
+                  dexConfig={dexConfig}
+                  state={state}
+                  updateState={updateState}
+                />
+              )
+            }
             <StyledButtonWrapper>
               <StyledGasBox>
                 <svg
@@ -332,7 +184,7 @@ const LendingMarketExpand = (props: Props) => {
               <div style={{ flexGrow: 1 }}>
                 <LendingDialogButton
                   disabled={!state.buttonClickable}
-                  actionText={state.tab === 'Supply' ? 'Deposit' : 'Borrow'}
+                  actionText={state.tab === 'Supply' ? 'Deposit' : state.tab}
                   amount={state.amount}
                   data={{
                     ...data,
@@ -346,8 +198,9 @@ const LendingMarketExpand = (props: Props) => {
                   loading={state.loading}
                   gas={state.gas}
                   account={account}
+                  marketsType={marketsType}
                   onApprovedSuccess={() => {
-                    if (!state.gas) state.getTrade();
+                    if (!state.gas) state.getTrade?.();
                   }}
                   onSuccess={() => {
                     onSuccess?.();
@@ -358,23 +211,24 @@ const LendingMarketExpand = (props: Props) => {
             </StyledButtonWrapper>
           </div>
         </StyledContent>
-        {dexConfig?.handler && Handler && (
+        {Handler && (
           <Handler
             provider={provider}
+            account={account}
             update={state.loading}
             chainId={chainId}
             data={{
-              actionText: state.tab === 'Supply' ? 'Deposit' : 'Borrow',
+              actionText: state.tab === 'Supply' ? 'Deposit' : state.tab,
               ...data,
-              config: dexConfig
+              config: dexConfig,
             }}
             amount={state.amount}
             curPool={curPool}
             onLoad={(_data: any) => {
-              console.log('handler_onLoad:', _data);
+              console.log('%chandler DATA onLoad: %o', 'background: #6439FF; color:#fff;', _data);
               updateState({
                 ..._data,
-                loading: false
+                loading: false,
               });
             }}
           />
@@ -390,4 +244,5 @@ export interface Props extends DexProps {
   data: any;
   expand: boolean;
   borrowLimit: string;
+  marketsType?: MarketsType;
 }
