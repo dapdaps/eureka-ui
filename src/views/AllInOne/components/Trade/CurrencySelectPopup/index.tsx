@@ -28,10 +28,11 @@ type Props = {
   tokens: Token[];
   display: boolean;
   currency?: Token;
+  updater: number;
   onClose: () => void;
   onSelect: (token: Token) => void;
 };
-const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: Props) => {
+const CurrencySelectPopup = ({ tokens, display, currency, updater, onClose, onSelect }: Props) => {
   const prices = usePriceStore((store) => store.price);
   const [searchVal, setSearchVal] = useState('');
   const { loading, balances = {}, queryBalance } = useTokensBalance(tokens);
@@ -49,8 +50,8 @@ const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: P
   }, [tokens, searchVal]);
 
   useEffect(() => {
-    if (display && !loading) queryBalance();
-  }, [display]);
+    queryBalance();
+  }, [updater]);
 
   return (
     <Modal
