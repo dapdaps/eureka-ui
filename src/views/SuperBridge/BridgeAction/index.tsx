@@ -365,7 +365,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
           currentToken={toToken}
           chainToken={allTokens}
           amount={reciveAmount}
-          limitChain={fromChain}
+          // limitChain={fromChain}
           onGasTrigger={() => {
             setGasModalShow(true);
           }}

@@ -10,7 +10,8 @@ const ListWapper = styled.div`
   & > :not(:first-child) {
     margin-top: 10px;
   }
-  height: 600px;
+  min-height: 160px;
+  max-height: 600px;
   overflow-y: auto;
   /* margin-bottom: 14px; */
 `;
