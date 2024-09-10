@@ -105,8 +105,6 @@ const id = `id_${Math.random()}`;
 export default function Advertise() {
   const { loading, medalList } = useMedalList();
 
-  // console.log('medalList:', medalList)
-
   const superBridgeMedal: any = useMemo(() => {
     if (medalList && medalList.length) {
       const bridges = medalList.filter((item) => {
@@ -114,7 +112,7 @@ export default function Advertise() {
       });
 
       if (bridges && bridges.length) {
-        bridges.sort((a: any, b: any) => a.level - b.level);
+        bridges.sort((a: any, b: any) => b.level - a.level);
         let usedMedal = bridges[0];
         for (let i = 0; i < bridges.length; i++) {
           if (!bridges[i].completed_status) {
@@ -123,10 +121,8 @@ export default function Advertise() {
           usedMedal = bridges[i];
         }
 
-        console.log('usedMedal:', usedMedal);
+        // console.log('usedMedal:', usedMedal);
 
-        // const total = usedMedal?.trading_volume > 0 ? 100 : usedMedal?.threshold;
-        // const quantity = usedMedal?.trading_volume > 0 ? Big(usedMedal?.completed_percent).toFixed(2) : usedMedal?.completed_threshold
         return usedMedal;
       }
     }
