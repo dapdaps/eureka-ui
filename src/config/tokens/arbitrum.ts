@@ -917,7 +917,7 @@ export const arbitrum: { [key: string]: Token } = {
     icon: '/images/tokens/dei.webp'
   },
   ibex: {
-    address: '0x9f04B6CEfd5BCd67d76aB708F17553Ce40188e6A',
+    address: '0x56659245931CB6920e39C189D2a0e7DD0dA2d57b',
     chainId: CHAIN_ID,
     symbol: 'IBEX',
     decimals: 18,
