@@ -182,6 +182,16 @@ export default function RewardHistory({ loaded, userRewardRecords, pager, maxPag
       router.push('/profile/medals');
     } else if (record?.source === 'LearnMore') {
       setMedalRewardModalVisible(true);
+    } else if (record?.source === 'Activity') {
+      const ActivityTitleMapping: any = {
+        'DapDap X Coin68': 'coin68',
+        'DapDap X Bitget': 'bitget',
+        // "KOL Recommendation Program": "",
+        'DapDap X NamLongDAO': 'namlongdao',
+        'DapDap X OKX Wallet': 'okx',
+        'DapDap X Coin98': 'coin98'
+      };
+      ActivityTitleMapping[record?.title] && router.push('/' + ActivityTitleMapping[record?.title]);
     } else {
       router.push('/odyssey/home?id=' + record?.relate_id);
     }
