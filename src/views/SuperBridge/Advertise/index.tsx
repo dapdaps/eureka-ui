@@ -1,5 +1,6 @@
 import 'swiper/css/pagination';
 
+import Big from 'big.js';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
 import styled from 'styled-components';
@@ -77,34 +78,12 @@ const Rango = () => {
   );
 };
 
-const Medal = () => {
-  const { loading, medalList } = useMedalList();
-
-  const superBridgeMedal: any = useMemo(() => {
-    if (medalList && medalList.length) {
-      const bridges = medalList.filter((item) => {
-        return item.medal_category === 'super_bridge';
-      });
-
-      if (bridges && bridges.length) {
-        bridges.sort((a: any, b: any) => a.level - b.level);
-        let usedMedal = bridges[0];
-        for (let i = 0; i < bridges.length; i++) {
-          if (!bridges[i].completed_status) {
-            return bridges[i];
-          }
-          usedMedal = bridges[i];
-        }
-        return usedMedal;
-      }
-    }
-  }, [medalList]);
-
+const Medal = ({ medal }: any) => {
   return (
     <AdWrapper>
-      {!loading && superBridgeMedal ? (
+      {medal ? (
         <MedalCard
-          medal={superBridgeMedal}
+          medal={medal}
           style={{
             fontSize: 12,
             width: 414,
@@ -124,6 +103,35 @@ const Medal = () => {
 const id = `id_${Math.random()}`;
 
 export default function Advertise() {
+  const { loading, medalList } = useMedalList();
+
+  // console.log('medalList:', medalList)
+
+  const superBridgeMedal: any = useMemo(() => {
+    if (medalList && medalList.length) {
+      const bridges = medalList.filter((item) => {
+        return item.medal_category === 'super_bridge';
+      });
+
+      if (bridges && bridges.length) {
+        bridges.sort((a: any, b: any) => a.level - b.level);
+        let usedMedal = bridges[0];
+        for (let i = 0; i < bridges.length; i++) {
+          if (!bridges[i].completed_status) {
+            return bridges[i];
+          }
+          usedMedal = bridges[i];
+        }
+
+        console.log('usedMedal:', usedMedal);
+
+        // const total = usedMedal?.trading_volume > 0 ? 100 : usedMedal?.threshold;
+        // const quantity = usedMedal?.trading_volume > 0 ? Big(usedMedal?.completed_percent).toFixed(2) : usedMedal?.completed_threshold
+        return usedMedal;
+      }
+    }
+  }, [medalList]);
+
   return (
     <Wrapper>
       <Swiper
@@ -148,9 +156,11 @@ export default function Advertise() {
           <Rango />
         </SwiperSlide>
 
-        <SwiperSlide>
-          <Medal />
-        </SwiperSlide>
+        {superBridgeMedal && (
+          <SwiperSlide>
+            <Medal medal={superBridgeMedal} />
+          </SwiperSlide>
+        )}
 
         <div id={id} className="swiper-bridge"></div>
       </Swiper>
