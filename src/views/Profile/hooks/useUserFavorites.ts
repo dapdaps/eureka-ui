@@ -9,68 +9,63 @@ import { CategoryList } from '@/views/AllDapps/config';
 
 import type { DappType, FavoriteType, Tab } from '../types';
 
-
 export default function useUserFavorites(tab: Tab) {
-  const { account } = useAccount()
+  const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const [userFavorites, setUserFavorites] = useState<FavoriteType | null>(null);
-  const [loaded, setLoaded] = useState(false)
+  const [userFavoriteQuantity, setUserFavoriteQuantity] = useState<number>(0);
+  const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const queryUserFavorites = async () => {
     if (loading) return;
     setLoading(true);
-    setLoaded(false)
+    setLoaded(false);
     try {
       const result = await get(`/api/user/favorites`);
-      const data = (result.data || [])
+      const data = result.data || [];
       data?.dapps?.forEach((dapp: DappType) => {
-        dapp.categories = []
-        dapp?.dapp_category?.forEach(category => {
-          const _c = CategoryList.find(_c => _c.key === category?.category_id)
-          _c && dapp.categories?.push(_c)
-        })
-        dapp.networks = []
-        dapp?.dapp_network?.forEach(network => {
-          const _n = chainCofig[network?.chain_id]
-          _n && dapp.networks?.push(_n)
-        })
+        dapp.categories = [];
+        dapp?.dapp_category?.forEach((category) => {
+          const _c = CategoryList.find((_c) => _c.key === category?.category_id);
+          _c && dapp.categories?.push(_c);
+        });
+        dapp.networks = [];
+        dapp?.dapp_network?.forEach((network) => {
+          const _n = chainCofig[network?.chain_id];
+          _n && dapp.networks?.push(_n);
+        });
       });
-      console.log('===data', data)
       setUserFavorites(data);
+      setUserFavoriteQuantity(data?.total);
       setLoading(false);
-      setLoaded(true)
+      setLoaded(true);
     } catch (err) {
       console.log(err, 'err');
     } finally {
       setLoading(false);
-      setLoaded(true)
+      setLoaded(true);
     }
   };
-
 
   const { run } = useDebounceFn(
     () => {
       account && check(queryUserFavorites);
     },
-    { wait: userFavorites ? 800 : 3000 },
+    { wait: userFavorites ? 800 : 3000 }
   );
 
-  // useEffect(() => {
-  //   (tab === "FavoriteApps" || !loaded) && run();
-  // }, [account, tab]);
-
   useEffect(() => {
-    run()
-  }, [account])
+    run();
+  }, [account]);
   useEffect(() => {
     if (tab === 'FavoriteApps') {
       run();
     } else {
-      setLoaded(false)
-      setUserFavorites(null)
+      setLoaded(false);
+      setUserFavorites(null);
     }
   }, [tab]);
 
-  return { loading, loaded, userFavorites, queryUserFavorites };
+  return { loading, loaded, userFavorites, userFavoriteQuantity, queryUserFavorites };
 }

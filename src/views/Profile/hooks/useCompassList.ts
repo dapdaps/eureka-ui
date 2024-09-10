@@ -6,42 +6,43 @@ import useAuthCheck from '@/hooks/useAuthCheck';
 import { get } from '@/utils/http';
 
 import type { Tab } from '../types';
-type CompassType = any
+type CompassType = any;
 export default function useCompassList(tab: Tab) {
-  const { account } = useAccount()
+  const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
 
   const [compassList, setCompassList] = useState<any>([]);
-  const [loaded, setLoaded] = useState(false)
+  const [compassQuantity, setCompassQuantity] = useState<number>(0);
+  const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const queryCompassListByAccount = async (query: any) => {
     if (loading) return;
     setLoading(true);
-    setLoaded(false)
+    setLoaded(false);
     try {
       const result = await get(`/api/compass/list-by-account`, query);
       const data = (result.data || []).map((compass: CompassType) => {
-        let reward = null, rule = null
+        let reward = null,
+          rule = null;
         try {
-          reward = JSON.parse(compass.reward)
+          reward = JSON.parse(compass.reward);
         } catch (error) {
-          reward = []
+          reward = [];
         }
         try {
-          rule = JSON.parse(compass.rule)
+          rule = JSON.parse(compass.rule);
         } catch (error) {
-          rule = {
-
-          }
+          rule = {};
         }
         return {
           ...compass,
           reward,
           rule
-        }
+        };
       });
       setCompassList(data);
+      setCompassQuantity(data.length);
       setLoading(false);
       setLoaded(true);
     } catch (err) {
@@ -52,28 +53,28 @@ export default function useCompassList(tab: Tab) {
     }
   };
 
-
   const { run } = useDebounceFn(
     () => {
-      account && check(() => {
-        queryCompassListByAccount({
-          status: 'ongoing'
-        })
-      });
+      account &&
+        check(() => {
+          queryCompassListByAccount({
+            status: 'ongoing'
+          });
+        });
     },
-    { wait: compassList ? 800 : 3000 },
+    { wait: compassList ? 800 : 3000 }
   );
   useEffect(() => {
-    run()
-  }, [account])
+    run();
+  }, [account]);
   useEffect(() => {
     if (tab === 'InProgress') {
       run();
     } else {
-      setLoaded(false)
-      setCompassList([])
+      setLoaded(false);
+      setCompassList([]);
     }
   }, [tab]);
 
-  return { loading, loaded, compassList, queryCompassListByAccount };
+  return { loading, loaded, compassList, compassQuantity, queryCompassListByAccount };
 }
