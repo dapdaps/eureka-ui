@@ -131,7 +131,9 @@ export default function Advertise() {
         width={415}
         slidesPerView={1}
         speed={500}
-        autoplay={true}
+        autoplay={{
+          pauseOnMouseEnter: true
+        }}
         spaceBetween={10}
         pagination={{
           clickable: true,
