@@ -212,7 +212,7 @@ export const avalanche: { [key: string]: Token } = {
     icon: 'https://raw.githubusercontent.com/pangolindex/tokens/main/assets/43114/0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5/logo_24.png'
   },
   'weth.e': {
-    address: '0x5375616bB6c52A90439fF96882a986d8FCdCe421',
+    address: '0x49D5c2BdFfac6CE2BFdB6640F4F80f226bc10bAB',
     chainId: CHAIN_ID,
     symbol: 'WETH.e',
     decimals: 18,

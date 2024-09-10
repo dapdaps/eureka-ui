@@ -444,7 +444,7 @@ export const base: { [key: string]: Token } = {
     icon: '/images/tokens/e-usd.svg'
   },
   tarot: {
-    address: '0x13278cD824D33A7aDB9f0a9A84ACA7C0D2DEEBf7',
+    address: '0xf544251d25f3d243a36b07e7e7962a678f952691',
     chainId: CHAIN_ID,
     symbol: 'TAROT',
     decimals: 18,

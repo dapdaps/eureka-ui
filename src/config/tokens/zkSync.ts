@@ -9,7 +9,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ETH',
     name: 'ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibspnls7q67q25r2ifv2rrfmvzl744pzuh3s5ekigeqkmyycl2auq'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -17,7 +17,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 8,
     symbol: 'WBTC',
     name: 'Wrapped BTC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
   },
 
   vc: {
@@ -26,7 +26,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'VC',
     name: 'VC',
-    icon: 'https://ipfs.near.social/ipfs/bafkreia2pgyfxypmylp7f4ypoqagctrjg63akkoc4zvamy3ugfqamqpnmq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreia2pgyfxypmylp7f4ypoqagctrjg63akkoc4zvamy3ugfqamqpnmq'
   },
 
   waifu: {
@@ -35,7 +35,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WAIFU',
     name: 'WAIFU',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibaxkkmqu5rnogicxaliozhi5vjbzzoisncrhgwe3g2s7q6rchjty',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibaxkkmqu5rnogicxaliozhi5vjbzzoisncrhgwe3g2s7q6rchjty'
   },
 
   weth: {
@@ -44,7 +44,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreie3hr7iav3gmgdl4mtyt4khorzdln4x746d25emnuwqkhs62t55wq'
   },
 
   zch: {
@@ -53,7 +53,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ZCH',
     name: 'ZilchToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreifquhaltsucnz2heyboy66nhklqrzopqk65o5x66s764za6nzbqou',
+    icon: 'https://ipfs.near.social/ipfs/bafkreifquhaltsucnz2heyboy66nhklqrzopqk65o5x66s764za6nzbqou'
   },
 
   keyvc: {
@@ -62,7 +62,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'keyVC',
     name: 'ZilchToken',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidx3ep2qhq6kdxey4yae5umjsufyymntblhbji7yoyabp2bd7hcou',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidx3ep2qhq6kdxey4yae5umjsufyymntblhbji7yoyabp2bd7hcou'
   },
 
   lsd: {
@@ -71,7 +71,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LSD',
     name: 'LSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigeq5rmi74c4reudxe23hmu4udtee7im3gwdjh72uyav7d2ayhxoi',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigeq5rmi74c4reudxe23hmu4udtee7im3gwdjh72uyav7d2ayhxoi'
   },
 
   usx: {
@@ -80,7 +80,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'USX',
     name: 'USX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidhsn7jgwtcgvwboxwfkwj5sv6ndgqxmlkf7n72o2uoyggcatdsba',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidhsn7jgwtcgvwboxwfkwj5sv6ndgqxmlkf7n72o2uoyggcatdsba'
   },
 
   dvf: {
@@ -89,7 +89,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DVF',
     name: 'DeversiFi Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigb3eo2jkoid4bouqjhfqlde5zlhugdwu6jvzd6avxtphqfygl7ua',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigb3eo2jkoid4bouqjhfqlde5zlhugdwu6jvzd6avxtphqfygl7ua'
   },
 
   iusd: {
@@ -98,7 +98,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'iUSD',
     name: 'iZUMi Bond USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiabjt25div73chcsnfhfqlfxj62j5fp2fvnl427qv3mlicx2bwanq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiabjt25div73chcsnfhfqlfxj62j5fp2fvnl427qv3mlicx2bwanq'
   },
 
   slusdt: {
@@ -107,7 +107,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'slUSDT',
     name: 'Shared-liquidity USDT',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibxvxdhd7go2rtgwmbpxhmm5cmdrkh3oeenuys2nc5lucs44anwam',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibxvxdhd7go2rtgwmbpxhmm5cmdrkh3oeenuys2nc5lucs44anwam'
   },
 
   lusd: {
@@ -116,7 +116,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LUSD',
     name: 'LUSD Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihbwhrsi447phga5fya4eb4nprudswmh4n5togvpyy4gowntcei5e',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihbwhrsi447phga5fya4eb4nprudswmh4n5togvpyy4gowntcei5e'
   },
 
   reth: {
@@ -125,7 +125,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'rETH',
     name: 'Rocket Pool ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiev6hgtqtg5wleen3wtnk7cejxpdmj5ee2ngkaswphvcwwv5xcsyy',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiev6hgtqtg5wleen3wtnk7cejxpdmj5ee2ngkaswphvcwwv5xcsyy'
   },
 
   space: {
@@ -134,7 +134,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SPACE',
     name: 'SPACE',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibem7ts37qyb22pwn6qwdl2ocbye52oza2hdpjvxpxslwb6jfi2vm',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibem7ts37qyb22pwn6qwdl2ocbye52oza2hdpjvxpxslwb6jfi2vm'
   },
   cebnb: {
     chainId: CHAIN_ID,
@@ -142,7 +142,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ceBNB',
     name: 'Celer Network BNB',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -150,7 +150,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDT',
     name: 'Tether USD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i',
+    icon: 'https://ipfs.near.social/ipfs/bafkreih45jy7ggj45ck34rf736kb67smsoa52wd7e46c2grh6etd3bhe5i'
   },
   'usdc.e': {
     chainId: CHAIN_ID,
@@ -158,7 +158,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'USDC.e',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy'
   },
   cebusd: {
     chainId: CHAIN_ID,
@@ -166,7 +166,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ceBUSD',
     name: 'Celer Network BUSD',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibp36dfkfjzgnnbb7u4jxh57gpjmfjerc6pefmyzhueulz5ovd5xy',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibp36dfkfjzgnnbb7u4jxh57gpjmfjerc6pefmyzhueulz5ovd5xy'
   },
   zf: {
     chainId: CHAIN_ID,
@@ -174,7 +174,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ZF',
     name: 'zkSwap Finance',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicankglmavov2ysq6ax7ezbdpno6ebu6zrc7ququnjgnrfuxzrzum',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicankglmavov2ysq6ax7ezbdpno6ebu6zrc7ququnjgnrfuxzrzum'
   },
   velocore: {
     chainId: CHAIN_ID,
@@ -183,7 +183,7 @@ export const zkSync: { [key: string]: Token } = {
     symbol: 'VC',
     name: 'Velocore',
     icon: 'https://ipfs.near.social/ipfs/bafkreihvtu2nfnzgzc6jbcdvd22fmtufkxoawttgbt3nmagc5rcvfjjcki',
-    priceKey: 'velocore',
+    priceKey: 'velocore'
   },
 
   dai: {
@@ -192,7 +192,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'DAI',
     name: 'Dai Stablecoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiguzm6s42t2hecx7bhwtwlhlsxt3fjkbzllro3n566kyrv3dq6ene'
   },
 
   zk: {
@@ -201,7 +201,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ZK',
     name: 'ZK',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihjaq7lpkheef7yiza2f72nzes4zskmsofzjm4b2xhccehvcws644',
+    icon: 'https://ipfs.near.social/ipfs/bafkreihjaq7lpkheef7yiza2f72nzes4zskmsofzjm4b2xhccehvcws644'
   },
   wsteth: {
     chainId: CHAIN_ID,
@@ -209,15 +209,15 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wstETH',
     name: 'wstETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibiot3lsckvm4t7zilejrtuqwcn6p3k472scykqc45fywmlb2fem4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibiot3lsckvm4t7zilejrtuqwcn6p3k472scykqc45fywmlb2fem4'
   },
-  'usdc': {
+  usdc: {
     chainId: CHAIN_ID,
     address: '0x1d17cbcf0d6d143135ae902365d2e5e2a16538d4',
     decimals: 6,
     symbol: 'USDC',
     name: 'USD Coin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy',
+    icon: 'https://ipfs.near.social/ipfs/bafkreig2f274oowfjwh5w4uai4dbxarqkupj635k3r4dnjp3xxxh5fugiy'
   },
   wrseth: {
     chainId: CHAIN_ID,
@@ -225,7 +225,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'wrsETH',
     name: 'wrsETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreids4wac3drewoks2xxinf7qdda7pjsdmvnskkwgb7q6wwulyerqru',
+    icon: 'https://ipfs.near.social/ipfs/bafkreids4wac3drewoks2xxinf7qdda7pjsdmvnskkwgb7q6wwulyerqru'
   },
   weth2: {
     chainId: CHAIN_ID,
@@ -233,7 +233,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'WETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiah52cflyo3ehah5picxoatpydcu2ssr5p2aj4qlgcsl43mi4d2my',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiah52cflyo3ehah5picxoatpydcu2ssr5p2aj4qlgcsl43mi4d2my'
   },
 
   star: {
@@ -242,7 +242,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'STAR',
     name: 'STAR',
-    icon: 'https://ipfs.near.social/ipfs/bafkreic6lbppjxlvui4eu5zvmjxupckoq3qoj7btagdothv6tns3gat7vq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreic6lbppjxlvui4eu5zvmjxupckoq3qoj7btagdothv6tns3gat7vq'
   },
 
   onez: {
@@ -251,7 +251,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ONEZ',
     name: 'ONEZ',
-    icon: 'https://ipfs.near.social/ipfs/bafkreicjdltvpyhhr7ein3wvkypeo2krizip2okwiowqoz7ip3nremyr6y',
+    icon: 'https://ipfs.near.social/ipfs/bafkreicjdltvpyhhr7ein3wvkypeo2krizip2okwiowqoz7ip3nremyr6y'
   },
 
   long: {
@@ -260,7 +260,7 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LONG',
     name: 'LONG',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibnoen545vxuotm4unmsk3pna5bxolohgd4ne34uhw5c5xcezowiy',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibnoen545vxuotm4unmsk3pna5bxolohgd4ne34uhw5c5xcezowiy'
   },
   leth: {
     chainId: CHAIN_ID,
@@ -268,6 +268,14 @@ export const zkSync: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'LETH',
     name: 'LETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigez3g3iluxdwzfwxpqftbgms6fnzr3bvz2jykdkcx36ptwjyff5u',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigez3g3iluxdwzfwxpqftbgms6fnzr3bvz2jykdkcx36ptwjyff5u'
   },
+  vs: {
+    address: '0x5756a28e2aae01f600fc2c01358395f5c1f8ad3a',
+    chainId: CHAIN_ID,
+    symbol: 'VS',
+    decimals: 18,
+    name: 'veSync',
+    icon: '/images/tokens/vs.svg'
+  }
 };
