@@ -497,7 +497,7 @@ export default function BirdgeAction({
           />
         )}
       </Container>
-      {toToken && routes?.length && (
+      {toToken && (
         <RightContainer>
           <RouteSelected
             fromChain={fromChain}

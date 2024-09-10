@@ -158,7 +158,13 @@ export default function Transaction({ initModalShow = false, updater = 1 }: Prop
     <Container>
       <Title>My transactions</Title>
       <TrasnItem>
-        <StatusWapper>
+        <StatusWapper
+          onClick={() => {
+            setTabIndex(1);
+            setSearchValueValue(value);
+            setTransactionModalShow(true);
+          }}
+        >
           <SingleStatus className="no-link">
             <AmountWapper>
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
