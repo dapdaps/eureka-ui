@@ -46,8 +46,6 @@ export default function SubmitBtn({
   const { account, chainId, provider } = useAccount();
   const [{ settingChain, connectedChain }, setChain] = useSetChain();
 
-  console.log(theme);
-
   const style = useMemo(() => {
     if (theme) {
       return {

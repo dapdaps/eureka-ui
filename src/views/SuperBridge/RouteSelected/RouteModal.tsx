@@ -10,7 +10,7 @@ const ListWapper = styled.div`
   & > :not(:first-child) {
     margin-top: 10px;
   }
-  max-height: 630px;
+  height: 600px;
   overflow-y: auto;
   /* margin-bottom: 14px; */
 `;
@@ -18,7 +18,7 @@ const ListWapper = styled.div`
 interface Props {
   fromChain: Chain;
   routes: QuoteResponse[] | null;
-  toToken: Token;
+  toToken?: Token | undefined;
   quoteLoading: boolean;
   best: QuoteResponse | null;
   fast: QuoteResponse | null;
@@ -38,23 +38,26 @@ export default function RouteModal({
 }: Props) {
   return (
     <ListWapper>
-      {routes?.map((route: QuoteResponse, index) => {
-        return (
-          <Route
-            fromChain={fromChain}
-            route={route}
-            fast={fast}
-            best={best}
-            active={routeSelected === route}
-            toToken={toToken}
-            onClick={() => {
-              onRouteSelected(route);
-            }}
-            showOutputTitle={false}
-            key={route.bridgeType + index}
-          />
-        );
-      })}
+      {toToken &&
+        routes &&
+        routes.length &&
+        routes?.map((route: QuoteResponse, index) => {
+          return (
+            <Route
+              fromChain={fromChain}
+              route={route}
+              fast={fast}
+              best={best}
+              active={routeSelected === route}
+              toToken={toToken}
+              onClick={() => {
+                onRouteSelected(route);
+              }}
+              showOutputTitle={false}
+              key={route.bridgeType}
+            />
+          );
+        })}
     </ListWapper>
   );
 }
