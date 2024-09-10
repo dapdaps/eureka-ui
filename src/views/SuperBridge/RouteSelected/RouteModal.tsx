@@ -12,7 +12,7 @@ const ListWapper = styled.div`
   }
   max-height: 630px;
   overflow-y: auto;
-  margin-bottom: 14px;
+  /* margin-bottom: 14px; */
 `;
 
 interface Props {

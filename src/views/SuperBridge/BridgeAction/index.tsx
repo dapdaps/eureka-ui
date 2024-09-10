@@ -526,7 +526,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
         )}
       </Container>
       <RightContainer>
-        {(quoteLoading || (routes && routes.length)) && toToken && (
+        {
           <RouteSelected
             quoteLoading={quoteLoading}
             fromChain={fromChain}
@@ -541,7 +541,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
             toToken={toToken}
             routes={routes}
           />
-        )}
+        }
 
         <Advertise />
       </RightContainer>
