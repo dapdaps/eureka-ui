@@ -5,7 +5,7 @@ import LendingTotal from '@/modules/lending/components/Total';
 import { StyledAmount, StyledBox, StyledValue } from './styles';
 
 const LendingMarketAmount = (props: Props) => {
-  const { amount, price } = props;
+  const { amount, price, amountUnit = '', suffixAmountUnit = '' } = props;
 
   return (
     <StyledBox>
@@ -13,7 +13,8 @@ const LendingMarketAmount = (props: Props) => {
         <LendingTotal
           total={amount}
           digit={2}
-          unit=""
+          unit={amountUnit}
+          suffixUnit={suffixAmountUnit}
         />
       </StyledAmount>
       <StyledValue>
@@ -34,4 +35,6 @@ export default LendingMarketAmount;
 export interface Props {
   amount: string;
   price: string;
+  amountUnit?: string;
+  suffixAmountUnit?: string;
 }

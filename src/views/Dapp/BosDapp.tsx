@@ -1,4 +1,5 @@
-import { useCallback } from 'react';
+import dynamic from 'next/dynamic';
+import { lazy, useCallback } from 'react';
 
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import chainsConfig from '@/config/chains';
@@ -15,6 +16,7 @@ import { useLayoutStore } from '@/stores/layout';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
 import refresh from '@/utils/refresh';
+
 export default function BosDapp({
   dapp,
   chainId,
@@ -98,13 +100,24 @@ export default function BosDapp({
       <LendingDex {...componentProps} />
     );
   }
-  if (network?.dapp_src === 'bluebiu.near/widget/Liquidity.GAMMA') {
+  
+  const DappNameList = [
+    "Gamma",
+    "RangeProtocol",
+    "Arrakis",
+    "Metavault",
+    "Steer",
+    "Juice",
+    "BlastOff",
+    "AgentFi"
+  ]
+  if (DappNameList.includes(localConfig?.basic?.name)) {
+    const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`))
     return (
-      <Gamma {...componentProps} />
+      <DynamicComponent {...componentProps} />
     );
   }
 
-  console.log('====componentProps', JSON.stringify(componentProps))
 
 
   return (

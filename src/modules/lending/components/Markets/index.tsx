@@ -1,11 +1,16 @@
 import Big from 'big.js';
 import { useEffect, useMemo } from 'react';
 
+import LendingMarketAmount from '@/modules/lending/components/Markets/Amount';
+import LendingMarketAsset from '@/modules/lending/components/Markets/Asset';
 import LendingMarketHeader from '@/modules/lending/components/Markets/Header';
 import LendingMarketRow from '@/modules/lending/components/Markets/Row';
 import { StyledContainer } from '@/modules/lending/components/Markets/styles';
+import LendingSummary from '@/modules/lending/components/Markets/Summary';
 import { useMultiState } from '@/modules/lending/hooks';
-import type { DexProps } from '@/modules/lending/models';
+import type { DexProps} from '@/modules/lending/models';
+import { MarketsType } from '@/modules/lending/models';
+import { DexType } from '@/modules/lending/models';
 
 const LendingMarkets = (props: Props) => {
   const {
@@ -14,15 +19,12 @@ const LendingMarkets = (props: Props) => {
     userTotalCollateralUsd,
     totalCollateralUsd,
     userTotalBorrowUsd,
-    addAction,
-    toast,
-    chainId,
-    nativeCurrency,
+    userTotalSupplyUsd,
     dexConfig,
-    onSuccess,
-    account,
-    prices,
+    marketsType = MarketsType.Market,
   } = props;
+  
+  const { type, pools } = dexConfig;
 
   const [state, updateState] = useMultiState<any>({});
 
@@ -64,7 +66,7 @@ const LendingMarkets = (props: Props) => {
         }
       ];
     }
-    if (dexConfig.pools && dexConfig.pools.length > 0) {
+    if (pools && pools.length > 0) {
       return [
         {
           key: "asset",
@@ -101,6 +103,120 @@ const LendingMarkets = (props: Props) => {
           key: "handler",
           width: "2%",
         },
+      ];
+    }
+    if (marketsType === MarketsType.Borrow) {
+      return [
+        {
+          key: 'collateral',
+          label: 'Collateral',
+          width: '20%',
+          render: (record: any) => {
+            return (
+              <LendingMarketAsset
+                icon={record.underlyingToken.icon}
+                symbol={record.underlyingToken.symbol}
+              />
+            );
+          },
+        },
+        {
+          key: 'borrow',
+          label: 'Borrow',
+          width: '20%',
+          render: (record: any) => {
+            return (
+              <LendingMarketAsset
+                icon={record.borrowToken.icon}
+                symbol={record.borrowToken.symbol}
+              />
+            );
+          },
+        },
+        {
+          key: 'totalSupplyUsd',
+          label: 'Total Supplied',
+          width: '20%',
+          render: (record: any) => {
+            return (
+              <LendingMarketAmount
+                amount={record.totalSupplied}
+                price={record.borrowTokenPrice}
+                suffixAmountUnit={` ${record.borrowToken.symbol}`}
+              />
+            );
+          },
+        },
+        {
+          key: 'borrowAPR',
+          label: 'Borrow APR',
+          width: '20%',
+          type: 'apy'
+        },
+        {
+          key: 'Utilization',
+          label: 'Utilization',
+          width: '17%',
+          type: 'apy'
+        },
+        {
+          key: 'handler',
+          width: '3%'
+        }
+      ];
+    }
+    if (marketsType === MarketsType.Earn) {
+      return [
+        {
+          key: 'collateral',
+          label: 'Collateral',
+          width: '25%',
+          render: (record: any) => {
+            return (
+              <LendingMarketAsset
+                icon={record.underlyingToken.icon}
+                symbol={record.underlyingToken.symbol}
+              />
+            );
+          },
+        },
+        {
+          key: 'deposit',
+          label: 'Deposit',
+          width: '25%',
+          render: (record: any) => {
+            return (
+              <LendingMarketAsset
+                icon={record.borrowToken.icon}
+                symbol={record.borrowToken.symbol}
+              />
+            );
+          },
+        },
+        {
+          key: 'yourDeposits',
+          label: 'Your Deposits',
+          width: '25%',
+          render: (record: any) => {
+            return (
+              <LendingMarketAmount
+                amount={record.yourLends}
+                price={record.borrowTokenPrice}
+                suffixAmountUnit={` ${record.borrowToken.symbol}`}
+              />
+            );
+          },
+        },
+        {
+          key: 'lendAPR',
+          label: 'Lend APR',
+          width: '22%',
+          type: 'apy'
+        },
+        {
+          key: 'handler',
+          width: '3%'
+        }
       ];
     }
     return [
@@ -144,7 +260,7 @@ const LendingMarkets = (props: Props) => {
         width: '2%'
       }
     ];
-  }, [from]);
+  }, [from, pools, type]);
 
   const data = Object.values(markets || {});
 
@@ -161,6 +277,15 @@ const LendingMarkets = (props: Props) => {
 
   return (
     <StyledContainer>
+      {
+        type === DexType.BorrowAndEarn && (
+          <LendingSummary
+            userTotalCollateralUsd={userTotalCollateralUsd}
+            userTotalBorrowUsd={userTotalBorrowUsd}
+            userTotalSupplyUsd={userTotalSupplyUsd}
+          />
+        )
+      }
       <LendingMarketHeader columns={COLUMNS} />
       {data.map((record: any) => (
         <LendingMarketRow
@@ -169,6 +294,7 @@ const LendingMarkets = (props: Props) => {
           columns={COLUMNS}
           data={record}
           borrowLimit={state.borrowLimit}
+          marketsType={marketsType}
         />
       ))}
     </StyledContainer>
@@ -178,8 +304,10 @@ const LendingMarkets = (props: Props) => {
 export default LendingMarkets;
 
 export interface Props extends DexProps {
+  marketsType?: MarketsType;
   markets: any;
-  userTotalCollateralUsd?: any;
-  totalCollateralUsd: any;
-  userTotalBorrowUsd: any;
+  userTotalCollateralUsd?: string;
+  totalCollateralUsd: string;
+  userTotalBorrowUsd: string;
+  userTotalSupplyUsd: string;
 }

@@ -1,4 +1,5 @@
 
+// @ts-nocheck
 import type { BigNumberish } from "@ethersproject/bignumber";
 import Big from 'big.js';
 import { ethers } from 'ethers';
@@ -84,6 +85,39 @@ export default memo(function Detail(props: any) {
   } = state;
 
   const detailLoading = Object.keys(balances).length < 2 || lpBalance === ""
+
+  const sender = account;
+  const { token0, token1, decimals0, decimals1, id } = data;
+  const vaultAddress = addresses[id];
+
+  const tokensPrice = prices;
+
+  const isInSufficient =
+    Number(amount0) > Number(balances[token0]) ||
+    Number(amount1) > Number(balances[token1]);
+
+  const isWithdrawInsufficient = Number(lpAmount) > Number(lpBalance);
+
+  const balance0 =
+    !amount0 || !tokensPrice?.[token0]
+      ? "-"
+      : parseFloat(Big(amount0).times(tokensPrice[token0]).toFixed(4));
+
+  const balance1 =
+    !amount1 || !tokensPrice?.[token1]
+      ? "-"
+      : parseFloat(Big(amount1).times(tokensPrice[token1]).toFixed(4));
+
+  const balanceLp =
+    !lpAmount || !lpBalance || !curPositionUSD
+      ? "-"
+      : parseFloat(
+        Big(lpAmount)
+          .div(Big(lpBalance).gt(0) ? lpBalance : 1)
+          .times(curPositionUSD)
+          .toFixed(4)
+      );
+
   const getFromDepositAmount = (depositAmount: any, tokenDecimal: number) => {
     const a = new Big(depositAmount[0].toString());
     const b = new Big(depositAmount[1].toString());
@@ -115,9 +149,6 @@ export default memo(function Detail(props: any) {
     return "0";
   };
 
-  const sender = account;
-  const { token0, token1, decimals0, decimals1, id } = data;
-  const vaultAddress = addresses[id];
   const updateLPBalance = () => {
     const abi = ["function balanceOf(address) view returns (uint256)"];
     const vaultContract = new ethers.Contract(
@@ -169,18 +200,6 @@ export default memo(function Detail(props: any) {
         });
     }
   };
-
-  useEffect(() => {
-    if (!sender || !token0 || !token1) return;
-    [
-      { symbol: token0, address: addresses[token0], decimals: decimals0 },
-      { symbol: token1, address: addresses[token1], decimals: decimals1 },
-    ].map(updateBalance);
-
-    updateLPBalance();
-  }, [sender, token0, token1]);
-
-
 
   const handleCheckApproval = (symbol: string, amount: string, decimals: number) => {
     const wei: any = ethers.utils.parseUnits(
@@ -548,33 +567,6 @@ export default memo(function Detail(props: any) {
 
   };
 
-  const tokensPrice = prices;
-
-  const isInSufficient =
-    Number(amount0) > Number(balances[token0]) ||
-    Number(amount1) > Number(balances[token1]);
-
-  const isWithdrawInsufficient = Number(lpAmount) > Number(lpBalance);
-
-  const balance0 =
-    !amount0 || !tokensPrice?.[token0]
-      ? "-"
-      : parseFloat(Big(amount0).times(tokensPrice[token0]).toFixed(4));
-
-  const balance1 =
-    !amount1 || !tokensPrice?.[token1]
-      ? "-"
-      : parseFloat(Big(amount1).times(tokensPrice[token1]).toFixed(4));
-
-  const balanceLp =
-    !lpAmount || !lpBalance || !curPositionUSD
-      ? "-"
-      : parseFloat(
-        Big(lpAmount)
-          .div(Big(lpBalance).gt(0) ? lpBalance : 1)
-          .times(curPositionUSD)
-          .toFixed(4)
-      );
 
   const onUpdateLpPercent = (percent: number) => {
     updateState({
@@ -591,7 +583,16 @@ export default memo(function Detail(props: any) {
 
     handleLPChange(newLpValue);
   };
+  useEffect(() => {
+    if (!sender || !token0 || !token1) return;
+    [
+      { symbol: token0, address: addresses[token0], decimals: decimals0 },
+      { symbol: token1, address: addresses[token1], decimals: decimals1 },
+    ].map(updateBalance);
 
+    updateLPBalance();
+  }, [sender, token0, token1]);
+  
   useEffect(() => {
     if (amount0) {
       handleTokenChange(amount0, token0);

@@ -27,7 +27,7 @@ const IconRight = (
     <path d="M7.18407 4.21913C7.68448 4.61945 7.68448 5.38054 7.18407 5.78087L2.28485 9.70024C1.63009 10.2241 0.660156 9.75788 0.660156 8.91937L0.660156 1.08062C0.660156 0.242118 1.63009 -0.224055 2.28485 0.299756L7.18407 4.21913Z" fill="#979ABE" />
   </svg>
 )
-export default function GammaConnector(props: any) {
+export default function Connector(props: any) {
 
   const columnList: ColunmListType = [{
     width: '25%',

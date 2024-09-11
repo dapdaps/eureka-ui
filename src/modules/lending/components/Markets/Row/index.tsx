@@ -5,7 +5,7 @@ import LendingMarketApy from '@/modules/lending/components/Markets/Apy';
 import LendingMarketAsset from '@/modules/lending/components/Markets/Asset';
 import LendingMarketExpand from '@/modules/lending/components/Markets/Expand';
 import { useMultiState } from '@/modules/lending/hooks';
-import type { Column, DexProps } from '@/modules/lending/models';
+import type { Column, DexProps, MarketsType } from '@/modules/lending/models';
 
 import { StyledExpand, StyledRow, StyledRowHeader, StyledRowItem } from './styles';
 
@@ -69,6 +69,9 @@ const LendingMarketRow = (props: Props) => {
       >
         {columns.map((column) => (
           <StyledRowItem key={column.key} style={{ width: column.width }}>
+            {
+              typeof column.render === 'function' && column.render(data, column)
+            }
             {column.key === 'asset' && (
               <LendingMarketAsset
                 icon={data?.underlyingToken.icon}
@@ -125,4 +128,5 @@ export interface Props extends DexProps {
   totalCollateralUsd: any;
   userTotalBorrowUsd: any;
   userTotalCollateralUsd?: any;
+  marketsType?: MarketsType;
 }
