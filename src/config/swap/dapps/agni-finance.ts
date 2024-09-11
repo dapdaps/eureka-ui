@@ -17,11 +17,9 @@ const networks = {
       mantle['mnt'],
       mantle['usdt'],
       mantle['wmnt'],
-      mantle['axlETH'],
       mantle['meth'],
       mantle['fbtc'],
-      mantle['usdy'],
-      mantle['meth']
+      mantle['usdy']
     ]
   }
 };
