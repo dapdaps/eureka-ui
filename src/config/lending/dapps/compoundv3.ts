@@ -7,6 +7,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.CompoundV3',
   handler: 'bluebiu.near/widget/Lending.Handler.CompoundV3',
   type: 'compound v3',
+  loaderName: 'CompoundV3',
 };
 
 const networks = {

@@ -1,6 +1,6 @@
 
 const basic = {
-  name: 'arrakis-finance',
+  name: 'Arrakis',
   icon: "https://s3.amazonaws.com/dapdap.prod/images/096-arrakis.png",
   dappSrc: 'bluebiu.near/widget/Liquidity.ARRAKIS',
   amountOutFn: 'bluebiu.near/widget/Liquidity.ARRAKIS',

@@ -21,6 +21,7 @@ export function ComponentWrapperPage(props: Props) {
     setCurrentComponentSrc(props.src);
   }, [setCurrentComponentSrc, props]);
 
+  console.log('====props.src', props.src)
   return (
     <>
       {props.meta && <MetaTags {...props.meta} />}

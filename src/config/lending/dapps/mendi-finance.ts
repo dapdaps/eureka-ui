@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.MendiFinance',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.MendiHandlerClaim',
+  loaderName: 'MendiFinance',
 };
 
 const networks = {

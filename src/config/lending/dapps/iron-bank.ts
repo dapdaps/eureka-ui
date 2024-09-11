@@ -6,6 +6,7 @@ const basic = {
   icon: '/images/apps/iron-bank.png',
   data: 'bluebiu.near/widget/Lending.Data.IronBank',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  loaderName: 'IronBank',
 };
 
 const networks = {

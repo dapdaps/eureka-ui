@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.LodestarV1',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.MendiHandlerClaim',
+  loaderName: 'LodestarV1'
 };
 
 const networks = {

@@ -7,6 +7,7 @@ const basic = {
   icon: '/images/apps/cream.png',
   data: 'bluebiu.near/widget/Lending.Data.Cream',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  loaderName: 'Cream'
 };
 
 const networks = {

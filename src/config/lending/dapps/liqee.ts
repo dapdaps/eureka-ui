@@ -5,6 +5,7 @@ const basic = {
   icon: '/images/apps/liqee.png',
   data: 'bluebiu.near/widget/Lending.Data.Liqee',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
+  loaderName: 'Liqee'
 };
 
 const networks = {

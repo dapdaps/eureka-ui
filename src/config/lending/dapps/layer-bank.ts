@@ -9,6 +9,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.LayerBank',
   handler: 'bluebiu.near/widget/Lending.Handler.LayerBank',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.LayerBankHandlerClaim',
+  loaderName: 'LayerBank',
 };
 
 const networks = {

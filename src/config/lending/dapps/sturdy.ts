@@ -4,12 +4,55 @@ const basic = {
   name: 'Sturdy',
   data: 'bluebiu.near/widget/Lending.Sturdy.Data',
   // handler: '',
-  type: '',
+  type: 'borrow and earn',
+  loaderName: 'Sturdy'
 };
 
 const networks = {
   //  mode
   34443: {
+    markets: {
+      '0xb93B53CA8a51A78348a9B22718ca7fe77D13B900': {
+        name: 'ezETH-WETH',
+        address: '0xb93B53CA8a51A78348a9B22718ca7fe77D13B900',
+        rate: '0xAE610460522F3e71c40Ad6a2c70f486341B88Daf',
+        protocolFee: 0.1,
+        underlyingToken: { ...mode['ezeth'] },
+        borrowToken: { ...mode['weth'] },
+      },
+      '0xC8F05Ad2Eb7fc894b822EDb9C07234149375C7A3': {
+        name: 'weETH.mode-WETH',
+        address: '0xC8F05Ad2Eb7fc894b822EDb9C07234149375C7A3',
+        rate: '0xfd364c4f8E03b76F4D8f0f8121A0A31D05F49372',
+        protocolFee: 0.1,
+        underlyingToken: { ...mode['we-eth.mode'] },
+        borrowToken: { ...mode['weth'] },
+      },
+      '0xFd5BdCfFD891F746FbC168cB3c7ea0EFDcE8B6bA': {
+        name: 'wrsETH-WETH',
+        address: '0xFd5BdCfFD891F746FbC168cB3c7ea0EFDcE8B6bA',
+        rate: '0xcDE573EE42c64e297A842eEEF81eEcECA93A887C',
+        protocolFee: 0,
+        underlyingToken: { ...mode['wrseth'] },
+        borrowToken: { ...mode['weth'] },
+      },
+      '0xd056dfd960A69Fa983c9DFb20eDD28f1fd70fc8C': {
+        name: 'MODE-WETH',
+        address: '0xd056dfd960A69Fa983c9DFb20eDD28f1fd70fc8C',
+        rate: '0x90832de4D1915c6e5906F4605bABE7C84a08A0C2',
+        protocolFee: 0.1,
+        underlyingToken: { ...mode['mode'] },
+        borrowToken: { ...mode['weth'] },
+      },
+      '0x810539C09B61112Fb7Aa749a0D17dD2A60c8E00a': {
+        name: 'USDC-WETH',
+        address: '0x810539C09B61112Fb7Aa749a0D17dD2A60c8E00a',
+        rate: '0x39d9DBEBBA50b8dC89c2819e863C1E146235BFEF',
+        protocolFee: 0,
+        underlyingToken: { ...mode['usdc'] },
+        borrowToken: { ...mode['weth'] },
+      },
+    },
     rawMarkets: [
       {
         POOL_NAME: 'ezETH-WETH',
@@ -61,7 +104,14 @@ const networks = {
         protocolFee: 0,
       },
     ],
-    TOKENS: [mode['we-eth.mode'], mode['weth'], mode['wrseth'], mode['ezeth'], mode['usdc'], mode['mode']],
+    TOKENS: [
+      mode['we-eth.mode'],
+      mode['weth'],
+      mode['wrseth'],
+      mode['ezeth'],
+      mode['usdc'],
+      mode['mode']
+    ],
   },
 };
 

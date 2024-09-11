@@ -11,7 +11,7 @@ import SwapDapp from './SwapDapp';
 const PoolDappSingle = dynamic(() => import('./PoolDapp/Single'));
 
 const DappCom = (props: any) => {
-  // console.log('%cdapp data: %o', 'background:#3A1078;color:#fff;', props);
+  console.log('%cdapp data: %o', 'background:#3A1078;color:#fff;', props);
 
   const { dapp, localConfig } = props;
 

@@ -1,6 +1,6 @@
 
 const basic = {
-  name: "steer",
+  name: "Steer",
   icon: "https://s3.amazonaws.com/dapdap.prod/images/154-steerfinance.png",
   dappSrc: 'bluebiu.near/widget/Liquidity.STEER',
   amountOutFn: "bluebiu.near/widget/Liquidity.STEER",
@@ -92,7 +92,6 @@ const networks = {
   // manta
   169: {
     ALL_DATA_URL: "https://subgraph.steer.finance/manta/subgraphs/name/steerprotocol/steer-manta",
-    STAKING_POOLS_URL: "https://9i52h964s3.execute-api.us-east-1.amazonaws.com/dev/staking-pools",
     FEE_APR_URL: "/pool/fee-apr",
     ammName: "QuickSwap",
     ammImage: "https://app.gamma.xyz/_next/static/media/icon.ea1fec4d.svg",
@@ -198,7 +197,6 @@ const networks = {
   },
   81457: {
     ALL_DATA_URL: "https://api.goldsky.com/api/public/project_clohj3ta78ok12nzs5m8yag0b/subgraphs/steer-protocol-blast/1.1.1/gn",
-    STAKING_POOLS_URL: "https://9i52h964s3.execute-api.us-east-1.amazonaws.com/dev/staking-pools",
     FEE_APR_URL: "/pool/fee-apr",
     ammName: "Thruster",
     ammImage: "	https://app.steer.finance/icons/thruster.svg",

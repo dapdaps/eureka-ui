@@ -7,6 +7,7 @@ const basic = {
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   handlerClaim: 'bluebiu.near/widget/Mantle.Lending.LendleClaimHandler',
   type: 'aave2',
+  loaderName: 'Lendle'
 };
 
 const networks = {

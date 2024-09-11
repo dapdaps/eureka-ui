@@ -5,6 +5,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.Ionic',
   handler: 'bluebiu.near/widget/Lending.Handler.Ionic',
   // handlerClaim: 'bluebiu.near/widget/Linea.Lending.LayerBankHandlerClaim',
+  loaderName: 'Ionic'
 };
 
 const networks = {
