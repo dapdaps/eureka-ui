@@ -36,7 +36,7 @@ const ChainName = styled.div`
   color: #fff;
   width: 30px;
 `;
-const ChainTrigger = styled.div`
+const ChainTrigger = styled.div<{ disabled?: boolean }>`
   height: 36px;
   display: flex;
   align-items: center;
@@ -50,7 +50,8 @@ const ChainTrigger = styled.div`
   cursor: pointer;
   transition: all 0.3s;
   &:hover {
-    border: 1px solid rgba(235, 244, 121, 0.3);
+    cursor: ${({ disabled = false }) => `${!disabled ? 'pointer' : 'default'}`};
+    border: 1px solid ${({ disabled = false }) => `${!disabled ? 'rgba(235, 244, 121, 0.3)' : 'rgba(55, 58, 83, 1)'}`};
   }
 `;
 const ChainGroupImg = styled.img`
@@ -112,7 +113,7 @@ const PriceWapper = styled.div`
 
 const TokenWapper = styled.div``;
 
-const TokenTrigger = styled.div`
+const TokenTrigger = styled.div<{ disabled?: boolean }>`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -127,7 +128,8 @@ const TokenTrigger = styled.div`
   width: 160px;
   margin: 0 0 0 auto;
   &:hover {
-    border: 1px solid rgba(235, 244, 121, 0.3);
+    cursor: ${({ disabled = false }) => `${!disabled ? 'pointer' : 'default'}`};
+    border: 1px solid ${({ disabled = false }) => `${!disabled ? 'rgba(235, 244, 121, 0.3)' : 'rgba(55, 58, 83, 1)'}`};
   }
 `;
 
@@ -189,6 +191,12 @@ const BalanceWapper = styled.div`
   }
 `;
 
+const NoConnectText = styled.div`
+  color: #979abe;
+  font-size: 14px;
+  line-height: 32px;
+`;
+
 interface Props {
   title: string;
   address: string;
@@ -247,8 +255,11 @@ export default function ChainTokenAmount({
         <ChainWapper>
           <ChainName>{title}</ChainName>
           <ChainTrigger
+            disabled={!address}
             onClick={() => {
-              setTokenModalShow(true);
+              if (address) {
+                setTokenModalShow(true);
+              }
             }}
           >
             <ChainGroupImg src={currentChain?.icon} key={currentChain?.icon} />
@@ -260,27 +271,35 @@ export default function ChainTokenAmount({
       </Header>
       <Content style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
         <AmountWapper>
-          <AmountInput
-            value={amount}
-            onFocus={() => {
-              setFocus(true);
-            }}
-            onBlur={() => {
-              setFocus(false);
-            }}
-            onChange={(e) => {
-              onAmountChange && !inputDisabled && onAmountChange(e.target.value);
-            }}
-            type="number"
-            disabled={inputDisabled}
-            placeholder="0"
-          />
+          {address ? (
+            <AmountInput
+              value={amount}
+              onFocus={() => {
+                setFocus(true);
+              }}
+              onBlur={() => {
+                setFocus(false);
+              }}
+              onChange={(e) => {
+                onAmountChange && !inputDisabled && onAmountChange(e.target.value);
+              }}
+              type="number"
+              disabled={inputDisabled}
+              placeholder="0"
+            />
+          ) : (
+            <NoConnectText>Please connect your wallet</NoConnectText>
+          )}
+
           <PriceWapper>{usdVal}</PriceWapper>
         </AmountWapper>
         <TokenWapper>
           <TokenTrigger
+            disabled={!address}
             onClick={() => {
-              setTokenModalShow(true);
+              if (address) {
+                setTokenModalShow(true);
+              }
             }}
           >
             {currentToken ? (
