@@ -70,7 +70,7 @@ const LendingContent = (props: Props) => {
       {tab === TabKey.Market && (
         <LendingMarkets
           markets={state.markets}
-          marketsType={dexConfig.type === DexType.BorrowAndEarn ? MarketsType.Borrow : MarketsType.Borrow}
+          marketsType={dexConfig.type === DexType.BorrowAndEarn ? MarketsType.Borrow : MarketsType.Market}
           totalCollateralUsd={state.totalCollateralUsd}
           userTotalCollateralUsd={state.userTotalCollateralUsd}
           userTotalBorrowUsd={state.userTotalBorrowUsd}

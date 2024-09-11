@@ -1,3 +1,4 @@
+import { useDebounce } from 'ahooks';
 import { useEffect, useRef, useState } from 'react';
 import type { ExecuteRequest, QuoteRequest, QuoteResponse } from 'super-bridge-sdk';
 import { execute, getAllToken, getBridgeMsg, getChainScan, getIcon, getQuote, getStatus, init } from 'super-bridge-sdk';
@@ -17,7 +18,9 @@ export default function useQuote(
   const { chainId, provider } = useAccount();
   const newestIdentification = useRef(identification);
 
-  async function getRoutes() {
+  // const inputValue = useDebounce(quoteLoading, { wait: 500 });
+
+  async function getRoutes(quoteRequest: QuoteRequest | null) {
     if (!quoteRequest) {
       setRoutes(null);
       return;
@@ -29,10 +32,12 @@ export default function useQuote(
     let stop = false;
 
     setTimeout(() => {
-      if (!stop) {
-        stop = true;
-        setQuoteLoading(false);
-        setLoading(false);
+      if (quoteRequest.identification === newestIdentification.current) {
+        if (!stop) {
+          stop = true;
+          setQuoteLoading(false);
+          setLoading(false);
+        }
       }
     }, timeout);
 
@@ -51,22 +56,34 @@ export default function useQuote(
       }
     });
     // console.log('routes:', routes)
+    // console.log(quoteRequest.identification, newestIdentification.current, Number(quoteRequest.identification) === Number(newestIdentification.current))
+
     if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {
       setLoading(false);
       setQuoteLoading(false);
       setRoutes(_routes);
+      return;
     }
 
-    setLoading(false);
-    setQuoteLoading(false);
+    if (quoteRequest.identification === newestIdentification.current) {
+      setLoading(false);
+      setQuoteLoading(false);
+    }
+
+    // if (_routes[0].identification === newestIdentification.current) {
+    //   setLoading(false);
+    //   setQuoteLoading(false);
+    // }
   }
 
   useEffect(() => {
-    getRoutes();
+    getRoutes(quoteRequest);
   }, [quoteRequest]);
 
   useEffect(() => {
-    newestIdentification.current = identification;
+    if (identification) {
+      newestIdentification.current = identification;
+    }
   }, [identification]);
 
   return {
