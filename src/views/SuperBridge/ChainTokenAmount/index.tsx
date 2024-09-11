@@ -271,7 +271,7 @@ export default function ChainTokenAmount({
       </Header>
       <Content style={{ background: focus ? 'rgba(27, 30, 39, 1)' : 'rgba(46, 49, 66, 1)' }}>
         <AmountWapper>
-          {address ? (
+          {address || inputDisabled ? (
             <AmountInput
               value={amount}
               onFocus={() => {

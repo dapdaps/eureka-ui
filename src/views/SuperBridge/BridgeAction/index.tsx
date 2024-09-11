@@ -329,18 +329,19 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
           address={addressFormated(account as string)}
           chainList={chainList}
         />
-        <ArrowSwap
-          onClick={() => {
-            const [_toChain, _fromChain] = [fromChain, toChain];
-            const [_toToken, _fromToken] = [fromToken, toToken];
+        <ArrowSwap>
+          <div
+            className="arrow"
+            onClick={() => {
+              const [_toChain, _fromChain] = [fromChain, toChain];
+              const [_toToken, _fromToken] = [fromToken, toToken];
 
-            setFromChain(_fromChain);
-            setToChain(_toChain);
-            setFromToken(_fromToken);
-            setToToken(_toToken);
-          }}
-        >
-          <div className="arrow">
+              setFromChain(_fromChain);
+              setToChain(_toChain);
+              setFromToken(_fromToken);
+              setToToken(_toToken);
+            }}
+          >
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M6.49992 1V11.5M6.49992 11.5L1 6M6.49992 11.5L12 6"
