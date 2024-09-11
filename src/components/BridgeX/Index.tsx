@@ -1,6 +1,6 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
@@ -111,6 +111,12 @@ const SubmitBtn = styled.button`
 `;
 
 let quoteParam = null;
+
+const toolMap: any = {
+  mode: 'official',
+  blast: 'official',
+  scroll: 'official'
+};
 
 export default function BridgeX({
   icon,
@@ -318,6 +324,10 @@ export default function BridgeX({
     setBtnText('Send');
   }, [account, currentChainId, inputValue, inputBalance, route, loading, chainFrom]);
 
+  const bridgeType = useMemo(() => {
+    return toolMap[tool] ? toolMap[tool] : tool;
+  }, [tool]);
+
   function validateInput() {
     if (!account || !chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
       return false;
@@ -365,7 +375,7 @@ export default function BridgeX({
         fromAddress: account,
         destAddress: otherAddressChecked ? toAddress : account,
         amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
-        engine: [tool]
+        engine: [bridgeType]
       };
 
       getQuote(quoteParam, provider.getSigner())
