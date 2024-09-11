@@ -14,7 +14,7 @@ const Container = styled.div`
   /* margin-top: 20px; */
   background: linear-gradient(180deg, #262836 0%, #000000 100%);
   border-radius: 12px;
-  padding: 25px 14px 10px;
+  padding: 25px 0 10px 14px;
   margin-bottom: 10px;
 `;
 
@@ -22,6 +22,7 @@ const TitleWapper = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
+  padding: 0 10px 0;
   .title {
     font-size: 16px;
     font-weight: 400;

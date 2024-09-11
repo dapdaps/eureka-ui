@@ -50,7 +50,6 @@ const BridgeSummary = styled.div`
     align-items: flex-start;
     gap: 5px;
     flex-wrap: wrap;
-    height: 40px;
     padding-top: 7px;
     .tag {
       font-size: 10px;
@@ -89,7 +88,7 @@ const BridgeAmount = styled.div`
   .cost-wapper {
     display: flex;
     align-items: center;
-    font-size: 14px;
+    font-size: 10px;
     font-weight: 400;
     line-height: 16.8px;
     color: rgba(151, 154, 190, 1);
@@ -129,8 +128,8 @@ interface Props {
 }
 
 const ActivityTags: any = {
-  Rango: 'Campaign'
-  // Swing: 'Compaign'
+  Rango: 'Campaign',
+  Swing: 'Campaign'
 };
 
 export default function Route({
