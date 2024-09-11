@@ -90,7 +90,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, contentSt
           quantity={+quantity}
           total={total}
           showAchieved={true}
-          showPercent={medal?.threshold > 0 ? false : true}
+          showPercent={medal?.trading_volume > 0 ? true : false}
           barWidth={barWidth}
         />
       )}
