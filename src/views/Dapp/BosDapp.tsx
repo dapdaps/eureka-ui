@@ -89,7 +89,10 @@ export default function BosDapp({
   const nativeComponents = [
     'lending',
     'compound v3',
+    'aave-v3'
   ];
+  console.log(localConfig.type, 'localConfig.type');
+  
   if (nativeComponents.includes(localConfig.type)) {
     return (
       <LendingDex {...componentProps} />

@@ -23,7 +23,7 @@ const LendingCompoundV3 = (props: Props) => {
     curChain,
     curPool
   } = props;
-
+  
   const { provider } = useAccount();
   const [Data] = useDynamicLoader({ path: '/lending/datas', name: dexConfig.loaderName });
 

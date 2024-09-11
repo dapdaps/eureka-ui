@@ -550,6 +550,8 @@ const BenqiData = (props: any) => {
     };
 
     const getCTokensData = () => {
+      console.log(markets, 'markets');
+      
       Object.values(markets).forEach((market) => {
         getCTokenData(market);
       });

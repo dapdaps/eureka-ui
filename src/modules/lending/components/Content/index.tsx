@@ -35,10 +35,13 @@ const LendingContent = (props: Props) => {
   const [state, updateState] = useMultiState<any>({
     loading: false
   });
-
+  
   useEffect(() => {
     updateState({ loading: !chainIdNotSupport });
   }, [chainIdNotSupport]);
+
+  console.log(state.markets, 'state.markets');
+  
 
   const handleTableButtonClick = (address: string, actionText: string) => {
     const market = state.markets[address];
@@ -123,6 +126,8 @@ const LendingContent = (props: Props) => {
             prices={prices}
             chainId={chainId}
             curPool={curPool}
+            dexConfig={dexConfig}
+            isChainSupported={!chainIdNotSupport}
             {...dexConfig}
             onLoad={(data: any) => {
               console.log('%cLendingContent DATA onLoad: %o', 'background: #FF885B; color:#fff;', data);

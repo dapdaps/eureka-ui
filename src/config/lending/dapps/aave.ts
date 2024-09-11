@@ -24,6 +24,7 @@ const basic = {
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'aave-v3',
+  loaderName: 'AaveV3'
 };
 
 const networks = {
