@@ -3,13 +3,13 @@ import { mantle } from '@/config/tokens/mantle';
 const basic = {
   name: 'Agni Finance',
   logo: '/images/apps/agni-finance.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   5000: {
     defaultCurrencies: {
       input: mantle['weth'],
-      output: mantle['usdc'],
+      output: mantle['usdc']
     },
     tokens: [
       mantle['weth'],
@@ -17,13 +17,11 @@ const networks = {
       mantle['mnt'],
       mantle['usdt'],
       mantle['wmnt'],
-      mantle['axlETH'],
       mantle['meth'],
       mantle['fbtc'],
-      mantle['usdy'],
-      mantle['meth'],
-    ],
-  },
+      mantle['usdy']
+    ]
+  }
 };
 
 export { basic, networks };
