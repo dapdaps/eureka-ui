@@ -16,7 +16,7 @@ import {
   StyledTradeBalance,
   StyledTradeBlock,
   StyledTradeInputContainer,
-  StyledTradeTitle,
+  StyledTradeTitle
 } from './styles';
 
 type Props = {
@@ -37,11 +37,15 @@ const Currency = ({
   currency,
   title,
   disabled,
-  isFrom,
+  isFrom
 }: Props) => {
   const prices = usePriceStore((store) => store.price);
 
-  const { tokenBalance: balance, isLoading } = useTokenBalance(currency?.address || '', currency?.decimals || 0);
+  const { tokenBalance: balance, isLoading } = useTokenBalance(
+    currency?.address || '',
+    currency?.decimals || 0,
+    currency?.chainId
+  );
 
   useEffect(() => {
     if (!isFrom) return;
@@ -76,7 +80,7 @@ const Currency = ({
                   onAmountChange(balanceFormated(new Big(balance).toFixed(18), 18));
                 }}
               >
-                {!balance ? '-' : balanceFormated(balance, 4)}
+                {!balance || !currency ? '-' : balanceFormated(balance, 4)}
               </span>
             )}
           </div>

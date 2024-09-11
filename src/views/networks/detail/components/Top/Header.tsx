@@ -12,64 +12,41 @@ import {
   StyledInfo,
   StyledStat,
   StyledStatItem,
-  StyledTitleWrapper,
+  StyledTitleWrapper
 } from './styles';
 
-const Header = (props: { chain: any; loading?: boolean; }) => {
+const Header = (props: { chain: any; loading?: boolean }) => {
   const { chain, loading } = props;
 
-  const {
-    logo,
-    name,
-    tvl,
-    trading_volume_general,
-    chainId,
-  } = chain;
+  const { logo, name, tvl, trading_volume_general, chainId } = chain;
 
   return (
     <StyledHeaderWrapper>
       <StyledTitleWrapper>
-        {
-          !loading ? (
-            <Image src={logo} alt="" width={100} height={100} />
-          ) : (
-            <Skeleton width="100px" height="100px" borderRadius="16px" containerClassName="skeleton" />
-          )
-        }
+        {!loading ? (
+          <Image src={logo} alt="" width={100} height={100} />
+        ) : (
+          <Skeleton width="100px" height="100px" borderRadius="16px" containerClassName="skeleton" />
+        )}
         <StyledInfo>
           <StyledChainName>
-            {
-              loading ? (
-                <Skeleton
-                  width="140px"
-                  height="50px"
-                  borderRadius="16px"
-                  containerClassName="skeleton"
-                />
-              ) : name
-            }
-          </StyledChainName>
-          {
-            loading ? (
-              <Skeleton
-                width="140px"
-                height="32px"
-                borderRadius="16px"
-                containerClassName="skeleton"
-              />
+            {loading ? (
+              <Skeleton width="140px" height="50px" borderRadius="16px" containerClassName="skeleton" />
             ) : (
-              <AddMetaMask
-                chainId={chainId}
-                bp="100121-001"
-              />
-            )
-          }
+              name
+            )}
+          </StyledChainName>
+          {loading ? (
+            <Skeleton width="140px" height="32px" borderRadius="16px" containerClassName="skeleton" />
+          ) : (
+            <AddMetaMask chainId={chainId} bp="100121-001" />
+          )}
           {/*<NativeCurrency isTag tbdToken={tbd_token} nativeCurrency={native_currency} onClick={onNativeClick}/>*/}
         </StyledInfo>
       </StyledTitleWrapper>
       <StyledStat>
-        {
-          loading ? [224, 76, 37].map((width) => (
+        {loading ? (
+          [224, 76, 37].map((width) => (
             <Skeleton
               key={width}
               width={`${width}px`}
@@ -77,25 +54,25 @@ const Header = (props: { chain: any; loading?: boolean; }) => {
               borderRadius="16px"
               containerClassName="skeleton"
             />
-          )) : (
-            <>
-              <StyledStatItem>
-                <span className="key">TVL</span>
-                <ValuePercent className="tvl-value">
-                  {/* ${formatIntegerThousandsSeparator(tvl, 1)} */}
-                  {formatValueDecimal(tvl, '$', 2, true)}
-                </ValuePercent>
-              </StyledStatItem>
-              <StyledStatItem>
-                <span className="key">Volume (24h)</span>
-                <ValuePercent className="tvl-value">
-                  {/* {formatIntegerThousandsSeparator(trading_volume_general, 0)} */}
-                  {formatValueDecimal(trading_volume_general, '$', 2, true)}
-                </ValuePercent>
-              </StyledStatItem>
-            </>
-          )
-        }
+          ))
+        ) : (
+          <>
+            <StyledStatItem>
+              <span className="key">TVL</span>
+              <ValuePercent className="tvl-value">
+                {/* ${formatIntegerThousandsSeparator(tvl, 1)} */}
+                {formatValueDecimal(tvl, '$', 2, true)}
+              </ValuePercent>
+            </StyledStatItem>
+            <StyledStatItem>
+              <span className="key">Volume (24h)</span>
+              <ValuePercent className="tvl-value">
+                {/* {formatIntegerThousandsSeparator(trading_volume_general, 0)} */}
+                {formatValueDecimal(trading_volume_general, '$', 2, true)}
+              </ValuePercent>
+            </StyledStatItem>
+          </>
+        )}
       </StyledStat>
     </StyledHeaderWrapper>
   );

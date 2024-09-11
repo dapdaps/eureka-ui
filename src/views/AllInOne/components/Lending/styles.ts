@@ -15,7 +15,7 @@ export const StyledChain = styled.div<{ bg?: string }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  
+
   img {
     width: 80%;
     height: 80%;
@@ -24,16 +24,16 @@ export const StyledChain = styled.div<{ bg?: string }>`
 export const StyledSupplied = styled.div<{ sub?: boolean }>`
   font-size: 16px;
   color: #fff;
-  ${({ sub }) => sub ? 'font-size: 12px;color: #6c6e87;' : ''}
+  ${({ sub }) => (sub ? 'font-size: 12px;color: #6c6e87;' : '')}
 `;
 export const StyledContent = styled.div`
-  margin-top: 12px;
+  margin-top: 30px;
 `;
 
-export const StyledConnectButton = styled.button<{ bg: string, color?: string }>`
+export const StyledConnectButton = styled.button<{ bg: string; color?: string }>`
   text-align: center;
-  background: ${props => props.bg};
-  color: ${props => props.color ?? '#fff'};
+  background: ${(props) => props.bg};
+  color: ${(props) => props.color ?? '#fff'};
   width: 100%;
   max-width: 488px;
   height: 60px;
@@ -59,5 +59,4 @@ export const StyledAccountTip = styled.div`
   line-height: 38px;
 `;
 
-export const StyledSwitchButton = styled.button<{ bg?: string }>`
-`;
+export const StyledSwitchButton = styled.button<{ bg?: string }>``;

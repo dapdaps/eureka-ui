@@ -86,7 +86,7 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
 
   const onOdysseyClick = (ody: Odyssey) => {
     if (odyssey[ody.id]) {
-      router.push(odyssey[ody.id].path);
+      router.push(ody.link || odyssey[ody.id].path);
       return;
     }
     toast.fail('Invalid odyssey id!');
@@ -135,27 +135,25 @@ const TooltipList: React.FC<TooltipListProps> = ({ data }) => {
               hover: {
                 scale: 1.2,
                 zIndex: 2,
-                filter: 'drop-shadow(0px 0px 10px rgba(223, 254, 0, 0.60))',
+                filter: 'drop-shadow(0px 0px 10px rgba(223, 254, 0, 0.60))'
               },
               default: {
                 zIndex: 1,
-                filter: 'unset',
-              },
+                filter: 'unset'
+              }
             }}
           >
             <StyledTagChainMask
               variants={{
                 hover: {
-                  opacity: 0,
+                  opacity: 0
                 },
                 default: {
-                  opacity: 1,
-                },
+                  opacity: 1
+                }
               }}
             />
-            <img
-              src={RewardIconsMap[item.logo_key]?.icon}
-            />
+            <img src={RewardIconsMap[item.logo_key]?.icon} />
           </StyledTagChain>
         </div>
       ))}

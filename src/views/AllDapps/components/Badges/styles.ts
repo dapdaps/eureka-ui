@@ -19,13 +19,13 @@ export const StyledContainer = styled.div`
     display: none;
   }
 `;
-export const StyledBadge = styled(motion.div)<{ $status?: StatusType; }>`
+export const StyledBadge = styled(motion.div)<{ $status?: StatusType }>`
   height: 32px;
   flex-shrink: 0;
   border-radius: 34px;
-  background: #21222B;
+  background: #21222b;
   padding: 0 14px 0 11px;
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -35,7 +35,7 @@ export const StyledBadge = styled(motion.div)<{ $status?: StatusType; }>`
   align-items: center;
   gap: 6px;
   position: relative;
-  opacity: ${({ $status }) => $status ? ($status === StatusType.ongoing ? 1 : 0.5) : 1};
+  opacity: ${({ $status }) => ($status ? ($status === StatusType.ongoing ? 1 : 0.5) : 1)};
 
   &.group {
     padding-left: 8px;
@@ -43,7 +43,7 @@ export const StyledBadge = styled(motion.div)<{ $status?: StatusType; }>`
     gap: 0;
 
     > img {
-      border: 2px solid #292B33;
+      border: 2px solid #292b33;
       border-radius: 50%;
       &:not(:first-child) {
         margin-left: -6px;
@@ -83,7 +83,7 @@ export const StyledBadgeTooltip = styled(motion.div)`
   height: 215px;
   flex-shrink: 0;
   border-radius: 12px;
-  border: 1px solid #464B56;
-  background: #21232A;
+  border: 1px solid #464b56;
+  background: #21232a;
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.25);
 `;

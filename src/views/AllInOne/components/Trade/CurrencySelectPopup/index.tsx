@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 import Modal from '@/components/Modal';
@@ -21,20 +21,21 @@ import {
   InputWarpper,
   StyledBalanceWrap,
   StyledRowR,
-  StyledTokenNameWrapper,
+  StyledTokenNameWrapper
 } from './styles';
 
 type Props = {
   tokens: Token[];
   display: boolean;
   currency?: Token;
+  updater: number;
   onClose: () => void;
   onSelect: (token: Token) => void;
 };
-const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: Props) => {
+const CurrencySelectPopup = ({ tokens, display, currency, updater, onClose, onSelect }: Props) => {
   const prices = usePriceStore((store) => store.price);
   const [searchVal, setSearchVal] = useState('');
-  const { loading, balances = {} } = useTokensBalance(tokens);
+  const { loading, balances = {}, queryBalance } = useTokensBalance(tokens);
 
   const filterTokens = useMemo(() => {
     return tokens.filter((token: any) => {
@@ -48,10 +49,17 @@ const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: P
     });
   }, [tokens, searchVal]);
 
+  useEffect(() => {
+    queryBalance();
+  }, [updater]);
+
   return (
     <Modal
       display={display}
-      onClose={onClose}
+      onClose={() => {
+        onClose();
+        setSearchVal('');
+      }}
       title="Select a token"
       width={462}
       content={
@@ -77,6 +85,7 @@ const CurrencySelectPopup = ({ tokens, display, currency, onClose, onSelect }: P
                   key={token.address}
                   onClick={() => {
                     onSelect(token);
+                    setSearchVal('');
                   }}
                 >
                   <CurrencyLabel>

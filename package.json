@@ -8,11 +8,22 @@
   },
   "scripts": {
     "dev": "NEXT_PUBLIC_API=https://test-api.dapdap.net next dev",
-    "dev-win": "set NEXT_PUBLIC_API=https://test-api.dapdap.net& call next dev",
+    "dev:win": "set NEXT_PUBLIC_API=https://test-api.dapdap.net& call next dev",
     "build": "next build",
+    "build:analyze:stats": "ANALYZE_STATS=true next build",
+    "build:analyze": "ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@braintree/sanitize-url": "6.0.4",
@@ -96,13 +107,14 @@
     "recharts": "^2.10.1",
     "rudder-sdk-js": "^2.45.0",
     "styled-components": "^6.1.1",
-    "super-bridge-sdk": "0.0.11-14",
+    "super-bridge-sdk": "0.0.11-24",
     "swiper": "^11.0.5",
     "uuid": "^9.0.1",
     "viem": "^2.2.0",
     "zustand": "^4.4.6"
   },
   "devDependencies": {
+    "@next/bundle-analyzer": "^14.2.5",
     "@types/analytics-node": "^3.1.14",
     "@types/big.js": "^6.2.2",
     "@types/d3": "^7.4.3",
@@ -122,6 +134,9 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "husky": "^9.1.5",
+    "lint-staged": "^15.2.9",
+    "prettier": "^3.3.3",
+    "next-plugin-bundle-stats": "^4.14.1",
     "ts-loader": "^9.5.1",
     "typescript": "5.3.2"
   }

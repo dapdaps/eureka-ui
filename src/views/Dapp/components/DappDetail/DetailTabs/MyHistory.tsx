@@ -4,14 +4,14 @@ import { useMemo, useRef } from 'react';
 
 import Empty from '@/components/Empty';
 import Pagination from '@/components/pagination';
+import TooltipSimple from '@/components/Tooltip';
+import { SupportedChains } from '@/config/all-in-one/chains';
 import useAccount from '@/hooks/useAccount';
 import type { Category } from '@/hooks/useAirdrop';
 import { useUserStore } from '@/stores/user';
 import { copyText } from '@/utils/copy';
 import { formatUSDate } from '@/utils/date';
 import { formateAddress } from '@/utils/formate';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
-import { chainPortfolioShowConfig } from '@/views/Dapp/components/DappDetail/config';
 import { formatTitle } from '@/views/OnBoarding/helpers';
 
 import FlexTable from '../../FlexTable';
@@ -27,25 +27,15 @@ import {
   StyledHistoryDappName,
   StyledMyAddress,
   StyledMyAvatar,
-  StyledTitleText,
+  StyledTitleText
 } from './styles';
 
 const Types: any = {
   network: 'chain',
-  dapp: 'dApp',
+  dapp: 'dApp'
 };
 
-const MyHistory = (
-  {
-    category,
-    loading,
-    historyList,
-    pageTotal,
-    pageIndex,
-    fetchHistoryList,
-    chainIds,
-  }: Props) => {
-
+const MyHistory = ({ category, loading, historyList, pageTotal, pageIndex, fetchHistoryList, chainIds }: Props) => {
   const router = useRouter();
   const { account } = useAccount();
   const userInfo = useUserStore((store: any) => store.user);
@@ -53,48 +43,50 @@ const MyHistory = (
   const copyTooltipRef = useRef<any>(null);
 
   const onPortfolioClick = () => {
-    router.push('/portfolio');
+    router.push({ pathname: '/portfolio', query: { tab: '3' } });
   };
 
   const historyDappColumns: Column[] = [
     {
       dataIndex: 'actions',
       title: 'Actions',
-      render: (_, record) => <StyledTitleText>{formatTitle(record)}</StyledTitleText>,
+      render: (_, record) => <StyledTitleText>{formatTitle(record)}</StyledTitleText>
     },
     {
       dataIndex: 'timestamp',
       title: 'Time',
       render: (_, record) => <StyledDateText>{formatUSDate(record.timestamp)}</StyledDateText>,
-      width: '30%',
-    },
+      width: '30%'
+    }
   ];
 
   const historyChainColumns: Column[] = [
     {
       dataIndex: 'actions',
       title: 'Actions',
-      render: (_, record) => <StyledTitleText>{formatTitle(record)}</StyledTitleText>,
+      render: (_, record) => <StyledTitleText>{formatTitle(record)}</StyledTitleText>
     },
     {
       dataIndex: 'dapp',
       title: 'dApp',
       width: '28%',
-      render: (_, record) => <StyledHistoryDapp>
-        <StyledHistoryDappLogo url={record.dapp_logo} />
-        <StyledHistoryDappName>{record.template ?? '-'}</StyledHistoryDappName>
-      </StyledHistoryDapp>,
+      render: (_, record) => (
+        <StyledHistoryDapp>
+          <StyledHistoryDappLogo url={record.dapp_logo} />
+          <StyledHistoryDappName>{record.template ?? '-'}</StyledHistoryDappName>
+        </StyledHistoryDapp>
+      )
     },
     {
       dataIndex: 'timestamp',
       title: 'Time',
       render: (_, record) => <StyledDateText>{formatUSDate(record.timestamp)}</StyledDateText>,
-      width: '30%',
-    },
+      width: '30%'
+    }
   ];
 
   const isShowPortfolio = useMemo(() => {
-    return chainIds.some((chain: number) => chainPortfolioShowConfig.includes(chain));
+    return chainIds.some((chain: number) => SupportedChains.map((item) => item.chainId).includes(chain));
   }, [chainIds]);
 
   return (
@@ -103,14 +95,9 @@ const MyHistory = (
         <StyledHeadInfo>
           <StyledMyAvatar url={userInfo.avatar} />
           <StyledMyAddress>{formateAddress(account ?? '')}</StyledMyAddress>
-          {
-            account && (
-              <>
-              <TooltipSimple
-                ref={copyTooltipRef}
-                tooltip="Copied!"
-                isControlled
-              >
+          {account && (
+            <>
+              <TooltipSimple ref={copyTooltipRef} tooltip="Copied!" isControlled>
                 <Image
                   className="head-icon"
                   src="/images/alldapps/icon-copy.svg"
@@ -125,33 +112,35 @@ const MyHistory = (
                   }}
                 />
               </TooltipSimple>
-              </>
-            )
-          }
+            </>
+          )}
         </StyledHeadInfo>
-        {account && isShowPortfolio && (<StyledHeadOther onClick={onPortfolioClick}>
-          View more on Portfolio
-        </StyledHeadOther>)
-        }
+        {account && isShowPortfolio && (
+          <StyledHeadOther onClick={onPortfolioClick}>View more on Portfolio</StyledHeadOther>
+        )}
       </StyledHead>
       <FlexTable
         className="history-table"
         loading={loading}
         list={historyList}
         columns={category == 'network' ? historyChainColumns : historyDappColumns}
-        emptyText={<Empty
-          size={42}
-          tips={<StyledEmptyTxt>You don’t have any record on this {Types[category]} yet</StyledEmptyTxt>}
-        />}
-        pagination={<Pagination
-          pageClassName={'history-pagination-item'}
-          className={'history-pagination'}
-          pageTotal={pageTotal}
-          pageIndex={pageIndex}
-          onPage={(page) => {
-            fetchHistoryList(page);
-          }}
-        />}
+        emptyText={
+          <Empty
+            size={42}
+            tips={<StyledEmptyTxt>You don’t have any record on this {Types[category]} yet</StyledEmptyTxt>}
+          />
+        }
+        pagination={
+          <Pagination
+            pageClassName={'history-pagination-item'}
+            className={'history-pagination'}
+            pageTotal={pageTotal}
+            pageIndex={pageIndex}
+            onPage={(page) => {
+              fetchHistoryList(page);
+            }}
+          />
+        }
       />
     </>
   );

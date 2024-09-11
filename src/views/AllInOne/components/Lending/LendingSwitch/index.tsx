@@ -46,7 +46,8 @@ const LendingSwitch = (props: IProps) => {
   const { active, disabled, onChange, theme } = props;
   return (
     <Switcher
-      onClick={() => {
+      onClick={(e) => {
+        e.stopPropagation();
         onChange?.();
       }}
       style={theme ? theme : {}}

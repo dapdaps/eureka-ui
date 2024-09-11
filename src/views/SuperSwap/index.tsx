@@ -1,6 +1,6 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import { useCallback, useEffect,useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import type { Token } from '@/types';
@@ -22,7 +22,7 @@ import {
   StyledInputs,
   StyledTradeFooter,
   StyledTradeIcon,
-  StyleProviderHeader,
+  StyleProviderHeader
 } from './styles';
 
 export default function SuperSwap() {
@@ -42,7 +42,7 @@ export default function SuperSwap() {
     chainId,
     onSuccess() {
       setUpdater(Date.now());
-    },
+    }
   });
 
   const { run: runQuoter } = useDebounceFn(
@@ -50,8 +50,8 @@ export default function SuperSwap() {
       onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
     },
     {
-      wait: 500,
-    },
+      wait: 500
+    }
   );
 
   const onSelectToken = useCallback(
@@ -72,7 +72,7 @@ export default function SuperSwap() {
       setOutputCurrency(_outputCurrency);
       setShowTokensSelector(false);
     },
-    [selectType, inputCurrency, outputCurrency, inputCurrencyAmount],
+    [selectType, inputCurrency, outputCurrency, inputCurrencyAmount]
   );
 
   useEffect(() => {
@@ -101,14 +101,22 @@ export default function SuperSwap() {
     setOutputCurrency(null as any);
   }, [chainId]);
 
-  const changeTokenType = useCallback(() => {
-    if (!trade || !outputCurrency) return;
-    setInputCurrency(outputCurrency);
-    setOutputCurrency(inputCurrency);
+  const swapToken = useCallback(() => {
+    const tempInputCurrency = inputCurrency;
+    const tempOutputCurrency = outputCurrency;
+
+    setInputCurrency(tempOutputCurrency);
+    setOutputCurrency(tempInputCurrency);
+
     setSelectType('in');
-    setInputCurrencyAmount(trade?.outputCurrencyAmount);
-    runQuoter();
-  }, [outputCurrency, outputCurrency, trade]);
+
+    if (trade) {
+      setInputCurrencyAmount(trade.outputCurrencyAmount);
+      setTimeout(() => {
+        runQuoter();
+      }, 0);
+    }
+  }, [inputCurrency, outputCurrency, trade, runQuoter]);
 
   return (
     <StyledContainer>
@@ -137,7 +145,7 @@ export default function SuperSwap() {
               onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
             }}
           />
-          <StyledTradeIcon disabled={false} onClick={changeTokenType}>
+          <StyledTradeIcon disabled={false} onClick={swapToken}>
             <Arrow2Down />
           </StyledTradeIcon>
           <InputCard
