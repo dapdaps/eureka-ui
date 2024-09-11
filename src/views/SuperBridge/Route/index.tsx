@@ -128,8 +128,8 @@ interface Props {
 }
 
 const ActivityTags: any = {
-  Rango: 'Campaign',
-  Swing: 'Campaign'
+  Rango: 'Campaign'
+  // Swing: 'Campaign'
 };
 
 export default function Route({
