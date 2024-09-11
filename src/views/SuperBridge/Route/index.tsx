@@ -132,7 +132,7 @@ interface Props {
 }
 
 const ActivityTags: any = {
-  Rango: 'Compaign'
+  Rango: 'Campaign'
   // Swing: 'Compaign'
 };
 
