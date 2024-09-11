@@ -1,6 +1,7 @@
 import Big from 'big.js';
 import React, { useEffect, useMemo, useState } from 'react';
 
+import Loading from '@/components/Icons/Loading';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { balanceFormated } from '@/utils/balance';
 
@@ -33,7 +34,7 @@ export default function CurrencyInput({
 }: any) {
   const [focus, setFocus] = useState(false);
   const tokenPrice = useMemo(() => (currency ? prices[currency.priceKey || currency.symbol] : 0), [prices, currency]);
-  const { tokenBalance } = useTokenBalance(currency?.address, currency?.decimals);
+  const { tokenBalance, isLoading } = useTokenBalance(currency?.address, currency?.decimals);
   useEffect(() => {
     if (tokenBalance && onUpdateCurrencyBalance) onUpdateCurrencyBalance(tokenBalance);
   }, [tokenBalance]);
@@ -95,13 +96,17 @@ export default function CurrencyInput({
               }}
             >
               Balance:{' '}
-              <span
-                style={{
-                  textDecoration: disabled ? 'none' : 'underline'
-                }}
-              >
-                {currency ? balanceFormated(tokenBalance) : '-'}
-              </span>
+              {isLoading ? (
+                <Loading />
+              ) : (
+                <span
+                  style={{
+                    textDecoration: disabled ? 'none' : 'underline'
+                  }}
+                >
+                  {currency ? balanceFormated(tokenBalance) : '-'}
+                </span>
+              )}
             </Amount>
           )}
         </CurrencyField>
