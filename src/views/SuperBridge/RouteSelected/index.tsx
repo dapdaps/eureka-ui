@@ -131,7 +131,7 @@ export default function RouteSelected({
         </Empty>
       )}
 
-      {sortedRoutes && toToken && (
+      {(quoteLoading || (sortedRoutes && sortedRoutes.length)) && (
         <RouteModal
           best={best}
           fast={fast}
