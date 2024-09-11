@@ -102,15 +102,13 @@ export default function useTrade({ chainId, template }: any) {
 
         const _trade = {
           ...formatTrade({
-            market: data,
+            market: { ...data, template },
             rawBalance,
             gasPrice,
             prices,
             inputCurrency,
             outputCurrency,
-            inputCurrencyAmount,
-            name: template,
-            logo: dexs[template].logo
+            inputCurrencyAmount
           })
         };
 
