@@ -8,4 +8,5 @@ export const StyledContainer = styled.div`
   border-radius: 20px;
   padding: 30px 34px 20px 40px;
   min-height: 100px;
+  position: relative;
 `;
