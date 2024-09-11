@@ -11,27 +11,24 @@ const Contanier = styled.div<{ active: boolean; canClick: any }>`
   min-height: 78px;
   border-radius: 10px;
   border: ${({ active }) => `1px solid ${active ? 'rgba(235, 244, 121, .3)' : 'rgba(55, 58, 83, 1)'}`};
-  padding: 10px 16px;
+  padding: 10px 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   transition: all 0.3s;
   cursor: ${({ canClick }) => `${canClick ? 'pointer' : 'default'}`};
   opacity: ${({ active }) => (active ? '1' : '.6')};
-  /* .name {
-    color: ${({ active }) => (!active ? 'rgba(151, 154, 190, 1)' : '#fff')};
-  } */
 `;
 
 const BridgeSummary = styled.div`
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 10px;
+  gap: 5px;
   .bridge-names {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 5px;
     margin-bottom: 5px;
     .img {
       width: 30px;
@@ -39,11 +36,11 @@ const BridgeSummary = styled.div`
       border-radius: 100%;
     }
     .name {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: 500;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 5px;
       color: #fff;
     }
   }
@@ -96,7 +93,7 @@ const BridgeAmount = styled.div`
     font-weight: 400;
     line-height: 16.8px;
     color: rgba(151, 154, 190, 1);
-    gap: 10px;
+    gap: 5px;
     white-space: nowrap;
   }
 

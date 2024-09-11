@@ -12,7 +12,6 @@ import MedalCard from '@/views/Profile/components/MedalCard';
 import useMedalList from '@/views/Profile/hooks/useMedalList';
 
 const Wrapper = styled.div`
-  width: 414px;
   overflow: hidden;
   .swiper-bridge {
     display: flex;
@@ -32,9 +31,9 @@ const Wrapper = styled.div`
 `;
 
 const AdWrapper = styled.div`
-  width: 414px;
+  width: 328px;
   .main-ad-img {
-    width: 414px;
+    width: 328px;
     height: 108px;
     cursor: pointer;
   }

@@ -50,7 +50,7 @@ const Wrapper = styled.div`
 `;
 
 const RightContainer = styled.div`
-  width: 414px;
+  width: 328px;
 `;
 
 const Container = styled.div`
