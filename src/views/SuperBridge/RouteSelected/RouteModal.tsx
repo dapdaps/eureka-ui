@@ -40,8 +40,8 @@ export default function RouteModal({
   return (
     <ListWapper>
       {toToken &&
-        routes &&
-        routes.length &&
+        !!routes &&
+        routes.length > 0 &&
         routes?.map((route: QuoteResponse, index) => {
           return (
             <Route
