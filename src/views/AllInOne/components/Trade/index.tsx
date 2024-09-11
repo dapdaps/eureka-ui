@@ -19,7 +19,7 @@ import {
   StyledTradeContainer,
   StyledTradeEth,
   StyledTradeFooter,
-  StyledTradeIcon,
+  StyledTradeIcon
 } from '@/views/AllInOne/components/Trade/styles';
 
 import useTrade from '../../hooks/useTrade';
@@ -44,7 +44,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
     chainId: chain.chainId,
     onSuccess() {
       setUpdater(Date.now());
-    },
+    }
   });
 
   const { run: runQuoter } = useDebounceFn(
@@ -52,8 +52,8 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
       onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
     },
     {
-      wait: 500,
-    },
+      wait: 500
+    }
   );
 
   const showMarketDropdown = () => {
@@ -79,7 +79,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
       setOutputCurrency(_outputCurrency);
       setShowTokensSelector(false);
     },
-    [selectType, inputCurrency, outputCurrency, inputCurrencyAmount],
+    [selectType, inputCurrency, outputCurrency, inputCurrencyAmount]
   );
 
   useEffect(() => {
@@ -168,7 +168,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
                   Big(inputCurrencyAmount || 0)
                     .div(Big(trade.outputCurrencyAmount || 0).eq(0) ? 1 : trade.outputCurrencyAmount)
                     .toString(),
-                  4,
+                  4
                 )}{' '}
                 {inputCurrency?.symbol}
               </span>
@@ -194,7 +194,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
             </StyledFlex>
           )}
         </StyledTradeFooter>
-        {!!markets.length && (
+        {!!markets.length && !!inputCurrency && !!outputCurrency && (
           <Markets
             isDropdown={isDropdown}
             chain={chain}
@@ -214,6 +214,7 @@ const Trade = (props: { chain: Record<string, any>; disabled?: boolean }) => {
         onClose={() => setShowTokensSelector(false)}
         currency={selectType === 'in' ? inputCurrency : outputCurrency}
         onSelect={onSelectToken}
+        updater={updater}
       />
     </>
   );
