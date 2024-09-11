@@ -20,7 +20,7 @@ import {
   StyledLogoWrapper,
   StyledTable,
   StyledTableHeader,
-  StyledTableRow,
+  StyledTableRow
 } from './styles';
 import User from './User';
 
@@ -53,14 +53,15 @@ export default function RankModal({ dapp, show, onClose }: any) {
           </StyledHeader>
           <StyledContent>
             <StyledDesc>
-            Track your real-time progress on the leaderboard! Updated every 15 minutes. Climb the ranks to earn more rewards!
+              Track your real-time progress on the leaderboard! Updated every 15 minutes. Climb the ranks to earn more
+              rewards!
             </StyledDesc>
             <StyledTable>
               <StyledTableHeader>
                 {columns.map((column) => (
                   <div
                     style={{
-                      width: column.width,
+                      width: column.width
                     }}
                     key={column.key}
                   >
@@ -74,7 +75,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                   {columns.map((column) => (
                     <div
                       style={{
-                        width: column.width,
+                        width: column.width
                       }}
                       key={column.key}
                     >
@@ -99,7 +100,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                       : columns.map((column) => (
                           <div
                             style={{
-                              width: column.width,
+                              width: column.width
                             }}
                             key={column.key}
                           >
@@ -108,7 +109,7 @@ export default function RankModal({ dapp, show, onClose }: any) {
                               <User
                                 account={{
                                   avatar: userInfo.avatar,
-                                  address: userInfo.address,
+                                  address: userInfo.address
                                 }}
                               />
                             )}
@@ -125,6 +126,6 @@ export default function RankModal({ dapp, show, onClose }: any) {
         </>
       }
     />,
-    document.body,
+    document.body
   ) as JSX.Element;
 }
