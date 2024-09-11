@@ -1,4 +1,4 @@
-import 'swiper/css/pagination';
+// import 'swiper/css/pagination';
 
 import Big from 'big.js';
 import { useRouter } from 'next/router';
@@ -156,7 +156,7 @@ export default function Advertise() {
           </SwiperSlide>
         )} */}
 
-        <div id={id} className="swiper-bridge"></div>
+        {/* <div id={id} className="swiper-bridge"></div> */}
       </Swiper>
     </Wrapper>
   );
