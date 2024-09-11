@@ -28,13 +28,13 @@ export default function SwapDapp({
   setCurrentChain,
   setIsChainSupported
 }: any) {
-  const defaultCurrencies = localConfig.networks[currentChain.chain_id].defaultCurrencies;
+  const defaultCurrencies = localConfig.networks[currentChain.chain_id]?.defaultCurrencies;
   const { switchChain } = useSwitchChain();
   const prices = usePriceStore((store) => store.price);
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState('');
   const [outputCurrencyAmount, setOutputCurrencyAmount] = useState('');
-  const [inputCurrency, setInputCurrency] = useState<any>(defaultCurrencies.input);
-  const [outputCurrency, setOutputCurrency] = useState<any>(defaultCurrencies.output);
+  const [inputCurrency, setInputCurrency] = useState<any>(defaultCurrencies?.input);
+  const [outputCurrency, setOutputCurrency] = useState<any>(defaultCurrencies?.output);
   const [displayCurrencySelect, setDisplayCurrencySelect] = useState(false);
   const [selectedTokenAddress, setSelectedTokenAddress] = useState('');
   const [maxInputBalance, setMaxInputBalance] = useState('');
@@ -191,7 +191,7 @@ export default function SwapDapp({
             )}
             <Button
               chain={{
-                chainId,
+                chainId: currentChain.chain_id,
                 selectBgColor: localConfig.theme['--button-color'],
                 textColor: localConfig.theme['--button-text-color']
               }}
