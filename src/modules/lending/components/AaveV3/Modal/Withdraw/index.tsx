@@ -1,5 +1,6 @@
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
@@ -64,7 +65,7 @@ const Input = styled.input`
   font-weight: bold;
   color: var(--agg-primary-color, #fff);
   flex: 1;
-  width: 160px;
+  width: 260px;
 
   &[type='number']::-webkit-outer-spin-button,
   &[type='number']::-webkit-inner-spin-button {
@@ -334,21 +335,11 @@ const WithdrawModal = (props: any) => {
     shownMaxValue = underlyingBalance;
   }
 
-  function debounce(fn: any, wait: any) {
-    let timer = state.timer;
-    return () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn();
-      }, wait);
-      updateState({ timer });
-    };
-  }
-  const updateNewHealthFactor = debounce(() => {
+  const updateNewHealthFactor = debounce((amount: any) => {
     updateState({ newHealthFactor: '-' });
     if (isCollateraled) {
-      const newHealthFactor = formatHealthFactor(calcHealthFactor('WITHDRAW', symbol, state.amount));
-      console.log('withdraw updateNewHealthFactor', symbol, state.amount, newHealthFactor);
+      const newHealthFactor = formatHealthFactor(calcHealthFactor('WITHDRAW', symbol, amount));
+      console.log('withdraw updateNewHealthFactor', symbol, amount, newHealthFactor);
       updateState({ newHealthFactor });
     } else {
       updateState({ newHealthFactor: healthFactor });
@@ -370,7 +361,7 @@ const WithdrawModal = (props: any) => {
         amountInUSD
       });
       if (hasHF) {
-        updateNewHealthFactor();
+        updateNewHealthFactor(value);
       }
     } else {
       updateState({

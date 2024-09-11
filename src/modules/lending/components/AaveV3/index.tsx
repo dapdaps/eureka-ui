@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 import { useEffect, useMemo, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
+import Loading from '@/modules/components/Loading';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 
 import type { DexProps } from '../../models/dex.model';
@@ -596,6 +597,7 @@ const AaveV3 = (props: Props) => {
           </ChainsWrap>
         )}
       </FlexContainer>
+      {state.loading && <Loading size={16} />}
       {state.selectTab === 'MARKET' && (
         <>
           <Markets
@@ -673,6 +675,7 @@ const AaveV3 = (props: Props) => {
                 yourTotalBorrow={state.yourTotalBorrow}
                 theme={dexConfig?.theme}
                 unifyNumber={unifyNumber}
+                provider={provider}
               />
             </YoursTableWrapper>
             <YoursTableWrapper>
@@ -713,6 +716,7 @@ const AaveV3 = (props: Props) => {
                 borrowETHGas={gasEstimation('borrowETH')}
                 borrowERC20Gas={gasEstimation('borrow')}
                 addAction={addAction}
+                provider={provider}
               />
             </YoursTableWrapper>
           </Yours>
@@ -729,6 +733,7 @@ const AaveV3 = (props: Props) => {
               toast={toast}
               theme={dexConfig?.theme}
               unifyNumber={unifyNumber}
+              provider={provider}
             />
           ) : null}
         </>

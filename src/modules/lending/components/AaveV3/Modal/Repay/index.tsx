@@ -1,5 +1,6 @@
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
@@ -68,7 +69,7 @@ const Input = styled.input`
   font-weight: bold;
   color: var(--agg-primary-color, #fff);
   flex: 1;
-  width: 160px;
+  width: 260px;
 
   &[type='number']::-webkit-outer-spin-button,
   &[type='number']::-webkit-inner-spin-button {
@@ -180,20 +181,9 @@ const RepayModal = (props: any) => {
       ? bigMin(getAvailableBalance(), debt).toFixed(decimals)
       : Big('0').toFixed(decimals);
 
-  function debounce(fn: any, wait: any) {
-    let timer = state.timer;
-    return () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn();
-      }, wait);
-      updateState({ timer });
-    };
-  }
-
-  const updateNewHealthFactor = debounce(() => {
+  const updateNewHealthFactor = debounce((amount: any) => {
     updateState({ newHealthFactor: '-' });
-    const newHealthFactor = formatHealthFactor(calcHealthFactor('REPAY', symbol, state.amount));
+    const newHealthFactor = formatHealthFactor(calcHealthFactor('REPAY', symbol, amount));
     console.log('REPAY updateNewHealthFactor', symbol, state.amount, newHealthFactor);
     updateState({ newHealthFactor });
   }, 1000);
@@ -213,7 +203,7 @@ const RepayModal = (props: any) => {
     }
     updateState({ amount: value, amountInUSD });
 
-    updateNewHealthFactor();
+    updateNewHealthFactor(value);
   };
 
   function getNonce(tokenAddress: any, userAddress: any) {

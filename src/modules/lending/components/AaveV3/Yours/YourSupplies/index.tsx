@@ -52,11 +52,12 @@ const YourSupplies = (props: any) => {
     onRefresh,
     unifyNumber,
     from,
+    provider
   } = props;
 
   const [state, updateState] = useMultiState<any>({
     data: undefined,
-    showCollateralModal: false,
+    showCollateralModal: false
   });
 
   const WithdrawButton = ({ data }: any) => {
@@ -83,7 +84,7 @@ const YourSupplies = (props: any) => {
           updateState({
             data: record,
             showCollateralModal: true,
-            flag: record.isCollateraled ? false : true,
+            flag: record.isCollateraled ? false : true
           });
         }}
       />
@@ -120,7 +121,7 @@ const YourSupplies = (props: any) => {
                   </SubText>
                 </div>,
                 renderCollateral(row),
-                <WithdrawButton key={idx} data={row} />,
+                <WithdrawButton key={idx} data={row} />
               ];
             })}
           />
@@ -133,7 +134,7 @@ const YourSupplies = (props: any) => {
           chainId={chainId}
           data={{
             ...state.data,
-            healthFactor,
+            healthFactor
           }}
           dexConfig={dexConfig}
           onActionSuccess={onActionSuccess}
@@ -150,6 +151,7 @@ const YourSupplies = (props: any) => {
           addAction={addAction}
           unifyNumber={unifyNumber}
           onRequestClose={() => setShowWithdrawModal(false)}
+          provider={provider}
         />
       )}
       {state.showCollateralModal && (
@@ -160,7 +162,7 @@ const YourSupplies = (props: any) => {
           chainId={chainId}
           data={{
             ...state.data,
-            healthFactor,
+            healthFactor
           }}
           onActionSuccess={onActionSuccess}
           formatHealthFactor={formatHealthFactor}
@@ -169,9 +171,10 @@ const YourSupplies = (props: any) => {
           account={account}
           from={from}
           unifyNumber={unifyNumber}
+          provider={provider}
           onRequestClose={() => {
             updateState({
-              showCollateralModal: false,
+              showCollateralModal: false
             });
             onRefresh?.();
           }}

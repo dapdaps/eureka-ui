@@ -66,7 +66,7 @@ const Input = styled.input`
   font-weight: bold;
   color: var(--agg-primary-color, #fff);
   flex: 1;
-  width: 160px;
+  width: 260px;
 
   &[type='number']::-webkit-outer-spin-button,
   &[type='number']::-webkit-inner-spin-button {

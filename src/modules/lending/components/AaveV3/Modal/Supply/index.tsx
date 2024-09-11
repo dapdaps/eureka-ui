@@ -1,5 +1,6 @@
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
@@ -68,7 +69,7 @@ const Input = styled.input`
   font-weight: bold;
   color: var(--agg-primary-color, #fff);
   flex: 1;
-  width: 160px;
+  width: 260px;
 
   &[type='number']::-webkit-outer-spin-button,
   &[type='number']::-webkit-inner-spin-button {
@@ -258,9 +259,12 @@ const SupplyModal = (props: any) => {
             }
           })
           .catch((err: any) => {
-            console.log('tx.wait on error', err);
+            console.log('tx.wait on error depositETH', err);
             updateState({ loading: false });
           });
+      })
+      .catch((err: any) => {
+        console.log('tx.wait on error depositETH', err);
       })
       .finally(() => {
         updateState({ loading: false });
@@ -309,6 +313,9 @@ const SupplyModal = (props: any) => {
           })
           .catch(() => updateState({ loading: false }));
       })
+      .catch((err: any) => {
+        console.log('tx.wait on error depositPacETH', err);
+      })
       .finally(() => updateState({ loading: false }));
   }
 
@@ -317,11 +324,7 @@ const SupplyModal = (props: any) => {
       .getSigner()
       .getAddress()
       .then(async (userAddress: any) => {
-        console.log(config.erc20Abi, 'config.erc20Abi');
-
         const token = new ethers.Contract(underlyingAsset, config.erc20Abi, provider.getSigner());
-        console.log(token, '324---token');
-
         token
           .allowance(userAddress, config.aavePoolV3Address)
           .then((allowanceAmount: any) => allowanceAmount.toString())
@@ -331,7 +334,7 @@ const SupplyModal = (props: any) => {
             });
           })
           .catch((err: any) => {
-            console.log(err, '333444---err');
+            console.log(err, 'getAllowance---err');
           });
       });
   }
@@ -487,21 +490,10 @@ const SupplyModal = (props: any) => {
       ? Big(balance).minus(MIN_ETH_GAS_FEE).toFixed(decimals)
       : Big(balance).toFixed(decimals);
 
-  function debounce(fn: any, wait: any) {
-    let timer = state.timer;
-    return () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn();
-      }, wait);
-      updateState({ timer });
-    };
-  }
-
-  const updateNewHealthFactor = debounce(() => {
+  const updateNewHealthFactor = debounce((amount: any) => {
     updateState({ newHealthFactor: '-' });
-    const newHealthFactor = formatHealthFactor(calcHealthFactor('SUPPLY', symbol, state.amount));
-    console.log('supply updateNewHealthFactor', symbol, state.amount, newHealthFactor);
+    const newHealthFactor = formatHealthFactor(calcHealthFactor('SUPPLY', symbol, amount));
+    console.log('supply updateNewHealthFactor', symbol, amount, newHealthFactor);
     updateState({ newHealthFactor });
   }, 1000);
 
@@ -513,12 +505,15 @@ const SupplyModal = (props: any) => {
     Number(state.amount) === 0;
 
   const changeValue = (value: any) => {
-    if (Number(value) > Number(maxValue)) {
+    if (!isValid(value)) return updateState({ amount: '' });
+
+    if (Big(value).gte(Big(maxValue))) {
       value = maxValue;
     }
-    if (Number(value) < 0) {
+    if (Big(value).lt(Big(0))) {
       value = '0';
     }
+
     if (isValid(value)) {
       const amountInUSD = Big(value)
         .mul(prices[symbol] || 1)
@@ -527,7 +522,7 @@ const SupplyModal = (props: any) => {
         amountInUSD
       });
 
-      updateNewHealthFactor();
+      updateNewHealthFactor(value);
     } else {
       updateState({
         amountInUSD: '0.00',

@@ -1,5 +1,6 @@
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
@@ -102,7 +103,7 @@ const Input = styled.input`
   font-weight: bold;
   color: var(--agg-primary-color, #fff);
   flex: 1;
-  width: 160px;
+  width: 260px;
 
   &[type='number']::-webkit-outer-spin-button,
   &[type='number']::-webkit-inner-spin-button {
@@ -187,20 +188,9 @@ const LoopModal = (props: any) => {
     });
   }
 
-  function debounce(fn: any, wait: any) {
-    let timer = state.timer;
-    return () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn();
-      }, wait);
-      updateState({ timer });
-    };
-  }
-
-  const updateNewHealthFactor = debounce(() => {
+  const updateNewHealthFactor = debounce((amount: any) => {
     updateState({ newHealthFactor: '-' });
-    const newHealthFactor = formatHealthFactor(calcHealthFactor('LOOP', symbol, state.amount, state.leverage));
+    const newHealthFactor = formatHealthFactor(calcHealthFactor('LOOP', symbol, amount, state.leverage));
     console.log('supply updateNewHealthFactor', symbol, state.amount, newHealthFactor);
     updateState({ newHealthFactor });
   }, 1000);
@@ -220,7 +210,7 @@ const LoopModal = (props: any) => {
         amountInUSD
       });
 
-      updateNewHealthFactor();
+      updateNewHealthFactor(_value);
     } else {
       updateState({
         amountInUSD: '0.00',
@@ -235,7 +225,7 @@ const LoopModal = (props: any) => {
       leverage: _value,
       pointsRewards: (_value[0] * 1.5).toFixed(2)
     });
-    updateNewHealthFactor();
+    updateNewHealthFactor(_value);
   };
 
   function getTokenAllowance() {

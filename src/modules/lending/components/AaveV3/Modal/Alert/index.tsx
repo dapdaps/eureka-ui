@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 
+import PrimaryButton from '../../PrimaryButton';
+import BaseModal from '../index';
 const AlertModalContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -29,31 +31,16 @@ const AlertModal = (props: any) => {
     />
   );
   return (
-    <Widget
-      src={`${config.ownerId}/widget/AAVE.Modal.BaseModal`}
-      props={{
-        title: '',
-        onRequestClose,
-        from,
-        children: (
-          <AlertModalContainer>
-            <Right />
-            <Title>{props.title}</Title>
-            <Description>{props.description}</Description>
-            <Widget
-              src={`${config.ownerId}/widget/AAVE.PrimaryButton`}
-              props={{
-                config,
-                theme,
-                children: 'Ok, Close',
-                onClick: onRequestClose,
-              }}
-            />
-          </AlertModalContainer>
-        ),
-        config,
-      }}
-    />
+    <BaseModal title={props.title} onRequestClose={onRequestClose} from={from}>
+      <AlertModalContainer>
+        <Right />
+        <Title>{props.title}</Title>
+        <Description>{props.description}</Description>
+        <PrimaryButton onClick={onRequestClose} config={config} theme={theme}>
+          Ok, Close
+        </PrimaryButton>
+      </AlertModalContainer>
+    </BaseModal>
   );
 };
 
