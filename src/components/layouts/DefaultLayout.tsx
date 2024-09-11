@@ -1,16 +1,18 @@
 import { useDebounceFn } from 'ahooks';
+import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import type { ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import ChainsDock from '@/components/ChainsDock';
 import useAccount from '@/hooks/useAccount';
 import useInititalDataWithAuth from '@/hooks/useInititalDataWithAuth';
 
-import AccountSider from '../AccountSider';
-import Footer from '../Footer';
 import { DesktopNavigationTop } from '../navigation/desktop/DesktopNavigationTop';
+
+const AccountSider = dynamic(() => import('../AccountSider'));
+const Footer = dynamic(() => import('../Footer'));
 
 interface Props {
   children: ReactNode;
@@ -47,10 +49,7 @@ const BLACK_PATH = [
   '/profile/medals'
 ];
 
-const HideFooterRoutes = [
-  '/uniswap',
-  '/coin68'
-]
+const HideFooterRoutes = ['/uniswap', '/coin68'];
 
 export function DefaultLayout({ children }: Props) {
   const router = useRouter();
@@ -62,7 +61,7 @@ export function DefaultLayout({ children }: Props) {
     () => {
       getInitialDataWithAuth(account);
     },
-    { wait: 500 },
+    { wait: 500 }
   );
 
   useEffect(() => {
@@ -72,7 +71,7 @@ export function DefaultLayout({ children }: Props) {
   return (
     <Layout
       style={{
-        background: BLACK_PATH.includes(router.pathname) ? '#000' : '#101115',
+        background: BLACK_PATH.includes(router.pathname) ? '#000' : '#101115'
       }}
     >
       {pathName !== '/uniswap' && <DesktopNavigationTop />}

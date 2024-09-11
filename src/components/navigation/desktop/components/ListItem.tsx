@@ -1,14 +1,15 @@
-import IconOdyssey from '@public/images/header/odyssey-new.svg';
-import { useRouter } from "next/router";
+import IconCircle from '@public/svg/odyssey/circle.svg';
+import IconNewText from '@public/svg/odyssey/new-text.svg';
+import { useRouter } from 'next/router';
 import Skeleton from 'react-loading-skeleton';
-import styled from "styled-components"
+import styled from 'styled-components';
 
-import type { Odyssey } from "@/components/DropdownSearchResultPanel/hooks/useDefaultSearch";
+import type { Odyssey } from '@/components/DropdownSearchResultPanel/hooks/useDefaultSearch';
 import LazyImage from '@/components/LazyImage';
-import odyssey from "@/config/odyssey";
-import useToast from "@/hooks/useToast";
-import Tag, { StatusType } from "@/views/Odyssey/components/Tag";
-
+import RotatingIcon from '@/components/RotatingIcon';
+import odyssey from '@/config/odyssey';
+import useToast from '@/hooks/useToast';
+import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 const Flex = styled.div`
   display: flex;
   align-items: center;
@@ -18,9 +19,9 @@ const Flex = styled.div`
   border-radius: 6px;
   &:hover {
     cursor: pointer;
-    background: rgba(0, 0, 0, .25);
-    .bridgeImage{
-      transform: translateY(-5px); 
+    background: rgba(0, 0, 0, 0.25);
+    .bridgeImage {
+      transform: translateY(-5px);
     }
   }
   &.bridge-nav {
@@ -34,9 +35,8 @@ const Flex = styled.div`
         height: 90px;
       }
     }
-    
   }
-`
+`;
 
 const StyleImage = styled.div`
   position: relative;
@@ -50,21 +50,21 @@ const StyleImage = styled.div`
     border: 1px solid #333648;
     border-radius: 8px;
   }
-`
+`;
 
-const StyleNew = styled(IconOdyssey)`
+const StyleNew = styled.div`
   position: absolute;
   top: -4px;
   right: -9px;
   color: #000;
   font-size: 12px;
-`  
+`;
 
 const StyleText = styled.div`
   display: flex;
   flex-direction: column;
   gap: 13px;
-`
+`;
 
 const StyleHeader = styled.div`
   display: flex;
@@ -80,7 +80,7 @@ const StyleHeader = styled.div`
     overflow: hidden;
     font-family: Montserrat;
   }
-`
+`;
 
 const StyleDesc = styled.div`
   font-size: 16px;
@@ -93,31 +93,14 @@ const StyleDesc = styled.div`
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   font-family: Montserrat;
-`
+`;
 
 interface IProps {
-    data: Odyssey[];
-    loading: boolean
-    className?: string
-    onClick?: () => void
-} 
-
-
-// const generateNewWithLiveArr = (arr: Odyssey[]): Odyssey[] => {
-
-//   if (arr.length === 0) return [];
-
-//   const ongoingItems = arr.filter(item => item.status === StatusType.ongoing);
-
-//   if (ongoingItems.length === 0) return arr;
-
-//   const maxIdItem = ongoingItems.reduce((maxItem, currentItem) => {
-//     return (currentItem.id > maxItem.id) ? currentItem : maxItem;
-//   }, ongoingItems[0]);
-
-//   return arr.map(item => ({ ...item, is_New: item.id === maxIdItem.id && item.status === StatusType.ongoing }));
-// };
-
+  data: Odyssey[];
+  loading: boolean;
+  className?: string;
+  onClick?: () => void;
+}
 
 const LoadingList = () => {
   return Array.from({ length: 8 }).map((_, index) => (
@@ -133,23 +116,22 @@ const LoadingList = () => {
       </StyleText>
     </Flex>
   ));
-}
-
+};
 
 const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
-  const router = useRouter()
+  const router = useRouter();
   const toast = useToast();
   const handleClick = (item: Odyssey) => {
     onClick?.();
     if (item.status === StatusType.un_start) {
       toast.fail({
-        title: 'Odyssey is upcoming...',
+        title: 'Odyssey is upcoming...'
       });
       return;
     }
     if (!odyssey[item.id]) return;
     router.push(odyssey[item.id].path);
-  }
+  };
 
   return (
     <>
@@ -157,27 +139,26 @@ const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
         <LoadingList />
       ) : (
         data.map((item: Odyssey, index) => (
-          <Flex 
-            key={index} 
+          <Flex
+            key={index}
             className={className}
             onClick={() => handleClick(item)}
             style={{
-              filter: item.status === StatusType.ended ? 'grayscale(100%)' : 'grayscale(0%)',
+              filter: item.status === StatusType.ended ? 'grayscale(100%)' : 'grayscale(0%)'
             }}
-            >
+          >
             <StyleImage className="bridgeImage">
-              <LazyImage
-                src={item.banner || '/images/odyssey/v2/default.jpg'}
-                alt="bridge"
-                width={100}
-                height={60}
-              />
-              {item.is_new && <StyleNew />}
+              <LazyImage src={item.banner || '/images/odyssey/v2/default.jpg'} alt="bridge" width={100} height={60} />
+              {item.is_new && (
+                <StyleNew>
+                  <RotatingIcon staticIcon={<IconNewText />} rotatingIcon={<IconCircle />} />
+                </StyleNew>
+              )}
             </StyleImage>
             <StyleText>
               <StyleHeader>
                 <div className="title">{item.name}</div>
-                <Tag status={item.status}  className="tag"/>
+                <Tag status={item.status} className="tag" />
               </StyleHeader>
               <StyleDesc>{item.description}</StyleDesc>
             </StyleText>
@@ -186,6 +167,6 @@ const ListItem: React.FC<IProps> = ({ data, loading, className, onClick }) => {
       )}
     </>
   );
-}
+};
 
-  export default ListItem;
+export default ListItem;

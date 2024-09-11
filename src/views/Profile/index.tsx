@@ -31,27 +31,27 @@ const StyledContainer = styled.div`
   background-repeat: no-repeat;
   background-size: 100% 313px;
   background-color: #000;
-`
+`;
 const StyledContainerTop = styled.div`
   position: relative;
   padding-top: 84px;
   height: 313px;
-`
+`;
 const StyledContainerBottom = styled.div`
   padding: 40px 0 110px;
   background-color: #000;
-`
+`;
 const StyledInnerContainer = styled.div`
   width: 1244px;
   max-width: 100%;
   margin: 0 auto;
   z-index: 5;
-`
+`;
 const StyledBouncingMedalContainer = styled.div`
   position: absolute;
   right: -104px;
   bottom: 0;
-`
+`;
 
 const CanvasWidth = 600;
 const CanvasHeight = 600;
@@ -64,75 +64,85 @@ export default memo(function ProfileView() {
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { handleReport } = useReport();
   const { loading: inviteLoading, inviteList } = useInviteList();
-  const { loaded: compassLoaded, compassList, } = useCompassList(tab)
-  const { loaded: airdropLoaded, airdropList } = useAirdropList(tab)
-  const { loaded: medalLoaded, userMedalList } = useMedalList(tab)
-  const { loaded: favoriteLoaded, userFavorites } = useUserFavorites(tab)
-  const { loaded: rewardLoaded, userRewardRecords, queryUserRewardRecords, pager, setPager } = useUserRewardRecords(tab)
-
+  const { loaded: compassLoaded, compassList, compassQuantity } = useCompassList(tab);
+  const { loaded: airdropLoaded, airdropList, airdropQuantity } = useAirdropList(tab);
+  const { loaded: medalLoaded, userMedalList, userMedalQuantity } = useMedalList(tab);
+  const { loaded: favoriteLoaded, userFavorites, userFavoriteQuantity } = useUserFavorites(tab);
+  const {
+    loaded: rewardLoaded,
+    userRewardRecords,
+    userRewardRecordQuantity,
+    queryUserRewardRecords,
+    pager,
+    setPager
+  } = useUserRewardRecords(tab);
 
   const [openInviteFirendsModal, setOpenInviteFirendsModal] = useState(false);
 
   const { info: rewardInfo, queryUserReward } = useUserReward();
 
-  const maxPage = useMemo(() => Math.ceil((userRewardRecords?.total ?? 0) / pager.page_size), [userRewardRecords?.total, pager])
+  const maxPage = useMemo(
+    () => Math.ceil((userRewardRecords?.total ?? 0) / pager.page_size),
+    [userRewardRecords?.total, pager]
+  );
   const tabsQuantity = useMemo(() => {
-    const inProgressQuantity = compassList?.length + airdropList?.length + userMedalList?.length
-    const favoriteAppsQuantity = userFavorites?.total ?? 0
-    const rewardHistoryQuantity = userRewardRecords?.total ?? 0
-    return [inProgressQuantity, favoriteAppsQuantity, rewardHistoryQuantity]
-  }, [compassList, airdropList, userMedalList, userFavorites, userRewardRecords])
+    const inProgressQuantity = compassQuantity + airdropQuantity + userMedalQuantity;
+    return [inProgressQuantity, userFavoriteQuantity, userRewardRecordQuantity];
+  }, [compassQuantity, airdropQuantity, userMedalQuantity, userFavoriteQuantity, userRewardRecordQuantity]);
 
   const bouncingMedals = useMemo(() => {
     const _filterMedals = userInfo?.medals?.filter((medal: MedalType) => medal?.logo) ?? [];
-    return _filterMedals?.map((medal: MedalType, index: number) => {
-      const renderMedal: BouncingMedalItem = {
-        key: index,
-        icon: medal?.logo,
-        width: 90,
-        x: index * (CanvasWidth / _filterMedals.length),
-        y: random(0, 300),
-        density: random(1, 10) / 1000,
-      };
-      if (renderMedal.x > CanvasWidth - renderMedal.width) {
-        renderMedal.x = CanvasWidth - renderMedal.width;
-      }
-      if (renderMedal.x < renderMedal.width) {
-        renderMedal.x = renderMedal.width;
-      }
+    return (
+      _filterMedals?.map((medal: MedalType, index: number) => {
+        const renderMedal: BouncingMedalItem = {
+          key: index,
+          icon: medal?.logo,
+          width: 90,
+          x: index * (CanvasWidth / _filterMedals.length),
+          y: random(0, 300),
+          density: random(1, 10) / 1000
+        };
+        if (renderMedal.x > CanvasWidth - renderMedal.width) {
+          renderMedal.x = CanvasWidth - renderMedal.width;
+        }
+        if (renderMedal.x < renderMedal.width) {
+          renderMedal.x = renderMedal.width;
+        }
 
-      return renderMedal;
-    }) ?? [];
-  }, [userInfo])
+        return renderMedal;
+      }) ?? []
+    );
+  }, [userInfo]);
   const handleChange = function (_tab: Tab) {
     setTab(_tab);
   };
   const handlePageChange = function (page: number) {
     if (page < 1 || page > maxPage || page === pager.page) {
-      return
+      return;
     }
     const _pager = {
       ...pager,
       page
-    }
-    queryUserRewardRecords(_pager)
-    setPager(_pager)
-  }
+    };
+    queryUserRewardRecords(_pager);
+    setPager(_pager);
+  };
 
   useEffect(() => {
-    const target = router?.query?.target
+    const target = router?.query?.target;
     if (target) {
-      if (target === "favorite") {
-        setTab("FavoriteApps")
+      if (target === 'favorite') {
+        setTab('FavoriteApps');
+      } else if (target === 'reward') {
+        setTab('RewardHistory');
       } else {
-        setOpenInviteFirendsModal(true)
+        setOpenInviteFirendsModal(true);
       }
     }
-  }, [router.query])
+  }, [router.query]);
 
   return (
     <StyledContainer>
-
       <StyledInnerContainer>
         <StyledContainerTop>
           <UserInfo info={userInfo} rewardInfo={rewardInfo} />
@@ -146,22 +156,20 @@ export default memo(function ProfileView() {
             }}
           />
           <StyledBouncingMedalContainer>
-            <BouncingMedal
-              width={CanvasWidth}
-              height={CanvasHeight}
-              medals={bouncingMedals}
-            />
+            <BouncingMedal width={CanvasWidth} height={CanvasHeight} medals={bouncingMedals} />
           </StyledBouncingMedalContainer>
         </StyledContainerTop>
         <StyledContainerBottom>
           <Tabs current={tab} tabsQuantity={tabsQuantity} onChange={handleChange} />
-          {tab === "InProgress" && (
-            <InProgress
-              {...{ compassLoaded, compassList, airdropLoaded, airdropList, medalLoaded, userMedalList }}
+          {tab === 'InProgress' && (
+            <InProgress {...{ compassLoaded, compassList, airdropLoaded, airdropList, medalLoaded, userMedalList }} />
+          )}
+          {tab === 'FavoriteApps' && <FavoriteApps {...{ loaded: favoriteLoaded, userFavorites }} />}
+          {tab === 'RewardHistory' && (
+            <RewardHistory
+              {...{ loaded: rewardLoaded, userRewardRecords, pager, maxPage, onPageChange: handlePageChange }}
             />
           )}
-          {tab === "FavoriteApps" && <FavoriteApps {...{ loaded: favoriteLoaded, userFavorites }} />}
-          {tab === "RewardHistory" && <RewardHistory {...{ loaded: rewardLoaded, userRewardRecords, pager, maxPage, onPageChange: handlePageChange }} />}
         </StyledContainerBottom>
       </StyledInnerContainer>
       <InviteFirendsModal

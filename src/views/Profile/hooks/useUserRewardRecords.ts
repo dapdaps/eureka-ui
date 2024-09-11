@@ -7,17 +7,17 @@ import { get } from '@/utils/http';
 
 import type { PagerType, RewardRecordsType, Tab } from '../types';
 
-
 export default function useUserRewardRecords(tab: Tab) {
-  const { account } = useAccount()
+  const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const [userRewardRecords, setUserRewardRecords] = useState<RewardRecordsType | null>(null);
-  const [loaded, setLoaded] = useState(false)
+  const [userRewardRecordQuantity, setUserRewardRecordQuantity] = useState<number>(0);
+  const [loaded, setLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pager, setPager] = useState<PagerType>({
     page: 1,
     page_size: 10
-  })
+  });
 
   const queryUserRewardRecords = async (_pager: PagerType) => {
     if (loading) return;
@@ -27,8 +27,9 @@ export default function useUserRewardRecords(tab: Tab) {
       const result = await get(`/api/user/reward/records`, {
         ..._pager
       });
-      const data = (result.data || [])
+      const data = result.data || [];
       setUserRewardRecords(data);
+      setUserRewardRecordQuantity(data?.total);
       setLoading(false);
       setLoaded(true);
     } catch (err) {
@@ -39,27 +40,27 @@ export default function useUserRewardRecords(tab: Tab) {
     }
   };
 
-
   const { run } = useDebounceFn(
     () => {
-      account && check(() => {
-        queryUserRewardRecords(pager)
-      });
+      account &&
+        check(() => {
+          queryUserRewardRecords(pager);
+        });
     },
-    { wait: userRewardRecords ? 800 : 3000 },
+    { wait: userRewardRecords ? 800 : 3000 }
   );
 
   useEffect(() => {
-    run()
-  }, [account])
+    run();
+  }, [account]);
   useEffect(() => {
     if (tab === 'RewardHistory') {
       run();
     } else {
-      setLoaded(false)
-      setUserRewardRecords(null)
+      setLoaded(false);
+      setUserRewardRecords(null);
     }
   }, [tab]);
 
-  return { loading, loaded, pager, setPager, userRewardRecords, queryUserRewardRecords };
+  return { loading, loaded, pager, setPager, userRewardRecords, userRewardRecordQuantity, queryUserRewardRecords };
 }

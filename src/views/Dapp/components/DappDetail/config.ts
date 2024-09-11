@@ -10,32 +10,29 @@ export const AirdropList: Potential[] = [
   {
     key: 'estimated_date',
     label: 'Estimated date',
-    value: '',
+    value: ''
   },
   {
     key: 'likelihood',
     label: 'Likelihood',
-    value: '',
+    value: ''
   },
   {
     key: 'difficulty',
     label: 'Difficulty',
-    value: '',
-  },
+    value: ''
+  }
 ];
 
 export const TABS = [
   {
     key: '1',
     label: 'Overview',
-    bp: "1006-002-008"
+    bp: '1006-002-008'
   },
   {
     key: '2',
     label: 'My History',
-    bp: "1006-002-007"
-  },
+    bp: '1006-002-007'
+  }
 ];
-
-// Polygon zkEVM, zkSync, Linea, Scroll, Blast
-export const chainPortfolioShowConfig = [1101, 324, 59144, 534352, 81457];

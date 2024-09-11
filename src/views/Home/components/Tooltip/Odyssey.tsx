@@ -7,22 +7,25 @@ import type { FormattedRewardList } from '@/views/AllDapps/hooks/useDappReward';
 import Tag, { StatusType } from '@/views/Odyssey/components/Tag';
 
 export const formatValue = (value?: string): string => {
-  if (!value) return ''
+  if (!value) return '';
   const unitsConfig = [
     { unit: 'B', threshold: 1e9 },
     { unit: 'M', threshold: 1e6 },
-    { unit: 'K', threshold: 1e3 },
+    { unit: 'K', threshold: 1e3 }
   ];
 
   // ⚠️ the value may not always be a number
   // it could be signed($123.45) or represent a range(15-25K),
   // so it cannot be calculated this way
-  if (!/^\d+(.\d+)?$/.test(value) && !unitsConfig.some((it) => new RegExp(`^\d+(.\d+)?${it.unit}$`).test(value as string))) {
+  if (
+    !/^\d+(.\d+)?$/.test(value) &&
+    !unitsConfig.some((it) => new RegExp(`^\d+(.\d+)?${it.unit}$`).test(value as string))
+  ) {
     return value;
   }
 
   value = value.toUpperCase();
-  if (unitsConfig.some(config => (value as string).endsWith(config.unit))) {
+  if (unitsConfig.some((config) => (value as string).endsWith(config.unit))) {
     return `${value}`;
   }
   for (const config of unitsConfig) {
@@ -36,25 +39,18 @@ export const formatValue = (value?: string): string => {
 };
 
 const OdysseyCard = (props: Props) => {
-  const {
-    status,
-    title,
-    subtitle,
-    imageUrl,
-    withoutCardStyle,
-    reward,
-    rewardValue,
-    onClick = () => {},
-  } = props;
+  const { status, title, subtitle, imageUrl, withoutCardStyle, reward, rewardValue, onClick = () => {} } = props;
 
   return (
     <StyledContainer $withoutCardStyle={withoutCardStyle} onClick={onClick}>
-      <Tag status={status} className='status' />
+      <Tag status={status} className="status" />
       <StyledContent>
         <StyleHead>
-          {
-            (rewardValue || reward?.value) && <StyledValue>{formatValue(rewardValue || reward?.value)} <span>{reward?.name}</span></StyledValue>
-          }
+          {(rewardValue || reward?.value) && (
+            <StyledValue>
+              {formatValue(rewardValue || reward?.value)} <span>{reward?.name}</span>
+            </StyledValue>
+          )}
         </StyleHead>
         <StyledTitle>{title}</StyledTitle>
         {/* <StyledTitleSub>{subtitle}</StyledTitleSub> */}
@@ -84,21 +80,21 @@ const StyleHead = styled.div`
   align-items: center;
   gap: 5px;
   margin-bottom: 5px;
-`
+`;
 
 const StyledValue = styled.div`
   font-family: Montserrat;
   font-size: 20px;
   font-weight: 700;
   line-height: 24px;
-  color: #EBF479;
+  color: #ebf479;
   margin-right: 5px;
   span {
     color: #fff;
   }
-`
+`;
 
-const StyledContainer = styled.div<{ $withoutCardStyle?: boolean; }>`
+const StyledContainer = styled.div<{ $withoutCardStyle?: boolean }>`
   position: relative;
   cursor: pointer;
 
@@ -156,6 +152,6 @@ const StyledTitleSub = styled.div`
 const StyledImage = styled(Image)<{ $status?: StatusType }>`
   width: 235px;
   height: 116px;
-  filter: ${({ $status }) => $status ? ($status === StatusType.ongoing ? 'unset' : 'grayscale(100%)') : 'unset'};
-  object-fit: cover;
+  filter: ${({ $status }) => ($status ? ($status === StatusType.ongoing ? 'unset' : 'grayscale(100%)') : 'unset')};
+  object-fit: fill;
 `;

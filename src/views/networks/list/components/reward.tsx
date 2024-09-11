@@ -5,8 +5,8 @@ import { useRouter } from 'next/router';
 import React, { memo, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import TooltipSimple from '@/components/Tooltip';
 import odysseies from '@/config/odyssey';
-import TooltipSimple from '@/views/AllDapps/components/Badges/Tooltip';
 import OdysseyCard from '@/views/Home/components/Tooltip/Odyssey';
 import { type NetworkOdyssey } from '@/views/networks/list/hooks/useNetworks';
 import RewardIcons from '@/views/OdysseyV8/RewardIcons';
@@ -36,7 +36,7 @@ const Reward = (props: Props) => {
           _badges.push({
             ...r,
             logo: RewardIcons[r.logo_key]?.icon ?? '',
-            odyssey: [o],
+            odyssey: [o]
           });
           return;
         }
@@ -57,21 +57,24 @@ const Reward = (props: Props) => {
     console.log('badge: %o', badge);
   };
 
-  const { run: onRewardLeave, cancel: onRewardLeaveCancel } = useDebounceFn(() => {
-    if (!containerRef.current) return;
-    containerRef.current.scrollTo({
-      left: 0,
-      behavior: 'smooth',
-    });
-    setOverflowVisible(true);
-  }, { wait: 300 });
+  const { run: onRewardLeave, cancel: onRewardLeaveCancel } = useDebounceFn(
+    () => {
+      if (!containerRef.current) return;
+      containerRef.current.scrollTo({
+        left: 0,
+        behavior: 'smooth'
+      });
+      setOverflowVisible(true);
+    },
+    { wait: 300 }
+  );
 
   const onRewardHover = () => {
     if (!containerRef.current) return;
     onRewardLeaveCancel();
     containerRef.current.scrollTo({
       left: containerRef.current.scrollWidth,
-      behavior: 'smooth',
+      behavior: 'smooth'
     });
     setOverflowVisible(false);
   };
@@ -83,111 +86,101 @@ const Reward = (props: Props) => {
   }, []);
 
   return (
-    <StyledContainer
-      whileHover="active"
-      initial="default"
-    >
+    <StyledContainer whileHover="active" initial="default">
       <StyledContainerInner ref={containerRef}>
         <StyledValue
           variants={{
             active: {
-              color: '#fff',
+              color: '#fff'
             },
             default: {
-              color: '#979ABE',
-            },
+              color: '#979ABE'
+            }
           }}
           transition={{
-            duration: 0.3,
+            duration: 0.3
           }}
         >
           {badges.length ? `${badges[0].value} ${badges[0].name.toUpperCase()}` : ''}
         </StyledValue>
-        <StyledBadges
-          onHoverStart={onRewardHover}
-          onHoverEnd={onRewardLeave}
-        >
-          {
-            badges.map((b, idx) => (
-              <StyledBadge
-                key={idx}
-                whileHover="tooltip"
-                initial="default"
-                variants={{
-                  tooltip: {
-                    scale: 1.2,
-                    zIndex: 2,
-                  },
-                  default: {
-                    scale: 1,
-                  },
-                }}
-                transition={{
-                  duration: 0.3,
-                }}
-                onClick={(e) => onBadgeClick(e, b)}
-              >
-                <TooltipSimple
-                  tooltip={b.odyssey && (
+        <StyledBadges onHoverStart={onRewardHover} onHoverEnd={onRewardLeave}>
+          {badges.map((b, idx) => (
+            <StyledBadge
+              key={idx}
+              whileHover="tooltip"
+              initial="default"
+              variants={{
+                tooltip: {
+                  scale: 1.2,
+                  zIndex: 2
+                },
+                default: {
+                  scale: 1
+                }
+              }}
+              transition={{
+                duration: 0.3
+              }}
+              onClick={(e) => onBadgeClick(e, b)}
+            >
+              <TooltipSimple
+                tooltip={
+                  b.odyssey && (
                     <StyledBadgeTooltipList>
-                      {
-                        b.odyssey.map((ody: any) => (
-                          <OdysseyCard
-                            key={ody.id}
-                            status={ody.status}
-                            title={ody.name}
-                            subtitle={ody.description}
-                            imageUrl={ody.banner}
-                            withoutCardStyle
-                            onClick={(e) => onOdyClick(e, ody)}
-                          />
-                        ))
-                      }
+                      {b.odyssey.map((ody: any) => (
+                        <OdysseyCard
+                          key={ody.id}
+                          status={ody.status}
+                          title={ody.name}
+                          subtitle={ody.description}
+                          imageUrl={ody.banner}
+                          withoutCardStyle
+                          onClick={(e) => onOdyClick(e, ody)}
+                        />
+                      ))}
                     </StyledBadgeTooltipList>
-                  )}
-                  style={{
-                    border: 0,
-                  }}
-                >
-                  <Image className="badge-img" src={b.logo} alt="" width={20} height={20} />
-                </TooltipSimple>
-              </StyledBadge>
-            ))
-          }
+                  )
+                }
+                style={{
+                  border: 0
+                }}
+              >
+                <Image className="badge-img" src={b.logo} alt="" width={20} height={20} />
+              </TooltipSimple>
+            </StyledBadge>
+          ))}
         </StyledBadges>
       </StyledContainerInner>
       <AnimatePresence>
-        {
-          overflow && overflowVisible ? (
-            <StyledBadge
-              className="overflowed"
-              initial="hidden"
-              exit="hidden"
-              animate="visible"
-              variants={{
-                visible: {
-                  opacity: 1,
-                  zIndex: 2,
-                },
-                hidden: {
-                  opacity: 0,
-                  zIndex: 1,
-                },
-              }}
-              transition={{
-                duration: 0.3,
-              }}
-              onHoverStart={onRewardHover}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="11" fill="black" stroke="#292B33" strokeWidth="2" />
-                <circle cx="8.36368" cy="11.9999" r="0.909091" fill="#979ABE" />
-                <circle cx="12" cy="11.9999" r="0.909091" fill="#979ABE" />
-                <circle cx="15.6364" cy="11.9999" r="0.909091" fill="#979ABE" />
-              </svg>
-            </StyledBadge>
-          ) : null
-        }
+        {overflow && overflowVisible ? (
+          <StyledBadge
+            className="overflowed"
+            initial="hidden"
+            exit="hidden"
+            animate="visible"
+            variants={{
+              visible: {
+                opacity: 1,
+                zIndex: 2
+              },
+              hidden: {
+                opacity: 0,
+                zIndex: 1
+              }
+            }}
+            transition={{
+              duration: 0.3
+            }}
+            onHoverStart={onRewardHover}
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="11" fill="black" stroke="#292B33" strokeWidth="2" />
+              <circle cx="8.36368" cy="11.9999" r="0.909091" fill="#979ABE" />
+              <circle cx="12" cy="11.9999" r="0.909091" fill="#979ABE" />
+              <circle cx="15.6364" cy="11.9999" r="0.909091" fill="#979ABE" />
+            </svg>
+          </StyledBadge>
+        ) : null}
       </AnimatePresence>
     </StyledContainer>
   );
@@ -232,7 +225,7 @@ const StyledContainerInner = styled(motion.div)`
   }
 `;
 const StyledValue = styled(motion.div)`
-  color: #979ABE;
+  color: #979abe;
   font-size: 16px;
   font-style: normal;
   font-weight: 600;
@@ -249,8 +242,8 @@ const StyledBadge = styled(motion.div)`
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  border: 2px solid #292B33;
-  background: #292B33;
+  border: 2px solid #292b33;
+  background: #292b33;
   margin-left: -8px;
   display: flex;
   justify-content: center;
@@ -279,5 +272,5 @@ const StyledBadgeTooltipList = styled.div`
   align-items: center;
   padding: 0 14px;
   gap: 20px;
-  background: #21232A;
+  background: #21232a;
 `;

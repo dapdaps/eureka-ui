@@ -19,12 +19,12 @@ export default function SwapDapp(props: any) {
           ...localConfig.basic,
           ...localConfig.networks[currentChain.chain_id],
           tokens: [
-            ...localConfig.networks[currentChain.chain_id]?.tokens,
-            ...(importTokens[currentChain.chain_id] || []),
+            ...(localConfig.networks[currentChain.chain_id]?.tokens || []),
+            ...(importTokens[currentChain.chain_id] || [])
           ],
-          theme: localConfig.theme,
+          theme: localConfig.theme
         },
-        onImport: addImportToken,
+        onImport: addImportToken
       }}
     />
   );

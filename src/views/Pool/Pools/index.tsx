@@ -1,6 +1,6 @@
 import Big from 'big.js';
 import { useRouter } from 'next/router';
-import { memo, useMemo,useState } from 'react';
+import { memo, useCallback, useMemo, useState } from 'react';
 
 import Loading from '@/components/Icons/Loading';
 
@@ -18,10 +18,12 @@ import {
   StyledHeader,
   StyledTitle,
   StyledTogglePositions,
-  StyledTopActions,
+  StyledTopActions
 } from './styles';
 
-const Pools = () => {
+const Pools = (props: Props) => {
+  const { onAction } = props;
+
   const { pools, loading } = usePools();
   const { theme = {} } = useDappConfig();
   const [version, setVersion] = useState('All');
@@ -34,12 +36,12 @@ const Pools = () => {
       acc[new Big(p.liquidity || 0).eq(0) ? 1 : 0].push(p);
       return acc;
     },
-    [[], []],
+    [[], []]
   ) ?? [[], []];
 
   const userSelectedPositionSet = useMemo(
     () => [...openPositions, ...(userHideClosedPositions ? [] : closedPositions)],
-    [closedPositions, openPositions, userHideClosedPositions],
+    [closedPositions, openPositions, userHideClosedPositions]
   );
 
   const userSelectedVersionSet = useMemo(() => {
@@ -48,16 +50,33 @@ const Pools = () => {
     return userSelectedPositionSet.filter((item) => item.poolVersion === version);
   }, [userSelectedPositionSet, version]);
 
+  const handleAction = useCallback((type: ActionType, position?: any) => {
+    // fix#DAP-862 merge the Dex and Pool page
+    if (onAction) {
+      onAction(type, position);
+      return;
+    }
+
+    if (type === ActionType.Add) {
+      router.push(`/dapp/${router.query.dappRoute}/add`);
+    }
+    if (type === ActionType.Position) {
+      let path = '';
+
+      if (position.poolVersion === 'V3') {
+        path = `/dapp/${router.query.dappRoute}/position?id=${position.data.tokenId}`;
+      } else {
+        path = `/dapp/${router.query.dappRoute}/position?id=${position.poolAddress}&fee=${position.fee}`;
+      }
+      router.push(path);
+    }
+  }, []);
+
   return (
     <StyledContainer style={{ ...theme }}>
       <StyledHeader>
         <StyledTitle>Pools</StyledTitle>
-        <Button
-          style={{ width: '149px', height: '35px' }}
-          onClick={() => {
-            router.push(`/dapp/${router.query.dappRoute}/add`);
-          }}
-        >
+        <Button style={{ width: '149px', height: '35px' }} onClick={() => handleAction(ActionType.Add)}>
           + Create Position
         </Button>
       </StyledHeader>
@@ -87,20 +106,7 @@ const Pools = () => {
               </StyledTopActions>
             </StyledContentTop>
             {userSelectedVersionSet.map((position, i) => (
-              <Pool
-                key={i}
-                {...position}
-                onClick={() => {
-                  let path = '';
-
-                  if (position.poolVersion === 'V3') {
-                    path = `/dapp/${router.query.dappRoute}/position?id=${position.data.tokenId}`;
-                  } else {
-                    path = `/dapp/${router.query.dappRoute}/position?id=${position.poolAddress}&fee=${position.fee}`;
-                  }
-                  router.push(path);
-                }}
-              />
+              <Pool key={i} {...position} onClick={() => handleAction(ActionType.Position, position)} />
             ))}
             {userSelectedPositionSet.length === 0 && <Empty />}
           </>
@@ -111,3 +117,12 @@ const Pools = () => {
 };
 
 export default memo(Pools);
+
+export enum ActionType {
+  Add = 'add',
+  Position = 'position'
+}
+
+interface Props {
+  onAction?(type: ActionType, position?: any): void;
+}

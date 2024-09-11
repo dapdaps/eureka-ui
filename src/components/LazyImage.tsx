@@ -13,6 +13,7 @@ const LazyImage = (props: Props) => {
     containerClassName,
     style,
     className,
+    delay = 0,
     ...restProps
   } = props;
 
@@ -24,18 +25,10 @@ const LazyImage = (props: Props) => {
 
   const renderFallback = useMemo(() => {
     if (typeof fallbackSrc === 'string') {
-      return (
-        <img
-          src={fallbackSrc}
-          alt={alt ?? ''}
-          style={style}
-        />
-      );
+      return <img src={fallbackSrc} alt={alt ?? ''} style={style} />;
     }
     if (fallbackSrc) {
-      return (
-        <>{fallbackSrc}</>
-      );
+      return <>{fallbackSrc}</>;
     }
     return DapDapLogo;
   }, [fallbackSrc]);
@@ -48,62 +41,58 @@ const LazyImage = (props: Props) => {
       style={{
         width,
         height,
-        ...containerStyle,
+        ...containerStyle
       }}
     >
       <AnimatePresence mode="wait">
-        {
-          isInView && (
-            <motion.img
-              key="real-image"
-              src={src}
-              alt={alt ?? ''}
-              style={style}
-              className={`real-image ${className}`}
-              variants={{
-                hidden: { opacity: 0 },
-                visible: { opacity: 1 },
-              }}
-              animate={isLoaded ? 'visible' : 'hidden'}
-              exit="hidden"
-              initial="hidden"
-              transition={{ duration: 1, ease: 'easeInOut', delay: 0.3 }}
-              onLoad={() => {
-                setLoaded(true);
-              }}
-              onError={(e) => {
-                console.log('LazyImage caught the error: %o', e);
-              }}
-            />
-          )
-        }
-        {
-          (!isInView || !isLoaded) && (
-            <StyledLazyImageUnloaded
-              key="fallback-image"
-              variants={{
-                hidden: {
-                  opacity: 0,
-                  transition: {
-                    duration: 0.3,
-                    ease: 'easeInOut',
-                  },
-                },
-                visible: {
-                  opacity: 1,
-                  transition: {
-                    duration: 0,
-                  },
-                },
-              }}
-              animate="visible"
-              exit="hidden"
-              initial="visible"
-            >
-              {renderFallback}
-            </StyledLazyImageUnloaded>
-          )
-        }
+        {isInView && (
+          <motion.img
+            key="real-image"
+            src={src}
+            alt={alt ?? ''}
+            style={style}
+            className={`real-image ${className}`}
+            variants={{
+              hidden: { opacity: 0 },
+              visible: { opacity: 1 }
+            }}
+            animate={isLoaded ? 'visible' : 'hidden'}
+            exit="hidden"
+            initial="hidden"
+            transition={{ duration: 0.3, ease: 'easeInOut', delay: delay }}
+            onLoad={() => {
+              setLoaded(true);
+            }}
+            onError={(e) => {
+              console.log('LazyImage caught the error: %o', e);
+            }}
+          />
+        )}
+        {(!isInView || !isLoaded) && (
+          <StyledLazyImageUnloaded
+            key="fallback-image"
+            variants={{
+              hidden: {
+                opacity: 0,
+                transition: {
+                  duration: 0.3,
+                  ease: 'easeInOut'
+                }
+              },
+              visible: {
+                opacity: 1,
+                transition: {
+                  duration: 0
+                }
+              }
+            }}
+            animate="visible"
+            exit="hidden"
+            initial="visible"
+          >
+            {renderFallback}
+          </StyledLazyImageUnloaded>
+        )}
       </AnimatePresence>
     </StyledLazyImage>
   );
@@ -121,6 +110,7 @@ export interface Props {
   containerClassName?: string;
   style?: React.CSSProperties;
   containerStyle?: React.CSSProperties;
+  delay?: number;
   [k: string]: any;
 }
 
@@ -145,14 +135,7 @@ const StyledLazyImageUnloaded = styled(motion.div)`
 `;
 
 const DapDapLogo = (
-  <svg
-    key="fallback-image"
-    width="121"
-    height="33"
-    viewBox="0 0 121 33"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+  <svg key="fallback-image" width="121" height="33" viewBox="0 0 121 33" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g opacity="0.1">
       <path
         d="M1.91839 15.6483C1.39153 13.3488 3.87506 7.45045 3.87506 7.45045L17.178 6.56635C19.7509 5.87693 22.3955 7.40382 23.0849 9.97673L28.7103 19.2472C27.806 23.7688 27.0567 26.3322 24.4837 27.0216L11.0003 30.9079C8.42742 31.5973 5.78278 30.0704 5.09337 27.4975L1.91839 15.6483Z"

@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   position: relative;
   font-family: Montserrat;
-  color: #FFF;
+  color: #fff;
   --paddingTop: 130px;
   --padding-top: -138px;
   &.mobile-invite {
@@ -18,7 +18,7 @@ export const StyledContainer = styled.div`
       font-size: 20px;
     }
   }
-  
+
   &.invite {
     .logo {
       width: 70px;
@@ -64,7 +64,6 @@ export const StyledXContainer = styled.div`
   z-index: 1;
 `;
 
-
 export const StyledX = styled.div`
   position: relative;
   z-index: 5;
@@ -84,14 +83,13 @@ export const StyledBgImage = styled.img`
   /* display: block; */
   position: relative;
   width: 1544px;
-  
-`
+`;
 export const StyledBgImageContainer = styled.div`
   position: fixed;
   top: 0;
   transform: translateX(-756px);
   z-index: 10;
-`
+`;
 export const StyledRect = styled.div`
   position: absolute;
   left: -50%;
@@ -101,19 +99,19 @@ export const StyledRect = styled.div`
   gap: 51px;
   z-index: 0;
   /* background: linear-gradient(0deg, #000 0%, #EBF479 75.02%); */
-`
+`;
 export const StyledLRect = styled.div`
   position: relative;
   flex: 1;
   height: 757px;
-  background: linear-gradient(346deg, #1D1F07 4.22%, #000 37.86%);
-`
+  background: linear-gradient(346deg, #1d1f07 4.22%, #000 37.86%);
+`;
 export const StyledRRect = styled.div`
   position: relative;
   flex: 1;
   height: 757px;
-  background: linear-gradient(14deg, #1D1F07 4.22%, #000 37.86%);
-`
+  background: linear-gradient(14deg, #1d1f07 4.22%, #000 37.86%);
+`;
 export const StyledRadialGradient = styled.div`
   position: absolute;
   left: 50%;
@@ -125,10 +123,10 @@ export const StyledRadialGradient = styled.div`
   flex-shrink: 0;
   border-radius: 450px;
   opacity: 0.6;
-  background: radial-gradient(35.95% 35.95% at 50% 50%, #EBF479 0%, rgba(235, 244, 121, 0.00) 100%);
+  background: radial-gradient(35.95% 35.95% at 50% 50%, #ebf479 0%, rgba(235, 244, 121, 0) 100%);
   filter: blur(50px);
   z-index: 10;
-`
+`;
 export const StyledMouseImage = styled.img`
   position: absolute;
   animation: jump linear 2s infinite;
@@ -149,19 +147,19 @@ export const StyledMouseImage = styled.img`
       transform: 0;
     }
   }
-`
+`;
 export const StyledLeftMouseImage = styled(StyledMouseImage)`
   right: 140px;
   bottom: 0;
   width: 293px;
-`
+`;
 export const StyledRightMouseImage = styled(StyledMouseImage)`
   animation-delay: 1s;
   position: absolute;
   left: 241px;
   bottom: 154px;
   width: 159px;
-`
+`;
 
 // export const StyledRect = styled.div`
 //     width: 66px;
@@ -200,7 +198,7 @@ export const StyledDesc = styled.div`
   text-align: center;
   padding: 16px;
   border-radius: 10px;
-  background: rgba(37, 37, 37, 0.60);
+  background: rgba(37, 37, 37, 0.6);
   backdrop-filter: blur(5px);
   font-size: 16px;
   font-weight: 400;
@@ -208,16 +206,18 @@ export const StyledDesc = styled.div`
   margin-bottom: 55px;
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   p {
     margin: 0;
   }
-  
 `;
 
 export const StyledConnectButton = styled.button`
   border-radius: 12px;
-  background: linear-gradient(180deg, #EEF3BF 0%, #E9F456 100%);
-  color: #1E2028;
+  background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
+  color: #1e2028;
   font-size: 18px;
   font-weight: 600;
   padding: 12px 54px;
@@ -231,17 +231,28 @@ export const StyledMedals = styled.div`
   position: relative;
   z-index: 1;
 `;
-export const StyledMedal = styled.div<{ $url: string }>`
-  filter: drop-shadow(0px 0px 20px #FFF);
+export const StyledMedal = styled.div<{ $url: string; $disabled: boolean }>`
+  filter: drop-shadow(0px 0px 20px #fff);
   width: 136px;
   height: 136px;
   background-color: #fff;
   border-radius: 50%;
-  background-image: ${({ $url }) => 'url(' + $url + ')'};
-  background-size: 100px 100px;
-  background-position: center;
-  background-repeat: no-repeat;
-  
+
+  &:after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 86px;
+    height: 86px;
+    background-image: ${({ $url }) => 'url(' + $url + ')'};
+    background-size: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: ${({ $disabled }) => ($disabled ? 'sepia(1) hue-rotate(210deg) saturate(0.5)' : '')};
+    opacity: ${({ $disabled }) => ($disabled ? '.5' : 1)};
+  }
 `;
 
 export const StyledLogoContainer = styled.div`

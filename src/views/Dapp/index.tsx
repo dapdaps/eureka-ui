@@ -1,23 +1,20 @@
-import { lazy,memo, Suspense } from 'react';
+import { lazy, memo, Suspense } from 'react';
 
 import DappBack from '@/components/PageBack';
+import useScrollMore from '@/hooks/useScrollMore';
 import DappFallback from '@/views/Dapp/components/Fallback';
 
 import DappDetailScroll from './components/DappDetail/Scroll';
 import DappCom from './DappCom';
-import {
-  DappName,
-  StyledDAppContent,
-  StyledDappWrapper,
-  StyledPage,
-  StyledPowerHints,
-} from './styles';
+import { DappName, StyledDAppContent, StyledDappWrapper, StyledPage, StyledPowerHints } from './styles';
 export { default as Empty } from './Empty';
 
 const DappDetail = lazy(() => import('./components/DappDetail'));
 
 const Dapp = (props: any) => {
   const { dapp } = props;
+
+  const { viewHeight } = useScrollMore({ gap: 42 });
 
   return (
     <StyledPage>
@@ -26,10 +23,10 @@ const Dapp = (props: any) => {
         style={{
           maxWidth: 1260,
           minWidth: 1060,
-          margin: '0 auto',
+          margin: '0 auto'
         }}
       />
-      <StyledDAppContent>
+      <StyledDAppContent style={{ minHeight: viewHeight }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '11px', justifyContent: 'center' }}>
           <img src={dapp.logo} style={{ width: '32px', height: '31px' }} />
           <DappName>{dapp.name}</DappName>
@@ -47,7 +44,7 @@ const Dapp = (props: any) => {
       </StyledDAppContent>
       <DappDetailScroll />
       <Suspense fallback={<DappFallback />}>
-        <DappDetail {...dapp}/>
+        <DappDetail {...dapp} />
       </Suspense>
     </StyledPage>
   );
