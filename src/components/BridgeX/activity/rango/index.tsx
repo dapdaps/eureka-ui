@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-import Rank from '@/views/Dapp/components/RankModal'
+import Rank from '@/views/Dapp/components/RankModal';
 
 const Wrapper = styled.div`
   position: relative;
@@ -35,8 +35,6 @@ const Wrapper = styled.div`
     color: #0075ff;
   }
 `;
-
-
 
 export default function RangoActivity({ dapp }: { dapp: any }) {
   const [rankModalShow, setRankModalShow] = useState(false);

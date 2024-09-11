@@ -11,7 +11,7 @@
     width: 4px;
     height: 4px;
     border-radius: 5px;
-    background-color: rgba(41, 125, 209, 1);
+    background: #EBF479;
     animation: dotFlashing 1s infinite linear alternate;
     animation-delay: 0.5s;
 }
@@ -37,14 +37,45 @@
     width: 4px;
     height: 4px;
     border-radius: 5px;
-    background-color: rgba(41, 125, 209, 1);
+    background: #EBF479;
+
 }
 
 @keyframes dotFlashing {
     0% {
-      background-color: rgba(41, 125, 209, 1);
+      background: #EBF479;
     }
     100% {
       background-color: #ebe6ff;
     }
   }
+
+.wrapper {
+  position: relative;
+  width: 31px;
+  height: 31px;
+}
+
+.loader {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+  width: 31px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 2px solid rgba(151, 154, 190, .5);
+  border-right-color: rgba(235, 244, 121, 1);
+  animation: l2 1s infinite linear;
+}
+
+.number {
+  position: absolute;
+  z-index: 2;
+  width: 31px;
+  height: 31px;
+  color: #fff;
+  text-align: center;
+  line-height: 31px;
+}
+@keyframes l2 {to{transform: rotate(1turn)}}

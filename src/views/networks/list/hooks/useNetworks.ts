@@ -12,9 +12,8 @@ import { type StatusType } from '@/views/Odyssey/components/Tag';
 
 const InConfigNetworkIds = Object.keys(IdToPath);
 
-export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
-
-  const  { fetchAdvertise } = useAdvertise('networks');
+export default function useNetworks({ sort, mode, rewardNow, airdrop }: any) {
+  const { fetchAdvertise } = useAdvertise('networks');
   const [loading, setLoading] = useState(false);
   const [networkList, setNetworkList] = useState<Network[]>([]);
   const [l1NetworkList, setL1NetworkList] = useState<Network[]>([]);
@@ -34,10 +33,10 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
       // find trading_volume and participants max
       const maxVolume = Math.max(...data.map((item: Network) => Big(item.trading_volume_general || 0).toNumber()));
       const maxParticipants = Math.max(...data.map((item: Network) => item.participants));
-      data.forEach(item => {
+      data.forEach((item) => {
         item.isTop = Big(item.trading_volume_general || 0).toNumber() === maxVolume;
         item.isHot = maxParticipants === item.participants;
-      })
+      });
       setNetworkList(data);
       return data;
     } catch (error) {
@@ -51,7 +50,7 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
       const _advertise = await fetchAdvertise();
       setAdvertise(_advertise);
     }
-  }
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -60,7 +59,7 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
     });
     return () => {
       setAdvertise([]);
-    }
+    };
   }, [mode]);
 
   const filterNetworkData = async () => {
@@ -68,12 +67,16 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
       return;
     }
     let _networkList = [...networkList];
-    const findSortVar: any = SortList.find(i => i.value === sort);
+    const findSortVar: any = SortList.find((i) => i.value === sort);
     if (findSortVar?.variable) {
       if (findSortVar.variable === 'name') {
         _networkList = orderBy(_networkList, (it) => it.name, findSortVar.value === 'z-a' ? 'desc' : 'asc');
       } else {
-        _networkList = orderBy(_networkList, (it) => Big(it[findSortVar.variable as  keyof Network] as string || 0).toNumber(), 'desc');
+        _networkList = orderBy(
+          _networkList,
+          (it) => Big((it[findSortVar.variable as keyof Network] as string) || 0).toNumber(),
+          'desc'
+        );
       }
     } else {
       _networkList = orderBy(_networkList, (it) => Big(it.trading_volume || 0).toNumber(), 'desc');
@@ -88,12 +91,12 @@ export default function useNetworks({sort,  mode, rewardNow, airdrop}: any) {
       _l2NetworkList.push(network);
     }
     if (advertise.length > 0 && mode === 'card') {
-      _l2NetworkList.splice(5, 0, {isAdvertise: true, advertise } as any);
+      _l2NetworkList.splice(5, 0, { isAdvertise: true, advertise } as any);
     }
 
     setL1NetworkList(_l1NetworkList);
     setL2NetworkList(_l2NetworkList);
-  }
+  };
 
   useEffect(() => {
     filterNetworkData();
