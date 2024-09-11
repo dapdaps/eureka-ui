@@ -133,7 +133,8 @@ export default function BridgeX({
   addAction,
   onSuccess,
   dapp,
-  style
+  style,
+  disabledChain = false
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -421,6 +422,7 @@ export default function BridgeX({
         <MainTitle>Bridge</MainTitle>
         <ChainPairs>
           <ChainSelector
+            disabledChain={disabledChain}
             chain={chainFrom}
             chainList={chainList}
             onChainChange={(chain: any) => {
@@ -448,6 +450,7 @@ export default function BridgeX({
           </ChainArrow>
 
           <ChainSelector
+            disabledChain={disabledChain}
             chain={chainTo}
             chainList={chainList}
             onChainChange={(chain: any) => {
