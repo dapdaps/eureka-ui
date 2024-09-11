@@ -543,7 +543,6 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
             routes={routes}
           />
         }
-
         <Advertise />
       </RightContainer>
     </Wrapper>

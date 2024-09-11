@@ -35,7 +35,7 @@ const AdWrapper = styled.div`
   width: 414px;
   .main-ad-img {
     width: 414px;
-    height: 118px;
+    height: 108px;
     cursor: pointer;
   }
 `;
