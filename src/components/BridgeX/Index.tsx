@@ -140,7 +140,8 @@ export default function BridgeX({
   onSuccess,
   dapp,
   style,
-  disabledChain = false
+  disabledChain = false,
+  disabledToToken = false
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -217,6 +218,8 @@ export default function BridgeX({
       setBridgeTokens(res);
     });
   }, [tool]);
+
+  useEffect(() => {}, [disabledToToken, selectInputToken]);
 
   useEffect(() => {
     if (loadedAllTokens && chainFrom) {
@@ -419,6 +422,7 @@ export default function BridgeX({
   }
 
   const CurrentActivityCom = activity[tool];
+
   return (
     <BridgePanel style={style}>
       <Header>

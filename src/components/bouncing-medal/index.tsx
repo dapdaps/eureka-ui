@@ -1,4 +1,4 @@
-import {
+import Matter, {
   Bodies,
   type Body,
   Composite,
@@ -8,7 +8,7 @@ import {
   MouseConstraint,
   Render,
   Runner,
-  World,
+  World
 } from 'matter-js';
 import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
@@ -31,10 +31,11 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         height,
         pixelRatio: DPR,
         wireframes: false,
-        background: 'unset',
-      },
+        background: 'unset'
+      }
     });
 
+    let beatTimer: any = null;
     const create = async () => {
       const medalImages = medals.map((it) => loadMedal(it.icon));
       const images: any = await Promise.all(medalImages);
@@ -52,9 +53,10 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
             sprite: {
               texture: images[idx].src,
               xScale: widthScale,
-              yScale: (images[idx].height * widthScale) / images[idx].height,
-            },
+              yScale: (images[idx].height * widthScale) / images[idx].height
+            }
           },
+          angle: Math.random() * (Math.PI * 2)
         });
       });
       const borders = [
@@ -65,51 +67,58 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         // left
         Bodies.rectangle(0, height / 2, 2, height, { isStatic: true, render: { visible: false } }),
         // right
-        Bodies.rectangle(width, height / 2, 2, height, { isStatic: true, render: { visible: false } }),
+        Bodies.rectangle(width, height / 2, 2, height, { isStatic: true, render: { visible: false } })
       ];
-      // const mouse = Mouse.create(render.canvas);
-      // const mouseConstraint = MouseConstraint.create(engine, {
-      //   mouse: mouse,
-      //   constraint: {
-      //     stiffness: 0.2,
-      //     render: {
-      //       visible: false,
-      //     },
-      //   },
-      // });
+      const mouse = Mouse.create(render.canvas);
+      const mouseConstraint = MouseConstraint.create(engine, {
+        mouse: mouse,
+        constraint: {
+          stiffness: 0.2,
+          render: {
+            visible: false
+          }
+        }
+      });
       Composite.add(engine.world, [
-        ...medalList.filter((m) => !!m) as Body[],
-        ...borders,
+        ...(medalList.filter((m) => !!m) as Body[]),
+        ...borders
         // mouseConstraint
       ]);
 
-      // const offset = 20;
-      // Events.on(mouseConstraint, 'mousemove', function(event) {
-      //   for (const medal of medalList) {
-      //     console.log(medal);
-      //     if (medal.position.x < offset) {
-      //       Body.setPosition(medal, { x: offset, y: medal.position.y });
-      //     }
-      //     if (medal.position.x > width - offset) {
-      //       Body.setPosition(medal, { x: width - offset, y: medal.position.y });
-      //     }
-      //     if (medal.position.y < offset) {
-      //       Body.setPosition(medal, { y: offset, x: medal.position.x });
-      //     }
-      //     if (medal.position.y > height - offset) {
-      //       Body.setPosition(medal, { y: height, x: medal.position.x });
-      //     }
-      //   }
-      // });
+      Events.on(mouseConstraint, 'mousedown', (event) => {
+        const mousePosition = event.mouse.position;
+        const realMousePosition = {
+          x: mousePosition.x / DPR,
+          y: mousePosition.y / DPR
+        };
+        const bodies = Matter.Composite.allBodies(engine.world).filter((item) => !item.isStatic);
+        bodies.forEach((body) => {
+          if (Matter.Bounds.contains(body.bounds, realMousePosition)) {
+            const forceMagnitude = 0.1 * body.mass;
+            const randomX = Math.random() * forceMagnitude;
+            const randomY = Math.random() * forceMagnitude;
+            const op = {
+              x: randomX,
+              y: randomY < randomX ? randomX : randomY
+            };
+            Matter.Body.applyForce(body, body.position, op);
 
+            beatTimer = setTimeout(() => {
+              Matter.Body.setPosition(body, { x: body.position.x, y: body.position.y });
+            }, 100);
+          }
+        });
+      });
       Render.run(render);
       const runner = Runner.create();
       Runner.run(runner, engine);
     };
+
     const timer = setTimeout(create, delay);
 
     return () => {
       clearTimeout(timer);
+      clearTimeout(beatTimer);
       Render.stop(render);
       World.clear(engine.world, true);
       Engine.clear(engine);
@@ -123,7 +132,7 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
       style={{
         width,
         height,
-        ...style,
+        ...style
       }}
     />
   );
@@ -140,7 +149,7 @@ const StyledCanvas = styled.div`
   }
 `;
 
-const loadMedal = (src: string): Promise<{ src: string; width: number; height: number; } | boolean> => {
+const loadMedal = (src: string): Promise<{ src: string; width: number; height: number } | boolean> => {
   return new Promise((resolve) => {
     const img = new Image();
     img.src = src;
@@ -148,7 +157,7 @@ const loadMedal = (src: string): Promise<{ src: string; width: number; height: n
       resolve({
         src: img.src,
         width: img.width,
-        height: img.height,
+        height: img.height
       });
     };
     img.onerror = () => {

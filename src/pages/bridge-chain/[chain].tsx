@@ -154,6 +154,7 @@ const AllInOne: NextPageWithLayout = () => {
         dapp={chainConfig}
         color={color}
         disabledChain={true}
+        disabledToToken={true}
         tool={chain}
         template={chainConfig?.name}
         chainList={filterChainList}

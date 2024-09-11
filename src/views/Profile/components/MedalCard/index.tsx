@@ -11,9 +11,10 @@ type PropsType = {
   medal: MedalType;
   style?: React.CSSProperties;
   nameStyle?: React.CSSProperties;
+  contentStyle?: React.CSSProperties;
   barWidth?: string;
 };
-export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsType) {
+export default function MedalCard({ medal, style, barWidth, nameStyle, contentStyle }: PropsType) {
   const total = useMemo(() => (medal?.trading_volume > 0 ? 100 : medal?.threshold), [medal]);
   const quantity = useMemo(
     () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : medal?.completed_threshold),
@@ -42,7 +43,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle }: PropsTy
           >
             {medal?.level_name}
           </StyledFont>
-          <StyledFont color="#979ABE" fontSize="14px" lineClamp="2" className="ellipsis">
+          <StyledFont color="#979ABE" style={contentStyle} fontSize="14px" lineClamp="2" className="ellipsis">
             {medal?.level_description}
           </StyledFont>
         </StyledFlex>
