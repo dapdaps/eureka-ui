@@ -1,3 +1,5 @@
+import dynamic from 'next/dynamic';
+
 import { blast } from '@/config/tokens/blast';
 
 const basic = {
@@ -109,7 +111,7 @@ const networks = {
             DUSD: blast['dusd'].address,
           },
         },
-        formContent: 'bluebiu.near/widget/Staking.AgentFi.Looper',
+        formContent: dynamic(() => import('@/modules/staking/AgentFi/components/Looper')),
       },
       {
         ID: '3',
@@ -184,7 +186,7 @@ const networks = {
             return BigInt(value);
           },
         },
-        formContent: 'bluebiu.near/widget/Staking.AgentFi.Liquidity',
+        formContent: dynamic(() => import('@/modules/staking/AgentFi/components/Liquidity')),
       },
       {
         ID: '1',
@@ -264,7 +266,7 @@ const networks = {
           ],
           contract: '0xB52274826621B6886787eC29E4C25cd3493B4930',
         },
-        formContent: 'bluebiu.near/widget/Staking.AgentFi.DEXBalancer',
+        formContent: dynamic(() => import('@/modules/staking/AgentFi/components/DEXBalancer')),
       },
       {
         ID: '2',
@@ -300,7 +302,7 @@ const networks = {
           lockedImgUrl: 'https://app.agentfi.io/assets/strategies/multipliooor/0_locked.png',
           contract: '0xE42ECCA759813Ceed368Ca08d8F0F6780D0c41E1',
         },
-        formContent: 'bluebiu.near/widget/Staking.AgentFi.Multipliooor',
+        formContent: dynamic(() => import('@/modules/staking/AgentFi/components/Multipliooor')),
       },
     ],
   },

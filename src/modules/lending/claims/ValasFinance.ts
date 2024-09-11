@@ -1,6 +1,6 @@
+import { da } from 'date-fns/locale';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
-import { da } from 'date-fns/locale';
 
 const CLAIM_ABI = [
   {

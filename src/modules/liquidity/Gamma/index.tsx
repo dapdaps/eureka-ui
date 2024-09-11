@@ -1,6 +1,6 @@
 
 
-import GammaConnector from '../Connector/Gamma'
+import Connector from '../Connector/Gamma'
 import { StyledContainer } from '../styles';
 export default function Gamma(props: any) {
   const {
@@ -8,7 +8,7 @@ export default function Gamma(props: any) {
   } = props
   return (
     <StyledContainer style={dexConfig.theme}>
-      <GammaConnector
+      <Connector
         {...{
           ...props
         }}

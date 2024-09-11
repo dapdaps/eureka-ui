@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { ethers } from 'ethers';
 import Big from 'big.js';
+import { ethers } from 'ethers';
+import { useEffect } from 'react';
 
 const ORACLE_ABI = [
   {
@@ -177,7 +177,7 @@ export default function ValasFinanceData (props: any) {
 
   useEffect(() => {
     if (!account || !update || !oracleAddress || !multicallAddress) return;
-    let info: any = {};
+    const info: any = {};
     let count = 0;
     const marketList: any[] = Object.values(markets);
     const underlyingTokensAddress = Object.keys(markets);
