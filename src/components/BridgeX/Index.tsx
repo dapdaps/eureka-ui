@@ -120,9 +120,7 @@ export default function BridgeX({
   template,
   account,
   chainList,
-  toggleDocClickHandler,
   getQuote,
-  getAllToken,
   getBridgeToken,
   getStatus,
   prices,
@@ -521,7 +519,7 @@ export default function BridgeX({
           style={{
             opacity: (!route || !canRoute) && account ? 0.2 : 1,
             background: color,
-            color: tool === 'stargate' ? '#000' : '#fff'
+            color: tool === 'stargate' || tool === 'mode' || tool === 'blast' ? '#000' : '#fff'
           }}
           onClick={async () => {
             if (!account) {
