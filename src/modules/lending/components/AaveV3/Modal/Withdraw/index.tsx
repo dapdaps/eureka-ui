@@ -1,10 +1,16 @@
 import Big from 'big.js';
+import { ethers } from 'ethers';
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
 import useAccount from '@/hooks/useAccount';
 import { useMultiState } from '@/modules/lending/hooks';
 
-import { isValid, ROUND_DOWN } from '../../utils';
+import PrimaryButton from '../../PrimaryButton';
+import { formatHealthFactor, isValid, ROUND_DOWN, unifyNumber } from '../../utils';
+import FlexBetween from '../FlexBetween';
+import BaseModal from '../index';
+import RoundedCard from '../RoundedCard';
 
 const WithdrawContainer = styled.div`
   display: flex;
@@ -85,7 +91,6 @@ const WithdrawModal = (props: any) => {
     chainId,
     withdrawETHGas,
     withdrawERC20Gas,
-    formatHealthFactor,
     calcHealthFactor,
     account,
     yourTotalBorrow,
@@ -96,10 +101,8 @@ const WithdrawModal = (props: any) => {
     addAction,
     dexConfig,
     from,
-    unifyNumber,
+    provider
   } = props;
-
-  const { provider } = useAccount();
 
   const {
     underlyingAsset,
@@ -110,7 +113,7 @@ const WithdrawModal = (props: any) => {
     isCollateraled,
     aTokenAddress,
     availableLiquidity,
-    healthFactor,
+    healthFactor
   } = data;
   console.log('withdraw-props--', props, isCollateraled);
 
@@ -123,7 +126,7 @@ const WithdrawModal = (props: any) => {
     needApprove: false,
     loading: false,
     newHealthFactor: '-',
-    gas: '-',
+    gas: '-'
   });
 
   function updateGas() {
@@ -138,8 +141,6 @@ const WithdrawModal = (props: any) => {
     }
   }
 
-  updateGas();
-
   const _remainingSupply = Number(underlyingBalance) - Number(state.amount);
   const remainingSupply = isNaN(_remainingSupply) ? underlyingBalance : Big(_remainingSupply).toFixed(2);
 
@@ -149,39 +150,35 @@ const WithdrawModal = (props: any) => {
       type: 'Lending',
       action: 'Withdraw',
       token: {
-        symbol,
+        symbol
       },
       amount: _amount,
       template: dexConfig.name,
       add: false,
       status,
-      transactionHash,
+      transactionHash
     });
   }
 
   function withdrawErc20(asset: any, actualAmount: any, shownAmount: any) {
     console.log('withdrawErc20--', asset, actualAmount, shownAmount);
     updateState({
-      loading: true,
+      loading: true
     });
-    return Ethers.provider()
+    return provider
       .getSigner()
       .getAddress()
-      .then((address) => {
-        const pool = new ethers.Contract(
-          config.aavePoolV3Address,
-          config.aavePoolV3ABI.body,
-          Ethers.provider().getSigner(),
-        );
+      .then((address: any) => {
+        const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI, provider.getSigner());
         // there is a bug in the aave pool contract that requires the amount to be truncated to the correct number of decimals
         const truncatedAmount = shownAmount.slice(0, shownAmount.indexOf('.') + decimals + 1);
         const amount = ethers.utils.parseUnits(truncatedAmount || 0, decimals);
 
         return pool['withdraw(address,uint256,address)'](asset, amount, address);
       })
-      .then((tx) => {
+      .then((tx: any) => {
         tx.wait()
-          .then((res) => {
+          .then((res: any) => {
             console.log('withdrawErc20', res);
             const { status, transactionHash } = res;
             if (status === 1) {
@@ -192,24 +189,24 @@ const WithdrawModal = (props: any) => {
                 callback: () => {
                   onRequestClose();
                   updateState({
-                    loading: false,
+                    loading: false
                   });
-                },
+                }
               });
               console.log('tx succeeded', res);
             } else {
               console.log('tx failed', res);
               updateState({
-                loading: false,
+                loading: false
               });
             }
           })
-          .catch((err) => {
+          .catch((err: any) => {
             console.log('tx.wait on error', err);
             updateState({ loading: false });
           });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log('withdraw(address,uint256,address) on error', err);
         updateState({ loading: false });
       });
@@ -218,23 +215,23 @@ const WithdrawModal = (props: any) => {
   function withdrawETH(actualAmount: any, shownAmount: any) {
     console.log('withdrawETH--', actualAmount, shownAmount);
     updateState({
-      loading: true,
+      loading: true
     });
-    return Ethers.provider()
+    return provider
       .getSigner()
       .getAddress()
-      .then((address) => {
+      .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI.body,
-          Ethers.provider().getSigner(),
+          config.wrappedTokenGatewayV3ABI,
+          provider.getSigner()
         );
 
         return wrappedTokenGateway.withdrawETH(config.aavePoolV3Address, actualAmount, address);
       })
-      .then((tx) => {
+      .then((tx: any) => {
         tx.wait()
-          .then((res) => {
+          .then((res: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
               formatAddAction(shownAmount, status, transactionHash);
@@ -244,52 +241,52 @@ const WithdrawModal = (props: any) => {
                 callback: () => {
                   onRequestClose();
                   updateState({
-                    loading: false,
+                    loading: false
                   });
-                },
+                }
               });
               console.log('tx succeeded', res);
             } else {
               console.log('tx failed', res);
               updateState({
-                loading: false,
+                loading: false
               });
             }
           })
-          .catch((err) => {
+          .catch((err: any) => {
             console.log('tx.wait on error', err);
             updateState({ loading: false });
           });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log('wrappedTokenGateway.withdrawETH on error', err);
         updateState({ loading: false });
       });
   }
 
   function approveForGateway(tokenAddress: any, amount: any) {
-    const token = new ethers.Contract(tokenAddress, config.erc20Abi.body, Ethers.provider().getSigner());
+    const token = new ethers.Contract(tokenAddress, config.erc20Abi, provider.getSigner());
 
     return token.approve(config.wrappedTokenGatewayV3Address, amount);
   }
 
   function allowanceForGateway(tokenAddress: any) {
-    return Ethers.provider()
+    return provider
       .getSigner()
       .getAddress()
-      .then((address) => {
-        const token = new ethers.Contract(tokenAddress, config.erc20Abi.body, Ethers.provider().getSigner());
+      .then((address: any) => {
+        const token = new ethers.Contract(tokenAddress, config.erc20Abi, provider.getSigner());
         return token.allowance(address, config.wrappedTokenGatewayV3Address);
       });
   }
 
   function update() {
     allowanceForGateway(aTokenAddress)
-      .then((amount) => Number(amount.toString()))
-      .then((amount) =>
+      .then((amount: any) => Number(amount.toString()))
+      .then((amount: any) =>
         updateState({
-          allowanceAmount: Big(amount).div(Big(10).pow(decimals)).toNumber(),
-        }),
+          allowanceAmount: Big(amount).div(Big(10).pow(decimals)).toNumber()
+        })
       );
 
     if (
@@ -303,8 +300,6 @@ const WithdrawModal = (props: any) => {
       updateState({ needApprove: false });
     }
   }
-
-  update();
 
   function bigMin(_a: any, _b: any) {
     const a = Big(_a);
@@ -328,7 +323,7 @@ const WithdrawModal = (props: any) => {
         .minus(
           Big(yourTotalBorrow || 0)
             .times(1.01)
-            .div(Big(threshold)),
+            .div(Big(threshold))
         )
         .div(prices[symbol])
         .toFixed();
@@ -372,7 +367,7 @@ const WithdrawModal = (props: any) => {
       const amountInUSD = Big(value).mul(prices[symbol]).toFixed(2, ROUND_DOWN);
 
       updateState({
-        amountInUSD,
+        amountInUSD
       });
       if (hasHF) {
         updateNewHealthFactor();
@@ -380,7 +375,7 @@ const WithdrawModal = (props: any) => {
     } else {
       updateState({
         amountInUSD: '0.00',
-        newHealthFactor: '-',
+        newHealthFactor: '-'
       });
     }
     updateState({ amount: value });
@@ -397,188 +392,150 @@ const WithdrawModal = (props: any) => {
   const disabled = !state.amount || !isValid(state.amount) || Number(state.amount) === 0;
   const hasHF = config.heroData.includes('Health Factor');
 
+  useEffect(() => {
+    update();
+    updateGas();
+  }, [data]);
+
   if (!data) {
     return <div />;
   }
-  
+
   return (
-    <Widget
-      src={`${config.ownerId}/widget/AAVE.Modal.BaseModal`}
-      props={{
-        title: `Withdraw ${symbol}`,
-        from,
-        onRequestClose: props.onRequestClose,
-        children: (
-          <WithdrawContainer>
-            <Widget
-              src={`${config.ownerId}/widget/AAVE.Modal.RoundedCard`}
-              props={{
-                title: 'Amount',
-                config,
-                children: (
-                  <>
-                    <Widget
-                      src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                      props={{
-                        left: (
-                          <TokenTexture>
-                            <Input
-                              type="number"
-                              value={state.amount}
-                              onChange={(e) => {
-                                changeValue(e.target.value);
-                              }}
-                              placeholder="0"
-                            />
-                          </TokenTexture>
-                        ),
-                        right: (
-                          <TokenWrapper>
-                            <img width={26} height={26} src={data?.icon} />
-                            <TokenTexture>{symbol}</TokenTexture>
-                          </TokenWrapper>
-                        ),
-                      }}
-                    />
-                    <Widget
-                      src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                      props={{
-                        left: <GrayTexture>${unifyNumber(state.amountInUSD)}</GrayTexture>,
-                        right: (
-                          <GrayTexture>
-                            Supply Balance:
-                            <Max
-                              onClick={() => {
-                                changeValue(Big(shownMaxValue).toFixed());
-                              }}
-                            >
-                              {unifyNumber(shownMaxValue)}
-                            </Max>
-                          </GrayTexture>
-                        ),
-                      }}
-                    />
-                  </>
-                ),
+    <BaseModal title={`Withdraw ${symbol}`} onRequestClose={onRequestClose} config={config} from={from}>
+      <WithdrawContainer>
+        <RoundedCard title="Amount">
+          <TokenTexture>
+            <Input
+              type="number"
+              value={state.amount}
+              onChange={(e) => {
+                changeValue(e.target.value);
               }}
+              placeholder="0"
             />
-            <Widget
-              src={`${config.ownerId}/widget/AAVE.Modal.RoundedCard`}
-              props={{
-                title: 'Transaction Overview',
-                config,
-                children: (
-                  <TransactionOverviewContainer>
-                    <Widget
-                      src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                      props={{
-                        left: <PurpleTexture>Remaining Supply</PurpleTexture>,
-                        right: (
-                          <WhiteTexture>
-                            {unifyNumber(remainingSupply)} {symbol}
-                          </WhiteTexture>
-                        ),
-                      }}
-                    />
-                    {hasHF ? (
-                      <Widget
-                        src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                        props={{
-                          left: <PurpleTexture>Health Factor</PurpleTexture>,
-                          right: (
-                            <div style={{ textAlign: 'right' }}>
-                              <PurpleTexture>
-                                {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
-                              </PurpleTexture>
-                            </div>
-                          ),
-                        }}
-                      />
-                    ) : null}
-                  </TransactionOverviewContainer>
-                ),
-              }}
-            />
-            {/* <Widget
-                  src={`${config.ownerId}/widget/AAVE.GasEstimation`}
-                  props={{ gas: state.gas, config }}
-                /> */}
-            {state.needApprove && symbol === config.nativeCurrency.symbol && (
-              <Widget
-                src={`${config.ownerId}/widget/AAVE.PrimaryButton`}
-                props={{
-                  config,
-                  theme,
-                  loading: state.loading,
-                  children: `Approve ${symbol}`,
-                  disabled,
-                  onClick: () => {
-                    updateState({
-                      loading: true,
-                    });
-                    const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
-                    approveForGateway(aTokenAddress, amount)
-                      .then((tx) => {
-                        tx.wait()
-                          .then((res) => {
-                            const { status } = res;
-                            if (status === 1) {
-                              console.log('tx succeeded', res);
-                              updateState({
-                                needApprove: false,
-                                loading: false,
-                              });
-                            } else {
-                              console.log('tx failed', res);
-                              updateState({
-                                loading: false,
-                              });
-                            }
-                          })
-                          .catch(() => updateState({ loading: false }));
-                      })
-                      .catch(() => updateState({ loading: false }));
-                  },
+          </TokenTexture>
+          <TokenWrapper>
+            <img width={26} height={26} src={data?.icon} />
+            <TokenTexture>{symbol}</TokenTexture>
+          </TokenWrapper>
+          <FlexBetween>
+            <GrayTexture>${unifyNumber(state.amountInUSD)}</GrayTexture>
+            <GrayTexture>
+              Supply Balance:
+              <Max
+                onClick={() => {
+                  changeValue(Big(shownMaxValue).toFixed());
                 }}
-              />
+              >
+                {unifyNumber(shownMaxValue)}
+              </Max>
+            </GrayTexture>
+          </FlexBetween>
+        </RoundedCard>
+        <RoundedCard title="Transaction Overview">
+          <TransactionOverviewContainer>
+            <FlexBetween>
+              <PurpleTexture>Remaining Supply</PurpleTexture>
+              <WhiteTexture>
+                {unifyNumber(remainingSupply)} {symbol}
+              </WhiteTexture>
+            </FlexBetween>
+            {hasHF && (
+              <FlexBetween>
+                <PurpleTexture>Health Factor</PurpleTexture>
+                <div style={{ textAlign: 'right' }}>
+                  <PurpleTexture>
+                    {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
+                  </PurpleTexture>
+                </div>
+              </FlexBetween>
             )}
-            {!(state.needApprove && symbol === config.nativeCurrency.symbol) && (
-              <Widget
-                src={`${config.ownerId}/widget/AAVE.PrimaryButton`}
-                props={{
-                  config,
-                  theme,
-                  loading: state.loading,
-                  children: 'Withdraw',
-                  disabled,
-                  onClick: () => {
-                    const actualAmount =
-                      state.amount === shownMaxValue
-                        ? actualMaxValue
-                        : Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0, ROUND_DOWN);
-
-                    const shownAmount = state.amount;
-                    console.log(shownAmount, 'shownAmount');
-                    console.log(shownMaxValue, 'shownMaxValue');
-                    console.log(actualAmount, 'actualAmount');
-                    console.log(actualMaxValue, 'actualMaxValue');
-
-                    if (symbol === config.nativeCurrency.symbol) {
-                      // supply weth
-                      withdrawETH(actualAmount, shownAmount);
-                    } else {
-                      // supply common
-                      withdrawErc20(underlyingAsset, actualAmount, shownAmount);
-                    }
-                  },
-                }}
-              />
+          </TransactionOverviewContainer>
+        </RoundedCard>
+        <RoundedCard title="Transaction Overview">
+          <TransactionOverviewContainer>
+            <FlexBetween>
+              <PurpleTexture>Remaining Supply</PurpleTexture>
+              <WhiteTexture>
+                {unifyNumber(remainingSupply)} {symbol}
+              </WhiteTexture>
+            </FlexBetween>
+            {hasHF && (
+              <FlexBetween>
+                <PurpleTexture>Health Factor</PurpleTexture>
+                <div style={{ textAlign: 'right' }}>
+                  <PurpleTexture>
+                    {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
+                  </PurpleTexture>
+                </div>
+              </FlexBetween>
             )}
-          </WithdrawContainer>
-        ),
-        config,
-      }}
-    />
+          </TransactionOverviewContainer>
+        </RoundedCard>
+
+        {state.needApprove && symbol === config.nativeCurrency.symbol ? (
+          <PrimaryButton
+            config={config}
+            theme={theme}
+            loading={state.loading}
+            disabled={disabled}
+            onClick={() => {
+              updateState({
+                loading: true
+              });
+              const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
+              approveForGateway(aTokenAddress, amount)
+                .then((tx: any) => {
+                  tx.wait()
+                    .then((res: any) => {
+                      const { status } = res;
+                      if (status === 1) {
+                        console.log('tx succeeded', res);
+                        updateState({
+                          needApprove: false,
+                          loading: false
+                        });
+                      } else {
+                        console.log('tx failed', res);
+                        updateState({
+                          loading: false
+                        });
+                      }
+                    })
+                    .catch(() => updateState({ loading: false }));
+                })
+                .catch(() => updateState({ loading: false }));
+            }}
+          >
+            {`Approve ${symbol}`}
+          </PrimaryButton>
+        ) : (
+          <PrimaryButton
+            config={config}
+            theme={theme}
+            loading={state.loading}
+            disabled={disabled}
+            onClick={() => {
+              const actualAmount =
+                state.amount === shownMaxValue
+                  ? actualMaxValue
+                  : Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0, ROUND_DOWN);
+
+              const shownAmount = state.amount;
+
+              if (symbol === config.nativeCurrency.symbol) {
+                // supply weth
+                withdrawETH(actualAmount, shownAmount);
+              } else {
+                // supply common
+                withdrawErc20(underlyingAsset, actualAmount, shownAmount);
+              }
+            }}
+          />
+        )}
+      </WithdrawContainer>
+    </BaseModal>
   );
 };
 

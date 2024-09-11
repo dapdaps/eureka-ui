@@ -1,4 +1,15 @@
+import Big from 'big.js';
+import { ethers } from 'ethers';
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
+
+import { useMultiState } from '@/modules/hooks';
+
+import PrimaryButton from '../../PrimaryButton';
+import { formatHealthFactor, unifyNumber } from '../../utils';
+import FlexBetween from '../FlexBetween';
+import BaseModal from '../index';
+import RoundedCard from '../RoundedCard';
 
 const WithdrawContainer = styled.div`
   display: flex;
@@ -67,10 +78,6 @@ const Input = styled.input`
   }
 `;
 
-const Max = styled.span`
-  color: #9b9b9b;
-  cursor: pointer;
-`;
 const Icon = styled.img`
   width: 16px;
   height: 16px;
@@ -89,25 +96,13 @@ const CollateralModal = (props: any) => {
     onActionSuccess,
     chainId,
     flag,
-    formatHealthFactor,
     calcHealthFactor,
     yourTotalBorrow,
     account,
     theme,
     from,
-    unifyNumber,
+    provider
   } = props;
-  console.log('props:', props);
-  if (!data) {
-    return <div />;
-  }
-  const ROUND_DOWN = 0;
-  function isValid(a) {
-    if (!a) return false;
-    if (isNaN(Number(a))) return false;
-    if (a === '') return false;
-    return true;
-  }
 
   const {
     icon,
@@ -118,22 +113,22 @@ const CollateralModal = (props: any) => {
     underlyingBalanceUSD,
     aTokenAddress,
     availableLiquidity,
-    healthFactor,
+    healthFactor
   } = data;
 
-  State.init({
+  const [state, updateState] = useMultiState<any>({
     amount: '',
     amountInUSD: '0.00',
     allowanceAmount: 0,
     needApprove: false,
     loading: false,
     newHealthFactor: '-',
-    gas: '-',
+    gas: '-'
   });
 
   function setColl() {
-    State.update({
-      loading: true,
+    updateState({
+      loading: true
     });
 
     const CollContract = new ethers.Contract(
@@ -142,121 +137,90 @@ const CollateralModal = (props: any) => {
         {
           inputs: [
             { internalType: 'address', name: 'asset', type: 'address' },
-            { internalType: 'bool', name: 'useAsCollateral', type: 'bool' },
+            { internalType: 'bool', name: 'useAsCollateral', type: 'bool' }
           ],
           name: 'setUserUseReserveAsCollateral',
           outputs: [],
           stateMutability: 'nonpayable',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
-      Ethers.provider().getSigner(),
+      provider.getSigner()
     );
 
     CollContract.setUserUseReserveAsCollateral(data.underlyingAsset, flag)
-      .then((tx) => {
+      .then((tx: any) => {
         tx.wait()
-          .then((res) => {
+          .then((res: any) => {
             const { status } = res;
             if (status === 1) {
               onActionSuccess({
                 msg: `Success`,
                 callback: () => {
                   onRequestClose();
-                  State.update({
-                    loading: false,
+                  updateState({
+                    loading: false
                   });
-                },
+                }
               });
               console.log('tx succeeded', res);
             } else {
               console.log('tx failed', res);
-              State.update({
-                loading: false,
+              updateState({
+                loading: false
               });
             }
           })
-          .catch(() => State.update({ loading: false }));
+          .catch(() => updateState({ loading: false }));
       })
-      .catch(() => State.update({ loading: false }));
+      .catch(() => updateState({ loading: false }));
   }
 
   useEffect(() => {
     const type = flag ? 'INC_COLLATERAL' : 'DEC_COLLATERAL';
     const newHealthFactor = formatHealthFactor(calcHealthFactor(type, symbol, underlyingBalance));
 
-    State.update({ newHealthFactor });
+    updateState({ newHealthFactor });
   }, []);
   const refuseClose = yourTotalBorrow && !isNaN(Number(state.newHealthFactor)) && Big(state.newHealthFactor).lt(1);
 
-  return (
-    <Widget
-      src={`${config.ownerId}/widget/AAVE.Modal.BaseModal`}
-      props={{
-        title: `Collateral`,
-        onRequestClose: props.onRequestClose,
-        from,
-        children: (
-          <WithdrawContainer>
-            <Widget
-              src={`${config.ownerId}/widget/AAVE.Modal.RoundedCard`}
-              props={{
-                title: 'Transaction Overview',
-                config,
-                children: (
-                  <TransactionOverviewContainer>
-                    <Widget
-                      src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                      props={{
-                        left: <PurpleTexture>Supply balance</PurpleTexture>,
-                        right: (
-                          <WhiteTexture>
-                            <Icon src={icon} alt="" />
-                            {unifyNumber(underlyingBalance)}
-                            {symbol}
-                          </WhiteTexture>
-                        ),
-                      }}
-                    />
-                    <Widget
-                      src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                      props={{
-                        left: <PurpleTexture>Health Factor</PurpleTexture>,
-                        right: (
-                          <div style={{ textAlign: 'right' }}>
-                            <PurpleTexture>
-                              {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
-                            </PurpleTexture>
-                          </div>
-                        ),
-                      }}
-                    />
-                  </TransactionOverviewContainer>
-                ),
-              }}
-            />
-            {refuseClose ? (
-              <Tips>
-                You can not switch usage as collateral mode for this currency, because it will cause collateral call
-              </Tips>
-            ) : null}
+  if (!data) {
+    return <div />;
+  }
 
-            <Widget
-              src={`${config.ownerId}/widget/AAVE.PrimaryButton`}
-              props={{
-                config,
-                theme,
-                loading: state.loading,
-                children: `${flag ? 'Enable' : 'Disable'} ${data.symbol} as Collateral`,
-                disabled: refuseClose,
-                onClick: setColl,
-              }}
-            />
-          </WithdrawContainer>
-        ),
-        config,
-      }}
-    />
+  return (
+    <BaseModal title="Collateral" onRequestClose={props.onRequestClose} from={from} config={config} theme={theme}>
+      <WithdrawContainer>
+        <RoundedCard title="Transaction Overview">
+          <TransactionOverviewContainer>
+            <FlexBetween>
+              <PurpleTexture>Supply balance</PurpleTexture>
+              <WhiteTexture>
+                <Icon src={icon} alt="" />
+                {unifyNumber(underlyingBalance)}
+                {symbol}
+              </WhiteTexture>
+            </FlexBetween>
+            <FlexBetween>
+              <PurpleTexture>Health Factor</PurpleTexture>
+              <div style={{ textAlign: 'right' }}>
+                <PurpleTexture>
+                  {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
+                </PurpleTexture>
+              </div>
+            </FlexBetween>
+          </TransactionOverviewContainer>
+        </RoundedCard>
+        {refuseClose ? (
+          <Tips>
+            You can not switch usage as collateral mode for this currency, because it will cause collateral call
+          </Tips>
+        ) : null}
+        <PrimaryButton config={config} theme={theme} loading={state.loading} disabled={refuseClose} onClick={setColl}>
+          {flag ? 'Enable' : 'Disable'} {data.symbol} as Collateral
+        </PrimaryButton>
+      </WithdrawContainer>
+    </BaseModal>
   );
 };
 

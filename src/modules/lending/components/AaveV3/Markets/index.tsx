@@ -58,16 +58,15 @@ const Markets = (props: any) => {
     theme,
     yourTotalSupply,
     from,
-    config,
-    gasEstimation,
+    config
   } = props;
 
   console.log(props, '64--props');
-  
+
   const [state, updateState] = useMultiState<any>({
     data: undefined,
     showBorrowModal: false,
-    showLoopModal: false,
+    showLoopModal: false
   });
 
   const SupplyButton = ({ data }: any) => {
@@ -140,7 +139,7 @@ const Markets = (props: any) => {
       'Available to borrow',
       'Borrow APY',
       // "Can be Collateral",
-      '',
+      ''
     ];
     tableData = assetsToSupply.map((row: any, index: number) => [
       <TokenWrapper key={`token-${index}`}>
@@ -174,7 +173,7 @@ const Markets = (props: any) => {
       <div key={`buttons-${index}`} style={{ display: 'flex', gap: 10, width: '100%' }}>
         <SupplyButton data={row} />
         <BorrowButton data={row} />
-      </div>,
+      </div>
     ]);
   }
 
@@ -187,7 +186,7 @@ const Markets = (props: any) => {
       'Borrow APY',
       'Pool Liquidity',
       // "Can be Collateral",
-      '',
+      ''
     ];
     tableData = assetsToSupply.map((row: any, index: number) => [
       <TokenWrapper key={`token-${index}`}>
@@ -203,7 +202,7 @@ const Markets = (props: any) => {
       </CenterItem>,
       <CenterItem key={`apy-${index}`}>
         <ItemPrimary className="apy">{`${unifyNumber(
-          (Number(row.supplyAPY) + Number(row.NATIVE_YIELD || 0)) * 100,
+          (Number(row.supplyAPY) + Number(row.NATIVE_YIELD || 0)) * 100
         )} %`}</ItemPrimary>
         <ItemSub className="radio">
           <IconMouth src="https://ipfs.near.social/ipfs/bafkreiffqyfmusnew73zt6slkeoryvevuw7ojcgvfdirgf3oqdsll5yyga" />
@@ -228,14 +227,14 @@ const Markets = (props: any) => {
         {row.supportBorrow ? (
           <BorrowButton
             data={{
-              ...row,
+              ...row
             }}
           />
         ) : (
           <div style={{ width: '100%' }}></div>
         )}
         {row.supportLoop ? <LoopButton data={row} /> : <div style={{ width: '100%' }}></div>}
-      </div>,
+      </div>
     ]);
   }
 
@@ -256,7 +255,7 @@ const Markets = (props: any) => {
         <SupplyModal
           data={{
             ...state.data,
-            healthFactor,
+            healthFactor
           }}
           onRequestClose={() => setShowSupplyModal(false)}
           {...props}
@@ -266,9 +265,9 @@ const Markets = (props: any) => {
         <BorrowModal
           data={{
             ...state.data,
-            healthFactor,
+            healthFactor
           }}
-          onRequestClose={() => setShowSupplyModal(false)}
+          onRequestClose={() => updateState({ showBorrowModal: false })}
           {...props}
         />
       )}
@@ -276,9 +275,9 @@ const Markets = (props: any) => {
         <LoopModal
           data={{
             ...state.data,
-            healthFactor,
+            healthFactor
           }}
-          onRequestClose={() => setShowSupplyModal(false)}
+          onRequestClose={() => updateState({ showLoopModal: false })}
           {...props}
         />
       )}

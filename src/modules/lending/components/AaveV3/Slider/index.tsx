@@ -1,5 +1,7 @@
+import * as Slider from '@radix-ui/react-slider';
 import { styled } from 'styled-components';
 
+import { useMultiState } from '@/modules/hooks/useMultiState';
 const Wrapper = styled.div`
   .SliderRoot {
     position: relative;
@@ -59,18 +61,19 @@ const LeverageValue = styled.span`
   color: white;
 `;
 
-const Slider = () => {
+const MIN_LEVERAGE = 1.1;
+
+const SliderCom = (props: any) => {
   const { LEVERAGE, onSliderChange } = props;
 
-  const MIN_LEVERAGE = 1.1;
-  State.init({
-    value: [MIN_LEVERAGE],
+  const [state, updateState] = useMultiState<any>({
+    value: [MIN_LEVERAGE]
   });
 
-  function onChange(_value) {
+  function onChange(_value: any) {
     onSliderChange(_value);
-    State.update({
-      value: [_value],
+    updateState({
+      value: [_value]
     });
   }
 
@@ -103,4 +106,4 @@ const Slider = () => {
   );
 };
 
-export default Slider;
+export default SliderCom;

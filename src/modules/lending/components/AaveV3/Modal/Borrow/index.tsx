@@ -1,4 +1,15 @@
+import Big from 'big.js';
+import { ethers } from 'ethers';
+import { useEffect } from 'react';
 import { styled } from 'styled-components';
+
+import { useMultiState } from '@/modules/lending/hooks';
+
+import PrimaryButton from '../../PrimaryButton';
+import { formatHealthFactor, isValid, ROUND_DOWN, unifyNumber } from '../../utils';
+import BaseModal from '../';
+import FlexBetween from '../FlexBetween';
+import RoundedCard from '../RoundedCard';
 
 const BorrowContainer = styled.div`
   display: flex;
@@ -83,62 +94,44 @@ const BorrowModal = (props: any) => {
     data,
     onRequestClose,
     onActionSuccess,
-    chainId,
-    borrowETHGas,
-    borrowERC20Gas,
-    formatHealthFactor,
     calcHealthFactor,
     theme,
     addAction,
     prices,
-    from,
-    unifyNumber,
+    provider,
+    gasEstimation
   } = props;
-
-  if (!data) {
-    return <div />;
-  }
-
-  const ROUND_DOWN = 0;
-  function isValid(a) {
-    if (!a) return false;
-    if (isNaN(Number(a))) return false;
-    if (a === '') return false;
-    return true;
-  }
 
   const {
     symbol,
-
     healthFactor,
     availableBorrows,
     availableBorrowsUSD,
     decimals,
     underlyingAsset,
-    variableDebtTokenAddress,
+    variableDebtTokenAddress
   } = data;
-  State.init({
+
+  const [state, updateState] = useMultiState<any>({
     amount: '',
     amountInUSD: '0.00',
     allowanceAmount: 0,
     loading: false,
     newHealthFactor: '-',
-    gas: '-',
+    gas: '-'
   });
 
   function updateGas() {
     if (symbol === config.nativeCurrency.symbol) {
-      borrowETHGas().then((value) => {
-        State.update({ gas: value });
+      gasEstimation('borrowETH').then((value: any) => {
+        updateState({ gas: value });
       });
     } else {
-      borrowERC20Gas().then((value) => {
-        State.update({ gas: value });
+      gasEstimation('borrow').then((value: any) => {
+        updateState({ gas: value });
       });
     }
   }
-
-  updateGas();
 
   const disabled = !state.amount || !isValid(state.amount) || Number(state.amount) === 0;
   const maxValue = Big(availableBorrows).toFixed(decimals);
@@ -148,31 +141,31 @@ const BorrowModal = (props: any) => {
    * @param {string} userAddress
    * @returns {BigNumber}
    */
-  function borrowAllowance(vwETHAddress, userAddress) {
-    const vToken = new ethers.Contract(vwETHAddress, config.variableDebtTokenABI.body, Ethers.provider().getSigner());
+  function borrowAllowance(vwETHAddress: string, userAddress: string) {
+    const vToken = new ethers.Contract(vwETHAddress, config.variableDebtTokenABI, provider.getSigner());
 
     return vToken.borrowAllowance(userAddress, config.wrappedTokenGatewayV3Address);
   }
 
-  function approveDelegation(vwETHAddress) {
-    const vToken = new ethers.Contract(vwETHAddress, config.variableDebtTokenABI.body, Ethers.provider().getSigner());
+  function approveDelegation(vwETHAddress: string) {
+    const vToken = new ethers.Contract(vwETHAddress, config.variableDebtTokenABI, provider.getSigner());
     const maxUint256 = ethers.BigNumber.from('0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff');
     return vToken.approveDelegation(config.wrappedTokenGatewayV3Address, maxUint256);
   }
 
-  function debounce(fn, wait) {
+  function debounce(fn: () => void, wait: number) {
     let timer = state.timer;
     return () => {
       if (timer) clearTimeout(timer);
       timer = setTimeout(() => {
         fn();
       }, wait);
-      State.update({ timer });
+      updateState({ timer });
     };
   }
 
   const updateNewHealthFactor = debounce(() => {
-    State.update({ newHealthFactor: '-' });
+    updateState({ newHealthFactor: '-' });
     const newHealthFactor = formatHealthFactor(calcHealthFactor('BORROW', symbol, state.amount));
     // console.log(
     //   "BORROW updateNewHealthFactor",
@@ -180,10 +173,10 @@ const BorrowModal = (props: any) => {
     //   state.amount,
     //   newHealthFactor
     // );
-    State.update({ newHealthFactor });
+    updateState({ newHealthFactor });
   }, 1000);
 
-  const changeValue = (value) => {
+  const changeValue = (value: string) => {
     let amountInUSD = '0.00';
     if (Number(value) > Number(maxValue)) {
       value = maxValue;
@@ -197,49 +190,45 @@ const BorrowModal = (props: any) => {
         .toFixed(2, ROUND_DOWN);
     }
 
-    State.update({ amount: parseFloat(value), amountInUSD });
+    updateState({ amount: parseFloat(value), amountInUSD });
 
     updateNewHealthFactor();
   };
 
-  function formatAddAction(_amount, status, transactionHash) {
+  function formatAddAction(_amount: string, status: number, transactionHash: string) {
     addAction?.({
       type: 'Lending',
       action: 'Borrow',
       token: {
-        symbol,
+        symbol
       },
       amount: _amount,
       template: dexConfig.name,
       add: false,
       status,
-      transactionHash,
+      transactionHash
     });
   }
 
-  function borrowERC20(amount) {
-    State.update({ loading: true });
-    const pool = new ethers.Contract(
-      config.aavePoolV3Address,
-      config.aavePoolV3ABI.body,
-      Ethers.provider().getSigner(),
-    );
+  function borrowERC20(amount: string) {
+    updateState({ loading: true });
+    const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI, provider);
 
-    Ethers.provider()
+    provider
       .getSigner()
       .getAddress()
-      .then((address) => {
+      .then((address: any) => {
         return pool['borrow(address,uint256,uint256,uint16,address)'](
           underlyingAsset,
           amount,
           2, // variable interest rate
           0,
-          address,
+          address
         );
       })
-      .then((tx) => {
+      .then((tx: any) => {
         tx.wait()
-          .then((res) => {
+          .then((res: any) => {
             const { status, transactionHash } = res;
             console.log('SUCCESS--', status, transactionHash);
             if (status === 1) {
@@ -248,41 +237,41 @@ const BorrowModal = (props: any) => {
                 msg: `You borrowed ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
                 callback: () => {
                   onRequestClose();
-                  State.update({
-                    loading: false,
+                  updateState({
+                    loading: false
                   });
-                },
+                }
               });
               console.log('tx succeeded', res);
             } else {
               console.log('tx failed', res);
-              State.update({
-                loading: false,
+              updateState({
+                loading: false
               });
             }
           })
-          .catch(() => State.update({ loading: false }));
+          .catch(() => updateState({ loading: false }));
       })
-      .catch(() => State.update({ loading: false }));
+      .catch(() => updateState({ loading: false }));
   }
 
-  function borrowETH(amount) {
+  function borrowETH(amount: string) {
     const wrappedTokenGateway = new ethers.Contract(
       config.wrappedTokenGatewayV3Address,
-      config.wrappedTokenGatewayV3ABI.body,
-      Ethers.provider().getSigner(),
+      config.wrappedTokenGatewayV3ABI,
+      provider.getSigner()
     );
-    State.update({ loading: true });
+    updateState({ loading: true });
     return wrappedTokenGateway
       .borrowETH(
         config.aavePoolV3Address,
         amount,
         2, // variable interest rate
-        0,
+        0
       )
-      .then((tx) => {
+      .then((tx: any) => {
         tx.wait()
-          .then((res) => {
+          .then((res: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
@@ -290,34 +279,34 @@ const BorrowModal = (props: any) => {
                 msg: `You borrowed ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
                 callback: () => {
                   onRequestClose();
-                  State.update({
-                    loading: false,
+                  updateState({
+                    loading: false
                   });
-                },
+                }
               });
               console.log('tx succeeded', res);
             } else {
               console.log('tx failed', res);
-              State.update({
-                loading: false,
+              updateState({
+                loading: false
               });
             }
           })
-          .catch(() => State.update({ loading: false }));
+          .catch(() => updateState({ loading: false }));
       })
-      .catch(() => State.update({ loading: false }));
+      .catch(() => updateState({ loading: false }));
   }
 
   function update() {
-    Ethers.provider()
+    provider
       .getSigner()
       .getAddress()
-      .then((address) => {
+      .then((address: any) => {
         borrowAllowance(variableDebtTokenAddress, address)
-          .then((amountRaw) => amountRaw.toString())
-          .then((amount) => {
-            State.update({
-              allowanceAmount: Big(amount).div(Big(10).pow(decimals)).toNumber(),
+          .then((amountRaw: any) => amountRaw.toString())
+          .then((amount: any) => {
+            updateState({
+              allowanceAmount: Big(amount).div(Big(10).pow(decimals)).toNumber()
             });
           });
       });
@@ -328,175 +317,128 @@ const BorrowModal = (props: any) => {
       Number(state.allowanceAmount) < Number(state.amount) ||
       Number(state.amount) === 0
     ) {
-      State.update({ needApprove: true });
+      updateState({ needApprove: true });
     } else {
-      State.update({ needApprove: false });
+      updateState({ needApprove: false });
     }
   }
 
-  update();
+  useEffect(() => {
+    update();
+    updateGas();
+  }, [state.amount]);
+
+  if (!data) {
+    return <div />;
+  }
+
   return (
     <>
-      <Widget
-        src={`${config.ownerId}/widget/AAVE.Modal.BaseModal`}
-        props={{
-          title: `Borrow ${symbol}`,
-          onRequestClose: onRequestClose,
-          children: (
-            <BorrowContainer>
-              <Widget
-                src={`${config.ownerId}/widget/AAVE.Modal.RoundedCard`}
-                props={{
-                  title: 'Amount',
-                  config,
-                  children: (
-                    <>
-                      <Widget
-                        src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                        props={{
-                          left: (
-                            <TokenTexture>
-                              <Input
-                                type="number"
-                                value={state.amount}
-                                onChange={(e) => {
-                                  changeValue(e.target.value);
-                                }}
-                                placeholder="0"
-                              />
-                            </TokenTexture>
-                          ),
-                          right: (
-                            <TokenWrapper>
-                              <img width={26} height={26} src={data?.icon} />
-                              <TokenTexture>{symbol}</TokenTexture>
-                            </TokenWrapper>
-                          ),
-                        }}
-                      />
-                      <Widget
-                        src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                        props={{
-                          left: <GrayTexture>${unifyNumber(state.amountInUSD)}</GrayTexture>,
-                          right: (
-                            <GrayTexture>
-                              Available:{' '}
-                              <Max
-                                onClick={() => {
-                                  changeValue(maxValue);
-                                }}
-                              >
-                                {unifyNumber(availableBorrows)}
-                              </Max>
-                            </GrayTexture>
-                          ),
-                        }}
-                      />
-                    </>
-                  ),
-                }}
-              />
-              <Widget
-                src={`${config.ownerId}/widget/AAVE.Modal.RoundedCard`}
-                props={{
-                  title: 'Transaction Overview',
-                  config,
-                  children: (
-                    <TransactionOverviewContainer>
-                      <Widget
-                        src={`${config.ownerId}/widget/AAVE.Modal.FlexBetween`}
-                        props={{
-                          left: <PurpleTexture>Health Factor</PurpleTexture>,
-                          right: (
-                            <div style={{ textAlign: 'right' }}>
-                              <Texture
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                  gap: 4,
-                                }}
-                              >
-                                {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
-                              </Texture>
-                            </div>
-                          ),
-                        }}
-                      />
-                    </TransactionOverviewContainer>
-                  ),
-                }}
-              />
-              {/* <Widget
-                    src={`${config.ownerId}/widget/AAVE.GasEstimation`}
-                    props={{ gas: state.gas, config }}
-                  /> */}
-              {state.needApprove && symbol === config.nativeCurrency.symbol && (
-                <Widget
-                  src={`${config.ownerId}/widget/AAVE.PrimaryButton`}
-                  props={{
-                    config,
-                    theme,
-                    loading: state.loading,
-                    children: `Approve ${symbol}`,
-                    disabled,
-                    onClick: () => {
-                      State.update({
-                        loading: true,
-                      });
-                      const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
-
-                      approveDelegation(variableDebtTokenAddress)
-                        .then((tx) => {
-                          tx.wait()
-                            .then((res) => {
-                              const { status } = res;
-                              if (status === 1) {
-                                State.update({
-                                  needApprove: false,
-                                  loading: false,
-                                });
-                              } else {
-                                console.log('tx failed', res);
-                                State.update({
-                                  loading: false,
-                                });
-                              }
-                            })
-                            .catch(() => State.update({ loading: false }));
-                        })
-                        .catch(() => State.update({ loading: false }));
-                    },
+      <BaseModal config={config} title={`Borrow ${symbol}`} onRequestClose={onRequestClose}>
+        <BorrowContainer>
+          <RoundedCard title="Amount">
+            <FlexBetween>
+              <TokenTexture>
+                <Input
+                  type="number"
+                  value={state.amount}
+                  onChange={(e) => {
+                    changeValue(e.target.value);
                   }}
+                  placeholder="0"
                 />
-              )}
-              {!(state.needApprove && symbol === config.nativeCurrency.symbol) && (
-                <Widget
-                  src={`${config.ownerId}/widget/AAVE.PrimaryButton`}
-                  props={{
-                    config,
-                    theme,
-                    children: `Borrow ${symbol}`,
-                    loading: state.loading,
-                    disabled,
-                    onClick: () => {
-                      const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
-                      if (symbol === config.nativeWrapCurrency.symbol) {
-                        // borrow weth
-                        borrowETH(amount);
-                      } else {
-                        // borrow common
-                        borrowERC20(amount);
-                      }
-                    },
+              </TokenTexture>
+              <TokenWrapper>
+                <img width={26} height={26} src={data?.icon} />
+                <TokenTexture>{symbol}</TokenTexture>
+              </TokenWrapper>
+            </FlexBetween>
+            <FlexBetween>
+              <GrayTexture>${unifyNumber(state.amountInUSD)}</GrayTexture>
+              <GrayTexture>
+                Available:{' '}
+                <Max
+                  onClick={() => {
+                    changeValue(maxValue);
                   }}
-                />
-              )}
-            </BorrowContainer>
-          ),
-          config,
-          from,
-        }}
-      />
+                >
+                  {unifyNumber(availableBorrows)}
+                </Max>
+              </GrayTexture>
+            </FlexBetween>
+          </RoundedCard>
+          <RoundedCard title="Transaction Overview">
+            <FlexBetween>
+              <PurpleTexture>Health Factor</PurpleTexture>
+              <div style={{ textAlign: 'right' }}>
+                <Texture
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 4
+                  }}
+                >
+                  {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
+                </Texture>
+              </div>
+            </FlexBetween>
+          </RoundedCard>
+          {state.needApprove && symbol === config.nativeCurrency.symbol ? (
+            <PrimaryButton
+              config={config}
+              theme={theme}
+              loading={state.loading}
+              disabled={disabled}
+              onClick={() => {
+                updateState({
+                  loading: true
+                });
+                approveDelegation(variableDebtTokenAddress)
+                  .then((tx: any) => {
+                    tx.wait()
+                      .then((res: any) => {
+                        const { status } = res;
+                        if (status === 1) {
+                          updateState({
+                            needApprove: false,
+                            loading: false
+                          });
+                        } else {
+                          console.log('tx failed', res);
+                          updateState({
+                            loading: false
+                          });
+                        }
+                      })
+                      .catch(() => updateState({ loading: false }));
+                  })
+                  .finally(() => updateState({ loading: false }));
+              }}
+            >
+              Approve {symbol}
+            </PrimaryButton>
+          ) : (
+            <PrimaryButton
+              config={config}
+              theme={theme}
+              loading={state.loading}
+              disabled={disabled}
+              onClick={() => {
+                const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
+                if (symbol === config.nativeWrapCurrency.symbol) {
+                  // borrow weth
+                  borrowETH(amount);
+                } else {
+                  // borrow common
+                  borrowERC20(amount);
+                }
+              }}
+            >
+              Borrow {symbol}
+            </PrimaryButton>
+          )}
+        </BorrowContainer>
+      </BaseModal>
     </>
   );
 };

@@ -41,10 +41,9 @@ const AaveV3 = (props: Props) => {
     from,
     prices,
     GAS_LIMIT_RECOMMENDATIONS,
-    refresh,
+    refresh
   } = props;
   const [config, setConfig] = useState<any>(null);
-
 
   const fetchConfig = async () => {
     const { CONTRACT_ABI = {} } = dexConfig || {};
@@ -56,17 +55,17 @@ const AaveV3 = (props: Props) => {
       fetch(CONTRACT_ABI.wrappedTokenGatewayV3ABI).then((res) => res.json()),
       fetch(CONTRACT_ABI.erc20Abi).then((res) => res.json()),
       fetch(CONTRACT_ABI.aavePoolV3ABI).then((res) => res.json()),
-      fetch(CONTRACT_ABI.variableDebtTokenABI).then((res) => res.json()),
+      fetch(CONTRACT_ABI.variableDebtTokenABI).then((res) => res.json())
     ]);
 
-    const [wrappedTokenGatewayV3ABI, erc20Abi, aavePoolV3ABI, variableDebtTokenABI] = abis.map(result =>
-      result.status === "fulfilled" ? result.value : null
+    const [wrappedTokenGatewayV3ABI, erc20Abi, aavePoolV3ABI, variableDebtTokenABI] = abis.map((result) =>
+      result.status === 'fulfilled' ? result.value : null
     );
 
     const constants = {
       FIXED_LIQUIDATION_VALUE: '1.0',
       MAX_UINT_256: '0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff',
-      AAVE_API_BASE_URL: 'https://aave-data-service-7a85eea3aebe.herokuapp.com',
+      AAVE_API_BASE_URL: 'https://aave-data-service-7a85eea3aebe.herokuapp.com'
     };
 
     const finalConfig = {
@@ -75,12 +74,11 @@ const AaveV3 = (props: Props) => {
       erc20Abi,
       aavePoolV3ABI,
       variableDebtTokenABI,
-      wrappedTokenGatewayV3ABI,
+      wrappedTokenGatewayV3ABI
     };
 
     setConfig(finalConfig);
   };
-
 
   const { provider } = useAccount();
 
@@ -88,7 +86,7 @@ const AaveV3 = (props: Props) => {
 
   const markets = dexConfig?.rawMarkets?.map((item: any) => ({
     ...item,
-    tokenPrice: prices[item.symbol],
+    tokenPrice: prices[item.symbol]
   }));
 
   const [state, updateState] = useMultiState<any>({
@@ -123,9 +121,8 @@ const AaveV3 = (props: Props) => {
 
     updater: 0,
     isShowReloadModal: false,
-    hasExistedLiquidity: false,
+    hasExistedLiquidity: false
   });
-  
 
   useEffect(() => {
     fetchConfig();
@@ -133,7 +130,7 @@ const AaveV3 = (props: Props) => {
 
   useEffect(() => {
     updateState({
-      loading: !chainIdNotSupport,
+      loading: !chainIdNotSupport
     });
   }, [chainIdNotSupport]);
 
@@ -142,7 +139,7 @@ const AaveV3 = (props: Props) => {
   const onSuccess = () => {
     updateState({
       ...state,
-      fresh: state.fresh + 1,
+      fresh: state.fresh + 1
     });
   };
 
@@ -176,7 +173,7 @@ const AaveV3 = (props: Props) => {
     const calls = aTokenAddresss?.map((addr: any) => ({
       address: addr,
       name: 'balanceOf',
-      params: [account],
+      params: [account]
     }));
     multicall({
       abi: [
@@ -185,25 +182,25 @@ const AaveV3 = (props: Props) => {
             {
               internalType: 'address',
               name: 'user',
-              type: 'address',
-            },
+              type: 'address'
+            }
           ],
           name: 'balanceOf',
           outputs: [
             {
               internalType: 'uint256',
               name: '',
-              type: 'uint256',
-            },
+              type: 'uint256'
+            }
           ],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res: any) => {
         console.log('getUsetDeposits_res', res);
@@ -240,9 +237,9 @@ const AaveV3 = (props: Props) => {
             ...(market.symbol === config.nativeCurrency.symbol
               ? {
                   ...config.nativeCurrency,
-                  supportPermit: true,
+                  supportPermit: true
                 }
-              : {}),
+              : {})
           };
         });
         const obj: any = {};
@@ -260,7 +257,7 @@ const AaveV3 = (props: Props) => {
         if (!_yourSupplies || !_yourSupplies.length) {
           updateState((prev: any) => ({
             ...prev,
-            yourSupplies: [],
+            yourSupplies: []
           }));
           return;
         }
@@ -268,12 +265,12 @@ const AaveV3 = (props: Props) => {
           {
             address: config.aavePoolV3Address,
             name: 'getUserConfiguration',
-            params: [account],
+            params: [account]
           },
           {
             address: config.aavePoolV3Address,
-            name: 'getReservesList',
-          },
+            name: 'getReservesList'
+          }
         ];
 
         multicall({
@@ -283,8 +280,8 @@ const AaveV3 = (props: Props) => {
                 {
                   internalType: 'address',
                   name: 'user',
-                  type: 'address',
-                },
+                  type: 'address'
+                }
               ],
               name: 'getUserConfiguration',
               outputs: [
@@ -293,16 +290,16 @@ const AaveV3 = (props: Props) => {
                     {
                       internalType: 'uint256',
                       name: 'data',
-                      type: 'uint256',
-                    },
+                      type: 'uint256'
+                    }
                   ],
                   internalType: 'struct DataTypes.UserConfigurationMap',
                   name: '',
-                  type: 'tuple',
-                },
+                  type: 'tuple'
+                }
               ],
               stateMutability: 'view',
-              type: 'function',
+              type: 'function'
             },
             {
               inputs: [],
@@ -311,17 +308,17 @@ const AaveV3 = (props: Props) => {
                 {
                   internalType: 'address[]',
                   name: '',
-                  type: 'address[]',
-                },
+                  type: 'address[]'
+                }
               ],
               stateMutability: 'view',
-              type: 'function',
-            },
+              type: 'function'
+            }
           ],
           calls,
           options: {},
           multicallAddress,
-          provider: Ethers.provider(),
+          provider: Ethers.provider()
         })
           .then((res: any) => {
             console.log('getCollateralStatus-res:', res);
@@ -347,18 +344,18 @@ const AaveV3 = (props: Props) => {
                     Big(prev)
                       .plus(Big(curr.underlyingBalanceUSD || 0))
                       .toFixed(),
-                  0,
+                  0
                 );
 
               updateState((prev: any) => ({
                 ...prev,
                 yourSupplies: _yourSupplies,
-                yourTotalCollateral,
+                yourTotalCollateral
               }));
             } else {
               updateState((prev: any) => ({
                 ...prev,
-                yourSupplies: _yourSupplies,
+                yourSupplies: _yourSupplies
               }));
             }
           })
@@ -377,7 +374,7 @@ const AaveV3 = (props: Props) => {
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
       name: 'balanceOf',
-      params: [account],
+      params: [account]
     }));
 
     multicall({
@@ -387,25 +384,25 @@ const AaveV3 = (props: Props) => {
             {
               internalType: 'address',
               name: 'user',
-              type: 'address',
-            },
+              type: 'address'
+            }
           ],
           name: 'balanceOf',
           outputs: [
             {
               internalType: 'uint256',
               name: '',
-              type: 'uint256',
-            },
+              type: 'uint256'
+            }
           ],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res: any) => {
         console.log('getUserDebts_res', res);
@@ -414,7 +411,7 @@ const AaveV3 = (props: Props) => {
         for (let index = 0; index < res.length; index++) {
           if (res[index]) {
             const market = _assetsToSupply.find(
-              (item) => item.variableDebtTokenAddress === variableDebtTokenAddresss[index],
+              (item) => item.variableDebtTokenAddress === variableDebtTokenAddresss[index]
             );
             if (market) {
               const _debt = ethers.utils.formatUnits(res[index][0], market.decimals);
@@ -435,7 +432,7 @@ const AaveV3 = (props: Props) => {
 
         console.log('yourBorrows--', _yourBorrows);
         updateState({
-          yourBorrows: _yourBorrows,
+          yourBorrows: _yourBorrows
         });
       })
       .catch((err: any) => {
@@ -454,7 +451,7 @@ const AaveV3 = (props: Props) => {
         // get user balances
         batchBalanceOf(
           account,
-          markets?.map((market: any) => market.underlyingAsset),
+          markets?.map((market: any) => market.underlyingAsset)
         )
           .then((balances: any) => {
             return balances?.map((balance: any) => balance.toString());
@@ -463,7 +460,7 @@ const AaveV3 = (props: Props) => {
             console.log('getUserBalance--', userBalances);
             if (userBalances.every((item: any) => item === null)) {
               updateState({
-                isShowReloadModal: true,
+                isShowReloadModal: true
               });
             } else {
               const _assetsToSupply = [...state.assetsToSupply];
@@ -480,7 +477,7 @@ const AaveV3 = (props: Props) => {
               }
 
               updateState({
-                assetsToSupply: _assetsToSupply,
+                assetsToSupply: _assetsToSupply
               });
             }
           })
@@ -497,15 +494,15 @@ const AaveV3 = (props: Props) => {
         {
           inputs: [
             { internalType: 'address[]', name: 'users', type: 'address[]' },
-            { internalType: 'address[]', name: 'tokens', type: 'address[]' },
+            { internalType: 'address[]', name: 'tokens', type: 'address[]' }
           ],
           name: 'batchBalanceOf',
           outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
-      provider.getSigner(),
+      provider.getSigner()
     );
 
     return balanceProvider.batchBalanceOf([userAddress], tokenAddresses);
@@ -522,7 +519,7 @@ const AaveV3 = (props: Props) => {
 
     updateState({
       step1: step1 || false,
-      updater: state.updater + 1,
+      updater: state.updater + 1
     });
     // update UI after data has almost loaded
     const timer = setTimeout(() => {
@@ -579,7 +576,7 @@ const AaveV3 = (props: Props) => {
   // - calcHealthFactor -- end
 
   // YourSupplies/YourBorrows
-  
+
   console.log('state', state);
 
   if (!config) return null;
@@ -601,16 +598,18 @@ const AaveV3 = (props: Props) => {
       </FlexContainer>
       {state.selectTab === 'MARKET' && (
         <>
-          <Markets 
-          config={config}
+          <Markets
+            config={config}
             assetsToSupply={state.assetsToSupply}
             showSupplyModal={state.showSupplyModal}
             setShowSupplyModal={(isShow: any) => updateState({ showSupplyModal: isShow })}
             healthFactor={state.healthFactor}
             yourTotalSupply={state.yourTotalSupply}
             gasEstimation={gasEstimation}
+            onActionSuccess={onActionSuccess}
+            calcHealthFactor={calcHealthFactor}
             {...props}
-            />
+          />
         </>
       )}
       {state.selectTab === 'YOURS' && (
@@ -623,7 +622,7 @@ const AaveV3 = (props: Props) => {
                 ? Number(
                     Big(state.netAPY || 0)
                       .times(100)
-                      .toFixed(2),
+                      .toFixed(2)
                   )
                 : '-'
             }%`}
@@ -772,7 +771,7 @@ const AaveV3 = (props: Props) => {
             updateState({
               loading: false,
               timestamp: Date.now(),
-              ...data,
+              ...data
             });
           }}
         />

@@ -101,7 +101,7 @@ const SupplyModal = (props: any) => {
     addAction,
     prices,
     gasEstimation,
-    provider,
+    provider
   } = props;
 
   const {
@@ -114,7 +114,7 @@ const SupplyModal = (props: any) => {
     underlyingAsset,
     name: tokenName,
     healthFactor,
-    supportPermit,
+    supportPermit
   } = data;
 
   const [state, updateState] = useMultiState<any>({
@@ -124,7 +124,7 @@ const SupplyModal = (props: any) => {
     newHealthFactor: '-',
     gas: '-',
     allowanceAmount: '0',
-    needApprove: false,
+    needApprove: false
   });
 
   function updateGas() {
@@ -140,7 +140,7 @@ const SupplyModal = (props: any) => {
   }
 
   function getNonce(tokenAddress: any, userAddress: any) {
-    const token = new ethers.Contract(tokenAddress, config.erc20Abi.body, provider.getSigner());
+    const token = new ethers.Contract(tokenAddress, config.erc20Abi, provider.getSigner());
     return token.nonces(userAddress).then((nonce: any) => nonce.toNumber());
   }
 
@@ -161,30 +161,30 @@ const SupplyModal = (props: any) => {
             { name: 'name', type: 'string' },
             { name: 'version', type: 'string' },
             { name: 'chainId', type: 'uint256' },
-            { name: 'verifyingContract', type: 'address' },
+            { name: 'verifyingContract', type: 'address' }
           ],
           Permit: [
             { name: 'owner', type: 'address' },
             { name: 'spender', type: 'address' },
             { name: 'value', type: 'uint256' },
             { name: 'nonce', type: 'uint256' },
-            { name: 'deadline', type: 'uint256' },
-          ],
+            { name: 'deadline', type: 'uint256' }
+          ]
         },
         primaryType: 'Permit',
         domain: {
           name: tokenName,
           version: '1',
           chainId,
-          verifyingContract: reserve,
+          verifyingContract: reserve
         },
         message: {
           owner: user,
           spender: config.aavePoolV3Address,
           value: amount,
           nonce,
-          deadline,
-        },
+          deadline
+        }
       };
 
       const dataToSign = JSON.stringify(typeData);
@@ -204,7 +204,7 @@ const SupplyModal = (props: any) => {
    */
   function supplyWithPermit(user: any, reserve: any, amount: any, deadline: any, rawSig: any) {
     const sig = ethers.utils.splitSignature(rawSig);
-    const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI.body, provider.getSigner());
+    const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI, provider.getSigner());
     return pool['supplyWithPermit(address,uint256,address,uint16,uint256,uint8,bytes32,bytes32)'](
       reserve,
       amount,
@@ -213,13 +213,13 @@ const SupplyModal = (props: any) => {
       deadline,
       sig.v,
       sig.r,
-      sig.s,
+      sig.s
     );
   }
 
   function depositETH(amount: any) {
     updateState({
-      loading: true,
+      loading: true
     });
     return provider
       .getSigner()
@@ -227,11 +227,11 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI.body,
-          provider.getSigner(),
+          config.wrappedTokenGatewayV3ABI,
+          provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
-          value: amount,
+          value: amount
         });
       })
       .then((tx: any) => {
@@ -245,15 +245,15 @@ const SupplyModal = (props: any) => {
                 callback: () => {
                   onRequestClose();
                   updateState({
-                    loading: false,
+                    loading: false
                   });
-                },
+                }
               });
               console.log('tx succeeded', res);
             } else {
               console.log('tx failed', res);
               updateState({
-                loading: false,
+                loading: false
               });
             }
           })
@@ -269,7 +269,7 @@ const SupplyModal = (props: any) => {
 
   function depositPacETH(amount: any) {
     updateState({
-      loading: true,
+      loading: true
     });
     return provider
       .getSigner()
@@ -277,11 +277,11 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI.body,
-          provider.getSigner(),
+          config.wrappedTokenGatewayV3ABI,
+          provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
-          value: amount,
+          value: amount
         });
       })
       .then((tx: any) => {
@@ -295,15 +295,15 @@ const SupplyModal = (props: any) => {
                 callback: () => {
                   onRequestClose();
                   updateState({
-                    loading: false,
+                    loading: false
                   });
-                },
+                }
               });
               console.log('tx succeeded', res);
             } else {
               console.log('tx failed', res);
               updateState({
-                loading: false,
+                loading: false
               });
             }
           })
@@ -327,7 +327,7 @@ const SupplyModal = (props: any) => {
           .then((allowanceAmount: any) => allowanceAmount.toString())
           .then((allowanceAmount: any) => {
             updateState({
-              allowanceAmount: Big(allowanceAmount).div(Big(10).pow(decimals)).toFixed(),
+              allowanceAmount: Big(allowanceAmount).div(Big(10).pow(decimals)).toFixed()
             });
           })
           .catch((err: any) => {
@@ -346,15 +346,15 @@ const SupplyModal = (props: any) => {
             { internalType: 'address', name: 'asset', type: 'address' },
             { internalType: 'uint256', name: 'amount', type: 'uint256' },
             { internalType: 'address', name: 'onBehalfOf', type: 'address' },
-            { internalType: 'uint16', name: 'referralCode', type: 'uint16' },
+            { internalType: 'uint16', name: 'referralCode', type: 'uint16' }
           ],
           name: 'supply',
           outputs: [],
           stateMutability: 'nonpayable',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
-      provider.getSigner(),
+      provider.getSigner()
     );
 
     return provider
@@ -370,18 +370,18 @@ const SupplyModal = (props: any) => {
       type: 'Lending',
       action: 'Supply',
       token: {
-        symbol,
+        symbol
       },
       amount: _amount,
       template: dexConfig.name,
       add: false,
       status,
-      transactionHash,
+      transactionHash
     });
   }
   function approve(amount: any) {
     const tokenAddress = underlyingAsset;
-    const token = new ethers.Contract(tokenAddress, config.erc20Abi.body, provider.getSigner());
+    const token = new ethers.Contract(tokenAddress, config.erc20Abi, provider.getSigner());
     return token['approve(address,uint256)'](config.aavePoolV3Address, amount);
   }
 
@@ -408,7 +408,7 @@ const SupplyModal = (props: any) => {
 
   function depositErc20(amount: any) {
     updateState({
-      loading: true,
+      loading: true
     });
     const deadline = Math.floor(Date.now() / 1000 + 3600); // after an hour
 
@@ -429,14 +429,14 @@ const SupplyModal = (props: any) => {
                       callback: () => {
                         onRequestClose();
                         updateState({
-                          loading: false,
+                          loading: false
                         });
-                      },
+                      }
                     });
                     console.log('tx succeeded', res);
                   } else {
                     updateState({
-                      loading: false,
+                      loading: false
                     });
                     console.log('tx failed', res);
                   }
@@ -462,14 +462,14 @@ const SupplyModal = (props: any) => {
                       callback: () => {
                         onRequestClose();
                         updateState({
-                          loading: false,
+                          loading: false
                         });
-                      },
+                      }
                     });
                     console.log('tx succeeded', res);
                   } else {
                     updateState({
-                      loading: false,
+                      loading: false
                     });
                     console.log('tx failed', res);
                   }
@@ -524,14 +524,14 @@ const SupplyModal = (props: any) => {
         .mul(prices[symbol] || 1)
         .toFixed(2, ROUND_DOWN);
       updateState({
-        amountInUSD,
+        amountInUSD
       });
 
       updateNewHealthFactor();
     } else {
       updateState({
         amountInUSD: '0.00',
-        newHealthFactor: '-',
+        newHealthFactor: '-'
       });
     }
     updateState({ amount: value });
@@ -610,7 +610,7 @@ const SupplyModal = (props: any) => {
             disabled={disabled}
             onClick={() => {
               updateState({
-                loading: true,
+                loading: true
               });
               const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
               approve(amount)
@@ -622,12 +622,12 @@ const SupplyModal = (props: any) => {
                         console.log('tx succeeded', res);
                         updateState({
                           needApprove: false,
-                          loading: false,
+                          loading: false
                         });
                       } else {
                         console.log('tx failed', res);
                         updateState({
-                          loading: false,
+                          loading: false
                         });
                       }
                     })
