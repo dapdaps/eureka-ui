@@ -68,6 +68,10 @@ export default function CurrencySelect({
     handleSearch();
   }, [tab]);
 
+  useEffect(() => {
+    setCurrencies(tokens);
+  }, [tokens]);
+
   return (
     <Modal
       display={display}

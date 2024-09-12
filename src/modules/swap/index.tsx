@@ -28,19 +28,19 @@ export default function SwapDapp({
   setCurrentChain,
   setIsChainSupported
 }: any) {
-  const defaultCurrencies = localConfig.networks[currentChain.chain_id]?.defaultCurrencies;
   const { switchChain } = useSwitchChain();
   const prices = usePriceStore((store) => store.price);
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState('');
   const [outputCurrencyAmount, setOutputCurrencyAmount] = useState('');
-  const [inputCurrency, setInputCurrency] = useState<any>(defaultCurrencies?.input);
-  const [outputCurrency, setOutputCurrency] = useState<any>(defaultCurrencies?.output);
+  const [inputCurrency, setInputCurrency] = useState<any>();
+  const [outputCurrency, setOutputCurrency] = useState<any>();
   const [displayCurrencySelect, setDisplayCurrencySelect] = useState(false);
   const [selectedTokenAddress, setSelectedTokenAddress] = useState('');
   const [maxInputBalance, setMaxInputBalance] = useState('');
   const [errorTips, setErrorTips] = useState('');
   const [updater, setUpdater] = useState(0);
   const { importTokens, addImportToken }: any = useImportTokensStore();
+
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
   const { loading, trade, onQuoter, onSwap } = useTrade({
     chainId: currentChain.chain_id,
@@ -60,10 +60,9 @@ export default function SwapDapp({
     }
   );
 
-  const tokens = useMemo(
-    () => [...localConfig.networks[currentChain.chain_id]?.tokens, ...(importTokens[currentChain.chain_id] || [])],
-    [currentChain, importTokens]
-  );
+  const tokens = useMemo(() => {
+    return [...localConfig.networks[currentChain.chain_id]?.tokens, ...(importTokens[currentChain.chain_id] || [])];
+  }, [currentChain?.chain_id, importTokens]);
 
   const onSwitchChain = (params: any) => {
     if (Number(params.chainId) === chainId) {
@@ -91,6 +90,12 @@ export default function SwapDapp({
     setOutputCurrency(_outputCurrency);
     setDisplayCurrencySelect(false);
   };
+
+  useEffect(() => {
+    const defaultCurrencies = localConfig.networks[currentChain.chain_id]?.defaultCurrencies;
+    setInputCurrency(defaultCurrencies?.input);
+    setOutputCurrency(defaultCurrencies?.output);
+  }, [currentChain]);
 
   useEffect(() => {
     if (!inputCurrency || !outputCurrency) {
