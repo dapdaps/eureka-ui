@@ -13,6 +13,7 @@ const ListWapper = styled.div`
   min-height: 260px;
   max-height: 600px;
   overflow-y: auto;
+  padding-right: 14px;
   /* margin-bottom: 14px; */
 `;
 
@@ -38,7 +39,7 @@ export default function RouteModal({
   onRouteSelected
 }: Props) {
   return (
-    <ListWapper>
+    <ListWapper style={{ paddingRight: routes && routes.length > 6 ? 8 : 14 }}>
       {toToken &&
         !!routes &&
         routes.length > 0 &&
