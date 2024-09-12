@@ -11,18 +11,18 @@ const formatTrade = ({
   prices,
   inputCurrency,
   outputCurrency,
-  inputCurrencyAmount,
+  inputCurrencyAmount
 }: any) => {
-  const _gas = !market.txn.gasLimit
+  const _gas = !market.txn?.gasLimit
     ? market.gas
-    : market.txn.gasLimit.type === 'BigNumber'
-      ? Number(market.txn.gasLimit.hex)
-      : market.txn.gasLimit;
+    : market.txn?.gasLimit.type === 'BigNumber'
+      ? Number(market.txn?.gasLimit.hex)
+      : market.txn?.gasLimit;
 
   const { isGasEnough, gas } = checkGas({
     rawBalance,
     gasPrice,
-    gasLimit: _gas,
+    gasLimit: _gas || 0
   });
 
   const inputCurrencyPrice = prices[inputCurrency.priceKey || inputCurrency.symbol];
@@ -87,7 +87,7 @@ const formatTrade = ({
     gasUsd: Big(nativeTokenPrice)
       .mul(gas)
       .div(10 ** nativeToken.decimals)
-      .toString(),
+      .toString()
   };
 };
 

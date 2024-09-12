@@ -85,7 +85,7 @@ export default function SwapDapp({
       _outputCurrency = token;
       if (token.address === inputCurrency?.address) _inputCurrency = null;
     }
-
+    if (!_inputCurrency || !_outputCurrency) setOutputCurrencyAmount('');
     setInputCurrency(_inputCurrency);
     setOutputCurrency(_outputCurrency);
     setDisplayCurrencySelect(false);
@@ -116,9 +116,7 @@ export default function SwapDapp({
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, maxInputBalance]);
 
   useEffect(() => {
-    if (trade) {
-      setOutputCurrencyAmount(trade.outputCurrencyAmount);
-    }
+    setOutputCurrencyAmount(trade?.outputCurrencyAmount || '');
   }, [trade]);
 
   return (
@@ -206,7 +204,7 @@ export default function SwapDapp({
               token={inputCurrency}
               loading={loading}
               onClick={onSwap}
-              disabled={!trade?.txn}
+              disabled={trade?.noPair}
             />
           </StyledPanel>
         </div>
