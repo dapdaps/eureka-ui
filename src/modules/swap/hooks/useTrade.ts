@@ -100,24 +100,21 @@ export default function useTrade({ chainId, template }: any) {
         if (!data) {
           throw new Error('No Data.');
         }
+        if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` === lastestCachedKey.current) {
+          const _trade = {
+            ...formatTrade({
+              market: { ...data, template },
+              rawBalance,
+              gasPrice,
+              prices,
+              inputCurrency,
+              outputCurrency,
+              inputCurrencyAmount
+            })
+          };
 
-        const network = networks[inputCurrency.chainId];
-        const dexs = network.dexs;
-
-        const _trade = {
-          ...formatTrade({
-            market: { ...data, template },
-            rawBalance,
-            gasPrice,
-            prices,
-            inputCurrency,
-            outputCurrency,
-            inputCurrencyAmount
-          })
-        };
-
-        setTrade(_trade);
-
+          setTrade(_trade);
+        }
         setLoading(false);
       } catch (err) {
         console.log(err);

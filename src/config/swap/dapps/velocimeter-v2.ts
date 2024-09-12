@@ -28,7 +28,7 @@ const networks = {
     routerAddress: '0xE11b93B61f6291d35c5a2beA0A9fF169080160cF',
     defaultCurrencies: {
       input: base['eth'],
-      output: base['usdbc']
+      output: base['usdc']
     },
     tokens: [
       base['weth'],
