@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import {
   execute,
   getAllToken,
+  getAllTokenPairs,
   getBridgeMsg,
   getBridgeTokens,
   getChainScan,
@@ -93,6 +94,7 @@ const AllInOne: NextPageWithLayout = () => {
   const [tab, setTab] = useState('');
   const cachedTabsStore: any = useAllInOneTabCachedStore();
   const { addAction } = useAddAction('dapp');
+  const [tokenPairs, setTokenPairs] = useState([]);
   const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 
   const [updateDetail, setUpdateDetail] = useState<boolean>(false);
@@ -138,6 +140,12 @@ const AllInOne: NextPageWithLayout = () => {
     }
   }, [chain]);
 
+  useEffect(() => {
+    if (chain) {
+      getAllTokenPairs(chain).then((val) => setTokenPairs(val));
+    }
+  }, [chain]);
+
   return currentChain ? (
     <Container key={chain}>
       <div className="page-back">
@@ -167,6 +175,7 @@ const AllInOne: NextPageWithLayout = () => {
         toChainId={router.query.toChainId as string}
         fromChainId={router.query.fromChainId as string}
         setChain={setChain}
+        tokenPairs={tokenPairs}
         onSuccess={() => {
           // setUpdateDetail(true);
           // const timer = setTimeout(() => {

@@ -92,7 +92,7 @@ export default function ChainSelector({ chain, chainList, disabledChain, onChain
         <ChainIcon src={chain?.icon} />
         <ChainName>{chain?.chainName}</ChainName>
       </ItemGroup>
-      <ArrowDown />
+      {!disabledChain && <ArrowDown />}
       {modalShow ? (
         <ChainListModal
           onClick={(e) => {

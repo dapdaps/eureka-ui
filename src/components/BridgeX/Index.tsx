@@ -141,7 +141,8 @@ export default function BridgeX({
   dapp,
   style,
   disabledChain = false,
-  disabledToToken = false
+  disabledToToken = false,
+  tokenPairs = []
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -218,8 +219,6 @@ export default function BridgeX({
       setBridgeTokens(res);
     });
   }, [tool]);
-
-  useEffect(() => {}, [disabledToToken, selectInputToken]);
 
   useEffect(() => {
     if (loadedAllTokens && chainFrom) {
@@ -331,6 +330,22 @@ export default function BridgeX({
     return toolMap[tool] ? toolMap[tool] : tool;
   }, [tool]);
 
+  useEffect(() => {
+    if (selectInputToken && tool && tokenPairs && tokenPairs.length && bridgeTokens) {
+      if (chainFrom.chainId === 1) {
+        const pair = tokenPairs.find((pair: any) => pair[0] === selectInputToken.symbol);
+        const toToken = outputTokens.find((token: any) => token.symbol === pair[1]);
+        setSelectOutputToken(toToken);
+      } else {
+        const pair = tokenPairs.find((pair: any) => pair[1] === selectInputToken.symbol);
+        const toToken = outputTokens.find((token: any) => token.symbol === pair[0]);
+        setSelectOutputToken(toToken);
+      }
+    } else {
+      // setSelectOutputToken(null)
+    }
+  }, [tokenPairs, tool, chainTo, selectInputToken, chainFrom, inputTokens, outputTokens]);
+
   function validateInput() {
     if (!account || !chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
       return false;
@@ -363,8 +378,8 @@ export default function BridgeX({
       setRoute(null);
 
       quoteParam = {
-        fromChainId: chainFrom.chainId,
-        toChainId: chainTo.chainId,
+        fromChainId: chainFrom.chainId.toString(),
+        toChainId: chainTo.chainId.toString(),
         fromToken: {
           address: selectInputToken?.address,
           symbol: selectInputToken?.symbol,
@@ -380,6 +395,8 @@ export default function BridgeX({
         amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
         engine: [bridgeType]
       };
+
+      console.log(quoteParam);
 
       getQuote(quoteParam, provider.getSigner())
         .then((res: any) => {
