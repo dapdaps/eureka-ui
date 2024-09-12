@@ -40,7 +40,7 @@ const StyledMedalsVideo = styled.video`
   height: 324px;
 `;
 
-const sortedKeys = ['Early Adopter Medals', 'Voyager Medals'];
+const sortedKeys = ['Voyager Medals', 'Early Adopter Medals', 'Community Medals'];
 
 export default memo(function MedalsView() {
   const { loading, medalList } = useMedalList();
