@@ -310,7 +310,7 @@ const WithdrawModal = (props: any) => {
         : Big(availableLiquidityAmount).mul(Big(10).pow(decimals)).toFixed(0, ROUND_DOWN)
       : '0';
 
-  let shownMaxValue;
+  let shownMaxValue: any;
   if (isCollateraled) {
     if (Big(threshold).eq(0)) {
       shownMaxValue = '0';

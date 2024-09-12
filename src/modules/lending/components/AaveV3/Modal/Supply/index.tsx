@@ -229,7 +229,7 @@ const SupplyModal = (props: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
           config.wrappedTokenGatewayV3ABI.body,
-          Ethers.provider().getSigner()
+          provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
           value: amount

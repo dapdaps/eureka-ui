@@ -210,7 +210,7 @@ const LoopModal = (props: any) => {
         amountInUSD
       });
 
-      updateNewHealthFactor(_value);
+      updateNewHealthFactor(value);
     } else {
       updateState({
         amountInUSD: '0.00',
@@ -316,11 +316,11 @@ const LoopModal = (props: any) => {
           'debtAllowance--',
           _debtAllowance,
           _debtAllowance.toString(),
-          Big(_debtAllowance).lt(Big(borrowAmount))
+          Big(_debtAllowance).lt(Big(borrowAmount.toString()))
         );
         if (!_debtAllowance) return false;
 
-        if (Big(_debtAllowance).lt(Big(borrowAmount))) {
+        if (Big(_debtAllowance).lt(Big(borrowAmount.toString()))) {
           new ethers.Contract(
             data.variableDebtTokenAddress,
             [

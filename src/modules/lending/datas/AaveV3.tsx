@@ -331,7 +331,7 @@ const AaveV3Data = (props: any) => {
           assetsToSupply: _assetsToSupply
         });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         showReload();
         console.log('getPoolDataProvider_err', err);
       });
@@ -343,7 +343,7 @@ const AaveV3Data = (props: any) => {
 
     const underlyingTokens = dexConfig?.rawMarkets?.map((market: any) => market.underlyingAsset);
 
-    const calls = underlyingTokens?.map((addr) => ({
+    const calls = underlyingTokens?.map((addr: any) => ({
       address: config.PoolDataProvider,
       name: 'getATokenTotalSupply',
       params: [addr]
@@ -460,7 +460,7 @@ const AaveV3Data = (props: any) => {
       multicallAddress,
       provider
     })
-      .then((res) => {
+      .then((res: any) => {
         console.log('getPoolDataProviderTotal_res', res);
 
         for (let i = 0; i < res.length; i++) {
@@ -472,7 +472,7 @@ const AaveV3Data = (props: any) => {
           assetsToSupply: prevAssetsToSupply
         });
       })
-      .catch((err) => {
+      .catch((err: any) => {
         console.log('getPoolDataProviderTotal_err', err);
         showReload();
       });
@@ -506,7 +506,7 @@ const AaveV3Data = (props: any) => {
       multicallAddress,
       provider
     })
-      .then((res) => {
+      .then((res: any) => {
         console.log('getPoolDataProviderCaps_res', res);
 
         for (let i = 0; i < res.length; i++) {
@@ -999,7 +999,7 @@ const AaveV3Data = (props: any) => {
     const rewardTokenPrice = getRewardTokenPrice(dexConfig, prices);
 
     try {
-      const updatedAssetsToSupply = assetsToSupply.map((asset, index) => {
+      const updatedAssetsToSupply = assetsToSupply.map((asset: any, index: any) => {
         const tokenTotalSupplyNormalized = normalizeTokenAmount(aTokenTotal[index], asset.decimals);
         const tokenTotalBorrowNormalized = normalizeTokenAmount(debtTotal[index], asset.decimals);
 

@@ -150,7 +150,7 @@ const Markets = (props: any) => {
         </CenterItem>
       </TokenWrapper>,
       <div key={`balance-${index}`}>
-        <div>{unifyNumber(row.balance, 7)}</div>
+        <div>{unifyNumber(row.balance)}</div>
         <div>${unifyNumber(row.balanceInUSD)}</div>
       </div>,
       <div key={`supply-apy-${index}`}>

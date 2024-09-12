@@ -115,7 +115,7 @@ const RewardsTable = (props: any) => {
       <StyledRewardsTable>
         <Title>Your Rewards</Title>
 
-        {data && data.length && data.find((item) => item.unclaimed) ? (
+        {data && data.length && data.find((item: any) => item.unclaimed) ? (
           <CardsTable
             headers={['Reward Asset', 'Unclaimed', '']}
             noDivider
