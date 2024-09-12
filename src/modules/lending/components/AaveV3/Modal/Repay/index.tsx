@@ -7,7 +7,7 @@ import { styled } from 'styled-components';
 import { useMultiState } from '@/modules/lending/hooks/useMultiState';
 
 import PrimaryButton from '../../PrimaryButton';
-import { formatHealthFactor, isValid, ROUND_DOWN } from '../../utils';
+import { formatHealthFactor, isValid, ROUND_DOWN, unifyNumber } from '../../utils';
 import FlexBetween from '../FlexBetween';
 import BaseModal from '../index';
 import RoundedCard from '../RoundedCard';
@@ -95,20 +95,20 @@ const RepayModal = (props: any) => {
     onRequestClose,
     onActionSuccess,
     chainId,
-    onlyOneBorrow,
-    repayETHGas,
-    repayERC20Gas,
     calcHealthFactor,
     theme,
     addAction,
     dexConfig,
     prices,
     from,
-    unifyNumber,
-    provider
+    provider,
+    gasEstimation
   } = props;
 
   const { symbol, healthFactor, decimals, underlyingAsset, name: tokenName, supportPermit, debt, debtInUSD } = data;
+  console.log(prices, 'prices');
+
+  console.log(data, '109--data');
 
   const [state, updateState] = useMultiState<any>({
     amount: '',
@@ -120,23 +120,25 @@ const RepayModal = (props: any) => {
     needApprove: false
   });
 
+  useEffect(() => {
+    updateGas();
+    getAllowance();
+    update();
+  }, [data]);
+
   const walletBal = assetsToSupply.find((item: any) => item.symbol === data.symbol).balance;
 
   function updateGas() {
     if (symbol === config.nativeCurrency.symbol) {
-      repayETHGas().then((value: any) => {
+      gasEstimation('repay').then((value: any) => {
         updateState({ gas: value });
       });
     } else {
-      repayERC20Gas().then((value: any) => {
+      gasEstimation('repayWithPermit').then((value: any) => {
         updateState({ gas: value });
       });
     }
   }
-
-  useEffect(() => {
-    updateGas();
-  }, [data]);
 
   function formatAddAction(_amount: any, status: any, transactionHash: any) {
     addAction?.({
@@ -229,7 +231,6 @@ const RepayModal = (props: any) => {
           });
       });
   }
-  getAllowance();
 
   function repayFromApproval(amount: any) {
     const tokenAddress = underlyingAsset;
@@ -269,7 +270,6 @@ const RepayModal = (props: any) => {
       updateState({ needApprove: false });
     }
   }
-  update();
 
   /**
    *
@@ -496,7 +496,7 @@ const RepayModal = (props: any) => {
   const disabled = !state.amount || !isValid(state.amount) || Number(state.amount) === 0;
 
   return (
-    <BaseModal title={`Repay ${symbol}`} onRequestClose={onRequestClose} from={from}>
+    <BaseModal title={`Repay ${symbol}`} onRequestClose={onRequestClose} from={from} config={config}>
       <RepayContainer>
         <RoundedCard title="Amount">
           <FlexBetween>
@@ -509,11 +509,11 @@ const RepayModal = (props: any) => {
                 }}
                 placeholder="0"
               />
-              <TokenWrapper>
-                <img width={26} height={26} src={data?.icon} />
-                <TokenTexture>{symbol}</TokenTexture>
-              </TokenWrapper>
             </TokenTexture>
+            <TokenWrapper>
+              <img width={26} height={26} src={data?.icon} />
+              <TokenTexture>{symbol}</TokenTexture>
+            </TokenWrapper>
           </FlexBetween>
           <FlexBetween>
             <GrayTexture>${unifyNumber(state.amountInUSD)}</GrayTexture>
@@ -531,35 +531,37 @@ const RepayModal = (props: any) => {
           </FlexBetween>
         </RoundedCard>
         <RoundedCard title="Transaction Overview">
-          <FlexBetween>
-            <PurpleTexture>Remaining Debt</PurpleTexture>
-            <div style={{ textAlign: 'right' }}>
-              <WhiteTexture>
-                {unifyNumber(debt) + ` ${symbol}`}→
-                {isValid(state.amount)
-                  ? unifyNumber(Big(debt).minus(state.amount).toFixed()) + ` ${symbol}`
-                  : `- ${symbol}`}
-              </WhiteTexture>
-              <WhiteTexture>
-                ${unifyNumber(debtInUSD)}→
-                {isValid(state.amount) && isValid(prices[symbol] || 1)
-                  ? '$ ' +
-                    Big(debt)
-                      .minus(state.amount)
-                      .times(prices[symbol] || 1)
-                      .toFixed(2)
-                  : '$ -'}
-              </WhiteTexture>
-            </div>
-          </FlexBetween>
-          <FlexBetween>
-            <PurpleTexture>Health Factor</PurpleTexture>
-            <div style={{ textAlign: 'right' }}>
-              <PurpleTexture>
-                {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
-              </PurpleTexture>
-            </div>
-          </FlexBetween>
+          <TransactionOverviewContainer>
+            <FlexBetween>
+              <PurpleTexture>Remaining Debt</PurpleTexture>
+              <div style={{ textAlign: 'right' }}>
+                <WhiteTexture>
+                  {unifyNumber(debt) + ` ${symbol}`}→
+                  {isValid(state.amount)
+                    ? unifyNumber(Big(debt).minus(state.amount).toFixed()) + ` ${symbol}`
+                    : `- ${symbol}`}
+                </WhiteTexture>
+                <WhiteTexture>
+                  ${unifyNumber(debtInUSD)}→
+                  {isValid(state.amount) && isValid(prices[symbol] || 1)
+                    ? '$ ' +
+                      Big(debt)
+                        .minus(state.amount)
+                        .times(prices[symbol] || 1)
+                        .toFixed(2)
+                    : '$ -'}
+                </WhiteTexture>
+              </div>
+            </FlexBetween>
+            <FlexBetween>
+              <PurpleTexture>Health Factor</PurpleTexture>
+              <div style={{ textAlign: 'right' }}>
+                <PurpleTexture>
+                  {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
+                </PurpleTexture>
+              </div>
+            </FlexBetween>
+          </TransactionOverviewContainer>
         </RoundedCard>
         {state.needApprove ? (
           <PrimaryButton

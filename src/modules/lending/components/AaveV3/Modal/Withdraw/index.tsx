@@ -4,7 +4,6 @@ import { debounce } from 'lodash';
 import { useEffect } from 'react';
 import { styled } from 'styled-components';
 
-import useAccount from '@/hooks/useAccount';
 import { useMultiState } from '@/modules/lending/hooks';
 
 import PrimaryButton from '../../PrimaryButton';
@@ -89,11 +88,7 @@ const WithdrawModal = (props: any) => {
     data,
     onRequestClose,
     onActionSuccess,
-    chainId,
-    withdrawETHGas,
-    withdrawERC20Gas,
     calcHealthFactor,
-    account,
     yourTotalBorrow,
     yourTotalCollateral,
     threshold,
@@ -102,7 +97,8 @@ const WithdrawModal = (props: any) => {
     addAction,
     dexConfig,
     from,
-    provider
+    provider,
+    gasEstimation
   } = props;
 
   const {
@@ -110,7 +106,6 @@ const WithdrawModal = (props: any) => {
     decimals,
     symbol,
     underlyingBalance,
-    underlyingBalanceUSD,
     isCollateraled,
     aTokenAddress,
     availableLiquidity,
@@ -132,11 +127,11 @@ const WithdrawModal = (props: any) => {
 
   function updateGas() {
     if (symbol === config.nativeCurrency.symbol) {
-      withdrawETHGas().then((value: any) => {
+      gasEstimation('withdrawETH').then((value: any) => {
         updateState({ gas: value });
       });
     } else {
-      withdrawERC20Gas().then((value: any) => {
+      gasEstimation('withdraw').then((value: any) => {
         updateState({ gas: value });
       });
     }
@@ -396,20 +391,22 @@ const WithdrawModal = (props: any) => {
     <BaseModal title={`Withdraw ${symbol}`} onRequestClose={onRequestClose} config={config} from={from}>
       <WithdrawContainer>
         <RoundedCard title="Amount">
-          <TokenTexture>
-            <Input
-              type="number"
-              value={state.amount}
-              onChange={(e) => {
-                changeValue(e.target.value);
-              }}
-              placeholder="0"
-            />
-          </TokenTexture>
-          <TokenWrapper>
-            <img width={26} height={26} src={data?.icon} />
-            <TokenTexture>{symbol}</TokenTexture>
-          </TokenWrapper>
+          <FlexBetween>
+            <TokenTexture>
+              <Input
+                type="number"
+                value={state.amount}
+                onChange={(e) => {
+                  changeValue(e.target.value);
+                }}
+                placeholder="0"
+              />
+            </TokenTexture>
+            <TokenWrapper>
+              <img width={26} height={26} src={data?.icon} />
+              <TokenTexture>{symbol}</TokenTexture>
+            </TokenWrapper>
+          </FlexBetween>
           <FlexBetween>
             <GrayTexture>${unifyNumber(state.amountInUSD)}</GrayTexture>
             <GrayTexture>
@@ -423,26 +420,6 @@ const WithdrawModal = (props: any) => {
               </Max>
             </GrayTexture>
           </FlexBetween>
-        </RoundedCard>
-        <RoundedCard title="Transaction Overview">
-          <TransactionOverviewContainer>
-            <FlexBetween>
-              <PurpleTexture>Remaining Supply</PurpleTexture>
-              <WhiteTexture>
-                {unifyNumber(remainingSupply)} {symbol}
-              </WhiteTexture>
-            </FlexBetween>
-            {hasHF && (
-              <FlexBetween>
-                <PurpleTexture>Health Factor</PurpleTexture>
-                <div style={{ textAlign: 'right' }}>
-                  <PurpleTexture>
-                    {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
-                  </PurpleTexture>
-                </div>
-              </FlexBetween>
-            )}
-          </TransactionOverviewContainer>
         </RoundedCard>
         <RoundedCard title="Transaction Overview">
           <TransactionOverviewContainer>

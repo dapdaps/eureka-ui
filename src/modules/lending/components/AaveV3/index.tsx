@@ -319,7 +319,7 @@ const AaveV3 = (props: Props) => {
           calls,
           options: {},
           multicallAddress,
-          provider: Ethers.provider()
+          provider
         })
           .then((res: any) => {
             console.log('getCollateralStatus-res:', res);
@@ -676,6 +676,7 @@ const AaveV3 = (props: Props) => {
                 theme={dexConfig?.theme}
                 unifyNumber={unifyNumber}
                 provider={provider}
+                gasEstimation={gasEstimation}
               />
             </YoursTableWrapper>
             <YoursTableWrapper>
@@ -711,12 +712,13 @@ const AaveV3 = (props: Props) => {
                 formatHealthFactor={formatHealthFactor}
                 calcHealthFactor={calcHealthFactor}
                 onActionSuccess={onActionSuccess}
-                repayETHGas={gasEstimation('repay')}
-                repayERC20Gas={gasEstimation('repayWithPermit')}
                 borrowETHGas={gasEstimation('borrowETH')}
                 borrowERC20Gas={gasEstimation('borrow')}
                 addAction={addAction}
                 provider={provider}
+                gasEstimation={gasEstimation}
+                healthFactor={state.healthFactor}
+                prices={prices}
               />
             </YoursTableWrapper>
           </Yours>

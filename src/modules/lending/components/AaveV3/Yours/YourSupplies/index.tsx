@@ -39,8 +39,7 @@ const YourSupplies = (props: any) => {
     showWithdrawModal,
     setShowWithdrawModal,
     healthFactor,
-    withdrawETHGas,
-    withdrawERC20Gas,
+    gasEstimation,
     formatHealthFactor,
     calcHealthFactor,
     account,
@@ -138,8 +137,6 @@ const YourSupplies = (props: any) => {
           }}
           dexConfig={dexConfig}
           onActionSuccess={onActionSuccess}
-          withdrawETHGas={withdrawETHGas}
-          withdrawERC20Gas={withdrawERC20Gas}
           formatHealthFactor={formatHealthFactor}
           calcHealthFactor={calcHealthFactor}
           account={account}
@@ -149,9 +146,9 @@ const YourSupplies = (props: any) => {
           yourTotalCollateral={yourTotalCollateral}
           threshold={threshold}
           addAction={addAction}
-          unifyNumber={unifyNumber}
           onRequestClose={() => setShowWithdrawModal(false)}
           provider={provider}
+          gasEstimation={gasEstimation}
         />
       )}
       {state.showCollateralModal && (

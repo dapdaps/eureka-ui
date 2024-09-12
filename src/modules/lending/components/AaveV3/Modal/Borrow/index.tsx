@@ -157,12 +157,7 @@ const BorrowModal = (props: any) => {
   const updateNewHealthFactor = debounce((amount: any) => {
     updateState({ newHealthFactor: '-' });
     const newHealthFactor = formatHealthFactor(calcHealthFactor('BORROW', symbol, amount));
-    // console.log(
-    //   "BORROW updateNewHealthFactor",
-    //   symbol,
-    //   state.amount,
-    //   newHealthFactor
-    // );
+    console.log('BORROW updateNewHealthFactor', symbol, amount, newHealthFactor);
     updateState({ newHealthFactor });
   }, 1000);
 

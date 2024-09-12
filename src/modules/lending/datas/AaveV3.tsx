@@ -13,7 +13,7 @@ const AaveV3Data = (props: any) => {
 
   const markets = dexConfig?.rawMarkets?.map((item: any) => ({
     ...item,
-    tokenPrice: prices[item.symbol],
+    tokenPrice: prices[item.symbol]
   }));
 
   function calcAvailableBorrows(availableBorrowsUSD: any, tokenPrice: any) {
@@ -49,7 +49,7 @@ const AaveV3Data = (props: any) => {
 
   function showReload() {
     onLoad({
-      isShowReloadModal: true,
+      isShowReloadModal: true
     });
   }
 
@@ -60,15 +60,15 @@ const AaveV3Data = (props: any) => {
         {
           inputs: [
             { internalType: 'address[]', name: 'users', type: 'address[]' },
-            { internalType: 'address[]', name: 'tokens', type: 'address[]' },
+            { internalType: 'address[]', name: 'tokens', type: 'address[]' }
           ],
           name: 'batchBalanceOf',
           outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
-      provider.getSigner(),
+      provider.getSigner()
     );
 
     return balanceProvider.batchBalanceOf([userAddress], tokenAddresses);
@@ -81,13 +81,13 @@ const AaveV3Data = (props: any) => {
     const calls = aTokenAddresss
       ?.map((addr) => ({
         address: addr,
-        name: 'totalSupply',
+        name: 'totalSupply'
       }))
       .concat(
         variableDebtTokenAddresss?.map((addr) => ({
           address: addr,
-          name: 'totalSupply',
-        })),
+          name: 'totalSupply'
+        }))
       );
 
     multicall({
@@ -97,13 +97,13 @@ const AaveV3Data = (props: any) => {
           name: 'totalSupply',
           outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res: any) => {
         try {
@@ -125,7 +125,7 @@ const AaveV3Data = (props: any) => {
 
             const _availableBorrowsUSD = bigMin(
               state.availableBorrowsUSD,
-              ethers.utils.formatUnits(liquidityAmount, _assetsToSupply[i].decimals),
+              ethers.utils.formatUnits(liquidityAmount, _assetsToSupply[i].decimals)
             )
               .times(ACTUAL_BORROW_AMOUNT_RATE)
               .toFixed();
@@ -139,7 +139,7 @@ const AaveV3Data = (props: any) => {
             assetsToSupply: _assetsToSupply,
             aTokenTotal,
             debtTotal,
-            hasExistedLiquidity: true,
+            hasExistedLiquidity: true
           });
         } catch (error) {
           console.log('catch getLiquidity', error);
@@ -162,7 +162,7 @@ const AaveV3Data = (props: any) => {
         // get user balances
         batchBalanceOf(
           account,
-          markets?.map((market: any) => market.underlyingAsset),
+          markets?.map((market: any) => market.underlyingAsset)
         )
           .then((balances: any) => {
             return balances?.map((balance: any) => balance.toString());
@@ -171,7 +171,7 @@ const AaveV3Data = (props: any) => {
             console.log('getUserBalance--', userBalances);
             if (userBalances.every((item: any) => item === null)) {
               onLoad({
-                isShowReloadModal: true,
+                isShowReloadModal: true
               });
             } else {
               const _assetsToSupply = [...state.assetsToSupply];
@@ -188,7 +188,7 @@ const AaveV3Data = (props: any) => {
               }
 
               onLoad({
-                assetsToSupply: _assetsToSupply,
+                assetsToSupply: _assetsToSupply
               });
             }
           })
@@ -205,7 +205,7 @@ const AaveV3Data = (props: any) => {
     const calls = underlyingTokens?.map((addr) => ({
       address: config.PoolDataProvider,
       name: 'getReserveData',
-      params: [addr],
+      params: [addr]
     }));
 
     multicall({
@@ -218,59 +218,59 @@ const AaveV3Data = (props: any) => {
             {
               internalType: 'uint256',
               name: 'accruedToTreasuryScaled',
-              type: 'uint256',
+              type: 'uint256'
             },
             { internalType: 'uint256', name: 'totalAToken', type: 'uint256' },
             {
               internalType: 'uint256',
               name: 'totalStableDebt',
-              type: 'uint256',
+              type: 'uint256'
             },
             {
               internalType: 'uint256',
               name: 'totalVariableDebt',
-              type: 'uint256',
+              type: 'uint256'
             },
             { internalType: 'uint256', name: 'liquidityRate', type: 'uint256' },
             {
               internalType: 'uint256',
               name: 'variableBorrowRate',
-              type: 'uint256',
+              type: 'uint256'
             },
             {
               internalType: 'uint256',
               name: 'stableBorrowRate',
-              type: 'uint256',
+              type: 'uint256'
             },
             {
               internalType: 'uint256',
               name: 'averageStableBorrowRate',
-              type: 'uint256',
+              type: 'uint256'
             },
             {
               internalType: 'uint256',
               name: 'liquidityIndex',
-              type: 'uint256',
+              type: 'uint256'
             },
             {
               internalType: 'uint256',
               name: 'variableBorrowIndex',
-              type: 'uint256',
+              type: 'uint256'
             },
             {
               internalType: 'uint40',
               name: 'lastUpdateTimestamp',
-              type: 'uint40',
-            },
+              type: 'uint40'
+            }
           ],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res: any) => {
         console.log('getPoolDataProvider_res', res);
@@ -297,7 +297,7 @@ const AaveV3Data = (props: any) => {
               averageStableBorrowRate,
               liquidityIndex,
               variableBorrowIndex,
-              lastUpdateTimestamp,
+              lastUpdateTimestamp
             ] = poolData[i];
             const RAY = Big(10).pow(27);
             const SECONDS_PER_YEAR = 31_536_000;
@@ -323,7 +323,7 @@ const AaveV3Data = (props: any) => {
           }
         }
         onLoad({
-          assetsToSupply: _assetsToSupply,
+          assetsToSupply: _assetsToSupply
         });
       })
       .catch((err) => {
@@ -340,7 +340,7 @@ const AaveV3Data = (props: any) => {
     const calls = underlyingTokens?.map((addr: any) => ({
       address: config.PoolDataProvider,
       name: 'getATokenTotalSupply',
-      params: [addr],
+      params: [addr]
     }));
 
     multicall({
@@ -350,13 +350,13 @@ const AaveV3Data = (props: any) => {
           name: 'getATokenTotalSupply',
           outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res: any) => {
         console.log('getPoolDataProviderTotal_res', res);
@@ -375,7 +375,7 @@ const AaveV3Data = (props: any) => {
             .toFixed();
         }
         onLoad({
-          assetsToSupply: prevAssetsToSupply,
+          assetsToSupply: prevAssetsToSupply
         });
       })
       .catch((err: any) => {
@@ -392,7 +392,7 @@ const AaveV3Data = (props: any) => {
     const calls = underlyingTokens?.map((addr: any) => ({
       address: config.PoolDataProvider,
       name: 'getTotalDebt',
-      params: [addr],
+      params: [addr]
     }));
 
     multicall({
@@ -402,13 +402,13 @@ const AaveV3Data = (props: any) => {
           name: 'getTotalDebt',
           outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res) => {
         console.log('getPoolDataProviderTotal_res', res);
@@ -419,7 +419,7 @@ const AaveV3Data = (props: any) => {
           prevAssetsToSupply[i].totalDebtsUSD = Big(_totalDebts).times(prices[prevAssetsToSupply[i].symbol]).toFixed();
         }
         onLoad({
-          assetsToSupply: prevAssetsToSupply,
+          assetsToSupply: prevAssetsToSupply
         });
       })
       .catch((err) => {
@@ -435,7 +435,7 @@ const AaveV3Data = (props: any) => {
     const calls = underlyingTokens?.map((addr: any) => ({
       address: config.PoolDataProvider,
       name: 'getReserveCaps',
-      params: [addr],
+      params: [addr]
     }));
 
     multicall({
@@ -445,16 +445,16 @@ const AaveV3Data = (props: any) => {
           name: 'getReserveCaps',
           outputs: [
             { internalType: 'uint256', name: 'borrowCap', type: 'uint256' },
-            { internalType: 'uint256', name: 'supplyCap', type: 'uint256' },
+            { internalType: 'uint256', name: 'supplyCap', type: 'uint256' }
           ],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res) => {
         console.log('getPoolDataProviderCaps_res', res);
@@ -468,7 +468,7 @@ const AaveV3Data = (props: any) => {
           prevAssetsToSupply[i].supplyCapUSD = Big(supplyCap).times(prices[prevAssetsToSupply[i].symbol]).toFixed();
         }
         onLoad({
-          assetsToSupply: prevAssetsToSupply,
+          assetsToSupply: prevAssetsToSupply
         });
       })
       .catch((err: any) => {
@@ -487,47 +487,47 @@ const AaveV3Data = (props: any) => {
               {
                 internalType: 'address',
                 name: 'user',
-                type: 'address',
-              },
+                type: 'address'
+              }
             ],
             name: 'getUserAccountData',
             outputs: [
               {
                 internalType: 'uint256',
                 name: 'totalCollateralBase',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'totalDebtBase',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'availableBorrowsBase',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'currentLiquidationThreshold',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'ltv',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'healthFactor',
-                type: 'uint256',
-              },
+                type: 'uint256'
+              }
             ],
             stateMutability: 'view',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
-        provider,
+        provider
       );
       contract
         .getUserAccountData(account)
@@ -539,7 +539,7 @@ const AaveV3Data = (props: any) => {
             availableBorrowsBase,
             currentLiquidationThreshold,
             ltv,
-            healthFactor,
+            healthFactor
           ] = res;
 
           const totalDebtBaseUSD = ethers.utils.formatUnits(totalDebtBase.toString(), 8);
@@ -564,7 +564,7 @@ const AaveV3Data = (props: any) => {
             currentLiquidationThreshold,
             BorrowPowerUsed,
             healthFactor: hf,
-            availableBorrowsUSD: ethers.utils.formatUnits(availableBorrowsBase, 8),
+            availableBorrowsUSD: ethers.utils.formatUnits(availableBorrowsBase, 8)
           });
         })
         .then(() => {
@@ -585,7 +585,7 @@ const AaveV3Data = (props: any) => {
     const calls = aTokenAddresss?.map((addr: any) => ({
       address: addr,
       name: 'balanceOf',
-      params: [account],
+      params: [account]
     }));
     multicall({
       abi: [
@@ -594,25 +594,25 @@ const AaveV3Data = (props: any) => {
             {
               internalType: 'address',
               name: 'user',
-              type: 'address',
-            },
+              type: 'address'
+            }
           ],
           name: 'balanceOf',
           outputs: [
             {
               internalType: 'uint256',
               name: '',
-              type: 'uint256',
-            },
+              type: 'uint256'
+            }
           ],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res: any) => {
         console.log('getUsetDeposits_res', res);
@@ -645,9 +645,9 @@ const AaveV3Data = (props: any) => {
             ...(market.symbol === config.nativeCurrency.symbol
               ? {
                   ...config.nativeCurrency,
-                  supportPermit: true,
+                  supportPermit: true
                 }
-              : {}),
+              : {})
           };
         });
         const obj: any = {};
@@ -657,7 +657,7 @@ const AaveV3Data = (props: any) => {
         }, []);
         console.log('1029--yourSupplies:', yourSupplies);
         onLoad({
-          yourSupplies,
+          yourSupplies
         });
         return yourSupplies;
       })
@@ -665,7 +665,7 @@ const AaveV3Data = (props: any) => {
         if (!_yourSupplies || !_yourSupplies.length) {
           onLoad((prev: any) => ({
             ...prev,
-            yourSupplies: [],
+            yourSupplies: []
           }));
           return;
         }
@@ -673,12 +673,12 @@ const AaveV3Data = (props: any) => {
           {
             address: config.aavePoolV3Address,
             name: 'getUserConfiguration',
-            params: [account],
+            params: [account]
           },
           {
             address: config.aavePoolV3Address,
-            name: 'getReservesList',
-          },
+            name: 'getReservesList'
+          }
         ];
 
         multicall({
@@ -688,8 +688,8 @@ const AaveV3Data = (props: any) => {
                 {
                   internalType: 'address',
                   name: 'user',
-                  type: 'address',
-                },
+                  type: 'address'
+                }
               ],
               name: 'getUserConfiguration',
               outputs: [
@@ -698,16 +698,16 @@ const AaveV3Data = (props: any) => {
                     {
                       internalType: 'uint256',
                       name: 'data',
-                      type: 'uint256',
-                    },
+                      type: 'uint256'
+                    }
                   ],
                   internalType: 'struct DataTypes.UserConfigurationMap',
                   name: '',
-                  type: 'tuple',
-                },
+                  type: 'tuple'
+                }
               ],
               stateMutability: 'view',
-              type: 'function',
+              type: 'function'
             },
             {
               inputs: [],
@@ -716,17 +716,17 @@ const AaveV3Data = (props: any) => {
                 {
                   internalType: 'address[]',
                   name: '',
-                  type: 'address[]',
-                },
+                  type: 'address[]'
+                }
               ],
               stateMutability: 'view',
-              type: 'function',
-            },
+              type: 'function'
+            }
           ],
           calls,
           options: {},
           multicallAddress,
-          provider,
+          provider
         })
           .then((res: any) => {
             console.log('getCollateralStatus-res:', res);
@@ -735,7 +735,7 @@ const AaveV3Data = (props: any) => {
               const _status = parseInt(rawStatus.toString()).toString(2).split('');
               // console.log("_status--", _status);
               const _statusArray = chunk(_status, 2);
-              // console.log("_status--", _statusArray, addrs, _yourSupplies);
+              console.log('_status--', _statusArray, addrs, _yourSupplies);
 
               for (let i = 0; i < _yourSupplies.length; i++) {
                 const item = _yourSupplies[i];
@@ -752,19 +752,17 @@ const AaveV3Data = (props: any) => {
                     Big(prev)
                       .plus(Big(curr.underlyingBalanceUSD || 0))
                       .toFixed(),
-                  0,
+                  0
                 );
-
-              onLoad((prev: any) => ({
-                ...prev,
+              console.log(yourTotalCollateral, 'yourTotalCollateral');
+              onLoad({
                 yourSupplies: _yourSupplies,
-                yourTotalCollateral,
-              }));
+                yourTotalCollateral
+              });
             } else {
-              onLoad((prev: any) => ({
-                ...prev,
-                yourSupplies: _yourSupplies,
-              }));
+              onLoad({
+                yourSupplies: _yourSupplies
+              });
             }
           })
           .catch((err: any) => {
@@ -783,7 +781,7 @@ const AaveV3Data = (props: any) => {
     const calls = variableDebtTokenAddresss?.map((addr: any) => ({
       address: addr,
       name: 'balanceOf',
-      params: [account],
+      params: [account]
     }));
 
     multicall({
@@ -793,25 +791,25 @@ const AaveV3Data = (props: any) => {
             {
               internalType: 'address',
               name: 'user',
-              type: 'address',
-            },
+              type: 'address'
+            }
           ],
           name: 'balanceOf',
           outputs: [
             {
               internalType: 'uint256',
               name: '',
-              type: 'uint256',
-            },
+              type: 'uint256'
+            }
           ],
           stateMutability: 'view',
-          type: 'function',
-        },
+          type: 'function'
+        }
       ],
       calls,
       options: {},
       multicallAddress,
-      provider,
+      provider
     })
       .then((res: any) => {
         console.log('getUserDebts_res', res);
@@ -820,7 +818,7 @@ const AaveV3Data = (props: any) => {
         for (let index = 0; index < res.length; index++) {
           if (res[index]) {
             const market = _assetsToSupply.find(
-              (item) => item.variableDebtTokenAddress === variableDebtTokenAddresss[index],
+              (item) => item.variableDebtTokenAddress === variableDebtTokenAddresss[index]
             );
             if (market) {
               const _debt = ethers.utils.formatUnits(res[index][0], market.decimals);
@@ -839,7 +837,7 @@ const AaveV3Data = (props: any) => {
           return accum;
         }, []);
         onLoad({
-          yourBorrows: _yourBorrows,
+          yourBorrows: _yourBorrows
         });
       })
       .catch((err: any) => {
@@ -874,13 +872,13 @@ const AaveV3Data = (props: any) => {
 
   useEffect(() => {
     onLoad({
-      config,
+      config
     });
   }, []);
 
   useEffect(() => {
     if (!account || !isChainSupported) return;
-    
+
     getUserBalance();
     getUserAccountData();
     getPoolDataProvider();
@@ -889,8 +887,8 @@ const AaveV3Data = (props: any) => {
       getPoolDataProviderTotalDebt();
       getPoolDataProviderCaps();
     }
-    console.log(state.hasExistedLiquidity, 'state.hasExistedLiquidity');
-    
+    console.log(state.step1, state.hasExistedLiquidity, 'state.hasExistedLiquidity');
+
     if (state.step1 && state.hasExistedLiquidity) {
       getYourSupplies();
       getUserDebts();
@@ -922,7 +920,7 @@ const AaveV3Data = (props: any) => {
       onLoad({
         totalMarketSize,
         totalAvailable,
-        totalBorrows,
+        totalBorrows
       });
     } catch (error) {
       console.log('CATCH_calc:', error);
@@ -956,12 +954,12 @@ const AaveV3Data = (props: any) => {
         const supplyRewardApy = calculateRewardApy(
           emissionPerSeconds[index][1],
           normalizedTotalTokenSupply.toString(),
-          rewardTokenPrice,
+          rewardTokenPrice
         );
         const borrowRewardApy = calculateRewardApy(
           emissionPerSeconds[index][1],
           normalizedTotalTokenBorrow.toString(),
-          rewardTokenPrice,
+          rewardTokenPrice
         );
 
         console.log('supplyRewardApy---', supplyRewardApy);
@@ -969,14 +967,14 @@ const AaveV3Data = (props: any) => {
         return {
           ...asset,
           supplyRewardApy,
-          borrowRewardApy: dexConfig.name === 'ZeroLend' ? borrowRewardApy : asset.borrowRewardApy,
+          borrowRewardApy: dexConfig.name === 'ZeroLend' ? borrowRewardApy : asset.borrowRewardApy
         };
       });
       console.log(updatedAssetsToSupply, 'updatedAssetsToSupply');
 
       onLoad({
         assetsToSupply: updatedAssetsToSupply,
-        step1: true,
+        step1: true
       });
     } catch (error) {
       console.log('CATCH:', error);
@@ -999,7 +997,7 @@ const AaveV3Data = (props: any) => {
           Big(total || 0)
             .plus(cur.underlyingBalanceUSD)
             .toFixed(),
-        0,
+        0
       );
       console.log('supplyBal--', supplyBal);
       const debtsBal = state.yourBorrows.reduce(
@@ -1007,7 +1005,7 @@ const AaveV3Data = (props: any) => {
           Big(total || 0)
             .plus(cur.debtInUSD)
             .toFixed(),
-        0,
+        0
       );
       console.log('debtsBal--', debtsBal, supplyBal);
       const netWorth = Big(supplyBal || 0)
@@ -1024,10 +1022,10 @@ const AaveV3Data = (props: any) => {
             .plus(
               Big(cur.underlyingBalanceUSD || 0)
                 .times(Big(cur.supplyAPY || 0))
-                .div(supplyBal || 1),
+                .div(supplyBal || 1)
             )
             .toFixed(),
-        0,
+        0
       );
       const yourSupplyRewardAPY = state.yourSupplies.reduce((total: any, cur: any) => {
         return Big(total || 0)
@@ -1041,7 +1039,7 @@ const AaveV3Data = (props: any) => {
           .plus(
             Big(cur.debtInUSD)
               .times(Big(cur.borrowAPY || 1))
-              .div(debtsBal || 1),
+              .div(debtsBal || 1)
           )
           .toFixed();
       }, 0);
@@ -1064,7 +1062,7 @@ const AaveV3Data = (props: any) => {
           Big(prev)
             .plus(Big(curr.underlyingBalanceUSD || 0))
             .toFixed(),
-        0,
+        0
       );
       console.log('yourTotalSupply--', yourTotalSupply);
 
@@ -1073,7 +1071,7 @@ const AaveV3Data = (props: any) => {
           Big(prev)
             .plus(Big(curr.debtInUSD || 0))
             .toFixed(),
-        0,
+        0
       );
       console.log('yourTotalBorrow--', yourTotalBorrow);
 
@@ -1083,12 +1081,19 @@ const AaveV3Data = (props: any) => {
         yourTotalSupply,
         yourTotalBorrow,
         yourSupplyApy: Big(weightedAverageSupplyAPY).plus(yourSupplyRewardAPY).toFixed(),
-        yourBorrowApy: weightedAverageBorrowsAPY,
+        yourBorrowApy: weightedAverageBorrowsAPY
       });
     } catch (error) {
       console.log('CATCH_CALC_NET_APY_ERROR:', error);
     }
-  }, [state.yourSupplies, state.yourBorrows, state.step1, state.yourTotalBorrow, state.yourTotalSupply, state.hasExistedLiquidity]);
+  }, [
+    state.yourSupplies,
+    state.yourBorrows,
+    state.step1,
+    state.yourTotalBorrow,
+    state.yourTotalSupply,
+    state.hasExistedLiquidity
+  ]);
 };
 
 export default AaveV3Data;

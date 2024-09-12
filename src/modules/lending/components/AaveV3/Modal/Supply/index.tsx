@@ -228,8 +228,8 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI,
-          provider.getSigner()
+          config.wrappedTokenGatewayV3ABI.body,
+          Ethers.provider().getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
           value: amount
@@ -259,14 +259,12 @@ const SupplyModal = (props: any) => {
             }
           })
           .catch((err: any) => {
-            console.log('tx.wait on error depositETH', err);
+            console.log('tx.wait on error', err);
             updateState({ loading: false });
           });
       })
       .catch((err: any) => {
-        console.log('tx.wait on error depositETH', err);
-      })
-      .finally(() => {
+        console.log('wrappedTokenGateway.depositETH on error', err);
         updateState({ loading: false });
       });
   }
@@ -281,7 +279,7 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI,
+          config.wrappedTokenGatewayV3ABI.body,
           provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
@@ -313,10 +311,7 @@ const SupplyModal = (props: any) => {
           })
           .catch(() => updateState({ loading: false }));
       })
-      .catch((err: any) => {
-        console.log('tx.wait on error depositPacETH', err);
-      })
-      .finally(() => updateState({ loading: false }));
+      .catch(() => updateState({ loading: false }));
   }
 
   function getAllowance() {
@@ -444,9 +439,16 @@ const SupplyModal = (props: any) => {
                     console.log('tx failed', res);
                   }
                 })
-                .catch(() => updateState({ loading: false }));
+                .catch((err: any) => {
+                  console.log('tx.wait on error depositErc20', err);
+                  updateState({ loading: false });
+                })
+                .finally(() => updateState({ loading: false }));
             })
-            .catch(() => updateState({ loading: false }));
+            .catch((err: any) => {
+              console.log('tx.wait on error depositErc20', err);
+            })
+            .finally(() => updateState({ loading: false }));
         } else {
           const token = underlyingAsset;
           signERC20Approval(userAddress, token, tokenName, amount, deadline)
@@ -477,12 +479,18 @@ const SupplyModal = (props: any) => {
                     console.log('tx failed', res);
                   }
                 })
-                .catch(() => updateState({ loading: false }));
+                .catch((err: any) => {
+                  console.log('tx.wait on error depositErc20', err);
+                  updateState({ loading: false });
+                })
+                .finally(() => updateState({ loading: false }));
             })
-            .catch(() => updateState({ loading: false }));
+            .catch((err: any) => {
+              console.log('tx.wait on error depositErc20', err);
+              updateState({ loading: false });
+            });
         }
-      })
-      .catch(() => updateState({ loading: false }));
+      });
   }
 
   const maxValue =
@@ -543,7 +551,7 @@ const SupplyModal = (props: any) => {
   }
 
   return (
-    <BaseModal title={`Supply ${symbol}`} {...props}>
+    <BaseModal config={config} title={`Supply ${symbol}`} {...props}>
       <WithdrawContainer>
         <RoundedCard title="Amount">
           <FlexBetween>
