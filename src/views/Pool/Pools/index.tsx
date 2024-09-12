@@ -18,7 +18,7 @@ import {
   StyledHeader,
   StyledTitle,
   StyledTogglePositions,
-  StyledTopActions,
+  StyledTopActions
 } from './styles';
 
 const Pools = (props: Props) => {
@@ -36,12 +36,12 @@ const Pools = (props: Props) => {
       acc[new Big(p.liquidity || 0).eq(0) ? 1 : 0].push(p);
       return acc;
     },
-    [[], []],
+    [[], []]
   ) ?? [[], []];
 
   const userSelectedPositionSet = useMemo(
     () => [...openPositions, ...(userHideClosedPositions ? [] : closedPositions)],
-    [closedPositions, openPositions, userHideClosedPositions],
+    [closedPositions, openPositions, userHideClosedPositions]
   );
 
   const userSelectedVersionSet = useMemo(() => {
@@ -76,10 +76,7 @@ const Pools = (props: Props) => {
     <StyledContainer style={{ ...theme }}>
       <StyledHeader>
         <StyledTitle>Pools</StyledTitle>
-        <Button
-          style={{ width: '149px', height: '35px' }}
-          onClick={() => handleAction(ActionType.Add)}
-        >
+        <Button style={{ width: '149px', height: '35px' }} onClick={() => handleAction(ActionType.Add)}>
           + Create Position
         </Button>
       </StyledHeader>
@@ -109,11 +106,7 @@ const Pools = (props: Props) => {
               </StyledTopActions>
             </StyledContentTop>
             {userSelectedVersionSet.map((position, i) => (
-              <Pool
-                key={i}
-                {...position}
-                onClick={() => handleAction(ActionType.Position, position)}
-              />
+              <Pool key={i} {...position} onClick={() => handleAction(ActionType.Position, position)} />
             ))}
             {userSelectedPositionSet.length === 0 && <Empty />}
           </>
@@ -127,7 +120,7 @@ export default memo(Pools);
 
 export enum ActionType {
   Add = 'add',
-  Position = 'position',
+  Position = 'position'
 }
 
 interface Props {

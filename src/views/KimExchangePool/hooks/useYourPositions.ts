@@ -1,5 +1,5 @@
 import { Contract } from 'ethers';
-import { useCallback, useEffect, useRef,useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import multicallAddresses from '@/config/contract/multicall';
 import useAccount from '@/hooks/useAccount';
@@ -35,7 +35,7 @@ export default function useYourPositions() {
       const tokenIdCalls = [...Array(balance).keys()].map((i) => ({
         address: PositionManager,
         name: 'tokenOfOwnerByIndex',
-        params: [account, i],
+        params: [account, i]
       }));
 
       const multicallAddress = multicallAddresses[chainId];
@@ -45,13 +45,13 @@ export default function useYourPositions() {
         calls: tokenIdCalls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       });
 
       const positionsCalls = tokenIds.map((tokenId: any) => ({
         address: PositionManager,
         name: 'positions',
-        params: [tokenId.toString()],
+        params: [tokenId.toString()]
       }));
 
       const positions = await multicall({
@@ -59,7 +59,7 @@ export default function useYourPositions() {
         calls: positionsCalls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       });
 
       const _tokens = tokens[chainId];
@@ -72,7 +72,7 @@ export default function useYourPositions() {
           token0: position.token0.toLowerCase(),
           token1: position.token1.toLowerCase(),
           pairs: Object.values(pairs),
-          chainId,
+          chainId
         });
         if (!pair) return;
         const item = {
@@ -83,7 +83,7 @@ export default function useYourPositions() {
           token0: _tokens[_token0],
           token1: _tokens[_token1],
           address: pair.address,
-          tickSpacing: pair.tickSpacing,
+          tickSpacing: pair.tickSpacing
         };
         if (position.liquidity.gt(0)) {
           _pools.unshift(item);

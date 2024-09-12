@@ -1,58 +1,65 @@
-import { useCallback, useEffect,useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import type { ExecuteRequest,QuoteRequest, QuoteResponse } from 'super-bridge-sdk'
+import type { QuoteResponse } from 'super-bridge-sdk';
 
-import type { Chain, Token } from "@/types";
+import type { Chain, Token } from '@/types';
 
-import { ArrowDown } from '../Arrow'
-import DotFlashing from '../DotFlashing/'
-import Modal from "../Modal";
-import Route from "../Route";
+import Route from '../Route';
 
 const ListWapper = styled.div`
-    &>:not(:first-child) {
-        margin-top: 10px;
-    }
-    height: 500px;
-    overflow-y: auto;
-`
-
-const KeepLoading = styled.div`
-    display: flex;
-    justify-content: center;
-    font-size: 16px;
-    color: rgba(41, 125, 209, 1);
-    margin-top: 30px;
-`
+  & > :not(:first-child) {
+    margin-top: 10px;
+  }
+  min-height: 260px;
+  max-height: 600px;
+  overflow-y: auto;
+  padding-right: 14px;
+  /* margin-bottom: 14px; */
+`;
 
 interface Props {
-    onClose?: () => void; 
-    fromChain: Chain;
-    routes: QuoteResponse[] | null;
-    toToken: Token;
-    quoteLoading: boolean;
-    best: QuoteResponse | null;
-    fast: QuoteResponse | null;
-    routeSelected: QuoteResponse | null;
-    onRouteSelected: (val: QuoteResponse) => void;
+  fromChain: Chain;
+  routes: QuoteResponse[] | null;
+  toToken?: Token | undefined;
+  quoteLoading: boolean;
+  best: QuoteResponse | null;
+  fast: QuoteResponse | null;
+  routeSelected: QuoteResponse | null;
+  onRouteSelected: (val: QuoteResponse) => void;
 }
 
-export default function RouteModal({ onClose, fromChain, routes, toToken, best, fast, quoteLoading, routeSelected, onRouteSelected }: Props) {
-
-    return <Modal title="Bridge Route" top="40%" onClose={onClose}>
-        <ListWapper>
-        {
-            routes?.map((route: QuoteResponse, index) => {
-                return <Route fromChain={fromChain} route={route} fast={fast} best={best} active={routeSelected === route} toToken={toToken} onClick={() => {
-                    onRouteSelected(route)
-                    // onClose && onClose()
-                }} showOutputTitle={false} key={route.bridgeType + index}/>
-            })
-        }
-        </ListWapper>
-        {
-            quoteLoading && <KeepLoading className="keep-loading"><span>More routes</span> <DotFlashing /></KeepLoading>
-        }
-        
-    </Modal>
+export default function RouteModal({
+  fromChain,
+  routes,
+  toToken,
+  best,
+  fast,
+  quoteLoading,
+  routeSelected,
+  onRouteSelected
+}: Props) {
+  return (
+    <ListWapper style={{ paddingRight: routes && routes.length > 6 ? 8 : 14 }}>
+      {toToken &&
+        !!routes &&
+        routes.length > 0 &&
+        routes?.map((route: QuoteResponse, index) => {
+          return (
+            <Route
+              fromChain={fromChain}
+              route={route}
+              fast={fast}
+              best={best}
+              active={routeSelected === route}
+              toToken={toToken}
+              onClick={() => {
+                onRouteSelected(route);
+              }}
+              showOutputTitle={false}
+              key={route.bridgeType}
+            />
+          );
+        })}
+    </ListWapper>
+  );
 }

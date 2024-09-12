@@ -14,7 +14,7 @@ import {
   StyledHeader,
   StyledHeaderLeft,
   StyledSelectedFee,
-  StyledToggleButton,
+  StyledToggleButton
 } from './styles';
 
 const SelectFee = ({ fee, disabled, onSelectFee }: any) => {
@@ -47,7 +47,7 @@ const SelectFee = ({ fee, disabled, onSelectFee }: any) => {
             exit="collapsed"
             variants={{
               open: { opacity: 1, height: 'auto' },
-              collapsed: { opacity: 0, height: 0 },
+              collapsed: { opacity: 0, height: 0 }
             }}
             transition={{ duration: 0.3 }}
           >

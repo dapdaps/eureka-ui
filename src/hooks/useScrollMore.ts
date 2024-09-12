@@ -1,7 +1,7 @@
 import { useLayoutEffect, useState } from 'react';
 
-export default function useScrollMore (props?: Props) {
-  const { gap = 0 } = props || {};
+export default function useScrollMore(props?: Props) {
+  const { gap = 50 } = props || {};
 
   const [viewHeight, setViewHeight] = useState<number>(650);
 
@@ -21,9 +21,9 @@ export default function useScrollMore (props?: Props) {
   }, []);
 
   return {
-    viewHeight,
+    viewHeight
   };
-};
+}
 
 interface Props {
   gap?: number;

@@ -1,4 +1,4 @@
-import { lazy,memo, Suspense } from 'react';
+import { lazy, memo, Suspense } from 'react';
 
 import DappBack from '@/components/PageBack';
 import useScrollMore from '@/hooks/useScrollMore';
@@ -6,13 +6,7 @@ import DappFallback from '@/views/Dapp/components/Fallback';
 
 import DappDetailScroll from './components/DappDetail/Scroll';
 import DappCom from './DappCom';
-import {
-  DappName,
-  StyledDAppContent,
-  StyledDappWrapper,
-  StyledPage,
-  StyledPowerHints,
-} from './styles';
+import { DappName, StyledDAppContent, StyledDappWrapper, StyledPage, StyledPowerHints } from './styles';
 export { default as Empty } from './Empty';
 
 const DappDetail = lazy(() => import('./components/DappDetail'));
@@ -29,7 +23,7 @@ const Dapp = (props: any) => {
         style={{
           maxWidth: 1260,
           minWidth: 1060,
-          margin: '0 auto',
+          margin: '0 auto'
         }}
       />
       <StyledDAppContent style={{ minHeight: viewHeight }}>
@@ -50,7 +44,7 @@ const Dapp = (props: any) => {
       </StyledDAppContent>
       <DappDetailScroll />
       <Suspense fallback={<DappFallback />}>
-        <DappDetail {...dapp}/>
+        <DappDetail {...dapp} />
       </Suspense>
     </StyledPage>
   );

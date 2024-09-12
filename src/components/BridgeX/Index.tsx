@@ -1,5 +1,7 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
+import Big from 'big.js';
+import { useEffect, useState } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -134,7 +136,8 @@ export default function BridgeX({
   getChainScan,
   addAction,
   onSuccess,
-  dapp
+  dapp,
+  style
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -409,9 +412,8 @@ export default function BridgeX({
   }
 
   const CurrentActivityCom = activity[tool];
-
   return (
-    <BridgePanel>
+    <BridgePanel style={style}>
       <Header>
         <BridgeIcon>
           <img src={icon} />

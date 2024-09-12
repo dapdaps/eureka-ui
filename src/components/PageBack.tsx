@@ -53,7 +53,7 @@ const StyledContainer = styled.div`
 
 const StyledInner = styled.div`
   flex-grow: 0;
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-family: Montserrat;
   font-size: 14px;

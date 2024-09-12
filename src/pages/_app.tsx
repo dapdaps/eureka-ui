@@ -7,7 +7,6 @@ import 'nprogress/nprogress.css';
 
 import { useDebounceFn } from 'ahooks';
 import type { AppProps } from 'next/app';
-
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Script from 'next/script';
@@ -68,7 +67,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
     () => {
       if (account) report({ code: '1001-005', address: account });
     },
-    { wait: 500 },
+    { wait: 500 }
   );
 
   useEffect(() => {

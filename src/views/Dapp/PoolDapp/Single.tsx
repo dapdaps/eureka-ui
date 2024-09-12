@@ -48,31 +48,17 @@ const PoolDappSingle = (props: any) => {
         currentChain,
         tokenId: poolData?.id,
         id: poolData?.id,
-        fee: poolData?.fee,
+        fee: poolData?.fee
       }}
     >
-      {
-        [PageType.Detail].includes(poolPage) && (
-          <StyledPoolBack>
-            <PageBack onBack={handleBack} />
-          </StyledPoolBack>
-        )
-      }
-      {
-        poolPage === PageType.Detail && (
-          <Detail isHideBack onClose={handleBack} />
-        )
-      }
-      {
-        poolPage === PageType.Add && (
-          <AddLiquidity isHideBack from="modal" onClose={handleBack} />
-        )
-      }
-      {
-        poolPage === PageType.Pools && (
-          <Pools onAction={handleAction} />
-        )
-      }
+      {[PageType.Detail].includes(poolPage) && (
+        <StyledPoolBack>
+          <PageBack onBack={handleBack} />
+        </StyledPoolBack>
+      )}
+      {poolPage === PageType.Detail && <Detail isHideBack onClose={handleBack} />}
+      {poolPage === PageType.Add && <AddLiquidity isHideBack from="modal" onClose={handleBack} />}
+      {poolPage === PageType.Pools && <Pools onAction={handleAction} />}
     </LiquidityContext.Provider>
   );
 };
@@ -82,5 +68,5 @@ export default PoolDappSingle;
 enum PageType {
   Pools = 'pools',
   Detail = 'detail',
-  Add = 'add',
+  Add = 'add'
 }

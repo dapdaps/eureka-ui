@@ -1,5 +1,5 @@
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   display: flex;
@@ -13,9 +13,9 @@ export const StyledTooltip = styled(motion.div)`
   flex-shrink: 0;
   border-radius: 12px;
   border: 1px solid #333648;
-  background: #1F2229;
+  background: #1f2229;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
-  color: #979ABE;
+  color: #979abe;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
