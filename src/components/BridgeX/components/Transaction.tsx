@@ -75,6 +75,12 @@ const TransactionWapper = styled.div`
     .proccessing {
       color: #00d1ff;
     }
+    .cliam {
+      padding: 5px;
+      background: #fff;
+      border-radius: 5px;
+      color: #000;
+    }
   }
   .time {
     display: flex;
@@ -141,8 +147,9 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
     const transactionList = await getTransaction(tool);
     const pendingList = transactionList.filter((item: any) => item.status === 3);
     // const pendingList = transactionList;
-    pendingList.forEach((item: any) => {
-      getStatus(
+    for (let i = 0; i < pendingList.length; i++) {
+      const item = pendingList[i];
+      const isComplate = await getStatus(
         {
           hash: item.hash,
           chainId: item.fromChainId,
@@ -153,31 +160,25 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
         },
         item.bridgeType || item.tool,
         provider?.getSigner()
-      )
-        .then((isComplate: any) => {
-          console.log('isComplate:', isComplate);
-          if (typeof isComplate === 'boolean' && isComplate) {
-            item.status = 2;
-            // updateTransaction(item);
-          } else if (typeof isComplate === 'object' && isComplate) {
-            if (isComplate.isSuccess) {
-              item.status = 2;
-              //   updateTransaction(item);
-            } else if (isComplate.execute) {
-              console.log(3333);
-              item.text = isComplate.status;
-              item.execute = isComplate.execute;
-            }
-          } else {
-            item.status = 3;
-          }
-
-          console.log(item);
-        })
-        .catch((err: any) => {
-          item.status = 3;
-        });
-    });
+      );
+      console.log('isComplate:', isComplate);
+      if (typeof isComplate === 'boolean' && isComplate) {
+        item.status = 2;
+        // updateTransaction(item);
+      } else if (typeof isComplate === 'object' && isComplate) {
+        if (isComplate.isSuccess) {
+          item.status = 2;
+          //   updateTransaction(item);
+        } else if (isComplate.execute) {
+          console.log(223344);
+          item.text = isComplate.status;
+          item.execute = isComplate.execute;
+        }
+      } else {
+        item.status = 3;
+      }
+      console.log(item);
+    }
 
     transactionList.sort((a: any, b: any) => b.time - a.time);
 
@@ -240,14 +241,14 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
                   <div>
                     {tx.status === 2 && <div className="complete">Complete</div>}
                     {tx.status === 3 &&
-                      (!tx.execute ? (
+                      (tx.execute ? (
                         <div
-                          className="processing"
+                          className="cliam"
                           onClick={() => {
-                            console.log(tx.text);
+                            tx.execute(tx, provider.getSigner());
                           }}
                         >
-                          {tx.text}111
+                          {tx.text}
                         </div>
                       ) : (
                         <div className="processing">Processing</div>
