@@ -139,8 +139,8 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
 
     setIsLoading(true);
     const transactionList = await getTransaction(tool);
-    // const pendingList = transactionList.filter((item: any) => item.status === 3)
-    const pendingList = transactionList;
+    const pendingList = transactionList.filter((item: any) => item.status === 3);
+    // const pendingList = transactionList;
     pendingList.forEach((item: any) => {
       getStatus(
         {
@@ -155,20 +155,24 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
         provider?.getSigner()
       )
         .then((isComplate: any) => {
+          console.log('isComplate:', isComplate);
           if (typeof isComplate === 'boolean' && isComplate) {
             item.status = 2;
-            updateTransaction(item);
+            // updateTransaction(item);
           } else if (typeof isComplate === 'object' && isComplate) {
             if (isComplate.isSuccess) {
               item.status = 2;
-              updateTransaction(item);
+              //   updateTransaction(item);
             } else if (isComplate.execute) {
+              console.log(3333);
               item.text = isComplate.status;
               item.execute = isComplate.execute;
             }
           } else {
             item.status = 3;
           }
+
+          console.log(item);
         })
         .catch((err: any) => {
           item.status = 3;
@@ -176,6 +180,9 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
     });
 
     transactionList.sort((a: any, b: any) => b.time - a.time);
+
+    console.log('transactionList:', transactionList);
+
     setTransactionList(transactionList);
     setIsLoading(false);
     setProccessSum(pendingList?.length || 0);
@@ -232,7 +239,19 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
                   </div>
                   <div>
                     {tx.status === 2 && <div className="complete">Complete</div>}
-                    {tx.status === 3 && <div className="processing">Processing</div>}
+                    {tx.status === 3 &&
+                      (!tx.execute ? (
+                        <div
+                          className="processing"
+                          onClick={() => {
+                            console.log(tx.text);
+                          }}
+                        >
+                          {tx.text}111
+                        </div>
+                      ) : (
+                        <div className="processing">Processing</div>
+                      ))}
                   </div>
                 </div>
                 <div className="time">
