@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+import NoPrize from '@/views/Campaign/RubicHoldstation/sections/Tickets/NoPrize';
+import RulesEntry from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/Entry';
+
 import Button from '../../components/Button';
 import ResultModal from './ResultModal';
 import Round from './Round';
@@ -10,6 +13,8 @@ import YourTicketsModal from './YourTicketsModal';
 const Tickets = () => {
   const [showTicketsModal, setShowTicketsModal] = useState(false);
   const [showResultModal, setShowResultModal] = useState(false);
+  const [noPrizeVisible, setNoPrizeVisible] = useState(false);
+
   return (
     <StyledContainer>
       <StyledTitle size={42}>Good Luck!</StyledTitle>
@@ -17,8 +22,9 @@ const Tickets = () => {
         <StyledPrize size={80} italic>
           $7,500
         </StyledPrize>
-        <StyledTitle size={36} style={{ paddingBottom: 12 }}>
-          in prize!
+        <StyledTitle size={36} style={{ paddingBottom: 12, display: 'flex', alignItems: 'center', gap: 22 }}>
+          <span>in prize!</span>
+          <RulesEntry />
         </StyledTitle>
       </StyledPrizeWrapper>
       <StyledTickets style={{ marginBottom: true ? 38 : 72 }}>
@@ -54,6 +60,12 @@ const Tickets = () => {
         display={showResultModal}
         onClose={() => {
           setShowResultModal(false);
+        }}
+      />
+      <NoPrize
+        visible={noPrizeVisible}
+        onClose={() => {
+          setNoPrizeVisible(false);
         }}
       />
     </StyledContainer>

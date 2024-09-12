@@ -33,13 +33,16 @@ const Holdstation = () => {
           <StyledFlex justifyContent="space-between" alignItems="flex-start" gap="38px">
             <LazyImage src="/images/campaign/holdstation-bg.png" width={464} height={339} />
             <StyledRight>
-              <StyledFlex justifyContent="space-between" alignItems="flex-start">
-                <LazyImage src="/images/campaign/holdstation-logo.png" width={115} height={48} />
-                <StyledFlex justifyContent="flex-end" alignItems="flex-start" gap="10px">
-                  <TicketBadge amount={0}></TicketBadge>
-                  <Refresh />
-                </StyledFlex>
+              <StyledFlex justifyContent="flex-end" alignItems="flex-start" gap="10px">
+                <TicketBadge amount={0}></TicketBadge>
+                <Refresh />
               </StyledFlex>
+              <LazyImage
+                src="/images/campaign/holdstation-logo.png"
+                width={115}
+                height={48}
+                containerStyle={{ marginTop: 17 }}
+              />
               <StyledFlex justifyContent="space-between" alignItems="flex-start" style={{ marginTop: 13 }}>
                 <StyledDownload>
                   Download <br />
@@ -47,6 +50,11 @@ const Holdstation = () => {
                 </StyledDownload>
                 <LazyImage src="/images/campaign/holdstation-qr-code.svg" width={76} height={76} />
               </StyledFlex>
+              <StyledDesc>
+                <StyledDescItem>
+                  Download Holdstation wallet and use it to join DapDap
+                </StyledDescItem>
+              </StyledDesc>
               <StyledFlex justifyContent="space-between" alignItems="flex-start" gap="16px" style={{ marginTop: 16 }}>
                 <Button style={{ flex: 1 }}>
                   <AppleLogo />
@@ -57,11 +65,6 @@ const Holdstation = () => {
                   <span>Google Play</span>
                 </Button>
               </StyledFlex>
-              <StyledDesc>
-                <StyledDescItem>
-                  Download Holdstation wallet and use it to join DapDap
-                </StyledDescItem>
-              </StyledDesc>
             </StyledRight>
           </StyledFlex>
         </Card>

@@ -36,7 +36,8 @@ export const StyledDownload = styled.div`
 `;
 export const StyledDesc = styled.ul`
   margin-top: 24px;
-  padding-left: 20px;
+  list-style: none;
+  padding-left: 0;
 `;
 export const StyledDescItem = styled.li`
   color: #FFF;

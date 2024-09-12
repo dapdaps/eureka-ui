@@ -1,8 +1,25 @@
 import styled from 'styled-components';
 
+export const StyledLeaderboard = styled.div`
+  position: relative;
+  padding: 77px 0 150px;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(20px);
+  }
+`;
 export const StyledContainer = styled.div`
   width: 1000px;
-  margin: 77px auto 150px;
+  margin: 0 auto;
 `;
 export const StyledTitle = styled.div`
   color: #FFF;
@@ -36,20 +53,6 @@ export const StyledDesc = styled.div`
 `;
 export const StyledContent = styled.div`
   margin-top: 49px;
-  position: relative;
-  
-  &::after {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 1;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    backdrop-filter: blur(20px);
-  }
 `;
 export const StyledTable = styled.div`
   border-radius: 12px;

@@ -7,7 +7,7 @@ import LeaderboardRank from '@/views/Campaign/RubicHoldstation/sections/Leaderbo
 import {
   StyledContainer,
   StyledContent,
-  StyledDesc,
+  StyledDesc, StyledLeaderboard,
   StyledTable,
   StyledTableBody,
   StyledTableCol,
@@ -61,88 +61,90 @@ const Leaderboard = () => {
   const selfData: any = [];
 
   return (
-    <StyledContainer>
-      <StyledTitle>
-        Climb to Leaderboard
-      </StyledTitle>
-      <StyledTitle>
-        Win<StyledTitlePrimary>$7,500</StyledTitlePrimary>Rewards
-      </StyledTitle>
-      <StyledDesc>
-        Trading on HoldStation by using Rubic bridge. <br />
-        The ranking changes in real time, updated every 15 minutes, and the final list of <br />
-        winners is based on the data at the end of the campaign.
-      </StyledDesc>
-      <StyledContent>
-        <IconImportant />
-        <StyledTable>
-          <StyledTableHeader>
-            <StyledTableHeaderRow>
+    <StyledLeaderboard>
+      <StyledContainer>
+        <StyledTitle>
+          Climb to Leaderboard
+        </StyledTitle>
+        <StyledTitle>
+          Win<StyledTitlePrimary>$7,500</StyledTitlePrimary>Rewards
+        </StyledTitle>
+        <StyledDesc>
+          Trading on HoldStation by using Rubic bridge. <br />
+          The ranking changes in real time, updated every 15 minutes, and the final list of <br />
+          winners is based on the data at the end of the campaign.
+        </StyledDesc>
+        <StyledContent>
+          <IconImportant />
+          <StyledTable>
+            <StyledTableHeader>
+              <StyledTableHeaderRow>
+                {
+                  columns.map((col: any) => (
+                    <StyledTableCol
+                      key={col.key}
+                      $width={col.width}
+                      $align={col.align}
+                    >
+                      {col.title}
+                    </StyledTableCol>
+                  ))
+                }
+              </StyledTableHeaderRow>
+            </StyledTableHeader>
+            <StyledTableBody>
               {
-                columns.map((col: any) => (
-                  <StyledTableCol
-                    key={col.key}
-                    $width={col.width}
-                    $align={col.align}
-                  >
-                    {col.title}
-                  </StyledTableCol>
-                ))
+                data.length ? data.map((item: any, index: number) => (
+                  <StyledTableRow key={index}>
+                    {
+                      columns.map((col: any) => (
+                        <StyledTableCol
+                          key={col.key}
+                          $width={col.width}
+                          $align={col.align}
+                        >
+                          {
+                            typeof col.render === 'function' ? col.render(item[col.key], item) : item[col.key]
+                          }
+                        </StyledTableCol>
+                      ))
+                    }
+                  </StyledTableRow>
+                )) : (
+                  <Empty tips="No data" />
+                )
               }
-            </StyledTableHeaderRow>
-          </StyledTableHeader>
-          <StyledTableBody>
-            {
-              data.length ? data.map((item: any, index: number) => (
-                <StyledTableRow key={index}>
-                  {
-                    columns.map((col: any) => (
-                      <StyledTableCol
-                        key={col.key}
-                        $width={col.width}
-                        $align={col.align}
-                      >
-                        {
-                          typeof col.render === 'function' ? col.render(item[col.key], item) : item[col.key]
-                        }
-                      </StyledTableCol>
-                    ))
-                  }
-                </StyledTableRow>
-              )) : (
-                <Empty tips="No data" />
-              )
-            }
-          </StyledTableBody>
-        </StyledTable>
-        <StyledTableTitle>Your current rank</StyledTableTitle>
-        <StyledTable>
-          <StyledTableBody>
-            {
-              selfData.length ? selfData.map((item: any, index: number) => (
-                <StyledTableRow key={index}>
-                  {
-                    columns.map((col: any) => (
-                      <StyledTableCol
-                        key={col.key}
-                        $width={col.width}
-                        $align={col.align}
-                      >
-                        {
-                          typeof col.render === 'function' ? col.render(item[col.key], item) : item[col.key]
-                        }
-                      </StyledTableCol>
-                    ))
-                  }
-                </StyledTableRow>
-              )) : (
-                <Empty tips="No data" />
-              )
-            }
-          </StyledTableBody>
-        </StyledTable>
-      </StyledContent>
-    </StyledContainer>
+            </StyledTableBody>
+          </StyledTable>
+          <StyledTableTitle>Your current rank</StyledTableTitle>
+          <StyledTable>
+            <StyledTableBody>
+              {
+                selfData.length ? selfData.map((item: any, index: number) => (
+                  <StyledTableRow key={index}>
+                    {
+                      columns.map((col: any) => (
+                        <StyledTableCol
+                          key={col.key}
+                          $width={col.width}
+                          $align={col.align}
+                        >
+                          {
+                            typeof col.render === 'function' ? col.render(item[col.key], item) : item[col.key]
+                          }
+                        </StyledTableCol>
+                      ))
+                    }
+                  </StyledTableRow>
+                )) : (
+                  <Empty tips="No data" />
+                )
+              }
+            </StyledTableBody>
+          </StyledTable>
+        </StyledContent>
+      </StyledContainer>
+    </StyledLeaderboard>
   );
 };
 
