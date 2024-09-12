@@ -151,10 +151,14 @@ const simplifyNumber = function (number: number, decimal: number) {
     return Big(number).toFixed(decimal);
   }
 };
-const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false) {
+const formatValueDecimal = function (value: any, unit = '', decimal = 0, simplify = false, showLine = true) {
   const target = Big(1).div(Math.pow(10, decimal));
-  if (Big(value ?? 0).eq(0)) {
-    return '-';
+  if (isNaN(value) || Big(value ?? 0).eq(0)) {
+    if (showLine) {
+      return '-';
+    } else {
+      return unit + Big(0).toFixed(decimal);
+    }
   } else if (Big(value).gt(0)) {
     if (Big(value).lt(target)) {
       return `<${unit}${target}`;

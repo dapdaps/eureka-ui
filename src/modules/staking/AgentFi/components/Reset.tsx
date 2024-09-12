@@ -1,13 +1,13 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from "react";
+import { memo } from 'react';
 import { useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
 import Loading from '@/modules/components/Loading';
 import { useMultiState } from '@/modules/hooks';
-import { formatValueDecimal } from "@/utils/formate";
+import { formatValueDecimal } from '@/utils/formate';
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -15,7 +15,7 @@ const StyledContainer = styled.div`
   height: 100%;
 `;
 const StyledFormItem = styled.div`
-  border-bottom: 1px solid #373A53;
+  border-bottom: 1px solid #373a53;
   padding-bottom: 18px;
   padding-top: 18px;
 
@@ -33,7 +33,7 @@ const StyledFormItemTitle = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
-  color: #979ABE;
+  color: #979abe;
 `;
 const StyledFormItemBody = styled.div`
   margin-top: 8px;
@@ -86,7 +86,7 @@ const StyledListItem = styled.div`
   font-size: 14px;
 
   .label {
-    color: #979ABE;
+    color: #979abe;
   }
 
   .value {
@@ -127,7 +127,7 @@ const StyledFullSelect = styled.div`
   > div {
     width: 100%;
 
-    > div[type="button"] {
+    > div[type='button'] {
       width: 100%;
     }
   }
@@ -158,7 +158,7 @@ const StyledWithdrawTips = styled.div`
   }
 
   .title {
-    border-bottom: 1px solid #373A53;
+    border-bottom: 1px solid #373a53;
     font-size: 18px;
     color: rgb(151, 154, 190);
     padding: 8px 0;
@@ -169,7 +169,7 @@ const StyledWithdrawTips = styled.div`
   }
 
   .head-wd {
-    border-bottom: 1px solid #373A53;
+    border-bottom: 1px solid #373a53;
 
     .col-wd {
       color: rgb(151, 154, 190);
@@ -202,7 +202,7 @@ const StyledPriceRangeList = styled.div`
   align-items: stretch;
   flex-wrap: nowrap;
   gap: 0;
-  border: 1px solid #373A53;
+  border: 1px solid #373a53;
   border-radius: 6px;
 
   .min-price,
@@ -220,11 +220,11 @@ const StyledPriceRangeList = styled.div`
   }
 
   .range-price {
-    border-left: 1px solid #373A53;
+    border-left: 1px solid #373a53;
   }
 
   .max-price {
-    border-left: 1px solid #373A53;
+    border-left: 1px solid #373a53;
   }
 
   .range-value {
@@ -234,62 +234,62 @@ const StyledPriceRangeList = styled.div`
   }
 
   .range-label {
-    color: #979ABE;
+    color: #979abe;
     font-size: 14px;
   }
 `;
 
 const ABI = [
   {
-    "inputs": [
+    inputs: [
       {
-        "components": [
+        components: [
           {
-            "internalType": "address",
-            "name": "router",
-            "type": "address",
+            internalType: 'address',
+            name: 'router',
+            type: 'address'
           },
           {
-            "internalType": "uint24",
-            "name": "fee",
-            "type": "uint24",
+            internalType: 'uint24',
+            name: 'fee',
+            type: 'uint24'
           },
           {
-            "internalType": "uint24",
-            "name": "slippageSwap",
-            "type": "uint24",
+            internalType: 'uint24',
+            name: 'slippageSwap',
+            type: 'uint24'
           },
           {
-            "internalType": "uint24",
-            "name": "slippageLiquidity",
-            "type": "uint24"
+            internalType: 'uint24',
+            name: 'slippageLiquidity',
+            type: 'uint24'
           },
           {
-            "internalType": "int24",
-            "name": "tickLower",
-            "type": "int24",
+            internalType: 'int24',
+            name: 'tickLower',
+            type: 'int24'
           },
           {
-            "internalType": "int24",
-            "name": "tickUpper",
-            "type": "int24"
+            internalType: 'int24',
+            name: 'tickUpper',
+            type: 'int24'
           },
           {
-            "internalType": "uint160",
-            "name": "sqrtPriceX96",
-            "type": "uint160",
-          },
+            internalType: 'uint160',
+            name: 'sqrtPriceX96',
+            type: 'uint160'
+          }
         ],
-        "internalType": "struct IConcentratedLiquidityModuleC.RebalanceParams",
-        "name": "params",
-        "type": "tuple",
-      },
+        internalType: 'struct IConcentratedLiquidityModuleC.RebalanceParams',
+        name: 'params',
+        type: 'tuple'
+      }
     ],
-    "name": "moduleC_rebalance",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function",
-  },
+    name: 'moduleC_rebalance',
+    outputs: [],
+    stateMutability: 'payable',
+    type: 'function'
+  }
 ];
 
 const { parseUnits, formatUnits } = ethers.utils;
@@ -308,7 +308,7 @@ export default memo(function Reset() {
     queryPoolInfo,
     tickToPrice,
     priceToUsableTick,
-    strategies,
+    strategies
   } = props;
 
   const { StakeTokens } = dexConfig;
@@ -317,18 +317,18 @@ export default memo(function Reset() {
     pending: false,
 
     rate: 20,
-    currentEth2UsdPrice: "",
-    minPrice: "",
-    maxPrice: "",
-    sqrtPriceX96: "",
+    currentEth2UsdPrice: '',
+    minPrice: '',
+    maxPrice: '',
+    sqrtPriceX96: '',
     currentEthToken: {},
-    currentUsdToken: {},
+    currentUsdToken: {}
   });
 
   const handleSubmit = () => {
     if (!state.rate) return;
     updateState({
-      pending: true,
+      pending: true
     });
 
     // fixed 0.30 % fee tier
@@ -338,13 +338,13 @@ export default memo(function Reset() {
       price: state.minPrice,
       token0: state.currentEthToken,
       token1: state.currentUsdToken,
-      fee: fee.value,
+      fee: fee.value
     });
     const tickUpper = priceToUsableTick({
       price: state.maxPrice,
       token0: state.currentEthToken,
       token1: state.currentUsdToken,
-      fee: fee.value,
+      fee: fee.value
     });
     const [_tickLower, _tickUpper] = tickLower > tickUpper ? [tickUpper, tickLower] : [tickLower, tickUpper];
 
@@ -356,75 +356,68 @@ export default memo(function Reset() {
         slippageLiquidity: 1000000,
         tickLower: _tickLower,
         tickUpper: _tickUpper,
-        sqrtPriceX96: state.sqrtPriceX96,
+        sqrtPriceX96: state.sqrtPriceX96
       }
     ];
 
-    const contract = new ethers.Contract(
-      record.agentAddress,
-      ABI,
-      Ethers.provider().getSigner(),
-    );
+    const contract = new ethers.Contract(record.agentAddress, ABI, provider.getSigner());
 
     const getTx = (gas) => {
       const contractOption = {
         gasLimit: gas || 4000000,
-        value: parseUnits('0', 18),
+        value: parseUnits('0', 18)
       };
-      contract.moduleC_rebalance(...params, contractOption)
+      contract
+        .moduleC_rebalance(...params, contractOption)
         .then((tx) => {
           tx.wait()
             .then((res) => {
               const { status, transactionHash } = res;
               updateState({
-                pending: false,
+                pending: false
               });
-              if (status !== 1) throw new Error("");
+              if (status !== 1) throw new Error('');
               onSuccess();
               // formatAddAction(actionText, state.ethAmount, status, transactionHash, state.currentEthToken.value);
               toast?.success({
                 title: `Set New Range Successfully!`,
                 tx: transactionHash,
-                chainId,
+                chainId
               });
             })
             .catch((err) => {
-              console.log("tx error: ", err);
+              console.log('tx error: ', err);
               updateState({
-                pending: false,
+                pending: false
               });
               toast?.fail({
                 title: `Set New Range Failed!`,
-                text: err?.message?.includes("user rejected transaction")
-                  ? "User rejected transaction"
-                  : ``,
+                text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
               });
             });
         })
         .catch((err) => {
-          console.log("contract fn error: ", err);
+          console.log('contract fn error: ', err);
           updateState({
-            pending: false,
+            pending: false
           });
           toast?.fail({
             title: `Set New Range Failed!`,
-            text: err?.message?.includes("user rejected transaction")
-              ? "User rejected transaction"
-              : ``,
+            text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
           });
         });
     };
 
     const estimateGas = () => {
-      contract.estimateGas.moduleC_rebalance(
-        ...params,
-        { value: parseUnits('0', 18) },
-      ).then((gas) => {
-        getTx(gas);
-      }).catch((err) => {
-        console.log("get gas failed: ", err);
-        getTx();
-      });
+      contract.estimateGas
+        .moduleC_rebalance(...params, { value: parseUnits('0', 18) })
+        .then((gas) => {
+          getTx(gas);
+        })
+        .catch((err) => {
+          console.log('get gas failed: ', err);
+          getTx();
+        });
     };
 
     estimateGas();
@@ -432,10 +425,10 @@ export default memo(function Reset() {
 
   const handleRate = (ev) => {
     if (isNaN(Number(ev.target.value))) return;
-    let amount = ev.target.value.replace(/\s+/g, "");
+    let amount = ev.target.value.replace(/\s+/g, '');
     if (!amount) {
       updateState({
-        rate: "",
+        rate: ''
       });
       return;
     }
@@ -447,24 +440,18 @@ export default memo(function Reset() {
     }
     amount = Math.round(amount);
     updateState({
-      rate: amount,
+      rate: amount
     });
   };
 
-  const {
-    pending,
-    rate,
-    currentEth2UsdPrice,
-    minPrice,
-    maxPrice,
-  } = state;
+  const { pending, rate, currentEth2UsdPrice, minPrice, maxPrice } = state;
 
   useEffect(() => {
     queryPoolInfo({ fee: currentStrategy.meta.feeTierList[2] }).then((poolRes) => {
       if (!poolRes) {
         toast?.fail({
           title: `Initialization Failed!`,
-          text: 'Query pool information failed, try again later or reload the page please!',
+          text: 'Query pool information failed, try again later or reload the page please!'
         });
         return;
       }
@@ -472,14 +459,10 @@ export default memo(function Reset() {
       updateState({ sqrtPriceX96 });
       const currentBalancesList = record.balances || [];
       const currentBalance = currentBalancesList.find((it) => /^BlasterSwap Positions NFT/.test(it.name));
-      if (
-        !currentBalance ||
-        !currentBalance.underlying ||
-        currentBalance.underlying.length < 2
-      ) {
+      if (!currentBalance || !currentBalance.underlying || currentBalance.underlying.length < 2) {
         toast?.fail({
           title: `Initialization Failed!`,
-          text: 'Query token information failed, try again later or reload the page please!',
+          text: 'Query token information failed, try again later or reload the page please!'
         });
         return;
       }
@@ -489,8 +472,8 @@ export default memo(function Reset() {
         currentEth2UsdPrice: tickToPrice({
           tick,
           token0: currentBalance.underlying[1],
-          token1: currentBalance.underlying[0],
-        }),
+          token1: currentBalance.underlying[0]
+        })
       });
     });
   }, []);
@@ -502,19 +485,14 @@ export default memo(function Reset() {
     const _maxPrice = Math.floor(Big(currentEth2UsdPrice).plus(slippageValue).toNumber());
     updateState({
       minPrice: _minPrice,
-      maxPrice: _maxPrice,
+      maxPrice: _maxPrice
     });
   }, [currentEth2UsdPrice, rate]);
 
   const renderButton = (disabled) => {
     return (
-      <StyledButton
-        disabled={pending || disabled}
-        onClick={handleSubmit}
-      >
-        {pending ? (
-          <Loading size={16} />
-        ) : "SET NEW RANGE"}
+      <StyledButton disabled={pending || disabled} onClick={handleSubmit}>
+        {pending ? <Loading size={16} /> : 'SET NEW RANGE'}
       </StyledButton>
     );
   };
@@ -525,23 +503,17 @@ export default memo(function Reset() {
         <>
           <StyledContent>
             <StyledTips>
-              Resetting the strategy will withdraw your existing underlying LP assets and deposit them into the new range.
+              Resetting the strategy will withdraw your existing underlying LP assets and deposit them into the new
+              range.
             </StyledTips>
             <StyledFormItem>
-              <StyledFormItemTitle>
-                Enter LP Range
-              </StyledFormItemTitle>
+              <StyledFormItemTitle>Enter LP Range</StyledFormItemTitle>
               <StyledFormItemBody>
-                <div style={{ width: "60px", display: "flex" }}>
-                  <StyledInput
-                    type="text"
-                    placeholder="0"
-                    value={rate}
-                    onChange={handleRate}
-                  />
-                  <span style={{ color: "#fff" }}>%</span>
+                <div style={{ width: '60px', display: 'flex' }}>
+                  <StyledInput type="text" placeholder="0" value={rate} onChange={handleRate} />
+                  <span style={{ color: '#fff' }}>%</span>
                 </div>
-                <div className="current-usdb" style={{ color: "#fff" }}>
+                <div className="current-usdb" style={{ color: '#fff' }}>
                   {Big(currentEth2UsdPrice || 0).toFixed(0)} USDB
                 </div>
                 <StyledPriceRangeList>
@@ -568,14 +540,5 @@ export default memo(function Reset() {
     return null;
   };
 
-  return (
-    <StyledContainer>
-      {renderReset()}
-    </StyledContainer>
-  );
-
-})
-
-
-
-
+  return <StyledContainer>{renderReset()}</StyledContainer>;
+});

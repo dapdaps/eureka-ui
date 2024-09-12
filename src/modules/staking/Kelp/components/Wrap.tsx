@@ -1,12 +1,11 @@
 // @ts-nocheck
-import Big from 'big.js';
 import { ethers } from 'ethers';
 import { memo, useEffect } from 'react';
 import styled from 'styled-components';
 
+import Loading from '@/modules/components/Loading';
 import { useMultiState } from '@/modules/hooks';
-
-import Loading from '../../Bridge/Loading';
+import { formatValueDecimal } from '@/utils/formate';
 const StyledDialog = styled.div`
   display: flex;
   align-items: center;
@@ -113,7 +112,6 @@ const StyledWrapOrUnwrapInputTopBalance = styled.div`
   font-weight: 400;
   line-height: normal;
   span {
-    cursor: pointer;
     color: #fff;
     text-decoration-line: underline;
   }
@@ -145,10 +143,10 @@ const StyledWrapOrUnwrapInputBottomSymbol = styled.div`
   align-items: center;
   gap: 5px;
 `;
-const StyledWrapOrUnwrapInputBottomSymbolImage = styled.img`
+const StyledTokenIcon = styled.img`
   width: 20px;
 `;
-const StyledWrapOrUnwrapInputBottomSymbolTxt = styled.div`
+const StyledTokenSymbol = styled.div`
   color: #fff;
   font-family: Gantari;
   font-size: 16px;
@@ -174,9 +172,8 @@ const StyledWrapOrUnwrapButton = styled.div`
   flex-shrink: 0;
   cursor: pointer;
   border-radius: 8px;
-  background: linear-gradient(180deg, #eef3bf 0%, #e9f456 100%);
-
-  color: #02051e;
+  background-color: #075a5a;
+  color: white;
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
@@ -188,62 +185,126 @@ const StyledWrapOrUnwrapButton = styled.div`
   }
 `;
 
-export default memo(function Dialog(props: any) {
-  const [state, updateState] = useMultiState<any>({
+const WABI = [
+  {
+    inputs: [
+      { internalType: 'address', name: 'asset', type: 'address' },
+      { internalType: 'uint256', name: '_amount', type: 'uint256' }
+    ],
+    name: 'deposit',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      { internalType: 'address', name: 'asset', type: 'address' },
+      { internalType: 'uint256', name: '_amount', type: 'uint256' }
+    ],
+    name: 'withdraw',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
+];
+export default memo(function Wrap(props) {
+  const [state, updateState] = useMultiState({
     categoryList: ['Wrap', 'Unwrap'],
     categoryIndex: 0,
     wrapAmount: '',
     unwrapAmount: '',
     wrapLoading: false,
     unwrapLoading: false,
-    balances: {
-      ETH: 0,
-      WETH: 0
-    }
+    isApproving: false,
+    balances: {},
+    allowances: {}
   });
-  const { toast, sender, provider, chainId, addAction, onCloseWrap } = props;
+  const {
+    account,
+    provider,
+    toast,
+    chainId,
+    addAction,
+    onCloseWrap,
+    tokenPairs,
+    multicall,
+    multicallAddress,
+    dexConfig
+  } = props;
+  const { formatUnits, parseUnits } = ethers.utils;
 
-  const WETH_ADDRESS = '0x4300000000000000000000000000000000000004';
-  const isWrapInSufficient = Number(state?.wrapAmount ?? 0) > Number(state?.balances['ETH'] ?? 0);
-  const isUnwrapInSufficient = Number(state?.unwrapAmount ?? 0) > Number(state?.balances['WETH'] ?? 0);
+  const isWrapInSufficient = Number(state?.wrapAmount ?? 0) > Number(state?.balances[tokenPairs[0].symbol] ?? 0);
+  const isUnwrapInSufficient = Number(state?.unwrapAmount ?? 0) > Number(state?.balances[tokenPairs[1].symbol] ?? 0);
 
   function handleQueryBalances() {
-    provider.getBalance(sender).then((result) => {
-      const balances = state.balances;
-      balances['ETH'] = Big(ethers.utils.formatEther(result)).toFixed(4);
-      updateState({
-        balances
+    const calls = tokenPairs.map((token) => ({
+      address: token.address,
+      name: 'balanceOf',
+      params: [account]
+    }));
+
+    multicall({
+      abi: [
+        {
+          inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+          name: 'balanceOf',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function'
+        }
+      ],
+      calls,
+      options: {},
+      multicallAddress,
+      provider
+    })
+      .then((res) => {
+        console.log('get_wallet_bal_res:', res);
+        const _balances = {};
+        tokenPairs.forEach((token, i) => {
+          const _symbol = token.symbol;
+          _balances[_symbol] = res[i] ? formatUnits(res[i][0], token.decimals) : 0;
+        });
+
+        updateState({
+          balances: _balances
+        });
+      })
+      .catch((err) => {
+        console.log('getWalletBalance_error', err);
       });
-    });
-    const abi = [
-      {
-        inputs: [
-          {
-            internalType: 'address',
-            name: 'account',
-            type: 'address'
-          }
-        ],
-        name: 'balanceOf',
-        outputs: [
-          {
-            internalType: 'uint256',
-            name: '',
-            type: 'uint256'
-          }
-        ],
-        stateMutability: 'view',
-        type: 'function'
-      }
-    ];
-    const contract = new ethers.Contract(ethers.utils.getAddress(WETH_ADDRESS), abi, provider.getSigner());
-    contract.balanceOf(sender).then((result) => {
-      const balances = state.balances;
-      balances['WETH'] = Big(ethers.utils.formatEther(result)).toFixed(4);
-      updateState({
-        balances
+  }
+
+  function getBatchAllowance() {
+    const calls = tokenPairs.map((token) => ({
+      address: token.address,
+      name: 'allowance',
+      params: [account, tokenPairs[1].address]
+    }));
+
+    multicall({
+      abi: ['function allowance(address owner, address spender) external view returns (uint256)'],
+      calls,
+      options: {},
+      multicallAddress,
+      provider
+    })
+      .then((res) => {
+        console.log('get_allowances_res:', res);
+
+        const _allowances = {};
+        tokenPairs.forEach((token, i) => {
+          const _symbol = token.symbol;
+          _allowances[_symbol] = res[i] ? formatUnits(res[i][0], token.decimals) : 0;
+        });
+
+        updateState({
+          allowances: _allowances
+        });
+      })
+      .catch((err) => {
+        console.log('get_allowances_error', err);
       });
-    });
   }
   function handleAmountChange(amount) {
     if (Number(amount) < 0) {
@@ -265,46 +326,40 @@ export default memo(function Dialog(props: any) {
       wrapLoading: true
     });
     const toastId = toast?.loading({
-      title: `Wrap ${state.wrapAmount} ETH`
+      title: `Wrap ${state.wrapAmount} ${tokenPairs[0].symbol}`
     });
-    const abi = [
-      {
-        inputs: [],
-        name: 'deposit',
-        outputs: [],
-        stateMutability: 'payable',
-        type: 'function'
-      }
-    ];
-    const contract = new ethers.Contract(ethers.utils.getAddress(WETH_ADDRESS), abi, provider.getSigner());
-    const _amount = Big(state.wrapAmount).mul(Big(10).pow(18)).toFixed(0);
+
+    const contract = new ethers.Contract(tokenPairs[1].address, WABI, provider.getSigner());
+    const _amount = parseUnits(state.wrapAmount, tokenPairs[0].decimals);
+    const _asset = tokenPairs[0].address;
     contract
-      .deposit({ value: _amount })
+      .deposit(_asset, _amount)
       .then((tx) => tx.wait())
       .then((result) => {
         const { status, transactionHash } = result;
         toast?.dismiss(toastId);
-        if (status !== 1) throw new Error('');
+
         updateState({
           wrapLoading: false
         });
         toast?.success({
           title: 'Wrap Successfully!',
-          text: `Wrap ${state.wrapAmount} ETH`,
+          text: `Wrap ${state.wrapAmount} ${tokenPairs[0].symbol}`,
           tx: transactionHash,
           chainId
         });
-        addAction?.({
-          type: 'Yield',
-          action: 'Wrap',
-          token0: 'ETH',
-          token1: 'WETH',
-          amount: state?.wrapAmount,
-          template: 'Juice',
-          add: true,
-          status,
-          transactionHash
-        });
+        // addAction?.({
+        //   type: "Staking",
+        //   action: "Wrap",
+        //   template: dexConfig?.name,
+        //   token0: tokenPairs[0].symbol,
+        //   token1: tokenPairs[1].symbol,
+        //   amount: state?.wrapAmount,
+        //   template: dexConfig.name,
+        //   add: true,
+        //   status,
+        //   transactionHash,
+        // });
         handleRefresh();
       })
       .catch((error) => {
@@ -316,7 +371,7 @@ export default memo(function Dialog(props: any) {
           title: 'Wrap Failed!',
           text: error?.message?.includes('user rejected transaction')
             ? 'User rejected transaction'
-            : `Wrap ${state.wrapAmount} ETH`
+            : `Wrap ${state.wrapAmount} ${tokenPairs[0].symbol}`
         });
       });
   }
@@ -325,51 +380,27 @@ export default memo(function Dialog(props: any) {
       unwrapLoading: true
     });
     const toastId = toast?.loading({
-      title: `Unwrap ${state.wrapAmount} WETH`
+      title: `Unwrap ${state.wrapAmount} ${tokenPairs[1].symbol}`
     });
-    const abi = [
-      {
-        inputs: [
-          {
-            internalType: 'uint256',
-            name: 'wad',
-            type: 'uint256'
-          }
-        ],
-        name: 'withdraw',
-        outputs: [],
-        stateMutability: 'nonpayable',
-        type: 'function'
-      }
-    ];
-    const contract = new ethers.Contract(ethers.utils.getAddress(WETH_ADDRESS), abi, provider.getSigner());
-    const _amount = Big(state.unwrapAmount).mul(Big(10).pow(18)).toFixed(0);
+
+    const contract = new ethers.Contract(tokenPairs[1].address, WABI, provider.getSigner());
+    const _amount = parseUnits(state.unwrapAmount, tokenPairs[1].decimals);
+    const _asset = tokenPairs[0].address;
     contract
-      .withdraw(_amount)
+      .withdraw(_asset, _amount)
       .then((tx) => tx.wait())
       .then((result) => {
         const { status, transactionHash } = result;
         toast?.dismiss(toastId);
-        if (status !== 1) throw new Error('');
+
         updateState({
           unwrapLoading: false
         });
         toast?.success({
           title: 'Unwrap Successfully!',
-          text: `Unwrap ${state.unwrapAmount} WETH`,
+          text: `Unwrap ${state.unwrapAmount} ${tokenPairs[1].symbol}`,
           tx: transactionHash,
           chainId
-        });
-        addAction?.({
-          type: 'Yield',
-          action: 'Unwrap',
-          token0: 'WETH',
-          token1: 'ETH',
-          amount: state?.unwrapAmount,
-          template: 'Juice',
-          add: false,
-          status: 1,
-          transactionHash
         });
         handleRefresh();
       })
@@ -382,21 +413,93 @@ export default memo(function Dialog(props: any) {
           title: 'Unwrap Failed!',
           text: error?.message?.includes('user rejected transaction')
             ? 'User rejected transaction'
-            : `Unwrap ${state.unwrapAmount} ETH`
+            : `Unwrap ${state.unwrapAmount} ${tokenPairs[1].symbol}`
         });
       });
   }
+  function handleApprove(_token, _spender, _amount, _decimals) {
+    updateState({
+      isApproving: true
+    });
+    const TokenContract = new ethers.Contract(
+      _token,
+      [
+        {
+          inputs: [
+            { internalType: 'address', name: 'spender', type: 'address' },
+            { internalType: 'uint256', name: 'amount', type: 'uint256' }
+          ],
+          name: 'approve',
+          outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+          stateMutability: 'nonpayable',
+          type: 'function'
+        }
+      ],
+      provider.getSigner()
+    );
+    console.log(`${_token} approve ${_spender} ${_amount} ${_decimals}`);
+
+    TokenContract.approve(_spender, parseUnits(_amount, _decimals))
+      .then((tx) => {
+        tx.wait()
+          .then((res) => {
+            const { status, transactionHash } = res;
+            console.info('approve_tx_res:', res);
+            updateState({
+              // isApproved: status === 1,
+              isApproving: false
+            });
+            if (status === 1) {
+              toast.success?.({
+                title: 'Approve Success!',
+                text: `transactionHash ${transactionHash}`
+              });
+              getBatchAllowance();
+            } else {
+              toast.fail?.({
+                title: 'Approve Failed!',
+                text: `transactionHash ${transactionHash}`
+              });
+            }
+          })
+          .finally(() => {
+            updateState({
+              isApproving: false
+            });
+          });
+      })
+      .catch((err) => {
+        console.info('approve_error: ', err);
+        updateState({
+          isApproving: false
+        });
+        toast?.fail({
+          title: 'Approve Failed!',
+          text: err?.message || ''
+        });
+      });
+  }
+
+  function handleMaxWrap() {
+    updateState({
+      wrapAmount: state.balances[tokenPairs[0].symbol]
+    });
+  }
+  function handleMaxUnwrap() {
+    updateState({
+      unwrapAmount: state.balances[tokenPairs[1].symbol]
+    });
+  }
+
   function handleRefresh() {
     handleQueryBalances();
+    getBatchAllowance();
   }
-  function handleMax() {
-    const amount = state.categoryIndex === 0 ? state.balances['ETH'] : state.balances['WETH'];
-    handleAmountChange(amount);
-  }
+
   useEffect(() => {
     handleRefresh();
   }, []);
-
+  console.log('balance--', state.balances, 'allowances--', state.allowances);
   return (
     <StyledDialog>
       <StyledMasker onClick={onCloseWrap} />
@@ -430,7 +533,8 @@ export default memo(function Dialog(props: any) {
               <StyledWrapOrUnwrapInputTop>
                 <StyledWrapOrUnwrapInputTopType>Deposit</StyledWrapOrUnwrapInputTopType>
                 <StyledWrapOrUnwrapInputTopBalance>
-                  Balance: <span onClick={handleMax}>{state.balances['ETH']}</span>
+                  Balance:{' '}
+                  <span onClick={handleMaxWrap}>{formatValueDecimal(state.balances[tokenPairs[0].symbol], '', 4)}</span>
                 </StyledWrapOrUnwrapInputTopBalance>
               </StyledWrapOrUnwrapInputTop>
               <StyledWrapOrUnwrapInputBottom>
@@ -441,16 +545,24 @@ export default memo(function Dialog(props: any) {
                   onChange={(event) => handleAmountChange(event.target.value)}
                 />
                 <StyledWrapOrUnwrapInputBottomSymbol>
-                  <StyledWrapOrUnwrapInputBottomSymbolImage src="https://ipfs.near.social/ipfs/bafkreib3g5xhs4b3djuvtarhutz5ayogdi7bz7nft6a2zg2e7pi2445uny" />
-                  <StyledWrapOrUnwrapInputBottomSymbolTxt>ETH</StyledWrapOrUnwrapInputBottomSymbolTxt>
+                  <StyledTokenIcon src={tokenPairs[0].icon} />
+                  <StyledTokenSymbol>{tokenPairs[0].symbol}</StyledTokenSymbol>
                 </StyledWrapOrUnwrapInputBottomSymbol>
               </StyledWrapOrUnwrapInputBottom>
             </StyledWrapOrUnwrapInput>
             {isWrapInSufficient ? (
               <StyledWrapOrUnwrapButton disabled>InSufficient Balance</StyledWrapOrUnwrapButton>
-            ) : state.wrapLoading ? (
+            ) : state.wrapLoading || state.isApproving ? (
               <StyledWrapOrUnwrapButton disabled>
                 <Loading />
+              </StyledWrapOrUnwrapButton>
+            ) : state.wrapAmount > state.allowances[tokenPairs[0].symbol] ? (
+              <StyledWrapOrUnwrapButton
+                onClick={(e) =>
+                  handleApprove(tokenPairs[0].address, tokenPairs[1].address, state.wrapAmount, tokenPairs[0].decimals)
+                }
+              >
+                Approve
               </StyledWrapOrUnwrapButton>
             ) : state.wrapAmount > 0 ? (
               <StyledWrapOrUnwrapButton onClick={handleWrap}>Wrap</StyledWrapOrUnwrapButton>
@@ -462,9 +574,12 @@ export default memo(function Dialog(props: any) {
           <StyledWrapContainerBottom>
             <StyledWrapOrUnwrapInput>
               <StyledWrapOrUnwrapInputTop>
-                <StyledWrapOrUnwrapInputTopType>Deposit</StyledWrapOrUnwrapInputTopType>
+                <StyledWrapOrUnwrapInputTopType>Withdraw</StyledWrapOrUnwrapInputTopType>
                 <StyledWrapOrUnwrapInputTopBalance>
-                  Balance: <span onClick={handleMax}>{state.balances['WETH']}</span>
+                  Balance:{' '}
+                  <span onClick={handleMaxUnwrap}>
+                    {formatValueDecimal(state.balances[tokenPairs[1].symbol], '', 4)}
+                  </span>
                 </StyledWrapOrUnwrapInputTopBalance>
               </StyledWrapOrUnwrapInputTop>
               <StyledWrapOrUnwrapInputBottom>
@@ -475,16 +590,29 @@ export default memo(function Dialog(props: any) {
                   onChange={(event) => handleAmountChange(event.target.value)}
                 />
                 <StyledWrapOrUnwrapInputBottomSymbol>
-                  <StyledWrapOrUnwrapInputBottomSymbolImage src="https://ipfs.near.social/ipfs/bafkreif5jqf6onhhj6aqfjt6zq2lqanw6o3kzmb7exnqjw42p4hpwrojmu" />
-                  <StyledWrapOrUnwrapInputBottomSymbolTxt>WETH</StyledWrapOrUnwrapInputBottomSymbolTxt>
+                  <StyledTokenIcon src={tokenPairs[1].icon} />
+                  <StyledTokenSymbol>{tokenPairs[1].symbol}</StyledTokenSymbol>
                 </StyledWrapOrUnwrapInputBottomSymbol>
               </StyledWrapOrUnwrapInputBottom>
             </StyledWrapOrUnwrapInput>
             {isUnwrapInSufficient ? (
               <StyledWrapOrUnwrapButton disabled>InSufficient Balance</StyledWrapOrUnwrapButton>
-            ) : state.unwrapLoading ? (
+            ) : state.unwrapLoading || state.isApproving ? (
               <StyledWrapOrUnwrapButton disabled>
                 <Loading />
+              </StyledWrapOrUnwrapButton>
+            ) : state.unwrapAmount > state.allowances[tokenPairs[1].symbol] ? (
+              <StyledWrapOrUnwrapButton
+                onClick={(e) =>
+                  handleApprove(
+                    tokenPairs[1].address,
+                    tokenPairs[1].address,
+                    state.unwrapAmount,
+                    tokenPairs[1].decimals
+                  )
+                }
+              >
+                Approve
               </StyledWrapOrUnwrapButton>
             ) : state.unwrapAmount > 0 ? (
               <StyledWrapOrUnwrapButton onClick={handleUnwrap}>Unwrap</StyledWrapOrUnwrapButton>

@@ -1,8 +1,8 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from "react";
-import styled from "styled-components";
+import { memo } from 'react';
+import styled from 'styled-components';
 
 import Loading from '@/modules/components/Loading';
 import { useMultiState } from '@/modules/hooks';
@@ -13,16 +13,16 @@ const StyledContainer = styled.div`
   height: 100%;
 `;
 const StyledFormItem = styled.div`
-  border-bottom: 1px solid #373A53;
+  border-bottom: 1px solid #373a53;
   padding-bottom: 18px;
   padding-top: 18px;
-  
+
   &.inline {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  
+
   &:first-child {
     padding-top: 0;
   }
@@ -31,7 +31,7 @@ const StyledFormItemTitle = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
-  color: #979ABE;
+  color: #979abe;
 `;
 const StyledFormItemBody = styled.div`
   margin-top: 8px;
@@ -84,7 +84,7 @@ const StyledListItem = styled.div`
   font-size: 14px;
 
   .label {
-    color: #979ABE;
+    color: #979abe;
   }
   .value {
     color: #fff;
@@ -108,7 +108,7 @@ const StyledButton = styled.button`
   transition: 0.5s;
   margin-top: auto;
   text-align: center;
-  
+
   &:hover {
     opacity: 0.8;
   }
@@ -122,8 +122,8 @@ const StyledFullSelect = styled.div`
 
   > div {
     width: 100%;
-    
-    > div[type="button"] {
+
+    > div[type='button'] {
       width: 100%;
     }
   }
@@ -136,14 +136,14 @@ const StyledTips = styled.div`
   line-height: normal;
   margin-bottom: 16px;
   text-align: center;
-  
+
   &.full {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
-  
+
   &.invalid {
     color: var(--switch-color);
     opacity: 0.6;
@@ -159,7 +159,7 @@ const StyledWithdrawTips = styled.div`
     font-size: 18px;
   }
   .title {
-    border-bottom: 1px solid #373A53;
+    border-bottom: 1px solid #373a53;
     font-size: 18px;
     color: rgb(151, 154, 190);
     padding: 8px 0;
@@ -168,8 +168,8 @@ const StyledWithdrawTips = styled.div`
     margin-top: 8px;
   }
   .head-wd {
-    border-bottom: 1px solid #373A53;
-    
+    border-bottom: 1px solid #373a53;
+
     .col-wd {
       color: rgb(151, 154, 190);
     }
@@ -189,7 +189,8 @@ const StyledWithdrawTips = styled.div`
     text-align: left;
     padding: 8px 0;
   }
-  .body-wd {}
+  .body-wd {
+  }
 `;
 const StyledCLMWithdrawRateList = styled.div`
   display: flex;
@@ -201,7 +202,7 @@ const StyledCLMWithdrawRateList = styled.div`
 const StyledCLMWithdrawRate = styled.div`
   width: 70px;
   height: 24px;
-  background: #373A53;
+  background: #373a53;
   color: #ffffff;
   border-radius: 12px;
   text-align: center;
@@ -217,42 +218,40 @@ const StyledCLMWithdrawRate = styled.div`
 
 const WITHDRAW_POOL_ABI_LOOPER = [
   {
-    inputs: [
-      { internalType: "address", name: "receiver", type: "address" },
-    ],
-    name: "moduleD_withdrawBalanceTo",
+    inputs: [{ internalType: 'address', name: 'receiver', type: 'address' }],
+    name: 'moduleD_withdrawBalanceTo',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
 ];
 const WITHDRAW_POOL_ABI_DEX = [
   {
     inputs: [
-      { internalType: "address", name: "to", type: "address" },
-      { internalType: "uint256", name: "value", type: "uint256" },
-      { internalType: "bytes", name: "data", type: "bytes" },
-      { internalType: "uint8", name: "operation", type: "uint8" },
+      { internalType: 'address', name: 'to', type: 'address' },
+      { internalType: 'uint256', name: 'value', type: 'uint256' },
+      { internalType: 'bytes', name: 'data', type: 'bytes' },
+      { internalType: 'uint8', name: 'operation', type: 'uint8' }
     ],
-    name: "execute",
+    name: 'execute',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
 ];
 const WITHDRAW_POOL_ABI_CLM = [
   {
     inputs: [
-      { internalType: "address", name: "receiver", type: "address" },
-      { internalType: "uint128", name: "liquidity", type: "uint128" },
-      { internalType: "uint160", name: "sqrtPriceX96", type: "uint160" },
-      { internalType: "uint24", name: "slippageLiquidity", type: "uint24" },
+      { internalType: 'address', name: 'receiver', type: 'address' },
+      { internalType: 'uint128', name: 'liquidity', type: 'uint128' },
+      { internalType: 'uint160', name: 'sqrtPriceX96', type: 'uint160' },
+      { internalType: 'uint24', name: 'slippageLiquidity', type: 'uint24' }
     ],
-    name: "moduleC_partialWithdrawTo",
+    name: 'moduleC_partialWithdrawTo',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
 ];
 
 const { parseUnits, formatUnits } = ethers.utils;
@@ -271,7 +270,7 @@ const {
   chainId,
   handleDetailClose,
   QUERY_POOL_ABI,
-  strategies,
+  strategies
 } = props;
 
 const { StakeTokens } = dexConfig;
@@ -281,86 +280,80 @@ const clmWithdrawRateList = [
   { label: '25%', value: 25 },
   { label: '50%', value: 50 },
   { label: '75%', value: 75 },
-  { label: '100%', value: 100 },
+  { label: '100%', value: 100 }
 ];
 
 const balanceList = formatTVL(record).list || [];
 
 export default memo(function Withdraw(props) {
-
-
   const [state, updateState] = useMultiState({
     unStakePercent: 25,
-    pending: false,
+    pending: false
   });
 
   const queryPoolInfo = ({ fee }) => {
     return new Promise((resolve) => {
-      const contract = new ethers.Contract(
-        fee.pool,
-        QUERY_POOL_ABI,
-        Ethers.provider().getSigner(),
-      );
+      const contract = new ethers.Contract(fee.pool, QUERY_POOL_ABI, provider.getSigner());
       const params = [];
-      contract.slot0(...params).then((poolAddress) => {
-        const [sqrtPriceX96] = poolAddress;
-        resolve(sqrtPriceX96);
-      }).catch((err) => {
-        console.log('queryPoolInfo failed, ', err);
-        resolve(false);
-      });
+      contract
+        .slot0(...params)
+        .then((poolAddress) => {
+          const [sqrtPriceX96] = poolAddress;
+          resolve(sqrtPriceX96);
+        })
+        .catch((err) => {
+          console.log('queryPoolInfo failed, ', err);
+          resolve(false);
+        });
     });
   };
 
   const handleAmount = (value) => {
     updateState({
-      unStakePercent: value,
+      unStakePercent: value
     });
   };
 
   const formatAddAction = (actionText, _amount, status, transactionHash, tokenSymbol) => {
     addAction?.({
-      type: "Staking",
+      type: 'Staking',
       action: actionText,
       token: {
-        symbol: tokenSymbol,
+        symbol: tokenSymbol
       },
       amount: _amount,
       template: props.name,
       add: false,
       status,
-      transactionHash,
+      transactionHash
     });
-  }
+  };
 
   const handleSubmit = () => {
     if (!record.agentAddress) return;
     updateState({
-      pending: true,
+      pending: true
     });
     if ([strategies[0].name].includes(record.name.toLowerCase())) {
       const params = [
         // receiver
-        account,
+        account
       ];
-      const contract = new ethers.Contract(
-        record.agentAddress,
-        WITHDRAW_POOL_ABI_LOOPER,
-        Ethers.provider().getSigner()
-      );
+      const contract = new ethers.Contract(record.agentAddress, WITHDRAW_POOL_ABI_LOOPER, provider.getSigner());
       const getTx = (gas) => {
         const contractOption = {
-          gasLimit: gas || 4000000,
-        }
-        contract.moduleD_withdrawBalanceTo(...params, contractOption)
+          gasLimit: gas || 4000000
+        };
+        contract
+          .moduleD_withdrawBalanceTo(...params, contractOption)
           .then((tx) => {
             tx.wait()
               .then((res) => {
                 const { status, transactionHash } = res;
                 updateState({
-                  pending: false,
+                  pending: false
                 });
-                if (status !== 1) throw new Error("");
+                if (status !== 1) throw new Error('');
                 // call back
                 handleDetailClose();
                 onSuccess();
@@ -369,46 +362,42 @@ export default memo(function Withdraw(props) {
                   title: `${actionText} Successfully!`,
                   text: `${actionText} ${Big(balanceList[0]?.balance || 0).toFixed(4)} DETH`,
                   tx: transactionHash,
-                  chainId,
+                  chainId
                 });
               })
               .catch((err) => {
                 console.log('tx error: ', err);
                 updateState({
-                  pending: false,
+                  pending: false
                 });
                 toast?.fail({
                   title: `${actionText} Failed!`,
-                  text: err?.message?.includes("user rejected transaction")
-                    ? "User rejected transaction"
-                    : ``,
+                  text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                 });
               });
           })
           .catch((err) => {
             console.log('contract fn error: ', err);
             updateState({
-              pending: false,
+              pending: false
             });
             toast?.fail({
               title: `${actionText} Failed!`,
-              text: err?.message?.includes("user rejected transaction")
-                ? "User rejected transaction"
-                : ``,
+              text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
             });
           });
       };
 
       const estimateGas = () => {
-        contract.estimateGas.moduleD_withdrawBalanceTo(
-          ...params,
-          {}
-        ).then((gas) => {
-          getTx(gas);
-        }).catch((err) => {
-          console.log('get gas failed: ', err);
-          getTx();
-        });
+        contract.estimateGas
+          .moduleD_withdrawBalanceTo(...params, {})
+          .then((gas) => {
+            getTx(gas);
+          })
+          .catch((err) => {
+            console.log('get gas failed: ', err);
+            getTx();
+          });
       };
 
       estimateGas();
@@ -424,26 +413,23 @@ export default memo(function Withdraw(props) {
         // data
         `0xc4fb5289000000000000000000000000${account.replace(/^0x/, '')}`,
         // operation
-        0,
+        0
       ];
-      const contract = new ethers.Contract(
-        rootAgent.agentAddress,
-        WITHDRAW_POOL_ABI_DEX,
-        Ethers.provider().getSigner()
-      );
+      const contract = new ethers.Contract(rootAgent.agentAddress, WITHDRAW_POOL_ABI_DEX, provider.getSigner());
       const getTx = (gas) => {
         const contractOption = {
-          gasLimit: gas || 4000000,
-        }
-        contract.execute(...params, contractOption)
+          gasLimit: gas || 4000000
+        };
+        contract
+          .execute(...params, contractOption)
           .then((tx) => {
             tx.wait()
               .then((res) => {
                 const { status, transactionHash } = res;
                 updateState({
-                  pending: false,
+                  pending: false
                 });
-                if (status !== 1) throw new Error("");
+                if (status !== 1) throw new Error('');
                 // call back
                 handleDetailClose();
                 onSuccess();
@@ -452,46 +438,42 @@ export default memo(function Withdraw(props) {
                   title: `${actionText} Successfully!`,
                   text: `${actionText} ${Big(balanceList[0]?.balance || 0).toFixed(4)} ${balanceList[0]?.symbol}`,
                   tx: transactionHash,
-                  chainId,
+                  chainId
                 });
               })
               .catch((err) => {
                 console.log('tx error: ', err);
                 updateState({
-                  pending: false,
+                  pending: false
                 });
                 toast?.fail({
                   title: `${actionText} Failed!`,
-                  text: err?.message?.includes("user rejected transaction")
-                    ? "User rejected transaction"
-                    : ``,
+                  text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                 });
               });
           })
           .catch((err) => {
             console.log('contract fn error: ', err);
             updateState({
-              pending: false,
+              pending: false
             });
             toast?.fail({
               title: `${actionText} Failed!`,
-              text: err?.message?.includes("user rejected transaction")
-                ? "User rejected transaction"
-                : ``,
+              text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
             });
           });
       };
 
       const estimateGas = () => {
-        contract.estimateGas.execute(
-          ...params,
-          {}
-        ).then((gas) => {
-          getTx(gas);
-        }).catch((err) => {
-          console.log('get gas failed: ', err);
-          getTx();
-        });
+        contract.estimateGas
+          .execute(...params, {})
+          .then((gas) => {
+            getTx(gas);
+          })
+          .catch((err) => {
+            console.log('get gas failed: ', err);
+            getTx();
+          });
       };
 
       estimateGas();
@@ -503,10 +485,10 @@ export default memo(function Withdraw(props) {
       if (!currentBalance || Big(currentBalance.balance || 0).lte(0)) {
         toast?.fail({
           title: `${actionText} Failed!`,
-          text: 'This strategy currently has no balance to withdraw!',
+          text: 'This strategy currently has no balance to withdraw!'
         });
         updateState({
-          pending: false,
+          pending: false
         });
         return;
       }
@@ -515,10 +497,10 @@ export default memo(function Withdraw(props) {
       if (liquidity.toNumber() !== Math.floor(liquidity.toNumber())) {
         toast?.fail({
           title: `${actionText} Failed!`,
-          text: 'Please select another ratio withdraw!',
+          text: 'Please select another ratio withdraw!'
         });
         updateState({
-          pending: false,
+          pending: false
         });
         return;
       }
@@ -528,10 +510,10 @@ export default memo(function Withdraw(props) {
       if (!fee) {
         toast?.fail({
           title: `${actionText} Failed!`,
-          text: 'This strategy currently has no balance to withdraw!',
+          text: 'This strategy currently has no balance to withdraw!'
         });
         updateState({
-          pending: false,
+          pending: false
         });
         return;
       }
@@ -539,10 +521,10 @@ export default memo(function Withdraw(props) {
         if (!sqrtPriceX96) {
           toast?.fail({
             title: `${actionText} Failed!`,
-            text: 'Query pool information failed!',
+            text: 'Query pool information failed!'
           });
           updateState({
-            pending: false,
+            pending: false
           });
           return;
         }
@@ -554,26 +536,23 @@ export default memo(function Withdraw(props) {
           // sqrtPriceX96 - uint160
           sqrtPriceX96,
           // slippageLiquidity - uint24
-          1000000,
+          1000000
         ];
-        const contract = new ethers.Contract(
-          record.agentAddress,
-          WITHDRAW_POOL_ABI_CLM,
-          Ethers.provider().getSigner()
-        );
+        const contract = new ethers.Contract(record.agentAddress, WITHDRAW_POOL_ABI_CLM, provider.getSigner());
         const getTx = (gas) => {
           const contractOption = {
-            gasLimit: gas || 4000000,
-          }
-          contract.moduleC_partialWithdrawTo(...params, contractOption)
+            gasLimit: gas || 4000000
+          };
+          contract
+            .moduleC_partialWithdrawTo(...params, contractOption)
             .then((tx) => {
               tx.wait()
                 .then((res) => {
                   const { status, transactionHash } = res;
                   updateState({
-                    pending: false,
+                    pending: false
                   });
-                  if (status !== 1) throw new Error("");
+                  if (status !== 1) throw new Error('');
                   // call back
                   handleDetailClose();
                   onSuccess();
@@ -582,46 +561,42 @@ export default memo(function Withdraw(props) {
                     title: `${actionText} Successfully!`,
                     text: `${actionText} ${Big(balanceList[0]?.balance || 0).toFixed(4)} ${balanceList[0]?.symbol}`,
                     tx: transactionHash,
-                    chainId,
+                    chainId
                   });
                 })
                 .catch((err) => {
                   console.log('tx error: ', err);
                   updateState({
-                    pending: false,
+                    pending: false
                   });
                   toast?.fail({
                     title: `${actionText} Failed!`,
-                    text: err?.message?.includes("user rejected transaction")
-                      ? "User rejected transaction"
-                      : ``,
+                    text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                   });
                 });
             })
             .catch((err) => {
               console.log('contract fn error: ', err);
               updateState({
-                pending: false,
+                pending: false
               });
               toast?.fail({
                 title: `${actionText} Failed!`,
-                text: err?.message?.includes("user rejected transaction")
-                  ? "User rejected transaction"
-                  : ``,
+                text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
               });
             });
         };
 
         const estimateGas = () => {
-          contract.estimateGas.moduleC_partialWithdrawTo(
-            ...params,
-            {}
-          ).then((gas) => {
-            getTx(gas);
-          }).catch((err) => {
-            console.log('get gas failed: ', err);
-            getTx();
-          });
+          contract.estimateGas
+            .moduleC_partialWithdrawTo(...params, {})
+            .then((gas) => {
+              getTx(gas);
+            })
+            .catch((err) => {
+              console.log('get gas failed: ', err);
+              getTx();
+            });
         };
 
         estimateGas();
@@ -629,20 +604,12 @@ export default memo(function Withdraw(props) {
     }
   };
 
-  const {
-    unStakePercent,
-    pending,
-  } = state;
+  const { unStakePercent, pending } = state;
 
   const renderButton = (disabled) => {
     return (
-      <StyledButton
-        disabled={pending || disabled}
-        onClick={handleSubmit}
-      >
-        {pending ? (
-          <Loading size={16} />
-        ) : 'WITHDRAW'}
+      <StyledButton disabled={pending || disabled} onClick={handleSubmit}>
+        {pending ? <Loading size={16} /> : 'WITHDRAW'}
       </StyledButton>
     );
   };
@@ -660,22 +627,18 @@ export default memo(function Withdraw(props) {
         <>
           <StyledContent>
             <StyledFormItem>
-              <StyledFormItemTitle>
-                Withdraw
-              </StyledFormItemTitle>
+              <StyledFormItemTitle>Withdraw</StyledFormItemTitle>
               <StyledFormItemBody>
                 <StyledCLMWithdrawRateList>
-                  {
-                    clmWithdrawRateList.map((item) => (
-                      <StyledCLMWithdrawRate
-                        key={item.value}
-                        onClick={() => handleAmount(item.value)}
-                        className={`${unStakePercent === item.value ? 'active' : ''}`}
-                      >
-                        {item.label}
-                      </StyledCLMWithdrawRate>
-                    ))
-                  }
+                  {clmWithdrawRateList.map((item) => (
+                    <StyledCLMWithdrawRate
+                      key={item.value}
+                      onClick={() => handleAmount(item.value)}
+                      className={`${unStakePercent === item.value ? 'active' : ''}`}
+                    >
+                      {item.label}
+                    </StyledCLMWithdrawRate>
+                  ))}
                 </StyledCLMWithdrawRateList>
               </StyledFormItemBody>
               <StyledFormItemBody>
@@ -685,42 +648,45 @@ export default memo(function Withdraw(props) {
                   <div className="assets">
                     <div className="head-wd">
                       <div className="row-wd">
-                        <div className="col-wd" style={{ flexBasis: '20%' }}>Asset</div>
-                        <div className="col-wd" style={{ flexBasis: '40%' }}>LP Balance</div>
-                        <div className="col-wd" style={{ flexBasis: '40%' }}>Withdraw</div>
+                        <div className="col-wd" style={{ flexBasis: '20%' }}>
+                          Asset
+                        </div>
+                        <div className="col-wd" style={{ flexBasis: '40%' }}>
+                          LP Balance
+                        </div>
+                        <div className="col-wd" style={{ flexBasis: '40%' }}>
+                          Withdraw
+                        </div>
                       </div>
                     </div>
                     <div className="body-wd">
-                      {
-                        balanceList.length ? balanceList.map((b) => (
-                          <div className="row-wd" key={b.symbol}>
-                            <div className="col-wd" style={{ flexBasis: '20%' }}>
-                              {b.symbol}
+                      {balanceList.length
+                        ? balanceList.map((b) => (
+                            <div className="row-wd" key={b.symbol}>
+                              <div className="col-wd" style={{ flexBasis: '20%' }}>
+                                {b.symbol}
+                              </div>
+                              <div className="col-wd" style={{ flexBasis: '40%' }}>
+                                {Big(b.balance || 0).toFixed(4, Big.roundDown)}
+                              </div>
+                              <div className="col-wd" style={{ flexBasis: '40%' }}>
+                                {Big(b.balance || 0)
+                                  .times(Big(unStakePercent || 0).div(100))
+                                  .toFixed(4, Big.roundDown)}
+                              </div>
                             </div>
-                            <div className="col-wd" style={{ flexBasis: '40%' }}>
-                              {Big(b.balance || 0).toFixed(4, Big.roundDown)}
-                            </div>
-                            <div className="col-wd" style={{ flexBasis: '40%' }}>
-                              {Big(b.balance || 0).times(Big(unStakePercent || 0).div(100)).toFixed(4, Big.roundDown)}
-                            </div>
-                          </div>
-                        )) : null
-                      }
+                          ))
+                        : null}
                     </div>
                   </div>
                 </StyledWithdrawTips>
               </StyledFormItemBody>
             </StyledFormItem>
-            {
-              noValueDisabled && (
-                <StyledFormItem>
-                  <StyledTips className="invalid">
-                    This strategy currently has no balance to withdraw!
-                  </StyledTips>
-                </StyledFormItem>
-
-              )
-            }
+            {noValueDisabled && (
+              <StyledFormItem>
+                <StyledTips className="invalid">This strategy currently has no balance to withdraw!</StyledTips>
+              </StyledFormItem>
+            )}
           </StyledContent>
           {renderButton(!unStakePercent || noValueDisabled)}
         </>
@@ -731,24 +697,26 @@ export default memo(function Withdraw(props) {
       return (
         <>
           <StyledContent>
-            <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-              <StyledTips>
-                All positions will be unwound and funds returned.
-              </StyledTips>
-              <StyledTips>
-                Withdrawal Balance
-              </StyledTips>
-              {
-                balanceList.length ? balanceList.map((tk, index) => (
+            <div
+              style={{
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center'
+              }}
+            >
+              <StyledTips>All positions will be unwound and funds returned.</StyledTips>
+              <StyledTips>Withdrawal Balance</StyledTips>
+              {balanceList.length ? (
+                balanceList.map((tk, index) => (
                   <StyledTips key={index}>
                     {Big(tk.balance).toFixed(4, Big.roundDown)} {tk.symbol}
                   </StyledTips>
-                )) : (
-                  <StyledTips>
-                    No balance
-                  </StyledTips>
-                )
-              }
+                ))
+              ) : (
+                <StyledTips>No balance</StyledTips>
+              )}
             </div>
           </StyledContent>
           {renderButton(!balanceList.length)}
@@ -771,9 +739,7 @@ export default memo(function Withdraw(props) {
       return (
         <>
           <StyledContent>
-            <StyledTips className="full">
-              Withdraw your full position.
-            </StyledTips>
+            <StyledTips className="full">Withdraw your full position.</StyledTips>
           </StyledContent>
           {renderButton(!balanceList.length)}
         </>
@@ -781,9 +747,5 @@ export default memo(function Withdraw(props) {
     }
   };
 
-  return (
-    <StyledContainer>
-      {renderWithdraw()}
-    </StyledContainer>
-  );
-})
+  return <StyledContainer>{renderWithdraw()}</StyledContainer>;
+});
