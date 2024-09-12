@@ -16,12 +16,14 @@ const Wrapper = styled.div`
   .swiper-bridge {
     display: flex;
     justify-content: center;
-    /* padding-top: 10px; */
+    gap: 10px;
+    padding-top: 10px;
     .swiper-pagination-bullet {
       height: 6px;
       width: 25px;
       border-radius: 3px;
-      background-color: rgba(145, 148, 177, 0.9);
+      background: rgba(55, 58, 83, 0.5);
+      cursor: pointer;
       &.swiper-pagination-bullet-active {
         width: 75px;
         background: rgba(87, 90, 119, 1);
@@ -32,10 +34,20 @@ const Wrapper = styled.div`
 
 const AdWrapper = styled.div`
   width: 328px;
+  height: 108px;
+  overflow: hidden;
+  .ellipsis {
+    -webkit-line-clamp: 1;
+  }
+  img {
+    width: 60px;
+  }
   .main-ad-img {
     width: 328px;
-    height: 108px;
     cursor: pointer;
+  }
+  .out-hook {
+    white-space: nowrap;
   }
 `;
 
@@ -71,7 +83,9 @@ const Rango = () => {
           </RangoTip>
         }
       >
-        <img className="main-ad-img" src="/images/bridge/super/rango.png" />
+        <div style={{ width: 328, height: 108, overflow: 'hidden' }}>
+          <img className="main-ad-img" src="/images/bridge/super/rango.png" />
+        </div>
       </TooltipSimple>
     </AdWrapper>
   );
@@ -85,14 +99,14 @@ const Medal = ({ medal }: any) => {
           medal={medal}
           style={{
             fontSize: 12,
-            width: 414,
+            width: 328,
             background: 'radial-gradient(108.37% 99.81% at 2.05% 4.07%, #5929A7 0%, #1E1B33 100%)',
-            paddingTop: 10,
-            paddingBottom: 10,
+            paddingTop: 14,
+            paddingBottom: 14,
             height: 108
           }}
           nameStyle={{ fontSize: 14 }}
-          contentStyle={{ fontSize: 12 }}
+          contentStyle={{ fontSize: 12, width: 230, textOverflow: 'ellipsis' }}
         />
       ) : null}
     </AdWrapper>
@@ -112,6 +126,7 @@ export default function Advertise() {
 
       if (bridges && bridges.length) {
         bridges.sort((a: any, b: any) => a.level - b.level);
+        console.log(bridges);
         let usedMedal = bridges[bridges.length - 1];
         for (let i = 0; i < bridges.length; i++) {
           console.log(bridges[i]);
@@ -130,7 +145,7 @@ export default function Advertise() {
     <Wrapper>
       <Swiper
         modules={[Autoplay, Pagination]}
-        width={415}
+        width={328}
         slidesPerView={1}
         speed={500}
         autoplay={{
@@ -150,13 +165,13 @@ export default function Advertise() {
           <Rango />
         </SwiperSlide>
 
-        {/* {superBridgeMedal && (
+        {superBridgeMedal && (
           <SwiperSlide>
             <Medal medal={superBridgeMedal} />
           </SwiperSlide>
-        )} */}
+        )}
 
-        {/* <div id={id} className="swiper-bridge"></div> */}
+        <div id={id} className="swiper-bridge"></div>
       </Swiper>
     </Wrapper>
   );
