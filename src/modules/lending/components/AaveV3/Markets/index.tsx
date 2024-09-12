@@ -14,6 +14,7 @@ import PrimaryButton from '../PrimaryButton';
 import TokenWrapper from '../TokenWrapper';
 import { formatRate, unifyNumber } from '../utils';
 import formatAmount from '../utils/formatAmount';
+import formatNumber from '../utils/formatNumber';
 
 const CenterRow = styled.div`
   /* text-align: center; */
@@ -209,17 +210,13 @@ const Markets = (props: any) => {
           {Number(row.EXTRA_RADIO) * 100}%
         </ItemSub>
       </CenterItem>,
-      <div key={`available-borrows-${index}`}>
-        <CenterRow>{unifyNumber(row.availableBorrows)}</CenterRow>
-        <CenterRow>${unifyNumber(row.availableBorrowsUSD)}</CenterRow>
-      </div>,
       <CenterItem key={`borrow-apy-${index}`}>
         <ItemPrimary className="apy">
           {row.borrowAPY ? `${unifyNumber(Number(row.borrowAPY) * 100)} %` : ''}
         </ItemPrimary>
       </CenterItem>,
       <CenterItem key={`total-supply-${index}`}>
-        <ItemPrimary>{formatAmount(row.totalSupply)}</ItemPrimary>
+        <ItemPrimary>{formatNumber(row.totalSupply)}</ItemPrimary>
         <ItemSub>{formatRate(row.utilized)} utilized</ItemSub>
       </CenterItem>,
       <div key={`buttons-${index}`} style={{ display: 'flex', gap: 10 }}>
@@ -233,6 +230,7 @@ const Markets = (props: any) => {
         ) : (
           <div style={{ width: '100%' }}></div>
         )}
+
         {row.supportLoop ? <LoopButton data={row} /> : <div style={{ width: '100%' }}></div>}
       </div>
     ]);

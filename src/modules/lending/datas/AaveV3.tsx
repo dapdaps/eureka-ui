@@ -75,16 +75,16 @@ const AaveV3Data = (props: any) => {
   }
 
   function getLiquidity() {
-    const aTokenAddresss = markets?.map((item) => item.aTokenAddress);
-    const variableDebtTokenAddresss = markets?.map((item) => item.variableDebtTokenAddress);
+    const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
+    const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress);
 
     const calls = aTokenAddresss
-      ?.map((addr) => ({
+      ?.map((addr: any) => ({
         address: addr,
         name: 'totalSupply'
       }))
       .concat(
-        variableDebtTokenAddresss?.map((addr) => ({
+        variableDebtTokenAddresss?.map((addr: any) => ({
           address: addr,
           name: 'totalSupply'
         }))
@@ -200,9 +200,9 @@ const AaveV3Data = (props: any) => {
   }
 
   function getPoolDataProvider() {
-    const underlyingTokens = dexConfig?.rawMarkets?.map((market) => market.underlyingAsset);
+    const underlyingTokens = dexConfig?.rawMarkets?.map((market: any) => market.underlyingAsset);
     // console.log("getPoolDataProvider--", underlyingTokens);
-    const calls = underlyingTokens?.map((addr) => ({
+    const calls = underlyingTokens?.map((addr: any) => ({
       address: config.PoolDataProvider,
       name: 'getReserveData',
       params: [addr]
@@ -318,8 +318,13 @@ const AaveV3Data = (props: any) => {
 
             const _borrowAPY = Big(Math.pow(variableBorrowAPY0, SECONDS_PER_YEAR) - 1).toFixed();
 
+            const _utilized = Big(totalVariableDebt || 0)
+              .div(Big(totalAToken || 1))
+              .toFixed();
+
             _assetsToSupply[i].supplyAPY = _supplyAPY;
             _assetsToSupply[i].borrowAPY = _borrowAPY;
+            _assetsToSupply[i].utilized = _utilized;
           }
         }
         onLoad({
@@ -331,6 +336,51 @@ const AaveV3Data = (props: any) => {
         console.log('getPoolDataProvider_err', err);
       });
   }
+
+  // Pool Liquidity Pac
+  function getPoolDataProviderTotalSupplyForPac() {
+    const prevAssetsToSupply = [...state.assetsToSupply];
+
+    const underlyingTokens = dexConfig?.rawMarkets?.map((market: any) => market.underlyingAsset);
+
+    const calls = underlyingTokens?.map((addr) => ({
+      address: config.PoolDataProvider,
+      name: 'getATokenTotalSupply',
+      params: [addr]
+    }));
+
+    multicall({
+      abi: [
+        {
+          inputs: [{ internalType: 'address', name: 'asset', type: 'address' }],
+          name: 'getATokenTotalSupply',
+          outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+          stateMutability: 'view',
+          type: 'function'
+        }
+      ],
+      calls,
+      options: {},
+      multicallAddress,
+      provider: provider
+    })
+      .then((res: any) => {
+        console.log('getPoolDataProviderTotal_res', res);
+
+        for (let i = 0; i < res.length; i++) {
+          const _totalSupply = ethers.utils.formatUnits(res[i][0], prevAssetsToSupply[i].decimals);
+          prevAssetsToSupply[i].totalSupply = _totalSupply;
+        }
+        onLoad({
+          assetsToSupply: prevAssetsToSupply
+        });
+      })
+      .catch((err: any) => {
+        showReload();
+        console.log('getPoolDataProviderTotal_err', err);
+      });
+  }
+
   // seamless use
   function getPoolDataProviderTotalSupply() {
     const prevAssetsToSupply = [...state.assetsToSupply];
@@ -887,6 +937,11 @@ const AaveV3Data = (props: any) => {
       getPoolDataProviderTotalDebt();
       getPoolDataProviderCaps();
     }
+
+    if (dexConfig.name === 'Pac Finance') {
+      getPoolDataProviderTotalSupplyForPac();
+    }
+
     console.log(state.step1, state.hasExistedLiquidity, 'state.hasExistedLiquidity');
 
     if (state.step1 && state.hasExistedLiquidity) {
