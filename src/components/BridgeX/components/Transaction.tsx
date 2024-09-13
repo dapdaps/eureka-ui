@@ -1,9 +1,11 @@
+import { useSetChain } from '@web3-onboard/react';
 import Big from 'big.js';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
 import useAccount from '@/hooks/useAccount';
+import useToast from '@/hooks/useToast';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
 
@@ -80,6 +82,7 @@ const TransactionWapper = styled.div`
       background: #fff;
       border-radius: 5px;
       color: #000;
+      cursor: pointer;
     }
   }
   .time {
@@ -135,8 +138,12 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
   const [proccessSum, setProccessSum] = useState(0);
   const [transactionList, setTransactionList] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [{ settingChain, connectedChain }, setChain] = useSetChain();
+  const { fail, success } = useToast();
 
   const { chainId, provider } = useAccount();
+
+  console.log('chainId:', chainId);
 
   async function refreshTransactionList() {
     if (!account) {
@@ -170,9 +177,28 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
           item.status = 2;
           //   updateTransaction(item);
         } else if (isComplate.execute) {
-          console.log(223344);
           item.text = isComplate.status;
-          item.execute = isComplate.execute;
+          item.execute = async (item: any, signer: any, chainId: any) => {
+            if (chainId?.toString() !== item.toChainId.toString()) {
+              setChain({ chainId: `0x${item.toChainId?.toString(16)}` });
+              return;
+            }
+
+            try {
+              const hash = await isComplate.execute(item, signer);
+
+              success({
+                title: 'Transaction success',
+                text: ''
+              });
+            } catch (e) {
+              console.log(e);
+              fail({
+                title: 'Transaction fail',
+                text: ''
+              });
+            }
+          };
         }
       } else {
         item.status = 3;
@@ -245,7 +271,7 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
                         <div
                           className="cliam"
                           onClick={() => {
-                            tx.execute(tx, provider.getSigner());
+                            tx.execute(tx, provider.getSigner(), chainId);
                           }}
                         >
                           {tx.text}

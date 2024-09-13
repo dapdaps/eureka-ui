@@ -91,7 +91,9 @@ const nextConfig = {
     },
     {
       source: '/blast/bridge/:path*',
-      destination: 'https://waitlist-api.prod.blast.io/:path*'
+      destination: process.env.IS_DEV
+        ? 'https://app.dapdap.net/blast/bridge/:path*'
+        : 'https://waitlist-api.prod.blast.io/:path*'
     },
     {
       source: '/renzo/:path*',
