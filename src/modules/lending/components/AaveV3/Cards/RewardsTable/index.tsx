@@ -4,6 +4,7 @@ import { styled } from 'styled-components';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
 
 import PrimaryButton from '../../PrimaryButton';
+import { unifyNumber } from '../../utils';
 import CardsTable from '../CardsTable';
 
 const StyledRewardsTable = styled.div`
@@ -71,7 +72,6 @@ const RewardsTable = (props: any) => {
     config,
     prices,
     theme,
-    unifyNumber,
     dexConfig,
     provider,
     supplies,
@@ -85,7 +85,7 @@ const RewardsTable = (props: any) => {
     curIndex: -1
   });
 
-  const [Claim] = useDynamicLoader({ path: `/lending/claims`, name: dexConfig.loaderName });
+  const [Claim] = useDynamicLoader({ path: `/lending/claims`, name: 'ZeroLand' });
 
   function formatValue(value: any, digits?: any) {
     if (Number(value) === 0) return '0';
@@ -118,7 +118,6 @@ const RewardsTable = (props: any) => {
         {data && data.length && data.find((item: any) => item.unclaimed) ? (
           <CardsTable
             headers={['Reward Asset', 'Unclaimed', '']}
-            noDivider
             data={data.map((row: any, index: any) => {
               return [
                 <TokenAsset key={index}>
@@ -134,7 +133,7 @@ const RewardsTable = (props: any) => {
                     config={config}
                     theme={theme}
                     disabled={!Number(row.unclaimed)}
-                    width={80}
+                    style={{ width: '80px' }}
                     loading={state.loading && index === state.curIndex}
                     onClick={() => {
                       const toastId = toast?.loading({

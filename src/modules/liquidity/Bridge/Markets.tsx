@@ -1,6 +1,6 @@
-import { memo } from "react"
-import styled from "styled-components"
-const Markets = styled.div`
+import { memo } from 'react';
+import styled from 'styled-components';
+const StyledMarkets = styled.div`
   /* width: 388px; */
   display: flex;
   align-items: center;
@@ -13,8 +13,8 @@ const Markets = styled.div`
     border: 1px solid #000;
     overflow: hidden;
   }
-`
-const Market = styled.div`
+`;
+const StyledMarket = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +23,7 @@ const Market = styled.div`
   width: 60px;
   height: 54px;
   cursor: pointer;
-  border: 1px solid #373A53;
+  border: 1px solid #373a53;
   background-color: rgba(33, 35, 48, 0.5);
   border-radius: 8px;
   img {
@@ -31,7 +31,7 @@ const Market = styled.div`
   }
   span {
     max-width: 54px;
-    color: #979ABE;
+    color: #979abe;
     font-family: Gantari;
     font-size: 12px;
     font-style: normal;
@@ -42,9 +42,9 @@ const Market = styled.div`
     white-space: nowrap;
   }
   &.active {
-    background-color: #32364B;
+    background-color: #32364b;
     span {
-      color: #FFF;
+      color: #fff;
     }
   }
 
@@ -63,7 +63,7 @@ const Market = styled.div`
     span {
       max-width: auto;
       color: #000;
-      font-family: "Inter Tight";
+      font-family: 'Inter Tight';
       font-size: 12px;
       font-style: normal;
       font-weight: 600;
@@ -72,32 +72,29 @@ const Market = styled.div`
     &.active {
       background: #000;
       span {
-        color: #FFF;
+        color: #fff;
       }
     }
   }
-`
+`;
 export default memo(function Markets(props: any) {
-  const {
-    from,
-    markets,
-    currentMarket,
-    onChangeMarket
-  } = props
+  const { from, markets, currentMarket, onChangeMarket } = props;
   return (
-    <Markets className={from}>
-      {
-        markets && markets.map((market: any, index: number) => {
-          const targetObject = from === 'layer' ? market?.basic : market
+    <StyledMarkets className={from}>
+      {markets &&
+        markets.map((market: any, index: number) => {
+          const targetObject = from === 'layer' ? market?.basic : market;
           return (
-            // @ts-ignore
-            <Market key={index} className={[from, currentMarket?.name === targetObject?.name ? 'active' : '']} onClick={() => onChangeMarket && onChangeMarket(market)}>
+            <StyledMarket
+              key={index}
+              className={[from, currentMarket?.name === targetObject?.name ? 'active' : ''].join(' ')}
+              onClick={() => onChangeMarket && onChangeMarket(market)}
+            >
               <img src={targetObject.icon} alt={targetObject?.name} />
               <span>{targetObject.name}</span>
-            </Market>
-          )
-        })
-      }
-    </Markets>
-  )
-})
+            </StyledMarket>
+          );
+        })}
+    </StyledMarkets>
+  );
+});

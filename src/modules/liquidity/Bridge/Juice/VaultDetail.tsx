@@ -556,8 +556,8 @@ const StyledMaxSlippageInput = styled.input`
     -moz-appearance: textfield;
   }
 `;
-export default memo(function VaultDetail() {
-  const [state, updateState] = useMultiState<any>({
+export default memo(function VaultDetail(props) {
+  const [state, updateState] = useMultiState({
     positionOverview: null,
     vaultOverview: null,
     isDeposit: true,
@@ -1608,7 +1608,7 @@ export default memo(function VaultDetail() {
             <StyledOverviewList>
               <StyledOverview>
                 <StyledOverviewLabel>Deposit Fee</StyledOverviewLabel>
-                <StyledOverviewValue>{symbol === 'USDB' ? '0.5' : '1'}%</StyledOverviewValue>
+                <StyledOverviewValue>{checkedVault.token0 === 'USDB' ? '0.5' : '1'}%</StyledOverviewValue>
               </StyledOverview>
               <StyledOverview>
                 <StyledOverviewLabel>Available Vault Space ({checkedVault.token0})</StyledOverviewLabel>

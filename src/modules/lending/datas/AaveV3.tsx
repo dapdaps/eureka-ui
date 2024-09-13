@@ -1149,6 +1149,238 @@ const AaveV3Data = (props: any) => {
     state.yourTotalSupply,
     state.hasExistedLiquidity
   ]);
+
+  useEffect(() => {
+    if (!account) return;
+
+    if (dexConfig.name !== 'ZeroLend') return;
+
+    function getRewardsData() {
+      const aTokenAddresss = state.assetsToSupply?.map((item: any) => item.aTokenAddress);
+
+      const calls = aTokenAddresss?.map((addr: any) => ({
+        address: config.incentivesProxy,
+        name: 'getRewardsData',
+        params: [addr, config.rewardAddress]
+      }));
+      console.log('zeroLend-data--', calls);
+
+      multicall({
+        abi: [
+          {
+            inputs: [
+              { internalType: 'address', name: 'asset', type: 'address' },
+              { internalType: 'address', name: 'reward', type: 'address' }
+            ],
+            name: 'getRewardsData',
+            outputs: [
+              { internalType: 'uint256', name: '', type: 'uint256' },
+              { internalType: 'uint256', name: '', type: 'uint256' },
+              { internalType: 'uint256', name: '', type: 'uint256' },
+              { internalType: 'uint256', name: '', type: 'uint256' }
+            ],
+            stateMutability: 'view',
+            type: 'function'
+          }
+        ],
+        calls,
+        options: {},
+        multicallAddress,
+        provider
+      })
+        .then((res: any) => {
+          console.log('--------------------fetchRewardsData_res', res);
+
+          onLoad({
+            emissionPerSeconds: res
+          });
+        })
+        .catch((err: any) => {
+          console.log('fetchRewardsData_err', err);
+        });
+    }
+
+    function getAllUserRewards() {
+      const arr = markets
+        ?.map((item: any) => [
+          item.aTokenAddress,
+          // item.stableDebtTokenAddress,
+          item.variableDebtTokenAddress
+        ])
+        .flat();
+      const addrs = [...new Set(arr)];
+
+      const rewardsProvider = new ethers.Contract(
+        config.incentivesProxy,
+        [
+          {
+            inputs: [
+              { internalType: 'address[]', name: 'assets', type: 'address[]' },
+              { internalType: 'address', name: 'user', type: 'address' }
+            ],
+            name: 'getAllUserRewards',
+            outputs: [
+              {
+                internalType: 'address[]',
+                name: 'rewardsList',
+                type: 'address[]'
+              },
+              {
+                internalType: 'uint256[]',
+                name: 'unclaimedAmounts',
+                type: 'uint256[]'
+              }
+            ],
+            stateMutability: 'view',
+            type: 'function'
+          }
+        ],
+        provider.getSigner()
+      );
+      rewardsProvider
+        .getAllUserRewards(addrs, account)
+        .then((res: any) => {
+          try {
+            console.log('getAllUserRewards_res:', res);
+            console.log(dexConfig.rewardToken, 'dexConfig.rewardToken');
+            const _rewardToken = [...dexConfig.rewardToken];
+
+            const _amount = res[1].reduce((total: any, cur: any) => {
+              return Big(total).plus(ethers.utils.formatUnits(cur)).toFixed();
+            }, 0);
+
+            _rewardToken[0].unclaimed = _amount;
+
+            onLoad({
+              rewardData: _rewardToken
+            });
+          } catch (error) {
+            console.log('catch_getAllUserRewards_error', error);
+          }
+        })
+        .catch((err: any) => {
+          console.log('getAllUserRewards_error:', err);
+        });
+    }
+
+    getRewardsData();
+    getAllUserRewards();
+  }, [account, dexConfig.name]);
+
+  useEffect(() => {
+    if (!account) return;
+
+    if (dexConfig.name !== 'Seamless Protocol') return;
+
+    function getRewardsData() {
+      const aTokenAddresss = state.assetsToSupply?.map((item: any) => item.aTokenAddress);
+
+      const calls = aTokenAddresss?.map((addr: any) => ({
+        address: config.incentivesProxy,
+        name: 'getRewardsData',
+        params: [addr, config.rewardAddress]
+      }));
+
+      multicall({
+        abi: [
+          {
+            inputs: [
+              { internalType: 'address', name: 'asset', type: 'address' },
+              { internalType: 'address', name: 'reward', type: 'address' }
+            ],
+            name: 'getRewardsData',
+            outputs: [
+              { internalType: 'uint256', name: '', type: 'uint256' },
+              { internalType: 'uint256', name: '', type: 'uint256' },
+              { internalType: 'uint256', name: '', type: 'uint256' },
+              { internalType: 'uint256', name: '', type: 'uint256' }
+            ],
+            stateMutability: 'view',
+            type: 'function'
+          }
+        ],
+        calls,
+        options: {},
+        multicallAddress,
+        provider
+      })
+        .then((res: any) => {
+          console.log('fetchRewardsData_res', res);
+
+          onLoad({
+            emissionPerSeconds: res
+          });
+        })
+        .catch((err: any) => {
+          console.log('fetchRewardsData_err', err);
+        });
+    }
+
+    function getAllUserRewards() {
+      const arr = markets?.map((item: any) => [item.aTokenAddress, item.variableDebtTokenAddress]).flat();
+      const addrs = [...new Set(arr)];
+
+      const rewardsProvider = new ethers.Contract(
+        config.incentivesProxy,
+        [
+          {
+            inputs: [
+              { internalType: 'address[]', name: 'assets', type: 'address[]' },
+              { internalType: 'address', name: 'user', type: 'address' }
+            ],
+            name: 'getAllUserRewards',
+            outputs: [
+              {
+                internalType: 'address[]',
+                name: 'rewardsList',
+                type: 'address[]'
+              },
+              {
+                internalType: 'uint256[]',
+                name: 'unclaimedAmounts',
+                type: 'uint256[]'
+              }
+            ],
+            stateMutability: 'view',
+            type: 'function'
+          }
+        ],
+        provider.getSigner()
+      );
+
+      rewardsProvider
+        .getAllUserRewards(addrs, account)
+        .then((res: any) => {
+          try {
+            console.log('getAllUserRewards_res:', res);
+            const [addrs, amounts] = res;
+
+            const updatedRewardToken = state.rewardToken.map((item: any) => {
+              const index = addrs.findIndex((addr: any) => addr.toLowerCase() === item.address.toLowerCase());
+              if (index !== -1) {
+                return {
+                  ...item,
+                  unclaimed: ethers.utils.formatUnits(amounts[index], item.decimals || 18)
+                };
+              }
+              return item;
+            });
+
+            onLoad({
+              rewardData: updatedRewardToken
+            });
+          } catch (error) {
+            console.log('catch_getAllUserRewards_error', error);
+          }
+        })
+        .catch((err: any) => {
+          console.log('getAllUserRewards_error:', err);
+        });
+    }
+
+    getRewardsData();
+    getAllUserRewards();
+  }, [account, dexConfig.loaderName]);
 };
 
 export default AaveV3Data;

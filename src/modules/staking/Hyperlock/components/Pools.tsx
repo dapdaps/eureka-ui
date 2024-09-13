@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { memo } from 'ethers';
+import { memo } from 'react';
 import styled from 'styled-components';
 
 import Spinner from '@/modules/components/Spinner';

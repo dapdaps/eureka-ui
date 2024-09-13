@@ -1,6 +1,8 @@
 import dynamic from 'next/dynamic';
 import { lazy, useCallback } from 'react';
 
+import { Spinner } from '@/components/lib/Spinner';
+import { MetaTags } from '@/components/MetaTags';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import chainsConfig from '@/config/chains';
 import GAS_LIMIT_RECOMMENDATIONS from '@/config/contract/gas-limit';
@@ -113,54 +115,19 @@ export default function BosDapp({
     'Ledgity',
     'Teahouse',
     'AthenaFinance',
-    'AuraFinance'
+    'AuraFinance',
+    'Hyperlock'
   ];
+
   if (DappNameList.includes(localConfig?.basic?.name)) {
-    const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`));
+    const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`), {
+      ssr: false,
+      loading: () => {
+        return <Spinner />;
+      }
+    });
     return <DynamicComponent {...componentProps} />;
   }
 
-  return (
-    <ComponentWrapperPage
-      componentProps={{
-        chainId,
-        name: dapp.name,
-        account,
-        CHAIN_LIST: dappChains,
-        curChain: currentChain,
-        defaultDex: dapp.name,
-        ...dapp,
-        wethAddress: wethConfig[currentChain.chain_id],
-        multicallAddress: multicallConfig[currentChain.chain_id],
-        dexConfig: {
-          ...localConfig.basic,
-          ...localConfig.networks[currentChain.chain_id],
-          theme: localConfig.theme
-        },
-        prices,
-        addAction,
-        bridgeCb,
-        onSwitchChain: (params: any) => {
-          if (Number(params.chainId) === chainId) {
-            setCurrentChain(chains.find((_chain: any) => _chain.chain_id === chainId));
-            setIsChainSupported(true);
-          } else {
-            switchChain(params);
-          }
-        },
-        switchingChain: switching,
-        nativeCurrency: chainsConfig[currentChain.chain_id].nativeCurrency,
-        theme: { bridge: dappBridgeTheme[currentChain.chain_id] },
-        multicall,
-        isChainSupported,
-        GAS_LIMIT_RECOMMENDATIONS,
-        refresh,
-        windowOpen: (url: any, target: any) => {
-          window.open(url, target);
-        },
-        ...props
-      }}
-      src={network?.dapp_src}
-    />
-  );
+  return <ComponentWrapperPage componentProps={componentProps} src={network?.dapp_src} />;
 }
