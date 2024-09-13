@@ -9,7 +9,21 @@ export const StyledBanner = styled.div`
   justify-content: center;
   position: relative;
   z-index: 2;
-  margin-left: 90px;
+  padding-left: 90px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: -350px;
+    top: 90px;
+
+    width: 698px;
+    height: 698px;
+    display: block;
+    border-radius: 698px;
+    opacity: 0.3;
+    background: radial-gradient(50% 50% at 50% 50%, #ff6bbb 0%, rgba(255, 107, 187, 0) 100%);
+  }
 `;
 
 export const StyledTitle = styled.div`
@@ -43,9 +57,21 @@ export const StyledTotal = styled.div`
   align-items: center;
   padding: 42px 0px;
   margin: 0 auto;
-  position: relative;
   top: -44px;
   z-index: 1;
+
+  &::before {
+    position: absolute;
+    top: -170px;
+    left: 55%;
+    content: '';
+    display: block;
+    width: 340px;
+    height: 340px;
+    border-radius: 340px;
+    opacity: 0.3;
+    background: radial-gradient(50% 50% at 50% 50%, #b06bff 0%, rgba(176, 107, 255, 0) 100%);
+  }
 `;
 
 export const StyledTotalItem = styled.div`

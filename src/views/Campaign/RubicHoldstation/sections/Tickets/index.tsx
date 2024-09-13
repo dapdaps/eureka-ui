@@ -24,11 +24,7 @@ import YourTicketsModal from './YourTicketsModal';
 
 const Tickets = () => {
   const context = useContext(RubicHoldstationContext);
-
-  const { data } = context.basic;
-  const { rewards, userTotalReward } = context.tickets;
-
-  const { totalBonus } = data;
+  const { rewards, userTotalReward, totalReward } = context.tickets;
 
   const [showTicketsModal, setShowTicketsModal] = useState(false);
 
@@ -50,7 +46,7 @@ const Tickets = () => {
       <StyledTitle size={42}>Good Luck!</StyledTitle>
       <StyledPrizeWrapper>
         <StyledPrize size={80} italic>
-          {totalBonus}
+          {totalReward}
         </StyledPrize>
         <StyledTitle size={36} style={{ paddingBottom: 12, display: 'flex', alignItems: 'center', gap: 22 }}>
           <span>in prize!</span>

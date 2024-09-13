@@ -10,6 +10,9 @@ export const useBasic = ({ category, totalBonus }: any) => {
   const [loading, setLoading] = useState(false);
 
   const getData = async () => {
+    if (!category) {
+      return;
+    }
     setLoading(true);
     try {
       const res = await get('/api/campaign', { category });
