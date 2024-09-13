@@ -8,6 +8,7 @@ const basic = {
   handler: 'bluebiu.near/widget/Lending.Handler.Radiant',
   handlerClaim: 'bluebiu.near/widget/Arbitrum.Lending.RadiantClaimHandler',
   type: 'aave2',
+  loaderName: 'Radiant'
 };
 
 const networks = {

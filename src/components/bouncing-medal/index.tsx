@@ -8,7 +8,7 @@ import Matter, {
   MouseConstraint,
   Render,
   Runner,
-  World,
+  World
 } from 'matter-js';
 import React, { useEffect, useRef } from 'react';
 import { styled } from 'styled-components';
@@ -31,8 +31,8 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         height,
         pixelRatio: DPR,
         wireframes: false,
-        background: 'unset',
-      },
+        background: 'unset'
+      }
     });
 
     let beatTimer: any = null;
@@ -53,10 +53,10 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
             sprite: {
               texture: images[idx].src,
               xScale: widthScale,
-              yScale: (images[idx].height * widthScale) / images[idx].height,
-            },
+              yScale: (images[idx].height * widthScale) / images[idx].height
+            }
           },
-          angle: Math.random() * (Math.PI * 2),
+          angle: Math.random() * (Math.PI * 2)
         });
       });
       const borders = [
@@ -67,7 +67,7 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         // left
         Bodies.rectangle(0, height / 2, 2, height, { isStatic: true, render: { visible: false } }),
         // right
-        Bodies.rectangle(width, height / 2, 2, height, { isStatic: true, render: { visible: false } }),
+        Bodies.rectangle(width, height / 2, 2, height, { isStatic: true, render: { visible: false } })
       ];
       const mouse = Mouse.create(render.canvas);
       const mouseConstraint = MouseConstraint.create(engine, {
@@ -75,13 +75,13 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         constraint: {
           stiffness: 0.2,
           render: {
-            visible: false,
-          },
-        },
+            visible: false
+          }
+        }
       });
       Composite.add(engine.world, [
-        ...medalList.filter((m) => !!m) as Body[],
-        ...borders,
+        ...(medalList.filter((m) => !!m) as Body[]),
+        ...borders
         // mouseConstraint
       ]);
 
@@ -89,23 +89,23 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
         const mousePosition = event.mouse.position;
         const realMousePosition = {
           x: mousePosition.x / DPR,
-          y: mousePosition.y / DPR,
-        }
-        const bodies = Matter.Composite.allBodies(engine.world).filter(item => !item.isStatic);
-        bodies.forEach(body => {
+          y: mousePosition.y / DPR
+        };
+        const bodies = Matter.Composite.allBodies(engine.world).filter((item) => !item.isStatic);
+        bodies.forEach((body) => {
           if (Matter.Bounds.contains(body.bounds, realMousePosition)) {
             const forceMagnitude = 0.1 * body.mass;
             const randomX = Math.random() * forceMagnitude;
             const randomY = Math.random() * forceMagnitude;
             const op = {
               x: randomX,
-              y: randomY < randomX ? randomX : randomY,
-            }
+              y: randomY < randomX ? randomX : randomY
+            };
             Matter.Body.applyForce(body, body.position, op);
 
             beatTimer = setTimeout(() => {
               Matter.Body.setPosition(body, { x: body.position.x, y: body.position.y });
-            }, 100)
+            }, 100);
           }
         });
       });
@@ -132,7 +132,7 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
       style={{
         width,
         height,
-        ...style,
+        ...style
       }}
     />
   );
@@ -149,7 +149,7 @@ const StyledCanvas = styled.div`
   }
 `;
 
-const loadMedal = (src: string): Promise<{ src: string; width: number; height: number; } | boolean> => {
+const loadMedal = (src: string): Promise<{ src: string; width: number; height: number } | boolean> => {
   return new Promise((resolve) => {
     const img = new Image();
     img.src = src;
@@ -157,7 +157,7 @@ const loadMedal = (src: string): Promise<{ src: string; width: number; height: n
       resolve({
         src: img.src,
         width: img.width,
-        height: img.height,
+        height: img.height
       });
     };
     img.onerror = () => {

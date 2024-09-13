@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.Moonwell',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Base.Lending.MoonwellHandlerClaim',
+  loaderName: 'Moonwell',
 };
 
 const networks = {

@@ -1,16 +1,13 @@
 import { gnosis } from '@/config/tokens/gnosis';
 
 const basic = {
-  name: 'Aura Finance',
-  // icon: '/images/apps/granary.png',
-  // data: 'bluebiu.near/widget/Lending.Data.Liquity',
-  // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
-  type: 'staking',
+  name: 'AuraFinance',
+  type: 'staking'
 };
 const POOL_TYPES = {
   WeightedPool: 'WeightedPool',
   ComposableStablePool: 'ComposableStablePool',
-  StablePool: 'StablePool',
+  StablePool: 'StablePool'
 };
 const tokenArray = Object.values(gnosis);
 const tokenMapping = tokenArray.reduce((prev, cur) => {
@@ -35,7 +32,7 @@ const networks = {
         Aura_Pool_ID: 15,
         poolType: POOL_TYPES.WeightedPool,
         APR: 0.0426,
-        pjAPR: 0.051,
+        pjAPR: 0.051
       },
       {
         poolName: 'COW-wstETH',
@@ -48,7 +45,7 @@ const networks = {
         Aura_Pool_ID: 20,
         poolType: POOL_TYPES.WeightedPool,
         APR: 0.1648,
-        pjAPR: 0.1431,
+        pjAPR: 0.1431
       },
       {
         poolName: 'USDT-sDAI-USDC',
@@ -61,7 +58,7 @@ const networks = {
         Aura_Pool_ID: 21,
         poolType: POOL_TYPES.ComposableStablePool,
         APR: 0.0814,
-        pjAPR: 0.1512,
+        pjAPR: 0.1512
       },
       {
         poolName: 'wstETH-sDAI',
@@ -74,7 +71,7 @@ const networks = {
         Aura_Pool_ID: 19,
         poolType: POOL_TYPES.WeightedPool,
         APR: 0.3045,
-        pjAPR: 0.3149,
+        pjAPR: 0.3149
       },
       {
         poolName: 'crvUSD-sDAI',
@@ -87,7 +84,7 @@ const networks = {
         Aura_Pool_ID: 23,
         poolType: POOL_TYPES.ComposableStablePool,
         APR: 0.1874,
-        pjAPR: 0.1919,
+        pjAPR: 0.1919
       },
       {
         poolName: 'sDAI-EURe',
@@ -100,7 +97,7 @@ const networks = {
         Aura_Pool_ID: 18,
         poolType: POOL_TYPES.ComposableStablePool,
         APR: 0.1959,
-        pjAPR: 0.2103,
+        pjAPR: 0.2103
       },
       {
         poolName: 'WETH-wstETH',
@@ -113,7 +110,7 @@ const networks = {
         Aura_Pool_ID: 0,
         poolType: POOL_TYPES.WeightedPool,
         APR: 0.0538,
-        pjAPR: 0.0705,
+        pjAPR: 0.0705
       },
       {
         poolName: 'AURA-wstETH-BAL',
@@ -126,7 +123,7 @@ const networks = {
         Aura_Pool_ID: 17,
         poolType: POOL_TYPES.WeightedPool,
         APR: 0.3023,
-        pjAPR: 0.286,
+        pjAPR: 0.286
       },
       {
         poolName: 'staBAL3-WETH-WBTC',
@@ -139,7 +136,7 @@ const networks = {
         Aura_Pool_ID: 13,
         poolType: POOL_TYPES.WeightedPool,
         APR: 0.2384,
-        pjAPR: 0.1619,
+        pjAPR: 0.1619
       },
       {
         poolName: 'stEUR-EURe',
@@ -152,8 +149,8 @@ const networks = {
         Aura_Pool_ID: 22,
         poolType: POOL_TYPES.ComposableStablePool,
         APR: 0.1426,
-        pjAPR: 0.156,
-      },
+        pjAPR: 0.156
+      }
       // {
       //   poolName: 'staBAL3-EURe',
       //   Rewards_contract_address: '0xf4116f1be90057e6f85b0dcc14c47c84cc4575da',
@@ -187,8 +184,8 @@ const networks = {
       //   decimals: 18,
       //   underlyingToken: gnosis['wmatic'],
       // },
-    },
-  },
+    }
+  }
 };
 
 export default { basic, networks };

@@ -1,6 +1,6 @@
 
 const basic = {
-  name: 'Rangeprotocol',
+  name: 'RangeProtocol',
   icon: 'https://s3.amazonaws.com/dapdap.prod/images/090-rageprotocal.png',
   dappSrc: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
   amountOutFn: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
