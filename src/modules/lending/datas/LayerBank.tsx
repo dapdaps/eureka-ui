@@ -76,17 +76,17 @@ const OTOKEN_ABI = [
     type: 'function'
   },
   {
-    'inputs': [],
-    'name': 'getRateModel',
-    'outputs': [
+    inputs: [],
+    name: 'getRateModel',
+    outputs: [
       {
-        'internalType': 'address',
-        'name': '',
-        'type': 'address'
+        internalType: 'address',
+        name: '',
+        type: 'address'
       }
     ],
-    'stateMutability': 'view',
-    'type': 'function'
+    stateMutability: 'view',
+    type: 'function'
   }
 ];
 const UNITROLLER_ABI = [
@@ -273,7 +273,7 @@ const LayerBankData = (props: any) => {
     prices,
     rewardToken,
     chainId,
-    provider,
+    provider
   } = props;
 
   useEffect(() => {
@@ -305,26 +305,15 @@ const LayerBankData = (props: any) => {
         const _markets: any = {};
         Object.values(_cTokensData).forEach((market: any) => {
           const underlyingPrice = _underlyPrice[market.address] || 1;
-          const marketSupplyUsd = Big(market.totalSupply || 0).mul(
-            underlyingPrice
-          );
-          const marketBorrowUsd = Big(market.totalBorrows || 0).mul(
-            underlyingPrice
-          );
+          const marketSupplyUsd = Big(market.totalSupply || 0).mul(underlyingPrice);
+          const marketBorrowUsd = Big(market.totalBorrows || 0).mul(underlyingPrice);
           totalSupplyUsd = totalSupplyUsd.plus(marketSupplyUsd);
           totalBorrowUsd = totalBorrowUsd.plus(marketBorrowUsd);
-          userTotalSupplyUsd = userTotalSupplyUsd.plus(
-            Big(market.userSupply).mul(underlyingPrice)
-          );
-          userTotalBorrowUsd = userTotalBorrowUsd.plus(
-            Big(market.userBorrow).mul(underlyingPrice)
-          );
+          userTotalSupplyUsd = userTotalSupplyUsd.plus(Big(market.userSupply).mul(underlyingPrice));
+          userTotalBorrowUsd = userTotalBorrowUsd.plus(Big(market.userBorrow).mul(underlyingPrice));
           if (_userMerberShip[market.address]) {
             totalCollateralUsd = totalCollateralUsd.plus(
-              Big(market.userSupply)
-                .mul(underlyingPrice)
-                .mul(_loanToValue[market.address])
-                .div(100)
+              Big(market.userSupply).mul(underlyingPrice).mul(_loanToValue[market.address]).div(100)
             );
           }
 
@@ -348,18 +337,12 @@ const LayerBankData = (props: any) => {
             borrow: Big(rewardApy.apyBorrow).mul(3).toFixed(2) + '%'
           };
           if (Big(rewardApy.apyAccountSupply).gt(0)) {
-            distributionApy.apyAccountSupply =
-              Big(rewardApy.apyAccountSupply).toFixed(2) + '%';
-            totalAccountDistributionApy = totalAccountDistributionApy.plus(
-              rewardApy.apyAccountSupply
-            );
+            distributionApy.apyAccountSupply = Big(rewardApy.apyAccountSupply).toFixed(2) + '%';
+            totalAccountDistributionApy = totalAccountDistributionApy.plus(rewardApy.apyAccountSupply);
           }
           if (Big(rewardApy.apyAccountBorrow).gt(0)) {
-            distributionApy.apyAccountBorrow =
-              Big(rewardApy.apyAccountBorrow).toFixed(2) + '%';
-            totalAccountDistributionApy = totalAccountDistributionApy.plus(
-              rewardApy.apyAccountBorrow
-            );
+            distributionApy.apyAccountBorrow = Big(rewardApy.apyAccountBorrow).toFixed(2) + '%';
+            totalAccountDistributionApy = totalAccountDistributionApy.plus(rewardApy.apyAccountBorrow);
           }
           _markets[market.address] = {
             ...market,
@@ -371,7 +354,7 @@ const LayerBankData = (props: any) => {
             supplyApy: supplyApy.toFixed(2) + '%',
             borrowApy: borrowApy.toFixed(2) + '%',
             distributionApy: [distributionApy],
-            dapp: name,
+            dapp: name
             // rewards
           };
         });
@@ -439,10 +422,7 @@ const LayerBankData = (props: any) => {
             const mod = i % (account ? 2 : 1);
             switch (mod) {
               case 0:
-                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(
-                  res[i][3]._hex || 0,
-                  16
-                );
+                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(res[i][3]._hex || 0, 16);
                 break;
               case 1:
                 _userMerberShip[oTokens[index].address] = res[i] ? res[i][0] || false : false;
@@ -465,11 +445,7 @@ const LayerBankData = (props: any) => {
     const getUnderlyPrice = () => {
       if (!oracleAddress) return;
       const oTokens = Object.keys(markets);
-      const UnderlyingContract = new ethers.Contract(
-        oracleAddress,
-        ORACLE_ABI,
-        provider.getSigner()
-      );
+      const UnderlyingContract = new ethers.Contract(oracleAddress, ORACLE_ABI, provider.getSigner());
       UnderlyingContract.getUnderlyingPrices(oTokens)
         .then((res: any) => {
           _underlyPrice = {};
@@ -489,9 +465,7 @@ const LayerBankData = (props: any) => {
       const calls = assets
         .filter((market: any) => {
           if (market.underlyingToken.isNative) nativeOToken = market.address;
-          return (
-            market.underlyingToken.address && !market.underlyingToken.isNative
-          );
+          return market.underlyingToken.address && !market.underlyingToken.isNative;
         })
         .map((market: any) => ({
           address: market.underlyingToken.address,
@@ -509,17 +483,11 @@ const LayerBankData = (props: any) => {
           _liquidity = {};
           for (let i = 0, len = res.length; i < len; i++) {
             const oToken = markets[calls[i].params[0]];
-            _liquidity[oToken.address] = ethers.utils.formatUnits(
-              res[i][0]._hex || 0,
-              oToken.underlyingToken.decimals
-            );
+            _liquidity[oToken.address] = ethers.utils.formatUnits(res[i][0]._hex || 0, oToken.underlyingToken.decimals);
           }
           if (nativeOToken) {
             provider.getBalance(nativeOToken).then((rawBalance: any) => {
-              _liquidity[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18
-              );
+              _liquidity[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('getOTokenLiquidity');
             });
@@ -528,7 +496,8 @@ const LayerBankData = (props: any) => {
             formatedData('getOTokenLiquidity');
           }
         })
-        .catch(() => {
+        .catch((err: any) => {
+          console.log('error-getOTokenLiquidity', err);
           setTimeout(() => {
             getOTokenLiquidity();
           }, 500);
@@ -539,9 +508,7 @@ const LayerBankData = (props: any) => {
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
           if (market.underlyingToken.isNative) nativeOToken = market.address;
-          return (
-            market.underlyingToken.address && !market.underlyingToken.isNative
-          );
+          return market.underlyingToken.address && !market.underlyingToken.isNative;
         })
         .map((market: any) => ({
           ...market.underlyingToken,
@@ -563,18 +530,12 @@ const LayerBankData = (props: any) => {
           _underlyingBalance = {};
           for (let i = 0, len = res.length; i < len; i++) {
             _underlyingBalance[underlyingTokens[i].oTokenAddress] = res[i]
-              ? ethers.utils.formatUnits(
-                res[i][0]._hex,
-                underlyingTokens[i].decimals
-              )
+              ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals)
               : '0';
           }
           if (nativeOToken) {
             provider.getBalance(account).then((rawBalance: any) => {
-              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18
-              );
+              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('underlyingTokens');
               getRewards();
@@ -637,49 +598,34 @@ const LayerBankData = (props: any) => {
         provider
       })
         .then((res: any) => {
-          const exchangeRateStored = res[0]
-            ? ethers.utils.formatUnits(res[0][0]._hex, 18)
-            : '0';
+          const exchangeRateStored = res[0] ? ethers.utils.formatUnits(res[0][0]._hex, 18) : '0';
           const userSupply = res[3]
-            ? ethers.utils.formatUnits(
-              res[3][0][0]._hex,
-              oToken.underlyingToken.decimals
-            )
+            ? ethers.utils.formatUnits(res[3][0][0]._hex, oToken.underlyingToken.decimals)
             : '0';
-          const totalSupply = res[1]
-            ? ethers.utils.formatUnits(
-              res[1][0]._hex,
-              oToken.underlyingToken.decimals
-            )
-            : '0';
+          const totalSupply = res[1] ? ethers.utils.formatUnits(res[1][0]._hex, oToken.underlyingToken.decimals) : '0';
           _cTokensData[oToken.address] = {
             ...oToken,
             exchangeRateStored,
             totalSupply: Big(totalSupply).mul(exchangeRateStored).toString(),
-            totalBorrows: res[2]
-              ? ethers.utils.formatUnits(
-                res[2][0]._hex,
-                oToken.underlyingToken.decimals
-              )
-              : '0',
+            totalBorrows: res[2] ? ethers.utils.formatUnits(res[2][0]._hex, oToken.underlyingToken.decimals) : '0',
             userSupply: Big(userSupply).mul(exchangeRateStored).toString(),
-            userBorrow: res[3]
-              ? ethers.utils.formatUnits(
-                res[3][0][1]._hex,
-                oToken.underlyingToken.decimals
-              )
-              : '0'
+            userBorrow: res[3] ? ethers.utils.formatUnits(res[3][0][1]._hex, oToken.underlyingToken.decimals) : '0'
           };
           const rateCalls = [
             {
               address: res[7][0],
               name: 'getBorrowRate',
-              params: [res[4][0] || '0', res[2][0] || '0', res[5][0] || '0']
+              params: [res[4][0] || '0', res[2][0] || '0', res[5] ? res[5][0] || '0' : '0']
             },
             {
               address: res[7][0],
               name: 'getSupplyRate',
-              params: [res[4][0] || '0', res[2][0] || '0', res[5][0] || '0', res[6][0] || '0']
+              params: [
+                res[4][0] || '0',
+                res[2][0] || '0',
+                res[5] ? res[5][0] || '0' : '0',
+                res[6] ? res[6][0] || '0' : '0'
+              ]
             }
           ];
           multicall({
@@ -709,7 +655,8 @@ const LayerBankData = (props: any) => {
               // }, 1000);
             });
         })
-        .catch(() => {
+        .catch((err: any) => {
+          console.log('error-getCTokenData', err);
           setTimeout(() => {
             getCTokenData(oToken);
           }, 1000);
@@ -722,16 +669,10 @@ const LayerBankData = (props: any) => {
     };
     const getRewards = () => {
       console.log('getRewards--', oracleAddress, rewardToken);
-      const PriceToken = new ethers.Contract(
-        oracleAddress,
-        ORACLE_ABI,
-        provider.getSigner()
-      );
+      const PriceToken = new ethers.Contract(oracleAddress, ORACLE_ABI, provider.getSigner());
       PriceToken.priceOf(rewardToken.address)
         .then((priceRes: any) => {
-          const price = Big(
-            ethers.utils.formatUnits(priceRes._hex, 18)
-          ).toString();
+          const price = Big(ethers.utils.formatUnits(priceRes._hex, 18)).toString();
           getUserRewards(price);
         })
         .catch((error: any) => {
@@ -763,27 +704,17 @@ const LayerBankData = (props: any) => {
           _accountRewards.price = price;
           for (let i = 0; i < res.length; i++) {
             if (i === res.length - 1) {
-              const accured = res[i]
-                ? ethers.utils.formatUnits(res[i][0]._hex, 18)
-                : '0';
+              const accured = res[i] ? ethers.utils.formatUnits(res[i][0]._hex, 18) : '0';
               _accountRewards.reward = accured;
               count++;
               formatedData('rewards');
               return;
             }
             _rewardsApy[cTokens[i]] = {
-              apySupply: res[i]
-                ? ethers.utils.formatUnits(res[i][0][0]._hex, 16)
-                : '0',
-              apyBorrow: res[i]
-                ? ethers.utils.formatUnits(res[i][0][1]._hex, 16)
-                : '0',
-              apyAccountSupply: res[i]
-                ? ethers.utils.formatUnits(res[i][0][2]._hex, 16)
-                : '0',
-              apyAccountBorrow: res[i]
-                ? ethers.utils.formatUnits(res[i][0][3]._hex, 16)
-                : '0'
+              apySupply: res[i] ? ethers.utils.formatUnits(res[i][0][0]._hex, 16) : '0',
+              apyBorrow: res[i] ? ethers.utils.formatUnits(res[i][0][1]._hex, 16) : '0',
+              apyAccountSupply: res[i] ? ethers.utils.formatUnits(res[i][0][2]._hex, 16) : '0',
+              apyAccountBorrow: res[i] ? ethers.utils.formatUnits(res[i][0][3]._hex, 16) : '0'
             };
           }
         })

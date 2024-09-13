@@ -111,11 +111,11 @@ const networks = {
       },
       {
         id: '3',
-        underlyingAsset: zkSync['usdc'].address,
-        name: zkSync['usdc'].name,
-        symbol: zkSync['usdc'].symbol,
-        decimals: zkSync['usdc'].decimals,
-        icon: zkSync['usdc'].icon,
+        underlyingAsset: zkSync['usdc.e'].address,
+        name: zkSync['usdc.e'].name,
+        symbol: zkSync['usdc.e'].symbol,
+        decimals: zkSync['usdc.e'].decimals,
+        icon: zkSync['usdc.e'].icon,
         supplyAPY: '',
         usageAsCollateralEnabled: true,
         borrowingEnabled: true,
@@ -129,7 +129,6 @@ const networks = {
         supportPermit: false,
         supportBorrow: true
       },
-
       {
         id: '4',
         underlyingAsset: zkSync['usdt'].address,

@@ -792,6 +792,29 @@ const ROUTE_CONFIG = {
       '--claim-color': '#D079FF',
     },
   },
+  'keom-protocol': {
+    type: 'lending',
+    theme: {
+      '--button-color': '#D079FF',
+      '--switch-color': '#D079FF',
+      '--button-text-color': 'black',
+      '--supply-color': '#D079FF',
+      '--yours-table-title': 'black',
+      '--borrow-color': '#D079FF',
+      '--withdraw-bg-color': '#D079FF',
+      '--withdraw-border-color': '#D079FF',
+      '--withdraw-bg-hover-color': '#D079FF',
+      '--repay-bg-color': '#D079FF',
+      '--repay-border-color': '#D079FF',
+      '--repay-bg-hover-color': '#D079FF',
+      '--claim-bg-hover-color': '#D079FF',
+      '--claim-bg-color': '#D079FF',
+      '--claim-border-color': '#D079FF',
+      '--withdraw-color': '#D079FF',
+      '--replay-color': '#D079FF',
+      '--claim-color': '#D079FF',
+    },
+  },
 };
 
 export default ROUTE_CONFIG;
