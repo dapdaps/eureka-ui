@@ -724,18 +724,13 @@ const AaveV3 = (props: Props) => {
           </Yours>
           {dexConfig.rewardToken ? (
             <RewardsTable
-              account={account}
               config={config}
               data={state.rewardData}
               dapps={dexConfig}
-              onSuccess={onSuccess}
               markets={markets}
-              prices={prices}
-              rewardAddress={config.incentivesProxy}
-              toast={toast}
               theme={dexConfig?.theme}
-              unifyNumber={unifyNumber}
               provider={provider}
+              {...props}
             />
           ) : null}
         </>
