@@ -143,8 +143,6 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
 
   const { chainId, provider } = useAccount();
 
-  console.log('chainId:', chainId);
-
   async function refreshTransactionList() {
     if (!account) {
       return;
@@ -163,12 +161,12 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
           address: item.fromAddress,
           fromChainId: item.fromChainId,
           toChainId: item.toChainId,
-          tool: item.tool
+          tool: item.tool,
+          fromToken: item.fromTokenSymbol
         },
         item.bridgeType || item.tool,
         provider?.getSigner()
       );
-      console.log('isComplate:', isComplate);
       if (typeof isComplate === 'boolean' && isComplate) {
         item.status = 2;
         // updateTransaction(item);
@@ -203,12 +201,9 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
       } else {
         item.status = 3;
       }
-      console.log(item);
     }
 
     transactionList.sort((a: any, b: any) => b.time - a.time);
-
-    console.log('transactionList:', transactionList);
 
     setTransactionList(transactionList);
     setIsLoading(false);
