@@ -75,7 +75,7 @@ const Holdstation = () => {
   return (
     <StyledContainer>
       <StyledTitle>「Holdstation Hyperlink」</StyledTitle>
-      <StyledTitleSub>Complete Mission to get 2 tickets</StyledTitleSub>
+      <StyledTitleSub>Complete Mission to get tickets</StyledTitleSub>
       <StyledContent>
         {loading ? (
           <Skeleton width={1000} height={371} borderRadius={20} />

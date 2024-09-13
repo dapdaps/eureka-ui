@@ -15,13 +15,13 @@ const RubicCard = (props: Props) => {
 
   const handleClick = () => {
     if (quest.operators && quest.operators[0]) {
-      // router.push(`/${quest.operators[0].route}`);
-      window.open(`/${quest.operators[0].route}`, '_blank');
+      router.push(`/${quest.operators[0].route}`);
+      // window.open(`/${quest.operators[0].route}`, '_blank');
       return;
     }
     if (quest.name === 'Super Bridge') {
-      // router.push('/super-bridge');
-      window.open('/super-bridge', '_blank');
+      router.push('/super-bridge');
+      // window.open('/super-bridge', '_blank');
     }
   };
 

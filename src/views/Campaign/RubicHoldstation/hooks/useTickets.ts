@@ -39,11 +39,7 @@ export const useTickets = ({ category }: any) => {
 
     setTotalReward(formateValueWithThousandSeparatorAndFont(total_reward, 0, true, { prefix: '$' }));
 
-    let latestReward: RewardItem | undefined = undefined;
     rewardsList = rewardsList.map((reward, idx) => {
-      if (reward.is_draw_completed) {
-        latestReward = reward;
-      }
       const voucherArr = [...new Array(reward.voucher.length).keys()].map((idx) =>
         reward.voucher.substring(idx, idx + 1)
       );
@@ -73,17 +69,10 @@ export const useTickets = ({ category }: any) => {
       };
     });
 
-    if (latestReward) {
-      rewardsList.forEach((reward) => {
-        if (reward.reward_time < (latestReward as RewardItem).reward_time) {
-          reward.expired = true;
-        }
-      });
-    }
-
     for (let i = 0; i < rewardsList.length; i++) {
       const curr = rewardsList[i];
-      if (curr.expired && curr.winners < 1) {
+      if (curr.is_draw_completed && curr.winners < 1) {
+        curr.expired = true;
         for (let j = i + 1; j < rewardsList.length; j++) {
           const next = rewardsList[j];
           next.amountAdd = [...curr.amountAdd, curr.amount];
