@@ -30,9 +30,9 @@ export default function BosDapp({
   setCurrentChain,
   setIsChainSupported,
   chains,
-  props = {},
+  props = {}
 }: any) {
-  const toast = useToast()
+  const toast = useToast();
   const prices = usePriceStore((store) => store.price);
   const { addAction } = useAddAction('dapp');
   const setLayoutStore = useLayoutStore((store) => store.set);
@@ -42,9 +42,9 @@ export default function BosDapp({
     () =>
       setLayoutStore({
         defaultTab: 'bridge',
-        showAccountSider: true,
+        showAccountSider: true
       }),
-    [],
+    []
   );
 
   const componentProps = {
@@ -62,7 +62,7 @@ export default function BosDapp({
     dexConfig: {
       ...localConfig.basic,
       ...localConfig.networks[currentChain.chain_id],
-      theme: localConfig.theme,
+      theme: localConfig.theme
     },
     prices,
     addAction,
@@ -85,37 +85,36 @@ export default function BosDapp({
     windowOpen: (url: any, target: any) => {
       window.open(url, target);
     },
-    ...props,
+    ...props
   };
 
-  const nativeComponents = [
-    'lending',
-    'compound v3',
-  ];
+  const nativeComponents = ['lending', 'compound v3', 'aave-v3'];
+  console.log(localConfig.type, 'localConfig.type');
+
   if (nativeComponents.includes(localConfig.type)) {
-    return (
-      <LendingDex {...componentProps} />
-    );
+    return <LendingDex {...componentProps} />;
   }
-  
+
   const DappNameList = [
-    "Gamma",
-    "RangeProtocol",
-    "Arrakis",
-    "Metavault",
-    "Steer",
-    "Juice",
-    "BlastOff",
-    "AgentFi"
-  ]
+    'Gamma',
+    'RangeProtocol',
+    'Arrakis',
+    'Metavault',
+    'Steer',
+    'Juice',
+    'BlastOff',
+    'AgentFi',
+    'Beefy',
+    'Duo',
+    'Kelp',
+    'Ledgity',
+    'Teahouse'
+  ];
+  console.log('===localConfig', `@/modules/${localConfig?.type}/${localConfig?.basic?.name}`);
   if (DappNameList.includes(localConfig?.basic?.name)) {
-    const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`))
-    return (
-      <DynamicComponent {...componentProps} />
-    );
+    const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`));
+    return <DynamicComponent {...componentProps} />;
   }
-
-
 
   return (
     <ComponentWrapperPage
@@ -132,7 +131,7 @@ export default function BosDapp({
         dexConfig: {
           ...localConfig.basic,
           ...localConfig.networks[currentChain.chain_id],
-          theme: localConfig.theme,
+          theme: localConfig.theme
         },
         prices,
         addAction,
@@ -155,7 +154,7 @@ export default function BosDapp({
         windowOpen: (url: any, target: any) => {
           window.open(url, target);
         },
-        ...props,
+        ...props
       }}
       src={network?.dapp_src}
     />
