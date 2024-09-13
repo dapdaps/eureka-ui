@@ -115,10 +115,9 @@ export default function BosDapp({
     'AthenaFinance',
     'AuraFinance'
   ];
-  console.log('===localConfig', `@/modules/${localConfig?.type}/${localConfig?.basic?.name}`);
   if (DappNameList.includes(localConfig?.basic?.name)) {
     const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`));
-    return <Hyperlock {...componentProps} />;
+    return <DynamicComponent {...componentProps} />;
   }
 
   return (
