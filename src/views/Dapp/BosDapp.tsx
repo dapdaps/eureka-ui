@@ -12,6 +12,9 @@ import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import LendingDex from '@/modules/lending/Dex';
 import Gamma from '@/modules/liquidity/Gamma';
+import AthenaFinance from '@/modules/staking/AthenaFinance';
+import AuraFinance from '@/modules/staking/AuraFinance';
+import Hyperlock from '@/modules/staking/Hyperlock';
 import { useLayoutStore } from '@/stores/layout';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
@@ -108,12 +111,14 @@ export default function BosDapp({
     'Duo',
     'Kelp',
     'Ledgity',
-    'Teahouse'
+    'Teahouse',
+    'AthenaFinance',
+    'AuraFinance'
   ];
   console.log('===localConfig', `@/modules/${localConfig?.type}/${localConfig?.basic?.name}`);
   if (DappNameList.includes(localConfig?.basic?.name)) {
     const DynamicComponent = dynamic(() => import(`@/modules/${localConfig?.type}/${localConfig?.basic?.name}`));
-    return <DynamicComponent {...componentProps} />;
+    return <Hyperlock {...componentProps} />;
   }
 
   return (
