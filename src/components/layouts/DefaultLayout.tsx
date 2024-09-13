@@ -46,7 +46,8 @@ const BLACK_PATH = [
   '/all-in-one/[chain]/[menu]',
   '/bridge-chain/[chain]',
   '/portfolio',
-  '/profile/medals'
+  '/profile/medals',
+  '/campaign/home'
 ];
 
 const HideFooterRoutes = ['/uniswap', '/coin68'];
