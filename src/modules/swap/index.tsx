@@ -144,7 +144,6 @@ export default function SwapDapp({
                 setSelectedTokenAddress(inputCurrency?.address);
               }}
               onUpdateCurrencyBalance={(balance: any) => {
-                console.log({ balance });
                 setMaxInputBalance(balance);
               }}
               onAmountChange={(val: any) => {

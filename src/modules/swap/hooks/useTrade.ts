@@ -12,7 +12,7 @@ import checkGas from '@/views/AllInOne/components/Trade/checkGas';
 import formatTrade from '@/views/AllInOne/components/Trade/formatTrade';
 import getWrapOrUnwrapTx from '@/views/AllInOne/components/Trade/getWrapOrUnwrapTx';
 
-export default function useTrade({ chainId, template }: any) {
+export default function useTrade({ chainId, template, onSuccess }: any) {
   const slippage: any = useSettingsStore((store: any) => store.slippage);
   const [loading, setLoading] = useState(false);
   const [trade, setTrade] = useState<any>();
@@ -141,6 +141,7 @@ export default function useTrade({ chainId, template }: any) {
 
       if (status === 1) {
         toast.success({ title: `Swap successfully!`, tx: transactionHash, chainId });
+        onSuccess?.();
       } else {
         toast.fail({ title: `Swap faily!` });
       }
