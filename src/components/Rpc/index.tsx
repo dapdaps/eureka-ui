@@ -9,7 +9,7 @@ import { useRpcStore } from '@/stores/rpc';
 
 const StyledRpcs = styled.div<{ $color?: string }>`
   position: fixed;
-  z-index: 2;
+  z-index: 62;
   bottom: 30px;
   right: 20px;
   display: flex;
@@ -43,11 +43,7 @@ const StyledRpcs = styled.div<{ $color?: string }>`
   }
 `;
 
-const Rpc = ({
-  className
-}: {
-  className?: string;
-}) => {
+const Rpc = ({ className }: { className?: string }) => {
   const rpcStore = useRpcStore();
   const { ping, getCurrentPing } = useRpc();
 

@@ -11,11 +11,12 @@ type PropsType = {
   medal: MedalType;
   style?: React.CSSProperties;
   nameStyle?: React.CSSProperties;
+  contentStyle?: React.CSSProperties;
   barWidth?: string;
   className?: string;
   tooltip?: string;
 };
-export default function MedalCard({ medal, style, barWidth, nameStyle, className, tooltip }: PropsType) {
+export default function MedalCard({ medal, style, barWidth, nameStyle, contentStyle, className, tooltip }: PropsType) {
   const total = useMemo(() => (medal?.trading_volume > 0 ? 100 : medal?.threshold), [medal]);
   const quantity = useMemo(
     () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : medal?.completed_threshold),
@@ -44,7 +45,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, className
           >
             {medal?.level_name}
           </StyledFont>
-          <StyledFont color="#979ABE" fontSize="14px" lineClamp="2" className="ellipsis">
+          <StyledFont color="#979ABE" style={contentStyle} fontSize="14px" lineClamp="2" className="ellipsis">
             {medal?.level_description}
           </StyledFont>
         </StyledFlex>
@@ -92,7 +93,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, className
           quantity={+quantity}
           total={total}
           showAchieved={true}
-          showPercent={medal?.threshold > 0 ? false : true}
+          showPercent={medal?.trading_volume > 0 ? true : false}
           barWidth={barWidth}
           tooltip={tooltip}
         />
