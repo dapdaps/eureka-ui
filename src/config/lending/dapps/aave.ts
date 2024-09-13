@@ -14,7 +14,7 @@ const CONTRACT_ABI = {
   aavePoolV3ABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/AAVEPoolV3.json',
   variableDebtTokenABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/VariableDebtToken.json',
   walletBalanceProviderABI:
-    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
+    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
@@ -24,6 +24,7 @@ const basic = {
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'aave-v3',
+  loaderName: 'AaveV3'
 };
 
 const networks = {
@@ -39,7 +40,7 @@ const networks = {
       PoolDataProvider: '0xa99F4E69acF23C6838DE90dD1B5c02EA928A53ee',
       wrappedTokenGatewayV3Address: '0xFF75A4B698E3Ec95E608ac0f22A03B8368E05F5D',
       balanceProviderAddress: '0xE51642875Af07Fea1B03d821E41a9DB24bC4447E',
-      incentivesProxy: '0xa3f3100C4f1D0624DB9DB97b40C13885Ce297799', //CLAIM
+      incentivesProxy: '0xa3f3100C4f1D0624DB9DB97b40C13885Ce297799' //CLAIM
     },
     rawMarkets: [
       {
@@ -60,7 +61,7 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '2',
@@ -80,7 +81,7 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: false,
+        supportBorrow: false
       },
       {
         id: '3',
@@ -100,7 +101,7 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '4',
@@ -120,11 +121,11 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        supportBorrow: true,
-      },
+        supportBorrow: true
+      }
     ],
-    CONTRACT_ABI,
-  },
+    CONTRACT_ABI
+  }
 };
 
 export default { basic, networks };

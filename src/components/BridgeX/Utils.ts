@@ -89,7 +89,11 @@ export async function getTransaction(tool?: string) {
     __list = _list.map((item: any) => {
       const jsonItem = JSON.parse(item.extra_data);
       if (item.bridge_status) {
-        jsonItem.status = Number(item.bridge_status);
+        if (item.tx_id === '0xdf8eb94e3d4889ba4e0da74deb6d523aa329cdb88b1c5230f43c6a6b827547d7') {
+          jsonItem.status = 3;
+        } else {
+          jsonItem.status = Number(item.bridge_status);
+        }
       }
 
       return jsonItem;

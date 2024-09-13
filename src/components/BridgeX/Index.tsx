@@ -1,6 +1,6 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
@@ -112,6 +112,12 @@ const SubmitBtn = styled.button`
 
 let quoteParam = null;
 
+const toolMap: any = {
+  mode: 'official',
+  blast: 'official',
+  scroll: 'official'
+};
+
 export default function BridgeX({
   icon,
   name,
@@ -120,9 +126,7 @@ export default function BridgeX({
   template,
   account,
   chainList,
-  toggleDocClickHandler,
   getQuote,
-  getAllToken,
   getBridgeToken,
   getStatus,
   prices,
@@ -135,7 +139,10 @@ export default function BridgeX({
   addAction,
   onSuccess,
   dapp,
-  style
+  style,
+  disabledChain = false,
+  disabledToToken = false,
+  tokenPairs = []
 }: any) {
   const { fail, success } = useToast();
   const [updater, setUpdater] = useState(1);
@@ -319,6 +326,26 @@ export default function BridgeX({
     setBtnText('Send');
   }, [account, currentChainId, inputValue, inputBalance, route, loading, chainFrom]);
 
+  const bridgeType = useMemo(() => {
+    return toolMap[tool] ? toolMap[tool] : tool;
+  }, [tool]);
+
+  useEffect(() => {
+    if (selectInputToken && tool && tokenPairs && tokenPairs.length && bridgeTokens) {
+      if (chainFrom.chainId === 1) {
+        const pair = tokenPairs.find((pair: any) => pair[0] === selectInputToken.symbol);
+        const toToken = outputTokens.find((token: any) => token.symbol === pair[1]);
+        setSelectOutputToken(toToken);
+      } else {
+        const pair = tokenPairs.find((pair: any) => pair[1] === selectInputToken.symbol);
+        const toToken = outputTokens.find((token: any) => token.symbol === pair[0]);
+        setSelectOutputToken(toToken);
+      }
+    } else {
+      // setSelectOutputToken(null)
+    }
+  }, [tokenPairs, tool, chainTo, selectInputToken, chainFrom, inputTokens, outputTokens]);
+
   function validateInput() {
     if (!account || !chainFrom || !chainTo || !selectInputToken || !selectInputToken || !inputValue) {
       return false;
@@ -351,8 +378,8 @@ export default function BridgeX({
       setRoute(null);
 
       quoteParam = {
-        fromChainId: chainFrom.chainId,
-        toChainId: chainTo.chainId,
+        fromChainId: chainFrom.chainId.toString(),
+        toChainId: chainTo.chainId.toString(),
         fromToken: {
           address: selectInputToken?.address,
           symbol: selectInputToken?.symbol,
@@ -366,8 +393,10 @@ export default function BridgeX({
         fromAddress: account,
         destAddress: otherAddressChecked ? toAddress : account,
         amount: new Big(inputValue).times(Math.pow(10, selectInputToken?.decimals)),
-        engine: [tool]
+        engine: [bridgeType]
       };
+
+      console.log(quoteParam);
 
       getQuote(quoteParam, provider.getSigner())
         .then((res: any) => {
@@ -410,6 +439,7 @@ export default function BridgeX({
   }
 
   const CurrentActivityCom = activity[tool];
+
   return (
     <BridgePanel style={style}>
       <Header>
@@ -423,6 +453,7 @@ export default function BridgeX({
         <MainTitle>Bridge</MainTitle>
         <ChainPairs>
           <ChainSelector
+            disabledChain={disabledChain}
             chain={chainFrom}
             chainList={chainList}
             onChainChange={(chain: any) => {
@@ -450,6 +481,7 @@ export default function BridgeX({
           </ChainArrow>
 
           <ChainSelector
+            disabledChain={disabledChain}
             chain={chainTo}
             chainList={chainList}
             onChainChange={(chain: any) => {
@@ -521,7 +553,7 @@ export default function BridgeX({
           style={{
             opacity: (!route || !canRoute) && account ? 0.2 : 1,
             background: color,
-            color: tool === 'stargate' ? '#000' : '#fff'
+            color: tool === 'stargate' || tool === 'mode' || tool === 'blast' ? '#000' : '#fff'
           }}
           onClick={async () => {
             if (!account) {

@@ -10,9 +10,10 @@
     "simple-import-sort/imports": "warn",
     "@typescript-eslint/no-explicit-any": "warn", // TODO: remove once refactor from JS is complete
     "@typescript-eslint/consistent-type-imports": "error",
-    "@typescript-eslint/ban-ts-comment":"off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-unused-vars": ["warn", { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }],
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "react/no-unescaped-entities": "off"
   },
   "ignorePatterns": ["node_modules/", "public/"]
 }

@@ -1,18 +1,18 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from "react";
+import { memo } from 'react';
 import { useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import ChainWarningBox from "@/modules/components/ChainWarningBox";
-import Spinner from "@/modules/components/Spinner";
+import ChainWarningBox from '@/modules/components/ChainWarningBox';
+import Spinner from '@/modules/components/Spinner';
 import { useDynamicLoader, useMultiState } from '@/modules/hooks';
-import { formatValueDecimal } from "@/utils/formate";
+import { formatValueDecimal } from '@/utils/formate';
 import { asyncFetch } from '@/utils/http';
 
-import MyStrategies from "./components/MyStrategies";
-import StrategyFactory from "./components/StrategyFactory";
+import MyStrategies from './components/MyStrategies';
+import StrategyFactory from './components/StrategyFactory';
 const StyledContainer = styled.div`
   padding-top: 34px;
   width: var(--container-width);
@@ -25,14 +25,14 @@ const StyledTabs = styled.div`
   justify-content: center;
 
   &::after {
-    content: "";
+    content: '';
     position: absolute;
     z-index: 1;
     left: 0;
     right: 0;
     bottom: 0;
     height: 1px;
-    background: linear-gradient(90deg, rgba(22, 24, 29, 0.00) 0%, #373A53 50%, rgba(22, 24, 29, 0.00) 100%);
+    background: linear-gradient(90deg, rgba(22, 24, 29, 0) 0%, #373a53 50%, rgba(22, 24, 29, 0) 100%);
   }
 
   .tab-item {
@@ -45,19 +45,19 @@ const StyledTabs = styled.div`
     width: 200px;
     height: 46px;
     cursor: pointer;
-    color: #979ABE;
+    color: #979abe;
     font-size: 20px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    
+
     &.active {
       color: #ffffff;
     }
   }
 `;
 const StyledTabsPointer = styled.div`
-  content: "";
+  content: '';
   display: block;
   width: 200px;
   height: 1px;
@@ -66,21 +66,21 @@ const StyledTabsPointer = styled.div`
   z-index: 2;
   left: 0;
   bottom: 0;
-  transition: transform .3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
 `;
 const StyledContentTopTVL = styled.div`
   position: absolute;
   z-index: 1;
   right: 0;
   top: 0;
-  color: #979ABE;
+  color: #979abe;
   height: 46px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 8px;
   font-size: 16px;
-  
+
   .tvl-value {
     color: var(--button-color);
     font-weight: 600;
@@ -93,74 +93,72 @@ const ERC20_ABI = [
     constant: true,
     inputs: [
       {
-        name: "owner",
-        type: "address",
+        name: 'owner',
+        type: 'address'
       },
       {
-        name: "spender",
-        type: "address",
-      },
+        name: 'spender',
+        type: 'address'
+      }
     ],
-    name: "allowance",
+    name: 'allowance',
     outputs: [
       {
-        name: "",
-        type: "uint256",
-      },
+        name: '',
+        type: 'uint256'
+      }
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     constant: false,
     inputs: [
       {
-        name: "spender",
-        type: "address",
+        name: 'spender',
+        type: 'address'
       },
       {
-        name: "amount",
-        type: "uint256",
-      },
+        name: 'amount',
+        type: 'uint256'
+      }
     ],
-    name: "approve",
+    name: 'approve',
     outputs: [
       {
-        name: "",
-        type: "bool",
-      },
+        name: '',
+        type: 'bool'
+      }
     ],
     payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
 ];
 const QUERY_POOL_ABI = [
   {
-    "inputs": [],
-    "name": "slot0",
-    "outputs": [
-      { "internalType": "uint160", "name": "sqrtPriceX96", "type": "uint160" },
-      { "internalType": "int24", "name": "tick", "type": "int24" },
-      { "internalType": "uint16", "name": "observationIndex", "type": "uint16" },
-      { "internalType": "uint16", "name": "observationCardinality", "type": "uint16" },
-      { "internalType": "uint16", "name": "observationCardinalityNext", "type": "uint16" },
-      { "internalType": "uint8", "name": "feeProtocol", "type": "uint8" },
-      { "internalType": "bool", "name": "unlocked", "type": "bool" },
+    inputs: [],
+    name: 'slot0',
+    outputs: [
+      { internalType: 'uint160', name: 'sqrtPriceX96', type: 'uint160' },
+      { internalType: 'int24', name: 'tick', type: 'int24' },
+      { internalType: 'uint16', name: 'observationIndex', type: 'uint16' },
+      { internalType: 'uint16', name: 'observationCardinality', type: 'uint16' },
+      { internalType: 'uint16', name: 'observationCardinalityNext', type: 'uint16' },
+      { internalType: 'uint8', name: 'feeProtocol', type: 'uint8' },
+      { internalType: 'bool', name: 'unlocked', type: 'bool' }
     ],
-    "stateMutability": "view",
-    "type": "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    "inputs": [],
-    "name": "liquidity",
-    "outputs": [
-      { "internalType": "uint128", "name": "", "type": "uint128" },
-    ],
-    "stateMutability": "view",
-    "type": "function",
-  },
+    inputs: [],
+    name: 'liquidity',
+    outputs: [{ internalType: 'uint128', name: '', type: 'uint128' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 
 const MAX_TICK = 887272;
@@ -169,18 +167,18 @@ const CLM_FEES = {
   100: {
     value: 100,
     space: 1,
-    desc: "Best for stable pairs",
+    desc: 'Best for stable pairs'
   },
   500: {
     value: 500,
     space: 10,
-    desc: "Best for most pairs",
+    desc: 'Best for most pairs'
   },
   3000: {
     value: 3000,
     space: 60,
-    desc: "Best for exotic pairs",
-  },
+    desc: 'Best for exotic pairs'
+  }
 };
 
 export default memo(function AgentFi(props) {
@@ -203,21 +201,20 @@ export default memo(function AgentFi(props) {
     account,
     provider,
     chainIdNotSupport,
-    isChainSupported,
+    isChainSupported
   } = props;
-
 
   const { StakeTokens } = dexConfig;
 
   const tabs = [
     {
       key: 1,
-      title: 'Strategy Factory',
+      title: 'Strategy Factory'
     },
     {
       key: 2,
-      title: 'My Strategies',
-    },
+      title: 'My Strategies'
+    }
   ];
 
   const [state, updateState] = useMultiState<any>({
@@ -240,12 +237,12 @@ export default memo(function AgentFi(props) {
     listDataLoaded: false,
     rootAgent: {},
     listLoading: false,
-    totalDeposited: '0.00',
+    totalDeposited: '0.00'
     //#endregion
   });
-  const [Data] = useDynamicLoader({ path: '/staking/Datas', name: "AgentFi" });
+  const [Data] = useDynamicLoader({ path: '/staking/Datas', name: 'AgentFi' });
   function wrapNativeToken(token) {
-    if (token.isNative) return { ...token, address: "0x4300000000000000000000000000000000000004" };
+    if (token.isNative) return { ...token, address: '0x4300000000000000000000000000000000000004' };
     return token;
   }
 
@@ -270,7 +267,9 @@ export default memo(function AgentFi(props) {
     const [_token0, _token1] = sortTokens(token0, token1);
     const decimals = _token1.decimals - _token0.decimals;
     const isReverse = _token1.address === token0.address;
-    return Math.floor(Math.log(new Big(isReverse ? 1 / price : price).mul(Big(10).pow(decimals)).toNumber()) / Math.log(1.0001));
+    return Math.floor(
+      Math.log(new Big(isReverse ? 1 / price : price).mul(Big(10).pow(decimals)).toNumber()) / Math.log(1.0001)
+    );
   }
 
   function nearestUsableTick(tick, fee) {
@@ -289,30 +288,30 @@ export default memo(function AgentFi(props) {
   const handleTab = (index) => {
     if (state.currentTabIdx === index) return;
     updateState({
-      currentTabIdx: index,
+      currentTabIdx: index
     });
   };
   const handleStrategy = (strategy) => {
     updateState({
-      currentStrategy: strategy,
+      currentStrategy: strategy
     });
   };
 
   const handleRecord = (_record) => {
     updateState({
-      record: _record,
+      record: _record
     });
   };
 
   const handleStrategyClose = () => {
     updateState({
-      currentStrategy: {},
+      currentStrategy: {}
     });
   };
 
   const handleRecordClose = () => {
     updateState({
-      record: {},
+      record: {}
     });
   };
 
@@ -323,7 +322,8 @@ export default memo(function AgentFi(props) {
           .getBalance(account)
           .then((rawBalance) => {
             resolve(formatUnits(rawBalance, token.decimals || 18));
-          }).catch((err) => {
+          })
+          .catch((err) => {
             console.log('get native balance error', err);
             resolve(0);
           });
@@ -333,14 +333,14 @@ export default memo(function AgentFi(props) {
         token.address,
         [
           {
-            inputs: [{ internalType: "address", name: "account", type: "address" }],
-            name: "balanceOf",
-            outputs: [{ internalType: "uint256", name: "value", type: "uint256" }],
-            stateMutability: "view",
-            type: "function",
-          },
+            inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+            name: 'balanceOf',
+            outputs: [{ internalType: 'uint256', name: 'value', type: 'uint256' }],
+            stateMutability: 'view',
+            type: 'function'
+          }
         ],
-        provider.getSigner(),
+        provider.getSigner()
       );
       contract
         .balanceOf(account)
@@ -348,45 +348,49 @@ export default memo(function AgentFi(props) {
           resolve(formatUnits(_balance, token.decimals || 18));
         })
         .catch((err) => {
-          console.log("getTokenBalance failed", err);
+          console.log('getTokenBalance failed', err);
           resolve(0);
         });
     });
-  }
+  };
 
   const handleUpdateData = () => {
     updateState({
-      loading: true,
+      loading: true
     });
   };
 
   const getTVLData = () => {
     const url = `https://stats-cdn.agentfi.io/protocolSummary.json`;
-    asyncFetch(url).then((res) => {
-      updateState({
-        // not this one, see getAppInformation fn
-        // tvl: res.body.tvl,
-        multiplier: res.multiplier,
-        numKnownMissions: res.numKnownMissions,
+    asyncFetch(url)
+      .then((res) => {
+        updateState({
+          // not this one, see getAppInformation fn
+          // tvl: res.body.tvl,
+          multiplier: res.multiplier,
+          numKnownMissions: res.numKnownMissions
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err);
-    });
   };
 
   const getDexBalancerData = () => {
     const url = `https://api.agentfi.io/strategy/dex-balancer`;
-    asyncFetch(url).then((res) => {
-      if (!res.data || !res.data.apr) {
-        return;
-      }
-      const { net } = res.data.apr;
-      updateState({
-        dexAPR: Big(net || 0).toFixed(1),
+    asyncFetch(url)
+      .then((res) => {
+        if (!res.data || !res.data.apr) {
+          return;
+        }
+        const { net } = res.data.apr;
+        updateState({
+          dexAPR: Big(net || 0).toFixed(1)
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err);
-    });
   };
 
   const formatTVL = (record, options) => {
@@ -397,7 +401,7 @@ export default memo(function AgentFi(props) {
     if (!record.balances || !record.balances.length) {
       return { value: '$0.00', list: [], usd: Big(0) };
     }
-    const calcList = record.balances.filter((b) => !["All Gas", "Max Gas Reclaim"].includes(b.name));
+    const calcList = record.balances.filter((b) => !['All Gas', 'Max Gas Reclaim'].includes(b.name));
     if (!calcList.length) {
       return { value: '$0.00', list: [], usd: Big(0) };
     }
@@ -429,7 +433,7 @@ export default memo(function AgentFi(props) {
       return {
         value: `$${totalValue.toFixed(2)}`,
         list: balanceList,
-        usd: totalValue,
+        usd: totalValue
       };
     }
 
@@ -445,12 +449,12 @@ export default memo(function AgentFi(props) {
     return {
       value: `$${totalValue.toFixed(2)}`,
       list: balanceList,
-      usd: totalValue,
+      usd: totalValue
     };
   };
 
   const getListData = (options) => {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       let { strategies } = options || {};
       if (!strategies) {
         strategies = state.strategies;
@@ -460,45 +464,47 @@ export default memo(function AgentFi(props) {
         return;
       }
       updateState({
-        listLoading: true,
+        listLoading: true
       });
       const url = `https://api.agentfi.io/agents/${account}?chainID=${curChain.chain_id}`;
-      asyncFetch(url).then((res) => {
-        if (!res.data) {
-          resolve([]);
-          return;
-        }
-        const ls = res.data || [];
-        const _listData = [];
-        let totalDeposited = Big(0);
-        let _rootAgent = [];
-        for (const it of ls) {
-          if (it.agentType === 'ROOT') {
-            _rootAgent = it;
-            const { usd } = formatTVL(it, { strategies, from: 'list data' });
-            totalDeposited = totalDeposited.plus(usd);
-            continue;
+      asyncFetch(url)
+        .then((res) => {
+          if (!res.data) {
+            resolve([]);
+            return;
           }
-          _listData.push(it);
-        }
-        _listData.forEach((record) => {
-          const { usd } = formatTVL(record, { strategies, from: 'list data' });
-          totalDeposited = totalDeposited.plus(usd);
+          const ls = res.data || [];
+          const _listData = [];
+          let totalDeposited = Big(0);
+          let _rootAgent = [];
+          for (const it of ls) {
+            if (it.agentType === 'ROOT') {
+              _rootAgent = it;
+              const { usd } = formatTVL(it, { strategies, from: 'list data' });
+              totalDeposited = totalDeposited.plus(usd);
+              continue;
+            }
+            _listData.push(it);
+          }
+          _listData.forEach((record) => {
+            const { usd } = formatTVL(record, { strategies, from: 'list data' });
+            totalDeposited = totalDeposited.plus(usd);
+          });
+          updateState({
+            listLoading: false,
+            listData: _listData,
+            totalDeposited: totalDeposited.toFixed(2),
+            rootAgent: _rootAgent || {}
+          });
+          resolve(_listData);
+        })
+        .catch((err) => {
+          console.log('getListData failed, ', err);
+          resolve([]);
+          updateState({
+            listLoading: false
+          });
         });
-        updateState({
-          listLoading: false,
-          listData: _listData,
-          totalDeposited: totalDeposited.toFixed(2),
-          rootAgent: _rootAgent || {},
-        });
-        resolve(_listData);
-      }).catch((err) => {
-        console.log('getListData failed, ', err);
-        resolve([]);
-        updateState({
-          listLoading: false,
-        });
-      });
     });
   };
 
@@ -509,86 +515,92 @@ export default memo(function AgentFi(props) {
         resolve(true);
         return;
       }
-      const TokenContract = new ethers.Contract(
-        tokenAddress,
-        ERC20_ABI,
-        provider.getSigner()
-      );
+      const TokenContract = new ethers.Contract(tokenAddress, ERC20_ABI, provider.getSigner());
       const allowanceParams = [
         // owner
         account,
         // spender
-        spender,
+        spender
       ];
       const approveParams = [
         // spender
         spender,
         // amount
-        parseUnits(Big(tokenAmount).toFixed(tokenDecimals || 18).toString(), tokenDecimals),
+        parseUnits(
+          Big(tokenAmount)
+            .toFixed(tokenDecimals || 18)
+            .toString(),
+          tokenDecimals
+        )
       ];
       const approveFailed = (msg) => {
         toast?.fail({
-          title: "Approve Failed!",
-          text: msg || `Approve ${state.currentUsdToken.value}`,
+          title: 'Approve Failed!',
+          text: msg || `Approve ${state.currentUsdToken.value}`
         });
       };
-      TokenContract.allowance(...allowanceParams).then((res) => {
-        const allowanceValue = Big(formatUnits(res, tokenDecimals));
-        if (allowanceValue.gte(tokenAmount || 0)) {
-          resolve(true);
-          return;
-        }
-        // re-approve
-        TokenContract.approve(...approveParams).then((tx) => {
-          tx.wait()
-            .then((res) => {
-              const { status, transactionHash } = res;
-              if (status !== 1) {
-                resolve(false);
-                approveFailed();
-                return;
-              }
-              resolve(true);
-              toast?.success({
-                title: "Approve Successfully!",
-                tx: transactionHash,
-                chainId,
-              });
+      TokenContract.allowance(...allowanceParams)
+        .then((res) => {
+          const allowanceValue = Big(formatUnits(res, tokenDecimals));
+          if (allowanceValue.gte(tokenAmount || 0)) {
+            resolve(true);
+            return;
+          }
+          // re-approve
+          TokenContract.approve(...approveParams)
+            .then((tx) => {
+              tx.wait()
+                .then((res) => {
+                  const { status, transactionHash } = res;
+                  if (status !== 1) {
+                    resolve(false);
+                    approveFailed();
+                    return;
+                  }
+                  resolve(true);
+                  toast?.success({
+                    title: 'Approve Successfully!',
+                    tx: transactionHash,
+                    chainId
+                  });
+                })
+                .catch((err) => {
+                  resolve(false);
+                  console.log(err);
+                  approveFailed();
+                });
             })
             .catch((err) => {
               resolve(false);
-              console.log(err);
-              approveFailed();
+              approveFailed(err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : '');
             });
         })
-          .catch((err) => {
-            resolve(false);
-            approveFailed(err?.message?.includes("user rejected transaction") ? 'User rejected transaction' : '');
-          });
-      }).catch((err) => {
-        console.log(err);
-        resolve(false);
-      });
+        .catch((err) => {
+          console.log(err);
+          resolve(false);
+        });
     });
   };
 
   const getAppInformation = () => {
     const url = `https://api.llama.fi/protocol/agentfi`;
     const url2 = `/api/app/agentfi/strategies`;
-    asyncFetch(url).then((res) => {
-      if (!res.tvl || !res.tvl.length) {
-        return;
-      }
-      const tvlList = res.tvl.sort((a, b) => b.date - a.date);
-      updateState({
-        tvl: tvlList[0]?.totalLiquidityUSD,
+    asyncFetch(url)
+      .then((res) => {
+        if (!res.tvl || !res.tvl.length) {
+          return;
+        }
+        const tvlList = res.tvl.sort((a, b) => b.date - a.date);
+        updateState({
+          tvl: tvlList[0]?.totalLiquidityUSD
+        });
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    }).catch((err) => {
-      console.log(err);
-    });
     return new Promise((resolve) => {
       updateState({
-        listLoading: true,
+        listLoading: true
       });
       const formatStrategies = (remoteStrategies) => {
         const strategiesResult = [];
@@ -596,29 +608,31 @@ export default memo(function AgentFi(props) {
           const curr = remoteStrategies.find((_it) => _it.ID === it.ID);
           const obj = {
             ...it,
-            NAME: curr?.NAME || it.NAME,
+            NAME: curr?.NAME || it.NAME
           };
           obj.name = obj.NAME.toLowerCase();
           strategiesResult.push(obj);
         });
         updateState({
-          strategies: strategiesResult,
+          strategies: strategiesResult
         });
         resolve(strategiesResult);
         updateState({
-          listLoading: false,
+          listLoading: false
         });
       };
-      asyncFetch(url2).then((res) => {
-        if (!res.length) {
+      asyncFetch(url2)
+        .then((res) => {
+          if (!res.length) {
+            formatStrategies([]);
+            return;
+          }
+          formatStrategies(res);
+        })
+        .catch((err) => {
+          console.log(err);
           formatStrategies([]);
-          return;
-        }
-        formatStrategies(res);
-      }).catch((err) => {
-        console.log(err);
-        formatStrategies([]);
-      });
+        });
     });
   };
 
@@ -636,12 +650,12 @@ export default memo(function AgentFi(props) {
     rootAgent,
     totalDeposited,
     dexAPR,
-    strategies,
+    strategies
   } = state;
 
   useEffect(() => {
     updateState({
-      loading: !chainIdNotSupport,
+      loading: !chainIdNotSupport
     });
   }, [chainIdNotSupport]);
 
@@ -653,147 +667,132 @@ export default memo(function AgentFi(props) {
       getListData({ strategies });
     });
     updateState({
-      listDataLoaded: true,
+      listDataLoaded: true
     });
   }, [prices, state.listDataLoaded]);
 
   return (
     <StyledContainer style={dexConfig.theme}>
-      {
-        loading || listLoading ? (
-          <Spinner />
-        ) : (
-          <>
-            <StyledTabs>
-              {
-                tabs.map((tab, index) => (
-                  <div
-                    className={`tab-item ${currentTabIdx === index ? 'active' : ''}`}
-                    key={tab.key}
-                    onClick={() => handleTab(index)}
-                  >
-                    {tab.title}
-                  </div>
-                ))
-              }
-              <StyledTabsPointer
-                style={{
-                  left: `calc((100% - 200px * ${tabs.length}) / 2)`,
-                  transform: `translateX(${currentTabIdx * 200}px)`,
+      {loading || listLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <StyledTabs>
+            {tabs.map((tab, index) => (
+              <div
+                className={`tab-item ${currentTabIdx === index ? 'active' : ''}`}
+                key={tab.key}
+                onClick={() => handleTab(index)}
+              >
+                {tab.title}
+              </div>
+            ))}
+            <StyledTabsPointer
+              style={{
+                left: `calc((100% - 200px * ${tabs.length}) / 2)`,
+                transform: `translateX(${currentTabIdx * 200}px)`
+              }}
+            />
+            {currentTabIdx === 0 && (
+              <StyledContentTopTVL>
+                <span className="tvl-label">Protocol TVL</span>
+                <span className="tvl-value">{formatValueDecimal(tvl, '$', 2, true)}</span>
+              </StyledContentTopTVL>
+            )}
+          </StyledTabs>
+          <StyledContent>
+            {currentTabIdx === 0 && (
+              <StrategyFactory
+                {...{
+                  ...props,
+                  provider,
+                  currentStrategy,
+                  handleStrategy,
+                  onStrategyClose: handleStrategyClose,
+                  getTokenBalance,
+                  handleUpdateData,
+                  totalMissions,
+                  multiplier,
+                  numKnownMissions,
+                  rootAgent,
+                  handleApprove,
+                  tickToPrice,
+                  priceToUsableTick,
+                  QUERY_POOL_ABI,
+                  dexAPR,
+                  strategies,
+                  onSuccess: () => {
+                    updateState({
+                      loading: true
+                    });
+                    getListData().then((_list) => {
+                      if (!_list.length || !record.agentAddress) return;
+                      const currRecord = _list.find((it) => it.agentAddress === record.agentAddress);
+                      currRecord && handleRecord(currRecord);
+                    });
+                  }
                 }}
               />
-              {
-                currentTabIdx === 0 && (
-                  <StyledContentTopTVL>
-                    <span className="tvl-label">Protocol TVL</span>
-                    <span className="tvl-value">
-                      {formatValueDecimal(tvl, '$', 2, true)}
-                    </span>
-                  </StyledContentTopTVL>
-                )
-              }
-            </StyledTabs>
-            <StyledContent>
-              {
-                currentTabIdx === 0 && (
-                  <StrategyFactory
-                    {...{
-                      ...props,
-                      provider,
-                      currentStrategy,
-                      handleStrategy,
-                      onStrategyClose: handleStrategyClose,
-                      getTokenBalance,
-                      handleUpdateData,
-                      totalMissions,
-                      multiplier,
-                      numKnownMissions,
-                      rootAgent,
-                      handleApprove,
-                      tickToPrice,
-                      priceToUsableTick,
-                      QUERY_POOL_ABI,
-                      dexAPR,
-                      strategies,
-                      onSuccess: () => {
-                        updateState({
-                          loading: true,
-                        });
-                        getListData().then((_list) => {
-                          if (!_list.length || !record.agentAddress) return;
-                          const currRecord = _list.find((it) => it.agentAddress === record.agentAddress);
-                          currRecord && handleRecord(currRecord);
-                        });
-                      },
-                    }}
-                  />
-                )
-              }
-              {
-                currentTabIdx === 1 && (
-                  <MyStrategies
-                    {...{
-                      ...props,
-                      provider,
-                      record,
-                      handleRecord,
-                      onRecordClose: handleRecordClose,
-                      getTokenBalance,
-                      multiplier,
-                      numKnownMissions,
-                      totalMissions,
-                      listData,
-                      loading: listLoading,
-                      totalDeposited,
-                      rootAgent,
-                      formatTVL,
-                      handleApprove,
-                      tickToPrice,
-                      priceToUsableTick,
-                      QUERY_POOL_ABI,
-                      strategies,
-                      onSuccess: () => {
-                        updateState({
-                          loading: true,
-                        });
-                        getListData().then((_list) => {
-                          if (!_list.length || !record.agentAddress) return;
-                          const currRecord = _list.find((it) => it.agentAddress === record.agentAddress);
-                          currRecord && handleRecord(currRecord);
-                        });
-                      },
-                    }}
-                  />
-                )
-              }
-            </StyledContent>
-          </>
-        )
-      }
+            )}
+            {currentTabIdx === 1 && (
+              <MyStrategies
+                {...{
+                  ...props,
+                  provider,
+                  record,
+                  handleRecord,
+                  onRecordClose: handleRecordClose,
+                  getTokenBalance,
+                  multiplier,
+                  numKnownMissions,
+                  totalMissions,
+                  listData,
+                  loading: listLoading,
+                  totalDeposited,
+                  rootAgent,
+                  formatTVL,
+                  handleApprove,
+                  tickToPrice,
+                  priceToUsableTick,
+                  QUERY_POOL_ABI,
+                  strategies,
+                  onSuccess: () => {
+                    updateState({
+                      loading: true
+                    });
+                    getListData().then((_list) => {
+                      if (!_list.length || !record.agentAddress) return;
+                      const currRecord = _list.find((it) => it.agentAddress === record.agentAddress);
+                      currRecord && handleRecord(currRecord);
+                    });
+                  }
+                }}
+              />
+            )}
+          </StyledContent>
+        </>
+      )}
 
-      {
-        Data && (
-          <Data
-            {...{
-              update: loading,
-              account,
-              provider,
-              wethAddress,
-              multicallAddress,
-              multicall,
-              prices,
-              ...dexConfig,
-              onLoad: (data) => {
-
-                updateState({
-                  loading: false,
-                  ...data,
-                });
-              },
-            }}
-          />
-        )
-      }
+      {Data && (
+        <Data
+          {...{
+            update: loading,
+            account,
+            provider,
+            wethAddress,
+            multicallAddress,
+            multicall,
+            prices,
+            ...dexConfig,
+            onLoad: (data) => {
+              updateState({
+                loading: false,
+                ...data
+              });
+            }
+          }}
+        />
+      )}
 
       {!isChainSupported && (
         <ChainWarningBox
@@ -801,11 +800,10 @@ export default memo(function AgentFi(props) {
             chain: curChain,
             onSwitchChain: onSwitchChain,
             switchingChain: switchingChain,
-            theme: dexConfig.theme?.button,
+            theme: dexConfig.theme
           }}
         />
       )}
     </StyledContainer>
   );
-
-})
+});

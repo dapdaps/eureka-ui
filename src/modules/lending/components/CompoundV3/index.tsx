@@ -69,41 +69,31 @@ const LendingCompoundV3 = (props: Props) => {
           }}
         />
       )}
-      {!state.rowData && (
-        <CompoundV3List
-          assets={state.assets || []}
-          onClickRow={handleClickRow}
-          curChain={curChain}
+      {!state.rowData && <CompoundV3List assets={state.assets || []} onClickRow={handleClickRow} curChain={curChain} />}
+
+      {state.loading && <Loading />}
+
+      {Data && (
+        <Data
+          provider={provider}
+          update={state.loading}
+          account={account}
+          wethAddress={wethAddress}
+          multicallAddress={multicallAddress}
+          multicall={multicall}
+          chainId={chainId}
+          curPool={curPool}
+          {...dexConfig}
+          onLoad={(data: any) => {
+            console.log('DATA_onLoad:', data);
+            updateState({
+              loading: false,
+              timestamp: Date.now(),
+              ...data
+            });
+          }}
         />
       )}
-
-      {state.loading && (
-        <Loading />
-      )}
-
-      {
-        Data && (
-          <Data
-            provider={provider}
-            update={state.loading}
-            account={account}
-            wethAddress={wethAddress}
-            multicallAddress={multicallAddress}
-            multicall={multicall}
-            chainId={chainId}
-            curPool={curPool}
-            {...dexConfig}
-            onLoad={(data: any) => {
-              console.log('DATA_onLoad:', data);
-              updateState({
-                loading: false,
-                timestamp: Date.now(),
-                ...data
-              });
-            }}
-          />
-        )
-      }
     </StyledContainer>
   );
 };

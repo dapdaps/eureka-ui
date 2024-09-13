@@ -1,11 +1,11 @@
 import { metis } from '@/config/tokens/metis';
 
 const basic = {
-  name: 'Athena Finance',
+  name: 'AthenaFinance',
   // icon: '/images/apps/granary.png',
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
-  type: 'staking',
+  type: 'staking'
 };
 
 const tokenArray = Object.values(metis);
@@ -25,8 +25,8 @@ const networks = {
       //   decimals: 18,
       //   underlyingToken: gnosis['wmatic'],
       // },
-    },
-  },
+    }
+  }
 };
 
 export default { basic, networks };
