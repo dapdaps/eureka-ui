@@ -11,6 +11,8 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
+import { formatDateTime } from '@/utils/date';
+import { useBasic } from '@/views/Campaign/RubicHoldstation/hooks/useBasic';
 
 import LazyImage from '../LazyImage';
 import activity from './activity';
@@ -79,6 +81,7 @@ const RubicHeader = styled.div`
   font-family: Montserrat;
   font-size: 14px;
   position: relative;
+  font-weight: 500;
 
   .rubic-badge {
     position: absolute;
@@ -471,8 +474,22 @@ export default function BridgeX({
   // for Campaign
   const isRubic = tool === 'rubic';
 
+  const { data }: any = useBasic({
+    category: isRubic ? 'rubic' : null
+  });
+
   const CampaignRubic = () => {
-    if (isRubic) {
+    if (isRubic && data.status && data.status !== 'ended') {
+      const { end_time, start_time } = data;
+      let hourStr: string | number = '';
+      let unit = '';
+      if (end_time) {
+        const date = new Date(end_time);
+        const hour = date.getHours();
+        hourStr = hour % 12;
+        unit = hour > 11 ? 'PM' : 'AM';
+      }
+
       return (
         <RubicHeader>
           <LazyImage
@@ -488,11 +505,10 @@ export default function BridgeX({
           <RubicFooter>
             <RubicFooterTime>
               <span className="label">Time: </span>
-              16/9/2024 -04/10/2024 3PM (UTC)
+              {formatDateTime(start_time, 'D/M/YYYY')} - {formatDateTime(end_time, 'D/M/YYYY')} {hourStr}
+              {unit} (UTC)
             </RubicFooterTime>
-            <RubicFooterLink href="/campaign/home?category=rubic-holdstation" target="_blank">
-              Campaign {'>'}
-            </RubicFooterLink>
+            <RubicFooterLink href="/campaign/home?category=rubic-holdstation">Campaign {'>'}</RubicFooterLink>
           </RubicFooter>
         </RubicHeader>
       );

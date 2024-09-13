@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
-  color: #FFF;
+  color: #fff;
   font-family: Montserrat;
+  background: #000;
 `;

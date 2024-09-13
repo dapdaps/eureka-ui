@@ -37,7 +37,7 @@ export const useTickets = ({ category }: any) => {
 
     rewardsList = rewardsList.sort((a, b) => a.reward_time - b.reward_time);
 
-    setTotalReward(total_reward);
+    setTotalReward(formateValueWithThousandSeparatorAndFont(total_reward, 0, true, { prefix: '$' }));
 
     let latestReward: RewardItem | undefined = undefined;
     rewardsList = rewardsList.map((reward, idx) => {
