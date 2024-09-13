@@ -51,6 +51,25 @@ const DAppRewardList: { [k: string]: Badge[] } = {
         }
       ]
     }
+  ],
+  ['Rubic Bridge']: [
+    {
+      name: RewardIcons['USDC']?.label || '',
+      value: '$7500',
+      icon: RewardIcons['USDC']?.icon || '',
+      status: StatusType.ongoing,
+      tooltip: 'Related reward on DapDap',
+      iconSize: 20,
+      odyssey: [
+        {
+          name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
+          status: 'ongoing',
+          link: '/campaign/home?category=rubic-holdstation',
+          banner: '/images/campaign/rubic-holdstation/link-banner.png',
+          badgeValue: '$7500'
+        }
+      ]
+    }
   ]
 };
 

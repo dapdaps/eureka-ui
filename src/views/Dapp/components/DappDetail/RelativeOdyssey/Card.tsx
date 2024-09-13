@@ -53,7 +53,8 @@ const OdysseyCardComponent = (props: Props) => {
     className,
     bp,
     isHoverButton,
-    showSummary = true
+    showSummary = true,
+    link
   } = props;
 
   const tagListRef = useRef<any>();
@@ -88,6 +89,10 @@ const OdysseyCardComponent = (props: Props) => {
     e.preventDefault();
     if (id === 0) {
       window.scrollTo({ top: 0 });
+      return;
+    }
+    if (id === -1 && link) {
+      router.push(link);
       return;
     }
 
@@ -373,6 +378,7 @@ export interface Props {
   bp?: string;
   isHoverButton?: boolean;
   showSummary?: boolean;
+  link?: string;
 }
 
 const odysseyIsLive = (status: StatusType) => {

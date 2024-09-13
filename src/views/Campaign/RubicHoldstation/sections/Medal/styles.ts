@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   width: 1000px;
-  margin: 0 auto 150px;
+  margin: 0 auto;
+  padding-bottom: 150px;
 `;
 export const StyledTitle = styled.div`
   color: #fff;

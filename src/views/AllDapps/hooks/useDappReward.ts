@@ -34,6 +34,15 @@ export default function useDappReward() {
               value: reward.value,
               name: reward.name,
               odysseys: [
+                // add Rubic activity
+                {
+                  ...item,
+                  banner: '/images/campaign/rubic-holdstation/link-banner.png',
+                  link: '/campaign/home?category=rubic-holdstation',
+                  status: StatusType.ongoing,
+                  name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
+                  reward_value: '$7500'
+                },
                 {
                   ...item,
                   banner: '/images/odyssey/rango-banner-round.png',
