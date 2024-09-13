@@ -59,7 +59,7 @@ export default function useSwitchChain() {
         return;
       }
       toast.success({
-        title: 'Add successfully!',
+        title: 'Switch successfully!',
       });
     } catch (error) {
       console.log(error, '<=====addChain');
