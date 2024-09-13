@@ -1,39 +1,69 @@
-import { useState } from 'react';
+import Big from 'big.js';
+import React, { useContext, useState } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
-import NoPrize from '@/views/Campaign/RubicHoldstation/sections/Tickets/NoPrize';
+import RubicHoldstationContext from '@/views/Campaign/RubicHoldstation/context';
+import type { RewardItem } from '@/views/Campaign/RubicHoldstation/hooks/useTickets';
 import RulesEntry from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/Entry';
 
 import Button from '../../components/Button';
 import ResultModal from './ResultModal';
 import Round from './Round';
-import { StyledContainer, StyledPrize, StyledPrizeWrapper, StyledTickets, StyledTitle, StyledWonText } from './styles';
+import {
+  StyledContainer,
+  StyledNotes,
+  StyledPrize,
+  StyledPrizeWrapper,
+  StyledRoundContainer,
+  StyledTickets,
+  StyledTitle,
+  StyledWonText
+} from './styles';
 import Ticket from './Ticket';
 import YourTicketsModal from './YourTicketsModal';
 
 const Tickets = () => {
+  const context = useContext(RubicHoldstationContext);
+
+  const { data } = context.basic;
+  const { rewards, userTotalReward } = context.tickets;
+
+  const { totalBonus } = data;
+
   const [showTicketsModal, setShowTicketsModal] = useState(false);
-  const [showResultModal, setShowResultModal] = useState(false);
-  const [noPrizeVisible, setNoPrizeVisible] = useState(false);
+
+  const handleScroll = () => {
+    if (!context.account) {
+      context.onAuthCheck();
+      return;
+    }
+    const element = document.getElementById('campaignRubicAndHoldstationGetTicketsNow');
+    element &&
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+  };
 
   return (
     <StyledContainer>
       <StyledTitle size={42}>Good Luck!</StyledTitle>
       <StyledPrizeWrapper>
         <StyledPrize size={80} italic>
-          $7,500
+          {totalBonus}
         </StyledPrize>
         <StyledTitle size={36} style={{ paddingBottom: 12, display: 'flex', alignItems: 'center', gap: 22 }}>
           <span>in prize!</span>
           <RulesEntry />
         </StyledTitle>
       </StyledPrizeWrapper>
-      <StyledTickets style={{ marginBottom: true ? 38 : 72 }}>
+      <StyledTickets>
         <Ticket
           onClick={() => {
             setShowTicketsModal(true);
           }}
         />
-        <Button style={{ position: 'absolute', right: 0 }}>
+        <Button style={{ position: 'absolute', right: 0 }} onClick={handleScroll}>
           <span>Get Tickets</span>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path
@@ -43,31 +73,38 @@ const Tickets = () => {
           </svg>
         </Button>
       </StyledTickets>
-      <StyledWonText>
-        <div>Congrats! You won</div>
-        <StyledPrize size={46}>$2500</StyledPrize>
-      </StyledWonText>
-      {[0, 1, 2].map((item, i) => (
-        <Round key={i} round={i + 1} />
-      ))}
+      {Big(userTotalReward.value || 0).gt(0) && (
+        <StyledWonText>
+          <div>Congrats! You won</div>
+          <StyledPrize size={46}>{userTotalReward.str}</StyledPrize>
+        </StyledWonText>
+      )}
+      <StyledRoundContainer>
+        {rewards?.length
+          ? rewards.map((item: RewardItem, i: number) => <Round key={i} reward={item} />)
+          : [...new Array(3).keys()].map((idx) => (
+              <Skeleton key={idx} width={998} height={186} borderRadius={20} style={{ marginBottom: 20 }} />
+            ))}
+      </StyledRoundContainer>
+      <StyledNotes>
+        <div className="note-title">Notes</div>
+        <ul className="note-list">
+          <li className="note-item">
+            The prize distribution for each round needs to be adjusted based on the actual number of winners.
+          </li>
+          <li className="note-item">
+            The carryover rules for the third round ensure that the prize does not go unclaimed, maintaining the
+            fairness and attractiveness of the lottery.
+          </li>
+        </ul>
+      </StyledNotes>
       <YourTicketsModal
         display={showTicketsModal}
         onClose={() => {
           setShowTicketsModal(false);
         }}
       />
-      <ResultModal
-        display={showResultModal}
-        onClose={() => {
-          setShowResultModal(false);
-        }}
-      />
-      <NoPrize
-        visible={noPrizeVisible}
-        onClose={() => {
-          setNoPrizeVisible(false);
-        }}
-      />
+      <ResultModal />
     </StyledContainer>
   );
 };

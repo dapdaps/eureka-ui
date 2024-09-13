@@ -1,4 +1,9 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
+
+import useAccount from '@/hooks/useAccount';
+import useConnectWallet from '@/hooks/useConnectWallet';
+import RubicHoldstationContext from '@/views/Campaign/RubicHoldstation/context';
 
 const StyledContainer = styled.div`
   position: relative;
@@ -57,9 +62,11 @@ const StyledLinks = styled.div`
   margin-top: 9px;
   cursor: pointer;
   transition: 0.5s;
+
   &:hover {
     opacity: 0.9;
   }
+
   &:active {
     opacity: 0.8;
   }
@@ -75,6 +82,12 @@ const StyledTicketBg = styled(StyledTicket)`
 `;
 
 export default function Ticket({ onClick }: any) {
+  const context = useContext(RubicHoldstationContext);
+  const { account } = useAccount();
+  const { onConnect } = useConnectWallet();
+
+  const { userVouchers } = context.tickets;
+
   return (
     <StyledContainer>
       <StyledTicket>
@@ -94,9 +107,13 @@ export default function Ticket({ onClick }: any) {
               />
             </svg>
           </StyledTitle>
-          <StyledLinks onClick={onClick}>View Your Tickets</StyledLinks>
+          {account ? (
+            <StyledLinks onClick={onClick}>View Your Tickets</StyledLinks>
+          ) : (
+            <StyledLinks onClick={onConnect}>Connect Wallet</StyledLinks>
+          )}
         </StyledContent>
-        <StyledNumber>8</StyledNumber>
+        <StyledNumber>{userVouchers.list.length}</StyledNumber>
       </StyledTicket>
       <StyledTicketBg />
     </StyledContainer>

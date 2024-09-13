@@ -27,7 +27,7 @@ const StyledInner = styled.div<{ size: number }>`
   text-transform: capitalize;
 `;
 
-export default function NumberBall({ number, size = 80 }: any) {
+export default function NumberBall({ number, size = 80, style }: any) {
   const [rotate, setRotate] = useState(0);
   useEffect(() => {
     const _random = Math.random();
@@ -36,6 +36,7 @@ export default function NumberBall({ number, size = 80 }: any) {
   return (
     <StyledContainer
       size={size}
+      style={style}
       bg={number ? config[number].bg : 'radial-gradient(70.56% 70.56% at 50% 50%, #979ABE 0%, #3D405A 100%)'}
     >
       <StyledInner size={size} style={{ transform: `rotate(${rotate}deg)`, fontWeight: number ? 900 : 500 }}>

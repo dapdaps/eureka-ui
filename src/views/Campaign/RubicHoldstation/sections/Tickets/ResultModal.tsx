@@ -1,8 +1,10 @@
+import { useContext } from 'react';
 import styled from 'styled-components';
 
 import Modal from '@/components/Modal';
+import RubicHoldstationContext from '@/views/Campaign/RubicHoldstation/context';
+import NoPrize from '@/views/Campaign/RubicHoldstation/sections/Tickets/NoPrize';
 
-import Button from '../../components/Button';
 import NumberBall from '../../components/NumberBall';
 import ModalTicket from './ModalTicket';
 import { StyledPrize } from './styles';
@@ -56,20 +58,24 @@ const StyledHints = styled.div`
   margin-top: 34px;
 `;
 
-const StyledButtonWrapper = styled.div`
-  margin-top: 39px;
-  display: flex;
-  justify-content: center;
-`;
+export default function ResultModal(props: ResultModalProps) {
+  const context = useContext(RubicHoldstationContext);
 
-export default function ResultModal({ display, onClose }: any) {
-  const success = true;
+  const { checkTicketVisible, checkTicketData, setCheckTicketVisible, setCheckTicketData } = context.tickets;
+
+  const success = !!checkTicketData && checkTicketData?.user_reward_voucher;
+
+  const handleClose = () => {
+    setCheckTicketVisible(false);
+    setCheckTicketData(undefined);
+  };
+
   return (
     <Modal
-      display={display}
+      display={checkTicketVisible}
       title=""
       width={470}
-      onClose={onClose}
+      onClose={handleClose}
       content={
         <StyledContainer>
           {success ? (
@@ -77,30 +83,24 @@ export default function ResultModal({ display, onClose }: any) {
               <StyledTitle>Congrats!</StyledTitle>
               <StyledLabel>You won</StyledLabel>
               <StyledPrizeWrapper>
-                <StyledPrize size={46}>$2500</StyledPrize>
+                <StyledPrize size={46}>{checkTicketData?.userRewardAmount}</StyledPrize>
               </StyledPrizeWrapper>
-              <StyledLabel>You matched the third prize in round 3</StyledLabel>
-              <ModalTicket index={3} />
+              <StyledLabel>You matched the prize in round {checkTicketData?.round}</StyledLabel>
+              {checkTicketData?.userRewardVoucher?.map((v: any, idx: number) => (
+                <ModalTicket key={idx} index={idx + 1} voucher={v} />
+              ))}
               <StyledNumbers>
-                {[8, 6, 3, 9, 7].map((item) => (
-                  <NumberBall key={item} number={item} size={70} />
-                ))}
+                {checkTicketData?.voucherArr.map((item: string) => <NumberBall key={item} number={item} size={70} />)}
               </StyledNumbers>
-              <StyledHints>The prize will transfer to your address in 5 days.</StyledHints>
+              <StyledHints>The prize will transfer to your address after the campaign ends.</StyledHints>
             </>
           ) : (
-            <>
-              <StyledTitle>Oops!</StyledTitle>
-              <StyledLabel style={{ width: '80%', margin: '20px auto' }}>
-                You weren&apos;t selected in round 3Good luck is on its way!
-              </StyledLabel>
-              <StyledButtonWrapper>
-                <Button onClick={onClose}>Close</Button>
-              </StyledButtonWrapper>
-            </>
+            <NoPrize round={checkTicketData?.round} />
           )}
         </StyledContainer>
       }
     />
   );
 }
+
+interface ResultModalProps {}

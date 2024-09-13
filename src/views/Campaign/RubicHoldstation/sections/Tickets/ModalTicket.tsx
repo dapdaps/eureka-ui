@@ -34,7 +34,7 @@ const StyledItemContent = styled.div`
   gap: 2px;
 `;
 
-const StyledNumber = styled.div<{ active: boolean }>`
+const StyledNumber = styled.div<{ active?: boolean }>`
   color: #000;
   font-size: 26px;
   font-style: normal;
@@ -47,7 +47,9 @@ const StyledNumber = styled.div<{ active: boolean }>`
   border: 3px solid ${({ active }) => (active ? '#FF008A' : 'transparent')};
 `;
 
-export default function ModalTicket({ index }: any) {
+export default function ModalTicket({ index, voucher }: ModalTicketProps) {
+  const isFullMatch = voucher.every((v) => !!v.won);
+
   return (
     <StyledItem>
       <StyledItemHeader>
@@ -60,12 +62,17 @@ export default function ModalTicket({ index }: any) {
         <span>Ticket {index}</span>
       </StyledItemHeader>
       <StyledItemContent>
-        {[8, 2, 3, 9, 0].map((item) => (
-          <StyledNumber key={item} active={item === 3}>
-            {item}
+        {voucher.map((item, idx) => (
+          <StyledNumber key={idx} active={!isFullMatch ? item.won : false}>
+            {item.no}
           </StyledNumber>
         ))}
       </StyledItemContent>
     </StyledItem>
   );
+}
+
+interface ModalTicketProps {
+  index: number;
+  voucher: { no: string; won?: boolean }[];
 }
