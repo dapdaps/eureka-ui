@@ -1,5 +1,6 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -11,6 +12,7 @@ import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
 
+import LazyImage from '../LazyImage';
 import activity from './activity';
 import Alert from './components/Alert';
 import ChainSelector from './components/ChainSelector';
@@ -51,9 +53,64 @@ const Content = styled.div`
   border: 1px solid #373a53;
   border-radius: 16px;
   background: #262836;
-  margin-top: 30px;
   padding: 16px;
   position: relative;
+
+  &.rubic {
+    top: -27px;
+    z-index: 1;
+  }
+`;
+
+const Body = styled.div`
+  margin-top: 30px;
+`;
+
+const RubicHeader = styled.div`
+  width: 100%;
+  height: 113px;
+  background: red;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  padding: 14px 20px 0 40px;
+  background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
+  filter: drop-shadow(0px 11px 6.8px rgba(0, 0, 0, 0.25));
+  color: #000;
+  font-family: Montserrat;
+  font-size: 14px;
+  position: relative;
+
+  .rubic-badge {
+    position: absolute;
+    top: -16px;
+    left: -16px;
+    z-index: 1;
+  }
+`;
+
+const RubicContent = styled.div`
+  .price {
+    font-style: italic;
+    font-weight: 700;
+  }
+`;
+
+const RubicFooter = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const RubicFooterLink = styled(Link)`
+  color: #fff;
+  font-weight: 600;
+  text-decoration: underline;
+`;
+
+const RubicFooterTime = styled.div`
+  .label {
+    font-weight: 700;
+  }
 `;
 
 const MainTitle = styled.div`
@@ -410,6 +467,39 @@ export default function BridgeX({
   }
 
   const CurrentActivityCom = activity[tool];
+
+  // for Campaign
+  const isRubic = tool === 'rubic';
+
+  const CampaignRubic = () => {
+    if (isRubic) {
+      return (
+        <RubicHeader>
+          <LazyImage
+            containerClassName="rubic-badge"
+            src="/images/campaign/rubic-holdstation/rubic-badge.png"
+            width={52}
+            height={64}
+          />
+          <RubicContent>
+            Rubic x HoldStation Campaign is live now! Play Lottery and Win Medals, <span className="price">$7500</span>{' '}
+            in prize
+          </RubicContent>
+          <RubicFooter>
+            <RubicFooterTime>
+              <span className="label">Time: </span>
+              16/9/2024 -04/10/2024 3PM (UTC)
+            </RubicFooterTime>
+            <RubicFooterLink href="/campaign/rubic-holdstation" target="_blank">
+              Campaign {'>'}
+            </RubicFooterLink>
+          </RubicFooter>
+        </RubicHeader>
+      );
+    }
+    return null;
+  };
+
   return (
     <BridgePanel style={style}>
       <Header>
@@ -419,238 +509,241 @@ export default function BridgeX({
         <BridgeName>{name}</BridgeName>
       </Header>
       {CurrentActivityCom && <CurrentActivityCom dapp={dapp} />}
-      <Content>
-        <MainTitle>Bridge</MainTitle>
-        <ChainPairs>
-          <ChainSelector
-            chain={chainFrom}
-            chainList={chainList}
-            onChainChange={(chain: any) => {
-              setChainFrom(chain);
+      <Body>
+        <CampaignRubic />
+        <Content className={isRubic ? 'rubic' : ''}>
+          <MainTitle>Bridge</MainTitle>
+          <ChainPairs>
+            <ChainSelector
+              chain={chainFrom}
+              chainList={chainList}
+              onChainChange={(chain: any) => {
+                setChainFrom(chain);
+              }}
+            />
+
+            <ChainArrow
+              onClick={() => {
+                const [_chainFrom, _chainTo] = [chainTo, chainFrom];
+
+                setChainFrom(_chainFrom);
+                setChainTo(_chainTo);
+                setUpdater(updater + 1);
+              }}
+            >
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M1 6L13.7273 6M13.7273 6L8.87869 11.0002M13.7273 6L8.87869 1"
+                  stroke="#979ABE"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </ChainArrow>
+
+            <ChainSelector
+              chain={chainTo}
+              chainList={chainList}
+              onChainChange={(chain: any) => {
+                setChainTo(chain);
+              }}
+            />
+          </ChainPairs>
+
+          <Token
+            title="Send"
+            selectToken={selectInputToken}
+            currentChain={chainFrom}
+            tokens={inputTokens}
+            amount={sendAmount}
+            balance={inputBalance}
+            loadingBalance={inputBalanceLoading}
+            disabled={false}
+            prices={prices}
+            amountUSD={fromUSD}
+            onTokenChange={(token: any) => {
+              setSelectInputToken(token);
+              // setSendAmount('')
+              setReceiveAmount('');
+            }}
+            onInputChange={(val: any) => {
+              setSendAmount(val);
             }}
           />
 
-          <ChainArrow
-            onClick={() => {
-              const [_chainFrom, _chainTo] = [chainTo, chainFrom];
+          <TokenSpace>
+            <TransformArrow>
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6.49992 1V11.5M6.49992 11.5L1 6M6.49992 11.5L12 6"
+                  stroke="white"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </TransformArrow>
+          </TokenSpace>
 
-              setChainFrom(_chainFrom);
-              setChainTo(_chainTo);
-              setUpdater(updater + 1);
-            }}
-          >
-            <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M1 6L13.7273 6M13.7273 6L8.87869 11.0002M13.7273 6L8.87869 1"
-                stroke="#979ABE"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </svg>
-          </ChainArrow>
-
-          <ChainSelector
-            chain={chainTo}
-            chainList={chainList}
-            onChainChange={(chain: any) => {
-              setChainTo(chain);
+          <Token
+            title="Receive"
+            currentChain={chainTo}
+            selectToken={selectOutputToken}
+            tokens={outputTokens}
+            amount={receiveAmount}
+            balance={outputBalance}
+            loadingBalance={outputBalanceLoading}
+            disabled={true}
+            prices={prices}
+            amountUSD={toUSD}
+            onTokenChange={(token: any) => {
+              setSelectOutputToken(token);
+              setReceiveAmount('');
             }}
           />
-        </ChainPairs>
 
-        <Token
-          title="Send"
-          selectToken={selectInputToken}
-          currentChain={chainFrom}
-          tokens={inputTokens}
-          amount={sendAmount}
-          balance={inputBalance}
-          loadingBalance={inputBalanceLoading}
-          disabled={false}
-          prices={prices}
-          amountUSD={fromUSD}
-          onTokenChange={(token: any) => {
-            setSelectInputToken(token);
-            // setSendAmount('')
-            setReceiveAmount('');
-          }}
-          onInputChange={(val: any) => {
-            setSendAmount(val);
-          }}
-        />
+          <FeeMsg
+            duration={duration}
+            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
+            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
+          />
+          {showWarning ? <Alert /> : null}
+          <TokenSpace height={'12px'} />
 
-        <TokenSpace>
-          <TransformArrow>
-            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M6.49992 1V11.5M6.49992 11.5L1 6M6.49992 11.5L12 6"
-                stroke="white"
-                stroke-width="2"
-                stroke-linecap="round"
-              />
-            </svg>
-          </TransformArrow>
-        </TokenSpace>
-
-        <Token
-          title="Receive"
-          currentChain={chainTo}
-          selectToken={selectOutputToken}
-          tokens={outputTokens}
-          amount={receiveAmount}
-          balance={outputBalance}
-          loadingBalance={outputBalanceLoading}
-          disabled={true}
-          prices={prices}
-          amountUSD={toUSD}
-          onTokenChange={(token: any) => {
-            setSelectOutputToken(token);
-            setReceiveAmount('');
-          }}
-        />
-
-        <FeeMsg
-          duration={duration}
-          feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
-          gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
-        />
-        {showWarning ? <Alert /> : null}
-        <TokenSpace height={'12px'} />
-
-        <SubmitBtn
-          style={{
-            opacity: (!route || !canRoute) && account ? 0.2 : 1,
-            background: color,
-            color: tool === 'stargate' ? '#000' : '#fff'
-          }}
-          onClick={async () => {
-            if (!account) {
-              onConnect();
-              return;
-            }
-
-            if (!route || !canRoute) {
-              return;
-            }
-
-            if (btnText === 'Switch Chain') {
-              setChain({ chainId: `0x${chainFrom.chainId?.toString(16)}` });
-              return;
-            }
-
-            setShowConfirm(true);
-          }}
-        >
-          {loading ? <Loading size={18} /> : null} {btnText}
-        </SubmitBtn>
-      </Content>
-
-      <TokenSpace height={'16px'} />
-
-      {showConfirm && (
-        <Confirm
-          color={color}
-          chainFrom={chainFrom}
-          chainTo={chainTo}
-          loading={isSending}
-          disabled={isSendingDisabled}
-          toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
-          duration={duration}
-          tool={tool}
-          gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
-          feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
-          sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
-          receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
-          onClose={() => {
-            if (!isSending) {
-              setShowConfirm(false);
-            }
-          }}
-          onSend={async () => {
-            setIsSending(true);
-            setIsSendingDisabled(true);
-
-            try {
-              const txHash: any = await execute(route, provider.getSigner());
-              if (!txHash) {
+          <SubmitBtn
+            style={{
+              opacity: (!route || !canRoute) && account ? 0.2 : 1,
+              background: color,
+              color: tool === 'stargate' ? '#000' : '#fff'
+            }}
+            onClick={async () => {
+              if (!account) {
+                onConnect();
                 return;
               }
 
-              setShowConfirm(false);
-              setIsSending(false);
-              setIsSendingDisabled(false);
-
-              const actionParams = {
-                hash: txHash,
-                link: getChainScan(chainFrom.chainId),
-                duration: duration,
-                fromChainId: chainFrom.chainId,
-                fromChainName: chainFrom.chainName,
-                fromChainLogo: chainFrom.icon,
-                fromTokenLogo: selectInputToken.icon,
-                fromAmount: sendAmount,
-                fromTokenSymbol: selectInputToken.symbol,
-                toChainId: chainTo.chainId,
-                toChainName: chainTo.chainName,
-                toChainLogo: chainTo.icon,
-                toTokenLogo: selectOutputToken.icon,
-                toAmout: receiveAmount,
-                toTokenSymbol: selectOutputToken.symbol,
-                time: Date.now(),
-                tool: tool,
-                bridgeType: route.bridgeType,
-                fromAddress: account,
-                toAddress: account,
-                status: 3
-              };
-
-              saveTransaction(actionParams);
-
-              addAction({
-                type: 'Bridge',
-                fromChainId: chainFrom.chainId,
-                toChainId: chainTo.chainId,
-                token: selectInputToken,
-                amount: inputValue,
-                template,
-                add: false,
-                status: 1,
-                transactionHash: txHash,
-                extra_data: actionParams
-              });
-
-              success({
-                title: 'Transaction success',
-                text: ''
-              });
-
-              if (typeof onSuccess === 'function') {
-                onSuccess();
+              if (!route || !canRoute) {
+                return;
               }
 
-              setUpdater(updater + 1);
-            } catch (err: any) {
-              console.log(err);
-              fail({
-                title: 'Transaction failed',
-                text: errorFormated(err)
-              });
+              if (btnText === 'Switch Chain') {
+                setChain({ chainId: `0x${chainFrom.chainId?.toString(16)}` });
+                return;
+              }
 
-              setIsSending(false);
-              setIsSendingDisabled(false);
-              setUpdater(updater + 1);
-            }
-          }}
+              setShowConfirm(true);
+            }}
+          >
+            {loading ? <Loading size={18} /> : null} {btnText}
+          </SubmitBtn>
+        </Content>
+
+        <TokenSpace height={'16px'} />
+
+        {showConfirm && (
+          <Confirm
+            color={color}
+            chainFrom={chainFrom}
+            chainTo={chainTo}
+            loading={isSending}
+            disabled={isSendingDisabled}
+            toAddress={addressFormated(otherAddressChecked ? toAddress : account)}
+            duration={duration}
+            tool={tool}
+            gasCostUSD={gasCostUSD ? balanceFormated(gasCostUSD) : '~'}
+            feeCostUSD={feeCostUSD ? balanceFormated(feeCostUSD) : '~'}
+            sendAmount={balanceFormated(sendAmount) + selectInputToken.symbol}
+            receiveAmount={balanceFormated(receiveAmount) + selectOutputToken.symbol}
+            onClose={() => {
+              if (!isSending) {
+                setShowConfirm(false);
+              }
+            }}
+            onSend={async () => {
+              setIsSending(true);
+              setIsSendingDisabled(true);
+
+              try {
+                const txHash: any = await execute(route, provider.getSigner());
+                if (!txHash) {
+                  return;
+                }
+
+                setShowConfirm(false);
+                setIsSending(false);
+                setIsSendingDisabled(false);
+
+                const actionParams = {
+                  hash: txHash,
+                  link: getChainScan(chainFrom.chainId),
+                  duration: duration,
+                  fromChainId: chainFrom.chainId,
+                  fromChainName: chainFrom.chainName,
+                  fromChainLogo: chainFrom.icon,
+                  fromTokenLogo: selectInputToken.icon,
+                  fromAmount: sendAmount,
+                  fromTokenSymbol: selectInputToken.symbol,
+                  toChainId: chainTo.chainId,
+                  toChainName: chainTo.chainName,
+                  toChainLogo: chainTo.icon,
+                  toTokenLogo: selectOutputToken.icon,
+                  toAmout: receiveAmount,
+                  toTokenSymbol: selectOutputToken.symbol,
+                  time: Date.now(),
+                  tool: tool,
+                  bridgeType: route.bridgeType,
+                  fromAddress: account,
+                  toAddress: account,
+                  status: 3
+                };
+
+                saveTransaction(actionParams);
+
+                addAction({
+                  type: 'Bridge',
+                  fromChainId: chainFrom.chainId,
+                  toChainId: chainTo.chainId,
+                  token: selectInputToken,
+                  amount: inputValue,
+                  template,
+                  add: false,
+                  status: 1,
+                  transactionHash: txHash,
+                  extra_data: actionParams
+                });
+
+                success({
+                  title: 'Transaction success',
+                  text: ''
+                });
+
+                if (typeof onSuccess === 'function') {
+                  onSuccess();
+                }
+
+                setUpdater(updater + 1);
+              } catch (err: any) {
+                console.log(err);
+                fail({
+                  title: 'Transaction failed',
+                  text: errorFormated(err)
+                });
+
+                setIsSending(false);
+                setIsSendingDisabled(false);
+                setUpdater(updater + 1);
+              }
+            }}
+          />
+        )}
+
+        <Transaction
+          updater={transitionUpdate}
+          storageKey={`bridge-${account}-${tool}`}
+          getStatus={getStatus}
+          tool={tool}
+          account={account}
         />
-      )}
-
-      <Transaction
-        updater={transitionUpdate}
-        storageKey={`bridge-${account}-${tool}`}
-        getStatus={getStatus}
-        tool={tool}
-        account={account}
-      />
+      </Body>
     </BridgePanel>
   );
 }
