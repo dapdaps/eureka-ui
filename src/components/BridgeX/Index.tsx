@@ -1,7 +1,5 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
-import Big from 'big.js';
-import { useEffect, useState } from 'react';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
