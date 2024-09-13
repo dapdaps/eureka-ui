@@ -519,7 +519,7 @@ export default function BridgeX({
               <span className="label">Time: </span>
               16/9/2024 -04/10/2024 3PM (UTC)
             </RubicFooterTime>
-            <RubicFooterLink href="/campaign/rubic-holdstation" target="_blank">
+            <RubicFooterLink href="/campaign/home?category=rubic-holdstation" target="_blank">
               Campaign {'>'}
             </RubicFooterLink>
           </RubicFooter>
