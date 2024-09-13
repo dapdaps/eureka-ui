@@ -2,14 +2,14 @@ import { useSetChain } from '@web3-onboard/react';
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import useTokensAndChains from '@/components/Bridge/hooks/useTokensAndChains';
-import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import multicallConfig from '@/config/contract/multicall';
-import liquidityDapp from '@/config/dapp/liquidity'
-import stakingDapp from '@/config/dapp/staking'
+import liquidityDapp from '@/config/dapp/liquidity';
+import stakingDapp from '@/config/dapp/staking';
 import liquidityConfig from '@/config/liquidity/networks';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useConnectWallet from '@/hooks/useConnectWallet';
+import LiquidityAllInOne from '@/modules/liquidity';
 import { usePriceStore } from '@/stores/price';
 import { multicall } from '@/utils/multicall';
 import {
@@ -21,7 +21,7 @@ import {
 const Liquidity = (props: Props) => {
   const { chain, menu } = props;
   const { onConnect } = useConnectWallet();
-  const { account, chainId } = useAccount();
+  const { account, chainId, provider } = useAccount();
   const [{ connectedChain, settingChain }, setChain] = useSetChain();
   const { chains } = useTokensAndChains();
   const { addAction } = useAddAction('all-in-one');
@@ -29,9 +29,10 @@ const Liquidity = (props: Props) => {
   const [tabConfig, setTabConfig] = useState<any>({ dapps: {} });
   const currentChain = useMemo(
     () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
-    [connectedChain?.id],
+    [connectedChain?.id]
   );
   const isRightNetwork = currentChain?.chainId === chain.chainId;
+
   useEffect(() => {
     const _tabConfig = liquidityConfig[chain?.chainId];
     setTabConfig(_tabConfig);
@@ -39,9 +40,8 @@ const Liquidity = (props: Props) => {
   if (account && isRightNetwork) {
     return (
       <div>
-        <ComponentWrapperPage
-          src={menu.path}
-          componentProps={{
+        <LiquidityAllInOne
+          {...{
             addAction,
             multicall,
             chainId: chain.chainId,
@@ -55,13 +55,13 @@ const Liquidity = (props: Props) => {
             multicallAddress: multicallConfig[currentChain?.chainId as any],
             themeMapping: {
               ...stakingDapp,
-              ...liquidityDapp,
+              ...liquidityDapp
             },
             dapps: tabConfig?.dapps,
             prices,
             account,
-            onReset: () => {
-            },
+            provider,
+            onReset: () => {}
           }}
         />
       </div>
@@ -87,17 +87,12 @@ const Liquidity = (props: Props) => {
     return (
       <StyledAccountContainer>
         <StyledAccountTip>{_textTip}</StyledAccountTip>
-        <StyledConnectButton
-          onClick={onButtonClick}
-          bg={chain.theme?.button?.bg}
-          color={chain.theme?.button?.text}
-        >
+        <StyledConnectButton onClick={onButtonClick} bg={chain.theme?.button?.bg} color={chain.theme?.button?.text}>
           {_buttonText}
         </StyledConnectButton>
       </StyledAccountContainer>
     );
   }
-
 };
 
 export default memo(Liquidity);
