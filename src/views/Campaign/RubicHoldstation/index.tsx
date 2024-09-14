@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
+import useMobile from '@/hooks/useMobile';
 import useUserInfo from '@/hooks/useUserInfo';
 import { useX } from '@/views/Campaign/hooks/useX';
 import RubicHoldstationContext from '@/views/Campaign/RubicHoldstation/context';
@@ -26,6 +27,7 @@ const TotalBonus = 7500;
 const RubicHoldstation = (props: Props) => {
   const {} = props;
 
+  useMobile();
   const { account } = useAccount();
   const { check: onAuthCheck } = useAuthCheck({ isNeedAk: true, isQuiet: false });
   const { userInfo, queryUserInfo } = useUserInfo();
