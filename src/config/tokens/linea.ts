@@ -250,5 +250,13 @@ export const linea: { [key: string]: Token } = {
     symbol: 'uniETH',
     name: 'Universal ETH',
     icon: '/images/tokens/uni-eth.png'
+  },
+  croak: {
+    chainId: CHAIN_ID,
+    address: '0xacb54d07ca167934f57f829bee2cc665e1a5ebef',
+    decimals: 18,
+    symbol: 'CROAK',
+    name: 'CROAK',
+    icon: '/images/tokens/croak.webp'
   }
 };

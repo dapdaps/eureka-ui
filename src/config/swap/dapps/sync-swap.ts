@@ -5,13 +5,13 @@ import { zkSync } from '@/config/tokens/zkSync';
 const basic = {
   name: 'SyncSwap',
   logo: '/images/apps/sync-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['usdc'],
+      output: linea['usdc']
     },
     tokens: [
       linea['eth'],
@@ -19,6 +19,7 @@ const networks = {
       linea['usdt'],
       linea['wbtc'],
       linea['busd'],
+      linea['croak'],
       linea['matic'],
       linea['dai'],
       linea['bnb'],
@@ -27,13 +28,13 @@ const networks = {
       linea['wsteth'],
       linea['wrseth'],
       linea['cebusd'],
-      linea['stone'],
-    ],
+      linea['stone']
+    ]
   },
   324: {
     defaultCurrencies: {
       input: zkSync['eth'],
-      output: zkSync['usdc'],
+      output: zkSync['usdc']
     },
     tokens: [
       zkSync['eth'],
@@ -48,13 +49,13 @@ const networks = {
       zkSync['zk'],
       zkSync['wsteth'],
       zkSync['wrseth'],
-      zkSync['dai'],
-    ],
+      zkSync['dai']
+    ]
   },
   534352: {
     defaultCurrencies: {
       input: scroll['eth'],
-      output: scroll['usdc'],
+      output: scroll['usdc']
     },
     tokens: [
       scroll['eth'],
@@ -72,9 +73,9 @@ const networks = {
       scroll['pufETH'],
       scroll['reth'],
       scroll['sis'],
-      scroll['itp'],
-    ],
-  },
+      scroll['itp']
+    ]
+  }
 };
 
 export { basic, networks };
