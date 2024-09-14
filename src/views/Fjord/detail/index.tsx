@@ -12,6 +12,7 @@ import Loading from '@/components/Icons/Loading';
 import chains from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
 import useAddTokenToWallet from '@/hooks/useAddTokenToWallet';
+import useAuthCheck from '@/hooks/useAuthCheck';
 import { StyledContainer, StyledFlex, StyledFont, StyledLoadingWrapper } from '@/styled/styles';
 import type { Token } from '@/types';
 import { formatValueDecimal } from '@/utils/formate';
@@ -33,11 +34,9 @@ import {
   Main,
   Sider,
   SocialGroup,
-  StyledBannerBg,
   StyledBreadcrumbAndBanner,
   StyledBreadcrumbContainer,
   StyledProjectStatus,
-  StyledRadialGradient,
   StyledSiderButton,
   StyledSiderContent,
   TabBody,
@@ -53,6 +52,7 @@ const STATUS_TXT_MAPPING: any = {
 
 export default function LaunchpadYoursPage() {
   const router = useRouter();
+  const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { account, provider } = useAccount();
   const { add } = useAddTokenToWallet();
   const { loading, pool, queryPool } = usePool();
@@ -145,9 +145,22 @@ export default function LaunchpadYoursPage() {
     if (pool) {
       queryShares(pool);
       queryTotalSupply(pool);
-      handleQueryMedal(pool);
+      // handleQueryMedal(pool);
     }
   }, [pool]);
+
+  useEffect(() => {
+    // console.log('=======account', account)
+    if (pool) {
+      if (account) {
+        check(() => {
+          handleQueryMedal(pool);
+        });
+      } else {
+        handleQueryMedal(pool);
+      }
+    }
+  }, [pool, account]);
 
   return pool ? (
     <div>
@@ -371,7 +384,7 @@ export default function LaunchpadYoursPage() {
                 fontSize="14px"
                 style={{ width: 426, textAlign: 'center', marginTop: 60, marginBottom: 80 }}
               >
-                This LBP is coming soon! Check back soon and stay up to date via the 
+                This LBP is coming soon! Check back soon and stay up to date via the
                 <span style={{ textDecoration: 'underline' }}>projects website</span>
               </StyledFont>
               <StyledSiderButton onClick={handleReminder}>
