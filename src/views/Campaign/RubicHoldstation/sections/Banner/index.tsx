@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import { StyledFlex } from '@/styled/styles';
 
-import { StyledBanner, StyledContainer, StyledTitle } from './styles';
+import { StyledBanner, StyledBannerImage, StyledContainer, StyledTitle } from './styles';
 import Total from './Total';
 
 const Banner = () => {
@@ -52,16 +52,7 @@ const Banner = () => {
             <div className="sub">Play Lottery and Win Prizes</div>
           </StyledTitle>
         </div>
-        <Image
-          src="/images/campaign/rubic-holdstation/banner.png"
-          width={762}
-          height={611}
-          alt="Lottery"
-          style={{
-            marginTop: -30,
-            marginLeft: -120
-          }}
-        />
+        <StyledBannerImage src="/images/campaign/rubic-holdstation/banner.png" width={762} height={611} alt="Lottery" />
       </StyledBanner>
       <Total />
     </StyledContainer>
