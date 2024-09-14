@@ -60,6 +60,7 @@ export default function useDappReward() {
 
     // add Rubic activity
     const rubicData: any = {
+      id: -1,
       banner: '/images/campaign/rubic-holdstation/link-banner.png',
       link: '/campaign/home?category=rubic-holdstation',
       status: StatusType.ongoing,

@@ -27,14 +27,37 @@ export const StyledBanner = styled.div`
 `;
 
 export const StyledTitle = styled.div`
-  margin-top: 48px;
+  margin-top: 74px;
   color: #fff;
-  font-size: 90px;
+  font-size: 42px;
   font-style: italic;
-  font-weight: 700;
+  font-weight: 800;
   line-height: 100%;
-  width: 703px;
   position: relative;
+
+  .primary {
+    font-size: 90px;
+    font-style: italic;
+    font-weight: 700;
+    line-height: 100%; /* 90px */
+    text-transform: capitalize;
+    background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-top: 13px;
+    padding-right: 5px;
+    margin-left: -5px;
+  }
+
+  .sub {
+    color: #fff;
+    font-size: 26px;
+    font-style: italic;
+    font-weight: 600;
+    line-height: 100%;
+    margin-top: 18px;
+  }
 `;
 
 export const StyledSubTitle = styled.div`

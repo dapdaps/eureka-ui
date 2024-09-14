@@ -107,11 +107,11 @@ const Holdstation = () => {
                   <StyledDescItem>Download Holdstation wallet and use it to explore</StyledDescItem>
                 </StyledDesc>
                 <StyledFlex justifyContent="space-between" alignItems="flex-start" gap="16px" style={{ marginTop: 16 }}>
-                  <Button style={{ flex: 1 }} onClick={() => onDownload('apple')}>
+                  <Button style={{ flex: 1, whiteSpace: 'nowrap' }} onClick={() => onDownload('apple')}>
                     <AppleLogo />
                     <span>App Store</span>
                   </Button>
-                  <Button style={{ flex: 1 }} onClick={() => onDownload('google')}>
+                  <Button style={{ flex: 1, whiteSpace: 'nowrap' }} onClick={() => onDownload('google')}>
                     <GooglePlayLogo />
                     <span>Google Play</span>
                   </Button>
