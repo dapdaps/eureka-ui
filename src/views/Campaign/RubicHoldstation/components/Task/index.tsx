@@ -1,6 +1,7 @@
 import IconArrowRight from '@public/images/campaign/icon-arrow-right-white.svg';
 import { useContext } from 'react';
 
+import useToast from '@/hooks/useToast';
 import { StyledFlex } from '@/styled/styles';
 import { useCheck } from '@/views/Campaign/hooks/useCheck';
 import useReport from '@/views/Campaign/hooks/useReport';
@@ -9,6 +10,7 @@ import Refresh from '@/views/Campaign/RubicHoldstation/components/Refresh';
 import { StyledContainer, StyledTitle } from '@/views/Campaign/RubicHoldstation/components/Task/styles';
 import TicketBadge from '@/views/Campaign/RubicHoldstation/components/TicketBadge';
 import RubicHoldstationContext from '@/views/Campaign/RubicHoldstation/context';
+import { useRubicCampaignStore } from '@/views/Campaign/RubicHoldstation/store';
 
 const Task = (props: Props) => {
   const { children, className, style, quest } = props;
@@ -18,8 +20,10 @@ const Task = (props: Props) => {
   const { updateData } = context.quests;
   const { getData: getTicketsData } = context.tickets;
 
+  const toast = useToast();
   const { checkCompleted, handleRefresh, refreshing } = useCheck();
   const { handleReport } = useReport();
+  const { setTwitterVisited, getTwitterVisited } = useRubicCampaignStore();
 
   const completed = checkCompleted(quest);
 
@@ -31,6 +35,12 @@ const Task = (props: Props) => {
     if (quest.category.startsWith('twitter')) {
       if (!context.userInfo.twitter?.is_bind) {
         context.handleXBind();
+        return;
+      }
+      if (!getTwitterVisited(context.account, quest.id)) {
+        toast.success({
+          title: 'Action confirmed successfully'
+        });
         return;
       }
     }
@@ -54,6 +64,7 @@ const Task = (props: Props) => {
         context.handleXBind();
         return;
       }
+      setTwitterVisited(context.account, true, quest.id);
     }
     if (!quest.source) return;
     if (quest.category === 'page') handleReport(quest.id);
