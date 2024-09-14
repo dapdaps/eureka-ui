@@ -29,7 +29,7 @@ export default function useTrade({ chainId }: any) {
   const lastestCachedKey = useRef('');
   const cachedTokens = useRef<any>();
   const prices = usePriceStore((store) => store.price);
-  const { setUpdater } = useUpdateBalanceStore()
+  const { setUpdater } = useUpdateBalanceStore();
   const getTokens = useCallback(() => {
     const network = networks[chainId];
     if (!network) return;
@@ -48,7 +48,7 @@ export default function useTrade({ chainId }: any) {
 
   const onQuoter = useCallback(
     async ({ inputCurrency, outputCurrency, inputCurrencyAmount }: any) => {
-      if (!inputCurrency) return
+      if (!inputCurrency) return;
       const wethAddress = weth[inputCurrency.chainId];
       const wrapType =
         inputCurrency.isNative && outputCurrency.address === wethAddress
@@ -75,13 +75,13 @@ export default function useTrade({ chainId }: any) {
             signer,
             wethAddress,
             type: wrapType,
-            amount,
+            amount
           });
 
           const { isGasEnough, gas } = checkGas({
             rawBalance,
             gasPrice,
-            gasLimit,
+            gasLimit
           });
 
           setTrade({
@@ -113,7 +113,7 @@ export default function useTrade({ chainId }: any) {
         const response = await fetch(process.env.NEXT_PUBLIC_API + '/quoter', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             params: JSON.stringify({
@@ -122,9 +122,9 @@ export default function useTrade({ chainId }: any) {
               outputCurrency,
               inputAmount: inputCurrencyAmount,
               slippage: slippage / 100 || 0.005,
-              account,
-            }),
-          }),
+              account
+            })
+          })
         });
         const result = await response.json();
         const data = result.data;
@@ -134,7 +134,7 @@ export default function useTrade({ chainId }: any) {
         const network = networks[inputCurrency.chainId];
         const dexs = network.dexs;
         const _markets = data
-          .filter((item: any) => item.txn && item.outputCurrencyAmount)
+          .filter((item: any) => item.outputCurrencyAmount)
           .sort((a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount)
           .map((item: any) => {
             const _trade = formatTrade({
@@ -144,7 +144,7 @@ export default function useTrade({ chainId }: any) {
               prices,
               inputCurrency,
               outputCurrency,
-              inputCurrencyAmount,
+              inputCurrencyAmount
             });
             return { ..._trade, name: item.template, logo: dexs[item.template].logo };
           });
@@ -161,13 +161,13 @@ export default function useTrade({ chainId }: any) {
           outputCurrencyAmount: '',
           noPair: true,
           txn: null,
-          routerAddress: '',
+          routerAddress: ''
         });
         setLoading(false);
         setMarkets([]);
       }
     },
-    [account, provider, slippage, prices, cachedTokens],
+    [account, provider, slippage, prices, cachedTokens]
   );
 
   const onSwap = useCallback(async () => {
@@ -201,13 +201,13 @@ export default function useTrade({ chainId }: any) {
         transactionHash,
         add: 0,
         token_in_currency: trade.inputCurrency,
-        token_out_currency: trade.outputCurrency,
+        token_out_currency: trade.outputCurrency
       });
       setLoading(false);
     } catch (err: any) {
       toast.dismiss(toastId);
       toast.fail({
-        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap faily!`,
+        title: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : `Swap faily!`
       });
       console.log(err);
       setLoading(false);
