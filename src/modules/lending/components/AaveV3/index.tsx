@@ -531,7 +531,7 @@ const AaveV3 = (props: Props) => {
       if (msg) {
         updateState({ alertModalText: msg });
       }
-    }, 5000);
+    }, 500);
   };
   // - onActionSuccess -- end
   // - calcHealthFactor -- start
@@ -719,6 +719,7 @@ const AaveV3 = (props: Props) => {
                 gasEstimation={gasEstimation}
                 healthFactor={state.healthFactor}
                 prices={prices}
+                dexConfig={dexConfig}
               />
             </YoursTableWrapper>
           </Yours>
