@@ -2,7 +2,9 @@ import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { useCallback, useEffect, useState } from 'react';
 
+import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import type { Token } from '@/types';
 
 import Arrow2Down from './components/Arrow2Down';
@@ -37,7 +39,7 @@ export default function SuperSwap() {
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
   // const [showChart, setShowChart] = useState(false);
-
+  const { switchChain } = useSwitchChain();
   const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
     chainId,
     onSuccess() {
@@ -95,9 +97,10 @@ export default function SuperSwap() {
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
   useEffect(() => {
+    if (!chainId) return;
     setInputCurrencyAmount('');
     setTrade(null as any);
-    setInputCurrency(null as any);
+    setInputCurrency(networks[chainId].defalutInputCurrency);
     setOutputCurrency(null as any);
   }, [chainId]);
 
@@ -117,6 +120,10 @@ export default function SuperSwap() {
       }, 0);
     }
   }, [inputCurrency, outputCurrency, trade, runQuoter]);
+
+  const onSelectChain = useCallback((chainId: number) => {
+    switchChain({ chainId });
+  }, []);
 
   return (
     <StyledContainer>
@@ -191,7 +198,7 @@ export default function SuperSwap() {
 
         {/* { trade && showChart && <KLineChart trade={trade} /> } */}
       </StyledContent>
-      <PriceBoard />
+      <PriceBoard onSelectChain={onSelectChain} />
       <SelectTokensModal
         tokens={tokens || []}
         display={showTokensSelector}
