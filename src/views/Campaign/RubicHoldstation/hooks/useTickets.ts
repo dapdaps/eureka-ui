@@ -41,7 +41,11 @@ export const useTickets = ({ category }: any) => {
 
     setTotalReward(formateValueWithThousandSeparatorAndFont(total_reward, 0, true, { prefix: '$' }));
 
+    let latest: RewardItem | undefined;
     rewardsList = rewardsList.map((reward, idx) => {
+      if (reward.is_draw_completed) {
+        latest = reward;
+      }
       const voucherArr = [...new Array(reward.voucher.length).keys()].map((idx) =>
         reward.voucher.substring(idx, idx + 1)
       );
@@ -74,6 +78,9 @@ export const useTickets = ({ category }: any) => {
 
     for (let i = 0; i < rewardsList.length; i++) {
       const curr = rewardsList[i];
+      if (latest && curr.reward_time < latest.reward_time) {
+        curr.expiredReal = true;
+      }
       if (curr.is_draw_completed && curr.winners < 1) {
         curr.expired = true;
         for (let j = i + 1; j < rewardsList.length; j++) {
@@ -84,6 +91,8 @@ export const useTickets = ({ category }: any) => {
         }
       }
     }
+
+    console.log('rewardsList: %o', rewardsList);
 
     setRewards(rewardsList);
     setUserVouchers({
@@ -182,6 +191,7 @@ export interface RewardItem extends Reward {
   userRewardVoucher: { no: string; won?: boolean }[];
   userRewardAmount: string;
   expired?: boolean;
+  expiredReal?: boolean;
   userChecked?: boolean;
 }
 
