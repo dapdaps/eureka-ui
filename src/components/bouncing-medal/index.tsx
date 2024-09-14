@@ -87,9 +87,14 @@ const BouncingMedal = (props: BouncingMedalsProps) => {
 
       Events.on(mouseConstraint, 'mousedown', (event) => {
         const mousePosition = event.mouse.position;
+        const userAgent = navigator.userAgent;
+        let _dpr = 1;
+        if (userAgent.includes('Win')) {
+          _dpr = DPR;
+        }
         const realMousePosition = {
-          x: mousePosition.x / DPR,
-          y: mousePosition.y / DPR
+          x: mousePosition.x / _dpr,
+          y: mousePosition.y / _dpr
         };
         const bodies = Matter.Composite.allBodies(engine.world).filter((item) => !item.isStatic);
         bodies.forEach((body) => {
