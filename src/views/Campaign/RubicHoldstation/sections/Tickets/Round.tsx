@@ -95,7 +95,7 @@ export default function Round(props: { reward: RewardItem }) {
                 ))
               : [...new Array(5).keys()].map((idx) => <NumberBall key={idx} />)}
           </StyledRoundNumbers>
-          {reward.is_draw_completed && reward.userChecked ? (
+          {reward.is_draw_completed && (reward.userChecked || reward.expiredReal) ? (
             <StyledExpired>
               {Big(reward.user_reward_amount || 0).gt(0) ? (
                 <StyledExpiredPrized>
