@@ -27,6 +27,15 @@ export const StyledTitle = styled.div`
   -webkit-text-fill-color: transparent;
   margin-top: 6.4vw;
 `;
+export const StyledTitleSub = styled.div`
+  color: #fff;
+  font-size: 4.3vw;
+  font-style: italic;
+  font-weight: 700;
+  line-height: 100%;
+  margin-top: 3.7vw;
+  text-align: center;
+`;
 export const StyledCard = styled.div`
   border-radius: 4.27vw;
   background: rgba(255, 255, 255, 0.1);

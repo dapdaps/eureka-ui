@@ -10,6 +10,7 @@ import {
   StyledLink,
   StyledLogo,
   StyledTitle,
+  StyledTitleSub,
   StyledVideo,
   StyledWrapper
 } from '@/views/Campaign/RubicHoldstation/Mobile/styles';
@@ -36,6 +37,7 @@ const RubicHoldstationMobile = () => {
         <StyledLogo src="/images/campaign/rubic-holdstation/logo.svg" alt="" />
       </StyledFlex>
       <StyledTitle>Grand Lotto</StyledTitle>
+      <StyledTitleSub>Play Lottery and Win Prizes</StyledTitleSub>
       <StyledWrapper>
         <StyledCard>
           Explore campaign via desktop for <span className="primary">7500 USDT prizes!</span>

@@ -1,15 +1,18 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 
-export const StyledContainer = styled.div`
-  padding-top: 142px;
-`;
+export const StyledContainer = styled.div``;
 
 export const StyledBanner = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   position: relative;
   z-index: 2;
-  padding-left: 90px;
+  height: 688px;
+  padding-top: 209px;
+  width: 1244px;
+  margin: 0 auto;
+  padding-left: 27px;
 
   &::before {
     content: '';
@@ -60,13 +63,11 @@ export const StyledTitle = styled.div`
   }
 `;
 
-export const StyledSubTitle = styled.div`
-  color: #fff;
-  font-size: 26px;
-  font-style: italic;
-  font-weight: 600;
-  line-height: 100%;
-  margin-top: 28px;
+export const StyledBannerImage = styled(Image)`
+  position: absolute;
+  z-index: 1;
+  right: -100px;
+  bottom: 0;
 `;
 
 export const StyledTotal = styled.div`
