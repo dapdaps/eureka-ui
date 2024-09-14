@@ -5,7 +5,7 @@ export const StyledLeaderboard = styled.div`
   padding: 77px 0 150px;
 
   &::after {
-    content: "";
+    content: '';
     display: block;
     position: absolute;
     z-index: 1;
@@ -14,7 +14,7 @@ export const StyledLeaderboard = styled.div`
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0);
-    backdrop-filter: blur(20px);
+    backdrop-filter: blur(10px);
   }
 `;
 export const StyledContainer = styled.div`
@@ -22,7 +22,7 @@ export const StyledContainer = styled.div`
   margin: 0 auto;
 `;
 export const StyledTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 36px;
   font-style: italic;
@@ -31,7 +31,7 @@ export const StyledTitle = styled.div`
   text-transform: capitalize;
 `;
 export const StyledTitlePrimary = styled.span`
-  background: linear-gradient(116deg, #C8FF7C 11.9%, #FFA5DB 64.92%, #7A78FF 104.11%);
+  background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -43,7 +43,7 @@ export const StyledTitlePrimary = styled.span`
   padding: 0 10px;
 `;
 export const StyledDesc = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 18px;
   font-style: normal;
@@ -56,11 +56,11 @@ export const StyledContent = styled.div`
 `;
 export const StyledTable = styled.div`
   border-radius: 12px;
-  border: 1px solid #373A53;
-  background: #1E2028;
+  border: 1px solid #373a53;
+  background: #1e2028;
 `;
 export const StyledTableHeader = styled.div`
-  border-bottom: 1px solid #373A53;
+  border-bottom: 1px solid #373a53;
 `;
 export const StyledTableBody = styled.div``;
 export const StyledTableRow = styled.div`
@@ -69,7 +69,7 @@ export const StyledTableRow = styled.div`
   justify-content: space-between;
   align-items: stretch;
   flex-wrap: nowrap;
-  color: #FFF;
+  color: #fff;
   text-align: right;
   font-size: 18px;
   font-style: normal;
@@ -78,13 +78,13 @@ export const StyledTableRow = styled.div`
 `;
 export const StyledTableHeaderRow = styled(StyledTableRow)`
   height: 68px;
-  color: #979ABE;
+  color: #979abe;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
 `;
-export const StyledTableCol = styled.div<{ $width?: string; $align?: 'left' | 'center' | 'right'; }>`
+export const StyledTableCol = styled.div<{ $width?: string; $align?: 'left' | 'center' | 'right' }>`
   height: 100%;
   display: flex;
   justify-content: ${({ $align }) => {
@@ -99,18 +99,18 @@ export const StyledTableCol = styled.div<{ $width?: string; $align?: 'left' | 'c
   ${({ $width }) => {
     if (!$width) {
       return {
-        flex: 1,
+        flex: 1
       };
     }
     return {
       flexShrink: 0,
       flexGrow: 0,
-      flexBasis: $width,
+      flexBasis: $width
     };
   }};
 `;
 export const StyledTableTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: left;
   font-size: 18px;
   font-style: normal;
@@ -124,7 +124,7 @@ export const StyledUser = styled.div`
   justify-content: flex-start;
   align-items: center;
   gap: 12px;
-  color: #FFF;
+  color: #fff;
   font-size: 18px;
   font-style: normal;
   font-weight: 400;
@@ -137,7 +137,7 @@ export const StyledUserAvatar = styled.div`
   border-radius: 50%;
   transform: rotate(-75deg);
   flex-shrink: 0;
-  background: conic-gradient(from 180deg at 50% 50%, #00D1FF 0deg, #FF008A 360deg);
+  background: conic-gradient(from 180deg at 50% 50%, #00d1ff 0deg, #ff008a 360deg);
 `;
 
 export const StyledRankIcon = styled.div`
