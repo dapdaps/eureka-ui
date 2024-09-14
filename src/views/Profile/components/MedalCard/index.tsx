@@ -19,7 +19,7 @@ type PropsType = {
 export default function MedalCard({ medal, style, barWidth, nameStyle, contentStyle, className, tooltip }: PropsType) {
   const total = useMemo(() => (medal?.trading_volume > 0 ? 100 : medal?.threshold), [medal]);
   const quantity = useMemo(
-    () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : medal?.completed_threshold),
+    () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : (medal?.completed_threshold ?? 0)),
     [medal]
   );
   const SPECIAL_LEVEL_NAME_MAPPING: any = {
