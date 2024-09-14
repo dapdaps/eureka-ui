@@ -228,7 +228,7 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI.body,
+          config.wrappedTokenGatewayV3ABI,
           provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
@@ -264,7 +264,6 @@ const SupplyModal = (props: any) => {
           });
       })
       .catch((err: any) => {
-        console.log('wrappedTokenGateway.depositETH on error', err);
         updateState({ loading: false });
       });
   }
@@ -279,7 +278,7 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI.body,
+          config.wrappedTokenGatewayV3ABI,
           provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
@@ -447,8 +446,7 @@ const SupplyModal = (props: any) => {
             })
             .catch((err: any) => {
               console.log('tx.wait on error depositErc20', err);
-            })
-            .finally(() => updateState({ loading: false }));
+            });
         } else {
           const token = underlyingAsset;
           signERC20Approval(userAddress, token, tokenName, amount, deadline)
@@ -616,27 +614,26 @@ const SupplyModal = (props: any) => {
                 loading: true
               });
               const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
-              approve(amount)
-                .then((tx: any) => {
-                  tx.wait()
-                    .then((res: any) => {
-                      const { status } = res;
-                      if (status === 1) {
-                        console.log('tx succeeded', res);
-                        updateState({
-                          needApprove: false,
-                          loading: false
-                        });
-                      } else {
-                        console.log('tx failed', res);
-                        updateState({
-                          loading: false
-                        });
-                      }
-                    })
-                    .catch(() => updateState({ loading: false }));
-                })
-                .finally(() => updateState({ loading: false }));
+              approve(amount).then((tx: any) => {
+                tx.wait()
+                  .then((res: any) => {
+                    const { status } = res;
+                    if (status === 1) {
+                      console.log('tx succeeded', res);
+                      updateState({
+                        needApprove: false,
+                        loading: false
+                      });
+                    } else {
+                      console.log('tx failed', res);
+                      updateState({
+                        loading: false
+                      });
+                    }
+                  })
+                  .catch(() => updateState({ loading: false }))
+                  .finally(() => updateState({ loading: false }));
+              });
             }}
           >
             Approve {symbol}
