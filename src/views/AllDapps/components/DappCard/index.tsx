@@ -54,9 +54,9 @@ const DAppRewardList: { [k: string]: Badge[] } = {
   ],
   ['Rubic Bridge']: [
     {
-      name: RewardIcons['USDC']?.label || '',
+      name: RewardIcons['USDT']?.label || '',
       value: '$7500',
-      icon: RewardIcons['USDC']?.icon || '',
+      icon: RewardIcons['USDT']?.icon || '',
       status: StatusType.ongoing,
       tooltip: 'Related reward on DapDap',
       iconSize: 20,

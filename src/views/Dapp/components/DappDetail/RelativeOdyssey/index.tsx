@@ -74,7 +74,7 @@ const RelativeOdyssey = (props: Props) => {
           banner: '/images/campaign/rubic-holdstation/link-banner.png',
           link: '/campaign/home?category=rubic-holdstation',
           showSummary: false,
-          reward: '[{"name":"USDC","value":"$7500","logo_key":"USDC"}]'
+          reward: '[{"name":"USDT","value":"$7500","logo_key":"USDT"}]'
         };
         data.unshift(zero);
       }

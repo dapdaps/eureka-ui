@@ -19,7 +19,7 @@ export interface FormattedRewardList {
 export default function useDappReward() {
   const formatRewardList = (data: Odyssey[]): FormattedRewardList[] => {
     if (!data || !data.length) return [];
-    return data.reduce((result: FormattedRewardList[], item: Odyssey) => {
+    const rewardList = data.reduce((result: FormattedRewardList[], item: Odyssey) => {
       const rewards: Reward[] = item.reward ? JSON.parse(item.reward) : [];
 
       rewards.forEach((reward) => {
@@ -34,15 +34,6 @@ export default function useDappReward() {
               value: reward.value,
               name: reward.name,
               odysseys: [
-                // add Rubic activity
-                {
-                  ...item,
-                  banner: '/images/campaign/rubic-holdstation/link-banner.png',
-                  link: '/campaign/home?category=rubic-holdstation',
-                  status: StatusType.ongoing,
-                  name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
-                  reward_value: '$7500'
-                },
                 {
                   ...item,
                   banner: '/images/odyssey/rango-banner-round.png',
@@ -66,6 +57,25 @@ export default function useDappReward() {
       });
       return result;
     }, []);
+
+    // add Rubic activity
+    const rubicData: any = {
+      banner: '/images/campaign/rubic-holdstation/link-banner.png',
+      link: '/campaign/home?category=rubic-holdstation',
+      status: StatusType.ongoing,
+      name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
+      reward_value: '$7500'
+    };
+    const usdtIdx = rewardList.findIndex((it) => it.logo_key === 'USDT');
+    if (usdtIdx < 0) {
+      rewardList.unshift({
+        logo_key: 'USDT',
+        name: 'USDT',
+        value: '',
+        odysseys: [rubicData]
+      });
+    }
+    return rewardList;
   };
 
   const fetchRewardData = async () => {
