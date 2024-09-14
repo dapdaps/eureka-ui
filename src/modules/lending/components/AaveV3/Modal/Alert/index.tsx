@@ -31,7 +31,7 @@ const AlertModal = (props: any) => {
     />
   );
   return (
-    <BaseModal title={props.title} onRequestClose={onRequestClose} from={from}>
+    <BaseModal title={props.title} onRequestClose={onRequestClose} from={from} config={config}>
       <AlertModalContainer>
         <Right />
         <Title>{props.title}</Title>
