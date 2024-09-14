@@ -53,9 +53,21 @@ const Leaderboard = () => {
     }
   ];
 
-  const data: any = [];
+  // TODO Fake data
+  const data: any = [...new Array(10).keys()].map((i) => ({
+    rank: i + 1,
+    address: account,
+    tradingVolume: Math.random() * 100 + (10 - i) * 2000 - Math.random() * 100 * i
+  }));
 
-  const selfData: any = [];
+  // TODO Fake data
+  const selfData: any = [
+    {
+      rank: 2345,
+      address: account,
+      tradingVolume: 535
+    }
+  ];
 
   return (
     <StyledLeaderboard>
