@@ -3,7 +3,7 @@ import type { Token } from '@/types';
 const CHAIN_ID = 80084;
 
 export const beraB: { [key: string]: Token } = {
-  bear: {
+  bera: {
     address: 'native',
     isNative: true,
     chainId: CHAIN_ID,
@@ -12,7 +12,7 @@ export const beraB: { [key: string]: Token } = {
     name: 'BERA',
     icon: '/images/tokens/bera.png'
   },
-  wbear: {
+  wbera: {
     address: '0x7507c1dc16935B82698e4C63f2746A2fCf994dF8',
     chainId: CHAIN_ID,
     symbol: 'WBERA',
