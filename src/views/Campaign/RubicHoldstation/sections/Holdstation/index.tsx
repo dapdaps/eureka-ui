@@ -44,13 +44,15 @@ const Holdstation = () => {
       context.onAuthCheck();
       return;
     }
-    if (!downloadApp || !checkCompleted(downloadApp)) return;
+    if (!downloadApp) return;
     handleRefresh(downloadApp, (resData) => {
       updateData(downloadApp.id, resData);
       // if (resData.total_spins > downloadApp.total_spins) {
       //   context.setNewTicketVisible(true);
       // }
-      getTicketsData(true);
+      if (resData.total_completed_times > 0) {
+        getTicketsData(true);
+      }
     });
   };
 
