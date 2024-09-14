@@ -1,8 +1,10 @@
 import IconImportant from '@public/images/campaign/icon-important.svg';
+import { useContext } from 'react';
 
 import Empty from '@/components/Empty';
 import useAccount from '@/hooks/useAccount';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
+import RubicHoldstationContext from '@/views/Campaign/RubicHoldstation/context';
 import LeaderboardRank from '@/views/Campaign/RubicHoldstation/sections/Leaderboard/Rank';
 import {
   StyledContainer,
@@ -23,6 +25,8 @@ import LeaderboardUser from '@/views/Campaign/RubicHoldstation/sections/Leaderbo
 
 const Leaderboard = () => {
   const { account } = useAccount();
+  const context = useContext(RubicHoldstationContext);
+  const { totalReward } = context.tickets;
 
   const columns = [
     {
@@ -74,7 +78,7 @@ const Leaderboard = () => {
       <StyledContainer>
         <StyledTitle>Climb to Leaderboard</StyledTitle>
         <StyledTitle>
-          Win<StyledTitlePrimary>$7,500</StyledTitlePrimary>Rewards
+          Win<StyledTitlePrimary>{totalReward}</StyledTitlePrimary>Rewards
         </StyledTitle>
         <StyledDesc>
           Trading on HoldStation by using Rubic bridge. <br />

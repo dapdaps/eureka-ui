@@ -104,7 +104,7 @@ const Holdstation = () => {
                   <LazyImage src="/images/campaign/holdstation-qr-code.svg" width={76} height={76} />
                 </StyledFlex>
                 <StyledDesc>
-                  <StyledDescItem>Download Holdstation wallet and use it to join DapDap</StyledDescItem>
+                  <StyledDescItem>Download Holdstation wallet and use it to explore</StyledDescItem>
                 </StyledDesc>
                 <StyledFlex justifyContent="space-between" alignItems="flex-start" gap="16px" style={{ marginTop: 16 }}>
                   <Button style={{ flex: 1 }} onClick={() => onDownload('apple')}>

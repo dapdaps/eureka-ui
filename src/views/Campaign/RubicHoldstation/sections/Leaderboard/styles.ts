@@ -31,7 +31,7 @@ export const StyledTitle = styled.div`
   text-transform: capitalize;
 `;
 export const StyledTitlePrimary = styled.span`
-  background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
+  background: linear-gradient(146deg, #c8ff7c 11.9%, #ffa5db 80%, #7a78ff 104.11%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

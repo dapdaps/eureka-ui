@@ -8,11 +8,13 @@ import { formateTxDate } from '@/utils/date';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { get } from '@/utils/http';
 import type { Reward } from '@/views/Campaign/models';
+import { useRubicCampaignStore } from '@/views/Campaign/RubicHoldstation/store';
 
 export const useTickets = ({ category }: any) => {
   const { account } = useAccount();
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const toast = useToast();
+  const { setChecked, getChecked } = useRubicCampaignStore();
 
   const [totalReward, setTotalReward] = useState('0');
   const [rewards, setRewards] = useState<RewardItem[]>([]);
@@ -65,7 +67,8 @@ export const useTickets = ({ category }: any) => {
             };
           });
         }) as any,
-        userRewardAmount: formateValueWithThousandSeparatorAndFont(reward.user_reward_amount, 2, true, { prefix: '$' })
+        userRewardAmount: formateValueWithThousandSeparatorAndFont(reward.user_reward_amount, 2, true, { prefix: '$' }),
+        userChecked: getChecked(account as string, idx + 1)
       };
     });
 
@@ -81,8 +84,6 @@ export const useTickets = ({ category }: any) => {
         }
       }
     }
-
-    console.log('rewardsList: %o', rewardsList);
 
     setRewards(rewardsList);
     setUserVouchers({
@@ -119,6 +120,9 @@ export const useTickets = ({ category }: any) => {
     try {
       const res = await get('/api/campaign/reward', { category });
       if (res.code !== 0) throw new Error(res.msg);
+      if (res.data.user_vouchers && res.data.user_vouchers.length) {
+        setChecked(account as string, true, currentReward.round);
+      }
       const newRewardsList = formatData(res.data);
       setChecking(false);
       const curr = newRewardsList.find((it) => it.round === currentReward.round);
@@ -178,6 +182,7 @@ export interface RewardItem extends Reward {
   userRewardVoucher: { no: string; won?: boolean }[];
   userRewardAmount: string;
   expired?: boolean;
+  userChecked?: boolean;
 }
 
 export interface UserVouchers {
