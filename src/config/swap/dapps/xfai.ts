@@ -3,13 +3,13 @@ import { linea } from '@/config/tokens/linea';
 const basic = {
   name: 'Xfai',
   logo: '/images/apps/xfai.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['usdc'],
+      output: linea['usdc']
     },
     tokens: [
       linea['xfit'],
@@ -20,8 +20,9 @@ const networks = {
       linea['usdt'],
       linea['dai'],
       linea['wsteth'],
-    ],
-  },
+      linea['stone']
+    ]
+  }
 };
 
 export { basic, networks };

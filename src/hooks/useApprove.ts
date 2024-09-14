@@ -11,7 +11,7 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
   const [approving, setApproving] = useState(false);
   const [checking, setChecking] = useState(false);
   const { account, provider } = useAccount();
-  
+
   const checkApproved = async () => {
     if (!token?.address || !amount || !spender || amount === '0') return;
     setChecking(true);
@@ -22,15 +22,15 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
           {
             inputs: [
               { internalType: 'address', name: '', type: 'address' },
-              { internalType: 'address', name: '', type: 'address' },
+              { internalType: 'address', name: '', type: 'address' }
             ],
             name: 'allowance',
             outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
             stateMutability: 'view',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
-        provider,
+        provider
       );
       const allowanceRes = await TokenContract.allowance(account, spender);
 
@@ -53,17 +53,24 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
           {
             inputs: [
               { internalType: 'address', name: 'spender', type: 'address' },
-              { internalType: 'uint256', name: 'value', type: 'uint256' },
+              { internalType: 'uint256', name: 'value', type: 'uint256' }
             ],
             name: 'approve',
             outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
             stateMutability: 'nonpayable',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
-        signer,
+        signer
       );
-      const tx = await TokenContract.approve(spender, new Big(amount).mul(10 ** token.decimals).toFixed(0));
+      const gas = await TokenContract.estimateGas.approve(
+        spender,
+        new Big(amount).mul(10 ** token.decimals).toFixed(0)
+      );
+
+      const tx = await TokenContract.approve(spender, new Big(amount).mul(10 ** token.decimals).toFixed(0), {
+        gasLimit: Big(gas.toString()).mul(1.2).toFixed(0)
+      });
       const res = await tx.wait();
       setApproving(false);
       if (res.status === 1) setApproved(true);
