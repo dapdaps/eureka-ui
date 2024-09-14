@@ -1,5 +1,6 @@
 import { useDebounceFn } from 'ahooks';
-import { useEffect, useState } from 'react';
+import Big from 'big.js';
+import { useEffect, useMemo, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import useAuthCheck from '@/hooks/useAuthCheck';
@@ -31,6 +32,19 @@ export const useTickets = ({ category }: any) => {
   const [checking, setChecking] = useState(false);
   const [checkTicketVisible, setCheckTicketVisible] = useState(false);
   const [checkTicketData, setCheckTicketData] = useState<RewardItem | undefined>();
+
+  const userTotalRewardShown = useMemo(() => {
+    let _total = Big(0);
+    rewards.forEach((re) => {
+      if (re.userChecked) {
+        _total = _total.plus(re.user_reward_amount);
+      }
+    });
+    return {
+      value: _total,
+      str: formateValueWithThousandSeparatorAndFont(_total, 2, true, { prefix: '$' })
+    };
+  }, [rewards]);
 
   const formatData = (data: any) => {
     const { total_reward, rewards, user_vouchers, user_total_reward } = data;
@@ -129,9 +143,11 @@ export const useTickets = ({ category }: any) => {
     try {
       const res = await get('/api/campaign/reward', { category });
       if (res.code !== 0) throw new Error(res.msg);
-      if (res.data.user_vouchers && res.data.user_vouchers.length) {
-        setChecked(account as string, true, currentReward.round);
-      }
+      // When there are no lottery tickets
+      // clicking should still display the "draw completed" status
+      // if (res.data.user_vouchers && res.data.user_vouchers.length) {
+      setChecked(account as string, true, currentReward.round);
+      // }
       const newRewardsList = formatData(res.data);
       setChecking(false);
       const curr = newRewardsList.find((it) => it.round === currentReward.round);
@@ -171,6 +187,7 @@ export const useTickets = ({ category }: any) => {
     rewards,
     userVouchers,
     userTotalReward,
+    userTotalRewardShown,
     loading,
     checking,
     handleCheck,

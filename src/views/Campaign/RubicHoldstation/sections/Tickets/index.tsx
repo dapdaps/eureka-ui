@@ -24,7 +24,7 @@ import YourTicketsModal from './YourTicketsModal';
 
 const Tickets = () => {
   const context = useContext(RubicHoldstationContext);
-  const { rewards, userTotalReward, totalReward } = context.tickets;
+  const { rewards, totalReward, userTotalRewardShown } = context.tickets;
 
   const [showTicketsModal, setShowTicketsModal] = useState(false);
 
@@ -69,10 +69,10 @@ const Tickets = () => {
           </svg>
         </Button>
       </StyledTickets>
-      {Big(userTotalReward.value || 0).gt(0) && (
+      {Big(userTotalRewardShown.value).gt(0) && (
         <StyledWonText>
           <div>Congrats! You won</div>
-          <StyledPrize size={46}>{userTotalReward.str}</StyledPrize>
+          <StyledPrize size={46}>{userTotalRewardShown.str}</StyledPrize>
         </StyledWonText>
       )}
       <StyledRoundContainer>
