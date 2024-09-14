@@ -2,10 +2,7 @@ import Big from 'big.js';
 import { upperFirst } from 'lodash';
 import { styled } from 'styled-components';
 
-import {
-  formateValue,
-  formateValueWithThousandSeparatorAndFont,
-} from '@/utils/formate';
+import { formateValue, formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import ImageFallback from '@/views/Portfolio/components/ImageFallback';
 
 const StyledRecord = styled.div`
@@ -14,7 +11,7 @@ const StyledRecord = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 6px;
-  color: #FFF;
+  color: #fff;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -39,7 +36,7 @@ export const executionTokenWay = (record: any) => {
   if (!record)
     return {
       tokenKey: 'tokens_in',
-      method: '',
+      method: ''
     };
   let method = record.sub_type;
 
@@ -52,10 +49,8 @@ export const executionTokenWay = (record: any) => {
   }
 
   return {
-    tokenKey: ['Borrow', 'remove'].includes(record.sub_type)
-      ? 'tokens_out'
-      : 'tokens_in',
-    method,
+    tokenKey: ['Borrow', 'remove'].includes(record.sub_type) ? 'tokens_out' : 'tokens_in',
+    method
   };
 };
 
@@ -75,17 +70,11 @@ export const formatExecution = (record: any) => {
       <>
         {record[key].map((it: any, idx: number) => (
           <div className="token-amount" key={idx}>
-            <ImageFallback
-              className="token-icon"
-              src={getTokenLogo(it.symbol)}
-              alt=""
-              width={20}
-              height={20}
-            />
+            <ImageFallback className="token-icon" src={getTokenLogo(it.symbol)} alt="" width={20} height={20} />
             <span
               className="token-value"
               style={{
-                color: key === 'tokens_out' ? '' : '#06C17E',
+                color: key === 'tokens_out' ? '' : '#06C17E'
               }}
             >
               {`${key === 'tokens_out' ? '- ' : '+ '}${formateValueWithThousandSeparatorAndFont(it.amount, 4, true)} ${it.symbol} (${formatUsd(it.usd)})`}
@@ -98,9 +87,7 @@ export const formatExecution = (record: any) => {
 
   return (
     <StyledRecord>
-      <span>
-        {upperFirst(method)}
-      </span>
+      <span>{upperFirst(method)}</span>
       {amount}
     </StyledRecord>
   );
@@ -116,7 +103,7 @@ export const defaultIcon = '/images/tokens/default_icon.png';
 export const getChainLogo = (name: string) => {
   name = name.toLowerCase();
   if (name) {
-    return `https://s3.amazonaws.com/db3.app/chain/${name}.png`;
+    return `https://s3.amazonaws.com/db3.main/chain/${name}.png`;
   }
   return defaultIcon;
 };
@@ -124,7 +111,7 @@ export const getChainLogo = (name: string) => {
 export const getDappLogo = (name: string) => {
   name = name.toLowerCase();
   if (name) {
-    return `https://s3.amazonaws.com/db3.app/dapp/${name}.png`;
+    return `https://s3.amazonaws.com/db3.main/dapp/${name}.png`;
   }
   return defaultIcon;
 };
@@ -132,7 +119,7 @@ export const getDappLogo = (name: string) => {
 export const getTokenLogo = (name: string) => {
   name = name.toLowerCase();
   if (name) {
-    return `https://s3.amazonaws.com/db3.app/token/${name}.png`;
+    return `https://s3.amazonaws.com/db3.main/token/${name}.png`;
   }
   return defaultIcon;
 };
@@ -148,11 +135,7 @@ export function getTime(timeStr: number) {
   return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
-export const formatPercentNumber = (
-  val: string | number,
-  div: string | number,
-  isSimply?: boolean,
-) => {
+export const formatPercentNumber = (val: string | number, div: string | number, isSimply?: boolean) => {
   if (!val || val == 0) {
     return Big(0).toFixed(isSimply ? 0 : 2);
   }
