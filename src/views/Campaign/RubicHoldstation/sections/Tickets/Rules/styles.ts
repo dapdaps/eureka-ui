@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const StyledEntry = styled.button`
-  width: 103px;
+  width: 130px;
   height: 42px;
   flex-shrink: 0;
   border-radius: 26px;
@@ -49,4 +49,8 @@ export const StyledListItem = styled.li`
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+
+  > ol {
+    padding-left: 20px;
+  }
 `;

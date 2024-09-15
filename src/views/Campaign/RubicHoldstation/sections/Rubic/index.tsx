@@ -35,7 +35,7 @@ const Rubic = () => {
         1 ticket for asset bridging at Rubic or Super Bridge using Rubic paths <br />
         Requires at least $25 per bridge
       </StyledTitleDesc>
-      <StyledTitleSub>1 transaction = 1 lottery ticket</StyledTitleSub>
+      <StyledTitleSub>1 transaction = 1 scratch ticket</StyledTitleSub>
       <StyledTitleSubDesc>(at least $25 per transaction)</StyledTitleSubDesc>
       <StyledContent>
         <StyledFlex justifyContent="space-between" alignItems="center" gap="24px">
@@ -54,7 +54,7 @@ const Rubic = () => {
               />
               <RubicCard
                 key={2}
-                title="Integreated dApp"
+                title="Intergrated dApp"
                 bg="/images/campaign/integreated-dapp-bg.png"
                 bgWidth={215}
                 bgHeight={236}
