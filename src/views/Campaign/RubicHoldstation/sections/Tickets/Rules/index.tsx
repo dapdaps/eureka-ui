@@ -4,7 +4,6 @@ import {
   StyledList,
   StyledListItem,
   StyledSection,
-  StyledText,
   StyledTitle
 } from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/styles';
 
@@ -31,7 +30,9 @@ const Rules = (props: Props) => {
         <StyledContainer>
           <StyledSection>
             <StyledTitle>Lotto Number Format:</StyledTitle>
-            <StyledText>Each lotto number is a sequence of 5 digits.</StyledText>
+            <StyledList>
+              <StyledListItem>Each lotto number is a sequence of 5 digits.</StyledListItem>
+            </StyledList>
           </StyledSection>
           <StyledSection>
             <StyledTitle>Lotto Rounds and Reward Amounts:</StyledTitle>
@@ -54,20 +55,23 @@ const Rules = (props: Props) => {
             <StyledTitle>Prize Carryover Rules:</StyledTitle>
             <StyledList>
               <StyledListItem>
-                If there is no winner in the First Round, the prize amount rolls over to the Second Round.
+                If there is no winner in the <strong>First Round</strong>, the prize amount rolls over to the{' '}
+                <strong>Second Round</strong>.
               </StyledListItem>
               <StyledListItem>
-                If there is no winner in the Second Round, the prize rolls over to the Third Round.
+                If there is no winner in the <strong>Second Round</strong>, the prize rolls over to the{' '}
+                <strong>Third Round</strong>.
               </StyledListItem>
               <StyledListItem>
-                The Third Round guarantees that all prize money will be awarded:
+                The <strong>Third Round</strong> guarantees that all prize money will be awarded:
                 <ol>
                   <li className="ol-item">
-                    If no one wins the First Prize, the prize amount is added to the Second Prize.
+                    If no one wins the <strong>First Prize</strong>, the prize amount is added to the{' '}
+                    <strong>Second Prize</strong>.
                   </li>
                   <li className="ol-item">
-                    If no one wins the Second Prize, the combined prize amount is added to the Third Prize and will be
-                    split equally among the winners.
+                    If no one wins the <strong>Second Prize</strong>, the combined prize amount is added to the{' '}
+                    <strong>Third Prize</strong> and will be split equally among the winners.
                   </li>
                 </ol>
               </StyledListItem>
