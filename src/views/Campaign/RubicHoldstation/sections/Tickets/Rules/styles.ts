@@ -22,6 +22,7 @@ export const StyledEntry = styled.button`
 export const StyledContainer = styled.div`
   text-align: left;
   padding: 0 35px 35px;
+  text-transform: none;
 `;
 export const StyledSection = styled.section`
   margin-top: 20px;
@@ -42,6 +43,7 @@ export const StyledText = styled.div`
 `;
 export const StyledList = styled.ul`
   padding-left: 20px;
+  margin-top: 14px;
 `;
 export const StyledListItem = styled.li`
   color: #fff;
