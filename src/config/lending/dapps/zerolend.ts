@@ -17,7 +17,7 @@ const CONTRACT_ABI = {
   aavePoolV3ABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/AAVEPoolV3.json',
   variableDebtTokenABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/VariableDebtToken.json',
   walletBalanceProviderABI:
-    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
+    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
@@ -25,7 +25,7 @@ const basic = {
   name: 'ZeroLend',
   data: 'bluebiu.near/widget/AAVE.Data.Zerolend',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
-  type: 'aave-v3',
+  type: 'aave-v3'
 };
 
 const rewardToken = [
@@ -35,8 +35,8 @@ const rewardToken = [
     symbol: 'earlyZERO',
     name: 'earlyZERO',
     icon: '',
-    unclaimed: '',
-  },
+    unclaimed: ''
+  }
 ];
 
 const networks = {
@@ -65,7 +65,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0x767b4A087c11d7581Ac95eaFfc1FeBFA26bad3d2',
       balanceProviderAddress: '0xdeEa10da04D867e3303AB6E50FA26C2d8a5e9f70',
       incentivesProxy: '0x54AB34aB3C723bD2674c7082aA6fFcdfd3A5BEdc', //CLAIM
-      rewardAddress: '0x9793eac2fECef55248efA039BEC78e82aC01CB2f',
+      rewardAddress: '0x9793eac2fECef55248efA039BEC78e82aC01CB2f'
     },
     rawMarkets: [
       {
@@ -86,7 +86,7 @@ const networks = {
         stableDebtTokenAddress: '0x9c9158BFF47342A20b7D2Ac09F89e96F3A209b9B',
         variableBorrowAPY: '',
         variableDebtTokenAddress: '0x56f58d9BE10929CdA709c4134eF7343D73B080Cf',
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '2',
@@ -106,7 +106,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: false,
+        supportBorrow: false
       },
       {
         id: '3',
@@ -126,7 +126,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '4',
@@ -146,7 +146,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '5',
@@ -166,7 +166,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '6',
@@ -186,11 +186,11 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
-      },
+        supportBorrow: true
+      }
     ],
     CONTRACT_ABI,
-    rewardToken,
+    rewardToken
   },
   //manta
   169: {
@@ -205,7 +205,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0xE05361EA51E20118072aec0fB0FD178e8b09D69e',
       balanceProviderAddress: '0xCbDc0aeD7CDf2472784068abEf23a902CafABb98',
       incentivesProxy: '0x28F6899fF643261Ca9766ddc251b359A2d00b945', //CLAIM
-      rewardAddress: '0x642CE49f36f74FCC430ff79A76EB984737A7672d',
+      rewardAddress: '0x642CE49f36f74FCC430ff79A76EB984737A7672d'
     },
     rawMarkets: [
       {
@@ -226,7 +226,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '2',
@@ -246,7 +246,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '3',
@@ -266,7 +266,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '4',
@@ -286,7 +286,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '5',
@@ -306,7 +306,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '6',
@@ -326,7 +326,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '7',
@@ -346,7 +346,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '8',
@@ -366,7 +366,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '9',
@@ -386,7 +386,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '10',
@@ -406,11 +406,11 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
-      },
+        supportBorrow: true
+      }
     ],
     CONTRACT_ABI,
-    rewardToken,
+    rewardToken
   },
   //linea
   59144: {
@@ -425,7 +425,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0x5d50bE703836C330Fc2d147a631CDd7bb8D7171c',
       balanceProviderAddress: '0xE05361EA51E20118072aec0fB0FD178e8b09D69e',
       incentivesProxy: '0x28F6899fF643261Ca9766ddc251b359A2d00b945', //CLAIM
-      rewardAddress: '0x40A59A3F3b16d9e74C811d24D8b7969664cFe180',
+      rewardAddress: '0x40A59A3F3b16d9e74C811d24D8b7969664cFe180'
     },
     rawMarkets: [
       {
@@ -446,7 +446,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '2',
@@ -466,7 +466,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: false,
+        supportBorrow: false
       },
 
       {
@@ -487,7 +487,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
 
       {
@@ -508,12 +508,12 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
-      },
+        supportBorrow: true
+      }
     ],
     CONTRACT_ABI,
-    rewardToken,
-  },
+    rewardToken
+  }
 };
 
 export default { basic, networks };

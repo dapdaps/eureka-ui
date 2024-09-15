@@ -1,3 +1,4 @@
+import SimpleTooltip from '@/components/Tooltip';
 import { StyledFlex, StyledFont, StyledSvg } from "@/styled/styles";
 
 import {
@@ -6,14 +7,18 @@ import {
   StyledInnerProgressBar,
   StyledProgressBar
 } from './styles';
+
 type ProgressType = {
   quantity: number;
   total: number;
   showAchieved?: boolean;
   showPercent?: boolean;
   barWidth?: string;
+  className?: string;
+  tooltip?: string;
 }
-export default function Progress({ quantity, total, showAchieved, showPercent, barWidth }: ProgressType) {
+
+export default function Progress({ quantity, total, showAchieved, showPercent, barWidth, className, tooltip }: ProgressType) {
   quantity = quantity > total ? total : quantity
 
   const renderRatio = function () {
@@ -27,8 +32,9 @@ export default function Progress({ quantity, total, showAchieved, showPercent, b
       return `${quantity}/${total}`
     }
   }
+
   return (
-    <StyledFlex justifyContent="center" gap="37px" style={{ position: 'relative', paddingRight: 52 }}>
+    <StyledFlex justifyContent="center" gap="37px" style={{ position: 'relative', paddingRight: 52 }} className={className}>
       {
         quantity >= total && showAchieved ? (
           <StyledAchievedContainer>
@@ -42,13 +48,19 @@ export default function Progress({ quantity, total, showAchieved, showPercent, b
             </StyledAchieved>
           </StyledAchievedContainer>
         ) : (
-          <StyledProgressBar $width={barWidth}>
-            <StyledInnerProgressBar $percent={(quantity / total) * 100} />
+          <StyledProgressBar $width={barWidth} className={`${className || ''}-bar`}>
+            <StyledInnerProgressBar $percent={(quantity / total) * 100} className={`${className || ''}-bar-inner`} />
           </StyledProgressBar>
         )
       }
       <StyledFont color="#979ABE" fontSize="14px" fontWeight="500" style={{ position: 'absolute', right: 0 }}>
-        {renderRatio()}
+        {
+          tooltip ? (
+            <SimpleTooltip tooltip={tooltip}>
+              {renderRatio()}
+            </SimpleTooltip>
+          ) : renderRatio()
+        }
       </StyledFont>
     </StyledFlex>
   )
