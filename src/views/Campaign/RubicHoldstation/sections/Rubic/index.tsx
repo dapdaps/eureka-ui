@@ -33,10 +33,10 @@ const Rubic = () => {
       <StyledTitle>「Rubic Super Exchange」</StyledTitle>
       <StyledTitleDesc>
         1 ticket for asset bridging at Rubic or Super Bridge using Rubic paths <br />
-        Requires at least $50 per bridge
+        Requires at least $25 per bridge
       </StyledTitleDesc>
       <StyledTitleSub>1 transaction = 1 lottery ticket</StyledTitleSub>
-      <StyledTitleSubDesc>(at least $50 per transaction)</StyledTitleSubDesc>
+      <StyledTitleSubDesc>(at least $25 per transaction)</StyledTitleSubDesc>
       <StyledContent>
         <StyledFlex justifyContent="space-between" alignItems="center" gap="24px">
           {loading ? (
