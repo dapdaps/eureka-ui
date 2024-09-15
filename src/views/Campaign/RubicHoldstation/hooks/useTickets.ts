@@ -8,6 +8,7 @@ import useToast from '@/hooks/useToast';
 import { formateTxDate } from '@/utils/date';
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 import { get } from '@/utils/http';
+import { getUTCTime } from '@/utils/utc';
 import type { Reward } from '@/views/Campaign/models';
 import { useRubicCampaignStore } from '@/views/Campaign/RubicHoldstation/store';
 
@@ -63,13 +64,16 @@ export const useTickets = ({ category }: any) => {
       const voucherArr = [...new Array(reward.voucher.length).keys()].map((idx) =>
         reward.voucher.substring(idx, idx + 1)
       );
+
+      const d = getUTCTime(reward.reward_time * 1000);
+
       return {
         ...reward,
         expired: false,
         amountAdd: [],
         amountAddStr: [],
         round: idx + 1,
-        rewardTime: formateTxDate(reward.reward_time * 1000, { is24Hour: true, suffix: 'UTC' }),
+        rewardTime: formateTxDate(d, { is24Hour: true, suffix: 'UTC' }),
         amountStr: formateValueWithThousandSeparatorAndFont(reward.amount, 2, true, { prefix: '$' }),
         voucherArr,
         userRewardVoucher: reward.user_reward_voucher.split(',').map((userVoucher: string) => {
