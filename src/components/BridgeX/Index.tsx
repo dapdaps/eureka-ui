@@ -535,8 +535,7 @@ export default function BridgeX({
           <RubicFooter>
             <RubicFooterTime>
               <span className="label">Time: </span>
-              {formatDateTime(_start_time, 'D/M/YYYY')} - {formatDateTime(_end_time, 'D/M/YYYY')} {hourStr}
-              {unit} (UTC)
+              {formatDateTime(_start_time, 'D/M/YYYY')} - {formatDateTime(_end_time, 'D/M/YYYY hh:mm')} (UTC)
             </RubicFooterTime>
             <RubicFooterLink href="/campaign/home?category=rubic-holdstation">Campaign {'>'}</RubicFooterLink>
           </RubicFooter>
