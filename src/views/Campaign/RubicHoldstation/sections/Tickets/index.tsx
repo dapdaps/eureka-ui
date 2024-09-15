@@ -92,6 +92,7 @@ const Tickets = () => {
             The carryover rules for the third round ensure that the prize does not go unclaimed, maintaining the
             fairness and attractiveness of the lottery.
           </li>
+          <li className="note-item">Rewards will be distributed to winners via the BNB Smart chain.</li>
         </ul>
       </StyledNotes>
       <YourTicketsModal

@@ -49,7 +49,7 @@ const Banner = () => {
               </svg>
             </StyledFlex>
             <div className="primary">Grand Lotto</div>
-            <div className="sub">Play Lottery and Win Prizes</div>
+            <div className="sub">Play Onchain and Win Prizes</div>
           </StyledTitle>
         </div>
         <StyledBannerImage src="/images/campaign/rubic-holdstation/banner.png" width={762} height={611} alt="Lottery" />

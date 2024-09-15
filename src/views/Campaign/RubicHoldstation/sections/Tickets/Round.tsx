@@ -80,6 +80,7 @@ export default function Round(props: { reward: RewardItem }) {
               }}
             >
               <span className="prize-text">{showPrize}</span>
+              <span className="prize-unit">USDT</span>
             </StyledPrize>
           </StyledPrizePot>
           <StyledRoundNumbers>

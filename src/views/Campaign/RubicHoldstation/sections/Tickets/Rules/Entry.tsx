@@ -16,7 +16,7 @@ const RulesEntry = () => {
             fill="white"
           />
         </svg>
-        Rules
+        Overview
       </StyledEntry>
       <Rules visible={rulesVisible} onClose={() => setRulesVisible(false)} />
     </>
