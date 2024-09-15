@@ -12,6 +12,7 @@ import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
 import { formatDateTime } from '@/utils/date';
+import { getUTCTime } from '@/utils/utc';
 import { useBasic } from '@/views/Campaign/RubicHoldstation/hooks/useBasic';
 
 import LazyImage from '../LazyImage';
@@ -512,12 +513,12 @@ export default function BridgeX({
       const { end_time, start_time } = data;
       let hourStr: string | number = '';
       let unit = '';
-      if (end_time) {
-        const date = new Date(end_time);
-        const hour = date.getHours();
-        hourStr = hour % 12;
-        unit = hour > 11 ? 'PM' : 'AM';
-      }
+      const _end_time = getUTCTime(end_time);
+      const date = new Date(_end_time);
+      const hour = date.getHours();
+      hourStr = hour % 12;
+      unit = hour > 11 ? 'PM' : 'AM';
+      const _start_time = getUTCTime(start_time);
 
       return (
         <RubicHeader>
@@ -534,7 +535,7 @@ export default function BridgeX({
           <RubicFooter>
             <RubicFooterTime>
               <span className="label">Time: </span>
-              {formatDateTime(start_time, 'D/M/YYYY')} - {formatDateTime(end_time, 'D/M/YYYY')} {hourStr}
+              {formatDateTime(_start_time, 'D/M/YYYY')} - {formatDateTime(_end_time, 'D/M/YYYY')} {hourStr}
               {unit} (UTC)
             </RubicFooterTime>
             <RubicFooterLink href="/campaign/home?category=rubic-holdstation">Campaign {'>'}</RubicFooterLink>
