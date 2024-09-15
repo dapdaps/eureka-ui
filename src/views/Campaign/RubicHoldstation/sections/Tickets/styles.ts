@@ -59,6 +59,11 @@ export const StyledPrize = styled.div<{ size: number; italic?: boolean; $expired
       position: absolute;
     }
   }
+
+  .prize-unit {
+    font-size: 0.5em;
+    margin-left: 5px;
+  }
 `;
 
 export const StyledTickets = styled.div`

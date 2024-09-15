@@ -1,8 +1,11 @@
 import Modal from '@/components/Modal';
 import {
-  StyledContainer, StyledList, StyledListItem,
-  StyledSection, StyledText,
-  StyledTitle,
+  StyledContainer,
+  StyledList,
+  StyledListItem,
+  StyledSection,
+  StyledText,
+  StyledTitle
 } from '@/views/Campaign/RubicHoldstation/sections/Tickets/Rules/styles';
 
 const Rules = (props: Props) => {
@@ -11,62 +14,75 @@ const Rules = (props: Props) => {
   return (
     <Modal
       display={visible}
-      title="Lottery Rules Overview"
+      title="Grand Lotto Overview"
       width={704}
       onClose={onClose}
       style={{
         borderRadius: 12,
         background: '#1F2229',
-        border: '1px solid #333648',
+        border: '1px solid #333648'
       }}
       headerStyle={{
         fontStyle: 'normal',
         fontSize: 20,
-        fontWeight: 600,
+        fontWeight: 600
       }}
-      content={(
+      content={
         <StyledContainer>
           <StyledSection>
-            <StyledTitle>Lottery Number Format:</StyledTitle>
-            <StyledText>
-              The lottery number consists of 5 digits.
-            </StyledText>
+            <StyledTitle>Lotto Number Format:</StyledTitle>
+            <StyledText>Each lotto number is a sequence of 5 digits.</StyledText>
           </StyledSection>
           <StyledSection>
-            <StyledTitle>Lottery Rounds and Prizes:</StyledTitle>
+            <StyledTitle>Lotto Rounds and Reward Amounts:</StyledTitle>
             <StyledList>
-              <StyledListItem>First Round: $750</StyledListItem>
-              <StyledListItem>Second Round: $1000</StyledListItem>
-              <StyledListItem>Third Round: $2000</StyledListItem>
+              <StyledListItem>First Round: $750 USDT</StyledListItem>
+              <StyledListItem>Second Round: $1,000 USDT</StyledListItem>
+              <StyledListItem>Third Round: $2,000 USDT</StyledListItem>
             </StyledList>
           </StyledSection>
           <StyledSection>
-            <StyledTitle>Prize Settings:</StyledTitle>
+            <StyledTitle>Prize Distribution:</StyledTitle>
             <StyledList>
-              <StyledListItem>The first and second rounds only have a first prize.</StyledListItem>
-              <StyledListItem>The third round has first, second, and third prizes.</StyledListItem>
+              <StyledListItem>First and Second Rounds: Only one prize level (First Prize) is available.</StyledListItem>
+              <StyledListItem>
+                Third Round: Three prize levels are available—First Prize, Second Prize, and Third Prize.
+              </StyledListItem>
             </StyledList>
           </StyledSection>
           <StyledSection>
             <StyledTitle>Prize Carryover Rules:</StyledTitle>
             <StyledList>
-              <StyledListItem>If no one wins in the first round, the prize carries over to the second round.</StyledListItem>
-              <StyledListItem>If no one wins in the second round, the prize carries over to the third round.</StyledListItem>
               <StyledListItem>
-                The third round cannot be void; if no one wins the first prize, the prize carries over to the second prize; if no one wins the second prize, the prize carries over to the third prize and is split equally among the winners.
+                If there is no winner in the First Round, the prize amount rolls over to the Second Round.
+              </StyledListItem>
+              <StyledListItem>
+                If there is no winner in the Second Round, the prize rolls over to the Third Round.
+              </StyledListItem>
+              <StyledListItem>
+                The Third Round guarantees that all prize money will be awarded:
+                <ol>
+                  <li className="ol-item">
+                    If no one wins the First Prize, the prize amount is added to the Second Prize.
+                  </li>
+                  <li className="ol-item">
+                    If no one wins the Second Prize, the combined prize amount is added to the Third Prize and will be
+                    split equally among the winners.
+                  </li>
+                </ol>
               </StyledListItem>
             </StyledList>
           </StyledSection>
           <StyledSection>
-            <StyledTitle>Winning Conditions:</StyledTitle>
+            <StyledTitle>Winning Criteria:</StyledTitle>
             <StyledList>
-              <StyledListItem>First Prize: All 5 digits are identical.</StyledListItem>
-              <StyledListItem>Second Prize: 4 out of 5 digits are identical.</StyledListItem>
-              <StyledListItem>Third Prize: 3 out of 5 digits are identical.</StyledListItem>
+              <StyledListItem>First Prize: All 5 digits must match the drawn number</StyledListItem>
+              <StyledListItem>Second Prize: 4 out of the 5 digits must match the drawn number</StyledListItem>
+              <StyledListItem>Third Prize: 3 out of the 5 digits must match the drawn number</StyledListItem>
             </StyledList>
           </StyledSection>
         </StyledContainer>
-      )}
+      }
     />
   );
 };
