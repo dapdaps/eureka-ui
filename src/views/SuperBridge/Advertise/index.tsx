@@ -65,28 +65,27 @@ const RangoTip = styled.div`
   }
 `;
 
-const Rango = () => {
+const Rango = (props: any) => {
+  const { link, banner, children } = props;
+
   const router = useRouter();
   return (
     <AdWrapper
       onClick={() => {
-        router.push('/bridge-x/rango');
+        router.push(link);
       }}
     >
-      <TooltipSimple
-        tooltip={
-          <RangoTip>
-            Volume-based competition: <span className="money">1000 $USDC</span> will be shared between top bridgors
-            <div>
-              <span className="time">Time:</span> 9/9/2024 - 23/9/2024 3PM (UTC)
-            </div>
-          </RangoTip>
-        }
-      >
+      {children ? (
+        <TooltipSimple tooltip={children}>
+          <div style={{ width: 328, height: 108, overflow: 'hidden' }}>
+            <img className="main-ad-img" src={banner} />
+          </div>
+        </TooltipSimple>
+      ) : (
         <div style={{ width: 328, height: 108, overflow: 'hidden' }}>
-          <img className="main-ad-img" src="/images/bridge/super/rango.png" />
+          <img className="main-ad-img" src={banner} />
         </div>
-      </TooltipSimple>
+      )}
     </AdWrapper>
   );
 };
@@ -161,12 +160,26 @@ export default function Advertise() {
         }}
         loop={true}
       >
-        <SwiperSlide>
-          <Rango />
+        <SwiperSlide key={1}>
+          <Rango
+            link="/campaign/home?category=rubic-holdstation"
+            banner="/images/campaign/rubic-holdstation/banner-link-super-bridge.png"
+          />
+        </SwiperSlide>
+
+        <SwiperSlide key={2}>
+          <Rango link="/bridge-x/rango" banner="/images/bridge/super/rango.png">
+            <RangoTip>
+              Volume-based competition: <span className="money">1000 $USDC</span> will be shared between top bridgors
+              <div>
+                <span className="time">Time:</span> 9/9/2024 - 23/9/2024 3PM (UTC)
+              </div>
+            </RangoTip>
+          </Rango>
         </SwiperSlide>
 
         {superBridgeMedal && (
-          <SwiperSlide>
+          <SwiperSlide key={3}>
             <Medal medal={superBridgeMedal} />
           </SwiperSlide>
         )}

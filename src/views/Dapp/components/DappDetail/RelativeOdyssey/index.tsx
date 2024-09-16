@@ -65,6 +65,20 @@ const RelativeOdyssey = (props: Props) => {
         data.unshift(zero);
       }
 
+      if (dappName === 'Rubic Bridge') {
+        const zero = {
+          id: -1,
+          name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
+          end_time: 1727280000000,
+          status: 'ongoing',
+          banner: '/images/campaign/rubic-holdstation/link-banner.png',
+          link: '/campaign/home?category=rubic-holdstation',
+          showSummary: false,
+          reward: '[{"name":"USDT","value":"$7500","logo_key":"USDT"}]'
+        };
+        data.unshift(zero);
+      }
+
       setOdysseyList(data.sort((a: any, b: any) => b.end_time - a.end_time));
     } catch (err) {
       console.log(err, 'err');
@@ -129,6 +143,7 @@ const RelativeOdyssey = (props: Props) => {
                   rewards={compass.reward}
                   volume={compass.trading_volume}
                   users={compass.total_users}
+                  link={compass.link}
                   isHoverButton
                   bp="1006-002-009"
                   // medals={[
