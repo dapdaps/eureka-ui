@@ -81,7 +81,7 @@ const RubicHoldstation = (props: Props) => {
         <Banner />
         <Tickets />
         <Rubic />
-        <Holdstation />
+        {/*<Holdstation />*/}
         <Leaderboard />
         <Medal />
         <NewTicketModal visible={newTicketVisible} onClose={() => setNewTicketVisible(false)} />
