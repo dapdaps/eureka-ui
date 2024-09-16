@@ -54,7 +54,7 @@ const Rubic = () => {
               />
               <RubicCard
                 key={2}
-                title="Intergrated dApp"
+                title="Integrated dApp"
                 bg="/images/campaign/integreated-dapp-bg.png"
                 bgWidth={215}
                 bgHeight={236}
