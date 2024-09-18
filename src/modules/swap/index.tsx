@@ -95,7 +95,7 @@ export default function SwapDapp({
     const defaultCurrencies = localConfig.networks[currentChain.chain_id]?.defaultCurrencies;
     setInputCurrency(defaultCurrencies?.input);
     setOutputCurrency(defaultCurrencies?.output);
-  }, [currentChain]);
+  }, [currentChain, localConfig]);
 
   useEffect(() => {
     if (!inputCurrency || !outputCurrency) {
