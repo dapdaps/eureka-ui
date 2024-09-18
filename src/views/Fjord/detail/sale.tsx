@@ -155,7 +155,7 @@ export default function Comp({ pool, totalSupply, softCap }: any) {
             <SummaryItem className="tiled">
               <div className="key">Soft Cap</div>
               <div className="value">
-                {formatValueDecimal(softCap, '', 2, true)} {pool?.share_token_symbol}
+                {showZero(formatValueDecimal(softCap, '', 2, true))} {pool?.share_token_symbol}
               </div>
             </SummaryItem>
             <SummaryItem className="tiled">
