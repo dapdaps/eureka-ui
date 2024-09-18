@@ -17,7 +17,7 @@ const formatTrade = ({
     ? market.gas
     : market.txn?.gasLimit.type === 'BigNumber'
       ? Number(market.txn.gasLimit.hex)
-      : market.txn?.gasLimit;
+      : Number(market.txn?.gasLimit);
 
   const { isGasEnough, gas } = checkGas({
     rawBalance,
