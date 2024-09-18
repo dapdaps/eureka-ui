@@ -237,6 +237,7 @@ export const getAggregatorsTx = async ({
       );
     }
   } catch (err) {
+    console.log('aggregator error', err);
     onError?.();
   }
 };

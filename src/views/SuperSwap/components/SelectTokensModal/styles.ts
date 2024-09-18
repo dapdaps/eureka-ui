@@ -25,7 +25,7 @@ export const Input = styled.input`
 
 export const CurrencyList = styled.div`
   padding: 0px 30px 20px;
-  max-height: calc(60vh - 120px);
+  height: calc(60vh - 120px);
   overflow-x: auto;
   @media (max-width: 900px) {
     max-height: 50vh;

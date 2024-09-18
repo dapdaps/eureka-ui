@@ -93,6 +93,9 @@ export default function useTrade({ chainId }: any) {
         return;
       }
 
+      cachedMarkets.current = [];
+      cachedCount.current = 0;
+
       const onQuoterCallback = (_markets: any) => {
         setLoading(false);
 
