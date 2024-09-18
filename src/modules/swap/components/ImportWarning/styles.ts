@@ -1,15 +1,11 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
-  border-radius: 24px;
-  background: var(--agg-bg-color, #303142);
-  border: 1px solid var(--agg-border-color, #373a53);
-  width: 393px;
-  height: 330px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding-bottom: 20px;
   @media (max-width: 900px) {
     width: 100%;
     border-radius: 16px 16px 0px 0px;

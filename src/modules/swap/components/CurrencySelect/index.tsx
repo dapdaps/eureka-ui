@@ -29,7 +29,7 @@ export default function CurrencySelect({
   const [searchVal, setSearchVal] = useState('');
   const [currencies, setCurrencies] = useState<any>(tokens || []);
   const { loading, queryToken } = useTokenInfo();
-  const [importToken, setImportToken] = useState(null);
+  const [importToken, setImportToken] = useState<any>(null);
   const [showImportWarning, setShowImportWarning] = useState(false);
   const { loading: balancesLoading, balances = {} } = useTokensBalance(tokens);
 
@@ -49,13 +49,20 @@ export default function CurrencySelect({
           ? token.isImport
           : false;
     });
+
     if (_tokens.length === 0 && utils.isAddress(searchVal) && !tokenIsAvailable) {
       setCurrencies([]);
       queryToken({
         chainId,
         address: searchVal,
         callback(token: any) {
-          console.log('token', token);
+          setImportToken({
+            symbol: token[1],
+            address: searchVal,
+            decimals: token[2],
+            name: token[0],
+            chainId
+          });
         }
       });
     } else {
@@ -66,7 +73,7 @@ export default function CurrencySelect({
 
   useEffect(() => {
     handleSearch();
-  }, [tab]);
+  }, [tab, searchVal]);
 
   useEffect(() => {
     setCurrencies(tokens);
@@ -100,7 +107,6 @@ export default function CurrencySelect({
               placeholder="Search name or paste address"
               onChange={(ev) => {
                 setSearchVal(ev.target.value);
-                handleSearch();
               }}
             />
             {searchVal && (

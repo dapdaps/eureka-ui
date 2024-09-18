@@ -120,7 +120,13 @@ export default function SwapDapp({
   }, [trade]);
 
   return (
-    <StyledContainer>
+    <StyledContainer
+      style={{
+        // @ts-ignore
+        '--button-color': localConfig.theme['--button-color'],
+        '--button-text-color': localConfig.theme['--button-text-color']
+      }}
+    >
       <StyledWidgetWrapper>
         <div>
           <StyledPanel>
