@@ -149,7 +149,7 @@ export default function Comp({ pool, totalSupply, softCap }: any) {
             <SummaryItem className="tiled">
               <div className="key">Max Allocation per Wallet</div>
               <div className="value">
-                {formatValueDecimal(pool?.shares_initial ?? 0, '$', 2, true)} {pool?.share_token_symbol}
+                {formatValueDecimal(pool?.shares_initial ?? 0, '', 2, true)} {pool?.share_token_symbol}
               </div>
             </SummaryItem>
             <SummaryItem className="tiled">
