@@ -101,6 +101,7 @@ export const getDappTx = async ({
         })
     );
   } catch (err) {
+    console.log('dapdap error', err);
     onError?.();
   }
 };

@@ -151,6 +151,7 @@ export default function useTrade({ chainId }: any) {
         prices,
         onCallBack: (_market: any) => {
           onQuoterCallback([_market]);
+          console.log('aggregator', _market);
         },
         onError: onQuoterError
       });
@@ -166,6 +167,7 @@ export default function useTrade({ chainId }: any) {
         prices,
         onCallBack: (_markets: any) => {
           onQuoterCallback(_markets);
+          console.log('dapdap', _markets);
         },
         onError: onQuoterError
       });
