@@ -595,7 +595,7 @@ export function useBuyTrade({
       );
       await approve(midToken.address, assetsIn, pool, signer);
 
-      let tx = null;
+      let tx: any = null;
       if (isFixedPriceSale) {
         const shares = await getShares(PoolContract, Big(assetsIn).div(10 ** quote?.fromToken?.decimals), quote);
         const wei = ethers.utils.parseUnits(Big(shares).toFixed(18), 18);
