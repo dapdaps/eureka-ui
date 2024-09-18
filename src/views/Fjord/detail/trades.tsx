@@ -57,7 +57,7 @@ const Tr = styled.div`
     justify-content: center;
   }
   .sell {
-    text-transform:capitalize;
+    text-transform: capitalize;
     color: #ff3aa5;
     font-family: Montserrat;
     font-size: 16px;
@@ -66,7 +66,7 @@ const Tr = styled.div`
     line-height: normal;
   }
   .buy {
-    text-transform:capitalize;
+    text-transform: capitalize;
     color: #47c33c;
     font-family: Montserrat;
     font-size: 16px;
@@ -108,94 +108,99 @@ const Arrow = () => (
 );
 type PagerType = {
   page: number;
-  page_size: number
-}
-type currentTabType = "TradeHistory" | "YourTrades"
+  page_size: number;
+};
+type currentTabType = 'TradeHistory' | 'YourTrades';
 
 export default function Comp({ pool }: any) {
   const { account, provider } = useAccount();
-  const { loading, trades, historyTotal, yourTotal, queryTrades, queryYourTotal } = useTrades()
+  const { loading, trades, historyTotal, yourTotal, queryTrades, queryYourTotal } = useTrades();
   const [pager, setPager] = useState<PagerType>({
     page: 1,
-    page_size: 10,
-  })
+    page_size: 10
+  });
   const [currentTab, setCurrentTab] = useState<currentTabType>('TradeHistory');
   const [tabData, setTabData] = useState([
     {
       name: 'Trade History',
-      key: 'TradeHistory',
+      key: 'TradeHistory'
     },
     {
       name: 'Your Trades',
-      key: 'YourTrades',
-    },
+      key: 'YourTrades'
+    }
   ]);
   const maxPage = useMemo(() => {
-    const total = currentTab === "TradeHistory" ? historyTotal : yourTotal
-    return Math.ceil(total / pager.page_size)
-  }, [currentTab, historyTotal, yourTotal])
+    const total = currentTab === 'TradeHistory' ? historyTotal : yourTotal;
+    return Math.ceil(total / pager.page_size);
+  }, [currentTab, historyTotal, yourTotal]);
 
   const handleQueryYourTotal = function () {
     queryYourTotal({
       ...pager,
       account,
-      pool: pool?.pool,
-    })
-  }
+      pool: pool?.pool
+    });
+  };
   const handleQueryTrades = function (_pager: PagerType, _currentTab: currentTabType) {
     queryTrades({
       ..._pager,
       ...(_currentTab === 'YourTrades' ? { account } : {}),
-      pool: pool?.pool,
-    })
-  }
-
+      pool: pool?.pool
+    });
+  };
 
   const onTabsChange = (key: currentTabType) => {
     const _pager: PagerType = {
       ...pager,
       page: 1
-    }
-    setPager(_pager)
+    };
+    setPager(_pager);
     setCurrentTab(key);
-    handleQueryTrades(_pager, key)
+    handleQueryTrades(_pager, key);
   };
 
   const handleClickPager = function (type: 'prev' | 'next') {
-    let _page = pager.page
+    let _page = pager.page;
     if (type === 'prev') {
-      _page -= 1
+      _page -= 1;
     } else {
-      _page += 1
+      _page += 1;
     }
     if ((type === 'prev' && _page < 1) || (type === 'next' && _page > maxPage)) {
-      return
+      return;
     }
     const _pager: PagerType = {
       ...pager,
       page: _page
-    }
-    setPager(_pager)
-    handleQueryTrades(_pager, currentTab)
-  }
+    };
+    setPager(_pager);
+    handleQueryTrades(_pager, currentTab);
+  };
   useEffect(() => {
-    setTabData(prev => {
-      const curr = _.cloneDeep(prev)
-      curr[1].name = "Your Trades (" + yourTotal + ")"
-      return curr
-    })
-  }, [yourTotal])
+    setTabData((prev) => {
+      const curr = _.cloneDeep(prev);
+      curr[1].name = 'Your Trades (' + yourTotal + ')';
+      return curr;
+    });
+  }, [yourTotal]);
 
   useEffect(() => {
     if (account && pool) {
-      handleQueryTrades(pager, currentTab)
-      handleQueryYourTotal()
+      handleQueryTrades(pager, currentTab);
+      handleQueryYourTotal();
     }
-  }, [account, pool])
+  }, [account, pool]);
 
   return (
     <div>
-      <Tabs tabData={tabData} loading={loading} current={currentTab} onTabsChange={onTabsChange} style={{ marginTop: 4 }}></Tabs>
+      <Tabs
+        tabData={tabData}
+        loading={loading}
+        current={currentTab}
+        onTabsChange={onTabsChange}
+        style={{ marginTop: 4 }}
+      ></Tabs>
       <Th>
         <div>Time</div>
         <div>Address</div>
@@ -203,63 +208,69 @@ export default function Comp({ pool }: any) {
         <div>Amount</div>
         <div>Type</div>
       </Th>
-      {
-        loading ? (
-          <StyledLoadingWrapper $h="100px">
-            <Loading size={60} />
-          </StyledLoadingWrapper>
-        ) : (
-          <Tbody>
-            {
-              trades?.map((trade, index) => {
-                return (
-                  <Tr key={index}>
-                    <div>
-                      {format(new Date(trade.timestamp * 1000), 'dd/MM/yyyy')}
-                      <br /> {format(new Date(trade.timestamp * 1000), 'HH:mm')} GMT+8
-                    </div>
-                    <div>{ellipsAccount(trade.pool)}</div>
-                    <div>{formatValueDecimal(trade?.extra_data?.shareTokenPrice ?? 0, '$', 4)}</div>
-                    <div className="amount">
-                      <img
-                        src={trade?.extra_data?.token0?.icon}
-                        className="icon"
-                        alt=""
-                      />
-                      {formatValueDecimal(trade?.extra_data?.token0?.amount ?? 0, '', 4)} <Arrow />
-                      <img
-                        src={trade?.extra_data?.token1?.icon}
-                        className="icon"
-                        alt=""
-                      />
-                      {formatValueDecimal(trade?.extra_data?.token1?.amount ?? 0, '', 4)}
-                    </div>
-                    <div className={trade?.extra_data?.trade_type}>{trade?.extra_data?.trade_type}</div>
-                  </Tr>
-                )
-              })
-            }
-          </Tbody>
-        )
-      }
+      {loading ? (
+        <StyledLoadingWrapper $h="100px">
+          <Loading size={60} />
+        </StyledLoadingWrapper>
+      ) : (
+        <Tbody>
+          {trades?.map((trade, index) => {
+            return (
+              <Tr key={index}>
+                <div>
+                  {format(new Date(trade.timestamp * 1000), 'dd/MM/yyyy')}
+                  <br /> {format(new Date(trade.timestamp * 1000), 'HH:mm')} GMT+8
+                </div>
+                <div>{ellipsAccount(trade.account_id)}</div>
+                <div>{formatValueDecimal(trade?.extra_data?.shareTokenPrice ?? 0, '$', 4)}</div>
+                <div className="amount">
+                  <img src={trade?.extra_data?.token0?.icon} className="icon" alt="" />
+                  {formatValueDecimal(trade?.extra_data?.token0?.amount ?? 0, '', 4)} <Arrow />
+                  <img src={trade?.extra_data?.token1?.icon} className="icon" alt="" />
+                  {formatValueDecimal(trade?.extra_data?.token1?.amount ?? 0, '', 4)}
+                </div>
+                <div className={trade?.extra_data?.trade_type}>{trade?.extra_data?.trade_type}</div>
+              </Tr>
+            );
+          })}
+        </Tbody>
+      )}
 
       <Foot>
         <PageNumber>Page 1 of {maxPage}</PageNumber>
-        <StyledFlex gap='12px' style={{ marginLeft: 17 }}>
+        <StyledFlex gap="12px" style={{ marginLeft: 17 }}>
           <StyledSvg onClick={() => handleClickPager('prev')}>
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="28" viewBox="0 0 50 28" fill="none">
-              <rect x="1" y="1" width="47.6667" height="26" rx="13" fill={pager.page <= 1 ? 'transparent' : '#373A53'} fill-opacity={pager.page === 1 ? 1 : 0.5} stroke="#373A53" />
+              <rect
+                x="1"
+                y="1"
+                width="47.6667"
+                height="26"
+                rx="13"
+                fill={pager.page <= 1 ? 'transparent' : '#373A53'}
+                fill-opacity={pager.page === 1 ? 1 : 0.5}
+                stroke="#373A53"
+              />
               <path d="M28 9L23 14L28 19" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
             </svg>
           </StyledSvg>
           <StyledSvg onClick={() => handleClickPager('next')}>
             <svg xmlns="http://www.w3.org/2000/svg" width="50" height="28" viewBox="0 0 50 28" fill="none">
-              <rect x="1" y="1" width="47.6667" height="26" rx="13" fill={pager.page >= maxPage ? 'transparent' : '#373A53'} fill-opacity={pager.page === maxPage ? 1 : 0.5} stroke="#373A53" />
+              <rect
+                x="1"
+                y="1"
+                width="47.6667"
+                height="26"
+                rx="13"
+                fill={pager.page >= maxPage ? 'transparent' : '#373A53'}
+                fill-opacity={pager.page === maxPage ? 1 : 0.5}
+                stroke="#373A53"
+              />
               <path d="M22 9L27 14L22 19" stroke="#979ABE" stroke-width="2" stroke-linecap="round" />
             </svg>
           </StyledSvg>
         </StyledFlex>
       </Foot>
-    </div >
+    </div>
   );
 }

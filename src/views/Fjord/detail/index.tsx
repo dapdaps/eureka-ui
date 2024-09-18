@@ -58,6 +58,7 @@ export default function LaunchpadYoursPage() {
   const { loading, pool, queryPool } = usePool();
   const { shares, queryShares } = useShares(account);
   const [totalSupply, setTotalSupply] = useState<any>(0);
+  const [minimumSharesSold, setMinimumSharesSold] = useState<any>(0);
   const [currentTab, setCurrentTab] = useState('ProjectDetails');
   const { medal, queryMedal } = useMedal();
 
@@ -126,6 +127,36 @@ export default function LaunchpadYoursPage() {
     }
   };
 
+  const queryMinimumSharesSold = async function (pool: any) {
+    const abi = [
+      {
+        inputs: [],
+        name: 'minimumSharesSold',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256'
+          }
+        ],
+        stateMutability: 'view',
+        type: 'function'
+      }
+    ];
+    const rpcUrl = chains[pool?.chain_id]?.rpcUrls[0] ?? '';
+    if (rpcUrl) {
+      const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+      const contract = new ethers.Contract(pool?.pool, abi, provider);
+      try {
+        const _minimumSharesSold = await contract.minimumSharesSold();
+        setMinimumSharesSold(ethers.utils.formatUnits(_minimumSharesSold, pool?.share_token_decimal));
+      } catch (error) {
+        console.log('error: ', error);
+        setMinimumSharesSold(0);
+      }
+    }
+  };
+
   const handleQueryMedal = function (pool: any) {
     queryMedal({
       category: 'launchpad',
@@ -145,6 +176,7 @@ export default function LaunchpadYoursPage() {
     if (pool) {
       queryShares(pool);
       queryTotalSupply(pool);
+      queryMinimumSharesSold(pool);
       // handleQueryMedal(pool);
     }
   }, [pool]);
@@ -322,7 +354,7 @@ export default function LaunchpadYoursPage() {
           )}
           {currentTab === 'SaleDetails' && (
             <TabBody>
-              <SaleDetail pool={pool} totalSupply={totalSupply} />
+              <SaleDetail pool={pool} totalSupply={totalSupply} softCap={minimumSharesSold} />
             </TabBody>
           )}
           {currentTab === 'Trades' && (
