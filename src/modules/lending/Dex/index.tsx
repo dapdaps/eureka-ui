@@ -24,7 +24,6 @@ interface RenderLendingComponentProps extends ILendingProps {
   tab?: string;
 }
 
-
 const LendingDex = (props: DexProps) => {
   const { CHAIN_LIST, curChain, chainId, account, dexConfig, onSwitchChain, switchingChain, isChainSupported, from } =
     props;
@@ -37,19 +36,19 @@ const LendingDex = (props: DexProps) => {
     if (type === DexType.BorrowAndEarn) {
       return [
         { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' },
+        { key: TabKey.Yours, label: 'Earn' }
       ];
     }
     return [
       { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' },
+      { key: TabKey.Yours, label: 'Yours' }
     ];
   }, [type]);
 
   const [state, updateState] = useMultiState<any>({
     tab: TabKey.Market,
     refreshKey: 1,
-    curPool: pools[0]?.key,
+    curPool: pools[0]?.key
   });
 
   const handleTabChange = (tab: Tab) => {
@@ -73,7 +72,7 @@ const LendingDex = (props: DexProps) => {
 
   const DexComponentMap: Partial<Record<DexType, React.ComponentType<any>>> = {
     [DexType.CompoundV3]: LendingCompoundV3,
-    [DexType.AaveV3]: LendingAaveV3,
+    [DexType.AaveV3]: LendingAaveV3
   };
 
   const RenderLendingComponent: React.FC<RenderLendingComponentProps> = ({ type, ...props }) => {
@@ -92,34 +91,15 @@ const LendingDex = (props: DexProps) => {
 
   return (
     <StyledContainer style={dexConfig.theme}>
-      {
-        type !== DexType.AaveV3 && (
-          <StyledHeader>
-          <LendingCardTabs
-            tabs={tabsArray}
-            active={state.tab}
-            onChange={handleTabChange}
-          />
-          <StyledHeaderRight>
-            {
-              pools && pools.length > 0 && (
-                <LendingPools
-                  pools={pools}
-                  curPool={state.curPool}
-                  onSwitchPool={handlePoolChange}
-                />
-              )
-            }
-            <LendingChains
-              chains={CHAIN_LIST}
-              curChain={curChain}
-              onSwitchChain={onSwitchChain}
-              from={from}
-            />
-          </StyledHeaderRight>
-        </StyledHeader>
-        )
-      }
+      <StyledHeader>
+        <LendingCardTabs tabs={tabsArray} active={state.tab} onChange={handleTabChange} />
+        <StyledHeaderRight>
+          {pools && pools.length > 0 && (
+            <LendingPools pools={pools} curPool={state.curPool} onSwitchPool={handlePoolChange} />
+          )}
+          <LendingChains chains={CHAIN_LIST} curChain={curChain} onSwitchChain={onSwitchChain} from={from} />
+        </StyledHeaderRight>
+      </StyledHeader>
       <RenderLendingComponent
         type={type}
         chainIdNotSupport={!isChainSupported}

@@ -2,6 +2,7 @@ import { blast } from '@/config/tokens/blast';
 
 const basic = {
   name: 'Orbit Protocol',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/pac.png',
   data: 'bluebiu.near/widget/Lending.Orbit.Data',
   handler: 'bluebiu.near/widget/Lending.Orbit.Handler',
   handlerClaim: 'bluebiu.near/widget/Lending.Orbit.RewardClaim',
@@ -29,7 +30,7 @@ const networks = {
         underlyingToken: blast['eth'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
+        canBorrow: true
       },
       '0x9aECEdCD6A82d26F2f86D331B17a1C1676442A87': {
         underlyingAsset: blast['usdb'].address,
@@ -41,7 +42,7 @@ const networks = {
         underlyingToken: blast['usdb'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
+        canBorrow: true
       },
       '0x8c415331761063e5d6b1c8e700f996b13603fc2e': {
         underlyingAsset: blast['wbtc'].address,
@@ -53,8 +54,8 @@ const networks = {
         underlyingToken: blast['wbtc'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
-      },
+        canBorrow: true
+      }
     },
     RENZO_MARKETS: {
       '0x795dCD51EaC6eb3123b7a4a1f906992EAA54Cb0e': {
@@ -67,7 +68,7 @@ const networks = {
         underlyingToken: blast['eth'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
+        canBorrow: true
       },
       '0x4991b902F397dC16b0BBd21b0057a20b4B357AE2': {
         underlyingAsset: blast['ezeth'].address,
@@ -79,7 +80,7 @@ const networks = {
         underlyingToken: blast['ezeth'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: false,
+        canBorrow: false
       },
 
       '0xb51b76c73fb24f472e0dd63bb8195bd2170bc65d': {
@@ -92,8 +93,8 @@ const networks = {
         underlyingToken: blast['fwweth'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
-      },
+        canBorrow: true
+      }
     },
     // KELP_MARKETS: {
     //   '0xAFAbd582E82042f4A8574f75c36409abEa916Ac5': {
@@ -144,7 +145,7 @@ const networks = {
         underlyingToken: blast['usde'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: false,
+        canBorrow: false
       },
       '0x3a61f4bF054cdFaC3a3436A21c4463C6D85C2408': {
         underlyingAsset: blast['usdb'].address,
@@ -156,7 +157,7 @@ const networks = {
         underlyingToken: blast['usdb'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
+        canBorrow: true
       },
       '0xa3135b76c28b3971B703a5e6CD451531b187Eb5A': {
         underlyingAsset: blast['deth'].address,
@@ -168,7 +169,7 @@ const networks = {
         underlyingToken: blast['deth'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
+        canBorrow: true
       },
       '0x4ADF85E2e760c9211894482DF74BA535BCae50A4': {
         underlyingAsset: blast['dusd'].address,
@@ -180,7 +181,7 @@ const networks = {
         underlyingToken: blast['dusd'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: true,
+        canBorrow: true
       },
       '0x9bbbA6322Fe5F3968C1F27C8B860727d683194C8': {
         underlyingAsset: blast['wrseth'].address,
@@ -192,16 +193,16 @@ const networks = {
         underlyingToken: blast['wrseth'],
         loanToValue: 0.75,
         isCollateral: false,
-        canBorrow: false,
-      },
+        canBorrow: false
+      }
     },
     // for new ui
     pools: [
-      { key: "ORBIT", label: "ORBIT" },
-      { key: "MOON", label: "MOON" },
-      { key: "RENZO", label: "RENZO" },
-    ],
-  },
+      { key: 'ORBIT', label: 'ORBIT' },
+      { key: 'MOON', label: 'MOON' },
+      { key: 'RENZO', label: 'RENZO' }
+    ]
+  }
 };
 
 export default { basic, networks };
