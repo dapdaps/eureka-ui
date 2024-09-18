@@ -91,17 +91,15 @@ const LendingDex = (props: DexProps) => {
 
   return (
     <StyledContainer style={dexConfig.theme}>
-      {type !== DexType.AaveV3 && (
-        <StyledHeader>
-          <LendingCardTabs tabs={tabsArray} active={state.tab} onChange={handleTabChange} />
-          <StyledHeaderRight>
-            {pools && pools.length > 0 && (
-              <LendingPools pools={pools} curPool={state.curPool} onSwitchPool={handlePoolChange} />
-            )}
-            <LendingChains chains={CHAIN_LIST} curChain={curChain} onSwitchChain={onSwitchChain} from={from} />
-          </StyledHeaderRight>
-        </StyledHeader>
-      )}
+      <StyledHeader>
+        <LendingCardTabs tabs={tabsArray} active={state.tab} onChange={handleTabChange} />
+        <StyledHeaderRight>
+          {pools && pools.length > 0 && (
+            <LendingPools pools={pools} curPool={state.curPool} onSwitchPool={handlePoolChange} />
+          )}
+          <LendingChains chains={CHAIN_LIST} curChain={curChain} onSwitchChain={onSwitchChain} from={from} />
+        </StyledHeaderRight>
+      </StyledHeader>
       <RenderLendingComponent
         type={type}
         chainIdNotSupport={!isChainSupported}

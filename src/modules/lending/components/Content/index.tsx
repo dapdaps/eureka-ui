@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import useAccount from '@/hooks/useAccount';
-import Loading from '@/modules/components/Loading';
+import Spinner from '@/modules/components/Spinner';
 import { StyledContainer } from '@/modules/lending/components/Content/styles';
 import LendingDialog from '@/modules/lending/components/Dialog';
 import LendingMarkets from '@/modules/lending/components/Markets';
@@ -39,8 +39,6 @@ const LendingContent = (props: Props) => {
   useEffect(() => {
     updateState({ loading: !chainIdNotSupport });
   }, [chainIdNotSupport]);
-
-  console.log(state.markets, 'state.markets');
 
   const handleTableButtonClick = (address: string, actionText: string) => {
     const market = state.markets[address];
@@ -129,7 +127,7 @@ const LendingContent = (props: Props) => {
             }}
           />
         ))}
-      {state.loading && <Loading size={16} />}
+      {state.loading && <Spinner />}
       {Data && (
         <Data
           provider={provider}

@@ -410,14 +410,10 @@ const LoopModal = (props: any) => {
                 const { status, transactionHash } = res;
                 if (status === 1) {
                   formatAddAction(Number(state.amount).toFixed(6), status, transactionHash);
+                  onRequestClose();
                   onActionSuccess({
                     msg: `You looped ${Number(state.amount).toFixed(6)} ${symbol}`,
-                    callback: () => {
-                      onRequestClose();
-                      updateState({
-                        loading: false
-                      });
-                    }
+                    step1: true
                   });
                   console.log('loop succeeded', res);
                   updateState({
@@ -430,7 +426,8 @@ const LoopModal = (props: any) => {
                   });
                 }
               })
-              .catch(() => updateState({ loading: false }));
+              .catch((err: any) => console.log('CATCH:', err))
+              .finally(() => updateState({ loading: false }));
           })
           .catch((err: any) => {
             console.log('CATCH:', err);

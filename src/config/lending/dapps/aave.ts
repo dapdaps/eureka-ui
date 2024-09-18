@@ -20,7 +20,7 @@ const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'AAVE V3',
-  // icon: '/images/apps/granary.png',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/061_094-aave1.png',
   // data: 'bluebiu.near/widget/Lending.Data.Liquity',
   // handler: 'bluebiu.near/widget/Lending.Handler.Liquity',
   type: 'aave-v3',

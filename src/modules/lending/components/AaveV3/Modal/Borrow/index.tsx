@@ -217,15 +217,11 @@ const BorrowModal = (props: any) => {
             const { status, transactionHash } = res;
             console.log('SUCCESS--', status, transactionHash);
             if (status === 1) {
+              onRequestClose();
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
               onActionSuccess({
                 msg: `You borrowed ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -259,15 +255,11 @@ const BorrowModal = (props: any) => {
           .then((res: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
+              onRequestClose();
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
               onActionSuccess({
                 msg: `You borrowed ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {

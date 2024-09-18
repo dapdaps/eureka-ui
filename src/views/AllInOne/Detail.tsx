@@ -3,11 +3,11 @@ import { memo, useMemo, useState } from 'react';
 
 import PageBack from '@/components/PageBack';
 import chainCofig from '@/config/chains';
+import Lending from '@/modules/lending/AllInOne';
 import { StyledFlex } from '@/styled/styles';
 import AllInOneCardView from '@/views/AllInOne/components/Card';
 import AllInOneDetailCardView from '@/views/AllInOne/components/Card/DetailCard';
 import AllInOneHeaderView from '@/views/AllInOne/components/Header';
-import Lending from '@/views/AllInOne/components/Lending';
 import Liquidity from '@/views/AllInOne/components/Liquidity';
 import Trade from '@/views/AllInOne/components/Trade';
 import { useChain } from '@/views/AllInOne/hooks/useChain';

@@ -4,6 +4,7 @@ import weth from '@/config/contract/weth';
 import granary from '../dapps/granary-finance';
 // import sonne from '../dapps/sonne';
 import ironBank from '../dapps/iron-bank';
+import WePiggy from '../dapps/we-piggy';
 
 const CHAIN_ID = 10;
 const CHAIN_NAME = 'Optimism';
@@ -17,7 +18,7 @@ export default {
     noAccountTips: 'Optimism Lending Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Optimism Chain.',
     chainId: CHAIN_ID,
-    chainName: CHAIN_NAME,
+    chainName: CHAIN_NAME
   },
   defaultDapp: 'Iron Bank',
   dapps: {
@@ -27,11 +28,15 @@ export default {
     // },
     'Iron Bank': {
       ...ironBank.basic,
-      ...ironBank.networks[CHAIN_ID],
+      ...ironBank.networks[CHAIN_ID]
     },
     'Granary Finance': {
       ...granary.basic,
-      ...granary.networks[CHAIN_ID],
+      ...granary.networks[CHAIN_ID]
     },
-  },
+    WePiggy: {
+      ...WePiggy.basic,
+      ...WePiggy.networks[CHAIN_ID]
+    }
+  }
 };

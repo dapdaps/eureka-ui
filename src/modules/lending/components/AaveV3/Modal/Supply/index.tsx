@@ -241,14 +241,10 @@ const SupplyModal = (props: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
+              onRequestClose();
               onActionSuccess({
                 msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -260,8 +256,8 @@ const SupplyModal = (props: any) => {
           })
           .catch((err: any) => {
             console.log('tx.wait on error', err);
-            updateState({ loading: false });
-          });
+          })
+          .finally(() => updateState({ loading: false }));
       })
       .catch((err: any) => {
         updateState({ loading: false });
@@ -290,15 +286,11 @@ const SupplyModal = (props: any) => {
           .then((res: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
+              onRequestClose();
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
               onActionSuccess({
                 msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -308,7 +300,7 @@ const SupplyModal = (props: any) => {
               });
             }
           })
-          .catch(() => updateState({ loading: false }));
+          .finally(() => updateState({ loading: false }));
       })
       .catch(() => updateState({ loading: false }));
   }
@@ -420,15 +412,11 @@ const SupplyModal = (props: any) => {
                 .then((res: any) => {
                   const { status, transactionHash } = res;
                   if (status === 1) {
+                    onRequestClose();
                     formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
                     onActionSuccess({
                       msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                      callback: () => {
-                        onRequestClose();
-                        updateState({
-                          loading: false
-                        });
-                      }
+                      step1: true
                     });
                     console.log('tx succeeded', res);
                   } else {
@@ -459,15 +447,11 @@ const SupplyModal = (props: any) => {
                   const { status, transactionHash } = res;
                   console.log('SUCCESS--', status, transactionHash);
                   if (status === 1) {
+                    onRequestClose();
                     formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
                     onActionSuccess({
                       msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                      callback: () => {
-                        onRequestClose();
-                        updateState({
-                          loading: false
-                        });
-                      }
+                      step1: true
                     });
                     console.log('tx succeeded', res);
                   } else {
@@ -479,7 +463,6 @@ const SupplyModal = (props: any) => {
                 })
                 .catch((err: any) => {
                   console.log('tx.wait on error depositErc20', err);
-                  updateState({ loading: false });
                 })
                 .finally(() => updateState({ loading: false }));
             })

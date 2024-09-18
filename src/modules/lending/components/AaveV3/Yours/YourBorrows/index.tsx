@@ -41,8 +41,6 @@ const SubText = styled.div`
 const YourBorrows = (props: any) => {
   const { config, yourBorrows, showRepayModal, setShowRepayModal, healthFactor, theme } = props;
 
-  console.log('yourBorrows', yourBorrows);
-
   const [state, updateState] = useMultiState<any>({
     data: undefined
   });

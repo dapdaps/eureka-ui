@@ -1,3 +1,4 @@
+import IconDone from '@public/images/others/done.svg';
 import { styled } from 'styled-components';
 
 import PrimaryButton from '../../PrimaryButton';
@@ -11,6 +12,8 @@ const AlertModalContainer = styled.div`
 const Title = styled.div`
   font-size: 20px;
   font-weight: bold;
+  color: #fff;
+  font-family: Montserrat;
 `;
 
 const Description = styled.div`
@@ -18,22 +21,16 @@ const Description = styled.div`
   font-weight: 500;
   margin-top: 10px;
   margin-bottom: 32px;
+  color: #fff;
+  font-family: Montserrat;
 `;
 
 const AlertModal = (props: any) => {
   const { config, onRequestClose, theme, from } = props;
-  const Right = () => (
-    <img
-      style={{ marginBottom: '12px' }}
-      src={`${config.ipfsPrefix}/bafkreigjsujyien6eb5ml3hmfigwwcgkse3emc2e6fkdhwzjp7yw7zue3u`}
-      width={80}
-      height={80}
-    />
-  );
   return (
     <BaseModal title={props.title} onRequestClose={onRequestClose} from={from} config={config}>
       <AlertModalContainer>
-        <Right />
+        <IconDone style={{ marginBottom: '12px' }} height={80} width={80} />
         <Title>{props.title}</Title>
         <Description>{props.description}</Description>
         <PrimaryButton onClick={onRequestClose} config={config} theme={theme}>

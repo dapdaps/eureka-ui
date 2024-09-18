@@ -154,14 +154,10 @@ const CollateralModal = (props: any) => {
           .then((res: any) => {
             const { status } = res;
             if (status === 1) {
+              onRequestClose();
               onActionSuccess({
                 msg: `Success`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -171,7 +167,8 @@ const CollateralModal = (props: any) => {
               });
             }
           })
-          .catch(() => updateState({ loading: false }));
+          .catch((err: any) => console.log('CATCH:', err))
+          .finally(() => updateState({ loading: false }));
       })
       .catch(() => updateState({ loading: false }));
   }

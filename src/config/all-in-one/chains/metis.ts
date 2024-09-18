@@ -12,24 +12,29 @@ export default {
   theme: {
     button: {
       bg: '#00D3FF',
-      text: '#000000',
-    },
+      text: '#000000'
+    }
   },
   menuConfig: {
     Bridge: {
       tab: 'Bridge',
       path: 'bluebiu.near/widget/Metis.Bridge',
-      description: 'Intuitively bridge from different networks to Metis, and vice versa.',
+      description: 'Intuitively bridge from different networks to Metis, and vice versa.'
     },
     Swap: {
       tab: 'Swap',
       path: 'bluebiu.near/widget/Metis.Swap.Dex',
-      description: 'Trade efficiently across any assets on Metis.',
+      description: 'Trade efficiently across any assets on Metis.'
     },
     Liquidity: {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
-      description: 'Seamlessly adding LP to any pair',
+      description: 'Seamlessly adding LP to any pair'
     },
-  },
+    Lending: {
+      tab: 'Lending',
+      path: 'bluebiu.near/widget/Metis.Lending',
+      description: 'Maximize asset utilization across Metis markets'
+    }
+  }
 };
