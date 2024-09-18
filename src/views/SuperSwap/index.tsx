@@ -1,8 +1,9 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
+import { useImportTokensStore } from '@/stores/import-tokens';
 import type { Token } from '@/types';
 
 import Arrow2Down from './components/Arrow2Down';
@@ -36,12 +37,25 @@ export default function SuperSwap() {
   const [showMarkets, setShowMarkets] = useState<boolean>(false);
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
+  const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
 
-  const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
+  const {
+    tokens = [],
+    tokensLoading,
+    loading,
+    markets,
+    trade,
+    bestTrade,
+    onQuoter,
+    onSelectMarket,
+    onSwap,
+    setTrade
+  } = useTrade({
     chainId,
     onSuccess() {
       setUpdater(Date.now());
+      setInputCurrencyAmount('');
     }
   });
 
@@ -52,6 +66,11 @@ export default function SuperSwap() {
     {
       wait: 500
     }
+  );
+
+  const mergedTokens = useMemo(
+    () => [...((chainId && importTokens[chainId]) || []), ...tokens],
+    [importTokens, tokens, chainId]
   );
 
   const onSelectToken = useCallback(
@@ -193,11 +212,14 @@ export default function SuperSwap() {
       </StyledContent>
       <PriceBoard />
       <SelectTokensModal
-        tokens={tokens || []}
+        tokens={mergedTokens || []}
         display={showTokensSelector}
         onClose={() => setShowTokensSelector(false)}
         currency={selectType === 'in' ? inputCurrency : outputCurrency}
         onSelect={onSelectToken}
+        loading={tokensLoading}
+        chainId={chainId}
+        onImport={addImportToken}
       />
       {showMarkets && outputCurrency && (
         <MarketsModal

@@ -63,7 +63,7 @@ const Value = styled.span`
 export const PriceImpactTypeColorMap: Record<number, string> = {
   0: '#33b65f',
   1: '#F88C39',
-  2: '#E956A6',
+  2: '#E956A6'
 };
 
 const WarningValue = styled(Value)<{ color: number }>`
@@ -105,7 +105,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
 
   const calculateRate = (input: string, output: string) => {
     if (!input || !output || Big(input).eq(0) || Big(output).eq(0)) {
-      return null; 
+      return null;
     }
     const inputBig = Big(input);
     const outputBig = Big(output);
@@ -118,7 +118,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
       : calculateRate(trade.outputCurrencyAmount, trade.inputCurrencyAmount);
     return rate ? balanceFormated(rate.toString(), 4) : 'N/A';
   }, [trade.inputCurrencyAmount, trade.outputCurrencyAmount, isRateReversed]);
-  
+
   return (
     <Wrapper>
       <StyledFlex justifyContent="space-between" style={{ paddingTop: 13 }}>
@@ -132,7 +132,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
         </StyledFlex>
         {markets?.length > 0 && (
           <StyledFlex className="trade-display" gap="5px" onClick={() => setIsOpen(!isOpen)}>
-            <StyledIcon src={trade.logo} />
+            {trade.logo ? <StyledIcon src={trade.logo} /> : <div style={{ width: 20 }} />}
             <div>{trade.name}</div>
             {trade.priceImpactType !== 0 ? (
               <StyledIconAlertTriangle impact={trade.priceImpactType} />
@@ -171,7 +171,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
               Big(trade.outputCurrencyAmount || 0)
                 .mul(1 - slippage / 100)
                 .toString(),
-              8,
+              8
             )}{' '}
             {trade.outputCurrency.symbol}
           </Value>

@@ -27,7 +27,7 @@ const StyledButton = styled.button<{ color?: string }>`
 
 const BaseButton = ({ disabled, onClick, children, color }: any) => {
   return (
-    <StyledButton disabled={disabled} onClick={onClick} color={color} >
+    <StyledButton disabled={disabled} onClick={onClick} color={color}>
       {children}
     </StyledButton>
   );
@@ -37,31 +37,30 @@ const getButtonImpactProps = (trade: any) => {
   if (trade?.priceImpactType === 2) {
     return {
       color: PriceImpactTypeColorMap[trade.priceImpactType],
-      text: 'I noticed the price impact, swap anyway',
+      text: 'I noticed the price impact, swap anyway'
     };
   }
 
   if (trade?.wrapType) {
     return {
       color: null,
-      text: trade?.wrapType === 1 ? 'Wrap' : 'Unwrap',
+      text: trade?.wrapType === 1 ? 'Wrap' : 'Unwrap'
     };
   }
 
   return {
     color: null,
-    text: 'Swap',
+    text: 'Swap'
   };
 };
-
 
 const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
-    spender: trade?.routerAddress,
+    spender: trade?.routerAddress
   });
-  
+
   const { switching, switchChain } = useSwitchChain();
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
@@ -84,7 +83,7 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
       <BaseButton
         onClick={() => {
           switchChain({
-            chainId: 42161,
+            chainId: 42161
           });
         }}
         loading={switching}
@@ -100,6 +99,10 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
         <Loading />
       </BaseButton>
     );
+  }
+
+  if (trade?.noPair) {
+    return <BaseButton disabled>Insufficient Liquidity</BaseButton>;
   }
 
   if (errorTips) {

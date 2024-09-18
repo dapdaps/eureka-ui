@@ -13,7 +13,7 @@ import {
   StyledItem,
   StyledLine,
   StyledTitle,
-  StyledTokenIcon,
+  StyledTokenIcon
 } from './styles';
 
 const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrency, onSelectMarket, trade }: any) => {
@@ -37,7 +37,7 @@ const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrenc
             >
               <StyledFlex justifyContent="space-between">
                 <StyledFlex gap="6px">
-                  <StyledIcon src={item.logo} />
+                  {item.logo ? <StyledIcon src={item.logo} /> : <div style={{ width: 30 }} />}
                   <StyledTitle>{item.name}</StyledTitle>
                   {bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>}
                 </StyledFlex>
@@ -47,7 +47,7 @@ const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrenc
                       Big(item.outputCurrencyAmount || 0)
                         .mul(1 - slippage / 100)
                         .toString(),
-                      8,
+                      8
                     )}
                   </StyledTitle>
                   <StyledTokenIcon src={outputCurrency.icon} />
@@ -62,7 +62,7 @@ const MarketsModal = ({ display, onClose, markets = [], bestTrade, outputCurrenc
                       Big(item.outputCurrencyAmount || 0)
                         .mul(1 - slippage / 100)
                         .toString(),
-                      8,
+                      8
                     )}{' '}
                     {outputCurrency.symbol}
                   </StyledDesc>
