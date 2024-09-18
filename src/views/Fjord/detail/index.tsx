@@ -332,7 +332,7 @@ export default function LaunchpadYoursPage() {
           )}
         </Main>
         <Sider>
-          {pool?.status === 'ongoing' ? (
+          {true ? (
             pool?.pool && (
               <FjordModal
                 isModal={false}
