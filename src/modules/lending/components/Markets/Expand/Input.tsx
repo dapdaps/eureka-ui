@@ -3,11 +3,7 @@ import Big from 'big.js';
 import LendingMarketInput from '@/modules/lending/components/Markets/Input';
 import LendingTotal from '@/modules/lending/components/Total';
 
-import {
-  StyledBorrowLimit,
-  StyledDetailItem,
-  StyledDetailPanel,
-} from './styles';
+import { StyledBorrowLimit, StyledDetailItem, StyledDetailPanel } from './styles';
 
 const LendingMarketExpandInput = (props: Props) => {
   const {
@@ -24,7 +20,7 @@ const LendingMarketExpandInput = (props: Props) => {
     updateState,
 
     borrowLimit,
-    dexConfig,
+    dexConfig
   } = props;
 
   const onAmountChange = (_amount: string) => {
@@ -38,7 +34,7 @@ const LendingMarketExpandInput = (props: Props) => {
         borrowLimit: '',
         isEmpty: Number(_amount) === 0 && _amount !== '',
         isOverSize: false,
-        isBigerThanBalance: false,
+        isBigerThanBalance: false
       });
       return;
     }
@@ -46,7 +42,7 @@ const LendingMarketExpandInput = (props: Props) => {
       if (Big(_amount).lt(minBorrowAmount)) {
         updateState({
           amount: _amount,
-          buttonClickable: false,
+          buttonClickable: false
         });
         return;
       }
@@ -54,9 +50,7 @@ const LendingMarketExpandInput = (props: Props) => {
     const params: any = { amount: _amount };
     const value = Big(Big(_amount).mul(underlyingPrice).toFixed(20));
     if (state.tab === 'Supply') {
-      params.borrowLimit = Big(borrowLimit || 0).plus(
-        value.mul(loanToValue / 100),
-      );
+      params.borrowLimit = Big(borrowLimit || 0).plus(value.mul(loanToValue / 100));
       params.isBigerThanBalance = Big(_amount).gt(userUnderlyingBalance || 0);
       params.isOverSize = false;
     }
@@ -72,8 +66,7 @@ const LendingMarketExpandInput = (props: Props) => {
         }
       }
     }
-    params.buttonClickable =
-      !params.isOverSize && !params.isBigerThanBalance && !params.isBorrowCapsFull;
+    params.buttonClickable = !params.isOverSize && !params.isBigerThanBalance && !params.isBorrowCapsFull;
     updateState(params);
 
     state.debouncedGetTrade();
@@ -85,11 +78,13 @@ const LendingMarketExpandInput = (props: Props) => {
         icon={underlyingToken?.icon}
         symbol={underlyingToken?.symbol}
         decimals={underlyingToken?.decimals}
-        balance={state.tab === 'Supply'
-          ? userUnderlyingBalance
-          : Big(borrowLimit || 0)
-            .div(underlyingPrice || 1)
-            .toString()}
+        balance={
+          state.tab === 'Supply'
+            ? userUnderlyingBalance
+            : Big(borrowLimit || 0)
+                .div(Big(underlyingPrice || 1).gt(0) ? 1 : underlyingPrice || 1)
+                .toString()
+        }
         price={underlyingPrice}
         amount={state.amount}
         onChange={onAmountChange}
@@ -98,9 +93,7 @@ const LendingMarketExpandInput = (props: Props) => {
         {state.tab === 'Supply' && dexConfig.name !== 'Ionic' && (
           <StyledDetailItem>
             <div>Collateral factor</div>
-            <div className="white">
-              {collateralFactor ? 'Enable' : 'Disable'}
-            </div>
+            <div className="white">{collateralFactor ? 'Enable' : 'Disable'}</div>
           </StyledDetailItem>
         )}
         <StyledDetailItem>
@@ -108,22 +101,12 @@ const LendingMarketExpandInput = (props: Props) => {
           <StyledBorrowLimit>
             <div>
               {' '}
-              <LendingTotal
-                total={borrowLimit}
-                digit={2}
-                unit="$"
-              />
+              <LendingTotal total={borrowLimit} digit={2} unit="$" />
             </div>
             {!!state.borrowLimit && (
               <>
                 {' '}
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="8"
-                  height="10"
-                  viewBox="0 0 8 10"
-                  fill="none"
-                >
+                <svg xmlns="http://www.w3.org/2000/svg" width="8" height="10" viewBox="0 0 8 10" fill="none">
                   <path
                     d="M7.5 4.13397C8.16667 4.51887 8.16667 5.48113 7.5 5.86603L1.5 9.33013C0.833334 9.71503 -4.47338e-07 9.2339 -4.13689e-07 8.4641L-1.10848e-07 1.5359C-7.71986e-08 0.766098 0.833333 0.284973 1.5 0.669873L7.5 4.13397Z"
                     fill="#979ABE"
@@ -131,11 +114,7 @@ const LendingMarketExpandInput = (props: Props) => {
                 </svg>
                 <div className="white">
                   {' '}
-                  <LendingTotal
-                    total={state.borrowLimit}
-                    digit={2}
-                    unit="$"
-                  />
+                  <LendingTotal total={state.borrowLimit} digit={2} unit="$" />
                 </div>
               </>
             )}
