@@ -96,7 +96,7 @@ const LayerHeader = styled.div`
 
 const StyleLoading = styled.div`
   padding: 16px;
-`
+`;
 
 export interface INotification {
   created_at: string;
@@ -106,6 +106,7 @@ export interface INotification {
   logo: string;
   user_id: number;
   content: string;
+  link?: string;
 }
 
 export interface INotificationsResponse {
@@ -113,20 +114,19 @@ export interface INotificationsResponse {
   data: INotification[];
 }
 
-
 const LoadingList = () => (
   <>
     <StyleLoading>
-      <Skeleton height={80} count={3} borderRadius={'12px'}/>
-    </StyleLoading>    
+      <Skeleton height={80} count={3} borderRadius={'12px'} />
+    </StyleLoading>
   </>
-)
+);
 
 export default function Notification() {
   const [isHovered, setIsHovered] = useState(false);
   const [data, setData] = useState<INotificationsResponse>();
   const ref = useRef<HTMLDivElement>(null);
-  const router = useRouter()
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const { check } = useAuthCheck({ isNeedAk: true, isQuiet: true });
   const { account } = useAccount();
@@ -169,7 +169,7 @@ export default function Notification() {
     () => {
       check(() => fetchNotification());
     },
-    { wait: 300 },
+    { wait: 300 }
   );
 
   const updateTokenAndRun = useLockFn(async () => {
@@ -202,15 +202,23 @@ export default function Notification() {
         <Layer>
           <LayerHeader>
             <div className="noti-title">Notifications</div>
-            <StyledContainer className="noti-read-all" data-bp="1001-006-001" onClick={() => {
-              router.push('/notification')
-              setIsHovered(false);
-            } }>Read all</StyledContainer>
+            <StyledContainer
+              className="noti-read-all"
+              data-bp="1001-006-001"
+              onClick={() => {
+                router.push('/notification');
+                setIsHovered(false);
+              }}
+            >
+              Read all
+            </StyledContainer>
           </LayerHeader>
           <div className="noti-content">
-            {
-              loading ? <LoadingList /> : data?.data.length === 0 ? 
-              <Empty size={48} tips="Waiting New Notifications" />:
+            {loading ? (
+              <LoadingList />
+            ) : data?.data.length === 0 ? (
+              <Empty size={48} tips="Waiting New Notifications" />
+            ) : (
               data?.data.map((item) => {
                 return (
                   <NotificationItem
@@ -218,13 +226,13 @@ export default function Notification() {
                     key={item.id}
                     data={item}
                     onClick={() => {
-                      router.push('/notification')
-                      setIsHovered(false)
+                      router.push('/notification');
+                      setIsHovered(false);
                     }}
                   />
                 );
               })
-            }
+            )}
           </div>
         </Layer>
       )}
