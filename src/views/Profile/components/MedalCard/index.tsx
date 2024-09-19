@@ -13,11 +13,13 @@ type PropsType = {
   nameStyle?: React.CSSProperties;
   contentStyle?: React.CSSProperties;
   barWidth?: string;
+  className?: string;
+  tooltip?: string;
 };
-export default function MedalCard({ medal, style, barWidth, nameStyle, contentStyle }: PropsType) {
+export default function MedalCard({ medal, style, barWidth, nameStyle, contentStyle, className, tooltip }: PropsType) {
   const total = useMemo(() => (medal?.trading_volume > 0 ? 100 : medal?.threshold), [medal]);
   const quantity = useMemo(
-    () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : medal?.completed_threshold),
+    () => (medal?.trading_volume > 0 ? Big(medal?.completed_percent).toFixed(2) : (medal?.completed_threshold ?? 0)),
     [medal]
   );
   const SPECIAL_LEVEL_NAME_MAPPING: any = {
@@ -26,7 +28,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, contentSt
     'Pioneer Bronze': 'checkra1neth'
   };
   return (
-    <StyledMedalCard style={style}>
+    <StyledMedalCard style={style} className={className}>
       <StyledFlex gap="15px">
         <StyledMedalImage
           className={Number(quantity) < total && !SPECIAL_LEVEL_NAME_MAPPING[medal?.level_name] ? 'disabled' : ''}
@@ -48,7 +50,7 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, contentSt
           </StyledFont>
         </StyledFlex>
       </StyledFlex>
-      <StyledMark>
+      <StyledMark className={`${className || ''}-reward-badge`}>
         <StyledFont color="#FFF" fontWeight="700">
           {medal?.gem}
         </StyledFont>
@@ -87,11 +89,13 @@ export default function MedalCard({ medal, style, barWidth, nameStyle, contentSt
         </StyledFlex>
       ) : (
         <ProgressBar
+          className={`${className || ''}-progress-bar`}
           quantity={+quantity}
           total={total}
           showAchieved={true}
-          showPercent={medal?.threshold > 0 ? false : true}
+          showPercent={medal?.trading_volume > 0 ? true : false}
           barWidth={barWidth}
+          tooltip={tooltip}
         />
       )}
     </StyledMedalCard>

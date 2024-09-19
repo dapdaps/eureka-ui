@@ -4,20 +4,20 @@ import { scroll } from '@/config/tokens/scroll';
 const basic = {
   name: 'Metavault V3',
   logo: '/images/apps/metavault.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   534352: {
     defaultCurrencies: {
       input: scroll['weth'],
-      output: scroll['usdt'],
+      output: scroll['usdt']
     },
-    tokens: [scroll['usdt'], scroll['weth'], scroll['usdc'], scroll['lusd'], scroll['wbtc'], scroll['mvx']],
+    tokens: [scroll['usdt'], scroll['weth'], scroll['usdc'], scroll['lusd'], scroll['wbtc'], scroll['mvx']]
   },
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['usdc'],
+      output: linea['usdc']
     },
     tokens: [
       linea['dai'],
@@ -29,8 +29,9 @@ const networks = {
       linea['bnb'],
       linea['cebusd'],
       linea['matic'],
-    ],
-  },
+      linea['croak']
+    ]
+  }
 };
 
 export { basic, networks };
