@@ -60,25 +60,41 @@ const OTOKEN_ABI = [
 ];
 const UNITROLLER_ABI = [
   {
-    constant: true,
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address'
+      }
+    ],
     name: 'markets',
     outputs: [
-      { internalType: 'bool', name: 'isListed', type: 'bool' },
+      {
+        internalType: 'bool',
+        name: 'isListed',
+        type: 'bool'
+      },
+      {
+        internalType: 'bool',
+        name: 'autoCollaterize',
+        type: 'bool'
+      },
       {
         internalType: 'uint256',
         name: 'collateralFactorMantissa',
         type: 'uint256'
-      },
-      { internalType: 'bool', name: 'isQied', type: 'bool' }
+      }
     ],
-    payable: false,
     stateMutability: 'view',
     type: 'function'
   },
   {
     inputs: [
-      { internalType: 'address', name: 'account', type: 'address' },
+      {
+        internalType: 'address',
+        name: 'account',
+        type: 'address'
+      },
       {
         internalType: 'contract IOToken',
         name: 'oToken',
@@ -86,14 +102,13 @@ const UNITROLLER_ABI = [
       }
     ],
     name: 'checkMembership',
-    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
-    stateMutability: 'view',
-    type: 'function'
-  },
-  {
-    inputs: [{ internalType: 'address', name: '', type: 'address' }],
-    name: 'rewardAccrued',
-    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool'
+      }
+    ],
     stateMutability: 'view',
     type: 'function'
   }
@@ -429,7 +444,7 @@ const KeomProtocolData = (props: any) => {
       });
     };
     const getUnitrollerData = () => {
-      const calls = [];
+      const calls: any = [];
       const oTokens: any = Object.values(markets);
       oTokens.forEach((token: any) => {
         calls.push({
@@ -445,11 +460,6 @@ const KeomProtocolData = (props: any) => {
           });
         }
       });
-      calls.push({
-        address: unitrollerAddress,
-        name: 'rewardAccrued',
-        params: [account]
-      });
       multicall({
         abi: UNITROLLER_ABI,
         calls,
@@ -461,13 +471,6 @@ const KeomProtocolData = (props: any) => {
           _loanToValue = {};
           _userMerberShip = {};
           for (let i = 0, len = res.length; i < len; i++) {
-            if (i === res.length - 1) {
-              _accountRewards.reward =
-                res[i] && res[i][0] ? ethers.utils.formatUnits(res[i] ? res[i][0]._hex || 0 : 0, 18) : '0';
-              count++;
-              formatedData('getUnitrollerData');
-              return;
-            }
             const index = Math.floor(i / (account ? 2 : 1));
             const mod = i % (account ? 2 : 1);
             switch (mod) {
@@ -480,6 +483,8 @@ const KeomProtocolData = (props: any) => {
               default:
             }
           }
+          count++;
+          formatedData('getUnitrollerData');
         })
         .catch((err: any) => {
           console.log('error-getUnitrollerData', err);
@@ -703,7 +708,6 @@ const KeomProtocolData = (props: any) => {
                 userSupply: Big(userSupply).mul(exchangeRateStored).toString(),
                 userBorrow
               };
-              console.log('>>>>> %s data: %o', oToken.symbol, _cTokensData[oToken.address]);
               if (oTokensLength === 0) {
                 count++;
                 formatedData('oTokens data');

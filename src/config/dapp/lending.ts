@@ -19,8 +19,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#019D8B',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   benqi: {
     type: 'lending',
@@ -42,8 +42,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#02B3ED',
       '--withdraw-color': '#000000',
       '--replay-color': '#000000',
-      '--claim-color': '#000000',
-    },
+      '--claim-color': '#000000'
+    }
   },
   cream: {
     type: 'lending',
@@ -65,8 +65,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#69E2DB',
       '--withdraw-color': '#000000',
       '--replay-color': '#000000',
-      '--claim-color': '#000000',
-    },
+      '--claim-color': '#000000'
+    }
   },
   'granary-finance': {
     type: 'lending',
@@ -88,8 +88,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#91C53E',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   'iron-bank': {
     type: 'lending',
@@ -111,8 +111,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#96FFB1',
       '--withdraw-color': '#FFFFFF',
       '--replay-color': '#FFFFFF',
-      '--claim-color': '#FFFFFF',
-    },
+      '--claim-color': '#FFFFFF'
+    }
   },
   'layer-bank': {
     type: 'lending',
@@ -134,8 +134,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#2B55D0',
       '--withdraw-color': '#fff',
       '--replay-color': '#FFFFFF',
-      '--claim-color': '#FFFFFF',
-    },
+      '--claim-color': '#FFFFFF'
+    }
   },
   lendle: {
     type: 'lending',
@@ -157,8 +157,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#9E77ED',
       '--withdraw-color': '#FFFFFF',
       '--replay-color': '#FFFFFF',
-      '--claim-color': '#FFFFFF',
-    },
+      '--claim-color': '#FFFFFF'
+    }
   },
   'mendi-finance': {
     type: 'lending',
@@ -180,8 +180,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#38CDFF',
       '--withdraw-color': '#FEF1EC',
       '--replay-color': '#FEF1EC',
-      '--claim-color': '#FEF1EC',
-    },
+      '--claim-color': '#FEF1EC'
+    }
   },
   moonwell: {
     type: 'lending',
@@ -203,8 +203,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': 'rgba(255, 255, 255, 0.35)',
       '--withdraw-color': '#FFFFFF',
       '--replay-color': '#FFFFFF',
-      '--claim-color': '#FFFFFF',
-    },
+      '--claim-color': '#FFFFFF'
+    }
   },
   radiant: {
     type: 'lending',
@@ -226,8 +226,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#9A80FE',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   'reactor-fusion': {
     type: 'lending',
@@ -249,8 +249,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': 'rgba(255, 255, 255, 0.7)',
       '--withdraw-color': '#000',
       '--replay-color': '#000',
-      '--claim-color': '#000',
-    },
+      '--claim-color': '#000'
+    }
   },
   sonne: {
     type: 'lending',
@@ -272,8 +272,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#FD684E',
       '--withdraw-color': '#FEF1EC',
       '--replay-color': '#FEF1EC',
-      '--claim-color': '#FEF1EC',
-    },
+      '--claim-color': '#FEF1EC'
+    }
   },
   venus: {
     type: 'lending',
@@ -295,8 +295,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#3a78ff',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   'valas-finance': {
     type: 'lending',
@@ -318,8 +318,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#91C53E',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   'tender-finance': {
     type: 'lending',
@@ -341,8 +341,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#16F195',
       '--withdraw-color': '#010604',
       '--replay-color': '#010604',
-      '--claim-color': '#16F195',
-    },
+      '--claim-color': '#16F195'
+    }
   },
   'we-piggy': {
     type: 'lending',
@@ -364,8 +364,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#FF4596',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   filda: {
     type: 'lending',
@@ -387,8 +387,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#2EA9FF',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   'trader-joe-lend': {
     type: 'lending',
@@ -410,8 +410,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#4eb6ff',
       '--withdraw-color': '#131313',
       '--replay-color': '#131313',
-      '--claim-color': '#131313',
-    },
+      '--claim-color': '#131313'
+    }
   },
   'lodestar-v1': {
     type: 'lending',
@@ -433,8 +433,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': 'rgba(229, 213, 64, 0.2)',
       '--withdraw-color': '#000',
       '--replay-color': '#000',
-      '--claim-color': '#E5D540',
-    },
+      '--claim-color': '#E5D540'
+    }
   },
   liqee: {
     type: 'lending',
@@ -456,8 +456,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#ffe8d8',
       '--withdraw-color': '#fff',
       '--replay-color': '#fff',
-      '--claim-color': '#fff',
-    },
+      '--claim-color': '#fff'
+    }
   },
   'shoebill-v2': {
     type: 'lending',
@@ -479,8 +479,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#4eb6ff',
       '--withdraw-color': '#131313',
       '--replay-color': '#131313',
-      '--claim-color': '#131313',
-    },
+      '--claim-color': '#131313'
+    }
   },
   'gravita-protocol': {
     type: 'lending',
@@ -502,8 +502,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#D079FF',
       '--withdraw-color': '#D079FF',
       '--replay-color': '#D079FF',
-      '--claim-color': '#D079FF',
-    },
+      '--claim-color': '#D079FF'
+    }
   },
   'preon-finance': {
     type: 'lending',
@@ -525,8 +525,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#7955F8',
       '--withdraw-color': '#7955F8',
       '--replay-color': '#7955F8',
-      '--claim-color': '#7955F8',
-    },
+      '--claim-color': '#7955F8'
+    }
   },
   'ethos-finance': {
     type: 'lending',
@@ -548,8 +548,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#773AD1',
       '--withdraw-color': '#773AD1',
       '--replay-color': '#773AD1',
-      '--claim-color': '#773AD1',
-    },
+      '--claim-color': '#773AD1'
+    }
   },
   'cog-finance': {
     type: 'lending',
@@ -571,8 +571,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#7955F8',
       '--withdraw-color': '#7955F8',
       '--replay-color': '#7955F8',
-      '--claim-color': '#7955F8',
-    },
+      '--claim-color': '#7955F8'
+    }
   },
   zerolend: {
     type: 'lending',
@@ -595,8 +595,8 @@ const ROUTE_CONFIG = {
       '--withdraw-color': '#EAEBEF',
       '--replay-color': '#EAEBEF',
       '--claim-color': '#EAEBEF',
-      '--button-disabled-color': 'rgba(234, 235, 239, .7)',
-    },
+      '--button-disabled-color': 'rgba(234, 235, 239, .7)'
+    }
   },
   aave: {
     type: 'lending',
@@ -619,8 +619,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#EAEBEF',
       '--withdraw-color': '#EAEBEF',
       '--replay-color': '#EAEBEF',
-      '--claim-color': '#EAEBEF',
-    },
+      '--claim-color': '#EAEBEF'
+    }
   },
   'pac-finance': {
     type: 'lending',
@@ -643,8 +643,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#BAEA29',
       '--withdraw-color': '#BAEA29',
       '--replay-color': '#BAEA29',
-      '--claim-color': '#BAEA29',
-    },
+      '--claim-color': '#BAEA29'
+    }
   },
   'orbit-protocol': {
     type: 'lending',
@@ -666,8 +666,8 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#EA580A',
       '--withdraw-color': 'white',
       '--replay-color': 'white',
-      '--claim-color': 'white',
-    },
+      '--claim-color': 'white'
+    }
   },
   'seamless-protocol': {
     type: 'lending',
@@ -690,15 +690,15 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#292E40',
       '--withdraw-color': '#3AB1FF',
       '--replay-color': '#77047B',
-      '--claim-color': '#292E40',
-    },
+      '--claim-color': '#292E40'
+    }
   },
   compoundv3: {
     type: 'lending',
     theme: {
       '--button-color': '#00ad79',
-      '--button-text-color': '#fff',
-    },
+      '--button-text-color': '#fff'
+    }
   },
   'ironclad-finance': {
     type: 'lending',
@@ -719,9 +719,9 @@ const ROUTE_CONFIG = {
       '--repay-border-color': '#61B7F6',
       '--claim-color': '#fff',
       '--claim-bg-color': '#61B7F6',
-      '--claim-bg-hover-color': '#61B7F6',
+      '--claim-bg-hover-color': '#61B7F6'
       // '--claim-border-color': '#61B7F6',
-    },
+    }
   },
   ionic: {
     type: 'lending',
@@ -742,9 +742,9 @@ const ROUTE_CONFIG = {
       '--repay-border-color': '#DFFE00',
       '--claim-color': '#000',
       '--claim-bg-color': '#3BFF89',
-      '--claim-bg-hover-color': '#3BFF89',
+      '--claim-bg-hover-color': '#3BFF89'
       // '--claim-border-color': '#3BFF89',
-    },
+    }
   },
   sturdy: {
     type: 'lending',
@@ -765,9 +765,9 @@ const ROUTE_CONFIG = {
       '--repay-border-color': '#F2AA37',
       '--claim-color': '#000',
       '--claim-bg-color': '#3BFF89',
-      '--claim-bg-hover-color': '#3BFF89',
+      '--claim-bg-hover-color': '#3BFF89'
       // '--claim-border-color': '#3BFF89',
-    },
+    }
   },
   lyve: {
     type: 'lending',
@@ -789,15 +789,15 @@ const ROUTE_CONFIG = {
       '--claim-border-color': '#D079FF',
       '--withdraw-color': '#D079FF',
       '--replay-color': '#D079FF',
-      '--claim-color': '#D079FF',
-    },
+      '--claim-color': '#D079FF'
+    }
   },
   'keom-protocol': {
     type: 'lending',
     theme: {
       '--button-color': '#D079FF',
       '--switch-color': '#D079FF',
-      '--button-text-color': 'black',
+      '--button-text-color': 'white',
       '--supply-color': '#D079FF',
       '--yours-table-title': 'black',
       '--borrow-color': '#D079FF',
@@ -810,11 +810,11 @@ const ROUTE_CONFIG = {
       '--claim-bg-hover-color': '#D079FF',
       '--claim-bg-color': '#D079FF',
       '--claim-border-color': '#D079FF',
-      '--withdraw-color': '#D079FF',
+      '--withdraw-color': '#fff',
       '--replay-color': '#D079FF',
-      '--claim-color': '#D079FF',
-    },
-  },
+      '--claim-color': '#D079FF'
+    }
+  }
 };
 
 export default ROUTE_CONFIG;
