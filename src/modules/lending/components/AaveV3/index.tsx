@@ -11,6 +11,7 @@ import { TabKey } from '@/modules/lending/models';
 import type { DexProps } from '../../models/dex.model';
 import RewardsTable from './Cards/RewardsTable';
 import Chain from './Chain';
+import { useIsolateStore } from './hooks/useIsolateStore';
 import Markets from './Markets';
 import AlertModal from './Modal/Alert';
 import ReloadModal from './Modal/Reload';
@@ -49,6 +50,8 @@ const AaveV3 = (props: Props) => {
     tab
   } = props;
   const [config, setConfig] = useState<any>(null);
+
+  const setIsolateStore = useIsolateStore((store) => store.set);
 
   const fetchConfig = async () => {
     const { CONTRACT_ABI = {} } = dexConfig || {};
@@ -169,7 +172,6 @@ const AaveV3 = (props: Props) => {
         console.log('gasEstimation error');
       });
   };
-  // YourSupplies/YourBorrows
   // - onActionSuccess -- start
   const getYourSupplies = () => {
     const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
@@ -326,7 +328,7 @@ const AaveV3 = (props: Props) => {
         })
           .then((res: any) => {
             console.log('getCollateralStatus-res:', res);
-            const [[rawStatus], [addrs]] = res;
+            const [[rawStatus] = [null], [addrs] = []] = res.map((item: any) => item ?? []);
             if (rawStatus) {
               const _status = parseInt(rawStatus.toString()).toString(2).split('');
               // console.log("_status--", _status);
@@ -356,6 +358,9 @@ const AaveV3 = (props: Props) => {
                 yourSupplies: _yourSupplies,
                 yourTotalCollateral
               }));
+              setIsolateStore({
+                data: _yourSupplies
+              });
             } else {
               updateState((prev: any) => ({
                 ...prev,
@@ -512,7 +517,7 @@ const AaveV3 = (props: Props) => {
     return balanceProvider.batchBalanceOf([userAddress], tokenAddresses);
   };
   const onActionSuccess = ({ msg, callback, step1 }: any) => {
-    console.log('onActionSuccess--');
+    console.log('onActionSuccess--', msg, callback, step1);
     // update data if action finishes
     getUserBalance();
 

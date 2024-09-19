@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { memo, useEffect } from 'react';
 import { styled } from 'styled-components';
 
 import { useMultiState } from '@/modules/hooks';
@@ -7,13 +8,13 @@ import CardsViews from '../Cards';
 import CardEmpty from '../Cards/CardEmpty';
 import CardList from '../Cards/CardList';
 import CardsTable from '../Cards/CardsTable';
+import { useIsolateStore } from '../hooks/useIsolateStore';
 import BorrowModal from '../Modal/Borrow';
 import LoopModal from '../Modal/Loop';
 import SupplyModal from '../Modal/Supply';
 import PrimaryButton from '../PrimaryButton';
 import TokenWrapper from '../TokenWrapper';
 import { formatRate, unifyNumber } from '../utils';
-import formatAmount from '../utils/formatAmount';
 import formatNumber from '../utils/formatNumber';
 
 const CenterRow = styled.div`
@@ -62,7 +63,7 @@ const Markets = (props: any) => {
     config
   } = props;
 
-  console.log(props, '64--props');
+  const { data: hasIsolateData, set: setIsolateStore } = useIsolateStore();
 
   const [state, updateState] = useMultiState<any>({
     data: undefined,
@@ -129,6 +130,16 @@ const Markets = (props: any) => {
     );
   };
 
+  const isIsolate = hasIsolateData.some((item: any) => item.isIsolated && !!item.isCollateraled);
+
+  const assetsToSupplyWithStable = assetsToSupply.filter((item: any) => item.isStableForIsolated);
+
+  useEffect(() => {
+    return () => {
+      setIsolateStore({ data: [] });
+    };
+  }, []);
+
   let headers;
   let tableData;
 
@@ -142,7 +153,7 @@ const Markets = (props: any) => {
       // "Can be Collateral",
       ''
     ];
-    tableData = assetsToSupply.map((row: any, index: number) => [
+    tableData = (isIsolate ? assetsToSupplyWithStable : assetsToSupply).map((row: any, index: number) => [
       <TokenWrapper key={`token-${index}`}>
         <img width={64} height={64} src={row.icon} alt={row.symbol} />
         <CenterItem>
@@ -189,7 +200,7 @@ const Markets = (props: any) => {
       // "Can be Collateral",
       ''
     ];
-    tableData = assetsToSupply.map((row: any, index: number) => [
+    tableData = (isIsolate ? assetsToSupplyWithStable : assetsToSupply).map((row: any, index: number) => [
       <TokenWrapper key={`token-${index}`}>
         <img width={64} height={64} src={row.icon} alt={row.symbol} />
         <CenterItem>
@@ -283,4 +294,4 @@ const Markets = (props: any) => {
   );
 };
 
-export default Markets;
+export default memo(Markets);

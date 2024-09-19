@@ -1,5 +1,6 @@
 import { styled } from 'styled-components';
 
+import Tooltip from '@/components/TitleTooltip';
 import { useMultiState } from '@/modules/lending/hooks';
 
 import CardEmpty from '../../Cards/CardEmpty';
@@ -26,6 +27,20 @@ const SubText = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
+`;
+
+const StyledIso = styled.div`
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+  border: 1px solid var(--agg-primary-color, #6f6f6f);
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 12px;
+  text-align: center;
+  color: #6f6f6f;
+  gap: 4px;
+  width: 70px;
 `;
 
 const YourSupplies = (props: any) => {
@@ -79,7 +94,6 @@ const YourSupplies = (props: any) => {
         active={record.isCollateraled}
         theme={theme}
         onChange={() => {
-          console.log('--------', record);
           updateState({
             data: record,
             showCollateralModal: true,
@@ -119,7 +133,18 @@ const YourSupplies = (props: any) => {
                       : ''}
                   </SubText>
                 </div>,
-                renderCollateral(row),
+                <div key={idx}>
+                  {renderCollateral(row)}
+                  {row.isIsolated && (
+                    <StyledIso>
+                      <div>Isolated</div>
+                      <Tooltip
+                        sx={{ marginTop: '-2px' }}
+                        content="Isolated assets have limited borrowing power and other assets cannot be used as collateral."
+                      />
+                    </StyledIso>
+                  )}
+                </div>,
                 <WithdrawButton key={idx} data={row} />
               ];
             })}
