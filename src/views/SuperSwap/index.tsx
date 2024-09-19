@@ -199,6 +199,7 @@ export default function SuperSwap() {
           onClick={onSwap}
           disabled={!trade?.txn}
           currentChain={currentChain}
+          onRefresh={runQuoter}
         />
 
         {trade && (

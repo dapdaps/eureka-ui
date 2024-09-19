@@ -54,11 +54,12 @@ const getButtonImpactProps = (trade: any) => {
   };
 };
 
-const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade, currentChain }: any) => {
+const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade, currentChain, onRefresh }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
-    spender: trade?.routerAddress
+    spender: trade?.routerAddress,
+    onSuccess: onRefresh
   });
 
   const { switching, switchChain } = useSwitchChain();
