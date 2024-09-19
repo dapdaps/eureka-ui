@@ -49,23 +49,16 @@ const CompoundV3Detail = (props: any) => {
 
   const updateInfo = () => {
     getAccountInfo(data, (res: any) => {
-      const _availableToBorrow = Big(res.userBorrowCapacityUsd).minus(
-        res.borrowedBalanceUsd
-      );
+      const _availableToBorrow = Big(res.userBorrowCapacityUsd).minus(res.borrowedBalanceUsd);
       updateState({
         ...res,
         collaterValue: res.userCollateralUsd,
         borrowCapacity: res.userBorrowCapacityUsd,
-        availableToBorrow: Big(_availableToBorrow).lt(0)
-          ? '0'
-          : _availableToBorrow.toString(),
+        availableToBorrow: Big(_availableToBorrow).lt(0) ? '0' : _availableToBorrow.toString(),
         liquidationPoint:
-          Big(res.userLiquidationUsd || 0).eq(0) ||
-          Big(res.userCollateralUsd || 0).eq(0)
+          Big(res.userLiquidationUsd || 0).eq(0) || Big(res.userCollateralUsd || 0).eq(0)
             ? '0'
-            : Big(res.borrowedBalanceUsd)
-              .div(Big(res.userLiquidationUsd).div(res.userCollateralUsd))
-              .toString(),
+            : Big(res.borrowedBalanceUsd).div(Big(res.userLiquidationUsd).div(res.userCollateralUsd)).toString(),
         borrowedBalance: res.borrowedBalanceUsd,
         userLiquidationUsd: res.userLiquidationUsd
       });
@@ -105,9 +98,7 @@ const CompoundV3Detail = (props: any) => {
   const onAmountChange = ({ amount, type, cb }: any) => {
     if (state.asset.address === data.baseToken.address) {
       if (type === 'Repay') {
-        const _borrowedBalance = Big(state.borrowedBalanceUsd).minus(
-          Big(amount).mul(state.asset.price)
-        );
+        const _borrowedBalance = Big(state.borrowedBalanceUsd).minus(Big(amount).mul(state.asset.price));
 
         cb({
           borrowedBalanceUsd: _borrowedBalance.toString(),
@@ -115,12 +106,9 @@ const CompoundV3Detail = (props: any) => {
             .minus(_borrowedBalance)
             .toString(),
           liquidationPoint:
-            Big(state.userLiquidationUsd || 0).eq(0) ||
-            Big(state.collaterValue || 0).eq(0)
+            Big(state.userLiquidationUsd || 0).eq(0) || Big(state.collaterValue || 0).eq(0)
               ? '0'
-              : Big(_borrowedBalance)
-                .div(Big(state.userLiquidationUsd).div(state.collaterValue))
-                .toString()
+              : Big(_borrowedBalance).div(Big(state.userLiquidationUsd).div(state.collaterValue)).toString()
         });
         return;
       }
@@ -135,12 +123,9 @@ const CompoundV3Detail = (props: any) => {
             .minus(_borrowedBalance)
             .toString(),
           liquidationPoint:
-            Big(state.userLiquidationUsd || 0).eq(0) ||
-            Big(state.collaterValue || 0).eq(0)
+            Big(state.userLiquidationUsd || 0).eq(0) || Big(state.collaterValue || 0).eq(0)
               ? '0'
-              : Big(_borrowedBalance)
-                .div(Big(state.userLiquidationUsd).div(state.collaterValue))
-                .toString()
+              : Big(_borrowedBalance).div(Big(state.userLiquidationUsd).div(state.collaterValue)).toString()
         });
         return;
       }
@@ -157,24 +142,16 @@ const CompoundV3Detail = (props: any) => {
         .add(_collaterValue);
     }
     if (type === 'Withdraw') {
-      _collaterValue = _collaterValue.minus(
-        Big(amount || 0).mul(state.asset.price)
-      );
+      _collaterValue = _collaterValue.minus(Big(amount || 0).mul(state.asset.price));
     }
-    _borrowCapacity = _collaterValue.mul(
-      state.asset.borrowCollateralFactor / 100
-    );
-    _availableToBorrow = Big(_borrowCapacity).minus(
-      state.borrowedBalanceUsd || 0
-    );
+    _borrowCapacity = _collaterValue.mul(state.asset.borrowCollateralFactor / 100);
+    _availableToBorrow = Big(_borrowCapacity).minus(state.borrowedBalanceUsd || 0);
 
     cb({
       collaterValue: _collaterValue.toString(),
       borrowCapacity: _borrowCapacity.toString(),
       availableToBorrow: _availableToBorrow.toString(),
-      userLiquidationUsd: _collaterValue
-        .mul(state.asset.liquidateCollateralFactor / 100)
-        .toString()
+      userLiquidationUsd: _collaterValue.mul(state.asset.liquidateCollateralFactor / 100).toString()
     });
   };
 
@@ -198,22 +175,12 @@ const CompoundV3Detail = (props: any) => {
         <StyledFlex style={{ marginBottom: 36, justifyContent: 'space-between' }}>
           <StyledFlex style={{ gap: 20 }}>
             <StyledSvg style={{ cursor: 'pointer' }} onClick={onBack}>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="7"
-                height="12"
-                viewBox="0 0 7 12"
-                fill="none"
-              >
+              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="12" viewBox="0 0 7 12" fill="none">
                 <path d="M6 11L1 6L6 1" stroke="white" strokeLinecap="round" />
               </svg>
             </StyledSvg>
             <StyledFlex style={{ gap: 14 }}>
-              <CompoundV3Asset
-                size="big"
-                icon={data.baseToken.icon}
-                curChain={curChain}
-              />
+              <CompoundV3Asset size="big" icon={data.baseToken.icon} curChain={curChain} />
               <StyledFlex
                 style={{
                   flexDirection: 'column',
@@ -226,36 +193,26 @@ const CompoundV3Detail = (props: any) => {
                     gap: 8
                   }}
                 >
-                  <StyledFont
-                    style={{ color: '#FFF', fontSize: 22, fontWeight: 700 }}
-                  >
+                  <StyledFont style={{ color: '#FFF', fontSize: 22, fontWeight: 700 }}>
                     {Big(state.borrowedBalanceUsd || 0).gt(0) ? (
                       <>
                         {state.borrowArr[0] || 0}.
-                        <span style={{ color: '#979ABE' }}>
-                        {state.borrowArr[1] || '0000'}
-                      </span>
+                        <span style={{ color: '#979ABE' }}>{state.borrowArr[1] || '0000'}</span>
                       </>
                     ) : (
                       <>
                         {state.balanceArr[0] || 0}.
-                        <span style={{ color: '#979ABE' }}>
-                        {state.balanceArr[1] || '0000'}
-                      </span>
+                        <span style={{ color: '#979ABE' }}>{state.balanceArr[1] || '0000'}</span>
                       </>
                     )}
                   </StyledFont>
-                  <StyledFont
-                    style={{ color: '#FFF', fontSize: 22, fontWeight: 700 }}
-                  >
+                  <StyledFont style={{ color: '#FFF', fontSize: 22, fontWeight: 700 }}>
                     {data.baseToken.symbol}
                   </StyledFont>
                 </StyledFlex>
                 <StyledFont style={{ color: '#979ABE' }}>
                   {formatAmount({
-                    amount: Big(state.borrowedBalanceUsd || 0).gt(0)
-                      ? state.borrowedBalanceUsd
-                      : state.balanceUsd,
+                    amount: Big(state.borrowedBalanceUsd || 0).gt(0) ? state.borrowedBalanceUsd : state.balanceUsd,
                     prev: '$'
                   })}
                 </StyledFont>
@@ -274,12 +231,8 @@ const CompoundV3Detail = (props: any) => {
                     gap: 5
                   }}
                 >
-                  <StyledFont style={{ color: '#00D395', fontSize: 16 }}>
-                    Supplying
-                  </StyledFont>
-                  <StyledFont
-                    style={{ color: '#FFF', fontSize: 16, fontWeight: 700 }}
-                  >
+                  <StyledFont style={{ color: '#00D395', fontSize: 16 }}>Supplying</StyledFont>
+                  <StyledFont style={{ color: '#FFF', fontSize: 16, fontWeight: 700 }}>
                     {state.supplyApr}% Net APR
                   </StyledFont>
                 </StyledFlex>{' '}
@@ -312,12 +265,8 @@ const CompoundV3Detail = (props: any) => {
                     gap: 5
                   }}
                 >
-                  <StyledFont style={{ color: '#7945FF', fontSize: 16 }}>
-                    Borrowing
-                  </StyledFont>
-                  <StyledFont
-                    style={{ color: '#FFF', fontSize: 16, fontWeight: 700 }}
-                  >
+                  <StyledFont style={{ color: '#7945FF', fontSize: 16 }}>Borrowing</StyledFont>
+                  <StyledFont style={{ color: '#FFF', fontSize: 16, fontWeight: 700 }}>
                     {state.borrowApr}% Net APR
                   </StyledFont>
                 </StyledFlex>{' '}
@@ -372,18 +321,10 @@ const CompoundV3Detail = (props: any) => {
             >
               {data.baseToken.symbol} Wallet Balance
             </StyledFont>
-            <StyledFlex
-              style={{ marginBottom: 30, justifyContent: 'space-between' }}
-            >
+            <StyledFlex style={{ marginBottom: 30, justifyContent: 'space-between' }}>
               <StyledFlex style={{ gap: 14 }}>
-                <CompoundV3Asset
-                  size="medium"
-                  icon={data.baseToken.icon}
-                  curChain={curChain}
-                />
-                <StyledFont
-                  style={{ color: '#FFF', fontSize: 16, fontWeight: 500 }}
-                >
+                <CompoundV3Asset size="medium" icon={data.baseToken.icon} curChain={curChain} />
+                <StyledFont style={{ color: '#FFF', fontSize: 16, fontWeight: 500 }}>
                   {data.baseToken.symbol}
                 </StyledFont>
               </StyledFlex>
@@ -394,9 +335,7 @@ const CompoundV3Detail = (props: any) => {
                   gap: 3
                 }}
               >
-                <StyledFont
-                  style={{ color: '#FFF', fontSize: 16, fontWeight: 500 }}
-                >
+                <StyledFont style={{ color: '#FFF', fontSize: 16, fontWeight: 500 }}>
                   {formatAmount({
                     amount: state.walletBalance
                   })}
@@ -411,20 +350,12 @@ const CompoundV3Detail = (props: any) => {
             </StyledFlex>
             <StyledFlex style={{ justifyContent: 'space-between' }}>
               <StyledFlex style={{ gap: 10 }}>
-                <StyledFont style={{ color: '#979ABE', fontSize: 14 }}>
-                  Net Supply APR
-                </StyledFont>
-                <StyledFont style={{ color: '#FFF', fontSize: 16 }}>
-                  {state.supplyApr}%
-                </StyledFont>
+                <StyledFont style={{ color: '#979ABE', fontSize: 14 }}>Net Supply APR</StyledFont>
+                <StyledFont style={{ color: '#FFF', fontSize: 16 }}>{state.supplyApr}%</StyledFont>
               </StyledFlex>
               <StyledFlex style={{ gap: 10 }}>
-                <StyledFont style={{ color: '#979ABE', fontSize: 14 }}>
-                  Net Borrow APR
-                </StyledFont>
-                <StyledFont style={{ color: '#FFF', fontSize: 16 }}>
-                  {state.borrowApr}%
-                </StyledFont>
+                <StyledFont style={{ color: '#979ABE', fontSize: 14 }}>Net Borrow APR</StyledFont>
+                <StyledFont style={{ color: '#FFF', fontSize: 16 }}>{state.borrowApr}%</StyledFont>
               </StyledFlex>
             </StyledFlex>
           </StyledWrapper>
@@ -438,8 +369,7 @@ const CompoundV3Detail = (props: any) => {
               className="supply"
               disabled={Big(state.borrowedBalanceUsd || 0).gt(0) || state.loading}
               onClick={() => {
-                if (Big(state.borrowedBalanceUsd || 0).gt(0) || state.loading)
-                  return;
+                if (Big(state.borrowedBalanceUsd || 0).gt(0) || state.loading) return;
                 updateState({
                   showDialog: true,
                   type: 'Supply',
@@ -453,24 +383,11 @@ const CompoundV3Detail = (props: any) => {
             >
               {Big(state.borrowedBalanceUsd || 0).gt(0) && (
                 <>
-                  <StyledTips>
-                    Must repay full {data.baseToken.symbol} borrowing
-                  </StyledTips>
+                  <StyledTips>Must repay full {data.baseToken.symbol} borrowing</StyledTips>
                   <StyledSvg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <circle cx="7" cy="7" r="6.5" stroke="#979ABE" />
-                      <path
-                        d="M7 7L7 10.5"
-                        stroke="#979ABE"
-                        stroke-width="1.4"
-                        stroke-linecap="round"
-                      />
+                      <path d="M7 7L7 10.5" stroke="#979ABE" stroke-width="1.4" stroke-linecap="round" />
                       <circle cx="7" cy="4.375" r="0.875" fill="#979ABE" />
                     </svg>
                   </StyledSvg>
@@ -480,26 +397,15 @@ const CompoundV3Detail = (props: any) => {
             </StyledButton>
             <StyledButton
               className="borrow"
-              disabled={
-                Big(state.balance || 0).gt(0) ||
-                Big(state.borrowCapacity || 0).eq(0) ||
-                state.loading
-              }
+              disabled={Big(state.balance || 0).gt(0) || Big(state.borrowCapacity || 0).eq(0) || state.loading}
               onClick={() => {
-                if (
-                  Big(state.balance || 0).gt(0) ||
-                  Big(state.borrowCapacity || 0).eq(0) ||
-                  state.loading
-                )
-                  return;
+                if (Big(state.balance || 0).gt(0) || Big(state.borrowCapacity || 0).eq(0) || state.loading) return;
                 updateState({
                   showDialog: true,
                   type: 'Borrow',
                   asset: {
                     ...data.baseToken,
-                    walletBalance: Big(state.availableToBorrow)
-                      .div(data.baseToken.price)
-                      .toString(),
+                    walletBalance: Big(state.availableToBorrow).div(data.baseToken.price).toString(),
                     walletBalanceUsd: state.availableToBorrow
                   }
                 });
@@ -507,24 +413,11 @@ const CompoundV3Detail = (props: any) => {
             >
               {Big(state.balance || 0).gt(0) && (
                 <>
-                  <StyledTips>
-                    Must Withdraw Full {data.baseToken.symbol} Balance
-                  </StyledTips>
+                  <StyledTips>Must Withdraw Full {data.baseToken.symbol} Balance</StyledTips>
                   <StyledSvg>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
                       <circle cx="7" cy="7" r="6.5" stroke="#979ABE" />
-                      <path
-                        d="M7 7L7 10.5"
-                        stroke="#979ABE"
-                        stroke-width="1.4"
-                        stroke-linecap="round"
-                      />
+                      <path d="M7 7L7 10.5" stroke="#979ABE" stroke-width="1.4" stroke-linecap="round" />
                       <circle cx="7" cy="4.375" r="0.875" fill="#979ABE" />
                     </svg>
                   </StyledSvg>
@@ -559,24 +452,12 @@ const CompoundV3Detail = (props: any) => {
           <StyledFlex style={{ flexDirection: 'column', gap: 20, width: '100%' }}>
             {data.collateralAssets?.map((asset: any) => (
               <StyledFlex style={{ gap: 14, width: '100%' }} key={asset.address}>
-                <CompoundV3Asset
-                  size="medium"
-                  icon={asset.icon}
-                  curChain={curChain}
-                />
+                <CompoundV3Asset size="medium" icon={asset.icon} curChain={curChain} />
                 <StyledWrapper style={{ flex: 1 }}>
-                  <StyledFlex
-                    style={{ justifyContent: 'space-between', gap: 10 }}
-                  >
-                    <StyledFont
-                      style={{ color: '#FFF', fontSize: 14, fontWeight: 500 }}
-                    >
-                      {asset.symbol}
-                    </StyledFont>
+                  <StyledFlex style={{ justifyContent: 'space-between', gap: 10 }}>
+                    <StyledFont style={{ color: '#FFF', fontSize: 14, fontWeight: 500 }}>{asset.symbol}</StyledFont>
                     <StyledDashed />
-                    <StyledFont
-                      style={{ color: '#FFF', fontSize: 14, fontWeight: 500 }}
-                    >
+                    <StyledFont style={{ color: '#FFF', fontSize: 14, fontWeight: 500 }}>
                       {formatAmount({
                         amount: state.collateralBalances[asset.address]?.balance
                       })}
@@ -585,8 +466,7 @@ const CompoundV3Detail = (props: any) => {
                   <StyledFlex style={{ justifyContent: 'space-between' }}>
                     <StyledFont style={{ color: '#979ABE', fontSize: 12 }}>
                       {formatAmount({
-                        amount:
-                        state.collateralBalances[asset.address]?.walletBalance,
+                        amount: state.collateralBalances[asset.address]?.walletBalance,
                         digits: 4
                       })}{' '}
                       in wallet
@@ -602,79 +482,42 @@ const CompoundV3Detail = (props: any) => {
                 </StyledWrapper>
                 <StyledFlex style={{ gap: 10 }}>
                   <StyledOperationButton
-                    disabled={
-                      Big(
-                        state.collateralBalances[asset.address]?.walletBalance || 0
-                      ).eq(0) || state.loading
-                    }
+                    disabled={Big(state.collateralBalances[asset.address]?.walletBalance || 0).eq(0) || state.loading}
                     onClick={() => {
-                      if (
-                        Big(
-                          state.collateralBalances[asset.address]?.walletBalance ||
-                          0
-                        ).eq(0) ||
-                        state.loading
-                      )
+                      if (Big(state.collateralBalances[asset.address]?.walletBalance || 0).eq(0) || state.loading)
                         return;
                       updateState({
                         showDialog: true,
                         type: 'Collateral',
                         asset: {
                           ...asset,
-                          walletBalance:
-                          state.collateralBalances[asset.address]?.walletBalance,
-                          walletBalanceUsd:
-                          state.collateralBalances[asset.address]?.walletBalanceUsd
+                          walletBalance: state.collateralBalances[asset.address]?.walletBalance,
+                          walletBalanceUsd: state.collateralBalances[asset.address]?.walletBalanceUsd
                         }
                       });
                     }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="10"
-                      height="10"
-                      viewBox="0 0 10 10"
-                      fill="none"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10" fill="none">
                       <path d="M1 5L9 5" stroke="#FFF" stroke-linecap="round" />
                       <path d="M5 1L5 9" stroke="#FFF" stroke-linecap="round" />
                     </svg>
                   </StyledOperationButton>
                   <StyledOperationButton
-                    disabled={
-                      Big(
-                        state.collateralBalances[asset.address]?.balance || 0
-                      ).eq(0) || state.loading
-                    }
+                    disabled={Big(state.collateralBalances[asset.address]?.balance || 0).eq(0) || state.loading}
                     onClick={() => {
-                      if (
-                        Big(
-                          state.collateralBalances[asset.address]?.balance || 0
-                        ).eq(0) ||
-                        state.loading
-                      )
-                        return;
-                      const _collaterBalanceUsd =
-                        state.collateralBalances[asset.address]?.balanceUsd;
+                      if (Big(state.collateralBalances[asset.address]?.balance || 0).eq(0) || state.loading) return;
+                      const _collaterBalanceUsd = state.collateralBalances[asset.address]?.balanceUsd;
 
                       let _balanceUsd = Big(0);
                       if (Big(state.borrowedBalanceUsd).eq(0)) {
                         _balanceUsd = Big(_collaterBalanceUsd);
                       } else {
-                        const _capacity = Big(_collaterBalanceUsd).mul(
-                          asset.borrowCollateralFactor / 100
-                        );
-                        const _otherCapacity = Big(
-                          state.userBorrowCapacityUsd
-                        ).minus(_capacity);
+                        const _capacity = Big(_collaterBalanceUsd).mul(asset.borrowCollateralFactor / 100);
+                        const _otherCapacity = Big(state.userBorrowCapacityUsd).minus(_capacity);
 
-                        const _diff = Big(state.borrowedBalanceUsd).minus(
-                          _otherCapacity
-                        );
+                        const _diff = Big(state.borrowedBalanceUsd).minus(_otherCapacity);
 
-                        _balanceUsd = Big(_collaterBalanceUsd).minus(
-                          _diff.div(asset.borrowCollateralFactor / 100)
-                        );
+                        _balanceUsd = Big(_collaterBalanceUsd).minus(_diff.div(asset.borrowCollateralFactor / 100));
                       }
                       _balanceUsd = _balanceUsd.lt(0) ? Big(0) : _balanceUsd;
 
@@ -689,13 +532,7 @@ const CompoundV3Detail = (props: any) => {
                       });
                     }}
                   >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="10"
-                      height="2"
-                      viewBox="0 0 10 2"
-                      fill="none"
-                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="2" viewBox="0 0 10 2" fill="none">
                       <path d="M1 1L9 1" stroke="#FFF" stroke-linecap="round" />
                     </svg>
                   </StyledOperationButton>
@@ -709,30 +546,22 @@ const CompoundV3Detail = (props: any) => {
         <StyledFlex style={{ gap: 5 }}>
           <StyledFont style={{ color: '#979ABE' }}>Liquidation Risk</StyledFont>
           <CompoundV3Range
-            value={Big(state.collaterValue || 0).eq(0)
-              ? 0
-              : Big(state.liquidationPoint || 0)
-                .div(state.collaterValue)
-                .mul(100)
-                .toFixed(0)}
+            value={
+              Big(state.collaterValue || 0).eq(0)
+                ? 0
+                : Big(state.liquidationPoint || 0)
+                    .div(state.collaterValue)
+                    .mul(100)
+                    .toFixed(0)
+            }
           />
         </StyledFlex>
-        <StyledFlex
-          style={{ marginTop: 16, marginBottom: 40, justifyContent: 'flex-end' }}
-        >
-          <StyledFont style={{ color: '#979ABE', fontSize: 12 }}>
-            Borrow Capacity
-          </StyledFont>
+        <StyledFlex style={{ marginTop: 16, marginBottom: 40, justifyContent: 'flex-end' }}>
+          <StyledFont style={{ color: '#979ABE', fontSize: 12 }}>Borrow Capacity</StyledFont>
         </StyledFlex>
         <StyledWrapper style={{ position: 'relative', marginBottom: 20 }}>
           <StyledSvg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="488"
-              height="160"
-              viewBox="0 0 488 160"
-              fill="none"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" width="488" height="160" viewBox="0 0 488 160" fill="none">
               <path
                 d="M179.632 1H479C483.418 1 487 4.58172 487 9V151C487 155.418 483.418 159 479 159H9C4.58172 159 1 155.418 1 151V9C1 4.58172 4.58172 1 9 1H12.1176"
                 stroke="#373A53"
@@ -749,11 +578,7 @@ const CompoundV3Detail = (props: any) => {
             }}
           >
             <StyledWrapper style={{ marginBottom: 13, paddingLeft: 17 }}>
-              <StyledFont
-                style={{ color: '#FFF', fontSize: 18, fontWeight: 600 }}
-              >
-                Position Summary
-              </StyledFont>
+              <StyledFont style={{ color: '#FFF', fontSize: 18, fontWeight: 600 }}>Position Summary</StyledFont>
             </StyledWrapper>
             <StyledFlex
               style={{
@@ -764,12 +589,8 @@ const CompoundV3Detail = (props: any) => {
                 gap: 12
               }}
             >
-              <StyledFlex
-                style={{ width: '100%', justifyContent: 'space-between' }}
-              >
-                <StyledFont style={{ color: '#979ABE' }}>
-                  Collateral Value
-                </StyledFont>
+              <StyledFlex style={{ width: '100%', justifyContent: 'space-between' }}>
+                <StyledFont style={{ color: '#979ABE' }}>Collateral Value</StyledFont>
                 <StyledFlex style={{ gap: 8 }}>
                   <StyledFont style={{ color: '#FFF' }}>
                     {formatAmount({
@@ -780,12 +601,8 @@ const CompoundV3Detail = (props: any) => {
                   {/* <StyledFont style={{ color: "#979ABE" }}>USDC</StyledFont> */}
                 </StyledFlex>
               </StyledFlex>
-              <StyledFlex
-                style={{ width: '100%', justifyContent: 'space-between' }}
-              >
-                <StyledFont style={{ color: '#979ABE' }}>
-                  Liquidation Point
-                </StyledFont>
+              <StyledFlex style={{ width: '100%', justifyContent: 'space-between' }}>
+                <StyledFont style={{ color: '#979ABE' }}>Liquidation Point</StyledFont>
                 <StyledFlex style={{ gap: 8 }}>
                   <StyledFont style={{ color: '#FFF' }}>
                     {formatAmount({
@@ -796,12 +613,8 @@ const CompoundV3Detail = (props: any) => {
                   {/* <StyledFont style={{ color: "#979ABE" }}>USDC</StyledFont> */}
                 </StyledFlex>
               </StyledFlex>
-              <StyledFlex
-                style={{ width: '100%', justifyContent: 'space-between' }}
-              >
-                <StyledFont style={{ color: '#979ABE' }}>
-                  Borrow Capacity
-                </StyledFont>
+              <StyledFlex style={{ width: '100%', justifyContent: 'space-between' }}>
+                <StyledFont style={{ color: '#979ABE' }}>Borrow Capacity</StyledFont>
                 <StyledFlex style={{ gap: 8 }}>
                   <StyledFont style={{ color: '#FFF' }}>
                     {formatAmount({
@@ -812,12 +625,8 @@ const CompoundV3Detail = (props: any) => {
                   {/* <StyledFont style={{ color: "#979ABE" }}>USDC</StyledFont> */}
                 </StyledFlex>
               </StyledFlex>
-              <StyledFlex
-                style={{ width: '100%', justifyContent: 'space-between' }}
-              >
-                <StyledFont style={{ color: '#979ABE' }}>
-                  Available to Borrow
-                </StyledFont>
+              <StyledFlex style={{ width: '100%', justifyContent: 'space-between' }}>
+                <StyledFont style={{ color: '#979ABE' }}>Available to Borrow</StyledFont>
                 <StyledFlex style={{ gap: 8 }}>
                   <StyledFont style={{ color: '#FFF' }}>
                     {formatAmount({
@@ -840,12 +649,8 @@ const CompoundV3Detail = (props: any) => {
               padding: 20
             }}
           >
-            <StyledFlex
-              style={{ marginBottom: 20, justifyContent: 'space-between' }}
-            >
-              <StyledFont
-                style={{ color: '#FFF', fontSize: 18, fontWeight: 600 }}
-              >
+            <StyledFlex style={{ marginBottom: 20, justifyContent: 'space-between' }}>
+              <StyledFont style={{ color: '#FFF', fontSize: 18, fontWeight: 600 }}>
                 {state.actions.length} Pending Actions
               </StyledFont>
               <StyledFont
@@ -885,11 +690,7 @@ const CompoundV3Detail = (props: any) => {
                   }}
                 >
                   <StyledFlex style={{ gap: 14 }}>
-                    <CompoundV3Asset
-                      size="small"
-                      icon={action.asset.icon}
-                      curChain={curChain}
-                    />
+                    <CompoundV3Asset size="small" icon={action.asset.icon} curChain={curChain} />
                     <StyledFont style={{ color: '#FFF' }}>
                       {action.type} {action.asset.symbol}
                     </StyledFont>
@@ -909,9 +710,7 @@ const CompoundV3Detail = (props: any) => {
                       </StyledFont>
                       <StyledFont style={{ color: '#979ABE', fontSize: 12 }}>
                         {formatAmount({
-                          amount: Big(action.amount)
-                            .mul(action.asset.price)
-                            .toString(),
+                          amount: Big(action.amount).mul(action.asset.price).toString(),
                           prev: '$'
                         })}
                       </StyledFont>
@@ -929,13 +728,7 @@ const CompoundV3Detail = (props: any) => {
                         });
                       }}
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="12"
-                        height="12"
-                        viewBox="0 0 12 12"
-                        fill="none"
-                      >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
                         <path
                           d="M7.73284 6.00004L11.7359 1.99701C12.0368 1.696 12.0882 1.2593 11.8507 1.0219L10.9779 0.14909C10.7404 -0.0884124 10.3043 -0.0363122 10.0028 0.264491L6.00013 4.26743L1.99719 0.264591C1.69619 -0.036712 1.25948 -0.0884125 1.02198 0.14939L0.149174 1.0223C-0.0882277 1.2594 -0.0368271 1.6961 0.264576 1.99711L4.26761 6.00004L0.264576 10.0033C-0.0363271 10.3041 -0.0884277 10.7405 0.149174 10.978L1.02198 11.8509C1.25948 12.0884 1.69619 12.0369 1.99719 11.736L6.00033 7.73276L10.0029 11.7354C10.3044 12.037 10.7405 12.0884 10.978 11.8509L11.8508 10.978C12.0882 10.7405 12.0368 10.3041 11.736 10.0029L7.73284 6.00004Z"
                           fill="#979ABE"
@@ -961,9 +754,7 @@ const CompoundV3Detail = (props: any) => {
                       <Loading size={16} />
                     </div>
                   )}
-                  {state.loading
-                    ? `${state.actions.length} Pending Transactions`
-                    : ' Submit Transactions'}
+                  {state.loading ? `${state.actions.length} Pending Transactions` : ' Submit Transactions'}
                 </StyledButton>
               </StyledFlex>
             </StyledFlex>
@@ -979,7 +770,7 @@ const CompoundV3Detail = (props: any) => {
           availableToBorrow={state.availableToBorrow}
           borrowApr={state.borrowApr}
           supplyApr={state.supplyApr}
-          cometAddress={state.address}
+          cometAddress={data?.baseToken?.address}
           account={account}
           toast={toast}
           addable={state.addable}
@@ -993,110 +784,104 @@ const CompoundV3Detail = (props: any) => {
           chainId={curChain.chainId}
         />
       )}
-      {
-        Handler && (
-          <Handler
-            provider={provider}
-            {...dexConfig}
-            chainId={chainId}
-            actions={state.actions}
-            update={state.loading}
-            comet={data}
-            wethAddress={wethAddress}
-            account={account}
-            curPool={curPool}
-            onCancel={() => {
+      {Handler && (
+        <Handler
+          provider={provider}
+          {...dexConfig}
+          chainId={chainId}
+          actions={state.actions}
+          update={state.loading}
+          comet={data}
+          wethAddress={wethAddress}
+          account={account}
+          curPool={curPool}
+          onCancel={() => {
+            updateState({
+              loading: false
+            });
+          }}
+          onLoad={(data: any) => {
+            console.log('estimate gas', data);
+            if (!data.gas) {
               updateState({
                 loading: false
               });
-            }}
-            onLoad={(data: any) => {
-              console.log('estimate gas', data);
-              if (!data.gas) {
-                updateState({
-                  loading: false
+              toast?.fail({ title: 'Estimate gas error' });
+              return;
+            }
+            let toastId = toast?.loading({
+              title: `Confirming...`
+            });
+            provider
+              .getSigner()
+              .sendTransaction(data.unsignedTx)
+              .then((tx: any) => {
+                toast?.dismiss(toastId);
+                toastId = toast?.loading({
+                  title: `Pending...`
                 });
-                toast?.fail({ title: 'Estimate gas error' });
-                return;
-              }
-              let toastId = toast?.loading({
-                title: `Confirming...`
-              });
-              provider
-                .getSigner()
-                .sendTransaction(data.unsignedTx)
-                .then((tx: any) => {
-                  toast?.dismiss(toastId);
-                  toastId = toast?.loading({
-                    title: `Pending...`
-                  });
-                  tx.wait()
-                    .then((res: any) => {
-                      const { status, transactionHash } = res;
-                      const _actions: any = [];
-                      state.actions.forEach((action: any, i: number) => {
-                        _actions.push({
-                          amount: action.amount,
-                          type: action.type,
-                          tokenSymbol: action.asset.symbol,
-                          tokenAddress: action.asset.address,
-                          tokenPriceKey: action.asset.priceKey || ''
-                        });
-                      });
-                      addAction?.({
-                        type: 'Lending',
-                        template: dexConfig.name,
-                        add: false,
-                        status,
-                        transactionHash,
-                        extra_data: { lending_actions: _actions }
-                      });
-                      if (status === 1) {
-                        updateInfo();
-                        toast?.dismiss(toastId);
-                        toast?.success({
-                          title: `Request successed!`,
-                          tx: transactionHash,
-                          chainId: curChain.chainId
-                        });
-                        updateState({
-                          loading: false,
-                          actions: []
-                        });
-                      } else {
-                        throw new Error();
-                      }
-                    })
-                    .catch((err: any) => {
-                      toast?.dismiss(toastId);
-                      toast?.fail({
-                        title: 'Request Failed!'
-                      });
-                      updateState({
-                        loading: false
+                tx.wait()
+                  .then((res: any) => {
+                    const { status, transactionHash } = res;
+                    const _actions: any = [];
+                    state.actions.forEach((action: any, i: number) => {
+                      _actions.push({
+                        amount: action.amount,
+                        type: action.type,
+                        tokenSymbol: action.asset.symbol,
+                        tokenAddress: action.asset.address,
+                        tokenPriceKey: action.asset.priceKey || ''
                       });
                     });
-                })
-                .catch((err: any) => {
-                  toast?.dismiss(toastId);
-                  toast?.fail({
-                    title: 'Request Failed!',
-                    text: err?.message?.includes('user rejected transaction')
-                      ? 'User rejected transaction'
-                      : ''
+                    addAction?.({
+                      type: 'Lending',
+                      template: dexConfig.name,
+                      add: false,
+                      status,
+                      transactionHash,
+                      extra_data: { lending_actions: _actions }
+                    });
+                    if (status === 1) {
+                      updateInfo();
+                      toast?.dismiss(toastId);
+                      toast?.success({
+                        title: `Request successed!`,
+                        tx: transactionHash,
+                        chainId: curChain.chainId
+                      });
+                      updateState({
+                        loading: false,
+                        actions: []
+                      });
+                    } else {
+                      throw new Error();
+                    }
+                  })
+                  .catch((err: any) => {
+                    toast?.dismiss(toastId);
+                    toast?.fail({
+                      title: 'Request Failed!'
+                    });
+                    updateState({
+                      loading: false
+                    });
                   });
-                  updateState({ loading: false });
+              })
+              .catch((err: any) => {
+                toast?.dismiss(toastId);
+                toast?.fail({
+                  title: 'Request Failed!',
+                  text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ''
                 });
-            }}
-          />
-        )
-      }
+                updateState({ loading: false });
+              });
+          }}
+        />
+      )}
     </StyledContainer>
   );
-
 };
 
 export default CompoundV3Detail;
 
-export interface Props {
-}
+export interface Props {}
