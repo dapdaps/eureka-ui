@@ -3,7 +3,7 @@ import Tooltip from '@/components/TitleTooltip';
 import ChainSelector from './ChainSelector';
 import { StyledContainer, StyledTitle } from './styles';
 
-export default function Header() {
+export default function Header({ onLoadChain }: any) {
   return (
     <>
       <StyledContainer>
@@ -24,7 +24,7 @@ export default function Header() {
           <Tooltip content="Super Swap aggregates 75+ DEXes for best-in-class rates, providing one-click access to deep liquidity pools. Each swap on DapDap helps to earn you medals, turning your trades into achievements! Enjoy smart pathfinding for complex token pairs and gas-optimized transactions across chains. Wap smarter, not harder." />
         </StyledTitle>
       </StyledContainer>
-      <ChainSelector />
+      <ChainSelector onLoadChain={onLoadChain} />
     </>
   );
 }

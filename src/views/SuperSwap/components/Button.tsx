@@ -54,7 +54,7 @@ const getButtonImpactProps = (trade: any) => {
   };
 };
 
-const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
+const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade, currentChain }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
@@ -78,7 +78,7 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     );
   }
 
-  if (!networks[chainId]) {
+  if (!networks[chainId] || currentChain.chain_id !== chainId) {
     return (
       <BaseButton
         onClick={() => {

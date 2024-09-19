@@ -28,6 +28,7 @@ import {
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
+  const [currentChain, setCurrentChain] = useState<any>({});
   const [updater, setUpdater] = useState(1);
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState<string>('');
   const [inputCurrency, setInputCurrency] = useState<Token>();
@@ -52,7 +53,7 @@ export default function SuperSwap() {
     onSwap,
     setTrade
   } = useTrade({
-    chainId,
+    chainId: currentChain?.chain_id,
     onSuccess() {
       setUpdater(Date.now());
       setInputCurrencyAmount('');
@@ -140,7 +141,11 @@ export default function SuperSwap() {
   return (
     <StyledContainer>
       <StyledContent>
-        <Header />
+        <Header
+          onLoadChain={(chain: any) => {
+            setCurrentChain(chain);
+          }}
+        />
         <StyledInputs>
           <InputCard
             title="You pay"
@@ -193,6 +198,7 @@ export default function SuperSwap() {
           loading={loading}
           onClick={onSwap}
           disabled={!trade?.txn}
+          currentChain={currentChain}
         />
 
         {trade && (
