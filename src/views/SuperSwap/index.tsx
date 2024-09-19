@@ -51,7 +51,8 @@ export default function SuperSwap() {
     onQuoter,
     onSelectMarket,
     onSwap,
-    setTrade
+    setTrade,
+    onUpdateTxn
   } = useTrade({
     chainId: currentChain?.chain_id,
     onSuccess() {
@@ -199,7 +200,9 @@ export default function SuperSwap() {
           onClick={onSwap}
           disabled={!trade?.txn}
           currentChain={currentChain}
-          onRefresh={runQuoter}
+          onRefresh={() => {
+            onUpdateTxn(trade);
+          }}
         />
 
         {trade && (

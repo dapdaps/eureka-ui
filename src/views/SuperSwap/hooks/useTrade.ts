@@ -11,7 +11,7 @@ import { useSettingsStore } from '@/stores/settings';
 import type { Token } from '@/types';
 
 import getAggregatorTokens from '../utils/getAggregatorTokens';
-import { getAggregatorsTx, getDappTx, getWrapTx } from '../utils/getTxs';
+import { getAggregatorsTx, getDappTx, getWrapTx, updateDappTx } from '../utils/getTxs';
 import { useUpdateBalanceStore } from './useUpdateBalanceStore';
 
 export default function useTrade({ chainId }: any) {
@@ -230,6 +230,27 @@ export default function useTrade({ chainId }: any) {
     }
   }, [account, provider, trade]);
 
+  const onUpdateTxn = async (_trade: any) => {
+    const rawBalance = await provider.getBalance(account);
+    const gasPrice = await provider.getGasPrice();
+    setLoading(true);
+    updateDappTx({
+      trade: _trade,
+      slippage,
+      account,
+      rawBalance,
+      gasPrice,
+      prices,
+      onSuccess: (record: any) => {
+        setTrade(record);
+        setLoading(false);
+      },
+      onError: () => {
+        setLoading(false);
+      }
+    });
+  };
+
   const onSelectMarket = async (market: any) => {
     setTrade(market);
   };
@@ -238,5 +259,17 @@ export default function useTrade({ chainId }: any) {
     if (chainId) getTokens();
   }, [chainId]);
 
-  return { tokens, tokensLoading, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade };
+  return {
+    tokens,
+    tokensLoading,
+    loading,
+    markets,
+    trade,
+    bestTrade,
+    onQuoter,
+    onSelectMarket,
+    onSwap,
+    setTrade,
+    onUpdateTxn
+  };
 }

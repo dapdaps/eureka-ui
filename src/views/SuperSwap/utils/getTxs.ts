@@ -97,7 +97,7 @@ export const getDappTx = async ({
             outputCurrency,
             inputCurrencyAmount
           });
-          return { ..._trade, name: item.template, logo: dexs[item.template].logo };
+          return { ..._trade, name: item.template, logo: dexs[item.template].logo, from: 'DapDap' };
         })
     );
   } catch (err) {
@@ -239,6 +239,57 @@ export const getAggregatorsTx = async ({
     }
   } catch (err) {
     console.log('aggregator error', err);
+    onError?.();
+  }
+};
+
+export const updateDappTx = async ({
+  trade,
+  slippage,
+  account,
+  rawBalance,
+  gasPrice,
+  prices,
+  onSuccess,
+  onError
+}: any) => {
+  try {
+    const { inputCurrency, outputCurrency, inputCurrencyAmount, name } = trade;
+
+    const response = await fetch(process.env.NEXT_PUBLIC_API + '/quoter', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        params: JSON.stringify({
+          template: name,
+          inputCurrency,
+          outputCurrency,
+          inputAmount: inputCurrencyAmount,
+          slippage: slippage / 100 || 0.005,
+          account
+        })
+      })
+    });
+    const result = await response.json();
+    const data = result.data;
+    if (!data) throw Error('');
+
+    onSuccess({
+      ...trade,
+      ...formatTrade({
+        market: data,
+        rawBalance,
+        gasPrice,
+        prices,
+        inputCurrency,
+        outputCurrency,
+        inputCurrencyAmount
+      })
+    });
+  } catch (err) {
+    console.log('dapdap error', err);
     onError?.();
   }
 };
