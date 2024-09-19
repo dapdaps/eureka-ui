@@ -1,4 +1,5 @@
 import cls from 'classnames';
+import { useMemo } from 'react';
 
 import type { INotification } from '@/components/navigation/desktop/Notification';
 import { formatTimeAgo } from '@/utils/format-time';
@@ -16,6 +17,16 @@ export default function Notification({
   variant?: 'default' | 'list';
   onClick?: () => void;
 }) {
+  const link = useMemo(() => {
+    if (data?.link) {
+      return data?.link;
+    } else {
+      const array = ['New achievement!', 'PTS convert to Gem'];
+      if (array.indexOf(data?.title) > -1) {
+        return '/profile?target=reward';
+      }
+    }
+  }, [data]);
   return (
     <div className={cls(styles.NotificationComWrapper, className)} onClick={onClick}>
       <img className={styles.icon} src={data.logo} />
@@ -34,11 +45,11 @@ export default function Notification({
               {!data.status && <div className={styles.dot}></div>}
               <div className={styles.timeText}>{formatTimeAgo(data.created_at)}</div>
             </div>
-            {data?.link && (
+            {link && (
               <div
                 className={styles.button}
                 onClick={() => {
-                  window.open(data?.link);
+                  window.open(link);
                 }}
               >
                 More
@@ -56,11 +67,11 @@ export default function Notification({
             </div>
           </div>
           <div className={styles.timeAndButton} style={{ flexDirection: 'row', gap: 34 }}>
-            {data?.link && (
+            {link && (
               <div
                 className={styles.button}
                 onClick={() => {
-                  window.open(data?.link);
+                  window.open(link);
                 }}
               >
                 More

@@ -39,11 +39,17 @@ export default function useNetworks({ sort, mode, rewardNow, airdrop }: any) {
     }
   };
   const queryIsTop = (data: Network[]) => {
-    data = data.sort(
+    // @ts-ignore
+    const sortData = _.cloneDeep(data).sort(
       (prev: Network, next: Network) => Number(next.trading_volume_general) - Number(prev.trading_volume_general)
     );
-    data[0] && (data[0].isTop = true);
-    data[1] && (data[1].isTop = true);
+    data.forEach((item) => {
+      if (item?.chain_id === sortData[0]?.chain_id || item?.chain_id === sortData[1]?.chain_id) {
+        item.isTop = true;
+      } else {
+        item.isTop = false;
+      }
+    });
     return data;
   };
 
@@ -90,7 +96,6 @@ export default function useNetworks({ sort, mode, rewardNow, airdrop }: any) {
         _l1NetworkList.push(network);
         continue;
       }
-      console.log('===network', network);
       _l2NetworkList.push(network);
     }
     if (advertise.length > 0 && mode === 'card') {
