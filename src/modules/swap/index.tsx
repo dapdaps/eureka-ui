@@ -210,6 +210,7 @@ export default function SwapDapp({
               loading={loading}
               onClick={onSwap}
               disabled={trade?.noPair}
+              onRefresh={runQuoter}
             />
           </StyledPanel>
         </div>
