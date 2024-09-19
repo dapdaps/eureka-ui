@@ -31,18 +31,20 @@ export default function useNetworks({ sort, mode, rewardNow, airdrop }: any) {
       let data: Network[] = resultNetwork.data || [];
       data = data.filter((it) => InConfigNetworkIds.includes(it.id + ''));
       // find trading_volume and participants max
-      const maxVolume = Math.max(...data.map((item: Network) => Big(item.trading_volume_general || 0).toNumber()));
-      const maxParticipants = Math.max(...data.map((item: Network) => item.participants));
-      data.forEach((item) => {
-        item.isTop = Big(item.trading_volume_general || 0).toNumber() === maxVolume;
-        item.isHot = maxParticipants === item.participants;
-      });
       setNetworkList(data);
       return data;
     } catch (error) {
       console.error('Error fetching resultNetwork data:', error);
       return [];
     }
+  };
+  const queryIsTop = (data: Network[]) => {
+    data = data.sort(
+      (prev: Network, next: Network) => Number(next.trading_volume_general) - Number(prev.trading_volume_general)
+    );
+    data[0] && (data[0].isTop = true);
+    data[1] && (data[1].isTop = true);
+    return data;
   };
 
   const fetchAdvertiseData = async () => {
@@ -88,14 +90,14 @@ export default function useNetworks({ sort, mode, rewardNow, airdrop }: any) {
         _l1NetworkList.push(network);
         continue;
       }
+      console.log('===network', network);
       _l2NetworkList.push(network);
     }
     if (advertise.length > 0 && mode === 'card') {
       _l2NetworkList.splice(5, 0, { isAdvertise: true, advertise } as any);
     }
-
     setL1NetworkList(_l1NetworkList);
-    setL2NetworkList(_l2NetworkList);
+    setL2NetworkList(queryIsTop(_l2NetworkList));
   };
 
   useEffect(() => {
