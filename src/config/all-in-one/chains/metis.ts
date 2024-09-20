@@ -30,11 +30,11 @@ export default {
       tab: 'Liquidity',
       path: 'bluebiu.near/widget/Liquidity.ALL',
       description: 'Seamlessly adding LP to any pair'
-    },
-    Lending: {
-      tab: 'Lending',
-      path: 'bluebiu.near/widget/Metis.Lending',
-      description: 'Maximize asset utilization across Metis markets'
     }
+    // Lending: {
+    //   tab: 'Lending',
+    //   path: 'bluebiu.near/widget/Metis.Lending',
+    //   description: 'Maximize asset utilization across Metis markets'
+    // }
   }
 };
