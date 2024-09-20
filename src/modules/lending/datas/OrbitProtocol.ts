@@ -8,21 +8,21 @@ const OTOKEN_ABI = [
     name: 'totalSupply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'totalSupply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'exchangeRateCurrent',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -31,7 +31,7 @@ const OTOKEN_ABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -40,21 +40,21 @@ const OTOKEN_ABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'supplyRatePerBlock',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'borrowRatePerBlock',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
@@ -63,11 +63,11 @@ const OTOKEN_ABI = [
       {
         internalType: 'uint256',
         name: '',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   //
   {
@@ -75,36 +75,36 @@ const OTOKEN_ABI = [
     name: 'balanceOfUnderlying',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'borrowBalanceStored',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'getCash',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'totalBorrows',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'totalReserves',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const ERC20_ABI = [
   {
@@ -112,20 +112,20 @@ const ERC20_ABI = [
     inputs: [
       {
         name: '_owner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'balanceOf',
     outputs: [
       {
         name: 'balance',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const SPACE_ABI = [
   {
@@ -133,17 +133,15 @@ const SPACE_ABI = [
     name: 'compSupplySpeeds',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'getAssetsIn',
-    outputs: [
-      { internalType: 'contract OToken[]', name: '', type: 'address[]' },
-    ],
+    outputs: [{ internalType: 'contract OToken[]', name: '', type: 'address[]' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const OrbitProtocolData = (props: any) => {
@@ -164,7 +162,7 @@ const OrbitProtocolData = (props: any) => {
     MOON_ADDRESS,
     prices,
     curPool,
-    provider,
+    provider
   } = props;
 
   const { formatUnits } = ethers.utils;
@@ -217,16 +215,10 @@ const OrbitProtocolData = (props: any) => {
           underlyingPrice = prices[market.symbol] || 1;
         }
 
-        userTotalSupplyUsd = userTotalSupplyUsd.plus(
-          Big(market.userSupply).mul(underlyingPrice),
-        );
-        userTotalBorrowUsd = userTotalBorrowUsd.plus(
-          Big(market.userBorrow).mul(underlyingPrice),
-        );
+        userTotalSupplyUsd = userTotalSupplyUsd.plus(Big(market.userSupply).mul(underlyingPrice));
+        userTotalBorrowUsd = userTotalBorrowUsd.plus(Big(market.userBorrow).mul(underlyingPrice));
 
-        const _collaterd = market.isCollateral
-          ? Big(market.userSupply).mul(underlyingPrice)
-          : 0;
+        const _collaterd = market.userMerberShip ? Big(market.userSupply).mul(underlyingPrice) : 0;
 
         totalCollateralUsd = totalCollateralUsd.plus(_collaterd);
 
@@ -247,28 +239,23 @@ const OrbitProtocolData = (props: any) => {
           supplyApy: supplyApy.toFixed(2) + '%',
           borrowApy: borrowApy.toFixed(2) + '%',
           poolSize: _poolSize,
-          dapp: name,
+          dapp: name
         };
       });
       // orbit ltv=0.75
-      const _borrowLimitUsd = totalCollateralUsd
-        .mul(0.75)
-        .minus(userTotalBorrowUsd);
+      const _borrowLimitUsd = totalCollateralUsd.mul(0.75).minus(userTotalBorrowUsd);
 
       onLoad({
         markets,
         userTotalSupplyUsd: userTotalSupplyUsd.toString(),
         userTotalBorrowUsd: userTotalBorrowUsd.toString(),
         totalCollateralUsd: totalCollateralUsd.toString(),
-        borrowLimitUsd: _borrowLimitUsd.gt(0) ? _borrowLimitUsd.toString() : 0,
+        borrowLimitUsd: _borrowLimitUsd.gt(0) ? _borrowLimitUsd.toString() : 0
       });
     };
     const getUnderlyPrice = () => {
       Object.values(markets).forEach((market: any) => {
-        _underlyPrice[market.address] =
-          prices[
-          market.underlyingToken.priceKey || market.underlyingToken.symbol
-            ] || '1';
+        _underlyPrice[market.address] = prices[market.underlyingToken.priceKey || market.underlyingToken.symbol] || '1';
       });
       count++;
       formatedData('getUnderlyPrice');
@@ -278,45 +265,34 @@ const OrbitProtocolData = (props: any) => {
       let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
-          if (market.underlyingToken.address === 'native')
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== 'native'
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           ...market.underlyingToken,
-          oTokenAddress: market.address,
+          oTokenAddress: market.address
         }));
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyingBalance = {};
           for (let i = 0, len = res.length; i < len; i++) {
-            _underlyingBalance[underlyingTokens[i].oTokenAddress] = (res[i] && res[i][0])
-              ? ethers.utils.formatUnits(
-                res[i][0]._hex,
-                underlyingTokens[i].decimals,
-              )
-              : '0';
+            _underlyingBalance[underlyingTokens[i].oTokenAddress] =
+              res[i] && res[i][0] ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals) : '0';
           }
           if (nativeOToken) {
             provider.getBalance(account).then((rawBalance: any) => {
-              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18,
-              );
+              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('getWalletBalance');
             });
@@ -335,14 +311,14 @@ const OrbitProtocolData = (props: any) => {
     const getBorrowRatePerBlock = () => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
-        name: 'borrowRatePerBlock',
+        name: 'borrowRatePerBlock'
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getBorrowRatePerBlock_res:', res);
@@ -350,12 +326,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                borrowRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0,
+                borrowRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                borrowRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0,
+                borrowRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0
               };
             }
           });
@@ -370,14 +346,14 @@ const OrbitProtocolData = (props: any) => {
     const getSupplyRatePerBlock = () => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
-        name: 'supplyRatePerBlock',
+        name: 'supplyRatePerBlock'
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getSupplyRatePerBlock_res:', res);
@@ -385,12 +361,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                supplyRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0,
+                supplyRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                supplyRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0,
+                supplyRatePerBlock: res[index] ? formatUnits(res[index][0]) : 0
               };
             }
           });
@@ -406,14 +382,14 @@ const OrbitProtocolData = (props: any) => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
         name: 'balanceOfUnderlying',
-        params: [account],
+        params: [account]
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getUserSupply_res:', res, _cTokensData);
@@ -421,16 +397,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                userSupply: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                userSupply: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                userSupply: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                userSupply: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             }
           });
@@ -445,14 +417,14 @@ const OrbitProtocolData = (props: any) => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
         name: 'borrowBalanceStored',
-        params: [account],
+        params: [account]
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getUserBorrows_res:', res, _cTokensData);
@@ -460,16 +432,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                userBorrow: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                userBorrow: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                userBorrow: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                userBorrow: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             }
           });
@@ -481,11 +449,7 @@ const OrbitProtocolData = (props: any) => {
         });
     };
     const getCollateralStatus = () => {
-      const contract = new ethers.Contract(
-        spaceAddress,
-        SPACE_ABI,
-        provider,
-      );
+      const contract = new ethers.Contract(spaceAddress, SPACE_ABI, provider);
       contract
         .getAssetsIn(account)
         .then((res: any) => {
@@ -493,12 +457,11 @@ const OrbitProtocolData = (props: any) => {
           if (Array.isArray(res) && res.length) {
             res.forEach((addr) => {
               const _market: any = oTokens.find(
-                (item: any) =>
-                  item.address.toLocaleLowerCase() === addr.toLocaleLowerCase(),
+                (item: any) => item.address.toLocaleLowerCase() === addr.toLocaleLowerCase()
               );
 
               if (_market) {
-                _market.isCollateral = true;
+                _market.userMerberShip = true;
               }
             });
 
@@ -506,12 +469,12 @@ const OrbitProtocolData = (props: any) => {
               if (_cTokensData[oToken.address]) {
                 _cTokensData[oToken.address] = {
                   ..._cTokensData[oToken.address],
-                  isCollateral: oToken.isCollateral,
+                  userMerberShip: oToken.userMerberShip
                 };
               } else {
                 _cTokensData[oToken.address] = {
                   ...oToken,
-                  isCollateral: oToken.isCollateral,
+                  userMerberShip: oToken.userMerberShip
                 };
               }
             });
@@ -520,12 +483,12 @@ const OrbitProtocolData = (props: any) => {
               if (_cTokensData[oToken.address]) {
                 _cTokensData[oToken.address] = {
                   ..._cTokensData[oToken.address],
-                  isCollateral: false,
+                  userMerberShip: false
                 };
               } else {
                 _cTokensData[oToken.address] = {
                   ...oToken,
-                  isCollateral: false,
+                  userMerberShip: false
                 };
               }
             });
@@ -541,14 +504,14 @@ const OrbitProtocolData = (props: any) => {
     const getPoolCash = () => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
-        name: 'getCash',
+        name: 'getCash'
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getPoolCash_res:', res, _cTokensData);
@@ -556,16 +519,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                cash: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                cash: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                cash: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                cash: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             }
           });
@@ -579,14 +538,14 @@ const OrbitProtocolData = (props: any) => {
     const getTotalBorrows = () => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
-        name: 'totalBorrows',
+        name: 'totalBorrows'
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('totalBorrows_res:', res, _cTokensData);
@@ -594,16 +553,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                totalBorrows: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                totalBorrows: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                totalBorrows: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                totalBorrows: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             }
           });
@@ -617,14 +572,14 @@ const OrbitProtocolData = (props: any) => {
     const getTotalReserves = () => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
-        name: 'totalReserves',
+        name: 'totalReserves'
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('totalReserves_res:', res, _cTokensData);
@@ -632,16 +587,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                totalReserves: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                totalReserves: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                totalReserves: res[index]
-                  ? formatUnits(res[index][0], oToken.decimals)
-                  : 0,
+                totalReserves: res[index] ? formatUnits(res[index][0], oToken.decimals) : 0
               };
             }
           });
@@ -656,14 +607,14 @@ const OrbitProtocolData = (props: any) => {
       const calls = oTokens.map((oToken: any) => ({
         address: spaceAddress,
         name: 'compSupplySpeeds',
-        params: [oToken.address],
+        params: [oToken.address]
       }));
       multicall({
         abi: SPACE_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getCompSpeed_res:', res, _cTokensData);
@@ -671,12 +622,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                compSupplySpeed: res[index],
+                compSupplySpeed: res[index]
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                compSupplySpeed: res[index],
+                compSupplySpeed: res[index]
               };
             }
           });
@@ -691,14 +642,14 @@ const OrbitProtocolData = (props: any) => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getOTokenBalance_res:', res, _cTokensData);
@@ -710,12 +661,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                oTokenBalance,
+                oTokenBalance
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                oTokenBalance,
+                oTokenBalance
               };
             }
           });
@@ -729,14 +680,14 @@ const OrbitProtocolData = (props: any) => {
     const getOTokenTotalSupply = () => {
       const calls = oTokens.map((oToken: any) => ({
         address: oToken.address,
-        name: 'totalSupply',
+        name: 'totalSupply'
       }));
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           console.log('getOTokenTotalSupply_res:', res, _cTokensData);
@@ -744,12 +695,12 @@ const OrbitProtocolData = (props: any) => {
             if (_cTokensData[oToken.address]) {
               _cTokensData[oToken.address] = {
                 ..._cTokensData[oToken.address],
-                oTokenTotalSupply: res[index],
+                oTokenTotalSupply: res[index]
               };
             } else {
               _cTokensData[oToken.address] = {
                 ...oToken,
-                oTokenTotalSupply: res[index],
+                oTokenTotalSupply: res[index]
               };
             }
           });

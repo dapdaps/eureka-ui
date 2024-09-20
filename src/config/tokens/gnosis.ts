@@ -242,5 +242,13 @@ export const gnosis: { [key: string]: Token } = {
     symbol: 'LINK',
     name: 'ChainLink Token on xDai',
     icon: 'https://ipfs.near.social/ipfs/bafkreidrq7qk3d6epwaxobq4gk7yowljr5tnslxwrsbd7vnw3srkt7ok3u'
+  },
+  'usdc.e': {
+    chainId: CHAIN_ID,
+    address: '0x2a22f9c3b484c3629090feed35f17ff8f88f76f0',
+    name: 'USDC.e',
+    symbol: 'USDC.e',
+    decimals: 6,
+    icon: 'https://ipfs.near.social/ipfs/bafkreie4jihoa76mgyzxhw2yrapihzu2qhkjz6m7u4opoxjebzg6zc2lla'
   }
 };
