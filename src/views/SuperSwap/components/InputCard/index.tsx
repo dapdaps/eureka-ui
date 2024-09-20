@@ -22,7 +22,7 @@ import {
   StyledTradeBalance,
   StyledTradeBlock,
   StyledTradeContent,
-  StyledTradeInputContainer,
+  StyledTradeInputContainer
 } from './styles';
 
 type Props = {
@@ -49,7 +49,7 @@ const Currency = ({
   disabled,
   isFrom,
   loading,
-  style = {},
+  style = {}
 }: Props) => {
   const [isFocus, setIsFocus] = useState(false);
   const prices = usePriceStore((store) => store.price);
@@ -76,7 +76,7 @@ const Currency = ({
       </StyledHeader>
       <StyledTradeContent
         style={{
-          backgroundColor: isFocus ? '#20212D' : 'transparent',
+          backgroundColor: isFocus ? '#20212D' : 'transparent'
         }}
       >
         <StyledTradeInputContainer>
@@ -94,7 +94,9 @@ const Currency = ({
             }}
           />
           <StyledSelectToken onClick={onTokenSelect}>
-            {currency && <CurrencyIcon src={currency.icon} alt={currency.symbol} />}
+            {currency && (
+              <CurrencyIcon src={currency.icon || '/images/tokens/default_icon.png'} alt={currency.symbol} />
+            )}
             <CurrencyTitle>{currency ? currency.symbol : 'Select a Token'}</CurrencyTitle>
             <div className={'arrow-icon'}>
               <ArrowIcon size={11.5} />
