@@ -90,11 +90,11 @@ export default function SuperSwap() {
 
       if (selectType === 'in') {
         _inputCurrency = token;
-        if (token.address === outputCurrency?.address) _outputCurrency = null;
+        if (token.address.toLowerCase() === outputCurrency?.address.toLowerCase()) _outputCurrency = null;
       }
       if (selectType === 'out') {
         _outputCurrency = token;
-        if (token.address === inputCurrency?.address) _inputCurrency = null;
+        if (token.address.toLowerCase() === inputCurrency?.address.toLowerCase()) _inputCurrency = null;
       }
 
       setInputCurrency(_inputCurrency);
@@ -209,7 +209,7 @@ export default function SuperSwap() {
           disabled={!trade?.txn}
           currentChain={currentChain}
           onRefresh={() => {
-            onUpdateTxn(trade);
+            if (!trade.txn) onUpdateTxn(trade);
           }}
         />
 

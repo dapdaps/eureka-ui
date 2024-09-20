@@ -85,11 +85,11 @@ export default function SwapDapp({
 
     if (selectType === 'in') {
       _inputCurrency = token;
-      if (token.address === outputCurrency?.address) _outputCurrency = null;
+      if (token.address.toLowerCase() === outputCurrency?.address.toLowerCase()) _outputCurrency = null;
     }
     if (selectType === 'out') {
       _outputCurrency = token;
-      if (token.address === inputCurrency?.address) _inputCurrency = null;
+      if (token.address.toLowerCase() === inputCurrency?.address.toLowerCase()) _inputCurrency = null;
     }
     if (!_inputCurrency || !_outputCurrency) setOutputCurrencyAmount('');
     setInputCurrency(_inputCurrency);
@@ -215,8 +215,10 @@ export default function SwapDapp({
               token={inputCurrency}
               loading={loading}
               onClick={onSwap}
-              disabled={trade?.noPair}
-              onRefresh={runQuoter}
+              disabled={trade?.noPair || !trade?.txn}
+              onRefresh={() => {
+                if (!trade?.txn) runQuoter();
+              }}
             />
           </StyledPanel>
         </div>
