@@ -197,7 +197,7 @@ const BorrowModal = (props: any) => {
 
   function borrowERC20(amount: string) {
     updateState({ loading: true });
-    const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI, provider);
+    const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI, provider.getSigner());
 
     provider
       .getSigner()
@@ -233,7 +233,10 @@ const BorrowModal = (props: any) => {
           })
           .catch(() => updateState({ loading: false }));
       })
-      .catch(() => updateState({ loading: false }));
+      .catch((err: any) => {
+        console.log('borrowERC20-err', err);
+        updateState({ loading: false });
+      });
   }
 
   function borrowETH(amount: string) {

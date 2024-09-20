@@ -1,9 +1,10 @@
 import { ethers } from 'ethers';
 
 const ZeroLandClaim = (props: any) => {
-  const { account, loading, provider, markets, rewardAddress, onSuccess, onError } = props;
+  const { account, loading, dapp, provider, markets, onSuccess, onError } = props;
 
-  if (!loading || !rewardAddress) return '';
+  if (!loading || !dapp.config.rewardAddress) return '';
+  console.log(dapp, 'dapp');
 
   const arr = markets
     .map((item: any) => [
@@ -15,7 +16,7 @@ const ZeroLandClaim = (props: any) => {
   const addrs = [...new Set(arr)];
 
   const claimProvider = new ethers.Contract(
-    rewardAddress,
+    dapp.config.incentivesProxy,
     [
       {
         inputs: [
@@ -35,6 +36,18 @@ const ZeroLandClaim = (props: any) => {
             type: 'uint256[]'
           }
         ],
+        stateMutability: 'nonpayable',
+        type: 'function'
+      },
+      {
+        inputs: [
+          { internalType: 'address[]', name: 'assets', type: 'address[]' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' },
+          { internalType: 'address', name: 'to', type: 'address' },
+          { internalType: 'address', name: 'reward', type: 'address' }
+        ],
+        name: 'claimRewards',
+        outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
         stateMutability: 'nonpayable',
         type: 'function'
       }
