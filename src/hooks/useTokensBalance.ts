@@ -24,6 +24,7 @@ export default function useTokensBalance(tokens: any) {
         if (token.address === 'native') hasNative = true;
         return token.address !== 'native';
       });
+
       const calls = tokensAddress.map((token: any) => ({
         address: token.address,
         name: 'balanceOf',
@@ -57,7 +58,7 @@ export default function useTokensBalance(tokens: any) {
       const [nativeBalance, ...rest] = await Promise.all(requests);
       const _balance: any = {};
       if (hasNative && nativeBalance) _balance.native = utils.formatUnits(nativeBalance, 18);
-      const results = flatten(rest);
+      const results = !hasNative ? flatten([nativeBalance, ...rest]) : flatten([...rest]);
       for (let i = 0; i < results.length; i++) {
         const token = tokensAddress[i];
         _balance[token.address] = utils.formatUnits(results[i]?.[0] || 0, token.decimals);
