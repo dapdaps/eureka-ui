@@ -8,10 +8,9 @@ import useAccount from './useAccount';
 import useConnectWallet from './useConnectWallet';
 type ChainParams = string | number | { chainId: string | number };
 
-
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum: any;
   }
 }
 
@@ -22,8 +21,6 @@ export default function useSwitchChain() {
   const { add: addChain } = useAddChain();
   const [currentChainId, setCurrentChainId] = useState<number | null>(null);
 
-
-  
   const toast = useToast();
 
   const switchChain = async (params: ChainParams, cb?: any) => {
@@ -38,17 +35,17 @@ export default function useSwitchChain() {
     try {
       const rawChainId = typeof params === 'object' ? params.chainId : params;
       let chainId: number;
-  
+
       if (typeof rawChainId === 'string' && rawChainId.toLowerCase().startsWith('0x')) {
-        chainId = parseInt(rawChainId, 16); 
+        chainId = parseInt(rawChainId, 16);
       } else {
         chainId = Number(rawChainId);
       }
-  
+
       if (isNaN(chainId) || chainId <= 0) {
         throw new Error('Invalid chainId');
       }
-  
+
       await addNetwork(chainId);
     } catch (error) {
       console.log(error, 'addNetwork-error');
@@ -61,7 +58,7 @@ export default function useSwitchChain() {
   const addNetwork = async (chainId: number) => {
     try {
       const addRes = await addChain({
-        chainId,
+        chainId
       });
 
       if (!addRes.success) {
@@ -69,14 +66,12 @@ export default function useSwitchChain() {
         return;
       }
       toast.success({
-        title: 'Switch successfully!',
+        title: 'Switch successfully!'
       });
     } catch (error) {
       console.log(error, '<=====addChain');
     }
   };
-
-
 
   useEffect(() => {
     const getCurrentChainId = async () => {
@@ -103,11 +98,7 @@ export default function useSwitchChain() {
     };
   }, []);
 
-  const currentChain = useMemo(
-    () => (currentChainId ? chains[currentChainId] : null),
-    [currentChainId],
-  );
-
+  const currentChain = useMemo(() => (currentChainId ? chains[currentChainId] : null), [currentChainId]);
 
   return { switching, switchChain, currentChain };
 }
