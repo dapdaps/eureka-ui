@@ -1,17 +1,13 @@
 import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
-import { useSetChain } from '@web3-onboard/react';
 import { motion } from 'framer-motion';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { overlay } from '@/components/animation';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
-import { chains } from '@/config/bridge';
-import useAddChain from '@/hooks/useAddChain';
 import useSortChains from '@/hooks/useSortChains';
 import useSwitchChain from '@/hooks/useSwitchChain';
-import useToast from '@/hooks/useToast';
 
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
@@ -132,12 +128,8 @@ const Chain = ({
 }) => {
 
   const { sortedChains } = useSortChains();
-  const [{ connectedChain, settingChain }] = useSetChain();
-  const { switchChain } = useSwitchChain()
-  const currentChain: any = useMemo(
-    () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
-    [connectedChain?.id],
-  );
+  const { switchChain, switching, currentChain } = useSwitchChain()
+
   const [showList, setShowList] = useState(false);
   const [showEmptyChainTips, setShowEmptyChainTips] = useState(false);
 
@@ -163,8 +155,8 @@ const Chain = ({
       }}
     >
       <StyledChain>
-        {currentChain && !settingChain && <ChainLogo src={currentChain.icon} />}
-        {!currentChain && !settingChain && (
+        {currentChain && !switching && <ChainLogo src={currentChain.icon} />}
+        {!currentChain && !switching && (
           <EmptyChainLogo
             onMouseEnter={() => {
               !showName && setShowEmptyChainTips(true);
@@ -195,9 +187,9 @@ const Chain = ({
             )}
           </EmptyChainLogo>
         )}
-        {settingChain && <Loading />}
+        {switching && <Loading />}
         {showName && (
-          <ChainName>{settingChain ? 'Request' : currentChain ? currentChain.chainName : 'Select Network'}</ChainName>
+          <ChainName>{switching ? 'Request' : currentChain ? currentChain.chainName : 'Select Network'}</ChainName>
         )}
       </StyledChain>
       <ArrowIconWrapper>

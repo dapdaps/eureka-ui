@@ -1,19 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
+import { chains } from '@/config/bridge';
 import useAddChain from '@/hooks/useAddChain';
 import useToast from '@/hooks/useToast';
 
 import useAccount from './useAccount';
 import useConnectWallet from './useConnectWallet';
-
 type ChainParams = string | number | { chainId: string | number };
 
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}
 
 export default function useSwitchChain() {
   const { account } = useAccount();
   const { onConnect } = useConnectWallet();
   const [switching, setSwitching] = useState(false);
   const { add: addChain } = useAddChain();
+  const [currentChainId, setCurrentChainId] = useState<number | null>(null);
+
+
+  
   const toast = useToast();
 
   const switchChain = async (params: ChainParams, cb?: any) => {
@@ -55,7 +65,7 @@ export default function useSwitchChain() {
       });
 
       if (!addRes.success) {
-        toast.fail('Failed to add network!');
+        toast.fail('Failed to switch network!');
         return;
       }
       toast.success({
@@ -66,5 +76,38 @@ export default function useSwitchChain() {
     }
   };
 
-  return { switching, switchChain };
+
+
+  useEffect(() => {
+    const getCurrentChainId = async () => {
+      try {
+        const chainId = await window.ethereum?.request({ method: 'eth_chainId' });
+        if (chainId) {
+          setCurrentChainId(Number(chainId));
+        }
+      } catch (error) {
+        console.error('get ID fail:', error);
+      }
+    };
+
+    getCurrentChainId();
+
+    const handleChainChanged = (chainId: string) => {
+      setCurrentChainId(Number(chainId));
+    };
+
+    window.ethereum.on('chainChanged', handleChainChanged);
+
+    return () => {
+      window.ethereum.removeListener('chainChanged', handleChainChanged);
+    };
+  }, []);
+
+  const currentChain = useMemo(
+    () => (currentChainId ? chains[currentChainId] : null),
+    [currentChainId],
+  );
+
+
+  return { switching, switchChain, currentChain };
 }
