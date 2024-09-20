@@ -74,7 +74,10 @@ export default function SuperSwap() {
   const mergedTokens = useMemo(
     () =>
       uniqBy(
-        [...((chainId && importTokens[chainId]) || []), ...tokens].map((token: any) => token.address.toLowerCase()),
+        [...((chainId && importTokens[chainId]) || []), ...tokens].map((token: any) => ({
+          ...token,
+          address: token.address.toLowerCase()
+        })),
         'address'
       ),
     [importTokens, tokens, chainId]
