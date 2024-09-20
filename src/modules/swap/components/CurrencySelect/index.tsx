@@ -57,10 +57,10 @@ export default function CurrencySelect({
         address: searchVal,
         callback(token: any) {
           setImportToken({
-            symbol: token[1],
+            symbol: token[1][0],
             address: searchVal,
-            decimals: token[2],
-            name: token[0],
+            decimals: token[2][0],
+            name: token[0][0],
             chainId
           });
         }
