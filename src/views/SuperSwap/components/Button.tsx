@@ -114,6 +114,10 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     return <BaseButton onClick={approve}>Approve {token?.symbol}</BaseButton>;
   }
 
+  if (trade && !trade.txn) {
+    return <BaseButton disabled>Estimate Gas Error</BaseButton>;
+  }
+
   return (
     <BaseButton onClick={onClick} disabled={disabled} color={color}>
       {text}

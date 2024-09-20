@@ -87,7 +87,7 @@ export const getDappTx = async ({
 
     onCallBack(
       data
-        .filter((item: any) => item.outputCurrencyAmount)
+        .filter((item: any) => Big(item.outputCurrencyAmount || 0).gt(0))
         .sort((a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount)
         .map((item: any) => {
           const _trade = formatTrade({
@@ -140,7 +140,11 @@ export const getAggregatorsTx = async ({
       const data = result?.data?.[0];
       if (!data) throw Error();
 
-      const dex = data.routerResult.quoteCompareList[0];
+      const dex =
+        data.routerResult.quoteCompareList[0] ||
+        data.routerResult.dexRouterList?.[0]?.subRouterList[0]?.dexProtocol?.[0];
+
+      if (!dex || Big(dex.amountOut || 0).eq(0)) throw Error();
       onCallBack(
         formatTrade({
           rawBalance,
