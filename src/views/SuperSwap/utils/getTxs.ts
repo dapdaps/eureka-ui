@@ -63,6 +63,8 @@ export const getDappTx = async ({
       }
     });
 
+    if (templates.length === 0) throw new Error();
+
     const response = await fetch(process.env.NEXT_PUBLIC_API + '/quoter', {
       method: 'POST',
       headers: {

@@ -27,7 +27,8 @@ export default async function getAggregatorTokens(chainId: number) {
     });
 
     const okxPrices = await getOKXPrices(tokens);
-    tokens = tokens.map((token: any) => ({ ...token, usd: okxPrices[token.address] }));
+
+    tokens = tokens.map((token: any) => ({ ...token, usd: okxPrices[token.address.toLowerCase()] }));
   } else {
     const result = await get(`/api/dex/okx?url=https://open-api.openocean.finance/v4/${chainId}/tokenList&method=GET`);
     tokens = result.data?.map((token: any) => {

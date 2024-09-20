@@ -22,8 +22,11 @@ export default async function getOKXPrices(tokens: any) {
   results.forEach((result: any) => {
     const data = result.data;
     data.forEach((token: any) => {
-      prices[token.tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee' ? 'native' : token.tokenAddress] =
-        token.price;
+      prices[
+        token.tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
+          ? 'native'
+          : token.tokenAddress.toLowerCase()
+      ] = token.price;
     });
   });
 
