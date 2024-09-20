@@ -72,7 +72,8 @@ export default memo(function LPData(props) {
       // if (count < 4) return;
       count = 0;
 
-      for (let i = 0; i < pairs.length; i++) {
+      console.log('===pairs', pairs);
+      for (let i = 0; i < pairs?.length; i++) {
         const _addr = pairs[i].vaultAddress.toLocaleLowerCase();
 
         const { token0, token1 } = _pairsDataRes[_addr] ? _pairsDataRes[_addr] : {};
@@ -105,12 +106,14 @@ export default memo(function LPData(props) {
           _apr = token0.shareTokenApr;
         }
 
+        console.log('====_apr', _apr);
+
         pairs[i].APR = Big(_apr).div(10000).toFixed(2, 0);
         pairs[i].AUM = _aum;
 
-        const _totalSupply = _totalSupplyRes[i][0].toString();
-        const _totalAmount0 = _underlyingAssetsRes[i][0].toString();
-        const _totalAmount1 = _underlyingAssetsRes[i][1].toString();
+        const _totalSupply = _totalSupplyRes[i] ? _totalSupplyRes[i][0].toString() : '0';
+        const _totalAmount0 = _underlyingAssetsRes[i] ? _underlyingAssetsRes[i][0].toString() : '0';
+        const _totalAmount1 = _underlyingAssetsRes[i] ? _underlyingAssetsRes[i][1].toString() : '0';
         const _shares = _userPositionsRes[i] ? formatUnits(_userPositionsRes[i][0]) : 0;
         pairs[i].totalSupply = _totalSupply;
         pairs[i].totalAmount0 = _totalAmount0;
@@ -158,7 +161,7 @@ export default memo(function LPData(props) {
     }
 
     function getUserPositions() {
-      const calls = pairs.map((item) => ({
+      const calls = pairs?.map((item) => ({
         address: item.vaultAddress,
         name: 'balanceOf',
         params: [account]
@@ -181,7 +184,7 @@ export default memo(function LPData(props) {
         });
     }
     function getTotalSupply() {
-      const calls = pairs.map((item) => ({
+      const calls = pairs?.map((item) => ({
         address: item.vaultAddress,
         name: 'totalSupply'
         //   params: [],
@@ -204,7 +207,7 @@ export default memo(function LPData(props) {
         });
     }
     function getAllUnderlyingAssets() {
-      const calls = pairs.map((item) => ({
+      const calls = pairs?.map((item) => ({
         address: item.vaultAddress,
         name: 'vaultAllUnderlyingAssets'
         //   params: [],

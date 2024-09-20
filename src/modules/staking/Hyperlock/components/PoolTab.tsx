@@ -4,6 +4,7 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/modules/components/Loading';
+import { useMultiState } from '@/modules/hooks';
 
 import TokenCard from './TokenCard';
 
@@ -60,6 +61,8 @@ export default memo(function PoolTab(props) {
     onSuccess,
     onOpenStakeModal
   } = props;
+  const [state, updateState] = useMultiState({});
+
   return (
     <StyledContainer>
       {tokens?.map((token) => (

@@ -100,14 +100,18 @@ const RewardsTable = (props: any) => {
     // seamless
     if (seamTokens.includes(symbol)) {
       return unifyNumber(
-        Big(prices['SEAM'] || 0)
-          .times(Big(amount))
+        Big(prices['SEAM'] || 1)
+          .times(Big(amount || 0))
           .toFixed()
       );
     }
     if (!prices[symbol]) return null;
 
-    return unifyNumber(Big(prices[symbol]).times(Big(amount)).toFixed());
+    return unifyNumber(
+      Big(prices[symbol] || 1)
+        .times(Big(amount || 0))
+        .toFixed()
+    );
   }
 
   return (
@@ -166,16 +170,16 @@ const RewardsTable = (props: any) => {
           </NoReward>
         )}
       </StyledRewardsTable>
-      {state.dapp && Claim && (
+      {state.curIndex > -1 && Claim && (
         <Claim
           provider={provider}
           supplies={supplies}
           loading={state.loading}
-          market={state.market}
+          markets={markets}
           dapp={state.dapp}
-          record={state.market}
           account={account}
           chainId={chainId}
+          record={state.dapp.rewardToken[state.curIndex]}
           onSuccess={() => {
             toast?.dismiss(state.toastId);
             updateState({ loading: false });
@@ -183,6 +187,7 @@ const RewardsTable = (props: any) => {
             onSuccess?.(state.dapp.name);
           }}
           onError={(err: any) => {
+            console.log('err', err);
             toast?.dismiss(state.toastId);
             updateState({ loading: false });
             toast?.fail({

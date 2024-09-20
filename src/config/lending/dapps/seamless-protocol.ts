@@ -34,8 +34,7 @@ const rewardToken = [
     icon: 'https://ipfs.near.social/ipfs/bafkreiez74jwccvehead67kbbi2r5b5tibtk23vuo3aamuhyllfvujczhu'
   },
   base['seam'],
-  base['esseam'],
-  base['usdc']
+  base['esseam']
 ];
 
 const networks = {
