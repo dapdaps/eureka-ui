@@ -31,7 +31,7 @@ export default function CurrencySelect({
   const { loading, queryToken } = useTokenInfo();
   const [importToken, setImportToken] = useState<any>(null);
   const [showImportWarning, setShowImportWarning] = useState(false);
-  const { loading: balancesLoading, balances = {} } = useTokensBalance(tokens);
+  const { loading: balancesLoading, balances = {}, queryBalance } = useTokensBalance(tokens);
 
   const handleSearch = () => {
     let tokenIsAvailable = false;
@@ -83,6 +83,10 @@ export default function CurrencySelect({
   useEffect(() => {
     setCurrencies(tokens);
   }, [tokens]);
+
+  useEffect(() => {
+    if (display) queryBalance();
+  }, [display]);
 
   return (
     <Modal

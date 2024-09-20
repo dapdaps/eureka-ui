@@ -70,6 +70,8 @@ const TradeButton = ({ chain, spender, token, amount, loading, errorTips, disabl
     return <BaseButton disabled>{errorTips}</BaseButton>;
   }
 
+  if (!spender) return <BaseButton disabled>Insufficient Liquidity</BaseButton>;
+
   if (!approved) {
     return (
       <BaseButton chain={chain} onClick={approve}>

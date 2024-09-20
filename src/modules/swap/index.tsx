@@ -69,7 +69,7 @@ export default function SwapDapp({
       ),
       'address'
     );
-  }, [currentChain?.chain_id, importTokens]);
+  }, [currentChain?.chain_id, importTokens, localConfig]);
 
   const onSwitchChain = (params: any) => {
     if (Number(params.chainId) === chainId) {
@@ -102,6 +102,7 @@ export default function SwapDapp({
     const defaultCurrencies = localConfig.networks[currentChain.chain_id]?.defaultCurrencies;
     setInputCurrency(defaultCurrencies?.input);
     setOutputCurrency(defaultCurrencies?.output);
+    setInputCurrencyAmount('');
   }, [currentChain, localConfig]);
 
   useEffect(() => {
