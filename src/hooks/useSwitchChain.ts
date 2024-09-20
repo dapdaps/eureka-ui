@@ -8,12 +8,12 @@ import useAccount from './useAccount';
 import useConnectWallet from './useConnectWallet';
 type ChainParams = string | number | { chainId: string | number };
 
-
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum: any;
   }
 }
+
 
 export default function useSwitchChain() {
   const { account } = useAccount();
