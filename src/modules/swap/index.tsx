@@ -1,5 +1,6 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
+import { uniqBy } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 
 import useSwitchChain from '@/hooks/useSwitchChain';
@@ -61,7 +62,12 @@ export default function SwapDapp({
   );
 
   const tokens = useMemo(() => {
-    return [...localConfig.networks[currentChain.chain_id]?.tokens, ...(importTokens[currentChain.chain_id] || [])];
+    return uniqBy(
+      [...localConfig.networks[currentChain.chain_id]?.tokens, ...(importTokens[currentChain.chain_id] || [])].map(
+        (token: any) => ({ ...token, address: token.address.toLowerCase() })
+      ),
+      'address'
+    );
   }, [currentChain?.chain_id, importTokens]);
 
   const onSwitchChain = (params: any) => {

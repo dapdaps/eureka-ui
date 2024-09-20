@@ -1,5 +1,6 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
+import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
@@ -71,7 +72,11 @@ export default function SuperSwap() {
   );
 
   const mergedTokens = useMemo(
-    () => [...((chainId && importTokens[chainId]) || []), ...tokens],
+    () =>
+      uniqBy(
+        [...((chainId && importTokens[chainId]) || []), ...tokens].map((token: any) => token.address.toLowerCase()),
+        'address'
+      ),
     [importTokens, tokens, chainId]
   );
 
