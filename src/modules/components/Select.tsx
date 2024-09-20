@@ -10,8 +10,8 @@ const Container = styled.div`
   align-items: flex-start;
   justify-content: flex-start;
   padding: 0px;
-  gap: 0.45em;
-  width: 100%;
+  /* gap: 0.45em;
+  width: 100%; */
 `;
 
 const Label = styled.label`
@@ -111,7 +111,7 @@ const Item = styled.button`
 `;
 export default memo(function CustomSelect(props) {
   const label = props.label ?? 'Label';
-  const noLabel = props.noLabel ?? false;
+  const noLabel = props.noLabel ?? true;
   const placeholder = props.placeholder ?? 'Select';
   const value = props.value ?? '';
   const options = props.options ?? [];

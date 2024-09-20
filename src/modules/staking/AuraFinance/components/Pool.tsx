@@ -191,7 +191,7 @@ export default memo(function Pool(props) {
             </GridItem>
             <GridItem>
               <div className="title-secondary">{Big(APR || 0).toFixed(2)}%</div>
-              <div className="title-sub">proj.{Big(pjAPR).mul(100).toFixed(2)} %</div>
+              <div className="title-sub">proj.{Big(pjAPR).toFixed(2)} %</div>
             </GridItem>
             <GridItem>
               <div className="title-secondary">{formatValueDecimal(TVL, '$', 2, true)}</div>

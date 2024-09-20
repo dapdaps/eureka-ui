@@ -2,6 +2,7 @@
 import * as Accordion from '@radix-ui/react-accordion';
 import * as Tabs from '@radix-ui/react-tabs';
 import Big from 'big.js';
+import { format } from 'date-fns';
 import { ethers } from 'ethers';
 import { memo, useEffect } from 'react';
 
@@ -893,7 +894,7 @@ export default memo(function AthenaFinance(props) {
         // Locking
 
         getLockingClaim(item).then((array) => {
-          if (array.length) {
+          if (array?.length) {
             fetchDexPrice('metis', array[0].join()).then((token_prices) => {
               const _rewards = array[0].reduce((total, addr, index) => {
                 const _amount = ethers.utils.formatUnits(array[1][index]);
@@ -1061,7 +1062,7 @@ export default memo(function AthenaFinance(props) {
         const stakedAmount = Big(ethers.utils.formatUnits(res[1][0])).toFixed();
         const reward = ethers.utils.formatUnits(res[0][1]);
         const athPrice = state.tokenPrices[state.poolsList[0].tokenAddress];
-        const rewardAmount = Big(reward).times(Big(athPrice));
+        const rewardAmount = Big(reward).times(Big(athPrice ? athPrice : 0));
 
         temp[1].stakedAmount = stakedAmount;
         temp[1].rewardAmount = rewardAmount.toFixed(2);
@@ -1139,6 +1140,7 @@ export default memo(function AthenaFinance(props) {
             return item[2].toString() !== '0.00';
           });
 
+        console.log('====_myPoolsList', _myPoolsList);
         updateState({
           lockingTotalSupply: totalSupply,
           poolsList: temp,
@@ -1365,7 +1367,7 @@ export default memo(function AthenaFinance(props) {
     });
   };
 
-  function handleReLock(index) {
+  function handleReLock(_, index) {
     // updateState({
     //   unstaking: true,
     // });
@@ -1405,6 +1407,7 @@ export default memo(function AthenaFinance(props) {
       });
   }
   function handleUnLock(index) {
+    console.log('====index', index);
     updateState({
       curIndex: index
     });
@@ -1545,7 +1548,7 @@ export default memo(function AthenaFinance(props) {
                   <GridContainer2 className="pool-head">
                     <GridItem>
                       <div className="title-primary">
-                        <span>{format(item[0], 'YYYY/MM/DD')}</span>
+                        <span>{format(Big(item[0]).toFixed(0) * 1000, 'yyyy/MM/dd')}</span>
                       </div>
                     </GridItem>
                     <GridItem>
@@ -1553,7 +1556,7 @@ export default memo(function AthenaFinance(props) {
                       {/* <div className="title-sub">{item[1]}</div> */}
                     </GridItem>
                     <GridItem>
-                      <div className="title-secondary">{format(item[1], 'YYYY/MM/DD')}</div>
+                      <div className="title-secondary">{format(Big(item[1]).toFixed(0) * 1000, 'yyyy/MM/dd')}</div>
                     </GridItem>
                     <GridItem>
                       {Big(new Date().getTime()).gt(Big(item[1]).times(1000)) ? (

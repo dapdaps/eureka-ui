@@ -126,7 +126,8 @@ export default memo(function Unstake(props) {
     inputValue: '',
     canUnstake: false,
     unstaking: false,
-    stakedAmountShow: Number(stakedAmount).toFixed(2)
+    stakedAmountShow: Number(stakedAmount).toFixed(2),
+    updater: 0
   });
 
   const handleSwitch = (isChecked) => {
@@ -227,7 +228,8 @@ export default memo(function Unstake(props) {
           })
           .finally(() => {
             updateState({
-              unstaking: false
+              unstaking: false,
+              updater: new Date().getTime()
             });
           });
       })

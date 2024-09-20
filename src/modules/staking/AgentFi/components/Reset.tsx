@@ -294,7 +294,7 @@ const ABI = [
 
 const { parseUnits, formatUnits } = ethers.utils;
 
-export default memo(function Reset() {
+export default memo(function Reset(props) {
   const {
     record,
     prices,

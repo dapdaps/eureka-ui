@@ -660,15 +660,16 @@ export default memo(function AgentFi(props) {
   }, [chainIdNotSupport]);
 
   useEffect(() => {
-    if (!prices || !Object.keys(prices).length || state.listDataLoaded) return;
-    getAppInformation().then((strategies) => {
-      getTVLData();
-      getDexBalancerData();
-      getListData({ strategies });
-    });
-    updateState({
-      listDataLoaded: true
-    });
+    if (prices && Object.keys(prices).length && !state.listDataLoaded) {
+      getAppInformation().then((strategies) => {
+        getTVLData();
+        getDexBalancerData();
+        getListData({ strategies });
+      });
+      updateState({
+        listDataLoaded: true
+      });
+    }
   }, [prices, state.listDataLoaded]);
 
   return (

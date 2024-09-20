@@ -24,7 +24,7 @@ const ABI = [
   }
 ];
 export function useGetTokenBalance(props) {
-  const { tokenAddress, owner, updateTokenBalance, place, provider } = props;
+  const { tokenAddress, owner, updateTokenBalance, place, provider, updater } = props;
   function getTokenBalance(_tokenAddress, _owner) {
     const TokenContract = new ethers.Contract(_tokenAddress, ABI, provider);
     TokenContract.balanceOf(_owner)
@@ -46,5 +46,5 @@ export function useGetTokenBalance(props) {
     if (tokenAddress && owner) {
       getTokenBalance(tokenAddress, owner);
     }
-  }, [tokenAddress, owner]);
+  }, [tokenAddress, owner, updater]);
 }

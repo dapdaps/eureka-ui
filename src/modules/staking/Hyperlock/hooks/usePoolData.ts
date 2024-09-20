@@ -28,7 +28,7 @@ export function usePoolData(props) {
     const getTokens = () => {
       asyncFetch('https://raw.githubusercontent.com/hyperlockfi/tokenlists/main/generated/hyperlock.tokenlist.json')
         .then((res) => {
-          const data = JSON.parse(res);
+          const data = res;
           tokens = data.tokens.reduce((acc, cur) => ({ ...acc, [cur.address.toLowerCase()]: cur }), {});
 
           getPoints();
@@ -247,6 +247,6 @@ export function usePoolData(props) {
           });
         });
     };
-    getConfig();
-  }, []);
+    account && getConfig();
+  }, [account]);
 }

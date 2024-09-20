@@ -650,6 +650,7 @@ export default memo(function KelpContent(props) {
                     />
                     <Select
                       {...{
+                        noLabel: true,
                         options: state.options,
                         value: state.options.find((obj) => obj.value === state.curToken),
                         onChange: (option) => {
@@ -773,7 +774,6 @@ export default memo(function KelpContent(props) {
               toast,
               chainId,
               addAction,
-              SYMBOL_ADDRESS,
               tokenPairs,
               onCloseWrap: handleCloseWrap,
               multicall,

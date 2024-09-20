@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import { memo, useEffect } from 'react';
 import styled from 'styled-components';
 
+import { useMultiState } from '@/modules/hooks';
 import { formatValueDecimal } from '@/utils/formate';
 
 import TokenCard from './TokenCard';
@@ -107,6 +108,31 @@ export default memo(function Assets(props) {
         totalFees: 0,
         totalDeposit: 0
       });
+    } else {
+      const lastStaked = staked[staked.length - 1];
+      const pool = pools[lastStaked?.pool?.id];
+      const _token0 = Big(ethers.utils.formatUnits(lastStaked.token0Amount || 0, lastStaked.token0.decimals));
+      const _token1 = Big(ethers.utils.formatUnits(lastStaked.token1Amount || 0, lastStaked.token1.decimals));
+
+      totalDeposit = totalDeposit
+        .add(_token0.mul(pool.token0.price || 0))
+        .add(_token1.mul(pool.token1.price || 0))
+        .add(Big(lastStaked.balance || 0).mul(lastStaked.price || 0));
+      const _fee0 = Big(
+        fees && fees[lastStaked.id]?.token0
+          ? ethers.utils.formatUnits(fees[lastStaked.id]?.token0, pool?.token0?.decimals)
+          : 0
+      );
+      const _fee1 = Big(
+        fees && fees[lastStaked.id]?.token1
+          ? ethers.utils.formatUnits(fees[lastStaked.id]?.token1, pool?.token1?.decimals)
+          : 0
+      );
+      totalFees = totalFees.add(_fee0.mul(pool.token0.price || 0)).add(_fee1.mul(pool.token1.price || 0));
+      updateState({
+        totalDeposit,
+        totalFees
+      });
     }
   }, [staked]);
 
@@ -148,7 +174,6 @@ export default memo(function Assets(props) {
               .map((item) => {
                 const pool = pools[item.pool.id];
                 const _token0 = Big(ethers.utils.formatUnits(item.token0Amount || 0, item.token0.decimals));
-
                 const _token1 = Big(ethers.utils.formatUnits(item.token1Amount || 0, item.token1.decimals));
                 return (
                   <TokenCard
@@ -226,23 +251,16 @@ export default memo(function Assets(props) {
                 const pool = pools[item.pool.id];
                 const _token0 = Big(ethers.utils.formatUnits(item.token0Amount || 0, item.token0.decimals));
                 const _token1 = Big(ethers.utils.formatUnits(item.token1Amount || 0, item.token1.decimals));
-
-                totalDeposit = totalDeposit
-                  .add(_token0.mul(pool.token0.price || 0))
-                  .add(_token1.mul(pool.token1.price || 0))
-                  .add(Big(item.balance || 0).mul(item.price || 0));
-
-                const _fee0 = Big(ethers.utils.formatUnits(fees[item.id].token0 || 0, pool.token0.decimals));
-                const _fee1 = Big(ethers.utils.formatUnits(fees[item.id].token1 || 0, pool.token1.decimals));
-
-                totalFees = totalFees.add(_fee0.mul(pool.token0.price || 0)).add(_fee1.mul(pool.token1.price || 0));
-
-                if (i === staked.length - 1) {
-                  updateState({
-                    totalDeposit,
-                    totalFees
-                  });
-                }
+                const _fee0 = Big(
+                  fees && fees[item.id]?.token0
+                    ? ethers.utils.formatUnits(fees[item.id]?.token0, pool?.token0?.decimals)
+                    : 0
+                );
+                const _fee1 = Big(
+                  fees && fees[item.id]?.token1
+                    ? ethers.utils.formatUnits(fees[item.id]?.token1, pool?.token1?.decimals)
+                    : 0
+                );
                 return (
                   <TokenCard
                     key={item.id}

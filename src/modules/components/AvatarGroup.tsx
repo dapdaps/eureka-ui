@@ -15,7 +15,7 @@ export default memo(function AvatarGroup(props) {
   const { icons, size, gap } = props;
   return (
     <AvatarGroupWrap gap={gap}>
-      {icons.map((icon, index) => {
+      {icons?.map((icon, index) => {
         return (
           <AvatarItem key={index}>
             <Avatar src={icon} size={size} />

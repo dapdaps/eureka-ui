@@ -14,6 +14,7 @@ export default function GammaData(props: any) {
     curChain,
     multicallAddress,
     LAST_SNAP_SHOT_DATA_URL,
+    FEE_APR_DATA_URL,
     prices,
     provider
   } = props;
@@ -216,6 +217,11 @@ export default function GammaData(props: any) {
       }
     );
   }
+  function handleGetFeeApr(callback) {
+    asyncFetch(FEE_APR_DATA_URL).then((result) => {
+      callback && callback(result);
+    });
+  }
   function getTotalApr() {
     const chain_id = curChain.chain_id;
     if ([8453, 10, 5000, 81457].includes(chain_id)) {
@@ -229,8 +235,17 @@ export default function GammaData(props: any) {
       asyncFetch('https://api.lynex.fi/api/v1/fusions').then((res) => {
         const fusionsData = res?.data;
         dataList = dataList.map((data) => {
+          console.log('====data', addresses[data.id]);
           const fusionData = fusionsData?.find((fusionData) => fusionData.address === data.vaultAddress);
-          data.totalApr = Big(fusionData?.gauge?.minApr ?? 0).toFixed(2) + '%';
+
+          if (['0xcc86572ce5a6eee74c76c57e9ea7b08221f06bb9'].includes(addresses[data.id])) {
+            data.totalApr =
+              Big(fusionData?.gauge?.apr ?? 0)
+                .div(2)
+                .toFixed(2) + '%';
+          } else {
+            data.totalApr = Big(fusionData?.gauge?.minApr ?? 0).toFixed(2) + '%';
+          }
           return data;
         });
         formatedData('getTotalApr');
@@ -271,22 +286,26 @@ export default function GammaData(props: any) {
       );
     }
     if ([137, 1101, 3776].includes(chain_id)) {
-      asyncFetch('https://api.angle.money/v2/merkl?chainIds[]=' + chain_id).then((res) => {
-        const { pools } = res[chain_id];
-        dataList = dataList.map((data) => {
-          const pool = pools[ethers.utils.getAddress(data.poolAddress)];
-          if (pool && Object.keys(pool.aprs).length > 0) {
-            Object.keys(pool.aprs).forEach((key) => {
-              if (key.indexOf(ethers.utils.getAddress(data.vaultAddress)) > -1) {
-                data.totalApr = Big(data.returns.weekly.feeApr).times(100).plus(pool.aprs[key]).toFixed(2) + '%';
-              }
-            });
-          } else {
-            data.totalApr = formatPercent(data?.returns?.weekly?.feeApr ?? 0);
-          }
-          return data;
+      handleGetFeeApr((feeAprData) => {
+        asyncFetch('https://api.angle.money/v2/merkl?chainIds[]=' + chain_id).then((res) => {
+          const { pools } = res[chain_id];
+          dataList = dataList.map((data) => {
+            const pool = pools[ethers.utils.getAddress(data.poolAddress)];
+            if (pool && Object.keys(pool.aprs).length > 0) {
+              Object.keys(pool.aprs).forEach((key) => {
+                if (key.indexOf(ethers.utils.getAddress(data.vaultAddress)) > -1) {
+                  const vaultAddress = addresses[data.id];
+                  console.log('feeAprData[vaultAddress]', feeAprData[vaultAddress]);
+                  data.totalApr = Big(feeAprData[vaultAddress].feeApr).times(100).plus(pool.aprs[key]).toFixed(2) + '%';
+                }
+              });
+            } else {
+              data.totalApr = formatPercent(data?.returns?.weekly?.feeApr ?? 0);
+            }
+            return data;
+          });
+          formatedData('getTotalApr');
         });
-        formatedData('getTotalApr');
       });
     }
   }

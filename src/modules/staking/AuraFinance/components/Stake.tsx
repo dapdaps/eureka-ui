@@ -80,7 +80,8 @@ export default memo(function Stake(props) {
     canStake: false,
     isStaking: false,
     inputValue: '',
-    selectData: []
+    selectData: [],
+    updater: 0
   });
   const isEqual = data && state.curToken === data?.LP_token_address;
   function updateAllowance(allowanceRaw) {
@@ -121,11 +122,11 @@ export default memo(function Stake(props) {
           type: 'function'
         }
       ],
-      Ethers.provider().getSigner()
+      provider.getSigner()
     );
-    console.info('to approve: ', tokenAddress, TOKENS[tokenAddress].decimals);
+    console.info('to approve: ', tokenAddress, TOKENS[tokenAddress]?.decimals);
 
-    TokenContract.approve(_spender, ethers.utils.parseUnits(state.inputValue, TOKENS[state.curToken].decimals || 18))
+    TokenContract.approve(_spender, ethers.utils.parseUnits(state.inputValue, TOKENS[state.curToken]?.decimals || 18))
       .then((tx) => {
         tx.wait()
           .then((res) => {
@@ -230,7 +231,7 @@ export default memo(function Stake(props) {
       isStaking: true
     });
     const { Aura_Pool_ID } = data;
-    const BPTContract = new ethers.Contract(BoosterLiteWrapper, BoosterLiteABI, Ethers.provider().getSigner());
+    const BPTContract = new ethers.Contract(BoosterLiteWrapper, BoosterLiteABI, provider.getSigner());
     console.log(ethers.utils.parseUnits(state.inputValue), data, props);
     BPTContract.deposit(Aura_Pool_ID, ethers.utils.parseUnits(state.inputValue), true, {
       gasLimit: 1173642
@@ -295,11 +296,7 @@ export default memo(function Stake(props) {
     updateState({
       isStaking: true
     });
-    const RewardsContract = new ethers.Contract(
-      RewardPoolDepositWrapper,
-      RewardPoolDepositABI,
-      Ethers.provider().getSigner()
-    );
+    const RewardsContract = new ethers.Contract(RewardPoolDepositWrapper, RewardPoolDepositABI, provider.getSigner());
 
     const { Rewards_contract_address, Balancer_Pool_ID, tokenAssets } = data;
 
@@ -378,7 +375,8 @@ export default memo(function Stake(props) {
           })
           .finally(() => {
             updateState({
-              isStaking: false
+              isStaking: false,
+              updater: new Date().getTime()
             });
           });
       })
@@ -457,6 +455,7 @@ export default memo(function Stake(props) {
     tokenAddress: state.curToken,
     owner: account,
     provider,
+    updater,
     updateTokenBalance
   });
   useEffect(() => {
