@@ -71,6 +71,11 @@ export default function CurrencySelect({
     }
   };
 
+  const handleClose = () => {
+    setSearchVal('');
+    onClose();
+  };
+
   useEffect(() => {
     handleSearch();
   }, [tab, searchVal]);
@@ -83,7 +88,7 @@ export default function CurrencySelect({
     <Modal
       display={display}
       title="Select a token"
-      onClose={onClose}
+      onClose={handleClose}
       content={
         <Content>
           <InputWarpper>
@@ -162,7 +167,7 @@ export default function CurrencySelect({
                 account={account}
                 onClick={() => {
                   onSelect?.(currency);
-                  onClose();
+                  handleClose();
                 }}
                 loading={balancesLoading}
                 balance={balances[currency.address]}
@@ -176,7 +181,7 @@ export default function CurrencySelect({
             onImport={(currency: any) => {
               onImport({ ...currency, chainId });
               onSelect?.(currency);
-              onClose();
+              handleClose();
             }}
             explor={explor}
             onClose={() => {
