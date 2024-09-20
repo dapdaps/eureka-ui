@@ -48,6 +48,7 @@ export default function SwapDapp({
     template: localConfig.basic.name,
     onSuccess: () => {
       setUpdater(Date.now());
+      runQuoter();
     }
   });
 

@@ -58,7 +58,7 @@ export default function SuperSwap() {
     chainId: currentChain?.chain_id,
     onSuccess() {
       setUpdater(Date.now());
-      setInputCurrencyAmount('');
+      runQuoter();
     }
   });
 

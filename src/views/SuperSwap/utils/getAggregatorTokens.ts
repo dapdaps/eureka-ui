@@ -26,7 +26,7 @@ export default async function getAggregatorTokens(chainId: number) {
           };
     });
 
-    const okxPrices = await getOKXPrices(tokens);
+    const okxPrices = await getOKXPrices(tokens.slice(0, 50));
 
     tokens = tokens.map((token: any) => ({ ...token, usd: okxPrices[token.address.toLowerCase()] }));
   } else {

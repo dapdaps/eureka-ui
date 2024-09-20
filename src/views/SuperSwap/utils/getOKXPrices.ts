@@ -14,13 +14,11 @@ export default async function getOKXPrices(tokens: any) {
       )}`
     );
   });
-
   const results = await Promise.all(calls);
-
   const prices: Record<string, string> = {};
 
-  results.forEach((result: any) => {
-    const data = result.data;
+  results?.forEach((result: any) => {
+    const data = result?.data || [];
     data.forEach((token: any) => {
       prices[
         token.tokenAddress === '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
