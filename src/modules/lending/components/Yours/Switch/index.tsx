@@ -9,12 +9,11 @@ const LendingSwitch = (props: Props) => {
         onChange?.();
       }}
       style={theme ? theme : {}}
-      className={`${active && 'active'} ${disabled && 'disabled'}`}
+      className={`${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`}
     >
-      <Handler className={active ? 'active' : ''} />
+      <Handler className={`${active ? 'active' : ''} ${disabled ? 'disabled' : ''}`} />
     </Switcher>
   );
-
 };
 
 export default LendingSwitch;

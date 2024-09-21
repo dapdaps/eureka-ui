@@ -48,7 +48,7 @@ const LendingMarketExpandInput = (props: Props) => {
       }
     }
     const params: any = { amount: _amount };
-    const value = Big(Big(_amount).mul(underlyingPrice).toFixed(20));
+    const value = Big(Big(_amount).mul(underlyingPrice).toFixed(20, 0));
     if (state.tab === 'Supply') {
       params.borrowLimit = Big(borrowLimit || 0).plus(value.mul(loanToValue / 100));
       params.isBigerThanBalance = Big(_amount).gt(userUnderlyingBalance || 0);
@@ -82,7 +82,7 @@ const LendingMarketExpandInput = (props: Props) => {
           state.tab === 'Supply'
             ? userUnderlyingBalance
             : Big(borrowLimit || 0)
-                .div(Big(underlyingPrice || 1).gt(0) ? 1 : underlyingPrice || 1)
+                .div(Big(underlyingPrice || 1).eq(0) ? 1 : underlyingPrice || 1)
                 .toString()
         }
         price={underlyingPrice}
