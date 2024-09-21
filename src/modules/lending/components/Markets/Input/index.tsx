@@ -38,7 +38,7 @@ const LendingMarketInput = (props: Props) => {
           <StyledBalanceAmount
             onClick={() => {
               const _bal = Big(balance)
-                .toFixed(decimals)
+                .toFixed(decimals, 0)
                 .replace(/[.]?0*$/, '');
               onChange(_bal);
             }}

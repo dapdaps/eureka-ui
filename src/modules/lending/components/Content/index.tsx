@@ -144,6 +144,20 @@ const LendingContent = (props: Props) => {
           {...dexConfig}
           onLoad={(data: any) => {
             console.log('%cLendingContent DATA onLoad: %o', 'background: #FF885B; color:#fff;', data);
+            if (data.markets) {
+              try {
+                const _data = Object.values(data.markets);
+                _data.forEach((d: any) => {
+                  const curr = Object.values(dexConfig.markets).find((m: any) => m.address === d.address) || {};
+                  d.localConfig = {
+                    ...dexConfig,
+                    currentMarket: curr
+                  };
+                });
+              } catch (err: any) {
+                console.log(err);
+              }
+            }
             updateState({
               loading: false,
               timestamp: Date.now(),

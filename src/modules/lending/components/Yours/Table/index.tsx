@@ -22,15 +22,7 @@ import {
 } from './styles';
 
 const LendingYoursTable = (props: Props) => {
-  const {
-    columns,
-    data,
-    buttons,
-    totalReverse,
-    emptyTips,
-    type,
-    onButtonClick
-  } = props;
+  const { columns, data, buttons, totalReverse, emptyTips, type, onButtonClick } = props;
 
   const renderTotal = (record: any, key: any, isSpecialKey?: boolean) => {
     return (
@@ -69,19 +61,14 @@ const LendingYoursTable = (props: Props) => {
     return (
       <LendingSwitch
         active={record.isCollateral === undefined ? true : record.isCollateral}
+        disabled={record.isCollateral === undefined}
         onChange={() => {
-          console.log('--------', record);
           if (record.isCollateral === undefined) return;
 
           // if (dappName === "Valas Finance") {
           //   onButtonClick?.(record.address, record.isCollateral ? false : true);
           // } else {
-          onButtonClick?.(
-            record.address,
-            record.isCollateral
-              ? 'Disable as Collateral'
-              : 'Enable as Collateral'
-          );
+          onButtonClick?.(record.address, record.isCollateral ? 'Disable as Collateral' : 'Enable as Collateral');
           // }
         }}
       />
@@ -94,18 +81,14 @@ const LendingYoursTable = (props: Props) => {
         {record.distributionApy &&
           record.distributionApy
             .filter((reward: any) => {
-              const apy = (
-                type === 'deposit' ? reward.supply : reward.borrow
-              ).slice(0, -1);
+              const apy = (type === 'deposit' ? reward.supply : reward.borrow).slice(0, -1);
               return !!Number(apy);
             })
             .map((reward: any, index: number) => {
               return (
                 <RewardApyItem key={index}>
                   {reward.icon ? <RewardIcon src={reward.icon} /> : null}
-                  <RewardApy>
-                    {type === 'deposit' ? reward.supply : reward.borrow} APR
-                  </RewardApy>
+                  <RewardApy>{type === 'deposit' ? reward.supply : reward.borrow} APR</RewardApy>
                 </RewardApyItem>
               );
             })}
@@ -147,9 +130,7 @@ const LendingYoursTable = (props: Props) => {
                           }
                         }}
                         text={button.text}
-                        loading={typeof button.loading === 'function'
-                          ? button.loading(record)
-                          : button.loading}
+                        loading={typeof button.loading === 'function' ? button.loading(record) : button.loading}
                       />
                     ))}
                   </Buttons>
@@ -161,8 +142,7 @@ const LendingYoursTable = (props: Props) => {
                       {column.type === 'total' && renderTotal(record, column.key)}
                       {column.type === 'apy' && renderApy(record)}
                       {column.type === 'collateral' && renderCollateral(record)}
-                      {!['total', 'apy', 'collateral'].includes(column.type) &&
-                        record[column.key]}
+                      {!['total', 'apy', 'collateral'].includes(column.type) && record[column.key]}
                     </div>
                   </NormalCell>
                 )}

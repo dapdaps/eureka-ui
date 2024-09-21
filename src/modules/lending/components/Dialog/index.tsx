@@ -76,7 +76,10 @@ const LendingDialog = (props: Props) => {
   const [state, updateState] = useMultiState<any>({
     amount: '',
     processValue: 0,
-    updateHandler: Date.now()
+    updateHandler: Date.now(),
+    userTotalBorrowUsd: '',
+    redeemUnderlyingUsd: '',
+    borrowAvailable: ''
   });
 
   const actionText = useMemo(() => data?.actionText, [data]);
@@ -93,11 +96,34 @@ const LendingDialog = (props: Props) => {
     if (Big(_balance).gt(data?.userBorrow || 0)) return data.userBorrow;
   };
 
-  const getBalance = () => {
+  const getBalance = async () => {
     const isUnderlying = ['Deposit', 'Repay'].includes(actionText);
     updateState({
       balanceLoading: true
     });
+
+    if (['Repay', 'Withdraw'].includes(actionText) && data.localConfig?.getBorrowAvailable) {
+      const _borrowAvailable = await data.localConfig?.getBorrowAvailable(data, { account });
+      updateState({
+        borrowAvailable: _borrowAvailable?.balanceUsd
+      });
+    }
+    if (actionText === 'Repay' && data.localConfig?.getUserTotalBorrow) {
+      const _userTotalBorrowUsd = await data.localConfig?.getUserTotalBorrow(data, { account });
+      updateState({
+        userTotalBorrowUsd: _userTotalBorrowUsd?.balanceUsd
+      });
+    }
+    if (actionText === 'Withdraw' && data.localConfig?.getRedeemUnderlying) {
+      const _redeemUnderlying = await data.localConfig?.getRedeemUnderlying(data, { account });
+      updateState({
+        balance: _redeemUnderlying.balance,
+        redeemUnderlyingUsd: _redeemUnderlying.balanceUsd,
+        balanceLoading: false
+      });
+      return;
+    }
+
     if (isUnderlying && data.underlyingToken.isNative) {
       provider.getBalance(account).then((rawBalance: any) => {
         updateState({
@@ -192,6 +218,9 @@ const LendingDialog = (props: Props) => {
   }, [display, data, actionText, provider, account]);
 
   const formatBorrowLimit = (digits: any, round?: any) => {
+    if (['Repay', 'Withdraw'].includes(actionText) && data.localConfig?.getBorrowAvailable) {
+      return Big(state.borrowAvailable || 0).toFixed(digits || 2, round || 1);
+    }
     if (data.config.name === 'Ionic') {
       const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(Big(data.COLLATERAL_FACTOR));
 
@@ -238,21 +267,27 @@ const LendingDialog = (props: Props) => {
 
     const precent = !Big(state.balance || 0).eq(0) ? Big(amount).div(state.balance).mul(100) : Big(0);
     const params: any = {
-      amount: amount,
+      amount: amount.replace(/[.]?0*$/, ''),
       processValue: precent.gt(100) ? 100 : precent.toNumber()
     };
     let isOverSize = false;
-    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20));
+    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20, 0));
     if (isSupply) {
-      if (actionText === 'Withdraw' && data.userMerberShip) {
-        params.borrowLimit = Big(data.totalCollateralUsd)
-          .minus(data.userTotalBorrowUsd)
-          .minus(value.mul(data.loanToValue / 100));
-        isOverSize = Big(data.userTotalBorrowUsd).eq(0)
-          ? false
-          : Big(data.totalCollateralUsd || 0)
-              .minus(value.mul(data.loanToValue / 100) || 0)
-              .lt(data.userTotalBorrowUsd || 0);
+      if (actionText === 'Withdraw') {
+        if (data.userMerberShip) {
+          params.borrowLimit = Big(data.totalCollateralUsd)
+            .minus(data.userTotalBorrowUsd)
+            .minus(value.mul(data.loanToValue / 100));
+          isOverSize = Big(data.userTotalBorrowUsd).eq(0)
+            ? false
+            : Big(data.totalCollateralUsd || 0)
+                .minus(value.mul(data.loanToValue / 100) || 0)
+                .lt(data.userTotalBorrowUsd || 0);
+        }
+        if (data.localConfig?.getRedeemUnderlying) {
+          params.borrowLimit = Big(state.redeemUnderlyingUsd).minus(value);
+          isOverSize = value.gt(state.redeemUnderlyingUsd);
+        }
       }
       if (actionText === 'Deposit') {
         params.borrowLimit = Big(data.totalCollateralUsd)
@@ -269,9 +304,15 @@ const LendingDialog = (props: Props) => {
           .minus(value || 0);
       }
       if (actionText === 'Repay') {
-        params.borrowBalance = Big(data.userTotalBorrowUsd).minus(value);
-        params.borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd).add(value);
-        isOverSize = value.gt(data.userTotalBorrowUsd);
+        if (data.localConfig?.getUserTotalBorrow) {
+          params.borrowBalance = Big(state.userTotalBorrowUsd).minus(value);
+          params.borrowLimit = Big(state.borrowAvailable).add(value);
+          isOverSize = value.gt(state.userTotalBorrowUsd);
+        } else {
+          params.borrowBalance = Big(data.userTotalBorrowUsd).minus(value);
+          params.borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd).add(value);
+          isOverSize = value.gt(data.userTotalBorrowUsd);
+        }
       }
     }
     if (params.borrowLimit) {
@@ -413,7 +454,8 @@ const LendingDialog = (props: Props) => {
                     onChange={(value) => {
                       const amount = Big(state.balance || 0)
                         .mul(+value / 100)
-                        .toFixed(4, 0);
+                        .toFixed(data.underlyingToken.decimals, 0)
+                        .replace(/[.]?0*$/, '');
                       updateState({
                         processValue: value,
                         amount

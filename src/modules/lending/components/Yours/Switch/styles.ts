@@ -15,7 +15,8 @@ export const Switcher = styled.div`
     background-color: var(--agg-secondary-color, var(--switch-color));
   }
   &.disabled {
-    cursor: default;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 `;
 export const Handler = styled.div`
@@ -32,5 +33,9 @@ export const Handler = styled.div`
     transform: translateX(22px);
     background-color: var(--agg-primary-color, #fff);
     border-color: #523f7b;
+  }
+  &.disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 `;
