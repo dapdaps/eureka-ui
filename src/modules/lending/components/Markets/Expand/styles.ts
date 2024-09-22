@@ -1,54 +1,16 @@
+import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
-export const StyledBox = styled.div`
-  border-radius: 0px 0px 16px 16px;
-  background: var(--agg-secondary-color, #2e3142);
-  height: 0px;
-  animation: fadeOut 0.4s 0.1s ease both;
-
-  &.expand {
-    animation: fadeIn 0.4s 0.1s ease both;
-  }
-
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-      transform: translateY(-20px);
-      height: 0px;
-      border: none;
-    }
-    100% {
-      opacity: 1;
-      transform: translateY(0);
-      height: 292px;
-      border: 1px solid var(--agg-border-color, #373a53);
-      border-top: none;
-    }
-  }
-
-  @keyframes fadeOut {
-    0% {
-      opacity: 1;
-      transform: translateY(0);
-      height: 292px;
-      border: 1px solid var(--agg-border-color, #373a53);
-      border-top: none;
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-20px);
-      height: 0px;
-      border: none;
-    }
-  }
+export const StyledBox = styled(motion.div)`
+  border-top: none;
+  height: 0;
 `;
 
-export const StyledWrapper = styled.div`
+export const StyledWrapper = styled(motion.div)`
   display: none;
-
-  &.expand {
-    display: block;
-  }
+  height: 100%;
+  background: var(--agg-secondary-color, #2e3142);
+  border-radius: 0 0 16px 16px;
 `;
 
 export const StyledHeader = styled.div`

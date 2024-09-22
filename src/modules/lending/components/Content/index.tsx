@@ -62,6 +62,10 @@ const LendingContent = (props: Props) => {
     });
   };
 
+  useEffect(() => {
+    updateState({ loading: true });
+  }, [tab]);
+
   return (
     <StyledContainer>
       {tab === TabKey.Market && (
