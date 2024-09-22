@@ -221,7 +221,7 @@ export default function SwapDapp({
               onClick={onSwap}
               disabled={trade?.noPair || !trade?.txn}
               onRefresh={() => {
-                if (!trade?.txn) runQuoter();
+                runQuoter();
               }}
             />
           </StyledPanel>
