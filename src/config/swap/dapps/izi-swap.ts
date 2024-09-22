@@ -72,10 +72,11 @@ const networks = {
   },
   534352: {
     defaultCurrencies: {
-      input: scroll['weth'],
+      input: scroll['eth'],
       output: scroll['usdc']
     },
     tokens: [
+      scroll['eth'],
       scroll['weth'],
       scroll['usdc'],
       scroll['dai'],

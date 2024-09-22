@@ -122,7 +122,7 @@ export default function useTrade({ chainId, template, onSuccess }: any) {
         setLoading(false);
       }
     },
-    [account, provider, slippage, prices, cachedTokens]
+    [account, provider, slippage, prices, cachedTokens, template]
   );
 
   const onSwap = useCallback(async () => {

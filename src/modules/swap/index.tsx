@@ -64,9 +64,10 @@ export default function SwapDapp({
 
   const tokens = useMemo(() => {
     return uniqBy(
-      [...localConfig.networks[currentChain.chain_id]?.tokens, ...(importTokens[currentChain.chain_id] || [])].map(
-        (token: any) => ({ ...token, address: token.address.toLowerCase() })
-      ),
+      [
+        ...(localConfig.networks[currentChain.chain_id]?.tokens || []),
+        ...(importTokens[currentChain.chain_id] || [])
+      ].map((token: any) => ({ ...token, address: token.address.toLowerCase() })),
       'address'
     );
   }, [currentChain?.chain_id, importTokens, localConfig]);
@@ -103,6 +104,7 @@ export default function SwapDapp({
     setInputCurrency(defaultCurrencies?.input);
     setOutputCurrency(defaultCurrencies?.output);
     setInputCurrencyAmount('');
+    setOutputCurrencyAmount('');
   }, [currentChain, localConfig]);
 
   useEffect(() => {
