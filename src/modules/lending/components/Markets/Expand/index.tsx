@@ -112,8 +112,46 @@ const LendingMarketExpand = (props: Props) => {
   }, [expand]);
 
   return (
-    <StyledBox className={expand ? 'expand' : ''}>
-      <StyledWrapper className={expand ? 'expand' : ''}>
+    <StyledBox
+      variants={{
+        expand: {
+          opacity: 1,
+          y: 0,
+          height: 292,
+          borderWidth: 1
+        },
+        collapse: {
+          opacity: 0,
+          y: -20,
+          height: 0,
+          borderWidth: 0,
+          transition: {
+            delay: 0.1
+          }
+        }
+      }}
+      animate={expand ? 'expand' : 'collapse'}
+      initial="collapse"
+    >
+      <StyledWrapper
+        variants={{
+          expand: {
+            opacity: 1,
+            display: 'block'
+          },
+          collapse: {
+            opacity: 0,
+            display: 'none',
+            transition: {
+              display: {
+                delay: 0.1
+              }
+            }
+          }
+        }}
+        animate={expand ? 'expand' : 'collapse'}
+        initial="collapse"
+      >
         <StyledHeader
           style={{
             paddingLeft: Tabs.length > 2 ? 0 : 520

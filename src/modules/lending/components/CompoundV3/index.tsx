@@ -5,7 +5,7 @@ import Loading from '@/modules/components/Loading';
 import CompoundV3Detail from '@/modules/lending/components/CompoundV3/Detail';
 import CompoundV3List from '@/modules/lending/components/CompoundV3/List';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
-import type { DexProps } from '@/modules/lending/models';
+import type { DexProps, TabKey } from '@/modules/lending/models';
 
 import { StyledContainer } from './styles';
 
@@ -21,6 +21,7 @@ const LendingCompoundV3 = (props: Props) => {
     toast,
     chainId,
     curChain,
+    tab,
     curPool
   } = props;
 
@@ -43,6 +44,10 @@ const LendingCompoundV3 = (props: Props) => {
       rowData: data
     });
   };
+
+  useEffect(() => {
+    updateState({ loading: true });
+  }, [tab]);
 
   return (
     <StyledContainer>
@@ -102,4 +107,5 @@ export default LendingCompoundV3;
 
 export interface Props extends DexProps {
   chainIdNotSupport?: boolean;
+  tab: TabKey;
 }
