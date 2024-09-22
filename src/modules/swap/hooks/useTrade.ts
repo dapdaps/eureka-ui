@@ -2,7 +2,6 @@ import Big from 'big.js';
 import { useCallback, useRef, useState } from 'react';
 
 import weth from '@/config/contract/weth';
-import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
@@ -21,6 +20,7 @@ export default function useTrade({ chainId, template, onSuccess }: any) {
   const { addAction } = useAddAction('dapp');
   const lastestCachedKey = useRef('');
   const cachedTokens = useRef<any>();
+  const cachedTimer = useRef<any>();
   const prices = usePriceStore((store) => store.price);
 
   const onQuoter = useCallback(
@@ -112,8 +112,15 @@ export default function useTrade({ chainId, template, onSuccess }: any) {
               inputCurrencyAmount
             })
           };
-
           setTrade(_trade);
+          clearTimeout(cachedTimer.current);
+          cachedTimer.current = setTimeout(() => {
+            onQuoter({
+              inputCurrency,
+              outputCurrency,
+              inputCurrencyAmount
+            });
+          }, 60000 * 2);
         }
         setLoading(false);
       } catch (err) {

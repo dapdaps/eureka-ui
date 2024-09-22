@@ -151,7 +151,6 @@ export default function useTrade({ chainId }: any) {
         prices,
         onCallBack: (_market: any) => {
           onQuoterCallback([_market]);
-          console.log('aggregator', _market);
         },
         onError: onQuoterError
       });
