@@ -22,7 +22,20 @@ interface ILendingProps {
 interface RenderLendingComponentProps extends ILendingProps {
   type: DexType;
   tab?: string;
+  refreshKey?: string;
+  wethAddress?: string;
 }
+
+const DexComponentMap: Partial<Record<DexType, React.ComponentType<any>>> = {
+  [DexType.CompoundV3]: LendingCompoundV3,
+  [DexType.AaveV3]: LendingAaveV3
+};
+
+const RenderLendingComponent: React.FC<RenderLendingComponentProps> = ({ type, refreshKey, wethAddress, ...props }) => {
+  const Component: any = DexComponentMap[type] || LendingContent;
+
+  return <Component key={refreshKey} wethAddress={wethAddress} {...props} />;
+};
 
 const LendingDex = (props: DexProps) => {
   const { CHAIN_LIST, curChain, chainId, account, dexConfig, onSwitchChain, switchingChain, isChainSupported, from } =
@@ -70,25 +83,6 @@ const LendingDex = (props: DexProps) => {
     };
   }, [chainId, account, state.curPool]);
 
-  const DexComponentMap: Partial<Record<DexType, React.ComponentType<any>>> = {
-    [DexType.CompoundV3]: LendingCompoundV3,
-    [DexType.AaveV3]: LendingAaveV3
-  };
-
-  const RenderLendingComponent: React.FC<RenderLendingComponentProps> = ({ type, ...props }) => {
-    const Component: any = DexComponentMap[type] || LendingContent;
-
-    return (
-      <Component
-        key={state.refreshKey}
-        CHAIN_LIST={CHAIN_LIST}
-        curChain={curChain}
-        wethAddress={dexConfig.wethAddress}
-        {...props}
-      />
-    );
-  };
-
   return (
     <StyledContainer style={dexConfig.theme}>
       <StyledHeader>
@@ -106,6 +100,8 @@ const LendingDex = (props: DexProps) => {
         tab={state.tab}
         curPool={state.curPool}
         {...props}
+        wethAddress={dexConfig.wethAddress}
+        refreshKey={state.refreshKey}
       />
       {!isChainSupported && (
         <ChainWarningBox
