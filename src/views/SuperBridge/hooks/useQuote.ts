@@ -23,6 +23,8 @@ export default function useQuote(
   async function getRoutes(quoteRequest: QuoteRequest | null) {
     if (!quoteRequest) {
       setRoutes(null);
+      setQuoteLoading(false);
+      setLoading(false);
       return;
     }
     setLoading(true);

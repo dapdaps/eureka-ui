@@ -122,6 +122,10 @@ export function timeFormate(value: number | string) {
   const m = _value % 60;
 
   if (h >= 1) {
+    if (h > 24) {
+      const d = Math.floor(h / 24);
+      return `~${h}h${m}min`;
+    }
     if (m > 0) {
       return `~${h}h${m}min`;
     }
