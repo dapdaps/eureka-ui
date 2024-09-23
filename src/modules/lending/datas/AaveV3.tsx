@@ -135,8 +135,8 @@ const AaveV3Data = (props: any) => {
 
             const _availableBorrows = calcAvailableBorrows(_availableBorrowsUSD, _assetsToSupply[i].tokenPrice);
 
-            _assetsToSupply[i].availableBorrowsUSD = _availableBorrowsUSD;
-            _assetsToSupply[i].availableBorrows = _availableBorrows;
+            _assetsToSupply[i].availableBorrowsUSD = Big(_availableBorrowsUSD).lt(0) ? 0 : _availableBorrowsUSD;
+            _assetsToSupply[i].availableBorrows = Big(_availableBorrows).lt(0) ? 0 : _availableBorrows;
           }
           onLoad({
             assetsToSupply: _assetsToSupply,
@@ -715,142 +715,149 @@ const AaveV3Data = (props: any) => {
   }
 
   const getBendSupply = () => {
-    const calls = [
+    const abi = [
       {
-        address: state.assetsToSupply[0].aTokenAddress,
-        name: 'balanceOf',
-        params: [account]
+        type: 'function',
+        name: 'getUserReserveData',
+        inputs: [
+          {
+            name: 'asset',
+            type: 'address',
+            internalType: 'address'
+          },
+          {
+            name: 'user',
+            type: 'address',
+            internalType: 'address'
+          }
+        ],
+        outputs: [
+          {
+            name: 'currentATokenBalance',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'currentStableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'currentVariableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'principalStableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'scaledVariableDebt',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'stableBorrowRate',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'liquidityRate',
+            type: 'uint256',
+            internalType: 'uint256'
+          },
+          {
+            name: 'stableRateLastUpdated',
+            type: 'uint40',
+            internalType: 'uint40'
+          },
+          {
+            name: 'usageAsCollateralEnabled',
+            type: 'bool',
+            internalType: 'bool'
+          }
+        ],
+        stateMutability: 'view'
       }
     ];
+    const underlyingTokens = state.assetsToSupply.map((market: any) => market.underlyingAsset);
 
-    const noHoneyAddr = state.assetsToSupply
-      ?.map((item: any) => item.underlyingAsset)
-      .filter((item: any) => !item.variableDebtTokenAddress);
-    const noHoneyCalls = noHoneyAddr?.map((addr: any) => ({
-      address: addr,
-      name: 'balanceOf',
-      params: [account]
+    const calls = underlyingTokens.map((addr: any) => ({
+      address: config.PoolDataProvider,
+      name: 'getUserReserveData',
+      params: [addr, account]
     }));
 
-    const aTokenAddresss = state.assetsToSupply?.map((item: any) => item.aTokenAddress);
-
     multicall({
-      abi: [
-        {
-          inputs: [
-            {
-              internalType: 'address',
-              name: 'user',
-              type: 'address'
-            }
-          ],
-          name: 'balanceOf',
-          outputs: [
-            {
-              internalType: 'uint256',
-              name: '',
-              type: 'uint256'
-            }
-          ],
-          stateMutability: 'view',
-          type: 'function'
-        }
-      ],
-      calls: noHoneyCalls,
+      abi,
+      calls,
       options: {},
       multicallAddress,
       provider
-    }).then((honeySets: any) => {
-      multicall({
-        abi: [
-          {
-            inputs: [
-              {
-                internalType: 'address',
-                name: 'user',
-                type: 'address'
-              }
-            ],
-            name: 'balanceOf',
-            outputs: [
-              {
-                internalType: 'uint256',
-                name: '',
-                type: 'uint256'
-              }
-            ],
-            stateMutability: 'view',
-            type: 'function'
-          }
-        ],
-        calls,
-        options: {},
-        multicallAddress,
-        provider
-      })
-        .then((res: any) => {
-          console.log('getUsetDeposits_res', res);
-          const userDeposits = [];
-          const data = res.concat(honeySets);
-          for (let index = 0; index < data.length; index++) {
-            if (data[index]) {
-              // let underlyingBalance=
-              debugger;
-              const market = state.assetsToSupply.find((item: any) => item.aTokenAddress === aTokenAddresss[index]);
-              if (market) {
-                const _bal = ethers.utils.formatUnits(data[index][0], market.decimals);
-                market.underlyingBalance = _bal;
-                market.underlyingBalanceUSD = Big(_bal)
-                  .mul(prices[market.symbol] || 1)
-                  .toFixed();
-                userDeposits.push(market);
-              }
+    })
+      .then((res: any) => {
+        const userDeposits = [];
+        for (let index = 0; index < res.length; index++) {
+          if (res[index]) {
+            // let underlyingBalance=
+            const market = state.assetsToSupply.find((item: any) => item.underlyingAsset === underlyingTokens[index]);
+            if (market) {
+              const [currentATokenBalance] = res[index];
+              console.log(currentATokenBalance, 'currentATokenBalance');
+
+              const _bal = ethers.utils.formatUnits(currentATokenBalance, market.decimals);
+              market.underlyingBalance = _bal;
+              market.underlyingBalanceUSD = Big(_bal)
+                .mul(prices[market.symbol] || 1)
+                .toFixed();
+              userDeposits.push(market);
             }
           }
+        }
 
-          const mm: any = state.assetsToSupply.reduce((prev: any, cur: any) => {
-            prev[cur.underlyingAsset] = JSON.parse(JSON.stringify(cur));
-            return prev;
-          }, {});
+        const mm: any = state.assetsToSupply.reduce((prev: any, cur: any) => {
+          prev[cur.underlyingAsset] = JSON.parse(JSON.stringify(cur));
+          return prev;
+        }, {});
 
-          const _yourSupplies = userDeposits?.map((userDeposit) => {
-            const market = mm[userDeposit.underlyingAsset];
+        const _yourSupplies = userDeposits?.map((userDeposit) => {
+          const market = mm[userDeposit.underlyingAsset];
 
-            return {
-              ...market,
-              ...userDeposit,
-              ...(market.symbol === config.nativeCurrency.symbol
-                ? {
-                    ...config.nativeCurrency,
-                    supportPermit: true
-                  }
-                : {})
-            };
-          });
-          const obj: any = {};
-          const yourSupplies = _yourSupplies.reduce((prev: any, cur: any) => {
-            obj[cur.aTokenAddress] ? '' : (obj[cur.aTokenAddress] = true && prev.push(cur));
-            return prev;
-          }, []);
-          console.log('1029--yourSupplies:', yourSupplies);
-          onLoad({
-            yourSupplies
-          });
-          return yourSupplies;
-        })
-        .then((_yourSupplies: any) => {
-          if (!_yourSupplies || !_yourSupplies.length) {
-            onLoad((prev: any) => ({
-              ...prev,
-              yourSupplies: []
-            }));
-            return;
-          }
-        })
-        .catch((err: any) => {
-          console.log('getUsetDeposits_err', err);
+          return {
+            ...market,
+            ...userDeposit,
+            ...(market.symbol === config.nativeCurrency.symbol
+              ? {
+                  ...config.nativeCurrency,
+                  supportPermit: true
+                }
+              : {})
+          };
         });
-    });
+        const obj: any = {};
+        const yourSupplies = _yourSupplies.reduce((prev: any, cur: any) => {
+          obj[cur.aTokenAddress] ? '' : (obj[cur.aTokenAddress] = true && prev.push(cur));
+          return prev;
+        }, []);
+        console.log('1029--yourSupplies:', yourSupplies);
+        onLoad({
+          yourSupplies
+        });
+        return yourSupplies;
+      })
+      .then((_yourSupplies: any) => {
+        if (!_yourSupplies || !_yourSupplies.length) {
+          onLoad((prev: any) => ({
+            ...prev,
+            yourSupplies: []
+          }));
+          return;
+        }
+      })
+      .catch((err: any) => {
+        console.log('getUsetDeposits_err', err);
+      });
   };
 
   function getYourSupplies() {
@@ -1285,12 +1292,12 @@ const AaveV3Data = (props: any) => {
         const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized).times(Big(prices[asset.symbol] || 1));
 
         const supplyRewardApy = calculateRewardApy(
-          emissionPerSeconds[index][1],
+          emissionPerSeconds[index]?.[1],
           normalizedTotalTokenSupply.toString(),
           rewardTokenPrice
         );
         const borrowRewardApy = calculateRewardApy(
-          emissionPerSeconds[index][1],
+          emissionPerSeconds[index]?.[1],
           normalizedTotalTokenBorrow.toString(),
           rewardTokenPrice
         );

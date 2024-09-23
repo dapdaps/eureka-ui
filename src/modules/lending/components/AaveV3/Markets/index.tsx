@@ -166,26 +166,47 @@ const Markets = (props: any) => {
         <div>${unifyNumber(row.balanceInUSD)}</div>
       </div>,
       <div key={`supply-apy-${index}`}>
-        <div>{row.supplyAPY ? `${unifyNumber(Number(row.supplyAPY) * 100)} %` : ''}</div>
-        <div>
-          {dexConfig.rewardToken && Number(row.supplyRewardApy)
-            ? `${unifyNumber(Number(row.supplyRewardApy) * 100)} %`
-            : ''}
-        </div>
+        {(dexConfig.name === 'Bend' && row.symbol === 'HONEY') || dexConfig.name !== 'Bend' ? (
+          <>
+            <div>{row.supplyAPY ? `${unifyNumber(Number(row.supplyAPY) * 100)} %` : ''}</div>
+            <div>
+              {dexConfig.rewardToken && Number(row.supplyRewardApy)
+                ? `${unifyNumber(Number(row.supplyRewardApy) * 100)} %`
+                : ''}
+            </div>
+          </>
+        ) : (
+          '-'
+        )}
       </div>,
       <div key={`available-borrows-${index}`}>
-        <CenterRow>{unifyNumber(row.availableBorrows)}</CenterRow>
-        <CenterRow>${unifyNumber(row.availableBorrowsUSD)}</CenterRow>
+        {(dexConfig.name === 'Bend' && row.symbol === 'HONEY') || dexConfig.name !== 'Bend' ? (
+          <>
+            <CenterRow>{unifyNumber(row.availableBorrows)}</CenterRow>
+            <CenterRow>${unifyNumber(row.availableBorrowsUSD)}</CenterRow>
+          </>
+        ) : (
+          '-'
+        )}
       </div>,
       <div key={`borrow-apy-${index}`}>
-        <div>{row.borrowAPY ? `${unifyNumber(Number(row.borrowAPY) * 100)} %` : ''}</div>
+        {(dexConfig.name === 'Bend' && row.symbol === 'HONEY') || dexConfig.name !== 'Bend' ? (
+          <div>{row.borrowAPY ? `${unifyNumber(Number(row.borrowAPY) * 100)} %` : ''}</div>
+        ) : (
+          '-'
+        )}
+
         <div>
           {dexConfig.rewardToken && row.borrowRewardApy ? `${unifyNumber(Number(row.borrowRewardApy) * 100)} %` : ''}
         </div>
       </div>,
       <div key={`buttons-${index}`} style={{ display: 'flex', gap: 10, width: '100%' }}>
         <SupplyButton data={row} />
-        <BorrowButton data={row} />
+        {(dexConfig.name === 'Bend' && row.symbol === 'HONEY') || dexConfig.name !== 'Bend' ? (
+          <BorrowButton data={row} />
+        ) : (
+          <div style={{ width: '100%' }}></div>
+        )}
       </div>
     ]);
   }
