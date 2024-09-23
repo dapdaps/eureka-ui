@@ -9,18 +9,18 @@ export const StyledBox = styled.div`
   border-radius: 12px;
   display: flex;
   justify-content: space-between;
+  column-gap: 30px;
 `;
 export const StyledInput = styled.input`
   background-color: transparent;
   color: var(--agg-primary-color, #fff);
 
   font-size: 18px;
-  font-style: normal;
   font-weight: 400;
-  line-height: normal;
   height: 22px;
   border: none;
   outline: none;
+  width: 100%;
 `;
 export const StyledValue = styled.div`
   color: rgba(151, 154, 190, 0.3);

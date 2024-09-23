@@ -324,6 +324,7 @@ export default memo(function DuoContent(props) {
                 <SummaryItem className="points-and-yield-selector">
                   <Select
                     {...{
+                      noLabel: true,
                       options: Object.values(PointsAndYield).map((it) => ({
                         text: it.label,
                         value: it.key
@@ -362,6 +363,7 @@ export default memo(function DuoContent(props) {
                       />
                       <Select
                         {...{
+                          noLabel: true,
                           options: state.options,
                           value: state.options.find((obj) => obj.value === state.curToken),
                           onChange: (option) => {

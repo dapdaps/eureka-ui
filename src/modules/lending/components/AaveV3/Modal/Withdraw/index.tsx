@@ -179,15 +179,10 @@ const WithdrawModal = (props: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
               formatAddAction(shownAmount, status, transactionHash);
+              onRequestClose();
               onActionSuccess({
                 msg: `You withdraw ${parseFloat(Big(shownAmount).toFixed(8))} ${symbol}`,
-                step1: true,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -199,8 +194,8 @@ const WithdrawModal = (props: any) => {
           })
           .catch((err: any) => {
             console.log('tx.wait on error', err);
-            updateState({ loading: false });
-          });
+          })
+          .finally(() => updateState({ loading: false }));
       })
       .catch((err: any) => {
         console.log('withdraw(address,uint256,address) on error', err);
@@ -230,16 +225,11 @@ const WithdrawModal = (props: any) => {
           .then((res: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
+              onRequestClose();
               formatAddAction(shownAmount, status, transactionHash);
               onActionSuccess({
                 msg: `You withdraw ${parseFloat(Big(shownAmount).toFixed(8))} ${symbol}`,
-                step1: true,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -251,8 +241,8 @@ const WithdrawModal = (props: any) => {
           })
           .catch((err: any) => {
             console.log('tx.wait on error', err);
-            updateState({ loading: false });
-          });
+          })
+          .finally(() => updateState({ loading: false }));
       })
       .catch((err: any) => {
         console.log('wrappedTokenGateway.withdrawETH on error', err);
@@ -471,7 +461,7 @@ const WithdrawModal = (props: any) => {
                         });
                       }
                     })
-                    .catch(() => updateState({ loading: false }));
+                    .finally(() => updateState({ loading: false }));
                 })
                 .catch(() => updateState({ loading: false }));
             }}
@@ -500,7 +490,9 @@ const WithdrawModal = (props: any) => {
                 withdrawErc20(underlyingAsset, actualAmount, shownAmount);
               }
             }}
-          />
+          >
+            {`Withdraw ${symbol}`}
+          </PrimaryButton>
         )}
       </WithdrawContainer>
     </BaseModal>

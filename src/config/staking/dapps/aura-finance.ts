@@ -31,8 +31,8 @@ const networks = {
         Balancer_Pool_ID: '0x4683e340a8049261057d5ab1b29c8d840e75695e00020000000000000000005a',
         Aura_Pool_ID: 15,
         poolType: POOL_TYPES.WeightedPool,
-        APR: 0.0426,
-        pjAPR: 0.051
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'COW-wstETH',
@@ -44,8 +44,8 @@ const networks = {
         Balancer_Pool_ID: '0x4cdabe9e07ca393943acfb9286bbbd0d0a310ff600020000000000000000005c',
         Aura_Pool_ID: 20,
         poolType: POOL_TYPES.WeightedPool,
-        APR: 0.1648,
-        pjAPR: 0.1431
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'USDT-sDAI-USDC',
@@ -57,8 +57,8 @@ const networks = {
         Balancer_Pool_ID: '0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655000000000000000000000066',
         Aura_Pool_ID: 21,
         poolType: POOL_TYPES.ComposableStablePool,
-        APR: 0.0814,
-        pjAPR: 0.1512
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'wstETH-sDAI',
@@ -70,8 +70,8 @@ const networks = {
         Balancer_Pool_ID: '0xbc2acf5e821c5c9f8667a36bb1131dad26ed64f9000200000000000000000063',
         Aura_Pool_ID: 19,
         poolType: POOL_TYPES.WeightedPool,
-        APR: 0.3045,
-        pjAPR: 0.3149
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'crvUSD-sDAI',
@@ -83,8 +83,8 @@ const networks = {
         Balancer_Pool_ID: '0xc9f00c3a713008ddf69b768d90d4978549bfdf9400000000000000000000006d',
         Aura_Pool_ID: 23,
         poolType: POOL_TYPES.ComposableStablePool,
-        APR: 0.1874,
-        pjAPR: 0.1919
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'sDAI-EURe',
@@ -96,8 +96,8 @@ const networks = {
         Balancer_Pool_ID: '0xdd439304a77f54b1f7854751ac1169b279591ef7000000000000000000000064',
         Aura_Pool_ID: 18,
         poolType: POOL_TYPES.ComposableStablePool,
-        APR: 0.1959,
-        pjAPR: 0.2103
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'WETH-wstETH',
@@ -109,8 +109,8 @@ const networks = {
         Balancer_Pool_ID: '0xbad20c15a773bf03ab973302f61fabcea5101f0a000000000000000000000034',
         Aura_Pool_ID: 0,
         poolType: POOL_TYPES.WeightedPool,
-        APR: 0.0538,
-        pjAPR: 0.0705
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'AURA-wstETH-BAL',
@@ -122,8 +122,8 @@ const networks = {
         Balancer_Pool_ID: '0x00df7f58e1cf932ebe5f54de5970fb2bdf0ef06d00010000000000000000005b',
         Aura_Pool_ID: 17,
         poolType: POOL_TYPES.WeightedPool,
-        APR: 0.3023,
-        pjAPR: 0.286
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'staBAL3-WETH-WBTC',
@@ -135,8 +135,8 @@ const networks = {
         Balancer_Pool_ID: '0x66888e4f35063ad8bb11506a6fde5024fb4f1db0000100000000000000000053',
         Aura_Pool_ID: 13,
         poolType: POOL_TYPES.WeightedPool,
-        APR: 0.2384,
-        pjAPR: 0.1619
+        APR: 0,
+        pjAPR: 0
       },
       {
         poolName: 'stEUR-EURe',
@@ -148,35 +148,9 @@ const networks = {
         Balancer_Pool_ID: '0x06135a9ae830476d3a941bae9010b63732a055f4000000000000000000000065',
         Aura_Pool_ID: 22,
         poolType: POOL_TYPES.ComposableStablePool,
-        APR: 0.1426,
-        pjAPR: 0.156
+        APR: 0,
+        pjAPR: 0
       }
-      // {
-      //   poolName: 'staBAL3-EURe',
-      //   Rewards_contract_address: '0xf4116f1be90057e6f85b0dcc14c47c84cc4575da',
-      //   Rewards_depositor_contract_address: '0x0fec3d212bcc29ef3e505b555d7a7343df0b7f76',
-      //   LP_token_address: '0x0c1b9ce6bf6c01f587c2ee98b0ef4b20c6648753',
-      //   Balancer_Gauge: '0x492cd2290e5b971eab622d6325cef6a329cf8a58',
-      //   Aura_Stash: '0x727d3d124bc9880d06aa7508c78c2c1f4e7369b2',
-      //   Balancer_Pool_ID: '0x0c1b9ce6bf6c01f587c2ee98b0ef4b20c6648753000000000000000000000050',
-      //   Aura_Pool_ID: 14,
-      //   poolType: POOL_TYPES.ComposableStablePool,
-      //   APR: 0.0538,
-      //   pjAPR: 0.0605,
-      // },
-      // {
-      //   poolName: 'staBAL3-GNO',
-      //   Rewards_contract_address: '0x7e6ccd111b56dd650af9d598e23f0cb0da7e59e7',
-      //   Rewards_depositor_contract_address: '0x0fec3d212bcc29ef3e505b555d7a7343df0b7f76',
-      //   LP_token_address: '0x274dedb9356c3e1e24bfe2bf3d4349fbdbfa0d14',
-      //   Balancer_Gauge: '0x4489dc0ff2a43023f2a85efdc4614d250612dd0d',
-      //   Aura_Stash: '0x429dc5616f9c78131a4bb592b1a0eb6f5e996c0e',
-      //   Balancer_Pool_ID: '0x274dedb9356c3e1e24bfe2bf3d4349fbdbfa0d14000200000000000000000054',
-      //   Aura_Pool_ID: 12,
-      //   poolType: POOL_TYPES.WeightedPool,
-      //   APR: 0.0538,
-      //   pjAPR: 0.0605,
-      // },
     ],
     TOKENS: tokenMapping,
     markets: {

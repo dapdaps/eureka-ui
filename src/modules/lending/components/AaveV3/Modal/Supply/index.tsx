@@ -86,7 +86,7 @@ const Max = styled.span`
   cursor: pointer;
 `;
 
-const MIN_ETH_GAS_FEE = 0.001;
+const MIN_ETH_GAS_FEE = 0.00001;
 const ROUND_DOWN = 0;
 
 const SupplyModal = (props: any) => {
@@ -228,7 +228,7 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI.body,
+          config.wrappedTokenGatewayV3ABI,
           provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
@@ -241,14 +241,10 @@ const SupplyModal = (props: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
+              onRequestClose();
               onActionSuccess({
                 msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -260,11 +256,10 @@ const SupplyModal = (props: any) => {
           })
           .catch((err: any) => {
             console.log('tx.wait on error', err);
-            updateState({ loading: false });
-          });
+          })
+          .finally(() => updateState({ loading: false }));
       })
       .catch((err: any) => {
-        console.log('wrappedTokenGateway.depositETH on error', err);
         updateState({ loading: false });
       });
   }
@@ -279,7 +274,7 @@ const SupplyModal = (props: any) => {
       .then((address: any) => {
         const wrappedTokenGateway = new ethers.Contract(
           config.wrappedTokenGatewayV3Address,
-          config.wrappedTokenGatewayV3ABI.body,
+          config.wrappedTokenGatewayV3ABI,
           provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
@@ -291,15 +286,11 @@ const SupplyModal = (props: any) => {
           .then((res: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
+              onRequestClose();
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
               onActionSuccess({
                 msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -309,7 +300,7 @@ const SupplyModal = (props: any) => {
               });
             }
           })
-          .catch(() => updateState({ loading: false }));
+          .finally(() => updateState({ loading: false }));
       })
       .catch(() => updateState({ loading: false }));
   }
@@ -384,7 +375,6 @@ const SupplyModal = (props: any) => {
   }
 
   function update() {
-    console.log('---', config.nativeCurrency, symbol === config.nativeCurrency.symbol);
     if (supportPermit) {
       return;
     }
@@ -421,15 +411,11 @@ const SupplyModal = (props: any) => {
                 .then((res: any) => {
                   const { status, transactionHash } = res;
                   if (status === 1) {
+                    onRequestClose();
                     formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
                     onActionSuccess({
                       msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                      callback: () => {
-                        onRequestClose();
-                        updateState({
-                          loading: false
-                        });
-                      }
+                      step1: true
                     });
                     console.log('tx succeeded', res);
                   } else {
@@ -446,9 +432,9 @@ const SupplyModal = (props: any) => {
                 .finally(() => updateState({ loading: false }));
             })
             .catch((err: any) => {
+              updateState({ loading: false });
               console.log('tx.wait on error depositErc20', err);
-            })
-            .finally(() => updateState({ loading: false }));
+            });
         } else {
           const token = underlyingAsset;
           signERC20Approval(userAddress, token, tokenName, amount, deadline)
@@ -461,15 +447,11 @@ const SupplyModal = (props: any) => {
                   const { status, transactionHash } = res;
                   console.log('SUCCESS--', status, transactionHash);
                   if (status === 1) {
+                    onRequestClose();
                     formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
                     onActionSuccess({
                       msg: `You supplied ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                      callback: () => {
-                        onRequestClose();
-                        updateState({
-                          loading: false
-                        });
-                      }
+                      step1: true
                     });
                     console.log('tx succeeded', res);
                   } else {
@@ -481,7 +463,6 @@ const SupplyModal = (props: any) => {
                 })
                 .catch((err: any) => {
                   console.log('tx.wait on error depositErc20', err);
-                  updateState({ loading: false });
                 })
                 .finally(() => updateState({ loading: false }));
             })
@@ -493,10 +474,22 @@ const SupplyModal = (props: any) => {
       });
   }
 
-  const maxValue =
-    symbol === config.nativeCurrency.symbol
-      ? Big(balance).minus(MIN_ETH_GAS_FEE).toFixed(decimals)
-      : Big(balance).toFixed(decimals);
+  function smartFormatNumber(value: Big, decimals: number): string {
+    const formatted = value.toFixed(decimals).replace(/\.?0+$/, '');
+    return formatted.includes('.') ? formatted : formatted + '.0';
+  }
+
+  function calculateMaxValue(balance: string, symbol: string, decimals: number, config: any): string {
+    const balanceBig = new Big(balance);
+
+    if (symbol === config.nativeCurrency.symbol) {
+      return smartFormatNumber(balanceBig.minus(MIN_ETH_GAS_FEE), decimals);
+    } else {
+      return smartFormatNumber(balanceBig, decimals);
+    }
+  }
+
+  const maxValue = calculateMaxValue(balance, symbol, decimals, config);
 
   const updateNewHealthFactor = debounce((amount: any) => {
     updateState({ newHealthFactor: '-' });
@@ -513,7 +506,10 @@ const SupplyModal = (props: any) => {
     Number(state.amount) === 0;
 
   const changeValue = (value: any) => {
-    if (!isValid(value)) return updateState({ amount: '' });
+    if (!isValid(value)) {
+      updateState({ amount: '', amountInUSD: '0.00', newHealthFactor: '-' });
+      return;
+    }
 
     if (Big(value).gte(Big(maxValue))) {
       value = maxValue;
@@ -522,22 +518,16 @@ const SupplyModal = (props: any) => {
       value = '0';
     }
 
-    if (isValid(value)) {
-      const amountInUSD = Big(value)
-        .mul(prices[symbol] || 1)
-        .toFixed(2, ROUND_DOWN);
-      updateState({
-        amountInUSD
-      });
+    const amountInUSD = Big(value)
+      .mul(prices[symbol] || 1)
+      .toFixed(2, ROUND_DOWN);
 
-      updateNewHealthFactor(value);
-    } else {
-      updateState({
-        amountInUSD: '0.00',
-        newHealthFactor: '-'
-      });
-    }
-    updateState({ amount: value });
+    updateState({
+      amount: value,
+      amountInUSD
+    });
+
+    updateNewHealthFactor(value);
   };
 
   useEffect(() => {
@@ -556,14 +546,7 @@ const SupplyModal = (props: any) => {
         <RoundedCard title="Amount">
           <FlexBetween>
             <TokenTexture>
-              <Input
-                type="number"
-                value={state.amount}
-                onChange={(e) => {
-                  changeValue(e.target.value);
-                }}
-                placeholder="0"
-              />
+              <Input type="text" value={state.amount} onChange={(e) => changeValue(e.target.value)} placeholder="0" />
             </TokenTexture>
             <TokenWrapper>
               <img width={26} height={26} src={data?.icon} />
@@ -634,9 +617,10 @@ const SupplyModal = (props: any) => {
                         });
                       }
                     })
-                    .catch(() => updateState({ loading: false }));
+                    .catch(() => updateState({ loading: false }))
+                    .finally(() => updateState({ loading: false }));
                 })
-                .finally(() => updateState({ loading: false }));
+                .catch(() => updateState({ loading: false }));
             }}
           >
             Approve {symbol}

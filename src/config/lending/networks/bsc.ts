@@ -6,7 +6,9 @@ import filda from '../dapps/filda';
 import granary from '../dapps/granary-finance';
 import liqee from '../dapps/liqee';
 import radiant from '../dapps/radiant';
+import ValasFinance from '../dapps/valas-finance';
 import venus from '../dapps/venus';
+import WePiggy from '../dapps/we-piggy';
 
 const CHAIN_ID = 56;
 const CHAIN_NAME = 'BNB';
@@ -20,33 +22,41 @@ export default {
     noAccountTips: 'BNB Chain Lending Collection',
     wrongNetworkTips: 'To proceed, kindly switch to BNB Chain.',
     chainId: CHAIN_ID,
-    chainName: CHAIN_NAME,
+    chainName: CHAIN_NAME
   },
   defaultDapp: 'Venus',
   dapps: {
     Venus: {
       ...venus.basic,
-      ...venus.networks[CHAIN_ID],
+      ...venus.networks[CHAIN_ID]
     },
     'C.R.E.A.M.': {
       ...cream.basic,
-      ...cream.networks[CHAIN_ID],
+      ...cream.networks[CHAIN_ID]
     },
     Radiant: {
       ...radiant.basic,
-      ...radiant.networks[CHAIN_ID],
+      ...radiant.networks[CHAIN_ID]
     },
     'Granary Finance': {
       ...granary.basic,
-      ...granary.networks[CHAIN_ID],
+      ...granary.networks[CHAIN_ID]
     },
     FilDA: {
       ...filda.basic,
-      ...filda.networks[CHAIN_ID],
+      ...filda.networks[CHAIN_ID]
     },
     Liqee: {
       ...liqee.basic,
-      ...liqee.networks[CHAIN_ID],
+      ...liqee.networks[CHAIN_ID]
     },
-  },
+    WePiggy: {
+      ...WePiggy.basic,
+      ...WePiggy.networks[CHAIN_ID]
+    },
+    'Valas Finance': {
+      ...ValasFinance.basic,
+      ...ValasFinance.networks[CHAIN_ID]
+    }
+  }
 };

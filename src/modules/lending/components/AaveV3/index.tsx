@@ -4,11 +4,14 @@ import { useEffect, useMemo, useState } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import Loading from '@/modules/components/Loading';
+import Spinner from '@/modules/components/Spinner';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
+import { TabKey } from '@/modules/lending/models';
 
 import type { DexProps } from '../../models/dex.model';
 import RewardsTable from './Cards/RewardsTable';
 import Chain from './Chain';
+import { useIsolateStore } from './hooks/useIsolateStore';
 import Markets from './Markets';
 import AlertModal from './Modal/Alert';
 import ReloadModal from './Modal/Reload';
@@ -24,6 +27,7 @@ export interface Props extends DexProps {
   chainIdNotSupport?: boolean;
   GAS_LIMIT_RECOMMENDATIONS: any;
   refresh?: () => void;
+  tab: TabKey;
 }
 
 const AaveV3 = (props: Props) => {
@@ -42,9 +46,12 @@ const AaveV3 = (props: Props) => {
     from,
     prices,
     GAS_LIMIT_RECOMMENDATIONS,
-    refresh
+    refresh,
+    tab
   } = props;
   const [config, setConfig] = useState<any>(null);
+
+  const setIsolateStore = useIsolateStore((store) => store.set);
 
   const fetchConfig = async () => {
     const { CONTRACT_ABI = {} } = dexConfig || {};
@@ -108,7 +115,6 @@ const AaveV3 = (props: Props) => {
     healthFactor: '',
     availableBorrowsUSD: '',
 
-    selectTab: 'MARKET', // MARKET | YOURS | Stake
     fresh: 0, // fresh rewards
     yourSupplyApy: 0,
     yourBorrowApy: 0,
@@ -166,7 +172,6 @@ const AaveV3 = (props: Props) => {
         console.log('gasEstimation error');
       });
   };
-  // YourSupplies/YourBorrows
   // - onActionSuccess -- start
   const getYourSupplies = () => {
     const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
@@ -323,7 +328,7 @@ const AaveV3 = (props: Props) => {
         })
           .then((res: any) => {
             console.log('getCollateralStatus-res:', res);
-            const [[rawStatus], [addrs]] = res;
+            const [[rawStatus] = [null], [addrs] = []] = res.map((item: any) => item ?? []);
             if (rawStatus) {
               const _status = parseInt(rawStatus.toString()).toString(2).split('');
               // console.log("_status--", _status);
@@ -353,6 +358,9 @@ const AaveV3 = (props: Props) => {
                 yourSupplies: _yourSupplies,
                 yourTotalCollateral
               }));
+              setIsolateStore({
+                data: _yourSupplies
+              });
             } else {
               updateState((prev: any) => ({
                 ...prev,
@@ -509,7 +517,7 @@ const AaveV3 = (props: Props) => {
     return balanceProvider.batchBalanceOf([userAddress], tokenAddresses);
   };
   const onActionSuccess = ({ msg, callback, step1 }: any) => {
-    console.log('onActionSuccess--');
+    console.log('onActionSuccess--', msg, callback, step1);
     // update data if action finishes
     getUserBalance();
 
@@ -531,7 +539,7 @@ const AaveV3 = (props: Props) => {
       if (msg) {
         updateState({ alertModalText: msg });
       }
-    }, 5000);
+    }, 500);
   };
   // - onActionSuccess -- end
   // - calcHealthFactor -- start
@@ -584,21 +592,8 @@ const AaveV3 = (props: Props) => {
 
   return (
     <Wrap>
-      <FlexContainer>
-        <TabSwitcher
-          theme={dexConfig?.theme}
-          select={state.selectTab}
-          from={from}
-          setSelect={(tabName: any) => updateState({ selectTab: tabName })}
-        />
-        {from === 'layer' ? null : (
-          <ChainsWrap>
-            <Chain chains={CHAIN_LIST} curChain={curChain} onSwitchChain={onSwitchChain} />
-          </ChainsWrap>
-        )}
-      </FlexContainer>
-      {state.loading && <Loading size={16} />}
-      {state.selectTab === 'MARKET' && (
+      {state.loading && <Spinner />}
+      {tab === TabKey.Market && (
         <>
           <Markets
             config={config}
@@ -614,7 +609,7 @@ const AaveV3 = (props: Props) => {
           />
         </>
       )}
-      {state.selectTab === 'YOURS' && (
+      {tab === TabKey.Yours && (
         <>
           <HeroData
             config={config}
@@ -719,6 +714,7 @@ const AaveV3 = (props: Props) => {
                 gasEstimation={gasEstimation}
                 healthFactor={state.healthFactor}
                 prices={prices}
+                dexConfig={dexConfig}
               />
             </YoursTableWrapper>
           </Yours>

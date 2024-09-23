@@ -10,7 +10,7 @@ const LendingMarketInput = (props: Props) => {
 
   return (
     <StyledBox>
-      <div>
+      <div style={{ flexGrow: 1 }}>
         <StyledInput
           placeholder="0.0"
           value={amount || ''}
@@ -31,25 +31,20 @@ const LendingMarketInput = (props: Props) => {
         </StyledValue>
       </div>
       <StyledRight>
-        <LendingMarketAsset
-          icon={icon}
-          symbol={symbol}
-        />
+        <LendingMarketAsset icon={icon} symbol={symbol} />
 
         <StyledBalance>
           Balance:
           <StyledBalanceAmount
             onClick={() => {
-              const _bal = Big(balance).toFixed(decimals).replace(/[.]?0*$/, '');
+              const _bal = Big(balance)
+                .toFixed(decimals, 0)
+                .replace(/[.]?0*$/, '');
               onChange(_bal);
             }}
           >
-            <LendingTotal
-              total={balance}
-              digit={2}
-              unit=""
-            />{' '}
-          </StyledBalanceAmount>
+            <LendingTotal total={balance} digit={2} unit="" />
+          </StyledBalanceAmount>{' '}
           {symbol}
         </StyledBalance>
       </StyledRight>

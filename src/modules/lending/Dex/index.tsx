@@ -22,8 +22,20 @@ interface ILendingProps {
 interface RenderLendingComponentProps extends ILendingProps {
   type: DexType;
   tab?: string;
+  refreshKey?: string;
+  wethAddress?: string;
 }
 
+const DexComponentMap: Partial<Record<DexType, React.ComponentType<any>>> = {
+  [DexType.CompoundV3]: LendingCompoundV3,
+  [DexType.AaveV3]: LendingAaveV3
+};
+
+const RenderLendingComponent: React.FC<RenderLendingComponentProps> = ({ type, refreshKey, wethAddress, ...props }) => {
+  const Component: any = DexComponentMap[type] || LendingContent;
+
+  return <Component key={refreshKey} wethAddress={wethAddress} {...props} />;
+};
 
 const LendingDex = (props: DexProps) => {
   const { CHAIN_LIST, curChain, chainId, account, dexConfig, onSwitchChain, switchingChain, isChainSupported, from } =
@@ -37,19 +49,19 @@ const LendingDex = (props: DexProps) => {
     if (type === DexType.BorrowAndEarn) {
       return [
         { key: TabKey.Market, label: 'Borrow' },
-        { key: TabKey.Yours, label: 'Earn' },
+        { key: TabKey.Yours, label: 'Earn' }
       ];
     }
     return [
       { key: TabKey.Market, label: 'Market' },
-      { key: TabKey.Yours, label: 'Yours' },
+      { key: TabKey.Yours, label: 'Yours' }
     ];
   }, [type]);
 
   const [state, updateState] = useMultiState<any>({
     tab: TabKey.Market,
     refreshKey: 1,
-    curPool: pools[0]?.key,
+    curPool: pools[0]?.key
   });
 
   const handleTabChange = (tab: Tab) => {
@@ -71,61 +83,27 @@ const LendingDex = (props: DexProps) => {
     };
   }, [chainId, account, state.curPool]);
 
-  const DexComponentMap: Partial<Record<DexType, React.ComponentType<any>>> = {
-    [DexType.CompoundV3]: LendingCompoundV3,
-    [DexType.AaveV3]: LendingAaveV3,
-  };
-
-  const RenderLendingComponent: React.FC<RenderLendingComponentProps> = ({ type, ...props }) => {
-    const Component: any = DexComponentMap[type] || LendingContent;
-
-    return (
-      <Component
-        key={state.refreshKey}
-        CHAIN_LIST={CHAIN_LIST}
-        curChain={curChain}
-        wethAddress={dexConfig.wethAddress}
-        {...props}
-      />
-    );
-  };
-
   return (
     <StyledContainer style={dexConfig.theme}>
-      {
-        type !== DexType.AaveV3 && (
-          <StyledHeader>
-          <LendingCardTabs
-            tabs={tabsArray}
-            active={state.tab}
-            onChange={handleTabChange}
-          />
-          <StyledHeaderRight>
-            {
-              pools && pools.length > 0 && (
-                <LendingPools
-                  pools={pools}
-                  curPool={state.curPool}
-                  onSwitchPool={handlePoolChange}
-                />
-              )
-            }
-            <LendingChains
-              chains={CHAIN_LIST}
-              curChain={curChain}
-              onSwitchChain={onSwitchChain}
-              from={from}
-            />
-          </StyledHeaderRight>
-        </StyledHeader>
-        )
-      }
+      <StyledHeader>
+        {type !== DexType.CompoundV3 && (
+          <LendingCardTabs tabs={tabsArray} active={state.tab} onChange={handleTabChange} />
+        )}
+        <StyledHeaderRight>
+          {pools && pools.length > 0 && (
+            <LendingPools pools={pools} curPool={state.curPool} onSwitchPool={handlePoolChange} />
+          )}
+          <LendingChains chains={CHAIN_LIST} curChain={curChain} onSwitchChain={onSwitchChain} from={from} />
+        </StyledHeaderRight>
+      </StyledHeader>
       <RenderLendingComponent
         type={type}
         chainIdNotSupport={!isChainSupported}
         tab={state.tab}
         curPool={state.curPool}
         {...props}
+        wethAddress={dexConfig.wethAddress}
+        refreshKey={state.refreshKey}
       />
       {!isChainSupported && (
         <ChainWarningBox

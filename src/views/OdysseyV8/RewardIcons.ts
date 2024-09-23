@@ -1,46 +1,50 @@
 export default {
   andy: {
     icon: '/images/odyssey/v8/andy-hd.png',
-    label: 'Andy Tokens',
+    label: 'Andy Tokens'
   },
   baja: {
     icon: '/images/odyssey/v8/baja-hd.png',
-    label: 'Baja Tokens',
+    label: 'Baja Tokens'
   },
   blast_gold: {
     icon: '/images/odyssey/v8/gold.svg',
-    label: 'Gold',
+    label: 'Gold'
   },
   particle_points: {
     icon: '/images/odyssey/v8/particle-reward.png',
-    label: 'Particle Points',
+    label: 'Particle Points'
   },
   ring_points: {
     icon: '/images/odyssey/v8/ring.svg',
-    label: 'Ring Points',
+    label: 'Ring Points'
   },
   rings: {
     icon: '/images/odyssey/v8/fenix-credit-hd.png',
-    label: 'Fenix Rings',
+    label: 'Fenix Rings'
   },
   thruster_credits: {
     icon: '/images/odyssey/v8/credit.svg',
-    label: 'Thruster Credits',
+    label: 'Thruster Credits'
   },
   veblade: {
     icon: '/images/odyssey/v8/logo-bladeswap-hd.png',
-    label: 'veBlade',
+    label: 'veBlade'
   },
   yield: {
     icon: '/images/odyssey/v8/yield-hd.png',
-    label: 'Crypto Valleys Yield token',
+    label: 'Crypto Valleys Yield token'
   },
   USDC: {
     icon: '/images/odyssey/v5/mastery/coin/usdc.svg',
-    label: 'USDC',
+    label: 'USDC'
   },
   SMD: {
     icon: '/images/odyssey/v5/mastery/temp/smd.svg',
-    label: '$SMD',
+    label: '$SMD'
   },
+  USDT: {
+    icon: '/images/tokens/usdt.png',
+    label: 'USDT'
+  }
 } as any;

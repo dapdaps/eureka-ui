@@ -86,7 +86,6 @@ const ApproveABI = [
 
 export default memo(function Stake(props) {
   const { data, account, provider, TOKENS, toast, addAction } = props;
-
   // curToken: token address
   const { poolType, tokenAddress: curToken, tokenAddress, StakingAddress } = data;
   const [state, updateState] = useMultiState({
@@ -336,12 +335,14 @@ export default memo(function Stake(props) {
   useAllowance({
     tokenAddress: curToken,
     owner: account,
+    provider,
     spender: StakingAddress,
     updateAllowance
   });
   useGetTokenBalance({
     tokenAddress: curToken,
     owner: account,
+    provider,
     updateTokenBalance
   });
   useEffect(() => {
@@ -379,7 +380,7 @@ export default memo(function Stake(props) {
         canStake: false
       });
     }
-  }, [state.isApproved, state.inputValue]);
+  }, [state.isApproved]);
 
   return (
     <StakePanel>

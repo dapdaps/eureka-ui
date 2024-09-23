@@ -5,7 +5,7 @@ import Loading from '@/modules/components/Loading';
 import CompoundV3Detail from '@/modules/lending/components/CompoundV3/Detail';
 import CompoundV3List from '@/modules/lending/components/CompoundV3/List';
 import { useDynamicLoader, useMultiState } from '@/modules/lending/hooks';
-import type { DexProps } from '@/modules/lending/models';
+import type { DexProps, TabKey } from '@/modules/lending/models';
 
 import { StyledContainer } from './styles';
 
@@ -21,9 +21,10 @@ const LendingCompoundV3 = (props: Props) => {
     toast,
     chainId,
     curChain,
+    tab,
     curPool
   } = props;
-  
+
   const { provider } = useAccount();
   const [Data] = useDynamicLoader({ path: '/lending/datas', name: dexConfig.loaderName });
 
@@ -36,7 +37,7 @@ const LendingCompoundV3 = (props: Props) => {
     updateState({
       loading: !chainIdNotSupport
     });
-  }, [chainIdNotSupport]);
+  }, [chainIdNotSupport, tab]);
 
   const handleClickRow = (data: any) => {
     updateState({
@@ -69,41 +70,31 @@ const LendingCompoundV3 = (props: Props) => {
           }}
         />
       )}
-      {!state.rowData && (
-        <CompoundV3List
-          assets={state.assets || []}
-          onClickRow={handleClickRow}
-          curChain={curChain}
+      {!state.rowData && <CompoundV3List assets={state.assets || []} onClickRow={handleClickRow} curChain={curChain} />}
+
+      {state.loading && <Loading />}
+
+      {Data && (
+        <Data
+          provider={provider}
+          update={state.loading}
+          account={account}
+          wethAddress={wethAddress}
+          multicallAddress={multicallAddress}
+          multicall={multicall}
+          chainId={chainId}
+          curPool={curPool}
+          {...dexConfig}
+          onLoad={(data: any) => {
+            console.log('DATA_onLoad:', data);
+            updateState({
+              loading: false,
+              timestamp: Date.now(),
+              ...data
+            });
+          }}
         />
       )}
-
-      {state.loading && (
-        <Loading />
-      )}
-
-      {
-        Data && (
-          <Data
-            provider={provider}
-            update={state.loading}
-            account={account}
-            wethAddress={wethAddress}
-            multicallAddress={multicallAddress}
-            multicall={multicall}
-            chainId={chainId}
-            curPool={curPool}
-            {...dexConfig}
-            onLoad={(data: any) => {
-              console.log('DATA_onLoad:', data);
-              updateState({
-                loading: false,
-                timestamp: Date.now(),
-                ...data
-              });
-            }}
-          />
-        )
-      }
     </StyledContainer>
   );
 };
@@ -112,4 +103,5 @@ export default LendingCompoundV3;
 
 export interface Props extends DexProps {
   chainIdNotSupport?: boolean;
+  tab: TabKey;
 }

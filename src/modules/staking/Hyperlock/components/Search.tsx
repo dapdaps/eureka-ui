@@ -3,7 +3,7 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 import { useMultiState } from '@/modules/hooks';
-const Search = styled.div`
+const StyledSearch = styled.div`
   position: absolute;
   right: 0px;
   top: 0px;
@@ -45,7 +45,7 @@ export default memo(function Search(props) {
   const debouncedOnChange = debounce?.(props.onChange, 500);
 
   return (
-    <Search>
+    <StyledSearch>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="21"
@@ -72,6 +72,6 @@ export default memo(function Search(props) {
           debouncedOnChange(ev.target.value);
         }}
       />
-    </Search>
+    </StyledSearch>
   );
 });

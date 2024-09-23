@@ -138,6 +138,10 @@ const nextConfig = {
     {
       source: '/api/sma-steth-apr',
       destination: 'https://stake.lido.fi/api/sma-steth-apr'
+    },
+    {
+      source: '/api/meth.mantle.xyz/:path*',
+      destination: 'https://meth.mantle.xyz/api/:path*'
     }
   ],
   images: {

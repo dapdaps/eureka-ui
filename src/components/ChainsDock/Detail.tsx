@@ -197,6 +197,16 @@ const Detail = (props: DetailProps) => {
             {!isSupported && <StyledComingSoon>Coming soon...</StyledComingSoon>}
           </StyledFlex>
         </StyledFlex>
+        <StyledFlex justifyContent="center" style={{ padding: '0 17px 12px' }}>
+          <Link
+            href="/campaign/home?category=rubic-holdstation"
+            style={{
+              width: '100%',
+              height: 49,
+              background: 'url("/images/campaign/rubic-holdstation/banner-link-chain.png") no-repeat center / contain'
+            }}
+          ></Link>
+        </StyledFlex>
         <StyledFoot>
           <StyledButton onClick={() => handleSuperBridge('in')}>Bridge in</StyledButton>
           <StyledButton onClick={() => handleSuperBridge('out')}>Bridge out</StyledButton>

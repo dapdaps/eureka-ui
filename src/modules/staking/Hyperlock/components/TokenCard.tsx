@@ -4,6 +4,7 @@ import { memo } from 'react';
 import styled from 'styled-components';
 
 import Loading from '@/modules/components/Loading';
+import { formatValueDecimal } from '@/utils/formate';
 
 import PoolIcons from './PoolIcons';
 const StyledContainer = styled.div`

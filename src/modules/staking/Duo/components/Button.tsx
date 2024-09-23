@@ -559,9 +559,62 @@ export default memo(function DuoButton(props) {
       return actionText;
     }
   }
+  function handleApprove() {
+    const toastId = toast?.loading({
+      title: `Approve ${tokenSymbol}`
+    });
+    updateState({
+      approving: true
+    });
+
+    const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
+    TokenContract.approve(spender, parseUnits(amountShown, tokenDecimals))
+      .then((tx) => {
+        tx.wait()
+          .then((res) => {
+            const { status, transactionHash } = res;
+            toast?.dismiss(toastId);
+            if (status !== 1) throw new Error('');
+            updateState({
+              isApproved: true,
+              approving: false
+            });
+            toast?.success({
+              title: 'Approve Successfully!',
+              // text: `Approve ${Big(amountShown).toFixed(2)} ${tokenSymbol}`,
+              tx: transactionHash,
+              chainId
+            });
+          })
+          .catch((err) => {
+            updateState({
+              isApproved: false,
+              approving: false
+            });
+          });
+      })
+      .catch((err) => {
+        updateState({
+          isApproved: false,
+          approving: false
+        });
+        toast?.dismiss(toastId);
+        toast?.fail({
+          title: 'Approve Failed!',
+          text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
+        });
+        onLoad?.(false);
+      });
+  }
   function render() {
     if (!actionText) return;
-
+    if (!state.isApproved) {
+      return (
+        <Button onClick={handleApprove} disabled={state.approving}>
+          {state.approving ? <Loading size={16} /> : 'Approve'}
+        </Button>
+      );
+    }
     if (!amount) {
       return (
         <Button disabled={true} className={actionText.toLowerCase()}>
@@ -577,60 +630,6 @@ export default memo(function DuoButton(props) {
   }
 
   useEffect(() => {
-    if (!state.isApproved) {
-      function handleApprove() {
-        const toastId = toast?.loading({
-          title: `Approve ${tokenSymbol}`
-        });
-        updateState({
-          approving: true
-        });
-
-        const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
-        TokenContract.approve(spender, parseUnits(amountShown, tokenDecimals))
-          .then((tx) => {
-            tx.wait()
-              .then((res) => {
-                const { status, transactionHash } = res;
-                toast?.dismiss(toastId);
-                if (status !== 1) throw new Error('');
-                updateState({
-                  isApproved: true,
-                  approving: false
-                });
-                toast?.success({
-                  title: 'Approve Successfully!',
-                  // text: `Approve ${Big(amountShown).toFixed(2)} ${tokenSymbol}`,
-                  tx: transactionHash,
-                  chainId
-                });
-              })
-              .catch((err) => {
-                updateState({
-                  isApproved: false,
-                  approving: false
-                });
-              });
-          })
-          .catch((err) => {
-            updateState({
-              isApproved: false,
-              approving: false
-            });
-            toast?.dismiss(toastId);
-            toast?.fail({
-              title: 'Approve Failed!',
-              text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
-            });
-            onLoad?.(false);
-          });
-      }
-      return (
-        <Button onClick={handleApprove} disabled={state.approving}>
-          {state.approving ? <Loading size={16} /> : 'Approve'}
-        </Button>
-      );
-    }
     updateState({
       approving: false,
       isApproved: false

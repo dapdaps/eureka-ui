@@ -1,8 +1,10 @@
 import dynamic from 'next/dynamic';
-import type { ComponentType } from 'react';
+import type { ComponentType, Dispatch, SetStateAction } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 
-export function useDynamicLoader<ComProps = any>(props: Props): [ComponentType<ComProps> | undefined] {
+export function useDynamicLoader<ComProps = any>(
+  props: Props
+): [ComponentType<ComProps> | undefined, Dispatch<SetStateAction<ComponentType<ComProps> | undefined>>] {
   const { path, name } = props;
 
   const _path = path.replace(/^\/+|\/+$/g, '');
@@ -19,7 +21,7 @@ export function useDynamicLoader<ComProps = any>(props: Props): [ComponentType<C
     getCom();
   }, []);
 
-  return [Com];
+  return [Com, setCom];
 }
 
 interface Props {

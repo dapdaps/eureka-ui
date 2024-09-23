@@ -8,21 +8,21 @@ const OTOKEN_ABI = [
     name: 'totalSupply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'totalBorrows',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'exchangeRateCurrent',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
@@ -31,25 +31,25 @@ const OTOKEN_ABI = [
       { internalType: 'uint256', name: '', type: 'uint256' },
       { internalType: 'uint256', name: '', type: 'uint256' },
       { internalType: 'uint256', name: '', type: 'uint256' },
-      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'supplyRatePerBlock',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'borrowRatePerBlock',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const UNITROLLER_ABI = [
   {
@@ -61,13 +61,13 @@ const UNITROLLER_ABI = [
       {
         internalType: 'uint256',
         name: 'collateralFactorMantissa',
-        type: 'uint256',
+        type: 'uint256'
       },
-      { internalType: 'bool', name: 'isQied', type: 'bool' },
+      { internalType: 'bool', name: 'isQied', type: 'bool' }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -75,37 +75,37 @@ const UNITROLLER_ABI = [
       {
         internalType: 'contract IOToken',
         name: 'oToken',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'checkMembership',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
     inputs: [
       { internalType: 'uint8', name: '', type: 'uint8' },
-      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'address', name: '', type: 'address' }
     ],
     name: 'supplyRewardSpeeds',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
     inputs: [
       { internalType: 'uint8', name: '', type: 'uint8' },
-      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'address', name: '', type: 'address' }
     ],
     name: 'borrowRewardSpeeds',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -114,7 +114,7 @@ const UNITROLLER_ABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -123,8 +123,8 @@ const UNITROLLER_ABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const ORACLE_ABI = [
   {
@@ -132,14 +132,14 @@ const ORACLE_ABI = [
       {
         internalType: 'contract IOToken',
         name: 'oToken',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'getUnderlyingPrice',
     outputs: [{ internalType: 'uint256', name: 'price', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const ERC20_ABI = [
   {
@@ -147,20 +147,20 @@ const ERC20_ABI = [
     inputs: [
       {
         name: '_owner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'balanceOf',
     outputs: [
       {
         name: 'balance',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const REWARD_PRIME_ABI = [
   {
@@ -169,7 +169,7 @@ const REWARD_PRIME_ABI = [
       { internalType: 'address', name: 'user', type: 'address' },
       { internalType: 'uint256', name: 'borrow', type: 'uint256' },
       { internalType: 'uint256', name: 'supply', type: 'uint256' },
-      { internalType: 'uint256', name: 'xvsStaked', type: 'uint256' },
+      { internalType: 'uint256', name: 'xvsStaked', type: 'uint256' }
     ],
     name: 'estimateAPR',
     outputs: [
@@ -180,43 +180,43 @@ const REWARD_PRIME_ABI = [
           {
             internalType: 'uint256',
             name: 'totalScore',
-            type: 'uint256',
+            type: 'uint256'
           },
           { internalType: 'uint256', name: 'userScore', type: 'uint256' },
           {
             internalType: 'uint256',
             name: 'xvsBalanceForScore',
-            type: 'uint256',
+            type: 'uint256'
           },
           { internalType: 'uint256', name: 'capital', type: 'uint256' },
           {
             internalType: 'uint256',
             name: 'cappedSupply',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             internalType: 'uint256',
             name: 'cappedBorrow',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             internalType: 'uint256',
             name: 'supplyCapUSD',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             internalType: 'uint256',
             name: 'borrowCapUSD',
-            type: 'uint256',
-          },
+            type: 'uint256'
+          }
         ],
         internalType: 'struct IPrime.APRInfo',
         name: 'aprInfo',
-        type: 'tuple',
-      },
+        type: 'tuple'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -225,8 +225,8 @@ const REWARD_PRIME_ABI = [
       {
         internalType: 'contract ComptrollerInterface',
         name: 'comptroller',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'pendingRewards',
     outputs: [
@@ -235,41 +235,41 @@ const REWARD_PRIME_ABI = [
           {
             internalType: 'address',
             name: 'distributorAddress',
-            type: 'address',
+            type: 'address'
           },
           {
             internalType: 'address',
             name: 'rewardTokenAddress',
-            type: 'address',
+            type: 'address'
           },
           {
             internalType: 'uint256',
             name: 'totalRewards',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             components: [
               {
                 internalType: 'address',
                 name: 'vTokenAddress',
-                type: 'address',
+                type: 'address'
               },
-              { internalType: 'uint256', name: 'amount', type: 'uint256' },
+              { internalType: 'uint256', name: 'amount', type: 'uint256' }
             ],
             internalType: 'struct VenusLens.PendingReward[]',
             name: 'pendingRewards',
-            type: 'tuple[]',
-          },
+            type: 'tuple[]'
+          }
         ],
         internalType: 'struct VenusLens.RewardSummary',
         name: '',
-        type: 'tuple',
-      },
+        type: 'tuple'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const VenusData = (props: any) => {
@@ -288,7 +288,7 @@ const VenusData = (props: any) => {
     rewardsPrimeData,
     rewardToken,
     prices,
-    provider,
+    provider
   } = props;
 
   useEffect(() => {
@@ -324,23 +324,14 @@ const VenusData = (props: any) => {
       Object.values(_cTokensData).forEach((market: any) => {
         const underlyingPrice = _underlyPrice[market.address] || 1;
         const marketSupplyUsd = Big(market.totalSupply || 0).mul(underlyingPrice);
-        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(
-          underlyingPrice,
-        );
+        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(underlyingPrice);
         totalSupplyUsd = totalSupplyUsd.plus(marketSupplyUsd);
         totalBorrowUsd = totalBorrowUsd.plus(marketBorrowUsd);
-        userTotalSupplyUsd = userTotalSupplyUsd.plus(
-          Big(market.userSupply).mul(underlyingPrice),
-        );
-        userTotalBorrowUsd = userTotalBorrowUsd.plus(
-          Big(market.userBorrow).mul(underlyingPrice),
-        );
+        userTotalSupplyUsd = userTotalSupplyUsd.plus(Big(market.userSupply).mul(underlyingPrice));
+        userTotalBorrowUsd = userTotalBorrowUsd.plus(Big(market.userBorrow).mul(underlyingPrice));
         if (_userMerberShip[market.address]) {
           totalCollateralUsd = totalCollateralUsd.plus(
-            Big(market.userSupply)
-              .mul(underlyingPrice)
-              .mul(_loanToValue[market.address])
-              .div(100),
+            Big(market.userSupply).mul(underlyingPrice).mul(_loanToValue[market.address]).div(100)
           );
         }
         const supplyApy = Big(market.supplyRatePerBlock)
@@ -362,28 +353,28 @@ const VenusData = (props: any) => {
         const distributionSupplyApy = marketSupplyUsd.eq(0)
           ? 0
           : Big(_rewardsSupplyRate[market.address])
-            .mul(20 * 60 * 24)
-            .mul(12.28)
-            .div(marketSupplyUsd)
-            .plus(1)
-            .pow(365)
-            .minus(1)
-            .mul(100)
-            .plus(_rewardsPrimeApy[market.address]?.supplyApy || 0)
-            .toFixed(2);
+              .mul(20 * 60 * 24)
+              .mul(12.28)
+              .div(marketSupplyUsd)
+              .plus(1)
+              .pow(365)
+              .minus(1)
+              .mul(100)
+              .plus(_rewardsPrimeApy[market.address]?.supplyApy || 0)
+              .toFixed(2);
 
         const distributionBorrowApy = marketBorrowUsd.eq(0)
           ? 0
           : Big(_rewardsBorrowRate[market.address])
-            .mul(20 * 60 * 24)
-            .mul(rewardPrice)
-            .div(marketBorrowUsd)
-            .plus(1)
-            .pow(365)
-            .minus(1)
-            .mul(100)
-            .plus(_rewardsPrimeApy[market.address]?.borrowApy || 0)
-            .toFixed(2);
+              .mul(20 * 60 * 24)
+              .mul(rewardPrice)
+              .div(marketBorrowUsd)
+              .plus(1)
+              .pow(365)
+              .minus(1)
+              .mul(100)
+              .plus(_rewardsPrimeApy[market.address]?.borrowApy || 0)
+              .toFixed(2);
 
         totalAccountDistributionApy = totalAccountDistributionApy
           .plus(distributionSupplyApy)
@@ -392,7 +383,7 @@ const VenusData = (props: any) => {
         distributionApy.push({
           ...rewardToken,
           supply: distributionSupplyApy + '%',
-          borrow: distributionBorrowApy + '%',
+          borrow: distributionBorrowApy + '%'
         });
 
         markets[market.address] = {
@@ -405,7 +396,7 @@ const VenusData = (props: any) => {
           supplyApy: supplyApy.toFixed(2) + '%',
           borrowApy: borrowApy.toFixed(2) + '%',
           dapp: name,
-          distributionApy,
+          distributionApy
         };
       });
 
@@ -419,7 +410,7 @@ const VenusData = (props: any) => {
           ...rewardToken,
           dailyRewards: dailyRewards.toString(),
           price: rewardPrice,
-          unclaimed: _accountRewards.toFixed(rewardToken.decimals),
+          unclaimed: _accountRewards.toFixed(rewardToken.decimals)
         });
       }
 
@@ -430,7 +421,7 @@ const VenusData = (props: any) => {
         totalBorrowUsd: totalBorrowUsd.toString(),
         userTotalSupplyUsd: userTotalSupplyUsd.toString(),
         userTotalBorrowUsd: userTotalBorrowUsd.toString(),
-        totalCollateralUsd: totalCollateralUsd.toString(),
+        totalCollateralUsd: totalCollateralUsd.toString()
       });
     };
     const getUnitrollerData = () => {
@@ -440,22 +431,22 @@ const VenusData = (props: any) => {
         calls.push({
           address: unitrollerAddress,
           name: 'markets',
-          params: [token.address],
+          params: [token.address]
         });
         calls.push({
           address: unitrollerAddress,
           name: 'checkMembership',
-          params: [account, token.address],
+          params: [account, token.address]
         });
         calls.push({
           address: unitrollerAddress,
           name: 'venusSupplySpeeds',
-          params: [token.address],
+          params: [token.address]
         });
         calls.push({
           address: unitrollerAddress,
           name: 'venusBorrowSpeeds',
-          params: [token.address],
+          params: [token.address]
         });
       });
 
@@ -464,7 +455,7 @@ const VenusData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _loanToValue = {};
@@ -474,20 +465,21 @@ const VenusData = (props: any) => {
             const mod = i % 4;
             switch (mod) {
               case 0:
-                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(
-                  res[i] ? res[i][1]._hex : 0,
-                  16,
-                );
+                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(res[i] ? res[i][1]._hex : 0, 16);
                 break;
               case 1:
                 _userMerberShip[oTokens[index].address] = res[i] ? res[i][0] || false : false;
                 break;
               case 2:
-                _rewardsSupplyRate[oTokens[index].address] =
-                  ethers.utils.formatUnits(res[i] ? res[i][0]?._hex || 0 : 0, 18);
+                _rewardsSupplyRate[oTokens[index].address] = ethers.utils.formatUnits(
+                  res[i] ? res[i][0]?._hex || 0 : 0,
+                  18
+                );
               case 3:
-                _rewardsBorrowRate[oTokens[index].address] =
-                  ethers.utils.formatUnits(res[i] ? res[i][0]?._hex || 0 : 0, 18);
+                _rewardsBorrowRate[oTokens[index].address] = ethers.utils.formatUnits(
+                  res[i] ? res[i][0]?._hex || 0 : 0,
+                  18
+                );
               default:
             }
           }
@@ -507,21 +499,21 @@ const VenusData = (props: any) => {
       const calls = oTokens.map((token) => ({
         address: oracleAddress,
         name: 'getUnderlyingPrice',
-        params: [token],
+        params: [token]
       }));
       multicall({
         abi: ORACLE_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyPrice = {};
           for (let i = 0, len = res.length; i < len; i++) {
             _underlyPrice[oTokens[i]] = ethers.utils.formatUnits(
               res[i][0]._hex,
-              36 - markets[oTokens[i]].underlyingToken.decimals,
+              36 - markets[oTokens[i]].underlyingToken.decimals
             );
           }
           count++;
@@ -536,40 +528,30 @@ const VenusData = (props: any) => {
       let nativeOToken = '';
       const calls = assets
         .filter((market: any) => {
-          if (market.underlyingToken.address === 'native')
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== 'native'
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           address: market.underlyingToken.address,
           name: 'balanceOf',
-          params: [market.address],
+          params: [market.address]
         }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _liquidity = {};
           for (let i = 0, len = res.length; i < len; i++) {
             const oToken = markets[calls[i].params[0]];
-            _liquidity[oToken.address] = ethers.utils.formatUnits(
-              res[i][0]._hex,
-              oToken.underlyingToken.decimals,
-            );
+            _liquidity[oToken.address] = ethers.utils.formatUnits(res[i][0]._hex, oToken.underlyingToken.decimals);
           }
           if (nativeOToken) {
             provider.getBalance(nativeOToken).then((rawBalance: any) => {
-              _liquidity[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18,
-              );
+              _liquidity[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('getOTokenLiquidity');
             });
@@ -589,45 +571,34 @@ const VenusData = (props: any) => {
       let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
-          if (market.underlyingToken.address === 'native')
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== 'native'
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           ...market.underlyingToken,
-          oTokenAddress: market.address,
+          oTokenAddress: market.address
         }));
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyingBalance = {};
           for (let i = 0, len = res.length; i < len; i++) {
-            _underlyingBalance[underlyingTokens[i].oTokenAddress] = res[i] && res[i][0]
-              ? ethers.utils.formatUnits(
-                res[i][0]._hex,
-                underlyingTokens[i].decimals,
-              )
-              : '0';
+            _underlyingBalance[underlyingTokens[i].oTokenAddress] =
+              res[i] && res[i][0] ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals) : '0';
           }
           if (nativeOToken) {
             provider.getBalance(account).then((rawBalance: any) => {
-              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18,
-              );
+              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('underlyingTokens');
             });
@@ -648,66 +619,51 @@ const VenusData = (props: any) => {
       const calls = [
         {
           address: oToken.address,
-          name: 'exchangeRateCurrent',
+          name: 'exchangeRateCurrent'
         },
         {
           address: oToken.address,
-          name: 'totalSupply',
+          name: 'totalSupply'
         },
         {
           address: oToken.address,
-          name: 'totalBorrows',
+          name: 'totalBorrows'
         },
         {
           address: oToken.address,
-          name: 'supplyRatePerBlock',
+          name: 'supplyRatePerBlock'
         },
         {
           address: oToken.address,
-          name: 'borrowRatePerBlock',
+          name: 'borrowRatePerBlock'
         },
         {
           address: oToken.address,
           name: 'getAccountSnapshot',
-          params: [account],
-        },
+          params: [account]
+        }
       ];
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           oTokensLength--;
-          const exchangeRateStored = ethers.utils.formatUnits(
-            res[0][0]._hex,
-            10 + oToken.underlyingToken.decimals,
-          );
-          const userSupply = ethers.utils.formatUnits(
-            res[5][1]._hex,
-            oToken.decimals,
-          );
-          const totalSupply = ethers.utils.formatUnits(
-            res[1][0]._hex,
-            oToken.decimals,
-          );
+          const exchangeRateStored = ethers.utils.formatUnits(res[0]?.[0]._hex, 10 + oToken.underlyingToken.decimals);
+          const userSupply = ethers.utils.formatUnits(res[5]?.[1]._hex, oToken.decimals);
+          const totalSupply = ethers.utils.formatUnits(res[1]?.[0]._hex, oToken.decimals);
           _cTokensData[oToken.address] = {
             ...oToken,
             exchangeRateStored,
             totalSupply: Big(totalSupply).mul(exchangeRateStored).toString(),
-            totalBorrows: ethers.utils.formatUnits(
-              res[2][0]._hex,
-              oToken.underlyingToken.decimals,
-            ),
+            totalBorrows: ethers.utils.formatUnits(res[2]?.[0]._hex, oToken.underlyingToken.decimals),
             supplyRatePerBlock: ethers.utils.formatUnits(res[3][0]._hex, 18),
             borrowRatePerBlock: ethers.utils.formatUnits(res[4][0]._hex, 18),
             userSupply: Big(userSupply).mul(exchangeRateStored).toString(),
-            userBorrow: ethers.utils.formatUnits(
-              res[5][2]._hex,
-              oToken.underlyingToken.decimals,
-            ),
+            userBorrow: ethers.utils.formatUnits(res[5]?.[2]._hex, oToken.underlyingToken.decimals)
           };
           if (oTokensLength === 0) {
             count++;
@@ -744,32 +700,27 @@ const VenusData = (props: any) => {
             .toFixed(0),
           Big(rewardsPrimeData[market].stake || 0)
             .mul(Big(10).pow(18))
-            .toFixed(0),
-        ],
+            .toFixed(0)
+        ]
       }));
       calls.push({
         address: rewardAddress,
         name: 'pendingRewards',
-        params: [account, unitrollerAddress],
+        params: [account, unitrollerAddress]
       });
       multicall({
         abi: REWARD_PRIME_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           res.forEach((item: any, i: number) => {
             if (i === res.length - 1) {
               count++;
               formatedData('getRewarsApy data');
-              _accountRewards = Big(
-                ethers.utils.formatUnits(
-                  item ? item[0][2] || 0 : 0,
-                  rewardToken.decimals,
-                ),
-              );
+              _accountRewards = Big(ethers.utils.formatUnits(item ? item[0][2] || 0 : 0, rewardToken.decimals));
               return;
             }
             const data = item[0];
@@ -793,7 +744,7 @@ const VenusData = (props: any) => {
               .toFixed(2);
             _rewardsPrimeApy[rewardMarkets[i]] = {
               supplyApy,
-              borrowApy,
+              borrowApy
             };
           });
         })

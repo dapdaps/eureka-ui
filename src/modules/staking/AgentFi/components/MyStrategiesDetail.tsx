@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import Loading from '@/modules/components/Loading';
 import { useMultiState } from '@/modules/hooks';
 import { formatValueDecimal } from '@/utils/formate';
-
+import { asyncFetch } from '@/utils/http';
 const StyledContainer = styled.div``;
 const StyledTop = styled.div``;
 const StyledBack = styled.div`
@@ -362,7 +362,8 @@ export default memo(function MyStrategiesDetail(props: any) {
     totalMissions,
     tickToPrice,
     QUERY_POOL_ABI,
-    strategies
+    strategies,
+    provider
   } = props;
 
   const currentStrategy = strategies.find((it) => it.name === record.name.toLowerCase());
@@ -386,7 +387,8 @@ export default memo(function MyStrategiesDetail(props: any) {
     });
   };
 
-  const queryPoolInfo = ({ fee }) => {
+  const queryPoolInfo = (params) => {
+    let fee = params?.fee;
     return new Promise((resolve) => {
       if (!fee) {
         const currentBalancesList = record.balances || [];
@@ -420,11 +422,11 @@ export default memo(function MyStrategiesDetail(props: any) {
     const url = `/api/app/agentfi/position/range?agentAddress=${record.agentAddress}`;
     asyncFetch(url)
       .then((res) => {
-        if (!res.ok || !res.body) {
+        if (!res.ok || !res) {
           return;
         }
         updateState({
-          currentRange: [res.body.min, res.body.max]
+          currentRange: [res.min, res.max]
         });
       })
       .catch((err) => {

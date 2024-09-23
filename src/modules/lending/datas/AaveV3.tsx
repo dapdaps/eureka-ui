@@ -2,6 +2,7 @@ import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
 
+import { useIsolateStore } from '../components/AaveV3/hooks/useIsolateStore';
 import { ACTUAL_BORROW_AMOUNT_RATE, chunk, isValid, ROUND_DOWN } from '../components/AaveV3/utils';
 
 const REWARD_TOKEN_DECIMALS = 1e18;
@@ -10,6 +11,7 @@ const SECONDS_PER_YEAR = 31536000;
 const AaveV3Data = (props: any) => {
   const { account, prices, multicallAddress, multicall, isChainSupported, dexConfig, onLoad, provider, state, config } =
     props;
+  const setIsolateStore = useIsolateStore((store) => store.set);
 
   const markets = dexConfig?.rawMarkets?.map((item: any) => ({
     ...item,
@@ -381,7 +383,7 @@ const AaveV3Data = (props: any) => {
       });
   }
 
-  // seamless use
+  // seamless use for yourSupplies
   function getPoolDataProviderTotalSupply() {
     const prevAssetsToSupply = [...state.assetsToSupply];
 
@@ -433,7 +435,7 @@ const AaveV3Data = (props: any) => {
         showReload();
       });
   }
-  // seamless use
+  // seamless use for debt
   function getPoolDataProviderTotalDebt() {
     const prevAssetsToSupply = [...state.assetsToSupply];
 
@@ -713,10 +715,9 @@ const AaveV3Data = (props: any) => {
       })
       .then((_yourSupplies: any) => {
         if (!_yourSupplies || !_yourSupplies.length) {
-          onLoad((prev: any) => ({
-            ...prev,
+          onLoad({
             yourSupplies: []
-          }));
+          });
           return;
         }
         const calls = [
@@ -779,8 +780,7 @@ const AaveV3Data = (props: any) => {
           provider
         })
           .then((res: any) => {
-            console.log('getCollateralStatus-res:', res);
-            const [[rawStatus], [addrs]] = res;
+            const [[rawStatus] = [null], [addrs] = []] = res.map((item: any) => item ?? []);
             if (rawStatus) {
               const _status = parseInt(rawStatus.toString()).toString(2).split('');
               // console.log("_status--", _status);
@@ -804,7 +804,7 @@ const AaveV3Data = (props: any) => {
                       .toFixed(),
                   0
                 );
-              console.log(yourTotalCollateral, 'yourTotalCollateral');
+
               onLoad({
                 yourSupplies: _yourSupplies,
                 yourTotalCollateral
@@ -814,6 +814,9 @@ const AaveV3Data = (props: any) => {
                 yourSupplies: _yourSupplies
               });
             }
+            setIsolateStore({
+              data: _yourSupplies
+            });
           })
           .catch((err: any) => {
             console.log('getCollateralStatus-error:', err);
@@ -899,6 +902,7 @@ const AaveV3Data = (props: any) => {
   const getRewardTokenPrice = (dexConfig: any, prices: any) => {
     if (dexConfig.name === 'ZeroLend') return 0.00025055;
     if (dexConfig.name === 'Seamless Protocol') return prices['SEAM'];
+    if (dexConfig.name === 'AAVE V3' && config.chainName === 'Metis') return prices['METIS'];
     return 0;
   };
 
@@ -907,24 +911,73 @@ const AaveV3Data = (props: any) => {
   };
 
   const calculateRewardApy = (emissionPerSecond: any, totalTokenAmount: any, rewardTokenPrice: any) => {
+    if (!emissionPerSecond || !totalTokenAmount || !rewardTokenPrice) return 0;
+    console.log(emissionPerSecond, totalTokenAmount, rewardTokenPrice, '<===936===');
     try {
-      const normalizedEmissionPerSecond = Big(emissionPerSecond || 0).div(Big(REWARD_TOKEN_DECIMALS));
+      const normalizedEmissionPerSecond = Big(Number(emissionPerSecond || 0)).div(Big(REWARD_TOKEN_DECIMALS));
+      const rewardTokenPriceNum = Number(rewardTokenPrice);
+      const totalTokenAmountNum = Number(totalTokenAmount || 1);
 
       return normalizedEmissionPerSecond
-        .times(Big(rewardTokenPrice))
+        .times(Big(rewardTokenPriceNum))
         .times(SECONDS_PER_YEAR)
-        .div(totalTokenAmount || 1)
+        .div(Big(totalTokenAmountNum))
         .toFixed();
     } catch (error) {
       console.log(error, 'calculateRewardApy-1321');
     }
   };
-
   useEffect(() => {
-    onLoad({
-      config
-    });
-  }, []);
+    if (!account || !isChainSupported) return;
+
+    if (!dexConfig.rewardToken) {
+      onLoad({ step1: true });
+      return;
+    }
+
+    const { emissionPerSeconds, aTokenTotal, debtTotal, assetsToSupply } = state;
+
+    console.log('calc reward apy', emissionPerSeconds, aTokenTotal, debtTotal);
+
+    if (!emissionPerSeconds.length || !aTokenTotal.length || !debtTotal.length) return;
+
+    const rewardTokenPrice = getRewardTokenPrice(dexConfig, prices);
+
+    try {
+      const updatedAssetsToSupply = assetsToSupply.map((asset: any, index: any) => {
+        const tokenTotalSupplyNormalized = normalizeTokenAmount(aTokenTotal[index], asset.decimals);
+        const tokenTotalBorrowNormalized = normalizeTokenAmount(debtTotal[index], asset.decimals);
+
+        const normalizedTotalTokenSupply = Big(tokenTotalSupplyNormalized || 0).times(Big(prices[asset.symbol] || 0));
+        const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized || 0).times(Big(prices[asset.symbol] || 0));
+
+        const supplyRewardApy = calculateRewardApy(
+          emissionPerSeconds[index]?.[1],
+          normalizedTotalTokenSupply.toString(),
+          rewardTokenPrice
+        );
+        const borrowRewardApy = calculateRewardApy(
+          emissionPerSeconds[index]?.[1],
+          normalizedTotalTokenBorrow.toString(),
+          rewardTokenPrice
+        );
+
+        return {
+          ...asset,
+          supplyRewardApy,
+          borrowRewardApy: dexConfig.name === 'ZeroLend' ? borrowRewardApy : asset.borrowRewardApy
+        };
+      });
+      console.log(updatedAssetsToSupply, '<===1014===updatedAssetsToSupply');
+      onLoad({
+        assetsToSupply: updatedAssetsToSupply,
+        step1: true
+      });
+    } catch (error) {
+      console.log('----CATCH:', error);
+      onLoad({ step1: true });
+    }
+  }, [state.emissionPerSeconds, state.aTokenTotal, state.debtTotal]);
 
   useEffect(() => {
     if (!account || !isChainSupported) return;
@@ -942,8 +995,6 @@ const AaveV3Data = (props: any) => {
       getPoolDataProviderTotalSupplyForPac();
     }
 
-    console.log(state.step1, state.hasExistedLiquidity, 'state.hasExistedLiquidity');
-
     if (state.step1 && state.hasExistedLiquidity) {
       getYourSupplies();
       getUserDebts();
@@ -952,13 +1003,12 @@ const AaveV3Data = (props: any) => {
 
   useEffect(() => {
     if (!account || !isChainSupported) return;
-    console.log(dexConfig.rewardToken, 'dexConfig.rewardToken');
-    console.log(state.assetsToSupply, 'state.assetsToSupply');
+
     try {
       if (!account || !isChainSupported) return;
       if (dexConfig.name !== 'Seamless Protocol') return;
       if (!Array.isArray(state.assetsToSupply)) return;
-      console.log('calc totalMarketSize');
+
       const totalMarketSize = state.assetsToSupply.reduce((prev: any, curr: any) => {
         return Big(prev || 0)
           .plus(Big(curr.totalSupplyUSD || 0))
@@ -984,62 +1034,6 @@ const AaveV3Data = (props: any) => {
 
   useEffect(() => {
     if (!account || !isChainSupported) return;
-    console.log(dexConfig.rewardToken, 'dexConfig.rewardToken');
-
-    if (!dexConfig.rewardToken) {
-      onLoad({ step1: true });
-      return;
-    }
-
-    const { emissionPerSeconds, aTokenTotal, debtTotal, assetsToSupply } = state;
-    console.log('calc reward apy', emissionPerSeconds, aTokenTotal, debtTotal);
-
-    if (!emissionPerSeconds.length || !aTokenTotal.length || !debtTotal.length) return;
-
-    const rewardTokenPrice = getRewardTokenPrice(dexConfig, prices);
-
-    try {
-      const updatedAssetsToSupply = assetsToSupply.map((asset: any, index: any) => {
-        const tokenTotalSupplyNormalized = normalizeTokenAmount(aTokenTotal[index], asset.decimals);
-        const tokenTotalBorrowNormalized = normalizeTokenAmount(debtTotal[index], asset.decimals);
-
-        const normalizedTotalTokenSupply = Big(tokenTotalSupplyNormalized).times(Big(prices[asset.symbol]));
-        const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized).times(Big(prices[asset.symbol]));
-
-        const supplyRewardApy = calculateRewardApy(
-          emissionPerSeconds[index][1],
-          normalizedTotalTokenSupply.toString(),
-          rewardTokenPrice
-        );
-        const borrowRewardApy = calculateRewardApy(
-          emissionPerSeconds[index][1],
-          normalizedTotalTokenBorrow.toString(),
-          rewardTokenPrice
-        );
-
-        console.log('supplyRewardApy---', supplyRewardApy);
-
-        return {
-          ...asset,
-          supplyRewardApy,
-          borrowRewardApy: dexConfig.name === 'ZeroLend' ? borrowRewardApy : asset.borrowRewardApy
-        };
-      });
-      console.log(updatedAssetsToSupply, 'updatedAssetsToSupply');
-
-      onLoad({
-        assetsToSupply: updatedAssetsToSupply,
-        step1: true
-      });
-    } catch (error) {
-      console.log('CATCH:', error);
-      onLoad({ step1: true });
-    }
-  }, [state.emissionPerSeconds, state.aTokenTotal, state.debtTotal]);
-
-  useEffect(() => {
-    console.log(state.step1, '992--->state.step1');
-    if (!account || !isChainSupported) return;
     if (!state.step1) return;
     // if (!["ZeroLend", "AAVE V3"].includes(dexConfig.name)) return;
 
@@ -1054,7 +1048,6 @@ const AaveV3Data = (props: any) => {
             .toFixed(),
         0
       );
-      console.log('supplyBal--', supplyBal);
       const debtsBal = state.yourBorrows.reduce(
         (total: any, cur: any) =>
           Big(total || 0)
@@ -1153,11 +1146,10 @@ const AaveV3Data = (props: any) => {
   useEffect(() => {
     if (!account) return;
 
-    if (dexConfig.name !== 'ZeroLend') return;
+    // if (dexConfig.name !== 'ZeroLend') return;
 
     function getRewardsData() {
       const aTokenAddresss = state.assetsToSupply?.map((item: any) => item.aTokenAddress);
-
       const calls = aTokenAddresss?.map((addr: any) => ({
         address: config.incentivesProxy,
         name: 'getRewardsData',

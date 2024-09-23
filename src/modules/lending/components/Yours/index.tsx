@@ -66,12 +66,11 @@ const LendingMarketYours = (props: Props) => {
               .mul(market.underlyingPrice)
               .toString(),
             address: market.address,
-            distributionApy: market.distributionApy
+            distributionApy: market.distributionApy,
+            dexConfig: market.dexConfig
           });
           change = change.add(
-            Big(
-              (Number(market.supplyApy.slice(0, -1)) + rewardSupplyApy) / 100 || 0
-            )
+            Big((Number(market.supplyApy.slice(0, -1)) + rewardSupplyApy) / 100 || 0)
               .mul(market.userSupply || 0)
               .mul(market.underlyingPrice)
           );
@@ -91,20 +90,14 @@ const LendingMarketYours = (props: Props) => {
             distributionApy: market.distributionApy
           });
           change = change.minus(
-            Big(
-              (Number(market.borrowApy.slice(0, -1)) - rewardBorrowApy) / 100 || 0
-            )
+            Big((Number(market.borrowApy.slice(0, -1)) - rewardBorrowApy) / 100 || 0)
               .mul(market.userBorrow || 0)
               .mul(market.underlyingPrice)
           );
         }
       });
     Object.values(dapps).forEach((dapp: any) => {
-      if (
-        dapp.rewards &&
-        dapp.rewards.length &&
-        (currentDapp === 'All' || currentDapp === dapp.dappName)
-      ) {
+      if (dapp.rewards && dapp.rewards.length && (currentDapp === 'All' || currentDapp === dapp.dappName)) {
         dapp.rewards.forEach((reward: any) => {
           rewards.push({
             icon: reward.icon,
@@ -158,11 +151,7 @@ const LendingMarketYours = (props: Props) => {
             <div>
               <Label className="yours-table-title">You Deposit</Label>
               <Value className="supply-color">
-                <LendingTotal
-                  total={state.userTotalSupplyUsd}
-                  digit={2}
-                  unit="$"
-                />
+                <LendingTotal total={state.userTotalSupplyUsd} digit={2} unit="$" />
               </Value>
             </div>
             <Right>
@@ -170,21 +159,14 @@ const LendingMarketYours = (props: Props) => {
               <Value>{currentDapp === 'All' ? '-' : state.netApy}%</Value>
             </Right>
           </Title>
-          <LendingDepositTable
-            data={state.supplies || []}
-            onButtonClick={props.onButtonClick}
-          />
+          <LendingDepositTable data={state.supplies || []} onButtonClick={props.onButtonClick} />
         </YoursTableWrapper>
         <YoursTableWrapper>
           <Title>
             <div>
               <Label className="yours-table-title">Borrow</Label>
               <Value className="borrow-color">
-                <LendingTotal
-                  total={state.userTotalBorrowUsd}
-                  digit={2}
-                  unit="$"
-                />
+                <LendingTotal total={state.userTotalBorrowUsd} digit={2} unit="$" />
               </Value>
             </div>
             <Right>
@@ -192,10 +174,7 @@ const LendingMarketYours = (props: Props) => {
               <Value>{state.userBorrowLimit}%</Value>
             </Right>
           </Title>
-          <LendingBorrowTable
-            data={state.borrows || []}
-            onButtonClick={props.onButtonClick}
-          />
+          <LendingBorrowTable data={state.borrows || []} onButtonClick={props.onButtonClick} />
         </YoursTableWrapper>
       </Yours>
       <LendingRewardsTable

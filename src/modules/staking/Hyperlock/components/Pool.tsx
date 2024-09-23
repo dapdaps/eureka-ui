@@ -2,6 +2,9 @@
 import { memo } from 'react';
 import styled from 'styled-components';
 
+import { useMultiState } from '@/modules/hooks';
+import { formatValueDecimal } from '@/utils/formate';
+
 import PoolTab from './PoolTab';
 const HeadWrapper = styled.div`
   border-radius: 16px;
@@ -177,7 +180,7 @@ export default memo(function Pool(props) {
           </GridItem>
           <GridItem>
             <div className="title-primary">
-              {data.stackIcons.map((item, i) => (
+              {data?.stackIcons?.map((item, i) => (
                 <img key={item} src={item} style={{ width: 26, height: 26, marginLeft: i === 0 ? 0 : -12 }} />
               ))}
             </div>

@@ -184,7 +184,8 @@ export default memo(function Connector(props: any) {
     ALL_DATA_URL,
     ICON_VAULT_MAP,
     USER_DATA_BASE,
-    LAST_SNAP_SHOT_DATA_URL
+    LAST_SNAP_SHOT_DATA_URL,
+    FEE_APR_DATA_URL
   } = dexConfig;
   function fetchAllData() {
     updateState({
@@ -295,6 +296,7 @@ export default memo(function Connector(props: any) {
             provider,
             multicallAddress,
             LAST_SNAP_SHOT_DATA_URL,
+            FEE_APR_DATA_URL,
             onLoad: (data: any) => {
               updateState({
                 dataList: data.dataList,

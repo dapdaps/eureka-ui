@@ -25,6 +25,7 @@ export default memo(function Hyperlock(props) {
   useHandler({
     ...props,
     onLoad: (fn) => {
+      console.log('=====1111====');
       updateState({
         handler: fn
       });
@@ -34,6 +35,7 @@ export default memo(function Hyperlock(props) {
     ...props,
     update: state.loading,
     onLoad: (data) => {
+      console.log('=====data====', data);
       updateState({
         loading: false,
         ...data

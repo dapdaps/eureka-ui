@@ -2,8 +2,10 @@
 import Big from 'big.js';
 import { ethers } from 'ethers';
 import { useEffect } from 'react';
+
+import { asyncFetch } from '@/utils/http';
 export function useUserData(props) {
-  const { type, account, update, dexConfig, pools, multicall, multicallAddress, tokenIds, onLoad } = props;
+  const { type, account, provider, update, dexConfig, pools, multicall, multicallAddress, tokenIds, onLoad } = props;
 
   useEffect(() => {
     if (!pools) return;
@@ -19,7 +21,7 @@ export function useUserData(props) {
         })
       })
         .then((res) => {
-          cb(res.body);
+          cb(res);
         })
         .catch((err) => {});
     };
@@ -52,7 +54,7 @@ export function useUserData(props) {
           }
         })
       }).then((res) => {
-        const data = res.body.data?.liquidityPositions || [];
+        const data = res.data?.liquidityPositions || [];
 
         const unstaked = data.filter((pool) => pool.user.id === account.toLowerCase());
         const staked = data.filter((pool) => pool.user.id === dexConfig.v2Address.toLowerCase());
@@ -208,7 +210,7 @@ export function useUserData(props) {
         })
       })
         .then((res) => {
-          const { staked, unstaked } = res.body.data;
+          const { staked, unstaked } = res.data;
 
           const _unstaked = {};
 

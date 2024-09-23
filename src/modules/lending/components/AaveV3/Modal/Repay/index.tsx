@@ -106,9 +106,6 @@ const RepayModal = (props: any) => {
   } = props;
 
   const { symbol, healthFactor, decimals, underlyingAsset, name: tokenName, supportPermit, debt, debtInUSD } = data;
-  console.log(prices, 'prices');
-
-  console.log(data, '109--data');
 
   const [state, updateState] = useMultiState<any>({
     amount: '',
@@ -346,6 +343,7 @@ const RepayModal = (props: any) => {
                 .then((res: any) => {
                   const { status, transactionHash } = res;
                   if (status === 1) {
+                    onRequestClose();
                     formatAddAction(
                       parseFloat(Big(actualAmount).div(Big(10).pow(decimals)).toFixed(8)),
                       status,
@@ -353,12 +351,7 @@ const RepayModal = (props: any) => {
                     );
                     onActionSuccess({
                       msg: `You repaid ${parseFloat(Big(shownAmount).toFixed(8))} ${symbol}`,
-                      callback: () => {
-                        onRequestClose();
-                        updateState({
-                          loading: false
-                        });
-                      }
+                      step1: true
                     });
                     console.log('tx succeeded', res);
                   } else {
@@ -368,7 +361,7 @@ const RepayModal = (props: any) => {
                     console.log('tx failed', res);
                   }
                 })
-                .catch(() => updateState({ loading: false }));
+                .finally(() => updateState({ loading: false }));
             })
             .catch(() => updateState({ loading: false }));
         } else {
@@ -391,6 +384,7 @@ const RepayModal = (props: any) => {
                   .then((res: any) => {
                     const { status, transactionHash } = res;
                     if (status === 1) {
+                      onRequestClose();
                       formatAddAction(
                         parseFloat(Big(actualAmount).div(Big(10).pow(decimals)).toFixed(8)),
                         status,
@@ -398,12 +392,7 @@ const RepayModal = (props: any) => {
                       );
                       onActionSuccess({
                         msg: `You repaid ${parseFloat(Big(shownAmount).toFixed(8))} ${symbol}`,
-                        callback: () => {
-                          onRequestClose();
-                          updateState({
-                            loading: false
-                          });
-                        }
+                        step1: true
                       });
                       console.log('tx succeeded', res);
                     } else {
@@ -413,7 +402,7 @@ const RepayModal = (props: any) => {
                       console.log('tx failed', res);
                     }
                   })
-                  .catch(() => updateState({ loading: false }));
+                  .finally(() => updateState({ loading: false }));
               });
             })
             .catch(() => updateState({ loading: false }));
@@ -449,6 +438,7 @@ const RepayModal = (props: any) => {
               .then((res: any) => {
                 const { status, transactionHash } = res;
                 if (status === 1) {
+                  onRequestClose();
                   formatAddAction(
                     parseFloat(Big(shownAmount).div(Big(10).pow(decimals)).toFixed(8)),
                     status,
@@ -456,12 +446,7 @@ const RepayModal = (props: any) => {
                   );
                   onActionSuccess({
                     msg: `You repaid ${parseFloat(Big(shownAmount).toFixed(8))} ${symbol}`,
-                    callback: () => {
-                      onRequestClose();
-                      updateState({
-                        loading: false
-                      });
-                    }
+                    step1: true
                   });
                   console.log('tx succeeded', res);
                 } else {
@@ -471,11 +456,15 @@ const RepayModal = (props: any) => {
                   console.log('tx failed', res);
                 }
               })
-              .catch(() => updateState({ loading: false }));
+              .finally(() => updateState({ loading: false }));
           })
-          .catch(() => updateState({ loading: false }));
+          .catch((err: any) => {
+            console.log(err, 'err');
+          });
       })
-      .catch(() => updateState({ loading: false }));
+      .catch((err: any) => {
+        console.log(err, 'err');
+      });
   }
   function transferToNumber(inputNumber: any) {
     if (isNaN(inputNumber)) {
@@ -591,9 +580,12 @@ const RepayModal = (props: any) => {
                         });
                       }
                     })
-                    .catch(() => updateState({ loading: false }));
+                    .catch(() => updateState({ loading: false }))
+                    .finally(() => updateState({ loading: false }));
                 })
-                .finally(() => updateState({ loading: false }));
+                .catch((error: any) => {
+                  console.log(error, 'error');
+                });
             }}
           >
             Approve {symbol}

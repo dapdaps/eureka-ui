@@ -3,6 +3,12 @@
     /* align-items: center; */
     gap: 10px;
     padding: 20px 16px;
+    .contentWrap {
+        display: flex;
+    }
+    .defaultContent {
+        width: 256px;
+    }
     .content {
         flex: 1;
         display: flex;
@@ -28,7 +34,6 @@
             white-space: nowrap;
         }
     }
-
     .subTtitle {
         width: 100%;
         height: 34px;
@@ -37,7 +42,19 @@
         font-size: 14px;
         font-weight: 400;
         line-height: 17px;
-        color: rgba(255, 255, 255, .6);
+        color: rgba(255, 255, 255, 0.6);
+    }
+    .defaultSubTtitle {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .listDescContent {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
     }
 
     .icon {
@@ -45,6 +62,11 @@
         height: 60px;
     }
 
+    .timeAndButton {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
     .time {
         display: flex;
         align-items: center;
@@ -66,6 +88,29 @@
             line-height: 14px;
             text-align: right;
         }
+    }
+    .button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 74px;
+        height: 34px;
+        flex-shrink: 0;
+        border-radius: 6px;
+        border: 1px solid rgba(151, 154, 190, 0.3);
+        cursor: pointer;
+
+        color: #979abe;
+        font-family: Montserrat;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+    }
+    .button:hover {
+        border: none;
+        background-color: #ebf479;
+        color: #02051E;
     }
 
     .notificationList {
@@ -99,4 +144,3 @@
     border-bottom-left-radius: 12px;
     border-bottom-right-radius: 12px;
 }
-

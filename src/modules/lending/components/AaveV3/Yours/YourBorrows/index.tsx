@@ -39,30 +39,23 @@ const SubText = styled.div`
 `;
 
 const YourBorrows = (props: any) => {
-  const {
-    config,
-    yourBorrows,
-    showRepayModal,
-    setShowRepayModal,
-    healthFactor,
-    theme,
-  } = props;
-
-  console.log('yourBorrows', yourBorrows);
+  const { config, yourBorrows, showRepayModal, setShowRepayModal, healthFactor, theme } = props;
 
   const [state, updateState] = useMultiState<any>({
-    data: undefined,
+    data: undefined
   });
-  
+
   const RepayButton = ({ data }: any) => (
     <PrimaryButton
       config={config}
       theme={theme}
-        onClick={() => {
-          updateState({ data });
-          setShowRepayModal(true);
-        }}
-    >Repay</PrimaryButton>
+      onClick={() => {
+        updateState({ data });
+        setShowRepayModal(true);
+      }}
+    >
+      Repay
+    </PrimaryButton>
   );
   return (
     <>
@@ -81,22 +74,22 @@ const YourBorrows = (props: any) => {
                   </CenterItem>
                 </TokenWrapper>,
                 <div key={idx}>
-                    <PrimaryTxt>{unifyNumber(row.debt)}</PrimaryTxt>
-                    <SubText>$ {unifyNumber(row.debtInUSD)}</SubText>
-                  </div>,
-                  `${(Number(row.borrowAPY) * 100).toFixed(2)} %`,
-                  <ButtonGroup key={idx}>
-                    <RepayButton data={{ ...row }} />
-                  </ButtonGroup>,
-                ];
-              })}
+                  <PrimaryTxt>{unifyNumber(row.debt)}</PrimaryTxt>
+                  <SubText>$ {unifyNumber(row.debtInUSD)}</SubText>
+                </div>,
+                `${(Number(row.borrowAPY) * 100).toFixed(2)} %`,
+                <ButtonGroup key={idx}>
+                  <RepayButton data={{ ...row }} />
+                </ButtonGroup>
+              ];
+            })}
           />
         </>
       )}
       {showRepayModal && (
         <RepayModal
           onRequestClose={() => setShowRepayModal(false)}
-          data={ { ...state.data, healthFactor }}
+          data={{ ...state.data, healthFactor }}
           onlyOneBorrow={yourBorrows.length === 1}
           {...props}
         />

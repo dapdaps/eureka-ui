@@ -11,10 +11,10 @@ const StyledContainer = styled.div`
 `;
 
 const ModuleLoading = (props: Props) => {
-  const { size } = props;
+  const { size, style, className } = props;
 
   return (
-    <StyledContainer>
+    <StyledContainer style={style} className={className}>
       <Loading size={size} />
     </StyledContainer>
   );
@@ -24,4 +24,6 @@ export default ModuleLoading;
 
 interface Props {
   size?: number;
+  style?: React.CSSProperties;
+  className?: string;
 }

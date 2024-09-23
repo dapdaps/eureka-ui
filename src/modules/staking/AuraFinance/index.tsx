@@ -10,6 +10,7 @@ import Button from '@/modules/components/Button';
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
 import { useMultiState } from '@/modules/hooks';
 import { formatValueDecimal } from '@/utils/formate';
+import { asyncFetch } from '@/utils/http';
 
 import Pool from './components/Pool';
 import {
@@ -341,17 +342,12 @@ export default memo(function AuraFinance(props) {
   // const account = Ethers.send("eth_requestAccounts", [])[0];
 
   function initPoolList() {
-    console.log('====state.poolsList', state.poolsList);
     for (let i = 0; i < state.poolsList?.length; i++) {
       const item = state.poolsList[i];
-
       getMultiLPToken(item, i);
-
       getMultiRewards(item, i);
     }
-
     getMultiPoolTokens();
-    // getMultiGlobal();
   }
 
   function getMultiRewards(pool, index) {
@@ -383,7 +379,6 @@ export default memo(function AuraFinance(props) {
       provider
     })
       .then((res) => {
-        console.log('getMultiRewards_res', res);
         const temp = [...state.poolsList];
         const balance = res[0] ? res[0][0] : 0;
         const rewardRate = res[1] ? res[1][0] : 0;
@@ -561,9 +556,12 @@ export default memo(function AuraFinance(props) {
 
     return ethers.BigNumber.from(0);
   }
-  function calcTVL() {
+  function calcTVL(dataList) {
     const temp = [...state.poolsList];
+
+    console.log('====dataList', dataList);
     for (let i = 0; i < temp.length; i++) {
+      console.log('===temp[i]', temp[i]);
       const tokens = temp[i].tokens;
       const tokenBalance = temp[i].tokenBalance;
       const bptTotalSupply = temp[i].bptTotalSupply;
@@ -583,33 +581,41 @@ export default memo(function AuraFinance(props) {
               return total;
             }
           }, 0);
-
           const bptPriceUsd = Big(sum).div(Big(bptTotalSupply));
-
           const TVL = Big(rewardTotalSupply).times(bptPriceUsd).toFixed(0);
-
-          // temp[i].poolValueUsd = sum;
           temp[i].bptPriceUsd = bptPriceUsd;
-          temp[i].TVL = TVL;
+          const pool = dataList.find(
+            (data) => data?.lpToken?.address.toLocaleLowerCase() === temp[i]?.LP_token_address.toLocaleLowerCase()
+          );
+          if (
+            ['0x7644fa5d0ea14fcf3e813fdf93ca9544f8567655', '0x66888e4f35063ad8bb11506a6fde5024fb4f1db0'].indexOf(
+              temp[i]?.LP_token_address
+            ) > -1
+          ) {
+            console.log('====11111=====');
+            temp[i].TVL = pool?.balancerPool?.totalLiquidity?.tvl?.calculated;
+          } else {
+            temp[i].TVL = TVL;
+          }
 
           // calc bal apr
-          const rewardPerYear = Big(ethers.utils.formatUnits(rewardRate)).times(Big(86400).times(365));
-
-          const rewardPerYearUsd = rewardPerYear.times(Big(prices['BAL']));
-          const BAL_APR = rewardPerYearUsd.div(TVL).times(100).toFixed(2);
-          temp[i].BAL_APR = BAL_APR;
-
-          const auraPerYear = getAuraMintAmount(rewardPerYear.toString(), auraGlobalData);
-          const auraPerYearUsd = ethers.utils.formatUnits(auraPerYear) * prices['AURA'];
-          const AURA_APR = Big(auraPerYearUsd).div(Big(TVL)).times(100).toFixed(2);
-          temp[i].AURA_APR = AURA_APR;
-
-          temp[i].APR = Number(temp[i].swapFee) + Number(BAL_APR) + Number(AURA_APR);
+          temp[i].APR = 0;
+          temp[i].pjAPR = 0;
+          pool?.aprs?.breakdown?.forEach((item) => {
+            temp[i].APR += item?.value;
+          });
+          pool?.aprs?.projectedBreakdown?.forEach((item) => {
+            temp[i].pjAPR += item?.value;
+          });
+          console.log('====APR', temp[i].APR);
         } catch (error) {
           console.log('calcTVL_error', error);
         }
       }
     }
+    updateState({
+      poolsList: temp
+    });
   }
 
   const handleChangeTabs = (value) => {
@@ -738,6 +744,22 @@ export default memo(function AuraFinance(props) {
         });
       });
   };
+  const getDataList = function (callback) {
+    asyncFetch('https://data.aura.finance/graphql', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        operationName: 'Pools',
+        variables: { chainId: 100, account: '0x5caf809086b2d77ec6cb54932e48b3bbb6546c53' },
+        query:
+          'query Pools($chainId: Int! = 1, $account: String = "") {\n  pools(chainId: $chainId) {\n    ...PoolAll\n    account(id: $account) {\n      id\n      staked\n      rewards {\n        earned\n        earnedUSD\n        reward {\n          id\n          expired\n          isMintedAura\n          lastUpdateTime\n          periodFinish\n          queuedRewards\n          rewardPerTokenStored\n          rewardPerYear\n          rewardRate\n          token {\n            ...Token\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n  allSystem(chainIds: [1, 10, 137, 42161]) {\n    auraBalTotalSupply\n    isShutdown\n    chainId\n    __typename\n  }\n  allBlocks(chainIds: [1, 10, 100, 137, 1101, 42161, 43114]) {\n    chainId\n    number\n    __typename\n  }\n}\n\nfragment PoolAll on PoolSchema {\n  id\n  address\n  addedAt\n  balancerPoolId\n  balancerPool {\n    totalLiquidity\n    factory\n    balancerTokenIds\n    __typename\n  }\n  boost\n  chainId\n  gauge\n  stash\n  isShutdown\n  isPhantomPool\n  name\n  price\n  prevIds: prevPoolIds\n  rewardPool\n  totalStaked\n  totalSupply\n  tvl\n  lpToken {\n    ...Token\n    __typename\n  }\n  rewards {\n    id\n    expired\n    isMintedAura\n    lastUpdateTime\n    periodFinish\n    queuedRewards\n    rewardPerTokenStored\n    rewardPerYear\n    rewardRate\n    token {\n      ...Token\n      __typename\n    }\n    __typename\n  }\n  extraRewards {\n    id\n    amount\n    token {\n      ...Token\n      __typename\n    }\n    funded {\n      id\n      epoch\n      amount\n      __typename\n    }\n    queued {\n      id\n      epoch\n      amount\n      __typename\n    }\n    __typename\n  }\n  token {\n    ...Token\n    __typename\n  }\n  tokens {\n    ...Token\n    __typename\n  }\n  tokenWeights\n  aprs {\n    breakdown {\n      id\n      token {\n        ...Token\n        __typename\n      }\n      name\n      value\n      isExtraBalancerRewards\n      isExtraAuraRewards\n      isBalancerYield\n      __typename\n    }\n    stakingToken {\n      ...Token\n      __typename\n    }\n    total\n    projectedBreakdown {\n      id\n      token {\n        ...Token\n        __typename\n      }\n      name\n      value\n      isExtraBalancerRewards\n      isExtraAuraRewards\n      isBalancerYield\n      __typename\n    }\n    projectedTotal\n    __typename\n  }\n  __typename\n}\n\nfragment Token on TokenSchema {\n  __typename\n  chainId\n  address\n  decimals\n  symbol\n  name\n  price\n  l1Token {\n    address\n    chainId\n    symbol\n    decimals\n    name\n    __typename\n  }\n}'
+      })
+    }).then((result) => {
+      callback && callback(result?.data?.pools);
+    });
+  };
 
   useEffect(() => {
     updateState({ account });
@@ -762,7 +784,7 @@ export default memo(function AuraFinance(props) {
 
         const temp = state.poolsList.filter((item) => Big(item.stakedAmount || 0).gt(0));
         const _myPools = temp.map((item) => ({ ...item, isClaiming: false }));
-        calcTVL();
+        getDataList(calcTVL);
         updateState({
           totalDepositAmount,
           totalRewardsAmount,
@@ -864,7 +886,7 @@ export default memo(function AuraFinance(props) {
                     </GridItem>
                     <GridItem>
                       <div className="title-secondary">{Big(item.APR || 0).toFixed(2)}%</div>
-                      <div className="title-sub">proj.{Big(item.pjAPR).mul(100).toFixed(2)} %</div>
+                      <div className="title-sub">proj.{Big(item.pjAPR).toFixed(2)} %</div>
                     </GridItem>
                     <GridItem>
                       <div className="title-secondary">{formatValueDecimal(item.stakedAmount, '', 2)}</div>

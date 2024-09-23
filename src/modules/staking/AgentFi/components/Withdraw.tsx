@@ -256,25 +256,6 @@ const WITHDRAW_POOL_ABI_CLM = [
 
 const { parseUnits, formatUnits } = ethers.utils;
 
-const {
-  prices,
-  currentStrategy,
-  dexConfig,
-  record,
-  formatTVL,
-  rootAgent,
-  account,
-  onSuccess,
-  addAction,
-  toast,
-  chainId,
-  handleDetailClose,
-  QUERY_POOL_ABI,
-  strategies
-} = props;
-
-const { StakeTokens } = dexConfig;
-
 const actionText = 'Withdraw';
 const clmWithdrawRateList = [
   { label: '25%', value: 25 },
@@ -283,9 +264,25 @@ const clmWithdrawRateList = [
   { label: '100%', value: 100 }
 ];
 
-const balanceList = formatTVL(record).list || [];
-
 export default memo(function Withdraw(props) {
+  const {
+    prices,
+    currentStrategy,
+    dexConfig,
+    record,
+    formatTVL,
+    rootAgent,
+    account,
+    onSuccess,
+    addAction,
+    toast,
+    chainId,
+    handleDetailClose,
+    QUERY_POOL_ABI,
+    strategies
+  } = props;
+  const { StakeTokens } = dexConfig;
+  const balanceList = formatTVL(record).list || [];
   const [state, updateState] = useMultiState({
     unStakePercent: 25,
     pending: false

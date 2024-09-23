@@ -68,18 +68,7 @@ const ERC20_ABI = [
 ];
 
 const LendingDialog = (props: Props) => {
-  const {
-    display,
-    data,
-    chainId,
-    onClose,
-    onSuccess,
-    source,
-    account,
-    from,
-    dexConfig,
-    curPool
-  } = props;
+  const { display, data, chainId, onClose, onSuccess, source, account, from, dexConfig, curPool } = props;
 
   const { provider } = useAccount();
   const [Handler] = useDynamicLoader({ path: '/lending/handlers', name: dexConfig.loaderName });
@@ -87,7 +76,10 @@ const LendingDialog = (props: Props) => {
   const [state, updateState] = useMultiState<any>({
     amount: '',
     processValue: 0,
-    updateHandler: Date.now()
+    updateHandler: Date.now(),
+    userTotalBorrowUsd: '',
+    redeemUnderlyingUsd: '',
+    borrowAvailable: ''
   });
 
   const actionText = useMemo(() => data?.actionText, [data]);
@@ -100,37 +92,51 @@ const LendingDialog = (props: Props) => {
   const getAvailable = (_balance: any) => {
     if (!_balance) return '-';
     if (actionText !== 'Repay') return _balance;
-    if (Big(_balance).lt(data?.userBorrow || 0)) return _balance;
+    if (Big(_balance).lte(data?.userBorrow || 0)) return _balance;
     if (Big(_balance).gt(data?.userBorrow || 0)) return data.userBorrow;
   };
 
-  const getBalance = () => {
+  const getBalance = async () => {
     const isUnderlying = ['Deposit', 'Repay'].includes(actionText);
     updateState({
       balanceLoading: true
     });
+
+    if (['Repay', 'Withdraw'].includes(actionText) && data.localConfig?.getBorrowAvailable) {
+      const _borrowAvailable = await data.localConfig?.getBorrowAvailable(data, { account });
+      updateState({
+        borrowAvailable: _borrowAvailable?.balanceUsd
+      });
+    }
+    if (actionText === 'Repay' && data.localConfig?.getUserTotalBorrow) {
+      const _userTotalBorrowUsd = await data.localConfig?.getUserTotalBorrow(data, { account });
+      updateState({
+        userTotalBorrowUsd: _userTotalBorrowUsd?.balanceUsd
+      });
+    }
+    if (actionText === 'Withdraw' && data.localConfig?.getRedeemUnderlying) {
+      const _redeemUnderlying = await data.localConfig?.getRedeemUnderlying(data, { account });
+      updateState({
+        balance: _redeemUnderlying.balance,
+        redeemUnderlyingUsd: _redeemUnderlying.balanceUsd,
+        balanceLoading: false
+      });
+      return;
+    }
+
     if (isUnderlying && data.underlyingToken.isNative) {
-      provider
-        .getBalance(account)
-        .then((rawBalance: any) => {
-          updateState({
-            balance: getAvailable(ethers.utils.formatUnits(rawBalance._hex, 18)),
-            balanceLoading: false
-          });
+      provider.getBalance(account).then((rawBalance: any) => {
+        updateState({
+          balance: getAvailable(ethers.utils.formatUnits(rawBalance._hex, 18)),
+          balanceLoading: false
         });
+      });
       return;
     }
     if (isUnderlying && data?.underlyingToken?.address) {
-      const TokenContract = new ethers.Contract(
-        data.underlyingToken.address,
-        ERC20_ABI,
-        provider.getSigner()
-      );
+      const TokenContract = new ethers.Contract(data.underlyingToken.address, ERC20_ABI, provider.getSigner());
       TokenContract.balanceOf(account).then((rawBalance: any) => {
-        const _rawBalance = ethers.utils.formatUnits(
-          rawBalance._hex,
-          data.underlyingToken.decimals
-        );
+        const _rawBalance = ethers.utils.formatUnits(rawBalance._hex, data.underlyingToken.decimals);
         updateState({
           balance: getAvailable(_rawBalance),
           balanceLoading: false
@@ -180,9 +186,7 @@ const LendingDialog = (props: Props) => {
   useEffect(() => {
     if (data && display) {
       let borromLimit: any = '';
-      const _borrowLimit = Big(data.totalCollateralUsd).minus(
-        data.userTotalBorrowUsd
-      );
+      const _borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd);
       let buttonClickable = false;
       if (actionText === 'Enable as Collateral') {
         borromLimit = _borrowLimit.add(
@@ -199,16 +203,10 @@ const LendingDialog = (props: Props) => {
             .mul(data.underlyingPrice)
         );
 
-        buttonClickable = Big(data.userTotalBorrowUsd).eq(0)
-          ? true
-          : !borromLimit.lt(0);
+        buttonClickable = Big(data.userTotalBorrowUsd).eq(0) ? true : !borromLimit.lt(0);
       }
       updateState({
-        borrowLimit: borromLimit
-          ? !borromLimit.gt(0)
-            ? '0.00'
-            : borromLimit.toFixed(2)
-          : '',
+        borrowLimit: borromLimit ? (!borromLimit.gt(0) ? '0.00' : borromLimit.toFixed(2)) : '',
         amount: '',
         buttonClickable,
         processValue: 0,
@@ -220,10 +218,11 @@ const LendingDialog = (props: Props) => {
   }, [display, data, actionText, provider, account]);
 
   const formatBorrowLimit = (digits: any, round?: any) => {
+    if (['Repay', 'Withdraw'].includes(actionText) && data.localConfig?.getBorrowAvailable) {
+      return Big(state.borrowAvailable || 0).toFixed(digits || 2, round || 1);
+    }
     if (data.config.name === 'Ionic') {
-      const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(
-        Big(data.COLLATERAL_FACTOR)
-      );
+      const currentTokenCollateralUSD = Big(data.userCollateralUSD || 0).times(Big(data.COLLATERAL_FACTOR));
 
       const _borrowLimit = Big(data.totalCollateralUsd)
         .minus(currentTokenCollateralUSD)
@@ -266,25 +265,29 @@ const LendingDialog = (props: Props) => {
       return;
     }
 
-    const precent = !Big(state.balance || 0).eq(0)
-      ? Big(amount).div(state.balance).mul(100)
-      : Big(0);
+    const precent = !Big(state.balance || 0).eq(0) ? Big(amount).div(state.balance).mul(100) : Big(0);
     const params: any = {
-      amount: amount,
+      amount: amount.replace(/[.]?0*$/, ''),
       processValue: precent.gt(100) ? 100 : precent.toNumber()
     };
     let isOverSize = false;
-    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20));
+    const value = Big(Big(amount).mul(data.underlyingPrice).toFixed(20, 0));
     if (isSupply) {
-      if (actionText === 'Withdraw' && data.userMerberShip) {
-        params.borrowLimit = Big(data.totalCollateralUsd)
-          .minus(data.userTotalBorrowUsd)
-          .minus(value.mul(data.loanToValue / 100));
-        isOverSize = Big(data.userTotalBorrowUsd).eq(0)
-          ? false
-          : Big(data.totalCollateralUsd || 0)
-            .minus(value.mul(data.loanToValue / 100) || 0)
-            .lt(data.userTotalBorrowUsd || 0);
+      if (actionText === 'Withdraw') {
+        if (data.userMerberShip) {
+          params.borrowLimit = Big(data.totalCollateralUsd)
+            .minus(data.userTotalBorrowUsd)
+            .minus(value.mul(data.loanToValue / 100));
+          isOverSize = Big(data.userTotalBorrowUsd).eq(0)
+            ? false
+            : Big(data.totalCollateralUsd || 0)
+                .minus(value.mul(data.loanToValue / 100) || 0)
+                .lt(data.userTotalBorrowUsd || 0);
+        }
+        if (data.localConfig?.getRedeemUnderlying) {
+          params.borrowLimit = Big(state.redeemUnderlyingUsd).minus(value);
+          isOverSize = value.gt(state.redeemUnderlyingUsd);
+        }
       }
       if (actionText === 'Deposit') {
         params.borrowLimit = Big(data.totalCollateralUsd)
@@ -295,19 +298,21 @@ const LendingDialog = (props: Props) => {
     if (isBorrow) {
       if (actionText === 'Borrow') {
         params.borrowBalance = value.plus(data.userTotalBorrowUsd).toFixed(2);
-        isOverSize = value.gt(
-          Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd)
-        );
+        isOverSize = value.gt(Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd));
         params.borrowLimit = Big(data.totalCollateralUsd || 0)
           .minus(data.userTotalBorrowUsd || 0)
           .minus(value || 0);
       }
       if (actionText === 'Repay') {
-        params.borrowBalance = Big(data.userTotalBorrowUsd).minus(value);
-        params.borrowLimit = Big(data.totalCollateralUsd)
-          .minus(data.userTotalBorrowUsd)
-          .add(value);
-        isOverSize = value.gt(data.userTotalBorrowUsd);
+        if (data.localConfig?.getUserTotalBorrow) {
+          params.borrowBalance = Big(state.userTotalBorrowUsd).minus(value);
+          params.borrowLimit = Big(state.borrowAvailable).add(value);
+          isOverSize = value.gt(state.userTotalBorrowUsd);
+        } else {
+          params.borrowBalance = Big(data.userTotalBorrowUsd).minus(value);
+          params.borrowLimit = Big(data.totalCollateralUsd).minus(data.userTotalBorrowUsd).add(value);
+          isOverSize = value.gt(data.userTotalBorrowUsd);
+        }
       }
     }
     if (params.borrowLimit) {
@@ -346,10 +351,10 @@ const LendingDialog = (props: Props) => {
           <TopBox className={isForCollateral ? 'none-border' : ''}>
             <Header>
               <Title>
-              <span>
-                {isForCollateral ? 'Collateral' : actionText}
-                {!isForCollateral && tokenSymbol}
-              </span>
+                <span>
+                  {isForCollateral ? 'Collateral' : actionText}
+                  {!isForCollateral && tokenSymbol}
+                </span>
                 {!isForCollateral && source !== 'dapp' && (
                   <>
                     <Apy className={isSupply ? 'supply-color' : 'borrow-color'}>
@@ -384,18 +389,13 @@ const LendingDialog = (props: Props) => {
                 </svg>
               ) : (
                 <StyledCloseIcon>
-                  <CloseIcon
-                    size={18}
-                    onClose={handleClose}
-                  />
+                  <CloseIcon size={18} onClose={handleClose} />
                 </StyledCloseIcon>
               )}
             </Header>
             {isForCollateral && (
               <CollateralToken>
-                {actionText === 'Disable as Collateral'
-                  ? 'Disabling'
-                  : 'Enabling'}
+                {actionText === 'Disable as Collateral' ? 'Disabling' : 'Enabling'}
                 <Token>
                   <TokenLogo src={data.underlyingToken.icon} />
                   <TokenSymbol>{tokenSymbol}</TokenSymbol>
@@ -421,9 +421,7 @@ const LendingDialog = (props: Props) => {
                       if (isNaN(Number(ev.target.value))) return;
                       handleAmountChange(ev.target.value.replace(/\s+/g, ''));
                       updateState({
-                        isMax: Big(ev.target.value.replace(/\s+/g, '') || 0).eq(
-                          state.balance || 0
-                        )
+                        isMax: Big(ev.target.value.replace(/\s+/g, '') || 0).eq(state.balance || 0)
                       });
                     }}
                     placeholder="0.0"
@@ -434,17 +432,14 @@ const LendingDialog = (props: Props) => {
                 </InputWrapper>
                 <InputBalance>
                   <BalanceValue>
-                    ≈ $
-                    {state.amount
-                      ? Big(state.amount).mul(data.underlyingPrice).toFixed(2)
-                      : '-'}
+                    ≈ ${state.amount ? Big(state.amount).mul(data.underlyingPrice).toFixed(2) : '-'}
                   </BalanceValue>
                   <BalanceWrapper
                     onClick={(ev) => {
                       if (state.balanceLoading || isNaN(state.balance)) return;
                       handleAmountChange(state.balance);
                       updateState({
-                        amount: Big(state.balance || 0).toFixed(12),
+                        // amount: Big(state.balance || 0).toFixed(12),
                         isMax: true
                       });
                     }}
@@ -459,7 +454,8 @@ const LendingDialog = (props: Props) => {
                     onChange={(value) => {
                       const amount = Big(state.balance || 0)
                         .mul(+value / 100)
-                        .toFixed(4, 0);
+                        .toFixed(data.underlyingToken.decimals, 0)
+                        .replace(/[.]?0*$/, '');
                       updateState({
                         processValue: value,
                         amount
@@ -496,16 +492,11 @@ const LendingDialog = (props: Props) => {
             <Row className={isForCollateral ? 'justfiy-start' : ''}>
               <Label>Borrow Limit</Label>
               <ValuesWrapper>
-                <Value className={!!state.borrowLimit ? 'range' : ''}>
-                  ${formatBorrowLimit(2)}
-                </Value>
+                <Value className={!!state.borrowLimit ? 'range' : ''}>${formatBorrowLimit(2)}</Value>
                 {!!state.borrowLimit && (
                   <>
                     <div className="mx_5">
-                      <ArrowIcon
-                        color="#979ABE"
-                        className="mx_5"
-                      />
+                      <ArrowIcon color="#979ABE" className="mx_5" />
                     </div>
                     <Value>${Big(state.borrowLimit).toFixed(2)}</Value>
                   </>
@@ -519,13 +510,10 @@ const LendingDialog = (props: Props) => {
                   <Value className={!!state.borrowBalance ? 'range' : ''}>
                     ${Big(data.userTotalBorrowUsd).toFixed(2)}
                   </Value>
-                  {(isBorrow && state.borrowBalance) && (
+                  {isBorrow && state.borrowBalance && (
                     <>
                       <div className="mx_5">
-                        <ArrowIcon
-                          color="#979ABE"
-                          className="mx_5"
-                        />
+                        <ArrowIcon color="#979ABE" className="mx_5" />
                       </div>
                       <Value>${Big(state.borrowBalance).toFixed(2)}</Value>
                     </>

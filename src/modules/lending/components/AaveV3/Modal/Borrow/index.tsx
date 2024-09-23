@@ -197,7 +197,7 @@ const BorrowModal = (props: any) => {
 
   function borrowERC20(amount: string) {
     updateState({ loading: true });
-    const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI, provider);
+    const pool = new ethers.Contract(config.aavePoolV3Address, config.aavePoolV3ABI, provider.getSigner());
 
     provider
       .getSigner()
@@ -217,15 +217,11 @@ const BorrowModal = (props: any) => {
             const { status, transactionHash } = res;
             console.log('SUCCESS--', status, transactionHash);
             if (status === 1) {
+              onRequestClose();
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
               onActionSuccess({
                 msg: `You borrowed ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {
@@ -237,7 +233,10 @@ const BorrowModal = (props: any) => {
           })
           .catch(() => updateState({ loading: false }));
       })
-      .catch(() => updateState({ loading: false }));
+      .catch((err: any) => {
+        console.log('borrowERC20-err', err);
+        updateState({ loading: false });
+      });
   }
 
   function borrowETH(amount: string) {
@@ -259,15 +258,11 @@ const BorrowModal = (props: any) => {
           .then((res: any) => {
             const { status, transactionHash } = res;
             if (status === 1) {
+              onRequestClose();
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
               onActionSuccess({
                 msg: `You borrowed ${parseFloat(Big(amount).div(Big(10).pow(decimals)).toFixed(8))} ${symbol}`,
-                callback: () => {
-                  onRequestClose();
-                  updateState({
-                    loading: false
-                  });
-                }
+                step1: true
               });
               console.log('tx succeeded', res);
             } else {

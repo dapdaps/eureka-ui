@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 const StyledContainer = styled.div`
   display: flex;
@@ -58,39 +58,36 @@ const StyledChainIcon = styled.img`
 `;
 
 const Chain = (props: any) => {
-    const { curChain, onSwitchChain, from } = props;
+  const { curChain, onSwitchChain, from } = props;
+  const chains = props.chains || [];
+  const isMulti = chains.length > 1;
 
-const chains = props.chains || [];
-const isMulti = chains.length > 1;
+  const handleSwitchChain = (chain: any) => {
+    if (from === 'layer') {
+      onSwitchChain({ chainId: chain.chain_id });
+    } else {
+      onSwitchChain?.({ chainId: `0x${chain.chain_id.toString(16)}` });
+    }
+  };
 
-const handleSwitchChain = (chain: any) => {
-  if (from === "layer") {
-    onSwitchChain({ chainId: chain.chain_id });
-  } else {
-    onSwitchChain?.({ chainId: `0x${chain.chain_id.toString(16)}` });
-  }
+  return (
+    <StyledContainer className={isMulti ? 'multi' : ''}>
+      <StyledLabel>{isMulti ? 'Chains:' : 'Chain:'}</StyledLabel>
+      <StyledChains>
+        {chains.map((chain: any) => (
+          <StyledChainBox
+            key={chain.chain_id}
+            className={curChain.chain_id === chain.chain_id ? 'active' : ''}
+            onClick={() => {
+              handleSwitchChain(chain);
+            }}
+          >
+            <StyledChainIcon src={chain.logo} />
+          </StyledChainBox>
+        ))}
+      </StyledChains>
+    </StyledContainer>
+  );
 };
 
-return (
-  <StyledContainer className={isMulti ? "multi" : ""}>
-    <StyledLabel>{isMulti ? "Chains:" : "Chain:"}</StyledLabel>
-    <StyledChains>
-      {chains.map((chain: any) => (
-        <StyledChainBox
-          key={chain.chain_id}
-          className={curChain.chain_id === chain.chain_id ? "active" : ""}
-          onClick={() => {
-            handleSwitchChain(chain);
-          }}
-        >
-          <StyledChainIcon src={chain.logo} />
-        </StyledChainBox>
-      ))}
-    </StyledChains>
-  </StyledContainer>
-);
-}
-
 export default Chain;
-
-

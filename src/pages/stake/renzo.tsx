@@ -60,9 +60,11 @@ export const Page: NextPageWithLayout = () => {
       <TitleWapper>
         <img className="icon" src="/images/apps/renzo.svg" />
       </TitleWapper>
-      <Bg style={{ minHeight: viewHeight }}>
-        <Renzo />
-      </Bg>
+      <div style={{ minHeight: viewHeight }}>
+        <Bg>
+          <Renzo />
+        </Bg>
+      </div>
 
       <DappDetailScroll />
       <Suspense fallback={<DappFallback />}>

@@ -41,7 +41,7 @@ const AdCard = function ({ ad }: any) {
       <StyledFlex gap="32px" alignItems="flex-start" style={{ width: '100%', height: '100%' }}>
         <StyledCardBackgroundImage src={ad.ad_images} alt={ad.title} width={720} height={400} />
         <StyledCardMainContent>
-          <div className="title">Featured</div>
+          <div className="title">{ad.tag || 'Featured'}</div>
           <div className="card_section">
             {ad.title.indexOf('Super') > -1 ? (
               <StyledFlex gap={ad.title.indexOf('Bridge') ? '2px' : '10px'}>
