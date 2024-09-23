@@ -37,17 +37,13 @@ const LendingCompoundV3 = (props: Props) => {
     updateState({
       loading: !chainIdNotSupport
     });
-  }, [chainIdNotSupport]);
+  }, [chainIdNotSupport, tab]);
 
   const handleClickRow = (data: any) => {
     updateState({
       rowData: data
     });
   };
-
-  useEffect(() => {
-    updateState({ loading: true });
-  }, [tab]);
 
   return (
     <StyledContainer>
