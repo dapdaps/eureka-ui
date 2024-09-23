@@ -63,7 +63,7 @@ const MarketsModal = ({
                   {bestTrade?.name === item.name && <StyledBestPrice>Cheapest</StyledBestPrice>}
                 </StyledTitle>
               </StyledFlex>
-              <StyledFlex gap="6px">
+              <StyledFlex gap="6px" style={{ flexShrink: 0 }}>
                 <StyledTitle>
                   ~
                   {balanceFormated(

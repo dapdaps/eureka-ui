@@ -117,8 +117,10 @@ export default function useTrade({ chainId }: any) {
       cachedCount.current = 0;
 
       const onQuoterCallback = (_markets: any) => {
+        if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
+          return;
+        }
         setLoading(false);
-
         if (cachedCount.current === 0) {
           setBestTrade(_markets[0]);
           setTrade(
@@ -151,6 +153,9 @@ export default function useTrade({ chainId }: any) {
       };
 
       const onQuoterError = () => {
+        if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
+          return;
+        }
         if (cachedCount.current === 1) {
           setLoading(false);
           cachedCount.current = 0;

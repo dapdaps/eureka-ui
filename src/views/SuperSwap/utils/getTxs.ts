@@ -283,18 +283,9 @@ export const updateDappTx = async ({
     const result = await response.json();
     const data = result.data;
     if (!data) throw Error('');
-
     onSuccess({
       ...trade,
-      ...formatTrade({
-        market: data,
-        rawBalance,
-        gasPrice,
-        prices,
-        inputCurrency,
-        outputCurrency,
-        inputCurrencyAmount
-      })
+      txn: data.txn
     });
   } catch (err) {
     console.log('dapdap error', err);
