@@ -223,6 +223,7 @@ export default function SwapDapp({
               onRefresh={() => {
                 runQuoter();
               }}
+              key={`button-${updater}`}
             />
           </StyledPanel>
         </div>
