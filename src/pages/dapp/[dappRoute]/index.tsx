@@ -67,12 +67,12 @@ export const DappPage: NextPageWithLayout = () => {
       const isSupported = !!dapp.dapp_network?.find((_chain: any) => _chain.chain_id === _chainId);
       setIsChainSupported(isSupported && _chainId === chainId);
       setCurrentChain(
-        chains.find((_chain: any) => _chain.chain_id === (isSupported ? _chainId : dapp.default_chain_id)),
+        chains.find((_chain: any) => _chain.chain_id === (isSupported ? _chainId : dapp.default_chain_id))
       );
     },
     {
-      wait: 500,
-    },
+      wait: 500
+    }
   );
 
   useEffect(() => {
@@ -91,6 +91,10 @@ export const DappPage: NextPageWithLayout = () => {
     const _network = dapp.dapp_network?.find((_network: any) => _network.network_id === currentChain?.id);
     return _network || dapp.dapp_network[0];
   }, [currentChain, dapp]);
+
+  console.log('===currentChain', currentChain);
+  console.log('===localConfig', localConfig);
+  console.log('===dapp', dapp);
 
   if (localConfig?.name === '') return <Empty />;
   if (!currentChain || !localConfig || !dapp) return <div />;

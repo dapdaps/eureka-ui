@@ -1,58 +1,65 @@
 const ROUTE_CONFIG = {
-  'gamma': {
+  gamma: {
     type: 'liquidity',
     theme: {
       '--button-color': '#FFFFFF',
-      '--button-text-color': '#1E2028',
-    },
+      '--button-text-color': '#1E2028'
+    }
   },
-  'steakhut': {
+  steakhut: {
     type: 'liquidity',
     theme: {
       '--button-color': '#1362E4',
-      '--button-text-color': '#FFFFFF',
-    },
+      '--button-text-color': '#FFFFFF'
+    }
   },
-  'rangeprotocol': {
+  rangeprotocol: {
     type: 'liquidity',
     theme: {
       '--button-color': '#7637A4',
-      '--button-text-color': '#FFFFFF',
-    },
+      '--button-text-color': '#FFFFFF'
+    }
   },
-  'metavault': {
+  metavault: {
     type: 'liquidity',
     theme: {
       '--button-color': '#AA4FEB',
-      '--button-text-color': '#FFFFFF',
-    },
+      '--button-text-color': '#FFFFFF'
+    }
   },
-  'arrakis': {
+  arrakis: {
     type: 'liquidity',
     theme: {
       '--button-color': '#FFA760',
-      '--button-text-color': '#000000',
-    },
+      '--button-text-color': '#000000'
+    }
   },
-  'steer': {
+  steer: {
     type: 'liquidity',
     theme: {
       '--button-color': '#6d28d9',
-      '--button-text-color': '#FFFFFF',
-    },
+      '--button-text-color': '#FFFFFF'
+    }
   },
-  'blastoff': {
+  blastoff: {
     type: 'liquidity',
     theme: {
       '--button-color': '#F49102',
-      '--button-text-color': '#000',
+      '--button-text-color': '#000'
     }
   },
-  'juice': {
+  juice: {
     type: 'liquidity',
     theme: {
       '--button-color': 'linear-gradient(270deg,#CE86FE 0%,#8321D9 100%)',
-      '--button-text-color': '#FFF',
+      '--button-text-color': '#FFF'
+    }
+  },
+  infrared: {
+    type: 'liquidity',
+    theme: {
+      '--button-color': '#FFF',
+      '--button-text-color': '#1E2028'
     }
   }
 };
