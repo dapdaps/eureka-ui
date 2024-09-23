@@ -86,7 +86,9 @@ const LendingDex = (props: DexProps) => {
   return (
     <StyledContainer style={dexConfig.theme}>
       <StyledHeader>
-        <LendingCardTabs tabs={tabsArray} active={state.tab} onChange={handleTabChange} />
+        {type !== DexType.CompoundV3 && (
+          <LendingCardTabs tabs={tabsArray} active={state.tab} onChange={handleTabChange} />
+        )}
         <StyledHeaderRight>
           {pools && pools.length > 0 && (
             <LendingPools pools={pools} curPool={state.curPool} onSwitchPool={handlePoolChange} />
