@@ -14,6 +14,7 @@ export const StyledContainer = styled.div`
 export const StyledList = styled.div`
   overflow-y: auto;
   height: calc(100% - 30px);
+  padding-right: 4px;
 `;
 
 export const StyledItem = styled.div<{ isActive: boolean }>`
