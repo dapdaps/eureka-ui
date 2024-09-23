@@ -81,19 +81,24 @@ export default memo(function LPData(props) {
         const token1TVL = Big(token1?.tvl ?? 0).times(token1?.shareTokenPrice ?? 0);
         let _apr = 0;
         let _aum = 0;
+        const filterAddress = ['0x0F3CC3Ea42b989323e7c7e499b5B6A343eA55c18'];
 
         if (token0TVL.gt(token1TVL)) {
-          // _apr = token0.shareTokenApr;
-          _apr = token0.feeApr7dAvg;
-
+          if (filterAddress.includes(pairs[i].vaultAddress)) {
+            _apr = token0.shareTokenApr;
+          } else {
+            _apr = token0.feeApr7dAvg;
+          }
           const _token0 = pairs[i].token0;
-
           _aum = Big(formatUnits(token0.tvl, pairs[i].decimals0))
             .times(prices[_token0] || 0)
             .toString();
         } else {
-          // _apr = token1.shareTokenApr;
-          _apr = token1?.feeApr7dAvg;
+          if (filterAddress.includes(pairs[i].vaultAddress)) {
+            _apr = token1.shareTokenApr;
+          } else {
+            _apr = token1.feeApr7dAvg;
+          }
 
           const _token1 = pairs[i].token1;
 

@@ -142,7 +142,7 @@ export default memo(function Detail(props) {
   const [state, updateState] = useMultiState({
     isDeposit: defaultDeposit,
     lpBalance: '',
-    balances: [],
+    balances: {},
     amount0: '',
     amount1: '',
     lpAmount: '',
@@ -185,52 +185,26 @@ export default memo(function Detail(props) {
     if (a === '') return false;
     return true;
   }
-
-  const updateLPBalance = () => {
-    console.log('updateLPBalance--');
-    const abi = ['function balanceOf(address) view returns (uint256)'];
-    const vaultContract = new ethers.Contract(vaultAddress, abi, provider);
-    vaultContract.balanceOf(account).then((balanceBig) => {
-      const adjustedBalance = formatUnits(balanceBig, 18);
-      updateState({
-        lpBalance: adjustedBalance
-      });
-    });
-  };
-  const updateBalance = (token) => {
-    console.log('updateBalance--');
-    const { address, decimals, symbol } = token;
-    if (symbol === 'ETH') {
-      provider.getBalance(account).then((balanceBig) => {
-        const adjustedBalance = formatUnits(balanceBig);
-        updateState({
-          balances: {
-            ...state.balances,
-            [symbol]: adjustedBalance
-          }
-        });
-      });
-    } else {
-      const erc20Abi = ['function balanceOf(address) view returns (uint256)'];
-      const tokenContract = new ethers.Contract(address, erc20Abi, provider);
-      tokenContract
-        .balanceOf(account)
-        .then((balanceBig) => {
-          const adjustedBalance = Big(formatUnits(balanceBig, decimals)).toFixed();
-          updateState({
-            balances: {
-              ...state.balances,
-              [symbol]: adjustedBalance
-            }
-          });
-        })
-        .catch((error) => {
-          console.log('error: ', error);
-          setTimeout(() => {
-            updateBalance(token);
-          }, 1500);
-        });
-    }
+  // const updateLPBalance = () => {
+  //   console.log('updateLPBalance--');
+  //   const abi = ['function balanceOf(address) view returns (uint256)'];
+  //   const vaultContract = new ethers.Contract(vaultAddress, abi, provider);
+  //   vaultContract.balanceOf(account).then((balanceBig) => {
+  //     const adjustedBalance = formatUnits(balanceBig, 18);
+  //     updateState({
+  //       lpBalance: adjustedBalance
+  //     });
+  //   });
+  // };
+  const updateBalance = () => {
+    console.log('=====');
+    // provider.getBalance(account).then((balanceBig) => {
+    //   const adjustedBalance = formatUnits(balanceBig);
+    //   console.log('====adjustedBalance', adjustedBalance)
+    //   tokenList.forEach(token => {
+    //     console.log(token?.symbol, '======', Big(Big(prices['ETH']).div(prices[token?.symbol])).times(formatUnits(balanceBig, 18)).toString())
+    //   })
+    // });
   };
   const changeMode = (isDeposit) => {
     updateState({ isDeposit });
@@ -428,6 +402,10 @@ export default memo(function Detail(props) {
         });
       });
   };
+
+  useEffect(() => {
+    updateBalance();
+  }, []);
 
   return (
     <DetailWrapper>
