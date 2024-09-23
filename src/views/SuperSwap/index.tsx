@@ -236,7 +236,7 @@ export default function SuperSwap() {
         currency={selectType === 'in' ? inputCurrency : outputCurrency}
         onSelect={onSelectToken}
         loading={tokensLoading}
-        chainId={chainId}
+        chainId={currentChain.chain_id}
         onImport={addImportToken}
       />
       {showMarkets && outputCurrency && (
