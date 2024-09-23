@@ -1021,7 +1021,7 @@ const AaveV3Data = (props: any) => {
 
                 const index = addrs.findIndex((addr: any) => addr.toLowerCase() === item.underlyingAsset.toLowerCase());
 
-                _yourSupplies[i].isCollateraled = Number(_statusArray[index][0]);
+                _yourSupplies[i].isCollateraled = Number(_statusArray[index]?.[0] ?? 0);
               }
 
               const yourTotalCollateral = _yourSupplies

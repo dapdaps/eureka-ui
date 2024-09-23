@@ -132,7 +132,7 @@ const Markets = (props: any) => {
 
   const isIsolate = hasIsolateData.some((item: any) => item.isIsolated && !!item.isCollateraled);
 
-  const assetsToSupplyWithStable = assetsToSupply.filter((item: any) => item.isStableForIsolated);
+  const assetsToSupplyWithStable = assetsToSupply?.filter((item: any) => item.isStableForIsolated);
 
   useEffect(() => {
     return () => {
@@ -153,6 +153,7 @@ const Markets = (props: any) => {
       // "Can be Collateral",
       ''
     ];
+    if (!assetsToSupply) return null;
     tableData = (isIsolate ? assetsToSupplyWithStable : assetsToSupply).map((row: any, index: number) => [
       <TokenWrapper key={`token-${index}`}>
         <img width={64} height={64} src={row.icon} alt={row.symbol} />
@@ -200,6 +201,7 @@ const Markets = (props: any) => {
       // "Can be Collateral",
       ''
     ];
+    if (!assetsToSupply) return null;
     tableData = (isIsolate ? assetsToSupplyWithStable : assetsToSupply).map((row: any, index: number) => [
       <TokenWrapper key={`token-${index}`}>
         <img width={64} height={64} src={row.icon} alt={row.symbol} />
