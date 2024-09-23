@@ -14,6 +14,7 @@ import useSwitchChain from '@/hooks/useSwitchChain';
 import useToast from '@/hooks/useToast';
 import LendingDex from '@/modules/lending/Dex';
 import Gamma from '@/modules/liquidity/Gamma';
+import Infrared from '@/modules/liquidity/Infrared';
 import AthenaFinance from '@/modules/staking/AthenaFinance';
 import AuraFinance from '@/modules/staking/AuraFinance';
 import Hyperlock from '@/modules/staking/Hyperlock';
@@ -94,7 +95,6 @@ export default function BosDapp({
   };
 
   const nativeComponents = ['lending', 'compound v3', 'aave-v3'];
-  console.log(localConfig.type, 'localConfig.type');
 
   if (nativeComponents.includes(localConfig.type)) {
     return <LendingDex {...componentProps} />;
@@ -116,7 +116,8 @@ export default function BosDapp({
     'Teahouse',
     'AthenaFinance',
     'AuraFinance',
-    'Hyperlock'
+    'Hyperlock',
+    'Infrared'
   ];
 
   if (DappNameList.includes(localConfig?.basic?.name)) {
@@ -126,7 +127,7 @@ export default function BosDapp({
         return <Spinner />;
       }
     });
-    return <DynamicComponent {...componentProps} />;
+    return <Infrared {...componentProps} />;
   }
 
   return <ComponentWrapperPage componentProps={componentProps} src={network?.dapp_src} />;
