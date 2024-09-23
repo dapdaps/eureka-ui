@@ -105,7 +105,7 @@ export default function SuperSwap() {
       setErrorTips('Enter an amount');
       return;
     }
-    if (Big(inputCurrencyAmount).gt(inputBlance)) {
+    if (Big(inputCurrencyAmount).gt(inputBlance || 0)) {
       setErrorTips(`Insufficient ${inputCurrency?.symbol} Balance`);
     } else {
       setErrorTips('');
@@ -146,11 +146,6 @@ export default function SuperSwap() {
           <Header
             onLoadChain={(chain: any) => {
               setCurrentChain(chain);
-            }}
-            loading={loading}
-            onRefresh={() => {
-              if (loading) return;
-              onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
             }}
           />
           <StyledInputs>
@@ -214,6 +209,10 @@ export default function SuperSwap() {
           onSelectMarket={onSelectMarket}
           loading={quoting}
           errorTips={errorTips}
+          onRefresh={() => {
+            if (loading) return;
+            onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+          }}
         />
       </StyledMain>
 

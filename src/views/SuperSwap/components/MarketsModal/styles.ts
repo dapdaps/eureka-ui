@@ -2,11 +2,18 @@ import styled from 'styled-components';
 
 export const StyledContainer = styled.div`
   padding: 14px;
-  overflow-y: auto;
   width: 328px;
   border-radius: 12px;
   background: linear-gradient(180deg, #262836 0%, #000 100%);
   height: 100%;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+`;
+
+export const StyledList = styled.div`
+  overflow-y: auto;
+  height: calc(100% - 30px);
 `;
 
 export const StyledItem = styled.div<{ isActive: boolean }>`
@@ -88,4 +95,8 @@ export const StyledEmpty = styled.div`
     font-weight: 500;
     margin-top: 22px;
   }
+`;
+
+export const StyledTitleName = styled.span`
+  margin-right: 4px;
 `;

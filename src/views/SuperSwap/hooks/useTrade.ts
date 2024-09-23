@@ -1,7 +1,9 @@
 import Big from 'big.js';
+import { providers } from 'ethers';
 import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import chains from '@/config/chains';
 import weth from '@/config/contract/weth';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
@@ -10,6 +12,7 @@ import { usePriceStore } from '@/stores/price';
 import { useSettingsStore } from '@/stores/settings';
 import type { Token } from '@/types';
 
+import customTokens from '../config/tokens';
 import getAggregatorTokens from '../utils/getAggregatorTokens';
 import { getAggregatorsTx, getDappTx, getWrapTx, updateDappTx } from '../utils/getTxs';
 import { useUpdateBalanceStore } from './useUpdateBalanceStore';
@@ -31,20 +34,27 @@ export default function useTrade({ chainId }: any) {
   const cachedCount = useRef<number>(0);
   const [quoting, setQuoting] = useState(false);
   const { setUpdater } = useUpdateBalanceStore();
+  const timerRef = useRef<any>(null);
 
   const getTokens = useCallback(async () => {
     try {
       setTokensLoading(true);
       const tokens = await getAggregatorTokens(chainId);
-      setTokens(tokens);
+      const _customTokens = (customTokens[chainId] || []).map((token: any) => ({
+        ...token,
+        usd: prices[token.symbol] || prices[token.priceKey]
+      }));
+
+      setTokens([...tokens, ..._customTokens]);
     } catch (err) {
       setTokens([]);
     } finally {
       setTokensLoading(false);
     }
-  }, [chainId]);
+  }, [chainId, prices]);
 
   const onQuoter = async ({ inputCurrency, outputCurrency, inputCurrencyAmount }: any) => {
+    clearTimeout(timerRef.current);
     if (!inputCurrency) return;
     const wethAddress = weth[inputCurrency.chainId];
     const wrapType =
@@ -64,8 +74,16 @@ export default function useTrade({ chainId }: any) {
       setQuoting(true);
       setMarkets([]);
 
-      const rawBalance = await provider.getBalance(account);
-      const gasPrice = await provider.getGasPrice();
+      const rpcUrl = chains[chainId]?.rpcUrls[0];
+
+      const _provider = rpcUrl ? new providers.JsonRpcProvider(rpcUrl) : provider;
+
+      let rawBalance = 0;
+
+      if (account) {
+        rawBalance = await _provider.getBalance(account);
+      }
+      const gasPrice = await _provider.getGasPrice();
 
       if (wrapType) {
         const { txn, gas, isGasEnough } = await getWrapTx({
@@ -130,6 +148,9 @@ export default function useTrade({ chainId }: any) {
         cachedMarkets.current = [];
         cachedCount.current = 0;
         setQuoting(false);
+        timerRef.current = setTimeout(() => {
+          onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+        }, 60000);
       };
 
       const onQuoterError = () => {
@@ -142,6 +163,9 @@ export default function useTrade({ chainId }: any) {
         }
         cachedCount.current = 1;
         setTrade({ noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency });
+        timerRef.current = setTimeout(() => {
+          onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+        }, 60000);
       };
 
       getAggregatorsTx({
@@ -185,7 +209,9 @@ export default function useTrade({ chainId }: any) {
         routerAddress: ''
       });
       setLoading(false);
+      setQuoting(false);
       setMarkets([]);
+      console.log(err);
     }
   };
 
@@ -260,6 +286,7 @@ export default function useTrade({ chainId }: any) {
 
   useEffect(() => {
     if (chainId) getTokens();
+    setMarkets([]);
   }, [chainId]);
 
   return {

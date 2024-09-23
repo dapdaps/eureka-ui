@@ -83,7 +83,7 @@ export const getDappTx = async ({
     });
     const result = await response.json();
     const data = result.data;
-    if (!data) throw Error('');
+    if (!data) throw Error('Empty Data');
 
     onCallBack(
       data
@@ -138,7 +138,7 @@ export const getAggregatorsTx = async ({
         })}`
       );
       const data = result?.data?.[0];
-      if (!data) throw Error();
+      if (!data) throw Error('Empty Data');
 
       const dex =
         data.routerResult.quoteCompareList[0] ||

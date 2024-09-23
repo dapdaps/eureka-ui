@@ -11,8 +11,6 @@ import { balanceFormated } from '@/utils/balance';
 
 import { StyledBestPrice } from '../styles';
 
-type PriceImpactLevel = 'low' | 'medium' | 'high';
-
 const Wrapper = styled.div`
   .trade-display {
     cursor: pointer;
@@ -80,19 +78,7 @@ const StyledIconAlertTriangle = styled(IconAlertTriangle)<{ impact: number }>`
   color: ${({ impact }) => PriceImpactTypeColorMap[impact]};
 `;
 
-const StyleOptionChart = styled.div`
-  padding: 4px 6px;
-  font-family: Montserrat;
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 12px;
-  color: #979abe;
-  background-color: #21232a;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-export default function Result({ trade, bestTrade, markets, showChart, onShowChart }: any) {
+export default function Result({ trade, bestTrade, markets }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const slippage: any = useSettingsStore((store: any) => store.slippage);
   const [isRateReversed, setIsRateReversed] = useState(false);
@@ -132,7 +118,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
         </StyledFlex>
         {markets?.length > 0 && (
           <StyledFlex className="trade-display" gap="5px" onClick={() => setIsOpen(!isOpen)}>
-            {trade.logo ? <StyledIcon src={trade.logo} /> : <div style={{ width: 20 }} />}
+            <StyledIcon src={trade?.logo || '/images/apps/default_token.png'} />
             <div>{trade.name}</div>
             {trade.priceImpactType !== 0 ? (
               <StyledIconAlertTriangle impact={trade.priceImpactType} />

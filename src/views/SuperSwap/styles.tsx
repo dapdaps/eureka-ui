@@ -19,8 +19,8 @@ export const StyledContainer = styled.div`
 `;
 
 export const StyledMain = styled.div`
-  display: flex;
-  gap: 20px;
+  position: relative;
+  padding-right: 348px;
 `;
 
 export const StyledContent = styled.div`
@@ -29,6 +29,7 @@ export const StyledContent = styled.div`
   border: 1px solid #373a53;
   background: #262836;
   padding: 20px 30px;
+  height: 100%;
 `;
 
 export const StyledInputs = styled.div`
@@ -66,6 +67,7 @@ export const StyledTradeFooter = styled.div`
 `;
 
 export const StyledBestPrice = styled.div`
+  display: inline-block;
   border-radius: 4px;
   background: rgba(51, 182, 95, 0.1);
   padding: 5px;

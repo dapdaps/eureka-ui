@@ -162,43 +162,60 @@ const SelectTokensModal = ({
                   }}
                 />
               )}
-              {currencies.map((token: any) => {
-                const balance = balances[token.address];
+              {currencies
+                .sort((a: any, b: any) => {
+                  const balanceA = balances[a.address];
+                  const balanceB = balances[b.address];
+                  return Number(balanceA) > Number(balanceB) ? -1 : 1;
+                })
+                .map((token: any) => {
+                  const balance = balances[token.address];
 
-                return (
-                  <CurrencyRow
-                    key={token.address}
-                    onClick={() => {
-                      onSelect(token);
-                    }}
-                  >
-                    <CurrencyLabel>
-                      <CurrencyIcon src={token.icon || '/images/tokens/default_icon.png'} />
-                      <StyledTokenNameWrapper>
-                        <CurrencyName>{token.name}</CurrencyName>
-                        <CurrencySymbol>{token.symbol}</CurrencySymbol>
-                      </StyledTokenNameWrapper>
-                    </CurrencyLabel>
-                    <StyledRowR>
-                      {token.address === currency?.address && (
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="12" viewBox="0 0 16 12" fill="none">
-                          <path d="M1 5L6 10L15 1" stroke="var(--border-color)" strokeWidth="2" strokeLinecap="round" />
-                        </svg>
-                      )}
-                      {balancesLoading ? (
-                        <Loading />
-                      ) : (
-                        <StyledBalanceWrap>
-                          <span className="balance">{balanceFormated(balance, 4)}</span>
-                          <CurrencyAmount>
-                            ${valueFormated(balance, prices[token.priceKey || token.symbol] || currency?.usd || '0')}
-                          </CurrencyAmount>
-                        </StyledBalanceWrap>
-                      )}
-                    </StyledRowR>
-                  </CurrencyRow>
-                );
-              })}
+                  return (
+                    <CurrencyRow
+                      key={token.address}
+                      onClick={() => {
+                        onSelect(token);
+                      }}
+                    >
+                      <CurrencyLabel>
+                        <CurrencyIcon src={token.icon || '/images/tokens/default_icon.png'} />
+                        <StyledTokenNameWrapper>
+                          <CurrencyName>{token.name}</CurrencyName>
+                          <CurrencySymbol>{token.symbol}</CurrencySymbol>
+                        </StyledTokenNameWrapper>
+                      </CurrencyLabel>
+                      <StyledRowR>
+                        {token.address === currency?.address && (
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="12"
+                            viewBox="0 0 16 12"
+                            fill="none"
+                          >
+                            <path
+                              d="M1 5L6 10L15 1"
+                              stroke="var(--border-color)"
+                              strokeWidth="2"
+                              strokeLinecap="round"
+                            />
+                          </svg>
+                        )}
+                        {balancesLoading ? (
+                          <Loading />
+                        ) : (
+                          <StyledBalanceWrap>
+                            <span className="balance">{balanceFormated(balance, 4)}</span>
+                            <CurrencyAmount>
+                              ${valueFormated(balance, prices[token.priceKey || token.symbol] || currency?.usd || '0')}
+                            </CurrencyAmount>
+                          </StyledBalanceWrap>
+                        )}
+                      </StyledRowR>
+                    </CurrencyRow>
+                  );
+                })}
               {!currencies.length && !loading && !tokensLoading && !importToken && <Empty>No token.</Empty>}
             </CurrencyList>
           </>
