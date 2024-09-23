@@ -349,6 +349,7 @@ export default memo(function Borrowers(props: any) {
     sender,
     provider,
     prices,
+    chainId,
     symbolIndex,
     addAction,
     multicall,
@@ -729,7 +730,7 @@ export default memo(function Borrowers(props: any) {
   }
   function doApprove(amount, APPROVE_ADDRESS, onSuccess, onError) {
     const toastId = toast?.loading({
-      title: `Approve ${symbol}`
+      title: `Approve ${FIRST_SYMBOL_NAME}`
     });
     const abi = [
       {
@@ -774,6 +775,7 @@ export default memo(function Borrowers(props: any) {
         onSuccess && onSuccess();
       })
       .catch((error) => {
+        console.log('====error', error);
         onError && onError();
         toast?.fail({
           title: 'Approve Failed!',

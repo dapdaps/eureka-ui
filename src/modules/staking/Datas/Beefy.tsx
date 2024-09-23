@@ -68,8 +68,10 @@ export default memo(function Data(props) {
       console.log(params, count);
 
       if (count < 5) return;
+
       count = 0;
       console.log('_lpsDataRes--', _lpsDataRes);
+      const array = ['sushi-cow-linea-usdc-weth-rp'];
       for (let i = 0; i < pairs.length; i++) {
         const lpsData = _lpsDataRes[pairs[i].id];
         const apyData = _apyDataRes[pairs[i].id];
@@ -79,10 +81,14 @@ export default memo(function Data(props) {
           ? Big(formatUnits(_yourDepositsRes[i][0])).times(formatUnits(_pricePerFullShareRes[i][0])).toFixed(7, 0)
           : 0;
 
-        const _beefyTVL = Big(formatUnits(_totalSupplyRes[i][0]))
-          .times(formatUnits(_pricePerFullShareRes[i][0]))
-          .times(lpsData.price || 0)
-          .toString();
+        const _beefyTVL = array.includes(pairs[i].id)
+          ? Big(lpsData?.totalSupply)
+              .times(lpsData.price || 0)
+              .toString()
+          : Big(formatUnits(_totalSupplyRes[i][0]))
+              .times(formatUnits(_pricePerFullShareRes[i][0]))
+              .times(lpsData.price || 0)
+              .toString();
         const _gammaTVL = Big(lpsData.price || 0)
           .times(lpsData.totalSupply)
           .toString();
