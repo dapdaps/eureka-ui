@@ -402,7 +402,7 @@ function TokenSelectModal({
   }, [idSuffix, currentChain]);
 
   return (
-    <Modal ref={wapperRef} paddingSize={0} onClose={onClose}>
+    <Modal ref={wapperRef} fixed paddingSize={0} onClose={onClose}>
       <Container>
         <ChainWapper>
           <Title style={{ paddingLeft: 20 }}>Chain</Title>
