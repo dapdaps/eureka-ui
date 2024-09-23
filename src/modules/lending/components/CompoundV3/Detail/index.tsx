@@ -770,7 +770,7 @@ const CompoundV3Detail = (props: any) => {
           availableToBorrow={state.availableToBorrow}
           borrowApr={state.borrowApr}
           supplyApr={state.supplyApr}
-          cometAddress={data?.baseToken?.address}
+          cometAddress={data.address}
           account={account}
           toast={toast}
           addable={state.addable}
