@@ -359,6 +359,7 @@ export default function ChainTokenAmount({
           onClose={() => {
             setTokenModalShow(false);
           }}
+          showSelectChain={true}
           onChainChange={onChainChange}
           onTokenChange={onTokenChange}
         />
