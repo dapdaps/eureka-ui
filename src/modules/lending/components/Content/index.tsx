@@ -38,7 +38,7 @@ const LendingContent = (props: Props) => {
 
   useEffect(() => {
     updateState({ loading: !chainIdNotSupport });
-  }, [chainIdNotSupport]);
+  }, [chainIdNotSupport, tab]);
 
   const handleTableButtonClick = (address: string, actionText: string) => {
     const market = state.markets[address];
@@ -61,10 +61,6 @@ const LendingContent = (props: Props) => {
       showDialog: true
     });
   };
-
-  useEffect(() => {
-    updateState({ loading: true });
-  }, [tab]);
 
   return (
     <StyledContainer>
