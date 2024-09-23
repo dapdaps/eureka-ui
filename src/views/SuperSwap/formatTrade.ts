@@ -78,7 +78,6 @@ const formatTrade = ({
   } else {
     routerStr = inputCurrency.symbol + ' > ' + outputCurrency.symbol;
   }
-
   return {
     inputCurrency,
     outputCurrency,
@@ -93,7 +92,7 @@ const formatTrade = ({
     isGasEnough,
     priceImpact,
     priceImpactType,
-    gasUsd: Big(nativeTokenPrice)
+    gasUsd: Big(nativeTokenPrice || 0)
       .mul(gas)
       .div(10 ** nativeToken.decimals)
       .toString()

@@ -103,9 +103,9 @@ export const StyleChainItem = styled.div<{ isActive?: boolean }>`
   cursor: pointer;
   padding: 9px;
   border-radius: 10px;
-  background: #18191e;
+  background: ${({ isActive }) => (isActive ? '#1B1E27' : 'transparent')};
   color: #fff;
-  border: ${({ isActive }) => (isActive ? '1px solid #EBF479' : '1px solid transparent')};
+  border: ${({ isActive }) => (isActive ? '1px solid #EBF479' : '1px solid #373A53')};
   max-width: 144px;
   .chain-img {
     width: 26px;

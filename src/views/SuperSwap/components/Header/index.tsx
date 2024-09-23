@@ -1,9 +1,12 @@
+import Refresh from '@/components/Icons/Refresh';
 import Tooltip from '@/components/TitleTooltip';
 
+import Slippage from '../InputCard/Slippage';
+import { StyledActionButton, StyledActions } from '../InputCard/styles';
 import ChainSelector from './ChainSelector';
 import { StyledContainer, StyledTitle } from './styles';
 
-export default function Header({ onLoadChain }: any) {
+export default function Header({ onLoadChain, loading, onRefresh }: any) {
   return (
     <>
       <StyledContainer>
@@ -20,9 +23,15 @@ export default function Header({ onLoadChain }: any) {
               stroke="#16181D"
             />
           </svg>
-          <div>Swap</div>
+          <div>Super Swap</div>
           <Tooltip content="Super Swap aggregates 75+ DEXes for best-in-class rates, providing one-click access to deep liquidity pools. Each swap on DapDap helps to earn you medals, turning your trades into achievements! Enjoy smart pathfinding for complex token pairs and gas-optimized transactions across chains. Wap smarter, not harder." />
         </StyledTitle>
+        <StyledActions>
+          <StyledActionButton onClick={onRefresh}>
+            <Refresh refreshing={loading} size={16} />
+          </StyledActionButton>
+          <Slippage />
+        </StyledActions>
       </StyledContainer>
       <ChainSelector onLoadChain={onLoadChain} />
     </>

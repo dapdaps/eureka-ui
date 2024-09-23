@@ -94,7 +94,7 @@ export default function useApprove({
   };
 
   useEffect(() => {
-    if (token?.isNative) {
+    if (token?.isNative && token.chainId !== 1088) {
       setApproved(true);
       return;
     }

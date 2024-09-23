@@ -145,6 +145,9 @@ export const getAggregatorsTx = async ({
         data.routerResult.dexRouterList?.[0]?.subRouterList[0]?.dexProtocol?.[0];
 
       if (!dex || Big(dex.amountOut || 0).eq(0)) throw Error();
+
+      if (inputCurrency.usd) prices[inputCurrency.symbol] = inputCurrency.usd;
+      if (outputCurrency.usd) prices[outputCurrency.symbol] = outputCurrency.usd;
       onCallBack(
         formatTrade({
           rawBalance,
@@ -170,9 +173,7 @@ export const getAggregatorsTx = async ({
             outputCurrencyAmount: dex.amountOut
           },
           prices: {
-            ...prices,
-            [inputCurrency.symbol]: inputCurrency.usd,
-            [outputCurrency.symbol]: outputCurrency.usd
+            ...prices
           },
           inputCurrency,
           outputCurrency,

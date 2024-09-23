@@ -17,15 +17,7 @@ import PriceBoard from './components/PriceBoard';
 import Result from './components/Result';
 import SelectTokensModal from './components/SelectTokensModal';
 import useTrade from './hooks/useTrade';
-import {
-  StyledAmount,
-  StyledContainer,
-  StyledContent,
-  StyledInputs,
-  StyledTradeFooter,
-  StyledTradeIcon,
-  StyleProviderHeader
-} from './styles';
+import { StyledContainer, StyledContent, StyledInputs, StyledMain, StyledTradeFooter, StyledTradeIcon } from './styles';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
@@ -36,7 +28,6 @@ export default function SuperSwap() {
   const [outputCurrency, setOutputCurrency] = useState<Token>();
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
   const [showTokensSelector, setShowTokensSelector] = useState<boolean>(false);
-  const [showMarkets, setShowMarkets] = useState<boolean>(false);
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
   const { importTokens, addImportToken }: any = useImportTokensStore();
@@ -46,6 +37,7 @@ export default function SuperSwap() {
     tokens = [],
     tokensLoading,
     loading,
+    quoting,
     markets,
     trade,
     bestTrade,
@@ -149,28 +141,11 @@ export default function SuperSwap() {
 
   return (
     <StyledContainer>
-      <StyledContent>
-        <Header
-          onLoadChain={(chain: any) => {
-            setCurrentChain(chain);
-          }}
-        />
-        <StyledInputs>
-          <InputCard
-            title="You pay"
-            isFrom={true}
-            amount={inputCurrencyAmount}
-            currency={inputCurrency}
-            onAmountChange={(amount: any) => {
-              setInputCurrencyAmount(amount);
-            }}
-            key={`in-${updater}`}
-            onTokenSelect={() => {
-              setSelectType('in');
-              setShowTokensSelector(true);
-            }}
-            onLoad={(balance: string) => {
-              setInputBalance(balance);
+      <StyledMain>
+        <StyledContent>
+          <Header
+            onLoadChain={(chain: any) => {
+              setCurrentChain(chain);
             }}
             loading={loading}
             onRefresh={() => {
@@ -178,56 +153,70 @@ export default function SuperSwap() {
               onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
             }}
           />
-          <StyledTradeIcon disabled={false} onClick={swapToken}>
-            <Arrow2Down />
-          </StyledTradeIcon>
-          <InputCard
-            title="Receive"
-            amount={trade?.outputCurrencyAmount}
-            currency={outputCurrency}
-            disabled
-            key={`out-${updater}`}
-            onTokenSelect={() => {
-              setSelectType('out');
-              setShowTokensSelector(true);
-            }}
-            style={{ marginTop: 6 }}
-          />
-        </StyledInputs>
-        <StyledTradeFooter>
-          {/* {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade} showChart={showChart} onShowChart={() => setShowChart(!showChart)} />} */}
-          {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}></Result>}
-        </StyledTradeFooter>
-
-        <Button
-          amount={inputCurrencyAmount}
-          errorTips={errorTips}
-          trade={trade}
-          token={inputCurrency}
-          loading={loading}
-          onClick={onSwap}
-          disabled={!trade?.txn}
-          currentChain={currentChain}
-          onRefresh={() => {
-            if (!trade.txn) onUpdateTxn(trade);
-          }}
-        />
-
-        {trade && (
-          <StyleProviderHeader>
-            <StyledAmount
-              onClick={() => {
-                if (!markets?.length) return;
-                setShowMarkets(true);
+          <StyledInputs>
+            <InputCard
+              title="You pay"
+              isFrom={true}
+              amount={inputCurrencyAmount}
+              currency={inputCurrency}
+              onAmountChange={(amount: any) => {
+                setInputCurrencyAmount(amount);
               }}
-            >
-              {markets?.length || 0} Providers
-            </StyledAmount>
-          </StyleProviderHeader>
-        )}
+              key={`in-${updater}`}
+              onTokenSelect={() => {
+                setSelectType('in');
+                setShowTokensSelector(true);
+              }}
+              onLoad={(balance: string) => {
+                setInputBalance(balance);
+              }}
+            />
+            <StyledTradeIcon disabled={false} onClick={swapToken}>
+              <Arrow2Down />
+            </StyledTradeIcon>
+            <InputCard
+              title="Receive"
+              amount={trade?.outputCurrencyAmount}
+              currency={outputCurrency}
+              disabled
+              key={`out-${updater}`}
+              onTokenSelect={() => {
+                setSelectType('out');
+                setShowTokensSelector(true);
+              }}
+              style={{ marginTop: 6 }}
+            />
+          </StyledInputs>
+          <StyledTradeFooter>
+            {/* {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade} showChart={showChart} onShowChart={() => setShowChart(!showChart)} />} */}
+            {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}></Result>}
+          </StyledTradeFooter>
 
-        {/* { trade && showChart && <KLineChart trade={trade} /> } */}
-      </StyledContent>
+          <Button
+            amount={inputCurrencyAmount}
+            errorTips={errorTips}
+            trade={trade}
+            token={inputCurrency}
+            loading={loading}
+            onClick={onSwap}
+            disabled={!trade?.txn}
+            currentChain={currentChain}
+            onRefresh={() => {
+              if (!trade.txn) onUpdateTxn(trade);
+            }}
+          />
+        </StyledContent>
+        <MarketsModal
+          markets={markets}
+          trade={trade}
+          bestTrade={bestTrade}
+          outputCurrency={outputCurrency}
+          onSelectMarket={onSelectMarket}
+          loading={quoting}
+          errorTips={errorTips}
+        />
+      </StyledMain>
+
       <PriceBoard />
       <SelectTokensModal
         tokens={mergedTokens || []}
@@ -239,19 +228,6 @@ export default function SuperSwap() {
         chainId={currentChain.chain_id}
         onImport={addImportToken}
       />
-      {showMarkets && outputCurrency && (
-        <MarketsModal
-          display={showMarkets}
-          onClose={() => {
-            setShowMarkets(false);
-          }}
-          markets={markets}
-          trade={trade}
-          bestTrade={bestTrade}
-          outputCurrency={outputCurrency}
-          onSelectMarket={onSelectMarket}
-        />
-      )}
     </StyledContainer>
   );
 }

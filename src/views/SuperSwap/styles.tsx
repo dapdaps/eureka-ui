@@ -11,15 +11,24 @@ export const StyledContainer = styled.div`
     color: #33b65f;
   }
   .price-impact-1 {
-    color: #F88C39;
+    color: #f88c39;
   }
   .price-impact-2 {
-    color: #E956A6;
+    color: #e956a6;
   }
 `;
 
+export const StyledMain = styled.div`
+  display: flex;
+  gap: 20px;
+`;
+
 export const StyledContent = styled.div`
-  width: 580px;
+  width: 648px;
+  border-radius: 12px;
+  border: 1px solid #373a53;
+  background: #262836;
+  padding: 20px 30px;
 `;
 
 export const StyledInputs = styled.div`
@@ -68,25 +77,3 @@ export const StyledBestPrice = styled.div`
   font-weight: 400;
   line-height: 100%;
 `;
-
-
-export const StyledAmount = styled.div`
-  color: #979abe;
-  font-family: Montserrat;
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 16px;
-    margin-left: 4px;
-    text-decoration: underline;
-    &:hover {
-      color: #ffffff;
-      cursor: pointer;
-    }
-`;
-
-export const StyleProviderHeader = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 16px;
-`

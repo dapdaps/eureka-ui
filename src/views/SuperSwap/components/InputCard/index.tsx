@@ -3,20 +3,15 @@ import { useEffect, useState } from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
-import Refresh from '@/components/Icons/Refresh';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
 import type { Token } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 
-import { useUpdateBalanceStore } from '../../hooks/useUpdateBalanceStore';
 import CurrencyInput from '../Input';
-import Slippage from './Slippage';
 import {
   CurrencyIcon,
   CurrencyTitle,
-  StyledActionButton,
-  StyledActions,
   StyledHeader,
   StyledSelectToken,
   StyledTradeBalance,
@@ -42,13 +37,11 @@ const Currency = ({
   onAmountChange = () => {},
   onTokenSelect,
   onLoad,
-  onRefresh,
   amount,
   currency,
   title,
   disabled,
   isFrom,
-  loading,
   style = {}
 }: Props) => {
   const [isFocus, setIsFocus] = useState(false);
@@ -62,23 +55,11 @@ const Currency = ({
   }, [balance]);
 
   return (
-    <StyledTradeBlock style={style}>
+    <StyledTradeBlock style={{ ...style, backgroundColor: isFocus ? '#20212D' : 'transparent' }}>
       <StyledHeader>
         <div>{title}</div>
-        {isFrom && (
-          <StyledActions>
-            <StyledActionButton onClick={onRefresh}>
-              <Refresh refreshing={loading} size={16} />
-            </StyledActionButton>
-            <Slippage />
-          </StyledActions>
-        )}
       </StyledHeader>
-      <StyledTradeContent
-        style={{
-          backgroundColor: isFocus ? '#20212D' : 'transparent'
-        }}
-      >
+      <StyledTradeContent>
         <StyledTradeInputContainer>
           <CurrencyInput
             amount={amount}

@@ -15,7 +15,12 @@ export default async function getAggregatorTokens(chainId: number) {
       const isNative = token.tokenContractAddress === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE';
 
       return isNative
-        ? { ...nativeToken, chainId, isNative, address: 'native' }
+        ? {
+            ...nativeToken,
+            chainId,
+            isNative,
+            address: chainId === 1088 ? '0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000' : 'native'
+          }
         : {
             name: token.tokenName,
             symbol: token.tokenSymbol,

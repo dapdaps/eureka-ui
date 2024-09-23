@@ -29,6 +29,7 @@ export default function useTrade({ chainId }: any) {
   const prices = usePriceStore((store) => store.price);
   const cachedMarkets = useRef<any[]>([]);
   const cachedCount = useRef<number>(0);
+  const [quoting, setQuoting] = useState(false);
   const { setUpdater } = useUpdateBalanceStore();
 
   const getTokens = useCallback(async () => {
@@ -60,6 +61,7 @@ export default function useTrade({ chainId }: any) {
 
     try {
       setLoading(true);
+      setQuoting(true);
       setMarkets([]);
 
       const rawBalance = await provider.getBalance(account);
@@ -127,12 +129,15 @@ export default function useTrade({ chainId }: any) {
         );
         cachedMarkets.current = [];
         cachedCount.current = 0;
+        setQuoting(false);
       };
 
       const onQuoterError = () => {
         if (cachedCount.current === 1) {
           setLoading(false);
           cachedCount.current = 0;
+          cachedMarkets.current = [];
+          setQuoting(false);
           return;
         }
         cachedCount.current = 1;
@@ -166,7 +171,6 @@ export default function useTrade({ chainId }: any) {
         prices,
         onCallBack: (_markets: any) => {
           onQuoterCallback(_markets);
-          console.log('dapdap', _markets);
         },
         onError: onQuoterError
       });
@@ -262,6 +266,7 @@ export default function useTrade({ chainId }: any) {
     tokens,
     tokensLoading,
     loading,
+    quoting,
     markets,
     trade,
     bestTrade,
