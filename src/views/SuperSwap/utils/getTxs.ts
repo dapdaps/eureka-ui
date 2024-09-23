@@ -143,8 +143,7 @@ export const getAggregatorsTx = async ({
       const dex =
         data.routerResult.quoteCompareList[0] ||
         data.routerResult.dexRouterList?.[0]?.subRouterList[0]?.dexProtocol?.[0];
-
-      if (!dex || Big(dex.amountOut || 0).eq(0)) throw Error();
+      if (!dex || Big(data.routerResult.toTokenAmount || 0).eq(0)) throw Error();
 
       if (inputCurrency.usd) prices[inputCurrency.symbol] = inputCurrency.usd;
       if (outputCurrency.usd) prices[outputCurrency.symbol] = outputCurrency.usd;
@@ -170,7 +169,9 @@ export const getAggregatorsTx = async ({
             routerAddress: data.tx.to,
             template: dex.dexName,
             logo: dex.dexLogo,
-            outputCurrencyAmount: dex.amountOut
+            outputCurrencyAmount: Big(data.routerResult.toTokenAmount)
+              .div(10 ** outputCurrency.decimals)
+              .toString()
           },
           prices: {
             ...prices

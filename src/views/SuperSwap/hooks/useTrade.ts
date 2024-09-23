@@ -119,7 +119,7 @@ export default function useTrade({ chainId }: any) {
       const onQuoterCallback = (_markets: any) => {
         setLoading(false);
 
-        if (!cachedMarkets.current.length) {
+        if (cachedCount.current === 0) {
           setBestTrade(_markets[0]);
           setTrade(
             _markets[0]
@@ -131,20 +131,17 @@ export default function useTrade({ chainId }: any) {
           cachedCount.current = 1;
           return;
         }
-        if (Big(_markets[0].outputCurrencyAmount || 0).gt(cachedMarkets.current[0].outputCurrencyAmount || 0)) {
-          setBestTrade(_markets[0]);
-          setTrade(
-            _markets[0]
-              ? { ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency }
-              : { noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency }
-          );
+
+        const mergedMarkets = uniqBy([..._markets, ...cachedMarkets.current], 'name').sort(
+          (a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount
+        );
+
+        if (mergedMarkets.length) {
+          setBestTrade(mergedMarkets[0]);
+          setTrade(mergedMarkets[0]);
         }
 
-        setMarkets(
-          uniqBy([..._markets, ...cachedMarkets.current], 'name').sort(
-            (a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount
-          )
-        );
+        setMarkets(mergedMarkets);
         cachedMarkets.current = [];
         cachedCount.current = 0;
         setQuoting(false);
@@ -159,13 +156,13 @@ export default function useTrade({ chainId }: any) {
           cachedCount.current = 0;
           cachedMarkets.current = [];
           setQuoting(false);
+          timerRef.current = setTimeout(() => {
+            onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+          }, 60000);
+          setTrade({ noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency });
           return;
         }
         cachedCount.current = 1;
-        setTrade({ noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency });
-        timerRef.current = setTimeout(() => {
-          onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
-        }, 60000);
       };
 
       getAggregatorsTx({
@@ -211,7 +208,6 @@ export default function useTrade({ chainId }: any) {
       setLoading(false);
       setQuoting(false);
       setMarkets([]);
-      console.log(err);
     }
   };
 
