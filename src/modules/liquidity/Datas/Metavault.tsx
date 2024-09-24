@@ -116,7 +116,7 @@ export default function GammaData(props: any) {
     });
   }
   function getDataList() {
-    pairs.forEach((pair) => {
+    pairs?.forEach((pair) => {
       dataList.push(pair);
     });
     formatedData('getDataList');
@@ -234,5 +234,5 @@ export default function GammaData(props: any) {
     getMyBalance();
     getPoolBalance();
     getTrader();
-  }, []);
+  }, [sender]);
 }

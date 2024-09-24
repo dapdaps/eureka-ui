@@ -59,7 +59,7 @@ export const Wrapper = styled.div`
     line-height: 16px;
   }
   .button {
-    width: 118px;
+    /* width: 118px; */
     height: 46px;
     flex-shrink: 0;
     border-radius: 8px;

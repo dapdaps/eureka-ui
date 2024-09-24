@@ -268,5 +268,5 @@ export default function GammaData(props: any) {
     getTvlUSD();
     getFeeApr();
     getBalance();
-  }, []);
+  }, [sender]);
 }

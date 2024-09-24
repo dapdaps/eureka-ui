@@ -21,7 +21,7 @@ const basic = {
       'https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_48%2Fd_unknown.png%2Ftokens%2F1088%2F0x75cb093E4D61d2A2e65D8e0BBb01DE8d89b53481.jpg&w=128&q=100',
     artMETIS: 'https://token-list.hercules.exchange/assets/artMETIS.svg',
     USDB: 'https://app.steer.finance/_next/image?url=https%3A%2F%2Fcdn.sushi.com%2Fimage%2Fupload%2Ff_auto%2Cc_limit%2Cw_64%2Cq_auto%2Ftokens%2F81457%2F0x4300000000000000000000000000000000000003.jpg&w=128&q=100',
-    PAC: '',
+    PAC: '/images/steer/pac.webp',
     pxETH:
       'https://app.steer.finance/_next/image?url=https%3A%2F%2Ffenix-dex-api.vercel.app%2Ftokens%2FpxETH.png&w=128&q=100'
   }

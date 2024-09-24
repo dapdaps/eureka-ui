@@ -47,8 +47,11 @@ const StyledClose = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  right: 20px;
-  top: 20px;
+  right: 15px;
+  top: 15px;
+  z-index: 50;
+  cursor: pointer;
+  padding: 5px;
 `;
 const StyledWrapContainerTopButton = styled.div`
   position: relative;
@@ -114,6 +117,7 @@ const StyledWrapOrUnwrapInputTopBalance = styled.div`
   span {
     color: #fff;
     text-decoration-line: underline;
+    cursor: pointer;
   }
 `;
 const StyledWrapOrUnwrapInputBottomInput = styled.input`

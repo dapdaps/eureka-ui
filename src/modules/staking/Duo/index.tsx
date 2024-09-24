@@ -3,11 +3,11 @@ import { memo, useEffect } from 'react';
 import styled from 'styled-components';
 
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
-import Spinner from '@/modules/components/Spinner';
 import { useDynamicLoader, useMultiState } from '@/modules/hooks';
 import LendingCardTabs from '@/modules/lending/components/CardTabs';
 import LendingChains from '@/modules/lending/components/Chains';
 
+import Spinner from '../Bridge/Spinner';
 import Content from './components/Content';
 const StyledContainer = styled.div`
   padding-top: 34px;

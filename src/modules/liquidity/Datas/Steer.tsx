@@ -186,14 +186,19 @@ export default function Data(props: any) {
     );
   }
   function getTvlUSD() {
+    console.log('====prices', prices);
     for (let i = 0; i < dataList.length; i++) {
       const data = dataList[i];
       const { token0Balance, token1Balance } = data.initialData;
-      if (data.poolAddress === '0x559e44572145aabf6fdbc7e49db92bb6e6079c66') {
-        dataList[i].tvlUSD = Big(ethers.utils.formatUnits(token1Balance ?? 0, data.decimals1))
-          .times(prices[data.token1])
-          .toFixed(2);
-      } else if (data.poolAddress === '0x47d7b9510ae2835c7c293825641a5427226d34cb') {
+
+      console.log('===data.token0', data.token0);
+      console.log(prices[data.token0]);
+      console.log('===data.token1', data.token1);
+      console.log(prices[data.token1]);
+      console.log('===token0Balance', Big(ethers.utils.formatUnits(token0Balance ?? 0, data.decimals0)).toString());
+      console.log('===token1Balance', Big(ethers.utils.formatUnits(token1Balance ?? 0, data.decimals1)).toString());
+
+      if (data.poolAddress === '0x47d7b9510ae2835c7c293825641a5427226d34cb') {
         handleGetSpecial(i);
       } else {
         dataList[i].tvlUSD = Big(ethers.utils.formatUnits(token0Balance ?? 0, data.decimals0))
@@ -203,6 +208,14 @@ export default function Data(props: any) {
       }
     }
     formatedData('getTvlUSD');
+  }
+  async function handleGetMerkl() {
+    try {
+      const response = await asyncFetchWithPromise('https://api.angle.money/v2/merkl?chainIds[]=' + curChain.chain_id);
+      return response[curChain?.chain_id]?.pools;
+    } catch (error) {
+      console.log('error:', error);
+    }
   }
   function handleGetBaseApr(baseAprUrl) {
     const baseAprPromiseArray = [];
@@ -221,10 +234,28 @@ export default function Data(props: any) {
     const promiseArray = [];
     promiseArray.push(handleGetBaseApr(baseAprUrl));
     Promise.all(promiseArray)
-      .then((result) => {
+      .then(async (result) => {
+        const pools = await handleGetMerkl();
         const [baseAprResult] = result;
         for (let i = 0; i < dataList.length; i++) {
-          dataList[i].feeApr = Big(baseAprResult[i]?.apr ?? 0).toFixed(2) + '%';
+          const data = dataList[i];
+          const pool = pools[ethers.utils.getAddress(data.poolAddress)];
+          const vaultAddress = addresses[data.id];
+
+          console.log('====pool', pool);
+          console.log('====vaultAddress', vaultAddress);
+          if (pool && Object.keys(pool.aprs).length > 0) {
+            Object.keys(pool.aprs).forEach((key) => {
+              if (key.indexOf(ethers.utils.getAddress(vaultAddress)) > -1) {
+                data.feeApr =
+                  Big(baseAprResult[i]?.apr ?? 0)
+                    .plus(pool.aprs[key])
+                    .toFixed(2) + '%';
+              }
+            });
+          } else {
+            dataList[i].feeApr = Big(baseAprResult[i]?.apr ?? 0).toFixed(2) + '%';
+          }
         }
         formatedData('getFeeApr');
       })
@@ -253,9 +284,13 @@ export default function Data(props: any) {
         for (let i = 0; i < dataList.length; i++) {
           const data = dataList[i];
           const [totalSupplyResult, getTotalAmountsResult] = result;
-          const total0 = ethers.utils.formatUnits(getTotalAmountsResult[i][0], data.decimals0);
-          const total1 = ethers.utils.formatUnits(getTotalAmountsResult[i][1], data.decimals1);
-          const totalSupply = ethers.utils.formatUnits(totalSupplyResult[i][0], 18);
+          const total0 = getTotalAmountsResult[i]
+            ? ethers.utils.formatUnits(getTotalAmountsResult[i][0], data.decimals0)
+            : 0;
+          const total1 = getTotalAmountsResult[i]
+            ? ethers.utils.formatUnits(getTotalAmountsResult[i][1], data.decimals1)
+            : 0;
+          const totalSupply = totalSupplyResult[i] ? ethers.utils.formatUnits(totalSupplyResult[i][0], 18) : 0;
           const priceLp = Big(totalSupply).gt(0)
             ? Big(Big(total0).times(prices[data.token0]).plus(Big(total1).times(prices[data.token1]))).div(totalSupply)
             : 0;
@@ -302,5 +337,5 @@ export default function Data(props: any) {
     getTvlUSD();
     getFeeApr();
     getBalance();
-  }, []);
+  }, [sender]);
 }

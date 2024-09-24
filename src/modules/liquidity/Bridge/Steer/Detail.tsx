@@ -656,7 +656,11 @@ export default memo(function Detail(props: any) {
                   <InputWrap className={Number(amount0) > Number(balances[token0]) ? 'inSufficient' : ''}>
                     <Input value={amount0} type="number" onChange={(e) => handleTokenChange(e.target.value, token0)} />
                     <InputSuffix>
-                      <img src={ICON_VAULT_MAP[token0]} alt={token0} />
+                      {ICON_VAULT_MAP[token0] ? (
+                        <img src={ICON_VAULT_MAP[token0]} alt={token0} />
+                      ) : (
+                        <UnKnownSvgContainer>{UnKnownSvg}</UnKnownSvgContainer>
+                      )}
                       <span>{token0}</span>
                     </InputSuffix>
                   </InputWrap>
@@ -672,7 +676,11 @@ export default memo(function Detail(props: any) {
                   <InputWrap className={Number(amount1) > Number(balances[token1]) ? 'inSufficient' : ''}>
                     <Input value={amount1} type="number" onChange={(e) => handleTokenChange(e.target.value, token1)} />
                     <InputSuffix>
-                      <img src={ICON_VAULT_MAP[token1]} alt={token1} />
+                      {ICON_VAULT_MAP[token1] ? (
+                        <img src={ICON_VAULT_MAP[token1]} alt={token1} />
+                      ) : (
+                        <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
+                      )}
                       <span>{token1}</span>
                     </InputSuffix>
                   </InputWrap>
@@ -751,8 +759,16 @@ export default memo(function Detail(props: any) {
 
                     <InputSuffix>
                       <StyledImageList>
-                        <img src={ICON_VAULT_MAP[token0]} alt={token0} />
-                        <img src={ICON_VAULT_MAP[token1]} alt={token1} style={{ marginLeft: -6 }} />
+                        {ICON_VAULT_MAP[token0] ? (
+                          <img src={ICON_VAULT_MAP[token0]} alt={token0} />
+                        ) : (
+                          <UnKnownSvgContainer>{UnKnownSvg}</UnKnownSvgContainer>
+                        )}
+                        {ICON_VAULT_MAP[token1] ? (
+                          <img src={ICON_VAULT_MAP[token1]} alt={token1} />
+                        ) : (
+                          <UnKnownSvgContainer style={{ marginRight: -6 }}>{UnKnownSvg}</UnKnownSvgContainer>
+                        )}
                       </StyledImageList>
                       <span>
                         {token0}/{token1}

@@ -455,7 +455,7 @@ export default memo(function Stake(props) {
     tokenAddress: state.curToken,
     owner: account,
     provider,
-    updater,
+    updater: state.updater,
     updateTokenBalance
   });
   useEffect(() => {

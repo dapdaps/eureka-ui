@@ -296,5 +296,5 @@ export default function Data(props: any) {
     getApy();
     getBalance();
     getLiquidity();
-  }, []);
+  }, [sender]);
 }
