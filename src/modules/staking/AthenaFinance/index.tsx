@@ -20,14 +20,14 @@ const POOLS = [
     StakingAddress: '0xD481eD22a20708839aeB7f1d07E1d01cbc526184', // Locking
     poolType: 'Locking', // Locking MasterChief Staking
     tvl: 0
-  },
-  {
-    poolName: 'HUM-xHUM',
-    tokenAddress: '0x31cfdA26D5841d92333D8F9B3acbd5efEedb39c1',
-    StakingAddress: '0x652a63c4df14e29080Ab058d6f151aBa61F86c10', //Staking
-    poolType: 'MasterChief', // Locking MasterChief Staking
-    tvl: 0
   }
+  // {
+  //   poolName: 'HUM-xHUM',
+  //   tokenAddress: '0x31cfdA26D5841d92333D8F9B3acbd5efEedb39c1',
+  //   StakingAddress: '0x652a63c4df14e29080Ab058d6f151aBa61F86c10', //Staking
+  //   poolType: 'MasterChief', // Locking MasterChief Staking
+  //   tvl: 0
+  // }
 ];
 
 const LockingABI = [
@@ -1187,10 +1187,14 @@ export default memo(function AthenaFinance(props) {
         fetchDexPrice('metis', tokenAddresses).then((prices) => {
           const pricesArray = Object.values(prices);
 
+          console.log('===prices', prices);
           const LPPrice = Big(reserve0)
             .times(pricesArray[0])
             .plus(Big(reserve1).times(pricesArray[1] ? pricesArray[1] : 0))
             .div(Big(totalSupply));
+
+          console.log('===LPPrice', Big(LPPrice).toString());
+          console.log('====balanceOf', Big(balanceOf).toString());
 
           const tvl = LPPrice.times(Big(balanceOf)).toFixed(2);
           const temp = [...state.poolsList];
