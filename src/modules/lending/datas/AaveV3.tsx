@@ -15,7 +15,7 @@ const AaveV3Data = (props: any) => {
 
   const markets = dexConfig?.rawMarkets?.map((item: any) => ({
     ...item,
-    tokenPrice: prices[item.symbol]
+    tokenPrice: prices[item.symbol] || 1
   }));
 
   function calcAvailableBorrows(availableBorrowsUSD: any, tokenPrice: any) {
@@ -122,7 +122,7 @@ const AaveV3Data = (props: any) => {
               .toFixed();
             _assetsToSupply[i].availableLiquidity = liquidityAmount;
             const _availableLiquidityUSD = Big(ethers.utils.formatUnits(liquidityAmount, _assetsToSupply[i].decimals))
-              .mul(Big(prices[_assetsToSupply[i].symbol] || 0))
+              .mul(Big(prices[_assetsToSupply[i].symbol] || 1))
               .toFixed();
             _assetsToSupply[i].availableLiquidityUSD = _availableLiquidityUSD;
 
@@ -133,7 +133,8 @@ const AaveV3Data = (props: any) => {
               .times(ACTUAL_BORROW_AMOUNT_RATE)
               .toFixed();
 
-            const _availableBorrows = calcAvailableBorrows(_availableBorrowsUSD, _assetsToSupply[i].tokenPrice);
+            const _availableBorrows = calcAvailableBorrows(_availableBorrowsUSD, _assetsToSupply[i].tokenPrice || 1);
+
             _assetsToSupply[i].availableBorrowsUSD = _availableBorrowsUSD;
             _assetsToSupply[i].availableBorrows = _availableBorrows;
           }
@@ -183,7 +184,7 @@ const AaveV3Data = (props: any) => {
                 const balanceRaw = Big(_bal || 0).div(Big(10).pow(item.decimals));
                 const _balance = balanceRaw.toFixed(item.decimals, ROUND_DOWN);
 
-                const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 0)).toFixed();
+                const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 1)).toFixed();
 
                 item.balance = _balance;
                 item.balanceInUSD = _balanceInUSD;
@@ -423,7 +424,7 @@ const AaveV3Data = (props: any) => {
           //   prices[prevAssetsToSupply[i].symbol]
           // );
           prevAssetsToSupply[i].totalSupplyUSD = Big(_totalSupply || 0)
-            .times(prices[prevAssetsToSupply[i].symbol])
+            .times(prices[prevAssetsToSupply[i].symbol] || 1)
             .toFixed();
         }
         onLoad({
@@ -468,7 +469,9 @@ const AaveV3Data = (props: any) => {
         for (let i = 0; i < res.length; i++) {
           const _totalDebts = ethers.utils.formatUnits(res[i][0], prevAssetsToSupply[i].decimals);
           prevAssetsToSupply[i].totalDebts = _totalDebts;
-          prevAssetsToSupply[i].totalDebtsUSD = Big(_totalDebts).times(prices[prevAssetsToSupply[i].symbol]).toFixed();
+          prevAssetsToSupply[i].totalDebtsUSD = Big(_totalDebts)
+            .times(prices[prevAssetsToSupply[i].symbol] || 1)
+            .toFixed();
         }
         onLoad({
           assetsToSupply: prevAssetsToSupply
@@ -515,9 +518,13 @@ const AaveV3Data = (props: any) => {
           const [borrowCap, supplyCap] = res[i];
 
           prevAssetsToSupply[i].borrowCap = borrowCap.toNumber();
-          prevAssetsToSupply[i].borrowCapUSD = Big(borrowCap).times(prices[prevAssetsToSupply[i].symbol]).toFixed();
+          prevAssetsToSupply[i].borrowCapUSD = Big(borrowCap)
+            .times(prices[prevAssetsToSupply[i].symbol] || 1)
+            .toFixed();
           prevAssetsToSupply[i].supplyCap = supplyCap.toNumber();
-          prevAssetsToSupply[i].supplyCapUSD = Big(supplyCap).times(prices[prevAssetsToSupply[i].symbol]).toFixed();
+          prevAssetsToSupply[i].supplyCapUSD = Big(supplyCap)
+            .times(prices[prevAssetsToSupply[i].symbol] || 1)
+            .toFixed();
         }
         onLoad({
           assetsToSupply: prevAssetsToSupply
@@ -688,7 +695,9 @@ const AaveV3Data = (props: any) => {
             if (market) {
               const _bal = ethers.utils.formatUnits(res[index][0], market.decimals);
               market.underlyingBalance = _bal;
-              market.underlyingBalanceUSD = Big(_bal).mul(prices[market.symbol]).toFixed();
+              market.underlyingBalanceUSD = Big(_bal)
+                .mul(prices[market.symbol] || 1)
+                .toFixed();
               userDeposits.push(market);
             }
           }
@@ -913,8 +922,8 @@ const AaveV3Data = (props: any) => {
 
   const getRewardTokenPrice = (dexConfig: any, prices: any) => {
     if (dexConfig.name === 'ZeroLend') return 0.00025055;
-    if (dexConfig.name === 'Seamless Protocol') return prices['SEAM'];
-    if (dexConfig.name === 'AAVE V3' && config.chainName === 'Metis') return prices['METIS'];
+    if (dexConfig.name === 'Seamless Protocol') return prices['SEAM'] || 1;
+    if (dexConfig.name === 'AAVE V3' && config.chainName === 'Metis') return prices['METIS'] || 1;
     return 0;
   };
 
@@ -960,8 +969,8 @@ const AaveV3Data = (props: any) => {
         const tokenTotalSupplyNormalized = normalizeTokenAmount(aTokenTotal[index], asset.decimals);
         const tokenTotalBorrowNormalized = normalizeTokenAmount(debtTotal[index], asset.decimals);
 
-        const normalizedTotalTokenSupply = Big(tokenTotalSupplyNormalized || 0).times(Big(prices[asset.symbol] || 0));
-        const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized || 0).times(Big(prices[asset.symbol] || 0));
+        const normalizedTotalTokenSupply = Big(tokenTotalSupplyNormalized || 0).times(Big(prices[asset.symbol] || 1));
+        const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized || 0).times(Big(prices[asset.symbol] || 1));
 
         const supplyRewardApy = calculateRewardApy(
           emissionPerSeconds[index]?.[1],
