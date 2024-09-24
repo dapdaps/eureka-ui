@@ -1,5 +1,6 @@
 // @ts-nocheck
 import Big from 'big.js';
+import BN from 'bn.js';
 import { ethers } from 'ethers';
 import { memo, useEffect } from 'react';
 import styled from 'styled-components';

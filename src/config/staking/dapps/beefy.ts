@@ -25,6 +25,8 @@ const networks = {
         strategy: 'LYNEX (GAMMA)',
         token0: 'ETH',
         token1: 'WBTC',
+        decimals0: 18,
+        decimals1: 8,
         vaultAddress: '0x8c0919AE1fAcD6695Ad236Ea618d1018e5c4d42c'
       },
       {
@@ -80,7 +82,8 @@ const networks = {
     tokenList: [linea['usdt'], linea['usdc'], linea['wsteth'], linea['weth'], linea['eth']],
     addresses: {
       USDC: '0x176211869cA2b568f2A7D4EE941E073a821EE1ff',
-      USDT: '0xA219439258ca9da29E9Cc4cE5596924745e12B93'
+      USDT: '0xA219439258ca9da29E9Cc4cE5596924745e12B93',
+      WBTC: '0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4'
     }
   }
 };

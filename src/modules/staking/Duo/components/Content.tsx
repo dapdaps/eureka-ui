@@ -1,6 +1,8 @@
 // @ts-nocheck
+import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
 import { ethers } from 'ethers';
+import _ from 'lodash';
 import { memo, useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -213,26 +215,18 @@ export default memo(function DuoContent(props) {
     return asyncFetch(url);
   }
 
-  function debounce(fn, wait) {
-    let timer = state.timer;
-    return () => {
-      if (timer) clearTimeout(timer);
-      timer = setTimeout(() => {
-        fn({});
-      }, wait);
-      updateState({ timer });
-    };
-  }
-
-  const getTvl = debounce(({ mode, token, key }) => {
+  const getTvl = ({ mode, token }) => {
     updateState({ tvlLoading: true });
     // attention plz
     // exchange 2 DETH, the tvl token is fwDETH
     // exchange 2 DUSD, the tvl token is fwDUSD
     const tvlMode = mode || state.curPointsAndYieldItem.type;
-    const tvlKey = key || state.curPointsAndYieldItem.tvlKey;
     token = token || state.curToken;
+
+    console.log('===token', token);
     const tvlToken = EXCHANGE_TOKEN_CONFIG[token];
+
+    console.log('====tvlMode', tvlMode, '=====tvlToken', tvlToken);
     if (!tvlMode || !tvlToken) {
       updateState({ tvlLoading: false });
       return;
@@ -240,16 +234,17 @@ export default memo(function DuoContent(props) {
     const url = `/duo/exchange/getTvl?token=${tvlToken}&mode=${tvlMode}`;
     fetchData(url)
       .then((res) => {
-        if (!res.result || !res.result[tvlKey]) {
+        if (!res.result) {
           updateState({ tvlLoading: false });
           return;
         }
-        const tvlRes = res.result[tvlKey];
+        const tvlRes = res.result;
         if (!tvlRes.liquidity) {
           updateState({ tvlLoading: false });
           return;
         }
         const tvl = Big(tvlRes.liquidity).div(Big(10).pow(18)).times(prices[token]);
+
         updateState({
           TVL: tvl.toString() || '-',
           tvlLoading: false
@@ -259,7 +254,13 @@ export default memo(function DuoContent(props) {
         console.log(err);
         updateState({ tvlLoading: false });
       });
-  }, 900);
+  };
+  const { run: debounceGetTvl } = useDebounceFn(
+    (data) => {
+      getTvl(data);
+    },
+    { wait: 900 }
+  );
 
   useEffect(() => {
     const options = StakeTokens?.map((item) => ({
@@ -279,7 +280,7 @@ export default memo(function DuoContent(props) {
     updateState({
       curPointsAndYieldItem: obj || {}
     });
-    getTvl({ mode: obj?.type, key: obj?.tvlKey });
+    debounceGetTvl({ mode: obj?.type });
   }, [state.curPointsAndYield]);
 
   const clickBalance = (_bal) => {
@@ -367,13 +368,14 @@ export default memo(function DuoContent(props) {
                           options: state.options,
                           value: state.options.find((obj) => obj.value === state.curToken),
                           onChange: (option) => {
+                            console.log('=====option', option);
                             updateState({
                               curToken: option.value,
                               stakeAmount: ''
                             });
                             const addr = StakeTokens?.find((item) => item.symbol === option.value)?.address;
                             addr && getTokenBalance(addr);
-                            getTvl({ token: option.value });
+                            debounceGetTvl({ token: option.value });
                           }
                         }}
                       />
