@@ -3,14 +3,14 @@ import { base } from '@/config/tokens/base';
 const basic = {
   name: 'Aerodrome',
   logo: '/images/apps/aerodrome.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 
 const networks = {
   8453: {
     defaultCurrencies: {
       input: base['eth'],
-      output: base['aero'],
+      output: base['aero']
     },
     tokens: [
       base['eth'],
@@ -37,9 +37,9 @@ const networks = {
       base['bsd-eth'],
       base['e-usd'],
       base['tarot'],
-      base['brett'],
-    ],
-  },
+      base['brett']
+    ]
+  }
 };
 
 export { basic, networks };

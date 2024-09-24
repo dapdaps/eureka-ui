@@ -2,13 +2,13 @@ import { bsc } from '@/config/tokens/bsc';
 const basic = {
   name: 'THENA V1',
   logo: '/images/apps/thena.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   56: {
     defaultCurrencies: {
       input: bsc['bnb'],
-      output: bsc['the'],
+      output: bsc['the']
     },
     tokens: [
       bsc['bnb'],
@@ -28,9 +28,9 @@ const networks = {
       bsc['livethe'],
       bsc['frxeth'],
       bsc['stkbnb'],
-      bsc['slisBNB'],
-    ],
-  },
+      bsc['slisBNB']
+    ]
+  }
 };
 
 export { basic, networks };

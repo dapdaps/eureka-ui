@@ -8,7 +8,7 @@ export const metis: { [key: string]: Token } = {
     symbol: 'USDT',
     icon: 'https://assets.coingecko.com/coins/images/325/standard/Tether.png?1696501661',
     decimals: 6,
-    address: '0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC',
+    address: '0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC'
   },
   eth: {
     chainId: CHAIN_ID,
@@ -16,7 +16,7 @@ export const metis: { [key: string]: Token } = {
     symbol: 'ETH',
     icon: 'https://assets.coingecko.com/coins/images/279/standard/ethereum.png?1696501628',
     decimals: 18,
-    address: '0x420000000000000000000000000000000000000A',
+    address: '0x420000000000000000000000000000000000000A'
   },
   metis: {
     chainId: CHAIN_ID,
@@ -25,7 +25,7 @@ export const metis: { [key: string]: Token } = {
     symbol: 'METIS',
     name: 'Metis Token',
     icon: 'https://assets.coingecko.com/coins/images/15595/small/metis.jpeg?1660285312',
-    isNative: true,
+    isNative: true
   },
   weth: {
     chainId: CHAIN_ID,
@@ -33,7 +33,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'WETH',
     name: 'Wrapped Ether',
-    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295',
+    icon: 'https://assets.coingecko.com/coins/images/2518/small/weth.png?1628852295'
   },
 
   'm.usdt': {
@@ -42,7 +42,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'm.USDT',
     name: 'USDT Token',
-    icon: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663',
+    icon: 'https://assets.coingecko.com/coins/images/325/small/Tether.png?1668148663'
   },
   'm.usdc': {
     chainId: CHAIN_ID,
@@ -50,7 +50,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 6,
     symbol: 'm.USDC',
     name: 'USDC Token',
-    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+    icon: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389'
   },
   maia: {
     chainId: CHAIN_ID,
@@ -58,7 +58,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 9,
     symbol: 'MAIA',
     name: 'Maia',
-    icon: 'https://assets.coingecko.com/coins/images/22502/small/whiteicon.4a79cf8b.png?1641953707',
+    icon: 'https://assets.coingecko.com/coins/images/22502/small/whiteicon.4a79cf8b.png?1641953707'
   },
   hera: {
     chainId: CHAIN_ID,
@@ -66,7 +66,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'HERA',
     name: 'Hera Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiezixu7e3kc2vv6di6dnqzept5rhstmoofl3ky5cvokqe3t2cbc3u',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiezixu7e3kc2vv6di6dnqzept5rhstmoofl3ky5cvokqe3t2cbc3u'
   },
   nett: {
     chainId: CHAIN_ID,
@@ -74,7 +74,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'NETT',
     name: 'Netswap Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiejwiiaoamvnjfu5fxvkm6x4sweu3hpk5zpf2eaas7cx4qslghxlq',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiejwiiaoamvnjfu5fxvkm6x4sweu3hpk5zpf2eaas7cx4qslghxlq'
   },
   peak: {
     chainId: CHAIN_ID,
@@ -82,7 +82,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'PEAK',
     name: 'PEAK',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibpv24wawd4uedvnypxphowyvcw6dbayvvwzxgjrditilvihoq2s4',
+    icon: 'https://ipfs.near.social/ipfs/bafkreibpv24wawd4uedvnypxphowyvcw6dbayvvwzxgjrditilvihoq2s4'
   },
   byte: {
     chainId: CHAIN_ID,
@@ -90,7 +90,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'BYTE',
     name: 'BinaryDAO Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidaoktium64c2ozdf3knal5pfmrisngngs5em36hvflgmqsqb3z64',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidaoktium64c2ozdf3knal5pfmrisngngs5em36hvflgmqsqb3z64'
   },
   'm.dai': {
     chainId: CHAIN_ID,
@@ -98,7 +98,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'm.DAI',
     name: 'DAI Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu',
+    icon: 'https://ipfs.near.social/ipfs/bafkreieuxntkdzi2mzkzdcbk6kahwxqpftxnipxcwc4oe4p4jm2rhj2xhu'
   },
   'm.wbtc': {
     chainId: CHAIN_ID,
@@ -106,7 +106,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'm.WBTC',
     name: 'WBTC Token',
-    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q',
+    icon: 'https://ipfs.near.social/ipfs/bafkreigdklwcldjo4w7viyrym54hdb43wgpv23mbicetszygzapttbgo7q'
   },
   hermes: {
     chainId: CHAIN_ID,
@@ -114,7 +114,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'HERMES',
     name: 'Hermes',
-    icon: 'https://ipfs.near.social/ipfs/bafybeiamt2iuucwebbklhvmq5dz3hir63u3ovkvusbuz3k2wpsiwhulnzy',
+    icon: 'https://ipfs.near.social/ipfs/bafybeiamt2iuucwebbklhvmq5dz3hir63u3ovkvusbuz3k2wpsiwhulnzy'
   },
   sfrxETH: {
     chainId: CHAIN_ID,
@@ -122,7 +122,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'sfrxETH',
     name: 'Staked rax Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiayh7m5knlt7olpwrnnltbd4ykszyzbca5gdpnj4mkqbrvknihcvi',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiayh7m5knlt7olpwrnnltbd4ykszyzbca5gdpnj4mkqbrvknihcvi'
   },
   eMetis: {
     chainId: CHAIN_ID,
@@ -130,7 +130,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'eMetis',
     name: 'Enki Metis',
-    icon: '/images/tokens/eMetis.png',
+    icon: '/images/tokens/eMetis.png'
   },
   enki: {
     chainId: CHAIN_ID,
@@ -138,7 +138,7 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'ENKI',
     name: 'ENKI Protocol',
-    icon: '/images/tokens/enki.png',
+    icon: '/images/tokens/enki.png'
   },
   titans: {
     chainId: CHAIN_ID,
@@ -146,6 +146,6 @@ export const metis: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'TITANS',
     name: 'TitanBorn',
-    icon: '/images/tokens/titans.png',
-  },
+    icon: '/images/tokens/titans.png'
+  }
 };

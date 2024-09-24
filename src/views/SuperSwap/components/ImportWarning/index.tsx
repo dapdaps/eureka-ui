@@ -1,4 +1,7 @@
+import { useMemo } from 'react';
+
 import Modal from '@/components/Modal';
+import chains from '@/config/chains';
 
 import {
   AddressWrap,
@@ -11,7 +14,8 @@ import {
   Text
 } from './styles';
 
-export default function ImportWarning({ display, currency, explor, onClose, onImport }: any) {
+export default function ImportWarning({ display, currency, chainId, onClose, onImport }: any) {
+  const currentChain = useMemo(() => chains[chainId], [chainId]);
   return (
     <Modal
       display={display}
@@ -32,7 +36,7 @@ export default function ImportWarning({ display, currency, explor, onClose, onIm
                 <CurrencySymbol>{currency.symbol}</CurrencySymbol>
                 <AddressWrap>
                   <div>Address: </div>
-                  <CurrencyName href={`${explor}/address/${currency.address}`} target="_blank">
+                  <CurrencyName href={`${currentChain?.blockExplorers}/address/${currency.address}`} target="_blank">
                     <span>
                       {currency.address ? currency.address.slice(0, 9) + '...' + currency.address.slice(-7) : ''}
                     </span>

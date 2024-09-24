@@ -3,14 +3,14 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 const basic = {
   name: 'Camelot',
   logo: '/images/apps/camelot.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 
 const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['grail'],
+      output: arbitrum['grail']
     },
     tokens: [
       arbitrum['eth'],
@@ -64,9 +64,9 @@ const networks = {
       arbitrum['AURY'],
       arbitrum['FLY'],
       arbitrum['flrEUR'],
-      arbitrum['ECLIP'],
-    ],
-  },
+      arbitrum['ECLIP']
+    ]
+  }
 };
 
 export { basic, networks };

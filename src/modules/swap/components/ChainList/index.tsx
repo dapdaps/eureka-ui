@@ -32,6 +32,7 @@ export default function ChainList({ currentChain, chains, onSwitchChain }: any) 
                 className={` ${active ? 'active' : ''}`}
                 onClick={() => {
                   onSwitchChain?.({ chainId: `0x${chain.chain_id.toString(16)}` });
+                  setShowList(false);
                 }}
               >
                 <div className="chain-filed">

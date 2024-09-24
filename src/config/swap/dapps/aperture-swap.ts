@@ -3,14 +3,14 @@ import { manta } from '@/config/tokens/manta';
 const basic = {
   name: 'ApertureSwap',
   logo: '/images/apps/aperture.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 
 const networks = {
   169: {
     defaultCurrencies: {
       input: manta['eth'],
-      output: manta['usdc'],
+      output: manta['usdc']
     },
     tokens: [
       manta['eth'],
@@ -25,9 +25,9 @@ const networks = {
       manta['tia'],
       manta['wsteth'],
       manta['lab'],
-      manta['reth'],
-    ],
-  },
+      manta['reth']
+    ]
+  }
 };
 
 export { basic, networks };

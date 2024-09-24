@@ -3,13 +3,13 @@ import { mantle } from '@/config/tokens/mantle';
 const basic = {
   name: 'Merchant Moe',
   logo: '/images/apps/merchant-moe.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   5000: {
     defaultCurrencies: {
       input: mantle['weth'],
-      output: mantle['usdc'],
+      output: mantle['usdc']
     },
     tokens: [
       mantle['usdt'],
@@ -21,9 +21,9 @@ const networks = {
       mantle['lend'],
       mantle['moe'],
       mantle['meth'],
-      mantle['fbtc'],
-    ],
-  },
+      mantle['fbtc']
+    ]
+  }
 };
 
 export { basic, networks };

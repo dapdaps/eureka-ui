@@ -3,13 +3,13 @@ import { mode } from '@/config/tokens/mode';
 const basic = {
   name: 'SwapMode',
   logo: '/images/apps/swap-mode.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   34443: {
     defaultCurrencies: {
       input: mode['eth'],
-      output: mode['usdt'],
+      output: mode['usdt']
     },
     tokens: [
       mode['eth'],
@@ -20,9 +20,9 @@ const networks = {
       mode['wbtc'],
       mode['we-eth'],
       mode['m-btc'],
-      mode['we-eth.mode'],
-    ],
-  },
+      mode['we-eth.mode']
+    ]
+  }
 };
 
 export { basic, networks };

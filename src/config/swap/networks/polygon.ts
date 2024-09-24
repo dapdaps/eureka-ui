@@ -14,23 +14,23 @@ export default {
   dexs: {
     QuickSwap: {
       ...quickSwapBasic,
-      ...quickSwapNetworks[CHAIN_ID],
+      ...quickSwapNetworks[CHAIN_ID]
     },
     Retro: {
       ...retroBasic,
-      ...retroNetworks[CHAIN_ID],
+      ...retroNetworks[CHAIN_ID]
     },
     Apeswap: {
       ...apeBasic,
-      ...apeNetworks[CHAIN_ID],
+      ...apeNetworks[CHAIN_ID]
     },
     SushiSwap: {
       ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
+      ...sushiNetworks[CHAIN_ID]
     },
     Honeyswap: {
       ...honeyBasic,
-      ...honeyNetworks[CHAIN_ID],
-    },
-  },
+      ...honeyNetworks[CHAIN_ID]
+    }
+  }
 };

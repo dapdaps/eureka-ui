@@ -16,31 +16,31 @@ export default {
   dexs: {
     Camelot: {
       ...camelotBasic,
-      ...camelotNetworks[CHAIN_ID],
+      ...camelotNetworks[CHAIN_ID]
     },
     Spartadex: {
       ...spartaBasic,
-      ...spartaNetworks[CHAIN_ID],
+      ...spartaNetworks[CHAIN_ID]
     },
     'Ramses V2': {
       ...ramsesV2Basic,
-      ...ramsesV2Networks[CHAIN_ID],
+      ...ramsesV2Networks[CHAIN_ID]
     },
     SushiSwap: {
       ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
+      ...sushiNetworks[CHAIN_ID]
     },
     'Chronos V2': {
       ...chronosV1Basic,
-      ...chronosV1Networks[CHAIN_ID],
+      ...chronosV1Networks[CHAIN_ID]
     },
     SolidLizard: {
       ...solidLizardBasic,
-      ...solidLizardNetworks[CHAIN_ID],
+      ...solidLizardNetworks[CHAIN_ID]
     },
     Apeswap: {
       ...apeBasic,
-      ...apeNetworks[CHAIN_ID],
-    },
-  },
+      ...apeNetworks[CHAIN_ID]
+    }
+  }
 };

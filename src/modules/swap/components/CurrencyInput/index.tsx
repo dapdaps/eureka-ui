@@ -34,7 +34,7 @@ export default function CurrencyInput({
 }: any) {
   const [focus, setFocus] = useState(false);
   const tokenPrice = useMemo(() => (currency ? prices[currency.priceKey || currency.symbol] : 0), [prices, currency]);
-  const { tokenBalance, isLoading } = useTokenBalance(currency?.address, currency?.decimals);
+  const { tokenBalance, isLoading } = useTokenBalance(currency?.address, currency?.decimals, currency?.chainId);
   useEffect(() => {
     if (tokenBalance && onUpdateCurrencyBalance) onUpdateCurrencyBalance(tokenBalance);
   }, [tokenBalance]);

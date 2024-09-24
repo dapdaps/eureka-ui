@@ -504,7 +504,7 @@ export const base: { [key: string]: Token } = {
     address: '0x3347453Ced85bd288D783d85cDEC9b01Ab90f9D8',
     chainId: CHAIN_ID,
     symbol: 'FTW',
-    decimals: 18,
+    decimals: 9,
     name: 'FriendTech33',
     icon: '/images/tokens/ftw.png'
   }

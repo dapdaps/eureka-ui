@@ -3,13 +3,13 @@ import { avalanche } from '@/config/tokens/avalanche';
 const basic = {
   name: 'Pangolin',
   logo: '/images/apps/pangolin.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   43114: {
     defaultCurrencies: {
       input: avalanche['usdc'],
-      output: avalanche['avax'],
+      output: avalanche['avax']
     },
     tokens: [
       avalanche['usdc'],
@@ -28,9 +28,9 @@ const networks = {
       avalanche['dai.e'],
       avalanche['wavax'],
       avalanche['weth.e'],
-      avalanche['ampl'],
-    ],
-  },
+      avalanche['ampl']
+    ]
+  }
 };
 
 export { basic, networks };

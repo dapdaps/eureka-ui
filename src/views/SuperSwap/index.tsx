@@ -1,10 +1,11 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
-import { useCallback, useEffect, useState } from 'react';
+import { uniqBy } from 'lodash';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
-import useSwitchChain from '@/hooks/useSwitchChain';
+import { useImportTokensStore } from '@/stores/import-tokens';
 import type { Token } from '@/types';
 
 import Arrow2Down from './components/Arrow2Down';
@@ -17,33 +18,41 @@ import PriceBoard from './components/PriceBoard';
 import Result from './components/Result';
 import SelectTokensModal from './components/SelectTokensModal';
 import useTrade from './hooks/useTrade';
-import {
-  StyledAmount,
-  StyledContainer,
-  StyledContent,
-  StyledInputs,
-  StyledTradeFooter,
-  StyledTradeIcon,
-  StyleProviderHeader
-} from './styles';
+import { StyledContainer, StyledContent, StyledInputs, StyledMain, StyledTradeFooter, StyledTradeIcon } from './styles';
 
 export default function SuperSwap() {
   const { chainId } = useAccount();
+  const [currentChain, setCurrentChain] = useState<any>({});
   const [updater, setUpdater] = useState(1);
   const [inputCurrencyAmount, setInputCurrencyAmount] = useState<string>('');
   const [inputCurrency, setInputCurrency] = useState<Token>();
   const [outputCurrency, setOutputCurrency] = useState<Token>();
   const [selectType, setSelectType] = useState<'in' | 'out'>('in');
   const [showTokensSelector, setShowTokensSelector] = useState<boolean>(false);
-  const [showMarkets, setShowMarkets] = useState<boolean>(false);
   const [errorTips, setErrorTips] = useState('');
   const [inputBlance, setInputBalance] = useState('0');
+  const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
-  const { switchChain } = useSwitchChain();
-  const { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade } = useTrade({
-    chainId,
+
+  const {
+    tokens = [],
+    tokensLoading,
+    loading,
+    quoting,
+    markets,
+    trade,
+    bestTrade,
+    onQuoter,
+    onSelectMarket,
+    onSwap,
+    setTrade,
+    setMarkets,
+    onUpdateTxn
+  } = useTrade({
+    chainId: currentChain?.chain_id,
     onSuccess() {
       setUpdater(Date.now());
+      runQuoter();
     }
   });
 
@@ -56,6 +65,18 @@ export default function SuperSwap() {
     }
   );
 
+  const mergedTokens = useMemo(
+    () =>
+      uniqBy(
+        [...((chainId && importTokens[chainId]) || []), ...tokens].map((token: any) => ({
+          ...token,
+          address: token.address.toLowerCase()
+        })),
+        'address'
+      ),
+    [importTokens, tokens, chainId]
+  );
+
   const onSelectToken = useCallback(
     (token: any) => {
       let _inputCurrency: any = inputCurrency;
@@ -63,11 +84,11 @@ export default function SuperSwap() {
 
       if (selectType === 'in') {
         _inputCurrency = token;
-        if (token.address === outputCurrency?.address) _outputCurrency = null;
+        if (token.address.toLowerCase() === outputCurrency?.address.toLowerCase()) _outputCurrency = null;
       }
       if (selectType === 'out') {
         _outputCurrency = token;
-        if (token.address === inputCurrency?.address) _inputCurrency = null;
+        if (token.address.toLowerCase() === inputCurrency?.address.toLowerCase()) _inputCurrency = null;
       }
 
       setInputCurrency(_inputCurrency);
@@ -86,7 +107,7 @@ export default function SuperSwap() {
       setErrorTips('Enter an amount');
       return;
     }
-    if (Big(inputCurrencyAmount).gt(inputBlance)) {
+    if (Big(inputCurrencyAmount).gt(inputBlance || 0)) {
       setErrorTips(`Insufficient ${inputCurrency?.symbol} Balance`);
     } else {
       setErrorTips('');
@@ -99,9 +120,10 @@ export default function SuperSwap() {
   useEffect(() => {
     if (!chainId) return;
     setInputCurrencyAmount('');
-    setTrade(null as any);
-    setInputCurrency(networks[chainId].defalutInputCurrency);
+    setInputCurrency(null as any);
     setOutputCurrency(null as any);
+    setMarkets([]);
+    setTrade(null);
   }, [chainId]);
 
   const swapToken = useCallback(() => {
@@ -127,98 +149,92 @@ export default function SuperSwap() {
 
   return (
     <StyledContainer>
-      <StyledContent>
-        <Header />
-        <StyledInputs>
-          <InputCard
-            title="You pay"
-            isFrom={true}
-            amount={inputCurrencyAmount}
-            currency={inputCurrency}
-            onAmountChange={(amount: any) => {
-              setInputCurrencyAmount(amount);
-            }}
-            key={`in-${updater}`}
-            onTokenSelect={() => {
-              setSelectType('in');
-              setShowTokensSelector(true);
-            }}
-            onLoad={(balance: string) => {
-              setInputBalance(balance);
-            }}
-            loading={loading}
-            onRefresh={() => {
-              if (loading) return;
-              onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+      <StyledMain>
+        <StyledContent>
+          <Header
+            onLoadChain={(chain: any) => {
+              setCurrentChain(chain);
             }}
           />
-          <StyledTradeIcon disabled={false} onClick={swapToken}>
-            <Arrow2Down />
-          </StyledTradeIcon>
-          <InputCard
-            title="Receive"
-            amount={trade?.outputCurrencyAmount}
-            currency={outputCurrency}
-            disabled
-            key={`out-${updater}`}
-            onTokenSelect={() => {
-              setSelectType('out');
-              setShowTokensSelector(true);
-            }}
-            style={{ marginTop: 6 }}
-          />
-        </StyledInputs>
-        <StyledTradeFooter>
-          {/* {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade} showChart={showChart} onShowChart={() => setShowChart(!showChart)} />} */}
-          {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}></Result>}
-        </StyledTradeFooter>
-
-        <Button
-          amount={inputCurrencyAmount}
-          errorTips={errorTips}
-          trade={trade}
-          token={inputCurrency}
-          loading={loading}
-          onClick={onSwap}
-          disabled={!trade?.txn}
-        />
-
-        {trade && (
-          <StyleProviderHeader>
-            <StyledAmount
-              onClick={() => {
-                if (!markets?.length) return;
-                setShowMarkets(true);
+          <StyledInputs>
+            <InputCard
+              title="You pay"
+              isFrom={true}
+              amount={inputCurrencyAmount}
+              currency={inputCurrency}
+              onAmountChange={(amount: any) => {
+                setInputCurrencyAmount(amount);
               }}
-            >
-              {markets?.length || 0} Providers
-            </StyledAmount>
-          </StyleProviderHeader>
-        )}
+              key={`in-${updater}`}
+              onTokenSelect={() => {
+                setSelectType('in');
+                setShowTokensSelector(true);
+              }}
+              onLoad={(balance: string) => {
+                setInputBalance(balance);
+              }}
+            />
+            <StyledTradeIcon disabled={false} onClick={swapToken}>
+              <Arrow2Down />
+            </StyledTradeIcon>
+            <InputCard
+              title="Receive"
+              amount={trade?.outputCurrencyAmount}
+              currency={outputCurrency}
+              disabled
+              key={`out-${updater}`}
+              onTokenSelect={() => {
+                setSelectType('out');
+                setShowTokensSelector(true);
+              }}
+              style={{ marginTop: 6 }}
+            />
+          </StyledInputs>
+          <StyledTradeFooter>
+            {/* {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade} showChart={showChart} onShowChart={() => setShowChart(!showChart)} />} */}
+            {trade && <Result markets={markets} trade={trade} bestTrade={bestTrade}></Result>}
+          </StyledTradeFooter>
 
-        {/* { trade && showChart && <KLineChart trade={trade} /> } */}
-      </StyledContent>
-      <PriceBoard onSelectChain={onSelectChain} />
-      <SelectTokensModal
-        tokens={tokens || []}
-        display={showTokensSelector}
-        onClose={() => setShowTokensSelector(false)}
-        currency={selectType === 'in' ? inputCurrency : outputCurrency}
-        onSelect={onSelectToken}
-      />
-      {showMarkets && outputCurrency && (
+          <Button
+            amount={inputCurrencyAmount}
+            errorTips={errorTips}
+            trade={trade}
+            token={inputCurrency}
+            loading={loading}
+            onClick={onSwap}
+            disabled={!trade?.txn}
+            currentChain={currentChain}
+            onRefresh={() => {
+              if (!trade.txn) onUpdateTxn(trade);
+            }}
+          />
+        </StyledContent>
         <MarketsModal
-          display={showMarkets}
-          onClose={() => {
-            setShowMarkets(false);
-          }}
           markets={markets}
           trade={trade}
           bestTrade={bestTrade}
           outputCurrency={outputCurrency}
           onSelectMarket={onSelectMarket}
+          loading={quoting}
+          errorTips={errorTips}
+          onRefresh={() => {
+            if (loading) return;
+            onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+          }}
         />
-      )}
+      </StyledMain>
+
+      <PriceBoard />
+      <SelectTokensModal
+        tokens={mergedTokens || []}
+        display={showTokensSelector}
+        onClose={() => setShowTokensSelector(false)}
+        currency={selectType === 'in' ? inputCurrency : outputCurrency}
+        onSelect={onSelectToken}
+        loading={tokensLoading}
+        chainId={currentChain.chain_id}
+        onImport={addImportToken}
+      />
     </StyledContainer>
   );
 }

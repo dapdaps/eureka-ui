@@ -10,14 +10,14 @@ import { scroll } from '@/config/tokens/scroll';
 const basic = {
   name: 'SushiSwap',
   logo: '/images/apps/sushi.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 
 const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['arb'],
+      output: arbitrum['arb']
     },
     tokens: [
       arbitrum['eth'],
@@ -56,13 +56,13 @@ const networks = {
       arbitrum['liqd'],
       arbitrum['stc'],
       arbitrum['beef'],
-      arbitrum['sx'],
-    ],
+      arbitrum['sx']
+    ]
   },
   100: {
     defaultCurrencies: {
       input: gnosis['weth'],
-      output: gnosis['xdai'],
+      output: gnosis['xdai']
     },
     tokens: [
       gnosis['gno'],
@@ -74,20 +74,20 @@ const networks = {
       gnosis['xdai'],
       gnosis['mps'],
       gnosis['fcl'],
-      gnosis['link'],
-    ],
+      gnosis['link']
+    ]
   },
   10: {
     defaultCurrencies: {
       input: optimism['eth'],
-      output: optimism['usdc.e'],
+      output: optimism['usdc.e']
     },
-    tokens: [optimism['op'], optimism['eth'], optimism['weth'], optimism['wbtc'], optimism['usdc'], optimism['usdt']],
+    tokens: [optimism['op'], optimism['eth'], optimism['weth'], optimism['wbtc'], optimism['usdc'], optimism['usdt']]
   },
   137: {
     defaultCurrencies: {
       input: polygon['weth'],
-      output: polygon['usdt'],
+      output: polygon['usdt']
     },
     tokens: [
       polygon['matic'],
@@ -106,13 +106,13 @@ const networks = {
       polygon['rnt'],
       polygon['rain'],
       polygon['zed'],
-      polygon['gddy'],
-    ],
+      polygon['gddy']
+    ]
   },
   1101: {
     defaultCurrencies: {
       input: polygonZkevm['eth'],
-      output: polygonZkevm['usdc'],
+      output: polygonZkevm['usdc']
     },
     tokens: [
       polygonZkevm['matic'],
@@ -121,20 +121,20 @@ const networks = {
       polygonZkevm['eth'],
       polygonZkevm['weth'],
       polygonZkevm['wbtc'],
-      polygonZkevm['dai'],
-    ],
+      polygonZkevm['dai']
+    ]
   },
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['axlusdc'],
+      output: linea['axlusdc']
     },
-    tokens: [linea['eth'], linea['weth'], linea['usdc'], linea['axlusdc'], linea['usdt']],
+    tokens: [linea['eth'], linea['weth'], linea['usdc'], linea['axlusdc'], linea['usdt']]
   },
   534352: {
     defaultCurrencies: {
       input: scroll['eth'],
-      output: scroll['usdc'],
+      output: scroll['usdc']
     },
     tokens: [
       scroll['eth'],
@@ -144,13 +144,13 @@ const networks = {
       scroll['axlusdc'],
       scroll['axlfrax'],
       scroll['usdt'],
-      scroll['frxeth'],
-    ],
+      scroll['frxeth']
+    ]
   },
   8453: {
     defaultCurrencies: {
       input: base['eth'],
-      output: base['axlusdc'],
+      output: base['axlusdc']
     },
     tokens: [
       base['weth'],
@@ -169,9 +169,9 @@ const networks = {
       base['fella'],
       base['dai'],
       base['usdbc'],
-      base['axlusdc'],
-    ],
-  },
+      base['axlusdc']
+    ]
+  }
 };
 
 export { basic, networks };

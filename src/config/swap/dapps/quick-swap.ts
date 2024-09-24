@@ -5,13 +5,13 @@ import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 const basic = {
   name: 'QuickSwap',
   logo: '/images/apps/quick-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   137: {
     defaultCurrencies: {
       input: polygon['eth'],
-      output: polygon['usdc'],
+      output: polygon['usdc']
     },
     tokens: [
       polygon['eth'],
@@ -29,13 +29,13 @@ const networks = {
       polygon['sand'],
       polygon['chp'],
       polygon['mai'],
-      polygon['ocean'],
-    ],
+      polygon['ocean']
+    ]
   },
   1101: {
     defaultCurrencies: {
       input: polygonZkevm['eth'],
-      output: polygonZkevm['usdc'],
+      output: polygonZkevm['usdc']
     },
     tokens: [
       polygonZkevm['eth'],
@@ -49,13 +49,13 @@ const networks = {
       polygonZkevm['usdc.e'],
       polygonZkevm['quick'],
       polygonZkevm['reth'],
-      polygonZkevm['quick'],
-    ],
+      polygonZkevm['quick']
+    ]
   },
   169: {
     defaultCurrencies: {
       input: manta['weth'],
-      output: manta['usdc'],
+      output: manta['usdc']
     },
     tokens: [
       manta['weth'],
@@ -76,9 +76,9 @@ const networks = {
       manta['gai'],
       manta['matic'],
       manta['pape'],
-      manta['manta-ray'],
-    ],
-  },
+      manta['manta-ray']
+    ]
+  }
 };
 
 export { basic, networks };

@@ -54,11 +54,12 @@ const getButtonImpactProps = (trade: any) => {
   };
 };
 
-const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
+const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade, currentChain, onRefresh }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
-    spender: trade?.routerAddress
+    spender: trade?.routerAddress,
+    onSuccess: onRefresh
   });
 
   const { switching, switchChain } = useSwitchChain();
@@ -78,7 +79,7 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     );
   }
 
-  if (!networks[chainId]) {
+  if (!networks[chainId] || currentChain.chain_id !== chainId) {
     return (
       <BaseButton
         onClick={() => {
@@ -101,6 +102,10 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     );
   }
 
+  if (trade?.noPair) {
+    return <BaseButton disabled>Insufficient Liquidity</BaseButton>;
+  }
+
   if (errorTips) {
     return <BaseButton disabled>{errorTips}</BaseButton>;
   }
@@ -111,6 +116,10 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
 
   if (!approved) {
     return <BaseButton onClick={approve}>Approve {token?.symbol}</BaseButton>;
+  }
+
+  if (trade && !trade.txn) {
+    return <BaseButton disabled>Estimate Gas Error</BaseButton>;
   }
 
   return (

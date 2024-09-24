@@ -3,13 +3,13 @@ import { metis } from '@/config/tokens/metis';
 const basic = {
   name: 'Netswap',
   logo: '/images/apps/net-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   1088: {
     defaultCurrencies: {
       input: metis['eth'],
-      output: metis['m.usdc'],
+      output: metis['m.usdc']
     },
     tokens: [
       metis['eth'],
@@ -22,9 +22,9 @@ const networks = {
       metis['weth'],
       metis['eMetis'],
       metis['enki'],
-      metis['titans'],
-    ],
-  },
+      metis['titans']
+    ]
+  }
 };
 
 export { basic, networks };

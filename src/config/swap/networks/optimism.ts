@@ -13,19 +13,19 @@ export default {
   dexs: {
     'Velodrome V2': {
       ...velodromeBasic,
-      ...velodromeNetworks[CHAIN_ID],
+      ...velodromeNetworks[CHAIN_ID]
     },
-    'Beethoven X': {
-      ...beethovenBasic,
-      ...beethovenNetworks[CHAIN_ID],
-    },
+    // 'Beethoven X': {
+    //   ...beethovenBasic,
+    //   ...beethovenNetworks[CHAIN_ID]
+    // },
     SushiSwap: {
       ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
+      ...sushiNetworks[CHAIN_ID]
     },
     'Frax Swap': {
       ...fraxBasic,
-      ...fraxNetworks[CHAIN_ID],
-    },
-  },
+      ...fraxNetworks[CHAIN_ID]
+    }
+  }
 };

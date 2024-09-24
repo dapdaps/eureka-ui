@@ -4,13 +4,13 @@ import { scroll } from '@/config/tokens/scroll';
 const basic = {
   name: 'Ambient',
   logo: '/images/apps/ambient.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   534352: {
     defaultCurrencies: {
       input: scroll['usdc'],
-      output: scroll['usdt'],
+      output: scroll['usdt']
     },
     tokens: [
       scroll['pxeth'],
@@ -30,16 +30,16 @@ const networks = {
       scroll['reth'],
       scroll['scribes'],
       scroll['sol'],
-      scroll['axlusdc'],
-    ],
+      scroll['axlusdc']
+    ]
   },
   81457: {
     defaultCurrencies: {
       input: blast['eth'],
-      output: blast['usdb'],
+      output: blast['usdb']
     },
-    tokens: [blast['eth'], blast['usdb'], blast['ezeth'], blast['blast'], blast['we-eth']],
-  },
+    tokens: [blast['eth'], blast['usdb'], blast['ezeth'], blast['blast'], blast['we-eth']]
+  }
 };
 
 export { basic, networks };

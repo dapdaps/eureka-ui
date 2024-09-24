@@ -3,13 +3,13 @@ import { arbitrum } from '@/config/tokens/arbitrum';
 const basic = {
   name: 'Chronos V2',
   logo: '/images/apps/chronos.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['usdc'],
+      output: arbitrum['usdc']
     },
     tokens: [
       arbitrum['eth'],
@@ -22,9 +22,9 @@ const networks = {
       arbitrum['arb'],
       arbitrum['dei'],
       arbitrum['ibex'],
-      arbitrum['war'],
-    ],
-  },
+      arbitrum['war']
+    ]
+  }
 };
 
 export { basic, networks };

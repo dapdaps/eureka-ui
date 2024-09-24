@@ -22,7 +22,7 @@ import {
   StyledChainTokenSymbol
 } from './styles';
 
-export default function ChainSelector() {
+export default function ChainSelector({ onLoadChain }: any) {
   const chain = useChain();
   const { chainId } = useAccount();
   const chains = useChainsStore((store: any) => store.chains);
@@ -67,6 +67,7 @@ export default function ChainSelector() {
     }
     setDisplayedChains(updatedChains);
     localStorage.setItem('swap-selectedChains', JSON.stringify(updatedChains));
+    onLoadChain(updatedChains[0]);
   };
 
   const fetchNetworkData = async () => {

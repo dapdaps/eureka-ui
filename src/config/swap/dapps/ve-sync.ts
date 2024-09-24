@@ -3,16 +3,16 @@ import { zkSync } from '@/config/tokens/zkSync';
 const basic = {
   name: 'veSync',
   logo: '/images/apps/ve-sync.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   324: {
     defaultCurrencies: {
       input: zkSync['eth'],
-      output: zkSync['usdc.e'],
+      output: zkSync['usdc.e']
     },
-    tokens: [zkSync['eth'], zkSync['usdc.e'], zkSync['vs']],
-  },
+    tokens: [zkSync['eth'], zkSync['usdc.e'], zkSync['vs']]
+  }
 };
 
 export { basic, networks };

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 export const Content = styled.div`
+  border-radius: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -13,7 +14,7 @@ export const Content = styled.div`
   }
 `;
 export const Text = styled.div`
-  color: var(--agg-text-color, #fff);
+  color: #fff;
   text-align: center;
   font-size: 14px;
   font-style: normal;
@@ -33,7 +34,7 @@ export const CurrencyLabel = styled.div`
 export const CurrencySymbol = styled.div`
   font-size: 16px;
   font-weight: 500px;
-  color: var(--agg-text-color, #fff);
+  color: #fff;
 `;
 export const AddressWrap = styled.div`
   font-size: 14px;
@@ -52,11 +53,11 @@ export const CurrencyName = styled.a`
 `;
 export const Button = styled.button`
   border-radius: 6px;
-  background: var(--button-color);
+  background: #ebf479;
   width: 200px;
   height: 36px;
   flex-shrink: 0;
-  color: var(--button-text-color);
+  color: #000;
   font-size: 16px;
   font-weight: 600;
   border: none;

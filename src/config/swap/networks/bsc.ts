@@ -16,15 +16,15 @@ export default {
     // },
     Apeswap: {
       ...apeSwapBasic,
-      ...apeSwapNetworks[CHAIN_ID],
+      ...apeSwapNetworks[CHAIN_ID]
     },
     Orion: {
       ...orionBasic,
-      ...orionNetworks[CHAIN_ID],
+      ...orionNetworks[CHAIN_ID]
     },
     'THENA V1': {
       ...thenaV1Basic,
-      ...thenaV1Networks[CHAIN_ID],
-    },
-  },
+      ...thenaV1Networks[CHAIN_ID]
+    }
+  }
 };
