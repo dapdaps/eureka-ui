@@ -142,17 +142,17 @@ const networks = {
         decimals0: 18,
         decimals1: 6,
         poolAddress: '0x92930F343c8Fb1da3656D4908d2F59b543A54056'
-      },
-      {
-        id: 'A WETH-WEBMI',
-        strategy: 'Dynamic',
-        strategy2: 'Active',
-        token0: 'WETH',
-        token1: 'WEBMI',
-        decimals0: 18,
-        decimals1: 18,
-        poolAddress: '0x96b70fa6666fd35b5d99330b6167466684267f81'
       }
+      // {
+      //   id: 'A WETH-WEBMI',
+      //   strategy: 'Dynamic',
+      //   strategy2: 'Active',
+      //   token0: 'WETH',
+      //   token1: 'WEBMI',
+      //   "decimals0": 18,
+      //   "decimals1": 18,
+      //   "poolAddress": "0x96b70fa6666fd35b5d99330b6167466684267f81",
+      // },
     ],
     addresses: {
       WETH: '0x0Dc808adcE2099A9F62AA87D9670745AbA741746',
