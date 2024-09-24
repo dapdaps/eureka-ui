@@ -166,7 +166,7 @@ export default function Advertise() {
             banner="/images/campaign/rubic-holdstation/banner-link-super-bridge.png"
           />
         </SwiperSlide>
-
+        {/* 
         <SwiperSlide key={2}>
           <Rango link="/bridge-x/rango" banner="/images/bridge/super/rango.png">
             <RangoTip>
@@ -176,7 +176,7 @@ export default function Advertise() {
               </div>
             </RangoTip>
           </Rango>
-        </SwiperSlide>
+        </SwiperSlide> */}
 
         {superBridgeMedal && (
           <SwiperSlide key={3}>
