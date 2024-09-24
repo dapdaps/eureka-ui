@@ -289,6 +289,7 @@ const LendingDialogButton = (props: Props) => {
             });
         })
         .catch((err: any) => {
+          console.log('approve contract approve failure: %o', err);
           updateState({
             isApproved: false,
             approving: false
