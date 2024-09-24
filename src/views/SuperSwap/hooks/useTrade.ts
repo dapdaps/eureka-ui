@@ -148,7 +148,20 @@ export default function useTrade({ chainId }: any) {
           return;
         }
 
-        const mergedMarkets = uniqBy([..._markets, ...cachedMarkets.current], 'name').sort(
+        const marketsObj: any = {};
+
+        [..._markets, ...cachedMarkets.current].forEach((market: any) => {
+          const item = marketsObj[market.name];
+          if (!item) {
+            marketsObj[market.name] = market;
+            return;
+          }
+          if (Big(item.outputCurrencyAmount).lt(market.outputCurrencyAmount)) {
+            marketsObj[market.name] = market;
+          }
+        });
+
+        const mergedMarkets = Object.values(marketsObj).sort(
           (a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount
         );
 
