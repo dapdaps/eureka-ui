@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import Loading from '@/components/Icons/Loading';
 
+import { timeFormate } from '../Utils';
+
 const ConfirmBox = styled.div`
   position: fixed;
   left: 0;
@@ -167,7 +169,7 @@ export default function Comfirm({
           </ListItem>
           <ListItem>
             <ListItemTitle>Est. Arrival</ListItemTitle>
-            <ListItemContent>~{duration}min</ListItemContent>
+            <ListItemContent>{timeFormate(duration)}</ListItemContent>
           </ListItem>
           <ListItem>
             <ListItemTitle>Bridge Fee</ListItemTitle>

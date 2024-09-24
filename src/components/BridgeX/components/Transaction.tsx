@@ -9,7 +9,7 @@ import useToast from '@/hooks/useToast';
 import { balanceFormated, percentFormated } from '@/utils/balance';
 import { formateTxDate } from '@/utils/date';
 
-import { getTransaction, saveTransaction, updateTransaction } from '../Utils';
+import { getTransaction, saveTransaction, timeFormate, updateTransaction } from '../Utils';
 import { ArrowDown, ArrowUp } from './Arrows';
 
 const TransactionWapper = styled.div`
@@ -269,7 +269,7 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
                             tx.execute(tx, provider.getSigner(), chainId);
                           }}
                         >
-                          {tx.text}
+                          {chainId?.toString() !== tx.toChainId.toString() ? 'switch chain' : tx.text}
                         </div>
                       ) : (
                         <div className="processing">Processing</div>
@@ -283,7 +283,7 @@ export default function Transaction({ updater, storageKey, getStatus, tool, acco
                       Tx
                     </a>
                   </div>
-                  {tx.status === 3 ? <div>~{tx.duration} min</div> : null}
+                  {tx.status === 3 ? <div>{timeFormate(tx.duration)}</div> : null}
                 </div>
               </div>
             );

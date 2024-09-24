@@ -23,6 +23,8 @@ export default function useQuote(
   async function getRoutes(quoteRequest: QuoteRequest | null) {
     if (!quoteRequest) {
       setRoutes(null);
+      setQuoteLoading(false);
+      setLoading(false);
       return;
     }
     setLoading(true);
@@ -55,7 +57,7 @@ export default function useQuote(
         setRoutes([...routes]);
       }
     });
-    // console.log('routes:', routes)
+    console.log('routes:', routes);
     // console.log(quoteRequest.identification, newestIdentification.current, Number(quoteRequest.identification) === Number(newestIdentification.current))
 
     if (_routes && _routes.length && _routes[0].identification === newestIdentification.current) {

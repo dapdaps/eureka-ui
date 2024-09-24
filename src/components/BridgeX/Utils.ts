@@ -115,6 +115,30 @@ export function isNumeric(value: any): boolean {
   return /^[0-9]+(\.)?([0-9]+)?$/.test(value);
 }
 
+export function timeFormate(value: number | string) {
+  if (!value) {
+    return '~min';
+  }
+
+  const _value = Number(value);
+
+  const h = Math.floor(_value / 60);
+  const m = _value % 60;
+
+  if (h >= 1) {
+    if (h > 24) {
+      const d = Math.floor(h / 24);
+      return `~${h}h${m}min`;
+    }
+    if (m > 0) {
+      return `~${h}h${m}min`;
+    }
+    return `~${h}h`;
+  }
+
+  return `~${m}min`;
+}
+
 export default {
   balanceFormated,
   addressFormated,

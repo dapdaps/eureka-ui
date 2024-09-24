@@ -158,20 +158,30 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
   });
 
   useEffect(() => {
+    let isReturn = false;
     if (!fromChain || !toChain || !fromToken || !toToken || !account || !inputValue) {
-      return;
+      isReturn = true;
     }
 
     if (Number(inputValue) <= 0) {
-      return;
+      isReturn = true;
     }
 
     if (fromChain === toChain && fromToken === toToken) {
+      isReturn = true;
+    }
+
+    if (isReturn) {
+      setReciveAmount('');
+      setSelectedRoute(null);
+      const identification = Date.now();
+      setIdentification(identification);
+      setQuoteRequest(null);
       return;
     }
 
-    setReciveAmount('');
-    setSelectedRoute(null);
+    // setReciveAmount('');
+    // setSelectedRoute(null);
 
     const identification = Date.now();
     setIsfresh(true);
@@ -191,7 +201,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
       },
       fromAddress: account as string,
       destAddress: account as string,
-      amount: new Big(inputValue).mul(10 ** fromToken?.decimals),
+      amount: new Big(inputValue).mul(10 ** (fromToken as Token)?.decimals),
       identification,
       exclude: ['official']
     });
@@ -380,6 +390,9 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
           text={disableText}
           fromChain={fromChain}
           onClick={() => {
+            // setConfirmSuccessModalShow(true)
+            // return
+
             if (selectedRoute) {
               setConfirmModalShow(true);
               setIsfresh(false);
@@ -500,11 +513,13 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
             route={selectedRoute}
             onClose={() => {
               setConfirmSuccessModalShow(false);
+              setSendAmount('');
             }}
             onTransactionClick={() => {}}
             isLoading={isSending}
             onClick={async () => {
               setConfirmSuccessModalShow(false);
+              setSendAmount('');
             }}
           />
         )}
