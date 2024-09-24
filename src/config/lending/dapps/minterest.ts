@@ -58,6 +58,9 @@ const getRedeemUnderlying = async (data: any, options: any) => {
     console.log(err);
   }
 };
+const getDisableCollateralDisabled = (data: any, options: any) => {
+  return Big(data.userBorrowUSD).gt(0);
+};
 
 const basic = {
   name: 'Minterest',
@@ -70,6 +73,7 @@ const basic = {
 
 const networks = {
   5000: {
+    collateralAddress: '0xe53a90EFd263363993A3B41Aa29f7DaBde1a932D',
     marketsAddress: 'https://mantle.minterest.com/api/markets',
     oracleAddress: 'https://mantle.minterest.com/api/utils/oracle-price',
     userDataAddress: 'https://mantle.minterest.com/api/user/data',
@@ -83,6 +87,7 @@ const networks = {
     getBorrowAvailable,
     getUserTotalBorrow,
     getRedeemUnderlying,
+    getDisableCollateralDisabled,
     markets: {
       [mantle['meth'].address]: {
         decimals: 8,
