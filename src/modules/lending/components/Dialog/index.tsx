@@ -204,6 +204,10 @@ const LendingDialog = (props: Props) => {
         );
 
         buttonClickable = Big(data.userTotalBorrowUsd).eq(0) ? true : !borromLimit.lt(0);
+
+        if (data.localConfig?.getDisableCollateralDisabled) {
+          buttonClickable = !data.localConfig?.getDisableCollateralDisabled(data, { account });
+        }
       }
       updateState({
         borrowLimit: borromLimit ? (!borromLimit.gt(0) ? '0.00' : borromLimit.toFixed(2)) : '',
