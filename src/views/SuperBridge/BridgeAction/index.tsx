@@ -513,6 +513,7 @@ export default function BirdgeAction({ chainList, onTransactionUpdate }: Props) 
             route={selectedRoute}
             onClose={() => {
               setConfirmSuccessModalShow(false);
+              setSendAmount('');
             }}
             onTransactionClick={() => {}}
             isLoading={isSending}

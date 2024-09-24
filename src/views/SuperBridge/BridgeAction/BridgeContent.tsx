@@ -481,11 +481,13 @@ export default function BirdgeAction({
             theme={theme}
             onClose={() => {
               setConfirmSuccessModalShow(false);
+              setSendAmount('');
             }}
             onTransactionClick={() => {}}
             isLoading={isSending}
             onClick={async () => {
               setConfirmSuccessModalShow(false);
+              setSendAmount('');
             }}
           />
         )}
