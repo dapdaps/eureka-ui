@@ -20,7 +20,7 @@ const NewTicketModal = (props: Props) => {
       style={{
         borderRadius: 12,
         background: '#1F2229',
-        border: '1px solid #333648',
+        border: '1px solid #333648'
       }}
     />
   );

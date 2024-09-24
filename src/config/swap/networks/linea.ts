@@ -8,7 +8,6 @@ import { basic as metavaultV3Basic, networks as metavaultV3Networks } from '../d
 import { basic as pancakeSwapBasic, networks as pancakeSwapNetworks } from '../dapps/pancake-swap';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
 import { basic as SyncSwapBasic, networks as SyncSwapNetworks } from '../dapps/sync-swap';
-import { basic as VelocoreV2Basic, networks as VelocoreV2Networks } from '../dapps/velocore-v2';
 import { basic as xfaiBasic, networks as xfaiNetworks } from '../dapps/xfai';
 import { basic as xyBasic, networks as xyNetworks } from '../dapps/xy-finance';
 
@@ -21,43 +20,39 @@ export default {
     SyncSwap: {
       ...SyncSwapBasic,
       ...SyncSwapNetworks[CHAIN_ID],
-      oneExecutionDisabled: true,
+      oneExecutionDisabled: true
     },
     Lynex: {
       ...lynexBasic,
-      ...lynexNetworks[CHAIN_ID],
+      ...lynexNetworks[CHAIN_ID]
     },
     iZiSwap: {
       ...IziSwapBasic,
-      ...IziSwapNetworks[CHAIN_ID],
+      ...IziSwapNetworks[CHAIN_ID]
     },
     Xfai: {
       ...xfaiBasic,
-      ...xfaiNetworks[CHAIN_ID],
+      ...xfaiNetworks[CHAIN_ID]
     },
     'Pancake Swap': {
       ...pancakeSwapBasic,
-      ...pancakeSwapNetworks[CHAIN_ID],
+      ...pancakeSwapNetworks[CHAIN_ID]
     },
     'Metavault V3': {
       ...metavaultV3Basic,
-      ...metavaultV3Networks[CHAIN_ID],
-    },
-    'Velocore V2': {
-      ...VelocoreV2Basic,
-      ...VelocoreV2Networks[CHAIN_ID],
+      ...metavaultV3Networks[CHAIN_ID]
     },
     'XY Finance': {
       ...xyBasic,
-      ...xyNetworks[CHAIN_ID],
+      ...xyNetworks[CHAIN_ID]
     },
     HorizonDEX: {
       ...HorizonDEXBasic,
-      ...HorizonDEXNetworks[CHAIN_ID],
+      ...HorizonDEXNetworks[CHAIN_ID]
     },
     SushiSwap: {
       ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
-    },
-  },
+      ...sushiNetworks[CHAIN_ID]
+    }
+  }
 };

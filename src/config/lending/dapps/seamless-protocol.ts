@@ -11,7 +11,7 @@ const CONTRACT_ABI = {
   aavePoolV3ABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/AAVEPoolV3.json',
   variableDebtTokenABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/VariableDebtToken.json',
   walletBalanceProviderABI:
-    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
+    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 // const heroData = ['Total market size', 'Total available', 'Total borrows'];
 const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
@@ -19,9 +19,11 @@ const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'Seamless Protocol',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/seamless.png',
   data: 'bluebiu.near/widget/AAVE.Data.Seamless',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
   type: 'aave-v3',
+  loaderName: 'AaveV3'
 };
 const rewardToken = [
   {
@@ -29,11 +31,10 @@ const rewardToken = [
     // decimals: 18,
     symbol: 'OG Points',
     name: 'OG Points',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiez74jwccvehead67kbbi2r5b5tibtk23vuo3aamuhyllfvujczhu',
+    icon: 'https://ipfs.near.social/ipfs/bafkreiez74jwccvehead67kbbi2r5b5tibtk23vuo3aamuhyllfvujczhu'
   },
   base['seam'],
-  base['esseam'],
-  base['usdc'],
+  base['esseam']
 ];
 
 const networks = {
@@ -50,7 +51,7 @@ const networks = {
       wrappedTokenGatewayV3Address: '0xaeeB3898edE6a6e86864688383E211132BAa1Af3',
       balanceProviderAddress: '0xDb0f02421f830398d7b59dae8d385e2Cd5ed5CF7',
       incentivesProxy: '0x91Ac2FfF8CBeF5859eAA6DdA661feBd533cD3780', //CLAIM
-      rewardAddress: '0x998e44232BEF4F8B033e5A5175BDC97F2B10d5e5',
+      rewardAddress: '0x998e44232BEF4F8B033e5A5175BDC97F2B10d5e5'
     },
     rawMarkets: [
       {
@@ -70,7 +71,7 @@ const networks = {
         variableBorrowAPY: '',
         aTokenAddress: '0x48bf8fCd44e2977c8a9A744658431A8e6C0d866c',
         variableDebtTokenAddress: '0x4cebC6688faa595537444068996ad9A207A19f13',
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '2',
@@ -89,7 +90,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '3',
@@ -108,7 +109,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '4',
@@ -127,7 +128,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '5',
@@ -146,7 +147,7 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        supportBorrow: true,
+        supportBorrow: true
       },
       {
         id: '6',
@@ -166,12 +167,12 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
 
-        supportBorrow: true,
-      },
+        supportBorrow: true
+      }
     ],
     CONTRACT_ABI,
-    rewardToken,
-  },
+    rewardToken
+  }
 };
 
 export default { basic, networks };

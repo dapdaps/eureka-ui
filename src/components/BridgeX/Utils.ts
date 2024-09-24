@@ -89,7 +89,11 @@ export async function getTransaction(tool?: string) {
     __list = _list.map((item: any) => {
       const jsonItem = JSON.parse(item.extra_data);
       if (item.bridge_status) {
-        jsonItem.status = Number(item.bridge_status);
+        if (item.tx_id === '0xdf8eb94e3d4889ba4e0da74deb6d523aa329cdb88b1c5230f43c6a6b827547d7') {
+          jsonItem.status = 3;
+        } else {
+          jsonItem.status = Number(item.bridge_status);
+        }
       }
 
       return jsonItem;
@@ -109,6 +113,30 @@ export async function getTransaction(tool?: string) {
 
 export function isNumeric(value: any): boolean {
   return /^[0-9]+(\.)?([0-9]+)?$/.test(value);
+}
+
+export function timeFormate(value: number | string) {
+  if (!value) {
+    return '~min';
+  }
+
+  const _value = Number(value);
+
+  const h = Math.floor(_value / 60);
+  const m = _value % 60;
+
+  if (h >= 1) {
+    if (h > 24) {
+      const d = Math.floor(h / 24);
+      return `~${h}h${m}min`;
+    }
+    if (m > 0) {
+      return `~${h}h${m}min`;
+    }
+    return `~${h}h`;
+  }
+
+  return `~${m}min`;
 }
 
 export default {

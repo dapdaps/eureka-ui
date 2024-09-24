@@ -7,27 +7,52 @@ import { scroll } from '@/config/tokens/scroll';
 const basic = {
   name: 'iZiSwap',
   logo: '/images/apps/izi-swap.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['usdc'],
+      output: linea['usdc']
     },
-    tokens: [linea['eth'], linea['usdc'], linea['weth'], linea['izi'], linea['wbtc'], linea['busd']],
+    tokens: [
+      linea['eth'],
+      linea['usdc'],
+      linea['weth'],
+      linea['izi'],
+      linea['wbtc'],
+      linea['busd'],
+      linea['iusd'],
+      linea['usdt'],
+      linea['solv-btc'],
+      linea['m-btc'],
+      linea['wsteth'],
+      linea['ezeth'],
+      linea['foxy'],
+      linea['lab'],
+      linea['dai']
+    ]
   },
   5000: {
     defaultCurrencies: {
       input: mantle['weth'],
-      output: mantle['usdc'],
+      output: mantle['usdc']
     },
-    tokens: [mantle['weth'], mantle['usdc'], mantle['mnt'], mantle['usdt'], mantle['wbtc'], mantle['wmnt']],
+    tokens: [
+      mantle['weth'],
+      mantle['usdc'],
+      mantle['mnt'],
+      mantle['usdt'],
+      mantle['wbtc'],
+      mantle['wmnt'],
+      mantle['meth'],
+      mantle['izi']
+    ]
   },
   169: {
     defaultCurrencies: {
       input: manta['weth'],
-      output: manta['usdc'],
+      output: manta['usdc']
     },
     tokens: [
       manta['weth'],
@@ -42,18 +67,16 @@ const networks = {
       manta['wusdm'],
       manta['stone'],
       manta['lab'],
-      manta['kuma'],
-      manta['mante'],
-      manta['webmi'],
-      manta['manta'],
-    ],
+      manta['manta']
+    ]
   },
   534352: {
     defaultCurrencies: {
-      input: scroll['weth'],
-      output: scroll['usdc'],
+      input: scroll['eth'],
+      output: scroll['usdc']
     },
     tokens: [
+      scroll['eth'],
       scroll['weth'],
       scroll['usdc'],
       scroll['dai'],
@@ -70,13 +93,13 @@ const networks = {
       scroll['iusd'],
       scroll['kala'],
       scroll['panda'],
-      scroll['bald'],
-    ],
+      scroll['bald']
+    ]
   },
   34443: {
     defaultCurrencies: {
       input: mode['eth'],
-      output: mode['usdt'],
+      output: mode['usdt']
     },
     tokens: [
       mode['eth'],
@@ -86,9 +109,9 @@ const networks = {
       mode['usdt'],
       mode['ezeth'],
       mode['m-btc'],
-      mode['we-eth.mode'],
-    ],
-  },
+      mode['we-eth.mode']
+    ]
+  }
 };
 
 export { basic, networks };

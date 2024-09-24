@@ -3,6 +3,7 @@ import weth from '@/config/contract/weth';
 
 import layerBank from '../dapps/layer-bank';
 import shoebillV2 from '../dapps/shoebill-v2';
+import zerolend from '../dapps/zerolend';
 
 const CHAIN_ID = 169;
 const CHAIN_NAME = 'Manta';
@@ -16,17 +17,21 @@ export default {
     noAccountTips: 'Manta Lending Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Manta Chain.',
     chainId: CHAIN_ID,
-    chainName: CHAIN_NAME,
+    chainName: CHAIN_NAME
   },
   defaultDapp: 'LayerBank',
   dapps: {
     LayerBank: {
       ...layerBank.basic,
-      ...layerBank.networks[CHAIN_ID],
+      ...layerBank.networks[CHAIN_ID]
     },
     'Shoebill V2': {
       ...shoebillV2.basic,
-      ...shoebillV2.networks[CHAIN_ID],
+      ...shoebillV2.networks[CHAIN_ID]
     },
-  },
+    ZeroLend: {
+      ...zerolend.basic,
+      ...zerolend.networks[CHAIN_ID]
+    }
+  }
 };

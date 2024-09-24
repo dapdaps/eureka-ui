@@ -3,6 +3,7 @@ import weth from '@/config/contract/weth';
 
 import cream from '../dapps/cream';
 import filda from '../dapps/filda';
+import WePiggy from '../dapps/we-piggy';
 
 const CHAIN_ID = 137;
 const CHAIN_NAME = 'Polygon';
@@ -16,17 +17,21 @@ export default {
     noAccountTips: 'Polygon Lending Collection',
     wrongNetworkTips: 'To proceed, kindly switch to Polygon Chain.',
     chainId: CHAIN_ID,
-    chainName: CHAIN_NAME,
+    chainName: CHAIN_NAME
   },
   defaultDapp: 'C.R.E.A.M.',
   dapps: {
     'C.R.E.A.M.': {
       ...cream.basic,
-      ...cream.networks[CHAIN_ID],
+      ...cream.networks[CHAIN_ID]
     },
     FilDA: {
       ...filda.basic,
-      ...filda.networks[CHAIN_ID],
+      ...filda.networks[CHAIN_ID]
     },
-  },
+    WePiggy: {
+      ...WePiggy.basic,
+      ...WePiggy.networks[CHAIN_ID]
+    }
+  }
 };

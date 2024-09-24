@@ -27,7 +27,7 @@ const StyledButton = styled.button<{ color?: string }>`
 
 const BaseButton = ({ disabled, onClick, children, color }: any) => {
   return (
-    <StyledButton disabled={disabled} onClick={onClick} color={color} >
+    <StyledButton disabled={disabled} onClick={onClick} color={color}>
       {children}
     </StyledButton>
   );
@@ -37,31 +37,31 @@ const getButtonImpactProps = (trade: any) => {
   if (trade?.priceImpactType === 2) {
     return {
       color: PriceImpactTypeColorMap[trade.priceImpactType],
-      text: 'I noticed the price impact, swap anyway',
+      text: 'I noticed the price impact, swap anyway'
     };
   }
 
   if (trade?.wrapType) {
     return {
       color: null,
-      text: trade?.wrapType === 1 ? 'Wrap' : 'Unwrap',
+      text: trade?.wrapType === 1 ? 'Wrap' : 'Unwrap'
     };
   }
 
   return {
     color: null,
-    text: 'Swap',
+    text: 'Swap'
   };
 };
 
-
-const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade }: any) => {
+const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, trade, currentChain, onRefresh }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
     spender: trade?.routerAddress,
+    onSuccess: onRefresh
   });
-  
+
   const { switching, switchChain } = useSwitchChain();
   const { onConnect } = useConnectWallet();
   const { account, chainId } = useAccount();
@@ -79,12 +79,12 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     );
   }
 
-  if (!networks[chainId]) {
+  if (!networks[chainId] || currentChain.chain_id !== chainId) {
     return (
       <BaseButton
         onClick={() => {
           switchChain({
-            chainId: 42161,
+            chainId: 42161
           });
         }}
         loading={switching}
@@ -102,12 +102,20 @@ const TradeButton = ({ token, amount, loading, errorTips, disabled, onClick, tra
     );
   }
 
+  if (trade?.noPair) {
+    return <BaseButton disabled>Insufficient Liquidity</BaseButton>;
+  }
+
   if (errorTips) {
     return <BaseButton disabled>{errorTips}</BaseButton>;
   }
 
   if (!approved) {
     return <BaseButton onClick={approve}>Approve {token?.symbol}</BaseButton>;
+  }
+
+  if (trade && !trade.txn) {
+    return <BaseButton disabled>Estimate Gas Error</BaseButton>;
   }
 
   return (

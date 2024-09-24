@@ -1,13 +1,12 @@
 import Big from 'big.js';
-import { utils } from 'ethers';
 
 const checkGas = ({ rawBalance, gasPrice, gasLimit, value }: any) => {
-  const _balance = Big(utils.formatEther(rawBalance)).add(value || 0);
-  const gas = Big(utils.formatEther(gasLimit)).mul(utils.formatEther(gasPrice));
+  const _balance = Big(rawBalance).add(value || 0);
+  const gas = Big(gasLimit).mul(gasPrice);
 
   return {
-    isGasEnough: _balance.lt(gas),
-    gas,
+    isGasEnough: _balance.gt(gas),
+    gas: gas.toString()
   };
 };
 

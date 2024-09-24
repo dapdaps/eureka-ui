@@ -1,27 +1,41 @@
 import { useSetChain } from '@web3-onboard/react';
 import { useDebounceFn } from 'ahooks';
-import { ethers } from 'ethers'
-import createKeccakHash from 'keccak'
+import { ethers } from 'ethers';
+import createKeccakHash from 'keccak';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import {
+  execute,
+  getAllToken,
+  getAllTokenPairs,
+  getBridgeMsg,
+  getBridgeTokens,
+  getChainScan,
+  getIcon,
+  getQuote,
+  getStatus,
+  init
+} from 'super-bridge-sdk';
 
+import BridgeX from '@/components/BridgeX/Index';
 import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import popupsData from '@/config/all-in-one/chains';
+import allChain from '@/config/chains';
 import lendingConfig from '@/config/lending/networks';
 import swapConfig from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useAuthCheck from '@/hooks/useAuthCheck';
 import { useDefaultLayout } from '@/hooks/useLayout';
-import { useAllInOneTabCachedStore,useAllInOneTabStore } from '@/stores/all-in-one';
+import useScrollMore from '@/hooks/useScrollMore';
+import { useAllInOneTabCachedStore, useAllInOneTabStore } from '@/stores/all-in-one';
 import { usePriceStore } from '@/stores/price';
-import { get } from '@/utils/http'
+import { get } from '@/utils/http';
 import { multicall } from '@/utils/multicall';
 import type { NextPageWithLayout } from '@/utils/types';
 import useReport from '@/views/Landing/hooks/useReport';
-
 
 const arrow = (
   <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -161,64 +175,76 @@ const BreadCrumbs = styled.div`
   }
 `;
 
-function toChecksumAddress (address: string): string {
-  address = address.toLowerCase().replace('0x', '')
-  const hash = createKeccakHash('keccak256').update(address).digest('hex')
-  let ret = '0x'
+function toChecksumAddress(address: string): string {
+  address = address.toLowerCase().replace('0x', '');
+  const hash = createKeccakHash('keccak256').update(address).digest('hex');
+  let ret = '0x';
 
   for (let i = 0; i < address.length; i++) {
     if (parseInt(hash[i], 16) >= 8) {
-      ret += address[i].toUpperCase()
+      ret += address[i].toUpperCase();
     } else {
-      ret += address[i]
+      ret += address[i];
     }
   }
 
-  return ret
+  return ret;
 }
+
+const chainIds: any = {
+  ['xy-blast']: {
+    chainId: 81457,
+    color: 'rgb(253, 254, 3)',
+    mainToken: [],
+    l2Token: []
+  },
+  ['xy-scroll']: {
+    chainId: 534352,
+    color: '#ff684b',
+    mainToken: [],
+    l2Token: []
+  }
+};
 
 const AllInOne: NextPageWithLayout = () => {
   const router = useRouter();
   const toolChain = router.query.toolChain as string;
-  const chain = 'scroll';
-  const [currentChain, setCurrentChain] = useState<any>();
-  const [chainConfig, setChainConfig] = useState<any>(null)
+  const { viewHeight } = useScrollMore({ gap: 96 });
+  const [chainConfig, setChainConfig] = useState<any>(null);
   const { account, chainId } = useAccount();
-  const [ checkSumAccount, setCheckSumAccount ] = useState<string>()
+  const [checkSumAccount, setCheckSumAccount] = useState<string>();
   const { handleReport } = useReport();
   const prices = usePriceStore((store) => store.price);
   const [tab, setTab] = useState('');
   const cachedTabsStore: any = useAllInOneTabCachedStore();
+  const [{ settingChain, connectedChain }, setChain] = useSetChain();
   const { addAction } = useAddAction('dapp');
 
-
   useEffect(() => {
-    if (currentChain && !chainConfig && toolChain) {
-      get(`/api/dapp?route=bridge/${toolChain}`)
-      .then(res => {
+    if (toolChain) {
+      get(`/api/dapp?route=bridge/${toolChain}`).then((res) => {
         if (res.code === 0) {
-          setChainConfig(res.data)
+          setChainConfig(res.data);
         }
-      })
+      });
     }
-  }, [currentChain, chainConfig, toolChain])
-
-  useEffect(() => {
-    const _currentChain = popupsData[chain]
-    setCurrentChain(_currentChain);
-  }, [chain]);
-
+  }, [toolChain]);
 
   useEffect(() => {
     if (account) {
-      const checkSumAccount = toChecksumAddress(account as string)
-      setCheckSumAccount(checkSumAccount)
+      const checkSumAccount = toChecksumAddress(account as string);
+      setCheckSumAccount(checkSumAccount);
     }
-  }, [account])
-  
+  }, [account]);
 
-  return currentChain ? (
-    <Container key={chain}>
+  const filterChainList = useMemo(() => {
+    if (toolChain) {
+      return [allChain[1], allChain[chainIds[toolChain].chainId]];
+    }
+  }, [toolChain]);
+
+  return chainConfig ? (
+    <Container key={toolChain}>
       <BreadCrumbs>
         <Link href="/">Home</Link>
         {arrow}
@@ -226,7 +252,40 @@ const AllInOne: NextPageWithLayout = () => {
         {arrow}
         <span>{chainConfig?.name} </span>
       </BreadCrumbs>
-      <>
+
+      <BridgeX
+        style={{ minHeight: viewHeight }}
+        addAction={addAction}
+        prices={prices}
+        account={account}
+        icon={chainConfig?.logo}
+        name={chainConfig?.name}
+        dapp={chainConfig}
+        color={'#277eec'}
+        disabledChain={true}
+        disabledToToken={true}
+        tool={'xy'}
+        template={chainConfig?.name}
+        chainList={filterChainList}
+        getQuote={getQuote}
+        getBridgeToken={getBridgeTokens}
+        getChainScan={getChainScan}
+        getStatus={getStatus}
+        execute={execute}
+        currentChainId={connectedChain?.id ? parseInt(connectedChain.id, 16) : 1}
+        toChainId={router.query.toChainId as string}
+        fromChainId={router.query.fromChainId as string}
+        setChain={setChain}
+        onSuccess={() => {
+          // setUpdateDetail(true);
+          // const timer = setTimeout(() => {
+          //   clearTimeout(timer);
+          //   setUpdateDetail(false);
+          // }, 0);
+        }}
+      />
+
+      {/* <>
         <div className="select-bg-icon">
           <div className="select-bg-content">
             <img src={chainConfig?.logo} alt="" />
@@ -254,7 +313,7 @@ const AllInOne: NextPageWithLayout = () => {
             }}
           />
         </div>
-      </>
+      </> */}
     </Container>
   ) : (
     <div />

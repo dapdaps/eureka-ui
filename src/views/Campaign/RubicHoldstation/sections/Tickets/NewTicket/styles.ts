@@ -4,7 +4,7 @@ export const StyledContainer = styled.div`
   padding: 0 35px 35px;
 `;
 export const StyledTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
@@ -13,7 +13,7 @@ export const StyledTitle = styled.div`
   text-align: center;
 `;
 export const StyledDesc = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 16px;
   font-style: normal;
@@ -26,7 +26,7 @@ export const StyledTicket = styled.div`
   height: 57px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: linear-gradient(116deg, #C8FF7C 11.9%, #FFA5DB 64.92%, #7A78FF 104.11%);
+  background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
   display: flex;
   justify-content: space-between;
   align-items: stretch;
@@ -58,7 +58,7 @@ export const StyledTicketRight = styled.div`
   gap: 10px;
 `;
 export const StyledCountdown = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
@@ -67,7 +67,7 @@ export const StyledCountdown = styled.div`
   text-align: center;
 `;
 export const StyledCountdownPrimary = styled.span`
-  color: #EBF479;
+  color: #ebf479;
   text-align: center;
   font-size: 20px;
   font-style: normal;

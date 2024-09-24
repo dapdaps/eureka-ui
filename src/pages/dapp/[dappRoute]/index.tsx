@@ -17,7 +17,7 @@ export const DappPage: NextPageWithLayout = () => {
   const dappPathname = router.query.dappRoute as string;
   const chains = useChainsStore((store: any) => store.chains);
 
-  const { chainId, account } = useAccount();
+  const { chainId, account, provider } = useAccount();
   const { dapp, loading } = useDappInfo(dappPathname ? `dapp/${dappPathname}` : '');
   const [currentChain, setCurrentChain] = useState<any>();
   const [ready, setReady] = useState(false);
@@ -67,12 +67,12 @@ export const DappPage: NextPageWithLayout = () => {
       const isSupported = !!dapp.dapp_network?.find((_chain: any) => _chain.chain_id === _chainId);
       setIsChainSupported(isSupported && _chainId === chainId);
       setCurrentChain(
-        chains.find((_chain: any) => _chain.chain_id === (isSupported ? _chainId : dapp.default_chain_id)),
+        chains.find((_chain: any) => _chain.chain_id === (isSupported ? _chainId : dapp.default_chain_id))
       );
     },
     {
-      wait: 500,
-    },
+      wait: 500
+    }
   );
 
   useEffect(() => {
@@ -100,6 +100,7 @@ export const DappPage: NextPageWithLayout = () => {
       dapp={dapp}
       chainId={chainId}
       account={account}
+      provider={provider}
       dappChains={dappChains}
       currentChain={currentChain}
       localConfig={localConfig}

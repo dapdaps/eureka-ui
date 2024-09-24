@@ -235,6 +235,22 @@ export const linea: { [key: string]: Token } = {
     name: 'Free Bridged SolvBTC',
     icon: 'https://ipfs.near.social/ipfs/bafkreifiiyr3pn7bnrixrydppkxzvvbdt2vv375ve4hdcqzdzqljjkbfuq'
   },
+  lynx: {
+    address: '0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af',
+    chainId: CHAIN_ID,
+    symbol: 'LYNX',
+    decimals: 18,
+    name: 'Lynex',
+    icon: '/images/tokens/lynx.png'
+  },
+  iusd: {
+    address: '0x0A3BB08b3a15A19b4De82F8AcFc862606FB69A2D',
+    chainId: CHAIN_ID,
+    symbol: 'iUSD',
+    decimals: 18,
+    name: 'iZUMi Bond USD',
+    icon: 'https://ipfs.near.social/ipfs/bafkreidovwcjy5o3ti4g5d4b3g5ki6ww2zr4br4dyv3vrygxl7dsqdfxva'
+  },
   'm-btc': {
     address: '0xe4D584ae9b753e549cAE66200A6475d2f00705f7',
     chainId: CHAIN_ID,

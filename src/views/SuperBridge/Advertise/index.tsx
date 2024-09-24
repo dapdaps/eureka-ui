@@ -44,6 +44,7 @@ const AdWrapper = styled.div`
   }
   .main-ad-img {
     width: 328px;
+    /* height: 108px; */
     cursor: pointer;
   }
   .out-hook {
@@ -77,12 +78,12 @@ const Rango = (props: any) => {
     >
       {children ? (
         <TooltipSimple tooltip={children}>
-          <div style={{ width: 328, height: 108, overflow: 'hidden' }}>
+          <div style={{ width: 328, height: 109, overflow: 'hidden' }}>
             <img className="main-ad-img" src={banner} />
           </div>
         </TooltipSimple>
       ) : (
-        <div style={{ width: 328, height: 108, overflow: 'hidden' }}>
+        <div style={{ width: 328, height: 109, overflow: 'hidden' }}>
           <img className="main-ad-img" src={banner} />
         </div>
       )}
@@ -125,10 +126,8 @@ export default function Advertise() {
 
       if (bridges && bridges.length) {
         bridges.sort((a: any, b: any) => a.level - b.level);
-        console.log(bridges);
         let usedMedal = bridges[bridges.length - 1];
         for (let i = 0; i < bridges.length; i++) {
-          console.log(bridges[i]);
           if (bridges[i].completed_status !== 'completed') {
             return bridges[i];
           }

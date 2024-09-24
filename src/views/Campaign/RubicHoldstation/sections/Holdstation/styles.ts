@@ -5,7 +5,7 @@ export const StyledContainer = styled.div`
   width: 1000px;
 `;
 export const StyledTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 36px;
   font-style: italic;
@@ -14,7 +14,7 @@ export const StyledTitle = styled.div`
   text-transform: capitalize;
 `;
 export const StyledTitleSub = styled.div`
-  color: #EBF479;
+  color: #ebf479;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -28,7 +28,7 @@ export const StyledContent = styled.div`
 `;
 export const StyledRight = styled.div``;
 export const StyledDownload = styled.div`
-  color: #FFF;
+  color: #fff;
   font-size: 32px;
   font-style: normal;
   font-weight: 600;
@@ -40,7 +40,7 @@ export const StyledDesc = styled.ul`
   padding-left: 0;
 `;
 export const StyledDescItem = styled.li`
-  color: #FFF;
+  color: #fff;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;

@@ -1,6 +1,5 @@
-
 const basic = {
-  name: 'Rangeprotocol',
+  name: 'RangeProtocol',
   icon: 'https://s3.amazonaws.com/dapdap.prod/images/090-rageprotocal.png',
   dappSrc: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
   amountOutFn: 'bluebiu.near/widget/Liquidity.RANGEPROTOCOL',
@@ -15,8 +14,8 @@ const basic = {
     wUSDM: 'https://app.rangeprotocol.com/images/coins/169/0xbdAd407F77f44F7Da6684B416b1951ECa461FB07.png',
     MANTA: 'https://app.rangeprotocol.com/images/coins/169/0x95CeF13441Be50d20cA4558CC0a27B601aC544E5.png',
     USDC: 'https://app.rangeprotocol.com/images/coins/169/0xb73603C5d87fA094B7314C74ACE2e64D165016fb.png',
-    WEBMI: 'https://app.rangeprotocol.com/images/coins/169/0x19585009Ce333efCC4a383c28B27A0Eb2e8497Ea.png',
-  },
+    WEBMI: 'https://app.rangeprotocol.com/images/coins/169/0x19585009Ce333efCC4a383c28B27A0Eb2e8497Ea.png'
+  }
 };
 const networks = {
   // bsc
@@ -34,9 +33,9 @@ const networks = {
         strategy2: 'Pegged',
         token0: 'USDT',
         token1: 'USDC',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0x92b7807bF19b7DDdf89b706143896d05228f3121",
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0x92b7807bF19b7DDdf89b706143896d05228f3121'
       },
       {
         id: 'P CAKE-WBNB',
@@ -44,9 +43,9 @@ const networks = {
         strategy2: 'Passive',
         token0: 'CAKE',
         token1: 'WBNB',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0x133B3D95bAD5405d14d53473671200e9342896BF",
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0x133B3D95bAD5405d14d53473671200e9342896BF'
       },
       {
         id: 'P ZETA-WBNB',
@@ -54,9 +53,9 @@ const networks = {
         strategy2: 'Passive',
         token0: 'ZETA',
         token1: 'WBNB',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0xF2B438694e2DD17a24c970435460de58B5785cFD",
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0xF2B438694e2DD17a24c970435460de58B5785cFD'
       },
       {
         id: 'P USDT-WBNB',
@@ -64,9 +63,9 @@ const networks = {
         strategy2: 'Passive',
         token0: 'USDT',
         token1: 'WBNB',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0x36696169C63e42cd08ce11f5deeBbCeBae652050",
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0x36696169C63e42cd08ce11f5deeBbCeBae652050'
       },
       {
         id: 'P USDV-USDT',
@@ -74,10 +73,10 @@ const networks = {
         strategy2: 'Pegged',
         token0: 'USDV',
         token1: 'USDT',
-        "decimals0": 6,
-        "decimals1": 18,
-        "poolAddress": "0x589a5062e47202bB994cD354913733a14b54e8Dc",
-      },
+        decimals0: 6,
+        decimals1: 18,
+        poolAddress: '0x589a5062e47202bB994cD354913733a14b54e8Dc'
+      }
     ],
     addresses: {
       USDT: '0x55d398326f99059fF775485246999027B3197955',
@@ -91,7 +90,7 @@ const networks = {
       'P CAKE-WBNB': '0x5db61A5f05580Cf620a9d0f9266E7432811DC309',
       'P ZETA-WBNB': '0xa5f84725C8c88F14E583f94b9968DE94a8903FC5',
       'P USDT-WBNB': '0xB99F1Ce0f1C95422913FAF5b1ea980BbC580c14a',
-      'P USDV-USDT': '0x80273A7E636a20546F2be21636C4771F51A3A580',
+      'P USDV-USDT': '0x80273A7E636a20546F2be21636C4771F51A3A580'
     },
     proxyAddress: '0x1cc4eE0cB063e9db36E51F5d67218ff1f8dbfA0f'
   },
@@ -110,9 +109,9 @@ const networks = {
         strategy2: 'Pegged',
         token0: 'WETH',
         token1: 'STONE',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0xb0A6C5Fac88b1D0F2CA6B1Df2dbB06FF0D227800",
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0xb0A6C5Fac88b1D0F2CA6B1Df2dbB06FF0D227800'
       },
       {
         id: 'P wUSDM-STONE',
@@ -120,9 +119,9 @@ const networks = {
         strategy2: 'Passive',
         token0: 'wUSDM',
         token1: 'STONE',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0x5FE8B6Ed86703e66Ea727cD06C44ac5a6DF9076f",
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0x5FE8B6Ed86703e66Ea727cD06C44ac5a6DF9076f'
       },
       {
         id: 'P WETH-MANTA',
@@ -130,9 +129,9 @@ const networks = {
         strategy2: 'Passive',
         token0: 'WETH',
         token1: 'MANTA',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0x8515bd9D9F5AF69775787175E398da16201a2fF2",
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0x8515bd9D9F5AF69775787175E398da16201a2fF2'
       },
       {
         id: 'P WETH-USDC',
@@ -140,21 +139,20 @@ const networks = {
         strategy2: 'Passive',
         token0: 'WETH',
         token1: 'USDC',
-        "decimals0": 18,
-        "decimals1": 6,
-        "poolAddress": "0x92930F343c8Fb1da3656D4908d2F59b543A54056",
-      },
-      {
-        id: 'A WETH-WEBMI',
-        strategy: 'Dynamic',
-        strategy2: 'Active',
-        token0: 'WETH',
-        token1: 'WEBMI',
-        "decimals0": 18,
-        "decimals1": 18,
-        "poolAddress": "0x96b70fa6666fd35b5d99330b6167466684267f81",
-      },
-
+        decimals0: 18,
+        decimals1: 6,
+        poolAddress: '0x92930F343c8Fb1da3656D4908d2F59b543A54056'
+      }
+      // {
+      //   id: 'A WETH-WEBMI',
+      //   strategy: 'Dynamic',
+      //   strategy2: 'Active',
+      //   token0: 'WETH',
+      //   token1: 'WEBMI',
+      //   "decimals0": 18,
+      //   "decimals1": 18,
+      //   "poolAddress": "0x96b70fa6666fd35b5d99330b6167466684267f81",
+      // },
     ],
     addresses: {
       WETH: '0x0Dc808adcE2099A9F62AA87D9670745AbA741746',
@@ -169,10 +167,9 @@ const networks = {
       'P WETH-MANTA': '0xD500D8f7481bfb24A8E260E698Ee4911C6CD48E1',
       'P WETH-USDC': '0x08F4539f91faA96b34323c11C9B00123bA19eef3',
       'A WETH-WEBMI': '0x5b7F97545584E67C077C2b051E3c5CFfA67379D5'
-
     },
     proxyAddress: '0x1cc4eE0cB063e9db36E51F5d67218ff1f8dbfA0f'
-  },
+  }
 };
 
 export default { basic, networks };

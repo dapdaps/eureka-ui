@@ -46,7 +46,11 @@ interface Options {
   isFullDecimal?: boolean;
 }
 
-export const formatIntegerThousandsSeparator = (integer?: number | string, precision: number = 2, options?: Options): string => {
+export const formatIntegerThousandsSeparator = (
+  integer?: number | string,
+  precision: number = 2,
+  options?: Options
+): string => {
   options = options || {};
   const zero = options.isFullDecimal ? Big(0).toFixed(precision) : '0';
   if (!integer) {
@@ -64,7 +68,10 @@ export const formatIntegerThousandsSeparator = (integer?: number | string, preci
   }
   if (_type === 'simplify') {
     const formatter = (split: number, unit: string): string => {
-      const _num = Big(integer).div(split).toFixed(precision, 0).replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
+      const _num = Big(integer)
+        .div(split)
+        .toFixed(precision, 0)
+        .replace(/(?:\.0*|(\.\d+?)0+)$/, '$1');
       const inter = _num.split('.')?.[0]?.replace(/\d(?=(\d{3})+\b)/g, '$&,');
       const decimal = _num.split('.')?.[1] ?? '';
       return `${inter}${decimal ? '.' + decimal : ''}${unit}`;
@@ -84,4 +91,18 @@ export const formatIntegerThousandsSeparator = (integer?: number | string, preci
     return Big(Big(integer).toFixed(precision, 0)).toString();
   }
   return '';
+};
+
+export function formatAmount(props: { amount?: string | number | Big.Big; digits?: number; prev?: string }) {
+  const { amount } = props;
+  const digits = props.digits || 2;
+  const prev = props.prev || '';
+  if (!amount) return '-';
+  const total = Big(amount);
+  if (total.eq(0)) return prev + '0';
+  const digitSplit = 1 / Math.pow(10, digits);
+
+  if (total.lt(digitSplit)) return '<' + prev + digitSplit;
+
+  return prev + Number(total.toFixed(digits)).toLocaleString('en-US');
 }
