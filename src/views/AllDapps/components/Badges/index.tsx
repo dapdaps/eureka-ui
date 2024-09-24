@@ -183,6 +183,7 @@ const Badges = (props: Props) => {
             onClick={(e) => onBadgeClick(e, badge)}
             onHoverStart={onRewardHover}
             onHoverEnd={onRewardLeave}
+            $status={badge.status}
           >
             <StyledBadgeImage
               src={badge.icon}
