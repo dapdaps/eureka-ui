@@ -61,7 +61,7 @@ const SelectTokensModal = ({
   const { loading, queryToken } = useTokenInfo();
   const [importToken, setImportToken] = useState<any>(null);
   const [showImportWarning, setShowImportWarning] = useState(false);
-  const { loading: balancesLoading, balances = {} } = useTokensBalance(tokens);
+  const { loading: balancesLoading, balances = {}, queryBalance } = useTokensBalance(tokens);
 
   const handleSearch = () => {
     let tokenIsAvailable = false;
@@ -100,11 +100,10 @@ const SelectTokensModal = ({
     }
   };
 
-  useEffect(() => {
-    if (display) {
-      setSearchVal('');
-    }
-  }, [display]);
+  const handleClose = () => {
+    setSearchVal('');
+    onClose();
+  };
 
   useEffect(() => {
     handleSearch();
@@ -114,10 +113,14 @@ const SelectTokensModal = ({
     setCurrencies(tokens);
   }, [tokens]);
 
+  useEffect(() => {
+    if (display) queryBalance();
+  }, [display]);
+
   return (
     <Modal
       display={display}
-      onClose={onClose}
+      onClose={handleClose}
       title="Select a token"
       width={462}
       content={
@@ -176,6 +179,7 @@ const SelectTokensModal = ({
                       key={token.address}
                       onClick={() => {
                         onSelect(token);
+                        handleClose();
                       }}
                     >
                       <CurrencyLabel>
@@ -225,7 +229,7 @@ const SelectTokensModal = ({
             onImport={(currency: any) => {
               onImport({ ...currency, chainId });
               onSelect?.(currency);
-              onClose();
+              handleClose();
             }}
             chainId={chainId}
             onClose={() => {

@@ -31,9 +31,9 @@ export default async function getAggregatorTokens(chainId: number) {
           };
     });
 
-    const okxPrices = await getOKXPrices(tokens.slice(0, 30));
+    const okxPrices = await getOKXPrices(tokens.slice(0, 20));
 
-    tokens = tokens.slice(0, 30).map((token: any) => ({ ...token, usd: okxPrices[token.address.toLowerCase()] }));
+    tokens = tokens.slice(0, 20).map((token: any) => ({ ...token, usd: okxPrices[token.address.toLowerCase()] }));
   } else {
     const result = await get(`/api/dex/okx?url=https://open-api.openocean.finance/v4/${chainId}/tokenList&method=GET`);
     tokens = result.data?.map((token: any) => {
@@ -51,5 +51,5 @@ export default async function getAggregatorTokens(chainId: number) {
           };
     });
   }
-  return tokens.slice(0, 30);
+  return tokens.slice(0, 20);
 }
