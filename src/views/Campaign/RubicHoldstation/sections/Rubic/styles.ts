@@ -5,7 +5,7 @@ export const StyledContainer = styled.div`
   margin: 179px auto 0;
 `;
 export const StyledSectionTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 48px;
   font-style: italic;
@@ -14,7 +14,7 @@ export const StyledSectionTitle = styled.div`
   text-transform: capitalize;
 `;
 export const StyledTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 36px;
   font-style: italic;
@@ -24,7 +24,7 @@ export const StyledTitle = styled.div`
   margin-top: 53px;
 `;
 export const StyledTitleDesc = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 18px;
   font-style: normal;
@@ -33,7 +33,7 @@ export const StyledTitleDesc = styled.div`
   margin-top: 21px;
 `;
 export const StyledTitleSub = styled.div`
-  color: #EBF479;
+  color: #ebf479;
   font-size: 20px;
   font-style: normal;
   font-weight: 700;
@@ -43,11 +43,11 @@ export const StyledTitleSub = styled.div`
   text-align: center;
 `;
 export const StyledTitleSubDesc = styled.div`
-  color: #EBF479;
+  color: #ebf479;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 100%;
+  line-height: 150%;
   margin-top: 14px;
   text-align: center;
 `;
@@ -61,7 +61,7 @@ export const StyledCardHead = styled.div`
   align-items: center;
 `;
 export const StyledCardHeadTitle = styled.div`
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-size: 20px;
   font-style: normal;
@@ -74,7 +74,7 @@ export const StyledCardHeadHandler = styled.div`
   align-items: center;
   gap: 9px;
 `;
-export const StyledCardBg= styled.div`
+export const StyledCardBg = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
