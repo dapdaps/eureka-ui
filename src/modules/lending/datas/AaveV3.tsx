@@ -662,7 +662,7 @@ const AaveV3Data = (props: any) => {
             type: 'function'
           }
         ],
-        provider
+        provider.getSigner()
       );
       contract
         .getUserAccountData(account)
@@ -1482,7 +1482,8 @@ const AaveV3Data = (props: any) => {
 
     function getAllUserRewards() {
       const arr = markets
-        ?.map((item: any) => [
+        ?.filter((item: any) => item.variableDebtTokenAddress)
+        .map((item: any) => [
           item.aTokenAddress,
           // item.stableDebtTokenAddress,
           item.variableDebtTokenAddress
@@ -1522,7 +1523,6 @@ const AaveV3Data = (props: any) => {
         .then((res: any) => {
           try {
             console.log('getAllUserRewards_res:', res);
-            console.log(dexConfig.rewardToken, 'dexConfig.rewardToken');
             const _rewardToken = [...dexConfig.rewardToken];
 
             const _amount = res[1].reduce((total: any, cur: any) => {

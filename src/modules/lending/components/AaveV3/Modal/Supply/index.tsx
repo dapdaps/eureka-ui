@@ -573,18 +573,26 @@ const SupplyModal = (props: any) => {
               <PurpleTexture>Supply APY</PurpleTexture>
               <WhiteTexture>{unifyNumber(Number(supplyAPY) * 100)}%</WhiteTexture>
             </FlexBetween>
-            <FlexBetween>
-              <PurpleTexture>Collateralization</PurpleTexture>
-              {usageAsCollateralEnabled ? <PurpleTexture>Enabled</PurpleTexture> : <RedTexture>Disabled</RedTexture>}
-            </FlexBetween>
-            <FlexBetween>
-              <PurpleTexture>Health Factor</PurpleTexture>
-              <div style={{ textAlign: 'right' }}>
-                <PurpleTexture style={{ display: 'flex' }}>
-                  {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
-                </PurpleTexture>
-              </div>
-            </FlexBetween>
+            {dexConfig.name !== 'Bend' && (
+              <>
+                <FlexBetween>
+                  <PurpleTexture>Collateralization</PurpleTexture>
+                  {usageAsCollateralEnabled ? (
+                    <PurpleTexture>Enabled</PurpleTexture>
+                  ) : (
+                    <RedTexture>Disabled</RedTexture>
+                  )}
+                </FlexBetween>
+                <FlexBetween>
+                  <PurpleTexture>Health Factor</PurpleTexture>
+                  <div style={{ textAlign: 'right' }}>
+                    <PurpleTexture style={{ display: 'flex' }}>
+                      {formatHealthFactor(healthFactor)}→{state.newHealthFactor}
+                    </PurpleTexture>
+                  </div>
+                </FlexBetween>
+              </>
+            )}
           </TransactionOverviewContainer>
         </RoundedCard>
 

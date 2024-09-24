@@ -33,7 +33,7 @@ const networks = {
     config: {
       ...baseConfig,
       chainName: 'bera-bArtio',
-      nativeCurrency: beraB['bera'],
+      nativeCurrency: beraB['bera'], // attention this native currency
       nativeWrapCurrency: beraB['weth'],
       rpcUrl: 'https://bartio.drpc.org',
       aavePoolV3Address: '0x30A3039675E5b5cbEA49d9a5eacbc11f9199B86D',
