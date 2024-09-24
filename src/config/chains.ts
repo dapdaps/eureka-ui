@@ -98,6 +98,7 @@ const chainCofig = {
       icon: 'https://assets.dapdap.net/images/bafkreiaeq6ca67je5ocago6vk2efwxiqurxgemputx7p2nt6n2p3zo65xq.svg'
     },
     rpcUrls: [
+      'https://bscrpc.com',
       'https://binance.llamarpc.com',
       'https://bsc.blockpi.network/v1/rpc/public',
       'https://bsc-rpc.publicnode.com'

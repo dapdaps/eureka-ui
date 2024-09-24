@@ -1,3 +1,4 @@
+import { useDebounceFn } from 'ahooks';
 import { providers, utils } from 'ethers';
 import { flatten } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
@@ -35,6 +36,7 @@ export default function useTokensBalance(tokens: any) {
       const requests = [];
       if (hasNative) requests.push(_provider.getBalance(account));
       const splits = Math.ceil(calls.length / 10);
+
       for (let i = 0; i < splits; i++) {
         requests.push(
           multicall({
@@ -71,8 +73,18 @@ export default function useTokensBalance(tokens: any) {
     }
   }, [tokens, account]);
 
+  const { run } = useDebounceFn(
+    () => {
+      queryBalance();
+    },
+    {
+      wait: 500
+    }
+  );
+
   useEffect(() => {
-    queryBalance();
+    if (!account) return;
+    run();
   }, [tokens, account]);
 
   return { loading, balances, queryBalance };
