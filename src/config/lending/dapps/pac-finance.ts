@@ -11,14 +11,16 @@ const CONTRACT_ABI = {
   aavePoolV3ABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/AAVEPoolV3.json',
   variableDebtTokenABI: 'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/VariableDebtToken.json',
   walletBalanceProviderABI:
-    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json',
+    'https://raw.githubusercontent.com/corndao/aave-v3-bos-app/main/abi/WalletBalanceProvider.json'
 };
 const heroData = ['Blast Points', 'Blast Gold', 'Net Worth', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'Pac Finance',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/orbit.png',
   data: 'bluebiu.near/widget/Lending.Data.Pac',
   type: 'aave-v3',
+  loaderName: 'AaveV3'
 };
 
 const networks = {
@@ -37,7 +39,7 @@ const networks = {
       incentivesProxy: '0x13c836bd2dec4ae49e7f865baafe02b402013795', //CLAIM
       // rewardAddress: '',
       LoopDelegateeAddress: '0xfDe98aB7a6602ad55462297D952CE25b58743140',
-      AaveOracle: '0xAf77325317F109ee21459AFeEDE51b16C231e6b1', // token price
+      AaveOracle: '0xAf77325317F109ee21459AFeEDE51b16C231e6b1' // token price
     },
     rawMarkets: [
       {
@@ -63,7 +65,7 @@ const networks = {
         LEVERAGE: 3,
         LTV: 0.7,
         EXTRA_RADIO: 0.3,
-        NATIVE_YIELD: 0.04,
+        NATIVE_YIELD: 0.04
       },
       {
         id: '2',
@@ -88,7 +90,7 @@ const networks = {
         LEVERAGE: 3,
         LTV: 0.7,
         EXTRA_RADIO: 0.3,
-        NATIVE_YIELD: 0.04,
+        NATIVE_YIELD: 0.04
       },
       {
         id: '3',
@@ -113,7 +115,7 @@ const networks = {
         LEVERAGE: 5,
         LTV: 0.8,
         EXTRA_RADIO: 0.3,
-        NATIVE_YIELD: 0.15,
+        NATIVE_YIELD: 0.15
       },
       {
         id: '4',
@@ -137,7 +139,7 @@ const networks = {
         supportLoop: false,
         // LEVERAGE: 5,
         LTV: 0.6,
-        EXTRA_RADIO: 0.3,
+        EXTRA_RADIO: 0.3
       },
       {
         id: '5',
@@ -161,7 +163,7 @@ const networks = {
         supportLoop: true,
         LEVERAGE: 3,
         LTV: 0.7,
-        EXTRA_RADIO: 0.3,
+        EXTRA_RADIO: 0.3
       },
       {
         id: '6',
@@ -185,7 +187,7 @@ const networks = {
         supportLoop: true,
         LEVERAGE: 3,
         LTV: 0.7,
-        EXTRA_RADIO: 0.3,
+        EXTRA_RADIO: 0.3
       },
       {
         id: '7',
@@ -209,7 +211,7 @@ const networks = {
         supportLoop: true,
         LEVERAGE: 5,
         LTV: 0.8,
-        EXTRA_RADIO: 0.3,
+        EXTRA_RADIO: 0.3
       },
       {
         id: '8',
@@ -233,7 +235,7 @@ const networks = {
         supportLoop: true,
         LEVERAGE: 3,
         LTV: 0.7,
-        EXTRA_RADIO: 0.3,
+        EXTRA_RADIO: 0.3
       },
       {
         id: '9',
@@ -257,11 +259,11 @@ const networks = {
         supportLoop: true,
         LEVERAGE: 2,
         LTV: 0.6,
-        EXTRA_RADIO: 0.3,
-      },
+        EXTRA_RADIO: 0.3
+      }
     ],
-    CONTRACT_ABI,
-  },
+    CONTRACT_ABI
+  }
 };
 
 export default { basic, networks };

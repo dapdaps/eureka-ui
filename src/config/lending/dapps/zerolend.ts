@@ -23,9 +23,11 @@ const heroData = ['Net Worth', 'Net APY', 'Health Factor'];
 const baseConfig = { ownerId, nodeUrl, ipfsPrefix, heroData };
 const basic = {
   name: 'ZeroLend',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/1712849029366.jpg',
   data: 'bluebiu.near/widget/AAVE.Data.Zerolend',
   handlerClaim: 'bluebiu.near/widget/Lending.RewardClaim.Zerolend',
-  type: 'aave-v3'
+  type: 'aave-v3',
+  loaderName: 'AaveV3'
 };
 
 const rewardToken = [

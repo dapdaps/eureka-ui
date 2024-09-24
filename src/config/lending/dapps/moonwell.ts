@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.Moonwell',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Base.Lending.MoonwellHandlerClaim',
+  loaderName: 'Moonwell'
 };
 
 const networks = {
@@ -18,16 +19,16 @@ const networks = {
         decimals: 8,
         symbol: 'mUSDbC',
         address: '0x703843C3379b52F9FF486c9f5892218d2a065cC8',
-        underlyingToken: base['usdbc'],
+        underlyingToken: base['usdbc']
       },
       '0x628ff693426583D9a7FB391E54366292F509D457': {
         decimals: 8,
         symbol: 'mWETH',
         address: '0x628ff693426583D9a7FB391E54366292F509D457',
-        underlyingToken: base['weth'],
-      },
-    },
-  },
+        underlyingToken: base['weth']
+      }
+    }
+  }
 };
 
 export default { basic, networks };

@@ -112,7 +112,7 @@ const Overview = (props: any) => {
             json.address = currToken?.address;
           }
         }
-        const _price = tokenPriceLatest[json.symbol.toUpperCase()];
+        const _price = json?.symbol ? tokenPriceLatest?.[json?.symbol.toUpperCase()] : '';
         if (_price) {
           json.price = formatThousandsSeparator(_price.price, 5);
           json.changePercent = Big(_price.change_percent || 0);

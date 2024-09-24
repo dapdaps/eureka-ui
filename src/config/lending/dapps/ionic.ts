@@ -2,9 +2,11 @@ import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'Ionic',
+  icon: 'https://s3.amazonaws.com/dapdap.prod/images/ionic.png',
   data: 'bluebiu.near/widget/Lending.Data.Ionic',
   handler: 'bluebiu.near/widget/Lending.Handler.Ionic',
   // handlerClaim: 'bluebiu.near/widget/Linea.Lending.LayerBankHandlerClaim',
+  loaderName: 'Ionic'
 };
 
 const networks = {
@@ -22,7 +24,7 @@ const networks = {
         address: '0x71ef7EDa2Be775E5A7aa8afD02C45F059833e9d2', // cToken
         loanToValue: 74,
         COLLATERAL_FACTOR: 0.825,
-        underlyingToken: mode['weth'],
+        underlyingToken: mode['weth']
       },
       '0x49950319aBE7CE5c3A6C90698381b45989C99b46': {
         decimals: 18,
@@ -30,7 +32,7 @@ const networks = {
         address: '0x49950319aBE7CE5c3A6C90698381b45989C99b46', // cToken
         loanToValue: 63,
         COLLATERAL_FACTOR: 0.7,
-        underlyingToken: mode['wrseth'],
+        underlyingToken: mode['wrseth']
       },
       '0x59e710215d45F584f44c0FEe83DA6d43D762D857': {
         decimals: 18,
@@ -38,7 +40,7 @@ const networks = {
         address: '0x59e710215d45F584f44c0FEe83DA6d43D762D857', // cToken
         loanToValue: 63,
         COLLATERAL_FACTOR: 0.7,
-        underlyingToken: mode['ezeth'],
+        underlyingToken: mode['ezeth']
       },
       '0xA0D844742B4abbbc43d8931a6Edb00C56325aA18': {
         decimals: 18,
@@ -46,7 +48,7 @@ const networks = {
         address: '0xA0D844742B4abbbc43d8931a6Edb00C56325aA18', // cToken
         loanToValue: 63,
         COLLATERAL_FACTOR: 0.7,
-        underlyingToken: mode['we-eth.mode'],
+        underlyingToken: mode['we-eth.mode']
       },
       '0x94812F2eEa03A49869f95e1b5868C6f3206ee3D3': {
         decimals: 6,
@@ -54,7 +56,7 @@ const networks = {
         address: '0x94812F2eEa03A49869f95e1b5868C6f3206ee3D3', // cToken
         loanToValue: 80,
         COLLATERAL_FACTOR: 0.9,
-        underlyingToken: mode['usdt'],
+        underlyingToken: mode['usdt']
       },
       '0x2BE717340023C9e14C1Bb12cb3ecBcfd3c3fB038': {
         decimals: 6,
@@ -62,7 +64,7 @@ const networks = {
         address: '0x2BE717340023C9e14C1Bb12cb3ecBcfd3c3fB038', // cToken
         loanToValue: 80,
         COLLATERAL_FACTOR: 0.9,
-        underlyingToken: mode['usdc'],
+        underlyingToken: mode['usdc']
       },
       '0xd70254C3baD29504789714A7c69d60Ec1127375C': {
         decimals: 8,
@@ -70,7 +72,7 @@ const networks = {
         address: '0xd70254C3baD29504789714A7c69d60Ec1127375C', // cToken
         loanToValue: 74,
         COLLATERAL_FACTOR: 0.825,
-        underlyingToken: mode['wbtc'],
+        underlyingToken: mode['wbtc']
       },
       '0x959FA710CCBb22c7Ce1e59Da82A247e686629310': {
         decimals: 18,
@@ -78,11 +80,11 @@ const networks = {
         address: '0x959FA710CCBb22c7Ce1e59Da82A247e686629310', // cToken
         loanToValue: 63,
         COLLATERAL_FACTOR: 0.7,
-        underlyingToken: mode['stone'],
-      },
-    },
+        underlyingToken: mode['stone']
+      }
+    }
     // rewardToken: mode['lab'],
-  },
+  }
 };
 
 export default { basic, networks };

@@ -1,5 +1,5 @@
 import weth from '@/config/contract/weth';
-import { CHAIN_ID as scrollId,scroll } from '@/config/tokens/scroll';
+import { CHAIN_ID as scrollId, scroll } from '@/config/tokens/scroll';
 
 const basic = {
   name: 'Compound V3',
@@ -7,6 +7,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.CompoundV3',
   handler: 'bluebiu.near/widget/Lending.Handler.CompoundV3',
   type: 'compound v3',
+  loaderName: 'CompoundV3'
 };
 
 const networks = {
@@ -19,7 +20,7 @@ const networks = {
       ACTION_SUPPLY_NATIVE_TOKEN: '0x414354494f4e5f535550504c595f4e41544956455f544f4b454e000000000000',
       ACTION_TRANSFER_ASSET: '0x414354494f4e5f5452414e534645525f41535345540000000000000000000000',
       ACTION_WITHDRAW_ASSET: '0x414354494f4e5f57495448445241575f41535345540000000000000000000000',
-      ACTION_WITHDRAW_NATIVE_TOKEN: '0x414354494f4e5f57495448445241575f4e41544956455f544f4b454e00000000',
+      ACTION_WITHDRAW_NATIVE_TOKEN: '0x414354494f4e5f57495448445241575f4e41544956455f544f4b454e00000000'
     },
     comets: [
       {
@@ -31,18 +32,18 @@ const networks = {
             address: weth[scrollId],
             priceFeed: '0x6bF14CB0A831078629D993FDeBcB182b21A8774C',
             borrowCollateralFactor: 80,
-            liquidateCollateralFactor: 85,
+            liquidateCollateralFactor: 85
           },
           {
             ...scroll['wsteth'],
             priceFeed: '0x709cef91Dd5d162d7047b678334d1Be41fe92843',
             borrowCollateralFactor: 75,
-            liquidateCollateralFactor: 80,
-          },
-        ],
-      },
-    ],
-  },
+            liquidateCollateralFactor: 80
+          }
+        ]
+      }
+    ]
+  }
 };
 
 export default { basic, networks };

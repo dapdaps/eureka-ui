@@ -17,7 +17,6 @@ import {
 } from 'super-bridge-sdk';
 
 import BridgeX from '@/components/BridgeX/Index';
-import { ComponentWrapperPage } from '@/components/near-org/ComponentWrapperPage';
 import DappBack from '@/components/PageBack';
 import chainCofig from '@/config/chains';
 import useAccount from '@/hooks/useAccount';
@@ -34,34 +33,11 @@ import DappFallback from '@/views/Dapp/components/Fallback';
 
 const DappDetail = lazy(() => import('@/views/Dapp/components/DappDetail'));
 
-const arrow = (
-  <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M1 1L4 4L1 7" stroke="#979ABE" strokeLinecap="round" />
-  </svg>
-);
-
 const Container = styled.div`
   margin: 0 8%;
   color: #ffffff;
   position: relative;
   padding-top: 50px;
-`;
-const BreadCrumbs = styled.div`
-  color: #979abe;
-  font-size: 14px;
-  margin-bottom: 32px;
-  a {
-    text-decoration: none;
-    color: #979abe;
-    display: inline-block;
-    cursor: pointer;
-  }
-  svg {
-    margin: 0 8px;
-  }
-  span {
-    color: #ffffff;
-  }
 `;
 
 const chainListSort = [
@@ -91,8 +67,6 @@ const Bridge: NextPageWithLayout = () => {
   const [template, setTemplate] = useState('');
   const [dappDetail, setDappDetail] = useState<any>({});
   const [updateDetail, setUpdateDetail] = useState<boolean>(false);
-
-  // const { icon, name, color } = getBridgeMsg(tool)
 
   useEffect(() => {
     if (tool) {

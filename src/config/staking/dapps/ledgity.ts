@@ -1,8 +1,8 @@
 import { linea } from '@/config/tokens/linea';
 
 const basic = {
-  name: 'Ledgity Yield',
-  data: 'bluebiu.near/widget/Staking.Ledgity.Data',
+  name: 'Ledgity',
+  data: 'bluebiu.near/widget/Staking.Ledgity.Data'
 };
 
 const networks = {
@@ -12,13 +12,13 @@ const networks = {
     WithdrawalContract: '0x4AF215DbE27fc030F37f73109B85F421FAB45B7a', //LUSDC
     StakeTokens: [
       {
-        ...linea['usdc'],
-      },
+        ...linea['usdc']
+      }
     ],
     ExchangeToken: {
-      ...linea['lusdc'],
-    },
-  },
+      ...linea['lusdc']
+    }
+  }
 };
 
 export default { basic, networks };

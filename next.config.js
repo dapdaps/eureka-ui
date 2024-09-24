@@ -91,7 +91,9 @@ const nextConfig = {
     },
     {
       source: '/blast/bridge/:path*',
-      destination: 'https://waitlist-api.prod.blast.io/:path*'
+      destination: process.env.IS_DEV
+        ? 'https://app.dapdap.net/blast/bridge/:path*'
+        : 'https://waitlist-api.prod.blast.io/:path*'
     },
     {
       source: '/renzo/:path*',
@@ -136,6 +138,10 @@ const nextConfig = {
     {
       source: '/api/sma-steth-apr',
       destination: 'https://stake.lido.fi/api/sma-steth-apr'
+    },
+    {
+      source: '/api/meth.mantle.xyz/:path*',
+      destination: 'https://meth.mantle.xyz/api/:path*'
     }
   ],
   images: {

@@ -6,6 +6,7 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.Benqi',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Avalanche.Lending.BenqiClaimHandler',
+  loaderName: 'Benqi'
 };
 
 const networks = {
@@ -25,7 +26,7 @@ const networks = {
         decimals: 8,
         symbol: 'qiETH',
         address: '0x334AD834Cd4481BB02d09615E7c11a00579A7909',
-        underlyingToken: avalanche['eth'],
+        underlyingToken: avalanche['eth']
       },
       // fix#DAP-630
       // '0xc9e5999b8e75C3fEB117F6f73E664b9f3C8ca65C': {
@@ -38,13 +39,13 @@ const networks = {
         decimals: 8,
         symbol: 'qiLINK',
         address: '0x4e9f683A27a6BdAD3FC2764003759277e93696e6',
-        underlyingToken: avalanche['link.e'],
+        underlyingToken: avalanche['link.e']
       },
       '0x835866d37AFB8CB8F8334dCCdaf66cf01832Ff5D': {
         decimals: 8,
         symbol: 'qiDAI',
         address: '0x835866d37AFB8CB8F8334dCCdaf66cf01832Ff5D',
-        underlyingToken: avalanche['dai.e'],
+        underlyingToken: avalanche['dai.e']
       },
       // fix#DAP-630
       // '0xBEb5d47A3f720Ec0a390d04b4d41ED7d9688bC7F': {
@@ -57,28 +58,28 @@ const networks = {
         decimals: 8,
         symbol: 'qiUSDCn',
         address: '0xB715808a78F6041E46d61Cb123C9B4A27056AE9C',
-        underlyingToken: avalanche['usdc'],
+        underlyingToken: avalanche['usdc']
       },
       '0xd8fcDa6ec4Bdc547C0827B8804e89aCd817d56EF': {
         decimals: 8,
         symbol: 'qiUSDTn',
         address: '0xd8fcDa6ec4Bdc547C0827B8804e89aCd817d56EF',
-        underlyingToken: avalanche['usdt'],
+        underlyingToken: avalanche['usdt']
       },
       '0xF362feA9659cf036792c9cb02f8ff8198E21B4cB': {
         decimals: 8,
         symbol: 'qisAVAX',
         address: '0xF362feA9659cf036792c9cb02f8ff8198E21B4cB',
-        underlyingToken: avalanche['savax'],
+        underlyingToken: avalanche['savax']
       },
       '0x89a415b3D20098E6A6C8f7a59001C67BD3129821': {
         decimals: 8,
         symbol: 'qiBTC.b',
         address: '0x89a415b3D20098E6A6C8f7a59001C67BD3129821',
-        underlyingToken: avalanche['btc.b'],
-      },
-    },
-  },
+        underlyingToken: avalanche['btc.b']
+      }
+    }
+  }
 };
 
 export default { basic, networks };
