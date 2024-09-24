@@ -19,55 +19,55 @@ const networks = {
         decimals: 8,
         symbol: 'crUSDC',
         address: '0xd5794ea7b269dB3a0CCB396774Cc2D0936FFBD86',
-        underlyingToken: arbitrum['usdc.e'],
+        underlyingToken: arbitrum['usdc.e']
       },
       '0x5eb35dAF9EF97E9e8cc33C486Bad884a62CAe9Ce': {
         decimals: 8,
         symbol: 'crUSDT',
         address: '0x5eb35dAF9EF97E9e8cc33C486Bad884a62CAe9Ce',
-        underlyingToken: arbitrum['usdt'],
+        underlyingToken: arbitrum['usdt']
       },
       '0x5441090C0401EE256b09DEb35679Ad175d1a0c97': {
         decimals: 8,
         symbol: 'crETH',
         address: '0x5441090C0401EE256b09DEb35679Ad175d1a0c97',
-        underlyingToken: arbitrum['weth'],
-      },
-    },
+        underlyingToken: arbitrum['weth']
+      }
+    }
   },
   56: {
     unitrollerAddress: '0x589de0f0ccf905477646599bb3e5c622c84cc0ba',
-    oracleAddress: '0x6eeDcf47711373E758A0ab4E467a36Bc2151Cd6A',
+    oracleAddress: '0xab548FFf4Db8693c999e98551C756E6C2948C408',
     markets: {
       '0x1Ffe17B99b439bE0aFC831239dDECda2A790fF3A': {
         decimals: 8,
         symbol: 'crBNB',
         address: '0x1Ffe17B99b439bE0aFC831239dDECda2A790fF3A',
-        underlyingToken: bsc['bnb'],
+        underlyingToken: bsc['bnb']
       },
       '0x2Bc4eb013DDee29D37920938B96d353171289B7C': {
         decimals: 8,
         symbol: 'crBUSD',
         address: '0x2Bc4eb013DDee29D37920938B96d353171289B7C',
-        underlyingToken: bsc['busd'],
+        underlyingToken: bsc['busd']
       },
       '0xd83c88db3a6ca4a32fff1603b0f7ddce01f5f727': {
         decimals: 8,
         symbol: 'crUSDC',
         address: '0xd83c88db3a6ca4a32fff1603b0f7ddce01f5f727',
-        underlyingToken: bsc['usdc'],
+        underlyingToken: bsc['usdc']
       },
       '0xb31f5d117541825D6692c10e4357008EDF3E2BCD': {
         decimals: 8,
         symbol: 'crETH',
         address: '0xb31f5d117541825D6692c10e4357008EDF3E2BCD',
-        underlyingToken: bsc['eth'],
+        underlyingToken: bsc['eth']
       },
       '0xEF6d459FE81C3Ed53d292c936b2df5a8084975De': {
         decimals: 8,
         symbol: 'crUSDT',
         address: '0xEF6d459FE81C3Ed53d292c936b2df5a8084975De',
-        underlyingToken: bsc['usdt'],
+        underlyingToken: bsc['usdt']
       },
       // fix#DAP-628
       // '0x3942936782d788ce69155F776A51A5F1C9dd9B22': {
@@ -87,27 +87,27 @@ const networks = {
         decimals: 18,
         symbol: 'crBTCB',
         address: '0x11883Cdea6bAb720092791cc89affa54428Ce069',
-        underlyingToken: bsc['btcb'],
+        underlyingToken: bsc['btcb']
       },
       '0x426D6D53187be3288fe37f214e3F6901D8145b62': {
         decimals: 18,
         symbol: 'crCREAM',
         address: '0x426D6D53187be3288fe37f214e3F6901D8145b62',
-        underlyingToken: bsc['cream'],
+        underlyingToken: bsc['cream']
       },
       '0x9095e8d707E40982aFFce41C61c10895157A1B22': {
         decimals: 18,
         symbol: 'crDAI',
         address: '0x9095e8d707E40982aFFce41C61c10895157A1B22',
-        underlyingToken: bsc['dai'],
+        underlyingToken: bsc['dai']
       },
       '0xbf9b95b78bc42f6cf53ff2a0ce19d607cfe1ff82': {
         decimals: 18,
         symbol: 'crCAKE',
         address: '0xbf9b95b78bc42f6cf53ff2a0ce19d607cfe1ff82',
-        underlyingToken: bsc['cake'],
-      },
-    },
+        underlyingToken: bsc['cake']
+      }
+    }
   },
   137: {
     unitrollerAddress: '0x20CA53E2395FA571798623F1cFBD11Fe2C114c24',
@@ -117,88 +117,88 @@ const networks = {
         decimals: 8,
         symbol: 'crUSDT',
         address: '0xf976C9bc0E16B250E0B1523CffAa9E4c07Bc5C8a',
-        underlyingToken: polygon['usdt'],
+        underlyingToken: polygon['usdt']
       },
       '0x3FaE5e5722C51cdb5B0afD8c7082e8a6AF336Ee8': {
         decimals: 8,
         symbol: 'crMATIC',
         address: '0x3FaE5e5722C51cdb5B0afD8c7082e8a6AF336Ee8',
-        underlyingToken: polygon['wmatic'],
+        underlyingToken: polygon['wmatic']
       },
       '0x73CF8c5D14Aa0EbC89f18272A568319F5BAB6cBD': {
         decimals: 8,
         symbol: 'crUSDC',
         address: '0x73CF8c5D14Aa0EbC89f18272A568319F5BAB6cBD',
-        underlyingToken: polygon['usdc'],
+        underlyingToken: polygon['usdc']
       },
       '0x7ef18d0a9C3Fb1A716FF6c3ED0Edf52a2427F716': {
         decimals: 8,
         symbol: 'crWETH',
         address: '0x7ef18d0a9C3Fb1A716FF6c3ED0Edf52a2427F716',
-        underlyingToken: polygon['eth'],
+        underlyingToken: polygon['eth']
       },
       '0x4486835e0C567A320C0636d8F6e6e6679A46a271': {
         decimals: 8,
         symbol: 'crAAVE',
         address: '0x4486835e0C567A320C0636d8F6e6e6679A46a271',
-        underlyingToken: polygon['aave'],
+        underlyingToken: polygon['aave']
       },
       '0x20d5d319C2964ecb52e1B006a4C059b7f6d6ad0a': {
         decimals: 8,
         symbol: 'crLINK',
         address: '0x20d5d319C2964ecb52e1B006a4C059b7f6d6ad0a',
-        underlyingToken: polygon['link'],
+        underlyingToken: polygon['link']
       },
       '0x4eCEDdF62277eD78623f9A94995c680f8fd6C00e': {
         decimals: 8,
         symbol: 'crDAI',
         address: '0x4eCEDdF62277eD78623f9A94995c680f8fd6C00e',
-        underlyingToken: polygon['dai'],
+        underlyingToken: polygon['dai']
       },
       '0x5Dc3A30d8c5937f1529C3c93507C16d86A17072A': {
         decimals: 8,
         symbol: 'crWBTC',
         address: '0x5Dc3A30d8c5937f1529C3c93507C16d86A17072A',
-        underlyingToken: polygon['wbtc'],
+        underlyingToken: polygon['wbtc']
       },
       '0x468a7BF78f11Da82c90b17a93adb7B14999aF5AB': {
         decimals: 8,
         symbol: 'crSUSHI',
         address: '0x468a7BF78f11Da82c90b17a93adb7B14999aF5AB',
-        underlyingToken: polygon['sushi'],
+        underlyingToken: polygon['sushi']
       },
       '0xE82225bA6BeD28406912522F01C7102DD9f07e78': {
         decimals: 8,
         symbol: 'crCRV',
         address: '0xE82225bA6BeD28406912522F01C7102DD9f07e78',
-        underlyingToken: polygon['crv'],
+        underlyingToken: polygon['crv']
       },
       '0x2eE80614Ccbc5e28654324a66A396458Fa5cD7Cc': {
         decimals: 8,
         symbol: 'crQUICK',
         address: '0x2eE80614Ccbc5e28654324a66A396458Fa5cD7Cc',
-        underlyingToken: polygon['quick'],
+        underlyingToken: polygon['quick']
       },
       '0x9B21EB2E30D8320c3c1b8d8465284D78E58cB971': {
         decimals: 8,
         symbol: 'crFXS',
         address: '0x9B21EB2E30D8320c3c1b8d8465284D78E58cB971',
-        underlyingToken: polygon['fxs'],
+        underlyingToken: polygon['fxs']
       },
       '0xd4409B8D17d5d49a7ed9Ae734B0E8EdBa29b9FFA': {
         decimals: 8,
         symbol: 'crSNX',
         address: '0xd4409B8D17d5d49a7ed9Ae734B0E8EdBa29b9FFA',
-        underlyingToken: polygon['snx'],
+        underlyingToken: polygon['snx']
       },
       '0x7ea7174dD0CB4Ab84f42177F01e9a8a79475d381': {
         decimals: 8,
         symbol: 'crUNI',
         address: '0x7ea7174dD0CB4Ab84f42177F01e9a8a79475d381',
-        underlyingToken: polygon['uni'],
-      },
-    },
-  },
+        underlyingToken: polygon['uni']
+      }
+    }
+  }
 };
 
 export default { basic, networks };

@@ -91,7 +91,7 @@ const LendingDex = (props: DexProps) => {
         )}
         <StyledHeaderRight>
           {pools && pools.length > 0 && (
-            <LendingPools pools={pools} curPool={state.curPool} onSwitchPool={handlePoolChange} />
+            <LendingPools pools={pools} curPool={state.curPool || pools[0]?.key} onSwitchPool={handlePoolChange} />
           )}
           <LendingChains chains={CHAIN_LIST} curChain={curChain} onSwitchChain={onSwitchChain} from={from} />
         </StyledHeaderRight>
@@ -100,7 +100,7 @@ const LendingDex = (props: DexProps) => {
         type={type}
         chainIdNotSupport={!isChainSupported}
         tab={state.tab}
-        curPool={state.curPool}
+        curPool={state.curPool || pools[0]?.key}
         {...props}
         wethAddress={dexConfig.wethAddress}
         refreshKey={state.refreshKey}
