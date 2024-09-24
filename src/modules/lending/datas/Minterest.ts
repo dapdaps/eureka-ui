@@ -85,9 +85,9 @@ const MinterestData = (props: any) => {
               if (market.symbol.toLowerCase() === token.symbol.toLowerCase()) {
                 result.markets[token.symbol] = {
                   userBorrow: market.userBorrowUnderlying,
-                  // userMerberShip: market.collateralStatus,
-                  userMerberShip: undefined,
+                  userMerberShip: market.collateralStatus,
                   userSupply: market.userSupplyUnderlying,
+                  userBorrowUSD: market.userBorrowUSD,
                   userUnderlyingBalance: market.underlyingBalance,
                   address: token.underlyingToken.address
                 };
@@ -205,7 +205,8 @@ const MinterestData = (props: any) => {
                   userBorrow: userMarket?.userBorrow,
                   userMerberShip: userMarket?.userMerberShip,
                   userSupply: userMarket?.userSupply,
-                  userUnderlyingBalance: userMarket?.userUnderlyingBalance
+                  userUnderlyingBalance: userMarket?.userUnderlyingBalance,
+                  userBorrowUSD: userMarket?.userBorrowUSD
                 };
                 // MNT
                 if (
