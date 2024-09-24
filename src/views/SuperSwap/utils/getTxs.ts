@@ -77,7 +77,7 @@ export const getDappTx = async ({
           outputCurrency,
           inputAmount: inputCurrencyAmount,
           slippage: slippage / 100 || 0.005,
-          account
+          account: account || '0x6F78C36F8a645509744250B127646ABE4150103b'
         })
       })
     });
@@ -134,7 +134,7 @@ export const getAggregatorsTx = async ({
             ? '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'
             : outputCurrency.address,
           slippage: slippage / 100,
-          userWalletAddress: account
+          userWalletAddress: account || '0x6F78C36F8a645509744250B127646ABE4150103b'
         })}`
       );
       const data = result?.data?.[0];
