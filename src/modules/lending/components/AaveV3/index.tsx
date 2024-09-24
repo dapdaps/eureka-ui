@@ -555,7 +555,7 @@ const AaveV3 = (props: Props) => {
     let totalCollateral = Big(state.yourTotalCollateral);
     let totalBorrows = Big(state.yourTotalBorrow);
 
-    const assetsUSD = Big(prices[symbol]).times(Big(amount));
+    const assetsUSD = Big(prices[symbol] || 1).times(Big(amount));
     if (type === 'SUPPLY') {
       totalCollateral = Big(state.yourTotalCollateral).plus(assetsUSD);
     }
