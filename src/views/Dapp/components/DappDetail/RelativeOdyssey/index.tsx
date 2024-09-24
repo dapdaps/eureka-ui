@@ -53,7 +53,7 @@ const RelativeOdyssey = (props: Props) => {
           description: 'Explore, Trade, Earn - Go for Gold!',
           start_time: 1717948800000,
           end_time: 2719244800000,
-          status: 'ongoing',
+          status: 'ended',
           banner: '/images/odyssey/rango-banner-round.png',
           link: '',
           category: 'spinblast',

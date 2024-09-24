@@ -47,7 +47,7 @@ export const StyledTitleSubDesc = styled.div`
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
-  line-height: 100%;
+  line-height: 150%;
   margin-top: 14px;
   text-align: center;
 `;

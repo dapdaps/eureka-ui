@@ -475,7 +475,10 @@ const KeomProtocolData = (props: any) => {
             const mod = i % (account ? 2 : 1);
             switch (mod) {
               case 0:
-                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(res[i] ? res[i][1]._hex || 0 : 0, 16);
+                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(res[i] ? res[i][2]._hex || 0 : 0, 16);
+                _loanToValue[oTokens[index].address] = Big(_loanToValue[oTokens[index].address] || 0)
+                  .times(0.99)
+                  .toFixed(1);
                 break;
               case 1:
                 _userMerberShip[oTokens[index].address] = res[i] ? res[i][0] || false : false;

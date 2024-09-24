@@ -32,11 +32,15 @@ const Rubic = () => {
       <StyledSectionTitle id="campaignRubicAndHoldstationGetTicketsNow">Get your tickets now!</StyledSectionTitle>
       <StyledTitle>「Rubic Super Exchange」</StyledTitle>
       <StyledTitleDesc>
-        1 ticket for asset bridging at Rubic or Super Bridge using Rubic paths <br />
-        Requires at least $25 per bridge
+        Asset bridging at Rubic or Super Bridge using Rubic paths <br />
+        Requires at least $25 per transaction to earn 1 ticket.
       </StyledTitleDesc>
-      <StyledTitleSub>1 transaction = 1 scratch ticket</StyledTitleSub>
-      <StyledTitleSubDesc>(at least $25 per transaction)</StyledTitleSubDesc>
+      <StyledTitleSub>1 transaction= (1 + n) scratch tickets</StyledTitleSub>
+      <StyledTitleSubDesc>
+        For every $25 increment in the transaction amount, you will earn an additional ticket.
+        <br />
+        Please note: You can earn a maximum of 20 tickets per transaction
+      </StyledTitleSubDesc>
       <StyledContent>
         <StyledFlex justifyContent="space-between" alignItems="center" gap="24px">
           {loading ? (

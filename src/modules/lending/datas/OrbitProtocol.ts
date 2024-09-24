@@ -168,7 +168,7 @@ const OrbitProtocolData = (props: any) => {
   const { formatUnits } = ethers.utils;
 
   useEffect(() => {
-    if (!multicallAddress || !update || !account) return;
+    if (!multicallAddress || !update || !account || !curPool) return;
     let markets: any;
     let spaceAddress: any;
     if (curPool === 'ORBIT') {

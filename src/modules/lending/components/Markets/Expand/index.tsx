@@ -236,8 +236,12 @@ const LendingMarketExpand = (props: Props) => {
                   onApprovedSuccess={() => {
                     if (!state.gas) state.getTrade?.();
                   }}
-                  onSuccess={() => {
+                  onSuccess={async () => {
                     onSuccess?.();
+                    if (state.tab === 'Borrow' && typeof data.localConfig?.onTabChangeBefore === 'function') {
+                      const beforeRes = await data.localConfig?.onTabChangeBefore('Borrow', data, { account });
+                      updateState(beforeRes);
+                    }
                     updateState({ amount: '' });
                   }}
                 />

@@ -477,8 +477,13 @@ export default function BridgeX({
 
             if (maxRoute) {
               setDuration(maxRoute.duration);
-              setGasCostUSD(maxRoute.gasType === 1 ? prices['ETH'] * maxRoute.gas : maxRoute.gas);
-              setFeeCostUSD(maxRoute.feeType === 1 ? prices['ETH'] * maxRoute.fee : maxRoute.fee);
+
+              setGasCostUSD(
+                maxRoute.gasType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.gas : maxRoute.gas
+              );
+              setFeeCostUSD(
+                maxRoute.feeType === 1 ? prices[chainFrom.nativeCurrency.symbol] * maxRoute.fee : maxRoute.fee
+              );
 
               setReceiveAmount(
                 getFullNum(
