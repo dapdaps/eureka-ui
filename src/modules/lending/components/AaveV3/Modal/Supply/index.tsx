@@ -86,7 +86,7 @@ const Max = styled.span`
   cursor: pointer;
 `;
 
-const MIN_ETH_GAS_FEE = 0.00001;
+const MIN_ETH_GAS_FEE = 0.001;
 const ROUND_DOWN = 0;
 
 const SupplyModal = (props: any) => {
@@ -232,7 +232,8 @@ const SupplyModal = (props: any) => {
           provider.getSigner()
         );
         return wrappedTokenGateway.depositETH(config.aavePoolV3Address, address, 0, {
-          value: amount
+          value: amount,
+          gasLimit: 90000000
         });
       })
       .then((tx: any) => {
@@ -256,11 +257,13 @@ const SupplyModal = (props: any) => {
           })
           .catch((err: any) => {
             console.log('tx.wait on error', err);
-          })
-          .finally(() => updateState({ loading: false }));
+          });
       })
       .catch((err: any) => {
-        updateState({ loading: false });
+        updateState({
+          loading: false
+        });
+        console.log(err, '<==Supply===depositETH');
       });
   }
 
