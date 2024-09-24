@@ -245,28 +245,47 @@ const LendingDialogButton = (props: Props) => {
       const TokenContract = new ethers.Contract(tokenAddr, ERC20_ABI, provider.getSigner());
       TokenContract.approve(spender, ethers.utils.parseUnits(amount, data.underlyingToken.decimals))
         .then((tx: any) => {
+          const handleSucceed = (res: any) => {
+            const { status, transactionHash } = res;
+            toast?.dismiss(toastId);
+            if (status !== 1) throw new Error('');
+            updateState({
+              isApproved: true,
+              approving: false
+            });
+            toast?.success({
+              title: 'Approve Successfully!',
+              // text: `Approve ${Big(amount).toFixed(2)} ${tokenSymbol}`,
+              tx: transactionHash,
+              chainId
+            });
+            onApprovedSuccess();
+          };
           tx.wait()
             .then((res: any) => {
-              const { status, transactionHash } = res;
-              toast?.dismiss(toastId);
-              if (status !== 1) throw new Error('');
-              updateState({
-                isApproved: true,
-                approving: false
-              });
-              toast?.success({
-                title: 'Approve Successfully!',
-                // text: `Approve ${Big(amount).toFixed(2)} ${tokenSymbol}`,
-                tx: transactionHash,
-                chainId
-              });
-              onApprovedSuccess();
+              handleSucceed(res);
             })
             .catch((err: any) => {
-              updateState({
-                isApproved: false,
-                approving: false
-              });
+              console.log('approve tx.wait failure: %o', err);
+              const timer = setTimeout(async () => {
+                clearTimeout(timer);
+                // try again
+                try {
+                  const res: any = await tx.wait();
+                  handleSucceed(res);
+                } catch (_err: any) {
+                  updateState({
+                    isApproved: true,
+                    approving: false
+                  });
+                  toast?.dismiss(toastId);
+                  toast?.success({
+                    title: 'Approve Successfully!',
+                    chainId
+                  });
+                  onApprovedSuccess();
+                }
+              }, 10000);
             });
         })
         .catch((err: any) => {
@@ -361,7 +380,7 @@ const LendingDialogButton = (props: Props) => {
                         chainId
                       });
                     }
-                  }, 5000);
+                  }, 10000);
                   // toast?.fail({
                   //   title: `${tokenSymbol} ${actionText.toLowerCase()} request failed!`,
                   //   chainId,
