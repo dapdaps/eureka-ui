@@ -105,7 +105,8 @@ export default function MetavaultConnector(props: any) {
     dataIndex: -1,
     categoryIndex: 0,
     chainIndex: 0,
-    token: ''
+    token: '',
+    updater: 0
   });
 
   const {
@@ -203,7 +204,7 @@ export default function MetavaultConnector(props: any) {
         filterList
       });
     }
-  }, [state.dataList, state.token, state.categoryIndex]);
+  }, [state.dataList, state.token, state.categoryIndex, state?.updater]);
   return !sender || (!isChainSupported && !isDapps) ? (
     <ChainWarningBox chain={curChain} onSwitchChain={onSwitchChain} theme={dexConfig.theme?.button} />
   ) : state.loading ? (
@@ -224,7 +225,8 @@ export default function MetavaultConnector(props: any) {
             onLoad: (data) => {
               updateState({
                 dataList: data.dataList,
-                loading: false
+                loading: false,
+                updater: new Date().getTime()
               });
             }
           }}

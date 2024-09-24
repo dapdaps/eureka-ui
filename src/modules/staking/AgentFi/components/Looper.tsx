@@ -195,6 +195,7 @@ export default memo(function Looper(props) {
     rootAgent,
     onSuccess,
     addAction,
+    provider,
     toast,
     chainId,
     handleApprove
@@ -213,7 +214,7 @@ export default memo(function Looper(props) {
     stakeMode: currentStrategy.meta.modeList[0]
   });
 
-  const { stakeAmount, stakeTokens, stakeToken, stakeTokenBalance, pending, stakeMode, provider } = state;
+  const { stakeAmount, stakeTokens, stakeToken, stakeTokenBalance, pending, stakeMode } = state;
 
   const modeList = currentStrategy.meta.modeList.map((it) => {
     const obj = {

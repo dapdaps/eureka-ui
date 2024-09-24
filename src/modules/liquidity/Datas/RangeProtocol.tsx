@@ -244,6 +244,13 @@ export default function Data(props: any) {
       for (let i = 0; i < result.length; i++) {
         const { balance0, balance1 } = result[i].data.vault;
         const data = dataList[i];
+
+        console.log('===data.token0', data.token0);
+        console.log('===balance0', balance0);
+        console.log('===prices[data.token0]', prices[data.token0]);
+        console.log('===data.token1', data.token1);
+        console.log('===balance0', balance1);
+        console.log('===prices[data.token1]', prices[data.token1]);
         dataList[i].tvlUSD = Big(ethers.utils.formatUnits(balance0, data.decimals0))
           .times(prices[data.token0] ?? 0)
           .plus(Big(ethers.utils.formatUnits(balance1, data.decimals1)).times(prices[data.token1] ?? 0))

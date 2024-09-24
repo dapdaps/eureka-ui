@@ -116,7 +116,8 @@ export default function ArrakisConnector(props: any) {
     dataIndex: -1,
     categoryIndex: 0,
     chainIndex: 0,
-    token: ''
+    token: '',
+    updater: 0
   });
   const {
     from,
@@ -220,7 +221,7 @@ export default function ArrakisConnector(props: any) {
         filterList
       });
     }
-  }, [state.dataList, state.token, state.categoryIndex]);
+  }, [state.dataList, state.token, state.categoryIndex, state?.updater]);
 
   useEffect(() => {
     const index = CHAIN_LIST ? CHAIN_LIST?.findIndex((chain) => chain.id === curChain.id) : -1;
@@ -259,7 +260,8 @@ export default function ArrakisConnector(props: any) {
             onLoad: (data: any) => {
               updateState({
                 dataList: data.dataList,
-                loading: false
+                loading: false,
+                updater: new Date().getTime()
               });
             }
           }}

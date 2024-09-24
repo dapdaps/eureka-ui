@@ -239,7 +239,7 @@ export default function Data(props: any) {
         const [baseAprResult] = result;
         for (let i = 0; i < dataList.length; i++) {
           const data = dataList[i];
-          const pool = pools[ethers.utils.getAddress(data.poolAddress)];
+          const pool = pools ? pools[ethers.utils.getAddress(data?.poolAddress)] : null;
           const vaultAddress = addresses[data.id];
 
           console.log('====pool', pool);
