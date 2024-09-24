@@ -20,6 +20,7 @@ const networks = {
     lendingPoolAddress: '0xF4B1486DD74D07706052A33d31d7c0AAFD0659E1',
     wethGateway: '0xBb5cA40b2F7aF3B1ff5dbce0E9cC78F8BFa817CE',
     incentiveController: '0xebC85d44cefb1293707b11f707bd3CEc34B4D5fA',
+    wethAddress: arbitrum['weth'].address,
     markets: {
       [arbitrum['dai'].address]: {
         decimals: 18,
@@ -88,6 +89,7 @@ const networks = {
     lendingPoolAddress: '0xd50Cf00b6e600Dd036Ba8eF475677d816d6c4281',
     wethGateway: '0x8a226b70dcEB9656Eb75545424400128fCEF9d9e',
     incentiveController: '0x7C16aBb090d3FB266E9d17F60174B632f4229933',
+    wethAddress: bsc['wbnb'].address,
     markets: {
       [bsc['btcb'].address]: {
         decimals: 18,
