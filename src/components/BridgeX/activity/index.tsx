@@ -18,5 +18,5 @@ const rango = dynamic(() => import('./rango'), {
 });
 
 export default {
-  // rango
+  rango
 } as { [v: string]: any };
