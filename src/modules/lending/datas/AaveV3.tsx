@@ -76,7 +76,8 @@ const AaveV3Data = (props: any) => {
     return balanceProvider.batchBalanceOf([userAddress], tokenAddresses);
   }
 
-  function getLiquidity() {
+  function getLiquidity(userData?: any) {
+    const { availableBorrowsUSD } = userData || state;
     const aTokenAddresss = markets?.map((item: any) => item.aTokenAddress);
     const variableDebtTokenAddresss = markets?.map((item: any) => item.variableDebtTokenAddress);
 
@@ -126,14 +127,13 @@ const AaveV3Data = (props: any) => {
             _assetsToSupply[i].availableLiquidityUSD = _availableLiquidityUSD;
 
             const _availableBorrowsUSD = bigMin(
-              state.availableBorrowsUSD,
+              availableBorrowsUSD,
               ethers.utils.formatUnits(liquidityAmount, _assetsToSupply[i].decimals)
             )
               .times(ACTUAL_BORROW_AMOUNT_RATE)
               .toFixed();
 
             const _availableBorrows = calcAvailableBorrows(_availableBorrowsUSD, _assetsToSupply[i].tokenPrice);
-
             _assetsToSupply[i].availableBorrowsUSD = _availableBorrowsUSD;
             _assetsToSupply[i].availableBorrows = _availableBorrows;
           }
@@ -610,6 +610,10 @@ const AaveV3Data = (props: any) => {
           const hf = Big(totalDebtBase).eq(0)
             ? formatHealthFactor('∞')
             : formatHealthFactor(ethers.utils.formatUnits(healthFactor));
+          console.log(
+            ethers.utils.formatUnits(availableBorrowsBase, 8),
+            'ethers.utils.formatUnits(availableBorrowsBase, 8)'
+          );
 
           onLoad({
             threshold,
@@ -618,9 +622,17 @@ const AaveV3Data = (props: any) => {
             healthFactor: hf,
             availableBorrowsUSD: ethers.utils.formatUnits(availableBorrowsBase, 8)
           });
+
+          return {
+            threshold,
+            currentLiquidationThreshold,
+            BorrowPowerUsed,
+            healthFactor: hf,
+            availableBorrowsUSD: ethers.utils.formatUnits(availableBorrowsBase, 8)
+          };
         })
-        .then(() => {
-          getLiquidity();
+        .then((userData: any) => {
+          getLiquidity(userData);
         })
         .catch((err: any) => {
           console.log('getUserAccountData_error', err);

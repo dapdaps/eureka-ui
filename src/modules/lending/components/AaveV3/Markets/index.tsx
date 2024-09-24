@@ -142,7 +142,6 @@ const Markets = (props: any) => {
 
   let headers;
   let tableData;
-
   if (['ZeroLend', 'AAVE V3', 'Seamless Protocol', 'C14'].includes(dexConfig.name)) {
     headers = [
       'Asset',
