@@ -127,7 +127,7 @@ export default function BosDapp({
         return <Spinner />;
       }
     });
-    return <Infrared {...componentProps} />;
+    return <DynamicComponent {...componentProps} />;
   }
 
   return <ComponentWrapperPage componentProps={componentProps} src={network?.dapp_src} />;
