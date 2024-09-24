@@ -258,6 +258,8 @@ const DISTRIBUTION_ABI = [
   }
 ];
 
+const timers: any = [];
+
 const LayerBankData = (props: any) => {
   const {
     multicallAddress,
@@ -437,9 +439,10 @@ const LayerBankData = (props: any) => {
         })
         .catch((err: any) => {
           console.log('error-getUnitrollerData', err);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             getUnitrollerData();
           }, 1000);
+          timers.push(timer);
         });
     };
     const getUnderlyPrice = () => {
@@ -498,9 +501,10 @@ const LayerBankData = (props: any) => {
         })
         .catch((err: any) => {
           console.log('error-getOTokenLiquidity', err);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             getOTokenLiquidity();
           }, 500);
+          timers.push(timer);
         });
     };
     const getWalletBalance = () => {
@@ -548,9 +552,10 @@ const LayerBankData = (props: any) => {
         })
         .catch((err: any) => {
           console.log(err);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             getWalletBalance();
           }, 500);
+          timers.push(timer);
         });
     };
     const getCTokenData = (oToken: any) => {
@@ -615,14 +620,18 @@ const LayerBankData = (props: any) => {
             {
               address: res[7][0],
               name: 'getBorrowRate',
-              params: [res[4][0] || '0', res[2][0] || '0', res[5] ? res[5][0] || '0' : '0']
+              params: [
+                res[4] ? res[4][0] || '0' : '0',
+                res[2] ? res[2][0] || '0' : '0',
+                res[5] ? res[5][0] || '0' : '0'
+              ]
             },
             {
               address: res[7][0],
               name: 'getSupplyRate',
               params: [
-                res[4][0] || '0',
-                res[2][0] || '0',
+                res[4] ? res[4][0] || '0' : '0',
+                res[2] ? res[2][0] || '0' : '0',
                 res[5] ? res[5][0] || '0' : '0',
                 res[6] ? res[6][0] || '0' : '0'
               ]
@@ -657,9 +666,10 @@ const LayerBankData = (props: any) => {
         })
         .catch((err: any) => {
           console.log('error-getCTokenData', err);
-          setTimeout(() => {
+          const timer = setTimeout(() => {
             getCTokenData(oToken);
           }, 1000);
+          timers.push(timer);
         });
     };
     const getCTokensData = () => {
@@ -726,6 +736,12 @@ const LayerBankData = (props: any) => {
     getUnitrollerData();
     getWalletBalance();
     getCTokensData();
+
+    return () => {
+      timers.forEach((timer: any) => {
+        clearTimeout(timer);
+      });
+    };
   }, [update, account, chainId, provider]);
 
   return null;

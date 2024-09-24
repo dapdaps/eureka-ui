@@ -4,9 +4,9 @@ const ZeroLandClaim = (props: any) => {
   const { account, loading, dapp, provider, markets, onSuccess, onError } = props;
 
   if (!loading || !dapp.config.rewardAddress) return '';
-  console.log(dapp, 'dapp');
 
   const arr = markets
+    .filter((item: any) => item.variableDebtTokenAddress)
     .map((item: any) => [
       item.aTokenAddress,
       // item.stableDebtTokenAddress,

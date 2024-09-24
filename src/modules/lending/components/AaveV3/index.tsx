@@ -763,7 +763,7 @@ const AaveV3 = (props: Props) => {
       if (msg) {
         updateState({ alertModalText: msg });
       }
-    }, 500);
+    }, 2000);
   };
   // - onActionSuccess -- end
   // - calcHealthFactor -- start

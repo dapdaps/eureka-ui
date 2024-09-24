@@ -501,16 +501,6 @@ const networks = {
         decimals0: 18,
         decimals1: 6,
         poolAddress: '0xc44ad482f24fd750caeba387d2726d8653f8c4bb'
-      },
-      {
-        id: 'P stMATIC-MATIC-0',
-        strategy: 'Dynamic',
-        strategy2: 'Pegged Price',
-        token0: 'stMATIC',
-        token1: 'MATIC',
-        decimals0: 18,
-        decimals1: 18,
-        poolAddress: '0x8f2a1450c040b3c19efe9676165d8f30d8280019'
       }
     ],
     addresses: {
@@ -524,8 +514,7 @@ const networks = {
       'N WETH-WBTC-0': '0x1cc4ee0cb063e9db36e51f5d67218ff1f8dbfa0f',
       'N WETH-MATIC-0': '0x2f39293c9ed046822c014143fb18d5ae0479be93',
       'S USDT-USDC-0': '0x145d55ae4848f9782efcac785a655e3e5dce1bcd',
-      'N WETH-USDC-0': '0x04c6b11e1ffe1f1032bd62adb343c9d07767489c',
-      'P stMATIC-MATIC-0': '0x9616052273a598bc04bd1ad7f7a753157c24f77e'
+      'N WETH-USDC-0': '0x04c6b11e1ffe1f1032bd62adb343c9d07767489c'
     },
     proxyAddress: '0x8480199e5d711399abb4d51bda329e064c89ad77'
   },

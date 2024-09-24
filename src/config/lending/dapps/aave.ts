@@ -266,9 +266,9 @@ const networks = {
     config: {
       ...baseConfig,
       chainName: 'Gnosis',
-      nativeCurrency: metis['eth'],
-      nativeWrapCurrency: metis['weth'],
-      rpcUrl: 'https://metis-pokt.nodies.app',
+      nativeCurrency: gnosis['xdai'],
+      nativeWrapCurrency: gnosis['weth'],
+      rpcUrl: 'https://gnosis.drpc.org',
       aavePoolV3Address: '0xb50201558B00496A145fE76f7424749556E326D8',
       PoolDataProvider: '0x501B4c19dd9C2e06E94dA7b6D5Ed4ddA013EC741',
       wrappedTokenGatewayV3Address: '0xfE76366A986B72c3f2923e05E6ba07b7de5401e4',
@@ -276,6 +276,26 @@ const networks = {
       incentivesProxy: '0xaD4F91D26254B6B0C6346b390dDA2991FDE2F20d' //CLAIM
     },
     rawMarkets: [
+      {
+        id: '0',
+        underlyingAsset: gnosis['wxdai'].address,
+        icon: gnosis['xdai'].icon,
+        decimals: gnosis['xdai'].decimals,
+        symbol: gnosis['xdai'].symbol,
+        name: gnosis['xdai'].name,
+        supplyAPY: '',
+        usageAsCollateralEnabled: true,
+        borrowingEnabled: true,
+        aTokenAddress: '0xd0Dd6cEF72143E22cCED4867eb0d5F2328715533',
+        variableDebtTokenAddress: '0x281963D7471eCdC3A2Bd4503e24e89691cfe420D',
+        isIsolated: false,
+        availableLiquidity: 0,
+        availableLiquidityUSD: '',
+        variableBorrowAPY: '',
+        supportPermit: false,
+        LTV: 0,
+        supportBorrow: true
+      },
       {
         id: '1',
         underlyingAsset: gnosis['wsteth'].address,
@@ -293,7 +313,8 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0
+        LTV: 0,
+        supportBorrow: true
       },
       {
         id: '2',
@@ -312,7 +333,8 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0
+        LTV: 0,
+        supportBorrow: true
       },
       {
         id: '3',
@@ -332,7 +354,8 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        isStableForIsolated: true
+        isStableForIsolated: true,
+        supportBorrow: true
       },
       {
         id: '4',
@@ -352,7 +375,8 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        isStableForIsolated: true
+        isStableForIsolated: true,
+        supportBorrow: true
       },
       {
         id: '5',
@@ -372,7 +396,8 @@ const networks = {
         variableBorrowAPY: '',
         supportPermit: false,
         LTV: 0,
-        isStableForIsolated: true
+        isStableForIsolated: true,
+        supportBorrow: true
       },
       {
         id: '6',
@@ -391,7 +416,8 @@ const networks = {
         availableLiquidityUSD: '',
         variableBorrowAPY: '',
         supportPermit: false,
-        LTV: 0
+        LTV: 0,
+        supportBorrow: true
       }
     ],
     CONTRACT_ABI

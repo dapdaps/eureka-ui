@@ -287,20 +287,20 @@ export default function GammaData(props: any) {
     }
     if ([137, 1101, 3776].includes(chain_id)) {
       handleGetFeeApr((feeAprData) => {
+        console.log('=feeAprData', feeAprData);
         asyncFetch('https://api.angle.money/v2/merkl?chainIds[]=' + chain_id).then((res) => {
           const { pools } = res[chain_id];
           dataList = dataList.map((data) => {
             const pool = pools[ethers.utils.getAddress(data.poolAddress)];
+            const vaultAddress = addresses[data.id];
             if (pool && Object.keys(pool.aprs).length > 0) {
               Object.keys(pool.aprs).forEach((key) => {
                 if (key.indexOf(ethers.utils.getAddress(data.vaultAddress)) > -1) {
-                  const vaultAddress = addresses[data.id];
-                  console.log('feeAprData[vaultAddress]', feeAprData[vaultAddress]);
                   data.totalApr = Big(feeAprData[vaultAddress].feeApr).times(100).plus(pool.aprs[key]).toFixed(2) + '%';
                 }
               });
             } else {
-              data.totalApr = formatPercent(data?.returns?.weekly?.feeApr ?? 0);
+              data.totalApr = formatPercent(feeAprData[vaultAddress].feeApr ?? 0);
             }
             return data;
           });

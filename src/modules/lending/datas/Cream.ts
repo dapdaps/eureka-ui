@@ -139,7 +139,8 @@ const CreatData = (props: any) => {
     multicall,
     markets,
     chainId,
-    provider
+    provider,
+    prices
   } = props;
 
   useEffect(() => {
@@ -293,6 +294,10 @@ const CreatData = (props: any) => {
               res[i][0]._hex || 0,
               36 - markets[oTokens[i]].underlyingToken.decimals
             );
+            if (chainId === 56) {
+              const bnbPrice = prices['BNB'];
+              _underlyPrice[oTokens[i]] = Big(bnbPrice).times(_underlyPrice[oTokens[i]]).toString();
+            }
           }
           count++;
           formatedData('getUnderlyPrice');
