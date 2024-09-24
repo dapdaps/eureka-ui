@@ -3,7 +3,6 @@ import { base } from '@/config/tokens/base';
 import { basic as aerodromeBasic, networks as aerodromeNetworks } from '../dapps/aerodrome';
 import { basic as balancerBasic, networks as balancerNetworks } from '../dapps/balancer';
 import { basic as baseSwapBasic, networks as baseSwapNetworks } from '../dapps/base-swap';
-import { basic as horizonDexBasic, networks as horizonDexNetworks } from '../dapps/horizon-dex';
 import { basic as rocketSwapBasic, networks as rocketSwapNetworks } from '../dapps/rocket-swap';
 import { basic as sharkBasic, networks as sharkNetworks } from '../dapps/shark-swap';
 import { basic as sushiBasic, networks as sushiNetworks } from '../dapps/sushi-swap';
@@ -18,43 +17,39 @@ export default {
   dexs: {
     Aerodrome: {
       ...aerodromeBasic,
-      ...aerodromeNetworks[CHAIN_ID],
+      ...aerodromeNetworks[CHAIN_ID]
     },
     SushiSwap: {
       ...sushiBasic,
-      ...sushiNetworks[CHAIN_ID],
+      ...sushiNetworks[CHAIN_ID]
     },
     BaseSwap: {
       ...baseSwapBasic,
-      ...baseSwapNetworks[CHAIN_ID],
+      ...baseSwapNetworks[CHAIN_ID]
     },
     Balancer: {
       ...balancerBasic,
-      ...balancerNetworks[CHAIN_ID],
+      ...balancerNetworks[CHAIN_ID]
     },
     SwapBased: {
       ...swapBasedBasic,
-      ...swapBasedNetworks[CHAIN_ID],
+      ...swapBasedNetworks[CHAIN_ID]
     },
     'Velocimeter V2': {
       ...velocimeterV2Basic,
-      ...velocimeterV2Networks[CHAIN_ID],
+      ...velocimeterV2Networks[CHAIN_ID]
     },
     RocketSwap: {
       ...rocketSwapBasic,
-      ...rocketSwapNetworks[CHAIN_ID],
+      ...rocketSwapNetworks[CHAIN_ID]
     },
     Synthswap: {
       ...synthSwapBasic,
-      ...synthSwapNetworks[CHAIN_ID],
+      ...synthSwapNetworks[CHAIN_ID]
     },
     SharkSwap: {
       ...sharkBasic,
-      ...sharkNetworks[CHAIN_ID],
-    },
-    HorizonDEX: {
-      ...horizonDexBasic,
-      ...horizonDexNetworks[CHAIN_ID],
-    },
-  },
+      ...sharkNetworks[CHAIN_ID]
+    }
+  }
 };

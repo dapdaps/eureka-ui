@@ -11,7 +11,22 @@ const networks = {
       input: linea['eth'],
       output: linea['usdt']
     },
-    tokens: [linea['usdc'], linea['eth'], linea['weth'], linea['usdt'], linea['mendi'], linea['croak']]
+    tokens: [
+      linea['usdc'],
+      linea['eth'],
+      linea['weth'],
+      linea['usdt'],
+      linea['mendi'],
+      linea['weeth'],
+      linea['wsteth'],
+      linea['ezeth'],
+      linea['wbtc'],
+      linea['foxy'],
+      linea['lynx'],
+      linea['mai'],
+      linea['stone'],
+      linea['croak']
+    ]
   }
 };
 

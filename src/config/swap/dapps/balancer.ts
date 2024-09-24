@@ -5,13 +5,13 @@ import { polygonZkevm } from '@/config/tokens/polygonZkevm';
 const basic = {
   name: 'Balancer',
   logo: '/images/apps/balancer.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   1101: {
     defaultCurrencies: {
       input: polygonZkevm['weth'],
-      output: polygonZkevm['reth'],
+      output: polygonZkevm['reth']
     },
     tokens: [
       polygonZkevm['weth'],
@@ -24,21 +24,20 @@ const networks = {
       polygonZkevm['rseth'],
       polygonZkevm['usdt'],
       polygonZkevm['bal'],
-      polygonZkevm['ankreth'],
       polygonZkevm['matic'],
-
       polygonZkevm['eth'],
       polygonZkevm['usdc'],
       polygonZkevm['wbtc'],
-      polygonZkevm['dai'],
-    ],
+      polygonZkevm['dai']
+    ]
   },
   8453: {
     defaultCurrencies: {
       input: base['weth'],
-      output: base['reth'],
+      output: base['reth']
     },
     tokens: [
+      base['eth'],
       base['weth'],
       base['reth'],
       base['aura'],
@@ -48,18 +47,17 @@ const networks = {
       base['cbeth'],
       base['axlbal'],
       base['bal'],
-      base['tbtc'],
-      base['tag'],
       base['usdbc'],
-
-      base['eth'],
       base['dai'],
-    ],
+      base['gold'],
+      base['kabosu'],
+      base['dog']
+    ]
   },
   100: {
     defaultCurrencies: {
       input: gnosis['wsteth'],
-      output: gnosis['gno'],
+      output: gnosis['gno']
     },
     tokens: [
       gnosis['wsteth'],
@@ -73,14 +71,14 @@ const networks = {
       gnosis['OLAS'],
       gnosis['wxdai'],
       gnosis['COW'],
-
       gnosis['xdai'],
       gnosis['BAL'],
       gnosis['usdc'],
       gnosis['usdt'],
       gnosis['dai'],
-    ],
-  },
+      gnosis['wsteth']
+    ]
+  }
 };
 
 export { basic, networks };

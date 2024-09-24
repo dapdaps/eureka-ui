@@ -11,8 +11,6 @@ import { balanceFormated } from '@/utils/balance';
 
 import { StyledBestPrice } from '../styles';
 
-type PriceImpactLevel = 'low' | 'medium' | 'high';
-
 const Wrapper = styled.div`
   .trade-display {
     cursor: pointer;
@@ -63,7 +61,7 @@ const Value = styled.span`
 export const PriceImpactTypeColorMap: Record<number, string> = {
   0: '#33b65f',
   1: '#F88C39',
-  2: '#E956A6',
+  2: '#E956A6'
 };
 
 const WarningValue = styled(Value)<{ color: number }>`
@@ -80,19 +78,7 @@ const StyledIconAlertTriangle = styled(IconAlertTriangle)<{ impact: number }>`
   color: ${({ impact }) => PriceImpactTypeColorMap[impact]};
 `;
 
-const StyleOptionChart = styled.div`
-  padding: 4px 6px;
-  font-family: Montserrat;
-  font-size: 12px;
-  font-weight: 300;
-  line-height: 12px;
-  color: #979abe;
-  background-color: #21232a;
-  border-radius: 4px;
-  cursor: pointer;
-`;
-
-export default function Result({ trade, bestTrade, markets, showChart, onShowChart }: any) {
+export default function Result({ trade, bestTrade, markets }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const slippage: any = useSettingsStore((store: any) => store.slippage);
   const [isRateReversed, setIsRateReversed] = useState(false);
@@ -105,7 +91,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
 
   const calculateRate = (input: string, output: string) => {
     if (!input || !output || Big(input).eq(0) || Big(output).eq(0)) {
-      return null; 
+      return null;
     }
     const inputBig = Big(input);
     const outputBig = Big(output);
@@ -118,7 +104,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
       : calculateRate(trade.outputCurrencyAmount, trade.inputCurrencyAmount);
     return rate ? balanceFormated(rate.toString(), 4) : 'N/A';
   }, [trade.inputCurrencyAmount, trade.outputCurrencyAmount, isRateReversed]);
-  
+
   return (
     <Wrapper>
       <StyledFlex justifyContent="space-between" style={{ paddingTop: 13 }}>
@@ -132,7 +118,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
         </StyledFlex>
         {markets?.length > 0 && (
           <StyledFlex className="trade-display" gap="5px" onClick={() => setIsOpen(!isOpen)}>
-            <StyledIcon src={trade.logo} />
+            <StyledIcon src={trade?.logo || '/images/apps/default_token.png'} />
             <div>{trade.name}</div>
             {trade.priceImpactType !== 0 ? (
               <StyledIconAlertTriangle impact={trade.priceImpactType} />
@@ -171,7 +157,7 @@ export default function Result({ trade, bestTrade, markets, showChart, onShowCha
               Big(trade.outputCurrencyAmount || 0)
                 .mul(1 - slippage / 100)
                 .toString(),
-              8,
+              8
             )}{' '}
             {trade.outputCurrency.symbol}
           </Value>

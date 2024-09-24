@@ -10,14 +10,14 @@ import { scroll } from '@/config/tokens/scroll';
 const basic = {
   name: 'SushiSwap',
   logo: '/images/apps/sushi.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 
 const networks = {
   42161: {
     defaultCurrencies: {
       input: arbitrum['eth'],
-      output: arbitrum['arb'],
+      output: arbitrum['arb']
     },
     tokens: [
       arbitrum['eth'],
@@ -30,17 +30,39 @@ const networks = {
       arbitrum['usdc.e'],
       arbitrum['wst-eth'],
       arbitrum['usde'],
-
       arbitrum['weth'],
       arbitrum['dai'],
       arbitrum['arb'],
       arbitrum['sushi'],
-    ],
+      arbitrum['solv-btc.bbn'],
+      arbitrum['solv-btc.ena'],
+      arbitrum['odin'],
+      arbitrum['dpx'],
+      arbitrum['ezeth'],
+      arbitrum['zro'],
+      arbitrum['govi'],
+      arbitrum['spell'],
+      arbitrum['we-eth'],
+      arbitrum['lon'],
+      arbitrum['mim'],
+      arbitrum['nuon'],
+      arbitrum['ydf'],
+      arbitrum['frm'],
+      arbitrum['ztx'],
+      arbitrum['jgOHM'],
+      arbitrum['gOHM'],
+      arbitrum['w3n'],
+      arbitrum['omni'],
+      arbitrum['liqd'],
+      arbitrum['stc'],
+      arbitrum['beef'],
+      arbitrum['sx']
+    ]
   },
   100: {
     defaultCurrencies: {
       input: gnosis['weth'],
-      output: gnosis['xdai'],
+      output: gnosis['xdai']
     },
     tokens: [
       gnosis['gno'],
@@ -49,35 +71,23 @@ const networks = {
       gnosis['weth'],
       gnosis['wbtc'],
       gnosis['usdt'],
-      gnosis['sushi'],
       gnosis['xdai'],
-    ],
+      gnosis['mps'],
+      gnosis['fcl'],
+      gnosis['link']
+    ]
   },
   10: {
     defaultCurrencies: {
       input: optimism['eth'],
-      output: optimism['usdc.e'],
+      output: optimism['usdc.e']
     },
-    tokens: [
-      optimism['op'],
-      optimism['eth'],
-      optimism['weth'],
-      optimism['susd'],
-      optimism['wbtc'],
-      optimism['dai'],
-      optimism['usdc'],
-      optimism['usdt'],
-      optimism['usdc.e'],
-      optimism['lusd'],
-      optimism['snx'],
-      optimism['mai'],
-      optimism['nsfw'],
-    ],
+    tokens: [optimism['op'], optimism['eth'], optimism['weth'], optimism['wbtc'], optimism['usdc'], optimism['usdt']]
   },
   137: {
     defaultCurrencies: {
       input: polygon['weth'],
-      output: polygon['usdt'],
+      output: polygon['usdt']
     },
     tokens: [
       polygon['matic'],
@@ -93,12 +103,16 @@ const networks = {
       polygon['klima'],
       polygon['tut'],
       polygon['aave'],
-    ],
+      polygon['rnt'],
+      polygon['rain'],
+      polygon['zed'],
+      polygon['gddy']
+    ]
   },
   1101: {
     defaultCurrencies: {
       input: polygonZkevm['eth'],
-      output: polygonZkevm['usdc'],
+      output: polygonZkevm['usdc']
     },
     tokens: [
       polygonZkevm['matic'],
@@ -107,40 +121,36 @@ const networks = {
       polygonZkevm['eth'],
       polygonZkevm['weth'],
       polygonZkevm['wbtc'],
-      polygonZkevm['dai'],
-    ],
+      polygonZkevm['dai']
+    ]
   },
   59144: {
     defaultCurrencies: {
       input: linea['eth'],
-      output: linea['axlusdc'],
+      output: linea['axlusdc']
     },
-    tokens: [linea['eth'], linea['weth'], linea['axlusdc']],
+    tokens: [linea['eth'], linea['weth'], linea['usdc'], linea['axlusdc'], linea['usdt']]
   },
   534352: {
     defaultCurrencies: {
       input: scroll['eth'],
-      output: scroll['usdc'],
+      output: scroll['usdc']
     },
     tokens: [
       scroll['eth'],
       scroll['weth'],
       scroll['usdc'],
-      scroll['dai'],
       scroll['wbtc'],
-      scroll['wsteth'],
       scroll['axlusdc'],
       scroll['axlfrax'],
       scroll['usdt'],
-      scroll['frxeth'],
-      scroll['rlc'],
-      scroll['toazu'],
-    ],
+      scroll['frxeth']
+    ]
   },
   8453: {
     defaultCurrencies: {
       input: base['eth'],
-      output: base['axlusdc'],
+      output: base['axlusdc']
     },
     tokens: [
       base['weth'],
@@ -159,9 +169,9 @@ const networks = {
       base['fella'],
       base['dai'],
       base['usdbc'],
-      base['axlusdc'],
-    ],
-  },
+      base['axlusdc']
+    ]
+  }
 };
 
 export { basic, networks };

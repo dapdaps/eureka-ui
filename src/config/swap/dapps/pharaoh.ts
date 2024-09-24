@@ -3,13 +3,13 @@ import { avalanche } from '@/config/tokens/avalanche';
 const basic = {
   name: 'Pharaoh',
   logo: '/images/apps/pharaoh.png',
-  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut',
+  amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
   43114: {
     defaultCurrencies: {
       input: avalanche['avax'],
-      output: avalanche['usdc'],
+      output: avalanche['usdc']
     },
     tokens: [
       avalanche['avax'],
@@ -33,8 +33,14 @@ const networks = {
       avalanche['eth'],
       avalanche['btc.b'],
       avalanche['wbtc.e'],
-    ],
-  },
+      avalanche['weth.e'],
+      avalanche['bnUSD'],
+      avalanche['kimbo'],
+      avalanche['coq'],
+      avalanche['sicko'],
+      avalanche['hefe']
+    ]
+  }
 };
 
 export { basic, networks };

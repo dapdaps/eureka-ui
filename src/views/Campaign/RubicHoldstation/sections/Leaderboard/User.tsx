@@ -1,10 +1,11 @@
+import { useMemo } from 'react';
+
 import LazyImage from '@/components/LazyImage';
 import {
   StyledUser,
   StyledUserAddress,
-  StyledUserAvatar,
+  StyledUserAvatar
 } from '@/views/Campaign/RubicHoldstation/sections/Leaderboard/styles';
-import { useMemo } from 'react';
 
 const LeaderboardUser = (props: Props) => {
   const { avatar, address } = props;
@@ -16,13 +17,11 @@ const LeaderboardUser = (props: Props) => {
 
   return (
     <StyledUser>
-      {
-        avatar ? (
-          <LazyImage src={avatar} width={26} height={26} style={{ borderRadius: '50%' }} />
-        ) : (
-          <StyledUserAvatar />
-        )
-      }
+      {avatar ? (
+        <LazyImage src={avatar} width={26} height={26} style={{ borderRadius: '50%' }} />
+      ) : (
+        <StyledUserAvatar />
+      )}
       <StyledUserAddress>{addr}</StyledUserAddress>
     </StyledUser>
   );

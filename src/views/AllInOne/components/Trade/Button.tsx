@@ -22,11 +22,12 @@ const BaseButton = ({ chain, disabled, loading, onClick, children }: any) => {
   );
 };
 
-const TradeButton = ({ chain, spender, token, amount, loading, errorTips, disabled, onClick }: any) => {
+const TradeButton = ({ chain, spender, token, amount, loading, errorTips, disabled, onClick, onRefresh }: any) => {
   const { approve, approved, approving, checking } = useApprove({
     amount,
     token,
     spender,
+    onSuccess: onRefresh
   });
   const { switching, switchChain } = useSwitchChain();
   const { onConnect } = useConnectWallet();
@@ -51,7 +52,7 @@ const TradeButton = ({ chain, spender, token, amount, loading, errorTips, disabl
         chain={chain}
         onClick={() => {
           switchChain({
-            chainId: chain.chainId,
+            chainId: chain.chainId
           });
         }}
         loading={switching}
@@ -61,13 +62,16 @@ const TradeButton = ({ chain, spender, token, amount, loading, errorTips, disabl
     );
   }
 
+  if (checking || approving || loading) {
+    return <BaseButton chain={chain} loading={true} disabled />;
+  }
+
   if (errorTips) {
     return <BaseButton disabled>{errorTips}</BaseButton>;
   }
 
-  if (checking || approving || loading) {
-    return <BaseButton chain={chain} loading={true} disabled />;
-  }
+  if (!spender) return <BaseButton disabled>Insufficient Liquidity</BaseButton>;
+
   if (!approved) {
     return (
       <BaseButton chain={chain} onClick={approve}>

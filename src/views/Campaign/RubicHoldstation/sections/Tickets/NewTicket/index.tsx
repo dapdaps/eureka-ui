@@ -3,9 +3,14 @@ import IconStar from '@public/images/campaign/icon-star.svg';
 import { StyledFlex } from '@/styled/styles';
 import NumberWheel from '@/views/Campaign/RubicHoldstation/components/NumberWheel';
 import {
-  StyledContainer, StyledCountdown, StyledCountdownPrimary,
-  StyledDesc, StyledTicket, StyledTicketLeft, StyledTicketRight,
-  StyledTitle,
+  StyledContainer,
+  StyledCountdown,
+  StyledCountdownPrimary,
+  StyledDesc,
+  StyledTicket,
+  StyledTicketLeft,
+  StyledTicketRight,
+  StyledTitle
 } from '@/views/Campaign/RubicHoldstation/sections/Tickets/NewTicket/styles';
 
 const NewTicket = (props: NewTicketProps) => {
@@ -13,9 +18,7 @@ const NewTicket = (props: NewTicketProps) => {
 
   return (
     <StyledContainer>
-      <StyledTitle>
-        +1 Ticket
-      </StyledTitle>
+      <StyledTitle>+1 Ticket</StyledTitle>
       <StyledDesc>
         Good job! <br />
         You got 1 [Rubic x HoldStation campagin] ticket. <br />
@@ -44,7 +47,7 @@ const NewTicket = (props: NewTicketProps) => {
         <span>h</span>&nbsp;
         <StyledCountdownPrimary>1</StyledCountdownPrimary>&nbsp;
         <span>m</span>
-        <br/>
+        <br />
         <span>until the draw</span>
       </StyledCountdown>
     </StyledContainer>
@@ -53,6 +56,4 @@ const NewTicket = (props: NewTicketProps) => {
 
 export default NewTicket;
 
-export interface NewTicketProps {
-
-}
+export interface NewTicketProps {}

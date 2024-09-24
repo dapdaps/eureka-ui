@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 741.59 741.59">
+  <defs>
+    <style>
+  .cls-1,
+  .cls-2 {
+    stroke-width: 0px;
+  }
+  .cls-2 {
+    fill: #00ebab;
+  }
+    </style>
+  </defs>
+  <circle class="cls-2" cx="370.8" cy="370.8" r="370.8" />
+  <path class="cls-1" d="m599.56,154.97h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m510.6,241.64h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m267.57,474.61h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m328.47,416.43h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m389.31,358.06h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m450.15,300.09h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m510.6,474.61h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m450.15,416.43h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m328.47,300.09h-58.34v58.34h60.58v-58.34h-2.24Z" />
+  <path class="cls-1" d="m267.57,241.64h-58.34v58.34h60.58v-58.34h-2.24Z" />
+</svg>

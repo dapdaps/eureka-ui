@@ -1,7 +1,9 @@
 import Big from 'big.js';
-import { intersection } from 'lodash';
+import { providers } from 'ethers';
+import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
+import chains from '@/config/chains';
 import weth from '@/config/contract/weth';
 import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
@@ -11,14 +13,15 @@ import { usePriceStore } from '@/stores/price';
 import { useSettingsStore } from '@/stores/settings';
 import type { Token } from '@/types';
 
-import checkGas from '../checkGas';
-import formatTrade from '../formatTrade';
-import getWrapOrUnwrapTx from '../getWrapOrUnwrapTx';
+import customTokens from '../config/tokens';
+import getAggregatorTokens from '../utils/getAggregatorTokens';
+import { getAggregatorsTx, getDappTx, getWrapTx, updateDappTx } from '../utils/getTxs';
 import { useUpdateBalanceStore } from './useUpdateBalanceStore';
 
 export default function useTrade({ chainId }: any) {
   const slippage: any = useSettingsStore((store: any) => store.slippage);
   const [tokens, setTokens] = useState<Token[]>();
+  const [tokensLoading, setTokensLoading] = useState(false);
   const [loading, setLoading] = useState(false);
   const [markets, setMarkets] = useState<any>([]);
   const [trade, setTrade] = useState<any>();
@@ -27,148 +30,221 @@ export default function useTrade({ chainId }: any) {
   const toast = useToast();
   const { addAction } = useAddAction('superswap');
   const lastestCachedKey = useRef('');
-  const cachedTokens = useRef<any>();
   const prices = usePriceStore((store) => store.price);
+  const cachedMarkets = useRef<any[]>([]);
+  const cachedCount = useRef<number>(0);
+  const cachedChainId = useRef<number>();
+  const [quoting, setQuoting] = useState(false);
   const { setUpdater } = useUpdateBalanceStore();
-  const getTokens = useCallback(() => {
-    const network = networks[chainId];
-    if (!network) return;
-    const dexs = Object.values(network.dexs);
-    const _tokens: { [key: string]: any } = {};
-    dexs.forEach((dex: any) => {
-      dex.tokens.forEach((token: any) => {
-        const _dexs = _tokens[token?.address]?.dexs || [];
-        _dexs.push(dex.name);
-        _tokens[token?.address] = { ...token, dexs: _dexs };
-      });
-    });
-    setTokens(Object.values(_tokens));
-    cachedTokens.current = _tokens;
-  }, [chainId]);
+  const timerRef = useRef<any>(null);
 
-  const onQuoter = useCallback(
-    async ({ inputCurrency, outputCurrency, inputCurrencyAmount }: any) => {
-      if (!inputCurrency) return;
-      const wethAddress = weth[inputCurrency.chainId];
-      const wrapType =
-        inputCurrency.isNative && outputCurrency.address === wethAddress
-          ? 1
-          : inputCurrency.address === wethAddress && outputCurrency.isNative
-            ? 2
-            : 0;
-
-      const amount = Big(inputCurrencyAmount)
-        .mul(10 ** inputCurrency.decimals)
-        .toString();
-      lastestCachedKey.current = `${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}`;
-
-      try {
-        setLoading(true);
-        setMarkets([]);
-
-        const rawBalance = await provider.getBalance(account);
-        const gasPrice = await provider.getGasPrice();
-
-        if (wrapType) {
-          const signer = provider.getSigner(account);
-          const { txn, gasLimit } = await getWrapOrUnwrapTx({
-            signer,
-            wethAddress,
-            type: wrapType,
-            amount
+  const getTokens = useCallback(async () => {
+    try {
+      setTokensLoading(true);
+      const tokens = await getAggregatorTokens(chainId);
+      if (tokens.length === 0) {
+        const network = networks[chainId];
+        const dexs = network?.dexs;
+        Object.values(dexs).forEach((dex: any) => {
+          dex.tokens.forEach((token: any) => {
+            tokens.push({ ...token, usd: prices[token.symbol] || prices[token.priceKey] });
           });
-
-          const { isGasEnough, gas } = checkGas({
-            rawBalance,
-            gasPrice,
-            gasLimit
-          });
-
-          setTrade({
-            inputCurrency,
-            inputCurrencyAmount,
-            outputCurrency,
-            outputCurrencyAmount: inputCurrencyAmount,
-            noPair: false,
-            txn,
-            routerAddress: wethAddress,
-            gas,
-            isGasEnough,
-            wrapType
-          });
-          setLoading(false);
-          setMarkets([]);
-          return;
-        }
-
-        const inputCurrencyDexs = inputCurrency.dexs || cachedTokens.current?.[inputCurrency.address].dexs || [];
-        const outputCurrencyDexs = outputCurrency.dexs || cachedTokens.current?.[outputCurrency.address].dexs || [];
-
-        const templates = intersection(inputCurrencyDexs, outputCurrencyDexs);
-
-        if (!templates.length) {
-          setLoading(false);
-          return { noPair: true, txn: null, outputCurrencyAmount: '', routerAddress: '' };
-        }
-        const response = await fetch(process.env.NEXT_PUBLIC_API + '/quoter', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            params: JSON.stringify({
-              templates,
-              inputCurrency,
-              outputCurrency,
-              inputAmount: inputCurrencyAmount,
-              slippage: slippage / 100 || 0.005,
-              account
-            })
-          })
         });
-        const result = await response.json();
-        const data = result.data;
-        if (!data) {
-          throw new Error('No Data.');
-        }
-        const network = networks[inputCurrency.chainId];
-        const dexs = network.dexs;
-        const _markets = data
-          .filter((item: any) => item.outputCurrencyAmount)
-          .sort((a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount)
-          .map((item: any) => {
-            const _trade = formatTrade({
-              market: item,
-              rawBalance,
-              gasPrice,
-              prices,
-              inputCurrency,
-              outputCurrency,
-              inputCurrencyAmount
-            });
-            return { ..._trade, name: item.template, logo: dexs[item.template].logo };
-          });
-        setBestTrade(_markets[0]);
-        setTrade({ ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency });
-        setMarkets(_markets);
-        setLoading(false);
-      } catch (err) {
-        console.log(err, 'useTrade - onQuoter');
+      }
+      const _customTokens = (customTokens[chainId] || []).map((token: any) => ({
+        ...token,
+        usd: prices[token.symbol] || prices[token.priceKey]
+      }));
+
+      setTokens([...tokens, ..._customTokens]);
+    } catch (err) {
+      setTokens([]);
+    } finally {
+      setTokensLoading(false);
+    }
+  }, [chainId, prices]);
+
+  const onQuoter = async ({ inputCurrency, outputCurrency, inputCurrencyAmount }: any) => {
+    clearTimeout(timerRef.current);
+    if (!inputCurrency) return;
+    const wethAddress = weth[inputCurrency.chainId];
+    const wrapType =
+      inputCurrency.isNative && outputCurrency.address === wethAddress
+        ? 1
+        : inputCurrency.address === wethAddress && outputCurrency.isNative
+          ? 2
+          : 0;
+
+    const amount = Big(inputCurrencyAmount)
+      .mul(10 ** inputCurrency.decimals)
+      .toString();
+    lastestCachedKey.current = `${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}`;
+
+    try {
+      setLoading(true);
+      setQuoting(true);
+      setMarkets([]);
+
+      const rpcUrl = chains[chainId]?.rpcUrls[0];
+
+      const _provider = rpcUrl ? new providers.JsonRpcProvider(rpcUrl) : provider;
+
+      let rawBalance = 0;
+
+      if (account) {
+        rawBalance = await _provider.getBalance(account);
+      }
+      const gasPrice = await _provider.getGasPrice();
+
+      if (wrapType) {
+        const { txn, gas, isGasEnough } = await getWrapTx({
+          wethAddress,
+          wrapType,
+          amount,
+          rawBalance,
+          gasPrice,
+          inputCurrency,
+          inputCurrencyAmount,
+          outputCurrency
+        });
         setTrade({
           inputCurrency,
           inputCurrencyAmount,
           outputCurrency,
-          outputCurrencyAmount: '',
-          noPair: true,
-          txn: null,
-          routerAddress: ''
+          outputCurrencyAmount: inputCurrencyAmount,
+          noPair: false,
+          txn,
+          routerAddress: wethAddress,
+          gas,
+          isGasEnough,
+          wrapType
         });
         setLoading(false);
         setMarkets([]);
+        return;
       }
-    },
-    [account, provider, slippage, prices, cachedTokens]
-  );
+
+      cachedMarkets.current = [];
+      cachedCount.current = 0;
+
+      const onQuoterCallback = (_markets: any) => {
+        if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
+          return;
+        }
+        if (cachedChainId.current !== inputCurrency.chainId) {
+          return;
+        }
+        setLoading(false);
+        if (cachedCount.current === 0) {
+          setBestTrade(_markets[0]);
+          setTrade(
+            _markets[0]
+              ? { ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency }
+              : { noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency }
+          );
+          setMarkets(_markets);
+          cachedMarkets.current = _markets;
+          cachedCount.current = 1;
+          return;
+        }
+
+        const marketsObj: any = {};
+
+        [..._markets, ...cachedMarkets.current].forEach((market: any) => {
+          const item = marketsObj[market.name];
+          if (!item) {
+            marketsObj[market.name] = market;
+            return;
+          }
+          if (Big(item.outputCurrencyAmount).lt(market.outputCurrencyAmount)) {
+            marketsObj[market.name] = market;
+          }
+        });
+
+        const mergedMarkets = Object.values(marketsObj).sort(
+          (a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount
+        );
+
+        if (mergedMarkets.length) {
+          setBestTrade(mergedMarkets[0]);
+          setTrade(mergedMarkets[0]);
+        }
+
+        setMarkets(mergedMarkets);
+        cachedMarkets.current = [];
+        cachedCount.current = 0;
+        setQuoting(false);
+        timerRef.current = setTimeout(() => {
+          onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+        }, 60000);
+      };
+
+      const onQuoterError = () => {
+        if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
+          return;
+        }
+        if (cachedChainId.current !== inputCurrency.chainId) {
+          return;
+        }
+        if (cachedCount.current === 1) {
+          setLoading(false);
+          cachedCount.current = 0;
+          cachedMarkets.current = [];
+          setQuoting(false);
+          timerRef.current = setTimeout(() => {
+            onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+          }, 60000);
+          setTrade({ noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency });
+          return;
+        }
+        cachedCount.current = 1;
+      };
+
+      getAggregatorsTx({
+        inputCurrency,
+        outputCurrency,
+        inputCurrencyAmount,
+        amount,
+        slippage,
+        account,
+        rawBalance,
+        gasPrice,
+        prices,
+        onCallBack: (_market: any) => {
+          onQuoterCallback([_market]);
+        },
+        onError: onQuoterError
+      });
+
+      getDappTx({
+        inputCurrency,
+        outputCurrency,
+        inputCurrencyAmount,
+        rawBalance,
+        gasPrice,
+        slippage,
+        account,
+        prices,
+        onCallBack: (_markets: any) => {
+          onQuoterCallback(_markets);
+        },
+        onError: onQuoterError
+      });
+    } catch (err) {
+      setTrade({
+        inputCurrency,
+        inputCurrencyAmount,
+        outputCurrency,
+        outputCurrencyAmount: '',
+        noPair: true,
+        txn: null,
+        routerAddress: ''
+      });
+      setLoading(false);
+      setQuoting(false);
+      setMarkets([]);
+    }
+  };
 
   const onSwap = useCallback(async () => {
     const signer = provider.getSigner(account);
@@ -214,13 +290,53 @@ export default function useTrade({ chainId }: any) {
     }
   }, [account, provider, trade]);
 
+  const onUpdateTxn = async (_trade: any) => {
+    const rawBalance = await provider.getBalance(account);
+    const gasPrice = await provider.getGasPrice();
+    setLoading(true);
+    updateDappTx({
+      trade: _trade,
+      slippage,
+      account,
+      rawBalance,
+      gasPrice,
+      prices,
+      onSuccess: (record: any) => {
+        setTrade(record);
+        setLoading(false);
+      },
+      onError: () => {
+        setLoading(false);
+      }
+    });
+  };
+
   const onSelectMarket = async (market: any) => {
     setTrade(market);
   };
 
   useEffect(() => {
     if (chainId) getTokens();
+    setMarkets([]);
+    setTrade(null);
+    setLoading(false);
+    setQuoting(false);
+    cachedChainId.current = chainId;
   }, [chainId]);
 
-  return { tokens, loading, markets, trade, bestTrade, onQuoter, onSelectMarket, onSwap, setTrade };
+  return {
+    tokens,
+    tokensLoading,
+    loading,
+    quoting,
+    markets,
+    trade,
+    bestTrade,
+    onQuoter,
+    onSelectMarket,
+    onSwap,
+    setTrade,
+    onUpdateTxn,
+    setMarkets
+  };
 }
