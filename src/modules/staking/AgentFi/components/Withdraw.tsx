@@ -273,6 +273,7 @@ export default memo(function Withdraw(props) {
     formatTVL,
     rootAgent,
     account,
+    provider,
     onSuccess,
     addAction,
     toast,
