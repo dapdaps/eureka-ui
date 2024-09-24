@@ -94,8 +94,10 @@ const StyledRow = styled.div`
 `;
 
 const ExpandWrapper = styled.div`
+  margin-right: -10px;
   height: 0px;
   animation: fadeOut 0.4s 0.1s ease both;
+  overflow-y: scroll;
   &.expand {
     animation: fadeIn 0.4s 0.1s ease both;
   }
@@ -138,7 +140,7 @@ const AccordionContent = styled.div`
   border-color: var(--bg-3);
   background-color: var(--bg-3);
   padding-bottom: 20px;
-  border-radius: 0px 0px 13px 13px;
+  /* border-radius: 0px 0px 13px 13px; */
   background: #2e3142;
 `;
 //Accordion end

@@ -1,16 +1,15 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from 'react';
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import styled from 'styled-components';
 
 import ChainWarningBox from '@/modules/components/ChainWarningBox';
-import Spinner from '@/modules/components/Spinner';
 import { useDynamicLoader, useMultiState } from '@/modules/hooks';
 import { formatValueDecimal } from '@/utils/formate';
 import { asyncFetch } from '@/utils/http';
 
+import Spinner from '../Bridge/Spinner';
 import MyStrategies from './components/MyStrategies';
 import StrategyFactory from './components/StrategyFactory';
 const StyledContainer = styled.div`

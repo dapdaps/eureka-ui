@@ -83,7 +83,12 @@ export default memo(function LPData(props) {
         let _aum = 0;
         const filterAddress = ['0x0F3CC3Ea42b989323e7c7e499b5B6A343eA55c18'];
 
+        console.log('====token0', token0);
+        console.log('====token1', token1);
+        console.log('===pairs[i].vaultAddress', pairs[i].vaultAddress);
+        console.log('===token0TVL.gt(token1TVL)', token0TVL.gt(token1TVL));
         if (token0TVL.gt(token1TVL)) {
+          console.log('111111');
           if (filterAddress.includes(pairs[i].vaultAddress)) {
             _apr = token0.shareTokenApr;
           } else {
@@ -94,6 +99,7 @@ export default memo(function LPData(props) {
             .times(prices[_token0] || 0)
             .toString();
         } else {
+          console.log('222222');
           if (filterAddress.includes(pairs[i].vaultAddress)) {
             _apr = token1.shareTokenApr;
           } else {
@@ -107,7 +113,7 @@ export default memo(function LPData(props) {
             .toString();
         }
 
-        if (pairs[i].id === 'USDC-USDT-Oku' || pairs[i].id === 'USDC-WETH-Oku') {
+        if (pairs[i].id === 'USDC-USDT-Oku') {
           _apr = token0.shareTokenApr;
         }
 
@@ -239,5 +245,5 @@ export default memo(function LPData(props) {
     getTotalSupply();
     getAllUnderlyingAssets();
     getUserPositions();
-  }, []);
+  }, [account]);
 });
