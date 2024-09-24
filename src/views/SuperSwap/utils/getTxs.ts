@@ -251,16 +251,7 @@ export const getAggregatorsTx = async ({
   }
 };
 
-export const updateDappTx = async ({
-  trade,
-  slippage,
-  account,
-  rawBalance,
-  gasPrice,
-  prices,
-  onSuccess,
-  onError
-}: any) => {
+export const updateDappTx = async ({ trade, slippage, account, onSuccess, onError }: any) => {
   try {
     const { inputCurrency, outputCurrency, inputCurrencyAmount, name } = trade;
 

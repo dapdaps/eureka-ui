@@ -26,7 +26,7 @@ export const StyledItem = styled.div<{ isActive: boolean }>`
   transition: 0.5s;
   border: 1px solid;
   margin-top: 10px;
-  border-color: ${({ isActive }) => (isActive ? '#ebf479' : 'transparent')};
+  border-color: ${({ isActive }) => (isActive ? '#ebf479' : '#373A53')};
   /* &:hover {
     border-color: #ebf479;
   } */
@@ -41,9 +41,9 @@ export const StyledIcon = styled.img`
 export const StyledTitle = styled.div`
   color: #fff;
   font-family: Montserrat;
-  font-size: 16px;
+  font-size: 14px;
   font-style: normal;
-  font-weight: 600;
+  font-weight: 500;
   line-height: normal;
 `;
 

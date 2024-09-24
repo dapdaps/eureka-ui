@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import chains from '@/config/chains';
 import weth from '@/config/contract/weth';
+import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
 import useAddAction from '@/hooks/useAddAction';
 import useToast from '@/hooks/useToast';
@@ -32,6 +33,7 @@ export default function useTrade({ chainId }: any) {
   const prices = usePriceStore((store) => store.price);
   const cachedMarkets = useRef<any[]>([]);
   const cachedCount = useRef<number>(0);
+  const cachedChainId = useRef<number>();
   const [quoting, setQuoting] = useState(false);
   const { setUpdater } = useUpdateBalanceStore();
   const timerRef = useRef<any>(null);
@@ -40,6 +42,15 @@ export default function useTrade({ chainId }: any) {
     try {
       setTokensLoading(true);
       const tokens = await getAggregatorTokens(chainId);
+      if (tokens.length === 0) {
+        const network = networks[chainId];
+        const dexs = network?.dexs;
+        Object.values(dexs).forEach((dex: any) => {
+          dex.tokens.forEach((token: any) => {
+            tokens.push({ ...token, usd: prices[token.symbol] || prices[token.priceKey] });
+          });
+        });
+      }
       const _customTokens = (customTokens[chainId] || []).map((token: any) => ({
         ...token,
         usd: prices[token.symbol] || prices[token.priceKey]
@@ -120,6 +131,9 @@ export default function useTrade({ chainId }: any) {
         if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
           return;
         }
+        if (cachedChainId.current !== inputCurrency.chainId) {
+          return;
+        }
         setLoading(false);
         if (cachedCount.current === 0) {
           setBestTrade(_markets[0]);
@@ -154,6 +168,9 @@ export default function useTrade({ chainId }: any) {
 
       const onQuoterError = () => {
         if (`${inputCurrency.address}-${outputCurrency.address}-${inputCurrencyAmount}` !== lastestCachedKey.current) {
+          return;
+        }
+        if (cachedChainId.current !== inputCurrency.chainId) {
           return;
         }
         if (cachedCount.current === 1) {
@@ -288,6 +305,10 @@ export default function useTrade({ chainId }: any) {
   useEffect(() => {
     if (chainId) getTokens();
     setMarkets([]);
+    setTrade(null);
+    setLoading(false);
+    setQuoting(false);
+    cachedChainId.current = chainId;
   }, [chainId]);
 
   return {
@@ -302,6 +323,7 @@ export default function useTrade({ chainId }: any) {
     onSelectMarket,
     onSwap,
     setTrade,
-    onUpdateTxn
+    onUpdateTxn,
+    setMarkets
   };
 }

@@ -45,6 +45,7 @@ export default function SuperSwap() {
     onSelectMarket,
     onSwap,
     setTrade,
+    setMarkets,
     onUpdateTxn
   } = useTrade({
     chainId: currentChain?.chain_id,
@@ -117,9 +118,10 @@ export default function SuperSwap() {
 
   useEffect(() => {
     setInputCurrencyAmount('');
-    setTrade(null as any);
     setInputCurrency(null as any);
     setOutputCurrency(null as any);
+    setMarkets([]);
+    setTrade(null);
   }, [chainId]);
 
   const swapToken = useCallback(() => {
