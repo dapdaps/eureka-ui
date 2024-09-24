@@ -351,8 +351,8 @@ export default function LiqeeData(props: any) {
       let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
-          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
-          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
+          if (market.underlyingToken.isNative) nativeOToken = market.address;
+          return market.underlyingToken.address && !market.underlyingToken.isNative;
         })
         .map((market: any) => ({
           ...market.underlyingToken,
