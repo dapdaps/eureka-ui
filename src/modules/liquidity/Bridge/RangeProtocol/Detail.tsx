@@ -488,7 +488,7 @@ export default memo(function Detail(props: any) {
       props?.data?.chain_id === 169
         ? '340282366920938463463374607431768211455'
         : '1157920892373161954235709850086879078532699846656405';
-    handleGetMintAmount(Big(amount0).mul(Big(10).pow(decimals0)).toFixed(0), targetAmount, (response) => {
+    handleGetMintAmount(Big(amount0).mul(Big(10).pow(decimals0)).toFixed(0), targetAmount, async (response) => {
       const [_amount0, _amount1, mintAmount] = response;
       const params =
         props?.data?.chain_id === 169
@@ -500,8 +500,17 @@ export default memo(function Detail(props: any) {
               ]
             ]
           : [mintAmount];
+
+      let estimateGas: any = 300000;
+      try {
+        estimateGas = await contract.estimateGas.mint(...params);
+      } catch (error) {
+        console.log('error', error);
+      }
       contract
-        .mint(...params)
+        .mint(...params, {
+          gasLimit: estimateGas ? Big(estimateGas.toString()).mul(1.2).toFixed(0) : 5000000
+        })
         .then((tx) => {
           return tx.wait();
         })
