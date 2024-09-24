@@ -458,7 +458,8 @@ const LendingDialog = (props: Props) => {
                         .replace(/[.]?0*$/, '');
                       updateState({
                         processValue: value,
-                        amount
+                        amount,
+                        isMax: Big(value || 0).gte(100)
                       });
                       handleAmountChange(amount);
                     }}
@@ -558,7 +559,9 @@ const LendingDialog = (props: Props) => {
               loading={state.loading}
               gas={state.gas}
               account={account}
-              onApprovedSuccess={() => {}}
+              onApprovedSuccess={() => {
+                updateState({ updateHandler: Date.now() });
+              }}
               onSuccess={() => {
                 handleClose();
                 onSuccess?.();
@@ -574,7 +577,7 @@ const LendingDialog = (props: Props) => {
           chainId={chainId}
           data={data}
           account={account}
-          amount={state.amount}
+          amount={state.isMax ? state.balance : state.amount}
           curPool={curPool}
           onLoad={(_data: any) => {
             console.log('Dialog-handler-onLoad--', _data);

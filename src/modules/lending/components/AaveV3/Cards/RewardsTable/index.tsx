@@ -85,7 +85,7 @@ const RewardsTable = (props: any) => {
     curIndex: -1
   });
 
-  const [Claim] = useDynamicLoader({ path: `/lending/claims`, name: 'ZeroLand' });
+  const [Claim] = useDynamicLoader({ path: `/lending/claims`, name: 'AaveV3' });
 
   function formatValue(value: any, digits?: any) {
     if (Number(value) === 0) return '0';

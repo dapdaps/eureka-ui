@@ -190,7 +190,7 @@ const MinterestData = (props: any) => {
                 );
                 result.markets[meta.address] = {
                   address: meta.address,
-                  borrowApy: apr2apy(economic.apr) + '%',
+                  borrowApy: '-' + apr2apy(economic.apr) + '%',
                   dapp: name,
                   decimals: meta.marketDecimals,
                   distributionApy: [],
