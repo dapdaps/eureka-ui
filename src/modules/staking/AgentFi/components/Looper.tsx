@@ -1,30 +1,28 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from "react";
+import { memo } from 'react';
 import { useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Balance from "@/modules/components/Balance";
+import Balance from '@/modules/components/Balance';
 import Loading from '@/modules/components/Loading';
 import Select from '@/modules/components/Select';
-import Spinner from "@/modules/components/Spinner";
+import Spinner from '@/modules/components/Spinner';
 import { useMultiState } from '@/modules/hooks';
 
-const StyledContainer = styled.div`
-  
-`;
+const StyledContainer = styled.div``;
 const StyledFormItem = styled.div`
-  border-bottom: 1px solid #373A53;
+  border-bottom: 1px solid #373a53;
   padding-bottom: 18px;
   padding-top: 18px;
-  
+
   &.inline {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  
+
   &:first-child {
     padding-top: 0;
   }
@@ -33,7 +31,7 @@ const StyledFormItemTitle = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
-  color: #979ABE;
+  color: #979abe;
 `;
 const StyledFormItemBody = styled.div`
   margin-top: 8px;
@@ -86,7 +84,7 @@ const StyledListItem = styled.div`
   font-size: 14px;
 
   .label {
-    color: #979ABE;
+    color: #979abe;
   }
   .value {
     color: #fff;
@@ -107,7 +105,7 @@ const StyledButton = styled.button`
   transition: 0.5s;
   margin-top: 20px;
   text-align: center;
-  
+
   &:hover {
     opacity: 0.8;
   }
@@ -121,8 +119,8 @@ const StyledFullSelect = styled.div`
 
   > div {
     width: 100%;
-    
-    > div[type="button"] {
+
+    > div[type='button'] {
       width: 100%;
     }
   }
@@ -133,57 +131,57 @@ const DEPOSIT_POOL_ABI = [
     inputs: [
       {
         components: [
-          { internalType: "address", name: "wrapMint", type: "address" },
-          { internalType: "address", name: "otoken", type: "address" },
-          { internalType: "address", name: "underlying", type: "address" },
-          { internalType: "uint8", name: "mode", type: "uint8" },
-          { internalType: "uint256", name: "leverage", type: "uint256" },
+          { internalType: 'address', name: 'wrapMint', type: 'address' },
+          { internalType: 'address', name: 'otoken', type: 'address' },
+          { internalType: 'address', name: 'underlying', type: 'address' },
+          { internalType: 'uint8', name: 'mode', type: 'uint8' },
+          { internalType: 'uint256', name: 'leverage', type: 'uint256' }
         ],
-        name: "mintParams",
-        type: "tuple",
+        name: 'mintParams',
+        type: 'tuple'
       },
       {
         components: [
-          { internalType: "address", name: "token", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' }
         ],
-        name: "deposit",
-        type: "tuple",
-      },
+        name: 'deposit',
+        type: 'tuple'
+      }
     ],
-    name: "createLoopooorAgentAndExplorer",
+    name: 'createLoopooorAgentAndExplorer',
     outputs: [],
-    stateMutability: "payable",
-    type: "function",
+    stateMutability: 'payable',
+    type: 'function'
   },
   {
     inputs: [
       {
         components: [
-          { internalType: "address", name: "wrapMint", type: "address" },
-          { internalType: "address", name: "otoken", type: "address" },
-          { internalType: "address", name: "underlying", type: "address" },
-          { internalType: "uint8", name: "mode", type: "uint8" },
-          { internalType: "uint256", name: "leverage", type: "uint256" },
+          { internalType: 'address', name: 'wrapMint', type: 'address' },
+          { internalType: 'address', name: 'otoken', type: 'address' },
+          { internalType: 'address', name: 'underlying', type: 'address' },
+          { internalType: 'uint8', name: 'mode', type: 'uint8' },
+          { internalType: 'uint256', name: 'leverage', type: 'uint256' }
         ],
-        name: "mintParams",
-        type: "tuple",
+        name: 'mintParams',
+        type: 'tuple'
       },
       {
         components: [
-          { internalType: "address", name: "token", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' }
         ],
-        name: "deposit",
-        type: "tuple",
+        name: 'deposit',
+        type: 'tuple'
       },
-      { internalType: "address", name: "rootAgentAddress", type: "address" },
+      { internalType: 'address', name: 'rootAgentAddress', type: 'address' }
     ],
-    name: "createLoopooorAgentForRoot",
+    name: 'createLoopooorAgentForRoot',
     outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
+    stateMutability: 'payable',
+    type: 'function'
+  }
 ];
 
 const { parseUnits, formatUnits } = ethers.utils;
@@ -197,9 +195,10 @@ export default memo(function Looper(props) {
     rootAgent,
     onSuccess,
     addAction,
+    provider,
     toast,
     chainId,
-    handleApprove,
+    handleApprove
   } = props;
 
   const { StakeTokens } = dexConfig;
@@ -212,22 +211,14 @@ export default memo(function Looper(props) {
     stakeToken: {},
     stakeTokenBalance: 0,
     pending: false,
-    stakeMode: currentStrategy.meta.modeList[0],
+    stakeMode: currentStrategy.meta.modeList[0]
   });
 
-  const {
-    stakeAmount,
-    stakeTokens,
-    stakeToken,
-    stakeTokenBalance,
-    pending,
-    stakeMode,
-    provider
-  } = state;
+  const { stakeAmount, stakeTokens, stakeToken, stakeTokenBalance, pending, stakeMode } = state;
 
   const modeList = currentStrategy.meta.modeList.map((it) => {
     const obj = {
-      ...it,
+      ...it
     };
     if (it.text === 'Boost Points') {
       obj.text = `${it.text} - ${currentStrategy.meta.PointsRate[stakeToken.value]}x`;
@@ -237,13 +228,13 @@ export default memo(function Looper(props) {
 
   const handleAmount = (ev) => {
     if (isNaN(Number(ev.target.value))) return;
-    let amount = ev.target.value.replace(/\s+/g, "");
+    let amount = ev.target.value.replace(/\s+/g, '');
 
     if (Big(amount || 0).gt(Big(state.stakeTokenBalance || 0))) {
       amount = Big(state.stakeTokenBalance || 0).toFixed(4, 0);
     }
     updateState({
-      stakeAmount: amount,
+      stakeAmount: amount
     });
   };
 
@@ -251,52 +242,58 @@ export default memo(function Looper(props) {
     if (option.value === state.stakeToken.value) return;
     updateState({
       stakeToken: option,
-      stakeAmount: '',
+      stakeAmount: ''
     });
     const currToken = StakeTokens.find((it) => it.symbol === option.value);
-    currToken && getTokenBalance(currToken).then((value) => {
-      updateState({
-        stakeTokenBalance: value,
+    currToken &&
+      getTokenBalance(currToken).then((value) => {
+        updateState({
+          stakeTokenBalance: value
+        });
       });
-    });
   };
 
   const handleBalance = (value) => {
     updateState({
-      stakeAmount: Big(value).toFixed(4, 0),
+      stakeAmount: Big(value).toFixed(4, 0)
     });
   };
 
   const handleMode = (option) => {
     updateState({
-      stakeMode: option,
+      stakeMode: option
     });
   };
 
   const formatAddAction = (actionText, _amount, status, transactionHash, tokenSymbol) => {
     addAction?.({
-      type: "Staking",
+      type: 'Staking',
       action: actionText,
       token: {
-        symbol: tokenSymbol,
+        symbol: tokenSymbol
       },
       amount: _amount,
       template: props.name,
       add: false,
       status,
-      transactionHash,
+      transactionHash
     });
-  }
+  };
 
   const handleSubmit = () => {
     if (Big(state.stakeAmount).lte(0)) return;
     updateState({
-      pending: true,
+      pending: true
     });
-    handleApprove(currentStrategy.meta.contract, state.stakeToken.address, state.stakeAmount, state.stakeToken.decimals).then((approveRes) => {
+    handleApprove(
+      currentStrategy.meta.contract,
+      state.stakeToken.address,
+      state.stakeAmount,
+      state.stakeToken.decimals
+    ).then((approveRes) => {
       if (!approveRes) {
         updateState({
-          pending: false,
+          pending: false
         });
         return;
       }
@@ -313,13 +310,13 @@ export default memo(function Looper(props) {
           // mode
           state.stakeMode.value,
           // leverage
-          parseUnits('2', 18),
+          parseUnits('2', 18)
         ],
         [
           // token
           currentStrategy.meta.underlying[state.stakeToken.value],
           // amount
-          parseUnits(stakeAmountShown, state.stakeToken.decimals),
+          parseUnits(stakeAmountShown, state.stakeToken.decimals)
         ]
       ];
 
@@ -335,16 +332,12 @@ export default memo(function Looper(props) {
         method = 'createLoopooorAgentForRoot';
       }
 
-      const contract = new ethers.Contract(
-        currentStrategy.meta.contract,
-        DEPOSIT_POOL_ABI,
-        provider.getSigner()
-      );
+      const contract = new ethers.Contract(currentStrategy.meta.contract, DEPOSIT_POOL_ABI, provider.getSigner());
 
       const getTx = (gas) => {
         const contractOption = {
-          gasLimit: gas || 4000000,
-        }
+          gasLimit: gas || 4000000
+        };
         if (['ETH'].includes(state.stakeToken.value)) {
           contractOption.value = parseUnits(stakeAmountShown, state.stakeToken.decimals);
         }
@@ -354,62 +347,55 @@ export default memo(function Looper(props) {
               .then((res) => {
                 const { status, transactionHash } = res;
                 updateState({
-                  pending: false,
+                  pending: false
                 });
-                if (status !== 1) throw new Error("");
+                if (status !== 1) throw new Error('');
                 onSuccess();
                 formatAddAction(actionText, stakeAmountShown, status, transactionHash, state.stakeToken.value);
                 toast?.success({
                   title: `${actionText} Successfully!`,
                   text: `${actionText} ${Big(stakeAmountShown).toFixed(2)} ${state.stakeToken.value}`,
                   tx: transactionHash,
-                  chainId,
+                  chainId
                 });
               })
               .catch((err) => {
                 console.log('tx error: ', err);
                 updateState({
-                  pending: false,
+                  pending: false
                 });
                 toast?.fail({
                   title: `${actionText} Failed!`,
-                  text: err?.message?.includes("user rejected transaction")
-                    ? "User rejected transaction"
-                    : ``,
+                  text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                 });
               });
           })
           .catch((err) => {
             console.log('contract fn error: ', err);
             updateState({
-              pending: false,
+              pending: false
             });
             toast?.fail({
               title: `${actionText} Failed!`,
-              text: err?.message?.includes("user rejected transaction")
-                ? "User rejected transaction"
-                : ``,
+              text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
             });
           });
       };
 
       const estimateGas = () => {
-        contract.estimateGas[method](
-          ...params,
-          { value: parseUnits(stakeAmountShown, state.stakeToken.decimals) }
-        ).then((gas) => {
-          getTx(gas);
-        }).catch((err) => {
-          console.log('get gas failed: ', err);
-          getTx();
-        });
+        contract.estimateGas[method](...params, { value: parseUnits(stakeAmountShown, state.stakeToken.decimals) })
+          .then((gas) => {
+            getTx(gas);
+          })
+          .catch((err) => {
+            console.log('get gas failed: ', err);
+            getTx();
+          });
       };
 
       estimateGas();
     });
   };
-
-
 
   useEffect(() => {
     const _stakeTokens = [];
@@ -418,17 +404,17 @@ export default memo(function Looper(props) {
         ...it,
         text: it.symbol,
         value: it.symbol,
-        icons: [it.icon],
+        icons: [it.icon]
       });
-    })
+    });
     updateState({
       stakeMode: currentStrategy.meta.modeList[0],
       stakeTokens: _stakeTokens,
-      stakeToken: _stakeTokens[0],
+      stakeToken: _stakeTokens[0]
     });
     getTokenBalance(StakeTokens[0]).then((value) => {
       updateState({
-        stakeTokenBalance: value,
+        stakeTokenBalance: value
       });
     });
   }, []);
@@ -436,27 +422,23 @@ export default memo(function Looper(props) {
   return (
     <StyledContainer>
       <StyledFormItem>
-        <StyledFormItemTitle>
-          Stake
-        </StyledFormItemTitle>
+        <StyledFormItemTitle>Stake</StyledFormItemTitle>
         <StyledFormItemBody>
-          <StyledInput
-            type="text"
-            placeholder="0"
-            value={stakeAmount}
-            onChange={handleAmount}
-          />
+          <StyledInput type="text" placeholder="0" value={stakeAmount} onChange={handleAmount} />
           <Select
             {...{
               options: stakeTokens,
               value: stakeToken,
-              onChange: handleToken,
+              onChange: handleToken
             }}
           />
         </StyledFormItemBody>
         <StyledFormItemFoot>
           <div className="prices">
-            ${Big(stakeAmount || 0).times(Big(prices[stakeToken.value] || 1)).toFixed(2, 0)}
+            $
+            {Big(stakeAmount || 0)
+              .times(Big(prices[stakeToken.value] || 1))
+              .toFixed(2, 0)}
           </div>
           <div className="balance">
             Balance:
@@ -465,23 +447,21 @@ export default memo(function Looper(props) {
                 value: stakeTokenBalance,
                 digit: 4,
                 onClick: handleBalance,
-                symbol: stakeToken.value,
+                symbol: stakeToken.value
               }}
             />
           </div>
         </StyledFormItemFoot>
       </StyledFormItem>
       <StyledFormItem>
-        <StyledFormItemTitle>
-          Mode
-        </StyledFormItemTitle>
+        <StyledFormItemTitle>Mode</StyledFormItemTitle>
         <StyledFormItemBody>
           <StyledFullSelect>
             <Select
               {...{
                 options: modeList,
                 value: stakeMode,
-                onChange: handleMode,
+                onChange: handleMode
               }}
             />
           </StyledFullSelect>
@@ -490,7 +470,12 @@ export default memo(function Looper(props) {
       <StyledList>
         <StyledListItem>
           <span className="label">Supply</span>
-          <span className="value">{Big(stakeAmount || 0).times(2).toString()} ETH</span>
+          <span className="value">
+            {Big(stakeAmount || 0)
+              .times(2)
+              .toString()}{' '}
+            ETH
+          </span>
         </StyledListItem>
         <StyledListItem>
           <span className="label">Borrow</span>
@@ -505,15 +490,9 @@ export default memo(function Looper(props) {
           <span className="value">{currentStrategy.meta.targetLTV}</span>
         </StyledListItem>
       </StyledList>
-      <StyledButton
-        disabled={pending || !stakeAmount}
-        onClick={handleSubmit}
-      >
-        {pending ? (
-          <Loading size={16} />
-        ) : (stakeAmount ? 'Launch Strategy' : 'Enter An Amount')}
+      <StyledButton disabled={pending || !stakeAmount} onClick={handleSubmit}>
+        {pending ? <Loading size={16} /> : stakeAmount ? 'Launch Strategy' : 'Enter An Amount'}
       </StyledButton>
     </StyledContainer>
   );
-
-})
+});

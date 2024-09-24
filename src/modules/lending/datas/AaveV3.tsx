@@ -134,7 +134,7 @@ const AaveV3Data = (props: any) => {
               .times(ACTUAL_BORROW_AMOUNT_RATE)
               .toFixed();
 
-            const _availableBorrows = calcAvailableBorrows(_availableBorrowsUSD, _assetsToSupply[i].tokenPrice);
+            const _availableBorrows = calcAvailableBorrows(_availableBorrowsUSD, _assetsToSupply[i].tokenPrice || 1);
 
             _assetsToSupply[i].availableBorrowsUSD = Big(_availableBorrowsUSD).lt(0) ? 0 : _availableBorrowsUSD;
             _assetsToSupply[i].availableBorrows = Big(_availableBorrows).lt(0) ? 0 : _availableBorrows;
@@ -245,7 +245,7 @@ const AaveV3Data = (props: any) => {
             const balanceRaw = Big(_bal || 0).div(Big(10).pow(item.decimals));
             const _balance = balanceRaw.toFixed(item.decimals, ROUND_DOWN);
 
-            const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 0)).toFixed();
+            const _balanceInUSD = balanceRaw.times(Big(item.tokenPrice || 1)).toFixed();
 
             item.balance = _balance;
             item.balanceInUSD = _balanceInUSD;
@@ -1150,8 +1150,8 @@ const AaveV3Data = (props: any) => {
 
   const getRewardTokenPrice = (dexConfig: any, prices: any) => {
     if (dexConfig.name === 'ZeroLend') return 0.00025055;
-    if (dexConfig.name === 'AAVE V3' && config.chainName === 'Metis') return prices['METIS'];
     if (dexConfig.name === 'Seamless Protocol') return prices['SEAM'] || 1;
+    if (dexConfig.name === 'AAVE V3' && config.chainName === 'Metis') return prices['METIS'] || 1;
     return 0;
   };
 
@@ -1197,8 +1197,8 @@ const AaveV3Data = (props: any) => {
         const tokenTotalSupplyNormalized = normalizeTokenAmount(aTokenTotal[index], asset.decimals);
         const tokenTotalBorrowNormalized = normalizeTokenAmount(debtTotal[index], asset.decimals);
 
-        const normalizedTotalTokenSupply = Big(tokenTotalSupplyNormalized || 0).times(Big(prices[asset.symbol] || 0));
-        const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized || 0).times(Big(prices[asset.symbol] || 0));
+        const normalizedTotalTokenSupply = Big(tokenTotalSupplyNormalized || 0).times(Big(prices[asset.symbol] || 1));
+        const normalizedTotalTokenBorrow = Big(tokenTotalBorrowNormalized || 0).times(Big(prices[asset.symbol] || 1));
 
         const supplyRewardApy = calculateRewardApy(
           emissionPerSeconds[index]?.[1],

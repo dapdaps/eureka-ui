@@ -488,71 +488,99 @@ export default memo(function Detail(props: any) {
       props?.data?.chain_id === 169
         ? '340282366920938463463374607431768211455'
         : '1157920892373161954235709850086879078532699846656405';
-    handleGetMintAmount(Big(amount0).mul(Big(10).pow(decimals0)).toFixed(0), targetAmount, (response) => {
-      const [_amount0, _amount1, mintAmount] = response;
-      const params =
+    handleGetMintAmount(
+      Big(
         props?.data?.chain_id === 169
-          ? [
-              mintAmount,
-              [
-                ethers.BigNumber.from(Big(_amount0).times(1.002).toFixed(0)),
-                ethers.BigNumber.from(Big(_amount1).times(1.002).toFixed(0))
+          ? amount0
+          : Big(
+              Big(amount0)
+                .times(10 ** 12)
+                .toFixed(0)
+            )
+              .mul(1)
+              .div(10 ** 12)
+      )
+        .mul(Big(10).pow(decimals0))
+        .toFixed(0),
+      targetAmount,
+      async (response) => {
+        const [_amount0, _amount1, mintAmount] = response;
+        console.log('==_amount0', Big(_amount0).toString());
+        console.log('==_amount1', Big(_amount1).toString());
+        console.log('==mintAmount', Big(mintAmount).toString());
+        const params =
+          props?.data?.chain_id === 169
+            ? [
+                mintAmount,
+                [
+                  ethers.BigNumber.from(Big(_amount0).times(1.002).toFixed(0)),
+                  ethers.BigNumber.from(Big(_amount1).times(1.002).toFixed(0))
+                ]
               ]
-            ]
-          : [mintAmount];
-      contract
-        .mint(...params)
-        .then((tx) => {
-          return tx.wait();
-        })
-        .then((receipt) => {
-          const { status, transactionHash } = receipt;
-          addAction?.({
-            type: 'Liquidity',
-            action: 'Deposit',
-            token0,
-            token1,
-            amount: amount0,
-            template: defaultDex,
-            status: status,
-            add: 1,
-            transactionHash,
-            chain_id: props?.data?.chain_id,
-            extra_data: JSON.stringify({
+            : [mintAmount];
+
+        let estimateGas: any = 300000;
+        try {
+          estimateGas = await contract.estimateGas.mint(...params);
+        } catch (error) {
+          console.log('error', error);
+        }
+        contract
+          .mint(...params, {
+            gasLimit: estimateGas ? Big(estimateGas.toString()).mul(1.2).toFixed(0) : 5000000
+          })
+          .then((tx) => {
+            return tx.wait();
+          })
+          .then((receipt) => {
+            const { status, transactionHash } = receipt;
+            addAction?.({
+              type: 'Liquidity',
               action: 'Deposit',
-              amount0,
-              amount1
-            })
-          });
+              token0,
+              token1,
+              amount: amount0,
+              template: defaultDex,
+              status: status,
+              add: 1,
+              transactionHash,
+              chain_id: props?.data?.chain_id,
+              extra_data: JSON.stringify({
+                action: 'Deposit',
+                amount0,
+                amount1
+              })
+            });
 
-          updateState({
-            isLoading: false,
-            isPostTx: true
-          });
+            updateState({
+              isLoading: false,
+              isPostTx: true
+            });
 
-          setTimeout(() => updateState({ isPostTx: false }), 10_000);
+            setTimeout(() => updateState({ isPostTx: false }), 10_000);
 
-          if (refetch) refetch();
+            if (refetch) refetch();
 
-          toast?.dismiss(toastId);
-          toast?.success({
-            title: 'Deposit Successfully!'
+            toast?.dismiss(toastId);
+            toast?.success({
+              title: 'Deposit Successfully!'
+            });
+          })
+          .catch((error) => {
+            console.log('=error', error);
+            updateState({
+              isError: true,
+              isLoading: false,
+              loadingMsg: error
+            });
+            toast?.dismiss(toastId);
+            toast?.fail({
+              title: 'Deposit Failed!',
+              text: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ''
+            });
           });
-        })
-        .catch((error) => {
-          console.log('=error', error);
-          updateState({
-            isError: true,
-            isLoading: false,
-            loadingMsg: error
-          });
-          toast?.dismiss(toastId);
-          toast?.fail({
-            title: 'Deposit Failed!',
-            text: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ''
-          });
-        });
-    });
+      }
+    );
   };
   const handleGetMinAmounts = (shares, callback) => {
     const abi = [

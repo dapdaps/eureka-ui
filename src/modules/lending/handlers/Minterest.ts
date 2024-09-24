@@ -35,16 +35,16 @@ const CTOKEN_ABI = [
 
 const UNITROLLER_ABI = [
   {
-    inputs: [],
-    name: 'enterMarkets',
-    outputs: [],
+    inputs: [{ internalType: 'address[]', name: 'mTokens', type: 'address[]' }],
+    name: 'enableAsCollateral',
+    outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
     stateMutability: 'nonpayable',
     type: 'function'
   },
   {
-    inputs: [],
-    name: 'exitMarket',
-    outputs: [],
+    inputs: [{ internalType: 'address', name: 'mToken', type: 'address' }],
+    name: 'disableAsCollateral',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'nonpayable',
     type: 'function'
   }
@@ -109,11 +109,11 @@ const MinterestHandler = (props: any) => {
       if (!data.address || !data.underlyingToken) return;
       const isEnter = data.actionText === 'Enable as Collateral';
 
-      contract = new ethers.Contract(data.address, UNITROLLER_ABI, provider.getSigner());
+      contract = new ethers.Contract(data.config.collateralAddress, UNITROLLER_ABI, provider.getSigner());
 
-      method = isEnter ? 'enterMarkets' : 'exitMarket';
+      method = isEnter ? 'enableAsCollateral' : 'disableAsCollateral';
 
-      params = isEnter ? [] : [];
+      params = isEnter ? [[data.address]] : [data.address];
     }
 
     if (!contract) return;

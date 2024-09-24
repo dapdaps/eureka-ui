@@ -332,7 +332,7 @@ export default function Connector(props: any) {
               updateState({
                 dataList: data.dataList,
                 loading: false,
-                updater: new Date()
+                updater: new Date().getTime()
               });
             }
           }}

@@ -259,9 +259,9 @@ export default memo(function DuoButton(props) {
   let spender;
   const [state, updateState] = useMultiState({});
   if (actionText === 'Stake') {
-    tokenSymbol = stakeToken.symbol;
-    tokenDecimals = stakeToken.decimals;
-    tokenAddr = stakeToken.address;
+    tokenSymbol = stakeToken?.symbol;
+    tokenDecimals = stakeToken?.decimals;
+    tokenAddr = stakeToken?.address;
     spender = curPointsAndYieldItem[curToken];
   }
   const amountShown = Big(amount || 0).toFixed(tokenDecimals, Big.roundDown);
@@ -637,7 +637,7 @@ export default memo(function DuoButton(props) {
   }, []);
 
   useEffect(() => {
-    if (['Stake'].includes(actionText) && !stakeToken.isNative) {
+    if (['Stake'].includes(actionText) && !stakeToken?.isNative) {
       getAllowance();
     } else {
       updateState({

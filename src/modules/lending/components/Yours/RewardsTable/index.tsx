@@ -18,39 +18,39 @@ const LendingRewardsTable = (props: Props) => {
   const columns =
     Object.keys(dapps)[0] === 'Valas Finance'
       ? [
-        {
-          type: 'name',
-          width: '30%',
-          name: 'Reward Asset'
-        },
-        {
-          type: 'total',
-          key: 'unclaimed',
-          width: '25%',
-          name: 'Rewards'
-        },
-        { type: 'button', width: '20%' }
-      ]
+          {
+            type: 'name',
+            width: '30%',
+            name: 'Reward Asset'
+          },
+          {
+            type: 'total',
+            key: 'unclaimed',
+            width: '25%',
+            name: 'Rewards'
+          },
+          { type: 'button', width: '20%' }
+        ]
       : [
-        {
-          type: 'name',
-          width: '30%',
-          name: 'Reward Asset'
-        },
-        {
-          type: 'total',
-          key: 'dailyReward',
-          width: '25%',
-          name: 'Daily Rewards'
-        },
-        {
-          type: 'total',
-          key: 'unclaimed',
-          width: '25%',
-          name: 'Unclaimed'
-        },
-        { type: 'button', width: '20%' }
-      ];
+          {
+            type: 'name',
+            width: '30%',
+            name: 'Reward Asset'
+          },
+          {
+            type: 'total',
+            key: 'dailyReward',
+            width: '25%',
+            name: 'Daily Rewards'
+          },
+          {
+            type: 'total',
+            key: 'unclaimed',
+            width: '25%',
+            name: 'Unclaimed'
+          },
+          { type: 'button', width: '20%' }
+        ];
 
   return (
     <>
@@ -59,7 +59,7 @@ const LendingRewardsTable = (props: Props) => {
         <LendingYoursTable
           totalReverse={true}
           columns={columns}
-          emptyTips={(
+          emptyTips={
             <NoReward>
               <div>You don&apos;t have unclaimed rewards</div>
               <div
@@ -70,7 +70,7 @@ const LendingRewardsTable = (props: Props) => {
                 $0.00
               </div>
             </NoReward>
-          )}
+          }
           data={props.data}
           buttons={[
             {
@@ -110,6 +110,7 @@ const LendingRewardsTable = (props: Props) => {
             onSuccess?.(state.dapp.name);
           }}
           onError={(err: any) => {
+            console.log('Claim failure: %o', err);
             toast?.dismiss(state.toastId);
             updateState({ loading: false });
             toast?.fail({
