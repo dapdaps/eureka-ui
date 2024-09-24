@@ -240,6 +240,8 @@ const SupplyModal = (props: any) => {
         tx.wait()
           .then((res: any) => {
             const { status, transactionHash } = res;
+            console.log(res, status === 1, 'status === 1');
+
             if (status === 1) {
               formatAddAction(Big(amount).div(Big(10).pow(decimals)).toFixed(8), status, transactionHash);
               onRequestClose();
@@ -260,10 +262,10 @@ const SupplyModal = (props: any) => {
           });
       })
       .catch((err: any) => {
+        console.log(err, '<==Supply===depositETH');
         updateState({
           loading: false
         });
-        console.log(err, '<==Supply===depositETH');
       });
   }
 
@@ -636,6 +638,7 @@ const SupplyModal = (props: any) => {
             disabled={disabled}
             onClick={() => {
               const amount = Big(state.amount).mul(Big(10).pow(decimals)).toFixed(0);
+
               if (symbol === config.nativeCurrency.symbol) {
                 if (['ZeroLend', 'AAVE V3', 'Seamless Protocol', 'C14'].includes(dexConfig.name)) {
                   // supply eth
