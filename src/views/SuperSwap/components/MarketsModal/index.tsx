@@ -47,12 +47,15 @@ const MarketsModal = ({
         </div>
       </StyledHeader>
       <StyledList id="super-swap-dexs">
-        {markets.map((item: any) => (
+        {markets.map((item: any, i: number) => (
           <StyledItem
             isActive={trade?.name === item.name}
             key={item.name}
             onClick={() => {
               onSelectMarket(item);
+            }}
+            style={{
+              opacity: i < 2 ? 1 : 0.6
             }}
           >
             <StyledFlex justifyContent="space-between">

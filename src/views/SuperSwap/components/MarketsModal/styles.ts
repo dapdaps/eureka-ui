@@ -19,17 +19,12 @@ export const StyledList = styled.div`
 
 export const StyledItem = styled.div<{ isActive: boolean }>`
   border-radius: 8px;
-  border: 1px solid #333648;
-  background: #20212d;
+  border: 1px solid #373a53;
   padding: 10px 12px 16px;
   cursor: pointer;
   transition: 0.5s;
-  border: 1px solid;
   margin-top: 10px;
   border-color: ${({ isActive }) => (isActive ? '#ebf479' : '#373A53')};
-  /* &:hover {
-    border-color: #ebf479;
-  } */
 `;
 
 export const StyledIcon = styled.img`

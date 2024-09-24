@@ -194,7 +194,6 @@ export default function useTrade({ chainId }: any) {
           timerRef.current = setTimeout(() => {
             onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
           }, 60000);
-          setTrade({ noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency });
           return;
         }
         cachedCount.current = 1;
