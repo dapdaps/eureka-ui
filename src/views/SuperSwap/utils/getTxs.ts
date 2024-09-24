@@ -123,6 +123,19 @@ export const getAggregatorsTx = async ({
 }: any) => {
   try {
     if (inputCurrency.chainId !== 34443) {
+      let spender = '';
+      if (!inputCurrency.isNative || inputCurrency.chainId === 1088) {
+        const allowanceRes = await get(
+          `/api/dex/okx?url=https://www.okx.com/api/v5/dex/aggregator/approve-transaction&method=GET&params=${JSON.stringify(
+            {
+              chainId: inputCurrency.chainId,
+              approveAmount: amount,
+              tokenContractAddress: inputCurrency.address
+            }
+          )}`
+        );
+        spender = allowanceRes.data[0].dexContractAddress;
+      }
       const result = await get(
         `/api/dex/okx?url=https://www.okx.com/api/v5/dex/aggregator/swap&method=GET&params=${JSON.stringify({
           chainId: inputCurrency.chainId,
@@ -166,7 +179,7 @@ export const getAggregatorsTx = async ({
             ],
 
             noPair: false,
-            routerAddress: data.tx.to,
+            routerAddress: spender,
             template: dex.dexName,
             logo: dex.dexLogo,
             outputCurrencyAmount: Big(data.routerResult.toTokenAmount)
