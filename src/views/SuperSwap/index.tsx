@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
 import type { Token } from '@/types';
 
@@ -33,6 +34,7 @@ export default function SuperSwap() {
   const [inputBlance, setInputBalance] = useState('0');
   const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
+  const { switchChain } = useSwitchChain();
 
   const {
     tokens = [],
@@ -224,7 +226,7 @@ export default function SuperSwap() {
         />
       </StyledMain>
 
-      <PriceBoard />
+      <PriceBoard onSelectChain={onSelectChain} />
       <SelectTokensModal
         tokens={mergedTokens || []}
         display={showTokensSelector}

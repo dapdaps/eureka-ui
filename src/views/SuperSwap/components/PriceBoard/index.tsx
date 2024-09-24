@@ -24,6 +24,7 @@ const StyledTitle = styled.div`
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-left: 130px;
+  margin-top: 20px;
 `;
 
 const Container = styled.div`
@@ -171,14 +172,14 @@ const PriceBoard = ({ onSelectChain }: { onSelectChain: (chain_id: number) => vo
 
     const gridIndexMap = Array(priceData.length).fill({ row: 0, col: 0 });
 
-    gridIndexMap[bestIndex] = { row: 1, col: 15 };
-    gridIndexMap[lowestIndex] = { row: 4, col: 3 };
+    gridIndexMap[bestIndex] = { row: 2, col: 15 };
+    gridIndexMap[lowestIndex] = { row: 5, col: 3 };
 
     const middlePositions = [
-      ...[4, 7, 10, 13].map((col) => ({ row: 2, col })),
-      ...[5, 8, 11, 14].map((col) => ({ row: 3, col })),
-      ...[6, 9, 12, 15].map((col) => ({ row: 4, col })),
-      ...[5, 8, 11, 14].map((col) => ({ row: 5, col }))
+      ...[4, 7, 10, 13].map((col) => ({ row: 3, col })),
+      ...[5, 8, 11, 14].map((col) => ({ row: 4, col })),
+      ...[6, 9, 12, 15].map((col) => ({ row: 5, col })),
+      ...[5, 8, 11, 14].map((col) => ({ row: 6, col }))
     ];
 
     let middlePriceIndex = 0;
