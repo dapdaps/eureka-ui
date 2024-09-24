@@ -37,7 +37,7 @@ const networks = {
   },
   56: {
     unitrollerAddress: '0x589de0f0ccf905477646599bb3e5c622c84cc0ba',
-    oracleAddress: '0xab548FFf4Db8693c999e98551C756E6C2948C408',
+    oracleAddress: '0x6eeDcf47711373E758A0ab4E467a36Bc2151Cd6A',
     markets: {
       '0x1Ffe17B99b439bE0aFC831239dDECda2A790fF3A': {
         decimals: 8,
