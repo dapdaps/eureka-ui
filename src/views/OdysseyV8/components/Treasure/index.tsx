@@ -36,35 +36,35 @@ import {
   Treasure3,
   Treasure4,
   Treasure5,
-  Treasure6,
+  Treasure6
 } from './styles';
 
 const ThrusterCoinListStep2 = [
   {
     key: 1,
     icon: ['/images/odyssey/v4/coin-juice.svg', '/images/odyssey/v4/coin-weth1.svg'],
-    name: ['JUICE', 'WETH'],
+    name: ['JUICE', 'WETH']
   },
   {
     key: 2,
     icon: ['/images/odyssey/v4/coin-pac.svg', '/images/odyssey/v4/coin-weth1.svg'],
-    name: ['PAC', 'WETH'],
+    name: ['PAC', 'WETH']
   },
   {
     key: 3,
     icon: ['/images/odyssey/v4/coin-kap.svg', '/images/odyssey/v4/coin-weth1.svg'],
-    name: ['KAP', 'WETH'],
+    name: ['KAP', 'WETH']
   },
   {
     key: 4,
     icon: ['/images/odyssey/v4/coin-yield.svg', '/images/odyssey/v4/coin-weth1.svg'],
-    name: ['YIELD', 'WETH'],
+    name: ['YIELD', 'WETH']
   },
   {
     key: 5,
     icon: ['/images/odyssey/v4/coin-glory.svg', '/images/odyssey/v4/coin-weth1.svg'],
-    name: ['GLORY', 'WETH'],
-  },
+    name: ['GLORY', 'WETH']
+  }
 ];
 
 export default function Treasure({ strategies }: any) {
@@ -80,7 +80,7 @@ export default function Treasure({ strategies }: any) {
 
   const TrapLayout = {
     borderColor: '#FFDD4D',
-    corner: 34,
+    corner: 34
   };
   const { check } = useAuthCheck({ isNeedAk: true });
   const { account } = useAccount();
@@ -172,7 +172,7 @@ export default function Treasure({ strategies }: any) {
                       ezETH
                       <Image src="/images/odyssey/v4/arrow-white.svg" alt="" width={19} height={16} />
                       <Image
-                        src="https://s3.amazonaws.com/dapdap.prod/images/blast.png"
+                        src="https://s3.amazonaws.com/dapdap.main/images/blast.png"
                         alt=""
                         width={26}
                         height={26}
@@ -483,7 +483,7 @@ export default function Treasure({ strategies }: any) {
               transform: 'translateX(-50%)',
               top: 150,
               marginBottom: 100,
-              width: 900,
+              width: 900
             }}
           >
             <ModalTitle>How to participate in a 2x Gold boosted strategy on Thruster and Hyperlock?</ModalTitle>
@@ -508,7 +508,7 @@ export default function Treasure({ strategies }: any) {
                   style={{
                     marginTop: 15,
                     flexWrap: 'wrap',
-                    gap: '10px 8px',
+                    gap: '10px 8px'
                   }}
                 >
                   {ThrusterCoinListStep1.map((coin) => (
@@ -526,7 +526,7 @@ export default function Treasure({ strategies }: any) {
                 <div
                   className="modal-list-foot"
                   style={{
-                    justifyContent: 'flex-start',
+                    justifyContent: 'flex-start'
                   }}
                 >
                   <ToDappButton onClick={(e: any) => openLink('https://app.thruster.finance/add')}>
@@ -555,7 +555,7 @@ export default function Treasure({ strategies }: any) {
                   alignItems="center"
                   style={{
                     marginTop: 15,
-                    flexWrap: 'wrap',
+                    flexWrap: 'wrap'
                   }}
                 >
                   {ThrusterCoinListStep2.map((coin) => (
@@ -565,7 +565,7 @@ export default function Treasure({ strategies }: any) {
                       name={coin.name}
                       style={{
                         flexBasis: '25%',
-                        marginBottom: 20,
+                        marginBottom: 20
                       }}
                     />
                   ))}
@@ -615,7 +615,7 @@ export default function Treasure({ strategies }: any) {
           <Treasure2 onClick={() => setShowModal6(true)}>
             <Spins
               style={{
-                left: 172,
+                left: 172
               }}
               active={strategies['strategy_thruster_hyperlock']}
             />
@@ -640,7 +640,7 @@ export default function Treasure({ strategies }: any) {
           <Treasure3 onClick={() => setShowModal5(true)}>
             <Spins
               style={{
-                left: -12,
+                left: -12
               }}
               active={strategies['strategy_juice']}
             />
@@ -664,7 +664,7 @@ export default function Treasure({ strategies }: any) {
           <Treasure4 onClick={() => setShowModal2(true)}>
             <Spins
               style={{
-                left: 172,
+                left: 172
               }}
               active={strategies['strategy_renzo_thruster_hyperlock_particle']}
             />
@@ -675,7 +675,7 @@ export default function Treasure({ strategies }: any) {
               width={408}
               height={221}
               style={{
-                top: 120,
+                top: 120
               }}
               className="scale star4"
             />
@@ -685,7 +685,7 @@ export default function Treasure({ strategies }: any) {
           <Treasure5 onClick={() => setShowModal3(true)}>
             <Spins
               style={{
-                left: 170,
+                left: 170
               }}
               active={strategies['strategy_thruster_orbit_juice']}
             />
@@ -698,7 +698,7 @@ export default function Treasure({ strategies }: any) {
               className="scale pac"
               style={{
                 marginRight: 130,
-                top: 120,
+                top: 120
               }}
             />
             <Title className="title title1">
@@ -720,7 +720,7 @@ export default function Treasure({ strategies }: any) {
           <Treasure6 onClick={() => setShowModal4(true)}>
             <Spins
               style={{
-                left: 30,
+                left: 30
               }}
               active={strategies['strategy_thruster_thruster_hyperlock_particle']}
             />
@@ -728,7 +728,7 @@ export default function Treasure({ strategies }: any) {
             <Image
               src="/images/odyssey/v4/star3.svg"
               style={{
-                top: 120,
+                top: 120
               }}
               alt=""
               width={340}
@@ -760,11 +760,11 @@ export default function Treasure({ strategies }: any) {
           open={!!selectedPool}
           dapp={{
             path: 'thruster-liquidity',
-            name: 'Thruster Pool',
+            name: 'Thruster Pool'
           }}
           chain={{
             chain_id: 81457,
-            name: 'Blast',
+            name: 'Blast'
           }}
           defaultTokens={selectedPool}
           onClose={() => {

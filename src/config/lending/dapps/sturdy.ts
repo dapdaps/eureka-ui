@@ -2,7 +2,7 @@ import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'Sturdy',
-  icon: 'https://s3.amazonaws.com/dapdap.prod/images/sturdy.png',
+  icon: 'https://s3.amazonaws.com/dapdap.main/images/sturdy.png',
   data: 'bluebiu.near/widget/Lending.Sturdy.Data',
   // handler: '',
   type: 'borrow and earn',

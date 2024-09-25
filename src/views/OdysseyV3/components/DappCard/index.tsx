@@ -17,13 +17,13 @@ import {
   StyledDappWrapper,
   StyledFooter,
   StyledFooterActions,
-  StyledTop,
+  StyledTop
 } from './styles';
 
 const ICON_MAP: any = {
-  'Li.Fi': 'https://s3.amazonaws.com/dapdap.prod/images/lifi.png',
-  Stargate: 'https://s3.amazonaws.com/dapdap.prod/images/stargate.png',
-  Orbiter: '/images/apps/orbiter.png',
+  'Li.Fi': 'https://s3.amazonaws.com/dapdap.main/images/lifi.png',
+  Stargate: 'https://s3.amazonaws.com/dapdap.main/images/stargate.png',
+  Orbiter: '/images/apps/orbiter.png'
 };
 
 export default function DappCard({
@@ -36,7 +36,7 @@ export default function DappCard({
   times,
   spins,
   total_spins,
-  onRefreshDetail,
+  onRefreshDetail
 }: any) {
   const [execution, setExecution] = useState(0);
   const { checking, handleRefresh } = useCheck({ id, total_spins, spins }, (_times: number) => {
@@ -59,7 +59,7 @@ export default function DappCard({
     if (source === 'wallet/bridge') {
       setLayout({
         showAccountSider: true,
-        defaultTab: 'bridge',
+        defaultTab: 'bridge'
       });
       return;
     }

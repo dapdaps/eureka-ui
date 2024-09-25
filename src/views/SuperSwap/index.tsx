@@ -3,7 +3,9 @@ import Big from 'big.js';
 import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import networks from '@/config/swap/networks';
 import useAccount from '@/hooks/useAccount';
+import useSwitchChain from '@/hooks/useSwitchChain';
 import { useImportTokensStore } from '@/stores/import-tokens';
 import type { Token } from '@/types';
 
@@ -32,6 +34,7 @@ export default function SuperSwap() {
   const [inputBlance, setInputBalance] = useState('0');
   const { importTokens, addImportToken }: any = useImportTokensStore();
   // const [showChart, setShowChart] = useState(false);
+  const { switchChain } = useSwitchChain();
 
   const {
     tokens = [],
@@ -117,6 +120,7 @@ export default function SuperSwap() {
   }, [inputCurrency, outputCurrency, inputCurrencyAmount, inputBlance]);
 
   useEffect(() => {
+    if (!chainId) return;
     setInputCurrencyAmount('');
     setInputCurrency(null as any);
     setOutputCurrency(null as any);
@@ -140,6 +144,10 @@ export default function SuperSwap() {
       }, 0);
     }
   }, [inputCurrency, outputCurrency, trade, runQuoter]);
+
+  const onSelectChain = useCallback((chainId: number) => {
+    switchChain({ chainId });
+  }, []);
 
   return (
     <StyledContainer>
@@ -199,7 +207,7 @@ export default function SuperSwap() {
             disabled={!trade?.txn}
             currentChain={currentChain}
             onRefresh={() => {
-              if (!trade.txn) onUpdateTxn(trade);
+              if (!trade.txn && trade.from === 'Dapdap') onUpdateTxn(trade);
             }}
           />
         </StyledContent>
@@ -218,7 +226,7 @@ export default function SuperSwap() {
         />
       </StyledMain>
 
-      <PriceBoard />
+      <PriceBoard onSelectChain={onSelectChain} />
       <SelectTokensModal
         tokens={mergedTokens || []}
         display={showTokensSelector}

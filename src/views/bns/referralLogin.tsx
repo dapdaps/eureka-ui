@@ -20,7 +20,7 @@ import {
   StyledInvitedAward,
   StyledLoginConnectWalletButton,
   StyledLoginVideo,
-  StyledText,
+  StyledText
 } from './styles';
 
 const StyledUserContainer = styled.div`
@@ -31,55 +31,50 @@ const StyledUserContainer = styled.div`
   gap: 8px;
   font-size: 18px;
   font-weight: 400;
-  color: #979ABE;
-`
+  color: #979abe;
+`;
 const StyledUser = styled.div`
   min-width: 169px;
   height: 60px;
   padding: 12px 20px 9px 14px;
   border-radius: 72px;
-  border: 1px solid #373A53;
-  background: #1B1E27;
+  border: 1px solid #373a53;
+  background: #1b1e27;
   display: flex;
   align-items: center;
   gap: 8px;
-`
+`;
 const StyledUserAvatar = styled.div`
   width: 36px;
   height: 36px;
   border-radius: 50%;
   overflow: hidden;
-`
-const StyledUserMessage = styled.div`
-  
-`
+`;
+const StyledUserMessage = styled.div``;
 const StyledUserName = styled.div`
-  color: #FFF;
+  color: #fff;
   font-family: Montserrat;
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-`
+`;
 const StyledUserAddress = styled.div`
-  color: #FFF;
+  color: #fff;
   font-family: Montserrat;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-`
+`;
 
 const LoginView = () => {
-  const router = useRouter()
+  const router = useRouter();
   const [{ wallet, connecting }, connect, disconnect] = useConnectWallet();
   const { queryUserInfo } = useInititalDataWithAuth();
-  const toast = useToast()
+  const toast = useToast();
   const [address, setAddress] = useState('');
-  const {
-    inviter
-  } = useGetInviter(router?.query?.inviteCode)
-
+  const { inviter } = useGetInviter(router?.query?.inviteCode);
 
   async function checkAddress() {
     const res: any = await get(`/api/invite/check-address/${address}`);
@@ -123,7 +118,7 @@ const LoginView = () => {
       {/* <ConfirmOfficialUrl /> */}
       <StyledImage>
         <StyledLoginVideo width={824} height={636} autoPlay muted playsInline loop>
-          <source src="https://s3.amazonaws.com/dapdap.prod/images/login_background.mp4" type="video/mp4" />
+          <source src="https://s3.amazonaws.com/dapdap.main/images/login_background.mp4" type="video/mp4" />
           <track src="/path/to/captions.vtt" kind="subtitles" srcLang="en" label="English" />
           Your browser does not support the video tag.
         </StyledLoginVideo>
@@ -134,32 +129,25 @@ const LoginView = () => {
         </StyledImage>
         {/* <StyledInvitedUsers>Invited users only</StyledInvitedUsers> */}
 
-        {
-          inviter && (
-            <StyledUserContainer>
-              <StyledText
-                $color='#979ABE'
-                $size='18px'>
-                Invited by
-              </StyledText>
-              <StyledUser>
-                <StyledUserAvatar>
-                  <Image width={36} height={36} src={inviter.avatar} alt='avator' />
-                </StyledUserAvatar>
-                <StyledUserMessage>
-                  {
-                    inviter?.username && (
-                      <StyledUserName>{inviter?.username}</StyledUserName>
-                    )
-                  }
-                  <StyledUserAddress>{ellipsAccount(inviter?.address)}</StyledUserAddress>
-                </StyledUserMessage>
-              </StyledUser>
-            </StyledUserContainer>
-          )
-        }
+        {inviter && (
+          <StyledUserContainer>
+            <StyledText $color="#979ABE" $size="18px">
+              Invited by
+            </StyledText>
+            <StyledUser>
+              <StyledUserAvatar>
+                <Image width={36} height={36} src={inviter.avatar} alt="avator" />
+              </StyledUserAvatar>
+              <StyledUserMessage>
+                {inviter?.username && <StyledUserName>{inviter?.username}</StyledUserName>}
+                <StyledUserAddress>{ellipsAccount(inviter?.address)}</StyledUserAddress>
+              </StyledUserMessage>
+            </StyledUser>
+          </StyledUserContainer>
+        )}
         <StyledInvitedAward>
-          💡You’ve been invited to join DapDap! By joining through this referral link and completing a valid transaction, you’ll help your friend progress toward earning the Promotional Maestro Medal.
+          💡You’ve been invited to join DapDap! By joining through this referral link and completing a valid
+          transaction, you’ll help your friend progress toward earning the Promotional Maestro Medal.
         </StyledInvitedAward>
         <StyledLoginConnectWalletButton
           onClick={() => {
