@@ -236,7 +236,7 @@ const chainCofig = {
   534352: {
     chainId: 534352,
     chainName: 'Scroll',
-    icon: 'https://s3.amazonaws.com/dapdap.main/images/scroll.png',
+    icon: 'https://s3.amazonaws.com/dapdap.main/images/scroll-chainicon.png',
     nativeCurrency: { name: 'ETH', symbol: 'ETH', decimals: 18 },
     rpcUrls: ['https://rpc.scroll.io', 'https://rpc.ankr.com/scroll', 'https://scroll.blockpi.network/v1/rpc/public'],
     blockExplorers: 'https://scrollscan.com/'
