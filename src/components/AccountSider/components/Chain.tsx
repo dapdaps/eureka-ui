@@ -1,14 +1,13 @@
 import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
-import { useSetChain } from '@web3-onboard/react';
 import { motion } from 'framer-motion';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { overlay } from '@/components/animation';
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
-import { chains } from '@/config/bridge';
 import useSortChains from '@/hooks/useSortChains';
+import useSwitchChain from '@/hooks/useSwitchChain';
 
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '56px')};
@@ -25,17 +24,16 @@ const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   padding: 0 5px;
   margin-top: ${({ $mt }) => $mt + 'px'};
   cursor: pointer;
-  
+
   &.empty-chain {
     &:hover {
-      background: #18191E;
+      background: #18191e;
     }
   }
-  
-  &.has-chain {
-    background: #18191E;
-  }
 
+  &.has-chain {
+    background: #18191e;
+  }
 `;
 const StyledChain = styled.div`
   display: flex;
@@ -69,7 +67,7 @@ const ChainList = styled.div<{ display?: number }>`
   z-index: 200;
   padding: 12px 0;
   border: 1px solid #333648;
-  background: #1F2229;
+  background: #1f2229;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 `;
 const ChainItem = styled(StyledChain)<{ active?: number }>`
@@ -118,7 +116,7 @@ const Chain = ({
   showName = true,
   showChains,
   setShowChains,
-  bp,
+  bp
 }: {
   mt?: number;
   showName?: boolean;
@@ -126,13 +124,9 @@ const Chain = ({
   setShowChains?: (show: boolean) => void;
   bp?: string;
 }) => {
-
   const { sortedChains } = useSortChains();
-  const [{ connectedChain, settingChain }, setChain] = useSetChain();
-  const currentChain: any = useMemo(
-    () => (connectedChain?.id ? chains[Number(connectedChain?.id)] : null),
-    [connectedChain?.id],
-  );
+  const { switchChain, switching, currentChain } = useSwitchChain();
+
   const [showList, setShowList] = useState(false);
   const [showEmptyChainTips, setShowEmptyChainTips] = useState(false);
 
@@ -157,8 +151,8 @@ const Chain = ({
       }}
     >
       <StyledChain>
-        {currentChain && !settingChain && <ChainLogo src={currentChain.icon} />}
-        {!currentChain && !settingChain && (
+        {currentChain && !switching && <ChainLogo src={currentChain.icon} />}
+        {!currentChain && !switching && (
           <EmptyChainLogo
             onMouseEnter={() => {
               !showName && setShowEmptyChainTips(true);
@@ -189,9 +183,9 @@ const Chain = ({
             )}
           </EmptyChainLogo>
         )}
-        {settingChain && <Loading />}
+        {switching && <Loading />}
         {showName && (
-          <ChainName>{settingChain ? 'Request' : currentChain ? currentChain.chainName : 'Select Network'}</ChainName>
+          <ChainName>{switching ? 'Request' : currentChain ? currentChain.chainName : 'Select Network'}</ChainName>
         )}
       </StyledChain>
       <ArrowIconWrapper>
@@ -202,7 +196,7 @@ const Chain = ({
           <ChainItem
             key={chain.chainId}
             onClick={() => {
-              setChain({ chainId: `0x${chain.chainId.toString(16)}` });
+              switchChain(chain.chainId);
             }}
             active={chain.chainId === currentChain?.chainId ? 1 : 0}
             data-bp={bp}
