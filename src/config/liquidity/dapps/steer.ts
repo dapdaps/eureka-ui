@@ -1,6 +1,6 @@
 const basic = {
-  name: 'Steer',
-  icon: 'https://s3.amazonaws.com/dapdap.prod/images/154-steerfinance.png',
+  name: 'steer',
+  icon: 'https://s3.amazonaws.com/dapdap.main/images/154-steerfinance.png',
   dappSrc: 'bluebiu.near/widget/Liquidity.STEER',
   amountOutFn: 'bluebiu.near/widget/Liquidity.STEER',
   ICON_VAULT_MAP: {

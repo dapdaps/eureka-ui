@@ -15,7 +15,7 @@ import {
   StyledImage,
   StyledImageWrapper,
   StyledSubtitle,
-  StyledTitle,
+  StyledTitle
 } from './styles';
 
 const CARDS = [
@@ -28,8 +28,8 @@ const CARDS = [
     name: 'Linea',
     icon: '/images/chains/linea_white.svg',
     bg: 'linear-gradient(180deg, #2697ff 0%, #21232a 100%)',
-    path: '/onboarding/linea',
-  },
+    path: '/onboarding/linea'
+  }
 ];
 
 const QuickOnboarding = () => {
@@ -43,7 +43,7 @@ const QuickOnboarding = () => {
       </StyledSubtitle>
       <StyledImageWrapper>
         <video controls width="700">
-          <source src="https://s3.amazonaws.com/dapdap.prod/images/Quick+onboarding.mp4" type="video/mp4" />
+          <source src="https://s3.amazonaws.com/dapdap.main/images/Quick+onboarding.mp4" type="video/mp4" />
         </video>
         <StyledCards>
           {CARDS.map((card: any) => (
