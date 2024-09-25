@@ -1,6 +1,5 @@
 import Big from 'big.js';
 import { providers } from 'ethers';
-import { uniqBy } from 'lodash';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import chains from '@/config/chains';
@@ -15,7 +14,7 @@ import type { Token } from '@/types';
 
 import customTokens from '../config/tokens';
 import getAggregatorTokens from '../utils/getAggregatorTokens';
-import { getAggregatorsTx, getDappTx, getWrapTx, updateDappTx } from '../utils/getTxs';
+import { getTxs, getWrapTx, LEN, updateDappTx } from '../utils/getTxs';
 import { useUpdateBalanceStore } from './useUpdateBalanceStore';
 
 export default function useTrade({ chainId }: any) {
@@ -134,19 +133,6 @@ export default function useTrade({ chainId }: any) {
         if (cachedChainId.current !== inputCurrency.chainId) {
           return;
         }
-        setLoading(false);
-        if (cachedCount.current === 0) {
-          setBestTrade(_markets[0]);
-          setTrade(
-            _markets[0]
-              ? { ..._markets[0], inputCurrency, inputCurrencyAmount, outputCurrency }
-              : { noPair: true, inputCurrency, inputCurrencyAmount, outputCurrency }
-          );
-          setMarkets(_markets);
-          cachedMarkets.current = _markets;
-          cachedCount.current = 1;
-          return;
-        }
 
         const marketsObj: any = {};
 
@@ -165,18 +151,19 @@ export default function useTrade({ chainId }: any) {
           (a: any, b: any) => b.outputCurrencyAmount - a.outputCurrencyAmount
         );
 
-        if (mergedMarkets.length) {
-          setBestTrade(mergedMarkets[0]);
-          setTrade(mergedMarkets[0]);
-        }
-
+        setLoading(false);
+        setBestTrade(mergedMarkets?.[0] || null);
+        setTrade(mergedMarkets?.[0] || null);
         setMarkets(mergedMarkets);
-        cachedMarkets.current = [];
-        cachedCount.current = 0;
-        setQuoting(false);
-        timerRef.current = setTimeout(() => {
-          onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
-        }, 60000);
+        cachedMarkets.current = mergedMarkets;
+        cachedCount.current = cachedCount.current + 1;
+
+        if (cachedCount.current === LEN) {
+          setQuoting(false);
+          timerRef.current = setTimeout(() => {
+            onQuoter({ inputCurrency, outputCurrency, inputCurrencyAmount });
+          }, 60000);
+        }
       };
 
       const onQuoterError = () => {
@@ -186,7 +173,7 @@ export default function useTrade({ chainId }: any) {
         if (cachedChainId.current !== inputCurrency.chainId) {
           return;
         }
-        if (cachedCount.current === 1) {
+        if (cachedCount.current === LEN) {
           setLoading(false);
           cachedCount.current = 0;
           cachedMarkets.current = [];
@@ -196,10 +183,10 @@ export default function useTrade({ chainId }: any) {
           }, 60000);
           return;
         }
-        cachedCount.current = 1;
+        cachedCount.current = cachedCount.current + 1;
       };
 
-      getAggregatorsTx({
+      getTxs({
         inputCurrency,
         outputCurrency,
         inputCurrencyAmount,
@@ -209,24 +196,7 @@ export default function useTrade({ chainId }: any) {
         rawBalance,
         gasPrice,
         prices,
-        onCallBack: (_market: any) => {
-          onQuoterCallback([_market]);
-        },
-        onError: onQuoterError
-      });
-
-      getDappTx({
-        inputCurrency,
-        outputCurrency,
-        inputCurrencyAmount,
-        rawBalance,
-        gasPrice,
-        slippage,
-        account,
-        prices,
-        onCallBack: (_markets: any) => {
-          onQuoterCallback(_markets);
-        },
+        onCallBack: onQuoterCallback,
         onError: onQuoterError
       });
     } catch (err) {

@@ -199,7 +199,7 @@ export default function SuperSwap() {
             disabled={!trade?.txn}
             currentChain={currentChain}
             onRefresh={() => {
-              if (!trade.txn) onUpdateTxn(trade);
+              if (!trade.txn && trade.from === 'Dapdap') onUpdateTxn(trade);
             }}
           />
         </StyledContent>
