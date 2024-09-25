@@ -285,6 +285,7 @@ const SturdyData = (props: any) => {
       for (let i = 0; i < rawMarkets.length; i++) {
         rawMarkets[i].underlyingPrice = prices[rawMarkets[i].underlyingToken.symbol] || 1;
         rawMarkets[i].borrowTokenPrice = prices[rawMarkets[i].borrowToken.symbol] || 1;
+        rawMarkets[i].borrowToken.price = rawMarkets[i].borrowTokenPrice;
 
         rawMarkets[i].totalSupplied = formatUnits(_totalSupplyRes[i][0], rawMarkets[i].borrowToken.decimals).toString();
         rawMarkets[i].totalSupplyUsd = Big(rawMarkets[i].totalSupplied)

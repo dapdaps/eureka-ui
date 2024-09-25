@@ -1,4 +1,5 @@
 import Big from 'big.js';
+import { isArray } from 'lodash';
 import { useEffect, useMemo } from 'react';
 
 import LendingMarketInput from '@/modules/lending/components/Markets/Input';
@@ -15,17 +16,24 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
 
   const {
     underlyingToken,
-    borrowToken,
+    borrowToken: _borrowToken,
     userUnderlyingBalance,
     userBorrowBalance,
     underlyingPrice,
-    borrowTokenPrice,
     yourBorrow,
     yourLends,
     yourCollateral,
     maxLTV,
-    exchangeRate
+    exchangeRate,
+    dapp
   } = data;
+
+  const borrowToken = useMemo(() => {
+    if (isArray(_borrowToken)) {
+      return state.currentBorrowToken;
+    }
+    return _borrowToken;
+  }, [_borrowToken, state.currentBorrowToken]);
 
   const onAmountChange = (amount: string) => {
     if (isNaN(Number(amount))) return;
@@ -52,6 +60,7 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
   };
 
   const getPrice = (symbol: string) => {
+    if (borrowToken.price) return borrowToken.price;
     if (symbol === 'weETH.mode') {
       return prices['weETH'];
     }
@@ -82,6 +91,9 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
 
   const balance = useMemo(() => {
     if (state.tab === 'Add Collateral') {
+      if (dapp === 'Dolomite') {
+        return yourLends;
+      }
       return userUnderlyingBalance;
     }
     if (state.tab === 'Remove Collateral') {
@@ -97,6 +109,9 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
       return bigMin(userBorrowBalance, yourBorrow);
     }
     if (state.tab === 'Supply') {
+      if (dapp === 'Dolomite') {
+        return userUnderlyingBalance;
+      }
       return userBorrowBalance;
     }
     if (state.tab === 'Withdraw') {
@@ -153,9 +168,15 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
       symbol={borrowToken?.symbol}
       decimals={borrowToken?.decimals}
       balance={balance}
-      price={borrowTokenPrice}
+      price={borrowToken?.price}
       amount={state.amount}
       onChange={onAmountChange}
+      tokenList={_borrowToken}
+      onTokenChange={(token) => {
+        updateState({
+          currentBorrowToken: token
+        });
+      }}
     />
   );
 };
