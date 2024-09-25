@@ -83,8 +83,6 @@ export default memo(function Detail(props: any) {
   const symbol = id;
   const vaultAddress = addresses[symbol];
 
-  const tokensPrice = prices;
-
   const isInSufficient = Number(inAmount) > Number(balances[symbol]);
 
   const isWithdrawInsufficient = Number(lpAmount) > Number(lpBalance);

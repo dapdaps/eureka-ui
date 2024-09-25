@@ -1,7 +1,7 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from 'react';
+import { memo, useMemo } from 'react';
 import { useEffect } from 'react';
 import styled from 'styled-components';
 
@@ -16,6 +16,7 @@ import {
   DetailWrapper,
   FilterButton,
   FilterButtonList,
+  Input,
   InputSuffix,
   InputWrap,
   InputWrapList,
@@ -26,57 +27,6 @@ import {
   StyledImageList,
   TotalPrice
 } from '../styles';
-
-const Panel = styled.div`
-  width: 500px;
-  margin: 0 auto 20px;
-  border-radius: 12px;
-  border: 1px solid rgba(55, 58, 83, 1);
-  background-color: rgba(46, 49, 66, 1);
-  padding: 15px;
-  margin-bottom: 20px;
-  .title {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16.8px;
-    color: rgba(151, 154, 190, 1);
-  }
-  .body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-  }
-
-  .foot {
-    margin-top: 10px;
-    display: flex;
-    justify-content: center;
-    justify-content: space-between;
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 14.4px;
-    color: rgba(151, 154, 190, 1);
-  }
-`;
-const Input = styled.input`
-  color: #fff;
-  font-size: 20px;
-  font-weight: 500;
-  border: none;
-  height: 24px;
-  width: 300px;
-  outline: none;
-  background-color: transparent;
-  padding: 0;
-  &:focus {
-    color: #fff;
-    background-color: transparent;
-    border-color: transparent;
-    outline: none;
-    box-shadow: none;
-  }
-`;
 
 const ABI = [
   {
@@ -125,139 +75,131 @@ const ABI = [
   }
 ];
 export default memo(function Detail(props) {
-  const { account, provider, data, toast, prices, defaultDex, addAction, userPositions, dexConfig } = props;
-
-  const { formatUnits, parseUnits } = ethers.utils;
-  const { tokenList } = dexConfig;
+  const { account, provider, data, toast, prices, refetch, defaultDex, addAction, userPositions, dexConfig } = props;
   const defaultDeposit = props.tab === 'deposit' || !props.tab;
 
-  const curPositionUSD = userPositions && userPositions[data.vaultAddress]?.balanceUSD;
-
-  const _options = tokenList.map((item) => ({
-    text: item.symbol,
-    value: item.symbol,
-    icons: [item.icon]
-  }));
-
+  const curPositionUSD = userPositions && userPositions[data.VAULT_ADDRESS]?.balanceUSD;
   const [state, updateState] = useMultiState({
     isDeposit: defaultDeposit,
     lpBalance: '',
     balances: {},
-    amount0: '',
-    amount1: '',
+    inAmount: '',
     lpAmount: '',
     isError: false,
     isLoading: false,
-    isToken0Approved: true,
-    isToken1Approved: true,
-    isToken0Approving: false,
-    isToken1Approving: false,
+    isTokenApproved: true,
+    isTokenApproving: false,
     loadingMsg: '',
     isPostTx: false,
     showPairs: false,
-    updater: 0,
-    options: _options
+    updater: 0
   });
 
-  const { vaultAddress, token0, token1, decimals0, decimals1, totalAmount0, totalAmount1, totalSupply } = data;
-
+  const sourceBalances = {};
   const {
     isDeposit,
     balances,
-    amount0,
-    amount1,
+    inAmount,
     isLoading,
     isError,
-    isToken0Approved,
-    isToken1Approved,
-    isToken0Approving,
-    isToken1Approving,
+    isTokenApproved,
+    isTokenApproving,
     loadingMsg,
     lpBalance,
     lpAmount,
     isPostTx
   } = state;
 
-  const detailLoading = false;
-  function isValid(a) {
-    if (!a) return false;
-    if (isNaN(Number(a))) return false;
-    if (a === '') return false;
-    return true;
-  }
-  // const updateLPBalance = () => {
-  //   console.log('updateLPBalance--');
-  //   const abi = ['function balanceOf(address) view returns (uint256)'];
-  //   const vaultContract = new ethers.Contract(vaultAddress, abi, provider);
-  //   vaultContract.balanceOf(account).then((balanceBig) => {
-  //     const adjustedBalance = formatUnits(balanceBig, 18);
-  //     updateState({
-  //       lpBalance: adjustedBalance
-  //     });
-  //   });
-  // };
+  const sender = account;
+  const { VAULT_ADDRESS, LP_ADDRESS, id, token0, token1, decimals } = data;
+  const symbol = id;
+  const isInSufficient = Number(inAmount) > Number(balances[symbol]);
+  const isWithdrawInsufficient = Number(lpAmount) > Number(lpBalance);
+
+  // const inAmountUsd =
+  const balanceLp = useMemo(() => {
+    const amount = isDeposit ? inAmount : lpAmount;
+    if (!amount) return '-';
+    return '$ ' + Big(data?.detail?.price).times(amount).toFixed(2);
+  }, [inAmount, lpAmount, isDeposit]);
+  const updateLPBalance = async () => {
+    const abi = [
+      'function balanceOf(address) view returns (uint256)',
+      {
+        inputs: [],
+        name: 'getPricePerFullShare',
+        outputs: [
+          {
+            internalType: 'uint256',
+            name: '',
+            type: 'uint256'
+          }
+        ],
+        stateMutability: 'view',
+        type: 'function'
+      }
+    ];
+    const contract = new ethers.Contract(VAULT_ADDRESS, abi, provider);
+    const balanceOfResult = (await contract.balanceOf(account)) || 0;
+    const getPricePerFullShareResult = (await contract.getPricePerFullShare()) || 0;
+    updateState({
+      lpBalance: Big(ethers.utils.formatUnits(balanceOfResult))
+        .times(ethers.utils.formatUnits(getPricePerFullShareResult))
+        .toFixed(18)
+    });
+  };
   const updateBalance = () => {
-    console.log('=====');
-    // provider.getBalance(account).then((balanceBig) => {
-    //   const adjustedBalance = formatUnits(balanceBig);
-    //   console.log('====adjustedBalance', adjustedBalance)
-    //   tokenList.forEach(token => {
-    //     console.log(token?.symbol, '======', Big(Big(prices['ETH']).div(prices[token?.symbol])).times(formatUnits(balanceBig, 18)).toString())
-    //   })
-    // });
+    const abi = ['function balanceOf(address) view returns (uint256)'];
+    const contract = new ethers.Contract(LP_ADDRESS, abi, provider.getSigner());
+    contract
+      .balanceOf(sender)
+      .then((balanceBig) => {
+        const adjustedBalance = Big(ethers.utils.formatUnits(balanceBig)).toFixed();
+        sourceBalances[symbol] = adjustedBalance;
+        updateState({
+          balances: sourceBalances
+        });
+      })
+      .catch((error: Error) => {
+        console.log('error: ', error);
+        setTimeout(() => {
+          updateBalance(token);
+        }, 1500);
+      });
+  };
+  const checkApproval = (amount) => {
+    const wei: any = ethers.utils.parseUnits(Big(amount).toFixed(decimals), decimals);
+    const abi = ['function allowance(address, address) external view returns (uint256)'];
+    const contract = new ethers.Contract(LP_ADDRESS, abi, provider.getSigner());
+    updateState({
+      isTokenApproved: false
+    });
+    contract
+      .allowance(sender, VAULT_ADDRESS)
+      .then((allowance: any) => {
+        const approved = !new Big(allowance.toString()).lt(wei);
+        updateState({
+          isTokenApproved: approved
+        });
+      })
+      .catch((e: Error) => console.log(e));
   };
   const changeMode = (isDeposit) => {
     updateState({ isDeposit });
   };
-  const handleMax = (isToken0) => {
-    if (isToken0) handleToken0Change(balances[token0]);
-    else handleToken1Change(balances[token1]);
+  const handleMax = () => {
+    handleTokenChange(balances[symbol]);
   };
-  const handleToken0Change = (amount) => {
-    updateState({ amount0: amount });
+  const handleTokenChange = (amount) => {
+    updateState({ inAmount: amount });
     if (Number(amount) === 0) {
       updateState({
-        amount1: '',
-        isToken0Approved: true,
-        isToken1Approved: true
+        inAmount: 0,
+        isTokenApproved: true
       });
       return;
     }
-
-    updateState({
-      isLoading: true,
-      isError: false,
-      loadingMsg: 'Computing deposit amount...'
-    });
-
-    const amount1 = calcAmount1(amount);
-    updateState({ amount1 });
-    updateState({ isLoading: false });
-    checkApproval(amount, amount1);
-  };
-
-  const handleToken1Change = (amount) => {
-    updateState({ amount1: amount });
-
-    if (Number(amount) === 0) {
-      updateState({
-        amount0: '',
-        isToken0Approved: true,
-        isToken1Approved: true
-      });
-      return;
-    }
-
-    updateState({
-      isLoading: true,
-      isError: false,
-      loadingMsg: 'Computing deposit amount...'
-    });
-
-    const amount0 = calcAmount0(amount);
-    updateState({ amount0 });
-    updateState({ isLoading: false });
-    checkApproval(amount0, amount);
+    checkApproval(amount);
   };
 
   const handleLPChange = (amount) => {
@@ -266,63 +208,126 @@ export default memo(function Detail(props) {
     });
   };
 
-  const handleDeposit = () => {
+  const handleApprove = () => {
+    const payload = { isTokenApproving: true };
+    const amount = Big(inAmount).toFixed(decimals);
+    const toastId = toast?.loading({
+      title: `Approve ${symbol}`
+    });
+    updateState({
+      ...payload,
+      isLoading: true,
+      loadingMsg: `Approving ${symbol}...`
+    });
+
+    const wei = ethers.utils.parseUnits(amount, decimals);
+
+    const abi = ['function approve(address, uint) public'];
+
+    const contract = new ethers.Contract(LP_ADDRESS, abi, provider.getSigner());
+
+    contract
+      .approve(VAULT_ADDRESS, wei)
+      .then((tx: any) => tx.wait())
+      .then((receipt: any) => {
+        const payload = { isTokenApproved: true, isTokenApproving: false };
+        updateState({ ...payload, isLoading: false, loadingMsg: '' });
+        toast?.dismiss(toastId);
+        toast?.success({
+          title: 'Approve Successfully!',
+          tx: receipt.transactionHash,
+          chainId: props.chainId
+        });
+      })
+      .catch((error: Error) => {
+        console.log('error: ', error);
+        updateState({
+          isError: true,
+          isLoading: false,
+          loadingMsg: error?.message,
+          isTokenApproving: false
+        });
+        toast?.dismiss(toastId);
+        toast?.fail({
+          title: 'Approve Failed!',
+          text: error?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
+        });
+      });
+  };
+
+  const handleDeposit = async () => {
     const toastId = toast?.loading({
       title: `Depositing...`
     });
     updateState({
+      toastId,
       isLoading: true,
       isError: false,
       loadingMsg: 'Depositing...'
     });
-
-    const token0Wei = parseUnits(Big(amount0).times(1.01).toFixed(decimals0), decimals0);
-    const token1Wei = parseUnits(Big(amount1).times(1.01).toFixed(decimals1), decimals1);
-    const _shares = parseUnits(calcShares(amount0));
-
-    const depositContract = new ethers.Contract(vaultAddress, ABI, provider.getSigner());
-    depositContract
-      .deposit(_shares, token0Wei, token1Wei)
-      .then((tx) => {
-        return tx.wait();
+    const wei = ethers.utils.parseUnits(Big(inAmount).toFixed(decimals), decimals);
+    const abi = [
+      {
+        inputs: [
+          {
+            internalType: 'uint256',
+            name: '_amount',
+            type: 'uint256'
+          }
+        ],
+        name: 'deposit',
+        outputs: [],
+        stateMutability: 'nonpayable',
+        type: 'function'
+      }
+    ];
+    const contract = new ethers.Contract(VAULT_ADDRESS, abi, provider.getSigner());
+    let estimateGas = new Big(1000000);
+    try {
+      estimateGas = await contract.estimateGas(wei);
+    } catch (err: any) {
+      if (err?.code === 'UNPREDICTABLE_GAS_LIMIT') {
+        estimateGas = new Big(6000000);
+      }
+    }
+    contract
+      .deposit(wei, {
+        gasLimit: estimateGas.mul(120).div(100).toString()
       })
-      .then((receipt) => {
+      .then((tx) => tx.wait())
+      .then((receipt: any) => {
         const { status, transactionHash } = receipt;
-
         addAction?.({
-          type: 'Liquidity',
-          action: 'Deposit',
-          token0,
-          token1,
-          amount: amount0,
+          type: 'Staking',
+          action: 'Stake',
+          token: `${token0} / ${token1}`,
+          amount: inAmount,
           template: defaultDex,
-          status: status,
           add: false,
-          transactionHash,
-          chain_id: props.chainId
+          status,
+          transactionHash
         });
 
         updateState({
-          amount0: '',
-          amount1: '',
           isLoading: false,
-          isPostTx: true,
-          updater: new Date().getTime()
+          isPostTx: true
         });
 
         setTimeout(() => updateState({ isPostTx: false }), 10_000);
+
+        const { refetch } = props;
+        refetch && refetch();
 
         toast?.dismiss(toastId);
         toast?.success({
           title: 'Deposit Successfully!'
         });
       })
-      .catch((error) => {
-        console.log('error: ', error);
+      .catch((error: Error) => {
         updateState({
           isError: true,
           isLoading: false,
-          loadingMsg: error
+          loadingMsg: error?.message
         });
         toast?.dismiss(toastId);
         toast?.fail({
@@ -344,54 +349,72 @@ export default memo(function Detail(props) {
       loadingMsg: 'Withdrawing...'
     });
 
-    const lpWeiAmount = parseUnits(Big(lpAmount).toFixed(18));
-    const { _token0, _token1 } = calcShareToTokens(lpAmount);
-    const token0Amount = parseUnits(Big(_token0).toFixed(decimals0), decimals0);
-    const token1Amount = parseUnits(Big(_token1).toFixed(decimals1), decimals1);
-    const withdrawContract = new ethers.Contract(vaultAddress, ABI, provider.getSigner());
+    const lpWeiAmount = ethers.utils.parseUnits(Big(lpAmount).toFixed(18), 18);
+    const abi = Big(lpAmount).eq(lpBalance)
+      ? [
+          {
+            inputs: [],
+            name: 'withdrawAll',
+            outputs: [],
+            stateMutability: 'nonpayable',
+            type: 'function'
+          }
+        ]
+      : [
+          {
+            inputs: [
+              {
+                internalType: 'uint256',
+                name: '_shares',
+                type: 'uint256'
+              }
+            ],
+            name: 'withdraw',
+            outputs: [],
+            stateMutability: 'nonpayable',
+            type: 'function'
+          }
+        ];
 
-    withdrawContract
-      .withdraw(lpWeiAmount, token0Amount, token1Amount, {
-        gasLimit: 4000000
-      })
-      .then((tx) => {
-        return tx.wait();
-      })
+    const contract = new ethers.Contract(VAULT_ADDRESS, abi, provider.getSigner());
+    const method = Big(lpAmount).eq(lpBalance) ? 'withdrawAll' : 'withdraw';
+    const params = Big(lpAmount).eq(lpBalance) ? [] : [lpWeiAmount];
+    contract[method](...params)
+      .then((tx) => tx.wait())
       .then((receipt) => {
         updateState({
-          lpAmount: '',
           isLoading: false,
-          isPostTx: true,
-          updater: new Date().getTime()
+          isPostTx: true
         });
-
         const { status, transactionHash } = receipt;
 
         addAction?.({
-          type: 'Liquidity',
-          action: 'Withdraw',
-          token0,
-          token1,
-          amount: lpAmount,
+          type: 'Staking',
+          action: 'Unstake',
+          token: `${token0} / ${token1}`,
+          amount: inAmount,
           template: defaultDex,
-          status: status,
           add: false,
-          transactionHash,
-          chain_id: state.chainId
+          status,
+          transactionHash
         });
-
         setTimeout(() => updateState({ isPostTx: false }), 10_000);
-
+        const { refetch } = props;
+        if (refetch) {
+          setTimeout(() => {
+            refetch();
+          }, 3000);
+        }
         toast?.dismiss(toastId);
         toast?.success({
           title: 'Withdraw Successfully!'
         });
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         updateState({
           isError: true,
           isLoading: false,
-          loadingMsg: error
+          loadingMsg: error?.message
         });
         toast?.dismiss(toastId);
         toast?.fail({
@@ -403,9 +426,23 @@ export default memo(function Detail(props) {
       });
   };
 
+  const onUpdateLpPercent = (percent: number) => {
+    updateState({
+      lpPercent: percent
+    });
+  };
+
   useEffect(() => {
+    if (!sender || !VAULT_ADDRESS) return;
     updateBalance();
-  }, []);
+    updateLPBalance();
+  }, [sender, VAULT_ADDRESS]);
+
+  useEffect(() => {
+    if (inAmount) {
+      handleTokenChange(inAmount, symbol);
+    }
+  }, [data]);
 
   return (
     <DetailWrapper>
@@ -417,90 +454,99 @@ export default memo(function Detail(props) {
           Withdraw
         </FilterButton>
       </FilterButtonList>
-      {detailLoading ? (
-        <div style={{ padding: '30px 0 45px' }}>
-          <LiquidityLoading color="#999" />
-        </div>
+      {isDeposit ? (
+        <>
+          <Row className="price-input">
+            <Column>
+              <InputWrap className={Number(inAmount) > Number(balances[symbol]) ? 'inSufficient' : ''}>
+                <Input value={inAmount} type="number" onChange={(e) => handleTokenChange(e.target.value, id)} />
+              </InputWrap>
+              <PriceWrap>
+                <TotalPrice>{balanceLp}</TotalPrice>
+                <BalancePrice>
+                  Balance:<span onClick={() => handleMax()}>{Big(balances[symbol] ?? 0).toFixed(6)}</span>
+                </BalancePrice>
+              </PriceWrap>
+            </Column>
+          </Row>
+          <StyledButtonList>
+            {isInSufficient && <StyledButton disabled>InSufficient Balance</StyledButton>}
+            {!isInSufficient &&
+              (isTokenApproved && !isTokenApproving ? (
+                <StyledButton disabled={isLoading || !inAmount} onClick={handleDeposit}>
+                  {isLoading ? <LiquidityLoading /> : 'Deposit'}
+                </StyledButton>
+              ) : (
+                <>
+                  <StyledButton disabled={isTokenApproved || isTokenApproving} onClick={() => handleApprove(true)}>
+                    {isTokenApproving ? (
+                      <LiquidityLoading />
+                    ) : (
+                      <>
+                        {isTokenApproved ? 'Approved' : 'Approve'} {`${token0} / ${token1}`}
+                      </>
+                    )}
+                  </StyledButton>
+                </>
+              ))}
+          </StyledButtonList>
+        </>
       ) : (
         <>
-          <Panel>
-            <div className="title"></div>
-            <div className="body">
-              <Input
-                type="text"
-                placeholder="0"
-                value={state.stakeAmount}
-                onChange={(ev) => {
-                  if (isNaN(Number(ev.target.value))) return;
-                  let amount = ev.target.value.replace(/\s+/g, '');
+          <Row className="price-input">
+            <Column>
+              <InputWrap>
+                <Input
+                  value={lpAmount}
+                  type="number"
+                  onChange={(e) => {
+                    handleLPChange(e.target.value);
 
-                  if (Big(amount || 0).gt(Big(state.tokenBal || 0))) {
-                    amount = Big(state.tokenBal || 0).toFixed(4, 0);
-                  }
-                  updateState({
-                    stakeAmount: amount
-                  });
-                }}
-              />
+                    const value = e.target.value;
 
-              <Select
-                {...{
-                  options: state.options,
-                  value: state.options.find((obj) => obj.value === state.curToken),
-                  onChange: (option) => {
-                    console.log('onchange--', option);
-                    updateState({
-                      curToken: option.value
-                    });
-                  }
-                }}
-              />
-            </div>
-            <div className="foot">
-              <div class="prices">
-                $
-                {Big(state.stakeAmount || 0)
-                  .times(Big(prices[state.curToken] || 1))
-                  .toFixed(2, 0)}
-              </div>
-              <div class="balance">
-                Balance:
-                <Balance
-                  {...{
-                    value: state.tokenBal,
-                    digit: 4
+                    if (!value) {
+                      onUpdateLpPercent(0);
+                    }
+
+                    if (value && Big(value).gt(0)) {
+                      const newSliderPercent = Big(value || 0)
+                        .div(Big(lpBalance).gt(0) ? lpBalance : 1)
+                        .times(100)
+                        .toFixed(0);
+                      onUpdateLpPercent(Number(newSliderPercent));
+                    }
                   }}
                 />
-              </div>
-            </div>
-          </Panel>
+              </InputWrap>
+              <PriceWrap>
+                <TotalPrice>{balanceLp}</TotalPrice>
+                <BalancePrice>
+                  Balance:{' '}
+                  <span
+                    onClick={() => {
+                      const newSliderPercent = Big(lpBalance || 0)
+                        .div(Big(lpBalance).gt(0) ? lpBalance : 1)
+                        .times(100)
+                        .toFixed(0);
+
+                      onUpdateLpPercent(Number(newSliderPercent));
+
+                      handleLPChange(lpBalance);
+                    }}
+                  >
+                    {Big(lpBalance).toFixed(6)}
+                  </span>
+                </BalancePrice>
+              </PriceWrap>
+            </Column>
+          </Row>
           <StyledButtonList>
-            {isToken0Approved && isToken1Approved && !isToken0Approving && !isToken1Approving ? (
-              <StyledButton disabled={isLoading || !amount0 || !amount1} onClick={handleDeposit}>
-                {isLoading ? <LiquidityLoading /> : 'Deposit'}
-              </StyledButton>
-            ) : (
-              <>
-                <StyledButton disabled={isToken0Approved || isToken0Approving} onClick={() => handleApprove(true)}>
-                  {isToken0Approving ? (
-                    <LiquidityLoading />
-                  ) : (
-                    <>
-                      {isToken0Approved ? 'Approved' : 'Approve'} {token0}
-                    </>
-                  )}
-                </StyledButton>
-                <StyledButton disabled={isToken1Approved || isToken1Approving} onClick={() => handleApprove(false)}>
-                  {isToken1Approving ? (
-                    <LiquidityLoading />
-                  ) : (
-                    <>
-                      {isToken1Approved ? 'Approved' : 'Approve'} {token1}
-                    </>
-                  )}
-                </StyledButton>
-              </>
-            )}
+            <StyledButton
+              disabled={isWithdrawInsufficient || isLoading || Number(lpAmount) <= 0}
+              onClick={handleWithdraw}
+            >
+              {isLoading ? <LiquidityLoading /> : <>{isWithdrawInsufficient ? 'InSufficient Balance' : 'Withdraw'}</>}
+            </StyledButton>
           </StyledButtonList>
         </>
       )}
