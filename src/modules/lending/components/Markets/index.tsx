@@ -1,16 +1,17 @@
 import Big from 'big.js';
+import { isArray } from 'lodash';
 import { useEffect, useMemo } from 'react';
 
 import LendingMarketAmount from '@/modules/lending/components/Markets/Amount';
 import LendingMarketAsset from '@/modules/lending/components/Markets/Asset';
+import LendingMarketAssetList from '@/modules/lending/components/Markets/Asset/List';
 import LendingMarketHeader from '@/modules/lending/components/Markets/Header';
 import LendingMarketRow from '@/modules/lending/components/Markets/Row';
 import { StyledContainer } from '@/modules/lending/components/Markets/styles';
 import LendingSummary from '@/modules/lending/components/Markets/Summary';
 import { useMultiState } from '@/modules/lending/hooks';
 import type { DexProps } from '@/modules/lending/models';
-import { MarketsType } from '@/modules/lending/models';
-import { DexType } from '@/modules/lending/models';
+import { DexType, MarketsType } from '@/modules/lending/models';
 
 const LendingMarkets = (props: Props) => {
   const {
@@ -120,6 +121,16 @@ const LendingMarkets = (props: Props) => {
           label: 'Borrow',
           width: '20%',
           render: (record: any) => {
+            if (isArray(record.borrowToken)) {
+              return (
+                <LendingMarketAssetList
+                  list={record.borrowToken.map((b: any) => ({
+                    icon: b.underlyingToken.icon,
+                    symbol: b.underlyingToken.symbol
+                  }))}
+                />
+              );
+            }
             return <LendingMarketAsset icon={record.borrowToken.icon} symbol={record.borrowToken.symbol} />;
           }
         },
@@ -128,6 +139,15 @@ const LendingMarkets = (props: Props) => {
           label: 'Total Supplied',
           width: '20%',
           render: (record: any) => {
+            if (isArray(record.borrowToken)) {
+              return (
+                <LendingMarketAmount
+                  amount={record.totalSupplied}
+                  price={record.underlyingPrice}
+                  suffixAmountUnit={` ${record.underlyingToken.symbol}`}
+                />
+              );
+            }
             return (
               <LendingMarketAmount
                 amount={record.totalSupplied}
@@ -170,6 +190,9 @@ const LendingMarkets = (props: Props) => {
           label: 'Deposit',
           width: '25%',
           render: (record: any) => {
+            if (isArray(record.borrowToken)) {
+              return <LendingMarketAsset icon={record.underlyingToken.icon} symbol={record.underlyingToken.symbol} />;
+            }
             return <LendingMarketAsset icon={record.borrowToken.icon} symbol={record.borrowToken.symbol} />;
           }
         },
@@ -178,6 +201,15 @@ const LendingMarkets = (props: Props) => {
           label: 'Your Deposits',
           width: '25%',
           render: (record: any) => {
+            if (isArray(record.borrowToken)) {
+              return (
+                <LendingMarketAmount
+                  amount={record.yourLends}
+                  price={record.underlyingPrice}
+                  suffixAmountUnit={` ${record.underlyingToken.symbol}`}
+                />
+              );
+            }
             return (
               <LendingMarketAmount
                 amount={record.yourLends}

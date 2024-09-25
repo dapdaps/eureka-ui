@@ -1,9 +1,11 @@
 import Big from 'big.js';
+import { isArray } from 'lodash';
 import { useEffect, useMemo } from 'react';
 
 import useAccount from '@/hooks/useAccount';
 import LendingDialogButton from '@/modules/lending/components/Button';
 import LendingMarketExpandBorrowInput from '@/modules/lending/components/Markets/Expand/BorrowInput';
+import LendingMarketEarnInput from '@/modules/lending/components/Markets/Expand/EarnInput';
 import LendingMarketExpandInput from '@/modules/lending/components/Markets/Expand/Input';
 import LendingMarketInfo from '@/modules/lending/components/Markets/Info';
 import LendingMarketBorrowInfo from '@/modules/lending/components/Markets/Info/Borrow';
@@ -64,7 +66,8 @@ const LendingMarketExpand = (props: Props) => {
   const [state, updateState] = useMultiState<any>({
     tab: Tabs[0],
     loading: false,
-    balanceUsd: undefined
+    balanceUsd: undefined,
+    currentBorrowToken: isArray(data.borrowToken) ? data.borrowToken?.[0] || {} : data.borrowToken
   });
 
   useEffect(() => {
@@ -110,6 +113,8 @@ const LendingMarketExpand = (props: Props) => {
       });
     }
   }, [expand]);
+
+  const isDolomiteEarn = data.dapp === 'Dolomite' && marketsType === MarketsType.Earn;
 
   return (
     <StyledBox
@@ -187,7 +192,14 @@ const LendingMarketExpand = (props: Props) => {
           )}
           <div>
             {dexConfig.type === DexType.BorrowAndEarn && (
-              <LendingMarketExpandBorrowInput data={data} prices={prices} state={state} updateState={updateState} />
+              <>
+                {isDolomiteEarn && (
+                  <LendingMarketEarnInput data={data} prices={prices} state={state} updateState={updateState} />
+                )}
+                {!isDolomiteEarn && (
+                  <LendingMarketExpandBorrowInput data={data} prices={prices} state={state} updateState={updateState} />
+                )}
+              </>
             )}
             {![DexType.BorrowAndEarn].includes(dexConfig.type) && (
               <LendingMarketExpandInput
@@ -258,7 +270,8 @@ const LendingMarketExpand = (props: Props) => {
             data={{
               actionText: state.tab === 'Supply' ? 'Deposit' : state.tab,
               ...data,
-              config: dexConfig
+              config: dexConfig,
+              currentBorrowToken: state.currentBorrowToken
             }}
             amount={state.amount}
             curPool={curPool}
