@@ -56,6 +56,7 @@ const Content = styled.div`
   border: 1px solid #373a53;
   border-radius: 16px;
   background: #262836;
+  margin-top: 30px;
   padding: 16px;
   position: relative;
 

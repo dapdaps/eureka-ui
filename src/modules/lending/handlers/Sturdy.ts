@@ -8,77 +8,77 @@ const CTOKEN_ABI = [
       {
         internalType: 'uint256',
         name: '_assets',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     name: 'convertToShares',
     outputs: [
       {
         internalType: 'uint256',
         name: '_shares',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_amount',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'bool',
         name: '_roundUp',
-        type: 'bool',
+        type: 'bool'
       },
       {
         internalType: 'bool',
         name: '_previewInterest',
-        type: 'bool',
-      },
+        type: 'bool'
+      }
     ],
     name: 'toBorrowShares',
     outputs: [
       {
         internalType: 'uint256',
         name: '_shares',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_shares',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'address',
         name: '_receiver',
-        type: 'address',
+        type: 'address'
       },
       {
         internalType: 'address',
         name: '_owner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'redeem',
     outputs: [
       {
         internalType: 'uint256',
         name: '_amountToReturn',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     stateMutability: 'nonpayable',
@@ -86,124 +86,120 @@ const CTOKEN_ABI = [
     name: 'deposit',
     inputs: [
       {
-        'internalType': 'uint256',
-        'name': '_amount',
-        'type': 'uint256',
-      },
-      {
-        'internalType': 'address',
-        'name': '_receiver',
-        'type': 'address',
-      },
-    ],
-    outputs: [
-      {
-        'internalType': 'uint256',
-        'name': '_sharesReceived',
-        'type': 'uint256',
-      },
-    ],
-  },
-  {
-    inputs: [
-      {
         internalType: 'uint256',
-        name: '_collateralAmount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: '_borrower',
-        type: 'address',
-      },
-    ],
-    name: 'addCollateral',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: '_collateralAmount',
-        type: 'uint256',
+        name: '_amount',
+        type: 'uint256'
       },
       {
         internalType: 'address',
         name: '_receiver',
-        type: 'address',
+        type: 'address'
+      }
+    ],
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '_sharesReceived',
+        type: 'uint256'
+      }
+    ]
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_collateralAmount',
+        type: 'uint256'
       },
+      {
+        internalType: 'address',
+        name: '_borrower',
+        type: 'address'
+      }
+    ],
+    name: 'addCollateral',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function'
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_collateralAmount',
+        type: 'uint256'
+      },
+      {
+        internalType: 'address',
+        name: '_receiver',
+        type: 'address'
+      }
     ],
     name: 'removeCollateral',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_shares',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'address',
         name: '_borrower',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'repayAsset',
     outputs: [
       {
         internalType: 'uint256',
         name: '_amountToRepay',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'uint256',
         name: '_borrowAmount',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'uint256',
         name: '_collateralAmount',
-        type: 'uint256',
+        type: 'uint256'
       },
       {
         internalType: 'address',
         name: '_receiver',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'borrowAsset',
     outputs: [
       {
         internalType: 'uint256',
         name: '_shares',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const SturdyHandler = (props: any) => {
   const { update, data, amount, onLoad, provider, account } = props;
 
   const handleConvertToShares = (_amount: any) => {
-    const contract = new ethers.Contract(
-      data.address,
-      CTOKEN_ABI,
-      provider.getSigner(),
-    );
+    const contract = new ethers.Contract(data.address, CTOKEN_ABI, provider.getSigner());
 
     return new Promise((resolve) => {
       contract
@@ -219,11 +215,7 @@ const SturdyHandler = (props: any) => {
   };
 
   const handleToBorrowShares = (_amount: any) => {
-    const contract = new ethers.Contract(
-      data.address,
-      CTOKEN_ABI,
-      provider.getSigner(),
-    );
+    const contract = new ethers.Contract(data.address, CTOKEN_ABI, provider.getSigner());
 
     return new Promise((resolve) => {
       contract
@@ -259,24 +251,14 @@ const SturdyHandler = (props: any) => {
     let params: any = [];
     let method = '';
 
-    const parsedAmount = ethers.utils.parseUnits(
-      Big(amount).toFixed(tokenDecimals).toString(),
-      tokenDecimals,
-    );
+    const parsedAmount = ethers.utils.parseUnits(Big(amount).toFixed(tokenDecimals).toString(), tokenDecimals);
 
     options = {
-      value:
-        isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay')
-          ? parsedAmount
-          : 0,
-      gasLimit: 4000000,
+      value: isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay') ? parsedAmount : 0,
+      gasLimit: 4000000
     };
 
-    const contract = new ethers.Contract(
-      spender,
-      CTOKEN_ABI,
-      provider.getSigner(),
-    );
+    const contract = new ethers.Contract(spender, CTOKEN_ABI, provider.getSigner());
 
     if (data.actionText === 'Withdraw') {
       const shares = await handleConvertToShares(parsedAmount);
@@ -322,13 +304,13 @@ const SturdyHandler = (props: any) => {
       const _gas = gas ? Big(gas.toString()).mul(1.2).toFixed(0) : 4000000;
       contract.populateTransaction[method](...params, {
         ...options,
-        gasLimit: _gas,
+        gasLimit: _gas
       })
         .then((res: any) => {
           onLoad({
             gas: _gas,
             unsignedTx: res,
-            isError: false,
+            isError: false
           });
         })
         .catch((err: any) => {

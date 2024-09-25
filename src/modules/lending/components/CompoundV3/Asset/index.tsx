@@ -1,4 +1,10 @@
-import { Asset, Icon, StyledChainIcon, StyledIconWrap, Symbol } from '@/modules/lending/components/CompoundV3/Asset/styles';
+import {
+  Asset,
+  Icon,
+  StyledChainIcon,
+  StyledIconWrap,
+  Symbol
+} from '@/modules/lending/components/CompoundV3/Asset/styles';
 
 const CompoundV3Asset = (props: Props) => {
   const { icon, symbol, curChain, size } = props;
@@ -11,9 +17,7 @@ const CompoundV3Asset = (props: Props) => {
           <img src={curChain.logo} />
         </StyledChainIcon>
       </StyledIconWrap>
-      {
-        symbol && <Symbol>{symbol}</Symbol>
-      }
+      {symbol && <Symbol>{symbol}</Symbol>}
     </Asset>
   );
 };

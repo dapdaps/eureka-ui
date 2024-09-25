@@ -8,21 +8,21 @@ const OTOKEN_ABI = [
     name: 'totalSupply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'totalBorrows',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'exchangeRateCurrent',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
@@ -31,25 +31,25 @@ const OTOKEN_ABI = [
       { internalType: 'uint256', name: '', type: 'uint256' },
       { internalType: 'uint256', name: '', type: 'uint256' },
       { internalType: 'uint256', name: '', type: 'uint256' },
-      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'supplyRatePerTimestamp',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'borrowRatePerTimestamp',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const UNITROLLER_ABI = [
   {
@@ -60,22 +60,22 @@ const UNITROLLER_ABI = [
       {
         internalType: 'uint256',
         name: 'collateralFactorMantissa',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       { internalType: 'address', name: 'account', type: 'address' },
-      { internalType: 'contract MToken', name: 'mToken', type: 'address' },
+      { internalType: 'contract MToken', name: 'mToken', type: 'address' }
     ],
     name: 'checkMembership',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const ORACLE_ABI = [
   {
@@ -83,14 +83,14 @@ const ORACLE_ABI = [
       {
         internalType: 'contract IOToken',
         name: 'oToken',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'getUnderlyingPrice',
     outputs: [{ internalType: 'uint256', name: 'price', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const ERC20_ABI = [
   {
@@ -98,20 +98,20 @@ const ERC20_ABI = [
     inputs: [
       {
         name: '_owner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'balanceOf',
     outputs: [
       {
         name: 'balance',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const REWARD_ABI = [
   {
@@ -126,44 +126,44 @@ const REWARD_ABI = [
               {
                 internalType: 'address',
                 name: 'emissionToken',
-                type: 'address',
+                type: 'address'
               },
               {
                 internalType: 'uint256',
                 name: 'totalAmount',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'supplySide',
-                type: 'uint256',
+                type: 'uint256'
               },
               {
                 internalType: 'uint256',
                 name: 'borrowSide',
-                type: 'uint256',
-              },
+                type: 'uint256'
+              }
             ],
             internalType: 'struct MultiRewardDistributorCommon.RewardInfo[]',
             name: 'rewards',
-            type: 'tuple[]',
-          },
+            type: 'tuple[]'
+          }
         ],
         internalType: 'struct MultiRewardDistributorCommon.RewardWithMToken[]',
         name: '',
-        type: 'tuple[]',
-      },
+        type: 'tuple[]'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
       {
         internalType: 'contract MToken',
         name: '_mToken',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'getAllMarketConfigs',
     outputs: [
@@ -173,48 +173,48 @@ const REWARD_ABI = [
           {
             internalType: 'address',
             name: 'emissionToken',
-            type: 'address',
+            type: 'address'
           },
           { internalType: 'uint256', name: 'endTime', type: 'uint256' },
           {
             internalType: 'uint224',
             name: 'supplyGlobalIndex',
-            type: 'uint224',
+            type: 'uint224'
           },
           {
             internalType: 'uint32',
             name: 'supplyGlobalTimestamp',
-            type: 'uint32',
+            type: 'uint32'
           },
           {
             internalType: 'uint224',
             name: 'borrowGlobalIndex',
-            type: 'uint224',
+            type: 'uint224'
           },
           {
             internalType: 'uint32',
             name: 'borrowGlobalTimestamp',
-            type: 'uint32',
+            type: 'uint32'
           },
           {
             internalType: 'uint256',
             name: 'supplyEmissionsPerSec',
-            type: 'uint256',
+            type: 'uint256'
           },
           {
             internalType: 'uint256',
             name: 'borrowEmissionsPerSec',
-            type: 'uint256',
-          },
+            type: 'uint256'
+          }
         ],
         internalType: 'struct MultiRewardDistributorCommon.MarketConfig[]',
         name: '',
-        type: 'tuple[]',
-      },
+        type: 'tuple[]'
+      }
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const MoonwellData = (props: any) => {
@@ -230,7 +230,7 @@ const MoonwellData = (props: any) => {
     markets,
     multicall,
     prices,
-    provider,
+    provider
   } = props;
 
   useEffect(() => {
@@ -248,7 +248,7 @@ const MoonwellData = (props: any) => {
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = {
       icon: 'https://ipfs.near.social/ipfs/bafkreih3un4tcbwp3tneicomraozegmftz45sfx4rtg3qyui67nfdrptei',
-      symbol: 'WELL',
+      symbol: 'WELL'
     };
 
     const formatedData = (key: any) => {
@@ -266,24 +266,15 @@ const MoonwellData = (props: any) => {
       Object.values(_cTokensData).forEach((market: any) => {
         const underlyingPrice = _underlyPrice[market.address];
         const marketSupplyUsd = Big(market.totalSupply || 0).mul(underlyingPrice);
-        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(
-          underlyingPrice,
-        );
+        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(underlyingPrice);
         totalSupplyUsd = totalSupplyUsd.plus(marketSupplyUsd);
         totalBorrowUsd = totalBorrowUsd.plus(marketBorrowUsd);
 
-        userTotalSupplyUsd = userTotalSupplyUsd.plus(
-          Big(market.userSupply).mul(underlyingPrice),
-        );
-        userTotalBorrowUsd = userTotalBorrowUsd.plus(
-          Big(market.userBorrow).mul(underlyingPrice),
-        );
+        userTotalSupplyUsd = userTotalSupplyUsd.plus(Big(market.userSupply).mul(underlyingPrice));
+        userTotalBorrowUsd = userTotalBorrowUsd.plus(Big(market.userBorrow).mul(underlyingPrice));
         if (_userMerberShip[market.address]) {
           totalCollateralUsd = totalCollateralUsd.plus(
-            Big(market.userSupply)
-              .mul(underlyingPrice)
-              .mul(_loanToValue[market.address])
-              .div(100),
+            Big(market.userSupply).mul(underlyingPrice).mul(_loanToValue[market.address]).div(100)
           );
         }
         const distributionSupplyApy = Big(_rewardsForWell[market.address].supply)
@@ -327,10 +318,10 @@ const MoonwellData = (props: any) => {
             {
               ...REWARD_TOKEN,
               supply: distributionSupplyApy + '%',
-              borrow: distributionBorrowApy + '%',
-            },
+              borrow: distributionBorrowApy + '%'
+            }
           ],
-          dapp: name,
+          dapp: name
           // rewards,
         };
       });
@@ -345,8 +336,8 @@ const MoonwellData = (props: any) => {
             ...REWARD_TOKEN,
             dailyRewards: dailyRewards.toString(),
             price: _accountRewards.price,
-            unclaimed: _accountRewards.reward,
-          },
+            unclaimed: _accountRewards.reward
+          }
         ];
       }
       onLoad({
@@ -356,7 +347,7 @@ const MoonwellData = (props: any) => {
         totalBorrowUsd: totalBorrowUsd.toString(),
         userTotalSupplyUsd: userTotalSupplyUsd.toString(),
         userTotalBorrowUsd: userTotalBorrowUsd.toString(),
-        totalCollateralUsd: totalCollateralUsd.toString(),
+        totalCollateralUsd: totalCollateralUsd.toString()
       });
     };
     const getUnitrollerData = () => {
@@ -366,13 +357,13 @@ const MoonwellData = (props: any) => {
         calls.push({
           address: unitrollerAddress,
           name: 'markets',
-          params: [token.address],
+          params: [token.address]
         });
         if (account) {
           calls.push({
             address: unitrollerAddress,
             name: 'checkMembership',
-            params: [account, token.address],
+            params: [account, token.address]
           });
         }
       });
@@ -381,7 +372,7 @@ const MoonwellData = (props: any) => {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _loanToValue = {};
@@ -391,10 +382,7 @@ const MoonwellData = (props: any) => {
             const mod = i % (account ? 2 : 1);
             switch (mod) {
               case 0:
-                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(
-                  res[i][1]._hex,
-                  16,
-                );
+                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(res[i][1]._hex, 16);
                 break;
               case 1:
                 _userMerberShip[oTokens[index].address] = res[i] ? res[i][0] || false : false;
@@ -418,21 +406,21 @@ const MoonwellData = (props: any) => {
       const calls = oTokens.map((token) => ({
         address: oracleAddress,
         name: 'getUnderlyingPrice',
-        params: [token],
+        params: [token]
       }));
       multicall({
         abi: ORACLE_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyPrice = {};
           for (let i = 0, len = res.length; i < len; i++) {
             _underlyPrice[oTokens[i]] = ethers.utils.formatUnits(
               res[i][0]._hex,
-              36 - markets[oTokens[i]].underlyingToken.decimals,
+              36 - markets[oTokens[i]].underlyingToken.decimals
             );
           }
           count++;
@@ -448,28 +436,25 @@ const MoonwellData = (props: any) => {
       }
       const underlyingTokens = Object.values(markets).map((market: any) => ({
         ...market.underlyingToken,
-        oTokenAddress: market.address,
+        oTokenAddress: market.address
       }));
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
         name: 'balanceOf',
-        params: [token.oTokenAddress],
+        params: [token.oTokenAddress]
       }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _liquidity = {};
           for (let i = 0, len = res.length; i < len; i++) {
             const oToken = markets[calls[i].params[0]];
-            _liquidity[oToken.address] = ethers.utils.formatUnits(
-              res[i][0]._hex,
-              oToken.underlyingToken.decimals,
-            );
+            _liquidity[oToken.address] = ethers.utils.formatUnits(res[i][0]._hex, oToken.underlyingToken.decimals);
           }
           count++;
           formatedData('getOTokenLiquidity');
@@ -485,45 +470,34 @@ const MoonwellData = (props: any) => {
       let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
-          if (market.underlyingToken.address === 'native')
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== 'native'
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           ...market.underlyingToken,
-          oTokenAddress: market.address,
+          oTokenAddress: market.address
         }));
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyingBalance = {};
           for (let i = 0, len = res.length; i < len; i++) {
-            _underlyingBalance[underlyingTokens[i].oTokenAddress] = res[i] && res[i][0]
-              ? ethers.utils.formatUnits(
-                res[i][0]._hex,
-                underlyingTokens[i].decimals,
-              )
-              : '0';
+            _underlyingBalance[underlyingTokens[i].oTokenAddress] =
+              res[i] && res[i][0] ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals) : '0';
           }
           if (nativeOToken) {
             provider.getBalance(account).then((rawBalance: any) => {
-              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18,
-              );
+              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('getWalletBalance');
             });
@@ -544,66 +518,51 @@ const MoonwellData = (props: any) => {
       const calls = [
         {
           address: oToken.address,
-          name: 'exchangeRateCurrent',
+          name: 'exchangeRateCurrent'
         },
         {
           address: oToken.address,
-          name: 'totalSupply',
+          name: 'totalSupply'
         },
         {
           address: oToken.address,
-          name: 'totalBorrows',
+          name: 'totalBorrows'
         },
         {
           address: oToken.address,
-          name: 'supplyRatePerTimestamp',
+          name: 'supplyRatePerTimestamp'
         },
         {
           address: oToken.address,
-          name: 'borrowRatePerTimestamp',
+          name: 'borrowRatePerTimestamp'
         },
         {
           address: oToken.address,
           name: 'getAccountSnapshot',
-          params: [account],
-        },
+          params: [account]
+        }
       ];
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           oTokensLength--;
-          const exchangeRateStored = ethers.utils.formatUnits(
-            res[0][0]._hex,
-            10 + oToken.underlyingToken.decimals,
-          );
-          const userSupply = ethers.utils.formatUnits(
-            res[5][1]._hex,
-            oToken.decimals,
-          );
-          const totalSupply = ethers.utils.formatUnits(
-            res[1][0]._hex,
-            oToken.decimals,
-          );
+          const exchangeRateStored = ethers.utils.formatUnits(res[0][0]._hex, 10 + oToken.underlyingToken.decimals);
+          const userSupply = ethers.utils.formatUnits(res[5][1]._hex, oToken.decimals);
+          const totalSupply = ethers.utils.formatUnits(res[1][0]._hex, oToken.decimals);
           _cTokensData[oToken.address] = {
             ...oToken,
             exchangeRateStored,
             totalSupply: Big(totalSupply).mul(exchangeRateStored).toString(),
-            totalBorrows: ethers.utils.formatUnits(
-              res[2][0]._hex,
-              oToken.underlyingToken.decimals,
-            ),
+            totalBorrows: ethers.utils.formatUnits(res[2][0]._hex, oToken.underlyingToken.decimals),
             supplyRatePerTimestamp: ethers.utils.formatUnits(res[3][0]._hex, 18),
             borrowRatePerTimestamp: ethers.utils.formatUnits(res[4][0]._hex, 18),
             userSupply: Big(userSupply).mul(exchangeRateStored).toString(),
-            userBorrow: ethers.utils.formatUnits(
-              res[5][2]._hex,
-              oToken.underlyingToken.decimals,
-            ),
+            userBorrow: ethers.utils.formatUnits(res[5][2]._hex, oToken.underlyingToken.decimals)
           };
           if (oTokensLength === 0) {
             count++;
@@ -628,19 +587,19 @@ const MoonwellData = (props: any) => {
       const calls = cTokens.map((token) => ({
         address: rewardDistributorAddress,
         name: 'getAllMarketConfigs',
-        params: [token],
+        params: [token]
       }));
       calls.push({
         address: rewardDistributorAddress,
         name: 'getOutstandingRewardsForUser',
-        params: [account],
+        params: [account]
       });
       multicall({
         abi: REWARD_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           for (let i = 0, len = res.length; i < len; i++) {
@@ -656,7 +615,7 @@ const MoonwellData = (props: any) => {
               });
               _accountRewards = {
                 reward: totalRewards.toString(),
-                price,
+                price
               };
               count++;
               formatedData('getRewards');
@@ -668,7 +627,7 @@ const MoonwellData = (props: any) => {
                 .mul(60 * 60 * 24),
               borrow: Big(ethers.utils.formatUnits(item[0][0][8], 18))
                 .mul(price)
-                .mul(60 * 60 * 24),
+                .mul(60 * 60 * 24)
             };
           }
         })

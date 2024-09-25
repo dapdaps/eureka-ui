@@ -1,12 +1,6 @@
 import type { Pool } from '@/modules/lending/models';
 
-import {
-  StyledContainer,
-  StyledLabel,
-  StyledPoolBox,
-  StyledPoolFont,
-  StyledPools,
-} from './styles';
+import { StyledContainer, StyledLabel, StyledPoolBox, StyledPoolFont, StyledPools } from './styles';
 
 const LendingPools = (props: Props) => {
   const { pools = [], curPool, onSwitchPool } = props;

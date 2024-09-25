@@ -14,7 +14,7 @@ const LendingMarketBorrowInfo = (props: Props) => {
     maxLTV = 0,
     liquidationFee = 0,
 
-    prices,
+    prices
   } = props;
 
   const getPrice = (symbol: string) => {

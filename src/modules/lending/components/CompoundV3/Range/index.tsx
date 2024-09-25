@@ -1,4 +1,9 @@
-import { StyledDot, StyledPercent, StyledRange, StyledSegment } from '@/modules/lending/components/CompoundV3/Range/styles';
+import {
+  StyledDot,
+  StyledPercent,
+  StyledRange,
+  StyledSegment
+} from '@/modules/lending/components/CompoundV3/Range/styles';
 
 const CompoundV3Range = (props: Props) => {
   const { value } = props;
@@ -10,8 +15,7 @@ const CompoundV3Range = (props: Props) => {
       <StyledSegment
         style={{
           width: _value + '%',
-          backgroundColor:
-            _value >= 80 ? '#F54E59' : _value >= 60 ? '#FFA947' : '#00AD79'
+          backgroundColor: _value >= 80 ? '#F54E59' : _value >= 60 ? '#FFA947' : '#00AD79'
         }}
       />
       <StyledPercent>{value}%</StyledPercent>

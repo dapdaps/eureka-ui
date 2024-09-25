@@ -6,7 +6,7 @@ export interface DexProps {
   dexConfig: any;
   wethAddress: string;
   multicallAddress: string;
-  multicall: any
+  multicall: any;
   prices: any;
   onSwitchChain: any;
   switchingChain: boolean;

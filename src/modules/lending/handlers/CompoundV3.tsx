@@ -71,7 +71,7 @@ const CompoundV3Handler = (props: any) => {
     onLoad,
     onCancel,
     chainId,
-    provider,
+    provider
   } = props;
 
   const TYPE_MAP: any = {
@@ -84,19 +84,10 @@ const CompoundV3Handler = (props: any) => {
 
   useEffect(() => {
     if (!update || !actions.length) return;
-    const CometContract = new ethers.Contract(
-      comet.address,
-      COMET_ABI,
-      provider.getSigner()
-    );
-    const BulkerContract = new ethers.Contract(
-      bulkerAddress,
-      BULKER_ABI,
-      provider.getSigner()
-    );
+    const CometContract = new ethers.Contract(comet.address, COMET_ABI, provider.getSigner());
+    const BulkerContract = new ethers.Contract(bulkerAddress, BULKER_ABI, provider.getSigner());
 
-    const getActionAmount = (action: any) =>
-      Big(action.amount).mul(Big(10).pow(action.asset.decimals)).toFixed(0);
+    const getActionAmount = (action: any) => Big(action.amount).mul(Big(10).pow(action.asset.decimals)).toFixed(0);
 
     const buildTx = ({ contract, method, params, options }: any) => {
       const _contract = contract === 'comet' ? CometContract : BulkerContract;
@@ -200,9 +191,7 @@ const CompoundV3Handler = (props: any) => {
           }
 
           const callData = ethers.utils.defaultAbiCoder.encode(
-            action.asset.isNative
-              ? ['address', 'address', 'uint']
-              : ['address', 'address', 'address', 'uint'],
+            action.asset.isNative ? ['address', 'address', 'uint'] : ['address', 'address', 'address', 'uint'],
             action.asset.isNative
               ? [comet.address, account, _amount]
               : [comet.address, account, action.asset.address, _amount]

@@ -7,7 +7,7 @@ export function useMultiState<State = Record<any, any>>(initialState: State): [S
     setState((prev) => {
       return {
         ...prev,
-        ...states,
+        ...states
       };
     });
   };

@@ -1,29 +1,27 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from "react";
+import { memo } from 'react';
 import { useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Balance from "@/modules/components/Balance";
-import Loading from '@/modules/components/Loading'
+import Balance from '@/modules/components/Balance';
+import Loading from '@/modules/components/Loading';
 import Select from '@/modules/components/Select';
 import { useMultiState } from '@/modules/hooks';
-import { formatValueDecimal } from "@/utils/formate";
-const StyledContainer = styled.div`
-  
-`;
+import { formatValueDecimal } from '@/utils/formate';
+const StyledContainer = styled.div``;
 const StyledFormItem = styled.div`
-  border-bottom: 1px solid #373A53;
+  border-bottom: 1px solid #373a53;
   padding-bottom: 18px;
   padding-top: 18px;
-  
+
   &.inline {
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  
+
   &:first-child {
     padding-top: 0;
   }
@@ -32,7 +30,7 @@ const StyledFormItemTitle = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
-  color: #979ABE;
+  color: #979abe;
 `;
 const StyledFormItemBody = styled.div`
   margin-top: 8px;
@@ -85,7 +83,7 @@ const StyledListItem = styled.div`
   font-size: 14px;
 
   .label {
-    color: #979ABE;
+    color: #979abe;
   }
   .value {
     color: #fff;
@@ -106,7 +104,7 @@ const StyledButton = styled.button`
   transition: 0.5s;
   margin-top: 20px;
   text-align: center;
-  
+
   &:hover {
     opacity: 0.8;
   }
@@ -120,8 +118,8 @@ const StyledFullSelect = styled.div`
 
   > div {
     width: 100%;
-    
-    > div[type="button"] {
+
+    > div[type='button'] {
       width: 100%;
     }
   }
@@ -141,16 +139,16 @@ const StyledProtocol = styled.a`
   gap: 0;
   width: 117px;
   height: 95px;
-  border: 1px solid #373A53;
+  border: 1px solid #373a53;
   border-radius: 16px;
   padding: 8px;
-  
+
   .protocol-icon {
     width: 50px;
     height: 50px;
   }
   .protocol-name {
-    color: #979ABE;
+    color: #979abe;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -159,7 +157,7 @@ const StyledProtocol = styled.a`
   }
 `;
 const StyledDexTips = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -170,64 +168,63 @@ const StyledFontWrap = styled.div`
   color: #fff;
   text-decoration: underline;
   cursor: pointer;
-`
+`;
 
 const DEPOSIT_POOL_ABI = [
   {
     inputs: [
       {
         components: [
-          { internalType: "address", name: "token", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' }
         ],
-        name: "deposit0",
-        type: "tuple",
+        name: 'deposit0',
+        type: 'tuple'
       },
       {
         components: [
-          { internalType: "address", name: "token", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' }
         ],
-        name: "deposit1",
-        type: "tuple",
+        name: 'deposit1',
+        type: 'tuple'
       },
-      { internalType: "address", name: "receiver", type: "address" },
+      { internalType: 'address', name: 'receiver', type: 'address' }
     ],
-    name: "createDexBalancerAgentAndExplorerAndRefundExcess",
+    name: 'createDexBalancerAgentAndExplorerAndRefundExcess',
     outputs: [],
-    stateMutability: "payable",
-    type: "function",
+    stateMutability: 'payable',
+    type: 'function'
   },
   {
     inputs: [
       {
         components: [
-          { internalType: "address", name: "token", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' }
         ],
-        name: "deposit0",
-        type: "tuple",
+        name: 'deposit0',
+        type: 'tuple'
       },
       {
         components: [
-          { internalType: "address", name: "token", type: "address" },
-          { internalType: "uint256", name: "amount", type: "uint256" },
+          { internalType: 'address', name: 'token', type: 'address' },
+          { internalType: 'uint256', name: 'amount', type: 'uint256' }
         ],
-        name: "deposit1",
-        type: "tuple",
+        name: 'deposit1',
+        type: 'tuple'
       },
-      { internalType: "address", name: "rootAgentAddress", type: "address" },
-      { internalType: "address", name: "receiver", type: "address" },
+      { internalType: 'address', name: 'rootAgentAddress', type: 'address' },
+      { internalType: 'address', name: 'receiver', type: 'address' }
     ],
-    name: "createDexBalancerAgentForRootAndRefundExcess",
+    name: 'createDexBalancerAgentForRootAndRefundExcess',
     outputs: [],
-    stateMutability: "payable",
-    type: "function",
-  },
+    stateMutability: 'payable',
+    type: 'function'
+  }
 ];
 
 const { parseUnits, formatUnits } = ethers.utils;
-
 
 export default memo(function DEXBalancer(props: any) {
   const {
@@ -242,7 +239,7 @@ export default memo(function DEXBalancer(props: any) {
     addAction,
     toast,
     chainId,
-    handleApprove,
+    handleApprove
   } = props;
   const { StakeTokens } = dexConfig;
   const actionText = 'Stake';
@@ -256,7 +253,7 @@ export default memo(function DEXBalancer(props: any) {
     usdAmount: '',
     usdTokens: [],
     currentUsdToken: {},
-    currentUsdTokenBalance: 0,
+    currentUsdTokenBalance: 0
   });
 
   const {
@@ -268,17 +265,17 @@ export default memo(function DEXBalancer(props: any) {
     usdAmount,
     usdTokens,
     currentUsdToken,
-    currentUsdTokenBalance,
+    currentUsdTokenBalance
   } = state;
 
   const handleEthAmount = (ev) => {
     if (isNaN(Number(ev.target.value))) return;
-    let amount = ev.target.value.replace(/\s+/g, "");
+    let amount = ev.target.value.replace(/\s+/g, '');
 
     if (!amount) {
       updateState({
         ethAmount: '',
-        usdAmount: '',
+        usdAmount: ''
       });
       return;
     }
@@ -288,7 +285,10 @@ export default memo(function DEXBalancer(props: any) {
     }
     updateState({
       ethAmount: amount,
-      usdAmount: Big(amount).times(prices[state.currentEthToken.value]).div(prices[state.currentUsdToken.value]).toFixed(state.currentUsdToken.decimals, 0),
+      usdAmount: Big(amount)
+        .times(prices[state.currentEthToken.value])
+        .div(prices[state.currentUsdToken.value])
+        .toFixed(state.currentUsdToken.decimals, 0)
     });
   };
 
@@ -296,76 +296,94 @@ export default memo(function DEXBalancer(props: any) {
     if (option.value === state.currentEthToken.value) return;
     updateState({
       currentEthToken: option,
-      ethAmount: '',
+      ethAmount: ''
     });
     const currToken = StakeTokens.find((it) => it.symbol === option.value);
-    currToken && getTokenBalance(currToken).then((value) => {
-      updateState({
-        currentEthTokenBalance: value,
+    currToken &&
+      getTokenBalance(currToken).then((value) => {
+        updateState({
+          currentEthTokenBalance: value
+        });
       });
-    });
   };
 
   const handleEthBalance = (value) => {
     // auto enter usd amount
     const updates = {
-      ethAmount: Big(value).toFixed(4, 0),
+      ethAmount: Big(value).toFixed(4, 0)
     };
-    updates.usdAmount = Big(updates.ethAmount).times(prices[state.currentEthToken.value]).div(prices[state.currentUsdToken.value]).toFixed(state.currentUsdToken.decimals, 0)
+    updates.usdAmount = Big(updates.ethAmount)
+      .times(prices[state.currentEthToken.value])
+      .div(prices[state.currentUsdToken.value])
+      .toFixed(state.currentUsdToken.decimals, 0);
     updateState(updates);
   };
 
   const formatAddAction = (actionText, _amount, status, transactionHash, tokenSymbol) => {
     addAction?.({
-      type: "Staking",
+      type: 'Staking',
       action: actionText,
       token: {
-        symbol: tokenSymbol,
+        symbol: tokenSymbol
       },
       amount: _amount,
       template: props.name,
       add: false,
       status,
-      transactionHash,
+      transactionHash
     });
-  }
+  };
 
   const handleSubmit = () => {
     if (Big(state.ethAmount).lte(0) || Big(state.usdAmount).lte(0)) return;
     // if rootAgent.agentAddress: use createDexBalancerAgentForRootAndRefundExcess
     // else: use createDexBalancerAgentAndExplorerAndRefundExcess
     updateState({
-      pending: true,
+      pending: true
     });
     const approveList = [
-      handleApprove(currentStrategy.meta.contract, state.currentEthToken.address, state.ethAmount, state.currentEthToken.decimals),
-      handleApprove(currentStrategy.meta.contract, state.currentUsdToken.address, state.usdAmount, state.currentUsdToken.decimals),
+      handleApprove(
+        currentStrategy.meta.contract,
+        state.currentEthToken.address,
+        state.ethAmount,
+        state.currentEthToken.decimals
+      ),
+      handleApprove(
+        currentStrategy.meta.contract,
+        state.currentUsdToken.address,
+        state.usdAmount,
+        state.currentUsdToken.decimals
+      )
     ];
     Promise.all(approveList).then((approveRes) => {
       if (approveRes.some((approved) => !approved)) {
         updateState({
-          pending: false,
+          pending: false
         });
         return;
       }
-      const ethAmountShown = Big(state.ethAmount || 0).toFixed(state.currentEthToken.decimals, Big.roundDown).toString();
-      const usdAmountShown = Big(state.usdAmount || 0).toFixed(state.currentUsdToken.decimals, Big.roundDown).toString();
+      const ethAmountShown = Big(state.ethAmount || 0)
+        .toFixed(state.currentEthToken.decimals, Big.roundDown)
+        .toString();
+      const usdAmountShown = Big(state.usdAmount || 0)
+        .toFixed(state.currentUsdToken.decimals, Big.roundDown)
+        .toString();
       let method = 'createDexBalancerAgentAndExplorerAndRefundExcess';
       const params = [
         [
           // token
           state.currentEthToken.address,
           // amount
-          parseUnits(ethAmountShown, state.currentEthToken.decimals),
+          parseUnits(ethAmountShown, state.currentEthToken.decimals)
         ],
         [
           // token
           state.currentUsdToken.address,
           // amount
-          parseUnits(usdAmountShown, state.currentUsdToken.decimals),
+          parseUnits(usdAmountShown, state.currentUsdToken.decimals)
         ],
         // receiver
-        account,
+        account
       ];
 
       if (rootAgent && rootAgent.agentAddress) {
@@ -374,16 +392,12 @@ export default memo(function DEXBalancer(props: any) {
         method = 'createDexBalancerAgentForRootAndRefundExcess';
       }
 
-      const contract = new ethers.Contract(
-        currentStrategy.meta.contract,
-        DEPOSIT_POOL_ABI,
-        provider.getSigner()
-      );
+      const contract = new ethers.Contract(currentStrategy.meta.contract, DEPOSIT_POOL_ABI, provider.getSigner());
 
       const getTx = (gas) => {
         const contractOption = {
-          gasLimit: gas || 4000000,
-        }
+          gasLimit: gas || 4000000
+        };
         if (['ETH'].includes(state.currentEthToken.value)) {
           contractOption.value = parseUnits(ethAmountShown, state.currentEthToken.decimals);
         }
@@ -393,55 +407,50 @@ export default memo(function DEXBalancer(props: any) {
               .then((res) => {
                 const { status, transactionHash } = res;
                 updateState({
-                  pending: false,
+                  pending: false
                 });
-                if (status !== 1) throw new Error("");
+                if (status !== 1) throw new Error('');
                 onSuccess();
                 formatAddAction(actionText, ethAmountShown, status, transactionHash, state.currentEthToken.value);
                 toast?.success({
                   title: `${actionText} Successfully!`,
                   text: `${actionText} ${Big(state.ethAmount).toFixed(2)} ${state.currentEthToken.value} & ${Big(state.usdAmount).toFixed(2)} ${state.currentUsdToken.value}`,
                   tx: transactionHash,
-                  chainId,
+                  chainId
                 });
               })
               .catch((err) => {
                 console.log('tx error: ', err);
                 updateState({
-                  pending: false,
+                  pending: false
                 });
                 toast?.fail({
                   title: `${actionText} Failed!`,
-                  text: err?.message?.includes("user rejected transaction")
-                    ? "User rejected transaction"
-                    : ``,
+                  text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                 });
               });
           })
           .catch((err) => {
             console.log('contract fn error: ', err);
             updateState({
-              pending: false,
+              pending: false
             });
             toast?.fail({
               title: `${actionText} Failed!`,
-              text: err?.message?.includes("user rejected transaction")
-                ? "User rejected transaction"
-                : ``,
+              text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
             });
           });
       };
 
       const estimateGas = () => {
-        contract.estimateGas[method](
-          ...params,
-          { value: parseUnits(ethAmountShown, state.currentEthToken.decimals) }
-        ).then((gas) => {
-          getTx(gas);
-        }).catch((err) => {
-          console.log('get gas failed: ', err);
-          getTx();
-        });
+        contract.estimateGas[method](...params, { value: parseUnits(ethAmountShown, state.currentEthToken.decimals) })
+          .then((gas) => {
+            getTx(gas);
+          })
+          .catch((err) => {
+            console.log('get gas failed: ', err);
+            getTx();
+          });
       };
 
       estimateGas();
@@ -450,12 +459,12 @@ export default memo(function DEXBalancer(props: any) {
 
   const handleUsdAmount = (ev) => {
     if (isNaN(Number(ev.target.value))) return;
-    let amount = ev.target.value.replace(/\s+/g, "");
+    let amount = ev.target.value.replace(/\s+/g, '');
 
     if (!amount) {
       updateState({
         ethAmount: '',
-        usdAmount: '',
+        usdAmount: ''
       });
       return;
     }
@@ -465,7 +474,10 @@ export default memo(function DEXBalancer(props: any) {
     }
     updateState({
       usdAmount: amount,
-      ethAmount: Big(amount).times(prices[state.currentUsdToken.value]).div(prices[state.currentEthToken.value]).toFixed(state.currentEthToken.decimals, 0),
+      ethAmount: Big(amount)
+        .times(prices[state.currentUsdToken.value])
+        .div(prices[state.currentEthToken.value])
+        .toFixed(state.currentEthToken.decimals, 0)
     });
   };
 
@@ -474,22 +486,26 @@ export default memo(function DEXBalancer(props: any) {
     updateState({
       currentUsdToken: option,
       usdAmount: '',
-      ethAmount: '',
+      ethAmount: ''
     });
     const currToken = StakeTokens.find((it) => it.symbol === option.value);
-    currToken && getTokenBalance(currToken).then((value) => {
-      updateState({
-        currentUsdTokenBalance: value,
+    currToken &&
+      getTokenBalance(currToken).then((value) => {
+        updateState({
+          currentUsdTokenBalance: value
+        });
       });
-    });
   };
 
   const handleUsdBalance = (value) => {
     // auto enter eth amount
     const updates = {
-      usdAmount: Big(value).toFixed(4, 0),
+      usdAmount: Big(value).toFixed(4, 0)
     };
-    updates.ethAmount = Big(updates.usdAmount).times(prices[state.currentUsdToken.value]).div(prices[state.currentEthToken.value]).toFixed(state.currentEthToken.decimals, 0)
+    updates.ethAmount = Big(updates.usdAmount)
+      .times(prices[state.currentUsdToken.value])
+      .div(prices[state.currentEthToken.value])
+      .toFixed(state.currentEthToken.decimals, 0);
     updateState(updates);
   };
   useEffect(() => {
@@ -503,7 +519,7 @@ export default memo(function DEXBalancer(props: any) {
         text: it.symbol,
         value: it.symbol,
         icons: [it.icon],
-        address: it.address === 'native' ? '0x0000000000000000000000000000000000000000' : it.address,
+        address: it.address === 'native' ? '0x0000000000000000000000000000000000000000' : it.address
       });
     });
     UsdStakeTokens.forEach((it) => {
@@ -511,23 +527,23 @@ export default memo(function DEXBalancer(props: any) {
         ...it,
         text: it.symbol,
         value: it.symbol,
-        icons: [it.icon],
+        icons: [it.icon]
       });
     });
     updateState({
       ethTokens: _ethTokens,
       currentEthToken: _ethTokens[0],
       usdTokens: _usdTokens,
-      currentUsdToken: _usdTokens[0],
+      currentUsdToken: _usdTokens[0]
     });
     getTokenBalance(EthStakeTokens[0]).then((value) => {
       updateState({
-        currentEthTokenBalance: value,
+        currentEthTokenBalance: value
       });
     });
     getTokenBalance(UsdStakeTokens[0]).then((value) => {
       updateState({
-        currentUsdTokenBalance: value,
+        currentUsdTokenBalance: value
       });
     });
   }, []);
@@ -535,64 +551,56 @@ export default memo(function DEXBalancer(props: any) {
   return (
     <StyledContainer>
       <StyledProtocolList>
-        {
-          currentStrategy.meta.protocolList.map((it, idx) => (
-            <StyledProtocol href={it.link} key={idx + ''} rel="nofollow" target="_blank">
-              <img className="protocol-icon" src={it.iconUrl} alt="" />
-              <span className="protocol-name">{it.name}</span>
-            </StyledProtocol>
-          ))
-        }
+        {currentStrategy.meta.protocolList.map((it, idx) => (
+          <StyledProtocol href={it.link} key={idx + ''} rel="nofollow" target="_blank">
+            <img className="protocol-icon" src={it.iconUrl} alt="" />
+            <span className="protocol-name">{it.name}</span>
+          </StyledProtocol>
+        ))}
       </StyledProtocolList>
       <StyledDexTips>
-        Add assets below - your funds will be allocated evenly across our partner protocols. Hit deposit to launch the strategy.
+        Add assets below - your funds will be allocated evenly across our partner protocols. Hit deposit to launch the
+        strategy.
       </StyledDexTips>
       <StyledFormItem>
-        <StyledFormItemTitle>
-          Assets and Amounts
-        </StyledFormItemTitle>
+        <StyledFormItemTitle>Assets and Amounts</StyledFormItemTitle>
         <StyledFormItemBody>
-          <StyledInput
-            type="text"
-            placeholder="0"
-            value={ethAmount}
-            onChange={handleEthAmount}
-          />
+          <StyledInput type="text" placeholder="0" value={ethAmount} onChange={handleEthAmount} />
         </StyledFormItemBody>
         <StyledFormItemFoot>
           <div className="prices">
-            ${Big(ethAmount || 0).times(Big(prices[currentEthToken.value] || 1)).toFixed(2, 0)}
+            $
+            {Big(ethAmount || 0)
+              .times(Big(prices[currentEthToken.value] || 1))
+              .toFixed(2, 0)}
           </div>
           <div className="balance">
-
             <Balance
               {...{
                 value: currentEthTokenBalance,
                 digit: 5,
                 onClick: handleEthBalance,
-                symbol: currentEthToken.value,
+                symbol: currentEthToken.value
               }}
             />
           </div>
         </StyledFormItemFoot>
         <StyledFormItemBody>
-          <StyledInput
-            type="text"
-            placeholder="0"
-            value={usdAmount}
-            onChange={handleUsdAmount}
-          />
+          <StyledInput type="text" placeholder="0" value={usdAmount} onChange={handleUsdAmount} />
           <Select
             {...{
               options: usdTokens,
               value: currentUsdToken,
-              onChange: handleUsdToken,
+              onChange: handleUsdToken
             }}
           />
         </StyledFormItemBody>
         <StyledFormItemFoot>
           <div className="prices">
-            ${Big(usdAmount || 0).times(Big(prices[currentUsdToken.value] || 1)).toFixed(2, 0)}
+            $
+            {Big(usdAmount || 0)
+              .times(Big(prices[currentUsdToken.value] || 1))
+              .toFixed(2, 0)}
           </div>
           <div className="balance">
             Balance:
@@ -601,21 +609,15 @@ export default memo(function DEXBalancer(props: any) {
                 value: currentUsdTokenBalance,
                 digit: 5,
                 onClick: handleUsdBalance,
-                symbol: currentUsdToken.value,
+                symbol: currentUsdToken.value
               }}
             />
           </div>
         </StyledFormItemFoot>
       </StyledFormItem>
-      <StyledButton
-        disabled={pending || !ethAmount}
-        onClick={handleSubmit}
-      >
-        {pending ? (
-          <Loading size={16} />
-        ) : 'Launch Strategy'}
+      <StyledButton disabled={pending || !ethAmount} onClick={handleSubmit}>
+        {pending ? <Loading size={16} /> : 'Launch Strategy'}
       </StyledButton>
     </StyledContainer>
   );
-
-})
+});

@@ -10,12 +10,7 @@ const LendingMarketAmount = (props: Props) => {
   return (
     <StyledBox>
       <StyledAmount>
-        <LendingTotal
-          total={amount}
-          digit={2}
-          unit={amountUnit}
-          suffixUnit={suffixAmountUnit}
-        />
+        <LendingTotal total={amount} digit={2} unit={amountUnit} suffixUnit={suffixAmountUnit} />
       </StyledAmount>
       <StyledValue>
         <LendingTotal

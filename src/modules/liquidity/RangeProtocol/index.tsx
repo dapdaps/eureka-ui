@@ -1,11 +1,7 @@
-
-
-import Connector from '../Connector/RangeProtocol'
+import Connector from '../Connector/RangeProtocol';
 import { StyledContainer } from '../styles';
 export default function RangeProtocol(props: any) {
-  const {
-    dexConfig
-  } = props
+  const { dexConfig } = props;
   return (
     <StyledContainer style={dexConfig.theme}>
       <Connector
@@ -14,5 +10,5 @@ export default function RangeProtocol(props: any) {
         }}
       />
     </StyledContainer>
-  )
+  );
 }

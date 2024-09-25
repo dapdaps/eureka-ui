@@ -53,11 +53,7 @@ const COLUMNS = [
 ];
 
 const CompoundV3List = (props: Props) => {
-  const {
-    onClickRow,
-    curChain,
-    assets
-  } = props;
+  const { onClickRow, curChain, assets } = props;
 
   return (
     <StyledContainer>

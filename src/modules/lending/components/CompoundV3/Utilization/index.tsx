@@ -10,10 +10,7 @@ const CompoundV3Utilization = (props: Props) => {
         <circle
           stroke="#00D395"
           style={{
-            strokeDasharray:
-              'calc(2 * 3.1415 * (20 - 3) / 2 * (' +
-              props.value +
-              ' / 100)) 1000'
+            strokeDasharray: 'calc(2 * 3.1415 * (20 - 3) / 2 * (' + props.value + ' / 100)) 1000'
           }}
         ></circle>
       </StyledRing>

@@ -1,5 +1,5 @@
-import { memo } from "react";
-import styled from "styled-components";
+import { memo } from 'react';
+import styled from 'styled-components';
 const StyledSpinner = styled.div`
   position: fixed;
   z-index: 8001;
@@ -17,7 +17,7 @@ const StyledSpinnerCover = styled.div`
   bottom: 0px;
   background: var(--agg-secondary-color, #000);
   opacity: 0.6;
-`
+`;
 const StyledSpinnerContainer = styled.div`
   position: relative;
   z-index: 100;
@@ -32,19 +32,19 @@ const StyledSpinnerImg = styled.img`
 `;
 
 export default memo(function Spinner(props: any) {
-  const {
-    from
-  } = props
+  const { from } = props;
   return (
     <StyledSpinner>
-      {
-        from !== 'layer' && (
-          <StyledSpinnerCover />
-        )
-      }
+      {from !== 'layer' && <StyledSpinnerCover />}
       <StyledSpinnerContainer>
-        <StyledSpinnerImg src={from === "layer" ? "https://ipfs.near.social/ipfs/bafkreiha6ccvtxzg36mp2l3h63pfudv7bw35z4ftwfd233ganhxm22kv7a" : "https://ipfs.near.social/ipfs/bafkreigxis5i2vafexhyfbafhwfvkebnk7epluyshqrzvkkbixrkkinudu"} />
+        <StyledSpinnerImg
+          src={
+            from === 'layer'
+              ? 'https://ipfs.near.social/ipfs/bafkreiha6ccvtxzg36mp2l3h63pfudv7bw35z4ftwfd233ganhxm22kv7a'
+              : 'https://ipfs.near.social/ipfs/bafkreigxis5i2vafexhyfbafhwfvkebnk7epluyshqrzvkkbixrkkinudu'
+          }
+        />
       </StyledSpinnerContainer>
     </StyledSpinner>
   );
-})
+});

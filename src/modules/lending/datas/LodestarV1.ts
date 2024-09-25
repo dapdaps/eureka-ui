@@ -5,149 +5,149 @@ import { useEffect } from 'react';
 const OTOKEN_ABI = [
   {
     inputs: [],
-    name: "totalSupply",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "totalBorrows",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'totalBorrows',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "exchangeRateCurrent",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'exchangeRateCurrent',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "getAccountSnapshot",
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'getAccountSnapshot',
     outputs: [
-      { internalType: "uint256", name: "", type: "uint256" },
-      { internalType: "uint256", name: "", type: "uint256" },
-      { internalType: "uint256", name: "", type: "uint256" },
-      { internalType: "uint256", name: "", type: "uint256" },
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' },
+      { internalType: 'uint256', name: '', type: 'uint256' }
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "supplyRatePerBlock",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'supplyRatePerBlock',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "borrowRatePerBlock",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
+    name: 'borrowRatePerBlock',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 const UNITROLLER_ABI = [
   {
     constant: true,
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "markets",
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'markets',
     outputs: [
-      { internalType: "bool", name: "isListed", type: "bool" },
+      { internalType: 'bool', name: 'isListed', type: 'bool' },
       {
-        internalType: "uint256",
-        name: "collateralFactorMantissa",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'collateralFactorMantissa',
+        type: 'uint256'
       },
-      { internalType: "bool", name: "isQied", type: "bool" },
+      { internalType: 'bool', name: 'isQied', type: 'bool' }
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [
-      { internalType: "address", name: "account", type: "address" },
+      { internalType: 'address', name: 'account', type: 'address' },
       {
-        internalType: "contract IOToken",
-        name: "oToken",
-        type: "address",
-      },
+        internalType: 'contract IOToken',
+        name: 'oToken',
+        type: 'address'
+      }
     ],
-    name: "checkMembership",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'checkMembership',
+    outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "compSupplySpeeds",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'compSupplySpeeds',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     constant: true,
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "compBorrowSpeeds",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'compBorrowSpeeds',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
-    stateMutability: "view",
-    type: "function",
-  },
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 const ERC20_ABI = [
   {
     constant: true,
     inputs: [
       {
-        name: "_owner",
-        type: "address",
-      },
+        name: '_owner',
+        type: 'address'
+      }
     ],
-    name: "balanceOf",
+    name: 'balanceOf',
     outputs: [
       {
-        name: "balance",
-        type: "uint256",
-      },
+        name: 'balance',
+        type: 'uint256'
+      }
     ],
     payable: false,
-    stateMutability: "view",
-    type: "function",
-  },
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 const LENS_ABI = [
   {
     inputs: [
-      { internalType: "contract Comp", name: "comp", type: "address" },
-      { internalType: "address", name: "account", type: "address" },
+      { internalType: 'contract Comp', name: 'comp', type: 'address' },
+      { internalType: 'address', name: 'account', type: 'address' }
     ],
-    name: "getCompBalanceMetadata",
+    name: 'getCompBalanceMetadata',
     outputs: [
       {
         components: [
-          { internalType: "uint256", name: "balance", type: "uint256" },
-          { internalType: "uint256", name: "votes", type: "uint256" },
-          { internalType: "address", name: "delegate", type: "address" },
+          { internalType: 'uint256', name: 'balance', type: 'uint256' },
+          { internalType: 'uint256', name: 'votes', type: 'uint256' },
+          { internalType: 'address', name: 'delegate', type: 'address' }
         ],
-        internalType: "struct CompoundLens.CompBalanceMetadata",
-        name: "",
-        type: "tuple",
-      },
+        internalType: 'struct CompoundLens.CompBalanceMetadata',
+        name: '',
+        type: 'tuple'
+      }
     ],
-    stateMutability: "view",
-    type: "function",
-  },
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 
-export default function LodestarV1Data (props: any) {
+export default function LodestarV1Data(props: any) {
   const {
     multicallAddress,
     unitrollerAddress,
@@ -177,10 +177,10 @@ export default function LodestarV1Data (props: any) {
     let count = 0;
     let oTokensLength = Object.values(markets).length;
     const REWARD_TOKEN = {
-      icon: "/images/tokens/lode.svg",
-      symbol: "LODE",
-      address: "0xf19547f9ed24aa66b03c3a552d181ae334fbb8db",
-      price: prices["LODE"] || "0.3076",
+      icon: '/images/tokens/lode.svg',
+      symbol: 'LODE',
+      address: '0xf19547f9ed24aa66b03c3a552d181ae334fbb8db',
+      price: prices['LODE'] || '0.3076',
       priceKey: ''
     };
     const formatedData = (key: string) => {
@@ -197,23 +197,14 @@ export default function LodestarV1Data (props: any) {
       Object.values(_cTokensData).forEach((market: any) => {
         const underlyingPrice = _underlyPrice[market.address] || 1;
         const marketSupplyUsd = Big(market.totalSupply || 0).mul(underlyingPrice);
-        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(
-          underlyingPrice
-        );
+        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(underlyingPrice);
         totalSupplyUsd = totalSupplyUsd.plus(marketSupplyUsd);
         totalBorrowUsd = totalBorrowUsd.plus(marketBorrowUsd);
-        userTotalSupplyUsd = userTotalSupplyUsd.plus(
-          Big(market.userSupply).mul(underlyingPrice)
-        );
-        userTotalBorrowUsd = userTotalBorrowUsd.plus(
-          Big(market.userBorrow).mul(underlyingPrice)
-        );
+        userTotalSupplyUsd = userTotalSupplyUsd.plus(Big(market.userSupply).mul(underlyingPrice));
+        userTotalBorrowUsd = userTotalBorrowUsd.plus(Big(market.userBorrow).mul(underlyingPrice));
         if (_userMerberShip[market.address]) {
           totalCollateralUsd = totalCollateralUsd.plus(
-            Big(market.userSupply)
-              .mul(underlyingPrice)
-              .mul(_loanToValue[market.address])
-              .div(100)
+            Big(market.userSupply).mul(underlyingPrice).mul(_loanToValue[market.address]).div(100)
           );
         }
         const distributionSupplyApy = _rewards[market.address].supply
@@ -254,16 +245,16 @@ export default function LodestarV1Data (props: any) {
           underlyingPrice: underlyingPrice,
           userUnderlyingBalance: _underlyingBalance[market.address],
           userMerberShip: _userMerberShip[market.address],
-          supplyApy: supplyApy.toFixed(2) + "%",
-          borrowApy: borrowApy.toFixed(2) + "%",
+          supplyApy: supplyApy.toFixed(2) + '%',
+          borrowApy: borrowApy.toFixed(2) + '%',
           distributionApy: [
             {
               ...REWARD_TOKEN,
-              supply: distributionSupplyApy + "%",
-              borrow: distributionBorrowApy + "%",
-            },
+              supply: distributionSupplyApy + '%',
+              borrow: distributionBorrowApy + '%'
+            }
           ],
-          dapp: name,
+          dapp: name
         };
       });
 
@@ -285,8 +276,8 @@ export default function LodestarV1Data (props: any) {
             ...REWARD_TOKEN,
             dailyRewards: dailyRewards.toString(),
             price: _accountRewards.price,
-            unclaimed: _accountRewards.reward,
-          },
+            unclaimed: _accountRewards.reward
+          }
         ];
       }
       onLoad({
@@ -296,7 +287,7 @@ export default function LodestarV1Data (props: any) {
         totalBorrowUsd: totalBorrowUsd.toString(),
         userTotalSupplyUsd: userTotalSupplyUsd.toString(),
         userTotalBorrowUsd: userTotalBorrowUsd.toString(),
-        totalCollateralUsd: totalCollateralUsd.toString(),
+        totalCollateralUsd: totalCollateralUsd.toString()
       });
     };
     const getUnitrollerData = () => {
@@ -305,14 +296,14 @@ export default function LodestarV1Data (props: any) {
       oTokens.forEach((token: any) => {
         calls.push({
           address: unitrollerAddress,
-          name: "markets",
-          params: [token.address],
+          name: 'markets',
+          params: [token.address]
         });
         if (account) {
           calls.push({
             address: unitrollerAddress,
-            name: "checkMembership",
-            params: [account, token.address],
+            name: 'checkMembership',
+            params: [account, token.address]
           });
         }
       });
@@ -321,7 +312,7 @@ export default function LodestarV1Data (props: any) {
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _loanToValue = {};
@@ -331,10 +322,7 @@ export default function LodestarV1Data (props: any) {
             const mod = i % (account ? 2 : 1);
             switch (mod) {
               case 0:
-                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(
-                  res[i]?.[1]._hex,
-                  16
-                );
+                _loanToValue[oTokens[index].address] = ethers.utils.formatUnits(res[i]?.[1]._hex, 16);
                 break;
               case 1:
                 _userMerberShip[oTokens[index].address] = res[i]?.[0] || false;
@@ -343,10 +331,10 @@ export default function LodestarV1Data (props: any) {
             }
           }
           count++;
-          formatedData("getUnitrollerData");
+          formatedData('getUnitrollerData');
         })
         .catch((err: any) => {
-          console.log("error-getUnitrollerData", err);
+          console.log('error-getUnitrollerData', err);
           setTimeout(() => {
             getUnitrollerData();
           }, 1000);
@@ -354,59 +342,46 @@ export default function LodestarV1Data (props: any) {
     };
     const getUnderlyPrice = () => {
       Object.values(markets).forEach((market: any) => {
-        _underlyPrice[market.address] =
-          prices[
-          market.underlyingToken.priceKey || market.underlyingToken.symbol
-            ] || "1";
+        _underlyPrice[market.address] = prices[market.underlyingToken.priceKey || market.underlyingToken.symbol] || '1';
       });
       count++;
-      formatedData("getUnderlyPrice");
+      formatedData('getUnderlyPrice');
     };
     const getOTokenLiquidity = () => {
       const assets = Object.values(markets);
-      let nativeOToken = "";
+      let nativeOToken = '';
       const calls = assets
         .filter((market: any) => {
-          if (market.underlyingToken.address === "native")
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== "native"
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           address: market.underlyingToken.address,
-          name: "balanceOf",
-          params: [market.address],
+          name: 'balanceOf',
+          params: [market.address]
         }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _liquidity = {};
           for (let i = 0, len = res.length; i < len; i++) {
             const oToken = markets[calls[i].params[0]];
-            _liquidity[oToken.address] = ethers.utils.formatUnits(
-              res[i]?.[0]._hex,
-              oToken.underlyingToken.decimals
-            );
+            _liquidity[oToken.address] = ethers.utils.formatUnits(res[i]?.[0]._hex, oToken.underlyingToken.decimals);
           }
           if (nativeOToken) {
             provider.getBalance(nativeOToken).then((rawBalance: any) => {
-              _liquidity[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18
-              );
+              _liquidity[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
-              formatedData("getOTokenLiquidity");
+              formatedData('getOTokenLiquidity');
             });
           } else {
             count++;
-            formatedData("getOTokenLiquidity");
+            formatedData('getOTokenLiquidity');
           }
         })
         .catch(() => {
@@ -416,58 +391,48 @@ export default function LodestarV1Data (props: any) {
         });
     };
     const getWalletBalance = () => {
-      let nativeOToken = "";
+      let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
-          if (market.underlyingToken.address === "native")
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== "native"
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           ...market.underlyingToken,
-          oTokenAddress: market.address,
+          oTokenAddress: market.address
         }));
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
-        name: "balanceOf",
-        params: [account],
+        name: 'balanceOf',
+        params: [account]
       }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyingBalance = {};
           for (let i = 0, len = res.length; i < len; i++) {
             _underlyingBalance[underlyingTokens[i].oTokenAddress] = res[i]?.[0]
-              ? ethers.utils.formatUnits(
-                res[i][0]._hex,
-                underlyingTokens[i].decimals
-              )
-              : "0";
+              ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals)
+              : '0';
           }
           if (nativeOToken) {
             provider.getBalance(account).then((rawBalance: any) => {
-              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18
-              );
+              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
-              formatedData("underlyingTokens");
+              formatedData('underlyingTokens');
             });
           } else {
             count++;
-            formatedData("underlyingTokens");
+            formatedData('underlyingTokens');
           }
         })
         .catch((err: any) => {
-          console.log("getWalletBalance error", err);
+          console.log('getWalletBalance error', err);
           setTimeout(() => {
             getWalletBalance();
           }, 500);
@@ -478,70 +443,55 @@ export default function LodestarV1Data (props: any) {
       const calls = [
         {
           address: oToken.address,
-          name: "exchangeRateCurrent",
+          name: 'exchangeRateCurrent'
         },
         {
           address: oToken.address,
-          name: "totalSupply",
+          name: 'totalSupply'
         },
         {
           address: oToken.address,
-          name: "totalBorrows",
+          name: 'totalBorrows'
         },
         {
           address: oToken.address,
-          name: "supplyRatePerBlock",
+          name: 'supplyRatePerBlock'
         },
         {
           address: oToken.address,
-          name: "borrowRatePerBlock",
+          name: 'borrowRatePerBlock'
         },
         {
           address: oToken.address,
-          name: "getAccountSnapshot",
-          params: [account],
-        },
+          name: 'getAccountSnapshot',
+          params: [account]
+        }
       ];
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           oTokensLength--;
-          const exchangeRateStored = ethers.utils.formatUnits(
-            res[0]?.[0]._hex,
-            10 + oToken.underlyingToken.decimals
-          );
-          const userSupply = ethers.utils.formatUnits(
-            res[5]?.[1]._hex,
-            oToken.decimals
-          );
-          const totalSupply = ethers.utils.formatUnits(
-            res[1]?.[0]._hex,
-            oToken.decimals
-          );
+          const exchangeRateStored = ethers.utils.formatUnits(res[0]?.[0]._hex, 10 + oToken.underlyingToken.decimals);
+          const userSupply = ethers.utils.formatUnits(res[5]?.[1]._hex, oToken.decimals);
+          const totalSupply = ethers.utils.formatUnits(res[1]?.[0]._hex, oToken.decimals);
           _cTokensData[oToken.address] = {
             ...oToken,
             exchangeRateStored,
             totalSupply: Big(totalSupply).mul(exchangeRateStored).toString(),
-            totalBorrows: ethers.utils.formatUnits(
-              res[2]?.[0]._hex,
-              oToken.underlyingToken.decimals
-            ),
+            totalBorrows: ethers.utils.formatUnits(res[2]?.[0]._hex, oToken.underlyingToken.decimals),
             supplyRatePerBlock: ethers.utils.formatUnits(res[3]?.[0]._hex, 18),
             borrowRatePerBlock: ethers.utils.formatUnits(res[4]?.[0]._hex, 18),
             userSupply: Big(userSupply).mul(exchangeRateStored).toString(),
-            userBorrow: ethers.utils.formatUnits(
-              res[5]?.[2]._hex,
-              oToken.underlyingToken.decimals
-            ),
+            userBorrow: ethers.utils.formatUnits(res[5]?.[2]._hex, oToken.underlyingToken.decimals)
           };
           if (oTokensLength === 0) {
             count++;
-            formatedData("oTokens data");
+            formatedData('oTokens data');
           }
         })
         .catch(() => {
@@ -563,66 +513,59 @@ export default function LodestarV1Data (props: any) {
         calls: [
           {
             address: lensAddress,
-            name: "getCompBalanceMetadata",
-            params: [REWARD_TOKEN.address, account],
-          },
+            name: 'getCompBalanceMetadata',
+            params: [REWARD_TOKEN.address, account]
+          }
         ],
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
-          const price =
-            prices[REWARD_TOKEN.priceKey || REWARD_TOKEN.symbol] || "1";
+          const price = prices[REWARD_TOKEN.priceKey || REWARD_TOKEN.symbol] || '1';
           _accountRewards = {
             price,
-            reward: res[0]?.[0]?.[0]
-              ? ethers.utils.formatUnits(res[0][0][0], 18).toString()
-              : "0",
+            reward: res[0]?.[0]?.[0] ? ethers.utils.formatUnits(res[0][0][0], 18).toString() : '0'
           };
           count++;
-          formatedData("rewards");
+          formatedData('rewards');
         })
         .catch((err: any) => {
-          console.log(name + " error-user-rewards", err);
+          console.log(name + ' error-user-rewards', err);
         });
     };
 
-    const getCTokenReward = ({ cTokens, index }: { cTokens: any, index: number }) => {
+    const getCTokenReward = ({ cTokens, index }: { cTokens: any; index: number }) => {
       const token = cTokens[index];
       const calls = [
         {
           address: unitrollerAddress,
-          name: "compBorrowSpeeds",
-          params: [token],
+          name: 'compBorrowSpeeds',
+          params: [token]
         },
         {
           address: unitrollerAddress,
-          name: "compSupplySpeeds",
-          params: [token],
-        },
+          name: 'compSupplySpeeds',
+          params: [token]
+        }
       ];
       multicall({
         abi: UNITROLLER_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           const borrow = res[0]?.[0]
-            ? Big(ethers.utils.formatUnits(res[0][0]._hex, 18)).mul(
-              REWARD_TOKEN.price
-            )
+            ? Big(ethers.utils.formatUnits(res[0][0]._hex, 18)).mul(REWARD_TOKEN.price)
             : Big(0);
           const supply = res[1]?.[0]
-            ? Big(ethers.utils.formatUnits(res[1][0]._hex, 18)).mul(
-              REWARD_TOKEN.price
-            )
+            ? Big(ethers.utils.formatUnits(res[1][0]._hex, 18)).mul(REWARD_TOKEN.price)
             : Big(0);
           _rewards[token] = {
             borrow: borrow.mul(7200),
-            supply: supply.mul(7200),
+            supply: supply.mul(7200)
           };
 
           if (index === cTokens.length - 1) {
@@ -630,12 +573,12 @@ export default function LodestarV1Data (props: any) {
           } else {
             getCTokenReward({
               cTokens,
-              index: index + 1,
+              index: index + 1
             });
           }
         })
         .catch((err: any) => {
-          console.log("error-rewards", err);
+          console.log('error-rewards', err);
         });
     };
 
@@ -643,7 +586,7 @@ export default function LodestarV1Data (props: any) {
       const cTokens = Object.keys(markets);
       getCTokenReward({
         cTokens,
-        index: 0,
+        index: 0
       });
     };
     getUnitrollerData();
@@ -653,5 +596,4 @@ export default function LodestarV1Data (props: any) {
     getCTokensData();
     getRewards();
   }, [update, account]);
-
 }

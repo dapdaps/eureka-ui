@@ -7,11 +7,7 @@ const CompoundV3UsdPrice = (props: Props) => {
   return (
     <StyledBox>
       <StyledPrice>
-        <LendingTotal
-          total={price}
-          digit={2}
-          unit="$"
-        />
+        <LendingTotal total={price} digit={2} unit="$" />
       </StyledPrice>
     </StyledBox>
   );

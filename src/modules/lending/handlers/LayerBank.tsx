@@ -101,18 +101,11 @@ const LayerBankHandler = (props: Props) => {
       );
 
       options = {
-        value:
-          isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay')
-            ? parsedAmount
-            : 0,
+        value: isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay') ? parsedAmount : 0,
         gasLimit: 4000000
       };
 
-      const CTokenContract = new ethers.Contract(
-        data.config.unitrollerAddress,
-        CTOKEN_ABI,
-        provider.getSigner()
-      );
+      const CTokenContract = new ethers.Contract(data.config.unitrollerAddress, CTOKEN_ABI, provider.getSigner());
 
       contract = CTokenContract;
 
@@ -141,11 +134,7 @@ const LayerBankHandler = (props: Props) => {
       if (!data.config.unitrollerAddress || !data.underlyingToken) return;
       const isEnter = data.actionText === 'Enable as Collateral';
 
-      contract = new ethers.Contract(
-        data.config.unitrollerAddress,
-        UNITROLLER_ABI,
-        provider.getSigner()
-      );
+      contract = new ethers.Contract(data.config.unitrollerAddress, UNITROLLER_ABI, provider.getSigner());
 
       method = isEnter ? 'enterMarkets' : 'exitMarket';
 

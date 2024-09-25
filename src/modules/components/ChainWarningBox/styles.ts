@@ -16,7 +16,7 @@ export const SwitchButton = styled.button`
   height: 46px;
   border: none;
   background: var(--button-color, var(--agg-primary-color, #000));
-  color: var(--button-text-color, var(--agg-secondary-color, #FFF));
+  color: var(--button-text-color, var(--agg-secondary-color, #fff));
 `;
 
 export const Container = styled.div`

@@ -47,12 +47,12 @@ const get = async (url: string, query?: Record<string, any>) => {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${tokens.access_token || ''}`,
-      'Content-Type': 'application/json',
-    },
+      'Content-Type': 'application/json'
+    }
   };
   if (!query) {
     const res = await fetch(getUrl(url), options);
-    const result = await res.json() as any;
+    const result = (await res.json()) as any;
     handleUpgrade(result);
     return result;
   }
@@ -60,7 +60,7 @@ const get = async (url: string, query?: Record<string, any>) => {
   query = removeEmptyKeys(query);
   const queryStr = objectToQueryString(query);
   const res = await fetch(`${getUrl(url)}?${queryStr}`, options);
-  const result = await res.json() as any;
+  const result = (await res.json()) as any;
   handleUpgrade(result);
   return result;
 };
@@ -68,7 +68,7 @@ const get = async (url: string, query?: Record<string, any>) => {
 const getWithoutActive = async (
   url: string,
   activity: 'coin68' | 'bitget' | 'namlongdao' | 'kol' | 'dapdapinvite' | 'okx' | 'coin98',
-  query?: Record<string, any>,
+  query?: Record<string, any>
 ) => {
   const tokens = JSON.parse(window.sessionStorage.getItem(AUTH_TOKENS) || '{}');
   const options = {
@@ -76,8 +76,8 @@ const getWithoutActive = async (
     headers: {
       Authorization: `Bearer ${tokens.access_token || ''}`,
       'Content-Type': 'application/json',
-      activity,
-    },
+      activity
+    }
   };
   if (!query) {
     const res = await fetch(getUrl(url), options);
@@ -96,11 +96,11 @@ const post = async (url: string, data?: object) => {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${tokens.access_token || ''}`,
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: data ? JSON.stringify(data) : undefined,
+    body: data ? JSON.stringify(data) : undefined
   });
-  const result = await res.json() as any;
+  const result = (await res.json()) as any;
   handleUpgrade(result);
   return result;
 };
@@ -111,16 +111,16 @@ const deleteRequest = async (url: string, data: object) => {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${tokens.access_token || ''}`,
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(data)
   });
   return (await res.json()) as any;
 };
 
 const asyncFetch = async (url: string, options?: object) => {
-  const response = await fetch(url, options)
-  return await response.json()
-}
+  const response = await fetch(url, options);
+  return await response.json();
+};
 
 export { get, post, getWithoutActive, deleteRequest, AUTH_TOKENS, asyncFetch };

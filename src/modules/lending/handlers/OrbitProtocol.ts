@@ -6,12 +6,12 @@ const CErc20_ABI = [
   {
     inputs: [
       { internalType: 'address', name: 'gToken', type: 'address' },
-      { internalType: 'uint256', name: 'uAmount', type: 'uint256' },
+      { internalType: 'uint256', name: 'uAmount', type: 'uint256' }
     ],
     name: 'supply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   //
   {
@@ -19,33 +19,29 @@ const CErc20_ABI = [
     name: 'mint',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'uint256', name: 'borrowAmount', type: 'uint256' },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'borrowAmount', type: 'uint256' }],
     name: 'borrow',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [{ internalType: 'uint256', name: 'repayAmount', type: 'uint256' }],
     name: 'repayBorrow',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'uint256', name: 'redeemAmount', type: 'uint256' },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'redeemAmount', type: 'uint256' }],
     name: 'redeemUnderlying',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const CEther_ABI = [
   {
@@ -53,39 +49,35 @@ const CEther_ABI = [
     name: 'mint',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'repayBorrow',
     outputs: [],
     stateMutability: 'payable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const UNITROLLER_ABI = [
   {
     constant: false,
-    inputs: [
-      { internalType: 'address[]', name: 'qiTokens', type: 'address[]' },
-    ],
+    inputs: [{ internalType: 'address[]', name: 'qiTokens', type: 'address[]' }],
     name: 'enterMarkets',
     outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: false,
-    inputs: [
-      { internalType: 'address', name: 'qiTokenAddress', type: 'address' },
-    ],
+    inputs: [{ internalType: 'address', name: 'qiTokenAddress', type: 'address' }],
     name: 'exitMarket',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const OrbitProtocolHandler = (props: any) => {
@@ -100,13 +92,7 @@ const OrbitProtocolHandler = (props: any) => {
 
     const isETH = data.underlyingToken.isNative;
     let spaceAddress;
-    const {
-      ORBIT_ADDRESS,
-      REOZO_ADDRESS,
-      MOON_MARKETS,
-      MOON_ADDRESS,
-      KELP_ADDRESS,
-    } = data.config;
+    const { ORBIT_ADDRESS, REOZO_ADDRESS, MOON_MARKETS, MOON_ADDRESS, KELP_ADDRESS } = data.config;
     if (curPool === 'ORBIT') {
       spaceAddress = ORBIT_ADDRESS;
     }
@@ -129,26 +115,15 @@ const OrbitProtocolHandler = (props: any) => {
 
       const parsedAmount = ethers.utils.parseUnits(
         Big(amount).toFixed(data.underlyingToken.decimals).toString(),
-        data.underlyingToken.decimals,
+        data.underlyingToken.decimals
       );
 
       options = {
-        value:
-          isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay')
-            ? parsedAmount
-            : 0,
-        gasLimit: 4000000,
+        value: isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay') ? parsedAmount : 0,
+        gasLimit: 4000000
       };
-      const CEtherContract = new ethers.Contract(
-        data.address,
-        CEther_ABI,
-        provider.getSigner(),
-      );
-      const CErc20Contract = new ethers.Contract(
-        data.address,
-        CErc20_ABI,
-        provider.getSigner(),
-      );
+      const CEtherContract = new ethers.Contract(data.address, CEther_ABI, provider.getSigner());
+      const CErc20Contract = new ethers.Contract(data.address, CErc20_ABI, provider.getSigner());
 
       contract = CErc20Contract;
 
@@ -178,11 +153,7 @@ const OrbitProtocolHandler = (props: any) => {
     if (isCollateral) {
       if (!data.underlyingToken) return;
       const isEnter = data.actionText === 'Enable as Collateral';
-      contract = new ethers.Contract(
-        spaceAddress,
-        UNITROLLER_ABI,
-        provider.getSigner(),
-      );
+      contract = new ethers.Contract(spaceAddress, UNITROLLER_ABI, provider.getSigner());
 
       method = isEnter ? 'enterMarkets' : 'exitMarket';
 
@@ -196,13 +167,13 @@ const OrbitProtocolHandler = (props: any) => {
 
       contract.populateTransaction[method](...params, {
         ...options,
-        gasLimit: 4000000,
+        gasLimit: 4000000
       })
         .then((res: any) => {
           onLoad({
             gas: 4000000,
             unsignedTx: res,
-            isError: false,
+            isError: false
           });
         })
         .catch((err: any) => {

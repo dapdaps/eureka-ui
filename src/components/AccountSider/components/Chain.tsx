@@ -9,7 +9,6 @@ import Loading from '@/components/Icons/Loading';
 import useSortChains from '@/hooks/useSortChains';
 import useSwitchChain from '@/hooks/useSwitchChain';
 
-
 const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   width: ${({ $showName }) => ($showName ? '204px' : '56px')};
   height: 34px;
@@ -25,17 +24,16 @@ const StyledContainer = styled.div<{ $mt?: number; $showName?: number }>`
   padding: 0 5px;
   margin-top: ${({ $mt }) => $mt + 'px'};
   cursor: pointer;
-  
+
   &.empty-chain {
     &:hover {
-      background: #18191E;
+      background: #18191e;
     }
   }
-  
-  &.has-chain {
-    background: #18191E;
-  }
 
+  &.has-chain {
+    background: #18191e;
+  }
 `;
 const StyledChain = styled.div`
   display: flex;
@@ -69,7 +67,7 @@ const ChainList = styled.div<{ display?: number }>`
   z-index: 200;
   padding: 12px 0;
   border: 1px solid #333648;
-  background: #1F2229;
+  background: #1f2229;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.25);
 `;
 const ChainItem = styled(StyledChain)<{ active?: number }>`
@@ -118,7 +116,7 @@ const Chain = ({
   showName = true,
   showChains,
   setShowChains,
-  bp,
+  bp
 }: {
   mt?: number;
   showName?: boolean;
@@ -126,9 +124,8 @@ const Chain = ({
   setShowChains?: (show: boolean) => void;
   bp?: string;
 }) => {
-
   const { sortedChains } = useSortChains();
-  const { switchChain, switching, currentChain } = useSwitchChain()
+  const { switchChain, switching, currentChain } = useSwitchChain();
 
   const [showList, setShowList] = useState(false);
   const [showEmptyChainTips, setShowEmptyChainTips] = useState(false);
@@ -142,7 +139,6 @@ const Chain = ({
       document.removeEventListener('click', hideList);
     };
   }, []);
-  
 
   return (
     <StyledContainer

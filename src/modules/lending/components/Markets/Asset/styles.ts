@@ -15,4 +15,3 @@ export const StyledSymbol = styled.div`
   font-weight: 500;
   color: var(--agg-primary-color, #fff);
 `;
-

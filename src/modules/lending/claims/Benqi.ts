@@ -8,20 +8,20 @@ const CLAIM_ABI = [
       {
         internalType: 'uint8',
         name: 'rewardType',
-        type: 'uint8',
+        type: 'uint8'
       },
       {
         internalType: 'address payable',
         name: 'holder',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'claimReward',
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const BenqiClaim = (props: any) => {
@@ -30,11 +30,7 @@ const BenqiClaim = (props: any) => {
   useEffect(() => {
     if (!loading || !dapp.unitrollerAddress || !account) return;
 
-    const CollateralContract = new ethers.Contract(
-      dapp.unitrollerAddress,
-      CLAIM_ABI,
-      provider.getSigner(),
-    );
+    const CollateralContract = new ethers.Contract(dapp.unitrollerAddress, CLAIM_ABI, provider.getSigner());
 
     CollateralContract.claimReward(record.symbol === 'QI' ? 0 : 1, account)
       .then((tx: any) => {

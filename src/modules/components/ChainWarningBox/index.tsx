@@ -37,15 +37,8 @@ const ChainWarningBox = (props: Props) => {
           <div style={{ fontSize: '18px', fontWeight: 500 }}>{chain.name}</div>
         </div>
         <div style={{ marginTop: '17px' }}>Please connect to {chain.name}</div>
-        <SwitchButton
-          onClick={() => handleSwitchChain()}
-          style={theme ? theme : {}}
-        >
-          {props.switchingChain ? (
-            <Loading size={16} />
-          ) : (
-            'Switch Network'
-          )}
+        <SwitchButton onClick={() => handleSwitchChain()} style={theme ? theme : {}}>
+          {props.switchingChain ? <Loading size={16} /> : 'Switch Network'}
         </SwitchButton>
       </Wrapper>
     </Container>
@@ -60,5 +53,5 @@ export interface Props {
   top?: string | number;
   switchingChain?: boolean;
 
-  onSwitchChain?(params: { chainId: string; }): void;
+  onSwitchChain?(params: { chainId: string }): void;
 }

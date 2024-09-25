@@ -1,26 +1,12 @@
 import { formateValueWithThousandSeparatorAndFont } from '@/utils/formate';
 
-import {
-  StyledItem,
-  StyledSummary,
-  StyledTitle,
-  StyledValue,
-} from './styles';
+import { StyledItem, StyledSummary, StyledTitle, StyledValue } from './styles';
 
 const LendingSummary = (props: Props) => {
-  const {
-    userTotalCollateralUsd = '0',
-    userTotalSupplyUsd = '0',
-    userTotalBorrowUsd = '0',
-  } = props;
+  const { userTotalCollateralUsd = '0', userTotalSupplyUsd = '0', userTotalBorrowUsd = '0' } = props;
 
   const formatUsd = (val: string) => {
-    return formateValueWithThousandSeparatorAndFont(
-      val,
-      2,
-      true,
-      { prefix: '$', isZeroPrecision: true }
-    );
+    return formateValueWithThousandSeparatorAndFont(val, 2, true, { prefix: '$', isZeroPrecision: true });
   };
 
   return (

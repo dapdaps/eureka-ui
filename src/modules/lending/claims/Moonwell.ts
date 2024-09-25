@@ -1,5 +1,3 @@
-const MoonwellClaim = (props: any) => {
-
-};
+const MoonwellClaim = (props: any) => {};
 
 export default MoonwellClaim;

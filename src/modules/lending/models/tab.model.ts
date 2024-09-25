@@ -5,5 +5,5 @@ export interface Tab {
 
 export enum TabKey {
   Market = 'market',
-  Yours = 'yours',
+  Yours = 'yours'
 }

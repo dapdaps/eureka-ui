@@ -2,11 +2,7 @@ import { StyledTab, StyledTabs } from '@/modules/lending/components/CardTabs/sty
 import type { Tab } from '@/modules/lending/models';
 
 const LendingCardTabs = (props: Props) => {
-  const {
-    tabs = [],
-    active,
-    onChange
-  } = props;
+  const { tabs = [], active, onChange } = props;
 
   return (
     <StyledTabs>

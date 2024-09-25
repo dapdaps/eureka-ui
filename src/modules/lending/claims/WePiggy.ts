@@ -4,41 +4,27 @@ import { useEffect } from 'react';
 const CLAIM_ABI = [
   {
     inputs: [
-      { internalType: "address", name: "holder", type: "address" },
+      { internalType: 'address', name: 'holder', type: 'address' },
       {
-        internalType: "contract PToken[]",
-        name: "pTokens",
-        type: "address[]",
-      },
+        internalType: 'contract PToken[]',
+        name: 'pTokens',
+        type: 'address[]'
+      }
     ],
-    name: "claimWpc",
+    name: 'claimWpc',
     outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
 ];
 
 export default function WePiggyClaim(props: any) {
-
-  const {
-    loading,
-    market,
-    dapp,
-    record,
-    onSuccess,
-    onError,
-    account,
-    provider
-  } = props;
+  const { loading, market, dapp, record, onSuccess, onError, account, provider } = props;
 
   useEffect(() => {
     if (!loading || !dapp?.rewardAddress || !account) return;
 
-    const RewardContract = new ethers.Contract(
-      dapp.rewardAddress,
-      CLAIM_ABI,
-      provider.getSigner()
-    );
+    const RewardContract = new ethers.Contract(dapp.rewardAddress, CLAIM_ABI, provider.getSigner());
 
     RewardContract.claimWpc()
       .then((tx: any) => {
@@ -49,8 +35,5 @@ export default function WePiggyClaim(props: any) {
       .catch((err: any) => {
         onError(err);
       });
-
   }, [loading, dapp, account]);
-
-
 }

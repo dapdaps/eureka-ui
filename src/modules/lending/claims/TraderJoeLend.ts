@@ -6,49 +6,33 @@ const CLAIM_ABI = [
     constant: false,
     inputs: [
       {
-        internalType: "uint8",
-        name: "rewardType",
-        type: "uint8",
+        internalType: 'uint8',
+        name: 'rewardType',
+        type: 'uint8'
       },
       {
-        internalType: "address payable",
-        name: "holder",
-        type: "address",
-      },
+        internalType: 'address payable',
+        name: 'holder',
+        type: 'address'
+      }
     ],
-    name: "claimReward",
+    name: 'claimReward',
     outputs: [],
     payable: false,
-    stateMutability: "nonpayable",
-    type: "function",
-  },
+    stateMutability: 'nonpayable',
+    type: 'function'
+  }
 ];
 
-export default function TraderJoeLendClaim (props: any) {
-
-  const {
-    loading,
-    market,
-    dapp,
-    record,
-    onSuccess,
-    onError,
-    provider,
-    account
-  } = props;
-
+export default function TraderJoeLendClaim(props: any) {
+  const { loading, market, dapp, record, onSuccess, onError, provider, account } = props;
 
   useEffect(() => {
-
     if (!loading || !dapp.unitrollerAddress || !account) return;
 
-    const CollateralContract = new ethers.Contract(
-      dapp.unitrollerAddress,
-      CLAIM_ABI,
-      provider.getSigner()
-    );
+    const CollateralContract = new ethers.Contract(dapp.unitrollerAddress, CLAIM_ABI, provider.getSigner());
 
-    CollateralContract.claimReward(record.symbol === "JOE" ? 0 : 1, account)
+    CollateralContract.claimReward(record.symbol === 'JOE' ? 0 : 1, account)
       .then((tx: any) => {
         tx.wait().then((res: any) => {
           onSuccess(res);
@@ -58,5 +42,4 @@ export default function TraderJoeLendClaim (props: any) {
         onError(err);
       });
   }, [loading, dapp, account]);
-
 }
