@@ -1,6 +1,5 @@
 import { useDebounce } from 'ahooks';
 import Big from 'big.js';
-import Link from 'next/link';
 import { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 
@@ -11,11 +10,7 @@ import useConnectWallet from '@/hooks/useConnectWallet';
 import useTokenBalance from '@/hooks/useCurrencyBalance';
 import useToast from '@/hooks/useToast';
 import { balanceFormated, errorFormated, getFullNum } from '@/utils/balance';
-import { formatDateTime } from '@/utils/date';
-import { getUTCTime } from '@/utils/utc';
-import { useBasic } from '@/views/Campaign/RubicHoldstation/hooks/useBasic';
 
-import LazyImage from '../LazyImage';
 import activity from './activity';
 import Alert from './components/Alert';
 import ChainSelector from './components/ChainSelector';
@@ -59,63 +54,10 @@ const Content = styled.div`
   margin-top: 30px;
   padding: 16px;
   position: relative;
-
-  &.rubic {
-    top: -27px;
-    z-index: 1;
-  }
 `;
 
 const Body = styled.div`
   margin-top: 30px;
-`;
-
-const RubicHeader = styled.div`
-  width: 100%;
-  height: 113px;
-  background: red;
-  border-top-left-radius: 16px;
-  border-top-right-radius: 16px;
-  padding: 14px 20px 0 40px;
-  background: linear-gradient(116deg, #c8ff7c 11.9%, #ffa5db 64.92%, #7a78ff 104.11%);
-  filter: drop-shadow(0px 11px 6.8px rgba(0, 0, 0, 0.25));
-  color: #000;
-  font-family: Montserrat;
-  font-size: 14px;
-  position: relative;
-  font-weight: 500;
-
-  .rubic-badge {
-    position: absolute;
-    top: -16px;
-    left: -16px;
-    z-index: 1;
-  }
-`;
-
-const RubicContent = styled.div`
-  .price {
-    font-style: italic;
-    font-weight: 700;
-  }
-`;
-
-const RubicFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const RubicFooterLink = styled(Link)`
-  color: #fff;
-  font-weight: 600;
-  text-decoration: underline;
-`;
-
-const RubicFooterTime = styled.div`
-  .label {
-    font-weight: 700;
-  }
 `;
 
 const MainTitle = styled.div`
@@ -507,50 +449,6 @@ export default function BridgeX({
 
   const CurrentActivityCom = activity[tool];
 
-  // for Campaign
-  const isRubic = tool === 'rubic';
-
-  const { data }: any = useBasic({
-    category: isRubic ? 'rubic' : null
-  });
-
-  const CampaignRubic = () => {
-    if (isRubic && data.status && data.status !== 'ended') {
-      const { end_time, start_time } = data;
-      let hourStr: string | number = '';
-      let unit = '';
-      const _end_time = getUTCTime(end_time);
-      const date = new Date(_end_time);
-      const hour = date.getHours();
-      hourStr = hour % 12;
-      unit = hour > 11 ? 'PM' : 'AM';
-      const _start_time = getUTCTime(start_time);
-
-      return (
-        <RubicHeader>
-          <LazyImage
-            containerClassName="rubic-badge"
-            src="/images/campaign/rubic-holdstation/rubic-badge.png"
-            width={52}
-            height={64}
-          />
-          <RubicContent>
-            Rubic x HoldStation Campaign is live now! Play Lottery and Win Medals, <span className="price">$7500</span>{' '}
-            in prize
-          </RubicContent>
-          <RubicFooter>
-            <RubicFooterTime>
-              <span className="label">Time: </span>
-              {formatDateTime(_start_time, 'D/M/YYYY')} - {formatDateTime(_end_time, 'D/M/YYYY hh:mm')} (UTC)
-            </RubicFooterTime>
-            <RubicFooterLink href="/campaign/home?category=rubic-holdstation">Campaign {'>'}</RubicFooterLink>
-          </RubicFooter>
-        </RubicHeader>
-      );
-    }
-    return null;
-  };
-
   return (
     <BridgePanel style={style}>
       <Header>
@@ -561,8 +459,7 @@ export default function BridgeX({
       </Header>
       {CurrentActivityCom && <CurrentActivityCom dapp={dapp} />}
       <Body>
-        <CampaignRubic />
-        <Content className={isRubic ? 'rubic' : ''}>
+        <Content>
           <MainTitle>Bridge</MainTitle>
           <ChainPairs>
             <ChainSelector

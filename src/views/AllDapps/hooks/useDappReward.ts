@@ -63,7 +63,7 @@ export default function useDappReward() {
       id: -1,
       banner: '/images/campaign/rubic-holdstation/link-banner.png',
       link: '/campaign/home?category=rubic-holdstation',
-      status: StatusType.ongoing,
+      status: StatusType.ended,
       name: 'Rubic x Holdstation Campaign：Play Lottery and Win Medals',
       reward_value: '$7500'
     };
