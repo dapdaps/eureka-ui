@@ -1,4 +1,3 @@
-import { base } from '@/config/tokens/base';
 import { linea } from '@/config/tokens/linea';
 
 const basic = {
@@ -7,13 +6,6 @@ const basic = {
   amountOutFn: 'bluebiu.near/widget/Swap.Data.AmountOut'
 };
 const networks = {
-  8453: {
-    defaultCurrencies: {
-      input: base['eth'],
-      output: base['axlusdc']
-    },
-    tokens: [base['eth'], base['weth'], base['axlusdc'], base['axlusdt']]
-  },
   59144: {
     defaultCurrencies: {
       input: linea['eth'],

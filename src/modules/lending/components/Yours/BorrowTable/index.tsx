@@ -7,25 +7,25 @@ const LendingBorrowTable = (props: Props) => {
     <LendingYoursTable
       columns={[
         {
-          type: "name",
-          width: "30%",
-          name: "Borrowed Asset",
+          type: 'name',
+          width: '30%',
+          name: 'Borrowed Asset'
         },
-        { type: "apy", width: "30%", name: "APY/Accrued" },
+        { type: 'apy', width: '30%', name: 'APY/Accrued' },
         {
-          type: "total",
-          key: "borrowed",
-          width: "20%",
-          name: "Borrowed",
+          type: 'total',
+          key: 'borrowed',
+          width: '20%',
+          name: 'Borrowed'
         },
-        { type: "button", width: "20%" },
+        { type: 'button', width: '20%' }
       ]}
       data={data}
       buttons={[
         {
-          text: "Repay",
-          loading,
-        },
+          text: 'Repay',
+          loading
+        }
       ]}
       type="borrow"
       onButtonClick={onButtonClick}

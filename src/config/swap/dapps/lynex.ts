@@ -25,7 +25,8 @@ const networks = {
       linea['foxy'],
       linea['lynx'],
       linea['mai'],
-      linea['stone']
+      linea['stone'],
+      linea['croak']
     ]
   }
 };

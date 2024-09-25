@@ -7,12 +7,12 @@ const basic = {
   data: 'bluebiu.near/widget/Lending.Data.Sonne',
   handler: 'bluebiu.near/widget/Lending.Handler.Cream',
   handlerClaim: 'bluebiu.near/widget/Linea.Lending.MendiHandlerClaim',
-  loaderName: 'Sonne',
+  loaderName: 'Sonne'
 };
 
 const rewardToken = {
   icon: 'https://ipfs.near.social/ipfs/bafkreiagqfppcrymfj426ik74axff645ohvi7va5v4yxlszdbu3xstyqeq',
-  symbol: 'SONNE',
+  symbol: 'SONNE'
 };
 
 const networks = {
@@ -25,28 +25,28 @@ const networks = {
         decimals: 8,
         symbol: 'sobWETH',
         address: '0x5F5c479fe590cD4442A05aE4a941dd991A633B8E',
-        underlyingToken: base['weth'],
+        underlyingToken: base['weth']
       },
       '0xb864BA2aab1f53BC3af7AE49a318202dD3fd54C2': {
         decimals: 8,
         symbol: 'sobDAI',
         address: '0xb864BA2aab1f53BC3af7AE49a318202dD3fd54C2',
-        underlyingToken: base['dai'],
+        underlyingToken: base['dai']
       },
       '0x225886C9beb5eeE254F79d58bbD80cf9F200D4d0': {
         decimals: 8,
         symbol: 'sobUSDbC',
         address: '0x225886C9beb5eeE254F79d58bbD80cf9F200D4d0',
-        underlyingToken: base['usdbc'],
+        underlyingToken: base['usdbc']
       },
       '0xfd68F92B45b633bbe0f475294C1A86aecD62985A': {
         decimals: 8,
         symbol: 'sobUSDC',
         address: '0xfd68F92B45b633bbe0f475294C1A86aecD62985A',
-        underlyingToken: base['usdc'],
-      },
+        underlyingToken: base['usdc']
+      }
     },
-    rewardToken,
+    rewardToken
   },
   10: {
     unitrollerAddress: '0x60CF091cD3f50420d50fD7f707414d0DF4751C58',
@@ -57,47 +57,47 @@ const networks = {
         decimals: 8,
         symbol: 'soLUSD',
         address: '0xAFdf91f120DEC93c65fd63DBD5ec372e5dcA5f82',
-        underlyingToken: optimism['lusd'],
+        underlyingToken: optimism['lusd']
       },
       '0x5569b83de187375d43FBd747598bfe64fC8f6436': {
         decimals: 8,
         symbol: 'soDAI',
         address: '0x5569b83de187375d43FBd747598bfe64fC8f6436',
-        underlyingToken: optimism['dai'],
+        underlyingToken: optimism['dai']
       },
       '0xE7De932d50EfC9ea0a7a409Fc015B4f71443528e': {
         decimals: 8,
         symbol: 'soMAI',
         address: '0xE7De932d50EfC9ea0a7a409Fc015B4f71443528e',
-        underlyingToken: optimism['mai'],
+        underlyingToken: optimism['mai']
       },
       '0x8cD6b19A07d754bF36AdEEE79EDF4F2134a8F571': {
         decimals: 8,
         symbol: 'soOP',
         address: '0x8cD6b19A07d754bF36AdEEE79EDF4F2134a8F571',
-        underlyingToken: optimism['op'],
+        underlyingToken: optimism['op']
       },
       '0xD7dAabd899D1fAbbC3A9ac162568939CEc0393Cc': {
         decimals: 8,
         symbol: 'soSNX',
         address: '0xD7dAabd899D1fAbbC3A9ac162568939CEc0393Cc',
-        underlyingToken: optimism['snx'],
+        underlyingToken: optimism['snx']
       },
       '0xEC8FEa79026FfEd168cCf5C627c7f486D77b765F': {
         decimals: 8,
         symbol: 'soUSDC',
         address: '0xEC8FEa79026FfEd168cCf5C627c7f486D77b765F',
-        underlyingToken: optimism['usdc.e'],
+        underlyingToken: optimism['usdc.e']
       },
       '0x5Ff29E4470799b982408130EFAaBdeeAE7f66a10': {
         decimals: 8,
         symbol: 'soUSDT',
         address: '0x5Ff29E4470799b982408130EFAaBdeeAE7f66a10',
-        underlyingToken: optimism['usdt'],
-      },
+        underlyingToken: optimism['usdt']
+      }
     },
-    rewardToken,
-  },
+    rewardToken
+  }
 };
 
 export default { basic, networks };

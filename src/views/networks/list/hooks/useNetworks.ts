@@ -1,5 +1,5 @@
 import Big from 'big.js';
-import { orderBy } from 'lodash';
+import _, { orderBy } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 
 import { IdToPath } from '@/config/all-in-one/chains';
@@ -39,7 +39,6 @@ export default function useNetworks({ sort, mode, rewardNow, airdrop }: any) {
     }
   };
   const queryIsTop = (data: Network[]) => {
-    // @ts-ignore
     const sortData = _.cloneDeep(data).sort(
       (prev: Network, next: Network) => Number(next.trading_volume_general) - Number(prev.trading_volume_general)
     );

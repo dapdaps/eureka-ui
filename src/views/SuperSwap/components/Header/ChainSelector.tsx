@@ -1,4 +1,3 @@
-import IconEmptyNetwork from '@public/images/chains/empty-network.svg';
 import IconChainArrowDown from '@public/images/tokens/chainArrowDown.svg';
 import Big from 'big.js';
 import { useEffect, useMemo, useState } from 'react';
@@ -22,7 +21,7 @@ import {
   StyledChainTokenSymbol
 } from './styles';
 
-export default function ChainSelector() {
+export default function ChainSelector({ onLoadChain }: any) {
   const chain = useChain();
   const { chainId } = useAccount();
   const chains = useChainsStore((store: any) => store.chains);
@@ -67,6 +66,7 @@ export default function ChainSelector() {
     }
     setDisplayedChains(updatedChains);
     localStorage.setItem('swap-selectedChains', JSON.stringify(updatedChains));
+    onLoadChain(updatedChains[0]);
   };
 
   const fetchNetworkData = async () => {
@@ -115,17 +115,8 @@ export default function ChainSelector() {
             setShowChains(!showChains);
           }}
         >
-          {chain?.chainId ? (
-            <>
-              <StyledChainName>{restChains.length} chains</StyledChainName>
-              <IconChainArrowDown />
-            </>
-          ) : (
-            <>
-              <IconEmptyNetwork />
-              <IconChainArrowDown />
-            </>
-          )}
+          <StyledChainName>{restChains.length} chains</StyledChainName>
+          <IconChainArrowDown />
         </StyledChain>
         {showChains && (
           <StyledChainListWrapper>

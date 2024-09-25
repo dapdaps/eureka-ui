@@ -4,129 +4,120 @@ import { useEffect } from 'react';
 
 const COMET_ABI = [
   {
-    inputs: [{ internalType: "address", name: "priceFeed", type: "address" }],
-    name: "getPrice",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    inputs: [{ internalType: 'address', name: 'priceFeed', type: 'address' }],
+    name: 'getPrice',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "totalsCollateral",
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'totalsCollateral',
     outputs: [
       {
-        internalType: "uint128",
-        name: "totalSupplyAsset",
-        type: "uint128",
+        internalType: 'uint128',
+        name: 'totalSupplyAsset',
+        type: 'uint128'
       },
-      { internalType: "uint128", name: "_reserved", type: "uint128" },
+      { internalType: 'uint128', name: '_reserved', type: 'uint128' }
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "totalSupply",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'totalSupply',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "totalBorrow",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'totalBorrow',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "baseTrackingBorrowSpeed",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'baseTrackingBorrowSpeed',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "baseTrackingSupplySpeed",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'baseTrackingSupplySpeed',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "trackingIndexScale",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'trackingIndexScale',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "getUtilization",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'getUtilization',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "uint256", name: "utilization", type: "uint256" }],
-    name: "getSupplyRate",
-    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
-    stateMutability: "view",
-    type: "function",
+    inputs: [{ internalType: 'uint256', name: 'utilization', type: 'uint256' }],
+    name: 'getSupplyRate',
+    outputs: [{ internalType: 'uint64', name: '', type: 'uint64' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "uint256", name: "utilization", type: "uint256" }],
-    name: "getBorrowRate",
-    outputs: [{ internalType: "uint64", name: "", type: "uint64" }],
-    stateMutability: "view",
-    type: "function",
+    inputs: [{ internalType: 'uint256', name: 'utilization', type: 'uint256' }],
+    name: 'getBorrowRate',
+    outputs: [{ internalType: 'uint64', name: '', type: 'uint64' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "borrowBalanceOf",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'borrowBalanceOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [
-      { internalType: "address", name: "", type: "address" },
-      { internalType: "address", name: "", type: "address" },
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'address', name: '', type: 'address' }
     ],
-    name: "userCollateral",
+    name: 'userCollateral',
     outputs: [
-      { internalType: "uint128", name: "balance", type: "uint128" },
-      { internalType: "uint128", name: "_reserved", type: "uint128" },
+      { internalType: 'uint128', name: 'balance', type: 'uint128' },
+      { internalType: 'uint128', name: '_reserved', type: 'uint128' }
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "getReserves",
-    outputs: [{ internalType: "int256", name: "", type: "int256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'getReserves',
+    outputs: [{ internalType: 'int256', name: '', type: 'int256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "address", name: "account", type: "address" }],
-    name: "balanceOf",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
-  },
+    inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
+    name: 'balanceOf',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 
 const CompoundV3Data = (props: any) => {
-  const {
-    comets,
-    multicall,
-    multicallAddress,
-    compPriceFeed,
-    account,
-    onLoad,
-    chainId,
-    provider,
-  } = props;
+  const { comets, multicall, multicallAddress, compPriceFeed, account, onLoad, chainId, provider } = props;
 
   let count: any = 0;
   let compPrice: any = 0;
@@ -172,31 +163,11 @@ const CompoundV3Data = (props: any) => {
           baseTrackingBorrowSpeed,
           trackingIndexScale: res[3][0]
         };
-        comet.totalBorrow = res[0]
-          ? ethers.utils.formatUnits(
-            res[0][0]?._hex || 0,
-            comet.baseToken.decimals
-          )
-          : '0';
-        comet.totalEarning = res[5][0]
-          ? ethers.utils.formatUnits(
-            res[5][0]?._hex || 0,
-            comet.baseToken.decimals
-          )
-          : '0';
-        comet.utilization = res[4][0]
-          ? ethers.utils.formatUnits(res[4][0]?._hex || 0, 16)
-          : '0';
-        const reverses = res[6][0]
-          ? ethers.utils.formatUnits(
-            res[6][0]?._hex || 0,
-            comet.baseToken.decimals
-          )
-          : '0';
-        comet.liquidity = Big(comet.totalEarning)
-          .minus(comet.totalBorrow)
-          .add(reverses)
-          .toString();
+        comet.totalBorrow = res[0] ? ethers.utils.formatUnits(res[0][0]?._hex || 0, comet.baseToken.decimals) : '0';
+        comet.totalEarning = res[5][0] ? ethers.utils.formatUnits(res[5][0]?._hex || 0, comet.baseToken.decimals) : '0';
+        comet.utilization = res[4][0] ? ethers.utils.formatUnits(res[4][0]?._hex || 0, 16) : '0';
+        const reverses = res[6][0] ? ethers.utils.formatUnits(res[6][0]?._hex || 0, comet.baseToken.decimals) : '0';
+        comet.liquidity = Big(comet.totalEarning).minus(comet.totalBorrow).add(reverses).toString();
         getCometRate(res[4][0], len);
       })
       .catch((err: any) => {
@@ -266,10 +237,7 @@ const CompoundV3Data = (props: any) => {
       .then((res: any) => {
         res.forEach((item: any, i: number) => {
           const amount = item[0]
-            ? ethers.utils.formatUnits(
-              item[0]?._hex || 0,
-              comet.collateralAssets[i].decimals
-            )
+            ? ethers.utils.formatUnits(item[0]?._hex || 0, comet.collateralAssets[i].decimals)
             : '0';
           comet.collateralAssets[i].collateral = amount;
         });
@@ -313,16 +281,10 @@ const CompoundV3Data = (props: any) => {
       .then((res: any) => {
         res.forEach((item: any, i: number) => {
           if (i === 0) {
-            comet.baseToken.price = ethers.utils.formatUnits(
-              item[0]?._hex || 0,
-              8
-            );
+            comet.baseToken.price = ethers.utils.formatUnits(item[0]?._hex || 0, 8);
             return;
           }
-          comet.collateralAssets[i - 1].price = ethers.utils.formatUnits(
-            item[0]?._hex || 0,
-            8
-          );
+          comet.collateralAssets[i - 1].price = ethers.utils.formatUnits(item[0]?._hex || 0, 8);
         });
         len--;
         if (len > 0) {
@@ -408,18 +370,10 @@ const CompoundV3Data = (props: any) => {
       provider: provider
     })
       .then((res: any) => {
-        const borrowedBalance = Big(res[0] || 0).div(
-          Big(10).pow(comet.baseToken.decimals)
-        );
-        const borrowedBalanceUsd = borrowedBalance
-          .mul(comet.baseToken.price)
-          .toString();
-        const balance = Big(res[1] || 0).div(
-          Big(10).pow(comet.baseToken.decimals)
-        );
-        const walletBalance = Big(res[2] || 0).div(
-          Big(10).pow(comet.baseToken.decimals)
-        );
+        const borrowedBalance = Big(res[0] || 0).div(Big(10).pow(comet.baseToken.decimals));
+        const borrowedBalanceUsd = borrowedBalance.mul(comet.baseToken.price).toString();
+        const balance = Big(res[1] || 0).div(Big(10).pow(comet.baseToken.decimals));
+        const walletBalance = Big(res[2] || 0).div(Big(10).pow(comet.baseToken.decimals));
         let userCollateralUsd = Big(0);
         let userBorrowCapacityUsd = Big(0);
         const collateralBalances: any = {};
@@ -427,12 +381,8 @@ const CompoundV3Data = (props: any) => {
         let nativePrice = 0;
         comet.collateralAssets.forEach((collateralAsset: any, i: number) => {
           const startI = i * comet.collateralAssets.length + 3;
-          const balance = Big(res[startI] ? res[startI][0] : 0).div(
-            Big(10).pow(collateralAsset.decimals)
-          );
-          userCollateralUsd = balance
-            .mul(collateralAsset.price)
-            .add(userCollateralUsd);
+          const balance = Big(res[startI] ? res[startI][0] : 0).div(Big(10).pow(collateralAsset.decimals));
+          userCollateralUsd = balance.mul(collateralAsset.price).add(userCollateralUsd);
 
           userBorrowCapacityUsd = balance
             .mul(collateralAsset.price)
@@ -444,9 +394,7 @@ const CompoundV3Data = (props: any) => {
             .mul(collateralAsset.liquidateCollateralFactor / 100)
             .add(userLiquidationUsd);
 
-          const walletBalance = Big(res[startI + 1] || 0).div(
-            Big(10).pow(collateralAsset.decimals)
-          );
+          const walletBalance = Big(res[startI + 1] || 0).div(Big(10).pow(collateralAsset.decimals));
           if (hasNative === collateralAsset.address) {
             nativePrice = collateralAsset.price;
           }
@@ -472,16 +420,12 @@ const CompoundV3Data = (props: any) => {
         };
 
         if (hasNative) {
-          provider
-            .getBalance(account)
-            .then((rawBalance: any) => {
-              const walletBalance = ethers.utils.formatUnits(rawBalance._hex, 18);
-              collateralBalances[hasNative].walletBalance = walletBalance;
-              collateralBalances[hasNative].walletBalanceUsd = Big(walletBalance)
-                .mul(nativePrice)
-                .toString();
-              cb?.(returnData);
-            });
+          provider.getBalance(account).then((rawBalance: any) => {
+            const walletBalance = ethers.utils.formatUnits(rawBalance._hex, 18);
+            collateralBalances[hasNative].walletBalance = walletBalance;
+            collateralBalances[hasNative].walletBalanceUsd = Big(walletBalance).mul(nativePrice).toString();
+            cb?.(returnData);
+          });
         } else {
           cb?.(returnData);
         }
@@ -503,30 +447,20 @@ const CompoundV3Data = (props: any) => {
 
       let totalCollateral = Big(0);
       comet.collateralAssets?.forEach((asset: any) => {
-        totalCollateral = totalCollateral.add(
-          Big(asset.collateral).mul(asset.price)
-        );
+        totalCollateral = totalCollateral.add(Big(asset.collateral).mul(asset.price));
       });
 
       const cometRewardData = rewardData[comet.address];
 
       const compToSuppliersPerDay =
-        (cometRewardData.baseTrackingSupplySpeed /
-          cometRewardData.trackingIndexScale) *
-        secondsPerDay;
+        (cometRewardData.baseTrackingSupplySpeed / cometRewardData.trackingIndexScale) * secondsPerDay;
       const compToBorrowersPerDay =
-        (cometRewardData.baseTrackingBorrowSpeed /
-          cometRewardData.trackingIndexScale) *
-        secondsPerDay;
+        (cometRewardData.baseTrackingBorrowSpeed / cometRewardData.trackingIndexScale) * secondsPerDay;
 
       const supplyCompRewardApr =
-        ((compPrice * compToSuppliersPerDay) /
-          (comet.totalEarning * comet.baseToken.price)) *
-        365;
+        ((compPrice * compToSuppliersPerDay) / (comet.totalEarning * comet.baseToken.price)) * 365;
       const borrowCompRewardApr =
-        ((compPrice * compToBorrowersPerDay) /
-          (comet.totalBorrow * comet.baseToken.price)) *
-        365;
+        ((compPrice * compToBorrowersPerDay) / (comet.totalBorrow * comet.baseToken.price)) * 365;
 
       return {
         ...comet,

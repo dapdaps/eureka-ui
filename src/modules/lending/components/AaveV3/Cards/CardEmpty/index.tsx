@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 const StyledCardEmpty = styled.div`
   min-height: 220px;
@@ -15,8 +15,6 @@ export const Divider = styled.hr`
   border-radius: 9999px;
 `;
 
-
-
 const CardEmpty = (props: any) => {
   return (
     <>
@@ -24,7 +22,6 @@ const CardEmpty = (props: any) => {
       <StyledCardEmpty>{props.children}</StyledCardEmpty>
     </>
   );
-
-}
+};
 
 export default CardEmpty;

@@ -1,3 +1,4 @@
+import { useDebounceFn } from 'ahooks';
 import { providers, utils } from 'ethers';
 import { flatten } from 'lodash';
 import { useCallback, useEffect, useState } from 'react';
@@ -24,6 +25,7 @@ export default function useTokensBalance(tokens: any) {
         if (token.address === 'native') hasNative = true;
         return token.address !== 'native';
       });
+
       const calls = tokensAddress.map((token: any) => ({
         address: token.address,
         name: 'balanceOf',
@@ -33,7 +35,8 @@ export default function useTokensBalance(tokens: any) {
       const multicallAddress = multicallAddresses[chainId];
       const requests = [];
       if (hasNative) requests.push(_provider.getBalance(account));
-      const splits = Math.ceil(calls.length / 20);
+      const splits = Math.ceil(calls.length / 10);
+
       for (let i = 0; i < splits; i++) {
         requests.push(
           multicall({
@@ -47,7 +50,7 @@ export default function useTokensBalance(tokens: any) {
               }
             ],
             options: {},
-            calls: i === splits - 1 ? calls.slice(i * 20) : calls.slice(i * 20, (i + 1) * 20),
+            calls: i === splits - 1 ? calls.slice(i * 10) : calls.slice(i * 10, (i + 1) * 10),
             multicallAddress,
             provider: _provider
           })
@@ -57,7 +60,7 @@ export default function useTokensBalance(tokens: any) {
       const [nativeBalance, ...rest] = await Promise.all(requests);
       const _balance: any = {};
       if (hasNative && nativeBalance) _balance.native = utils.formatUnits(nativeBalance, 18);
-      const results = flatten(rest);
+      const results = !hasNative ? flatten([nativeBalance, ...rest]) : flatten([...rest]);
       for (let i = 0; i < results.length; i++) {
         const token = tokensAddress[i];
         _balance[token.address] = utils.formatUnits(results[i]?.[0] || 0, token.decimals);
@@ -70,8 +73,18 @@ export default function useTokensBalance(tokens: any) {
     }
   }, [tokens, account]);
 
+  const { run } = useDebounceFn(
+    () => {
+      queryBalance();
+    },
+    {
+      wait: 500
+    }
+  );
+
   useEffect(() => {
-    queryBalance();
+    if (!account) return;
+    run();
   }, [tokens, account]);
 
   return { loading, balances, queryBalance };

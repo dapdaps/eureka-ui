@@ -1,6 +1,5 @@
 import { styled } from 'styled-components';
 
-
 const TabContainer = styled.div`
   background: var(--agg-secondary-color, #212233);
   color: var(--agg-primary-color, #fff);
@@ -13,7 +12,7 @@ const TabContainer = styled.div`
   padding: 0 4px;
 `;
 
-const TabItem = styled.div<{ selected: boolean, disabled?: boolean,  }>`
+const TabItem = styled.div<{ selected: boolean; disabled?: boolean }>`
   flex: 1;
   display: flex;
   align-items: center;
@@ -35,7 +34,7 @@ const TabItem = styled.div<{ selected: boolean, disabled?: boolean,  }>`
 `;
 
 const TabSwitcher = (props: any) => {
-const { select, setSelect, theme, from } = props;
+  const { select, setSelect, theme, from } = props;
 
   return (
     <TabContainer>

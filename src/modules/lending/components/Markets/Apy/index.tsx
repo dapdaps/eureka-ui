@@ -20,7 +20,6 @@ const LendingMarketApy = (props: Props) => {
           ))}
     </StyledBox>
   );
-
 };
 
 export default LendingMarketApy;

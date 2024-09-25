@@ -13,7 +13,7 @@ const LendingChains = (props: Props) => {
   const isMulti = chains.length > 1;
 
   const handleSwitchChain = (chain: Chain) => {
-    if (from === "layer") {
+    if (from === 'layer') {
       onSwitchChain?.({ chainId: chain.chain_id });
     } else {
       onSwitchChain?.({ chainId: `0x${chain.chain_id.toString(16)}` });
@@ -21,13 +21,13 @@ const LendingChains = (props: Props) => {
   };
 
   return (
-    <StyledContainer className={isMulti ? "multi" : ""}>
-      <StyledLabel>{isMulti ? "Chains:" : "Chain:"}</StyledLabel>
+    <StyledContainer className={isMulti ? 'multi' : ''}>
+      <StyledLabel>{isMulti ? 'Chains:' : 'Chain:'}</StyledLabel>
       <StyledChains>
         {chains.map((chain) => (
           <StyledChainBox
             key={chain.chain_id}
-            className={curChain.chain_id === chain.chain_id ? "active" : ""}
+            className={curChain.chain_id === chain.chain_id ? 'active' : ''}
             onClick={() => {
               handleSwitchChain(chain);
             }}

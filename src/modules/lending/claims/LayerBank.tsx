@@ -17,11 +17,7 @@ const LayerBankHandlerClaim = (props: any) => {
   useEffect(() => {
     if (!loading || !dapp.unitrollerAddress) return;
 
-    const CollateralContract = new ethers.Contract(
-      dapp.unitrollerAddress,
-      UNITROLLER_ABI,
-      provider.getSigner()
-    );
+    const CollateralContract = new ethers.Contract(dapp.unitrollerAddress, UNITROLLER_ABI, provider.getSigner());
     CollateralContract.claimLab()
       .then((tx: any) => {
         tx.wait().then((res: any) => {

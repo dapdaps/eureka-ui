@@ -8,21 +8,21 @@ const OTOKEN_ABI = [
     name: 'totalSupply',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'totalBorrows',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'exchangeRateCurrent',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -31,7 +31,7 @@ const OTOKEN_ABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -40,32 +40,30 @@ const OTOKEN_ABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'supplyRatePerBlock',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [],
     name: 'borrowRatePerBlock',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const UNITROLLER_ABI = [
   {
     inputs: [{ internalType: 'address', name: 'account', type: 'address' }],
     name: 'getAssetsIn',
-    outputs: [
-      { internalType: 'contract OToken[]', name: '', type: 'address[]' },
-    ],
+    outputs: [{ internalType: 'contract OToken[]', name: '', type: 'address[]' }],
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: true,
@@ -76,13 +74,13 @@ const UNITROLLER_ABI = [
       {
         internalType: 'uint256',
         name: 'collateralFactorMantissa',
-        type: 'uint256',
+        type: 'uint256'
       },
-      { internalType: 'bool', name: 'isQied', type: 'bool' },
+      { internalType: 'bool', name: 'isQied', type: 'bool' }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [
@@ -90,14 +88,14 @@ const UNITROLLER_ABI = [
       {
         internalType: 'contract IOToken',
         name: 'oToken',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'checkMembership',
     outputs: [{ internalType: 'bool', name: '', type: 'bool' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const ORACLE_ABI = [
   {
@@ -105,14 +103,14 @@ const ORACLE_ABI = [
       {
         internalType: 'contract IOToken',
         name: 'oToken',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'getUnderlyingPrice',
     outputs: [{ internalType: 'uint256', name: 'price', type: 'uint256' }],
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 const ERC20_ABI = [
   {
@@ -120,20 +118,20 @@ const ERC20_ABI = [
     inputs: [
       {
         name: '_owner',
-        type: 'address',
-      },
+        type: 'address'
+      }
     ],
     name: 'balanceOf',
     outputs: [
       {
         name: 'balance',
-        type: 'uint256',
-      },
+        type: 'uint256'
+      }
     ],
     payable: false,
     stateMutability: 'view',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const IonicData = (props: any) => {
@@ -149,7 +147,7 @@ const IonicData = (props: any) => {
     markets,
     multicall,
     prices,
-    provider,
+    provider
   } = props;
 
   const { formatUnits, parseUnits } = ethers.utils;
@@ -178,8 +176,7 @@ const IonicData = (props: any) => {
       const dailyGrowthRate: any = Big(rateAsNumber || 0)
         .mul(blocksPerDay)
         .toString();
-      const annualGrowth =
-        Math.exp(daysPerYear * Math.log1p(dailyGrowthRate)) - 1;
+      const annualGrowth = Math.exp(daysPerYear * Math.log1p(dailyGrowthRate)) - 1;
       const apy = Big(annualGrowth).mul(100);
       return apy;
     };
@@ -201,33 +198,21 @@ const IonicData = (props: any) => {
         // const underlyingPrice = _underlyPrice[market.address] || 1;
 
         let underlyingPrice =
-          market.underlyingToken.symbol === 'weETH.mode'
-            ? prices['weETH']
-            : prices[market.underlyingToken.symbol];
+          market.underlyingToken.symbol === 'weETH.mode' ? prices['weETH'] : prices[market.underlyingToken.symbol];
         underlyingPrice = underlyingPrice || 1;
 
         const marketSupplyUsd = Big(market.totalSupply || 0).mul(underlyingPrice);
-        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(
-          underlyingPrice,
-        );
+        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(underlyingPrice);
         totalSupplyUsd = totalSupplyUsd.plus(marketSupplyUsd);
         totalBorrowUsd = totalBorrowUsd.plus(marketBorrowUsd);
-        userTotalSupplyUsd = userTotalSupplyUsd.plus(
-          Big(market.userSupply).mul(underlyingPrice),
-        );
-        userTotalBorrowUsd = userTotalBorrowUsd.plus(
-          Big(market.userBorrow).mul(underlyingPrice),
-        );
+        userTotalSupplyUsd = userTotalSupplyUsd.plus(Big(market.userSupply).mul(underlyingPrice));
+        userTotalBorrowUsd = userTotalBorrowUsd.plus(Big(market.userBorrow).mul(underlyingPrice));
 
         if (_collateralMap[market.address]) {
           totalCollateralUsd = totalCollateralUsd.plus(
-            Big(market.userSupply)
-              .mul(underlyingPrice)
-              .mul(market['COLLATERAL_FACTOR']),
+            Big(market.userSupply).mul(underlyingPrice).mul(market['COLLATERAL_FACTOR'])
           );
-          userTotalCollateralUsd = userTotalCollateralUsd.plus(
-            Big(market.userSupply).mul(underlyingPrice),
-          );
+          userTotalCollateralUsd = userTotalCollateralUsd.plus(Big(market.userSupply).mul(underlyingPrice));
         }
         // for ionic, every token's collateral usd
         const _userCollateralUSD = _collateralMap[market.address]
@@ -237,9 +222,7 @@ const IonicData = (props: any) => {
 
         const borrowApy = calcApy(market.borrowRatePerBlock);
 
-        const _minBorrowAmount = Big(
-          formatUnits(_minBorrowMap[market.address][0]),
-        )
+        const _minBorrowAmount = Big(formatUnits(_minBorrowMap[market.address][0]))
           .times(Big(prices['ETH'] || 0))
           .div(underlyingPrice)
           .toFixed(6, 0);
@@ -249,10 +232,7 @@ const IonicData = (props: any) => {
         //   : 0;
 
         const _borrowCaps = _borrowCapsRes[market.address]
-          ? ethers.utils.formatUnits(
-            _borrowCapsRes[market.address][0],
-            market.decimals,
-          )
+          ? ethers.utils.formatUnits(_borrowCapsRes[market.address][0], market.decimals)
           : 0;
         markets[market.address] = {
           ...market,
@@ -268,7 +248,7 @@ const IonicData = (props: any) => {
           borrowApy: borrowApy.toFixed(2) + '%',
           minBorrowAmount: _minBorrowAmount,
           borrowCaps: _borrowCaps,
-          dapp: name,
+          dapp: name
         };
       });
 
@@ -279,7 +259,7 @@ const IonicData = (props: any) => {
         userTotalSupplyUsd: userTotalSupplyUsd.toString(),
         userTotalBorrowUsd: userTotalBorrowUsd.toString(),
         userTotalCollateralUsd: userTotalCollateralUsd.toString(),
-        totalCollateralUsd: totalCollateralUsd.toString(),
+        totalCollateralUsd: totalCollateralUsd.toString()
       });
     };
 
@@ -289,21 +269,21 @@ const IonicData = (props: any) => {
       const calls = oTokens.map((token) => ({
         address: oracleAddress,
         name: 'getUnderlyingPrice',
-        params: [token],
+        params: [token]
       }));
       multicall({
         abi: ORACLE_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyPrice = {};
           for (let i = 0, len = res.length; i < len; i++) {
             _underlyPrice[oTokens[i]] = ethers.utils.formatUnits(
               res[i][0]._hex,
-              36 - markets[oTokens[i]].underlyingToken.decimals,
+              36 - markets[oTokens[i]].underlyingToken.decimals
             );
           }
           count++;
@@ -318,40 +298,30 @@ const IonicData = (props: any) => {
       let nativeOToken = '';
       const calls = assets
         .filter((market: any) => {
-          if (market.underlyingToken.address === 'native')
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== 'native'
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           address: market.underlyingToken.address,
           name: 'balanceOf',
-          params: [market.address],
+          params: [market.address]
         }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _liquidity = {};
           for (let i = 0, len = res.length; i < len; i++) {
             const oToken = markets[calls[i].params[0]];
-            _liquidity[oToken.address] = ethers.utils.formatUnits(
-              res[i][0]._hex,
-              oToken.underlyingToken.decimals,
-            );
+            _liquidity[oToken.address] = ethers.utils.formatUnits(res[i][0]._hex, oToken.underlyingToken.decimals);
           }
           if (nativeOToken) {
             provider.getBalance(nativeOToken).then((rawBalance: any) => {
-              _liquidity[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18,
-              );
+              _liquidity[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('getOTokenLiquidity');
             });
@@ -371,45 +341,34 @@ const IonicData = (props: any) => {
       let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
-          if (market.underlyingToken.address === 'native')
-            nativeOToken = market.address;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== 'native'
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = market.address;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
           ...market.underlyingToken,
-          oTokenAddress: market.address,
+          oTokenAddress: market.address
         }));
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
         name: 'balanceOf',
-        params: [account],
+        params: [account]
       }));
       multicall({
         abi: ERC20_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           _underlyingBalance = {};
           for (let i = 0, len = res.length; i < len; i++) {
-            _underlyingBalance[underlyingTokens[i].oTokenAddress] = res[i] && res[i][0]
-              ? ethers.utils.formatUnits(
-                res[i][0]._hex,
-                underlyingTokens[i].decimals,
-              )
-              : '0';
+            _underlyingBalance[underlyingTokens[i].oTokenAddress] =
+              res[i] && res[i][0] ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals) : '0';
           }
           if (nativeOToken) {
             provider.getBalance(account).then((rawBalance: any) => {
-              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(
-                rawBalance._hex,
-                18,
-              );
+              _underlyingBalance[nativeOToken] = ethers.utils.formatUnits(rawBalance._hex, 18);
               count++;
               formatedData('underlyingTokens');
             });
@@ -430,79 +389,60 @@ const IonicData = (props: any) => {
       const calls = [
         {
           address: oToken.address,
-          name: 'exchangeRateCurrent',
+          name: 'exchangeRateCurrent'
         },
         {
           address: oToken.address,
-          name: 'totalSupply',
+          name: 'totalSupply'
         },
         {
           address: oToken.address,
-          name: 'totalBorrows',
+          name: 'totalBorrows'
         },
         {
           address: oToken.address,
           name: 'balanceOf',
-          params: [account],
+          params: [account]
         },
         {
           address: oToken.address,
           name: 'borrowBalanceCurrent',
-          params: [account],
+          params: [account]
         },
         {
           address: oToken.address,
-          name: 'borrowRatePerBlock',
+          name: 'borrowRatePerBlock'
         },
         {
           address: oToken.address,
-          name: 'supplyRatePerBlock',
-        },
+          name: 'supplyRatePerBlock'
+        }
       ];
       multicall({
         abi: OTOKEN_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           oTokensLength--;
-          const exchangeRateStored = res[0][0]
-            ? ethers.utils.formatUnits(res[0][0], 18)
-            : '0';
+          const exchangeRateStored = res[0][0] ? ethers.utils.formatUnits(res[0][0], 18) : '0';
 
-          const totalSupply = res[1][0]
-            ? ethers.utils.formatUnits(res[1][0]._hex, oToken.decimals)
-            : '0';
+          const totalSupply = res[1][0] ? ethers.utils.formatUnits(res[1][0]._hex, oToken.decimals) : '0';
 
-          const userSupply = res[3] && res[3][0]
-            ? ethers.utils.formatUnits(res[3][0]._hex, oToken.decimals)
-            : '0';
+          const userSupply = res[3] && res[3][0] ? ethers.utils.formatUnits(res[3][0]._hex, oToken.decimals) : '0';
 
-          const _totalSupply = Big(totalSupply)
-            .mul(exchangeRateStored)
-            .toString();
+          const _totalSupply = Big(totalSupply).mul(exchangeRateStored).toString();
 
           const _totalBorrows = res[2][0]
-            ? ethers.utils.formatUnits(
-              res[2][0]._hex,
-              oToken.underlyingToken.decimals,
-            )
+            ? ethers.utils.formatUnits(res[2][0]._hex, oToken.underlyingToken.decimals)
             : '0';
-          const supplyRatePerBlock = res[6][0]
-            ? ethers.utils.formatUnits(res[6][0]._hex, 18)
-            : '0';
-          const borrowRatePerBlock = res[5][0]
-            ? ethers.utils.formatUnits(res[5][0]._hex, 18)
-            : '0';
+          const supplyRatePerBlock = res[6][0] ? ethers.utils.formatUnits(res[6][0]._hex, 18) : '0';
+          const borrowRatePerBlock = res[5][0] ? ethers.utils.formatUnits(res[5][0]._hex, 18) : '0';
           const _userSupply = Big(userSupply).mul(exchangeRateStored).toString();
-          const _userBorrow = res[4] && res[4][0]
-            ? ethers.utils.formatUnits(
-              res[4][0]._hex,
-              oToken.underlyingToken.decimals,
-            )
-            : '0';
+          const _userBorrow =
+            res[4] && res[4][0] ? ethers.utils.formatUnits(res[4][0]._hex, oToken.underlyingToken.decimals) : '0';
 
           _cTokensData[oToken.address] = {
             ...oToken,
@@ -512,7 +452,7 @@ const IonicData = (props: any) => {
             supplyRatePerBlock,
             borrowRatePerBlock,
             userSupply: _userSupply,
-            userBorrow: _userBorrow,
+            userBorrow: _userBorrow
           };
           if (oTokensLength === 0) {
             count++;
@@ -534,11 +474,7 @@ const IonicData = (props: any) => {
     };
     const getCollateralStatus = () => {
       const oTokens = Object.values(markets);
-      const contract = new ethers.Contract(
-        collateralAddress,
-        UNITROLLER_ABI,
-        provider,
-      );
+      const contract = new ethers.Contract(collateralAddress, UNITROLLER_ABI, provider);
       contract
         .getAssetsIn(account)
         .then((res: any) => {
@@ -548,8 +484,7 @@ const IonicData = (props: any) => {
             _collateralMap = {};
             res.forEach((addr) => {
               const _market: any = oTokens.find(
-                (item: any) =>
-                  item.address.toLocaleLowerCase() === addr.toLocaleLowerCase(),
+                (item: any) => item.address.toLocaleLowerCase() === addr.toLocaleLowerCase()
               );
 
               if (_market) {
@@ -570,7 +505,7 @@ const IonicData = (props: any) => {
       const calls = cTokens.map((_cToken) => ({
         address: collateralAddress,
         name: 'borrowCaps',
-        params: [_cToken],
+        params: [_cToken]
       }));
       multicall({
         abi: [
@@ -579,25 +514,25 @@ const IonicData = (props: any) => {
               {
                 internalType: 'address',
                 name: '',
-                type: 'address',
-              },
+                type: 'address'
+              }
             ],
             name: 'borrowCaps',
             outputs: [
               {
                 internalType: 'uint256',
                 name: '',
-                type: 'uint256',
-              },
+                type: 'uint256'
+              }
             ],
             stateMutability: 'view',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getBorrowCaps-res:', res);
@@ -622,7 +557,7 @@ const IonicData = (props: any) => {
       const calls = cTokens.map((_cToken) => ({
         address: '0x8ea3fc79D9E463464C5159578d38870b770f6E57',
         name: 'getMinBorrowEth',
-        params: [_cToken],
+        params: [_cToken]
       }));
       multicall({
         abi: [
@@ -631,25 +566,25 @@ const IonicData = (props: any) => {
               {
                 internalType: 'contract ICErc20',
                 name: '_ctoken',
-                type: 'address',
-              },
+                type: 'address'
+              }
             ],
             name: 'getMinBorrowEth',
             outputs: [
               {
                 internalType: 'uint256',
                 name: '',
-                type: 'uint256',
-              },
+                type: 'uint256'
+              }
             ],
             stateMutability: 'view',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
         calls,
         options: {},
         multicallAddress,
-        provider: provider,
+        provider: provider
       })
         .then((res: any) => {
           console.log('getMinBorrow-res:', res);

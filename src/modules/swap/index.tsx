@@ -1,5 +1,6 @@
 import { useDebounceFn } from 'ahooks';
 import Big from 'big.js';
+import { uniqBy } from 'lodash';
 import { useEffect, useMemo, useState } from 'react';
 
 import useSwitchChain from '@/hooks/useSwitchChain';
@@ -47,6 +48,7 @@ export default function SwapDapp({
     template: localConfig.basic.name,
     onSuccess: () => {
       setUpdater(Date.now());
+      runQuoter();
     }
   });
 
@@ -61,8 +63,14 @@ export default function SwapDapp({
   );
 
   const tokens = useMemo(() => {
-    return [...localConfig.networks[currentChain.chain_id]?.tokens, ...(importTokens[currentChain.chain_id] || [])];
-  }, [currentChain?.chain_id, importTokens]);
+    return uniqBy(
+      [
+        ...(localConfig.networks[currentChain.chain_id]?.tokens || []),
+        ...(importTokens[currentChain.chain_id] || [])
+      ].map((token: any) => ({ ...token, address: token.address.toLowerCase() })),
+      'address'
+    );
+  }, [currentChain?.chain_id, importTokens, localConfig]);
 
   const onSwitchChain = (params: any) => {
     if (Number(params.chainId) === chainId) {
@@ -79,11 +87,11 @@ export default function SwapDapp({
 
     if (selectType === 'in') {
       _inputCurrency = token;
-      if (token.address === outputCurrency?.address) _outputCurrency = null;
+      if (token.address.toLowerCase() === outputCurrency?.address.toLowerCase()) _outputCurrency = null;
     }
     if (selectType === 'out') {
       _outputCurrency = token;
-      if (token.address === inputCurrency?.address) _inputCurrency = null;
+      if (token.address.toLowerCase() === inputCurrency?.address.toLowerCase()) _inputCurrency = null;
     }
     if (!_inputCurrency || !_outputCurrency) setOutputCurrencyAmount('');
     setInputCurrency(_inputCurrency);
@@ -95,7 +103,9 @@ export default function SwapDapp({
     const defaultCurrencies = localConfig.networks[currentChain.chain_id]?.defaultCurrencies;
     setInputCurrency(defaultCurrencies?.input);
     setOutputCurrency(defaultCurrencies?.output);
-  }, [currentChain]);
+    setInputCurrencyAmount('');
+    setOutputCurrencyAmount('');
+  }, [currentChain, localConfig]);
 
   useEffect(() => {
     if (!inputCurrency || !outputCurrency) {
@@ -120,7 +130,13 @@ export default function SwapDapp({
   }, [trade]);
 
   return (
-    <StyledContainer>
+    <StyledContainer
+      style={{
+        // @ts-ignore
+        '--button-color': localConfig.theme['--button-color'],
+        '--button-text-color': localConfig.theme['--button-text-color']
+      }}
+    >
       <StyledWidgetWrapper>
         <div>
           <StyledPanel>
@@ -203,7 +219,11 @@ export default function SwapDapp({
               token={inputCurrency}
               loading={loading}
               onClick={onSwap}
-              disabled={trade?.noPair}
+              disabled={trade?.noPair || !trade?.txn}
+              onRefresh={() => {
+                runQuoter();
+              }}
+              key={`button-${updater}`}
             />
           </StyledPanel>
         </div>

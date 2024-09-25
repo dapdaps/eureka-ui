@@ -1,4 +1,4 @@
-import { styled } from 'styled-components'
+import { styled } from 'styled-components';
 
 const Wrap = styled.div`
   padding: 24px 15px;
@@ -50,14 +50,4 @@ const Value = styled.div`
   margin-right: 15px;
 `;
 
-export {
-    Wrap,
-    FlexContainer,
-    ChainsWrap,
-    Yours,
-    YoursTableWrapper,
-    Title,
-    SubTitle,
-    Label,
-    Value,
-}
+export { Wrap, FlexContainer, ChainsWrap, Yours, YoursTableWrapper, Title, SubTitle, Label, Value };

@@ -1,19 +1,9 @@
 // @ts-nocheck
 import { ethers } from 'ethers';
-import { memo } from "react";
+import { memo } from 'react';
 import { useEffect } from 'react';
 export default memo(function Data(props) {
-  const {
-    CHAIN_LIST,
-    multicallAddress,
-    multicall,
-    account,
-    provider,
-    prices,
-    update,
-    onLoad,
-    StakeTokens,
-  } = props;
+  const { CHAIN_LIST, multicallAddress, multicall, account, provider, prices, update, onLoad, StakeTokens } = props;
 
   const { formatUnits, parseUnits } = ethers.utils;
 
@@ -31,7 +21,7 @@ export default memo(function Data(props) {
       }
 
       onLoad({
-        StakeTokens,
+        StakeTokens
       });
     }
 
@@ -40,68 +30,61 @@ export default memo(function Data(props) {
       const underlyingTokens = StakeTokens.filter((market) => {
         return market.address && !market.isNative;
       });
-      provider?.getBalance(account)
-        .then((rawBalance) => {
+      provider?.getBalance(account).then((rawBalance) => {
+        console.log('=====rawBalance', rawBalance);
+        _balanceRes['native'] = ethers.utils.formatUnits(rawBalance, 18);
+        if (underlyingTokens.length) {
+          const calls = underlyingTokens.map((token) => ({
+            address: token.address,
+            name: 'balanceOf',
+            params: [account]
+          }));
 
-          console.log('=====rawBalance', rawBalance)
-          _balanceRes["native"] = ethers.utils.formatUnits(rawBalance, 18);
-          if (underlyingTokens.length) {
-            const calls = underlyingTokens.map((token) => ({
-              address: token.address,
-              name: "balanceOf",
-              params: [account],
-            }));
+          multicall({
+            abi: [
+              {
+                constant: true,
+                inputs: [
+                  {
+                    name: '_owner',
+                    type: 'address'
+                  }
+                ],
+                name: 'balanceOf',
+                outputs: [
+                  {
+                    name: 'balance',
+                    type: 'uint256'
+                  }
+                ],
+                payable: false,
+                stateMutability: 'view',
+                type: 'function'
+              }
+            ],
+            calls,
+            options: {},
+            multicallAddress,
+            provider
+          })
+            .then((res) => {
+              for (let i = 0, len = res.length; i < len; i++) {
+                _balanceRes[underlyingTokens[i].address] = res[i]
+                  ? ethers.utils.formatUnits(res[i][0], underlyingTokens[i].decimals)
+                  : '0';
+              }
 
-            multicall({
-              abi: [
-                {
-                  constant: true,
-                  inputs: [
-                    {
-                      name: "_owner",
-                      type: "address",
-                    },
-                  ],
-                  name: "balanceOf",
-                  outputs: [
-                    {
-                      name: "balance",
-                      type: "uint256",
-                    },
-                  ],
-                  payable: false,
-                  stateMutability: "view",
-                  type: "function",
-                },
-              ],
-              calls,
-              options: {},
-              multicallAddress,
-              provider,
+              count++;
+              formatData('getWalletBalance');
             })
-              .then((res) => {
-                for (let i = 0, len = res.length; i < len; i++) {
-                  _balanceRes[underlyingTokens[i].address] = res[i]
-                    ? ethers.utils.formatUnits(
-                      res[i][0],
-                      underlyingTokens[i].decimals
-                    )
-                    : "0";
-                }
-
-                count++;
-                formatData("getWalletBalance");
-              })
-              .catch((err) => {
-              });
-          } else {
-            count++;
-            formatData("getWalletBalance");
-          }
-        });
+            .catch((err) => {});
+        } else {
+          count++;
+          formatData('getWalletBalance');
+        }
+      });
     }
 
     getWalletBalance();
   }, [account, update]);
-})
-
+});

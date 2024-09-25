@@ -29,9 +29,9 @@ export default function CurrencySelect({
   const [searchVal, setSearchVal] = useState('');
   const [currencies, setCurrencies] = useState<any>(tokens || []);
   const { loading, queryToken } = useTokenInfo();
-  const [importToken, setImportToken] = useState(null);
+  const [importToken, setImportToken] = useState<any>(null);
   const [showImportWarning, setShowImportWarning] = useState(false);
-  const { loading: balancesLoading, balances = {} } = useTokensBalance(tokens);
+  const { loading: balancesLoading, balances = {}, queryBalance } = useTokensBalance(tokens);
 
   const handleSearch = () => {
     let tokenIsAvailable = false;
@@ -49,13 +49,20 @@ export default function CurrencySelect({
           ? token.isImport
           : false;
     });
+
     if (_tokens.length === 0 && utils.isAddress(searchVal) && !tokenIsAvailable) {
       setCurrencies([]);
       queryToken({
         chainId,
         address: searchVal,
         callback(token: any) {
-          console.log('token', token);
+          setImportToken({
+            symbol: token[1][0],
+            address: searchVal,
+            decimals: token[2][0],
+            name: token[0][0],
+            chainId
+          });
         }
       });
     } else {
@@ -64,19 +71,28 @@ export default function CurrencySelect({
     }
   };
 
+  const handleClose = () => {
+    setSearchVal('');
+    onClose();
+  };
+
   useEffect(() => {
     handleSearch();
-  }, [tab]);
+  }, [tab, searchVal]);
 
   useEffect(() => {
     setCurrencies(tokens);
   }, [tokens]);
 
+  useEffect(() => {
+    if (display) queryBalance();
+  }, [display]);
+
   return (
     <Modal
       display={display}
       title="Select a token"
-      onClose={onClose}
+      onClose={handleClose}
       content={
         <Content>
           <InputWarpper>
@@ -100,7 +116,6 @@ export default function CurrencySelect({
               placeholder="Search name or paste address"
               onChange={(ev) => {
                 setSearchVal(ev.target.value);
-                handleSearch();
               }}
             />
             {searchVal && (
@@ -156,7 +171,7 @@ export default function CurrencySelect({
                 account={account}
                 onClick={() => {
                   onSelect?.(currency);
-                  onClose();
+                  handleClose();
                 }}
                 loading={balancesLoading}
                 balance={balances[currency.address]}
@@ -170,7 +185,7 @@ export default function CurrencySelect({
             onImport={(currency: any) => {
               onImport({ ...currency, chainId });
               onSelect?.(currency);
-              onClose();
+              handleClose();
             }}
             explor={explor}
             onClose={() => {

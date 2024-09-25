@@ -16,8 +16,8 @@ const formatTrade = ({
   const _gas = !market.txn?.gasLimit
     ? market.gas
     : market.txn?.gasLimit.type === 'BigNumber'
-      ? Number(market.txn?.gasLimit.hex)
-      : market.txn?.gasLimit;
+      ? Number(market.txn.gasLimit.hex)
+      : Number(market.txn?.gasLimit);
 
   const { isGasEnough, gas } = checkGas({
     rawBalance,
@@ -78,12 +78,12 @@ const formatTrade = ({
   } else {
     routerStr = inputCurrency.symbol + ' > ' + outputCurrency.symbol;
   }
-
   return {
     inputCurrency,
     outputCurrency,
     inputCurrencyAmount,
     name: market.template,
+    logo: market.logo,
     txn: market.txn,
     routerAddress: market.routerAddress,
     noPair: market.noPair,
@@ -92,7 +92,7 @@ const formatTrade = ({
     isGasEnough,
     priceImpact,
     priceImpactType,
-    gasUsd: Big(nativeTokenPrice)
+    gasUsd: Big(nativeTokenPrice || 0)
       .mul(gas)
       .div(10 ** nativeToken.decimals)
       .toString()

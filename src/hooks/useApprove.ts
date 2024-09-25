@@ -6,7 +6,17 @@ import type { Token } from '@/types';
 
 import useAccount from './useAccount';
 
-export default function useApprove({ token, amount, spender }: { token?: Token; amount?: string; spender?: string }) {
+export default function useApprove({
+  token,
+  amount,
+  spender,
+  onSuccess
+}: {
+  token?: Token;
+  amount?: string;
+  spender?: string;
+  onSuccess?: VoidFunction;
+}) {
   const [approved, setApproved] = useState(false);
   const [approving, setApproving] = useState(false);
   const [checking, setChecking] = useState(false);
@@ -73,7 +83,10 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
       });
       const res = await tx.wait();
       setApproving(false);
-      if (res.status === 1) setApproved(true);
+      if (res.status === 1) {
+        setApproved(true);
+        onSuccess?.();
+      }
     } catch (err) {
       console.log(err);
       setApproving(false);
@@ -81,7 +94,7 @@ export default function useApprove({ token, amount, spender }: { token?: Token; 
   };
 
   useEffect(() => {
-    if (token?.isNative) {
+    if (token?.isNative && token.chainId !== 1088) {
       setApproved(true);
       return;
     }

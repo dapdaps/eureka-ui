@@ -4,143 +4,141 @@ import { useEffect } from 'react';
 
 const ORACLE_ABI = [
   {
-    inputs: [{ internalType: "address[]", name: "assets", type: "address[]" }],
-    name: "getAssetsPrices",
-    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
-    stateMutability: "view",
-    type: "function",
-  },
+    inputs: [{ internalType: 'address[]', name: 'assets', type: 'address[]' }],
+    name: 'getAssetsPrices',
+    outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 const DATA_ABI = [
   {
-    inputs: [{ internalType: "address", name: "asset", type: "address" }],
-    name: "getReserveConfigurationData",
+    inputs: [{ internalType: 'address', name: 'asset', type: 'address' }],
+    name: 'getReserveConfigurationData',
     outputs: [
-      { internalType: "uint256", name: "decimals", type: "uint256" },
-      { internalType: "uint256", name: "ltv", type: "uint256" },
+      { internalType: 'uint256', name: 'decimals', type: 'uint256' },
+      { internalType: 'uint256', name: 'ltv', type: 'uint256' },
       {
-        internalType: "uint256",
-        name: "liquidationThreshold",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'liquidationThreshold',
+        type: 'uint256'
       },
-      { internalType: "uint256", name: "liquidationBonus", type: "uint256" },
-      { internalType: "uint256", name: "reserveFactor", type: "uint256" },
-      { internalType: "bool", name: "usageAsCollateralEnabled", type: "bool" },
-      { internalType: "bool", name: "borrowingEnabled", type: "bool" },
-      { internalType: "bool", name: "stableBorrowRateEnabled", type: "bool" },
-      { internalType: "bool", name: "isActive", type: "bool" },
-      { internalType: "bool", name: "isFrozen", type: "bool" },
+      { internalType: 'uint256', name: 'liquidationBonus', type: 'uint256' },
+      { internalType: 'uint256', name: 'reserveFactor', type: 'uint256' },
+      { internalType: 'bool', name: 'usageAsCollateralEnabled', type: 'bool' },
+      { internalType: 'bool', name: 'borrowingEnabled', type: 'bool' },
+      { internalType: 'bool', name: 'stableBorrowRateEnabled', type: 'bool' },
+      { internalType: 'bool', name: 'isActive', type: 'bool' },
+      { internalType: 'bool', name: 'isFrozen', type: 'bool' }
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [
-      { internalType: "address", name: "asset", type: "address" },
-      { internalType: "address", name: "user", type: "address" },
+      { internalType: 'address', name: 'asset', type: 'address' },
+      { internalType: 'address', name: 'user', type: 'address' }
     ],
-    name: "getUserReserveData",
+    name: 'getUserReserveData',
     outputs: [
       {
-        internalType: "uint256",
-        name: "currentATokenBalance",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'currentATokenBalance',
+        type: 'uint256'
       },
-      { internalType: "uint256", name: "currentStableDebt", type: "uint256" },
-      { internalType: "uint256", name: "currentVariableDebt", type: "uint256" },
-      { internalType: "uint256", name: "principalStableDebt", type: "uint256" },
-      { internalType: "uint256", name: "scaledVariableDebt", type: "uint256" },
-      { internalType: "uint256", name: "stableBorrowRate", type: "uint256" },
-      { internalType: "uint256", name: "liquidityRate", type: "uint256" },
-      { internalType: "uint40", name: "stableRateLastUpdated", type: "uint40" },
-      { internalType: "bool", name: "usageAsCollateralEnabled", type: "bool" },
+      { internalType: 'uint256', name: 'currentStableDebt', type: 'uint256' },
+      { internalType: 'uint256', name: 'currentVariableDebt', type: 'uint256' },
+      { internalType: 'uint256', name: 'principalStableDebt', type: 'uint256' },
+      { internalType: 'uint256', name: 'scaledVariableDebt', type: 'uint256' },
+      { internalType: 'uint256', name: 'stableBorrowRate', type: 'uint256' },
+      { internalType: 'uint256', name: 'liquidityRate', type: 'uint256' },
+      { internalType: 'uint40', name: 'stableRateLastUpdated', type: 'uint40' },
+      { internalType: 'bool', name: 'usageAsCollateralEnabled', type: 'bool' }
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "address", name: "asset", type: "address" }],
-    name: "getReserveData",
+    inputs: [{ internalType: 'address', name: 'asset', type: 'address' }],
+    name: 'getReserveData',
     outputs: [
-      { internalType: "uint256", name: "availableLiquidity", type: "uint256" },
-      { internalType: "uint256", name: "totalStableDebt", type: "uint256" },
-      { internalType: "uint256", name: "totalVariableDebt", type: "uint256" },
-      { internalType: "uint256", name: "liquidityRate", type: "uint256" },
-      { internalType: "uint256", name: "variableBorrowRate", type: "uint256" },
-      { internalType: "uint256", name: "stableBorrowRate", type: "uint256" },
+      { internalType: 'uint256', name: 'availableLiquidity', type: 'uint256' },
+      { internalType: 'uint256', name: 'totalStableDebt', type: 'uint256' },
+      { internalType: 'uint256', name: 'totalVariableDebt', type: 'uint256' },
+      { internalType: 'uint256', name: 'liquidityRate', type: 'uint256' },
+      { internalType: 'uint256', name: 'variableBorrowRate', type: 'uint256' },
+      { internalType: 'uint256', name: 'stableBorrowRate', type: 'uint256' },
       {
-        internalType: "uint256",
-        name: "averageStableBorrowRate",
-        type: "uint256",
+        internalType: 'uint256',
+        name: 'averageStableBorrowRate',
+        type: 'uint256'
       },
-      { internalType: "uint256", name: "liquidityIndex", type: "uint256" },
-      { internalType: "uint256", name: "variableBorrowIndex", type: "uint256" },
-      { internalType: "uint40", name: "lastUpdateTimestamp", type: "uint40" },
+      { internalType: 'uint256', name: 'liquidityIndex', type: 'uint256' },
+      { internalType: 'uint256', name: 'variableBorrowIndex', type: 'uint256' },
+      { internalType: 'uint40', name: 'lastUpdateTimestamp', type: 'uint40' }
     ],
-    stateMutability: "view",
-    type: "function",
-  },
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 const INCENTIVE_ABI = [
   {
     inputs: [],
-    name: "totalAllocPoint",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'totalAllocPoint',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [],
-    name: "rewardsPerSecond",
-    outputs: [{ internalType: "uint256", name: "", type: "uint256" }],
-    stateMutability: "view",
-    type: "function",
+    name: 'rewardsPerSecond',
+    outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
+    stateMutability: 'view',
+    type: 'function'
   },
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "poolInfo",
+    inputs: [{ internalType: 'address', name: '', type: 'address' }],
+    name: 'poolInfo',
     outputs: [
-      { internalType: "uint256", name: "totalSupply", type: "uint256" },
-      { internalType: "uint256", name: "allocPoint", type: "uint256" },
-      { internalType: "uint256", name: "lastRewardTime", type: "uint256" },
-      { internalType: "uint256", name: "accRewardPerShare", type: "uint256" },
+      { internalType: 'uint256', name: 'totalSupply', type: 'uint256' },
+      { internalType: 'uint256', name: 'allocPoint', type: 'uint256' },
+      { internalType: 'uint256', name: 'lastRewardTime', type: 'uint256' },
+      { internalType: 'uint256', name: 'accRewardPerShare', type: 'uint256' },
       {
-        internalType: "contract IOnwardIncentivesController",
-        name: "onwardIncentives",
-        type: "address",
-      },
+        internalType: 'contract IOnwardIncentivesController',
+        name: 'onwardIncentives',
+        type: 'address'
+      }
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [
-      { internalType: "address", name: "", type: "address" },
-      { internalType: "address", name: "user", type: "address" },
+      { internalType: 'address', name: '', type: 'address' },
+      { internalType: 'address', name: 'user', type: 'address' }
     ],
-    name: "userInfo",
+    name: 'userInfo',
     outputs: [
-      { type: "uint256", name: "amount", internalType: "uint256" },
-      { type: "uint256", name: "rewardDebt", internalType: "uint256" },
+      { type: 'uint256', name: 'amount', internalType: 'uint256' },
+      { type: 'uint256', name: 'rewardDebt', internalType: 'uint256' }
     ],
-    stateMutability: "view",
-    type: "function",
+    stateMutability: 'view',
+    type: 'function'
   },
   {
     inputs: [
-      { internalType: "address", name: "_user", type: "address" },
-      { internalType: "address[]", name: "_tokens", type: "address[]" },
+      { internalType: 'address', name: '_user', type: 'address' },
+      { internalType: 'address[]', name: '_tokens', type: 'address[]' }
     ],
-    name: "claimableReward",
-    outputs: [{ internalType: "uint256[]", name: "", type: "uint256[]" }],
-    stateMutability: "view",
-    type: "function",
-  },
+    name: 'claimableReward',
+    outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 
-export default function LendleData (props: any) {
-
-
+export default function LendleData(props: any) {
   const {
     oracleAddress,
     walletBalanceProvider,
@@ -180,17 +178,11 @@ export default function LendleData (props: any) {
     };
 
     const getTokensPrice = () => {
-      const oracleContract = new ethers.Contract(
-        oracleAddress,
-        ORACLE_ABI,
-        provider.getSigner()
-      );
+      const oracleContract = new ethers.Contract(oracleAddress, ORACLE_ABI, provider.getSigner());
       oracleContract
         .getAssetsPrices(underlyingTokensAddress)
         .then((res: any) => {
-          const scale = ["Agave", "Lendle"].includes(dappName)
-            ? 1000000000000000000
-            : 100000000;
+          const scale = ['Agave', 'Lendle'].includes(dappName) ? 1000000000000000000 : 100000000;
           const parsedRes = res.map((price: any) => {
             return Big(price.toString()).div(scale).toFixed();
           });
@@ -202,11 +194,11 @@ export default function LendleData (props: any) {
             getIncentiveData();
           } else {
             count++;
-            formatedData("getTokensPrice");
+            formatedData('getTokensPrice');
           }
         })
         .catch((err: any) => {
-          console.log("getTokensPrice error", err);
+          console.log('getTokensPrice error', err);
         });
     };
 
@@ -220,17 +212,17 @@ export default function LendleData (props: any) {
         [
           {
             inputs: [
-              { internalType: "address", name: "provider", type: "address" },
-              { internalType: "address", name: "user", type: "address" },
+              { internalType: 'address', name: 'provider', type: 'address' },
+              { internalType: 'address', name: 'user', type: 'address' }
             ],
-            name: "getUserWalletBalances",
+            name: 'getUserWalletBalances',
             outputs: [
-              { internalType: "address[]", name: "", type: "address[]" },
-              { internalType: "uint256[]", name: "", type: "uint256[]" },
+              { internalType: 'address[]', name: '', type: 'address[]' },
+              { internalType: 'uint256[]', name: '', type: 'uint256[]' }
             ],
-            stateMutability: "view",
-            type: "function",
-          },
+            stateMutability: 'view',
+            type: 'function'
+          }
         ],
         provider.getSigner()
       );
@@ -252,31 +244,27 @@ export default function LendleData (props: any) {
           });
 
           count++;
-          formatedData("getUserWalletBalances");
+          formatedData('getUserWalletBalances');
         })
         .catch((err: any) => {
-          console.log("getUserWalletBalances error");
+          console.log('getUserWalletBalances error');
         });
     };
 
     const getWalletBalance = () => {
-      let nativeOToken = "";
+      let nativeOToken = '';
       const underlyingTokens = Object.values(markets)
         .filter((market: any) => {
-          if (market.underlyingToken.address === "native")
-            nativeOToken = wethAddress;
-          return (
-            market.underlyingToken.address &&
-            market.underlyingToken.address !== "native"
-          );
+          if (market.underlyingToken.address === 'native') nativeOToken = wethAddress;
+          return market.underlyingToken.address && market.underlyingToken.address !== 'native';
         })
         .map((market: any) => ({
-          ...market.underlyingToken,
+          ...market.underlyingToken
         }));
       const calls = underlyingTokens.map((token) => ({
         address: token.address,
-        name: "balanceOf",
-        params: [account],
+        name: 'balanceOf',
+        params: [account]
       }));
 
       multicall({
@@ -285,21 +273,21 @@ export default function LendleData (props: any) {
             constant: true,
             inputs: [
               {
-                name: "_owner",
-                type: "address",
-              },
+                name: '_owner',
+                type: 'address'
+              }
             ],
-            name: "balanceOf",
+            name: 'balanceOf',
             outputs: [
               {
-                name: "balance",
-                type: "uint256",
-              },
+                name: 'balance',
+                type: 'uint256'
+              }
             ],
             payable: false,
-            stateMutability: "view",
-            type: "function",
-          },
+            stateMutability: 'view',
+            type: 'function'
+          }
         ],
         calls,
         options: {},
@@ -309,64 +297,58 @@ export default function LendleData (props: any) {
         .then((res: any) => {
           for (let i = 0, len = res.length; i < len; i++) {
             markets[underlyingTokens[i].address].userUnderlyingBalance = res[i]?.[0]
-              ? ethers.utils.formatUnits(
-                res[i][0]._hex,
-                underlyingTokens[i].decimals
-              )
-              : "0";
+              ? ethers.utils.formatUnits(res[i][0]._hex, underlyingTokens[i].decimals)
+              : '0';
           }
 
           if (nativeOToken) {
             provider.getBalance(account).then((rawBalance: any) => {
-              markets[nativeOToken].userUnderlyingBalance =
-                ethers.utils.formatUnits(rawBalance._hex, 18);
+              markets[nativeOToken].userUnderlyingBalance = ethers.utils.formatUnits(rawBalance._hex, 18);
 
               count++;
-              formatedData("getWalletBalance");
+              formatedData('getWalletBalance');
             });
           } else {
             count++;
-            formatedData("getWalletBalance");
+            formatedData('getWalletBalance');
           }
         })
         .catch((err: any) => {
-          console.log("getWalletBalance error", err);
+          console.log('getWalletBalance error', err);
         });
     };
 
     const getConfigurationData = () => {
       const calls = underlyingTokensAddress.map((address) => ({
         address: aaveProtocolDataProviderAddress,
-        name: "getReserveConfigurationData",
-        params: [address],
+        name: 'getReserveConfigurationData',
+        params: [address]
       }));
       multicall({
         abi: DATA_ABI,
         calls,
         options: {},
         multicallAddress,
-        provider,
+        provider
       })
         .then((res: any) => {
           res.forEach((item: any, i: number) => {
             const _address = underlyingTokensAddress[i];
-            markets[_address].loanToValue = Big(item[1].toString())
-              .div(100)
-              .toNumber();
+            markets[_address].loanToValue = Big(item[1].toString()).div(100).toNumber();
           });
           count++;
-          formatedData("getConfigurationData");
+          formatedData('getConfigurationData');
         })
         .catch((err: any) => {
-          console.log("getConfigurationData error");
+          console.log('getConfigurationData error');
         });
     };
 
     const getReverseData = () => {
       const calls = underlyingTokensAddress.map((address) => ({
         address: aaveProtocolDataProviderAddress,
-        name: "getReserveData",
-        params: [address],
+        name: 'getReserveData',
+        params: [address]
       }));
       multicall({
         abi: DATA_ABI,
@@ -379,30 +361,15 @@ export default function LendleData (props: any) {
           res.forEach((item: any, i: number) => {
             const _address = underlyingTokensAddress[i];
 
-            const [
-              availableLiquidity,
-              totalStableDebt,
-              totalVariableDebt,
-              liquidityRate,
-              variableBorrowRate,
-            ] = item;
-            const decimals = Big(10).pow(
-              markets[_address].underlyingToken.decimals
-            );
+            const [availableLiquidity, totalStableDebt, totalVariableDebt, liquidityRate, variableBorrowRate] = item;
+            const decimals = Big(10).pow(markets[_address].underlyingToken.decimals);
             const totalDebt = Big(totalStableDebt.toString())
               .plus(totalVariableDebt.toString())
               .div(decimals)
               .toFixed();
-            const totalDebtRaw = Big(totalStableDebt.toString())
-              .plus(totalVariableDebt.toString())
-              .toFixed();
-            const totalDeposit = Big(availableLiquidity.toString())
-              .plus(totalDebtRaw)
-              .div(decimals)
-              .toFixed();
-            const marketSize = Big(availableLiquidity.toString())
-              .div(decimals)
-              .toFixed();
+            const totalDebtRaw = Big(totalStableDebt.toString()).plus(totalVariableDebt.toString()).toFixed();
+            const totalDeposit = Big(availableLiquidity.toString()).plus(totalDebtRaw).div(decimals).toFixed();
+            const marketSize = Big(availableLiquidity.toString()).div(decimals).toFixed();
 
             const RAY = Big(10).pow(27);
 
@@ -416,43 +383,37 @@ export default function LendleData (props: any) {
               .plus(depositAPR.div(Big(SECONDS_PER_YEAR)))
               .toNumber();
 
-            const depositAPY = Big(
-              100 * (Math.pow(depositAPY0, SECONDS_PER_YEAR) - 1)
-            ).toFixed(2);
+            const depositAPY = Big(100 * (Math.pow(depositAPY0, SECONDS_PER_YEAR) - 1)).toFixed(2);
 
             const variableBorrowAPY0 = Big(1)
               .plus(Big(variableBorrowAPR).div(Big(SECONDS_PER_YEAR)))
               .toNumber();
 
-            const variableBorrowAPYRaw = Big(
-              100 * (Math.pow(variableBorrowAPY0, SECONDS_PER_YEAR) - 1)
-            );
+            const variableBorrowAPYRaw = Big(100 * (Math.pow(variableBorrowAPY0, SECONDS_PER_YEAR) - 1));
 
-            const variableBorrowAPY = Big(
-              100 * (Math.pow(variableBorrowAPY0, SECONDS_PER_YEAR) - 1)
-            ).toFixed(2);
+            const variableBorrowAPY = Big(100 * (Math.pow(variableBorrowAPY0, SECONDS_PER_YEAR) - 1)).toFixed(2);
 
             const netApyBig = Big(depositAPY0).minus(variableBorrowAPYRaw);
-            markets[_address].supplyApy = depositAPY + "%";
-            markets[_address].borrowApy = variableBorrowAPY + "%";
+            markets[_address].supplyApy = depositAPY + '%';
+            markets[_address].borrowApy = variableBorrowAPY + '%';
             markets[_address].totalBorrows = Big(totalDebt).toFixed(4);
             markets[_address].totalSupply = Big(totalDeposit).toFixed(4);
             markets[_address].liquidity = Big(marketSize).toFixed(4);
             markets[_address].netApy = Big(netApyBig).toFixed();
           });
           count++;
-          formatedData("getReverseData");
+          formatedData('getReverseData');
         })
         .catch((err: any) => {
-          console.log("getReverseData error");
+          console.log('getReverseData error');
         });
     };
 
     const getUserReserveData = () => {
       const calls = underlyingTokensAddress.map((address) => ({
         address: aaveProtocolDataProviderAddress,
-        name: "getUserReserveData",
-        params: [address, account],
+        name: 'getUserReserveData',
+        params: [address, account]
       }));
       multicall({
         abi: DATA_ABI,
@@ -464,24 +425,17 @@ export default function LendleData (props: any) {
         .then((res: any) => {
           res.forEach((item: any, i: number) => {
             const _address = underlyingTokensAddress[i];
-            const decimals = Big(10).pow(
-              markets[_address].underlyingToken.decimals
-            );
+            const decimals = Big(10).pow(markets[_address].underlyingToken.decimals);
 
             markets[_address].userMerberShip = item[8];
-            markets[_address].userSupply = Big(item[0].toString())
-              .div(decimals)
-              .toFixed();
-            markets[_address].userBorrow = Big(item[1].toString())
-              .add(item[2].toString())
-              .div(decimals)
-              .toFixed();
+            markets[_address].userSupply = Big(item[0].toString()).div(decimals).toFixed();
+            markets[_address].userBorrow = Big(item[1].toString()).add(item[2].toString()).div(decimals).toFixed();
           });
           count++;
-          formatedData("getUserReserveData");
+          formatedData('getUserReserveData');
         })
         .catch((err: any) => {
-          console.log("getUserReserveData error");
+          console.log('getUserReserveData error');
         });
     };
     let fetchedTokenLen = 0;
@@ -489,14 +443,14 @@ export default function LendleData (props: any) {
       const calls = [
         {
           address: incentiveController,
-          name: "totalAllocPoint",
-          params: [],
+          name: 'totalAllocPoint',
+          params: []
         },
         {
           address: incentiveController,
-          name: "rewardsPerSecond",
-          params: [],
-        },
+          name: 'rewardsPerSecond',
+          params: []
+        }
       ];
       multicall({
         abi: INCENTIVE_ABI,
@@ -511,56 +465,50 @@ export default function LendleData (props: any) {
 
           getIncentiveDataForToken({
             aTokenAddress: marketList[fetchedTokenLen].address,
-            variableDebtTokenAddress:
-            marketList[fetchedTokenLen].variableDebtTokenAddress,
+            variableDebtTokenAddress: marketList[fetchedTokenLen].variableDebtTokenAddress,
             address:
-              marketList[fetchedTokenLen].underlyingToken.address === "native"
+              marketList[fetchedTokenLen].underlyingToken.address === 'native'
                 ? wethAddress
-                : marketList[fetchedTokenLen].underlyingToken.address,
+                : marketList[fetchedTokenLen].underlyingToken.address
           });
         })
         .catch((err: any) => {
-          console.log("getIncentiveData error");
+          console.log('getIncentiveData error');
         });
     };
 
-    const getIncentiveDataForToken = (
-      {
-        aTokenAddress,
-        variableDebtTokenAddress,
-        address,
-      }: any) => {
+    const getIncentiveDataForToken = ({ aTokenAddress, variableDebtTokenAddress, address }: any) => {
       const calls = [
         {
           address: incentiveController,
-          name: "poolInfo",
-          params: [aTokenAddress],
+          name: 'poolInfo',
+          params: [aTokenAddress]
         },
         {
           address: incentiveController,
-          name: "userInfo",
-          params: [aTokenAddress, account],
+          name: 'userInfo',
+          params: [aTokenAddress, account]
         },
         {
           address: incentiveController,
-          name: "claimableReward",
-          params: [account, [aTokenAddress]],
+          name: 'claimableReward',
+          params: [account, [aTokenAddress]]
         },
         {
           address: incentiveController,
-          name: "poolInfo",
-          params: [variableDebtTokenAddress],
+          name: 'poolInfo',
+          params: [variableDebtTokenAddress]
         },
         {
           address: incentiveController,
-          name: "userInfo",
-          params: [variableDebtTokenAddress, account],
+          name: 'userInfo',
+          params: [variableDebtTokenAddress, account]
         },
         {
           address: incentiveController,
-          name: "claimableReward",
-          params: [account, [variableDebtTokenAddress]],
-        },
+          name: 'claimableReward',
+          params: [account, [variableDebtTokenAddress]]
+        }
       ];
       multicall({
         abi: INCENTIVE_ABI,
@@ -597,51 +545,28 @@ export default function LendleData (props: any) {
             .div(info.totalAllocPoint);
 
           if (rewardToken) {
-            yearlyRewardToThisPool = dailyRewardToThisPool
-              .mul(365)
-              .div(Big(10).pow(rewardToken.decimals));
+            yearlyRewardToThisPool = dailyRewardToThisPool.mul(365).div(Big(10).pow(rewardToken.decimals));
 
-            yearlyRewardToThisPoolUsd = Big(yearlyRewardToThisPool).times(
-              rewardToken.price
-            );
+            yearlyRewardToThisPoolUsd = Big(yearlyRewardToThisPool).times(rewardToken.price);
 
-            yearlyRewardToThisPoolDebt = dailyRewardToThisPoolDebt
-              .mul(365)
-              .div(Big(10).pow(rewardToken.decimals));
+            yearlyRewardToThisPoolDebt = dailyRewardToThisPoolDebt.mul(365).div(Big(10).pow(rewardToken.decimals));
 
-            yearlyRewardToThisPoolDebtUsd = Big(yearlyRewardToThisPoolDebt).times(
-              rewardToken.price
-            );
+            yearlyRewardToThisPoolDebtUsd = Big(yearlyRewardToThisPoolDebt).times(rewardToken.price);
           }
 
           const totalSupplyUsd = Big(markets[address].underlyingPrice).mul(
-            ethers.utils.formatUnits(
-              poolInfo[0]._hex,
-              markets[address].underlyingToken.decimals
-            )
+            ethers.utils.formatUnits(poolInfo[0]._hex, markets[address].underlyingToken.decimals)
           );
 
-          markets[address].rewardSupplyApy = yearlyRewardToThisPoolUsd
-            .div(totalSupplyUsd)
-            .mul(100)
-            .toFixed(2, 0);
+          markets[address].rewardSupplyApy = yearlyRewardToThisPoolUsd.div(totalSupplyUsd).mul(100).toFixed(2, 0);
 
           const totalBorrowUsd = Big(markets[address].underlyingPrice).mul(
-            ethers.utils.formatUnits(
-              poolInfoDebt[0]._hex,
-              markets[address].underlyingToken.decimals
-            )
+            ethers.utils.formatUnits(poolInfoDebt[0]._hex, markets[address].underlyingToken.decimals)
           );
 
-          markets[address].rewardBorrowApy = yearlyRewardToThisPoolDebtUsd
-            .div(totalBorrowUsd)
-            .mul(100)
-            .toFixed(2, 0);
+          markets[address].rewardBorrowApy = yearlyRewardToThisPoolDebtUsd.div(totalBorrowUsd).mul(100).toFixed(2, 0);
 
-          const rewardPerShareThisPool = dailyRewardToThisPool
-            .mul(ACC_REWARD_PRECISION)
-            .div(totalSupply)
-            .toFixed(0);
+          const rewardPerShareThisPool = dailyRewardToThisPool.mul(ACC_REWARD_PRECISION).div(totalSupply).toFixed(0);
 
           const rewardPerShareThisPoolDebt = dailyRewardToThisPoolDebt
             .mul(ACC_REWARD_PRECISION)
@@ -681,27 +606,24 @@ export default function LendleData (props: any) {
             .div(Big(10).pow(rewardToken.decimals))
             .toFixed();
 
-          markets[address].dailyRewards = Big(dailyRewards)
-            .plus(dailyRewardsDebt)
-            .toFixed();
+          markets[address].dailyRewards = Big(dailyRewards).plus(dailyRewardsDebt).toFixed();
           fetchedTokenLen++;
           if (fetchedTokenLen === underlyingTokensAddress.length) {
             count++;
-            formatedData("getIncentiveDataForToken");
+            formatedData('getIncentiveDataForToken');
           } else {
             getIncentiveDataForToken({
               aTokenAddress: marketList[fetchedTokenLen].address,
-              variableDebtTokenAddress:
-              marketList[fetchedTokenLen].variableDebtTokenAddress,
+              variableDebtTokenAddress: marketList[fetchedTokenLen].variableDebtTokenAddress,
               address:
-                marketList[fetchedTokenLen].underlyingToken.address === "native"
+                marketList[fetchedTokenLen].underlyingToken.address === 'native'
                   ? wethAddress
-                  : marketList[fetchedTokenLen].underlyingToken.address,
+                  : marketList[fetchedTokenLen].underlyingToken.address
             });
           }
         })
         .catch((err: any) => {
-          console.log("getIncentiveDataForToken error", err);
+          console.log('getIncentiveDataForToken error', err);
         });
     };
 
@@ -720,25 +642,16 @@ export default function LendleData (props: any) {
       Object.values(markets).forEach((market: any, i) => {
         const underlyingPrice = market.underlyingPrice;
         const marketSupplyUsd = Big(market.totalSupply || 0).mul(underlyingPrice);
-        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(
-          underlyingPrice
-        );
+        const marketBorrowUsd = Big(market.totalBorrows || 0).mul(underlyingPrice);
 
         totalSupplyUsd = totalSupplyUsd.plus(marketSupplyUsd);
         totalBorrowUsd = totalBorrowUsd.plus(marketBorrowUsd);
-        userTotalSupplyUsd = userTotalSupplyUsd.plus(
-          Big(market.userSupply).mul(underlyingPrice)
-        );
-        userTotalBorrowUsd = userTotalBorrowUsd.plus(
-          Big(market.userBorrow).mul(underlyingPrice)
-        );
+        userTotalSupplyUsd = userTotalSupplyUsd.plus(Big(market.userSupply).mul(underlyingPrice));
+        userTotalBorrowUsd = userTotalBorrowUsd.plus(Big(market.userBorrow).mul(underlyingPrice));
 
         if (market.userMerberShip) {
           totalCollateralUsd = totalCollateralUsd.plus(
-            Big(market.userSupply)
-              .mul(underlyingPrice)
-              .mul(market.loanToValue)
-              .div(100)
+            Big(market.userSupply).mul(underlyingPrice).mul(market.loanToValue).div(100)
           );
         }
 
@@ -747,9 +660,9 @@ export default function LendleData (props: any) {
           distributionApy = [
             {
               ...rewardToken,
-              supply: market.rewardSupplyApy + "%",
-              borrow: market.rewardBorrowApy + "%",
-            },
+              supply: market.rewardSupplyApy + '%',
+              borrow: market.rewardBorrowApy + '%'
+            }
           ];
           totalUnclaimed = totalUnclaimed.plus(market.unclaimed);
           totalDailyRewards = totalDailyRewards.plus(market.dailyRewards);
@@ -758,7 +671,7 @@ export default function LendleData (props: any) {
         _markets[market.address] = {
           ...market,
           distributionApy,
-          dapp: dappName,
+          dapp: dappName
         };
       });
       let rewards: any[] = [];
@@ -769,8 +682,8 @@ export default function LendleData (props: any) {
             dailyRewards: totalDailyRewards.toString(),
             unclaimed: totalUnclaimed.toString(),
             // fix#DAP-800
-            allPools: [rewardToken.address],
-          },
+            allPools: [rewardToken.address]
+          }
         ];
       }
       onLoad({
@@ -780,7 +693,7 @@ export default function LendleData (props: any) {
         totalBorrowUsd: totalBorrowUsd.toString(),
         userTotalSupplyUsd: userTotalSupplyUsd.toString(),
         userTotalBorrowUsd: userTotalBorrowUsd.toString(),
-        totalCollateralUsd: totalCollateralUsd.toString(),
+        totalCollateralUsd: totalCollateralUsd.toString()
       });
     };
 
@@ -790,5 +703,4 @@ export default function LendleData (props: any) {
     getUserWalletBalances();
     getRewardPrice();
   }, [account, update]);
-
 }

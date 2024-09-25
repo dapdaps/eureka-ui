@@ -2,7 +2,7 @@ import { mode } from '@/config/tokens/mode';
 
 const basic = {
   name: 'Ironclad Finance',
-  icon: 'https://s3.amazonaws.com/dapdap.prod/images/ironclad.png',
+  icon: 'https://s3.amazonaws.com/dapdap.main/images/ironclad.png',
   data: 'bluebiu.near/widget/Lending.Data.Ironclad',
   handler: 'bluebiu.near/widget/Lending.Handler.IronClad',
   // handlerClaim: 'bluebiu.near/widget/Arbitrum.Lending.RadiantClaimHandler',

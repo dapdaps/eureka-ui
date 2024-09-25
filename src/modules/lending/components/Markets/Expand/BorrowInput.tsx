@@ -10,7 +10,7 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
     state,
     updateState,
 
-    prices,
+    prices
   } = props;
 
   const {
@@ -24,7 +24,7 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
     yourLends,
     yourCollateral,
     maxLTV,
-    exchangeRate,
+    exchangeRate
   } = data;
 
   const onAmountChange = (amount: string) => {
@@ -33,14 +33,12 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
     if (isZero) {
       updateState({
         amount,
-        buttonClickable: false,
+        buttonClickable: false
       });
       return;
     }
     const params: any = { amount };
-    params.isBigerThanBalance = Big(amount || 0).gt(
-      balance || 0,
-    );
+    params.isBigerThanBalance = Big(amount || 0).gt(balance || 0);
     params.buttonClickable = !params.isBigerThanBalance;
 
     updateState(params);
@@ -77,13 +75,9 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
     //   maxLTV) *
     // MIN_HF;
 
-    const maxWithdrawAmount = Big(collateralAmount).minus(
-      shouldRemainedCollateral,
-    );
+    const maxWithdrawAmount = Big(collateralAmount).minus(shouldRemainedCollateral);
 
-    return maxWithdrawAmount.lt(0)
-      ? Big(0)
-      : maxWithdrawAmount.toFixed(underlyingToken?.decimals, 0);
+    return maxWithdrawAmount.lt(0) ? Big(0) : maxWithdrawAmount.toFixed(underlyingToken?.decimals, 0);
   };
 
   const balance = useMemo(() => {
@@ -111,23 +105,14 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
   }, [userUnderlyingBalance, userBorrowBalance, state.tab, borrowToken, state.maxWithdraw, yourBorrow, yourLends]);
 
   useEffect(() => {
-    const collateralUSD = Big(yourCollateral || 0).times(
-      Big(getPrice(underlyingToken?.symbol)),
-    );
-    const borrowUSD = Big(yourBorrow || 0).times(
-      Big(getPrice(borrowToken?.symbol)),
-    );
+    const collateralUSD = Big(yourCollateral || 0).times(Big(getPrice(underlyingToken?.symbol)));
+    const borrowUSD = Big(yourBorrow || 0).times(Big(getPrice(borrowToken?.symbol)));
     const _borrowLimitUSD = collateralUSD
       .times(Big(maxLTV || 0))
       .div(1.11)
       .minus(borrowUSD);
     // console.log("borrowLimitUSD--", _borrowLimitUSD.toFixed());
-    const _maxWithdraw = calcMaxWithdraw(
-      yourCollateral,
-      yourBorrow,
-      maxLTV,
-      exchangeRate,
-    );
+    const _maxWithdraw = calcMaxWithdraw(yourCollateral, yourBorrow, maxLTV, exchangeRate);
     // if (Big(data.yourCollateralUSD).gt(0)) {
     //   const shouldRemainedCollateral = Big(data.yourBorrowUSD || 0)
     //     .times(1.0001)
@@ -144,7 +129,7 @@ const LendingMarketExpandBorrowInput = (props: Props) => {
     // }
     updateState({
       borrowLimitUSD: _borrowLimitUSD.lte(0) ? Big(0) : _borrowLimitUSD,
-      maxWithdraw: _maxWithdraw,
+      maxWithdraw: _maxWithdraw
     });
   }, [data]);
 

@@ -28,7 +28,7 @@ export const StyledChain = styled.div`
   gap: 10px;
   cursor: pointer;
   transition: 0.5s;
-  border: 1px solid #373A53;
+  border: 1px solid #373a53;
   color: #fff;
   border-radius: 8px;
   padding: 14px;
@@ -45,7 +45,7 @@ export const StyledChainName = styled.div`
   font-size: 14px;
   font-weight: 500;
   line-height: 14px;
-`
+`;
 
 export const StyledChainLogo = styled.img`
   width: 22px;
@@ -103,9 +103,10 @@ export const StyleChainItem = styled.div<{ isActive?: boolean }>`
   cursor: pointer;
   padding: 9px;
   border-radius: 10px;
-  background: #18191E;
+  background: ${({ isActive }) => (isActive ? '#1B1E27' : 'transparent')};
   color: #fff;
-  border: ${({ isActive }) => ( isActive ? '1px solid #EBF479' : '1px solid transparent')};
+  border: ${({ isActive }) => (isActive ? '1px solid #EBF479' : '1px solid #373A53')};
+  max-width: 144px;
   .chain-img {
     width: 26px;
     height: 26px;

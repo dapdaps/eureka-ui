@@ -48,7 +48,6 @@ export function chunk(arr: any, size: any) {
   return result;
 }
 
-
 export function formatRate(_value: any) {
   if (isNaN(Number(_value))) return '';
   const value = (Number(_value) * 100).toFixed();

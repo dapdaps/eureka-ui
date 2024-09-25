@@ -70,7 +70,7 @@ export const StyledRange = styled.input`
     background-color: #16181d;
     margin-top: -7px;
     &:after {
-      content: "12%";
+      content: '12%';
       color: #fff;
     }
   }

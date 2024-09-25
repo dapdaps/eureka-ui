@@ -3,11 +3,9 @@ import styled from 'styled-components';
 export const StyledTradeBlock = styled.div`
   border-radius: 10px;
   border: 1px solid #373a53;
-  background: #262836;
 `;
 export const StyledHeader = styled.div`
   height: 40px;
-  border-bottom: 1px solid #373a53;
   padding: 12px 16px;
   color: #53577b;
   font-family: Montserrat;
@@ -23,6 +21,7 @@ export const StyledActions = styled.div`
   display: flex;
   align-items: center;
   gap: 16px;
+  color: #979abe;
 `;
 
 export const StyledTradeTitle = styled.div`

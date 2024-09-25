@@ -9,8 +9,8 @@ const CLAIM_ABI = [
     outputs: [],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const VenusClaim = (props: any) => {
@@ -19,11 +19,7 @@ const VenusClaim = (props: any) => {
   useEffect(() => {
     if (!loading || !dapp.unitrollerAddress || !account) return;
 
-    const CollateralContract = new ethers.Contract(
-      dapp.unitrollerAddress,
-      CLAIM_ABI,
-      provider.getSigner(),
-    );
+    const CollateralContract = new ethers.Contract(dapp.unitrollerAddress, CLAIM_ABI, provider.getSigner());
 
     CollateralContract.estimateGas
       .claimVenus(account)

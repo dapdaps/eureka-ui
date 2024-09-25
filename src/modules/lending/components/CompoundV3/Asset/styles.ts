@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const StyledIconWrap = styled.div`
   position: relative;
-`
+`;
 export const Icon = styled.img`
   width: 26px;
   height: 26px;
@@ -24,7 +24,7 @@ export const StyledChainIcon = styled.div`
     width: 100%;
     height: 100%;
   }
-`
+`;
 export const Symbol = styled.div`
   font-size: 16px;
   font-weight: 500;

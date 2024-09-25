@@ -10,58 +10,50 @@ const CTOKEN_ABI = [
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'uint256', name: 'redeemAmount', type: 'uint256' },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'redeemAmount', type: 'uint256' }],
     name: 'redeemUnderlying',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
-    inputs: [
-      { internalType: 'uint256', name: 'borrowAmount', type: 'uint256' },
-    ],
+    inputs: [{ internalType: 'uint256', name: 'borrowAmount', type: 'uint256' }],
     name: 'borrow',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     inputs: [{ internalType: 'uint256', name: 'repayAmount', type: 'uint256' }],
     name: 'repayBorrow',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const UNITROLLER_ABI = [
   {
     constant: false,
-    inputs: [
-      { internalType: 'address[]', name: 'qiTokens', type: 'address[]' },
-    ],
+    inputs: [{ internalType: 'address[]', name: 'qiTokens', type: 'address[]' }],
     name: 'enterMarkets',
     outputs: [{ internalType: 'uint256[]', name: '', type: 'uint256[]' }],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
+    type: 'function'
   },
   {
     constant: false,
-    inputs: [
-      { internalType: 'address', name: 'qiTokenAddress', type: 'address' },
-    ],
+    inputs: [{ internalType: 'address', name: 'qiTokenAddress', type: 'address' }],
     name: 'exitMarket',
     outputs: [{ internalType: 'uint256', name: '', type: 'uint256' }],
     payable: false,
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const IonicHandler = (props: any) => {
@@ -85,17 +77,11 @@ const IonicHandler = (props: any) => {
         return;
       }
 
-      const parsedAmount = ethers.utils.parseUnits(
-        amount,
-        data.underlyingToken.decimals,
-      );
+      const parsedAmount = ethers.utils.parseUnits(amount, data.underlyingToken.decimals);
 
       options = {
-        value:
-          isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay')
-            ? parsedAmount
-            : 0,
-        gasLimit: 4000000,
+        value: isETH && (data.actionText === 'Deposit' || data.actionText === 'Repay') ? parsedAmount : 0,
+        gasLimit: 4000000
       };
 
       const CNativeTokenContract = new ethers.Contract(
@@ -106,24 +92,20 @@ const IonicHandler = (props: any) => {
             name: 'mint',
             outputs: [],
             stateMutability: 'payable',
-            type: 'function',
+            type: 'function'
           },
           {
             inputs: [],
             name: 'repayBorrow',
             outputs: [],
             stateMutability: 'payable',
-            type: 'function',
-          },
+            type: 'function'
+          }
         ],
-        provider.getSigner(),
+        provider.getSigner()
       );
 
-      const CTokenContract = new ethers.Contract(
-        data.address,
-        CTOKEN_ABI,
-        provider.getSigner(),
-      );
+      const CTokenContract = new ethers.Contract(data.address, CTOKEN_ABI, provider.getSigner());
 
       contract = CTokenContract;
 
@@ -154,11 +136,7 @@ const IonicHandler = (props: any) => {
       try {
         const isEnter = data.actionText === 'Enable as Collateral';
 
-        contract = new ethers.Contract(
-          data.config.collateralAddress,
-          UNITROLLER_ABI,
-          provider.getSigner(),
-        );
+        contract = new ethers.Contract(data.config.collateralAddress, UNITROLLER_ABI, provider.getSigner());
 
         method = isEnter ? 'enterMarkets' : 'exitMarket';
 
@@ -175,13 +153,13 @@ const IonicHandler = (props: any) => {
       const _gas = gas ? Big(gas.toString()).mul(1.2).toFixed(0) : 4000000;
       contract.populateTransaction[method](...params, {
         ...options,
-        gasLimit: _gas,
+        gasLimit: _gas
       })
         .then((res: any) => {
           onLoad({
             gas: _gas,
             unsignedTx: res,
-            isError: false,
+            isError: false
           });
         })
         .catch((err: any) => {

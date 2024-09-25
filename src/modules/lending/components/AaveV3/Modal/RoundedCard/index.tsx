@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 const Title = styled.div`
   font-size: 14px;
@@ -13,7 +13,6 @@ const Content = styled.div`
   border: 1px solid #383947;
   border-radius: 10px;
 `;
-
 
 const RoundedCard = (props: any) => {
   return (

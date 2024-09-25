@@ -1,11 +1,7 @@
-
-
-import Connector from '../Connector/BlastOff'
+import Connector from '../Connector/BlastOff';
 import { StyledContainer } from '../styles';
 export default function Gamma(props: any) {
-  const {
-    dexConfig
-  } = props
+  const { dexConfig } = props;
   return (
     <StyledContainer style={dexConfig.theme}>
       <Connector
@@ -14,5 +10,5 @@ export default function Gamma(props: any) {
         }}
       />
     </StyledContainer>
-  )
+  );
 }

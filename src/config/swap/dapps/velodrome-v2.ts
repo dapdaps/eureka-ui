@@ -7,10 +7,11 @@ const basic = {
 const networks = {
   10: {
     defaultCurrencies: {
-      input: optimism['weth'],
+      input: optimism['eth'],
       output: optimism['usdt']
     },
     tokens: [
+      optimism['eth'],
       optimism['frax'],
       optimism['usdt'],
       optimism['wbtc'],

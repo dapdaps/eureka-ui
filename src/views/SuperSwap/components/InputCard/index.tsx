@@ -3,26 +3,21 @@ import { useEffect, useState } from 'react';
 
 import ArrowIcon from '@/components/Icons/ArrowIcon';
 import Loading from '@/components/Icons/Loading';
-import Refresh from '@/components/Icons/Refresh';
 import useTokenBalance from '@/hooks/useTokenBalance';
 import { usePriceStore } from '@/stores/price';
 import type { Token } from '@/types';
 import { balanceFormated, valueFormated } from '@/utils/balance';
 
-import { useUpdateBalanceStore } from '../../hooks/useUpdateBalanceStore';
 import CurrencyInput from '../Input';
-import Slippage from './Slippage';
 import {
   CurrencyIcon,
   CurrencyTitle,
-  StyledActionButton,
-  StyledActions,
   StyledHeader,
   StyledSelectToken,
   StyledTradeBalance,
   StyledTradeBlock,
   StyledTradeContent,
-  StyledTradeInputContainer,
+  StyledTradeInputContainer
 } from './styles';
 
 type Props = {
@@ -42,14 +37,12 @@ const Currency = ({
   onAmountChange = () => {},
   onTokenSelect,
   onLoad,
-  onRefresh,
   amount,
   currency,
   title,
   disabled,
   isFrom,
-  loading,
-  style = {},
+  style = {}
 }: Props) => {
   const [isFocus, setIsFocus] = useState(false);
   const prices = usePriceStore((store) => store.price);
@@ -62,23 +55,11 @@ const Currency = ({
   }, [balance]);
 
   return (
-    <StyledTradeBlock style={style}>
+    <StyledTradeBlock style={{ ...style, backgroundColor: isFocus ? '#20212D' : 'transparent' }}>
       <StyledHeader>
         <div>{title}</div>
-        {isFrom && (
-          <StyledActions>
-            <StyledActionButton onClick={onRefresh}>
-              <Refresh refreshing={loading} size={16} />
-            </StyledActionButton>
-            <Slippage />
-          </StyledActions>
-        )}
       </StyledHeader>
-      <StyledTradeContent
-        style={{
-          backgroundColor: isFocus ? '#20212D' : 'transparent',
-        }}
-      >
+      <StyledTradeContent>
         <StyledTradeInputContainer>
           <CurrencyInput
             amount={amount}
@@ -94,7 +75,9 @@ const Currency = ({
             }}
           />
           <StyledSelectToken onClick={onTokenSelect}>
-            {currency && <CurrencyIcon src={currency.icon} alt={currency.symbol} />}
+            {currency && (
+              <CurrencyIcon src={currency.icon || '/images/tokens/default_icon.png'} alt={currency.symbol} />
+            )}
             <CurrencyTitle>{currency ? currency.symbol : 'Select a Token'}</CurrencyTitle>
             <div className={'arrow-icon'}>
               <ArrowIcon size={11.5} />

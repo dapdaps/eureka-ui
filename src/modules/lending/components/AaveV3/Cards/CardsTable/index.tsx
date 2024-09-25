@@ -1,6 +1,6 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
-import { Divider } from "../CardEmpty";
+import { Divider } from '../CardEmpty';
 
 const StyledCardsTable = styled.div`
   margin-top: 20px;
@@ -48,44 +48,38 @@ const StyledCardsTable = styled.div`
 `;
 
 const CardsTable = (props: any) => {
+  const { headers, data, noDivider } = props;
 
+  if (!headers || !data) {
+    return null;
+  }
 
-const { headers, data, noDivider } = props;
+  return (
+    <>
+      {noDivider ? null : <Divider />}
 
-if (!headers || !data) {
-  return null;
-}
-
-
-return (
-  <>
-    {noDivider ? null : (
-      <Divider />
-    )}
-
-    <StyledCardsTable>
-      <table>
-        <thead>
-          <tr>
-            {headers.map((header: any, idx: any) => (
-              <th key={idx}>{header}</th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map((rows: any, idx: any) => (
-            <tr key={idx}>
-              {rows.map((data: any, idx: any) => (
-                <td key={idx}>{data}</td>
+      <StyledCardsTable>
+        <table>
+          <thead>
+            <tr>
+              {headers.map((header: any, idx: any) => (
+                <th key={idx}>{header}</th>
               ))}
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </StyledCardsTable>
-  </>
+          </thead>
+          <tbody>
+            {data.map((rows: any, idx: any) => (
+              <tr key={idx}>
+                {rows.map((data: any, idx: any) => (
+                  <td key={idx}>{data}</td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </StyledCardsTable>
+    </>
   );
 };
 
 export default CardsTable;
-

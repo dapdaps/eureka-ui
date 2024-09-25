@@ -1,11 +1,7 @@
-
-
-import ArrakisConnector from '../Connector/Arrakis'
+import ArrakisConnector from '../Connector/Arrakis';
 import { StyledContainer } from '../styles';
 export default function Arrakis(props: any) {
-  const {
-    dexConfig
-  } = props
+  const { dexConfig } = props;
   return (
     <StyledContainer style={dexConfig.theme}>
       <ArrakisConnector
@@ -14,5 +10,5 @@ export default function Arrakis(props: any) {
         }}
       />
     </StyledContainer>
-  )
+  );
 }

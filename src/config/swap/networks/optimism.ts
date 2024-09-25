@@ -15,10 +15,10 @@ export default {
       ...velodromeBasic,
       ...velodromeNetworks[CHAIN_ID]
     },
-    'Beethoven X': {
-      ...beethovenBasic,
-      ...beethovenNetworks[CHAIN_ID]
-    },
+    // 'Beethoven X': {
+    //   ...beethovenBasic,
+    //   ...beethovenNetworks[CHAIN_ID]
+    // },
     SushiSwap: {
       ...sushiBasic,
       ...sushiNetworks[CHAIN_ID]

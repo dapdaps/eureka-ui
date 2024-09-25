@@ -1,4 +1,4 @@
-import { styled } from "styled-components";
+import { styled } from 'styled-components';
 
 const THead = styled.div`
   display: grid;
@@ -34,42 +34,37 @@ const CardsList = styled.div`
 `;
 
 const CardList = (props: any) => {
-    const { headers, data } = props;
+  const { headers, data } = props;
 
-    if (!headers || !data) {
-      return null;
-    }
-    
-    return (
-      <>
-        <CardsList>
-          <div>
-            <THead>
-              {headers.map((header: any, idx: any) => (
-                <div key={idx}>{header}</div>
-              ))}
-            </THead>
-    
-            <TBody>
-              {data.map((rows: any, idx: any) => (
-                <div className="list" key={idx}>
-                  {rows.map((data: any, idx: any) => (
-                    <div className="item" key={idx}>
-                      {data}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </TBody>
-          </div>
-        </CardsList>
-      </>
-    );
-}
+  if (!headers || !data) {
+    return null;
+  }
+
+  return (
+    <>
+      <CardsList>
+        <div>
+          <THead>
+            {headers.map((header: any, idx: any) => (
+              <div key={idx}>{header}</div>
+            ))}
+          </THead>
+
+          <TBody>
+            {data.map((rows: any, idx: any) => (
+              <div className="list" key={idx}>
+                {rows.map((data: any, idx: any) => (
+                  <div className="item" key={idx}>
+                    {data}
+                  </div>
+                ))}
+              </div>
+            ))}
+          </TBody>
+        </div>
+      </CardsList>
+    </>
+  );
+};
 
 export default CardList;
-    
-
-
-
-

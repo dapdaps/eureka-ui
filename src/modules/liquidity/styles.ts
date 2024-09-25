@@ -1,10 +1,8 @@
-import styled from "styled-components"
+import styled from 'styled-components';
 
-import { FontProps } from "@/styled/types";
+import { FontProps } from '@/styled/types';
 
-
-export const StyledContainer = styled.div`
-`
+export const StyledContainer = styled.div``;
 
 export const StyledFont = styled.div<any>`
   color: ${(props) => props.color || '#000'};
@@ -24,14 +22,14 @@ export const StyledFlex = styled.div<any>`
 `;
 export const StyledDashedUndeline = styled.div`
   padding: 2px 0;
-  border-bottom: 1px dashed #979ABE;
-`
+  border-bottom: 1px dashed #979abe;
+`;
 
 export const TitleText = styled.div`
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 32px;
-  color: var(--agg-primary-color, #FFF);
+  color: var(--agg-primary-color, #fff);
   @media (max-width: 900px) {
     display: none;
   }
@@ -68,7 +66,7 @@ export const ContainerLogin = styled.div`
 // List
 export const ListWrapper = styled.div`
   margin-top: 20px;
-`
+`;
 export const SvgIcon = styled.div`
   display: flex;
   justify-content: center;
@@ -83,17 +81,15 @@ export const SvgIcon = styled.div`
       transform: translateY(-50%) rotate(90deg);
     }
   }
-`
-export const Table = styled.div`
-  
-`
+`;
+export const Table = styled.div``;
 export const THead = styled.div`
   display: flex;
   align-items: center;
   padding: 12px 30px;
-`
+`;
 export const Th = styled.div`
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
   font-size: 14px;
   font-style: normal;
@@ -121,14 +117,13 @@ export const Th = styled.div`
   &:nth-of-type(7) {
     width: 10%;
   }
-`
-export const TBody = styled.div`
-`
+`;
+export const TBody = styled.div``;
 export const TrWrapper = styled.div`
   display: flex;
   flex-direction: column;
   border-radius: 16px;
-  border: 1px solid var(--agg-border-color, #373A53);
+  border: 1px solid var(--agg-border-color, #373a53);
   margin-bottom: 8px;
   overflow: hidden;
   box-shadow: 0px 0px 10px 0px var(--agg-shadow-color, transparent);
@@ -136,18 +131,18 @@ export const TrWrapper = styled.div`
     /* background-color: var(--agg-hover-color, transparent); */
     border: 1px solid var(--agg-primary-color, transparent);
   }
-`
+`;
 export const Tr = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
   height: 84px;
-  background: var(--agg-secondary-color,#262836);
+  background: var(--agg-secondary-color, #262836);
   padding: 0 24px;
   &.active {
     background-color: var(--agg-hover-color, #262836);
   }
-`
+`;
 export const Td = styled.div`
   position: relative;
   display: flex;
@@ -179,41 +174,41 @@ export const Td = styled.div`
   &:nth-of-type(7) {
     width: 10%;
   }
-`
+`;
 export const TdTxt = styled.div`
-  color: var(--agg-primary-color,#FFF);
+  color: var(--agg-primary-color, #fff);
   font-family: Gantari;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   &.gray {
-    color: #979ABE;
+    color: #979abe;
     font-size: 12px;
   }
-`
+`;
 export const PoolPercentage = styled.div`
   padding: 3px 8px;
   border-radius: 24px;
   background: rgba(151, 154, 190, 0.1);
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-`
+`;
 export const StrategyTxt = styled.div`
   padding: 7px 10px;
   border-radius: 6px;
   background: rgba(151, 154, 190, 0.1);
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-`
+`;
 export const StyledVaultImage = styled.div`
   display: flex;
   align-items: center;
@@ -223,7 +218,7 @@ export const StyledVaultImage = styled.div`
     height: 26px;
     border-radius: 50%;
   }
-`
+`;
 // Detail
 
 export const Row = styled.div`
@@ -236,25 +231,24 @@ export const Row = styled.div`
     justify-content: center;
     gap: 14px;
   }
-`
+`;
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-`
+`;
 export const DetailWrapper = styled.div`
-  background: var(--agg-secondary-color,#262836);
-
-`
+  background: var(--agg-secondary-color, #262836);
+`;
 export const FilterButtonList = styled.div`
   margin-bottom: 20px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-top: 1px solid var(--agg-border-color, #373A53);
-  border-bottom: 1px solid var(--agg-border-color, #373A53);
-`
+  border-top: 1px solid var(--agg-border-color, #373a53);
+  border-bottom: 1px solid var(--agg-border-color, #373a53);
+`;
 export const FilterButton = styled.div`
   cursor: pointer;
   position: relative;
@@ -263,9 +257,9 @@ export const FilterButton = styled.div`
   justify-content: center;
   width: 250px;
   height: 48px;
-  border-left: 1px solid var(--agg-border-color, #373A53);
-  border-right: 1px solid var(--agg-border-color, #373A53);
-  color: #979ABE;
+  border-left: 1px solid var(--agg-border-color, #373a53);
+  border-right: 1px solid var(--agg-border-color, #373a53);
+  color: #979abe;
   font-family: Gantari;
   font-size: 16px;
   font-style: normal;
@@ -281,55 +275,54 @@ export const FilterButton = styled.div`
     }
   }
   &.isActive {
-    color: var(--agg-primary-color, #FFF);
+    color: var(--agg-primary-color, #fff);
     &:after {
-      content: "";
+      content: '';
       position: absolute;
       left: 0;
       width: 100%;
       bottom: -2px;
       height: 5px;
       flex-shrink: 0;
-      background: #1362E4;
+      background: #1362e4;
     }
   }
-`
+`;
 export const InputWrapList = styled.div`
   margin-bottom: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
-`
+`;
 export const InputWrap = styled.div`
   position: relative;
   height: 46px;
-  background: var(--agg-primary-color,#33364B);
+  background: var(--agg-primary-color, #33364b);
   border-radius: 12px;
-  border: 1px solid var(--agg-primary-color,#33364B);
+  border: 1px solid var(--agg-primary-color, #33364b);
   overflow: hidden;
   input::-webkit-inner-spin-button {
     -webkit-appearance: none !important;
   }
-  
-  input::-webkit-outer-spin-button{
+
+  input::-webkit-outer-spin-button {
     -webkit-appearance: none !important;
   }
-  input[type="number"]{
+  input[type='number'] {
     -moz-appearance: textfield;
   }
   &.inSufficient {
-    border-color: #FF547D;
+    border-color: #ff547d;
   }
-
-`
+`;
 export const Input = styled.input`
   border: none;
   outline: none;
-  background: var(--agg-secondary-color,#1B1E27);
+  background: var(--agg-secondary-color, #1b1e27);
   margin: 0;
   width: 100%;
   height: 100%;
-  color: var(--agg-primary-color,#FFF);
+  color: var(--agg-primary-color, #fff);
   font-family: Gantari;
   font-size: 13px;
   font-style: normal;
@@ -337,7 +330,7 @@ export const Input = styled.input`
   padding: 0 80px 0 10px;
   border-radius: 8px;
   /* border: 1px solid #33364B; */
-`
+`;
 export const InputSuffix = styled.div`
   position: absolute;
   top: 13px;
@@ -346,7 +339,7 @@ export const InputSuffix = styled.div`
   align-items: center;
   gap: 6px;
   span {
-    color: var(--agg-primary-color, #FFF);
+    color: var(--agg-primary-color, #fff);
     text-align: right;
     font-family: Gantari;
     font-size: 14px;
@@ -358,30 +351,28 @@ export const InputSuffix = styled.div`
     width: 20px;
     border-radius: 50%;
   }
-
-`
+`;
 export const StyledImageList = styled.div`
   display: flex;
   align-items: center;
-  
-`
+`;
 export const PriceWrap = styled.div`
   margin-top: 6px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-`
+`;
 export const TotalPrice = styled.span`
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
   font-size: 12px;
   opacity: 0.3;
-`
+`;
 export const BalancePrice = styled.div`
   display: flex;
   align-items: center;
   gap: 4px;
-  color: #979ABE;
+  color: #979abe;
   text-align: right;
   font-family: Gantari;
   font-size: 12px;
@@ -389,11 +380,11 @@ export const BalancePrice = styled.div`
   font-weight: 400;
   line-height: normal;
   span {
-    color: var(--agg-primary-color, #FFF);
+    color: var(--agg-primary-color, #fff);
     text-decoration-line: underline;
     cursor: pointer;
   }
-`
+`;
 
 export const StyledButtonList = styled.div`
   width: 500px;
@@ -402,7 +393,7 @@ export const StyledButtonList = styled.div`
   align-items: center;
   justify-content: center;
   gap: 14px;
-`
+`;
 export const StyledButton = styled.button`
   outline: none;
   border: none;
@@ -413,24 +404,24 @@ export const StyledButton = styled.button`
   height: 46px;
   border-radius: var(--agg-button-radius, 8px);
   background-color: var(--button-color, var(--agg-primary-color, #000));
-  color: var(--button-text-color, var(--agg-secondary-color, #FFF));
+  color: var(--button-text-color, var(--agg-secondary-color, #fff));
   font-family: Gantari;
   font-size: 16px;
   font-weight: 500;
   &[disabled] {
-    opacity: 0.5!important;
+    opacity: 0.5 !important;
     cursor: not-allowed;
   }
   &:hover {
     opacity: 0.8;
   }
-`
+`;
 
 export const StyledLoading = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: rotate 1.5s linear  infinite;
+  animation: rotate 1.5s linear infinite;
   @keyframes rotate {
     0% {
       transform: rotate(0deg);
@@ -439,14 +430,14 @@ export const StyledLoading = styled.div`
       transform: rotate(360deg);
     }
   }
-`
+`;
 export const StyledEmptyTips = styled.div`
   text-align: center;
   padding-top: 82px;
-  color: #979ABE;
+  color: #979abe;
   font-family: Gantari;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-`
+`;

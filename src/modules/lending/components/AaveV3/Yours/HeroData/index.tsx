@@ -41,11 +41,10 @@ const Yours = (props: any) => {
     totalAvailable,
     totalBorrows,
     BlastPoints,
-    BlastGold,
+    BlastGold
   } = props;
 
   console.log(props, 'HeroData>=====');
-  
 
   if (!netWorth || !netAPY || !healthFactor) {
     return <div />;
@@ -61,12 +60,12 @@ const Yours = (props: any) => {
     'Total available': formatNumber(totalAvailable),
     'Total borrows': formatNumber(totalBorrows),
     'Blast Points': BlastPoints,
-    'Blast Gold': BlastGold,
+    'Blast Gold': BlastGold
   };
 
   const heroDataTitle = heroData.map((item: any) => ({
     name: item,
-    value: heroDataMap[item],
+    value: heroDataMap[item]
   }));
 
   return (

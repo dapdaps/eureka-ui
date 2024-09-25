@@ -1,11 +1,11 @@
 // @ts-nocheck
 import Big from 'big.js';
 import { ethers } from 'ethers';
-import { memo } from "react";
+import { memo } from 'react';
 import { useEffect } from 'react';
-import styled from "styled-components";
+import styled from 'styled-components';
 
-import Balance from "@/modules/components/Balance";
+import Balance from '@/modules/components/Balance';
 import Loading from '@/modules/components/Loading';
 import { useMultiState } from '@/modules/hooks';
 const StyledContainer = styled.div`
@@ -15,7 +15,7 @@ const StyledContainer = styled.div`
   height: 100%;
 `;
 const StyledFormItem = styled.div`
-  border-bottom: 1px solid #373A53;
+  border-bottom: 1px solid #373a53;
   padding-bottom: 18px;
   padding-top: 18px;
 
@@ -33,7 +33,7 @@ const StyledFormItemTitle = styled.div`
   font-size: 14px;
   font-weight: 400;
   line-height: 17px;
-  color: #979ABE;
+  color: #979abe;
 `;
 const StyledFormItemBody = styled.div`
   margin-top: 8px;
@@ -86,7 +86,7 @@ const StyledListItem = styled.div`
   font-size: 14px;
 
   .label {
-    color: #979ABE;
+    color: #979abe;
   }
 
   .value {
@@ -127,7 +127,7 @@ const StyledFullSelect = styled.div`
   > div {
     width: 100%;
 
-    > div[type="button"] {
+    > div[type='button'] {
       width: 100%;
     }
   }
@@ -158,7 +158,7 @@ const StyledWithdrawTips = styled.div`
   }
 
   .title {
-    border-bottom: 1px solid #373A53;
+    border-bottom: 1px solid #373a53;
     font-size: 18px;
     color: rgb(151, 154, 190);
     padding: 8px 0;
@@ -169,7 +169,7 @@ const StyledWithdrawTips = styled.div`
   }
 
   .head-wd {
-    border-bottom: 1px solid #373A53;
+    border-bottom: 1px solid #373a53;
 
     .col-wd {
       color: rgb(151, 154, 190);
@@ -200,125 +200,118 @@ const DEPOSIT_POOL_ABI_MULTI = [
   {
     inputs: [
       {
-        "components": [
+        components: [
           {
-            "internalType": "address",
-            "name": "to",
-            "type": "address",
+            internalType: 'address',
+            name: 'to',
+            type: 'address'
           },
           {
-            "internalType": "uint256",
-            "name": "value",
-            "type": "uint256",
+            internalType: 'uint256',
+            name: 'value',
+            type: 'uint256'
           },
           {
-            "internalType": "bytes",
-            "name": "data",
-            "type": "bytes",
+            internalType: 'bytes',
+            name: 'data',
+            type: 'bytes'
           },
           {
-            "internalType": "uint8",
-            "name": "operation",
-            "type": "uint8",
-          },
+            internalType: 'uint8',
+            name: 'operation',
+            type: 'uint8'
+          }
         ],
-        "internalType": "struct BatchExecutor.Operation[]",
-        "name": "operations",
-        "type": "tuple[]",
-      },
+        internalType: 'struct BatchExecutor.Operation[]',
+        name: 'operations',
+        type: 'tuple[]'
+      }
     ],
-    name: "executeBatch",
+    name: 'executeBatch',
     outputs: [
       {
-        "internalType": "bytes[]",
-        "name": "",
-        "type": "bytes[]",
-      },
+        internalType: 'bytes[]',
+        name: '',
+        type: 'bytes[]'
+      }
     ],
-    stateMutability: "payable",
-    type: "function",
+    stateMutability: 'payable',
+    type: 'function'
   },
   {
     inputs: [
       {
-        name: "receiver",
-        type: "address",
-        internalType: "address",
+        name: 'receiver',
+        type: 'address',
+        internalType: 'address'
       },
       {
-        name: "sqrtPriceX96",
-        type: "uint160",
-        internalType: "uint160",
+        name: 'sqrtPriceX96',
+        type: 'uint160',
+        internalType: 'uint160'
       },
       {
-        name: "slippageLiquidity",
-        type: "uint24",
-        internalType: "uint24",
-      },
+        name: 'slippageLiquidity',
+        type: 'uint24',
+        internalType: 'uint24'
+      }
     ],
-    name: "moduleC_increaseLiquidityWithBalanceAndRefundTo",
+    name: 'moduleC_increaseLiquidityWithBalanceAndRefundTo',
     outputs: [
       {
-        name: "liquidity",
-        type: "uint128",
-        internalType: "uint128",
+        name: 'liquidity',
+        type: 'uint128',
+        internalType: 'uint128'
       },
       {
-        name: "amount0",
-        type: "uint256",
-        internalType: "uint256",
+        name: 'amount0',
+        type: 'uint256',
+        internalType: 'uint256'
       },
       {
-        name: "amount1",
-        type: "uint256",
-        internalType: "uint256",
-      },
+        name: 'amount1',
+        type: 'uint256',
+        internalType: 'uint256'
+      }
     ],
-    stateMutability: "payable",
-    type: "function",
+    stateMutability: 'payable',
+    type: 'function'
   },
   {
-    inputs: [
-      { internalType: "bytes[]", name: "data", type: "bytes[]" }
-    ],
-    name: "multicall",
-    outputs: [
-      { internalType: "bytes[]", name: "", type: "bytes[]" }
-    ],
-    stateMutability: "payable",
-    type: "function",
-  },
+    inputs: [{ internalType: 'bytes[]', name: 'data', type: 'bytes[]' }],
+    name: 'multicall',
+    outputs: [{ internalType: 'bytes[]', name: '', type: 'bytes[]' }],
+    stateMutability: 'payable',
+    type: 'function'
+  }
 ];
 const TRANSFORM_TOKEN_ABI = [
   {
     inputs: [
       {
-        name: "from",
-        type: "address",
-        internalType: "address",
+        name: 'from',
+        type: 'address',
+        internalType: 'address'
       },
       {
-        name: "to",
-        type: "address",
-        internalType: "address",
+        name: 'to',
+        type: 'address',
+        internalType: 'address'
       },
       {
-        name: "amount",
-        type: "uint256",
-        internalType: "uint256",
-      },
+        name: 'amount',
+        type: 'uint256',
+        internalType: 'uint256'
+      }
     ],
-    name: "transferFrom",
-    outputs: [
-      { internalType: "bytes", name: "returnData", type: "bytes" },
-    ],
-    stateMutability: "view",
-    type: "function",
-  },
+    name: 'transferFrom',
+    outputs: [{ internalType: 'bytes', name: 'returnData', type: 'bytes' }],
+    stateMutability: 'view',
+    type: 'function'
+  }
 ];
 
 const { parseUnits, formatUnits } = ethers.utils;
-
 
 export default memo(function Deposit(props: any) {
   const {
@@ -337,28 +330,28 @@ export default memo(function Deposit(props: any) {
     handleApprove,
     balanceList,
     queryPoolInfo,
-    strategies,
+    strategies
   } = props;
 
   const { StakeTokens } = dexConfig;
-  const actionText = "Stake";
+  const actionText = 'Stake';
 
   const [state, updateState] = useMultiState<any>({
     pending: false,
 
     //#region dex/clm
     currentEthToken: {},
-    ethAmount: "",
+    ethAmount: '',
     ethTokens: [],
     currentEthTokenBalance: 0,
-    usdAmount: "",
+    usdAmount: '',
     usdTokens: [],
     currentUsdToken: {},
     currentUsdTokenBalance: 0,
     //#endregion
 
     //#region Multipliooor
-    stakeAmount: "",
+    stakeAmount: '',
     stakeTokens: [],
     stakeToken: {},
     stakeTokenBalance: 0,
@@ -366,7 +359,7 @@ export default memo(function Deposit(props: any) {
 
     //#region clm
     currentEthPer: 50,
-    currentUsdPer: 50,
+    currentUsdPer: 50
     //#endregion
   });
 
@@ -388,22 +381,22 @@ export default memo(function Deposit(props: any) {
     stakeAmount,
     stakeTokens,
     stakeToken,
-    stakeTokenBalance,
+    stakeTokenBalance
     //#endregion
   } = state;
 
   const formatAddAction = (actionText, _amount, status, transactionHash, tokenSymbol) => {
     addAction?.({
-      type: "Staking",
+      type: 'Staking',
       action: actionText,
       token: {
-        symbol: tokenSymbol,
+        symbol: tokenSymbol
       },
       amount: _amount,
       template: props.name,
       add: false,
       status,
-      transactionHash,
+      transactionHash
     });
   };
 
@@ -419,9 +412,9 @@ export default memo(function Deposit(props: any) {
       // to
       record.agentAddress,
       // amount
-      ethers.BigNumber.from(usdAmountShown),
+      ethers.BigNumber.from(usdAmountShown)
     ];
-    return iface.encodeFunctionData("transferFrom", params);
+    return iface.encodeFunctionData('transferFrom', params);
   };
 
   const handleSubmit = () => {
@@ -432,7 +425,7 @@ export default memo(function Deposit(props: any) {
     if (record.name.toLowerCase() === strategies[2].name) {
       if (!state.ethAmount || !state.usdAmount) return;
       updateState({
-        pending: true,
+        pending: true
       });
 
       const data = queryUSDBTransform();
@@ -462,103 +455,96 @@ export default memo(function Deposit(props: any) {
           record.agentAddress,
           // Big(state.ethAmount).times(Big(10).pow(state.currentEthToken.decimals)).toNumber(),
           parseUnits(ethAmountShown, state.currentEthToken.decimals),
-          "0x",
-          0,
+          '0x',
+          0
         ],
-        [
-          state.currentUsdToken.address,
-          0,
-          data,
-          0,
-        ],
-        [
-          record.agentAddress,
-          0,
-          "0x7bb485dc",
-          0,
-        ],
+        [state.currentUsdToken.address, 0, data, 0],
+        [record.agentAddress, 0, '0x7bb485dc', 0]
       ];
 
       const approveList = [
-        handleApprove(rootAgent.agentAddress, state.currentEthToken.address, state.ethAmount, state.currentEthToken.decimals),
-        handleApprove(rootAgent.agentAddress, state.currentUsdToken.address, state.usdAmount, state.currentUsdToken.decimals),
+        handleApprove(
+          rootAgent.agentAddress,
+          state.currentEthToken.address,
+          state.ethAmount,
+          state.currentEthToken.decimals
+        ),
+        handleApprove(
+          rootAgent.agentAddress,
+          state.currentUsdToken.address,
+          state.usdAmount,
+          state.currentUsdToken.decimals
+        )
       ];
       Promise.all(approveList).then((approveRes) => {
         if (approveRes.some((approved) => !approved)) {
           updateState({
-            pending: false,
+            pending: false
           });
           return;
         }
 
-        const contract = new ethers.Contract(
-          rootAgent.agentAddress,
-          DEPOSIT_POOL_ABI_MULTI,
-          provider.getSigner(),
-        );
+        const contract = new ethers.Contract(rootAgent.agentAddress, DEPOSIT_POOL_ABI_MULTI, provider.getSigner());
 
         const getTx = (gas) => {
           const contractOption = {
-            gasLimit: gas || 4000000,
+            gasLimit: gas || 4000000
           };
           if (['ETH'].includes(state.currentEthToken.value)) {
             contractOption.value = parseUnits(ethAmountShown, state.currentEthToken.decimals || 18);
           }
-          contract.executeBatch(params, contractOption)
+          contract
+            .executeBatch(params, contractOption)
             .then((tx) => {
               tx.wait()
                 .then((res) => {
                   const { status, transactionHash } = res;
                   updateState({
-                    pending: false,
+                    pending: false
                   });
-                  if (status !== 1) throw new Error("");
+                  if (status !== 1) throw new Error('');
                   onSuccess();
                   formatAddAction(actionText, ethAmountShown, status, transactionHash, state.currentEthToken.value);
                   toast?.success({
                     title: `${actionText} Successfully!`,
                     text: `${actionText} ${Big(state.ethAmount).toFixed(2)} ${state.currentEthToken.value}`,
                     tx: transactionHash,
-                    chainId,
+                    chainId
                   });
                 })
                 .catch((err) => {
-                  console.log("tx error: ", err);
+                  console.log('tx error: ', err);
                   updateState({
-                    pending: false,
+                    pending: false
                   });
                   toast?.fail({
                     title: `${actionText} Failed!`,
-                    text: err?.message?.includes("user rejected transaction")
-                      ? "User rejected transaction"
-                      : ``,
+                    text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                   });
                 });
             })
             .catch((err) => {
-              console.log("contract fn error: ", err);
+              console.log('contract fn error: ', err);
               updateState({
-                pending: false,
+                pending: false
               });
               toast?.fail({
                 title: `${actionText} Failed!`,
-                text: err?.message?.includes("user rejected transaction")
-                  ? "User rejected transaction"
-                  : ``,
+                text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
               });
             });
         };
 
         const estimateGas = () => {
-          contract.estimateGas.executeBatch(
-            params,
-            { value: parseUnits(ethAmountShown, state.currentEthToken.decimals || 18) },
-          ).then((gas) => {
-            getTx(gas);
-          }).catch((err) => {
-            console.log("get gas failed: ", err);
-            getTx();
-          });
+          contract.estimateGas
+            .executeBatch(params, { value: parseUnits(ethAmountShown, state.currentEthToken.decimals || 18) })
+            .then((gas) => {
+              getTx(gas);
+            })
+            .catch((err) => {
+              console.log('get gas failed: ', err);
+              getTx();
+            });
         };
 
         estimateGas();
@@ -568,7 +554,7 @@ export default memo(function Deposit(props: any) {
     if (record.name.toLowerCase() === strategies[3].name) {
       if (!state.stakeAmount || !rootAgent.agentAddress) return;
       updateState({
-        pending: true,
+        pending: true
       });
 
       // const params = [
@@ -586,86 +572,69 @@ export default memo(function Deposit(props: any) {
       //   },
       // ];
       const params = [
-        [
-          record.agentAddress,
-          parseUnits(stakeAmountShown, state.stakeToken.decimals),
-          "0x",
-          0,
-        ],
-        [
-          record.agentAddress,
-          0,
-          "0x7bb485dc",
-          0,
-        ],
+        [record.agentAddress, parseUnits(stakeAmountShown, state.stakeToken.decimals), '0x', 0],
+        [record.agentAddress, 0, '0x7bb485dc', 0]
       ];
 
-      const contract = new ethers.Contract(
-        rootAgent.agentAddress,
-        DEPOSIT_POOL_ABI_MULTI,
-        provider.getSigner(),
-      );
+      const contract = new ethers.Contract(rootAgent.agentAddress, DEPOSIT_POOL_ABI_MULTI, provider.getSigner());
 
       const getTx = (gas) => {
         const contractOption = {
           gasLimit: gas || 4000000,
-          value: parseUnits(stakeAmountShown, state.stakeToken.decimals || 18),
+          value: parseUnits(stakeAmountShown, state.stakeToken.decimals || 18)
         };
-        contract.executeBatch(params, contractOption)
+        contract
+          .executeBatch(params, contractOption)
           .then((tx) => {
             tx.wait()
               .then((res) => {
                 const { status, transactionHash } = res;
                 updateState({
-                  pending: false,
+                  pending: false
                 });
-                if (status !== 1) throw new Error("");
+                if (status !== 1) throw new Error('');
                 onSuccess();
                 formatAddAction(actionText, stakeAmountShown, status, transactionHash, state.stakeToken.value);
                 toast?.success({
                   title: `${actionText} Successfully!`,
                   text: `${actionText} ${Big(state.stakeAmount).toFixed(2)} ${state.stakeToken.value}`,
                   tx: transactionHash,
-                  chainId,
+                  chainId
                 });
               })
               .catch((err) => {
-                console.log("tx error: ", err);
+                console.log('tx error: ', err);
                 updateState({
-                  pending: false,
+                  pending: false
                 });
                 toast?.fail({
                   title: `${actionText} Failed!`,
-                  text: err?.message?.includes("user rejected transaction")
-                    ? "User rejected transaction"
-                    : ``,
+                  text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                 });
               });
           })
           .catch((err) => {
-            console.log("contract fn error: ", err);
+            console.log('contract fn error: ', err);
             updateState({
-              pending: false,
+              pending: false
             });
             toast?.fail({
               title: `${actionText} Failed!`,
-              text: err?.message?.includes("user rejected transaction")
-                ? "User rejected transaction"
-                : ``,
+              text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
             });
           });
       };
 
       const estimateGas = () => {
-        contract.estimateGas.executeBatch(
-          params,
-          { value: parseUnits(stakeAmountShown, state.stakeToken.decimals || 18) },
-        ).then((gas) => {
-          getTx(gas);
-        }).catch((err) => {
-          console.log("get gas failed: ", err);
-          getTx();
-        });
+        contract.estimateGas
+          .executeBatch(params, { value: parseUnits(stakeAmountShown, state.stakeToken.decimals || 18) })
+          .then((gas) => {
+            getTx(gas);
+          })
+          .catch((err) => {
+            console.log('get gas failed: ', err);
+            getTx();
+          });
       };
 
       estimateGas();
@@ -674,7 +643,7 @@ export default memo(function Deposit(props: any) {
     if (record.name.toLowerCase() === strategies[1].name) {
       if (!state.ethAmount || !state.usdAmount) return;
       updateState({
-        pending: true,
+        pending: true
       });
 
       const data = queryUSDBTransform();
@@ -682,11 +651,11 @@ export default memo(function Deposit(props: any) {
       queryPoolInfo({ fee: currentStrategy.meta.feeTierList[2] }).then((poolRes) => {
         if (!poolRes) {
           updateState({
-            pending: false,
+            pending: false
           });
           toast?.fail({
             title: `${actionText} Failed!`,
-            text: 'Query pool information failed!',
+            text: 'Query pool information failed!'
           });
           return;
         }
@@ -712,12 +681,12 @@ export default memo(function Deposit(props: any) {
             state.currentUsdToken.address,
             '115792089237316195423570985008687907853269984665640564039457.584007913129639935',
             state.currentUsdToken.decimals
-          ),
+          )
         ];
         Promise.all(approveList).then((approveRes) => {
           if (approveRes.some((approved) => !approved)) {
             updateState({
-              pending: false,
+              pending: false
             });
             return;
           }
@@ -732,16 +701,12 @@ export default memo(function Deposit(props: any) {
               }
             ]
           ];
-          const moduleCParams = [
-            account,
-            sqrtPriceX96,
-            1000000,
-          ];
+          const moduleCParams = [account, sqrtPriceX96, 1000000];
 
           const iface = new ethers.utils.Interface(DEPOSIT_POOL_ABI_MULTI);
           const multicallParams = [
-            iface.encodeFunctionData("executeBatch", executeBatchParams),
-            iface.encodeFunctionData("moduleC_increaseLiquidityWithBalanceAndRefundTo", moduleCParams)
+            iface.encodeFunctionData('executeBatch', executeBatchParams),
+            iface.encodeFunctionData('moduleC_increaseLiquidityWithBalanceAndRefundTo', moduleCParams)
           ];
 
           const multicallContract = new ethers.Contract(
@@ -761,46 +726,44 @@ export default memo(function Deposit(props: any) {
               // .populateTransaction
               .multicall(multicallParams, {
                 ...multicallOptions,
-                gasLimit: _gas || 5000000,
+                gasLimit: _gas || 5000000
               })
               .then((tx) => {
-                tx.wait().then((res) => {
-                  const { status, transactionHash } = res;
-                  updateState({
-                    pending: false,
+                tx.wait()
+                  .then((res) => {
+                    const { status, transactionHash } = res;
+                    updateState({
+                      pending: false
+                    });
+                    if (status !== 1) throw new Error('');
+                    onSuccess();
+                    formatAddAction(actionText, ethAmountShown, status, transactionHash, state.currentEthToken.value);
+                    toast?.success({
+                      title: `${actionText} Successfully!`,
+                      text: `${actionText} ${Big(state.ethAmount).toFixed(2)} ${state.currentEthToken.value}`,
+                      tx: transactionHash,
+                      chainId
+                    });
+                  })
+                  .catch((err) => {
+                    console.log('Concentrated Liquidity Manager deposit faild when wait, ', err);
+                    updateState({
+                      pending: false
+                    });
+                    toast?.fail({
+                      title: `${actionText} Failed!`,
+                      text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
+                    });
                   });
-                  if (status !== 1) throw new Error("");
-                  onSuccess();
-                  formatAddAction(actionText, ethAmountShown, status, transactionHash, state.currentEthToken.value);
-                  toast?.success({
-                    title: `${actionText} Successfully!`,
-                    text: `${actionText} ${Big(state.ethAmount).toFixed(2)} ${state.currentEthToken.value}`,
-                    tx: transactionHash,
-                    chainId,
-                  });
-                }).catch((err) => {
-                  console.log('Concentrated Liquidity Manager deposit faild when wait, ', err);
-                  updateState({
-                    pending: false,
-                  });
-                  toast?.fail({
-                    title: `${actionText} Failed!`,
-                    text: err?.message?.includes("user rejected transaction")
-                      ? "User rejected transaction"
-                      : ``,
-                  });
-                });
               })
               .catch((err) => {
                 console.log('Concentrated Liquidity Manager deposit faild when multicall, ', err);
                 updateState({
-                  pending: false,
+                  pending: false
                 });
                 toast?.fail({
                   title: `${actionText} Failed!`,
-                  text: err?.message?.includes("user rejected transaction")
-                    ? "User rejected transaction"
-                    : ``,
+                  text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : ``
                 });
               });
           };
@@ -825,12 +788,12 @@ export default memo(function Deposit(props: any) {
   //#region dex/clm
   const handleUsdAmount = (ev) => {
     if (isNaN(Number(ev.target.value))) return;
-    let amount = ev.target.value.replace(/\s+/g, "");
+    let amount = ev.target.value.replace(/\s+/g, '');
 
     if (!amount) {
       updateState({
-        ethAmount: "",
-        usdAmount: "",
+        ethAmount: '',
+        usdAmount: ''
       });
       return;
     }
@@ -838,17 +801,29 @@ export default memo(function Deposit(props: any) {
     if (Big(amount || 0).gt(Big(state.currentUsdTokenBalance || 0))) {
       amount = Big(state.currentUsdTokenBalance || 0).toFixed(4, 0);
     }
-    let calcEthAmount = Big(amount).times(prices[state.currentUsdToken.value]).div(prices[state.currentEthToken.value]).toFixed(state.currentEthToken.decimals, 0);
+    let calcEthAmount = Big(amount)
+      .times(prices[state.currentUsdToken.value])
+      .div(prices[state.currentEthToken.value])
+      .toFixed(state.currentEthToken.decimals, 0);
     if (record.name.toLowerCase() === strategies[1].name) {
       if (Big(state.currentUsdPer).lte(0)) {
-        calcEthAmount = Big(amount).times(prices[state.currentUsdToken.value]).times(Big(state.currentEthPer).div(100)).div(prices[state.currentEthToken.value]).toFixed(state.currentEthToken.decimals);
+        calcEthAmount = Big(amount)
+          .times(prices[state.currentUsdToken.value])
+          .times(Big(state.currentEthPer).div(100))
+          .div(prices[state.currentEthToken.value])
+          .toFixed(state.currentEthToken.decimals);
       } else {
-        calcEthAmount = Big(amount).times(prices[state.currentUsdToken.value]).div(Big(state.currentUsdPer).div(100)).times(Big(state.currentEthPer).div(100)).div(prices[state.currentEthToken.value]).toFixed(state.currentEthToken.decimals);
+        calcEthAmount = Big(amount)
+          .times(prices[state.currentUsdToken.value])
+          .div(Big(state.currentUsdPer).div(100))
+          .times(Big(state.currentEthPer).div(100))
+          .div(prices[state.currentEthToken.value])
+          .toFixed(state.currentEthToken.decimals);
       }
     }
     updateState({
       usdAmount: amount,
-      ethAmount: calcEthAmount,
+      ethAmount: calcEthAmount
     });
   };
 
@@ -856,12 +831,12 @@ export default memo(function Deposit(props: any) {
     if (option.value === state.currentUsdToken.value) return;
     updateState({
       currentUsdToken: option,
-      usdAmount: "",
-      ethAmount: "",
+      usdAmount: '',
+      ethAmount: ''
     });
     getTokenBalance(option).then((value) => {
       updateState({
-        currentUsdTokenBalance: value,
+        currentUsdTokenBalance: value
       });
     });
   };
@@ -869,23 +844,31 @@ export default memo(function Deposit(props: any) {
   const handleUsdBalance = (value) => {
     // auto enter eth amount
     const updates = {
-      usdAmount: Big(value).toFixed(4, 0),
+      usdAmount: Big(value).toFixed(4, 0)
     };
-    updates.ethAmount = Big(updates.usdAmount).times(prices[state.currentUsdToken.value]).div(prices[state.currentEthToken.value]).toFixed(state.currentEthToken.decimals, 0);
+    updates.ethAmount = Big(updates.usdAmount)
+      .times(prices[state.currentUsdToken.value])
+      .div(prices[state.currentEthToken.value])
+      .toFixed(state.currentEthToken.decimals, 0);
     if (record.name.toLowerCase() === strategies[1].name) {
-      updates.ethAmount = Big(updates.usdAmount).times(prices[state.currentUsdToken.value]).div(Big(state.currentUsdPer).div(100)).times(Big(state.currentEthPer).div(100)).div(prices[state.currentEthToken.value]).toFixed(state.currentEthToken.decimals);
+      updates.ethAmount = Big(updates.usdAmount)
+        .times(prices[state.currentUsdToken.value])
+        .div(Big(state.currentUsdPer).div(100))
+        .times(Big(state.currentEthPer).div(100))
+        .div(prices[state.currentEthToken.value])
+        .toFixed(state.currentEthToken.decimals);
     }
     updateState(updates);
   };
 
   const handleEthAmount = (ev) => {
     if (isNaN(Number(ev.target.value))) return;
-    let amount = ev.target.value.replace(/\s+/g, "");
+    let amount = ev.target.value.replace(/\s+/g, '');
 
     if (!amount) {
       updateState({
-        ethAmount: "",
-        usdAmount: "",
+        ethAmount: '',
+        usdAmount: ''
       });
       return;
     }
@@ -893,17 +876,29 @@ export default memo(function Deposit(props: any) {
     if (Big(amount || 0).gt(Big(state.currentEthTokenBalance || 0))) {
       amount = Big(state.currentEthTokenBalance || 0).toFixed(4, 0);
     }
-    let calcUsdAmount = Big(amount).times(prices[state.currentEthToken.value]).div(prices[state.currentUsdToken.value]).toFixed(state.currentUsdToken.decimals, 0);
+    let calcUsdAmount = Big(amount)
+      .times(prices[state.currentEthToken.value])
+      .div(prices[state.currentUsdToken.value])
+      .toFixed(state.currentUsdToken.decimals, 0);
     if (record.name.toLowerCase() === strategies[1].name) {
       if (Big(state.currentEthPer).lte(0)) {
-        calcUsdAmount = Big(amount).times(prices[state.currentEthToken.value]).times(Big(state.currentUsdPer).div(100)).div(prices[state.currentUsdToken.value]).toFixed(state.currentUsdToken.decimals, Big.roundDown);
+        calcUsdAmount = Big(amount)
+          .times(prices[state.currentEthToken.value])
+          .times(Big(state.currentUsdPer).div(100))
+          .div(prices[state.currentUsdToken.value])
+          .toFixed(state.currentUsdToken.decimals, Big.roundDown);
       } else {
-        calcUsdAmount = Big(amount).times(prices[state.currentEthToken.value]).div(Big(state.currentEthPer).div(100)).times(Big(state.currentUsdPer).div(100)).div(prices[state.currentUsdToken.value]).toFixed(state.currentUsdToken.decimals, Big.roundDown);
+        calcUsdAmount = Big(amount)
+          .times(prices[state.currentEthToken.value])
+          .div(Big(state.currentEthPer).div(100))
+          .times(Big(state.currentUsdPer).div(100))
+          .div(prices[state.currentUsdToken.value])
+          .toFixed(state.currentUsdToken.decimals, Big.roundDown);
       }
     }
     updateState({
       ethAmount: amount,
-      usdAmount: calcUsdAmount,
+      usdAmount: calcUsdAmount
     });
   };
 
@@ -911,11 +906,11 @@ export default memo(function Deposit(props: any) {
     if (option.value === state.currentEthToken.value) return;
     updateState({
       currentEthToken: option,
-      ethAmount: "",
+      ethAmount: ''
     });
     getTokenBalance(option).then((value) => {
       updateState({
-        currentEthTokenBalance: value,
+        currentEthTokenBalance: value
       });
     });
   };
@@ -923,11 +918,19 @@ export default memo(function Deposit(props: any) {
   const handleEthBalance = (value) => {
     // auto enter usd amount
     const updates = {
-      ethAmount: Big(value).toFixed(4, 0),
+      ethAmount: Big(value).toFixed(4, 0)
     };
-    updates.usdAmount = Big(updates.ethAmount).times(prices[state.currentEthToken.value]).div(prices[state.currentUsdToken.value]).toFixed(state.currentUsdToken.decimals, 0);
+    updates.usdAmount = Big(updates.ethAmount)
+      .times(prices[state.currentEthToken.value])
+      .div(prices[state.currentUsdToken.value])
+      .toFixed(state.currentUsdToken.decimals, 0);
     if (record.name.toLowerCase() === strategies[1].name) {
-      updates.usdAmount = Big(updates.ethAmount).times(prices[state.currentEthToken.value]).div(Big(state.currentEthPer).div(100)).times(Big(state.currentUsdPer).div(100)).div(prices[state.currentUsdToken.value]).toFixed(state.currentUsdToken.decimals, Big.roundDown);
+      updates.usdAmount = Big(updates.ethAmount)
+        .times(prices[state.currentEthToken.value])
+        .div(Big(state.currentEthPer).div(100))
+        .times(Big(state.currentUsdPer).div(100))
+        .div(prices[state.currentUsdToken.value])
+        .toFixed(state.currentUsdToken.decimals, Big.roundDown);
     }
     updateState(updates);
   };
@@ -936,13 +939,13 @@ export default memo(function Deposit(props: any) {
   //#region Multipliooor
   const handleAmount = (ev) => {
     if (isNaN(Number(ev.target.value))) return;
-    let amount = ev.target.value.replace(/\s+/g, "");
+    let amount = ev.target.value.replace(/\s+/g, '');
 
     if (Big(amount || 0).gt(Big(state.stakeTokenBalance || 0))) {
       amount = Big(state.stakeTokenBalance || 0).toFixed(4, 0);
     }
     updateState({
-      stakeAmount: amount,
+      stakeAmount: amount
     });
   };
 
@@ -950,32 +953,28 @@ export default memo(function Deposit(props: any) {
     if (option.value === state.stakeToken.value) return;
     updateState({
       stakeToken: option,
-      stakeAmount: "",
+      stakeAmount: ''
     });
     const currToken = StakeTokens.find((it) => it.symbol === option.value);
-    currToken && getTokenBalance(currToken).then((value) => {
-      updateState({
-        stakeTokenBalance: value,
+    currToken &&
+      getTokenBalance(currToken).then((value) => {
+        updateState({
+          stakeTokenBalance: value
+        });
       });
-    });
   };
 
   const handleBalance = (value) => {
     updateState({
-      stakeAmount: Big(value).toFixed(4, 0),
+      stakeAmount: Big(value).toFixed(4, 0)
     });
   };
   //#endregion
 
   const renderButton = (disabled) => {
     return (
-      <StyledButton
-        disabled={pending || disabled}
-        onClick={handleSubmit}
-      >
-        {pending ? (
-          <Loading size={16} />
-        ) : "DEPOSIT MORE ETH"}
+      <StyledButton disabled={pending || disabled} onClick={handleSubmit}>
+        {pending ? <Loading size={16} /> : 'DEPOSIT MORE ETH'}
       </StyledButton>
     );
   };
@@ -989,20 +988,16 @@ export default memo(function Deposit(props: any) {
               If the remaining funds are low, deposit more funds to ensure the Blast Multiplier tasks are completed.
             </StyledTips>
             <StyledFormItem>
-              <StyledFormItemTitle>
-                Watch for our Discord announcements!
-              </StyledFormItemTitle>
+              <StyledFormItemTitle>Watch for our Discord announcements!</StyledFormItemTitle>
               <StyledFormItemBody>
-                <StyledInput
-                  type="text"
-                  placeholder="0"
-                  value={stakeAmount}
-                  onChange={handleAmount}
-                />
+                <StyledInput type="text" placeholder="0" value={stakeAmount} onChange={handleAmount} />
               </StyledFormItemBody>
               <StyledFormItemFoot>
                 <div className="prices">
-                  ${Big(stakeAmount || 0).times(Big(prices[stakeToken.value] || 1)).toFixed(2, 0)}
+                  $
+                  {Big(stakeAmount || 0)
+                    .times(Big(prices[stakeToken.value] || 1))
+                    .toFixed(2, 0)}
                 </div>
                 <div className="balance">
                   Balance:
@@ -1011,7 +1006,7 @@ export default memo(function Deposit(props: any) {
                       value: stakeTokenBalance,
                       digit: 4,
                       onClick: handleBalance,
-                      symbol: stakeToken.value,
+                      symbol: stakeToken.value
                     }}
                   />
                 </div>
@@ -1026,35 +1021,27 @@ export default memo(function Deposit(props: any) {
       return (
         <>
           <StyledContent>
-            {
-              record.name.toLowerCase() === strategies[1].name ? (
-                <>
-                  <StyledTips>
-                    Due to price movement, your LP position is {Big(state.currentEthPer).toFixed(0)}% : {Big(state.currentUsdPer).toFixed(0)}%, WETH :
-                    USDB.
-                  </StyledTips>
-                  <StyledTips>
-                    Deposit more below at the same ratio.
-                  </StyledTips>
-                </>
-              ) : (
+            {record.name.toLowerCase() === strategies[1].name ? (
+              <>
                 <StyledTips>
-                  Add to your position
+                  Due to price movement, your LP position is {Big(state.currentEthPer).toFixed(0)}% :{' '}
+                  {Big(state.currentUsdPer).toFixed(0)}%, WETH : USDB.
                 </StyledTips>
-              )
-            }
+                <StyledTips>Deposit more below at the same ratio.</StyledTips>
+              </>
+            ) : (
+              <StyledTips>Add to your position</StyledTips>
+            )}
             <StyledFormItem>
               <StyledFormItemBody>
-                <StyledInput
-                  type="text"
-                  placeholder="0"
-                  value={ethAmount}
-                  onChange={handleEthAmount}
-                />
+                <StyledInput type="text" placeholder="0" value={ethAmount} onChange={handleEthAmount} />
               </StyledFormItemBody>
               <StyledFormItemFoot>
                 <div className="prices">
-                  ${Big(ethAmount || 0).times(Big(prices[currentEthToken.value] || 1)).toFixed(2, 0)}
+                  $
+                  {Big(ethAmount || 0)
+                    .times(Big(prices[currentEthToken.value] || 1))
+                    .toFixed(2, 0)}
                 </div>
                 <div className="balance">
                   Balance:
@@ -1063,23 +1050,20 @@ export default memo(function Deposit(props: any) {
                       value: currentEthTokenBalance,
                       digit: 5,
                       onClick: handleEthBalance,
-                      symbol: currentEthToken.value,
+                      symbol: currentEthToken.value
                     }}
                   />
-
                 </div>
               </StyledFormItemFoot>
               <StyledFormItemBody>
-                <StyledInput
-                  type="text"
-                  placeholder="0"
-                  value={usdAmount}
-                  onChange={handleUsdAmount}
-                />
+                <StyledInput type="text" placeholder="0" value={usdAmount} onChange={handleUsdAmount} />
               </StyledFormItemBody>
               <StyledFormItemFoot>
                 <div className="prices">
-                  ${Big(usdAmount || 0).times(Big(prices[currentUsdToken.value] || 1)).toFixed(2, 0)}
+                  $
+                  {Big(usdAmount || 0)
+                    .times(Big(prices[currentUsdToken.value] || 1))
+                    .toFixed(2, 0)}
                 </div>
                 <div className="balance">
                   Balance:
@@ -1088,7 +1072,7 @@ export default memo(function Deposit(props: any) {
                       value: currentUsdTokenBalance,
                       digit: 5,
                       onClick: handleUsdBalance,
-                      symbol: currentUsdToken.value,
+                      symbol: currentUsdToken.value
                     }}
                   />
                 </div>
@@ -1107,15 +1091,15 @@ export default memo(function Deposit(props: any) {
     if ([strategies[2].name, strategies[1].name].includes(record.name.toLowerCase())) {
       const _ethTokens = [];
       const _usdTokens = [];
-      const EthStakeTokens = StakeTokens.filter((it) => ["ETH", "WETH"].includes(it.symbol));
-      const UsdStakeTokens = StakeTokens.filter((it) => ["USDB"].includes(it.symbol));
+      const EthStakeTokens = StakeTokens.filter((it) => ['ETH', 'WETH'].includes(it.symbol));
+      const UsdStakeTokens = StakeTokens.filter((it) => ['USDB'].includes(it.symbol));
       EthStakeTokens.forEach((it) => {
         _ethTokens.push({
           ...it,
           text: it.symbol,
           value: it.symbol,
           icons: [it.icon],
-          address: it.address === "native" ? "0x0000000000000000000000000000000000000000" : it.address,
+          address: it.address === 'native' ? '0x0000000000000000000000000000000000000000' : it.address
         });
       });
       UsdStakeTokens.forEach((it) => {
@@ -1123,23 +1107,23 @@ export default memo(function Deposit(props: any) {
           ...it,
           text: it.symbol,
           value: it.symbol,
-          icons: [it.icon],
+          icons: [it.icon]
         });
       });
       updateState({
         ethTokens: _ethTokens,
         currentEthToken: _ethTokens[0],
         usdTokens: _usdTokens,
-        currentUsdToken: _usdTokens[0],
+        currentUsdToken: _usdTokens[0]
       });
       getTokenBalance(EthStakeTokens[0]).then((value) => {
         updateState({
-          currentEthTokenBalance: value,
+          currentEthTokenBalance: value
         });
       });
       getTokenBalance(UsdStakeTokens[0]).then((value) => {
         updateState({
-          currentUsdTokenBalance: value,
+          currentUsdTokenBalance: value
         });
       });
     }
@@ -1148,22 +1132,23 @@ export default memo(function Deposit(props: any) {
     //#region Multipliooor
     if (record.name.toLowerCase() === strategies[3].name) {
       const _stakeTokens = [];
-      const eth = StakeTokens.find((it) => it.symbol === "ETH");
-      eth && _stakeTokens.push({
-        ...eth,
-        text: eth.symbol,
-        value: eth.symbol,
-        icons: [eth.icon],
-        address: "0x0000000000000000000000000000000000000000",
-      });
+      const eth = StakeTokens.find((it) => it.symbol === 'ETH');
+      eth &&
+        _stakeTokens.push({
+          ...eth,
+          text: eth.symbol,
+          value: eth.symbol,
+          icons: [eth.icon],
+          address: '0x0000000000000000000000000000000000000000'
+        });
       updateState({
         stakeMode: currentStrategy.meta.modeList[0],
         stakeTokens: _stakeTokens,
-        stakeToken: _stakeTokens[0] || {},
+        stakeToken: _stakeTokens[0] || {}
       });
       getTokenBalance(StakeTokens[0]).then((value) => {
         updateState({
-          stakeTokenBalance: value,
+          stakeTokenBalance: value
         });
       });
     }
@@ -1174,15 +1159,15 @@ export default memo(function Deposit(props: any) {
     //#region 'Concentrated Liquidity Manager'
     if (record.name.toLowerCase() === strategies[1].name) {
       try {
-        const weth = balanceList.find((it) => ["WETH", "ETH"].includes(it.symbol));
-        const usdb = balanceList.find((it) => it.symbol === "USDB");
+        const weth = balanceList.find((it) => ['WETH', 'ETH'].includes(it.symbol));
+        const usdb = balanceList.find((it) => it.symbol === 'USDB');
         const wethVal = Big(weth.balance).times(prices[weth.symbol]);
         const usdbVal = Big(usdb.balance).times(prices[usdb.symbol]);
         const total = wethVal.plus(usdbVal);
         if (total.lte(0)) {
           updateState({
             currentEthPer: 50,
-            currentUsdPer: 50,
+            currentUsdPer: 50
           });
           return;
         }
@@ -1190,7 +1175,7 @@ export default memo(function Deposit(props: any) {
         const usdbPer = usdbVal.div(total).times(100).toString();
         updateState({
           currentEthPer: wethPer,
-          currentUsdPer: usdbPer,
+          currentUsdPer: usdbPer
         });
       } catch (err) {
         console.log(err);
@@ -1199,9 +1184,5 @@ export default memo(function Deposit(props: any) {
     //#endregion
   }, [balanceList, prices]);
 
-  return (
-    <StyledContainer>
-      {renderDeposit()}
-    </StyledContainer>
-  );
-})
+  return <StyledContainer>{renderDeposit()}</StyledContainer>;
+});

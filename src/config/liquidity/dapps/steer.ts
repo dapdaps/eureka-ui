@@ -1,6 +1,6 @@
 const basic = {
-  name: 'Steer',
-  icon: 'https://s3.amazonaws.com/dapdap.prod/images/154-steerfinance.png',
+  name: 'steer',
+  icon: 'https://s3.amazonaws.com/dapdap.main/images/154-steerfinance.png',
   dappSrc: 'bluebiu.near/widget/Liquidity.STEER',
   amountOutFn: 'bluebiu.near/widget/Liquidity.STEER',
   ICON_VAULT_MAP: {
@@ -221,6 +221,32 @@ const networks = {
     ammName: 'Thruster',
     ammImage: '	https://app.steer.finance/icons/thruster.svg',
     pairs: [
+      {
+        id: 'W USDB-WETH',
+        strategy: 'Dynamic',
+        strategy2: 'Wide',
+        token0: 'USDB',
+        token1: 'WETH',
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0xcd03572e7cfb94996beebaa539234ce5c23ae1d6',
+        ammName: 'Sushi',
+        ammImage:
+          'https://app.steer.finance/_next/image?url=https%3A%2F%2Fsteer.finance%2Fwp-content%2Fuploads%2F2023%2F05%2Fsushiswap-sushi-logo.png&w=256&q=75'
+      },
+      {
+        id: 'W USDB-axlUSDC',
+        strategy: 'Dynamic',
+        strategy2: 'Wide',
+        token0: 'USDB',
+        token1: 'axlUSDC',
+        decimals0: 18,
+        decimals1: 18,
+        poolAddress: '0xbbeb0f9a75705f44e7026ec79727cc39581feeb7',
+        ammName: 'Sushi',
+        ammImage:
+          'https://app.steer.finance/_next/image?url=https%3A%2F%2Fsteer.finance%2Fwp-content%2Fuploads%2F2023%2F05%2Fsushiswap-sushi-logo.png&w=256&q=75'
+      },
       {
         id: 'W2 USDB-WETH',
         strategy: 'Dynamic',

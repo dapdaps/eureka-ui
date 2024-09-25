@@ -7,8 +7,8 @@ const UNITROLLER_ABI = [
     name: 'claimComp',
     outputs: [],
     stateMutability: 'nonpayable',
-    type: 'function',
-  },
+    type: 'function'
+  }
 ];
 
 const MendiFinanceClaim = (props: any) => {
@@ -17,11 +17,7 @@ const MendiFinanceClaim = (props: any) => {
   useEffect(() => {
     if (!loading || !dapp.unitrollerAddress) return;
 
-    const CollateralContract = new ethers.Contract(
-      dapp.unitrollerAddress,
-      UNITROLLER_ABI,
-      provider.getSigner(),
-    );
+    const CollateralContract = new ethers.Contract(dapp.unitrollerAddress, UNITROLLER_ABI, provider.getSigner());
     CollateralContract.claimComp(account)
       .then((tx: any) => {
         tx.wait().then((res: any) => {

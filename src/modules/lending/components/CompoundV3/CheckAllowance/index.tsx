@@ -40,9 +40,7 @@ const CompoundV3CheckAllowance = (props: Props) => {
       provider.getSigner()
     );
     TokenContract.allowance(account, spender).then((allowanceRaw: any) => {
-      cb(
-        !allowanceRaw.lt(Big(amount).mul(Big(10).pow(token.decimals)).toFixed(0))
-      );
+      cb(!allowanceRaw.lt(Big(amount).mul(Big(10).pow(token.decimals)).toFixed(0)));
     });
   };
 
@@ -82,10 +80,7 @@ const CompoundV3CheckAllowance = (props: Props) => {
     );
     TokenContract.approve(
       spender,
-      ethers.utils.parseUnits(
-        Big(amount).toFixed(token.decimals).toString(),
-        token.decimals
-      )
+      ethers.utils.parseUnits(Big(amount).toFixed(token.decimals).toString(), token.decimals)
     )
       .then((tx: any) => {
         tx.wait().then((res: any) => {
@@ -107,9 +102,7 @@ const CompoundV3CheckAllowance = (props: Props) => {
         toast?.dismiss(toastId);
         toast?.fail({
           title: 'Approve Failed!',
-          text: err?.message?.includes('user rejected transaction')
-            ? 'User rejected transaction'
-            : null
+          text: err?.message?.includes('user rejected transaction') ? 'User rejected transaction' : null
         });
       });
   };

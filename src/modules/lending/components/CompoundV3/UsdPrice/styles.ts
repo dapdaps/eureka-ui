@@ -4,7 +4,7 @@ export const StyledBox = styled.div`
   display: flex;
 `;
 export const StyledPrice = styled.div`
-  color: #FFF;
+  color: #fff;
   font-family: Gantari;
   font-size: 14px;
   font-style: normal;
