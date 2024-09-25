@@ -1450,14 +1450,14 @@ const AaveV3Data = (props: any) => {
     // if (dexConfig.name !== 'ZeroLend') return;
 
     function getRewardsData() {
-      const aTokenAddresss = state.assetsToSupply?.map((item: any) => item.aTokenAddress);
+      const aTokenAddresss = state.assetsToSupply
+        .filter((asset: any) => asset.variableDebtTokenAddress)
+        ?.map((item: any) => item.aTokenAddress);
       const calls = aTokenAddresss?.map((addr: any) => ({
         address: config.incentivesProxy,
         name: 'getRewardsData',
         params: [addr, config.rewardAddress]
       }));
-      console.log('zeroLend-data--', calls);
-
       multicall({
         abi: [
           {
@@ -1482,8 +1482,6 @@ const AaveV3Data = (props: any) => {
         provider
       })
         .then((res: any) => {
-          console.log('--------------------fetchRewardsData_res', res);
-
           onLoad({
             emissionPerSeconds: res
           });
@@ -1503,7 +1501,6 @@ const AaveV3Data = (props: any) => {
         ])
         .flat();
       const addrs = [...new Set(arr)];
-
       const rewardsProvider = new ethers.Contract(
         config.incentivesProxy,
         [

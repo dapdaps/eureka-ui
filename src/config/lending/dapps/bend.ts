@@ -19,9 +19,9 @@ const basic = {
 
 const rewardToken = [
   {
-    address: '',
+    address: '0xbDa130737BDd9618301681329bF2e46A016ff9Ad',
     symbol: 'BGT',
-    name: 'BGT',
+    name: '$BGT',
     icon: '',
     unclaimed: ''
   }

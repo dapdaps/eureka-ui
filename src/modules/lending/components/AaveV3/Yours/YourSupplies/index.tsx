@@ -1,3 +1,4 @@
+import Big from 'big.js';
 import { styled } from 'styled-components';
 
 import Tooltip from '@/components/TitleTooltip';
@@ -75,10 +76,12 @@ const YourSupplies = (props: any) => {
   });
 
   const WithdrawButton = ({ data }: any) => {
+    const needDisable = dexConfig.name === 'Bend' && data.symbol != 'HONEY' && Big(yourTotalBorrow).gt(0);
     return (
       <PrimaryButton
         config={config}
         theme={theme}
+        disabled={needDisable}
         onClick={() => {
           updateState({ data });
           setShowWithdrawModal(true);
