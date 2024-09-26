@@ -7,7 +7,7 @@ export const mode: { [key: string]: Token } = {
     address: 'native',
     name: 'ETH',
     symbol: 'ETH',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
+    icon: '/assets/tokens/eth.png',
     decimals: 18,
     isNative: true
   },
@@ -89,7 +89,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'SMD',
     name: 'Swap Mode',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidos7g5c4y4cplsamp2rry6a5x3kn5cxbyc734lrevbm4ron35nfa'
+    icon: '/assets/tokens/smd.png'
   },
   mochad: {
     chainId: CHAIN_ID,
@@ -97,7 +97,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MOCHAD',
     name: 'MoChadCoin',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiezw2pp2yptuajshiqfxxeqrw3vgkjt6xi2jx62cqb53chlnup6h4'
+    icon: '/assets/tokens/mochad.png'
   },
   wbtc: {
     chainId: CHAIN_ID,
@@ -113,7 +113,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'MODI',
     name: 'Modie',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiemajqfppspgsp3aqpg7rmgex672idgamyqrrcs6t7ut7t2uqrhia'
+    icon: '/assets/tokens/modi.png'
   },
   stone: {
     chainId: CHAIN_ID,
@@ -121,7 +121,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'STONE',
     name: 'StakeStone Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih3upiejskutko5ochkysbzuihf4t7ngopshrdefi3zjknmnmou6i'
+    icon: '/assets/tokens/stone.png'
   },
   lab: {
     chainId: CHAIN_ID,
@@ -137,7 +137,7 @@ export const mode: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'KIM',
     name: 'KIM',
-    icon: 'https://ipfs.near.social/ipfs/bafkreidiekbdac2oxzv3wue537e22wi7hvb62wqwp3tkmy3oquolbsedf4'
+    icon: '/assets/tokens/kim.svg'
   },
   rseth: {
     chainId: CHAIN_ID,
@@ -161,7 +161,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'MODE',
     decimals: 18,
     name: 'MODE',
-    icon: 'https://ipfs.near.social/ipfs/bafkreihyh7mw7dieuobllbdpzs2irqadepophuc764rtdxbwdn36csz5ei'
+    icon: '/assets/tokens/mode.svg'
   },
   iusd: {
     address: '0xA70266C8F8Cf33647dcFEE763961aFf418D9E1E4',
@@ -177,7 +177,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'DJUMP',
     decimals: 18,
     name: 'Degen Jmp',
-    icon: 'https://ipfs.near.social/ipfs/bafybeic2jxrjhyqvg257y76sudgjs5ysikfdip6o35rw5kxegf7mnf65um'
+    icon: '/assets/tokens/djump.svg'
   },
   'px-eth': {
     address: '0x9E0d7D79735e1c63333128149c7b616a0dC0bBDb',
@@ -185,7 +185,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'pxETH',
     decimals: 18,
     name: 'Pirex Ether OT',
-    icon: 'https://ipfs.near.social/ipfs/bafkreie2h2na72r7wtoea4lcaooq37abhqed4p2tc6zps7rviyyank27wq'
+    icon: '/assets/tokens/pxeth.svg'
   },
   ionx: {
     address: '0x77E7bcfeE826b12cD498Faa9831d7055b7478272',
@@ -193,7 +193,7 @@ export const mode: { [key: string]: Token } = {
     symbol: 'IONX',
     decimals: 18,
     name: 'Charged Particles - IONX',
-    icon: 'https://ipfs.near.social/ipfs/bafkreiapb6sl4xwdemmtnul7dp2nbqhnjxuaa6jhcvpon3fhf725akj4oi'
+    icon: '/assets/tokens/ionx.webp'
   },
   peas: {
     address: '0x02f92800F57BCD74066F5709F1Daa1A4302Df875',

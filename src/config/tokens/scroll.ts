@@ -10,7 +10,7 @@ export const scroll: { [key: string]: Token } = {
     symbol: 'ETH',
     decimals: 18,
     name: 'Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy'
+    icon: '/assets/tokens/eth.png'
   },
   usdt: {
     chainId: CHAIN_ID,
@@ -170,7 +170,7 @@ export const scroll: { [key: string]: Token } = {
     decimals: 18,
     symbol: 'STONE',
     name: 'StakeStone Ether',
-    icon: 'https://ipfs.near.social/ipfs/bafkreih3upiejskutko5ochkysbzuihf4t7ngopshrdefi3zjknmnmou6i'
+    icon: '/assets/tokens/stone.png'
   },
   uniETH: {
     chainId: CHAIN_ID,

@@ -47,7 +47,7 @@ const networks = {
         availableLiquidityUSD: '',
         borrowingEnabled: true,
         decimals: 18,
-        icon: 'https://ipfs.near.social/ipfs/bafkreibmo3leq3youcg4o2fxe6pjxajkz4rfee4u5qbcxrx4puebx46psy',
+        icon: '/assets/tokens/eth.png',
         id: '1',
         isIsolated: false,
         supportLoop: true,
