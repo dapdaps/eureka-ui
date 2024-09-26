@@ -241,12 +241,16 @@ export default function useTrade({ chainId }: any) {
         inputCurrency: trade.inputCurrency,
         outputCurrencyAmount: trade.outputCurrencyAmount,
         outputCurrency: trade.outputCurrency,
-        template: wethAddress === trade.routerAddress ? 'Wrap and Unwrap' : trade.name,
+        template:
+          wethAddress === trade.routerAddress ? 'Wrap and Unwrap' : trade.from !== 'Dapdap' ? trade.from : trade.name,
         status,
         transactionHash,
         add: 0,
         token_in_currency: trade.inputCurrency,
-        token_out_currency: trade.outputCurrency
+        token_out_currency: trade.outputCurrency,
+        extra_data: {
+          template: trade.name
+        }
       });
       setLoading(false);
     } catch (err: any) {
